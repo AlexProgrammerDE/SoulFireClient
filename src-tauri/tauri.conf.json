@@ -63,10 +63,14 @@
       }
     },
     "security": {
-      "csp": null
+      "csp": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; connect-src 'self'; font-src 'self'; frame-src 'self'; img-src 'self' data:; manifest-src 'self'; media-src 'self'; worker-src 'self';"
     },
     "updater": {
-      "active": false
+      "active": false,
+      "windows": {
+        "installMode": "passive"
+      },
+      "dialog": true
     },
     "windows": [
       {
