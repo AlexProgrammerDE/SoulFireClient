@@ -19,10 +19,29 @@ export const metadata: Metadata = {
     },
     description: "Frontend client for SoulFire.",
     applicationName: "SoulFire",
+    twitter: {
+        card: "summary",
+        images: [
+            {
+                url: "/logo.png",
+                width: 512,
+                height: 512,
+                alt: "SoulFire Logo",
+            },
+        ],
+    },
     openGraph: {
         type: "website",
         locale: "en_US",
         url: "https://app.soulfiremc.com",
+        images: [
+            {
+                url: "/logo.png",
+                width: 512,
+                height: 512,
+                alt: "SoulFire Logo",
+            },
+        ],
     },
     formatDetection: {
         telephone: false,
