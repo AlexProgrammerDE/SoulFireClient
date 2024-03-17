@@ -4,6 +4,7 @@ import {LogsProvider} from "@/components/providers/logs-provider";
 import {GrpcWebFetchTransport} from "@protobuf-ts/grpcweb-transport";
 import {ConfigServiceClient} from "@/generated/com/soulfiremc/grpc/generated/config.client.ts";
 import {ClientInfoContext} from "@/components/providers/client-info-context.tsx";
+import {DashboardMenuHeader} from "@/components/dashboard-menu-header.tsx";
 
 const isAuthenticated = () => {
     return localStorage.getItem("server-address") !== null && localStorage.getItem("server-token") !== null
@@ -58,11 +59,12 @@ function ClientLayout() {
 
     return (
         <div className="container">
+            <DashboardMenuHeader/>
             <ServerConnectionContext.Provider value={transport}>
                 <ClientInfoContext.Provider value={clientData}>
-                <LogsProvider>
-                    <Outlet/>
-                </LogsProvider>
+                    <LogsProvider>
+                        <Outlet/>
+                    </LogsProvider>
                 </ClientInfoContext.Provider>
             </ServerConnectionContext.Provider>
         </div>
