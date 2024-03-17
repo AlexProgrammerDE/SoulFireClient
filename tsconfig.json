@@ -5,7 +5,6 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "allowJs": true,
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -14,12 +13,14 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "allowJs": true,
 
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]

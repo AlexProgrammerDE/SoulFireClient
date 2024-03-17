@@ -1,32 +1,34 @@
-"use client";
-
-import {useContext, useEffect, useRef} from "react";
-import {XTerm} from "xterm-for-react";
-import Xterm from "xterm-for-react/dist/src/XTerm";
+import {useContext, useEffect} from "react";
 import {LogsContext} from "@/components/providers/logs-provider.tsx";
+import "xterm/css/xterm.css";
+import {Terminal} from "xterm";
 
-export const Terminal = () => {
-    const xtermRef = useRef<Xterm | null>(null)
+let terminal: Terminal;
+export const TerminalComponent = () => {
+    console.log("TerminalComponent")
     const logs = useContext(LogsContext)
 
     useEffect(() => {
-        if (xtermRef.current === null) {
+        if (terminal !== undefined) {
+            if (logs.value.length === 0) {
+                return
+            }
+
+            terminal.write(logs.value.join(""))
+            logs.setValue([])
+            logs.value = []
             return
         }
 
-        console.log(logs)
-        xtermRef.current.terminal.write(logs)
+        terminal = new Terminal();
+        terminal.open(document.getElementById("terminal")!);
+        terminal.write(logs.value.join(""))
 
-        const eventListener = (event: any) => {
-            xtermRef.current?.terminal.writeln(event.detail.line)
-        }
-
-        document.addEventListener("sf-logs", eventListener)
-
-        return () => document.removeEventListener("sf-logs", eventListener)
+        logs.setValue([])
+        logs.value = []
     }, [logs])
 
     return (
-        <XTerm ref={xtermRef} options={{}}/>
+        <div id="terminal"/>
     )
 }

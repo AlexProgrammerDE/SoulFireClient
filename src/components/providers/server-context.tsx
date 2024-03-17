@@ -1,11 +1,4 @@
 import {createContext} from "react";
-import grpcWeb from "grpc-web";
+import {RpcTransport} from "@protobuf-ts/runtime-rpc";
 
-export type ServerConnectionInfo = {
-    address: string
-    token: string
-
-    createMetadata: () => grpcWeb.Metadata
-}
-
-export const ServerConnectionContext = createContext<ServerConnectionInfo | null>(null)
+export const ServerConnectionContext = createContext<RpcTransport>(null as never)

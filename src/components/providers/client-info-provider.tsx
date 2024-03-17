@@ -1,7 +1,6 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
-import {ConfigServiceClient} from "@/generated/com/soulfiremc/grpc/generated/ConfigServiceClientPb";
-import {ClientDataRequest} from "@/generated/com/soulfiremc/grpc/generated/config_pb";
 import {ServerConnectionContext} from "@/components/providers/server-context.tsx";
+import {ConfigServiceClient} from "@/generated/com/soulfiremc/grpc/generated/config.client.ts";
 
 export type ClientInfo = {
     username: string
@@ -10,27 +9,28 @@ export type ClientInfo = {
 export const ClientInfoContext = createContext<ClientInfo | null>(null)
 
 export const ClientInfoProvider = ({children}: Readonly<{ children: ReactNode }>) => {
+    console.log("ClientInfoProvider")
     const serverConnection = useContext(ServerConnectionContext)
     const [clientInfo, setClientInfo] = useState<ClientInfo | null>(null)
 
     useEffect(() => {
-        if (serverConnection === null) {
-            return
-        }
+        console.log("Client info requested")
 
-        const configService = new ConfigServiceClient(serverConnection.address);
-        const dataRequest = new ClientDataRequest()
-
-        configService.getUIClientData(dataRequest, serverConnection.createMetadata(), (err, response) => {
-            if (err) {
-                console.error(err)
-                return
-            }
-
+        const abortController = new AbortController();
+        const configService = new ConfigServiceClient(serverConnection);
+        configService.getUIClientData({}, {
+            abort: abortController.signal
+        }).then(result =>
             setClientInfo({
-                username: response.getUsername()
-            })
+                username: result.response.username
+            }), reason => {
+            console.error(reason)
         })
+
+        return () => {
+            console.log("Client info request aborted")
+            abortController.abort()
+        };
     }, [serverConnection])
 
     if (clientInfo === null) {

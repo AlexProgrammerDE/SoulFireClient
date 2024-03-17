@@ -15,7 +15,7 @@ export const Route = createRootRoute({
                 enableSystem
                 disableTransitionOnChange
             >
-                <main className="container h-full">
+                <main className="h-full">
                     <Outlet />
                 </main>
                 <Toaster richColors/>

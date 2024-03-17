@@ -21,7 +21,7 @@ export const Route = createFileRoute('/')({
 
 function Index() {
     return (
-        <div className="w-full h-full flex">
+        <div className="w-full h-full flex container">
             <LoginForm/>
         </div>
     )

@@ -67,7 +67,7 @@
 }
 
 @layer base {
-  html, body {
+  html, body, #app {
     @apply h-full w-full p-0 mt-0;
   }
   body {

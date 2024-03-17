@@ -1,43 +1,36 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
-import {LogsServiceClient} from "@/generated/com/soulfiremc/grpc/generated/LogsServiceClientPb";
-import {LogRequest} from "@/generated/com/soulfiremc/grpc/generated/logs_pb";
 import {ServerConnectionContext} from "@/components/providers/server-context.tsx";
+import {LogsServiceClient} from "@/generated/com/soulfiremc/grpc/generated/logs.client.ts";
 
-export const LogsContext = createContext<string>("")
+export const LogsContext = createContext<{
+    value: string[]
+    setValue: (value: string[]) => void
+}>({
+    value: [],
+    setValue: () => {
+    }
+})
 
 export const LogsProvider = ({children}: Readonly<{ children: ReactNode }>) => {
     const serverConnection = useContext(ServerConnectionContext)
-    const [logs, setLogs] = useState<string | null>(null)
+    const [logs, setLogs] = useState<string[]>([])
 
     useEffect(() => {
-        if (serverConnection === null || logs !== null) {
-            return
-        }
-
-        // To avoid multiple subscriptions
-        setLogs("")
-
-        let appendableLogs = ""
-        const logsService = new LogsServiceClient(serverConnection.address);
-        const logRequest = new LogRequest()
-        logRequest.setPrevious(300)
-        logsService.subscribe(logRequest, serverConnection.createMetadata()).on("data", (response) => {
-            appendableLogs += response.getMessage() + "\n"
-            setLogs(appendableLogs)
-            document.dispatchEvent(new CustomEvent("sf-logs", {detail: {line: response.getMessage()}}))
+        const abortController = new AbortController();
+        const logsService = new LogsServiceClient(serverConnection);
+        logsService.subscribe({
+            previous: 300
+        }, {
+            abort: abortController.signal
+        }).responses.onMessage((message) => {
+            setLogs((logs) => [...logs, message.message + "\r\n"])
         })
-    }, [logs, serverConnection])
 
-    if (serverConnection === null) {
-        return (
-            <div className="w-full h-full flex">
-                Loading...
-            </div>
-        );
-    }
+        return () => abortController.abort();
+    }, [serverConnection])
 
     return (
-        <LogsContext.Provider value={logs ?? ""}>
+        <LogsContext.Provider value={{value: logs, setValue: setLogs}}>
             {children}
         </LogsContext.Provider>
     )
