@@ -5,7 +5,6 @@ import {Terminal} from "xterm";
 
 let terminal: Terminal;
 export const TerminalComponent = () => {
-    console.log("TerminalComponent")
     const logs = useContext(LogsContext)
 
     useEffect(() => {

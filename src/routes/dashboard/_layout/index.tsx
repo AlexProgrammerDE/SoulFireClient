@@ -1,6 +1,6 @@
 import {useContext} from "react";
 import {TerminalComponent} from "@/components/terminal.tsx";
-import {ClientInfoContext} from "@/components/providers/client-info-provider.tsx";
+import {ClientInfoContext} from "@/components/providers/client-info-context.tsx";
 import {createFileRoute} from "@tanstack/react-router";
 
 export const Route = createFileRoute('/dashboard/_layout/')({
