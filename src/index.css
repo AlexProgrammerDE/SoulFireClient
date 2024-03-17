@@ -67,10 +67,14 @@
 }
 
 @layer base {
-  * {
-    @apply border-border;
+  html, body {
+    @apply h-full w-full p-0 mt-0;
   }
   body {
-    @apply bg-background text-foreground;
+    font-family: "Inter", sans-serif;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  * {
+    @apply border-border;
   }
 }

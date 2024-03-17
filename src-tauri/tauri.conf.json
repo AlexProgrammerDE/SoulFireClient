@@ -1,10 +1,10 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
-    "beforeBuildCommand": "npm run build",
-    "beforeDevCommand": "npm run dev",
-    "devPath": "http://localhost:3000",
-    "distDir": "../out"
+    "beforeBuildCommand": "pnpm run build",
+    "beforeDevCommand": "pnpm run dev",
+    "devPath": "http://localhost:5173",
+    "distDir": "../dist"
   },
   "package": {
     "productName": "soulfire",
@@ -49,7 +49,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "longDescription": "",
+      "longDescription": "Advanced Minecraft Server-Stresser Tool. Launch bot attacks on your servers to measure performance.",
       "macOS": {
         "entitlements": null,
         "exceptionDomain": "",
@@ -58,7 +58,7 @@
         "signingIdentity": null
       },
       "resources": [],
-      "shortDescription": "",
+      "shortDescription": "Advanced Minecraft Server-Stresser Tool.",
       "targets": "all",
       "windows": {
         "certificateThumbprint": null,
@@ -78,11 +78,13 @@
     },
     "windows": [
       {
+        "label": "main",
         "fullscreen": false,
         "height": 600,
         "resizable": true,
         "title": "SoulFire",
-        "width": 800
+        "width": 800,
+        "center": true
       }
     ]
   }

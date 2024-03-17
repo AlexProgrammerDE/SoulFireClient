@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+import "com/soulfiremc/grpc/generated/common.proto";
+
+option java_multiple_files = true;
+
+package com.soulfiremc.grpc.generated;
+
+message SettingsEntry {
+  string key = 1;
+  oneof value {
+    string stringValue = 2;
+    int32 intValue = 3;
+    bool boolValue = 4;
+    double doubleValue = 5;
+  }
+}
+
+message SettingsNamespace {
+  string namespace = 1;
+  repeated SettingsEntry entries = 2;
+}
+
+message AttackStartRequest {
+  repeated SettingsNamespace settings = 1;
+  repeated MinecraftAccountProto accounts = 2;
+  repeated ProxyProto proxies = 3;
+}
+
+message AttackStartResponse {
+  int32 id = 1;
+}
+
+message AttackStateToggleRequest {
+  enum State {
+    PAUSE = 0;
+    RESUME = 1;
+  }
+
+  int32 id = 1;
+  State newState = 2;
+}
+
+message AttackStateToggleResponse {
+}
+
+message AttackStopRequest {
+  int32 id = 1;
+}
+
+message AttackStopResponse {
+}
+
+service AttackService {
+  rpc startAttack(AttackStartRequest) returns (AttackStartResponse);
+  rpc toggleAttackState(AttackStateToggleRequest) returns (AttackStateToggleResponse);
+  rpc stopAttack(AttackStopRequest) returns (AttackStopResponse);
+}
