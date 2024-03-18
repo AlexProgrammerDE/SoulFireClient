@@ -58,7 +58,7 @@ function ClientLayout() {
     const {transport, clientData} = Route.useLoaderData()
 
     return (
-        <div className="container">
+        <div className="min-h-screen w-screen container">
             <DashboardMenuHeader/>
             <ServerConnectionContext.Provider value={transport}>
                 <ClientInfoContext.Provider value={clientData}>

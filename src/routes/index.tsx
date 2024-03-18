@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/form.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
+import {isTauri} from "@/lib/utils.ts";
+import {exit} from "@tauri-apps/api/process";
 
 export const Route = createFileRoute('/')({
     component: Index,
@@ -21,7 +23,7 @@ export const Route = createFileRoute('/')({
 
 function Index() {
     return (
-        <div className="w-full h-full flex container">
+        <div className="min-h-screen w-screen flex container">
             <LoginForm/>
         </div>
     )
@@ -90,7 +92,7 @@ const LoginForm = () => {
                                 <FormItem>
                                     <FormLabel>Token</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="secret-token" {...field} />
+                                        <Input placeholder="Secret token" {...field} />
                                     </FormControl>
                                     <FormDescription>
                                         Token to authenticate with the server.
@@ -101,7 +103,14 @@ const LoginForm = () => {
                         />
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                        <Button variant="outline">Quit</Button>
+                        {
+                            isTauri() ? (
+                                <Button variant="outline" onClick={e => {
+                                    e.preventDefault()
+                                    exit(0).then(console.log)
+                                }}>Exit</Button>
+                            ) : <div></div> // To prevent the connect-button from being pushed to the left
+                        }
                         <Button type="submit">Connect</Button>
                     </CardFooter>
                 </form>

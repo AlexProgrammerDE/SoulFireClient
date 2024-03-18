@@ -7,6 +7,8 @@ import {
     MenubarTrigger
 } from "@/components/ui/menubar.tsx";
 import {useTheme} from "next-themes";
+import {isTauri} from "@/lib/utils.ts";
+import {exit} from "@tauri-apps/api/process";
 
 export const DashboardMenuHeader = () => {
     const { theme, setTheme } = useTheme()
@@ -23,8 +25,14 @@ export const DashboardMenuHeader = () => {
                     <MenubarItem>
                         Save Profile <MenubarShortcut>⌘S</MenubarShortcut>
                     </MenubarItem>
-                    <MenubarSeparator/>
-                    <MenubarItem>Exit</MenubarItem>
+                    {
+                        isTauri() && (
+                            <>
+                                <MenubarSeparator/>
+                                <MenubarItem onClick={() => exit(0)}>Exit</MenubarItem>
+                            </>
+                        )
+                    }
                 </MenubarContent>
             </MenubarMenu>
             <MenubarMenu>

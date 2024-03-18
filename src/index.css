@@ -67,12 +67,12 @@
 }
 
 @layer base {
-  html, body, #app, main {
-    @apply h-full w-full p-0 mt-0;
+  html, body, #app {
+    @apply min-h-screen w-screen;
   }
   body {
-    font-family: "Inter", sans-serif;
-    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Geist Variable', sans-serif;
+    @apply bg-background text-foreground antialiased;
   }
   * {
     @apply border-border;
