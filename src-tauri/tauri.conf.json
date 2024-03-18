@@ -84,7 +84,8 @@
         "resizable": true,
         "title": "SoulFire",
         "width": 800,
-        "center": true
+        "center": true,
+        "decorations": false
       }
     ]
   }

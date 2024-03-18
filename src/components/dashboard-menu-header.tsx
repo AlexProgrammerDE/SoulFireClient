@@ -13,7 +13,7 @@ export const DashboardMenuHeader = () => {
     console.log(theme)
 
     return (
-        <Menubar className="my-4">
+        <Menubar data-tauri-drag-region className="my-4">
             <MenubarMenu>
                 <MenubarTrigger>File</MenubarTrigger>
                 <MenubarContent>
@@ -33,9 +33,7 @@ export const DashboardMenuHeader = () => {
                     <MenubarSub>
                         <MenubarSubTrigger>Theme</MenubarSubTrigger>
                         <MenubarSubContent>
-                            <MenubarRadioGroup value={theme} onValueChange={e => {
-                                setTheme(e)
-                            }}>
+                            <MenubarRadioGroup value={theme} onValueChange={e => setTheme(e)}>
                                 <MenubarRadioItem value="system">System</MenubarRadioItem>
                                 <MenubarRadioItem value="dark">Dark</MenubarRadioItem>
                                 <MenubarRadioItem value="light">Light</MenubarRadioItem>

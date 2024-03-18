@@ -5,6 +5,7 @@ import {ThemeProvider} from "@/components/theme-provider.tsx";
 import {Toaster} from "@/components/ui/sonner.tsx";
 import {TailwindIndicator} from "@/components/tailwind-indicator.tsx";
 import {lazy, Suspense} from "react";
+import {ScrollArea} from "@/components/ui/scroll-area.tsx";
 
 const TanStackRouterDevtools =
     process.env.NODE_ENV === 'production'
@@ -26,7 +27,9 @@ export const Route = createRootRoute({
                 disableTransitionOnChange
             >
                 <main className="h-full">
-                    <Outlet />
+                    <ScrollArea className="h-screen w-screen rounded-md border">
+                        <Outlet />
+                    </ScrollArea>
                 </main>
                 <Toaster richColors/>
             </ThemeProvider>

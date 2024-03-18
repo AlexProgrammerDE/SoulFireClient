@@ -3,8 +3,7 @@ import {TerminalComponent} from "@/components/terminal.tsx";
 import {ClientInfoContext} from "@/components/providers/client-info-context.tsx";
 import {createFileRoute} from "@tanstack/react-router";
 import {Alert, AlertDescription, AlertTitle} from "@/components/ui/alert.tsx";
-import {AlertCircle, MessageSquareWarningIcon, TriangleAlert} from "lucide-react";
-import {Warning} from "postcss";
+import {TriangleAlert} from "lucide-react";
 
 export const Route = createFileRoute('/dashboard/_layout/')({
     component: Dashboard,
