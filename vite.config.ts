@@ -9,6 +9,9 @@ export default defineConfig({
         react(),
         TanStackRouterVite(),
     ],
+    define: {
+        APP_VERSION: JSON.stringify(process.env.npm_package_version),
+    },
     resolve: {
         alias: {
             "@": resolve(__dirname, "src"),

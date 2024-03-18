@@ -68,7 +68,8 @@
 
 @layer base {
   html, body, #app {
-    @apply min-h-screen w-screen;
+    clip-path: inset(0 0 0 0 round 1% 1% 1% 1%);
+    @apply max-h-screen h-screen w-screen rounded-lg;
   }
   body {
     font-family: 'Geist Variable', sans-serif;

@@ -89,7 +89,8 @@
         "title": "SoulFire",
         "width": 800,
         "center": true,
-        "decorations": false
+        "decorations": false,
+        "transparent": true
       }
     ]
   }
