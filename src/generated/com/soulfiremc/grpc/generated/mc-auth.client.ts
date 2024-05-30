@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { MCAuthService } from "./mc-auth";
+import type { RefreshResponse } from "./mc-auth";
+import type { RefreshRequest } from "./mc-auth";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { AuthResponse } from "./mc-auth";
 import type { AuthRequest } from "./mc-auth";
@@ -17,6 +19,10 @@ export interface IMCAuthServiceClient {
      * @generated from protobuf rpc: login(com.soulfiremc.grpc.generated.AuthRequest) returns (com.soulfiremc.grpc.generated.AuthResponse);
      */
     login(input: AuthRequest, options?: RpcOptions): UnaryCall<AuthRequest, AuthResponse>;
+    /**
+     * @generated from protobuf rpc: refresh(com.soulfiremc.grpc.generated.RefreshRequest) returns (com.soulfiremc.grpc.generated.RefreshResponse);
+     */
+    refresh(input: RefreshRequest, options?: RpcOptions): UnaryCall<RefreshRequest, RefreshResponse>;
 }
 /**
  * @generated from protobuf service com.soulfiremc.grpc.generated.MCAuthService
@@ -33,5 +39,12 @@ export class MCAuthServiceClient implements IMCAuthServiceClient, ServiceInfo {
     login(input: AuthRequest, options?: RpcOptions): UnaryCall<AuthRequest, AuthResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
         return stackIntercept<AuthRequest, AuthResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: refresh(com.soulfiremc.grpc.generated.RefreshRequest) returns (com.soulfiremc.grpc.generated.RefreshResponse);
+     */
+    refresh(input: RefreshRequest, options?: RpcOptions): UnaryCall<RefreshRequest, RefreshResponse> {
+        const method = this.methods[1], opt = this._transport.mergeOptions(options);
+        return stackIntercept<RefreshRequest, RefreshResponse>("unary", this._transport, method, opt, input);
     }
 }

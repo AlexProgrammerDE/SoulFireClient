@@ -60,11 +60,10 @@ const LoginForm = () => {
     }
 
     return (
-        <Card className="w-[350px] m-auto">
+        <Card className="w-full max-w-[450px] m-auto border-none">
             <CardHeader>
                 <CardTitle>Connect to a SoulFire server</CardTitle>
-                <CardDescription>SoulFire requires you to connect to a server for you to control using the
-                    client.</CardDescription>
+                <CardDescription>SoulFire requires you to connect to a server for you to control using the client.</CardDescription>
             </CardHeader>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>

@@ -4,8 +4,6 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { CommandService } from "./command";
-import type { CommandHistoryResponse } from "./command";
-import type { CommandHistoryRequest } from "./command";
 import type { CommandCompletionResponse } from "./command";
 import type { CommandCompletionRequest } from "./command";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
@@ -25,10 +23,6 @@ export interface ICommandServiceClient {
      * @generated from protobuf rpc: tabCompleteCommand(com.soulfiremc.grpc.generated.CommandCompletionRequest) returns (com.soulfiremc.grpc.generated.CommandCompletionResponse);
      */
     tabCompleteCommand(input: CommandCompletionRequest, options?: RpcOptions): UnaryCall<CommandCompletionRequest, CommandCompletionResponse>;
-    /**
-     * @generated from protobuf rpc: getCommandHistory(com.soulfiremc.grpc.generated.CommandHistoryRequest) returns (com.soulfiremc.grpc.generated.CommandHistoryResponse);
-     */
-    getCommandHistory(input: CommandHistoryRequest, options?: RpcOptions): UnaryCall<CommandHistoryRequest, CommandHistoryResponse>;
 }
 /**
  * @generated from protobuf service com.soulfiremc.grpc.generated.CommandService
@@ -52,12 +46,5 @@ export class CommandServiceClient implements ICommandServiceClient, ServiceInfo 
     tabCompleteCommand(input: CommandCompletionRequest, options?: RpcOptions): UnaryCall<CommandCompletionRequest, CommandCompletionResponse> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);
         return stackIntercept<CommandCompletionRequest, CommandCompletionResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: getCommandHistory(com.soulfiremc.grpc.generated.CommandHistoryRequest) returns (com.soulfiremc.grpc.generated.CommandHistoryResponse);
-     */
-    getCommandHistory(input: CommandHistoryRequest, options?: RpcOptions): UnaryCall<CommandHistoryRequest, CommandHistoryResponse> {
-        const method = this.methods[2], opt = this._transport.mergeOptions(options);
-        return stackIntercept<CommandHistoryRequest, CommandHistoryResponse>("unary", this._transport, method, opt, input);
     }
 }

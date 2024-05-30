@@ -5,7 +5,7 @@ import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { ConfigService } from "./config";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type { UIClientDataResponse } from "./config";
+import type { ClientDataResponse } from "./config";
 import type { ClientDataRequest } from "./config";
 import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
@@ -14,9 +14,9 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  */
 export interface IConfigServiceClient {
     /**
-     * @generated from protobuf rpc: getUIClientData(com.soulfiremc.grpc.generated.ClientDataRequest) returns (com.soulfiremc.grpc.generated.UIClientDataResponse);
+     * @generated from protobuf rpc: getClientData(com.soulfiremc.grpc.generated.ClientDataRequest) returns (com.soulfiremc.grpc.generated.ClientDataResponse);
      */
-    getUIClientData(input: ClientDataRequest, options?: RpcOptions): UnaryCall<ClientDataRequest, UIClientDataResponse>;
+    getClientData(input: ClientDataRequest, options?: RpcOptions): UnaryCall<ClientDataRequest, ClientDataResponse>;
 }
 /**
  * @generated from protobuf service com.soulfiremc.grpc.generated.ConfigService
@@ -28,10 +28,10 @@ export class ConfigServiceClient implements IConfigServiceClient, ServiceInfo {
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * @generated from protobuf rpc: getUIClientData(com.soulfiremc.grpc.generated.ClientDataRequest) returns (com.soulfiremc.grpc.generated.UIClientDataResponse);
+     * @generated from protobuf rpc: getClientData(com.soulfiremc.grpc.generated.ClientDataRequest) returns (com.soulfiremc.grpc.generated.ClientDataResponse);
      */
-    getUIClientData(input: ClientDataRequest, options?: RpcOptions): UnaryCall<ClientDataRequest, UIClientDataResponse> {
+    getClientData(input: ClientDataRequest, options?: RpcOptions): UnaryCall<ClientDataRequest, ClientDataResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return stackIntercept<ClientDataRequest, UIClientDataResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<ClientDataRequest, ClientDataResponse>("unary", this._transport, method, opt, input);
     }
 }

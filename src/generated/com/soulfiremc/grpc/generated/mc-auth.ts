@@ -40,6 +40,28 @@ export interface AuthResponse {
      */
     account?: MinecraftAccountProto;
 }
+/**
+ * @generated from protobuf message com.soulfiremc.grpc.generated.RefreshRequest
+ */
+export interface RefreshRequest {
+    /**
+     * @generated from protobuf field: com.soulfiremc.grpc.generated.MinecraftAccountProto account = 1;
+     */
+    account?: MinecraftAccountProto;
+    /**
+     * @generated from protobuf field: optional com.soulfiremc.grpc.generated.ProxyProto proxy = 2;
+     */
+    proxy?: ProxyProto;
+}
+/**
+ * @generated from protobuf message com.soulfiremc.grpc.generated.RefreshResponse
+ */
+export interface RefreshResponse {
+    /**
+     * @generated from protobuf field: com.soulfiremc.grpc.generated.MinecraftAccountProto account = 1;
+     */
+    account?: MinecraftAccountProto;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class AuthRequest$Type extends MessageType<AuthRequest> {
     constructor() {
@@ -148,9 +170,109 @@ class AuthResponse$Type extends MessageType<AuthResponse> {
  * @generated MessageType for protobuf message com.soulfiremc.grpc.generated.AuthResponse
  */
 export const AuthResponse = new AuthResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RefreshRequest$Type extends MessageType<RefreshRequest> {
+    constructor() {
+        super("com.soulfiremc.grpc.generated.RefreshRequest", [
+            { no: 1, name: "account", kind: "message", T: () => MinecraftAccountProto },
+            { no: 2, name: "proxy", kind: "message", T: () => ProxyProto }
+        ]);
+    }
+    create(value?: PartialMessage<RefreshRequest>): RefreshRequest {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<RefreshRequest>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RefreshRequest): RefreshRequest {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* com.soulfiremc.grpc.generated.MinecraftAccountProto account */ 1:
+                    message.account = MinecraftAccountProto.internalBinaryRead(reader, reader.uint32(), options, message.account);
+                    break;
+                case /* optional com.soulfiremc.grpc.generated.ProxyProto proxy */ 2:
+                    message.proxy = ProxyProto.internalBinaryRead(reader, reader.uint32(), options, message.proxy);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: RefreshRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* com.soulfiremc.grpc.generated.MinecraftAccountProto account = 1; */
+        if (message.account)
+            MinecraftAccountProto.internalBinaryWrite(message.account, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        /* optional com.soulfiremc.grpc.generated.ProxyProto proxy = 2; */
+        if (message.proxy)
+            ProxyProto.internalBinaryWrite(message.proxy, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message com.soulfiremc.grpc.generated.RefreshRequest
+ */
+export const RefreshRequest = new RefreshRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RefreshResponse$Type extends MessageType<RefreshResponse> {
+    constructor() {
+        super("com.soulfiremc.grpc.generated.RefreshResponse", [
+            { no: 1, name: "account", kind: "message", T: () => MinecraftAccountProto }
+        ]);
+    }
+    create(value?: PartialMessage<RefreshResponse>): RefreshResponse {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<RefreshResponse>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: RefreshResponse): RefreshResponse {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* com.soulfiremc.grpc.generated.MinecraftAccountProto account */ 1:
+                    message.account = MinecraftAccountProto.internalBinaryRead(reader, reader.uint32(), options, message.account);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: RefreshResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* com.soulfiremc.grpc.generated.MinecraftAccountProto account = 1; */
+        if (message.account)
+            MinecraftAccountProto.internalBinaryWrite(message.account, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message com.soulfiremc.grpc.generated.RefreshResponse
+ */
+export const RefreshResponse = new RefreshResponse$Type();
 /**
  * @generated ServiceType for protobuf service com.soulfiremc.grpc.generated.MCAuthService
  */
 export const MCAuthService = new ServiceType("com.soulfiremc.grpc.generated.MCAuthService", [
-    { name: "login", options: {}, I: AuthRequest, O: AuthResponse }
+    { name: "login", options: {}, I: AuthRequest, O: AuthResponse },
+    { name: "refresh", options: {}, I: RefreshRequest, O: RefreshResponse }
 ]);

@@ -297,8 +297,23 @@ export interface ClientPluginSettingsPage {
     entries: ClientPluginSettingEntry[];
 }
 /**
- * New options that extend the clients options
- *
+ * @generated from protobuf message com.soulfiremc.grpc.generated.PermissionMessage
+ */
+export interface PermissionMessage {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+    /**
+     * @generated from protobuf field: bool granted = 3;
+     */
+    granted: boolean;
+}
+/**
  * @generated from protobuf message com.soulfiremc.grpc.generated.ClientPlugin
  */
 export interface ClientPlugin {
@@ -320,19 +335,23 @@ export interface ClientPlugin {
     provider: string;
 }
 /**
- * @generated from protobuf message com.soulfiremc.grpc.generated.UIClientDataResponse
+ * @generated from protobuf message com.soulfiremc.grpc.generated.ClientDataResponse
  */
-export interface UIClientDataResponse {
+export interface ClientDataResponse {
     /**
      * @generated from protobuf field: string username = 1;
      */
     username: string;
     /**
-     * @generated from protobuf field: repeated com.soulfiremc.grpc.generated.ClientPlugin plugins = 2;
+     * @generated from protobuf field: repeated com.soulfiremc.grpc.generated.PermissionMessage permissions = 2;
+     */
+    permissions: PermissionMessage[];
+    /**
+     * @generated from protobuf field: repeated com.soulfiremc.grpc.generated.ClientPlugin plugins = 3;
      */
     plugins: ClientPlugin[];
     /**
-     * @generated from protobuf field: repeated com.soulfiremc.grpc.generated.ClientPluginSettingsPage pluginSettings = 3;
+     * @generated from protobuf field: repeated com.soulfiremc.grpc.generated.ClientPluginSettingsPage pluginSettings = 4;
      */
     pluginSettings: ClientPluginSettingsPage[];
 }
@@ -1174,6 +1193,69 @@ class ClientPluginSettingsPage$Type extends MessageType<ClientPluginSettingsPage
  */
 export const ClientPluginSettingsPage = new ClientPluginSettingsPage$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class PermissionMessage$Type extends MessageType<PermissionMessage> {
+    constructor() {
+        super("com.soulfiremc.grpc.generated.PermissionMessage", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "granted", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+    create(value?: PartialMessage<PermissionMessage>): PermissionMessage {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.id = "";
+        message.description = "";
+        message.granted = false;
+        if (value !== undefined)
+            reflectionMergePartial<PermissionMessage>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PermissionMessage): PermissionMessage {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string id */ 1:
+                    message.id = reader.string();
+                    break;
+                case /* string description */ 2:
+                    message.description = reader.string();
+                    break;
+                case /* bool granted */ 3:
+                    message.granted = reader.bool();
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PermissionMessage, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string id = 1; */
+        if (message.id !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.id);
+        /* string description = 2; */
+        if (message.description !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.description);
+        /* bool granted = 3; */
+        if (message.granted !== false)
+            writer.tag(3, WireType.Varint).bool(message.granted);
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message com.soulfiremc.grpc.generated.PermissionMessage
+ */
+export const PermissionMessage = new PermissionMessage$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class ClientPlugin$Type extends MessageType<ClientPlugin> {
     constructor() {
         super("com.soulfiremc.grpc.generated.ClientPlugin", [
@@ -1245,24 +1327,26 @@ class ClientPlugin$Type extends MessageType<ClientPlugin> {
  */
 export const ClientPlugin = new ClientPlugin$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class UIClientDataResponse$Type extends MessageType<UIClientDataResponse> {
+class ClientDataResponse$Type extends MessageType<ClientDataResponse> {
     constructor() {
-        super("com.soulfiremc.grpc.generated.UIClientDataResponse", [
+        super("com.soulfiremc.grpc.generated.ClientDataResponse", [
             { no: 1, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "plugins", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ClientPlugin },
-            { no: 3, name: "pluginSettings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ClientPluginSettingsPage }
+            { no: 2, name: "permissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PermissionMessage },
+            { no: 3, name: "plugins", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ClientPlugin },
+            { no: 4, name: "pluginSettings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ClientPluginSettingsPage }
         ]);
     }
-    create(value?: PartialMessage<UIClientDataResponse>): UIClientDataResponse {
+    create(value?: PartialMessage<ClientDataResponse>): ClientDataResponse {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.username = "";
+        message.permissions = [];
         message.plugins = [];
         message.pluginSettings = [];
         if (value !== undefined)
-            reflectionMergePartial<UIClientDataResponse>(this, message, value);
+            reflectionMergePartial<ClientDataResponse>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UIClientDataResponse): UIClientDataResponse {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ClientDataResponse): ClientDataResponse {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -1270,10 +1354,13 @@ class UIClientDataResponse$Type extends MessageType<UIClientDataResponse> {
                 case /* string username */ 1:
                     message.username = reader.string();
                     break;
-                case /* repeated com.soulfiremc.grpc.generated.ClientPlugin plugins */ 2:
+                case /* repeated com.soulfiremc.grpc.generated.PermissionMessage permissions */ 2:
+                    message.permissions.push(PermissionMessage.internalBinaryRead(reader, reader.uint32(), options));
+                    break;
+                case /* repeated com.soulfiremc.grpc.generated.ClientPlugin plugins */ 3:
                     message.plugins.push(ClientPlugin.internalBinaryRead(reader, reader.uint32(), options));
                     break;
-                case /* repeated com.soulfiremc.grpc.generated.ClientPluginSettingsPage pluginSettings */ 3:
+                case /* repeated com.soulfiremc.grpc.generated.ClientPluginSettingsPage pluginSettings */ 4:
                     message.pluginSettings.push(ClientPluginSettingsPage.internalBinaryRead(reader, reader.uint32(), options));
                     break;
                 default:
@@ -1287,16 +1374,19 @@ class UIClientDataResponse$Type extends MessageType<UIClientDataResponse> {
         }
         return message;
     }
-    internalBinaryWrite(message: UIClientDataResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: ClientDataResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string username = 1; */
         if (message.username !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.username);
-        /* repeated com.soulfiremc.grpc.generated.ClientPlugin plugins = 2; */
+        /* repeated com.soulfiremc.grpc.generated.PermissionMessage permissions = 2; */
+        for (let i = 0; i < message.permissions.length; i++)
+            PermissionMessage.internalBinaryWrite(message.permissions[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
+        /* repeated com.soulfiremc.grpc.generated.ClientPlugin plugins = 3; */
         for (let i = 0; i < message.plugins.length; i++)
-            ClientPlugin.internalBinaryWrite(message.plugins[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* repeated com.soulfiremc.grpc.generated.ClientPluginSettingsPage pluginSettings = 3; */
+            ClientPlugin.internalBinaryWrite(message.plugins[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        /* repeated com.soulfiremc.grpc.generated.ClientPluginSettingsPage pluginSettings = 4; */
         for (let i = 0; i < message.pluginSettings.length; i++)
-            ClientPluginSettingsPage.internalBinaryWrite(message.pluginSettings[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+            ClientPluginSettingsPage.internalBinaryWrite(message.pluginSettings[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -1304,12 +1394,12 @@ class UIClientDataResponse$Type extends MessageType<UIClientDataResponse> {
     }
 }
 /**
- * @generated MessageType for protobuf message com.soulfiremc.grpc.generated.UIClientDataResponse
+ * @generated MessageType for protobuf message com.soulfiremc.grpc.generated.ClientDataResponse
  */
-export const UIClientDataResponse = new UIClientDataResponse$Type();
+export const ClientDataResponse = new ClientDataResponse$Type();
 /**
  * @generated ServiceType for protobuf service com.soulfiremc.grpc.generated.ConfigService
  */
 export const ConfigService = new ServiceType("com.soulfiremc.grpc.generated.ConfigService", [
-    { name: "getUIClientData", options: {}, I: ClientDataRequest, O: UIClientDataResponse }
+    { name: "getClientData", options: {}, I: ClientDataRequest, O: ClientDataResponse }
 ]);

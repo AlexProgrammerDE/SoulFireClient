@@ -10,6 +10,7 @@ import { UnknownFieldHandler } from "@protobuf-ts/runtime";
 import type { PartialMessage } from "@protobuf-ts/runtime";
 import { reflectionMergePartial } from "@protobuf-ts/runtime";
 import { MessageType } from "@protobuf-ts/runtime";
+import { Struct } from "../../../../google/protobuf/struct";
 /**
  * @generated from protobuf message com.soulfiremc.grpc.generated.ProxyProto
  */
@@ -19,19 +20,15 @@ export interface ProxyProto {
      */
     type: ProxyProto_Type;
     /**
-     * @generated from protobuf field: string host = 2;
+     * @generated from protobuf field: string address = 2;
      */
-    host: string;
+    address: string;
     /**
-     * @generated from protobuf field: int32 port = 3;
-     */
-    port: number;
-    /**
-     * @generated from protobuf field: optional string username = 4;
+     * @generated from protobuf field: optional string username = 3;
      */
     username?: string;
     /**
-     * @generated from protobuf field: optional string password = 5;
+     * @generated from protobuf field: optional string password = 4;
      */
     password?: string;
 }
@@ -72,21 +69,27 @@ export interface MinecraftAccountProto {
      * @generated from protobuf oneof: accountData
      */
     accountData: {
-        oneofKind: "onlineJavaData";
+        oneofKind: "onlineSimpleJavaData";
         /**
-         * @generated from protobuf field: com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineJavaData onlineJavaData = 4;
+         * @generated from protobuf field: com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineSimpleJavaData onlineSimpleJavaData = 4;
          */
-        onlineJavaData: MinecraftAccountProto_OnlineJavaData;
+        onlineSimpleJavaData: MinecraftAccountProto_OnlineSimpleJavaData;
+    } | {
+        oneofKind: "onlineChainJavaData";
+        /**
+         * @generated from protobuf field: com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineChainJavaData onlineChainJavaData = 5;
+         */
+        onlineChainJavaData: MinecraftAccountProto_OnlineChainJavaData;
     } | {
         oneofKind: "offlineJavaData";
         /**
-         * @generated from protobuf field: com.soulfiremc.grpc.generated.MinecraftAccountProto.OfflineJavaData offlineJavaData = 5;
+         * @generated from protobuf field: com.soulfiremc.grpc.generated.MinecraftAccountProto.OfflineJavaData offlineJavaData = 6;
          */
         offlineJavaData: MinecraftAccountProto_OfflineJavaData;
     } | {
         oneofKind: "bedrockData";
         /**
-         * @generated from protobuf field: com.soulfiremc.grpc.generated.MinecraftAccountProto.BedrockData bedrockData = 6;
+         * @generated from protobuf field: com.soulfiremc.grpc.generated.MinecraftAccountProto.BedrockData bedrockData = 7;
          */
         bedrockData: MinecraftAccountProto_BedrockData;
     } | {
@@ -94,9 +97,9 @@ export interface MinecraftAccountProto {
     };
 }
 /**
- * @generated from protobuf message com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineJavaData
+ * @generated from protobuf message com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineSimpleJavaData
  */
-export interface MinecraftAccountProto_OnlineJavaData {
+export interface MinecraftAccountProto_OnlineSimpleJavaData {
     /**
      * @generated from protobuf field: string authToken = 1;
      */
@@ -105,6 +108,23 @@ export interface MinecraftAccountProto_OnlineJavaData {
      * @generated from protobuf field: int64 tokenExpireAt = 2;
      */
     tokenExpireAt: bigint;
+}
+/**
+ * @generated from protobuf message com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineChainJavaData
+ */
+export interface MinecraftAccountProto_OnlineChainJavaData {
+    /**
+     * @generated from protobuf field: string authToken = 1;
+     */
+    authToken: string;
+    /**
+     * @generated from protobuf field: int64 tokenExpireAt = 2;
+     */
+    tokenExpireAt: bigint;
+    /**
+     * @generated from protobuf field: google.protobuf.Struct authChain = 3;
+     */
+    authChain?: Struct;
 }
 /**
  * @generated from protobuf message com.soulfiremc.grpc.generated.MinecraftAccountProto.OfflineJavaData
@@ -139,6 +159,10 @@ export interface MinecraftAccountProto_BedrockData {
      * @generated from protobuf field: string playFabId = 6;
      */
     playFabId: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Struct authChain = 7;
+     */
+    authChain?: Struct;
 }
 /**
  * @generated from protobuf enum com.soulfiremc.grpc.generated.MinecraftAccountProto.AccountTypeProto
@@ -170,17 +194,15 @@ class ProxyProto$Type extends MessageType<ProxyProto> {
     constructor() {
         super("com.soulfiremc.grpc.generated.ProxyProto", [
             { no: 1, name: "type", kind: "enum", T: () => ["com.soulfiremc.grpc.generated.ProxyProto.Type", ProxyProto_Type] },
-            { no: 2, name: "host", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "port", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 4, name: "username", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "password", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "username", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "password", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
     create(value?: PartialMessage<ProxyProto>): ProxyProto {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.type = 0;
-        message.host = "";
-        message.port = 0;
+        message.address = "";
         if (value !== undefined)
             reflectionMergePartial<ProxyProto>(this, message, value);
         return message;
@@ -193,16 +215,13 @@ class ProxyProto$Type extends MessageType<ProxyProto> {
                 case /* com.soulfiremc.grpc.generated.ProxyProto.Type type */ 1:
                     message.type = reader.int32();
                     break;
-                case /* string host */ 2:
-                    message.host = reader.string();
+                case /* string address */ 2:
+                    message.address = reader.string();
                     break;
-                case /* int32 port */ 3:
-                    message.port = reader.int32();
-                    break;
-                case /* optional string username */ 4:
+                case /* optional string username */ 3:
                     message.username = reader.string();
                     break;
-                case /* optional string password */ 5:
+                case /* optional string password */ 4:
                     message.password = reader.string();
                     break;
                 default:
@@ -220,18 +239,15 @@ class ProxyProto$Type extends MessageType<ProxyProto> {
         /* com.soulfiremc.grpc.generated.ProxyProto.Type type = 1; */
         if (message.type !== 0)
             writer.tag(1, WireType.Varint).int32(message.type);
-        /* string host = 2; */
-        if (message.host !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.host);
-        /* int32 port = 3; */
-        if (message.port !== 0)
-            writer.tag(3, WireType.Varint).int32(message.port);
-        /* optional string username = 4; */
+        /* string address = 2; */
+        if (message.address !== "")
+            writer.tag(2, WireType.LengthDelimited).string(message.address);
+        /* optional string username = 3; */
         if (message.username !== undefined)
-            writer.tag(4, WireType.LengthDelimited).string(message.username);
-        /* optional string password = 5; */
+            writer.tag(3, WireType.LengthDelimited).string(message.username);
+        /* optional string password = 4; */
         if (message.password !== undefined)
-            writer.tag(5, WireType.LengthDelimited).string(message.password);
+            writer.tag(4, WireType.LengthDelimited).string(message.password);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -249,9 +265,10 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
             { no: 1, name: "type", kind: "enum", T: () => ["com.soulfiremc.grpc.generated.MinecraftAccountProto.AccountTypeProto", MinecraftAccountProto_AccountTypeProto] },
             { no: 2, name: "profileId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "lastKnownName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "onlineJavaData", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OnlineJavaData },
-            { no: 5, name: "offlineJavaData", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OfflineJavaData },
-            { no: 6, name: "bedrockData", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_BedrockData }
+            { no: 4, name: "onlineSimpleJavaData", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OnlineSimpleJavaData },
+            { no: 5, name: "onlineChainJavaData", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OnlineChainJavaData },
+            { no: 6, name: "offlineJavaData", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OfflineJavaData },
+            { no: 7, name: "bedrockData", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_BedrockData }
         ]);
     }
     create(value?: PartialMessage<MinecraftAccountProto>): MinecraftAccountProto {
@@ -278,19 +295,25 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
                 case /* string lastKnownName */ 3:
                     message.lastKnownName = reader.string();
                     break;
-                case /* com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineJavaData onlineJavaData */ 4:
+                case /* com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineSimpleJavaData onlineSimpleJavaData */ 4:
                     message.accountData = {
-                        oneofKind: "onlineJavaData",
-                        onlineJavaData: MinecraftAccountProto_OnlineJavaData.internalBinaryRead(reader, reader.uint32(), options, (message.accountData as any).onlineJavaData)
+                        oneofKind: "onlineSimpleJavaData",
+                        onlineSimpleJavaData: MinecraftAccountProto_OnlineSimpleJavaData.internalBinaryRead(reader, reader.uint32(), options, (message.accountData as any).onlineSimpleJavaData)
                     };
                     break;
-                case /* com.soulfiremc.grpc.generated.MinecraftAccountProto.OfflineJavaData offlineJavaData */ 5:
+                case /* com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineChainJavaData onlineChainJavaData */ 5:
+                    message.accountData = {
+                        oneofKind: "onlineChainJavaData",
+                        onlineChainJavaData: MinecraftAccountProto_OnlineChainJavaData.internalBinaryRead(reader, reader.uint32(), options, (message.accountData as any).onlineChainJavaData)
+                    };
+                    break;
+                case /* com.soulfiremc.grpc.generated.MinecraftAccountProto.OfflineJavaData offlineJavaData */ 6:
                     message.accountData = {
                         oneofKind: "offlineJavaData",
                         offlineJavaData: MinecraftAccountProto_OfflineJavaData.internalBinaryRead(reader, reader.uint32(), options, (message.accountData as any).offlineJavaData)
                     };
                     break;
-                case /* com.soulfiremc.grpc.generated.MinecraftAccountProto.BedrockData bedrockData */ 6:
+                case /* com.soulfiremc.grpc.generated.MinecraftAccountProto.BedrockData bedrockData */ 7:
                     message.accountData = {
                         oneofKind: "bedrockData",
                         bedrockData: MinecraftAccountProto_BedrockData.internalBinaryRead(reader, reader.uint32(), options, (message.accountData as any).bedrockData)
@@ -317,15 +340,18 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
         /* string lastKnownName = 3; */
         if (message.lastKnownName !== "")
             writer.tag(3, WireType.LengthDelimited).string(message.lastKnownName);
-        /* com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineJavaData onlineJavaData = 4; */
-        if (message.accountData.oneofKind === "onlineJavaData")
-            MinecraftAccountProto_OnlineJavaData.internalBinaryWrite(message.accountData.onlineJavaData, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* com.soulfiremc.grpc.generated.MinecraftAccountProto.OfflineJavaData offlineJavaData = 5; */
+        /* com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineSimpleJavaData onlineSimpleJavaData = 4; */
+        if (message.accountData.oneofKind === "onlineSimpleJavaData")
+            MinecraftAccountProto_OnlineSimpleJavaData.internalBinaryWrite(message.accountData.onlineSimpleJavaData, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
+        /* com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineChainJavaData onlineChainJavaData = 5; */
+        if (message.accountData.oneofKind === "onlineChainJavaData")
+            MinecraftAccountProto_OnlineChainJavaData.internalBinaryWrite(message.accountData.onlineChainJavaData, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* com.soulfiremc.grpc.generated.MinecraftAccountProto.OfflineJavaData offlineJavaData = 6; */
         if (message.accountData.oneofKind === "offlineJavaData")
-            MinecraftAccountProto_OfflineJavaData.internalBinaryWrite(message.accountData.offlineJavaData, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* com.soulfiremc.grpc.generated.MinecraftAccountProto.BedrockData bedrockData = 6; */
+            MinecraftAccountProto_OfflineJavaData.internalBinaryWrite(message.accountData.offlineJavaData, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+        /* com.soulfiremc.grpc.generated.MinecraftAccountProto.BedrockData bedrockData = 7; */
         if (message.accountData.oneofKind === "bedrockData")
-            MinecraftAccountProto_BedrockData.internalBinaryWrite(message.accountData.bedrockData, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
+            MinecraftAccountProto_BedrockData.internalBinaryWrite(message.accountData.bedrockData, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -337,22 +363,22 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
  */
 export const MinecraftAccountProto = new MinecraftAccountProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class MinecraftAccountProto_OnlineJavaData$Type extends MessageType<MinecraftAccountProto_OnlineJavaData> {
+class MinecraftAccountProto_OnlineSimpleJavaData$Type extends MessageType<MinecraftAccountProto_OnlineSimpleJavaData> {
     constructor() {
-        super("com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineJavaData", [
+        super("com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineSimpleJavaData", [
             { no: 1, name: "authToken", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "tokenExpireAt", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ }
         ]);
     }
-    create(value?: PartialMessage<MinecraftAccountProto_OnlineJavaData>): MinecraftAccountProto_OnlineJavaData {
+    create(value?: PartialMessage<MinecraftAccountProto_OnlineSimpleJavaData>): MinecraftAccountProto_OnlineSimpleJavaData {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.authToken = "";
         message.tokenExpireAt = 0n;
         if (value !== undefined)
-            reflectionMergePartial<MinecraftAccountProto_OnlineJavaData>(this, message, value);
+            reflectionMergePartial<MinecraftAccountProto_OnlineSimpleJavaData>(this, message, value);
         return message;
     }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MinecraftAccountProto_OnlineJavaData): MinecraftAccountProto_OnlineJavaData {
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MinecraftAccountProto_OnlineSimpleJavaData): MinecraftAccountProto_OnlineSimpleJavaData {
         let message = target ?? this.create(), end = reader.pos + length;
         while (reader.pos < end) {
             let [fieldNo, wireType] = reader.tag();
@@ -374,7 +400,7 @@ class MinecraftAccountProto_OnlineJavaData$Type extends MessageType<MinecraftAcc
         }
         return message;
     }
-    internalBinaryWrite(message: MinecraftAccountProto_OnlineJavaData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+    internalBinaryWrite(message: MinecraftAccountProto_OnlineSimpleJavaData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
         /* string authToken = 1; */
         if (message.authToken !== "")
             writer.tag(1, WireType.LengthDelimited).string(message.authToken);
@@ -388,9 +414,71 @@ class MinecraftAccountProto_OnlineJavaData$Type extends MessageType<MinecraftAcc
     }
 }
 /**
- * @generated MessageType for protobuf message com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineJavaData
+ * @generated MessageType for protobuf message com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineSimpleJavaData
  */
-export const MinecraftAccountProto_OnlineJavaData = new MinecraftAccountProto_OnlineJavaData$Type();
+export const MinecraftAccountProto_OnlineSimpleJavaData = new MinecraftAccountProto_OnlineSimpleJavaData$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MinecraftAccountProto_OnlineChainJavaData$Type extends MessageType<MinecraftAccountProto_OnlineChainJavaData> {
+    constructor() {
+        super("com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineChainJavaData", [
+            { no: 1, name: "authToken", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "tokenExpireAt", kind: "scalar", T: 3 /*ScalarType.INT64*/, L: 0 /*LongType.BIGINT*/ },
+            { no: 3, name: "authChain", kind: "message", T: () => Struct }
+        ]);
+    }
+    create(value?: PartialMessage<MinecraftAccountProto_OnlineChainJavaData>): MinecraftAccountProto_OnlineChainJavaData {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        message.authToken = "";
+        message.tokenExpireAt = 0n;
+        if (value !== undefined)
+            reflectionMergePartial<MinecraftAccountProto_OnlineChainJavaData>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MinecraftAccountProto_OnlineChainJavaData): MinecraftAccountProto_OnlineChainJavaData {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                case /* string authToken */ 1:
+                    message.authToken = reader.string();
+                    break;
+                case /* int64 tokenExpireAt */ 2:
+                    message.tokenExpireAt = reader.int64().toBigInt();
+                    break;
+                case /* google.protobuf.Struct authChain */ 3:
+                    message.authChain = Struct.internalBinaryRead(reader, reader.uint32(), options, message.authChain);
+                    break;
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: MinecraftAccountProto_OnlineChainJavaData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        /* string authToken = 1; */
+        if (message.authToken !== "")
+            writer.tag(1, WireType.LengthDelimited).string(message.authToken);
+        /* int64 tokenExpireAt = 2; */
+        if (message.tokenExpireAt !== 0n)
+            writer.tag(2, WireType.Varint).int64(message.tokenExpireAt);
+        /* google.protobuf.Struct authChain = 3; */
+        if (message.authChain)
+            Struct.internalBinaryWrite(message.authChain, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message com.soulfiremc.grpc.generated.MinecraftAccountProto.OnlineChainJavaData
+ */
+export const MinecraftAccountProto_OnlineChainJavaData = new MinecraftAccountProto_OnlineChainJavaData$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MinecraftAccountProto_OfflineJavaData$Type extends MessageType<MinecraftAccountProto_OfflineJavaData> {
     constructor() {
@@ -425,7 +513,8 @@ class MinecraftAccountProto_BedrockData$Type extends MessageType<MinecraftAccoun
             { no: 3, name: "publicKey", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "privateKey", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "deviceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "playFabId", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 6, name: "playFabId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "authChain", kind: "message", T: () => Struct }
         ]);
     }
     create(value?: PartialMessage<MinecraftAccountProto_BedrockData>): MinecraftAccountProto_BedrockData {
@@ -463,6 +552,9 @@ class MinecraftAccountProto_BedrockData$Type extends MessageType<MinecraftAccoun
                 case /* string playFabId */ 6:
                     message.playFabId = reader.string();
                     break;
+                case /* google.protobuf.Struct authChain */ 7:
+                    message.authChain = Struct.internalBinaryRead(reader, reader.uint32(), options, message.authChain);
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -493,6 +585,9 @@ class MinecraftAccountProto_BedrockData$Type extends MessageType<MinecraftAccoun
         /* string playFabId = 6; */
         if (message.playFabId !== "")
             writer.tag(6, WireType.LengthDelimited).string(message.playFabId);
+        /* google.protobuf.Struct authChain = 7; */
+        if (message.authChain)
+            Struct.internalBinaryWrite(message.authChain, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
