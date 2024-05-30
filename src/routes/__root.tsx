@@ -5,7 +5,6 @@ import {ThemeProvider} from "@/components/theme-provider.tsx";
 import {Toaster} from "@/components/ui/sonner.tsx";
 import {TailwindIndicator} from "@/components/tailwind-indicator.tsx";
 import {lazy, Suspense} from "react";
-import {ScrollArea} from "@/components/ui/scroll-area.tsx";
 
 const TanStackRouterDevtoolsLazy = lazy(() =>
     // Lazy load in development
@@ -31,11 +30,9 @@ export const Route = createRootRoute({
                 enableSystem
                 disableTransitionOnChange
             >
-                <ScrollArea className="h-screen w-screen rounded-md border">
-                    <main vaul-drawer-wrapper="" className="min-h-screen w-screen">
-                        <Outlet/>
-                    </main>
-                </ScrollArea>
+                <main vaul-drawer-wrapper="" className="min-h-screen w-screen">
+                    <Outlet/>
+                </main>
                 <Toaster richColors/>
             </ThemeProvider>
             <TailwindIndicator/>

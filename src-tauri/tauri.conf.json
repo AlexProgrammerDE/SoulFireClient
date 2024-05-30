@@ -9,7 +9,7 @@
   },
   "package": {
     "productName": "soulfire",
-    "version": "0.1.0"
+    "version": "1.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -86,11 +86,8 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "SoulFire",
         "width": 800,
-        "center": true,
-        "decorations": false,
-        "transparent": true
+        "center": true
       }
     ]
   }

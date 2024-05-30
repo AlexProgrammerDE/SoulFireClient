@@ -26,6 +26,12 @@ fn main() {
             }
             _ => {}
         })
+        .setup(|app| {
+            let main_window = app.get_window("main").unwrap();
+            let app_version = &app.package_info().version;
+            let _ = main_window.set_title(format!("SoulFireClient {app_version}").as_str());
+            Ok(())
+        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
