@@ -30,7 +30,7 @@ export const Route = createRootRoute({
                 enableSystem
                 disableTransitionOnChange
             >
-                <main vaul-drawer-wrapper="" className="min-h-screen w-screen">
+                <main vaul-drawer-wrapper="" className="min-h-screen w-screen flex">
                     <Outlet/>
                 </main>
                 <Toaster richColors/>

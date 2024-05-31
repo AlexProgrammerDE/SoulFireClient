@@ -7,6 +7,7 @@ import {ClientInfoContext} from "@/components/providers/client-info-context.tsx"
 import {DashboardMenuHeader} from "@/components/dashboard-menu-header.tsx";
 import {ProfileContext} from "@/components/providers/profile-context";
 import {DEFAULT_PROFILE} from "@/lib/types.ts";
+import {Button} from "@/components/ui/button.tsx";
 
 const isAuthenticated = () => {
     return localStorage.getItem("server-address") !== null && localStorage.getItem("server-token") !== null
@@ -48,29 +49,49 @@ export const Route = createFileRoute('/dashboard/_layout')({
             clientData: result.response
         }
     },
+    errorComponent: ({error}) => (
+        <div className="m-auto flex flex-col gap-2">
+            <h1 className="text-2xl font-bold">Error</h1>
+            <p className="text-red-500">
+                {error instanceof Error ? error.message : "An error occurred"}
+            </p>
+            <Button className="w-fit" onClick={() => {
+                localStorage.removeItem("server-address")
+                localStorage.removeItem("server-token")
+                window.location.reload()
+            }}>
+                Back to login
+            </Button>
+        </div>
+    ),
     pendingComponent: () => (
         <div className="w-full h-full flex">
-            Loading...
+            Connecting...
         </div>
     ),
     component: ClientLayout,
 })
 
 function ClientLayout() {
-    const {transport, clientData} = Route.useLoaderData()
+    try {
+        const {transport, clientData} = Route.useLoaderData()
+        return (
+            <div className="min-h-screen w-screen container">
+                <ServerConnectionContext.Provider value={transport}>
+                    <ClientInfoContext.Provider value={clientData}>
+                        <LogsProvider>
+                            <ProfileContext.Provider value={DEFAULT_PROFILE}>
+                                <DashboardMenuHeader/>
+                                <Outlet/>
+                            </ProfileContext.Provider>
+                        </LogsProvider>
+                    </ClientInfoContext.Provider>
+                </ServerConnectionContext.Provider>
+            </div>
+        );
+    } catch(e) {
+        console.error(e)
+        return <div>Failed to connect to server</div>
+    }
 
-    return (
-        <div className="min-h-screen w-screen container">
-            <DashboardMenuHeader/>
-            <ServerConnectionContext.Provider value={transport}>
-                <ClientInfoContext.Provider value={clientData}>
-                    <LogsProvider>
-                        <ProfileContext.Provider value={DEFAULT_PROFILE}>
-                            <Outlet/>
-                        </ProfileContext.Provider>
-                    </LogsProvider>
-                </ClientInfoContext.Provider>
-            </ServerConnectionContext.Provider>
-        </div>
-    );
 }

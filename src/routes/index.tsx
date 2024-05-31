@@ -118,7 +118,7 @@ const LoginForm = () => {
                             </Button>
                             {
                                 !isIntegratedServerAvailable ? (
-                                    <p className="text-xs text-gray-500">Integrated server is not available in this platform.</p>
+                                    <p className="text-xs text-gray-500">Integrated server is not available on this platform.</p>
                                 ) : null
                             }
                         </div>
