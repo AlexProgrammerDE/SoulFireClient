@@ -48,8 +48,8 @@ importers:
         specifier: ^1.5.3
         version: 1.5.3
       '@xterm/addon-fit':
-        specifier: ^0.9.0
-        version: 0.9.0(@xterm/xterm@5.4.0)
+        specifier: ^0.10.0
+        version: 0.10.0(@xterm/xterm@5.4.0)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -1122,8 +1122,8 @@ packages:
     peerDependencies:
       vite: ^4 || ^5
 
-  '@xterm/addon-fit@0.9.0':
-    resolution: {integrity: sha512-hDlPPbTVPYyvwXu/asW8HbJkI/2RMi0cMaJnBZYVeJB0SWP2NeESMCNr+I7CvBlyI0sAxpxOg8Wk4OMkxBz9WA==}
+  '@xterm/addon-fit@0.10.0':
+    resolution: {integrity: sha512-UFYkDm4HUahf2lnEyHvio51TNGiLK66mqP2JoATy7hRZeXaGMRDr00JiSF7m63vR5WKATF605yEggJKsw0JpMQ==}
     peerDependencies:
       '@xterm/xterm': ^5.0.0
 
@@ -3481,7 +3481,7 @@ snapshots:
     transitivePeerDependencies:
       - '@swc/helpers'
 
-  '@xterm/addon-fit@0.9.0(@xterm/xterm@5.4.0)':
+  '@xterm/addon-fit@0.10.0(@xterm/xterm@5.4.0)':
     dependencies:
       '@xterm/xterm': 5.4.0
 
