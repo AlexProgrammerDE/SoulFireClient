@@ -53,20 +53,13 @@ async fn run_integrated_server(app_handle: AppHandle) -> String {
         send_log(&app_handle, "Extracting JVM...");
         let decompressed = flate2::read::GzDecoder::new(&content[..]);
         let mut archive = tar::Archive::new(decompressed);
-        archive.unpack(&jvm_dir).unwrap();
-
-        send_log(&app_handle, "Fixing up data...");
-        // Move all files from jdk_dir_name to jvm_dir
-        let jdk_dir = &jvm_dir.join(jdk_dir_name);
-        for entry in std::fs::read_dir(jdk_dir).unwrap() {
-            let entry = entry.unwrap();
-            let file_name = entry.file_name();
-            let new_path = jvm_dir.join(file_name);
-            std::fs::rename(entry.path(), new_path).unwrap();
+        for entry in archive.entries().unwrap() {
+            let mut entry = entry.unwrap();
+            let path = entry.path().unwrap();
+            let path = path.strip_prefix(&jdk_dir_name).unwrap();
+            let path = jvm_dir.join(path);
+            entry.unpack(path).unwrap();
         }
-
-        // Delete jdk_dir_name
-        std::fs::remove_dir_all(jdk_dir).unwrap();
 
         send_log(&app_handle, "Downloaded JVM");
     } else {
