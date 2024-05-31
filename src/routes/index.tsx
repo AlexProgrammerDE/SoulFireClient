@@ -18,6 +18,7 @@ import {useEffect, useState} from "react";
 import {LaptopMinimalIcon, LoaderCircleIcon, ServerIcon} from "lucide-react";
 import {isTauri} from "@/lib/utils.ts";
 import {invoke} from "@tauri-apps/api";
+import {listen} from "@tauri-apps/api/event";
 
 export const Route = createFileRoute('/')({
     component: Index,
@@ -53,6 +54,8 @@ const LoginForm = () => {
         },
     })
     const [loginType, setLoginType] = useState<LoginType | null>(null)
+    const [latestLog, setLatestLog] = useState<string>("Preparing to start integrated server...")
+    const [integratedServerLoading, setIntegratedServerLoading] = useState(false)
     const isIntegratedServerAvailable = isTauri()
 
     function redirectWithCredentials(address: string, token: string) {
@@ -71,21 +74,19 @@ const LoginForm = () => {
 
     // Hook for loading the integrated server
     useEffect(() => {
-        if (loginType === "INTEGRATED") {
-            const listener = (event: Event) => {
-                console.log(event)
-            }
-            window.addEventListener("integrated-server-start-log", listener)
-            invoke("run_integrated_server").then(path => {
-                console.log("Server started")
-                console.log(path)
-            }).catch(err => {
-                console.error(err)
+        if (loginType === "INTEGRATED" && !integratedServerLoading) {
+            setIntegratedServerLoading(true)
+            void listen('integrated-server-start-log', (event) => {
+                setLatestLog(event.payload as string)
             })
+            invoke("run_integrated_server").then(payload => {
+                const payloadString = payload as string
+                const split = payloadString.split("\n")
 
-            return () => window.removeEventListener("integrated-server-start-log", listener)
+                redirectWithCredentials(split[0], split[1])
+            })
         }
-    }, [loginType])
+    }, [loginType, integratedServerLoading, latestLog])
 
     return (
         <Card className="w-full max-w-[450px] m-auto border-none">
@@ -98,7 +99,7 @@ const LoginForm = () => {
                 }
                 {
                     "INTEGRATED" === loginType ? (
-                        <CardDescription>Starting the integrated server...</CardDescription>
+                        <CardDescription>{latestLog}</CardDescription>
                     ) : null
                 }
                 {
