@@ -20,6 +20,7 @@ fn main() {
         .add_native_item(SystemTrayMenuItem::Separator)
         .add_item(quit);
     tauri::Builder::default()
+        .invoke_handler(tauri::generate_handler![run_integrated_server])
         .system_tray(SystemTray::new().with_menu(tray_menu))
         .on_system_tray_event(|app, event| match event {
             SystemTrayEvent::MenuItemClick { id, .. } => {
