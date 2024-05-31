@@ -63,7 +63,7 @@ const LoginForm = () => {
         localStorage.setItem("server-token", token.trim())
 
         navigate({
-            to: "/dashboard",
+            to: "/",
             replace: true
         }).then()
     }
