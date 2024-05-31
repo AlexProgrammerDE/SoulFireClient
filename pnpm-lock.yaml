@@ -57,8 +57,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.1
       lucide-react:
-        specifier: ^0.358.0
-        version: 0.358.0(react@18.2.0)
+        specifier: ^0.381.0
+        version: 0.381.0(react@18.2.0)
       next-themes:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -1931,8 +1931,8 @@ packages:
     resolution: {integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==}
     engines: {node: '>=10'}
 
-  lucide-react@0.358.0:
-    resolution: {integrity: sha512-rBSptRjZTMBm24zsFhR6pK/NgbT18JegZGKcH4+1H3+UigMSRpeoWLtR/fAwMYwYnlJOZB+y8WpeHne9D6X6Kg==}
+  lucide-react@0.381.0:
+    resolution: {integrity: sha512-cft0ywFfHkGprX5pwKyS9jme/ksh9eYAHSZqFRKN0XGp70kia4uqZOTPB+i+O51cqiJlvGLqzMGWnMHaeJTs3g==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
 
@@ -4528,7 +4528,7 @@ snapshots:
     dependencies:
       yallist: 4.0.0
 
-  lucide-react@0.358.0(react@18.2.0):
+  lucide-react@0.381.0(react@18.2.0):
     dependencies:
       react: 18.2.0
 
