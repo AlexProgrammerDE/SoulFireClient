@@ -53,7 +53,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
         <div className="m-auto flex flex-col gap-2">
             <h1 className="text-2xl font-bold">Error</h1>
             <p className="text-red-500">
-                {error instanceof Error ? error.message : "An error occurred"}
+                {error.message}
             </p>
             <Button className="w-fit" onClick={() => {
                 localStorage.removeItem("server-address")
@@ -73,25 +73,19 @@ export const Route = createFileRoute('/dashboard/_layout')({
 })
 
 function ClientLayout() {
-    try {
-        const {transport, clientData} = Route.useLoaderData()
-        return (
-            <div className="min-h-screen w-screen container">
-                <ServerConnectionContext.Provider value={transport}>
-                    <ClientInfoContext.Provider value={clientData}>
-                        <LogsProvider>
-                            <ProfileContext.Provider value={DEFAULT_PROFILE}>
-                                <DashboardMenuHeader/>
-                                <Outlet/>
-                            </ProfileContext.Provider>
-                        </LogsProvider>
-                    </ClientInfoContext.Provider>
-                </ServerConnectionContext.Provider>
-            </div>
-        );
-    } catch(e) {
-        console.error(e)
-        return <div>Failed to connect to server</div>
-    }
-
+    const {transport, clientData} = Route.useLoaderData()
+    return (
+        <div className="min-h-screen w-screen container">
+            <ServerConnectionContext.Provider value={transport}>
+                <ClientInfoContext.Provider value={clientData}>
+                    <LogsProvider>
+                        <ProfileContext.Provider value={DEFAULT_PROFILE}>
+                            <DashboardMenuHeader/>
+                            <Outlet/>
+                        </ProfileContext.Provider>
+                    </LogsProvider>
+                </ClientInfoContext.Provider>
+            </ServerConnectionContext.Provider>
+        </div>
+    );
 }
