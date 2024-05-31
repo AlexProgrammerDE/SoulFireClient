@@ -76,8 +76,11 @@ const LoginForm = () => {
                 console.log(event)
             }
             window.addEventListener("integrated-server-start-log", listener)
-            invoke("run_integrated_server").then(() => {
+            invoke("run_integrated_server").then(path => {
                 console.log("Server started")
+                console.log(path)
+            }).catch(err => {
+                console.error(err)
             })
 
             return () => window.removeEventListener("integrated-server-start-log", listener)
