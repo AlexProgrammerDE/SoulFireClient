@@ -30,6 +30,8 @@ export const TerminalComponent = () => {
 
         logs.setValue([])
         logs.value = []
+
+        window.addEventListener('resize', () => fitAddon.fit());
     }, [logs])
 
     return (
