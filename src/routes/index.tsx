@@ -14,8 +14,8 @@ import {
 } from "@/components/ui/form.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
-import {isTauri} from "@/lib/utils.ts";
-import {exit} from "@tauri-apps/api/process";
+import {useEffect, useState} from "react";
+import {LaptopMinimalIcon, LoaderCircleIcon, ServerIcon} from "lucide-react";
 
 export const Route = createFileRoute('/')({
     component: Index,
@@ -39,6 +39,8 @@ const formSchema = z.object({
         .max(255, "Token is too long"),
 })
 
+type LoginType = "INTEGRATED" | "REMOTE"
+
 const LoginForm = () => {
     const navigate = useNavigate()
     const form = useForm<z.infer<typeof formSchema>>({
@@ -48,10 +50,12 @@ const LoginForm = () => {
             token: ""
         },
     })
+    const [loginType, setLoginType] = useState<LoginType | null>(null)
+    const isIntegratedServerAvailable = true
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        localStorage.setItem("server-address", values.address.trim())
-        localStorage.setItem("server-token", values.token.trim())
+    function redirectWithCredentials(address: string, token: string) {
+        localStorage.setItem("server-address", address.trim())
+        localStorage.setItem("server-token", token.trim())
 
         navigate({
             to: "/dashboard",
@@ -59,61 +63,117 @@ const LoginForm = () => {
         }).then()
     }
 
+    function onSubmit(values: z.infer<typeof formSchema>) {
+        redirectWithCredentials(values.address, values.token)
+    }
+
+    // Hook for loading the integrated server
+    useEffect(() => {
+        if (loginType === "INTEGRATED") {
+            setTimeout(() => {
+                setLoginType(null)
+            }, 2000)
+        }
+    }, [loginType])
+
     return (
         <Card className="w-full max-w-[450px] m-auto border-none">
             <CardHeader>
                 <CardTitle>Connect to a SoulFire server</CardTitle>
-                <CardDescription>SoulFire requires you to connect to a server for you to control using the client.</CardDescription>
+                {
+                    null === loginType ? (
+                        <CardDescription>Integrated server runs a bundled server on the client. Remote connects to a remote dedicated SoulFire server.</CardDescription>
+                    ) : null
+                }
+                {
+                    "INTEGRATED" === loginType ? (
+                        <CardDescription>Starting the integrated server...</CardDescription>
+                    ) : null
+                }
+                {
+                    "REMOTE" === loginType ? (
+                        <CardDescription>Put in the address and token of the server you want to connect to.</CardDescription>
+                    ) : null
+                }
             </CardHeader>
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <CardContent className="space-y-4">
-                        <FormField
-                            control={form.control}
-                            name="address"
-                            render={({field}) => (
-                                <FormItem>
-                                    <FormLabel>Address</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="http://localhost:38765" {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        Address of the server you want to connect to.
-                                    </FormDescription>
-                                    <FormMessage/>
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="token"
-                            render={({field}) => (
-                                <FormItem>
-                                    <FormLabel>Token</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Secret token" {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        Token to authenticate with the server.
-                                    </FormDescription>
-                                    <FormMessage/>
-                                </FormItem>
-                            )}
-                        />
+            {
+                null === loginType ? (
+                    <CardContent className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-1 w-full">
+                            <Button disabled={!isIntegratedServerAvailable} variant="outline" className="flex gap-2 w-full"
+                                    onClick={() => setLoginType("INTEGRATED")}>
+                                <LaptopMinimalIcon className="w-6 h-6"/>
+                                <p>Use integrated server</p>
+                            </Button>
+                            {
+                                !isIntegratedServerAvailable ? (
+                                    <p className="text-xs text-gray-500">Integrated server is not available in this platform.</p>
+                                ) : null
+                            }
+                        </div>
+                        <Button variant="outline" className="flex gap-2 w-full" onClick={() => setLoginType("REMOTE")}>
+                            <ServerIcon className="w-6 h-6"/>
+                            <p>Connect to remote server</p>
+                        </Button>
                     </CardContent>
-                    <CardFooter className="flex justify-between">
-                        {
-                            isTauri() ? (
+                ) : null
+            }
+            {
+                "INTEGRATED" === loginType ? (
+                    <CardContent className="flex w-full h-32">
+                        <LoaderCircleIcon className="w-12 h-12 animate-spin m-auto"/>
+                    </CardContent>
+                ) : null
+            }
+            {
+                "REMOTE" === loginType ? (
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)}>
+                            <CardContent className="space-y-4">
+                                <FormField
+                                    control={form.control}
+                                    name="address"
+                                    render={({field}) => (
+                                        <FormItem>
+                                            <FormLabel>Address</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="http://localhost:38765" {...field} />
+                                            </FormControl>
+                                            <FormDescription>
+                                                Address of the server you want to connect to.
+                                            </FormDescription>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="token"
+                                    render={({field}) => (
+                                        <FormItem>
+                                            <FormLabel>Token</FormLabel>
+                                            <FormControl>
+                                                <Input placeholder="Secret token" {...field} />
+                                            </FormControl>
+                                            <FormDescription>
+                                                Token to authenticate with the server.
+                                            </FormDescription>
+                                            <FormMessage/>
+                                        </FormItem>
+                                    )}
+                                />
+                            </CardContent>
+                            <CardFooter className="flex justify-between">
                                 <Button variant="outline" onClick={e => {
                                     e.preventDefault()
-                                    exit(0).then(console.log)
-                                }}>Exit</Button>
-                            ) : <div></div> // To prevent the connect-button from being pushed to the left
-                        }
-                        <Button type="submit">Connect</Button>
-                    </CardFooter>
-                </form>
-            </Form>
+                                    setLoginType(null)
+                                }}>Back</Button>
+                                <Button type="submit">Connect</Button>
+                            </CardFooter>
+                        </form>
+                    </Form>
+                ) : null
+            }
         </Card>
     )
 }

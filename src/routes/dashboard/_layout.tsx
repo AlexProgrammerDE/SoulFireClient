@@ -5,6 +5,8 @@ import {GrpcWebFetchTransport} from "@protobuf-ts/grpcweb-transport";
 import {ConfigServiceClient} from "@/generated/com/soulfiremc/grpc/generated/config.client.ts";
 import {ClientInfoContext} from "@/components/providers/client-info-context.tsx";
 import {DashboardMenuHeader} from "@/components/dashboard-menu-header.tsx";
+import {ProfileContext} from "@/components/providers/profile-context";
+import {DEFAULT_PROFILE} from "@/lib/types.ts";
 
 const isAuthenticated = () => {
     return localStorage.getItem("server-address") !== null && localStorage.getItem("server-token") !== null
@@ -37,7 +39,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
         });
 
         const configService = new ConfigServiceClient(transport);
-        const result = await configService.getUIClientData({}, {
+        const result = await configService.getClientData({}, {
             abort: props.abortController.signal
         })
 
@@ -63,7 +65,9 @@ function ClientLayout() {
             <ServerConnectionContext.Provider value={transport}>
                 <ClientInfoContext.Provider value={clientData}>
                     <LogsProvider>
-                        <Outlet/>
+                        <ProfileContext.Provider value={DEFAULT_PROFILE}>
+                            <Outlet/>
+                        </ProfileContext.Provider>
                     </LogsProvider>
                 </ClientInfoContext.Provider>
             </ServerConnectionContext.Provider>
