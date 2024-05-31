@@ -9,6 +9,7 @@ import {
     CredenzaTitle
 } from "./ui/credenza";
 import {Button} from "@/components/ui/button.tsx";
+import {isTauri} from "@/lib/utils.ts";
 
 export function AboutPopup({open, setOpen}: {open: boolean, setOpen: (open: boolean) => void}) {
     return (
@@ -21,8 +22,7 @@ export function AboutPopup({open, setOpen}: {open: boolean, setOpen: (open: bool
                     </CredenzaDescription>
                 </CredenzaHeader>
                 <CredenzaBody>
-                    This component is built using shadcn/ui&apos;s dialog and drawer
-                    component, which is built on top of Vaul.
+                    Tauri: {isTauri() ? "Yes" : "No"}
                 </CredenzaBody>
                 <CredenzaFooter>
                     <CredenzaClose asChild>

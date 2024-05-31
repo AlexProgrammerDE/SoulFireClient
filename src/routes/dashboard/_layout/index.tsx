@@ -22,10 +22,7 @@ export default function Dashboard() {
                 </AlertDescription>
             </Alert>
             <p>
-                Hi! :D This is the dashboard. You are connected!
-            </p>
-            <p>
-                Your username is: {clientInfo?.username}
+                Hi! :D This is the dashboard. You are connected, {clientInfo?.username}!
             </p>
             <div className="block">
                 <TerminalComponent/>
