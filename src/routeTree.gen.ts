@@ -48,18 +48,30 @@ const DashboardLayoutIndexRoute = DashboardLayoutIndexImport.update({
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
     '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardImport
       parentRoute: typeof rootRoute
     }
     '/dashboard/_layout': {
+      id: '/dashboard/_layout'
+      path: '/dashboard'
+      fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardLayoutImport
       parentRoute: typeof DashboardRoute
     }
     '/dashboard/_layout/': {
+      id: '/dashboard/_layout/'
+      path: '/'
+      fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardLayoutIndexImport
       parentRoute: typeof DashboardLayoutImport
     }
@@ -68,11 +80,47 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren([
+export const routeTree = rootRoute.addChildren({
   IndexRoute,
-  DashboardRoute.addChildren([
-    DashboardLayoutRoute.addChildren([DashboardLayoutIndexRoute]),
-  ]),
-])
+  DashboardRoute: DashboardRoute.addChildren({
+    DashboardLayoutRoute: DashboardLayoutRoute.addChildren({
+      DashboardLayoutIndexRoute,
+    }),
+  }),
+})
 
 /* prettier-ignore-end */
+
+/* ROUTE_MANIFEST_START
+{
+  "routes": {
+    "__root__": {
+      "filePath": "__root.tsx",
+      "children": [
+        "/",
+        "/dashboard"
+      ]
+    },
+    "/": {
+      "filePath": "index.tsx"
+    },
+    "/dashboard": {
+      "filePath": "dashboard",
+      "children": [
+        "/dashboard/_layout"
+      ]
+    },
+    "/dashboard/_layout": {
+      "filePath": "dashboard/_layout.tsx",
+      "parent": "/dashboard",
+      "children": [
+        "/dashboard/_layout/"
+      ]
+    },
+    "/dashboard/_layout/": {
+      "filePath": "dashboard/_layout/index.tsx",
+      "parent": "/dashboard/_layout"
+    }
+  }
+}
+ROUTE_MANIFEST_END */
