@@ -62,10 +62,10 @@ const LoginForm = () => {
         localStorage.setItem("server-address", address.trim())
         localStorage.setItem("server-token", token.trim())
 
-        navigate({
-            to: "/",
+        void navigate({
+            to: "/dashboard",
             replace: true
-        }).then()
+        })
     }
 
     function onSubmit(values: z.infer<typeof formSchema>) {

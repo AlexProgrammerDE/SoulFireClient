@@ -1,5 +1,5 @@
 import {ServerConnectionContext} from "@/components/providers/server-context.tsx";
-import {createFileRoute, Outlet, redirect} from "@tanstack/react-router";
+import {createFileRoute, Outlet, redirect, useNavigate} from "@tanstack/react-router";
 import {LogsProvider} from "@/components/providers/logs-provider";
 import {GrpcWebFetchTransport} from "@protobuf-ts/grpcweb-transport";
 import {ConfigServiceClient} from "@/generated/com/soulfiremc/grpc/generated/config.client.ts";
@@ -49,7 +49,19 @@ export const Route = createFileRoute('/dashboard/_layout')({
             clientData: result.response
         }
     },
-    errorComponent: ({error}) => (
+    errorComponent: ErrorComponent,
+    pendingComponent: () => (
+        <div className="w-full h-full flex">
+            Connecting...
+        </div>
+    ),
+    component: ClientLayout,
+})
+
+function ErrorComponent({error}: {error: Error}) {
+    const navigate = useNavigate()
+
+    return (
         <div className="m-auto flex flex-col gap-2">
             <h1 className="text-2xl font-bold">Error</h1>
             <p className="text-red-500">
@@ -58,19 +70,17 @@ export const Route = createFileRoute('/dashboard/_layout')({
             <Button className="w-fit" onClick={() => {
                 localStorage.removeItem("server-address")
                 localStorage.removeItem("server-token")
-                window.location.reload()
+
+                void navigate({
+                    to: "/",
+                    replace: true
+                })
             }}>
                 Back to login
             </Button>
         </div>
-    ),
-    pendingComponent: () => (
-        <div className="w-full h-full flex">
-            Connecting...
-        </div>
-    ),
-    component: ClientLayout,
-})
+    )
+}
 
 function ClientLayout() {
     const {transport, clientData} = Route.useLoaderData()
