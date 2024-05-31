@@ -1,7 +1,16 @@
 // Prevents an additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+use std::env;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
+
+#[tauri::command]
+async fn run_integrated_server(window: tauri::Window, app_handle: tauri::AppHandle) -> String {
+    let app_local_data_dir = app_handle.path_resolver().app_local_data_dir();
+    window.emit("integrated-server-start-log", "Downloading jvm...").expect("Failed to emit event");
+
+    app_local_data_dir.unwrap().to_string_lossy().to_string()
+}
 
 fn main() {
     let open = CustomMenuItem::new("open".to_string(), "Open SoulFire");

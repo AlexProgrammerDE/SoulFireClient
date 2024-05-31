@@ -16,6 +16,8 @@ import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {useEffect, useState} from "react";
 import {LaptopMinimalIcon, LoaderCircleIcon, ServerIcon} from "lucide-react";
+import {isTauri} from "@/lib/utils.ts";
+import {invoke} from "@tauri-apps/api";
 
 export const Route = createFileRoute('/')({
     component: Index,
@@ -51,7 +53,7 @@ const LoginForm = () => {
         },
     })
     const [loginType, setLoginType] = useState<LoginType | null>(null)
-    const isIntegratedServerAvailable = true
+    const isIntegratedServerAvailable = isTauri()
 
     function redirectWithCredentials(address: string, token: string) {
         localStorage.setItem("server-address", address.trim())
@@ -70,9 +72,15 @@ const LoginForm = () => {
     // Hook for loading the integrated server
     useEffect(() => {
         if (loginType === "INTEGRATED") {
-            setTimeout(() => {
-                setLoginType(null)
-            }, 2000)
+            const listener = (event: Event) => {
+                console.log(event)
+            }
+            window.addEventListener("integrated-server-start-log", listener)
+            invoke("run_integrated_server").then(() => {
+                console.log("Server started")
+            })
+
+            return () => window.removeEventListener("integrated-server-start-log", listener)
         }
     }, [loginType])
 
