@@ -67,13 +67,12 @@
 }
 
 @layer base {
-  html, body, #app {
-    clip-path: inset(0 0 0 0 round 1% 1% 1% 1%);
-    @apply max-h-screen h-screen w-screen rounded-lg;
+  html, body {
+    @apply max-h-screen h-screen w-screen;
   }
   body {
     font-family: 'Geist Variable', sans-serif;
-    @apply bg-background text-foreground antialiased;
+    @apply bg-background text-foreground antialiased overflow-hidden;
   }
   * {
     @apply border-border;
