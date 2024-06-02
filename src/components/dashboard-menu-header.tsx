@@ -18,7 +18,7 @@ export const DashboardMenuHeader = () => {
 
     return (
         <>
-            <Menubar data-tauri-drag-region className="my-4">
+            <Menubar data-tauri-drag-region className="rounded-none">
                 <MenubarMenu>
                     <MenubarTrigger>File</MenubarTrigger>
                     <MenubarContent>

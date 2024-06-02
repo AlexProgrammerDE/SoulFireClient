@@ -85,13 +85,15 @@ function ErrorComponent({error}: {error: Error}) {
 function ClientLayout() {
     const {transport, clientData} = Route.useLoaderData()
     return (
-        <div className="min-h-screen w-screen container">
+        <div className="h-screen w-screen">
             <ServerConnectionContext.Provider value={transport}>
                 <ClientInfoContext.Provider value={clientData}>
                     <LogsProvider>
                         <ProfileContext.Provider value={DEFAULT_PROFILE}>
                             <DashboardMenuHeader/>
-                            <Outlet/>
+                            <div className="p-4">
+                                <Outlet/>
+                            </div>
                         </ProfileContext.Provider>
                     </LogsProvider>
                 </ClientInfoContext.Provider>
