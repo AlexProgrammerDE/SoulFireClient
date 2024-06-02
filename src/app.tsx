@@ -5,10 +5,10 @@ import {RouterProvider, createRouter, createHashHistory} from '@tanstack/react-r
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 
-const memoryHistory = createHashHistory()
+const hashHistory = createHashHistory()
 
 // Create a new router instance
-const router = createRouter({ routeTree, history: memoryHistory })
+const router = createRouter({ routeTree, history: hashHistory })
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {
