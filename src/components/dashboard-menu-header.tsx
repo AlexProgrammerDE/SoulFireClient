@@ -19,6 +19,9 @@ import {useContext, useState} from "react";
 import {useNavigate} from "@tanstack/react-router";
 import {ProfileContext} from "@/components/providers/profile-context.tsx";
 import {saveAs} from 'file-saver';
+import {createDir, readTextFile, writeTextFile} from "@tauri-apps/api/fs";
+import {open, save} from "@tauri-apps/api/dialog";
+import {appConfigDir, resolve} from "@tauri-apps/api/path";
 
 function data2blob(data: string) {
   const bytes = new Array(data.length);
@@ -46,26 +49,73 @@ export const DashboardMenuHeader = () => {
           <MenubarMenu>
             <MenubarTrigger>File</MenubarTrigger>
             <MenubarContent>
-              <input id="profile-load-input" type="file"
-                     accept=".json"
-                     className="hidden" onInput={e => {
-                const file = (e.target as HTMLInputElement).files?.item(0)
-                if (!file) return
+              {
+                  !isTauri() && (
+                      <input id="profile-load-input" type="file"
+                             accept=".json"
+                             className="hidden" onInput={e => {
+                        const file = (e.target as HTMLInputElement).files?.item(0)
+                        if (!file) return
 
-                const reader = new FileReader()
-                reader.onload = () => {
-                  const data = reader.result as string
-                  profile.setProfile(JSON.parse(data))
+                        const reader = new FileReader()
+                        reader.onload = () => {
+                          const data = reader.result as string
+                          profile.setProfile(JSON.parse(data))
+                        }
+                        reader.readAsText(file)
+                      }}/>
+                  )
+              }
+              <MenubarItem onClick={async () => {
+                if (isTauri()) {
+                  const profileDir = await resolve(await appConfigDir(), 'profile')
+                  await createDir(profileDir, {recursive: true})
+
+                  const selected = await open({
+                    title: "Load Profile",
+                    filters: [{
+                      name: 'SoulFire JSON Profile',
+                      extensions: ['json']
+                    }],
+                    defaultPath: await resolve(await appConfigDir(), 'profile')
+                  });
+
+                  if (selected) {
+                    const single = Array.isArray(selected) ? selected[0] : selected
+                    const data = await readTextFile(single)
+                    profile.setProfile(JSON.parse(data))
+                  }
+                } else {
+                  document.getElementById("profile-load-input")?.click()
                 }
-                reader.readAsText(file)
-              }}/>
-              <MenubarItem onClick={() => {
-                document.getElementById("profile-load-input")?.click()
               }}>
                 Load Profile
               </MenubarItem>
-              <MenubarItem onClick={() => {
-                saveAs(data2blob(JSON.stringify(profile)), "profile.json")
+              <MenubarItem onClick={async () => {
+                if (isTauri()) {
+                  const profileDir = await resolve(await appConfigDir(), 'profile')
+                  await createDir(profileDir, {recursive: true})
+
+                  const selected = await save({
+                    title: "Save Profile",
+                    filters: [{
+                      name: 'SoulFire JSON Profile',
+                      extensions: ['json']
+                    }],
+                    defaultPath: profileDir
+                  });
+
+                  if (selected) {
+                    let single = Array.isArray(selected) ? selected[0] : selected
+                    if (!single.endsWith(".json")) {
+                      single += ".json"
+                    }
+
+                    await writeTextFile(single, JSON.stringify(profile))
+                  }
+                } else {
+                  saveAs(data2blob(JSON.stringify(profile)), "profile.json")
+                }
               }}>
                 Save Profile
               </MenubarItem>

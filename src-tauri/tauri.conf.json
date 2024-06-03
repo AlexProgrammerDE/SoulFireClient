@@ -17,6 +17,13 @@
       "process": {
         "all": true
       },
+      "path": {
+        "all": true
+      },
+      "fs": {
+        "all": true,
+        "scope": ["$APPCONFIG/profile/*", "$APPCONFIG/profile"]
+      },
       "clipboard": {
         "all": true
       },
