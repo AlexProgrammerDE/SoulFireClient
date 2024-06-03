@@ -1,3 +1,6 @@
+export const LOCAL_STORAGE_SERVER_ADDRESS_KEY = "server-address"
+export const LOCAL_STORAGE_SERVER_TOKEN_KEY = "server-token"
+
 export const DEFAULT_PROFILE: ProfileRoot = {
     settings: {},
     accounts: [],

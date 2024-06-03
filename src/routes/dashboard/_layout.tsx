@@ -95,9 +95,13 @@ function ClientLayout() {
         <ServerConnectionContext.Provider value={transport}>
           <ClientInfoContext.Provider value={clientData}>
             <DashboardMenuHeader/>
-            <div className="flex-grow grid grid-cols-1 md:grid-cols-2">
-              <Outlet/>
-              <TerminalComponent/>
+            <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex p-4">
+                <Outlet/>
+              </div>
+              <div>
+                Terminal
+              </div>
             </div>
           </ClientInfoContext.Provider>
         </ServerConnectionContext.Provider>
