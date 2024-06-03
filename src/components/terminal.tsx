@@ -1,5 +1,5 @@
 import {useContext, useEffect, useRef, useState} from "react";
-import "xterm/css/xterm.css";
+import "@xterm/xterm/css/xterm.css";
 import {FitAddon} from '@xterm/addon-fit';
 import {LogsServiceClient} from "@/generated/com/soulfiremc/grpc/generated/logs.client.ts";
 import {ServerConnectionContext} from "./providers/server-context";
