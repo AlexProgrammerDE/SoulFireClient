@@ -50,8 +50,8 @@ const LoginForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      address: "",
-      token: ""
+      address: localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY) ?? "",
+      token: localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY) ?? ""
     },
   })
   const [loginType, setLoginType] = useState<LoginType | null>(null)

@@ -16,14 +16,22 @@ import {useTheme} from "next-themes";
 import {isTauri} from "@/lib/utils.ts";
 import {exit} from "@tauri-apps/api/process";
 import {AboutPopup} from "@/components/about-popup.tsx";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {useNavigate} from "@tanstack/react-router";
-import {LOCAL_STORAGE_SERVER_ADDRESS_KEY, LOCAL_STORAGE_SERVER_TOKEN_KEY} from "@/lib/types.ts";
+import {ProfileContext} from "@/components/providers/profile-context.tsx";
 
 export const DashboardMenuHeader = () => {
   const {theme, setTheme} = useTheme()
   const [aboutOpen, setAboutOpen] = useState(false)
   const navigate = useNavigate()
+  const profile = useContext(ProfileContext)
+
+  const loadProfile = async () => {
+  }
+
+  const saveProfile = async () => {
+
+  }
 
   return (
       <>
@@ -36,17 +44,14 @@ export const DashboardMenuHeader = () => {
           <MenubarMenu>
             <MenubarTrigger>File</MenubarTrigger>
             <MenubarContent>
-              <MenubarItem>
-                Load Profile <MenubarShortcut>⌘L</MenubarShortcut>
+              <MenubarItem onClick={loadProfile}>
+                Load Profile
               </MenubarItem>
-              <MenubarItem>
-                Save Profile <MenubarShortcut>⌘S</MenubarShortcut>
+              <MenubarItem onClick={saveProfile}>
+                Save Profile
               </MenubarItem>
               <MenubarSeparator/>
               <MenubarItem onClick={() => {
-                localStorage.removeItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY)
-                localStorage.removeItem(LOCAL_STORAGE_SERVER_TOKEN_KEY)
-
                 void navigate({
                   to: "/",
                   replace: true

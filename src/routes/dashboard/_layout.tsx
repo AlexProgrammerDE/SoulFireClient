@@ -71,9 +71,6 @@ function ErrorComponent({error}: { error: Error }) {
           {error.message}
         </p>
         <Button className="w-fit" onClick={() => {
-          localStorage.removeItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY)
-          localStorage.removeItem(LOCAL_STORAGE_SERVER_TOKEN_KEY)
-
           void navigate({
             to: "/",
             replace: true
