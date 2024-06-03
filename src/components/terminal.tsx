@@ -1,4 +1,4 @@
-import {useContext, useEffect, useMemo, useRef} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import "xterm/css/xterm.css";
 import {FitAddon} from '@xterm/addon-fit';
 import {LogsServiceClient} from "@/generated/com/soulfiremc/grpc/generated/logs.client.ts";
@@ -17,20 +17,38 @@ const terminalInitOnlyProps: ITerminalInitOnlyOptions = {
 
 export const TerminalComponent = () => {
   const terminalRef = useRef<HTMLDivElement>(null);
-  const terminal = useMemo(() => new Terminal({ ...terminalProps, ...terminalInitOnlyProps }), []);
-  const fitAddon = useMemo(() => new FitAddon(), []);
+  const [terminal, setTerminal] = useState<Terminal | null>(null);
   const serverConnection = useContext(ServerConnectionContext)
 
   useEffect(() => {
-    if (terminalRef.current && !terminal.element) {
-      terminal.loadAddon(fitAddon);
+    const terminal = new Terminal({...terminalProps, ...terminalInitOnlyProps});
 
-      terminal.open(terminalRef.current);
-      fitAddon.fit();
-    }
-  }, [fitAddon, terminal, terminalRef]);
+    setTerminal(terminal);
+    return () => {
+      if (terminal) {
+        terminal.dispose();
+      }
+    };
+  }, []);
 
   useEffect(() => {
+    if (!terminalRef.current || !terminal) {
+      return
+    }
+
+    const fitAddon = new FitAddon();
+    terminal.loadAddon(fitAddon);
+
+    terminal.open(terminalRef.current);
+    fitAddon.fit();
+  }, [terminal, terminalRef]);
+
+  useEffect(() => {
+    if (!terminalRef.current || !terminal) {
+      return
+    }
+
+    terminal.clear();
     const abortController = new AbortController();
     const logsService = new LogsServiceClient(serverConnection);
     logsService.subscribe({
@@ -38,11 +56,15 @@ export const TerminalComponent = () => {
     }, {
       abort: abortController.signal
     }).responses.onMessage((message) => {
-      terminal.write(message.message + "\r\n")
+      for (const line of message.message.split("\n")) {
+        terminal.write(line + "\r\n")
+      }
     })
 
-    return () => abortController.abort();
-  }, [serverConnection, terminal])
+    return () => {
+      abortController.abort();
+    }
+  }, [serverConnection, terminal, terminalRef]);
 
   return (
       <div className="flex-grow" ref={terminalRef}/>
