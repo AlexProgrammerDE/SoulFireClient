@@ -1,7 +1,7 @@
 import {createRootRoute, Outlet} from '@tanstack/react-router'
 import 'non.geist';
 import "../index.css";
-import {ThemeProvider} from "@/components/theme-provider.tsx";
+import {ThemeProvider} from "@/components/providers/theme-provider.tsx";
 import {Toaster} from "@/components/ui/sonner.tsx";
 import {TailwindIndicator} from "@/components/tailwind-indicator.tsx";
 

@@ -18,6 +18,7 @@ import {exit} from "@tauri-apps/api/process";
 import {AboutPopup} from "@/components/about-popup.tsx";
 import {useState} from "react";
 import {useNavigate} from "@tanstack/react-router";
+import {LOCAL_STORAGE_SERVER_ADDRESS_KEY, LOCAL_STORAGE_SERVER_TOKEN_KEY} from "@/lib/types.ts";
 
 export const DashboardMenuHeader = () => {
   const {theme, setTheme} = useTheme()
@@ -43,8 +44,8 @@ export const DashboardMenuHeader = () => {
               </MenubarItem>
               <MenubarSeparator/>
               <MenubarItem onClick={() => {
-                localStorage.removeItem("server-address")
-                localStorage.removeItem("server-token")
+                localStorage.removeItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY)
+                localStorage.removeItem(LOCAL_STORAGE_SERVER_TOKEN_KEY)
 
                 void navigate({
                   to: "/",

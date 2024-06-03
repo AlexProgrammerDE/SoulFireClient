@@ -1,5 +1,4 @@
 import {
-  ClientPluginSettingEntry,
   ClientPluginSettingEntryMinMaxPair, ClientPluginSettingEntrySingle,
   ClientPluginSettingsPage
 } from "@/generated/com/soulfiremc/grpc/generated/config.ts";

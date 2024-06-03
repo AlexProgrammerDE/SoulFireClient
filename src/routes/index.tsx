@@ -19,6 +19,7 @@ import {LaptopMinimalIcon, LoaderCircleIcon, ServerIcon} from "lucide-react";
 import {isTauri} from "@/lib/utils.ts";
 import {invoke} from "@tauri-apps/api";
 import {listen} from "@tauri-apps/api/event";
+import {LOCAL_STORAGE_SERVER_ADDRESS_KEY, LOCAL_STORAGE_SERVER_TOKEN_KEY} from "@/lib/types.ts";
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -59,8 +60,8 @@ const LoginForm = () => {
   const isIntegratedServerAvailable = isTauri()
 
   function redirectWithCredentials(address: string, token: string) {
-    localStorage.setItem("server-address", address.trim())
-    localStorage.setItem("server-token", token.trim())
+    localStorage.setItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY, address.trim())
+    localStorage.setItem(LOCAL_STORAGE_SERVER_TOKEN_KEY, token.trim())
 
     void navigate({
       to: "/dashboard",

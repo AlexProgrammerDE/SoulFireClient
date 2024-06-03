@@ -1,5 +1,6 @@
 import {createFileRoute, Link} from "@tanstack/react-router";
 import {Button} from "@/components/ui/button.tsx";
+import ControlsMenu from "@/components/controls-menu.tsx";
 
 export const Route = createFileRoute('/dashboard/_layout/')({
   component: Dashboard,
@@ -35,6 +36,7 @@ export default function Dashboard() {
             Dev Settings
           </Link>
         </Button>
+        <ControlsMenu/>
       </div>
   );
 }

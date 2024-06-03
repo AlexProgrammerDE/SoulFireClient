@@ -1,3 +1,5 @@
+import {AttackStartRequest} from "@/generated/com/soulfiremc/grpc/generated/attack.ts";
+
 export const LOCAL_STORAGE_SERVER_ADDRESS_KEY = "server-address"
 export const LOCAL_STORAGE_SERVER_TOKEN_KEY = "server-token"
 
@@ -28,4 +30,12 @@ export type ProfileProxy = {
     address: string,
     username?: string
     password?: string
+}
+
+export function convertToProto(data: ProfileRoot): AttackStartRequest {
+    return {
+        settings: [],
+        accounts: [],
+        proxies: []
+    }
 }
