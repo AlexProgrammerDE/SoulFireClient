@@ -41,6 +41,15 @@ export const TerminalComponent = () => {
 
     terminal.open(terminalRef.current);
     fitAddon.fit();
+
+    const resizeListener = () => {
+        fitAddon.fit();
+    }
+
+    window.addEventListener('resize', resizeListener);
+    return () => {
+        window.removeEventListener('resize', resizeListener);
+    }
   }, [terminal, terminalRef]);
 
   useEffect(() => {
