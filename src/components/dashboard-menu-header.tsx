@@ -185,10 +185,6 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
           <MenubarMenu>
             <MenubarTrigger>Help</MenubarTrigger>
             <MenubarContent>
-              <MenubarItem>
-                Save logs
-              </MenubarItem>
-              <MenubarSeparator/>
               <MenubarItem onClick={() => setAboutOpen(true)}>About</MenubarItem>
             </MenubarContent>
           </MenubarMenu>
