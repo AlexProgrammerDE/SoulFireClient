@@ -167,7 +167,7 @@ const LoginForm = () => {
                             <FormItem>
                               <FormLabel>Token</FormLabel>
                               <FormControl>
-                                <Input placeholder="Secret token" {...field} />
+                                <Input type="password" placeholder="Secret token" {...field} />
                               </FormControl>
                               <FormDescription>
                                 Token to authenticate with the server.
