@@ -32,7 +32,7 @@ function data2blob(data: string) {
   return new Blob([new Uint8Array(bytes)]);
 }
 
-export const DashboardMenuHeader = () => {
+export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: string[] }) => {
   const {theme, setTheme} = useTheme()
   const [aboutOpen, setAboutOpen] = useState(false)
   const navigate = useNavigate()
@@ -50,7 +50,52 @@ export const DashboardMenuHeader = () => {
             <MenubarTrigger>File</MenubarTrigger>
             <MenubarContent>
               {
-                  !isTauri() && (
+                isTauri() ? (
+                    <MenubarSub>
+                      <MenubarSubTrigger>Load Profile</MenubarSubTrigger>
+                      <MenubarSubContent>
+                        {
+                            availableProfiles.length > 0 && (
+                                <>
+                                  {
+                                    availableProfiles.map(file => (
+                                        <MenubarItem key={file} onClick={async () => {
+                                          const data = await readTextFile(await resolve(await resolve(await appConfigDir(), 'profile'), file))
+                                          profile.setProfile(JSON.parse(data))
+                                        }}>
+                                          {file}
+                                        </MenubarItem>
+                                    ))
+                                  }
+                                  <MenubarSeparator/>
+                                </>
+                            )
+                        }
+                        <MenubarItem onClick={async () => {
+                          const profileDir = await resolve(await appConfigDir(), 'profile')
+                          await createDir(profileDir, {recursive: true})
+
+                          const selected = await open({
+                            title: "Load Profile",
+                            filters: [{
+                              name: 'SoulFire JSON Profile',
+                              extensions: ['json']
+                            }],
+                            defaultPath: profileDir
+                          });
+
+                          if (selected) {
+                            const single = Array.isArray(selected) ? selected[0] : selected
+                            const data = await readTextFile(single)
+                            profile.setProfile(JSON.parse(data))
+                          }
+                        }}>
+                          Load from file
+                        </MenubarItem>
+                      </MenubarSubContent>
+                    </MenubarSub>
+                ) : (
+                    <>
                       <input id="profile-load-input" type="file"
                              accept=".json"
                              className="hidden" onInput={e => {
@@ -64,33 +109,14 @@ export const DashboardMenuHeader = () => {
                         }
                         reader.readAsText(file)
                       }}/>
-                  )
+                      <MenubarItem onClick={async () => {
+                        document.getElementById("profile-load-input")?.click()
+                      }}>
+                        Load Profile
+                      </MenubarItem>
+                    </>
+                )
               }
-              <MenubarItem onClick={async () => {
-                if (isTauri()) {
-                  const profileDir = await resolve(await appConfigDir(), 'profile')
-                  await createDir(profileDir, {recursive: true})
-
-                  const selected = await open({
-                    title: "Load Profile",
-                    filters: [{
-                      name: 'SoulFire JSON Profile',
-                      extensions: ['json']
-                    }],
-                    defaultPath: await resolve(await appConfigDir(), 'profile')
-                  });
-
-                  if (selected) {
-                    const single = Array.isArray(selected) ? selected[0] : selected
-                    const data = await readTextFile(single)
-                    profile.setProfile(JSON.parse(data))
-                  }
-                } else {
-                  document.getElementById("profile-load-input")?.click()
-                }
-              }}>
-                Load Profile
-              </MenubarItem>
               <MenubarItem onClick={async () => {
                 if (isTauri()) {
                   const profileDir = await resolve(await appConfigDir(), 'profile')

@@ -11,6 +11,9 @@ import {TerminalComponent} from "@/components/terminal.tsx";
 import CommandInput from "@/components/command-input.tsx";
 import ProfileProvider from "@/components/providers/profile-context.tsx";
 import {LOCAL_STORAGE_SERVER_ADDRESS_KEY, LOCAL_STORAGE_SERVER_TOKEN_KEY} from "@/lib/types.ts";
+import {isTauri} from "@/lib/utils.ts";
+import {createDir, readDir} from "@tauri-apps/api/fs";
+import {appConfigDir, resolve} from "@tauri-apps/api/path";
 
 const isAuthenticated = () => {
   return localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY) !== null && localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY) !== null
@@ -47,9 +50,22 @@ export const Route = createFileRoute('/dashboard/_layout')({
       abort: props.abortController.signal
     })
 
+    let availableProfiles: string[] = []
+    if (isTauri()) {
+      const profileDir = await resolve(await resolve(await appConfigDir(), 'profile'))
+      await createDir(profileDir, {recursive: true})
+
+      availableProfiles = (await readDir(profileDir))
+          .filter(file => !file.children)
+          .filter(file => file.name)
+          .map(file => file.name!)
+          .filter(file => file.endsWith('.json'))
+    }
+
     return {
       transport,
-      clientData: result.response
+      clientData: result.response,
+      availableProfiles
     }
   },
   errorComponent: ErrorComponent,
@@ -83,12 +99,12 @@ function ErrorComponent({error}: { error: Error }) {
 }
 
 function ClientLayout() {
-  const {transport, clientData} = Route.useLoaderData()
+  const {transport, clientData, availableProfiles} = Route.useLoaderData()
   const [sentInitial, setSentInitial] = useState(false)
 
   useEffect(() => {
     if (sentInitial) {
-        return
+      return
     }
 
     toast.warning("Experimental Software!", {
@@ -103,7 +119,7 @@ function ClientLayout() {
         <ServerConnectionContext.Provider value={transport}>
           <ClientInfoContext.Provider value={clientData}>
             <ProfileProvider>
-              <DashboardMenuHeader/>
+              <DashboardMenuHeader availableProfiles={availableProfiles}/>
               <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="flex p-4">
                   <Outlet/>
