@@ -1,26 +1,28 @@
 import {
-    Menubar,
-    MenubarContent,
-    MenubarItem,
-    MenubarMenu,
-    MenubarRadioGroup,
-    MenubarRadioItem,
-    MenubarSeparator,
-    MenubarShortcut,
-    MenubarSub,
-    MenubarSubContent,
-    MenubarSubTrigger,
-    MenubarTrigger
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarRadioGroup,
+  MenubarRadioItem,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarSub,
+  MenubarSubContent,
+  MenubarSubTrigger,
+  MenubarTrigger
 } from "@/components/ui/menubar.tsx";
 import {useTheme} from "next-themes";
 import {isTauri} from "@/lib/utils.ts";
 import {exit} from "@tauri-apps/api/process";
 import {AboutPopup} from "@/components/about-popup.tsx";
 import {useState} from "react";
+import {useNavigate} from "@tanstack/react-router";
 
 export const DashboardMenuHeader = () => {
   const {theme, setTheme} = useTheme()
   const [aboutOpen, setAboutOpen] = useState(false)
+  const navigate = useNavigate()
 
   return (
       <>
@@ -39,12 +41,19 @@ export const DashboardMenuHeader = () => {
               <MenubarItem>
                 Save Profile <MenubarShortcut>⌘S</MenubarShortcut>
               </MenubarItem>
+              <MenubarSeparator/>
+              <MenubarItem onClick={() => {
+                localStorage.removeItem("server-address")
+                localStorage.removeItem("server-token")
+
+                void navigate({
+                  to: "/",
+                  replace: true
+                })
+              }}>Log out</MenubarItem>
               {
                   isTauri() && (
-                      <>
-                        <MenubarSeparator/>
-                        <MenubarItem onClick={() => exit(0)}>Exit</MenubarItem>
-                      </>
+                      <MenubarItem onClick={() => exit(0)}>Exit</MenubarItem>
                   )
               }
             </MenubarContent>
