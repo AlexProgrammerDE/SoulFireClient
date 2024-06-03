@@ -2,6 +2,7 @@ import {createFileRoute, Link, notFound} from '@tanstack/react-router'
 import {Button} from "@/components/ui/button.tsx";
 import {useContext} from "react";
 import {ClientInfoContext} from "@/components/providers/client-info-context.tsx";
+import ClientSettingsPageComponent from "@/components/client-settings-page.tsx";
 
 export const Route = createFileRoute('/dashboard/_layout/settings/$namespace')({
   component: SettingsNamespace
@@ -22,7 +23,7 @@ function SettingsNamespace() {
             Back
           </Link>
         </Button>
-        <h1>{namespace}</h1>
+        <ClientSettingsPageComponent data={settingsEntry}/>
       </div>
   )
 }
