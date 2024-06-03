@@ -8,6 +8,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {useEffect} from "react";
 import {toast} from "sonner";
 import {TerminalComponent} from "@/components/terminal.tsx";
+import CommandInput from "@/components/command-input.tsx";
 
 const isAuthenticated = () => {
   return localStorage.getItem("server-address") !== null && localStorage.getItem("server-token") !== null
@@ -99,8 +100,9 @@ function ClientLayout() {
               <div className="flex p-4">
                 <Outlet/>
               </div>
-              <div>
-                Terminal
+              <div className="flex flex-col gap-4 p-4">
+                <TerminalComponent/>
+                <CommandInput/>
               </div>
             </div>
           </ClientInfoContext.Provider>
