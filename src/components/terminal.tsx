@@ -1,40 +1,40 @@
 import {useContext, useEffect} from "react";
-import {LogsContext} from "@/components/providers/logs-provider.tsx";
 import "xterm/css/xterm.css";
 import {Terminal} from "xterm";
-import { FitAddon } from '@xterm/addon-fit';
+import {FitAddon} from '@xterm/addon-fit';
+import {LogsServiceClient} from "@/generated/com/soulfiremc/grpc/generated/logs.client.ts";
+import {ServerConnectionContext} from "./providers/server-context";
 
 let terminal: Terminal;
 export const TerminalComponent = () => {
-    const logs = useContext(LogsContext)
+  const serverConnection = useContext(ServerConnectionContext)
 
-    useEffect(() => {
-        if (terminal !== undefined) {
-            if (logs.value.length === 0) {
-                return
-            }
+  useEffect(() => {
+    terminal = new Terminal();
+    const fitAddon = new FitAddon();
+    terminal.loadAddon(fitAddon);
+    terminal.open(document.getElementById("terminal")!);
+    terminal.focus();
+    fitAddon.fit();
 
-            terminal.write(logs.value.join(""))
-            logs.setValue([])
-            logs.value = []
-            return
-        }
+    window.addEventListener('resize', () => fitAddon.fit());
+  }, [])
 
-        terminal = new Terminal();
-        const fitAddon = new FitAddon();
-        terminal.open(document.getElementById("terminal")!);
-        terminal.write(logs.value.join(""));
-        terminal.loadAddon(fitAddon);
-        terminal.focus();
-        fitAddon.fit();
+  useEffect(() => {
+    const abortController = new AbortController();
+    const logsService = new LogsServiceClient(serverConnection);
+    logsService.subscribe({
+      previous: 300
+    }, {
+      abort: abortController.signal
+    }).responses.onMessage((message) => {
+      terminal.write(message.message + "\r\n")
+    })
 
-        logs.setValue([])
-        logs.value = []
+    return () => abortController.abort();
+  }, [serverConnection])
 
-        window.addEventListener('resize', () => fitAddon.fit());
-    }, [logs])
-
-    return (
-        <div id="terminal"/>
-    )
+  return (
+      <div id="terminal"/>
+  )
 }
