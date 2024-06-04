@@ -89,9 +89,6 @@ importers:
       non.geist:
         specifier: ^1.0.2
         version: 1.0.3
-      parseuri:
-        specifier: ^3.0.2
-        version: 3.0.2
       react:
         specifier: ^18
         version: 18.3.1
@@ -2413,9 +2410,6 @@ packages:
   parent-module@1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}
     engines: {node: '>=6'}
-
-  parseuri@3.0.2:
-    resolution: {integrity: sha512-eNmfF+mj9fyyZFFW9keXPsIscduBQub8oqnXXPYnl6hGs6P0mshf9ArriI9vB6w08GuuzgQnTWRrWWDTeoCLEQ==}
 
   path-exists@4.0.0:
     resolution: {integrity: sha512-ak9Qy5Q7jYb2Wwcey5Fpvg2KoAc/ZIhLSLOSBmRmygPsGwkVVt0fZa0qrtMz+m6tJTAHfZQ8FnmB4MG4LWy7/w==}
@@ -5392,8 +5386,6 @@ snapshots:
   parent-module@1.0.1:
     dependencies:
       callsites: 3.1.0
-
-  parseuri@3.0.2: {}
 
   path-exists@4.0.0: {}
 
