@@ -81,7 +81,7 @@
       "csp": null
     },
     "updater": {
-      "active": false,
+      "active": true,
       "windows": {
         "installMode": "passive"
       },
