@@ -34,7 +34,9 @@ function SettingsNamespace() {
             Back
           </Link>
         </Button>
-        <ClientSettingsPageComponent data={settingsEntry}/>
+        <div className="flex flex-col gap-2">
+          <ClientSettingsPageComponent data={settingsEntry}/>
+        </div>
       </div>
   )
 }
