@@ -88,7 +88,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
     toast.promise(new Promise<number>((resolve, reject) => {
       (async () => {
         try {
-          let count = 0
+          const accountsToAdd: ProfileAccount[] = []
           for (const line of textSplit) {
             const {response: {account}} = await service.login({
               service: accountTypeSelected,
@@ -96,21 +96,20 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
             })
 
             if (account) {
-              profile.setProfile({
-                ...profile.profile,
-                accounts: [...profile.profile.accounts, {
+              accountsToAdd.push({
                   type: account.type,
                   profileId: account.profileId,
                   lastKnownName: account.lastKnownName,
                   accountData: account.accountData
-                }]
-              })
+                })
             }
-
-            count++
           }
 
-          resolve(count)
+          profile.setProfile({
+            ...profile.profile,
+            accounts: [...profile.profile.accounts, ...accountsToAdd]
+          })
+          resolve(accountsToAdd.length)
         } catch (e) {
           reject(e)
         }

@@ -149,7 +149,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
     toast.promise(new Promise<number>((resolve, reject) => {
       (async () => {
         try {
-          let count = 0
+          const proxiesToAdd: ProfileProxy[] = []
           for (const line of textSplit) {
             let proxy: ProfileProxy;
             switch (proxyTypeSelected) {
@@ -163,15 +163,14 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
                 break
             }
 
-            profile.setProfile({
-              ...profile.profile,
-              proxies: [...profile.profile.proxies, proxy]
-            })
-
-            count++
+            proxiesToAdd.push(proxy)
           }
 
-          resolve(count)
+          profile.setProfile({
+            ...profile.profile,
+            proxies: [...profile.profile.proxies, ...proxiesToAdd]
+          })
+          resolve(proxiesToAdd.length)
         } catch (e) {
           reject(e)
         }
