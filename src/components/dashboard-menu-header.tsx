@@ -22,6 +22,7 @@ import {saveAs} from 'file-saver';
 import {createDir, readTextFile, writeTextFile} from "@tauri-apps/api/fs";
 import {open, save} from "@tauri-apps/api/dialog";
 import {appConfigDir, resolve} from "@tauri-apps/api/path";
+import {toast} from "sonner";
 
 function data2blob(data: string) {
   const bytes = new Array(data.length);
@@ -62,6 +63,8 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
                                         <MenubarItem key={file} onClick={async () => {
                                           const data = await readTextFile(await resolve(await resolve(await appConfigDir(), 'profile'), file))
                                           profile.setProfile(JSON.parse(data))
+
+                                          toast.success("Profile loaded")
                                         }}>
                                           {file}
                                         </MenubarItem>
@@ -89,6 +92,8 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
                             const data = await readTextFile(single)
                             profile.setProfile(JSON.parse(data))
                           }
+
+                          toast.success("Profile loaded")
                         }}>
                           Load from file
                         </MenubarItem>
@@ -106,6 +111,8 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
                         reader.onload = () => {
                           const data = reader.result as string
                           profile.setProfile(JSON.parse(data))
+
+                          toast.success("Profile loaded")
                         }
                         reader.readAsText(file)
                       }}/>
@@ -143,15 +150,18 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
                 } else {
                   saveAs(data2blob(data), "profile.json")
                 }
+
+                toast.success("Profile saved")
               }}>
                 Save Profile
               </MenubarItem>
               <MenubarSeparator/>
-              <MenubarItem onClick={() => {
-                void navigate({
+              <MenubarItem onClick={async () => {
+                await navigate({
                   to: "/",
                   replace: true
                 })
+                toast.success("Logged out")
               }}>Log out</MenubarItem>
               {
                   isTauri() && (

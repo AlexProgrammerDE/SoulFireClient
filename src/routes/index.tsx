@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/form.tsx";
 import {Input} from "@/components/ui/input.tsx";
 import {Button} from "@/components/ui/button.tsx";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {LaptopMinimalIcon, LoaderCircleIcon, ServerIcon} from "lucide-react";
 import {isTauri} from "@/lib/utils.ts";
 import {invoke} from "@tauri-apps/api";
@@ -59,18 +59,18 @@ const LoginForm = () => {
   const [integratedServerLoading, setIntegratedServerLoading] = useState(false)
   const isIntegratedServerAvailable = isTauri()
 
-  function redirectWithCredentials(address: string, token: string) {
+  const redirectWithCredentials = useCallback(async (address: string, token: string) => {
     localStorage.setItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY, address.trim())
     localStorage.setItem(LOCAL_STORAGE_SERVER_TOKEN_KEY, token.trim())
 
-    void navigate({
+    await navigate({
       to: "/dashboard",
       replace: true
     })
-  }
+  }, [navigate])
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    redirectWithCredentials(values.address, values.token)
+    void redirectWithCredentials(values.address, values.token)
   }
 
   // Hook for loading the integrated server
@@ -84,10 +84,10 @@ const LoginForm = () => {
         const payloadString = payload as string
         const split = payloadString.split("\n")
 
-        redirectWithCredentials(split[0], split[1])
+        void redirectWithCredentials(split[0], split[1])
       })
     }
-  }, [loginType, integratedServerLoading, latestLog])
+  }, [loginType, integratedServerLoading, latestLog, redirectWithCredentials])
 
   return (
       <Card className="w-full max-w-[450px] m-auto border-none">

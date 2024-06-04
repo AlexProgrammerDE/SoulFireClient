@@ -5,7 +5,6 @@ import {ConfigServiceClient} from "@/generated/com/soulfiremc/grpc/generated/con
 import {ClientInfoContext} from "@/components/providers/client-info-context.tsx";
 import {DashboardMenuHeader} from "@/components/dashboard-menu-header.tsx";
 import {Button} from "@/components/ui/button.tsx";
-import {useEffect, useState} from "react";
 import {toast} from "sonner";
 import {TerminalComponent} from "@/components/terminal.tsx";
 import CommandInput from "@/components/command-input.tsx";
@@ -62,6 +61,10 @@ export const Route = createFileRoute('/dashboard/_layout')({
           .filter(file => file.endsWith('.json'))
     }
 
+    toast.success("Connected to server!", {
+      description: "You are now connected to the server. Have fun!"
+    })
+
     return {
       transport,
       clientData: result.response,
@@ -100,19 +103,6 @@ function ErrorComponent({error}: { error: Error }) {
 
 function ClientLayout() {
   const {transport, clientData, availableProfiles} = Route.useLoaderData()
-  const [sentInitial, setSentInitial] = useState(false)
-
-  useEffect(() => {
-    if (sentInitial) {
-      return
-    }
-
-    toast.warning("Experimental Software!", {
-      description: "The SoulFire client is currently in development and is not ready for production use."
-    })
-
-    setSentInitial(true)
-  }, [sentInitial]);
 
   return (
       <div className="flex flex-col h-screen w-screen">

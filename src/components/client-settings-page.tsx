@@ -3,7 +3,6 @@ import {
   ClientPluginSettingEntryMinMaxPair,
   ClientPluginSettingEntrySingle,
   ClientPluginSettingsPage,
-  ClientPluginSettingType,
   ComboSetting,
   DoubleSetting,
   IntSetting,
@@ -170,7 +169,8 @@ function SingleComponent(props: { namespace: string, settingKey: string, entry: 
     case "string":
       return <div className="flex flex-col gap-1">
         <ComponentTitle title={props.entry.uiName} description={props.entry.description}/>
-        <StringComponent namespace={props.namespace} settingKey={props.settingKey} entry={props.entry.type.value.string}/>
+        <StringComponent namespace={props.namespace} settingKey={props.settingKey}
+                         entry={props.entry.type.value.string}/>
       </div>
     case "int":
       return <div className="flex flex-col gap-1">
@@ -185,7 +185,8 @@ function SingleComponent(props: { namespace: string, settingKey: string, entry: 
     case "double":
       return <div className="flex flex-col gap-1">
         <ComponentTitle title={props.entry.uiName} description={props.entry.description}/>
-        <DoubleComponent namespace={props.namespace} settingKey={props.settingKey} entry={props.entry.type.value.double}/>
+        <DoubleComponent namespace={props.namespace} settingKey={props.settingKey}
+                         entry={props.entry.type.value.double}/>
       </div>
     case "combo":
       return <div className="flex flex-col gap-1">
@@ -224,7 +225,8 @@ export default function ClientSettingsPageComponent({data}: { data: ClientPlugin
             if (page.value.oneofKind === "single") {
               return <SingleComponent
                   namespace={data.namespace}
-                  settingKey={"single|" + page.value.single.key}
+                  key={"single|" + page.value.single.key}
+                  settingKey={page.value.single.key}
                   entry={page.value.single}/>
             } else if (page.value.oneofKind === "minMaxPair") {
               return <MinMaxComponent
