@@ -100,7 +100,7 @@ function BoolComponent(props: { namespace: string, settingKey: string, entry: Bo
   const profile = useContext(ProfileContext)
 
   return (
-      <Checkbox defaultChecked={value} onChange={e => {
+      <Checkbox className="my-auto" defaultChecked={value} onChange={e => {
         const value = Boolean(e.currentTarget.value)
         setValue(value)
         profile.setProfile(updateEntry(props.namespace, props.settingKey, value, profile.profile))
@@ -161,34 +161,38 @@ function ComboComponent(props: { namespace: string, settingKey: string, entry: C
   )
 }
 
-function SingularSettingInput(props: { namespace: string, settingKey: string, entry: ClientPluginSettingType }) {
-  switch (props.entry.value.oneofKind) {
-    case "string":
-      return <StringComponent namespace={props.namespace} settingKey={props.settingKey}
-                              entry={props.entry.value.string}/>
-    case "int":
-      return <IntComponent namespace={props.namespace} settingKey={props.settingKey} entry={props.entry.value.int}/>
-    case "bool":
-      return <BoolComponent namespace={props.namespace} settingKey={props.settingKey} entry={props.entry.value.bool}/>
-    case "double":
-      return <DoubleComponent namespace={props.namespace} settingKey={props.settingKey}
-                              entry={props.entry.value.double}/>
-    case "combo":
-      return <ComboComponent namespace={props.namespace} settingKey={props.settingKey} entry={props.entry.value.combo}/>
-  }
-}
-
-function SingleComponent(props: { namespace: string, entry: ClientPluginSettingEntrySingle }) {
+function SingleComponent(props: { namespace: string, settingKey: string, entry: ClientPluginSettingEntrySingle }) {
   if (!props.entry.type) {
     return null
   }
 
-  return (
-      <div className="flex flex-col gap-1">
+  switch (props.entry.type.value.oneofKind) {
+    case "string":
+      return <div className="flex flex-col gap-1">
         <ComponentTitle title={props.entry.uiName} description={props.entry.description}/>
-        <SingularSettingInput namespace={props.namespace} settingKey={props.entry.key} entry={props.entry.type}/>
+        <StringComponent namespace={props.namespace} settingKey={props.settingKey} entry={props.entry.type.value.string}/>
       </div>
-  )
+    case "int":
+      return <div className="flex flex-col gap-1">
+        <ComponentTitle title={props.entry.uiName} description={props.entry.description}/>
+        <IntComponent namespace={props.namespace} settingKey={props.settingKey} entry={props.entry.type.value.int}/>
+      </div>
+    case "bool":
+      return <div className="flex flex-row gap-1">
+        <BoolComponent namespace={props.namespace} settingKey={props.settingKey} entry={props.entry.type.value.bool}/>
+        <ComponentTitle title={props.entry.uiName} description={props.entry.description}/>
+      </div>
+    case "double":
+      return <div className="flex flex-col gap-1">
+        <ComponentTitle title={props.entry.uiName} description={props.entry.description}/>
+        <DoubleComponent namespace={props.namespace} settingKey={props.settingKey} entry={props.entry.type.value.double}/>
+      </div>
+    case "combo":
+      return <div className="flex flex-col gap-1">
+        <ComponentTitle title={props.entry.uiName} description={props.entry.description}/>
+        <ComboComponent namespace={props.namespace} settingKey={props.settingKey} entry={props.entry.type.value.combo}/>
+      </div>
+  }
 }
 
 function MinMaxComponent(props: { namespace: string, entry: ClientPluginSettingEntryMinMaxPair }) {
@@ -220,7 +224,7 @@ export default function ClientSettingsPageComponent({data}: { data: ClientPlugin
             if (page.value.oneofKind === "single") {
               return <SingleComponent
                   namespace={data.namespace}
-                  key={"single|" + page.value.single.key}
+                  settingKey={"single|" + page.value.single.key}
                   entry={page.value.single}/>
             } else if (page.value.oneofKind === "minMaxPair") {
               return <MinMaxComponent
