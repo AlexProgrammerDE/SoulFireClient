@@ -144,6 +144,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
       return
     }
 
+    setProxyTypeSelected(null)
     const textSplit = text.split("\n").map(t => t.trim()).filter(t => t.length > 0)
     toast.promise(new Promise<number>((resolve, reject) => {
       (async () => {

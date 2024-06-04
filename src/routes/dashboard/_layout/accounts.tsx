@@ -82,6 +82,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       return
     }
 
+    setAccountTypeSelected(null)
     const textSplit = text.split("\n").map(t => t.trim()).filter(t => t.length > 0)
     const service = new MCAuthServiceClient(transport)
     toast.promise(new Promise<number>((resolve, reject) => {
