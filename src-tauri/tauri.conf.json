@@ -85,6 +85,10 @@
       "windows": {
         "installMode": "passive"
       },
+      "endpoints": [
+        "https://gist.githubusercontent.com/AlexProgrammerDE/66024f243a31c7d7d449c54205d37d0c/raw/f86f8fc00215e34e23e10d0b9fb3a8679acec57f/update.json"
+      ],
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDI0QUFBREZCNjZGNjcyMjYKUldRbWN2Wm0rNjJxSkJGM3p1dlJiTkMydnRZTjR2d3JuYnJ5eWNKanZjRnlWc2FKaGoyVmdDNlcK",
       "dialog": true
     },
     "windows": [
