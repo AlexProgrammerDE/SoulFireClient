@@ -61,10 +61,6 @@ export const Route = createFileRoute('/dashboard/_layout')({
           .filter(file => file.endsWith('.json'))
     }
 
-    toast.success("Connected to server!", {
-      description: "You are now connected to the server. Have fun!"
-    })
-
     return {
       transport,
       clientData: result.response,
