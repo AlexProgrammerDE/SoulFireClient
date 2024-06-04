@@ -41,7 +41,6 @@ export const TerminalComponent = () => {
 
     const resizeListener = debounce(() => {
       if (terminal.element) {
-        console.log("resize")
         fitAddon.fit();
       }
     }, 100)

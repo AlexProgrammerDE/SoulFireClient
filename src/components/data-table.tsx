@@ -9,11 +9,12 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   SortingState,
-  useReactTable,
+  Table as ReactTable,
+  useReactTable
 } from "@tanstack/react-table"
 
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
-import {useState} from "react";
+import React, {useState} from "react";
 import {Input} from "@/components/ui/input.tsx";
 import {DataTablePagination} from "@/components/data-table-pagination.tsx";
 
@@ -21,7 +22,9 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[],
   filterDisplayName: string
-  filterKey: string
+  filterKey: string,
+  // Element with form param
+  extraHeader?: (props: { table: ReactTable<TData> }) => React.ReactNode
 }
 
 export function DataTable<TData, TValue>({
@@ -29,6 +32,7 @@ export function DataTable<TData, TValue>({
                                            data,
                                            filterDisplayName,
                                            filterKey,
+                                           extraHeader
                                          }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
@@ -55,7 +59,7 @@ export function DataTable<TData, TValue>({
 
   return (
       <div className="flex flex-col gap-4">
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <Input
               placeholder={`Filter ${filterDisplayName}...`}
               value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
@@ -64,6 +68,7 @@ export function DataTable<TData, TValue>({
               }
               className="max-w-sm"
           />
+          {extraHeader && extraHeader({table})}
         </div>
         <div className="rounded-md border">
           <Table>

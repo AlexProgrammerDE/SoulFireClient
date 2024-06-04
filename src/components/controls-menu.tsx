@@ -25,7 +25,10 @@ export default function ControlsMenu() {
     }), {
       loading: "Starting attack...",
       success: r => `Attack ${r.response.id} started successfully`,
-      error: "Failed to start attack"
+      error: (e) => {
+        console.error(e)
+        return 'Failed to start attack'
+      }
     })
   }, [profile, transport])
 
@@ -43,7 +46,10 @@ export default function ControlsMenu() {
     }), {
       loading: "Toggling attack state...",
       success: `Attack state toggled to ${appState === "paused" ? "running" : "paused"}`,
-      error: "Failed to toggle attack state"
+      error: (e) => {
+        console.error(e)
+        return 'Failed to toggle attack state'
+      }
     })
   }, [appState, currentAttack, transport])
 
@@ -61,7 +67,10 @@ export default function ControlsMenu() {
     }), {
       loading: "Stopping attack...",
       success: `Attack ${currentAttack} stopped successfully`,
-      error: "Failed to stop attack"
+      error: (e) => {
+        console.error(e)
+        return 'Failed to stop attack'
+      }
     })
   }, [currentAttack, transport])
 

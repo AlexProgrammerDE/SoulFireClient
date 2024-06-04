@@ -31,12 +31,13 @@ export class WrappedDouble {
   }
 }
 
-export function getEnumKeyByValue(enumObj: never, value: number): string | undefined {
-  return Object.keys(enumObj).find(key => enumObj[key] === value);
+
+
+export function getEnumKeyByValue<E extends object>(enumObj: E, value: number): keyof E {
+    return Object.entries(enumObj).find(([, v]) => v === value)?.[0] as keyof E
 }
 
 export type ProfileAccount = {
-  enabled: boolean,
   type: MinecraftAccountProto_AccountTypeProto
   profileId: string,
   lastKnownName: string,
@@ -44,7 +45,6 @@ export type ProfileAccount = {
 }
 
 export type ProfileProxy = {
-  enabled: boolean,
   type: ProxyProto_Type
   address: string,
   username?: string
@@ -95,13 +95,13 @@ export function convertToProto(data: ProfileRoot): AttackStartRequest {
           entries: Object.entries(value)
               .map(([key, value]) => toSettingsEntryProto(key, value))
         })),
-    accounts: data.accounts.filter(a => a.enabled).map(a => ({
+    accounts: data.accounts.map(a => ({
       type: a.type,
       profileId: a.profileId,
       lastKnownName: a.lastKnownName,
       accountData: a.accountData
     })),
-    proxies: data.proxies.filter(p => p.enabled).map(p => ({
+    proxies: data.proxies.map(p => ({
       type: p.type,
       address: p.address,
       username: p.username,

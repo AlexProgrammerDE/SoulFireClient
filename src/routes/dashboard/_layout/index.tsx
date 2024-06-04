@@ -8,7 +8,7 @@ export const Route = createFileRoute('/dashboard/_layout/')({
 
 export default function Dashboard() {
   return (
-      <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 auto-rows-fr gap-4">
         <Button asChild variant="secondary" className="w-full h-full">
           <Link to="/dashboard/settings/$namespace"
                 params={{namespace: 'bot'}}>

@@ -15,7 +15,7 @@ import {useTheme} from "next-themes";
 import {isTauri} from "@/lib/utils.ts";
 import {exit} from "@tauri-apps/api/process";
 import {AboutPopup} from "@/components/about-popup.tsx";
-import {useContext, useState} from "react";
+import {useContext, useRef, useState} from "react";
 import {useNavigate} from "@tanstack/react-router";
 import {ProfileContext} from "@/components/providers/profile-context.tsx";
 import {saveAs} from 'file-saver';
@@ -38,6 +38,7 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
   const [aboutOpen, setAboutOpen] = useState(false)
   const navigate = useNavigate()
   const profile = useContext(ProfileContext)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   return (
       <>
@@ -84,7 +85,9 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
                               name: 'SoulFire JSON Profile',
                               extensions: ['json']
                             }],
-                            defaultPath: profileDir
+                            defaultPath: profileDir,
+                            multiple: false,
+                            directory: false
                           });
 
                           if (selected) {
@@ -101,7 +104,7 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
                     </MenubarSub>
                 ) : (
                     <>
-                      <input id="profile-load-input" type="file"
+                      <input ref={fileInputRef} type="file"
                              accept=".json"
                              className="hidden" onInput={e => {
                         const file = (e.target as HTMLInputElement).files?.item(0)
@@ -117,7 +120,7 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
                         reader.readAsText(file)
                       }}/>
                       <MenubarItem onClick={async () => {
-                        document.getElementById("profile-load-input")?.click()
+                        fileInputRef.current?.click()
                       }}>
                         Load Profile
                       </MenubarItem>

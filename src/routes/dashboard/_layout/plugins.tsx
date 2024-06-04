@@ -17,7 +17,7 @@ function Plugins() {
             Back
           </Link>
         </Button>
-        <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="w-full h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-fr gap-4">
           {
             clientInfo.pluginSettings.filter(pluginSetting => !pluginSetting.hidden).map((pluginSetting) => (
                 <Button key={pluginSetting.namespace} asChild variant="secondary" className="w-full h-full">
