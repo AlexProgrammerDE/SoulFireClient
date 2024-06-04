@@ -91,9 +91,9 @@
       {
         "label": "main",
         "fullscreen": false,
-        "height": 600,
+        "height": 675,
         "resizable": true,
-        "width": 800,
+        "width": 1200,
         "center": true
       }
     ]
