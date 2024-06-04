@@ -78,3 +78,13 @@
     @apply border-border;
   }
 }
+
+.terminal-container{
+  /* this is important */
+  overflow: hidden;
+}
+
+.xterm .xterm-viewport {
+  /* see : https://github.com/xtermjs/xterm.js/issues/3564#issuecomment-1004417440 */
+  width: initial !important;
+}

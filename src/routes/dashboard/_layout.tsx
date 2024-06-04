@@ -121,11 +121,13 @@ function ClientLayout() {
             <ProfileProvider>
               <DashboardMenuHeader availableProfiles={availableProfiles}/>
               <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex p-4">
+                <div className="flex p-4 md:h-[calc(100vh-2.5rem)] overflow-auto">
                   <Outlet/>
                 </div>
                 <div className="flex flex-col gap-4 p-4">
-                  <TerminalComponent/>
+                  <div className="terminal-container flex-grow md:h-[calc(100vh-9rem)]">
+                    <TerminalComponent/>
+                  </div>
                   <CommandInput/>
                 </div>
               </div>

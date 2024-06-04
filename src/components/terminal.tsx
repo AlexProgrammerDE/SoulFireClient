@@ -3,16 +3,13 @@ import "@xterm/xterm/css/xterm.css";
 import {FitAddon} from '@xterm/addon-fit';
 import {LogsServiceClient} from "@/generated/com/soulfiremc/grpc/generated/logs.client.ts";
 import {ServerConnectionContext} from "./providers/server-context";
-import {ITerminalInitOnlyOptions, ITerminalOptions, Terminal} from "@xterm/xterm";
+import {ITerminalOptions, Terminal} from "@xterm/xterm";
+import debounce from "debounce";
 
 const terminalProps: ITerminalOptions = {
   allowTransparency: true,
   fontSize: 12,
   allowProposedApi: true,
-};
-
-const terminalInitOnlyProps: ITerminalInitOnlyOptions = {
-  rows: 30,
 };
 
 export const TerminalComponent = () => {
@@ -21,7 +18,7 @@ export const TerminalComponent = () => {
   const serverConnection = useContext(ServerConnectionContext)
 
   useEffect(() => {
-    const terminal = new Terminal({...terminalProps, ...terminalInitOnlyProps});
+    const terminal = new Terminal({...terminalProps});
 
     setTerminal(terminal);
     return () => {
@@ -42,13 +39,16 @@ export const TerminalComponent = () => {
     terminal.open(terminalRef.current);
     fitAddon.fit();
 
-    const resizeListener = () => {
+    const resizeListener = debounce(() => {
+      if (terminal.element) {
+        console.log("resize")
         fitAddon.fit();
-    }
+      }
+    }, 100)
 
     window.addEventListener('resize', resizeListener);
     return () => {
-        window.removeEventListener('resize', resizeListener);
+      window.removeEventListener('resize', resizeListener);
     }
   }, [terminal, terminalRef]);
 
@@ -76,6 +76,6 @@ export const TerminalComponent = () => {
   }, [serverConnection, terminal, terminalRef]);
 
   return (
-      <div className="flex-grow" ref={terminalRef}/>
+      <div className="h-full" ref={terminalRef}/>
   )
 }

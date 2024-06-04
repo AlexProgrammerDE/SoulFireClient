@@ -19,58 +19,63 @@ import {useState} from "react";
 import {Input} from "@/components/ui/input.tsx";
 import {Checkbox} from "@/components/ui/checkbox.tsx";
 
-function ComponentTitle({title, description}: { title: string, description: string }) {
+function ComponentTitle(props: { title: string, description: string }) {
   return (
       <TooltipProvider>
         <Tooltip>
-          <TooltipTrigger className="w-fit">{title}</TooltipTrigger>
+          <TooltipTrigger className="w-fit">{props.title}</TooltipTrigger>
           <TooltipContent>
-            <p>{description}</p>
+            <p>{props.description}</p>
           </TooltipContent>
         </Tooltip>
       </TooltipProvider>
   )
 }
 
-function StringComponent({entry}: { entry: StringSetting }) {
-  const [value, setValue] = useState(entry.def)
+function StringComponent(props: { namespace: string, settingKey: string, entry: StringSetting }) {
+  const [value, setValue] = useState(props.entry.def)
 
   return (
-      <Input type="text" value={value} onChange={e => setValue(e.currentTarget.value)}/>
+      <Input type={props.entry.secret ? "password" : "text"}
+             value={value} onChange={e => setValue(e.currentTarget.value)}/>
   )
 }
 
-function IntComponent({entry}: { entry: IntSetting }) {
-  const [value, setValue] = useState(entry.def)
+function IntComponent(props: { namespace: string, settingKey: string, entry: IntSetting }) {
+  const [value, setValue] = useState(props.entry.def)
 
   return (
       <Input type="number"
-             min={entry.min}
-                max={entry.max}
-             step={entry.step}
+             min={props.entry.min}
+             max={props.entry.max}
+             step={props.entry.step}
              value={value} onChange={e => setValue(parseInt(e.currentTarget.value))}/>
   )
 }
 
-function DoubleComponent({entry}: { entry: DoubleSetting }) {
-  const [value, setValue] = useState(entry.def)
+function DoubleComponent(props: { namespace: string, settingKey: string, entry: DoubleSetting }) {
+  const [value, setValue] = useState(props.entry.def)
 
   return (
-      <Input type="number" value={value} onChange={e => setValue(parseFloat(e.currentTarget.value))}/>
+      <Input type="number"
+             min={props.entry.min}
+             max={props.entry.max}
+             step={props.entry.step}
+             value={value} onChange={e => setValue(parseFloat(e.currentTarget.value))}/>
   )
 }
 
-function BoolComponent({entry}: { entry: BoolSetting }) {
-  const [value, setValue] = useState(entry.def)
+function BoolComponent(props: { namespace: string, settingKey: string, entry: BoolSetting }) {
+  const [value, setValue] = useState(props.entry.def)
 
   return (
       <Checkbox checked={value} onChange={e => setValue(Boolean(e.currentTarget.value))}/>
   )
 }
 
-function ComboComponent({entry}: { entry: ComboSetting }) {
+function ComboComponent(props: { namespace: string, settingKey: string, entry: ComboSetting }) {
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState(entry.options[entry.def].id)
+  const [value, setValue] = useState(props.entry.options[props.entry.def].id)
 
   return (
       <Popover open={open} onOpenChange={setOpen}>
@@ -82,7 +87,7 @@ function ComboComponent({entry}: { entry: ComboSetting }) {
               className="w-[200px] justify-between"
           >
             {value
-                ? entry.options.find((framework) => framework.id === value)?.displayName
+                ? props.entry.options.find((framework) => framework.id === value)?.displayName
                 : "Select value..."}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50"/>
           </Button>
@@ -93,7 +98,7 @@ function ComboComponent({entry}: { entry: ComboSetting }) {
             <CommandList>
               <CommandEmpty>No framework found.</CommandEmpty>
               <CommandGroup>
-                {entry.options.map((framework) => (
+                {props.entry.options.map((framework) => (
                     <CommandItem
                         key={framework.id}
                         value={framework.id}
@@ -119,52 +124,52 @@ function ComboComponent({entry}: { entry: ComboSetting }) {
   )
 }
 
-function SingularSettingInput({
-                                entry: {
-                                  value
-                                }
-                              }: { entry: ClientPluginSettingType }) {
-  switch (value.oneofKind) {
+function SingularSettingInput(props: { namespace: string, settingKey: string, entry: ClientPluginSettingType }) {
+  switch (props.entry.value.oneofKind) {
     case "string":
-      return <StringComponent entry={value.string}/>
+      return <StringComponent namespace={props.namespace} settingKey={props.settingKey}
+                              entry={props.entry.value.string}/>
     case "int":
-      return <IntComponent entry={value.int}/>
+      return <IntComponent namespace={props.namespace} settingKey={props.settingKey} entry={props.entry.value.int}/>
     case "bool":
-      return <BoolComponent entry={value.bool}/>
+      return <BoolComponent namespace={props.namespace} settingKey={props.settingKey} entry={props.entry.value.bool}/>
     case "double":
-      return <DoubleComponent entry={value.double}/>
+      return <DoubleComponent namespace={props.namespace} settingKey={props.settingKey}
+                              entry={props.entry.value.double}/>
     case "combo":
-      return <ComboComponent entry={value.combo}/>
+      return <ComboComponent namespace={props.namespace} settingKey={props.settingKey} entry={props.entry.value.combo}/>
   }
 }
 
-function SingleComponent({entry}: { entry: ClientPluginSettingEntrySingle }) {
-  if (!entry.type) {
+function SingleComponent(props: { namespace: string, entry: ClientPluginSettingEntrySingle }) {
+  if (!props.entry.type) {
     return null
   }
 
   return (
       <div className="flex flex-col gap-1">
-        <ComponentTitle title={entry.uiName} description={entry.description}/>
-        <SingularSettingInput entry={entry.type}/>
+        <ComponentTitle title={props.entry.uiName} description={props.entry.description}/>
+        <SingularSettingInput namespace={props.namespace} settingKey={props.entry.key} entry={props.entry.type}/>
       </div>
   )
 }
 
-function MinMaxComponent({entry}: { entry: ClientPluginSettingEntryMinMaxPair }) {
-  if (!entry.min || !entry.max || !entry.min.intSetting || !entry.max.intSetting) {
+function MinMaxComponent(props: { namespace: string, entry: ClientPluginSettingEntryMinMaxPair }) {
+  if (!props.entry.min || !props.entry.max || !props.entry.min.intSetting || !props.entry.max.intSetting) {
     return null
   }
 
   return (
       <>
         <div className="flex flex-col gap-1">
-          <ComponentTitle title={entry.min.uiName} description={entry.min.description}/>
-          <IntComponent entry={entry.min.intSetting}/>
+          <ComponentTitle title={props.entry.min.uiName} description={props.entry.min.description}/>
+          <IntComponent namespace={props.namespace} settingKey={props.entry.min.key}
+                        entry={props.entry.min.intSetting}/>
         </div>
         <div className="flex flex-col gap-1">
-          <ComponentTitle title={entry.max.uiName} description={entry.max.description}/>
-            <IntComponent entry={entry.max.intSetting}/>
+          <ComponentTitle title={props.entry.max.uiName} description={props.entry.max.description}/>
+          <IntComponent namespace={props.namespace} settingKey={props.entry.max.key}
+                        entry={props.entry.max.intSetting}/>
         </div>
       </>
   )
@@ -176,10 +181,13 @@ export default function ClientSettingsPageComponent({data}: { data: ClientPlugin
         {
           data.entries.map((page) => {
             if (page.value.oneofKind === "single") {
-              return <SingleComponent key={"single|" + page.value.single.key}
-                                      entry={page.value.single}/>
+              return <SingleComponent
+                  namespace={data.namespace}
+                  key={"single|" + page.value.single.key}
+                  entry={page.value.single}/>
             } else if (page.value.oneofKind === "minMaxPair") {
               return <MinMaxComponent
+                  namespace={data.namespace}
                   key={"min-max|" + page.value.minMaxPair.min?.key + "|" + page.value.minMaxPair.max?.key}
                   entry={page.value.minMaxPair}/>
             }
