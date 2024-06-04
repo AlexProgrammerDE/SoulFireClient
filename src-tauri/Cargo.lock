@@ -63,20 +63,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0952808a6c2afd1aa8947271f3a60f1a6763c7b912d210184c5149b5cf147247"
 
 [[package]]
-name = "app"
-version = "0.1.0"
-dependencies = [
- "flate2",
- "reqwest",
- "serde",
- "serde_json",
- "strip-ansi-escapes",
- "tar",
- "tauri",
- "tauri-build",
-]
-
-[[package]]
 name = "arboard"
 version = "3.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3060,6 +3046,20 @@ checksum = "ce305eb0b4296696835b71df73eb912e0f1ffd2556a501fcede6e0c50349191c"
 dependencies = [
  "libc",
  "windows-sys 0.52.0",
+]
+
+[[package]]
+name = "soulfire"
+version = "1.0.0"
+dependencies = [
+ "flate2",
+ "reqwest",
+ "serde",
+ "serde_json",
+ "strip-ansi-escapes",
+ "tar",
+ "tauri",
+ "tauri-build",
 ]
 
 [[package]]
