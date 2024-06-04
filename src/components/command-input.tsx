@@ -61,7 +61,7 @@ export default function CommandInput() {
       completionStateNew = {
         lastWritten: text,
         receivedCompletions: [],
-        index: null
+        index: 0
       }
     }
 
