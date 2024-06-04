@@ -12,12 +12,27 @@ import {
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@/components/ui/tooltip.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover.tsx";
-import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command.tsx";
+import {Command, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command.tsx";
 import {Check, ChevronsUpDown} from "lucide-react";
 import {cn} from "@/lib/utils.ts";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {Input} from "@/components/ui/input.tsx";
 import {Checkbox} from "@/components/ui/checkbox.tsx";
+import {ProfileContext} from "@/components/providers/profile-context.tsx";
+import {ProfileRoot} from "@/lib/types.ts";
+
+function updateEntry(namespace: string, settingKey: string, value: unknown, profile: ProfileRoot): ProfileRoot {
+  return {
+    ...profile,
+    settings: {
+      ...profile.settings,
+      [namespace]: {
+        ...profile.settings[namespace] || {},
+        [settingKey]: value
+      }
+    }
+  }
+}
 
 function ComponentTitle(props: { title: string, description: string }) {
   return (
@@ -34,48 +49,69 @@ function ComponentTitle(props: { title: string, description: string }) {
 
 function StringComponent(props: { namespace: string, settingKey: string, entry: StringSetting }) {
   const [value, setValue] = useState(props.entry.def)
+  const profile = useContext(ProfileContext)
 
   return (
       <Input type={props.entry.secret ? "password" : "text"}
-             value={value} onChange={e => setValue(e.currentTarget.value)}/>
+             defaultValue={value} onChange={e => {
+        const value = e.currentTarget.value
+        setValue(value)
+        profile.setProfile(updateEntry(props.namespace, props.settingKey, value, profile.profile))
+      }}/>
   )
 }
 
 function IntComponent(props: { namespace: string, settingKey: string, entry: IntSetting }) {
   const [value, setValue] = useState(props.entry.def)
+  const profile = useContext(ProfileContext)
 
   return (
       <Input type="number"
              min={props.entry.min}
              max={props.entry.max}
              step={props.entry.step}
-             value={value} onChange={e => setValue(parseInt(e.currentTarget.value))}/>
+             defaultValue={value} onChange={e => {
+        const value = parseInt(e.currentTarget.value)
+        setValue(value)
+        profile.setProfile(updateEntry(props.namespace, props.settingKey, value, profile.profile))
+      }}/>
   )
 }
 
 function DoubleComponent(props: { namespace: string, settingKey: string, entry: DoubleSetting }) {
   const [value, setValue] = useState(props.entry.def)
+  const profile = useContext(ProfileContext)
 
   return (
       <Input type="number"
              min={props.entry.min}
              max={props.entry.max}
              step={props.entry.step}
-             value={value} onChange={e => setValue(parseFloat(e.currentTarget.value))}/>
+             defaultValue={value} onChange={e => {
+        const value = parseFloat(e.currentTarget.value)
+        setValue(value)
+        profile.setProfile(updateEntry(props.namespace, props.settingKey, value, profile.profile))
+      }}/>
   )
 }
 
 function BoolComponent(props: { namespace: string, settingKey: string, entry: BoolSetting }) {
   const [value, setValue] = useState(props.entry.def)
+  const profile = useContext(ProfileContext)
 
   return (
-      <Checkbox checked={value} onChange={e => setValue(Boolean(e.currentTarget.value))}/>
+      <Checkbox defaultChecked={value} onChange={e => {
+        const value = Boolean(e.currentTarget.value)
+        setValue(value)
+        profile.setProfile(updateEntry(props.namespace, props.settingKey, value, profile.profile))
+      }}/>
   )
 }
 
 function ComboComponent(props: { namespace: string, settingKey: string, entry: ComboSetting }) {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState(props.entry.options[props.entry.def].id)
+  const profile = useContext(ProfileContext)
 
   return (
       <Popover open={open} onOpenChange={setOpen}>
@@ -96,14 +132,15 @@ function ComboComponent(props: { namespace: string, settingKey: string, entry: C
           <Command>
             <CommandInput placeholder="Search value..."/>
             <CommandList>
-              <CommandEmpty>No framework found.</CommandEmpty>
               <CommandGroup>
                 {props.entry.options.map((framework) => (
                     <CommandItem
                         key={framework.id}
                         value={framework.id}
                         onSelect={(currentValue) => {
-                          setValue(currentValue === value ? "" : currentValue)
+                          const value = currentValue
+                          setValue(value)
+                          profile.setProfile(updateEntry(props.namespace, props.settingKey, value, profile.profile))
                           setOpen(false)
                         }}
                     >

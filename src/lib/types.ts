@@ -10,7 +10,7 @@ export const DEFAULT_PROFILE: ProfileRoot = {
 }
 
 export type ProfileRoot = {
-    settings: Record<string, Record<string, never>>,
+    settings: Record<string, Record<string, unknown>>,
     accounts: EnabledWrapper<ProfileAccount>[],
     proxies: EnabledWrapper<ProfileProxy>[],
 }

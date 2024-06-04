@@ -118,6 +118,7 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
                 )
               }
               <MenubarItem onClick={async () => {
+                const data = JSON.stringify(profile.profile, null, 2)
                 if (isTauri()) {
                   const profileDir = await resolve(await appConfigDir(), 'profile')
                   await createDir(profileDir, {recursive: true})
@@ -137,10 +138,10 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
                       single += ".json"
                     }
 
-                    await writeTextFile(single, JSON.stringify(profile))
+                    await writeTextFile(single, data)
                   }
                 } else {
-                  saveAs(data2blob(JSON.stringify(profile)), "profile.json")
+                  saveAs(data2blob(data), "profile.json")
                 }
               }}>
                 Save Profile
