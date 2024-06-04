@@ -5,7 +5,7 @@ description = "Frontend client for SoulFire."
 authors = ["Pistonmaster"]
 license = "GPL-3.0"
 repository = "https://github.com/AlexProgrammerDE/SoulFireClient"
-default-run = "app"
+default-run = "soulfire"
 edition = "2021"
 rust-version = "1.60"
 
