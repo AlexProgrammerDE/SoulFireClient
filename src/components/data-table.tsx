@@ -1,28 +1,34 @@
 "use client"
 
 import {
-  ColumnDef, ColumnFiltersState,
+  ColumnDef,
+  ColumnFiltersState,
   flexRender,
-  getCoreRowModel, getFilteredRowModel,
-  getPaginationRowModel, getSortedRowModel,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
   SortingState,
   useReactTable,
 } from "@tanstack/react-table"
 
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
-import { Button } from "./ui/button"
 import {useState} from "react";
 import {Input} from "@/components/ui/input.tsx";
 import {DataTablePagination} from "@/components/data-table-pagination.tsx";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
-  data: TData[]
+  data: TData[],
+  filterDisplayName: string
+  filterKey: string
 }
 
 export function DataTable<TData, TValue>({
                                            columns,
                                            data,
+                                           filterDisplayName,
+                                           filterKey,
                                          }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
@@ -48,13 +54,13 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-      <div>
-        <div className="flex items-center py-4">
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center">
           <Input
-              placeholder="Filter emails..."
-              value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+              placeholder={`Filter ${filterDisplayName}...`}
+              value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
               onChange={(event) =>
-                  table.getColumn("email")?.setFilterValue(event.target.value)
+                  table.getColumn(filterKey)?.setFilterValue(event.target.value)
               }
               className="max-w-sm"
           />
@@ -103,7 +109,7 @@ export function DataTable<TData, TValue>({
             </TableBody>
           </Table>
         </div>
-        <DataTablePagination table={table} />
+        <DataTablePagination table={table}/>
       </div>
   )
 }
