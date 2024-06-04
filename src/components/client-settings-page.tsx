@@ -19,9 +19,9 @@ import {useContext, useState} from "react";
 import {Input} from "@/components/ui/input.tsx";
 import {Checkbox} from "@/components/ui/checkbox.tsx";
 import {ProfileContext} from "@/components/providers/profile-context.tsx";
-import {ProfileRoot} from "@/lib/types.ts";
+import {ProfileRoot, ProfileSettingsJSDataTypes, WrappedDouble, WrappedInteger} from "@/lib/types.ts";
 
-function updateEntry(namespace: string, settingKey: string, value: unknown, profile: ProfileRoot): ProfileRoot {
+function updateEntry(namespace: string, settingKey: string, value: ProfileSettingsJSDataTypes, profile: ProfileRoot): ProfileRoot {
   return {
     ...profile,
     settings: {
@@ -73,7 +73,7 @@ function IntComponent(props: { namespace: string, settingKey: string, entry: Int
              defaultValue={value} onChange={e => {
         const value = parseInt(e.currentTarget.value)
         setValue(value)
-        profile.setProfile(updateEntry(props.namespace, props.settingKey, value, profile.profile))
+        profile.setProfile(updateEntry(props.namespace, props.settingKey, new WrappedInteger(value), profile.profile))
       }}/>
   )
 }
@@ -90,7 +90,7 @@ function DoubleComponent(props: { namespace: string, settingKey: string, entry: 
              defaultValue={value} onChange={e => {
         const value = parseFloat(e.currentTarget.value)
         setValue(value)
-        profile.setProfile(updateEntry(props.namespace, props.settingKey, value, profile.profile))
+        profile.setProfile(updateEntry(props.namespace, props.settingKey, new WrappedDouble(value), profile.profile))
       }}/>
   )
 }
