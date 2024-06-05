@@ -216,9 +216,9 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
                     <MenubarItem onClick={async () => {
                       await shellOpen(await appDataDir())
                     }}>Data directory</MenubarItem>
+                    <MenubarSeparator/>
                   </>)
               }
-              <MenubarSeparator/>
               <MenubarItem onClick={() => setAboutOpen(true)}>About</MenubarItem>
             </MenubarContent>
           </MenubarMenu>
