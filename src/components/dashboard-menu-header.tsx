@@ -21,7 +21,8 @@ import {ProfileContext} from "@/components/providers/profile-context.tsx";
 import {saveAs} from 'file-saver';
 import {createDir, readTextFile, writeTextFile} from "@tauri-apps/api/fs";
 import {open, save} from "@tauri-apps/api/dialog";
-import {appConfigDir, resolve} from "@tauri-apps/api/path";
+import {open as shellOpen} from "@tauri-apps/api/shell";
+import {appConfigDir, appDataDir, resolve} from "@tauri-apps/api/path";
 import {toast} from "sonner";
 
 function data2blob(data: string) {
@@ -199,6 +200,25 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
           <MenubarMenu>
             <MenubarTrigger>Help</MenubarTrigger>
             <MenubarContent>
+              <MenubarItem onClick={async () => {
+                if (isTauri()) {
+                  await shellOpen("https://soulfiremc.com/docs")
+                } else {
+                  window.open("https://soulfiremc.com/docs")
+                }
+              }}>Documentation</MenubarItem>
+              <MenubarSeparator/>
+              {
+                  isTauri() && (<>
+                    <MenubarItem onClick={async () => {
+                      await shellOpen(await appConfigDir())
+                    }}>Config directory</MenubarItem>
+                    <MenubarItem onClick={async () => {
+                      await shellOpen(await appDataDir())
+                    }}>Data directory</MenubarItem>
+                  </>)
+              }
+              <MenubarSeparator/>
               <MenubarItem onClick={() => setAboutOpen(true)}>About</MenubarItem>
             </MenubarContent>
           </MenubarMenu>
