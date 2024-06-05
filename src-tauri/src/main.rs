@@ -181,7 +181,7 @@ async fn run_integrated_server(app_handle: AppHandle) -> String {
 
 fn get_java_exec_name() -> &'static str {
     if cfg!(target_os = "windows") {
-        "java.exe"
+        "javaw.exe"
     } else {
         "java"
     }
