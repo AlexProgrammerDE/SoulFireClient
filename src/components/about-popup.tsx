@@ -10,6 +10,15 @@ import {
 } from "./ui/credenza";
 import {Button} from "@/components/ui/button.tsx";
 import {isTauri} from "@/lib/utils.ts";
+import { version, type, platform, locale, arch } from '@tauri-apps/api/os';
+
+const tauriInfo = isTauri() ? {
+  osVersion: await version(),
+    osType: await type(),
+    platformName: await platform(),
+    osLocale: await locale(),
+    archName: await arch()
+} : null
 
 export function AboutPopup({open, setOpen}: { open: boolean, setOpen: (open: boolean) => void }) {
   return (
@@ -22,7 +31,21 @@ export function AboutPopup({open, setOpen}: { open: boolean, setOpen: (open: boo
             </CredenzaDescription>
           </CredenzaHeader>
           <CredenzaBody>
-            Tauri: {isTauri() ? "Yes" : "No"}
+            {
+              tauriInfo !== null ? (
+                  <>
+                    <p>Operating System: {tauriInfo.osType} {tauriInfo.osVersion}</p>
+                    <p>Platform: {tauriInfo.platformName}</p>
+                    <p>Locale: {tauriInfo.osLocale}</p>
+                    <p>Architecture: {tauriInfo.archName}</p>
+                  </>
+              ) : (
+                  <>
+                    <p>Browser: {navigator.userAgent}</p>
+                    <p>Locale: {navigator.language}</p>
+                  </>
+              )
+            }
           </CredenzaBody>
           <CredenzaFooter>
             <CredenzaClose asChild>
