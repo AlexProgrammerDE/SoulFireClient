@@ -8,6 +8,34 @@ use tauri::{AppHandle, CustomMenuItem, Manager, SystemTray, SystemTrayEvent, Sys
 use tauri::api::process::Command;
 use tauri::api::process::CommandEvent::Stdout;
 
+fn extract_tar_gz(data: &[u8], target_dir: &std::path::Path, strip_prefix: &str) {
+    let decompressed = flate2::read::GzDecoder::new(data);
+    let mut archive = tar::Archive::new(decompressed);
+    for entry in archive.entries().unwrap() {
+        let mut entry = entry.unwrap();
+        let path = entry.path().unwrap();
+        let path = path.strip_prefix(&strip_prefix).unwrap();
+        let path = target_dir.join(path);
+        entry.unpack(path).unwrap();
+    }
+}
+
+fn extract_zip(data: &[u8], target_dir: &std::path::Path, strip_prefix: &str) {
+    let mut archive = zip::ZipArchive::new(std::io::Cursor::new(data)).unwrap();
+    for i in 0..archive.len() {
+        let mut file_data = archive.by_index(i).unwrap();
+        let path = file_data.enclosed_name().unwrap();
+        let path = path.strip_prefix(&strip_prefix).unwrap();
+        let path = target_dir.join(path);
+        if file_data.is_dir() {
+            std::fs::create_dir_all(&path).unwrap();
+        } else {
+            let mut file = std::fs::File::create(&path).unwrap();
+            std::io::copy(&mut file_data, &mut file).unwrap();
+        }
+    }
+}
+
 #[tauri::command]
 async fn run_integrated_server(app_handle: AppHandle) -> String {
     let soul_fire_version = "1.9.0";
@@ -33,7 +61,7 @@ async fn run_integrated_server(app_handle: AppHandle) -> String {
         let security_version = jvm_json[0]["version"]["security"].as_u64().unwrap();
         let build_version = jvm_json[0]["version"]["build"].as_u64().unwrap();
         println!("Download URL: {}", download_url);
-        let jdk_dir_name = format!("jdk-{}.{}.{}+{}", major_version, minor_version, security_version, build_version);
+        let jdk_archive_dir_name = format!("jdk-{}.{}.{}+{}", major_version, minor_version, security_version, build_version);
 
         fn send_download_progress(app_handle: &AppHandle, progress: u64, total: u64) {
             send_log(app_handle, format!("Downloading JVM... {}%", progress * 100 / total));
@@ -51,14 +79,12 @@ async fn run_integrated_server(app_handle: AppHandle) -> String {
         }
 
         send_log(&app_handle, "Extracting JVM...");
-        let decompressed = flate2::read::GzDecoder::new(&content[..]);
-        let mut archive = tar::Archive::new(decompressed);
-        for entry in archive.entries().unwrap() {
-            let mut entry = entry.unwrap();
-            let path = entry.path().unwrap();
-            let path = path.strip_prefix(&jdk_dir_name).unwrap();
-            let path = jvm_dir.join(path);
-            entry.unpack(path).unwrap();
+        if download_url.ends_with(".tar.gz") {
+            extract_tar_gz(&content[..], &jvm_dir, &jdk_archive_dir_name);
+        } else if download_url.ends_with(".zip") {
+            extract_zip(&content[..], &jvm_dir, &jdk_archive_dir_name);
+        } else {
+            panic!("Unsupported JVM archive format");
         }
 
         send_log(&app_handle, "Downloaded JVM");
