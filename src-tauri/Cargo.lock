@@ -3355,7 +3355,7 @@ dependencies = [
 
 [[package]]
 name = "soulfire"
-version = "1.0.1"
+version = "1.0.2"
 dependencies = [
  "flate2",
  "reqwest 0.12.4",

@@ -8,8 +8,7 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "soulfire",
-    "version": "1.0.1"
+    "productName": "soulfire"
   },
   "tauri": {
     "allowlist": {
