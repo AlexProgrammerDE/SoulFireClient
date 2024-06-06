@@ -11,14 +11,18 @@ import {
 import {Button} from "@/components/ui/button.tsx";
 
 export type TauriInfo = {
-    osType: string
-    osVersion: string
-    platformName: string
-    osLocale: string | null
-    archName: string
+  osType: string
+  osVersion: string
+  platformName: string
+  osLocale: string | null
+  archName: string
 } | null
 
-export function AboutPopup({open, setOpen, tauriInfo}: { open: boolean, setOpen: (open: boolean) => void, tauriInfo: TauriInfo }) {
+export function AboutPopup({open, setOpen, tauriInfo}: {
+  open: boolean,
+  setOpen: (open: boolean) => void,
+  tauriInfo: TauriInfo
+}) {
   return (
       <Credenza open={open} onOpenChange={setOpen}>
         <CredenzaContent>

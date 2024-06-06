@@ -1,4 +1,4 @@
-import { Table } from "@tanstack/react-table"
+import {Table} from "@tanstack/react-table"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon} from "lucide-react";
@@ -26,7 +26,7 @@ export function DataTablePagination<TData>({
                 }}
             >
               <SelectTrigger className="h-8 w-[70px]">
-                <SelectValue placeholder={table.getState().pagination.pageSize} />
+                <SelectValue placeholder={table.getState().pagination.pageSize}/>
               </SelectTrigger>
               <SelectContent side="top">
                 {[10, 20, 30, 40, 50].map((pageSize) => (
@@ -49,7 +49,7 @@ export function DataTablePagination<TData>({
                 disabled={!table.getCanPreviousPage()}
             >
               <span className="sr-only">Go to first page</span>
-              <ChevronsLeftIcon className="h-4 w-4" />
+              <ChevronsLeftIcon className="h-4 w-4"/>
             </Button>
             <Button
                 variant="outline"
@@ -58,7 +58,7 @@ export function DataTablePagination<TData>({
                 disabled={!table.getCanPreviousPage()}
             >
               <span className="sr-only">Go to previous page</span>
-              <ChevronLeftIcon className="h-4 w-4" />
+              <ChevronLeftIcon className="h-4 w-4"/>
             </Button>
             <Button
                 variant="outline"
@@ -67,7 +67,7 @@ export function DataTablePagination<TData>({
                 disabled={!table.getCanNextPage()}
             >
               <span className="sr-only">Go to next page</span>
-              <ChevronRightIcon className="h-4 w-4" />
+              <ChevronRightIcon className="h-4 w-4"/>
             </Button>
             <Button
                 variant="outline"
@@ -76,7 +76,7 @@ export function DataTablePagination<TData>({
                 disabled={!table.getCanNextPage()}
             >
               <span className="sr-only">Go to last page</span>
-              <ChevronsRightIcon className="h-4 w-4" />
+              <ChevronsRightIcon className="h-4 w-4"/>
             </Button>
           </div>
         </div>

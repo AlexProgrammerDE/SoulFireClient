@@ -97,11 +97,11 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
 
             if (account) {
               accountsToAdd.push({
-                  type: account.type,
-                  profileId: account.profileId,
-                  lastKnownName: account.lastKnownName,
-                  accountData: account.accountData
-                })
+                type: account.type,
+                profileId: account.profileId,
+                lastKnownName: account.lastKnownName,
+                accountData: account.accountData
+              })
             }
           }
 

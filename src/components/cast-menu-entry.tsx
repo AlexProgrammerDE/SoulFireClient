@@ -1,5 +1,4 @@
 import {MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger} from "@/components/ui/menubar.tsx";
-import {open as shellOpen} from "@tauri-apps/api/shell";
 import {useEffect, useState} from "react";
 import {invoke} from "@tauri-apps/api";
 import {toast} from "sonner";
@@ -9,6 +8,7 @@ type MediaDeviceInfo = {
   id: string
   name: string
   address: string
+  port: number
 }
 
 export default function CastMenuEntry() {
@@ -42,7 +42,14 @@ export default function CastMenuEntry() {
                     {
                       devices.map((device, index) => (
                           <MenubarItem key={index} onClick={() => {
-                            void shellOpen(`http://${device.address}`)
+                            toast.promise(invoke("connect_cast", {
+                              address: device.address,
+                              port: device.port
+                            }), {
+                              loading: `Connecting to ${device.name}...`,
+                              success: `Connected to ${device.name}!`,
+                              error: `Failed to connect to ${device.name}`
+                            })
                           }}>{device.name}</MenubarItem>
                       ))
                     }

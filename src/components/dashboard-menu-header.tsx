@@ -201,7 +201,7 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
             </MenubarContent>
           </MenubarMenu>
           {
-            isTauri() && <CastMenuEntry/>
+              isTauri() && <CastMenuEntry/>
           }
           <MenubarMenu>
             <MenubarTrigger>Help</MenubarTrigger>

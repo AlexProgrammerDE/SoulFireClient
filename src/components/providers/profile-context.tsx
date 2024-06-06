@@ -6,7 +6,7 @@ export const ProfileContext = createContext<{
   setProfile: (profile: ProfileRoot) => void
 }>(null as never)
 
-export default function ProfileProvider({children}: {children: ReactNode}) {
+export default function ProfileProvider({children}: { children: ReactNode }) {
   const [profile, setProfile] = useState(DEFAULT_PROFILE)
 
   return <ProfileContext.Provider value={{

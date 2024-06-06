@@ -3,8 +3,11 @@
 
 use std::env;
 use std::net::TcpListener;
+use std::str::FromStr;
 use std::time::Duration;
 use mdns_sd::{ServiceDaemon, ServiceEvent};
+use rust_cast::CastDevice;
+use rust_cast::channels::receiver::{Application, CastDeviceApp};
 use serde::Serialize;
 use serde_json::json;
 use tauri::{AppHandle, CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
@@ -253,10 +256,13 @@ fn detect_os() -> &'static str {
 }
 
 const SERVICE_TYPE: &str = "_googlecast._tcp.local.";
+const DEFAULT_DESTINATION_ID: &str = "receiver-0";
 const CAST_SCREEN_MODEL_NAME: &str = "Chromecast";
 const CAST_MODEL_NAME: &str = "md";
 const CAST_FRIENDLY_NAME: &str = "fn";
 const CAST_ID: &str = "id";
+const CAST_APP_ID: &str = "3F768D1D";
+const CAST_APP_NAMESPACE: &str = "urn:x-cast:com.soulfiremc";
 
 #[tauri::command]
 async fn discover_casts(app_handle: AppHandle) -> String {
@@ -277,6 +283,7 @@ async fn discover_casts(app_handle: AppHandle) -> String {
                 let id = info.get_properties().get_property_val_str(CAST_ID).unwrap();
                 let name = info.get_properties().get_property_val_str(CAST_FRIENDLY_NAME).unwrap();
                 let address = info.get_hostname();
+                let port = info.get_port();
 
                 if announced_ids.contains(&id.to_string()) {
                     continue;
@@ -289,7 +296,8 @@ async fn discover_casts(app_handle: AppHandle) -> String {
                                     json!({
                                         "id": id,
                                         "name": name,
-                                        "address": address
+                                        "address": address,
+                                        "port": port
                                     }),
                 ).unwrap();
             }
@@ -300,6 +308,39 @@ async fn discover_casts(app_handle: AppHandle) -> String {
     announced_ids.len().to_string()
 }
 
+#[tauri::command]
+async fn connect_cast(address: String, port: u16) {
+    fn connect_device(address: &str, port: u16) -> CastDevice {
+        let cast_device = match CastDevice::connect_without_host_verification(address, port) {
+            Ok(cast_device) => cast_device,
+            Err(err) => panic!("Could not establish connection with Cast Device: {:?}", err),
+        };
+
+        cast_device
+            .connection
+            .connect(DEFAULT_DESTINATION_ID.to_string())
+            .unwrap();
+        cast_device.heartbeat.ping().unwrap();
+
+        cast_device
+    }
+
+    fn run_app(device: &CastDevice, app_to_run: &CastDeviceApp) -> Application {
+        device.receiver.launch_app(app_to_run).unwrap()
+    }
+
+    let cast_device = connect_device(&address, port);
+    let app_to_run = CastDeviceApp::from_str(CAST_APP_ID).unwrap();
+
+    let application = run_app(&cast_device, &app_to_run);
+
+    println!("Connected to application: {:?}", application);
+
+    cast_device.receiver.broadcast_message(CAST_APP_NAMESPACE, &json!({
+        "custom-key": "Hello Chromecast! This message is from the new SoulFire client. :D"
+    })).unwrap();
+}
+
 fn main() {
     let open = CustomMenuItem::new("open".to_string(), "Open SoulFire");
     let quit = CustomMenuItem::new("quit".to_string(), "Quit SoulFire");
@@ -308,7 +349,7 @@ fn main() {
         .add_native_item(SystemTrayMenuItem::Separator)
         .add_item(quit);
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![run_integrated_server, discover_casts])
+        .invoke_handler(tauri::generate_handler![run_integrated_server, discover_casts, connect_cast])
         .system_tray(SystemTray::new().with_menu(tray_menu))
         .on_system_tray_event(|app, event| match event {
             SystemTrayEvent::MenuItemClick { id, .. } => {

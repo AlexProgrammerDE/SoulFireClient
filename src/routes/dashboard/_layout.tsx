@@ -5,7 +5,6 @@ import {ConfigServiceClient} from "@/generated/com/soulfiremc/grpc/generated/con
 import {ClientInfoContext} from "@/components/providers/client-info-context.tsx";
 import {DashboardMenuHeader} from "@/components/dashboard-menu-header.tsx";
 import {Button} from "@/components/ui/button.tsx";
-import {toast} from "sonner";
 import {TerminalComponent} from "@/components/terminal.tsx";
 import CommandInput from "@/components/command-input.tsx";
 import ProfileProvider from "@/components/providers/profile-context.tsx";
