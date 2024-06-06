@@ -25,6 +25,8 @@ strip-ansi-escapes = "0.2.0"
 zip = "2.1.2"
 rust_cast = "0.19.0"
 mdns-sd = "0.11.1"
+env_logger = "0.11.3"
+log = "0.4.21"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.

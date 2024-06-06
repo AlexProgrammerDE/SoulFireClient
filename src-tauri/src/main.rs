@@ -6,13 +6,16 @@ use std::net::TcpListener;
 use std::str::FromStr;
 use std::time::Duration;
 use mdns_sd::{ServiceDaemon, ServiceEvent};
-use rust_cast::CastDevice;
-use rust_cast::channels::receiver::{Application, CastDeviceApp};
+use rust_cast::{CastDevice, ChannelMessage};
+use rust_cast::channels::heartbeat::HeartbeatResponse;
+use rust_cast::channels::receiver::{CastDeviceApp};
 use serde::Serialize;
-use serde_json::json;
+use serde_json::{json, Map, Value};
 use tauri::{AppHandle, CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
 use tauri::api::process::Command;
 use tauri::api::process::CommandEvent::Stdout;
+use log::{error, info};
+use rust_cast::message_manager::CastMessagePayload;
 
 fn extract_tar_gz(data: &[u8], target_dir: &std::path::Path, strip_prefix: &str) {
     let decompressed = flate2::read::GzDecoder::new(data);
@@ -56,7 +59,7 @@ async fn run_integrated_server(app_handle: AppHandle) -> String {
         let adoptium_os = detect_os();
         let adoptium_arch = detect_architecture();
         let jvm_url = format!("https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture={}&image_type=jdk&os={}&vendor=eclipse", adoptium_arch, adoptium_os);
-        println!("JVM URL: {}", jvm_url);
+        info!("JVM URL: {}", jvm_url);
 
         send_log(&app_handle, "Fetching JVM data...");
         let response = reqwest::get(&jvm_url).await.unwrap();
@@ -66,7 +69,7 @@ async fn run_integrated_server(app_handle: AppHandle) -> String {
         let minor_version = jvm_json[0]["version"]["minor"].as_u64().unwrap();
         let security_version = jvm_json[0]["version"]["security"].as_u64().unwrap();
         let build_version = jvm_json[0]["version"]["build"].as_u64().unwrap();
-        println!("Download URL: {}", download_url);
+        info!("Download URL: {}", download_url);
         let jdk_archive_dir_name = format!("jdk-{}.{}.{}+{}", major_version, minor_version, security_version, build_version);
 
         fn send_download_progress(app_handle: &AppHandle, progress: u64, total: u64) {
@@ -107,7 +110,7 @@ async fn run_integrated_server(app_handle: AppHandle) -> String {
     if !soul_fire_version_file.exists() {
         send_log(&app_handle, "Fetching SoulFire data...");
         let soul_fire_url = format!("https://github.com/AlexProgrammerDE/SoulFire/releases/download/{}/SoulFireDedicated-{}.jar", soul_fire_version, soul_fire_version);
-        println!("SoulFire URL: {}", soul_fire_url);
+        info!("SoulFire URL: {}", soul_fire_url);
 
         fn send_download_progress(app_handle: &AppHandle, progress: u64, total: u64) {
             send_log(app_handle, format!("Downloading SoulFire... {}%", progress * 100 / total));
@@ -145,7 +148,7 @@ async fn run_integrated_server(app_handle: AppHandle) -> String {
 
     let available_port = find_next_available_port(38765).unwrap();
 
-    println!("Java Executable: {}", java_exec_path);
+    info!("Java Executable: {}", java_exec_path);
     let command = Command::new(java_exec_path)
         .current_dir(soul_fire_rundir)
         .args(&[
@@ -291,7 +294,7 @@ async fn discover_casts(app_handle: AppHandle) -> String {
 
                 announced_ids.push(id.to_string());
 
-                println!("Discovered cast device: {} at {}", name, address);
+                info!("Discovered cast device: {} at {}", name, address);
                 app_handle.emit_all("cast-device-discovered",
                                     json!({
                                         "id": id,
@@ -305,43 +308,77 @@ async fn discover_casts(app_handle: AppHandle) -> String {
         }
     }
 
+    mdns.shutdown().unwrap();
+
     announced_ids.len().to_string()
 }
 
 #[tauri::command]
 async fn connect_cast(address: String, port: u16) {
-    fn connect_device(address: &str, port: u16) -> CastDevice {
-        let cast_device = match CastDevice::connect_without_host_verification(address, port) {
-            Ok(cast_device) => cast_device,
-            Err(err) => panic!("Could not establish connection with Cast Device: {:?}", err),
-        };
+    let cast_device = match CastDevice::connect_without_host_verification(&address, port) {
+        Ok(cast_device) => cast_device,
+        Err(err) => panic!("Could not establish connection with Cast Device: {:?}", err),
+    };
 
-        cast_device
-            .connection
-            .connect(DEFAULT_DESTINATION_ID.to_string())
-            .unwrap();
-        cast_device.heartbeat.ping().unwrap();
+    info!("Connected to Cast Device: {:?} {:?}", address, port);
+    cast_device
+        .connection
+        .connect(DEFAULT_DESTINATION_ID.to_string())
+        .unwrap();
 
-        cast_device
-    }
-
-    fn run_app(device: &CastDevice, app_to_run: &CastDeviceApp) -> Application {
-        device.receiver.launch_app(app_to_run).unwrap()
-    }
-
-    let cast_device = connect_device(&address, port);
     let app_to_run = CastDeviceApp::from_str(CAST_APP_ID).unwrap();
+    let application = cast_device.receiver.launch_app(&app_to_run).unwrap();
 
-    let application = run_app(&cast_device, &app_to_run);
+    cast_device.connection.disconnect(DEFAULT_DESTINATION_ID).unwrap();
 
-    println!("Connected to application: {:?}", application);
+    cast_device
+        .connection
+        .connect(&application.transport_id)
+        .unwrap();
+
+    info!("Connected to application: {:?}", application);
 
     cast_device.receiver.broadcast_message(CAST_APP_NAMESPACE, &json!({
-        "custom-key": "Hello Chromecast! This message is from the new SoulFire client. :D"
+        "type": "INITIAL_HELLO"
     })).unwrap();
+
+    loop {
+        match cast_device.receive() {
+            Ok(ChannelMessage::Heartbeat(response)) => {
+                if let HeartbeatResponse::Ping = response {
+                    cast_device.heartbeat.pong().unwrap();
+                }
+            }
+            Ok(ChannelMessage::Raw(response)) => {
+                if response.namespace == CAST_APP_NAMESPACE {
+                    let CastMessagePayload::String(message) = response.payload else {
+                        continue;
+                    };
+
+                    let json_message: Map<String, Value> = serde_json::from_str(&message).unwrap();
+                    let message_type = json_message.get("type").unwrap().as_str().unwrap();
+                    if message_type == "CHALLENGE_REQUEST" {
+                        let challenge = json_message.get("challenge").unwrap().as_str().unwrap();
+                        let response = json!({
+                            "type": "CHALLENGE_RESPONSE",
+                            "challenge": challenge
+                        });
+                        cast_device.receiver.broadcast_message(CAST_APP_NAMESPACE, &response).unwrap();
+                    } else if message_type == "LOGIN_SUCCESS" {
+                        info!("Successfully logged in to Cast Device");
+                        return;
+                    }
+                }
+            },
+            Err(error) => error!("Error occurred while receiving message {}", error),
+            _ => {}
+        }
+    }
 }
 
 fn main() {
+    env_logger::init();
+
     let open = CustomMenuItem::new("open".to_string(), "Open SoulFire");
     let quit = CustomMenuItem::new("quit".to_string(), "Quit SoulFire");
     let tray_menu = SystemTrayMenu::new()
