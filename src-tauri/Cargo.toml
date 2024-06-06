@@ -23,6 +23,8 @@ tar = "0.4.40"
 flate2 = "1.0.30"
 strip-ansi-escapes = "0.2.0"
 zip = "2.1.2"
+rust_cast = "0.19.0"
+mdns-sd = "0.11.1"
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.

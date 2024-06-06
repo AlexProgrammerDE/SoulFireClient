@@ -25,6 +25,7 @@ import {open as shellOpen} from "@tauri-apps/api/shell";
 import {appConfigDir, appDataDir, resolve} from "@tauri-apps/api/path";
 import {toast} from "sonner";
 import {arch, locale, platform, type, version} from '@tauri-apps/api/os';
+import CastMenuEntry from "@/components/cast-menu-entry.tsx";
 
 function data2blob(data: string) {
   const bytes = new Array(data.length);
@@ -199,6 +200,9 @@ export const DashboardMenuHeader = ({availableProfiles}: { availableProfiles: st
               </MenubarSub>
             </MenubarContent>
           </MenubarMenu>
+          {
+            isTauri() && <CastMenuEntry/>
+          }
           <MenubarMenu>
             <MenubarTrigger>Help</MenubarTrigger>
             <MenubarContent>

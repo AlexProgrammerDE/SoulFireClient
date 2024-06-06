@@ -77,7 +77,10 @@ const LoginForm = () => {
   useEffect(() => {
     if (loginType === "INTEGRATED" && !integratedServerLoading) {
       setIntegratedServerLoading(true)
+
+      let listening = true
       void listen('integrated-server-start-log', (event) => {
+        if (!listening) return
         setLatestLog(event.payload as string)
       })
       invoke("run_integrated_server").then(payload => {
@@ -86,6 +89,10 @@ const LoginForm = () => {
 
         void redirectWithCredentials(split[0], split[1])
       })
+
+      return () => {
+        listening = false
+      }
     }
   }, [loginType, integratedServerLoading, latestLog, redirectWithCredentials])
 

@@ -3,7 +3,10 @@
 
 use std::env;
 use std::net::TcpListener;
+use std::time::Duration;
+use mdns_sd::{ServiceDaemon, ServiceEvent};
 use serde::Serialize;
+use serde_json::json;
 use tauri::{AppHandle, CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
 use tauri::api::process::Command;
 use tauri::api::process::CommandEvent::Stdout;
@@ -249,6 +252,54 @@ fn detect_os() -> &'static str {
     }
 }
 
+const SERVICE_TYPE: &str = "_googlecast._tcp.local.";
+const CAST_SCREEN_MODEL_NAME: &str = "Chromecast";
+const CAST_MODEL_NAME: &str = "md";
+const CAST_FRIENDLY_NAME: &str = "fn";
+const CAST_ID: &str = "id";
+
+#[tauri::command]
+async fn discover_casts(app_handle: AppHandle) -> String {
+    let mdns = ServiceDaemon::new().expect("Failed to create mDNS daemon.");
+
+    let receiver = mdns
+        .browse(SERVICE_TYPE)
+        .expect("Failed to browse mDNS services.");
+
+    let mut announced_ids: Vec<String> = vec![];
+    while let Ok(event) = receiver.recv_timeout(Duration::from_secs(5)) {
+        match event {
+            ServiceEvent::ServiceResolved(info) => {
+                if info.get_properties().get_property_val_str(CAST_MODEL_NAME).unwrap() != CAST_SCREEN_MODEL_NAME {
+                    continue;
+                }
+
+                let id = info.get_properties().get_property_val_str(CAST_ID).unwrap();
+                let name = info.get_properties().get_property_val_str(CAST_FRIENDLY_NAME).unwrap();
+                let address = info.get_hostname();
+
+                if announced_ids.contains(&id.to_string()) {
+                    continue;
+                }
+
+                announced_ids.push(id.to_string());
+
+                println!("Discovered cast device: {} at {}", name, address);
+                app_handle.emit_all("cast-device-discovered",
+                                    json!({
+                                        "id": id,
+                                        "name": name,
+                                        "address": address
+                                    }),
+                ).unwrap();
+            }
+            _ => {}
+        }
+    }
+
+    announced_ids.len().to_string()
+}
+
 fn main() {
     let open = CustomMenuItem::new("open".to_string(), "Open SoulFire");
     let quit = CustomMenuItem::new("quit".to_string(), "Quit SoulFire");
@@ -257,7 +308,7 @@ fn main() {
         .add_native_item(SystemTrayMenuItem::Separator)
         .add_item(quit);
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![run_integrated_server])
+        .invoke_handler(tauri::generate_handler![run_integrated_server, discover_casts])
         .system_tray(SystemTray::new().with_menu(tray_menu))
         .on_system_tray_event(|app, event| match event {
             SystemTrayEvent::MenuItemClick { id, .. } => {
