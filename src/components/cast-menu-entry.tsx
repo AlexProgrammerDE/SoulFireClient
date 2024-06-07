@@ -2,7 +2,7 @@ import {MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigg
 import {useEffect, useState} from "react";
 import {invoke} from "@tauri-apps/api";
 import {toast} from "sonner";
-import {listen} from "@tauri-apps/api/event";
+import {emit, listen} from "@tauri-apps/api/event";
 
 type MediaDeviceInfo = {
   id: string
@@ -65,6 +65,19 @@ export default function CastMenuEntry() {
               error: "Failed to find devices"
             })
           }}>Refresh</MenubarItem>
+          <MenubarSeparator/>
+          <MenubarItem onClick={async () => {
+            toast.promise(emit("cast-global-message", {
+              type: "DISPLAY_LOGS",
+              logs: ["Hello from SoulFire!"]
+            }), {
+              loading: "Broadcasting message...",
+              success: "Message broadcasted!",
+              error: "Failed to broadcast message"
+            })
+          }}>
+            Broadcast test
+          </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
   );

@@ -1,9 +1,10 @@
 // Prevents an additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use std::env;
+use std::{env, thread};
 use std::net::TcpListener;
 use std::str::FromStr;
+use std::sync::mpsc::{channel, Sender};
 use std::time::Duration;
 use mdns_sd::{ServiceDaemon, ServiceEvent};
 use rust_cast::{CastDevice, ChannelMessage};
@@ -314,7 +315,19 @@ async fn discover_casts(app_handle: AppHandle) -> String {
 }
 
 #[tauri::command]
-async fn connect_cast(address: String, port: u16) {
+async fn connect_cast(address: String, port: u16, app_handle: AppHandle) {
+    let (tx, rx) = channel();
+
+    thread::spawn(move || {
+        create_cast_connection(address, port, app_handle, tx);
+    });
+
+    if rx.recv().is_ok() {
+        return;
+    }
+}
+
+fn create_cast_connection(address: String, port: u16, app_handle: AppHandle, channel: Sender<()>) {
     let cast_device = match CastDevice::connect_without_host_verification(&address, port) {
         Ok(cast_device) => cast_device,
         Err(err) => panic!("Could not establish connection with Cast Device: {:?}", err),
@@ -342,7 +355,14 @@ async fn connect_cast(address: String, port: u16) {
         "type": "INITIAL_HELLO"
     })).unwrap();
 
+    let mut sent_success = false;
+    let (tx, rx) = std::sync::mpsc::sync_channel(64);
     loop {
+        if let Ok(message) = rx.try_recv() {
+            info!("Sending message to Cast Device: {:?}", message);
+            cast_device.receiver.broadcast_message(CAST_APP_NAMESPACE, &message).unwrap();
+        }
+
         match cast_device.receive() {
             Ok(ChannelMessage::Heartbeat(response)) => {
                 if let HeartbeatResponse::Ping = response {
@@ -366,7 +386,19 @@ async fn connect_cast(address: String, port: u16) {
                         cast_device.receiver.broadcast_message(CAST_APP_NAMESPACE, &response).unwrap();
                     } else if message_type == "LOGIN_SUCCESS" {
                         info!("Successfully logged in to Cast Device");
-                        return;
+
+                        let tx = tx.clone();
+                        app_handle.listen_global("cast-global-message", move |event| {
+                            let message = event.payload().unwrap();
+                            let message_json: Value = serde_json::from_str(&message).unwrap();
+
+                            tx.send(message_json).unwrap();
+                        });
+
+                        if !sent_success {
+                            channel.send(()).unwrap();
+                            sent_success = true;
+                        }
                     }
                 }
             },
