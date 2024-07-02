@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@hookform/resolvers':
         specifier: ^3.3.4
-        version: 3.6.0(react-hook-form@7.52.1(react@18.3.1))
+        version: 3.7.0(react-hook-form@7.52.1(react@18.3.1))
       '@protobuf-ts/grpcweb-transport':
         specifier: ^2.9.4
         version: 2.9.4
@@ -485,8 +485,8 @@ packages:
   '@floating-ui/utils@0.2.3':
     resolution: {integrity: sha512-XGndio0l5/Gvd6CLIABvsav9HHezgDFFhDfHk1bvLfr9ni8dojqLSvBbotJEjmIwNHL7vK4QzBJTdBRoB+c1ww==}
 
-  '@hookform/resolvers@3.6.0':
-    resolution: {integrity: sha512-UBcpyOX3+RR+dNnqBd0lchXpoL8p4xC21XP8H6Meb8uve5Br1GCnmg0PcBoKKqPKgGu9GHQ/oygcmPrQhetwqw==}
+  '@hookform/resolvers@3.7.0':
+    resolution: {integrity: sha512-42p5X18noBV3xqOpTlf2V5qJZwzNgO4eLzHzmKGh/w7z4+4XqRw5AsESVkqE+qwAuRRlg2QG12EVEjPkrRIbeg==}
     peerDependencies:
       react-hook-form: ^7.0.0
 
@@ -3384,7 +3384,7 @@ snapshots:
 
   '@floating-ui/utils@0.2.3': {}
 
-  '@hookform/resolvers@3.6.0(react-hook-form@7.52.1(react@18.3.1))':
+  '@hookform/resolvers@3.7.0(react-hook-form@7.52.1(react@18.3.1))':
     dependencies:
       react-hook-form: 7.52.1(react@18.3.1)
 
