@@ -1,124 +1,139 @@
-import {ServerConnectionContext} from "@/components/providers/server-context.tsx";
-import {createFileRoute, Outlet, redirect, useNavigate} from "@tanstack/react-router";
-import {GrpcWebFetchTransport} from "@protobuf-ts/grpcweb-transport";
-import {ConfigServiceClient} from "@/generated/com/soulfiremc/grpc/generated/config.client.ts";
-import {ClientInfoContext} from "@/components/providers/client-info-context.tsx";
-import {DashboardMenuHeader} from "@/components/dashboard-menu-header.tsx";
-import {Button} from "@/components/ui/button.tsx";
-import {TerminalComponent} from "@/components/terminal.tsx";
-import CommandInput from "@/components/command-input.tsx";
-import ProfileProvider from "@/components/providers/profile-context.tsx";
-import {LOCAL_STORAGE_SERVER_ADDRESS_KEY, LOCAL_STORAGE_SERVER_TOKEN_KEY} from "@/lib/types.ts";
-import {isTauri} from "@/lib/utils.ts";
-import {createDir, readDir} from "@tauri-apps/api/fs";
-import {appConfigDir, resolve} from "@tauri-apps/api/path";
+import { ServerConnectionContext } from '@/components/providers/server-context.tsx';
+import {
+  createFileRoute,
+  Outlet,
+  redirect,
+  useNavigate,
+} from '@tanstack/react-router';
+import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
+import { ConfigServiceClient } from '@/generated/com/soulfiremc/grpc/generated/config.client.ts';
+import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
+import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { TerminalComponent } from '@/components/terminal.tsx';
+import CommandInput from '@/components/command-input.tsx';
+import ProfileProvider from '@/components/providers/profile-context.tsx';
+import {
+  LOCAL_STORAGE_SERVER_ADDRESS_KEY,
+  LOCAL_STORAGE_SERVER_TOKEN_KEY,
+} from '@/lib/types.ts';
+import { isTauri } from '@/lib/utils.ts';
+import { createDir, readDir } from '@tauri-apps/api/fs';
+import { appConfigDir, resolve } from '@tauri-apps/api/path';
 
 const isAuthenticated = () => {
-  return localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY) !== null && localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY) !== null
-}
+  return (
+    localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY) !== null &&
+    localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY) !== null
+  );
+};
 
 export const Route = createFileRoute('/dashboard/_layout')({
-  beforeLoad: async ({location}) => {
+  beforeLoad: async ({ location }) => {
     if (!isAuthenticated()) {
       throw redirect({
         to: '/',
         search: {
           redirect: location.href,
         },
-      })
+      });
     }
   },
-  loader: async props => {
-    const address = localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY)
-    const token = localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY)
+  loader: async (props) => {
+    const address = localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY);
+    const token = localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY);
 
     if (!address || !token) {
-      throw new Error("No server address or token")
+      throw new Error('No server address or token');
     }
 
     const transport = new GrpcWebFetchTransport({
       baseUrl: address,
       meta: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
 
     const configService = new ConfigServiceClient(transport);
-    const result = await configService.getClientData({}, {
-      abort: props.abortController.signal
-    })
+    const result = await configService.getClientData(
+      {},
+      {
+        abort: props.abortController.signal,
+      },
+    );
 
-    let availableProfiles: string[] = []
+    let availableProfiles: string[] = [];
     if (isTauri()) {
-      const profileDir = await resolve(await resolve(await appConfigDir(), 'profile'))
-      await createDir(profileDir, {recursive: true})
+      const profileDir = await resolve(
+        await resolve(await appConfigDir(), 'profile'),
+      );
+      await createDir(profileDir, { recursive: true });
 
       availableProfiles = (await readDir(profileDir))
-          .filter(file => !file.children)
-          .filter(file => file.name)
-          .map(file => file.name!)
-          .filter(file => file.endsWith('.json'))
+        .filter((file) => !file.children)
+        .filter((file) => file.name)
+        .map((file) => file.name!)
+        .filter((file) => file.endsWith('.json'));
     }
 
     return {
       transport,
       clientData: result.response,
-      availableProfiles
-    }
+      availableProfiles,
+    };
   },
   errorComponent: ErrorComponent,
   pendingComponent: () => (
-      <div className="w-full h-full flex">
-        Connecting...
-      </div>
+    <div className="flex h-full w-full">Connecting...</div>
   ),
   component: ClientLayout,
-})
+});
 
-function ErrorComponent({error}: { error: Error }) {
-  const navigate = useNavigate()
+function ErrorComponent({ error }: { error: Error }) {
+  const navigate = useNavigate();
 
   return (
-      <div className="m-auto flex flex-col gap-2">
-        <h1 className="text-2xl font-bold">Error</h1>
-        <p className="text-red-500">
-          {error.message}
-        </p>
-        <Button className="w-fit" onClick={() => {
+    <div className="m-auto flex flex-col gap-2">
+      <h1 className="text-2xl font-bold">Error</h1>
+      <p className="text-red-500">{error.message}</p>
+      <Button
+        className="w-fit"
+        onClick={() => {
           void navigate({
-            to: "/",
-            replace: true
-          })
-        }}>
-          Back to login
-        </Button>
-      </div>
-  )
+            to: '/',
+            replace: true,
+          });
+        }}
+      >
+        Back to login
+      </Button>
+    </div>
+  );
 }
 
 function ClientLayout() {
-  const {transport, clientData, availableProfiles} = Route.useLoaderData()
+  const { transport, clientData, availableProfiles } = Route.useLoaderData();
 
   return (
-      <div className="flex flex-col h-screen w-screen">
-        <ServerConnectionContext.Provider value={transport}>
-          <ClientInfoContext.Provider value={clientData}>
-            <ProfileProvider>
-              <DashboardMenuHeader availableProfiles={availableProfiles}/>
-              <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="flex p-4 md:h-[calc(100vh-2.5rem)] overflow-auto">
-                  <Outlet/>
-                </div>
-                <div className="flex flex-col gap-4 p-4">
-                  <div className="terminal-container flex-grow md:h-[calc(100vh-9rem)]">
-                    <TerminalComponent/>
-                  </div>
-                  <CommandInput/>
-                </div>
+    <div className="flex h-screen w-screen flex-col">
+      <ServerConnectionContext.Provider value={transport}>
+        <ClientInfoContext.Provider value={clientData}>
+          <ProfileProvider>
+            <DashboardMenuHeader availableProfiles={availableProfiles} />
+            <div className="grid flex-grow grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="flex overflow-auto p-4 md:h-[calc(100vh-2.5rem)]">
+                <Outlet />
               </div>
-            </ProfileProvider>
-          </ClientInfoContext.Provider>
-        </ServerConnectionContext.Provider>
-      </div>
+              <div className="flex flex-col gap-4 p-4">
+                <div className="terminal-container flex-grow md:h-[calc(100vh-9rem)]">
+                  <TerminalComponent />
+                </div>
+                <CommandInput />
+              </div>
+            </div>
+          </ProfileProvider>
+        </ClientInfoContext.Provider>
+      </ServerConnectionContext.Provider>
+    </div>
   );
 }

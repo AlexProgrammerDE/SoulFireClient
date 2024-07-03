@@ -67,19 +67,20 @@
 }
 
 @layer base {
-  html, body {
-    @apply max-h-screen h-screen w-screen;
+  html,
+  body {
+    @apply h-screen max-h-screen w-screen;
   }
   body {
     font-family: 'Geist Variable', sans-serif;
-    @apply bg-background text-foreground antialiased overflow-hidden;
+    @apply overflow-hidden bg-background text-foreground antialiased;
   }
   * {
     @apply border-border;
   }
 }
 
-.terminal-container{
+.terminal-container {
   /* this is important */
   overflow: hidden;
 }

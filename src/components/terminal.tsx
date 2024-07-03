@@ -1,10 +1,10 @@
-import {useContext, useEffect, useRef, useState} from "react";
-import "@xterm/xterm/css/xterm.css";
-import {FitAddon} from '@xterm/addon-fit';
-import {LogsServiceClient} from "@/generated/com/soulfiremc/grpc/generated/logs.client.ts";
-import {ServerConnectionContext} from "./providers/server-context";
-import {ITerminalOptions, Terminal} from "@xterm/xterm";
-import debounce from "debounce";
+import { useContext, useEffect, useRef, useState } from 'react';
+import '@xterm/xterm/css/xterm.css';
+import { FitAddon } from '@xterm/addon-fit';
+import { LogsServiceClient } from '@/generated/com/soulfiremc/grpc/generated/logs.client.ts';
+import { ServerConnectionContext } from './providers/server-context';
+import { ITerminalOptions, Terminal } from '@xterm/xterm';
+import debounce from 'debounce';
 
 const terminalProps: ITerminalOptions = {
   allowTransparency: true,
@@ -15,10 +15,10 @@ const terminalProps: ITerminalOptions = {
 export const TerminalComponent = () => {
   const terminalRef = useRef<HTMLDivElement>(null);
   const [terminal, setTerminal] = useState<Terminal | null>(null);
-  const serverConnection = useContext(ServerConnectionContext)
+  const serverConnection = useContext(ServerConnectionContext);
 
   useEffect(() => {
-    const terminal = new Terminal({...terminalProps});
+    const terminal = new Terminal({ ...terminalProps });
 
     setTerminal(terminal);
     return () => {
@@ -30,7 +30,7 @@ export const TerminalComponent = () => {
 
   useEffect(() => {
     if (!terminalRef.current || !terminal) {
-      return
+      return;
     }
 
     const fitAddon = new FitAddon();
@@ -43,38 +43,41 @@ export const TerminalComponent = () => {
       if (terminal.element) {
         fitAddon.fit();
       }
-    }, 100)
+    }, 100);
 
     window.addEventListener('resize', resizeListener);
     return () => {
       window.removeEventListener('resize', resizeListener);
-    }
+    };
   }, [terminal, terminalRef]);
 
   useEffect(() => {
     if (!terminalRef.current || !terminal) {
-      return
+      return;
     }
 
     terminal.clear();
     const abortController = new AbortController();
     const logsService = new LogsServiceClient(serverConnection);
-    logsService.subscribe({
-      previous: 300
-    }, {
-      abort: abortController.signal
-    }).responses.onMessage((message) => {
-      for (const line of message.message.split("\n")) {
-        terminal.write(line + "\r\n")
-      }
-    })
+    logsService
+      .subscribe(
+        {
+          previous: 300,
+        },
+        {
+          abort: abortController.signal,
+        },
+      )
+      .responses.onMessage((message) => {
+        for (const line of message.message.split('\n')) {
+          terminal.write(line + '\r\n');
+        }
+      });
 
     return () => {
       abortController.abort();
-    }
+    };
   }, [serverConnection, terminal, terminalRef]);
 
-  return (
-      <div className="h-full" ref={terminalRef}/>
-  )
-}
+  return <div className="h-full" ref={terminalRef} />;
+};
