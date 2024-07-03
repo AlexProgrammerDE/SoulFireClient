@@ -7,7 +7,6 @@ use std::str::FromStr;
 use std::sync::atomic::AtomicBool;
 use std::sync::mpsc::{channel, Sender};
 use discord_presence::{Client, Event};
-use discord_presence::models::ActivityButton;
 use mdns_sd::{ServiceDaemon, ServiceEvent};
 use rust_cast::{CastDevice, ChannelMessage};
 use rust_cast::channels::heartbeat::HeartbeatResponse;
@@ -449,7 +448,6 @@ fn load_discord_rpc() {
 
   let _ready = drpc.on_ready(|_ctx| {
     println!("ready?");
-    ;
   });
 
   let _activity_join_request = drpc.on_activity_join_request(|ctx| {
