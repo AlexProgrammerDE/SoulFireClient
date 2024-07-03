@@ -3,6 +3,8 @@ import {
   MinecraftAccountProto,
   MinecraftAccountProto_AccountTypeProto, ProxyProto_Type
 } from "@/generated/com/soulfiremc/grpc/generated/common.ts";
+import {Struct} from "@/generated/google/protobuf/struct.ts";
+import {JsonValue} from "@protobuf-ts/runtime/build/types/json-typings";
 
 export const LOCAL_STORAGE_SERVER_ADDRESS_KEY = "server-address"
 export const LOCAL_STORAGE_SERVER_TOKEN_KEY = "server-token"
@@ -13,25 +15,11 @@ export const DEFAULT_PROFILE: ProfileRoot = {
   proxies: []
 }
 
-export type ProfileSettingsJSDataTypes = string | WrappedInteger | WrappedDouble | boolean
-
 export type ProfileRoot = {
-  settings: Record<string, Record<string, ProfileSettingsJSDataTypes>>,
+  settings: Record<string, Record<string, JsonValue>>,
   accounts: ProfileAccount[],
   proxies: ProfileProxy[],
 }
-
-export class WrappedInteger {
-  constructor(public value: number) {
-  }
-}
-
-export class WrappedDouble {
-  constructor(public value: number) {
-  }
-}
-
-
 
 export function getEnumKeyByValue<E extends object>(enumObj: E, value: number): keyof E {
     return Object.entries(enumObj).find(([, v]) => v === value)?.[0] as keyof E
@@ -51,39 +39,10 @@ export type ProfileProxy = {
   password?: string
 }
 
-function toSettingsEntryProto(key: string, value: ProfileSettingsJSDataTypes): SettingsEntry {
-  if (typeof value === "string") {
-    return {
-      key: key,
-      value: {
-        oneofKind: "stringValue",
-        stringValue: value
-      }
-    }
-  } else if (value instanceof WrappedInteger) {
-    return {
-      key: key,
-      value: {
-        oneofKind: "intValue",
-        intValue: value.value
-      }
-    }
-  } else if (value instanceof WrappedDouble) {
-    return {
-      key: key,
-      value: {
-        oneofKind: "doubleValue",
-        doubleValue: value.value
-      }
-    }
-  } else {
-    return {
-      key: key,
-      value: {
-        oneofKind: "boolValue",
-        boolValue: value
-      }
-    }
+function toSettingsEntryProto(key: string, value: JsonValue): SettingsEntry {
+  return {
+    key: key,
+    value: Struct.fromJson(value)
   }
 }
 
