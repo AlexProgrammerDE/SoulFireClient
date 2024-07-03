@@ -125,7 +125,7 @@ importers:
         version: 1.43.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/router-vite-plugin':
         specifier: ^1.20.0
-        version: 1.43.5(vite@5.3.3(@types/node@20.14.9))
+        version: 1.43.9(vite@5.3.3(@types/node@20.14.9))
       '@tauri-apps/cli':
         specifier: ^1.5.11
         version: 1.6.0
@@ -1306,20 +1306,23 @@ packages:
     resolution: {integrity: sha512-9dK/vVGO6SupMed1EAHwsIY0sHEu1EBsVYa208/V+zonJLOTNTthuDAYUxjmLTLm18FeqsujKoDl0hFX4rsREw==}
     engines: {node: '>=12'}
 
-  '@tanstack/router-plugin@1.43.5':
-    resolution: {integrity: sha512-poKdkvafqSCQ4a7aDz00yN6NpdbWLr1Seg64bahUaM0FsyBP3HjXECbfsjpUETyInqp2/bjkpkmD1J9G4anhRg==}
+  '@tanstack/router-plugin@1.43.9':
+    resolution: {integrity: sha512-RGLurxb7/pAyWpHD56vn9Hl1Q5ZlfhrLjm5uJsJshChwodAn/+eee6MfkoYl677n67KOUeX8QOvuff6txhww5g==}
     engines: {node: '>=12'}
     peerDependencies:
       '@rsbuild/core': '>=0.7.9'
       vite: '>=5.0.13'
+      webpack: '>=5.92.0'
     peerDependenciesMeta:
       '@rsbuild/core':
         optional: true
       vite:
         optional: true
+      webpack:
+        optional: true
 
-  '@tanstack/router-vite-plugin@1.43.5':
-    resolution: {integrity: sha512-Zctc3JI7stvLbQ8PHhkfjUjAMYeos6PZBI/uE/a97Csvg53z74sVKWRF5pb+G21GSs4PWoMuThoO37wfq2b2nw==}
+  '@tanstack/router-vite-plugin@1.43.9':
+    resolution: {integrity: sha512-XOZ1GkPD2aHIReuJa4F/BbYbmZrhWXxeTXWZgjd/Q5P/moqTT4wiJV9j7jVVuK2lGMeiABKsbizsiPA+COPzwA==}
     engines: {node: '>=12'}
 
   '@tanstack/store@0.1.3':
@@ -1549,8 +1552,8 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  acorn@8.12.0:
-    resolution: {integrity: sha512-RTvkC4w+KNXrM39/lWCUaG0IbRkWdCv7W/IOW9oU6SawyxulvkQy5HQPVTKxEjczcUvapcrw3cFx/60VN/NRNw==}
+  acorn@8.12.1:
+    resolution: {integrity: sha512-tcpGyI9zbizT9JbV6oYE477V6mTlXvvi0T0G3SNIYE2apm/G5huBa1+K89VGeovbg+jycCrfhl3ADxErOuO6Jg==}
     engines: {node: '>=0.4.0'}
     hasBin: true
 
@@ -1705,8 +1708,8 @@ packages:
   caniuse-lite@1.0.30001625:
     resolution: {integrity: sha512-4KE9N2gcRH+HQhpeiRZXd+1niLB/XNLAhSy4z7fI8EzcbcPoAqjNInxVHTiTwWfTIV4w096XG8OtCOCQQKPv3w==}
 
-  caniuse-lite@1.0.30001639:
-    resolution: {integrity: sha512-eFHflNTBIlFwP2AIKaYuBQN/apnUoKNhBdza8ZnW/h2di4LCZ4xFqYlxUxo+LQ76KFI1PGcC1QDxMbxTZpSCAg==}
+  caniuse-lite@1.0.30001640:
+    resolution: {integrity: sha512-lA4VMpW0PSUrFnkmVuEKBUovSWKhj7puyCg8StBChgu298N1AtuF1sKWEvfDuimSEDbhlb/KqPKC3fs1HbuQUA==}
 
   chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -2984,6 +2987,12 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
+  update-browserslist-db@1.1.0:
+    resolution: {integrity: sha512-EdRAaAyk2cUE1wOf2DkEhzxqOQvFOoRJFNS6NeyJ01Gp2beMRpBAINjM2iDXE3KCuKhwnvHIQCJm6ThL2Z+HzQ==}
+    hasBin: true
+    peerDependencies:
+      browserslist: '>= 4.21.0'
+
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
@@ -4167,7 +4176,7 @@ snapshots:
       prettier: 3.3.2
       zod: 3.23.8
 
-  '@tanstack/router-plugin@1.43.5(vite@5.3.3(@types/node@20.14.9))':
+  '@tanstack/router-plugin@1.43.9(vite@5.3.3(@types/node@20.14.9))':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/generator': 7.24.7
@@ -4183,6 +4192,7 @@ snapshots:
       '@types/babel__template': 7.4.4
       '@types/babel__traverse': 7.20.6
       babel-dead-code-elimination: 1.0.6
+      chokidar: 3.6.0
       unplugin: 1.11.0
       zod: 3.23.8
     optionalDependencies:
@@ -4190,13 +4200,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@tanstack/router-vite-plugin@1.43.5(vite@5.3.3(@types/node@20.14.9))':
+  '@tanstack/router-vite-plugin@1.43.9(vite@5.3.3(@types/node@20.14.9))':
     dependencies:
-      '@tanstack/router-plugin': 1.43.5(vite@5.3.3(@types/node@20.14.9))
+      '@tanstack/router-plugin': 1.43.9(vite@5.3.3(@types/node@20.14.9))
     transitivePeerDependencies:
       - '@rsbuild/core'
       - supports-color
       - vite
+      - webpack
 
   '@tanstack/store@0.1.3': {}
 
@@ -4433,7 +4444,7 @@ snapshots:
 
   acorn@8.11.3: {}
 
-  acorn@8.12.0: {}
+  acorn@8.12.1: {}
 
   ajv@6.12.6:
     dependencies:
@@ -4611,10 +4622,10 @@ snapshots:
 
   browserslist@4.23.1:
     dependencies:
-      caniuse-lite: 1.0.30001639
+      caniuse-lite: 1.0.30001640
       electron-to-chromium: 1.4.816
       node-releases: 2.0.14
-      update-browserslist-db: 1.0.16(browserslist@4.23.1)
+      update-browserslist-db: 1.1.0(browserslist@4.23.1)
 
   call-bind@1.0.7:
     dependencies:
@@ -4630,7 +4641,7 @@ snapshots:
 
   caniuse-lite@1.0.30001625: {}
 
-  caniuse-lite@1.0.30001639: {}
+  caniuse-lite@1.0.30001640: {}
 
   chalk@2.4.2:
     dependencies:
@@ -6103,7 +6114,7 @@ snapshots:
 
   unplugin@1.11.0:
     dependencies:
-      acorn: 8.12.0
+      acorn: 8.12.1
       chokidar: 3.6.0
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.6.2
@@ -6114,7 +6125,7 @@ snapshots:
       escalade: 3.1.2
       picocolors: 1.0.1
 
-  update-browserslist-db@1.0.16(browserslist@4.23.1):
+  update-browserslist-db@1.1.0(browserslist@4.23.1):
     dependencies:
       browserslist: 4.23.1
       escalade: 3.1.2
