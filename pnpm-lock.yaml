@@ -55,7 +55,7 @@ importers:
         version: 8.19.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/router-devtools':
         specifier: ^1.20.1
-        version: 1.44.0(@tanstack/react-router@1.44.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 1.44.1(@tanstack/react-router@1.44.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tauri-apps/api':
         specifier: ^1.5.3
         version: 1.6.0
@@ -122,10 +122,10 @@ importers:
         version: 2.9.4
       '@tanstack/react-router':
         specifier: ^1.20.1
-        version: 1.44.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 1.44.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/router-vite-plugin':
         specifier: ^1.20.0
-        version: 1.43.13(vite@5.3.3(@types/node@20.14.10))
+        version: 1.44.1(vite@5.3.3(@types/node@20.14.10))
       '@tauri-apps/cli':
         specifier: ^1.5.11
         version: 1.6.0
@@ -517,6 +517,9 @@ packages:
 
   '@jridgewell/sourcemap-codec@1.4.15':
     resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
+
+  '@jridgewell/sourcemap-codec@1.5.0':
+    resolution: {integrity: sha512-gv3ZRaISU3fjPAgNsriBRqGWQL6quFx04YMPW/zD8XMLsU32mhCCbfbO6KZFLjvYpCZ8zyDEgqsgf+PwPaM7GQ==}
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
@@ -1270,8 +1273,8 @@ packages:
     resolution: {integrity: sha512-Tr3WNthMbyKLWlMQetDPhmW7nKunJIZxdvn/kwUhmK7/lDKqNFy0GA77fpcO4LUguI20VZYwwjesOC2FOgMlkw==}
     engines: {node: '>=12'}
 
-  '@tanstack/react-router@1.44.0':
-    resolution: {integrity: sha512-4z5zBWmYHSwc4uu1qe/WKa6vKKh4aGggHDej+B0bIUUx3c7OCHb9HtBS9yJb9ZcxW1t6cWr0aFF3EqZ+U8Fscg==}
+  '@tanstack/react-router@1.44.1':
+    resolution: {integrity: sha512-YGCwPdCEIzZNjw7GHnYyYD8jJPNyPZY2HVMTyYrFS3tOkMsWPohAki+ZrayRTtObavKeT60vsW274wEcVKMMhw==}
     engines: {node: '>=12'}
     peerDependencies:
       react: '>=18'
@@ -1290,20 +1293,20 @@ packages:
       react: '>=16.8'
       react-dom: '>=16.8'
 
-  '@tanstack/router-devtools@1.44.0':
-    resolution: {integrity: sha512-bPMibnqY4QnUbVJARxjNV0LGmaA6VU3DPkcZKBxHeCNCDTqc744TRnPAGhHFVwEtDqXQkf1rnVgf4qMnuYQz3w==}
+  '@tanstack/router-devtools@1.44.1':
+    resolution: {integrity: sha512-nwc8yDW104Ji/Tka+9vy0Lw45izblDjF/pXKebXU1dG3rHT53UnmTd+NfJNGsTPpZ4frKRtPyYFdeGolM5lx2w==}
     engines: {node: '>=12'}
     peerDependencies:
-      '@tanstack/react-router': ^1.44.0
+      '@tanstack/react-router': ^1.44.1
       react: '>=18'
       react-dom: '>=18'
 
-  '@tanstack/router-generator@1.43.13':
-    resolution: {integrity: sha512-uWs32cgtREaqqjD6sBCZnuX3HmTMSyU+xhHAsT8Fa3mLCyXj4ABJ8uzItPQYLyoZtJ8M1eV7XDe48vDbjus+AA==}
+  '@tanstack/router-generator@1.44.1':
+    resolution: {integrity: sha512-5mJJt5oMsjXThK6pYJcoouVzRBiwnAO5z3RCKmkxA+ZBzFCplEGE0aE8tqb1ZTdhHmaN06XlawhxXgk7uX2VRQ==}
     engines: {node: '>=12'}
 
-  '@tanstack/router-plugin@1.43.13':
-    resolution: {integrity: sha512-v8QD5Ns14bS2Lw6hf6bxRnPqAYHxaQ+3LMKxZqhWfA3S+enQGkyi6lt9Aicr6DX2i0g7yyjUeXA5ro7ekIOdpw==}
+  '@tanstack/router-plugin@1.44.1':
+    resolution: {integrity: sha512-A/+fysfclWIxfwdhQA7IG7xeGTGnoe4Vdc22Gd/OSyIAQTLu9QZ6belBYaQYn+0dRYGZ6zqLZFaoqI5Uee4l/g==}
     engines: {node: '>=12'}
     peerDependencies:
       '@rsbuild/core': '>=0.7.9'
@@ -1317,8 +1320,8 @@ packages:
       webpack:
         optional: true
 
-  '@tanstack/router-vite-plugin@1.43.13':
-    resolution: {integrity: sha512-X4cXKMeNWUA+Z4NVaEWMaAQ0ehIhAZNQk3uCzVk3W9vogIitsLIGE1PrtOFUtHI0iwyx97yfin9ktmZ7atg/HQ==}
+  '@tanstack/router-vite-plugin@1.44.1':
+    resolution: {integrity: sha512-tAsinbe48zy1vWxC5vL8agFCAodAzqMCg4x5vU609cLOKt/odUA1oLkoMcG+h4fV8vknBWaOr+hC+kozGhvtmw==}
     engines: {node: '>=12'}
 
   '@tanstack/store@0.5.4':
@@ -1684,8 +1687,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
-  browserslist@4.23.1:
-    resolution: {integrity: sha512-TUfofFo/KsK/bWZ9TWQ5O26tsWW4Uhmt8IYklbnUa70udB6P2wA7w7o4PY4muaEPBQaAX+CEnmmIA41NVHtPVw==}
+  browserslist@4.23.2:
+    resolution: {integrity: sha512-qkqSyistMYdxAcw+CzbZwlBy8AGmS/eEWs+sEV5TnLRGDOL+C5M2EnH6tlZyg0YoAxGJAFKh61En9BR941GnHA==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
 
@@ -1704,8 +1707,8 @@ packages:
   caniuse-lite@1.0.30001625:
     resolution: {integrity: sha512-4KE9N2gcRH+HQhpeiRZXd+1niLB/XNLAhSy4z7fI8EzcbcPoAqjNInxVHTiTwWfTIV4w096XG8OtCOCQQKPv3w==}
 
-  caniuse-lite@1.0.30001640:
-    resolution: {integrity: sha512-lA4VMpW0PSUrFnkmVuEKBUovSWKhj7puyCg8StBChgu298N1AtuF1sKWEvfDuimSEDbhlb/KqPKC3fs1HbuQUA==}
+  caniuse-lite@1.0.30001641:
+    resolution: {integrity: sha512-Phv5thgl67bHYo1TtMY/MurjkHhV4EDaCosezRXgZ8jzA/Ub+wjxAvbGvjoFENStinwi5kCyOYV3mi5tOGykwA==}
 
   chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -1862,8 +1865,8 @@ packages:
   electron-to-chromium@1.4.787:
     resolution: {integrity: sha512-d0EFmtLPjctczO3LogReyM2pbBiiZbnsKnGF+cdZhsYzHm/A0GV7W94kqzLD8SN4O3f3iHlgLUChqghgyznvCQ==}
 
-  electron-to-chromium@1.4.819:
-    resolution: {integrity: sha512-8RwI6gKUokbHWcN3iRij/qpvf/wCbIVY5slODi85werwqUQwpFXM+dvUBND93Qh7SB0pW3Hlq3/wZsqQ3M9Jaw==}
+  electron-to-chromium@1.4.823:
+    resolution: {integrity: sha512-4h+oPeAiGQOHFyUJOqpoEcPj/xxlicxBzOErVeYVMMmAiXUXsGpsFd0QXBMaUUbnD8hhSfLf9uw+MlsoIA7j5w==}
 
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
@@ -3159,7 +3162,7 @@ snapshots:
     dependencies:
       '@babel/compat-data': 7.24.7
       '@babel/helper-validator-option': 7.24.7
-      browserslist: 4.23.1
+      browserslist: 4.23.2
       lru-cache: 5.1.1
       semver: 6.3.1
 
@@ -3422,10 +3425,12 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.4.15': {}
 
+  '@jridgewell/sourcemap-codec@1.5.0': {}
+
   '@jridgewell/trace-mapping@0.3.25':
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
-      '@jridgewell/sourcemap-codec': 1.4.15
+      '@jridgewell/sourcemap-codec': 1.5.0
 
   '@next/eslint-plugin-next@14.2.5':
     dependencies:
@@ -3941,7 +3946,7 @@ snapshots:
 
   '@radix-ui/react-use-callback-ref@1.0.1(@types/react@18.3.3)(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.0
       react: 18.3.1
     optionalDependencies:
       '@types/react': 18.3.3
@@ -3969,7 +3974,7 @@ snapshots:
 
   '@radix-ui/react-use-escape-keydown@1.0.3(@types/react@18.3.3)(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.0
       '@radix-ui/react-use-callback-ref': 1.0.1(@types/react@18.3.3)(react@18.3.1)
       react: 18.3.1
     optionalDependencies:
@@ -3984,7 +3989,7 @@ snapshots:
 
   '@radix-ui/react-use-layout-effect@1.0.1(@types/react@18.3.3)(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.0
       react: 18.3.1
     optionalDependencies:
       '@types/react': 18.3.3
@@ -4130,7 +4135,7 @@ snapshots:
 
   '@tanstack/history@1.43.14': {}
 
-  '@tanstack/react-router@1.44.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@tanstack/react-router@1.44.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@tanstack/history': 1.43.14
       '@tanstack/react-store': 0.5.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -4152,9 +4157,9 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@tanstack/router-devtools@1.44.0(@tanstack/react-router@1.44.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@tanstack/router-devtools@1.44.1(@tanstack/react-router@1.44.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@tanstack/react-router': 1.44.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tanstack/react-router': 1.44.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       clsx: 2.1.1
       date-fns: 2.30.0
       goober: 2.1.14(csstype@3.1.3)
@@ -4163,12 +4168,12 @@ snapshots:
     transitivePeerDependencies:
       - csstype
 
-  '@tanstack/router-generator@1.43.13':
+  '@tanstack/router-generator@1.44.1':
     dependencies:
       prettier: 3.3.2
       zod: 3.23.8
 
-  '@tanstack/router-plugin@1.43.13(vite@5.3.3(@types/node@20.14.10))':
+  '@tanstack/router-plugin@1.44.1(vite@5.3.3(@types/node@20.14.10))':
     dependencies:
       '@babel/core': 7.24.7
       '@babel/generator': 7.24.7
@@ -4178,7 +4183,7 @@ snapshots:
       '@babel/template': 7.24.7
       '@babel/traverse': 7.24.7
       '@babel/types': 7.24.7
-      '@tanstack/router-generator': 1.43.13
+      '@tanstack/router-generator': 1.44.1
       '@types/babel__core': 7.20.5
       '@types/babel__generator': 7.6.8
       '@types/babel__template': 7.4.4
@@ -4192,9 +4197,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@tanstack/router-vite-plugin@1.43.13(vite@5.3.3(@types/node@20.14.10))':
+  '@tanstack/router-vite-plugin@1.44.1(vite@5.3.3(@types/node@20.14.10))':
     dependencies:
-      '@tanstack/router-plugin': 1.43.13(vite@5.3.3(@types/node@20.14.10))
+      '@tanstack/router-plugin': 1.44.1(vite@5.3.3(@types/node@20.14.10))
     transitivePeerDependencies:
       - '@rsbuild/core'
       - supports-color
@@ -4612,12 +4617,12 @@ snapshots:
       node-releases: 2.0.14
       update-browserslist-db: 1.0.16(browserslist@4.23.0)
 
-  browserslist@4.23.1:
+  browserslist@4.23.2:
     dependencies:
-      caniuse-lite: 1.0.30001640
-      electron-to-chromium: 1.4.819
+      caniuse-lite: 1.0.30001641
+      electron-to-chromium: 1.4.823
       node-releases: 2.0.14
-      update-browserslist-db: 1.1.0(browserslist@4.23.1)
+      update-browserslist-db: 1.1.0(browserslist@4.23.2)
 
   call-bind@1.0.7:
     dependencies:
@@ -4633,7 +4638,7 @@ snapshots:
 
   caniuse-lite@1.0.30001625: {}
 
-  caniuse-lite@1.0.30001640: {}
+  caniuse-lite@1.0.30001641: {}
 
   chalk@2.4.2:
     dependencies:
@@ -4780,7 +4785,7 @@ snapshots:
 
   electron-to-chromium@1.4.787: {}
 
-  electron-to-chromium@1.4.819: {}
+  electron-to-chromium@1.4.823: {}
 
   emoji-regex@8.0.0: {}
 
@@ -6115,9 +6120,9 @@ snapshots:
       escalade: 3.1.2
       picocolors: 1.0.1
 
-  update-browserslist-db@1.1.0(browserslist@4.23.1):
+  update-browserslist-db@1.1.0(browserslist@4.23.2):
     dependencies:
-      browserslist: 4.23.1
+      browserslist: 4.23.2
       escalade: 3.1.2
       picocolors: 1.0.1
 
