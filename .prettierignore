@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 
 src/generated
+src/routeTree.gen.ts
 protobuf
 src-tauri/target
 pnpm-lock.yaml

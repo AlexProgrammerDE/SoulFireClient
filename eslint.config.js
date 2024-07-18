@@ -43,6 +43,11 @@ export default tseslint.config(
     ...tseslint.configs.disableTypeChecked,
   },
   {
-    ignores: ['src-tauri/**/*', 'dist/**/*', 'src/generated/**/*'],
+    ignores: [
+      'src-tauri/**/*',
+      'dist/**/*',
+      'src/generated/**/*',
+      'src/routeTree.gen.ts',
+    ],
   },
 );
