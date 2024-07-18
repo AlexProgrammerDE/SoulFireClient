@@ -55,20 +55,22 @@ export default function ImportDialog(props: {
               <Button
                 variant="secondary"
                 className="w-full"
-                onClick={async () => {
+                onClick={() => {
                   if (isTauri()) {
-                    const downloadsDir = await downloadDir();
-                    const input = await open({
-                      title: props.title,
-                      filters: [{ name: 'Text', extensions: ['txt'] }],
-                      defaultPath: downloadsDir,
-                      multiple: false,
-                      directory: false,
-                    });
+                    void (async () => {
+                      const downloadsDir = await downloadDir();
+                      const input = await open({
+                        title: props.title,
+                        filters: [{ name: 'Text', extensions: ['txt'] }],
+                        defaultPath: downloadsDir,
+                        multiple: false,
+                        directory: false,
+                      });
 
-                    if (input) {
-                      props.listener(Array.isArray(input) ? input[0] : input);
-                    }
+                      if (input) {
+                        props.listener(Array.isArray(input) ? input[0] : input);
+                      }
+                    })();
                   } else {
                     fileInputRef.current?.click();
                   }
@@ -79,12 +81,14 @@ export default function ImportDialog(props: {
               <Button
                 variant="secondary"
                 className="w-full"
-                onClick={async () => {
-                  if (isTauri()) {
-                    props.listener((await clipboard.readText()) ?? '');
-                  } else {
-                    props.listener(await navigator.clipboard.readText());
-                  }
+                onClick={() => {
+                  void (async () => {
+                    if (isTauri()) {
+                      props.listener((await clipboard.readText()) ?? '');
+                    } else {
+                      props.listener(await navigator.clipboard.readText());
+                    }
+                  })();
                 }}
               >
                 From clipboard
