@@ -11,7 +11,7 @@
     "generate-icons": "tauri icon -v public/logo.png",
     "dev-tauri": "RUST_LOG=info tauri dev",
     "build-tauri": "tauri build",
-    "generate-proto": "protoc -I=./protobuf/src --ts_out src/generated --ts_opt long_type_string --ts_opt optimize_code_size --proto_path protos $(find protos -iname \"*.proto\")"
+    "generate-proto": "protoc --ts_out src/generated --ts_opt long_type_string --ts_opt optimize_code_size --proto_path protos $(find protos -iname \"*.proto\")"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
