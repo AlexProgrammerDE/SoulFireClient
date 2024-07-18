@@ -2,9 +2,9 @@
 
 declare module 'eslint-plugin-react-refresh' {
   import type { ESLint } from 'eslint';
-  const plugin: Omit<ESLint.Plugin, 'configs'> & {
+  const plugin: Omit & {
     // eslint-plugin-react-hooks does not use FlatConfig yet
-    configs: Record<string, ESLint.ConfigData>;
+    configs: Record;
   };
   export default plugin;
 }

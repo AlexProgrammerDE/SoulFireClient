@@ -86,7 +86,7 @@ function parseURIProxy(line: string): ProfileProxy {
   };
 }
 
-const columns: ColumnDef<ProfileProxy>[] = [
+const columns: ColumnDef[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -134,7 +134,7 @@ const columns: ColumnDef<ProfileProxy>[] = [
   },
 ];
 
-function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
+function ExtraHeader(props: { table: ReactTable }) {
   const profile = useContext(ProfileContext);
   const [proxyTypeSelected, setProxyTypeSelected] =
     useState<UIProxyType | null>(null);
@@ -155,34 +155,32 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         .filter((t) => t.length > 0);
       toast.promise(
         new Promise<number>((resolve, reject) => {
-          (async () => {
-            try {
-              const proxiesToAdd: ProfileProxy[] = [];
-              for (const line of textSplit) {
-                let proxy: ProfileProxy;
-                switch (proxyTypeSelected) {
-                  case UIProxyType.HTTP:
-                  case UIProxyType.SOCKS4:
-                  case UIProxyType.SOCKS5:
-                    proxy = parseNormalProxy(line);
-                    break;
-                  case UIProxyType.URI:
-                    proxy = parseURIProxy(line);
-                    break;
-                }
-
-                proxiesToAdd.push(proxy);
+          try {
+            const proxiesToAdd: ProfileProxy[] = [];
+            for (const line of textSplit) {
+              let proxy: ProfileProxy;
+              switch (proxyTypeSelected) {
+                case UIProxyType.HTTP:
+                case UIProxyType.SOCKS4:
+                case UIProxyType.SOCKS5:
+                  proxy = parseNormalProxy(line);
+                  break;
+                case UIProxyType.URI:
+                  proxy = parseURIProxy(line);
+                  break;
               }
 
-              profile.setProfile({
-                ...profile.profile,
-                proxies: [...profile.profile.proxies, ...proxiesToAdd],
-              });
-              resolve(proxiesToAdd.length);
-            } catch (e) {
-              reject(e);
+              proxiesToAdd.push(proxy);
             }
-          })();
+
+            profile.setProfile({
+              ...profile.profile,
+              proxies: [...profile.profile.proxies, ...proxiesToAdd],
+            });
+            resolve(proxiesToAdd.length);
+          } catch (e) {
+            reject(e);
+          }
         }),
         {
           loading: 'Importing proxies...',

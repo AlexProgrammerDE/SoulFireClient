@@ -56,7 +56,7 @@ type LoginType = 'INTEGRATED' | 'REMOTE';
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<z.infer>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       address: localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY) ?? '',
@@ -83,7 +83,7 @@ const LoginForm = () => {
     [navigate],
   );
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer) {
     void redirectWithCredentials(values.address, values.token);
   }
 
@@ -97,7 +97,7 @@ const LoginForm = () => {
         if (!listening) return;
         setLatestLog(event.payload as string);
       });
-      invoke('run_integrated_server').then((payload) => {
+      void invoke('run_integrated_server').then((payload) => {
         const payloadString = payload as string;
         const split = payloadString.split('\n');
 
@@ -164,7 +164,7 @@ const LoginForm = () => {
       ) : null}
       {'REMOTE' === loginType ? (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={() => void form.handleSubmit(onSubmit)}>
             <CardContent className="space-y-4">
               <FormField
                 control={form.control}

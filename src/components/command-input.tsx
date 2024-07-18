@@ -17,7 +17,7 @@ export default function CommandInput() {
     index: null,
   });
 
-  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
+  const handleKeyDown: KeyboardEventHandler = (e) => {
     const currenTarget = e.currentTarget;
     if (e.key === 'Enter') {
       e.preventDefault();
