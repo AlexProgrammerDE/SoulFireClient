@@ -54,9 +54,11 @@ const formSchema = z.object({
 
 type LoginType = 'INTEGRATED' | 'REMOTE';
 
+type FormData = z.infer<typeof formSchema>;
+
 const LoginForm = () => {
   const navigate = useNavigate();
-  const form = useForm<z.infer>({
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       address: localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY) ?? '',
@@ -83,7 +85,7 @@ const LoginForm = () => {
     [navigate],
   );
 
-  function onSubmit(values: z.infer) {
+  function onSubmit(values: FormData) {
     void redirectWithCredentials(values.address, values.token);
   }
 

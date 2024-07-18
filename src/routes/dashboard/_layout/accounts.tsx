@@ -25,7 +25,7 @@ export const Route = createFileRoute('/dashboard/_layout/accounts')({
   component: AccountSettings,
 });
 
-const columns: ColumnDef[] = [
+const columns: ColumnDef<ProfileAccount>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -73,7 +73,7 @@ const columns: ColumnDef[] = [
   },
 ];
 
-function ExtraHeader(props: { table: ReactTable }) {
+function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   const profile = useContext(ProfileContext);
   const transport = useContext(ServerConnectionContext);
   const [accountTypeSelected, setAccountTypeSelected] =
@@ -95,38 +95,32 @@ function ExtraHeader(props: { table: ReactTable }) {
         .filter((t) => t.length > 0);
       const service = new MCAuthServiceClient(transport);
       toast.promise(
-        new Promise<number>((resolve, reject) => {
-          (async () => {
-            try {
-              const accountsToAdd: ProfileAccount[] = [];
-              for (const line of textSplit) {
-                const {
-                  response: { account },
-                } = await service.login({
-                  service: accountTypeSelected,
-                  payload: line,
-                });
+        (async () => {
+          const accountsToAdd: ProfileAccount[] = [];
+          for (const line of textSplit) {
+            const {
+              response: { account },
+            } = await service.login({
+              service: accountTypeSelected,
+              payload: line,
+            });
 
-                if (account) {
-                  accountsToAdd.push({
-                    type: account.type,
-                    profileId: account.profileId,
-                    lastKnownName: account.lastKnownName,
-                    accountData: account.accountData,
-                  });
-                }
-              }
-
-              profile.setProfile({
-                ...profile.profile,
-                accounts: [...profile.profile.accounts, ...accountsToAdd],
+            if (account) {
+              accountsToAdd.push({
+                type: account.type,
+                profileId: account.profileId,
+                lastKnownName: account.lastKnownName,
+                accountData: account.accountData,
               });
-              resolve(accountsToAdd.length);
-            } catch (e) {
-              reject(e);
             }
-          })();
-        }),
+          }
+
+          profile.setProfile({
+            ...profile.profile,
+            accounts: [...profile.profile.accounts, ...accountsToAdd],
+          });
+          return accountsToAdd.length;
+        })(),
         {
           loading: 'Importing accounts...',
           success: (r) => `${r} accounts imported!`,

@@ -86,7 +86,7 @@ function parseURIProxy(line: string): ProfileProxy {
   };
 }
 
-const columns: ColumnDef[] = [
+const columns: ColumnDef<ProfileProxy>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -134,7 +134,7 @@ const columns: ColumnDef[] = [
   },
 ];
 
-function ExtraHeader(props: { table: ReactTable }) {
+function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   const profile = useContext(ProfileContext);
   const [proxyTypeSelected, setProxyTypeSelected] =
     useState<UIProxyType | null>(null);
