@@ -15,12 +15,12 @@ import {
 } from 'lucide-react';
 
 interface DataTablePaginationProps<TData> {
-  table: Table;
+  table: Table<TData>;
 }
 
 export function DataTablePagination<TData>({
   table,
-}: DataTablePaginationProps) {
+}: DataTablePaginationProps<TData>) {
   return (
     <div className="flex items-center justify-between px-2">
       <div className="flex-1 text-sm text-muted-foreground">

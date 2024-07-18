@@ -24,12 +24,12 @@ import { Input } from '@/components/ui/input.tsx';
 import { DataTablePagination } from '@/components/data-table-pagination.tsx';
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef[];
+  columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filterDisplayName: string;
   filterKey: string;
   // Element with form param
-  extraHeader?: (props: { table: ReactTable }) => React.ReactNode;
+  extraHeader?: (props: { table: ReactTable<TData> }) => React.ReactNode;
 }
 
 export function DataTable<TData, TValue>({
@@ -38,7 +38,7 @@ export function DataTable<TData, TValue>({
   filterDisplayName,
   filterKey,
   extraHeader,
-}: DataTableProps) {
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});

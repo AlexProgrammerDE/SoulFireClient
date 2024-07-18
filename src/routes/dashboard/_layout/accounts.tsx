@@ -25,7 +25,7 @@ export const Route = createFileRoute('/dashboard/_layout/accounts')({
   component: AccountSettings,
 });
 
-const columns: ColumnDef[] = [
+const columns: ColumnDef<ProfileAccount>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -73,7 +73,7 @@ const columns: ColumnDef[] = [
   },
 ];
 
-function ExtraHeader(props: { table: ReactTable }) {
+function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   const profile = useContext(ProfileContext);
   const transport = useContext(ServerConnectionContext);
   const [accountTypeSelected, setAccountTypeSelected] =

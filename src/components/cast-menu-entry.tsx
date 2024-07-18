@@ -158,8 +158,8 @@ export default function CastMenuEntry() {
         )}
         <MenubarSeparator />
         <MenubarItem
-          onClick={() => {
-            void toast.promise(
+          onClick={async () => {
+            toast.promise(
               emit('cast-global-message', {
                 type: 'DISPLAY_LOGS',
                 logs: ['Hello from SoulFire!'],

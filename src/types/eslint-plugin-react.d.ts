@@ -2,9 +2,9 @@
 
 declare module 'eslint-plugin-react' {
   import type { ESLint } from 'eslint';
-  const plugin: Omit & {
+  const plugin: Omit<ESLint.Plugin, 'configs'> & {
     // eslint-plugin-react does not use FlatConfig yet
-    configs: Record;
+    configs: Record<string, ESLint.ConfigData>;
   };
   export default plugin;
 }

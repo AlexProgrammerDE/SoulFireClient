@@ -25,4 +25,3 @@ dist-ssr
 
 src/generated
 protobuf
-src-tauri/target/

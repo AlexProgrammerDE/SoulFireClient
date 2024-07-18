@@ -20,7 +20,7 @@ export const DEFAULT_PROFILE: ProfileRoot = {
 };
 
 export type ProfileRoot = {
-  settings: Record;
+  settings: Record<string, Record<string, JsonValue>>;
   accounts: ProfileAccount[];
   proxies: ProfileProxy[];
 };
