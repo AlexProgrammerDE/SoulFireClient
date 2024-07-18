@@ -7,7 +7,7 @@ import {
   MinecraftAccountProto_AccountTypeProto,
   ProxyProto_Type,
 } from '@/generated/com/soulfiremc/grpc/generated/common.ts';
-import { Struct } from '@/generated/google/protobuf/struct.ts';
+import { Value } from '@/generated/google/protobuf/struct.ts';
 import { JsonValue } from '@protobuf-ts/runtime/build/types/json-typings';
 
 export const LOCAL_STORAGE_SERVER_ADDRESS_KEY = 'server-address';
@@ -49,7 +49,7 @@ export type ProfileProxy = {
 function toSettingsEntryProto(key: string, value: JsonValue): SettingsEntry {
   return {
     key: key,
-    value: Struct.fromJson(value),
+    value: Value.fromJson(value),
   };
 }
 
