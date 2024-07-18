@@ -98,7 +98,7 @@ export default function ImportDialog(props: {
             <Button
               variant="secondary"
               className="w-full"
-              onClick={async () => props.listener(inputText)}
+              onClick={() => props.listener(inputText)}
             >
               Load from text
             </Button>
