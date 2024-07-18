@@ -26,6 +26,7 @@ import { appConfigDir, appDataDir, resolve } from '@tauri-apps/api/path';
 import { toast } from 'sonner';
 import { arch, locale, platform, type, version } from '@tauri-apps/api/os';
 import CastMenuEntry from '@/components/cast-menu-entry.tsx';
+import { ProfileRoot } from '@/lib/types.ts';
 
 function data2blob(data: string) {
   const bytes = new Array(data.length);
@@ -71,16 +72,23 @@ export const DashboardMenuHeader = ({
                       {availableProfiles.map((file) => (
                         <MenubarItem
                           key={file}
-                          onClick={async () => {
-                            const data = await readTextFile(
-                              await resolve(
-                                await resolve(await appConfigDir(), 'profile'),
-                                file,
-                              ),
-                            );
-                            profile.setProfile(JSON.parse(data));
+                          onClick={() => {
+                            void (async () => {
+                              const data = await readTextFile(
+                                await resolve(
+                                  await resolve(
+                                    await appConfigDir(),
+                                    'profile',
+                                  ),
+                                  file,
+                                ),
+                              );
+                              profile.setProfile(
+                                JSON.parse(data) as ProfileRoot,
+                              );
 
-                            toast.success('Profile loaded');
+                              toast.success('Profile loaded');
+                            })();
                           }}
                         >
                           {file}
@@ -90,35 +98,37 @@ export const DashboardMenuHeader = ({
                     </>
                   )}
                   <MenubarItem
-                    onClick={async () => {
-                      const profileDir = await resolve(
-                        await appConfigDir(),
-                        'profile',
-                      );
-                      await createDir(profileDir, { recursive: true });
+                    onClick={() => {
+                      void (async () => {
+                        const profileDir = await resolve(
+                          await appConfigDir(),
+                          'profile',
+                        );
+                        await createDir(profileDir, { recursive: true });
 
-                      const selected = await open({
-                        title: 'Load Profile',
-                        filters: [
-                          {
-                            name: 'SoulFire JSON Profile',
-                            extensions: ['json'],
-                          },
-                        ],
-                        defaultPath: profileDir,
-                        multiple: false,
-                        directory: false,
-                      });
+                        const selected = await open({
+                          title: 'Load Profile',
+                          filters: [
+                            {
+                              name: 'SoulFire JSON Profile',
+                              extensions: ['json'],
+                            },
+                          ],
+                          defaultPath: profileDir,
+                          multiple: false,
+                          directory: false,
+                        });
 
-                      if (selected) {
-                        const single = Array.isArray(selected)
-                          ? selected[0]
-                          : selected;
-                        const data = await readTextFile(single);
-                        profile.setProfile(JSON.parse(data));
-                      }
+                        if (selected) {
+                          const single = Array.isArray(selected)
+                            ? selected[0]
+                            : selected;
+                          const data = await readTextFile(single);
+                          profile.setProfile(JSON.parse(data) as ProfileRoot);
+                        }
 
-                      toast.success('Profile loaded');
+                        toast.success('Profile loaded');
+                      })();
                     }}
                   >
                     Load from file
@@ -139,7 +149,7 @@ export const DashboardMenuHeader = ({
                     const reader = new FileReader();
                     reader.onload = () => {
                       const data = reader.result as string;
-                      profile.setProfile(JSON.parse(data));
+                      profile.setProfile(JSON.parse(data) as ProfileRoot);
 
                       toast.success('Profile loaded');
                     };
@@ -147,7 +157,7 @@ export const DashboardMenuHeader = ({
                   }}
                 />
                 <MenubarItem
-                  onClick={async () => {
+                  onClick={() => {
                     fileInputRef.current?.click();
                   }}
                 >
@@ -156,36 +166,35 @@ export const DashboardMenuHeader = ({
               </>
             )}
             <MenubarItem
-              onClick={async () => {
+              onClick={() => {
                 const data = JSON.stringify(profile.profile, null, 2);
                 if (isTauri()) {
-                  const profileDir = await resolve(
-                    await appConfigDir(),
-                    'profile',
-                  );
-                  await createDir(profileDir, { recursive: true });
+                  void (async () => {
+                    const profileDir = await resolve(
+                      await appConfigDir(),
+                      'profile',
+                    );
+                    await createDir(profileDir, { recursive: true });
 
-                  const selected = await save({
-                    title: 'Save Profile',
-                    filters: [
-                      {
-                        name: 'SoulFire JSON Profile',
-                        extensions: ['json'],
-                      },
-                    ],
-                    defaultPath: profileDir,
-                  });
+                    let selected = await save({
+                      title: 'Save Profile',
+                      filters: [
+                        {
+                          name: 'SoulFire JSON Profile',
+                          extensions: ['json'],
+                        },
+                      ],
+                      defaultPath: profileDir,
+                    });
 
-                  if (selected) {
-                    let single = Array.isArray(selected)
-                      ? selected[0]
-                      : selected;
-                    if (!single.endsWith('.json')) {
-                      single += '.json';
+                    if (selected) {
+                      if (!selected.endsWith('.json')) {
+                        selected += '.json';
+                      }
+
+                      await writeTextFile(selected, data);
                     }
-
-                    await writeTextFile(single, data);
-                  }
+                  })();
                 } else {
                   saveAs(data2blob(data), 'profile.json');
                 }
@@ -197,18 +206,20 @@ export const DashboardMenuHeader = ({
             </MenubarItem>
             <MenubarSeparator />
             <MenubarItem
-              onClick={async () => {
-                await navigate({
-                  to: '/',
-                  replace: true,
-                });
-                toast.success('Logged out');
+              onClick={() => {
+                void (async () => {
+                  await navigate({
+                    to: '/',
+                    replace: true,
+                  });
+                  toast.success('Logged out');
+                })();
               }}
             >
               Log out
             </MenubarItem>
             {isTauri() && (
-              <MenubarItem onClick={() => exit(0)}>Exit</MenubarItem>
+              <MenubarItem onClick={() => void exit(0)}>Exit</MenubarItem>
             )}
           </MenubarContent>
         </MenubarMenu>
@@ -243,9 +254,9 @@ export const DashboardMenuHeader = ({
           <MenubarTrigger>Help</MenubarTrigger>
           <MenubarContent>
             <MenubarItem
-              onClick={async () => {
+              onClick={() => {
                 if (isTauri()) {
-                  await shellOpen('https://soulfiremc.com/docs');
+                  void shellOpen('https://soulfiremc.com/docs');
                 } else {
                   window.open('https://soulfiremc.com/docs');
                 }
@@ -257,15 +268,19 @@ export const DashboardMenuHeader = ({
             {isTauri() && (
               <>
                 <MenubarItem
-                  onClick={async () => {
-                    await shellOpen(await appConfigDir());
+                  onClick={() => {
+                    void (async () => {
+                      await shellOpen(await appConfigDir());
+                    })();
                   }}
                 >
                   Config directory
                 </MenubarItem>
                 <MenubarItem
-                  onClick={async () => {
-                    await shellOpen(await appDataDir());
+                  onClick={() => {
+                    void (async () => {
+                      await shellOpen(await appDataDir());
+                    })();
                   }}
                 >
                   Data directory
@@ -274,19 +289,21 @@ export const DashboardMenuHeader = ({
               </>
             )}
             <MenubarItem
-              onClick={async () => {
-                setTauriInfo(
-                  isTauri()
-                    ? {
-                        osType: await type(),
-                        osVersion: await version(),
-                        platformName: await platform(),
-                        osLocale: await locale(),
-                        archName: await arch(),
-                      }
-                    : null,
-                );
-                setAboutOpen(true);
+              onClick={() => {
+                void (async () => {
+                  setTauriInfo(
+                    isTauri()
+                      ? {
+                          osType: await type(),
+                          osVersion: await version(),
+                          platformName: await platform(),
+                          osLocale: await locale(),
+                          archName: await arch(),
+                        }
+                      : null,
+                  );
+                  setAboutOpen(true);
+                })();
               }}
             >
               About
