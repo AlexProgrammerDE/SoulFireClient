@@ -29,7 +29,7 @@ const isAuthenticated = () => {
 };
 
 export const Route = createFileRoute('/dashboard/_layout')({
-  beforeLoad: ({ location }) => {
+  beforeLoad: async ({ location }) => {
     if (!isAuthenticated()) {
       throw redirect({
         to: '/',
