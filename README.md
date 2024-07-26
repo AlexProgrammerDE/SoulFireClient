@@ -1,13 +1,18 @@
 # SoulFireClient
 
-This is a client for the SoulFire server. It is written using Next.JS and packaged as a Tauri app.
+This is a frontend for the SoulFire server.
+It mainly targets the web, but uses native APIs using Tauri.
 
-## Compiling gRPC-web files
+Tools used:
 
-```bash
-mkdir -p src/generated
-npx protoc --ts_out src/generated --proto_path protos $(find protos -iname "*.proto")
-```
+- Vite
+- tanstack-router
+- Tauri
+- shadcn/ui
+- TailwindCSS
+- XTerm
+- protobuf-ts
+- and more...
 
 ## Linux dependencies
 
