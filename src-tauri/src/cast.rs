@@ -136,8 +136,8 @@ fn create_cast_connection(address: String, port: u16, app_handle: AppHandle, cha
   let (tx, rx) = std::sync::mpsc::sync_channel(64);
   loop {
     if let Ok(message) = rx.try_recv() {
-      info!("Sending message to Cast Device: {:?}", message);
       cast_device.receiver.broadcast_message(CAST_APP_NAMESPACE, &message).unwrap();
+      info!("Sent message: {:?}", message);
     }
 
     match cast_device.receive() {
@@ -153,6 +153,7 @@ fn create_cast_connection(address: String, port: u16, app_handle: AppHandle, cha
           };
 
           let json_message: Map<String, Value> = serde_json::from_str(&message).unwrap();
+          info!("Received message: {:?}", json_message);
           let message_type = json_message.get("type").unwrap().as_str().unwrap();
           if message_type == "CHALLENGE_REQUEST" {
             let challenge = json_message.get("challenge").unwrap().as_str().unwrap();
@@ -167,7 +168,7 @@ fn create_cast_connection(address: String, port: u16, app_handle: AppHandle, cha
             let tx = tx.clone();
             app_handle.listen_global("cast-global-message", move |event| {
               let message = event.payload().unwrap();
-              let message_json: Value = serde_json::from_str(&message).unwrap();
+              let message_json: Map<String, Value> = serde_json::from_str(&message).unwrap();
 
               tx.send(message_json).unwrap();
             });
