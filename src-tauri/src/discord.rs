@@ -3,8 +3,9 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use discord_presence::{Client, Event};
 use log::{error, info};
 
+const CLIENT_ID: u64 = 1248603974475583608;
 pub fn load_discord_rpc() {
-  let mut drpc = Client::new(1248603974475583608);
+  let mut drpc = Client::new(CLIENT_ID);
 
   let _ready = drpc.on_ready(|_ctx| {
     info!("Discord RPC ready!");
@@ -12,18 +13,6 @@ pub fn load_discord_rpc() {
 
   let _ready = drpc.on_error(|error| {
     error!("Discord RPC error: {:?}", error);
-  });
-
-  let _activity_join_request = drpc.on_activity_join_request(|ctx| {
-    info!("Join request: {:?}", ctx.event);
-  });
-
-  let _activity_join = drpc.on_activity_join(|ctx| {
-    info!("Joined: {:?}", ctx.event);
-  });
-
-  let _activity_spectate = drpc.on_activity_spectate(|ctx| {
-    info!("Spectate: {:?}", ctx.event);
   });
 
   drpc.start();
