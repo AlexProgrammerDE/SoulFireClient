@@ -111,6 +111,17 @@ function ErrorComponent({ error }: { error: Error }) {
   );
 }
 
+function TerminalSide() {
+  return (
+    <div className="flex flex-col gap-4 p-4">
+      <div className="terminal-container flex-grow md:h-[calc(100vh-9rem)]">
+        <TerminalComponent />
+      </div>
+      <CommandInput />
+    </div>
+  );
+}
+
 function ClientLayout() {
   const { transport, clientData, availableProfiles } = Route.useLoaderData();
 
@@ -124,12 +135,7 @@ function ClientLayout() {
               <div className="flex overflow-auto p-4 md:h-[calc(100vh-2.5rem)]">
                 <Outlet />
               </div>
-              <div className="flex flex-col gap-4 p-4">
-                <div className="terminal-container flex-grow md:h-[calc(100vh-9rem)]">
-                  <TerminalComponent />
-                </div>
-                <CommandInput />
-              </div>
+              <TerminalSide />
             </div>
           </ProfileProvider>
         </ClientInfoContext.Provider>
