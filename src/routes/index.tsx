@@ -67,7 +67,6 @@ const LoginForm = () => {
   const [latestLog, setLatestLog] = useState<string>(
     'Preparing to start integrated server...',
   );
-  const [integratedServerLoading, setIntegratedServerLoading] = useState(false);
   const isIntegratedServerAvailable = isTauri();
 
   const redirectWithCredentials = useCallback(
@@ -89,9 +88,7 @@ const LoginForm = () => {
 
   // Hook for loading the integrated server
   useEffect(() => {
-    if (loginType === 'INTEGRATED' && !integratedServerLoading) {
-      setIntegratedServerLoading(true);
-
+    if (loginType === 'INTEGRATED') {
       let listening = true;
       void listen('integrated-server-start-log', (event) => {
         if (!listening) return;
@@ -108,7 +105,7 @@ const LoginForm = () => {
         listening = false;
       };
     }
-  }, [loginType, integratedServerLoading, latestLog, redirectWithCredentials]);
+  }, [loginType, redirectWithCredentials]);
 
   return (
     <Card className="m-auto w-full max-w-[450px] border-none">

@@ -124,7 +124,7 @@ pub async fn run_integrated_server(app_handle: AppHandle) -> String {
     if let Stdout(line) = message {
       let line = strip_ansi_escapes::strip_str(line);
       if line.contains("Finished loading!") {
-        send_log(&app_handle, "SoulFire server started");
+        send_log(&app_handle, "Generating token...");
         break;
       } else {
         send_log(&app_handle, line);
