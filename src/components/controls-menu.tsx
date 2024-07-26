@@ -2,10 +2,10 @@ import { useCallback, useContext, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { ServerConnectionContext } from '@/components/providers/server-context.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
-import { AttackServiceClient } from '@/generated/com/soulfiremc/grpc/generated/attack.client.ts';
 import { convertToProto } from '@/lib/types.ts';
-import { AttackStateToggleRequest_State } from '@/generated/com/soulfiremc/grpc/generated/attack.ts';
 import { toast } from 'sonner';
+import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
+import { InstanceState } from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
 
 type State = 'unstarted' | 'paused' | 'running';
 
@@ -13,17 +13,28 @@ export default function ControlsMenu() {
   const [appState, setAppState] = useState<State>('unstarted');
   const transport = useContext(ServerConnectionContext);
   const profile = useContext(ProfileContext);
-  const [currentAttack, setCurrentAttack] = useState<number | null>(null);
+  const [currentAttack, setCurrentAttack] = useState<string | null>(null);
 
   const startAttack = useCallback(() => {
-    const client = new AttackServiceClient(transport);
+    const client = new InstanceServiceClient(transport);
     toast.promise(
-      client.startAttack(convertToProto(profile.profile)).then((r) => {
-        setCurrentAttack(r.response.id);
-        setAppState('running');
-
-        return r;
-      }),
+      client
+        .createInstance({
+          friendlyName: 'gui-attack',
+        })
+        .then(async (r) => {
+          await client.updateInstanceConfig({
+            id: r.response.id,
+            config: convertToProto(profile.profile),
+          });
+          await client.changeInstanceState({
+            id: r.response.id,
+            state: InstanceState.RUNNING,
+          });
+          setCurrentAttack(r.response.id);
+          setAppState('running');
+          return r;
+        }),
       {
         loading: 'Starting attack...',
         success: (r) => `Attack ${r.response.id} started successfully`,
@@ -36,19 +47,19 @@ export default function ControlsMenu() {
   }, [profile, transport]);
 
   const toggleAttackState = useCallback(() => {
-    const client = new AttackServiceClient(transport);
+    const client = new InstanceServiceClient(transport);
     if (!currentAttack) {
       return;
     }
 
     toast.promise(
       client
-        .toggleAttackState({
+        .changeInstanceState({
           id: currentAttack,
-          newState:
+          state:
             appState === 'paused'
-              ? AttackStateToggleRequest_State.RESUME
-              : AttackStateToggleRequest_State.PAUSE,
+              ? InstanceState.RUNNING
+              : InstanceState.PAUSED,
         })
         .then(() => {
           setAppState(appState === 'paused' ? 'running' : 'paused');
@@ -65,15 +76,16 @@ export default function ControlsMenu() {
   }, [appState, currentAttack, transport]);
 
   const stopAttack = useCallback(() => {
-    const client = new AttackServiceClient(transport);
+    const client = new InstanceServiceClient(transport);
     if (!currentAttack) {
       return;
     }
 
     toast.promise(
       client
-        .stopAttack({
+        .changeInstanceState({
           id: currentAttack,
+          state: InstanceState.STOPPED,
         })
         .then(() => {
           setCurrentAttack(null);

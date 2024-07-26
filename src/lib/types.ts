@@ -1,14 +1,14 @@
 import {
-  AttackStartRequest,
-  SettingsEntry,
-} from '@/generated/com/soulfiremc/grpc/generated/attack.ts';
-import {
   MinecraftAccountProto,
   MinecraftAccountProto_AccountTypeProto,
   ProxyProto_Type,
 } from '@/generated/com/soulfiremc/grpc/generated/common.ts';
 import { Value } from '@/generated/google/protobuf/struct.ts';
 import { JsonValue } from '@protobuf-ts/runtime/build/types/json-typings';
+import {
+  InstanceConfig,
+  SettingsEntry,
+} from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
 
 export const LOCAL_STORAGE_SERVER_ADDRESS_KEY = 'server-address';
 export const LOCAL_STORAGE_SERVER_TOKEN_KEY = 'server-token';
@@ -53,7 +53,7 @@ function toSettingsEntryProto(key: string, value: JsonValue): SettingsEntry {
   };
 }
 
-export function convertToProto(data: ProfileRoot): AttackStartRequest {
+export function convertToProto(data: ProfileRoot): InstanceConfig {
   return {
     settings: Object.entries(data.settings).map(([key, value]) => ({
       namespace: key,
