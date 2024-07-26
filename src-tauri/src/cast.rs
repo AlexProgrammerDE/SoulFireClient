@@ -1,3 +1,4 @@
+use std::str::FromStr;
 use std::sync::atomic::AtomicBool;
 use std::sync::mpsc::{channel, Sender};
 use std::thread;
@@ -11,7 +12,6 @@ use rust_cast::channels::receiver::CastDeviceApp;
 use rust_cast::message_manager::CastMessagePayload;
 use serde_json::{json, Map, Value};
 use tauri::{AppHandle, async_runtime, Manager};
-use crate::{CAST_APP_ID, CAST_APP_NAMESPACE, DEFAULT_DESTINATION_ID};
 
 const SERVICE_TYPE: &str = "_googlecast._tcp.local.";
 const DEFAULT_DESTINATION_ID: &str = "receiver-0";

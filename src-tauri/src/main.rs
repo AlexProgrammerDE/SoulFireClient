@@ -2,10 +2,8 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::{env, thread};
-use std::str::FromStr;
 use std::sync::atomic::AtomicBool;
 
-use serde::Serialize;
 use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu, SystemTrayMenuItem};
 
 use crate::cast::{CastRunningState, connect_cast, discover_casts};
