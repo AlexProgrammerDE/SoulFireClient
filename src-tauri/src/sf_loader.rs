@@ -1,3 +1,4 @@
+use std::sync::atomic::AtomicBool;
 use log::info;
 use serde::Serialize;
 use tauri::api::process::Command;
@@ -5,8 +6,18 @@ use tauri::api::process::CommandEvent::Stdout;
 use tauri::{AppHandle, Manager};
 use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_next_available_port, get_java_exec_name};
 
+pub struct IntegratedServerState {
+  pub starting: AtomicBool,
+}
+
 #[tauri::command]
-pub async fn run_integrated_server(app_handle: AppHandle) -> String {
+pub async fn run_integrated_server(app_handle: AppHandle, integrated_server_state: tauri::State<'_, IntegratedServerState>) -> Result<String, ()> {
+  if integrated_server_state.starting.load(std::sync::atomic::Ordering::Relaxed) {
+    return Ok("Server already starting".to_string());
+  }
+
+  integrated_server_state.starting.store(true, std::sync::atomic::Ordering::Relaxed);
+
   let soul_fire_version = "1.10.0";
 
   fn send_log<S: Serialize + Clone>(app_handle: &AppHandle, payload: S) {
@@ -145,5 +156,5 @@ pub async fn run_integrated_server(app_handle: AppHandle) -> String {
   };
 
   let url = format!("http://127.0.0.1:{}", available_port);
-  return format!("{}\n{}", url, token);
+  return Ok(format!("{}\n{}", url, token));
 }

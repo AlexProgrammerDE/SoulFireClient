@@ -23,7 +23,7 @@ const CAST_APP_ID: &str = "3F768D1D";
 const CAST_APP_NAMESPACE: &str = "urn:x-cast:com.soulfiremc";
 
 pub struct CastRunningState {
-  pub(crate) running: AtomicBool,
+  pub running: AtomicBool,
 }
 
 #[tauri::command]

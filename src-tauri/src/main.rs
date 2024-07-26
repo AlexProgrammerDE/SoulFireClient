@@ -8,7 +8,7 @@ use tauri::{CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu
 
 use crate::cast::{CastRunningState, connect_cast, discover_casts};
 use crate::discord::load_discord_rpc;
-use crate::sf_loader::run_integrated_server;
+use crate::sf_loader::{IntegratedServerState, run_integrated_server};
 
 mod utils;
 mod cast;
@@ -31,6 +31,9 @@ fn main() {
   tauri::Builder::default()
     .manage(CastRunningState {
       running: AtomicBool::new(false),
+    })
+    .manage(IntegratedServerState {
+      starting: AtomicBool::new(false),
     })
     .invoke_handler(tauri::generate_handler![run_integrated_server, discover_casts, connect_cast])
     .system_tray(SystemTray::new().with_menu(tray_menu))
