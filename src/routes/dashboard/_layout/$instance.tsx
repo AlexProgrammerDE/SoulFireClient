@@ -5,6 +5,8 @@ import { createTransport } from '@/lib/web-rpc.ts';
 import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
 import ProfileProvider from '@/components/providers/profile-context';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { convertFromProto } from '@/lib/types.ts';
+import { InstanceConfig } from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance')({
   loader: async (props) => {
@@ -46,7 +48,11 @@ function ClientLayout() {
     <InstanceInfoContext.Provider
       value={{ id: instanceId, info: instanceInfo }}
     >
-      <ProfileProvider>
+      <ProfileProvider
+        instanceProfile={convertFromProto(
+          instanceInfo.config as InstanceConfig,
+        )}
+      >
         <div className="grid flex-grow grid-cols-1 gap-4 md:grid-cols-2">
           <div className="flex overflow-auto p-4 md:h-[calc(100vh-2.5rem)]">
             <Outlet />

@@ -5,19 +5,10 @@ import {
 } from '@/generated/com/soulfiremc/grpc/generated/common.ts';
 import { Value } from '@/generated/google/protobuf/struct.ts';
 import { JsonValue } from '@protobuf-ts/runtime/build/types/json-typings';
-import {
-  InstanceConfig,
-  SettingsEntry,
-} from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
+import { InstanceConfig } from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
 
 export const LOCAL_STORAGE_SERVER_ADDRESS_KEY = 'server-address';
 export const LOCAL_STORAGE_SERVER_TOKEN_KEY = 'server-token';
-
-export const DEFAULT_PROFILE: ProfileRoot = {
-  settings: {},
-  accounts: [],
-  proxies: [],
-};
 
 export type ProfileRoot = {
   settings: Record<string, Record<string, JsonValue>>;
@@ -46,32 +37,33 @@ export type ProfileProxy = {
   password?: string;
 };
 
-function toSettingsEntryProto(key: string, value: JsonValue): SettingsEntry {
-  return {
-    key: key,
-    value: Value.fromJson(value),
-  };
-}
-
 export function convertToProto(data: ProfileRoot): InstanceConfig {
   return {
     settings: Object.entries(data.settings).map(([key, value]) => ({
       namespace: key,
-      entries: Object.entries(value).map(([key, value]) =>
-        toSettingsEntryProto(key, value),
-      ),
+      entries: Object.entries(value).map(([key, value]) => ({
+        key: key,
+        value: Value.fromJson(value),
+      })),
     })),
-    accounts: data.accounts.map((a) => ({
-      type: a.type,
-      profileId: a.profileId,
-      lastKnownName: a.lastKnownName,
-      accountData: a.accountData,
-    })),
-    proxies: data.proxies.map((p) => ({
-      type: p.type,
-      address: p.address,
-      username: p.username,
-      password: p.password,
-    })),
+    accounts: data.accounts,
+    proxies: data.proxies,
+  };
+}
+
+export function convertFromProto(data: InstanceConfig): ProfileRoot {
+  const settings: Record<string, Record<string, JsonValue>> = {};
+  for (const namespace of data.settings) {
+    const entries: Record<string, JsonValue> = {};
+    for (const entry of namespace.entries) {
+      entries[entry.key] = Value.toJson(entry.value as Value);
+    }
+    settings[namespace.namespace] = entries;
+  }
+
+  return {
+    settings: settings,
+    accounts: data.accounts,
+    proxies: data.proxies,
   };
 }
