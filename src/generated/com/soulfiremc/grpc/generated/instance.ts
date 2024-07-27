@@ -129,6 +129,10 @@ export interface InstanceInfoResponse {
      * @generated from protobuf field: com.soulfiremc.grpc.generated.InstanceConfig config = 2;
      */
     config?: InstanceConfig;
+    /**
+     * @generated from protobuf field: com.soulfiremc.grpc.generated.InstanceState state = 3;
+     */
+    state: InstanceState;
 }
 /**
  * @generated from protobuf message com.soulfiremc.grpc.generated.InstanceUpdateFriendlyNameRequest
@@ -165,24 +169,6 @@ export interface InstanceUpdateConfigRequest {
  * @generated from protobuf message com.soulfiremc.grpc.generated.InstanceUpdateConfigResponse
  */
 export interface InstanceUpdateConfigResponse {
-}
-/**
- * @generated from protobuf message com.soulfiremc.grpc.generated.InstanceStateRequest
- */
-export interface InstanceStateRequest {
-    /**
-     * @generated from protobuf field: string id = 1;
-     */
-    id: string;
-}
-/**
- * @generated from protobuf message com.soulfiremc.grpc.generated.InstanceStateResponse
- */
-export interface InstanceStateResponse {
-    /**
-     * @generated from protobuf field: com.soulfiremc.grpc.generated.InstanceState state = 1;
-     */
-    state: InstanceState;
 }
 /**
  * @generated from protobuf message com.soulfiremc.grpc.generated.InstanceStateChangeRequest
@@ -357,7 +343,8 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
     constructor() {
         super("com.soulfiremc.grpc.generated.InstanceInfoResponse", [
             { no: 1, name: "friendlyName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "config", kind: "message", T: () => InstanceConfig }
+            { no: 2, name: "config", kind: "message", T: () => InstanceConfig },
+            { no: 3, name: "state", kind: "enum", T: () => ["com.soulfiremc.grpc.generated.InstanceState", InstanceState] }
         ]);
     }
 }
@@ -412,30 +399,6 @@ class InstanceUpdateConfigResponse$Type extends MessageType<InstanceUpdateConfig
  */
 export const InstanceUpdateConfigResponse = new InstanceUpdateConfigResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class InstanceStateRequest$Type extends MessageType<InstanceStateRequest> {
-    constructor() {
-        super("com.soulfiremc.grpc.generated.InstanceStateRequest", [
-            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message com.soulfiremc.grpc.generated.InstanceStateRequest
- */
-export const InstanceStateRequest = new InstanceStateRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class InstanceStateResponse$Type extends MessageType<InstanceStateResponse> {
-    constructor() {
-        super("com.soulfiremc.grpc.generated.InstanceStateResponse", [
-            { no: 1, name: "state", kind: "enum", T: () => ["com.soulfiremc.grpc.generated.InstanceState", InstanceState] }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message com.soulfiremc.grpc.generated.InstanceStateResponse
- */
-export const InstanceStateResponse = new InstanceStateResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
 class InstanceStateChangeRequest$Type extends MessageType<InstanceStateChangeRequest> {
     constructor() {
         super("com.soulfiremc.grpc.generated.InstanceStateChangeRequest", [
@@ -468,6 +431,5 @@ export const InstanceService = new ServiceType("com.soulfiremc.grpc.generated.In
     { name: "getInstanceInfo", options: {}, I: InstanceInfoRequest, O: InstanceInfoResponse },
     { name: "updateInstanceFriendlyName", options: {}, I: InstanceUpdateFriendlyNameRequest, O: InstanceUpdateFriendlyNameResponse },
     { name: "updateInstanceConfig", options: {}, I: InstanceUpdateConfigRequest, O: InstanceUpdateConfigResponse },
-    { name: "getInstanceState", options: {}, I: InstanceStateRequest, O: InstanceStateResponse },
     { name: "changeInstanceState", options: {}, I: InstanceStateChangeRequest, O: InstanceStateChangeResponse }
 ]);

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { ServerConnectionContext } from '@/components/providers/server-context.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
@@ -7,110 +7,124 @@ import { toast } from 'sonner';
 import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
 import { InstanceState } from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
-
-type State = 'unstarted' | 'paused' | 'running';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '@/lib/query.ts';
 
 export default function ControlsMenu() {
-  const [appState, setAppState] = useState<State>('unstarted');
   const transport = useContext(ServerConnectionContext);
   const profile = useContext(ProfileContext);
   const instanceInfo = useContext(InstanceInfoContext);
-
-  const startAttack = useCallback(() => {
-    const client = new InstanceServiceClient(transport);
-    toast.promise(
-      async () => {
-        await client.updateInstanceConfig({
+  const startMutation = useMutation({
+    mutationFn: () => {
+      const client = new InstanceServiceClient(transport);
+      const promise = client
+        .updateInstanceConfig({
           id: instanceInfo.id,
           config: convertToProto(profile.profile),
+        })
+        .then(() => {
+          return client.changeInstanceState({
+            id: instanceInfo.id,
+            state: InstanceState.RUNNING,
+          });
         });
-        await client.changeInstanceState({
-          id: instanceInfo.id,
-          state: InstanceState.RUNNING,
-        });
-        setAppState('running');
-      },
-      {
+      toast.promise(promise, {
         loading: 'Starting attack...',
         success: `Attack started successfully`,
         error: (e) => {
           console.error(e);
           return 'Failed to start attack';
         },
-      },
-    );
-  }, [instanceInfo, profile, transport]);
+      });
 
-  const toggleAttackState = useCallback(() => {
-    const client = new InstanceServiceClient(transport);
-    toast.promise(
-      client
+      return promise;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ['instance-info', instanceInfo.id],
+      });
+    },
+  });
+  const toggleMutation = useMutation({
+    mutationFn: () => {
+      const client = new InstanceServiceClient(transport);
+      const current = instanceInfo.state;
+      const promise = client
         .changeInstanceState({
           id: instanceInfo.id,
           state:
-            appState === 'paused'
+            current === InstanceState.PAUSED
               ? InstanceState.RUNNING
               : InstanceState.PAUSED,
         })
-        .then(() => {
-          setAppState(appState === 'paused' ? 'running' : 'paused');
-        }),
-      {
+        .then();
+      toast.promise(promise, {
         loading: 'Toggling attack state...',
-        success: `Attack state toggled to ${appState === 'paused' ? 'running' : 'paused'}`,
+        success: `Attack state toggled to ${current === InstanceState.PAUSED ? 'running' : 'paused'}`,
         error: (e) => {
           console.error(e);
           return 'Failed to toggle attack state';
         },
-      },
-    );
-  }, [appState, instanceInfo, transport]);
+      });
 
-  const stopAttack = useCallback(() => {
-    const client = new InstanceServiceClient(transport);
-    toast.promise(
-      client
+      return promise;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ['instance-info', instanceInfo.id],
+      });
+    },
+  });
+  const stopMutation = useMutation({
+    mutationFn: () => {
+      const client = new InstanceServiceClient(transport);
+      const promise = client
         .changeInstanceState({
           id: instanceInfo.id,
           state: InstanceState.STOPPED,
         })
-        .then(() => {
-          setAppState('unstarted');
-        }),
-      {
+        .then();
+      toast.promise(promise, {
         loading: 'Stopping attack...',
         success: `Attack stopped successfully`,
         error: (e) => {
           console.error(e);
           return 'Failed to stop attack';
         },
-      },
-    );
-  }, [instanceInfo, transport]);
+      });
+
+      return promise;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ['instance-info', instanceInfo.id],
+      });
+    },
+  });
 
   return (
     <div className="grid grid-rows-3 gap-4">
       <Button
         className="h-full w-full"
         variant="secondary"
-        onClick={startAttack}
-        disabled={appState !== 'unstarted'}
+        onClick={() => startMutation.mutate()}
+        disabled={instanceInfo.state !== InstanceState.STOPPED}
       >
         Start
       </Button>
       <Button
         className="h-full w-full"
         variant="secondary"
-        onClick={toggleAttackState}
-        disabled={appState === 'unstarted'}
+        onClick={() => toggleMutation.mutate()}
+        disabled={instanceInfo.state === InstanceState.STOPPED}
       >
-        {appState === 'paused' ? 'Resume' : 'Pause'}
+        {instanceInfo.state === InstanceState.PAUSED ? 'Resume' : 'Pause'}
       </Button>
       <Button
         className="h-full w-full"
         variant="secondary"
-        onClick={stopAttack}
-        disabled={appState === 'unstarted'}
+        onClick={() => stopMutation.mutate()}
+        disabled={instanceInfo.state === InstanceState.STOPPED}
       >
         Stop
       </Button>

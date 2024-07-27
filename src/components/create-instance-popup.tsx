@@ -9,7 +9,6 @@ import {
   CredenzaTitle,
 } from './ui/credenza';
 import { Button } from '@/components/ui/button.tsx';
-import { useNavigate } from '@tanstack/react-router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';

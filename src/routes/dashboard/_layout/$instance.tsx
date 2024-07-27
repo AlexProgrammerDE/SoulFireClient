@@ -8,25 +8,39 @@ import { InstanceInfoContext } from '@/components/providers/instance-info-contex
 import { convertFromProto } from '@/lib/types.ts';
 import { InstanceConfig } from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
+import { queryClient } from '@/lib/query.ts';
+import { useQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance')({
-  loader: async (props) => {
-    const transport = createTransport();
-
-    const instanceService = new InstanceServiceClient(transport);
-    const result = await instanceService.getInstanceInfo(
-      {
-        id: props.params.instance,
-      },
-      {
-        abort: props.abortController.signal,
-      },
-    );
-
+  beforeLoad: (props) => {
+    const { instance } = props.params;
     return {
-      instanceId: props.params.instance,
-      instanceInfo: result.response,
+      infoQueryOptions: {
+        queryKey: ['instance-info', instance],
+        queryFn: async ({ signal }: { signal: AbortSignal }) => {
+          const transport = createTransport();
+
+          const instanceService = new InstanceServiceClient(transport);
+          const result = await instanceService.getInstanceInfo(
+            {
+              id: instance,
+            },
+            {
+              abort: signal,
+            },
+          );
+
+          return {
+            instanceInfo: result.response,
+          };
+        },
+        signal: props.abortController.signal,
+        refetchInterval: 3_000,
+      },
     };
+  },
+  loader: async (props) => {
+    await queryClient.prefetchQuery(props.context.infoQueryOptions);
   },
   component: ClientLayout,
 });
@@ -43,16 +57,25 @@ function TerminalSide() {
 }
 
 function ClientLayout() {
-  const { instanceId, instanceInfo } = Route.useLoaderData();
+  const { instance } = Route.useParams();
+  const { infoQueryOptions } = Route.useRouteContext();
+  const instanceInfo = useQuery(infoQueryOptions);
+  if (!instanceInfo.data) {
+    throw instanceInfo.error;
+  }
 
   return (
     <>
       <InstanceInfoContext.Provider
-        value={{ id: instanceId, info: instanceInfo }}
+        value={{
+          id: instance,
+          friendlyName: instanceInfo.data.instanceInfo.friendlyName,
+          state: instanceInfo.data.instanceInfo.state,
+        }}
       >
         <ProfileProvider
           instanceProfile={convertFromProto(
-            instanceInfo.config as InstanceConfig,
+            instanceInfo.data.instanceInfo.config as InstanceConfig,
           )}
         >
           <DashboardMenuHeader />

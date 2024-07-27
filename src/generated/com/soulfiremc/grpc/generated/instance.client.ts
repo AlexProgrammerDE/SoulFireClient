@@ -6,8 +6,6 @@ import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { InstanceService } from "./instance";
 import type { InstanceStateChangeResponse } from "./instance";
 import type { InstanceStateChangeRequest } from "./instance";
-import type { InstanceStateResponse } from "./instance";
-import type { InstanceStateRequest } from "./instance";
 import type { InstanceUpdateConfigResponse } from "./instance";
 import type { InstanceUpdateConfigRequest } from "./instance";
 import type { InstanceUpdateFriendlyNameResponse } from "./instance";
@@ -51,10 +49,6 @@ export interface IInstanceServiceClient {
      * @generated from protobuf rpc: updateInstanceConfig(com.soulfiremc.grpc.generated.InstanceUpdateConfigRequest) returns (com.soulfiremc.grpc.generated.InstanceUpdateConfigResponse);
      */
     updateInstanceConfig(input: InstanceUpdateConfigRequest, options?: RpcOptions): UnaryCall<InstanceUpdateConfigRequest, InstanceUpdateConfigResponse>;
-    /**
-     * @generated from protobuf rpc: getInstanceState(com.soulfiremc.grpc.generated.InstanceStateRequest) returns (com.soulfiremc.grpc.generated.InstanceStateResponse);
-     */
-    getInstanceState(input: InstanceStateRequest, options?: RpcOptions): UnaryCall<InstanceStateRequest, InstanceStateResponse>;
     /**
      * @generated from protobuf rpc: changeInstanceState(com.soulfiremc.grpc.generated.InstanceStateChangeRequest) returns (com.soulfiremc.grpc.generated.InstanceStateChangeResponse);
      */
@@ -112,17 +106,10 @@ export class InstanceServiceClient implements IInstanceServiceClient, ServiceInf
         return stackIntercept<InstanceUpdateConfigRequest, InstanceUpdateConfigResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: getInstanceState(com.soulfiremc.grpc.generated.InstanceStateRequest) returns (com.soulfiremc.grpc.generated.InstanceStateResponse);
-     */
-    getInstanceState(input: InstanceStateRequest, options?: RpcOptions): UnaryCall<InstanceStateRequest, InstanceStateResponse> {
-        const method = this.methods[6], opt = this._transport.mergeOptions(options);
-        return stackIntercept<InstanceStateRequest, InstanceStateResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
      * @generated from protobuf rpc: changeInstanceState(com.soulfiremc.grpc.generated.InstanceStateChangeRequest) returns (com.soulfiremc.grpc.generated.InstanceStateChangeResponse);
      */
     changeInstanceState(input: InstanceStateChangeRequest, options?: RpcOptions): UnaryCall<InstanceStateChangeRequest, InstanceStateChangeResponse> {
-        const method = this.methods[7], opt = this._transport.mergeOptions(options);
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
         return stackIntercept<InstanceStateChangeRequest, InstanceStateChangeResponse>("unary", this._transport, method, opt, input);
     }
 }
