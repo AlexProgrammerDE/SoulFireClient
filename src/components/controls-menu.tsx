@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react';
+import { useContext } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { ServerConnectionContext } from '@/components/providers/server-context.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
