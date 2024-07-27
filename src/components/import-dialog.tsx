@@ -39,7 +39,7 @@ export default function ImportDialog(props: {
                   type="file"
                   accept=".json"
                   className="hidden"
-                  onInput={(e) => {
+                  onChange={(e) => {
                     const file = (e.target as HTMLInputElement).files?.item(0);
                     if (!file) return;
 

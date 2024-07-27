@@ -95,6 +95,30 @@ export const DashboardMenuHeader = () => {
             )}
           </MenubarContent>
         </MenubarMenu>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".json"
+          className="hidden"
+          onInput={(e) => {
+            const file = (e.target as HTMLInputElement).files?.item(0);
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = () => {
+              const data = reader.result as string;
+              toast.promise(
+                setProfileMutation.mutateAsync(JSON.parse(data) as ProfileRoot),
+                {
+                  loading: 'Loading profile...',
+                  success: 'Profile loaded',
+                  error: 'Failed to load profile',
+                },
+              );
+            };
+            reader.readAsText(file);
+          }}
+        />
         {profile && (
           <MenubarMenu>
             <MenubarTrigger>Instance</MenubarTrigger>
@@ -188,34 +212,6 @@ export const DashboardMenuHeader = () => {
                 </MenubarSub>
               ) : (
                 <>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept=".json"
-                    className="hidden"
-                    onInput={(e) => {
-                      const file = (e.target as HTMLInputElement).files?.item(
-                        0,
-                      );
-                      if (!file) return;
-
-                      const reader = new FileReader();
-                      reader.onload = () => {
-                        const data = reader.result as string;
-                        toast.promise(
-                          setProfileMutation.mutateAsync(
-                            JSON.parse(data) as ProfileRoot,
-                          ),
-                          {
-                            loading: 'Loading profile...',
-                            success: 'Profile loaded',
-                            error: 'Failed to load profile',
-                          },
-                        );
-                      };
-                      reader.readAsText(file);
-                    }}
-                  />
                   <MenubarItem
                     onClick={() => {
                       fileInputRef.current?.click();
