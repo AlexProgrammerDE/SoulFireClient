@@ -1,4 +1,4 @@
-import { ServerConnectionContext } from '@/components/providers/server-context.tsx';
+import { TransportContext } from '@/components/providers/server-context.tsx';
 import {
   createFileRoute,
   Outlet,
@@ -119,13 +119,13 @@ function ClientLayout() {
 
   return (
     <div className="flex h-screen w-screen flex-col">
-      <ServerConnectionContext.Provider value={transport}>
+      <TransportContext.Provider value={transport}>
         <ClientInfoContext.Provider value={clientData}>
           <SystemInfoContext.Provider value={systemInfo}>
             <Outlet />
           </SystemInfoContext.Provider>
         </ClientInfoContext.Provider>
-      </ServerConnectionContext.Provider>
+      </TransportContext.Provider>
     </div>
   );
 }

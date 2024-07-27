@@ -5,7 +5,12 @@ import { Button } from '@/components/ui/button.tsx';
 import ClientSettingsPageComponent from '@/components/client-settings-page.tsx';
 import { DataTable } from '@/components/data-table.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
-import { getEnumKeyByValue, ProfileAccount } from '@/lib/types.ts';
+import {
+  convertToProto,
+  getEnumKeyByValue,
+  ProfileAccount,
+  ProfileRoot,
+} from '@/lib/types.ts';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { MinecraftAccountProto_AccountTypeProto } from '@/generated/com/soulfiremc/grpc/generated/common.ts';
 import { PlusIcon, TrashIcon } from 'lucide-react';
@@ -17,10 +22,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
 import { toast } from 'sonner';
-import { ServerConnectionContext } from '@/components/providers/server-context.tsx';
+import { TransportContext } from '@/components/providers/server-context.tsx';
 import { MCAuthServiceClient } from '@/generated/com/soulfiremc/grpc/generated/mc-auth.client.ts';
 import ImportDialog from '@/components/import-dialog.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '@/lib/query.ts';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance/accounts')({
   component: AccountSettings,
@@ -76,9 +84,24 @@ const columns: ColumnDef<ProfileAccount>[] = [
 
 function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   const profile = useContext(ProfileContext);
-  const transport = useContext(ServerConnectionContext);
+  const transport = useContext(TransportContext);
+  const instanceInfo = useContext(InstanceInfoContext);
   const [accountTypeSelected, setAccountTypeSelected] =
     useState<MinecraftAccountProto_AccountTypeProto | null>(null);
+  const setProfileMutation = useMutation({
+    mutationFn: async (profile: ProfileRoot) => {
+      const instanceService = new InstanceServiceClient(transport);
+      await instanceService.updateInstanceConfig({
+        id: instanceInfo.id,
+        config: convertToProto(profile),
+      });
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ['instance-info', instanceInfo.id],
+      });
+    },
+  });
 
   const textSelectedCallback = useCallback(
     (text: string) => {
@@ -116,9 +139,9 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
             }
           }
 
-          profile.setProfile({
-            ...profile.profile,
-            accounts: [...profile.profile.accounts, ...accountsToAdd],
+          await setProfileMutation.mutateAsync({
+            ...profile,
+            accounts: [...profile.accounts, ...accountsToAdd],
           });
           return accountsToAdd.length;
         })(),
@@ -132,7 +155,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         },
       );
     },
-    [accountTypeSelected, profile, transport],
+    [accountTypeSelected, profile, setProfileMutation, transport],
   );
 
   return (
@@ -195,21 +218,26 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         variant="outline"
         disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
         onClick={() => {
-          const beforeSize = profile.profile.accounts.length;
+          const beforeSize = profile.accounts.length;
           const selectedRows = props.table
             .getFilteredSelectedRowModel()
             .rows.map((r) => r.original);
           const newProfile = {
-            ...profile.profile,
-            accounts: profile.profile.accounts.filter(
+            ...profile,
+            accounts: profile.accounts.filter(
               (a) => !selectedRows.some((r) => r.profileId === a.profileId),
             ),
           };
 
-          profile.setProfile(newProfile);
-          toast.info(
-            `Removed ${beforeSize - newProfile.accounts.length} accounts`,
-          );
+          toast.promise(setProfileMutation.mutateAsync(newProfile), {
+            loading: 'Removing accounts...',
+            success: () =>
+              `Removed ${beforeSize - newProfile.accounts.length} accounts`,
+            error: (e) => {
+              console.error(e);
+              return 'Failed to remove accounts';
+            },
+          });
         }}
       >
         <TrashIcon className="h-4 w-4" />
@@ -249,7 +277,7 @@ function AccountSettings() {
         filterDisplayName="accounts"
         filterKey="lastKnownName"
         columns={columns}
-        data={profile.profile.accounts}
+        data={profile.accounts}
         extraHeader={ExtraHeader}
       />
     </div>

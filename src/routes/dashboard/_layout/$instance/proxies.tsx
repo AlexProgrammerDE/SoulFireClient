@@ -6,7 +6,12 @@ import ClientSettingsPageComponent from '@/components/client-settings-page.tsx';
 import { DataTable } from '@/components/data-table.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
-import { getEnumKeyByValue, ProfileProxy } from '@/lib/types.ts';
+import {
+  convertToProto,
+  getEnumKeyByValue,
+  ProfileProxy,
+  ProfileRoot,
+} from '@/lib/types.ts';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { ProxyProto_Type } from '@/generated/com/soulfiremc/grpc/generated/common.ts';
 import { toast } from 'sonner';
@@ -20,6 +25,10 @@ import { PlusIcon, TrashIcon } from 'lucide-react';
 import ImportDialog from '@/components/import-dialog.tsx';
 import URI from 'urijs';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { TransportContext } from '@/components/providers/server-context.tsx';
+import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
+import { useMutation } from '@tanstack/react-query';
+import { queryClient } from '@/lib/query.ts';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance/proxies')({
   component: ProxySettings,
@@ -137,8 +146,24 @@ const columns: ColumnDef<ProfileProxy>[] = [
 
 function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   const profile = useContext(ProfileContext);
+  const transport = useContext(TransportContext);
+  const instanceInfo = useContext(InstanceInfoContext);
   const [proxyTypeSelected, setProxyTypeSelected] =
     useState<UIProxyType | null>(null);
+  const setProfileMutation = useMutation({
+    mutationFn: async (profile: ProfileRoot) => {
+      const instanceService = new InstanceServiceClient(transport);
+      await instanceService.updateInstanceConfig({
+        id: instanceInfo.id,
+        config: convertToProto(profile),
+      });
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ['instance-info', instanceInfo.id],
+      });
+    },
+  });
 
   const textSelectedCallback = useCallback(
     (text: string) => {
@@ -155,34 +180,30 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         .map((t) => t.trim())
         .filter((t) => t.length > 0);
       toast.promise(
-        new Promise<number>((resolve, reject) => {
-          try {
-            const proxiesToAdd: ProfileProxy[] = [];
-            for (const line of textSplit) {
-              let proxy: ProfileProxy;
-              switch (proxyTypeSelected) {
-                case UIProxyType.HTTP:
-                case UIProxyType.SOCKS4:
-                case UIProxyType.SOCKS5:
-                  proxy = parseNormalProxy(line);
-                  break;
-                case UIProxyType.URI:
-                  proxy = parseURIProxy(line);
-                  break;
-              }
-
-              proxiesToAdd.push(proxy);
+        (async () => {
+          const proxiesToAdd: ProfileProxy[] = [];
+          for (const line of textSplit) {
+            let proxy: ProfileProxy;
+            switch (proxyTypeSelected) {
+              case UIProxyType.HTTP:
+              case UIProxyType.SOCKS4:
+              case UIProxyType.SOCKS5:
+                proxy = parseNormalProxy(line);
+                break;
+              case UIProxyType.URI:
+                proxy = parseURIProxy(line);
+                break;
             }
 
-            profile.setProfile({
-              ...profile.profile,
-              proxies: [...profile.profile.proxies, ...proxiesToAdd],
-            });
-            resolve(proxiesToAdd.length);
-          } catch (e) {
-            reject(e);
+            proxiesToAdd.push(proxy);
           }
-        }),
+
+          await setProfileMutation.mutateAsync({
+            ...profile,
+            proxies: [...profile.proxies, ...proxiesToAdd],
+          });
+          return proxiesToAdd.length;
+        })(),
         {
           loading: 'Importing proxies...',
           success: (r) => `${r} proxies imported!`,
@@ -193,7 +214,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         },
       );
     },
-    [profile, proxyTypeSelected],
+    [profile, proxyTypeSelected, setProfileMutation],
   );
 
   return (
@@ -231,21 +252,22 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         variant="outline"
         disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
         onClick={() => {
-          const beforeSize = profile.profile.proxies.length;
+          const beforeSize = profile.proxies.length;
           const selectedRows = props.table
             .getFilteredSelectedRowModel()
             .rows.map((r) => r.original);
           const newProfile = {
-            ...profile.profile,
-            proxies: profile.profile.proxies.filter(
+            ...profile,
+            proxies: profile.proxies.filter(
               (a) => !selectedRows.some((r) => r.address === a.address),
             ),
           };
 
-          profile.setProfile(newProfile);
-          toast.info(
-            `Removed ${beforeSize - newProfile.proxies.length} proxies`,
-          );
+          toast.promise(setProfileMutation.mutateAsync(newProfile), {
+            loading: 'Removing proxies...',
+            success: `Removed ${beforeSize - newProfile.proxies.length} proxies`,
+            error: 'Failed to remove proxies',
+          });
         }}
       >
         <TrashIcon className="h-4 w-4" />
@@ -288,7 +310,7 @@ function ProxySettings() {
         filterDisplayName="proxies"
         filterKey="address"
         columns={columns}
-        data={profile.profile.proxies}
+        data={profile.proxies}
         extraHeader={ExtraHeader}
       />
     </div>

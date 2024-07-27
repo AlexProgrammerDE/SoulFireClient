@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import '@xterm/xterm/css/xterm.css';
 import { FitAddon } from '@xterm/addon-fit';
 import { LogsServiceClient } from '@/generated/com/soulfiremc/grpc/generated/logs.client.ts';
-import { ServerConnectionContext } from './providers/server-context';
+import { TransportContext } from './providers/server-context';
 import { ITerminalOptions, Terminal } from '@xterm/xterm';
 import debounce from 'debounce';
 
@@ -15,7 +15,7 @@ const terminalProps: ITerminalOptions = {
 export const TerminalComponent = () => {
   const terminalRef = useRef<HTMLDivElement>(null);
   const [terminal, setTerminal] = useState<Terminal | null>(null);
-  const serverConnection = useContext(ServerConnectionContext);
+  const serverConnection = useContext(TransportContext);
 
   useEffect(() => {
     const terminal = new Terminal({ ...terminalProps });

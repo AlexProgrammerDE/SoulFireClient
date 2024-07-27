@@ -1,6 +1,7 @@
 import {
   BoolSetting,
   ClientPluginSettingEntryMinMaxPair,
+  ClientPluginSettingEntryMinMaxPairSingle,
   ClientPluginSettingEntrySingle,
   ClientPluginSettingsPage,
   ComboSetting,
@@ -33,8 +34,14 @@ import { useContext, useState } from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
-import { ProfileRoot } from '@/lib/types.ts';
+import { convertToProto, ProfileRoot } from '@/lib/types.ts';
 import { JsonValue } from '@protobuf-ts/runtime';
+import { useDebouncedCallback } from 'use-debounce';
+import { useMutation } from '@tanstack/react-query';
+import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
+import { queryClient } from '@/lib/query.ts';
+import { TransportContext } from '@/components/providers/server-context.tsx';
+import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 
 function updateEntry(
   namespace: string,
@@ -54,6 +61,20 @@ function updateEntry(
   };
 }
 
+function getEntry(
+  namespace: string,
+  settingKey: string,
+  profile: ProfileRoot,
+  defaultValue: JsonValue,
+): JsonValue {
+  const current = profile.settings[namespace]?.[settingKey];
+  if (current === undefined) {
+    return defaultValue;
+  }
+
+  return current;
+}
+
 function ComponentTitle(props: { title: string; description: string }) {
   return (
     <TooltipProvider>
@@ -71,25 +92,21 @@ function StringComponent(props: {
   namespace: string;
   settingKey: string;
   entry: StringSetting;
+  changeCallback: (value: JsonValue) => void;
 }) {
-  const [value, setValue] = useState(props.entry.def);
   const profile = useContext(ProfileContext);
+  const [value, setValue] = useState(
+    getEntry(props.namespace, props.settingKey, profile, props.entry.def),
+  );
 
   return (
     <Input
       type={props.entry.secret ? 'password' : 'text'}
-      defaultValue={value}
+      defaultValue={value as string}
       onChange={(e) => {
         const value = e.currentTarget.value;
         setValue(value);
-        profile.setProfile(
-          updateEntry(
-            props.namespace,
-            props.settingKey,
-            value,
-            profile.profile,
-          ),
-        );
+        props.changeCallback(value);
       }}
     />
   );
@@ -99,9 +116,12 @@ function IntComponent(props: {
   namespace: string;
   settingKey: string;
   entry: IntSetting;
+  changeCallback: (value: JsonValue) => void;
 }) {
-  const [value, setValue] = useState(props.entry.def);
   const profile = useContext(ProfileContext);
+  const [value, setValue] = useState(
+    getEntry(props.namespace, props.settingKey, profile, props.entry.def),
+  );
 
   return (
     <Input
@@ -109,18 +129,11 @@ function IntComponent(props: {
       min={props.entry.min}
       max={props.entry.max}
       step={props.entry.step}
-      defaultValue={value}
+      defaultValue={value as number}
       onChange={(e) => {
         const value = parseInt(e.currentTarget.value);
         setValue(value);
-        profile.setProfile(
-          updateEntry(
-            props.namespace,
-            props.settingKey,
-            value,
-            profile.profile,
-          ),
-        );
+        props.changeCallback(value);
       }}
     />
   );
@@ -130,9 +143,12 @@ function DoubleComponent(props: {
   namespace: string;
   settingKey: string;
   entry: DoubleSetting;
+  changeCallback: (value: JsonValue) => void;
 }) {
-  const [value, setValue] = useState(props.entry.def);
   const profile = useContext(ProfileContext);
+  const [value, setValue] = useState(
+    getEntry(props.namespace, props.settingKey, profile, props.entry.def),
+  );
 
   return (
     <Input
@@ -140,18 +156,11 @@ function DoubleComponent(props: {
       min={props.entry.min}
       max={props.entry.max}
       step={props.entry.step}
-      defaultValue={value}
+      defaultValue={value as number}
       onChange={(e) => {
         const value = parseFloat(e.currentTarget.value);
         setValue(value);
-        profile.setProfile(
-          updateEntry(
-            props.namespace,
-            props.settingKey,
-            value,
-            profile.profile,
-          ),
-        );
+        props.changeCallback(value);
       }}
     />
   );
@@ -161,25 +170,21 @@ function BoolComponent(props: {
   namespace: string;
   settingKey: string;
   entry: BoolSetting;
+  changeCallback: (value: JsonValue) => void;
 }) {
-  const [value, setValue] = useState(props.entry.def);
   const profile = useContext(ProfileContext);
+  const [value, setValue] = useState(
+    getEntry(props.namespace, props.settingKey, profile, props.entry.def),
+  );
 
   return (
     <Checkbox
       className="my-auto"
-      defaultChecked={value}
+      defaultChecked={value as boolean}
       onChange={(e) => {
         const value = Boolean(e.currentTarget.value);
         setValue(value);
-        profile.setProfile(
-          updateEntry(
-            props.namespace,
-            props.settingKey,
-            value,
-            profile.profile,
-          ),
-        );
+        props.changeCallback(value);
       }}
     />
   );
@@ -189,10 +194,18 @@ function ComboComponent(props: {
   namespace: string;
   settingKey: string;
   entry: ComboSetting;
+  changeCallback: (value: JsonValue) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(props.entry.options[props.entry.def].id);
   const profile = useContext(ProfileContext);
+  const [value, setValue] = useState(
+    getEntry(
+      props.namespace,
+      props.settingKey,
+      profile,
+      props.entry.options[props.entry.def].id,
+    ),
+  );
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -222,14 +235,7 @@ function ComboComponent(props: {
                   onSelect={(currentValue) => {
                     const value = currentValue;
                     setValue(value);
-                    profile.setProfile(
-                      updateEntry(
-                        props.namespace,
-                        props.settingKey,
-                        value,
-                        profile.profile,
-                      ),
-                    );
+                    props.changeCallback(value);
                     setOpen(false);
                   }}
                 >
@@ -255,6 +261,28 @@ function SingleComponent(props: {
   settingKey: string;
   entry: ClientPluginSettingEntrySingle;
 }) {
+  const instanceInfo = useContext(InstanceInfoContext);
+  const profile = useContext(ProfileContext);
+  const transport = useContext(TransportContext);
+  const setProfileMutation = useMutation({
+    mutationFn: async (profile: ProfileRoot) => {
+      const instanceService = new InstanceServiceClient(transport);
+      await instanceService.updateInstanceConfig({
+        id: instanceInfo.id,
+        config: convertToProto(profile),
+      });
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ['instance-info', instanceInfo.id],
+      });
+    },
+  });
+  const write = useDebouncedCallback((value: JsonValue) => {
+    setProfileMutation.mutate(
+      updateEntry(props.namespace, props.settingKey, value, profile),
+    );
+  }, 1_000);
   if (!props.entry.type) {
     return null;
   }
@@ -271,6 +299,7 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.string}
+            changeCallback={write}
           />
         </div>
       );
@@ -285,6 +314,7 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.int}
+            changeCallback={write}
           />
         </div>
       );
@@ -295,6 +325,7 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.bool}
+            changeCallback={write}
           />
           <ComponentTitle
             title={props.entry.uiName}
@@ -313,6 +344,7 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.double}
+            changeCallback={write}
           />
         </div>
       );
@@ -327,49 +359,77 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.combo}
+            changeCallback={write}
           />
         </div>
       );
   }
 }
 
+function MinMaxComponentSingle(props: {
+  namespace: string;
+  entry: ClientPluginSettingEntryMinMaxPairSingle;
+}) {
+  const instanceInfo = useContext(InstanceInfoContext);
+  const profile = useContext(ProfileContext);
+  const transport = useContext(TransportContext);
+  const setProfileMutation = useMutation({
+    mutationFn: async (profile: ProfileRoot) => {
+      const instanceService = new InstanceServiceClient(transport);
+      await instanceService.updateInstanceConfig({
+        id: instanceInfo.id,
+        config: convertToProto(profile),
+      });
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ['instance-info', instanceInfo.id],
+      });
+    },
+  });
+  const write = useDebouncedCallback((value: JsonValue) => {
+    setProfileMutation.mutate(
+      updateEntry(props.namespace, props.entry.key, value, profile),
+    );
+  }, 1_000);
+  if (!props.entry.intSetting) {
+    return null;
+  }
+
+  return (
+    <div className="flex flex-col gap-1">
+      <ComponentTitle
+        title={props.entry.uiName}
+        description={props.entry.description}
+      />
+      <IntComponent
+        namespace={props.namespace}
+        settingKey={props.entry.key}
+        entry={props.entry.intSetting}
+        changeCallback={write}
+      />
+    </div>
+  );
+}
+
 function MinMaxComponent(props: {
   namespace: string;
   entry: ClientPluginSettingEntryMinMaxPair;
 }) {
-  if (
-    !props.entry.min ||
-    !props.entry.max ||
-    !props.entry.min.intSetting ||
-    !props.entry.max.intSetting
-  ) {
+  if (!props.entry.min || !props.entry.max) {
     return null;
   }
 
   return (
     <>
-      <div className="flex flex-col gap-1">
-        <ComponentTitle
-          title={props.entry.min.uiName}
-          description={props.entry.min.description}
-        />
-        <IntComponent
-          namespace={props.namespace}
-          settingKey={props.entry.min.key}
-          entry={props.entry.min.intSetting}
-        />
-      </div>
-      <div className="flex flex-col gap-1">
-        <ComponentTitle
-          title={props.entry.max.uiName}
-          description={props.entry.max.description}
-        />
-        <IntComponent
-          namespace={props.namespace}
-          settingKey={props.entry.max.key}
-          entry={props.entry.max.intSetting}
-        />
-      </div>
+      <MinMaxComponentSingle
+        namespace={props.namespace}
+        entry={props.entry.min}
+      />
+      <MinMaxComponentSingle
+        namespace={props.namespace}
+        entry={props.entry.max}
+      />
     </>
   );
 }

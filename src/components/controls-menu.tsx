@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Button } from '@/components/ui/button.tsx';
-import { ServerConnectionContext } from '@/components/providers/server-context.tsx';
+import { TransportContext } from '@/components/providers/server-context.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { convertToProto } from '@/lib/types.ts';
 import { toast } from 'sonner';
@@ -11,7 +11,7 @@ import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '@/lib/query.ts';
 
 export default function ControlsMenu() {
-  const transport = useContext(ServerConnectionContext);
+  const transport = useContext(TransportContext);
   const profile = useContext(ProfileContext);
   const instanceInfo = useContext(InstanceInfoContext);
   const startMutation = useMutation({
@@ -20,7 +20,7 @@ export default function ControlsMenu() {
       const promise = client
         .updateInstanceConfig({
           id: instanceInfo.id,
-          config: convertToProto(profile.profile),
+          config: convertToProto(profile),
         })
         .then(() => {
           return client.changeInstanceState({

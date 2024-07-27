@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input.tsx';
 import { KeyboardEventHandler, useContext, useState } from 'react';
-import { ServerConnectionContext } from '@/components/providers/server-context.tsx';
+import { TransportContext } from '@/components/providers/server-context.tsx';
 import { CommandServiceClient } from '@/generated/com/soulfiremc/grpc/generated/command.client.ts';
 
 type CompletionState = {
@@ -10,7 +10,7 @@ type CompletionState = {
 };
 
 export default function CommandInput() {
-  const transport = useContext(ServerConnectionContext);
+  const transport = useContext(TransportContext);
   const [completionState, setCompletionState] = useState<CompletionState>({
     lastWritten: '',
     receivedCompletions: null,

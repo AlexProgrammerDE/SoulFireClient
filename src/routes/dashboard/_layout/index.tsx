@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button.tsx';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { TrashIcon } from 'lucide-react';
 import { toast } from 'sonner';
-import { ServerConnectionContext } from '@/components/providers/server-context.tsx';
+import { TransportContext } from '@/components/providers/server-context.tsx';
 import { queryClient } from '@/lib/query.ts';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
@@ -51,7 +51,7 @@ function ClientLayout() {
   const navigate = useNavigate();
   const { listQueryOptions } = Route.useRouteContext();
   const instanceList = useQuery(listQueryOptions);
-  const transport = useContext(ServerConnectionContext);
+  const transport = useContext(TransportContext);
   const [createOpen, setCreateOpen] = useState(false);
   const addMutation = useMutation({
     mutationFn: async (values: CreateInstanceType) => {
