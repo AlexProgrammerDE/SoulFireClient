@@ -25,8 +25,13 @@ import { open as shellOpen } from '@tauri-apps/api/shell';
 import { appConfigDir, appDataDir, resolve } from '@tauri-apps/api/path';
 import { toast } from 'sonner';
 import CastMenuEntry from '@/components/cast-menu-entry.tsx';
-import { ProfileRoot } from '@/lib/types.ts';
+import { convertToProto, ProfileRoot } from '@/lib/types.ts';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
+import { useMutation } from '@tanstack/react-query';
+import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
+import { queryClient } from '@/lib/query.ts';
+import { TransportContext } from '@/components/providers/server-context.tsx';
+import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 
 function data2blob(data: string) {
   const bytes = new Array(data.length);
@@ -41,9 +46,25 @@ export const DashboardMenuHeader = () => {
   const { theme, setTheme } = useTheme();
   const [aboutOpen, setAboutOpen] = useState(false);
   const navigate = useNavigate();
-  const profile = useContext(ProfileContext);
   const systemInfo = useContext(SystemInfoContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const profile = useContext(ProfileContext);
+  const transport = useContext(TransportContext);
+  const instanceInfo = useContext(InstanceInfoContext);
+  const setProfileMutation = useMutation({
+    mutationFn: async (profile: ProfileRoot) => {
+      const instanceService = new InstanceServiceClient(transport);
+      await instanceService.updateInstanceConfig({
+        id: instanceInfo.id,
+        config: convertToProto(profile),
+      });
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ['instance-info', instanceInfo.id],
+      });
+    },
+  });
 
   return (
     <>
@@ -98,11 +119,17 @@ export const DashboardMenuHeader = () => {
                                     file,
                                   ),
                                 );
-                                profile.setProfile(
-                                  JSON.parse(data) as ProfileRoot,
-                                );
 
-                                toast.success('Profile loaded');
+                                toast.promise(
+                                  setProfileMutation.mutateAsync(
+                                    JSON.parse(data) as ProfileRoot,
+                                  ),
+                                  {
+                                    loading: 'Loading profile...',
+                                    success: 'Profile loaded',
+                                    error: 'Failed to load profile',
+                                  },
+                                );
                               })();
                             }}
                           >
@@ -139,7 +166,16 @@ export const DashboardMenuHeader = () => {
                               ? selected[0]
                               : selected;
                             const data = await readTextFile(single);
-                            profile.setProfile(JSON.parse(data) as ProfileRoot);
+                            toast.promise(
+                              setProfileMutation.mutateAsync(
+                                JSON.parse(data) as ProfileRoot,
+                              ),
+                              {
+                                loading: 'Loading profile...',
+                                success: 'Profile loaded',
+                                error: 'Failed to load profile',
+                              },
+                            );
                           }
 
                           toast.success('Profile loaded');
@@ -166,9 +202,16 @@ export const DashboardMenuHeader = () => {
                       const reader = new FileReader();
                       reader.onload = () => {
                         const data = reader.result as string;
-                        profile.setProfile(JSON.parse(data) as ProfileRoot);
-
-                        toast.success('Profile loaded');
+                        toast.promise(
+                          setProfileMutation.mutateAsync(
+                            JSON.parse(data) as ProfileRoot,
+                          ),
+                          {
+                            loading: 'Loading profile...',
+                            success: 'Profile loaded',
+                            error: 'Failed to load profile',
+                          },
+                        );
                       };
                       reader.readAsText(file);
                     }}
@@ -184,7 +227,7 @@ export const DashboardMenuHeader = () => {
               )}
               <MenubarItem
                 onClick={() => {
-                  const data = JSON.stringify(profile.profile, null, 2);
+                  const data = JSON.stringify(profile, null, 2);
                   if (isTauri()) {
                     void (async () => {
                       const profileDir = await resolve(
