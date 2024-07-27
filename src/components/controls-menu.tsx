@@ -39,7 +39,7 @@ export default function ControlsMenu() {
         },
       },
     );
-  }, [profile, transport]);
+  }, [instanceInfo, profile, transport]);
 
   const toggleAttackState = useCallback(() => {
     const client = new InstanceServiceClient(transport);
