@@ -37,6 +37,7 @@ export const Route = createFileRoute('/dashboard/_layout/')({
         queryKey: ['instance-list'],
         queryFn: listQueryFn,
         signal: props.abortController.signal,
+        refetchInterval: 3_000,
       },
     };
   },
