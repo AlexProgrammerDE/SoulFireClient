@@ -59,17 +59,17 @@ export function CreateInstancePopup({
   function onSubmit(values: FormSchemaType) {
     const instanceService = new InstanceServiceClient(transport);
     toast.promise(
-      (async () => {
-        return instanceService.createInstance({
+      instanceService
+        .createInstance({
           friendlyName: values.friendlyName,
-        });
-      })(),
+        })
+        .then((r) => r.response),
       {
         loading: 'Creating instance...',
         success: (r) => {
           void navigate({
             to: '/dashboard/$instance',
-            params: { instance: r.response.id },
+            params: { instance: r.id },
           });
           return 'Instance created successfully';
         },
@@ -89,9 +89,8 @@ export function CreateInstancePopup({
             <CredenzaHeader>
               <CredenzaTitle>Create a new instance</CredenzaTitle>
               <CredenzaDescription>
-                Instances need friendly names to distinguish them from each
-                other. It can be any name you want, for example, "My Minecraft
-                Bot".
+                Instances need friendly names for you to distinguish them. It It
+                can be any name you want, for example, "My Minecraft Bot".
               </CredenzaDescription>
             </CredenzaHeader>
             <CredenzaBody className="space-y-4">

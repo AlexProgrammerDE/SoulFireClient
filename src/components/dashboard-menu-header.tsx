@@ -221,6 +221,16 @@ export const DashboardMenuHeader = () => {
               >
                 Save Profile
               </MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem
+                onClick={() => {
+                  void navigate({
+                    to: '/dashboard',
+                  });
+                }}
+              >
+                Back to selection
+              </MenubarItem>
             </MenubarContent>
           </MenubarMenu>
         )}
