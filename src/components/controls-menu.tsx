@@ -6,6 +6,7 @@ import { convertToProto } from '@/lib/types.ts';
 import { toast } from 'sonner';
 import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
 import { InstanceState } from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
+import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 
 type State = 'unstarted' | 'paused' | 'running';
 
@@ -13,31 +14,25 @@ export default function ControlsMenu() {
   const [appState, setAppState] = useState<State>('unstarted');
   const transport = useContext(ServerConnectionContext);
   const profile = useContext(ProfileContext);
-  const [currentAttack, setCurrentAttack] = useState<string | null>(null);
+  const instanceInfo = useContext(InstanceInfoContext);
 
   const startAttack = useCallback(() => {
     const client = new InstanceServiceClient(transport);
     toast.promise(
-      client
-        .createInstance({
-          friendlyName: 'gui-attack',
-        })
-        .then(async (r) => {
-          await client.updateInstanceConfig({
-            id: r.response.id,
-            config: convertToProto(profile.profile),
-          });
-          await client.changeInstanceState({
-            id: r.response.id,
-            state: InstanceState.RUNNING,
-          });
-          setCurrentAttack(r.response.id);
-          setAppState('running');
-          return r;
-        }),
+      async () => {
+        await client.updateInstanceConfig({
+          id: instanceInfo.id,
+          config: convertToProto(profile.profile),
+        });
+        await client.changeInstanceState({
+          id: instanceInfo.id,
+          state: InstanceState.RUNNING,
+        });
+        setAppState('running');
+      },
       {
         loading: 'Starting attack...',
-        success: (r) => `Attack ${r.response.id} started successfully`,
+        success: `Attack started successfully`,
         error: (e) => {
           console.error(e);
           return 'Failed to start attack';
@@ -48,14 +43,10 @@ export default function ControlsMenu() {
 
   const toggleAttackState = useCallback(() => {
     const client = new InstanceServiceClient(transport);
-    if (!currentAttack) {
-      return;
-    }
-
     toast.promise(
       client
         .changeInstanceState({
-          id: currentAttack,
+          id: instanceInfo.id,
           state:
             appState === 'paused'
               ? InstanceState.RUNNING
@@ -73,34 +64,29 @@ export default function ControlsMenu() {
         },
       },
     );
-  }, [appState, currentAttack, transport]);
+  }, [appState, instanceInfo, transport]);
 
   const stopAttack = useCallback(() => {
     const client = new InstanceServiceClient(transport);
-    if (!currentAttack) {
-      return;
-    }
-
     toast.promise(
       client
         .changeInstanceState({
-          id: currentAttack,
+          id: instanceInfo.id,
           state: InstanceState.STOPPED,
         })
         .then(() => {
-          setCurrentAttack(null);
           setAppState('unstarted');
         }),
       {
         loading: 'Stopping attack...',
-        success: `Attack ${currentAttack} stopped successfully`,
+        success: `Attack stopped successfully`,
         error: (e) => {
           console.error(e);
           return 'Failed to stop attack';
         },
       },
     );
-  }, [currentAttack, transport]);
+  }, [instanceInfo, transport]);
 
   return (
     <div className="grid grid-rows-3 gap-4">
