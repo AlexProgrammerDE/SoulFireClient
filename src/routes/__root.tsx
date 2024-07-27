@@ -6,7 +6,11 @@ import { Toaster } from '@/components/ui/sonner.tsx';
 import { TailwindIndicator } from '@/components/tailwind-indicator.tsx';
 
 export const Route = createRootRoute({
-  component: () => (
+  component: ClientLayout,
+});
+
+function ClientLayout() {
+  return (
     <>
       <ThemeProvider
         attribute="class"
@@ -21,5 +25,5 @@ export const Route = createRootRoute({
       </ThemeProvider>
       <TailwindIndicator />
     </>
-  ),
-});
+  );
+}

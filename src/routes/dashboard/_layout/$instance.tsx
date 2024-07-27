@@ -7,6 +7,7 @@ import ProfileProvider from '@/components/providers/profile-context';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { convertFromProto } from '@/lib/types.ts';
 import { InstanceConfig } from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
+import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance')({
   loader: async (props) => {
@@ -45,21 +46,24 @@ function ClientLayout() {
   const { instanceId, instanceInfo } = Route.useLoaderData();
 
   return (
-    <InstanceInfoContext.Provider
-      value={{ id: instanceId, info: instanceInfo }}
-    >
-      <ProfileProvider
-        instanceProfile={convertFromProto(
-          instanceInfo.config as InstanceConfig,
-        )}
+    <>
+      <InstanceInfoContext.Provider
+        value={{ id: instanceId, info: instanceInfo }}
       >
-        <div className="grid flex-grow grid-cols-1 gap-4 md:grid-cols-2">
-          <div className="flex overflow-auto p-4 md:h-[calc(100vh-2.5rem)]">
-            <Outlet />
+        <ProfileProvider
+          instanceProfile={convertFromProto(
+            instanceInfo.config as InstanceConfig,
+          )}
+        >
+          <DashboardMenuHeader />
+          <div className="grid flex-grow grid-cols-1 gap-4 md:grid-cols-2">
+            <div className="flex overflow-auto p-4 md:h-[calc(100vh-2.5rem)]">
+              <Outlet />
+            </div>
+            <TerminalSide />
           </div>
-          <TerminalSide />
-        </div>
-      </ProfileProvider>
-    </InstanceInfoContext.Provider>
+        </ProfileProvider>
+      </InstanceInfoContext.Provider>
+    </>
   );
 }

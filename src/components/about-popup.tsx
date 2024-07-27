@@ -9,23 +9,16 @@ import {
   CredenzaTitle,
 } from './ui/credenza';
 import { Button } from '@/components/ui/button.tsx';
-
-export type TauriInfo = {
-  osType: string;
-  osVersion: string;
-  platformName: string;
-  osLocale: string | null;
-  archName: string;
-} | null;
+import { type SystemInfo } from '@/components/providers/system-info-context.tsx';
 
 export function AboutPopup({
   open,
   setOpen,
-  tauriInfo,
+  systemInfo,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
-  tauriInfo: TauriInfo;
+  systemInfo: SystemInfo | null;
 }) {
   return (
     <Credenza open={open} onOpenChange={setOpen}>
@@ -37,14 +30,14 @@ export function AboutPopup({
           </CredenzaDescription>
         </CredenzaHeader>
         <CredenzaBody>
-          {tauriInfo !== null ? (
+          {systemInfo !== null ? (
             <>
               <p>
-                Operating System: {tauriInfo.osType} {tauriInfo.osVersion}
+                Operating System: {systemInfo.osType} {systemInfo.osVersion}
               </p>
-              <p>Platform: {tauriInfo.platformName}</p>
-              <p>Locale: {tauriInfo.osLocale ?? 'Unknown'}</p>
-              <p>Architecture: {tauriInfo.archName}</p>
+              <p>Platform: {systemInfo.platformName}</p>
+              <p>Locale: {systemInfo.osLocale ?? 'Unknown'}</p>
+              <p>Architecture: {systemInfo.archName}</p>
             </>
           ) : (
             <>

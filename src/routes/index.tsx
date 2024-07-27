@@ -84,7 +84,6 @@ const LoginForm = () => {
   );
 
   function onSubmit(values: FormSchemaType) {
-    console.log(values);
     void redirectWithCredentials(values.address, values.token);
   }
 

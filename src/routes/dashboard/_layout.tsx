@@ -7,12 +7,23 @@ import {
 } from '@tanstack/react-router';
 import { ConfigServiceClient } from '@/generated/com/soulfiremc/grpc/generated/config.client.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { isTauri } from '@/lib/utils.ts';
-import { createDir, readDir } from '@tauri-apps/api/fs';
-import { appConfigDir, resolve } from '@tauri-apps/api/path';
 import { createTransport, isAuthenticated } from '@/lib/web-rpc.ts';
+import { isTauri } from '@/lib/utils.ts';
+import { appConfigDir, resolve } from '@tauri-apps/api/path';
+import { createDir, readDir } from '@tauri-apps/api/fs';
+import {
+  SystemInfo,
+  SystemInfoContext,
+} from '@/components/providers/system-info-context.tsx';
+import { arch, locale, platform, type, version } from '@tauri-apps/api/os';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card.tsx';
+import { LoaderCircleIcon } from 'lucide-react';
 
 export const Route = createFileRoute('/dashboard/_layout')({
   beforeLoad: ({ location }) => {
@@ -26,6 +37,31 @@ export const Route = createFileRoute('/dashboard/_layout')({
     }
   },
   loader: async (props) => {
+    let systemInfo: SystemInfo | null;
+    if (isTauri()) {
+      const profileDir = await resolve(
+        await resolve(await appConfigDir(), 'profile'),
+      );
+      await createDir(profileDir, { recursive: true });
+
+      const availableProfiles = (await readDir(profileDir))
+        .filter((file) => !file.children)
+        .filter((file) => file.name)
+        .map((file) => file.name!)
+        .filter((file) => file.endsWith('.json'));
+
+      systemInfo = {
+        availableProfiles,
+        osType: await type(),
+        osVersion: await version(),
+        platformName: await platform(),
+        osLocale: await locale(),
+        archName: await arch(),
+      };
+    } else {
+      systemInfo = null;
+    }
+
     const transport = createTransport();
 
     const configService = new ConfigServiceClient(transport);
@@ -36,29 +72,22 @@ export const Route = createFileRoute('/dashboard/_layout')({
       },
     );
 
-    let availableProfiles: string[] = [];
-    if (isTauri()) {
-      const profileDir = await resolve(
-        await resolve(await appConfigDir(), 'profile'),
-      );
-      await createDir(profileDir, { recursive: true });
-
-      availableProfiles = (await readDir(profileDir))
-        .filter((file) => !file.children)
-        .filter((file) => file.name)
-        .map((file) => file.name!)
-        .filter((file) => file.endsWith('.json'));
-    }
-
     return {
       transport,
       clientData: result.response,
-      availableProfiles,
+      systemInfo,
     };
   },
   errorComponent: ErrorComponent,
   pendingComponent: () => (
-    <div className="flex h-full w-full">Connecting...</div>
+    <Card className="m-auto text-center w-full max-w-[450px] border-none">
+      <CardHeader className="pb-0">
+        <CardTitle>Connecting...</CardTitle>
+      </CardHeader>
+      <CardContent className="flex h-32 w-full">
+        <LoaderCircleIcon className="m-auto h-12 w-12 animate-spin" />
+      </CardContent>
+    </Card>
   ),
   component: ClientLayout,
 });
@@ -86,14 +115,15 @@ function ErrorComponent({ error }: { error: Error }) {
 }
 
 function ClientLayout() {
-  const { transport, clientData, availableProfiles } = Route.useLoaderData();
+  const { transport, clientData, systemInfo } = Route.useLoaderData();
 
   return (
     <div className="flex h-screen w-screen flex-col">
       <ServerConnectionContext.Provider value={transport}>
         <ClientInfoContext.Provider value={clientData}>
-          <DashboardMenuHeader availableProfiles={availableProfiles} />
-          <Outlet />
+          <SystemInfoContext.Provider value={systemInfo}>
+            <Outlet />
+          </SystemInfoContext.Provider>
         </ClientInfoContext.Provider>
       </ServerConnectionContext.Provider>
     </div>

@@ -14,7 +14,7 @@ import {
 import { useTheme } from 'next-themes';
 import { isTauri } from '@/lib/utils.ts';
 import { exit } from '@tauri-apps/api/process';
-import { AboutPopup, TauriInfo } from '@/components/about-popup.tsx';
+import { AboutPopup } from '@/components/about-popup.tsx';
 import { useContext, useRef, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
@@ -24,9 +24,9 @@ import { open, save } from '@tauri-apps/api/dialog';
 import { open as shellOpen } from '@tauri-apps/api/shell';
 import { appConfigDir, appDataDir, resolve } from '@tauri-apps/api/path';
 import { toast } from 'sonner';
-import { arch, locale, platform, type, version } from '@tauri-apps/api/os';
 import CastMenuEntry from '@/components/cast-menu-entry.tsx';
 import { ProfileRoot } from '@/lib/types.ts';
+import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 
 function data2blob(data: string) {
   const bytes = new Array(data.length);
@@ -37,16 +37,12 @@ function data2blob(data: string) {
   return new Blob([new Uint8Array(bytes)]);
 }
 
-export const DashboardMenuHeader = ({
-  availableProfiles,
-}: {
-  availableProfiles: string[];
-}) => {
+export const DashboardMenuHeader = () => {
   const { theme, setTheme } = useTheme();
   const [aboutOpen, setAboutOpen] = useState(false);
-  const [tauriInfo, setTauriInfo] = useState<TauriInfo | null>(null);
   const navigate = useNavigate();
   const profile = useContext(ProfileContext);
+  const systemInfo = useContext(SystemInfoContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -82,13 +78,13 @@ export const DashboardMenuHeader = ({
           <MenubarMenu>
             <MenubarTrigger>Instance</MenubarTrigger>
             <MenubarContent>
-              {isTauri() ? (
+              {isTauri() && systemInfo ? (
                 <MenubarSub>
                   <MenubarSubTrigger>Load Profile</MenubarSubTrigger>
                   <MenubarSubContent>
-                    {availableProfiles.length > 0 && (
+                    {systemInfo.availableProfiles.length > 0 && (
                       <>
-                        {availableProfiles.map((file) => (
+                        {systemInfo.availableProfiles.map((file) => (
                           <MenubarItem
                             key={file}
                             onClick={() => {
@@ -295,20 +291,7 @@ export const DashboardMenuHeader = ({
             )}
             <MenubarItem
               onClick={() => {
-                void (async () => {
-                  setTauriInfo(
-                    isTauri()
-                      ? {
-                          osType: await type(),
-                          osVersion: await version(),
-                          platformName: await platform(),
-                          osLocale: await locale(),
-                          archName: await arch(),
-                        }
-                      : null,
-                  );
-                  setAboutOpen(true);
-                })();
+                setAboutOpen(true);
               }}
             >
               About
@@ -319,7 +302,7 @@ export const DashboardMenuHeader = ({
       <AboutPopup
         open={aboutOpen}
         setOpen={setAboutOpen}
-        tauriInfo={tauriInfo}
+        systemInfo={systemInfo}
       />
     </>
   );
