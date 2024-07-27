@@ -16,10 +16,12 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as DashboardLayoutImport } from './routes/dashboard/_layout'
 import { Route as DashboardLayoutIndexImport } from './routes/dashboard/_layout/index'
-import { Route as DashboardLayoutProxiesImport } from './routes/dashboard/_layout/proxies'
-import { Route as DashboardLayoutPluginsImport } from './routes/dashboard/_layout/plugins'
-import { Route as DashboardLayoutAccountsImport } from './routes/dashboard/_layout/accounts'
-import { Route as DashboardLayoutSettingsNamespaceImport } from './routes/dashboard/_layout/settings/$namespace'
+import { Route as DashboardLayoutInstanceImport } from './routes/dashboard/_layout/$instance'
+import { Route as DashboardLayoutInstanceIndexImport } from './routes/dashboard/_layout/$instance/index'
+import { Route as DashboardLayoutInstanceProxiesImport } from './routes/dashboard/_layout/$instance/proxies'
+import { Route as DashboardLayoutInstancePluginsImport } from './routes/dashboard/_layout/$instance/plugins'
+import { Route as DashboardLayoutInstanceAccountsImport } from './routes/dashboard/_layout/$instance/accounts'
+import { Route as DashboardLayoutInstanceSettingsNamespaceImport } from './routes/dashboard/_layout/$instance/settings/$namespace'
 
 // Create Virtual Routes
 
@@ -47,25 +49,39 @@ const DashboardLayoutIndexRoute = DashboardLayoutIndexImport.update({
   getParentRoute: () => DashboardLayoutRoute,
 } as any)
 
-const DashboardLayoutProxiesRoute = DashboardLayoutProxiesImport.update({
-  path: '/proxies',
+const DashboardLayoutInstanceRoute = DashboardLayoutInstanceImport.update({
+  path: '/$instance',
   getParentRoute: () => DashboardLayoutRoute,
 } as any)
 
-const DashboardLayoutPluginsRoute = DashboardLayoutPluginsImport.update({
-  path: '/plugins',
-  getParentRoute: () => DashboardLayoutRoute,
-} as any)
+const DashboardLayoutInstanceIndexRoute =
+  DashboardLayoutInstanceIndexImport.update({
+    path: '/',
+    getParentRoute: () => DashboardLayoutInstanceRoute,
+  } as any)
 
-const DashboardLayoutAccountsRoute = DashboardLayoutAccountsImport.update({
-  path: '/accounts',
-  getParentRoute: () => DashboardLayoutRoute,
-} as any)
+const DashboardLayoutInstanceProxiesRoute =
+  DashboardLayoutInstanceProxiesImport.update({
+    path: '/proxies',
+    getParentRoute: () => DashboardLayoutInstanceRoute,
+  } as any)
 
-const DashboardLayoutSettingsNamespaceRoute =
-  DashboardLayoutSettingsNamespaceImport.update({
+const DashboardLayoutInstancePluginsRoute =
+  DashboardLayoutInstancePluginsImport.update({
+    path: '/plugins',
+    getParentRoute: () => DashboardLayoutInstanceRoute,
+  } as any)
+
+const DashboardLayoutInstanceAccountsRoute =
+  DashboardLayoutInstanceAccountsImport.update({
+    path: '/accounts',
+    getParentRoute: () => DashboardLayoutInstanceRoute,
+  } as any)
+
+const DashboardLayoutInstanceSettingsNamespaceRoute =
+  DashboardLayoutInstanceSettingsNamespaceImport.update({
     path: '/settings/$namespace',
-    getParentRoute: () => DashboardLayoutRoute,
+    getParentRoute: () => DashboardLayoutInstanceRoute,
   } as any)
 
 // Populate the FileRoutesByPath interface
@@ -93,25 +109,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardLayoutImport
       parentRoute: typeof DashboardRoute
     }
-    '/dashboard/_layout/accounts': {
-      id: '/dashboard/_layout/accounts'
-      path: '/accounts'
-      fullPath: '/dashboard/accounts'
-      preLoaderRoute: typeof DashboardLayoutAccountsImport
-      parentRoute: typeof DashboardLayoutImport
-    }
-    '/dashboard/_layout/plugins': {
-      id: '/dashboard/_layout/plugins'
-      path: '/plugins'
-      fullPath: '/dashboard/plugins'
-      preLoaderRoute: typeof DashboardLayoutPluginsImport
-      parentRoute: typeof DashboardLayoutImport
-    }
-    '/dashboard/_layout/proxies': {
-      id: '/dashboard/_layout/proxies'
-      path: '/proxies'
-      fullPath: '/dashboard/proxies'
-      preLoaderRoute: typeof DashboardLayoutProxiesImport
+    '/dashboard/_layout/$instance': {
+      id: '/dashboard/_layout/$instance'
+      path: '/$instance'
+      fullPath: '/dashboard/$instance'
+      preLoaderRoute: typeof DashboardLayoutInstanceImport
       parentRoute: typeof DashboardLayoutImport
     }
     '/dashboard/_layout/': {
@@ -121,12 +123,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardLayoutIndexImport
       parentRoute: typeof DashboardLayoutImport
     }
-    '/dashboard/_layout/settings/$namespace': {
-      id: '/dashboard/_layout/settings/$namespace'
+    '/dashboard/_layout/$instance/accounts': {
+      id: '/dashboard/_layout/$instance/accounts'
+      path: '/accounts'
+      fullPath: '/dashboard/$instance/accounts'
+      preLoaderRoute: typeof DashboardLayoutInstanceAccountsImport
+      parentRoute: typeof DashboardLayoutInstanceImport
+    }
+    '/dashboard/_layout/$instance/plugins': {
+      id: '/dashboard/_layout/$instance/plugins'
+      path: '/plugins'
+      fullPath: '/dashboard/$instance/plugins'
+      preLoaderRoute: typeof DashboardLayoutInstancePluginsImport
+      parentRoute: typeof DashboardLayoutInstanceImport
+    }
+    '/dashboard/_layout/$instance/proxies': {
+      id: '/dashboard/_layout/$instance/proxies'
+      path: '/proxies'
+      fullPath: '/dashboard/$instance/proxies'
+      preLoaderRoute: typeof DashboardLayoutInstanceProxiesImport
+      parentRoute: typeof DashboardLayoutInstanceImport
+    }
+    '/dashboard/_layout/$instance/': {
+      id: '/dashboard/_layout/$instance/'
+      path: '/'
+      fullPath: '/dashboard/$instance/'
+      preLoaderRoute: typeof DashboardLayoutInstanceIndexImport
+      parentRoute: typeof DashboardLayoutInstanceImport
+    }
+    '/dashboard/_layout/$instance/settings/$namespace': {
+      id: '/dashboard/_layout/$instance/settings/$namespace'
       path: '/settings/$namespace'
-      fullPath: '/dashboard/settings/$namespace'
-      preLoaderRoute: typeof DashboardLayoutSettingsNamespaceImport
-      parentRoute: typeof DashboardLayoutImport
+      fullPath: '/dashboard/$instance/settings/$namespace'
+      preLoaderRoute: typeof DashboardLayoutInstanceSettingsNamespaceImport
+      parentRoute: typeof DashboardLayoutInstanceImport
     }
   }
 }
@@ -137,11 +167,14 @@ export const routeTree = rootRoute.addChildren({
   IndexRoute,
   DashboardRoute: DashboardRoute.addChildren({
     DashboardLayoutRoute: DashboardLayoutRoute.addChildren({
-      DashboardLayoutAccountsRoute,
-      DashboardLayoutPluginsRoute,
-      DashboardLayoutProxiesRoute,
+      DashboardLayoutInstanceRoute: DashboardLayoutInstanceRoute.addChildren({
+        DashboardLayoutInstanceAccountsRoute,
+        DashboardLayoutInstancePluginsRoute,
+        DashboardLayoutInstanceProxiesRoute,
+        DashboardLayoutInstanceIndexRoute,
+        DashboardLayoutInstanceSettingsNamespaceRoute,
+      }),
       DashboardLayoutIndexRoute,
-      DashboardLayoutSettingsNamespaceRoute,
     }),
   }),
 })
@@ -171,32 +204,44 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "dashboard/_layout.tsx",
       "parent": "/dashboard",
       "children": [
-        "/dashboard/_layout/accounts",
-        "/dashboard/_layout/plugins",
-        "/dashboard/_layout/proxies",
-        "/dashboard/_layout/",
-        "/dashboard/_layout/settings/$namespace"
+        "/dashboard/_layout/$instance",
+        "/dashboard/_layout/"
       ]
     },
-    "/dashboard/_layout/accounts": {
-      "filePath": "dashboard/_layout/accounts.tsx",
-      "parent": "/dashboard/_layout"
-    },
-    "/dashboard/_layout/plugins": {
-      "filePath": "dashboard/_layout/plugins.tsx",
-      "parent": "/dashboard/_layout"
-    },
-    "/dashboard/_layout/proxies": {
-      "filePath": "dashboard/_layout/proxies.tsx",
-      "parent": "/dashboard/_layout"
+    "/dashboard/_layout/$instance": {
+      "filePath": "dashboard/_layout/$instance.tsx",
+      "parent": "/dashboard/_layout",
+      "children": [
+        "/dashboard/_layout/$instance/accounts",
+        "/dashboard/_layout/$instance/plugins",
+        "/dashboard/_layout/$instance/proxies",
+        "/dashboard/_layout/$instance/",
+        "/dashboard/_layout/$instance/settings/$namespace"
+      ]
     },
     "/dashboard/_layout/": {
       "filePath": "dashboard/_layout/index.tsx",
       "parent": "/dashboard/_layout"
     },
-    "/dashboard/_layout/settings/$namespace": {
-      "filePath": "dashboard/_layout/settings/$namespace.tsx",
-      "parent": "/dashboard/_layout"
+    "/dashboard/_layout/$instance/accounts": {
+      "filePath": "dashboard/_layout/$instance/accounts.tsx",
+      "parent": "/dashboard/_layout/$instance"
+    },
+    "/dashboard/_layout/$instance/plugins": {
+      "filePath": "dashboard/_layout/$instance/plugins.tsx",
+      "parent": "/dashboard/_layout/$instance"
+    },
+    "/dashboard/_layout/$instance/proxies": {
+      "filePath": "dashboard/_layout/$instance/proxies.tsx",
+      "parent": "/dashboard/_layout/$instance"
+    },
+    "/dashboard/_layout/$instance/": {
+      "filePath": "dashboard/_layout/$instance/index.tsx",
+      "parent": "/dashboard/_layout/$instance"
+    },
+    "/dashboard/_layout/$instance/settings/$namespace": {
+      "filePath": "dashboard/_layout/$instance/settings/$namespace.tsx",
+      "parent": "/dashboard/_layout/$instance"
     }
   }
 }

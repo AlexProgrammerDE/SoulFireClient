@@ -5,28 +5,14 @@ import {
   redirect,
   useNavigate,
 } from '@tanstack/react-router';
-import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 import { ConfigServiceClient } from '@/generated/com/soulfiremc/grpc/generated/config.client.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { TerminalComponent } from '@/components/terminal.tsx';
-import CommandInput from '@/components/command-input.tsx';
-import ProfileProvider from '@/components/providers/profile-context.tsx';
-import {
-  LOCAL_STORAGE_SERVER_ADDRESS_KEY,
-  LOCAL_STORAGE_SERVER_TOKEN_KEY,
-} from '@/lib/types.ts';
 import { isTauri } from '@/lib/utils.ts';
 import { createDir, readDir } from '@tauri-apps/api/fs';
 import { appConfigDir, resolve } from '@tauri-apps/api/path';
-
-const isAuthenticated = () => {
-  return (
-    localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY) !== null &&
-    localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY) !== null
-  );
-};
+import { createTransport, isAuthenticated } from '@/lib/web-rpc.ts';
 
 export const Route = createFileRoute('/dashboard/_layout')({
   beforeLoad: ({ location }) => {
@@ -40,19 +26,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
     }
   },
   loader: async (props) => {
-    const address = localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY);
-    const token = localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY);
-
-    if (!address || !token) {
-      throw new Error('No server address or token');
-    }
-
-    const transport = new GrpcWebFetchTransport({
-      baseUrl: address,
-      meta: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const transport = createTransport();
 
     const configService = new ConfigServiceClient(transport);
     const result = await configService.getClientData(
@@ -111,17 +85,6 @@ function ErrorComponent({ error }: { error: Error }) {
   );
 }
 
-function TerminalSide() {
-  return (
-    <div className="flex flex-col gap-4 p-4">
-      <div className="terminal-container flex-grow md:h-[calc(100vh-9rem)]">
-        <TerminalComponent />
-      </div>
-      <CommandInput />
-    </div>
-  );
-}
-
 function ClientLayout() {
   const { transport, clientData, availableProfiles } = Route.useLoaderData();
 
@@ -129,15 +92,8 @@ function ClientLayout() {
     <div className="flex h-screen w-screen flex-col">
       <ServerConnectionContext.Provider value={transport}>
         <ClientInfoContext.Provider value={clientData}>
-          <ProfileProvider>
-            <DashboardMenuHeader availableProfiles={availableProfiles} />
-            <div className="grid flex-grow grid-cols-1 gap-4 md:grid-cols-2">
-              <div className="flex overflow-auto p-4 md:h-[calc(100vh-2.5rem)]">
-                <Outlet />
-              </div>
-              <TerminalSide />
-            </div>
-          </ProfileProvider>
+          <DashboardMenuHeader availableProfiles={availableProfiles} />
+          <Outlet />
         </ClientInfoContext.Provider>
       </ServerConnectionContext.Provider>
     </div>

@@ -20,8 +20,9 @@ import { toast } from 'sonner';
 import { ServerConnectionContext } from '@/components/providers/server-context.tsx';
 import { MCAuthServiceClient } from '@/generated/com/soulfiremc/grpc/generated/mc-auth.client.ts';
 import ImportDialog from '@/components/import-dialog.tsx';
+import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 
-export const Route = createFileRoute('/dashboard/_layout/accounts')({
+export const Route = createFileRoute('/dashboard/_layout/$instance/accounts')({
   component: AccountSettings,
 });
 
@@ -228,11 +229,14 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
 function AccountSettings() {
   const clientInfo = useContext(ClientInfoContext);
   const profile = useContext(ProfileContext);
+  const instanceInfo = useContext(InstanceInfoContext);
 
   return (
     <div className="flex h-full w-full flex-col gap-4">
       <Button asChild variant="secondary">
-        <Link to="/dashboard">Back</Link>
+        <Link to="/dashboard/$instance" params={{ instance: instanceInfo.id }}>
+          Back
+        </Link>
       </Button>
       <div className="flex flex-col gap-2">
         <ClientSettingsPageComponent

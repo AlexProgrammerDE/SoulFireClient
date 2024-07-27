@@ -51,12 +51,13 @@ const formSchema = z.object({
     .url('Address must be a valid URL'),
   token: z.string().min(1, 'Token is required').max(255, 'Token is too long'),
 });
+type FormSchemaType = z.infer<typeof formSchema>;
 
 type LoginType = 'INTEGRATED' | 'REMOTE';
 
 const LoginForm = () => {
   const navigate = useNavigate();
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       address: localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY) ?? '',
@@ -82,7 +83,8 @@ const LoginForm = () => {
     [navigate],
   );
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: FormSchemaType) {
+    console.log(values);
     void redirectWithCredentials(values.address, values.token);
   }
 
@@ -161,7 +163,7 @@ const LoginForm = () => {
       ) : null}
       {'REMOTE' === loginType ? (
         <Form {...form}>
-          <form onSubmit={() => void form.handleSubmit(onSubmit)}>
+          <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
             <CardContent className="space-y-4">
               <FormField
                 control={form.control}

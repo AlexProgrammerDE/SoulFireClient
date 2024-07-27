@@ -3,14 +3,18 @@ import { Button } from '@/components/ui/button.tsx';
 import { useContext } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import ClientSettingsPageComponent from '@/components/client-settings-page.tsx';
+import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 
-export const Route = createFileRoute('/dashboard/_layout/settings/$namespace')({
+export const Route = createFileRoute(
+  '/dashboard/_layout/$instance/settings/$namespace',
+)({
   component: SettingsNamespace,
 });
 
 function SettingsNamespace() {
   const { namespace } = Route.useParams();
   const clientInfo = useContext(ClientInfoContext);
+  const instanceInfo = useContext(InstanceInfoContext);
   const settingsEntry = clientInfo.pluginSettings.find(
     (s) => s.namespace === namespace,
   );
@@ -20,7 +24,12 @@ function SettingsNamespace() {
         <div className="m-auto flex flex-col gap-2">
           <p>No settings found for {namespace}</p>
           <Button asChild variant="secondary">
-            <Link to="/dashboard/plugins">Back</Link>
+            <Link
+              to="/dashboard/$instance/plugins"
+              params={{ instance: instanceInfo.id }}
+            >
+              Back
+            </Link>
           </Button>
         </div>
       </div>
@@ -30,9 +39,21 @@ function SettingsNamespace() {
   return (
     <div className="flex h-full w-full flex-col gap-4">
       <Button asChild variant="secondary">
-        <Link to={settingsEntry.hidden ? '/dashboard' : '/dashboard/plugins'}>
-          Back
-        </Link>
+        {settingsEntry.hidden ? (
+          <Link
+            to="/dashboard/$instance"
+            params={{ instance: instanceInfo.id }}
+          >
+            Back
+          </Link>
+        ) : (
+          <Link
+            to="/dashboard/$instance/plugins"
+            params={{ instance: instanceInfo.id }}
+          >
+            Back
+          </Link>
+        )}
       </Button>
       <div className="flex flex-col gap-2">
         <ClientSettingsPageComponent data={settingsEntry} />
