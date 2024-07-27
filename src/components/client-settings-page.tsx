@@ -216,10 +216,10 @@ function ComboComponent(props: {
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {value
-            ? props.entry.options.find((option) => option.id === value)
-                ?.displayName
-            : 'Select value...'}
+          {
+            props.entry.options.find((option) => option.id === value)
+              ?.displayName
+          }
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
