@@ -217,7 +217,7 @@ function ComboComponent(props: {
           className="w-[200px] justify-between"
         >
           {value
-            ? props.entry.options.find((framework) => framework.id === value)
+            ? props.entry.options.find((option) => option.id === value)
                 ?.displayName
             : 'Select value...'}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -228,10 +228,10 @@ function ComboComponent(props: {
           <CommandInput placeholder="Search value..." />
           <CommandList>
             <CommandGroup>
-              {props.entry.options.map((framework) => (
+              {props.entry.options.map((option) => (
                 <CommandItem
-                  key={framework.id}
-                  value={framework.id}
+                  key={option.id}
+                  value={option.id}
                   onSelect={(currentValue) => {
                     const value = currentValue;
                     setValue(value);
@@ -242,10 +242,10 @@ function ComboComponent(props: {
                   <Check
                     className={cn(
                       'mr-2 h-4 w-4',
-                      value === framework.id ? 'opacity-100' : 'opacity-0',
+                      value === option.id ? 'opacity-100' : 'opacity-0',
                     )}
                   />
-                  {framework.displayName}
+                  {option.displayName}
                 </CommandItem>
               ))}
             </CommandGroup>
