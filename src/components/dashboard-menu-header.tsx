@@ -59,152 +59,7 @@ export const DashboardMenuHeader = ({
           <MenubarTrigger>
             <img src="/logo.png" alt="SoulFIre logo" className="h-6" />
           </MenubarTrigger>
-        </MenubarMenu>
-        <MenubarMenu>
-          <MenubarTrigger>File</MenubarTrigger>
           <MenubarContent>
-            {isTauri() ? (
-              <MenubarSub>
-                <MenubarSubTrigger>Load Profile</MenubarSubTrigger>
-                <MenubarSubContent>
-                  {availableProfiles.length > 0 && (
-                    <>
-                      {availableProfiles.map((file) => (
-                        <MenubarItem
-                          key={file}
-                          onClick={() => {
-                            void (async () => {
-                              const data = await readTextFile(
-                                await resolve(
-                                  await resolve(
-                                    await appConfigDir(),
-                                    'profile',
-                                  ),
-                                  file,
-                                ),
-                              );
-                              profile.setProfile(
-                                JSON.parse(data) as ProfileRoot,
-                              );
-
-                              toast.success('Profile loaded');
-                            })();
-                          }}
-                        >
-                          {file}
-                        </MenubarItem>
-                      ))}
-                      <MenubarSeparator />
-                    </>
-                  )}
-                  <MenubarItem
-                    onClick={() => {
-                      void (async () => {
-                        const profileDir = await resolve(
-                          await appConfigDir(),
-                          'profile',
-                        );
-                        await createDir(profileDir, { recursive: true });
-
-                        const selected = await open({
-                          title: 'Load Profile',
-                          filters: [
-                            {
-                              name: 'SoulFire JSON Profile',
-                              extensions: ['json'],
-                            },
-                          ],
-                          defaultPath: profileDir,
-                          multiple: false,
-                          directory: false,
-                        });
-
-                        if (selected) {
-                          const single = Array.isArray(selected)
-                            ? selected[0]
-                            : selected;
-                          const data = await readTextFile(single);
-                          profile.setProfile(JSON.parse(data) as ProfileRoot);
-                        }
-
-                        toast.success('Profile loaded');
-                      })();
-                    }}
-                  >
-                    Load from file
-                  </MenubarItem>
-                </MenubarSubContent>
-              </MenubarSub>
-            ) : (
-              <>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept=".json"
-                  className="hidden"
-                  onInput={(e) => {
-                    const file = (e.target as HTMLInputElement).files?.item(0);
-                    if (!file) return;
-
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                      const data = reader.result as string;
-                      profile.setProfile(JSON.parse(data) as ProfileRoot);
-
-                      toast.success('Profile loaded');
-                    };
-                    reader.readAsText(file);
-                  }}
-                />
-                <MenubarItem
-                  onClick={() => {
-                    fileInputRef.current?.click();
-                  }}
-                >
-                  Load Profile
-                </MenubarItem>
-              </>
-            )}
-            <MenubarItem
-              onClick={() => {
-                const data = JSON.stringify(profile.profile, null, 2);
-                if (isTauri()) {
-                  void (async () => {
-                    const profileDir = await resolve(
-                      await appConfigDir(),
-                      'profile',
-                    );
-                    await createDir(profileDir, { recursive: true });
-
-                    let selected = await save({
-                      title: 'Save Profile',
-                      filters: [
-                        {
-                          name: 'SoulFire JSON Profile',
-                          extensions: ['json'],
-                        },
-                      ],
-                      defaultPath: profileDir,
-                    });
-
-                    if (selected) {
-                      if (!selected.endsWith('.json')) {
-                        selected += '.json';
-                      }
-
-                      await writeTextFile(selected, data);
-                    }
-                  })();
-                } else {
-                  saveAs(data2blob(data), 'profile.json');
-                }
-
-                toast.success('Profile saved');
-              }}
-            >
-              Save Profile
-            </MenubarItem>
-            <MenubarSeparator />
             <MenubarItem
               onClick={() => {
                 void (async () => {
@@ -223,6 +78,156 @@ export const DashboardMenuHeader = ({
             )}
           </MenubarContent>
         </MenubarMenu>
+        {profile && (
+          <MenubarMenu>
+            <MenubarTrigger>Instance</MenubarTrigger>
+            <MenubarContent>
+              {isTauri() ? (
+                <MenubarSub>
+                  <MenubarSubTrigger>Load Profile</MenubarSubTrigger>
+                  <MenubarSubContent>
+                    {availableProfiles.length > 0 && (
+                      <>
+                        {availableProfiles.map((file) => (
+                          <MenubarItem
+                            key={file}
+                            onClick={() => {
+                              void (async () => {
+                                const data = await readTextFile(
+                                  await resolve(
+                                    await resolve(
+                                      await appConfigDir(),
+                                      'profile',
+                                    ),
+                                    file,
+                                  ),
+                                );
+                                profile.setProfile(
+                                  JSON.parse(data) as ProfileRoot,
+                                );
+
+                                toast.success('Profile loaded');
+                              })();
+                            }}
+                          >
+                            {file}
+                          </MenubarItem>
+                        ))}
+                        <MenubarSeparator />
+                      </>
+                    )}
+                    <MenubarItem
+                      onClick={() => {
+                        void (async () => {
+                          const profileDir = await resolve(
+                            await appConfigDir(),
+                            'profile',
+                          );
+                          await createDir(profileDir, { recursive: true });
+
+                          const selected = await open({
+                            title: 'Load Profile',
+                            filters: [
+                              {
+                                name: 'SoulFire JSON Profile',
+                                extensions: ['json'],
+                              },
+                            ],
+                            defaultPath: profileDir,
+                            multiple: false,
+                            directory: false,
+                          });
+
+                          if (selected) {
+                            const single = Array.isArray(selected)
+                              ? selected[0]
+                              : selected;
+                            const data = await readTextFile(single);
+                            profile.setProfile(JSON.parse(data) as ProfileRoot);
+                          }
+
+                          toast.success('Profile loaded');
+                        })();
+                      }}
+                    >
+                      Load from file
+                    </MenubarItem>
+                  </MenubarSubContent>
+                </MenubarSub>
+              ) : (
+                <>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept=".json"
+                    className="hidden"
+                    onInput={(e) => {
+                      const file = (e.target as HTMLInputElement).files?.item(
+                        0,
+                      );
+                      if (!file) return;
+
+                      const reader = new FileReader();
+                      reader.onload = () => {
+                        const data = reader.result as string;
+                        profile.setProfile(JSON.parse(data) as ProfileRoot);
+
+                        toast.success('Profile loaded');
+                      };
+                      reader.readAsText(file);
+                    }}
+                  />
+                  <MenubarItem
+                    onClick={() => {
+                      fileInputRef.current?.click();
+                    }}
+                  >
+                    Load Profile
+                  </MenubarItem>
+                </>
+              )}
+              <MenubarItem
+                onClick={() => {
+                  const data = JSON.stringify(profile.profile, null, 2);
+                  if (isTauri()) {
+                    void (async () => {
+                      const profileDir = await resolve(
+                        await appConfigDir(),
+                        'profile',
+                      );
+                      await createDir(profileDir, { recursive: true });
+
+                      let selected = await save({
+                        title: 'Save Profile',
+                        filters: [
+                          {
+                            name: 'SoulFire JSON Profile',
+                            extensions: ['json'],
+                          },
+                        ],
+                        defaultPath: profileDir,
+                      });
+
+                      if (selected) {
+                        if (!selected.endsWith('.json')) {
+                          selected += '.json';
+                        }
+
+                        await writeTextFile(selected, data);
+                      }
+                    })();
+                  } else {
+                    saveAs(data2blob(data), 'profile.json');
+                  }
+
+                  toast.success('Profile saved');
+                }}
+              >
+                Save Profile
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+        )}
         <MenubarMenu>
           <MenubarTrigger>View</MenubarTrigger>
           <MenubarContent>
