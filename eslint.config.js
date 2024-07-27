@@ -9,11 +9,13 @@ import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
 import eslintPluginReactRefresh from 'eslint-plugin-react-refresh';
 import { fixupPluginRules } from '@eslint/compat';
 import tselintParser from '@typescript-eslint/parser';
+import tanstackQueryEslint from '@tanstack/eslint-plugin-query';
 
 export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   eslintPluginPrettierRecommended,
+  ...tanstackQueryEslint.configs['flat/recommended'],
   {
     plugins: {
       react: eslintPluginReact,

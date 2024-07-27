@@ -23,10 +23,6 @@ import {
   FormMessage,
 } from '@/components/ui/form.tsx';
 import { Input } from '@/components/ui/input.tsx';
-import { useContext } from 'react';
-import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
-import { ServerConnectionContext } from '@/components/providers/server-context.tsx';
-import { toast } from 'sonner';
 
 const formSchema = z.object({
   friendlyName: z
@@ -38,48 +34,23 @@ const formSchema = z.object({
       'Friendly name can only contain letters, numbers, and spaces',
     ),
 });
-type FormSchemaType = z.infer<typeof formSchema>;
+export type CreateInstanceType = z.infer<typeof formSchema>;
 
 export function CreateInstancePopup({
   open,
   setOpen,
+  onSubmit,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
+  onSubmit: (values: CreateInstanceType) => void;
 }) {
-  const navigate = useNavigate();
-  const form = useForm<FormSchemaType>({
+  const form = useForm<CreateInstanceType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       friendlyName: '',
     },
   });
-  const transport = useContext(ServerConnectionContext);
-
-  function onSubmit(values: FormSchemaType) {
-    const instanceService = new InstanceServiceClient(transport);
-    toast.promise(
-      instanceService
-        .createInstance({
-          friendlyName: values.friendlyName,
-        })
-        .then((r) => r.response),
-      {
-        loading: 'Creating instance...',
-        success: (r) => {
-          void navigate({
-            to: '/dashboard/$instance',
-            params: { instance: r.id },
-          });
-          return 'Instance created successfully';
-        },
-        error: (e) => {
-          console.error(e);
-          return 'Failed to create instance';
-        },
-      },
-    );
-  }
 
   return (
     <Credenza open={open} onOpenChange={setOpen}>
