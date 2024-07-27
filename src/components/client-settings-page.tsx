@@ -30,7 +30,7 @@ import {
 } from '@/components/ui/command.tsx';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils.ts';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
@@ -93,14 +93,30 @@ function StringComponent(props: {
   settingKey: string;
   entry: StringSetting;
   changeCallback: (value: JsonValue) => void;
+  allowsRemoteUpdate: boolean;
 }) {
   const profile = useContext(ProfileContext);
-  const [value, setValue] = useState(
-    getEntry(props.namespace, props.settingKey, profile, props.entry.def),
+  const serverValue = getEntry(
+    props.namespace,
+    props.settingKey,
+    profile,
+    props.entry.def,
   );
+  const [value, setValue] = useState(serverValue);
+  const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (props.allowsRemoteUpdate && value !== serverValue) {
+      setValue(serverValue);
+      if (ref.current) {
+        ref.current.value = serverValue as string;
+      }
+    }
+  }, [profile, props.allowsRemoteUpdate, serverValue, value]);
 
   return (
     <Input
+      ref={ref}
       type={props.entry.secret ? 'password' : 'text'}
       defaultValue={value as string}
       onChange={(e) => {
@@ -117,14 +133,30 @@ function IntComponent(props: {
   settingKey: string;
   entry: IntSetting;
   changeCallback: (value: JsonValue) => void;
+  allowsRemoteUpdate: boolean;
 }) {
   const profile = useContext(ProfileContext);
-  const [value, setValue] = useState(
-    getEntry(props.namespace, props.settingKey, profile, props.entry.def),
+  const serverValue = getEntry(
+    props.namespace,
+    props.settingKey,
+    profile,
+    props.entry.def,
   );
+  const [value, setValue] = useState(serverValue);
+  const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (props.allowsRemoteUpdate && value !== serverValue) {
+      setValue(serverValue);
+      if (ref.current) {
+        ref.current.value = serverValue as string;
+      }
+    }
+  }, [profile, props.allowsRemoteUpdate, serverValue, value]);
 
   return (
     <Input
+      ref={ref}
       type="number"
       min={props.entry.min}
       max={props.entry.max}
@@ -144,14 +176,30 @@ function DoubleComponent(props: {
   settingKey: string;
   entry: DoubleSetting;
   changeCallback: (value: JsonValue) => void;
+  allowsRemoteUpdate: boolean;
 }) {
   const profile = useContext(ProfileContext);
-  const [value, setValue] = useState(
-    getEntry(props.namespace, props.settingKey, profile, props.entry.def),
+  const serverValue = getEntry(
+    props.namespace,
+    props.settingKey,
+    profile,
+    props.entry.def,
   );
+  const [value, setValue] = useState(serverValue);
+  const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (props.allowsRemoteUpdate && value !== serverValue) {
+      setValue(serverValue);
+      if (ref.current) {
+        ref.current.value = serverValue as string;
+      }
+    }
+  }, [profile, props.allowsRemoteUpdate, serverValue, value]);
 
   return (
     <Input
+      ref={ref}
       type="number"
       min={props.entry.min}
       max={props.entry.max}
@@ -171,18 +219,33 @@ function BoolComponent(props: {
   settingKey: string;
   entry: BoolSetting;
   changeCallback: (value: JsonValue) => void;
+  allowsRemoteUpdate: boolean;
 }) {
   const profile = useContext(ProfileContext);
-  const [value, setValue] = useState(
-    getEntry(props.namespace, props.settingKey, profile, props.entry.def),
+  const serverValue = getEntry(
+    props.namespace,
+    props.settingKey,
+    profile,
+    props.entry.def,
   );
+  const [value, setValue] = useState(serverValue);
+  const ref = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (props.allowsRemoteUpdate && value !== serverValue) {
+      setValue(serverValue);
+      if (ref.current) {
+        ref.current.click();
+      }
+    }
+  }, [profile, props.allowsRemoteUpdate, serverValue, value]);
 
   return (
     <Checkbox
+      ref={ref}
       className="my-auto"
       defaultChecked={value as boolean}
-      onChange={(e) => {
-        const value = Boolean(e.currentTarget.value);
+      onCheckedChange={(value) => {
         setValue(value);
         props.changeCallback(value);
       }}
@@ -195,17 +258,23 @@ function ComboComponent(props: {
   settingKey: string;
   entry: ComboSetting;
   changeCallback: (value: JsonValue) => void;
+  allowsRemoteUpdate: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const profile = useContext(ProfileContext);
-  const [value, setValue] = useState(
-    getEntry(
-      props.namespace,
-      props.settingKey,
-      profile,
-      props.entry.options[props.entry.def].id,
-    ),
+  const serverValue = getEntry(
+    props.namespace,
+    props.settingKey,
+    profile,
+    props.entry.options[props.entry.def].id,
   );
+  const [value, setValue] = useState(serverValue);
+
+  useEffect(() => {
+    if (props.allowsRemoteUpdate && value !== serverValue) {
+      setValue(serverValue);
+    }
+  }, [profile, props.allowsRemoteUpdate, serverValue, value]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -264,6 +333,10 @@ function SingleComponent(props: {
   const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
+  const [recentlyChanged, setRecentlyChanged] = useState(false);
+  const recentlyChangedBouncer = useDebouncedCallback(() => {
+    setRecentlyChanged(false);
+  }, 5_000);
   const setProfileMutation = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
       const instanceService = new InstanceServiceClient(transport);
@@ -283,6 +356,19 @@ function SingleComponent(props: {
       updateEntry(props.namespace, props.settingKey, value, profile),
     );
   }, 1_000);
+  const changeCallback = useCallback(
+    (value: JsonValue) => {
+      setRecentlyChanged(true);
+      recentlyChangedBouncer();
+      write(value);
+    },
+    [recentlyChangedBouncer, write],
+  );
+  const allowsRemoteUpdate =
+    !recentlyChanged &&
+    setProfileMutation.isIdle &&
+    !queryClient.isFetching({ queryKey: ['instance-info', instanceInfo.id] });
+
   if (!props.entry.type) {
     return null;
   }
@@ -299,7 +385,8 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.string}
-            changeCallback={write}
+            changeCallback={changeCallback}
+            allowsRemoteUpdate={allowsRemoteUpdate}
           />
         </div>
       );
@@ -314,7 +401,8 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.int}
-            changeCallback={write}
+            changeCallback={changeCallback}
+            allowsRemoteUpdate={allowsRemoteUpdate}
           />
         </div>
       );
@@ -325,7 +413,8 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.bool}
-            changeCallback={write}
+            changeCallback={changeCallback}
+            allowsRemoteUpdate={allowsRemoteUpdate}
           />
           <ComponentTitle
             title={props.entry.uiName}
@@ -344,7 +433,8 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.double}
-            changeCallback={write}
+            changeCallback={changeCallback}
+            allowsRemoteUpdate={allowsRemoteUpdate}
           />
         </div>
       );
@@ -359,7 +449,8 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.combo}
-            changeCallback={write}
+            changeCallback={changeCallback}
+            allowsRemoteUpdate={allowsRemoteUpdate}
           />
         </div>
       );
@@ -373,6 +464,10 @@ function MinMaxComponentSingle(props: {
   const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
+  const [recentlyChanged, setRecentlyChanged] = useState(false);
+  const recentlyChangedBouncer = useDebouncedCallback(() => {
+    setRecentlyChanged(false);
+  }, 5_000);
   const setProfileMutation = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
       const instanceService = new InstanceServiceClient(transport);
@@ -392,6 +487,19 @@ function MinMaxComponentSingle(props: {
       updateEntry(props.namespace, props.entry.key, value, profile),
     );
   }, 1_000);
+  const changeCallback = useCallback(
+    (value: JsonValue) => {
+      setRecentlyChanged(true);
+      recentlyChangedBouncer();
+      write(value);
+    },
+    [recentlyChangedBouncer, write],
+  );
+  const allowsRemoteUpdate =
+    !recentlyChanged &&
+    setProfileMutation.isIdle &&
+    !queryClient.isFetching({ queryKey: ['instance-info', instanceInfo.id] });
+
   if (!props.entry.intSetting) {
     return null;
   }
@@ -406,7 +514,8 @@ function MinMaxComponentSingle(props: {
         namespace={props.namespace}
         settingKey={props.entry.key}
         entry={props.entry.intSetting}
-        changeCallback={write}
+        changeCallback={changeCallback}
+        allowsRemoteUpdate={allowsRemoteUpdate}
       />
     </div>
   );
