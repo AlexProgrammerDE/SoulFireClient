@@ -62,8 +62,6 @@ pub fn detect_architecture() -> &'static str {
     "x32"
   } else if cfg!(target_arch = "powerpc64") {
     "ppc64"
-  } else if cfg!(target_arch = "powerpc64le") {
-    "ppc64le"
   } else if cfg!(target_arch = "s390x") {
     "s390x"
   } else if cfg!(target_arch = "aarch64") {
