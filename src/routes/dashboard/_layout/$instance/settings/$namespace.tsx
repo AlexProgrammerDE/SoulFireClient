@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import ClientSettingsPageComponent from '@/components/client-settings-page.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/$instance/settings/$namespace',
@@ -55,9 +56,11 @@ function SettingsNamespace() {
           </Link>
         )}
       </Button>
-      <div className="flex flex-col gap-2">
-        <ClientSettingsPageComponent data={settingsEntry} />
-      </div>
+      <ScrollArea className="h-full w-full pr-4">
+        <div className="flex flex-col gap-2">
+          <ClientSettingsPageComponent data={settingsEntry} />
+        </div>
+      </ScrollArea>
     </div>
   );
 }
