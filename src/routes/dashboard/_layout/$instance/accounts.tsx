@@ -22,7 +22,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
 import { toast } from 'sonner';
-import { TransportContext } from '@/components/providers/server-context.tsx';
+import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { MCAuthServiceClient } from '@/generated/com/soulfiremc/grpc/generated/mc-auth.client.ts';
 import ImportDialog from '@/components/import-dialog.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';

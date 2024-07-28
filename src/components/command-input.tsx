@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input.tsx';
 import { KeyboardEventHandler, useContext, useState } from 'react';
-import { TransportContext } from '@/components/providers/server-context.tsx';
+import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { CommandServiceClient } from '@/generated/com/soulfiremc/grpc/generated/command.client.ts';
 
 type CompletionState = {

@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import '@xterm/xterm/css/xterm.css';
 import { FitAddon } from '@xterm/addon-fit';
 import { LogsServiceClient } from '@/generated/com/soulfiremc/grpc/generated/logs.client.ts';
-import { TransportContext } from './providers/server-context';
+import { TransportContext } from './providers/transport-context.tsx';
 import { ITerminalOptions, Terminal } from '@xterm/xterm';
 import debounce from 'debounce';
 

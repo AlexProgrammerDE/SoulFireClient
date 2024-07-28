@@ -40,7 +40,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { useMutation } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
 import { queryClient } from '@/lib/query.ts';
-import { TransportContext } from '@/components/providers/server-context.tsx';
+import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 
 function updateEntry(

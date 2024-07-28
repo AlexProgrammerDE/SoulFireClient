@@ -25,7 +25,7 @@ import { PlusIcon, TrashIcon } from 'lucide-react';
 import ImportDialog from '@/components/import-dialog.tsx';
 import URI from 'urijs';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
-import { TransportContext } from '@/components/providers/server-context.tsx';
+import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
 import { useMutation } from '@tanstack/react-query';
 import { queryClient } from '@/lib/query.ts';
