@@ -355,7 +355,7 @@ function SingleComponent(props: {
     setProfileMutation.mutate(
       updateEntry(props.namespace, props.settingKey, value, profile),
     );
-  }, 1_000);
+  }, 100);
   const changeCallback = useCallback(
     (value: JsonValue) => {
       setRecentlyChanged(true);
@@ -486,7 +486,7 @@ function MinMaxComponentSingle(props: {
     setProfileMutation.mutate(
       updateEntry(props.namespace, props.entry.key, value, profile),
     );
-  }, 1_000);
+  }, 100);
   const changeCallback = useCallback(
     (value: JsonValue) => {
       setRecentlyChanged(true);
