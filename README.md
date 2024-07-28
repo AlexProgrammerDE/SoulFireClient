@@ -19,3 +19,10 @@ Tools used:
 ```bash
 sudo apt install libavahi-client-dev
 ```
+
+## Deployments
+
+See which branches are at which URLs:
+
+- [`release`](https://app.soulfiremc.com) -> app.soulfiremc.com
+- [`main`](https://preview.soulfiremc.com) -> preview.soulfiremc.com
