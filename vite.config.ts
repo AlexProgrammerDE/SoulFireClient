@@ -14,7 +14,7 @@ export default defineConfig({
   },
   // @ts-expect-error - not in types
   vercel: {
-    redirects: [
+    rewrites: [
       {
         source: '/(.*)',
         destination: '/index.html',
