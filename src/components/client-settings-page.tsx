@@ -30,7 +30,14 @@ import {
 } from '@/components/ui/command.tsx';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from '@/lib/utils.ts';
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
@@ -106,6 +113,13 @@ function StringComponent(props: {
   const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
+    console.log(
+      'useEffect',
+      profile,
+      props.allowsRemoteUpdate,
+      serverValue,
+      value,
+    );
     if (props.allowsRemoteUpdate && value !== serverValue) {
       setValue(serverValue);
       if (ref.current) {
@@ -364,10 +378,15 @@ function SingleComponent(props: {
     },
     [recentlyChangedBouncer, write],
   );
-  const allowsRemoteUpdate =
-    !recentlyChanged &&
-    setProfileMutation.isIdle &&
-    !queryClient.isFetching({ queryKey: ['instance-info', instanceInfo.id] });
+  const allowsRemoteUpdate = useMemo(() => {
+    return (
+      !recentlyChanged &&
+      setProfileMutation.isIdle &&
+      queryClient.isFetching({
+        queryKey: ['instance-info', instanceInfo.id],
+      }) === 0
+    );
+  }, [recentlyChanged, setProfileMutation.isIdle, instanceInfo]);
 
   if (!props.entry.type) {
     return null;
@@ -495,10 +514,13 @@ function MinMaxComponentSingle(props: {
     },
     [recentlyChangedBouncer, write],
   );
-  const allowsRemoteUpdate =
-    !recentlyChanged &&
-    setProfileMutation.isIdle &&
-    !queryClient.isFetching({ queryKey: ['instance-info', instanceInfo.id] });
+  const allowsRemoteUpdate = useMemo(() => {
+    return (
+      !recentlyChanged &&
+      setProfileMutation.isIdle &&
+      !queryClient.isFetching({ queryKey: ['instance-info', instanceInfo.id] })
+    );
+  }, [recentlyChanged, setProfileMutation.isIdle, instanceInfo]);
 
   if (!props.entry.intSetting) {
     return null;

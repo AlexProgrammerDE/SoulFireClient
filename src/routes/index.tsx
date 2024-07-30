@@ -81,7 +81,7 @@ const LoginForm = () => {
         replace: true,
       });
     },
-    [navigate],
+    [navigate, searchParams.redirect],
   );
 
   function onSubmit(values: FormSchemaType) {
