@@ -6,17 +6,6 @@ import { ScrollArea } from './ui/scroll-area.tsx';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
 import { flavorEntries } from '@catppuccin/palette';
 
-declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
-  namespace React {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    interface HTMLAttributes<T> {
-      // Sets raw CSS styles
-      STYLE?: string;
-    }
-  }
-}
-
 const rgbToArray = (rgb: {
   r: number;
   g: number;
@@ -28,6 +17,17 @@ const rgbToArray = (rgb: {
 const hslToString = (rgb: { h: number; s: number; l: number }): string => {
   return `${Math.round(rgb.h)}, ${Math.round(rgb.s * 100)}%, ${Math.round(rgb.l * 100)}%`;
 };
+
+function cssToStyles(css: string) {
+  return css
+    .split(';')
+    .map((cur) => cur.split(':'))
+    .reduce((acc: Record<string, string>, [key, value]) => {
+      key = key.replace(/-./g, (css) => css.toUpperCase()[1]);
+      acc[key] = value;
+      return acc;
+    }, {});
+}
 
 export const TerminalComponent = () => {
   const [gotPrevious, setGotPrevious] = useState(false);
@@ -138,11 +138,10 @@ export const TerminalComponent = () => {
               {parse(entry[1]).spans.map((span, index) => {
                 return (
                   <span
-                    STYLE={
-                      span.css === ''
-                        ? `color: hsl(${hslToString(selectedTheme.colors.text.hsl)})`
-                        : span.css
-                    }
+                    style={cssToStyles(
+                      span.css ??
+                        `color: hsl(${hslToString(selectedTheme.colors.text.hsl)})`,
+                    )}
                     key={index}
                   >
                     {span.text}
