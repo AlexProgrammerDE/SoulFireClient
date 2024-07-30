@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router';
+import { createFileRoute, deepEqual, Outlet } from '@tanstack/react-router';
 import { TerminalComponent } from '@/components/terminal.tsx';
 import CommandInput from '@/components/command-input.tsx';
 import { createTransport } from '@/lib/web-rpc.ts';
@@ -36,6 +36,8 @@ export const Route = createFileRoute('/dashboard/_layout/$instance')({
         },
         signal: props.abortController.signal,
         refetchInterval: 3_000,
+        structuralSharing: (prev: unknown, next: unknown) =>
+          deepEqual(prev, next) ? prev : next,
       },
     };
   },
@@ -57,21 +59,19 @@ function TerminalSide() {
 function InstanceLayout() {
   const { instance } = Route.useParams();
   const { infoQueryOptions } = Route.useRouteContext();
-  const instanceInfoResult = useQuery(infoQueryOptions);
+  const { data } = useQuery(infoQueryOptions);
 
   return (
     <>
       <InstanceInfoContext.Provider
         value={{
           id: instance,
-          friendlyName: instanceInfoResult.data!.instanceInfo.friendlyName,
-          state: instanceInfoResult.data!.instanceInfo.state,
+          friendlyName: data!.instanceInfo.friendlyName,
+          state: data!.instanceInfo.state,
         }}
       >
         <ProfileContext.Provider
-          value={convertFromProto(
-            instanceInfoResult.data!.instanceInfo.config as InstanceConfig,
-          )}
+          value={convertFromProto(data!.instanceInfo.config as InstanceConfig)}
         >
           <DashboardMenuHeader />
           <div className="grid flex-grow grid-cols-1 gap-4 md:grid-cols-2">
