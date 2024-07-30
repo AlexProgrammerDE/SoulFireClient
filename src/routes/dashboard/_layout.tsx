@@ -9,7 +9,7 @@ import { ConfigServiceClient } from '@/generated/com/soulfiremc/grpc/generated/c
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { createTransport, isAuthenticated } from '@/lib/web-rpc.ts';
-import { isTauri } from '@/lib/utils.ts';
+import { getTerminalTheme, isTauri } from '@/lib/utils.ts';
 import { appConfigDir, resolve } from '@tauri-apps/api/path';
 import { createDir, readDir } from '@tauri-apps/api/fs';
 import {
@@ -24,6 +24,8 @@ import {
   CardTitle,
 } from '@/components/ui/card.tsx';
 import { LoaderCircleIcon } from 'lucide-react';
+import { useState } from 'react';
+import { TerminalThemeContext } from '@/components/providers/terminal-theme-context';
 
 export const Route = createFileRoute('/dashboard/_layout')({
   beforeLoad: ({ location }) => {
@@ -116,13 +118,21 @@ function ErrorComponent({ error }: { error: Error }) {
 
 function ClientLayout() {
   const { transport, clientData, systemInfo } = Route.useLoaderData();
+  const [terminalTheme, setTerminalTheme] = useState(getTerminalTheme());
 
   return (
     <div className="flex h-screen w-screen flex-col">
       <TransportContext.Provider value={transport}>
         <ClientInfoContext.Provider value={clientData}>
           <SystemInfoContext.Provider value={systemInfo}>
-            <Outlet />
+            <TerminalThemeContext.Provider
+              value={{
+                value: terminalTheme,
+                setter: setTerminalTheme,
+              }}
+            >
+              <Outlet />
+            </TerminalThemeContext.Provider>
           </SystemInfoContext.Provider>
         </ClientInfoContext.Provider>
       </TransportContext.Provider>

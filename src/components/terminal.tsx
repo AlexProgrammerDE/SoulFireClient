@@ -11,6 +11,7 @@ declare global {
   namespace React {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     interface HTMLAttributes<T> {
+      // Sets raw CSS styles
       STYLE?: string;
     }
   }
@@ -34,7 +35,7 @@ export const TerminalComponent = () => {
   const serverConnection = useContext(TransportContext);
   const terminalTheme = useContext(TerminalThemeContext);
   const selectedTheme = flavorEntries.find(
-    (entry) => entry[0] === terminalTheme,
+    (entry) => entry[0] === terminalTheme.value,
   )![1];
   ansicolor.rgb = {
     black: [0, 0, 0],

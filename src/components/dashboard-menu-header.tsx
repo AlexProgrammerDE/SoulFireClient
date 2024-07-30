@@ -48,9 +48,7 @@ function data2blob(data: string) {
   return new Blob([new Uint8Array(bytes)]);
 }
 
-export const DashboardMenuHeader = (props: {
-  setTerminalTheme: (theme: string) => void;
-}) => {
+export const DashboardMenuHeader = () => {
   const { theme, setTheme } = useTheme();
   const [aboutOpen, setAboutOpen] = useState(false);
   const navigate = useNavigate();
@@ -302,10 +300,10 @@ export const DashboardMenuHeader = (props: {
               <MenubarSubTrigger>Terminal</MenubarSubTrigger>
               <MenubarSubContent>
                 <MenubarRadioGroup
-                  value={terminalTheme}
+                  value={terminalTheme.value}
                   onValueChange={(e) => {
                     localStorage.setItem(LOCAL_STORAGE_TERMINAL_THEME_KEY, e);
-                    props.setTerminalTheme(e);
+                    terminalTheme.setter(e);
                   }}
                 >
                   {flavorEntries.map((entry) => (
