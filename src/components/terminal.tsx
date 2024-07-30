@@ -123,7 +123,7 @@ export const TerminalComponent = () => {
 
   return (
     <ScrollArea
-      className="md:h-[calc(100vh-9rem)] w-full pr-4 font-mono rounded-md"
+      className="md:h-[calc(100vh-8rem)] w-full pr-4 font-mono rounded-md"
       style={
         {
           backgroundColor: selectedTheme.colors.base.hex,
