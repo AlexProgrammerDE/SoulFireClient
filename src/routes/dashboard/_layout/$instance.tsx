@@ -42,7 +42,7 @@ export const Route = createFileRoute('/dashboard/_layout/$instance')({
   loader: async (props) => {
     await queryClient.prefetchQuery(props.context.infoQueryOptions);
   },
-  component: ClientLayout,
+  component: InstanceLayout,
 });
 
 function TerminalSide() {
@@ -54,7 +54,7 @@ function TerminalSide() {
   );
 }
 
-function ClientLayout() {
+function InstanceLayout() {
   const { instance } = Route.useParams();
   const { infoQueryOptions } = Route.useRouteContext();
   const instanceInfoResult = useQuery(infoQueryOptions);

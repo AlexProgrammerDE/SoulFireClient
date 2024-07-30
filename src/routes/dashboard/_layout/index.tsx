@@ -44,10 +44,10 @@ export const Route = createFileRoute('/dashboard/_layout/')({
   loader: async (props) => {
     await queryClient.prefetchQuery(props.context.listQueryOptions);
   },
-  component: ClientLayout,
+  component: InstanceSelectPage,
 });
 
-function ClientLayout() {
+function InstanceSelectPage() {
   const navigate = useNavigate();
   const { listQueryOptions } = Route.useRouteContext();
   const instanceList = useQuery(listQueryOptions);

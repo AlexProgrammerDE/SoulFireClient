@@ -91,7 +91,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
       </CardContent>
     </Card>
   ),
-  component: ClientLayout,
+  component: DashboardLayout,
 });
 
 function ErrorComponent({ error }: { error: Error }) {
@@ -116,7 +116,7 @@ function ErrorComponent({ error }: { error: Error }) {
   );
 }
 
-function ClientLayout() {
+function DashboardLayout() {
   const { transport, clientData, systemInfo } = Route.useLoaderData();
   const [terminalTheme, setTerminalTheme] = useState(getTerminalTheme());
 

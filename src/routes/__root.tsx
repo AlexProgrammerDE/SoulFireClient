@@ -6,12 +6,27 @@ import { Toaster } from '@/components/ui/sonner.tsx';
 import { TailwindIndicator } from '@/components/tailwind-indicator.tsx';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/lib/query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { lazy, useEffect, useState } from 'react';
 
 export const Route = createRootRoute({
-  component: ClientLayout,
+  component: RootLayout,
 });
 
-function ClientLayout() {
+const ReactQueryDevtoolsProduction = lazy(() =>
+  import('@tanstack/react-query-devtools/production').then((d) => ({
+    default: d.ReactQueryDevtools,
+  })),
+);
+
+function RootLayout() {
+  const [showDevtools, setShowDevtools] = useState(false);
+
+  useEffect(() => {
+    // @ts-expect-error - not in types
+    window.toggleDevtools = () => setShowDevtools((old) => !old);
+  }, []);
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -27,6 +42,12 @@ function ClientLayout() {
           <Toaster richColors />
         </ThemeProvider>
         <TailwindIndicator />
+        <ReactQueryDevtools initialIsOpen />
+        {showDevtools && (
+          <React.Suspense fallback={null}>
+            <ReactQueryDevtoolsProduction />
+          </React.Suspense>
+        )}
       </QueryClientProvider>
     </>
   );
