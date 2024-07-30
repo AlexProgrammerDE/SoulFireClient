@@ -57,6 +57,7 @@ type LoginType = 'INTEGRATED' | 'REMOTE';
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const searchParams: Record<string, string> = Route.useSearch();
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -76,7 +77,7 @@ const LoginForm = () => {
       localStorage.setItem(LOCAL_STORAGE_SERVER_TOKEN_KEY, token.trim());
 
       await navigate({
-        to: '/dashboard',
+        to: searchParams.redirect ?? '/dashboard',
         replace: true,
       });
     },
