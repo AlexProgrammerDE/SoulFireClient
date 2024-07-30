@@ -1,16 +1,15 @@
-import { createFileRoute, deepEqual, Outlet } from '@tanstack/react-router';
+import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { TerminalComponent } from '@/components/terminal.tsx';
 import CommandInput from '@/components/command-input.tsx';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
 import { ProfileContext } from '@/components/providers/profile-context';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
-import { convertFromProto, ProfileRoot } from '@/lib/types.ts';
+import { convertFromProto } from '@/lib/types.ts';
 import { InstanceConfig } from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { queryClient } from '@/lib/query.ts';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance')({
   beforeLoad: (props) => {
@@ -61,29 +60,21 @@ function ClientLayout() {
   const { instance } = Route.useParams();
   const { infoQueryOptions } = Route.useRouteContext();
   const instanceInfoResult = useQuery(infoQueryOptions);
-  const instanceInfo = instanceInfoResult.data!;
-  const serverProfile = convertFromProto(
-    instanceInfo.instanceInfo.config as InstanceConfig,
-  );
-  const [currentProfile, setCurrentProfile] =
-    useState<ProfileRoot>(serverProfile);
-
-  useEffect(() => {
-    if (!deepEqual(currentProfile, serverProfile)) {
-      setCurrentProfile(serverProfile);
-    }
-  }, [currentProfile, serverProfile]);
 
   return (
     <>
       <InstanceInfoContext.Provider
         value={{
           id: instance,
-          friendlyName: instanceInfo.instanceInfo.friendlyName,
-          state: instanceInfo.instanceInfo.state,
+          friendlyName: instanceInfoResult.data!.instanceInfo.friendlyName,
+          state: instanceInfoResult.data!.instanceInfo.state,
         }}
       >
-        <ProfileContext.Provider value={currentProfile}>
+        <ProfileContext.Provider
+          value={convertFromProto(
+            instanceInfoResult.data!.instanceInfo.config as InstanceConfig,
+          )}
+        >
           <DashboardMenuHeader />
           <div className="grid flex-grow grid-cols-1 gap-4 md:grid-cols-2">
             <div className="flex overflow-auto p-4 md:h-[calc(100vh-2.5rem)]">
