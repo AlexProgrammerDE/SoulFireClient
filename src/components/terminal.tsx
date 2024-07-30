@@ -1,83 +1,92 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import '@xterm/xterm/css/xterm.css';
-import { FitAddon } from '@xterm/addon-fit';
+import { useContext, useEffect, useState } from 'react';
 import { LogsServiceClient } from '@/generated/com/soulfiremc/grpc/generated/logs.client.ts';
 import { TransportContext } from './providers/transport-context.tsx';
-import { ITerminalOptions, Terminal } from '@xterm/xterm';
-import debounce from 'debounce';
+import { type AnsiColored, parse } from 'ansicolor';
+import { ScrollArea } from './ui/scroll-area.tsx';
 
-const terminalProps: ITerminalOptions = {
-  allowTransparency: true,
-  fontSize: 12,
-  allowProposedApi: true,
-};
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace React {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    interface HTMLAttributes<T> {
+      STYLE?: string;
+    }
+  }
+}
 
 export const TerminalComponent = () => {
-  const terminalRef = useRef<HTMLDivElement>(null);
-  const [terminal, setTerminal] = useState<Terminal | null>(null);
+  const [gotPrevious, setGotPrevious] = useState(false);
+  const [entries, setEntries] = useState<[string, AnsiColored][]>([]);
   const serverConnection = useContext(TransportContext);
 
   useEffect(() => {
-    const terminal = new Terminal({ ...terminalProps });
-
-    setTerminal(terminal);
-    return () => {
-      if (terminal) {
-        terminal.dispose();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!terminalRef.current || !terminal) {
+    if (gotPrevious) {
       return;
     }
 
-    const fitAddon = new FitAddon();
-    terminal.loadAddon(fitAddon);
+    const abortController = new AbortController();
+    const logsService = new LogsServiceClient(serverConnection);
+    void logsService
+      .getPrevious(
+        {
+          count: 300,
+        },
+        {
+          abort: abortController.signal,
+        },
+      )
+      .then((response) => {
+        for (const line of response.response.messages) {
+          const randomString = Math.random().toString(36).substring(7);
+          setEntries((prev) => [...prev, [randomString, parse(line)] as const]);
+        }
+        setGotPrevious(true);
+      });
 
-    terminal.open(terminalRef.current);
-    fitAddon.fit();
-
-    const resizeListener = debounce(() => {
-      if (terminal.element) {
-        fitAddon.fit();
-      }
-    }, 100);
-
-    window.addEventListener('resize', resizeListener);
     return () => {
-      window.removeEventListener('resize', resizeListener);
+      abortController.abort();
     };
-  }, [terminal, terminalRef]);
+  }, [gotPrevious, serverConnection]);
 
   useEffect(() => {
-    if (!terminalRef.current || !terminal) {
-      return;
-    }
-
-    terminal.clear();
     const abortController = new AbortController();
     const logsService = new LogsServiceClient(serverConnection);
     logsService
       .subscribe(
-        {
-          previous: 300,
-        },
+        {},
         {
           abort: abortController.signal,
         },
       )
       .responses.onMessage((message) => {
         for (const line of message.message.split('\n')) {
-          terminal.write(line + '\r\n');
+          const randomString = Math.random().toString(36).substring(7);
+          setEntries((prev) => [...prev, [randomString, parse(line)] as const]);
         }
       });
 
     return () => {
       abortController.abort();
     };
-  }, [serverConnection, terminal, terminalRef]);
+  }, [serverConnection]);
 
-  return <div className="h-full" ref={terminalRef} />;
+  return (
+    <ScrollArea className="h-full w-full pr-4">
+      <div className="whitespace-pre">
+        {entries.map((entry) => {
+          return (
+            <div key={entry[0]}>
+              {entry[1].spans.map((span, index) => {
+                return (
+                  <span STYLE={span.css} key={index}>
+                    {span.text}
+                  </span>
+                );
+              })}
+            </div>
+          );
+        })}
+      </div>
+    </ScrollArea>
+  );
 };

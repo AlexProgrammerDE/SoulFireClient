@@ -4,13 +4,27 @@
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { MessageType } from "@protobuf-ts/runtime";
 /**
+ * @generated from protobuf message com.soulfiremc.grpc.generated.PreviousLogRequest
+ */
+export interface PreviousLogRequest {
+    /**
+     * @generated from protobuf field: int32 count = 1;
+     */
+    count: number;
+}
+/**
+ * @generated from protobuf message com.soulfiremc.grpc.generated.PreviousLogResponse
+ */
+export interface PreviousLogResponse {
+    /**
+     * @generated from protobuf field: repeated string messages = 1;
+     */
+    messages: string[];
+}
+/**
  * @generated from protobuf message com.soulfiremc.grpc.generated.LogRequest
  */
 export interface LogRequest {
-    /**
-     * @generated from protobuf field: uint32 previous = 1;
-     */
-    previous: number;
 }
 /**
  * @generated from protobuf message com.soulfiremc.grpc.generated.LogResponse
@@ -22,11 +36,33 @@ export interface LogResponse {
     message: string;
 }
 // @generated message type with reflection information, may provide speed optimized methods
+class PreviousLogRequest$Type extends MessageType<PreviousLogRequest> {
+    constructor() {
+        super("com.soulfiremc.grpc.generated.PreviousLogRequest", [
+            { no: 1, name: "count", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message com.soulfiremc.grpc.generated.PreviousLogRequest
+ */
+export const PreviousLogRequest = new PreviousLogRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PreviousLogResponse$Type extends MessageType<PreviousLogResponse> {
+    constructor() {
+        super("com.soulfiremc.grpc.generated.PreviousLogResponse", [
+            { no: 1, name: "messages", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message com.soulfiremc.grpc.generated.PreviousLogResponse
+ */
+export const PreviousLogResponse = new PreviousLogResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class LogRequest$Type extends MessageType<LogRequest> {
     constructor() {
-        super("com.soulfiremc.grpc.generated.LogRequest", [
-            { no: 1, name: "previous", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
-        ]);
+        super("com.soulfiremc.grpc.generated.LogRequest", []);
     }
 }
 /**
@@ -49,5 +85,6 @@ export const LogResponse = new LogResponse$Type();
  * @generated ServiceType for protobuf service com.soulfiremc.grpc.generated.LogsService
  */
 export const LogsService = new ServiceType("com.soulfiremc.grpc.generated.LogsService", [
+    { name: "getPrevious", options: {}, I: PreviousLogRequest, O: PreviousLogResponse },
     { name: "subscribe", serverStreaming: true, options: {}, I: LogRequest, O: LogResponse }
 ]);
