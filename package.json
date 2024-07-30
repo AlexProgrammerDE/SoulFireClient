@@ -15,6 +15,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@catppuccin/palette": "^1.2.0",
     "@hookform/resolvers": "^3.9.0",
     "@protobuf-ts/grpcweb-transport": "^2.9.4",
     "@protobuf-ts/runtime": "^2.9.4",

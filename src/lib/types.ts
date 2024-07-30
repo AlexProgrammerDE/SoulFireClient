@@ -9,6 +9,7 @@ import { InstanceConfig } from '@/generated/com/soulfiremc/grpc/generated/instan
 
 export const LOCAL_STORAGE_SERVER_ADDRESS_KEY = 'server-address';
 export const LOCAL_STORAGE_SERVER_TOKEN_KEY = 'server-token';
+export const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
 
 export type ProfileRoot = {
   settings: Record<string, Record<string, JsonValue>>;

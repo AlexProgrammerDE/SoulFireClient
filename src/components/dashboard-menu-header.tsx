@@ -25,13 +25,19 @@ import { open as shellOpen } from '@tauri-apps/api/shell';
 import { appConfigDir, appDataDir, resolve } from '@tauri-apps/api/path';
 import { toast } from 'sonner';
 import CastMenuEntry from '@/components/cast-menu-entry.tsx';
-import { convertToProto, ProfileRoot } from '@/lib/types.ts';
+import {
+  convertToProto,
+  LOCAL_STORAGE_TERMINAL_THEME_KEY,
+  ProfileRoot,
+} from '@/lib/types.ts';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { useMutation } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
 import { queryClient } from '@/lib/query.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
+import { flavorEntries } from '@catppuccin/palette';
 
 function data2blob(data: string) {
   const bytes = new Array(data.length);
@@ -42,7 +48,9 @@ function data2blob(data: string) {
   return new Blob([new Uint8Array(bytes)]);
 }
 
-export const DashboardMenuHeader = () => {
+export const DashboardMenuHeader = (props: {
+  setTerminalTheme: (theme: string) => void;
+}) => {
   const { theme, setTheme } = useTheme();
   const [aboutOpen, setAboutOpen] = useState(false);
   const navigate = useNavigate();
@@ -51,6 +59,7 @@ export const DashboardMenuHeader = () => {
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
   const instanceInfo = useContext(InstanceInfoContext);
+  const terminalTheme = useContext(TerminalThemeContext);
   const setProfileMutation = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
       const instanceService = new InstanceServiceClient(transport);
@@ -292,8 +301,18 @@ export const DashboardMenuHeader = () => {
             <MenubarSub>
               <MenubarSubTrigger>Terminal</MenubarSubTrigger>
               <MenubarSubContent>
-                <MenubarRadioGroup value="default">
-                  <MenubarRadioItem value="default">Default</MenubarRadioItem>
+                <MenubarRadioGroup
+                  value={terminalTheme}
+                  onValueChange={(e) => {
+                    localStorage.setItem(LOCAL_STORAGE_TERMINAL_THEME_KEY, e);
+                    props.setTerminalTheme(e);
+                  }}
+                >
+                  {flavorEntries.map((entry) => (
+                    <MenubarRadioItem key={entry[0]} value={entry[0]}>
+                      {entry[1].emoji} {entry[1].name}
+                    </MenubarRadioItem>
+                  ))}
                 </MenubarRadioGroup>
               </MenubarSubContent>
             </MenubarSub>

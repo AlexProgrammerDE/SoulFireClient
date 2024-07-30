@@ -10,6 +10,9 @@ import { InstanceConfig } from '@/generated/com/soulfiremc/grpc/generated/instan
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { queryClient } from '@/lib/query.ts';
 import { useQuery } from '@tanstack/react-query';
+import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
+import { useState } from 'react';
+import { getTerminalTheme } from '@/lib/utils.ts';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance')({
   beforeLoad: (props) => {
@@ -48,9 +51,7 @@ export const Route = createFileRoute('/dashboard/_layout/$instance')({
 function TerminalSide() {
   return (
     <div className="flex flex-col gap-4 p-4">
-      <div className="terminal-container flex-grow md:h-[calc(100vh-9rem)]">
-        <TerminalComponent />
-      </div>
+      <TerminalComponent />
       <CommandInput />
     </div>
   );
@@ -60,6 +61,7 @@ function ClientLayout() {
   const { instance } = Route.useParams();
   const { infoQueryOptions } = Route.useRouteContext();
   const instanceInfoResult = useQuery(infoQueryOptions);
+  const [terminalTheme, setTerminalTheme] = useState(getTerminalTheme());
 
   return (
     <>
@@ -75,13 +77,15 @@ function ClientLayout() {
             instanceInfoResult.data!.instanceInfo.config as InstanceConfig,
           )}
         >
-          <DashboardMenuHeader />
-          <div className="grid flex-grow grid-cols-1 gap-4 md:grid-cols-2">
-            <div className="flex overflow-auto p-4 md:h-[calc(100vh-2.5rem)]">
-              <Outlet />
+          <TerminalThemeContext.Provider value={terminalTheme}>
+            <DashboardMenuHeader setTerminalTheme={setTerminalTheme} />
+            <div className="grid flex-grow grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="flex overflow-auto p-4 md:h-[calc(100vh-2.5rem)]">
+                <Outlet />
+              </div>
+              <TerminalSide />
             </div>
-            <TerminalSide />
-          </div>
+          </TerminalThemeContext.Provider>
         </ProfileContext.Provider>
       </InstanceInfoContext.Provider>
     </>
