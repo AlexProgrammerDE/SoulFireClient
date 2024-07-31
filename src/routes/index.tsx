@@ -49,7 +49,14 @@ const formSchema = z.object({
     .min(1, 'Address is required')
     .max(255, 'Address is too long')
     .url('Address must be a valid URL'),
-  token: z.string().min(1, 'Token is required').max(255, 'Token is too long'),
+  token: z
+    .string()
+    .min(1, 'Token is required')
+    .max(255, 'Token is too long')
+    .regex(
+      /e[yw][A-Za-z0-9-_]+\.(?:e[yw][A-Za-z0-9-_]+)?\.[A-Za-z0-9-_]{2,}(?:(?:\.[A-Za-z0-9-_]{2,}){2})?/,
+      'Must be a valid JWT token',
+    ),
 });
 type FormSchemaType = z.infer<typeof formSchema>;
 
