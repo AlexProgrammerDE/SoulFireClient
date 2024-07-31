@@ -29,6 +29,8 @@ function cssToStyles(css: string) {
     }, {});
 }
 
+const MAX_TERMINAL_ENTRIES = 500;
+
 export const TerminalComponent = () => {
   const [gotPrevious, setGotPrevious] = useState(false);
   const [entries, setEntries] = useState<(readonly [string, string])[]>([]);
@@ -105,7 +107,7 @@ export const TerminalComponent = () => {
     void logsService
       .getPrevious(
         {
-          count: 500,
+          count: MAX_TERMINAL_ENTRIES,
         },
         {
           abort: abortController.signal,
@@ -140,9 +142,9 @@ export const TerminalComponent = () => {
           setEntries((prev) => {
             let resultingArray = [...prev, [randomString, line] as const];
 
-            if (resultingArray.length > 500) {
+            if (resultingArray.length > MAX_TERMINAL_ENTRIES) {
               resultingArray = resultingArray.slice(
-                resultingArray.length - 500,
+                resultingArray.length - MAX_TERMINAL_ENTRIES,
               );
             }
 
