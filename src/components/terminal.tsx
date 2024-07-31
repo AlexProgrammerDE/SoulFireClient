@@ -31,7 +31,7 @@ function cssToStyles(css: string) {
 
 export const TerminalComponent = () => {
   const [gotPrevious, setGotPrevious] = useState(false);
-  const [entries, setEntries] = useState<[string, string][]>([]);
+  const [entries, setEntries] = useState<(readonly [string, string])[]>([]);
   const serverConnection = useContext(TransportContext);
   const terminalTheme = useContext(TerminalThemeContext);
   const paneRef = useRef<HTMLDivElement>(null);
@@ -105,7 +105,7 @@ export const TerminalComponent = () => {
     void logsService
       .getPrevious(
         {
-          count: 300,
+          count: 500,
         },
         {
           abort: abortController.signal,
@@ -137,7 +137,17 @@ export const TerminalComponent = () => {
       .responses.onMessage((message) => {
         for (const line of message.message.split('\n')) {
           const randomString = Math.random().toString(36).substring(7);
-          setEntries((prev) => [...prev, [randomString, line] as const]);
+          setEntries((prev) => {
+            let resultingArray = [...prev, [randomString, line] as const];
+
+            if (resultingArray.length > 500) {
+              resultingArray = resultingArray.slice(
+                resultingArray.length - 500,
+              );
+            }
+
+            return resultingArray;
+          });
         }
       });
 
