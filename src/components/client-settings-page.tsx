@@ -476,6 +476,7 @@ function MinMaxComponentSingle(props: {
   namespace: string;
   entry: ClientPluginSettingEntryMinMaxPairSingle;
 }) {
+  const queryClient = useQueryClient();
   const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
@@ -510,13 +511,17 @@ function MinMaxComponentSingle(props: {
     },
     [recentlyChangedBouncer, write],
   );
+  const mutationNotRunning =
+    setProfileMutation.isIdle || setProfileMutation.isSuccess;
   const allowsRemoteUpdate = useMemo(() => {
     return (
       !recentlyChanged &&
-      setProfileMutation.isIdle &&
-      !queryClient.isFetching({ queryKey: ['instance-info', instanceInfo.id] })
+      mutationNotRunning &&
+      queryClient.isFetching({
+        queryKey: ['instance-info', instanceInfo.id],
+      }) === 0
     );
-  }, [recentlyChanged, setProfileMutation.isIdle, instanceInfo]);
+  }, [recentlyChanged, mutationNotRunning, queryClient, instanceInfo.id]);
 
   if (!props.entry.intSetting) {
     return null;
