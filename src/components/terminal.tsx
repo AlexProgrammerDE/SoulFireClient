@@ -1,4 +1,4 @@
-import { CSSProperties, useContext, useEffect, useState } from 'react';
+import { CSSProperties, useContext, useEffect, useRef, useState } from 'react';
 import { LogsServiceClient } from '@/generated/com/soulfiremc/grpc/generated/logs.client.ts';
 import { TransportContext } from './providers/transport-context.tsx';
 import { ansicolor, parse } from 'ansicolor';
@@ -34,6 +34,8 @@ export const TerminalComponent = () => {
   const [entries, setEntries] = useState<[string, string][]>([]);
   const serverConnection = useContext(TransportContext);
   const terminalTheme = useContext(TerminalThemeContext);
+  const paneRef = useRef<HTMLDivElement>(null);
+  const [isAtBottom, setIsAtBottom] = useState(true);
   const selectedTheme = flavorEntries.find(
     (entry) => entry[0] === terminalTheme.value,
   )![1];
@@ -69,6 +71,29 @@ export const TerminalComponent = () => {
     cyan: rgbToArray(selectedTheme.colors.teal.rgb),
     lightCyan: rgbToArray(selectedTheme.colors.teal.rgb),
   };
+
+  const handleScroll = () => {
+    if (paneRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = paneRef.current;
+      setIsAtBottom(scrollTop + clientHeight >= scrollHeight - 1);
+    }
+  };
+
+  useEffect(() => {
+    const pane = paneRef.current;
+    if (pane) {
+      pane.addEventListener('scroll', handleScroll);
+      return () => {
+        pane.removeEventListener('scroll', handleScroll);
+      };
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isAtBottom && paneRef.current) {
+      paneRef.current.scrollTop = paneRef.current.scrollHeight;
+    }
+  }, [entries, isAtBottom]);
 
   useEffect(() => {
     if (gotPrevious) {
@@ -123,6 +148,7 @@ export const TerminalComponent = () => {
 
   return (
     <ScrollArea
+      viewportRef={paneRef}
       className="md:h-[calc(100vh-8rem)] w-full pr-4 font-mono rounded-md text-sm"
       style={
         {
