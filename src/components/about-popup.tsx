@@ -9,17 +9,18 @@ import {
   CredenzaTitle,
 } from './ui/credenza';
 import { Button } from '@/components/ui/button.tsx';
-import { type SystemInfo } from '@/components/providers/system-info-context.tsx';
+import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
+import { useContext } from 'react';
 
 export function AboutPopup({
   open,
   setOpen,
-  systemInfo,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
-  systemInfo: SystemInfo | null;
 }) {
+  const systemInfo = useContext(SystemInfoContext);
+
   return (
     <Credenza open={open} onOpenChange={setOpen}>
       <CredenzaContent>

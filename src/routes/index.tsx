@@ -21,15 +21,15 @@ import {
 } from '@/components/ui/form.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { LaptopMinimalIcon, LoaderCircleIcon, ServerIcon } from 'lucide-react';
-import { isTauri } from '@/lib/utils.ts';
 import { invoke } from '@tauri-apps/api';
 import { listen } from '@tauri-apps/api/event';
 import {
   LOCAL_STORAGE_SERVER_ADDRESS_KEY,
   LOCAL_STORAGE_SERVER_TOKEN_KEY,
 } from '@/lib/types.ts';
+import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -76,7 +76,7 @@ const LoginForm = () => {
   const [latestLog, setLatestLog] = useState<string>(
     'Preparing to start integrated server...',
   );
-  const isIntegratedServerAvailable = isTauri();
+  const systemInfo = useContext(SystemInfoContext);
 
   const redirectWithCredentials = useCallback(
     async (address: string, token: string) => {
@@ -139,7 +139,7 @@ const LoginForm = () => {
         <CardContent className="flex flex-col gap-2">
           <div className="flex w-full flex-col gap-1">
             <Button
-              disabled={!isIntegratedServerAvailable}
+              disabled={!systemInfo}
               variant="outline"
               className="flex w-full gap-2"
               onClick={() => setLoginType('INTEGRATED')}
@@ -147,7 +147,7 @@ const LoginForm = () => {
               <LaptopMinimalIcon className="h-6 w-6" />
               <p>Use integrated server</p>
             </Button>
-            {!isIntegratedServerAvailable ? (
+            {!systemInfo ? (
               <p className="text-xs text-gray-500">
                 Integrated server is not available on this platform.
               </p>
@@ -165,18 +165,25 @@ const LoginForm = () => {
             <p className="mb-1">
               SoulFire Client {APP_VERSION} - {APP_ENVIRONMENT}
             </p>
-            {APP_ENVIRONMENT === 'production' && (
-              <a
-                className="text-blue-500"
-                href="https://preview.soulfiremc.com"
-              >
-                Looking for preview?
-              </a>
-            )}
-            {APP_ENVIRONMENT === 'preview' && (
-              <a className="text-blue-500" href="https://app.soulfiremc.com">
-                Looking for production?
-              </a>
+            {!systemInfo && (
+              <>
+                {APP_ENVIRONMENT === 'production' && (
+                  <a
+                    className="text-blue-500"
+                    href="https://preview.soulfiremc.com"
+                  >
+                    Looking for preview?
+                  </a>
+                )}
+                {APP_ENVIRONMENT === 'preview' && (
+                  <a
+                    className="text-blue-500"
+                    href="https://app.soulfiremc.com"
+                  >
+                    Looking for production?
+                  </a>
+                )}
+              </>
             )}
           </div>
         </CardContent>

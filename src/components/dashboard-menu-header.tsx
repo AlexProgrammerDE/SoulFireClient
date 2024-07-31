@@ -369,11 +369,7 @@ export const DashboardMenuHeader = () => {
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
-      <AboutPopup
-        open={aboutOpen}
-        setOpen={setAboutOpen}
-        systemInfo={systemInfo}
-      />
+      <AboutPopup open={aboutOpen} setOpen={setAboutOpen} />
     </>
   );
 };

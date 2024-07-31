@@ -9,14 +9,7 @@ import { ConfigServiceClient } from '@/generated/soulfire/config.client.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { createTransport, isAuthenticated } from '@/lib/web-rpc.ts';
-import { getTerminalTheme, isTauri } from '@/lib/utils.ts';
-import { appConfigDir, resolve } from '@tauri-apps/api/path';
-import { createDir, readDir } from '@tauri-apps/api/fs';
-import {
-  SystemInfo,
-  SystemInfoContext,
-} from '@/components/providers/system-info-context.tsx';
-import { arch, locale, platform, type, version } from '@tauri-apps/api/os';
+import { getTerminalTheme } from '@/lib/utils.ts';
 import {
   Card,
   CardContent,
@@ -39,31 +32,6 @@ export const Route = createFileRoute('/dashboard/_layout')({
     }
   },
   loader: async (props) => {
-    let systemInfo: SystemInfo | null;
-    if (isTauri()) {
-      const profileDir = await resolve(
-        await resolve(await appConfigDir(), 'profile'),
-      );
-      await createDir(profileDir, { recursive: true });
-
-      const availableProfiles = (await readDir(profileDir))
-        .filter((file) => !file.children)
-        .filter((file) => file.name)
-        .map((file) => file.name!)
-        .filter((file) => file.endsWith('.json'));
-
-      systemInfo = {
-        availableProfiles,
-        osType: await type(),
-        osVersion: await version(),
-        platformName: await platform(),
-        osLocale: await locale(),
-        archName: await arch(),
-      };
-    } else {
-      systemInfo = null;
-    }
-
     const transport = createTransport();
 
     const configService = new ConfigServiceClient(transport);
@@ -77,7 +45,6 @@ export const Route = createFileRoute('/dashboard/_layout')({
     return {
       transport,
       clientData: result.response,
-      systemInfo,
     };
   },
   errorComponent: ErrorComponent,
@@ -117,23 +84,21 @@ function ErrorComponent({ error }: { error: Error }) {
 }
 
 function DashboardLayout() {
-  const { transport, clientData, systemInfo } = Route.useLoaderData();
+  const { transport, clientData } = Route.useLoaderData();
   const [terminalTheme, setTerminalTheme] = useState(getTerminalTheme());
 
   return (
     <div className="flex h-screen w-screen flex-col">
       <TransportContext.Provider value={transport}>
         <ClientInfoContext.Provider value={clientData}>
-          <SystemInfoContext.Provider value={systemInfo}>
-            <TerminalThemeContext.Provider
-              value={{
-                value: terminalTheme,
-                setter: setTerminalTheme,
-              }}
-            >
-              <Outlet />
-            </TerminalThemeContext.Provider>
-          </SystemInfoContext.Provider>
+          <TerminalThemeContext.Provider
+            value={{
+              value: terminalTheme,
+              setter: setTerminalTheme,
+            }}
+          >
+            <Outlet />
+          </TerminalThemeContext.Provider>
         </ClientInfoContext.Provider>
       </TransportContext.Provider>
     </div>
