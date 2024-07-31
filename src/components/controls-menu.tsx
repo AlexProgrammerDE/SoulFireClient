@@ -7,10 +7,10 @@ import { toast } from 'sonner';
 import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
 import { InstanceState } from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
-import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '@/lib/query.ts';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export default function ControlsMenu() {
+  const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
   const profile = useContext(ProfileContext);
   const instanceInfo = useContext(InstanceInfoContext);

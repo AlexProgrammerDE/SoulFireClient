@@ -33,9 +33,8 @@ import {
   ProfileRoot,
 } from '@/lib/types.ts';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
-import { queryClient } from '@/lib/query.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
@@ -51,6 +50,7 @@ function data2blob(data: string) {
 }
 
 export const DashboardMenuHeader = () => {
+  const queryClient = useQueryClient();
   const { theme, setTheme } = useTheme();
   const [aboutOpen, setAboutOpen] = useState(false);
   const navigate = useNavigate();

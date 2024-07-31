@@ -27,8 +27,7 @@ import { MCAuthServiceClient } from '@/generated/com/soulfiremc/grpc/generated/m
 import ImportDialog from '@/components/import-dialog.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
-import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '@/lib/query.ts';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance/accounts')({
   component: AccountSettings,
@@ -83,6 +82,7 @@ const columns: ColumnDef<ProfileAccount>[] = [
 ];
 
 function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
+  const queryClient = useQueryClient();
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
   const instanceInfo = useContext(InstanceInfoContext);

@@ -16,8 +16,8 @@ import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { TrashIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { queryClient } from '@/lib/query.ts';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { queryClientInstance } from '@/lib/query.ts';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const listQueryFn = async ({ signal }: { signal: AbortSignal }) => {
   const transport = createTransport();
@@ -49,13 +49,14 @@ export const Route = createFileRoute('/dashboard/_layout/')({
     };
   },
   loader: async (props) => {
-    await queryClient.prefetchQuery(props.context.listQueryOptions);
+    await queryClientInstance.prefetchQuery(props.context.listQueryOptions);
   },
   component: InstanceSelectPage,
 });
 
 function InstanceSelectPage() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { listQueryOptions } = Route.useRouteContext();
   const instanceList = useQuery(listQueryOptions);
   const transport = useContext(TransportContext);

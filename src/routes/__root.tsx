@@ -5,7 +5,7 @@ import { ThemeProvider } from '@/components/providers/theme-provider.tsx';
 import { Toaster } from '@/components/ui/sonner.tsx';
 import { TailwindIndicator } from '@/components/tailwind-indicator.tsx';
 import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClient } from '@/lib/query';
+import { queryClientInstance } from '@/lib/query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { lazy, Suspense, useEffect, useState } from 'react';
 
@@ -29,7 +29,7 @@ function RootLayout() {
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClientInstance}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

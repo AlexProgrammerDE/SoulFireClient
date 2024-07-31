@@ -27,8 +27,7 @@ import URI from 'urijs';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
-import { useMutation } from '@tanstack/react-query';
-import { queryClient } from '@/lib/query.ts';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance/proxies')({
   component: ProxySettings,
@@ -145,6 +144,7 @@ const columns: ColumnDef<ProfileProxy>[] = [
 ];
 
 function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
+  const queryClient = useQueryClient();
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
   const instanceInfo = useContext(InstanceInfoContext);

@@ -8,7 +8,7 @@ import { InstanceInfoContext } from '@/components/providers/instance-info-contex
 import { convertFromProto } from '@/lib/types.ts';
 import { InstanceConfig } from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
-import { queryClient } from '@/lib/query.ts';
+import { queryClientInstance } from '@/lib/query.ts';
 import { useQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance')({
@@ -42,7 +42,7 @@ export const Route = createFileRoute('/dashboard/_layout/$instance')({
     };
   },
   loader: async (props) => {
-    await queryClient.prefetchQuery(props.context.infoQueryOptions);
+    await queryClientInstance.prefetchQuery(props.context.infoQueryOptions);
   },
   component: InstanceLayout,
 });

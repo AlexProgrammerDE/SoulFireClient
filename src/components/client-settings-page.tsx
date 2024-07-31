@@ -46,7 +46,6 @@ import { JsonValue } from '@protobuf-ts/runtime';
 import { useDebouncedCallback } from 'use-debounce';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
-import { queryClient } from '@/lib/query.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 

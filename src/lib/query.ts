@@ -1,9 +1,9 @@
 import { QueryClient } from '@tanstack/react-query';
 import { broadcastQueryClient } from '@tanstack/query-broadcast-client-experimental';
 
-export const queryClient = new QueryClient();
+export const queryClientInstance = new QueryClient();
 
 broadcastQueryClient({
-  queryClient,
+  queryClient: queryClientInstance,
   broadcastChannel: 'soulfire',
 });
