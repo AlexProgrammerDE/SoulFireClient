@@ -11,7 +11,7 @@ export default defineConfig({
   define: {
     APP_VERSION: JSON.stringify(process.env.npm_package_version),
     APP_ENVIRONMENT: JSON.stringify(
-      process.env.VITE_VERCEL_ENV ?? 'development',
+      process.env.VITE_VERCEL_ENV ?? process.env.NODE_ENV,
     ),
   },
   // @ts-expect-error - not in types
