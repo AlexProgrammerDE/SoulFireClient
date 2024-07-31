@@ -161,6 +161,24 @@ const LoginForm = () => {
             <ServerIcon className="h-6 w-6" />
             <p>Connect to remote server</p>
           </Button>
+          <div className="absolute text-xs text-gray-500 text-center bottom-0 left-0 right-0 mb-2">
+            <p className="mb-1">
+              SoulFire Client {APP_VERSION} - {APP_ENVIRONMENT}
+            </p>
+            {APP_ENVIRONMENT === 'production' && (
+              <a
+                className="text-blue-500"
+                href="https://preview.soulfiremc.com"
+              >
+                Looking for preview?
+              </a>
+            )}
+            {APP_ENVIRONMENT === 'preview' && (
+              <a className="text-blue-500" href="https://app.soulfiremc.com">
+                Looking for production?
+              </a>
+            )}
+          </div>
         </CardContent>
       ) : null}
       {'INTEGRATED' === loginType ? (
