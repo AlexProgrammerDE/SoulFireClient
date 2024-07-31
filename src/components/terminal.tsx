@@ -107,7 +107,8 @@ export const TerminalComponent = () => {
     void logsService
       .getPrevious(
         {
-          count: MAX_TERMINAL_ENTRIES,
+          // Max allowed amount of entries by the server
+          count: 300,
         },
         {
           abort: abortController.signal,
