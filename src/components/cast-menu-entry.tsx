@@ -119,7 +119,6 @@ export default function CastMenuEntry() {
                   {
                     loading: `Connecting to ${currentDevice.info.name}...`,
                     success: (transportId) => {
-                      console.log(transportId);
                       setDevices((devices) =>
                         devices.map((device) => {
                           if (

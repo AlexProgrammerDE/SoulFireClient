@@ -44,7 +44,7 @@ import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { convertToProto, ProfileRoot } from '@/lib/types.ts';
 import { JsonValue } from '@protobuf-ts/runtime';
 import { useDebouncedCallback } from 'use-debounce';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
 import { queryClient } from '@/lib/query.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
@@ -113,13 +113,6 @@ function StringComponent(props: {
   const ref = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    console.log(
-      'useEffect',
-      profile,
-      props.allowsRemoteUpdate,
-      serverValue,
-      value,
-    );
     if (props.allowsRemoteUpdate && value !== serverValue) {
       setValue(serverValue);
       if (ref.current) {
@@ -344,6 +337,7 @@ function SingleComponent(props: {
   settingKey: string;
   entry: ClientPluginSettingEntrySingle;
 }) {
+  const queryClient = useQueryClient();
   const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
@@ -378,15 +372,17 @@ function SingleComponent(props: {
     },
     [recentlyChangedBouncer, write],
   );
+  const mutationNotRunning =
+    setProfileMutation.isIdle || setProfileMutation.isSuccess;
   const allowsRemoteUpdate = useMemo(() => {
     return (
       !recentlyChanged &&
-      setProfileMutation.isIdle &&
+      mutationNotRunning &&
       queryClient.isFetching({
         queryKey: ['instance-info', instanceInfo.id],
       }) === 0
     );
-  }, [recentlyChanged, setProfileMutation.isIdle, instanceInfo]);
+  }, [recentlyChanged, mutationNotRunning, queryClient, instanceInfo.id]);
 
   if (!props.entry.type) {
     return null;
