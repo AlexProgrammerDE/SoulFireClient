@@ -118,7 +118,7 @@ function StringComponent(props: {
         ref.current.value = serverValue as string;
       }
     }
-  }, [profile, props.allowsRemoteUpdate, serverValue, value]);
+  }, [props.allowsRemoteUpdate, serverValue, value]);
 
   return (
     <Input
@@ -158,7 +158,7 @@ function IntComponent(props: {
         ref.current.value = serverValue as string;
       }
     }
-  }, [profile, props.allowsRemoteUpdate, serverValue, value]);
+  }, [props.allowsRemoteUpdate, serverValue, value]);
 
   return (
     <Input
@@ -201,7 +201,7 @@ function DoubleComponent(props: {
         ref.current.value = serverValue as string;
       }
     }
-  }, [profile, props.allowsRemoteUpdate, serverValue, value]);
+  }, [props.allowsRemoteUpdate, serverValue, value]);
 
   return (
     <Input
@@ -244,7 +244,7 @@ function BoolComponent(props: {
         ref.current.click();
       }
     }
-  }, [profile, props.allowsRemoteUpdate, serverValue, value]);
+  }, [props.allowsRemoteUpdate, serverValue, value]);
 
   return (
     <Checkbox
@@ -280,7 +280,7 @@ function ComboComponent(props: {
     if (props.allowsRemoteUpdate && value !== serverValue) {
       setValue(serverValue);
     }
-  }, [profile, props.allowsRemoteUpdate, serverValue, value]);
+  }, [props.allowsRemoteUpdate, serverValue, value]);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
