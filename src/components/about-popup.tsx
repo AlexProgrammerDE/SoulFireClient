@@ -43,8 +43,20 @@ export function AboutPopup({
             <>
               <p>Browser: {navigator.userAgent}</p>
               <p>Locale: {navigator.language}</p>
+              <p>Environment: {APP_ENVIRONMENT}</p>
             </>
           )}
+          <p className="mt-4">
+            Source code available on{' '}
+            <a
+              href="https://github.com/AlexProgrammerDE/SoulFireClient"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500"
+            >
+              GitHub
+            </a>
+          </p>
         </CredenzaBody>
         <CredenzaFooter>
           <CredenzaClose asChild>

@@ -10,7 +10,9 @@ export default defineConfig({
   plugins: [TanStackRouterVite(), viteReactSwc(), eslintPlugin(), vercel()],
   define: {
     APP_VERSION: JSON.stringify(process.env.npm_package_version),
-    APP_ENVIRONMENT: JSON.stringify(process.env.VITE_VERCEL_ENV),
+    APP_ENVIRONMENT: JSON.stringify(
+      process.env.VITE_VERCEL_ENV ?? 'development',
+    ),
   },
   // @ts-expect-error - not in types
   vercel: {
