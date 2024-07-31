@@ -139,8 +139,9 @@ export const TerminalComponent = () => {
                 return (
                   <span
                     style={cssToStyles(
-                      span.css ??
-                        `color: hsl(${hslToString(selectedTheme.colors.text.hsl)})`,
+                      span.css === ''
+                        ? `color: hsl(${hslToString(selectedTheme.colors.text.hsl)})`
+                        : span.css,
                     )}
                     key={index}
                   >
