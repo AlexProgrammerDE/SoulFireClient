@@ -1,6 +1,6 @@
 # SoulFireClient
 
-This is a frontend for the SoulFire server.
+This is a frontend for the [SoulFire server](https://github.com/AlexProgrammerDE/SoulFire).
 It mainly targets the web, but uses native APIs using Tauri.
 
 Tools used:
