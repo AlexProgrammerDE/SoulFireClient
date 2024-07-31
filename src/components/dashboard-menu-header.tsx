@@ -34,7 +34,7 @@ import {
 } from '@/lib/types.ts';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
+import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';

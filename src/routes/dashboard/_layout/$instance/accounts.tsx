@@ -12,7 +12,7 @@ import {
   ProfileRoot,
 } from '@/lib/types.ts';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
-import { MinecraftAccountProto_AccountTypeProto } from '@/generated/com/soulfiremc/grpc/generated/common.ts';
+import { MinecraftAccountProto_AccountTypeProto } from '@/generated/soulfire/common.ts';
 import { PlusIcon, TrashIcon } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import {
@@ -23,10 +23,10 @@ import {
 } from '@/components/ui/dropdown-menu.tsx';
 import { toast } from 'sonner';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { MCAuthServiceClient } from '@/generated/com/soulfiremc/grpc/generated/mc-auth.client.ts';
+import { MCAuthServiceClient } from '@/generated/soulfire/mc-auth.client.ts';
 import ImportDialog from '@/components/import-dialog.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
-import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
+import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance/accounts')({

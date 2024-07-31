@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input.tsx';
 import { KeyboardEventHandler, useContext, useState } from 'react';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { CommandServiceClient } from '@/generated/com/soulfiremc/grpc/generated/command.client.ts';
+import { CommandServiceClient } from '@/generated/soulfire/command.client.ts';
 
 type CompletionState = {
   lastWritten: string;

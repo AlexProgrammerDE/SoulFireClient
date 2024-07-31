@@ -8,7 +8,7 @@ import {
   DoubleSetting,
   IntSetting,
   StringSetting,
-} from '@/generated/com/soulfiremc/grpc/generated/config.ts';
+} from '@/generated/soulfire/config.ts';
 import {
   Tooltip,
   TooltipContent,
@@ -45,7 +45,7 @@ import { convertToProto, ProfileRoot } from '@/lib/types.ts';
 import { JsonValue } from '@protobuf-ts/runtime';
 import { useDebouncedCallback } from 'use-debounce';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
+import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 

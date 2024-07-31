@@ -1,5 +1,5 @@
 import { CSSProperties, useContext, useEffect, useRef, useState } from 'react';
-import { LogsServiceClient } from '@/generated/com/soulfiremc/grpc/generated/logs.client.ts';
+import { LogsServiceClient } from '@/generated/soulfire/logs.client.ts';
 import { TransportContext } from './providers/transport-context.tsx';
 import { ansicolor, parse } from 'ansicolor';
 import { ScrollArea } from './ui/scroll-area.tsx';

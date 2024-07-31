@@ -13,7 +13,7 @@ import {
   ProfileRoot,
 } from '@/lib/types.ts';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
-import { ProxyProto_Type } from '@/generated/com/soulfiremc/grpc/generated/common.ts';
+import { ProxyProto_Type } from '@/generated/soulfire/common.ts';
 import { toast } from 'sonner';
 import {
   DropdownMenu,
@@ -26,7 +26,7 @@ import ImportDialog from '@/components/import-dialog.tsx';
 import URI from 'urijs';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
+import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance/proxies')({

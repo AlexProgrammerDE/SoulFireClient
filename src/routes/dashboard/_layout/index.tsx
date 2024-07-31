@@ -5,7 +5,7 @@ import {
   useNavigate,
 } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
-import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
+import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import {
   CreateInstancePopup,
   CreateInstanceType,

@@ -4,8 +4,8 @@ import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { convertToProto } from '@/lib/types.ts';
 import { toast } from 'sonner';
-import { InstanceServiceClient } from '@/generated/com/soulfiremc/grpc/generated/instance.client.ts';
-import { InstanceState } from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
+import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
+import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 

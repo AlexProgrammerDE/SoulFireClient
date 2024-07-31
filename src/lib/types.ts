@@ -2,10 +2,10 @@ import {
   MinecraftAccountProto,
   MinecraftAccountProto_AccountTypeProto,
   ProxyProto_Type,
-} from '@/generated/com/soulfiremc/grpc/generated/common.ts';
+} from '@/generated/soulfire/common.ts';
 import { Value } from '@/generated/google/protobuf/struct.ts';
 import { JsonValue } from '@protobuf-ts/runtime/build/types/json-typings';
-import { InstanceConfig } from '@/generated/com/soulfiremc/grpc/generated/instance.ts';
+import { InstanceConfig } from '@/generated/soulfire/instance.ts';
 
 export const LOCAL_STORAGE_SERVER_ADDRESS_KEY = 'server-address';
 export const LOCAL_STORAGE_SERVER_TOKEN_KEY = 'server-token';

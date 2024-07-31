@@ -1,10 +1,11 @@
 syntax = "proto3";
 
+option java_package = "com.soulfiremc.grpc.generated";
 option java_multiple_files = true;
 
-package com.soulfiremc.grpc.generated;
+package soulfire.v1;
 
-import "com/soulfiremc/grpc/generated/common.proto";
+import "soulfire/common.proto";
 import "google/protobuf/struct.proto";
 
 message SettingsEntry {
@@ -38,6 +39,12 @@ message InstanceDeleteRequest {
 message InstanceDeleteResponse {
 }
 
+enum InstanceState {
+  STOPPED = 0;
+  RUNNING = 1;
+  PAUSED = 2;
+}
+
 message InstanceListRequest {
 }
 
@@ -45,15 +52,10 @@ message InstanceListResponse {
   message Instance {
     string id = 1;
     string friendlyName = 2;
+    InstanceState state = 3;
   }
 
   repeated Instance instances = 1;
-}
-
-enum InstanceState {
-  STOPPED = 0;
-  RUNNING = 1;
-  PAUSED = 2;
 }
 
 message InstanceInfoRequest {

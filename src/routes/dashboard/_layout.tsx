@@ -5,7 +5,7 @@ import {
   redirect,
   useNavigate,
 } from '@tanstack/react-router';
-import { ConfigServiceClient } from '@/generated/com/soulfiremc/grpc/generated/config.client.ts';
+import { ConfigServiceClient } from '@/generated/soulfire/config.client.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { createTransport, isAuthenticated } from '@/lib/web-rpc.ts';
