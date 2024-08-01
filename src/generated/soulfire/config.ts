@@ -3,6 +3,7 @@
 // tslint:disable
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { MessageType } from "@protobuf-ts/runtime";
+import { SettingsNamespace } from "./common";
 /**
  * @generated from protobuf message soulfire.v1.ClientDataRequest
  */
@@ -113,11 +114,20 @@ export interface ComboSetting {
     def: number;
 }
 /**
+ * @generated from protobuf message soulfire.v1.StringListSetting
+ */
+export interface StringListSetting {
+    /**
+     * @generated from protobuf field: repeated string def = 1;
+     */
+    def: string[];
+}
+/**
  * A single setting type with optional default value
  *
- * @generated from protobuf message soulfire.v1.ClientPluginSettingType
+ * @generated from protobuf message soulfire.v1.SettingType
  */
-export interface ClientPluginSettingType {
+export interface SettingType {
     /**
      * @generated from protobuf oneof: value
      */
@@ -152,15 +162,21 @@ export interface ClientPluginSettingType {
          */
         combo: ComboSetting;
     } | {
+        oneofKind: "stringList";
+        /**
+         * @generated from protobuf field: soulfire.v1.StringListSetting stringList = 6;
+         */
+        stringList: StringListSetting;
+    } | {
         oneofKind: undefined;
     };
 }
 /**
  * A single option in the settings page
  *
- * @generated from protobuf message soulfire.v1.ClientPluginSettingEntrySingle
+ * @generated from protobuf message soulfire.v1.SettingEntrySingle
  */
-export interface ClientPluginSettingEntrySingle {
+export interface SettingEntrySingle {
     /**
      * Basically we only send a kv map to the server with every setting entry
      *
@@ -180,14 +196,14 @@ export interface ClientPluginSettingEntrySingle {
      */
     description: string;
     /**
-     * @generated from protobuf field: soulfire.v1.ClientPluginSettingType type = 6;
+     * @generated from protobuf field: soulfire.v1.SettingType type = 5;
      */
-    type?: ClientPluginSettingType;
+    type?: SettingType;
 }
 /**
- * @generated from protobuf message soulfire.v1.ClientPluginSettingEntryMinMaxPairSingle
+ * @generated from protobuf message soulfire.v1.SettingEntryMinMaxPairSingle
  */
-export interface ClientPluginSettingEntryMinMaxPairSingle {
+export interface SettingEntryMinMaxPairSingle {
     /**
      * Basically we only send a kv map to the server with every setting entry
      *
@@ -207,78 +223,95 @@ export interface ClientPluginSettingEntryMinMaxPairSingle {
      */
     description: string;
     /**
-     * @generated from protobuf field: soulfire.v1.IntSetting intSetting = 6;
+     * @generated from protobuf field: soulfire.v1.IntSetting intSetting = 5;
      */
     intSetting?: IntSetting;
 }
 /**
  * A paired option in the settings page
  *
- * @generated from protobuf message soulfire.v1.ClientPluginSettingEntryMinMaxPair
+ * @generated from protobuf message soulfire.v1.SettingEntryMinMaxPair
  */
-export interface ClientPluginSettingEntryMinMaxPair {
+export interface SettingEntryMinMaxPair {
     /**
      * Required to be IntSetting
      *
-     * @generated from protobuf field: soulfire.v1.ClientPluginSettingEntryMinMaxPairSingle min = 1;
+     * @generated from protobuf field: soulfire.v1.SettingEntryMinMaxPairSingle min = 1;
      */
-    min?: ClientPluginSettingEntryMinMaxPairSingle;
+    min?: SettingEntryMinMaxPairSingle;
     /**
      * Required to be IntSetting
      *
-     * @generated from protobuf field: soulfire.v1.ClientPluginSettingEntryMinMaxPairSingle max = 2;
+     * @generated from protobuf field: soulfire.v1.SettingEntryMinMaxPairSingle max = 2;
      */
-    max?: ClientPluginSettingEntryMinMaxPairSingle;
+    max?: SettingEntryMinMaxPairSingle;
 }
 /**
  * A entry in the settings page
  *
- * @generated from protobuf message soulfire.v1.ClientPluginSettingEntry
+ * @generated from protobuf message soulfire.v1.SettingEntry
  */
-export interface ClientPluginSettingEntry {
+export interface SettingEntry {
     /**
      * @generated from protobuf oneof: value
      */
     value: {
         oneofKind: "single";
         /**
-         * @generated from protobuf field: soulfire.v1.ClientPluginSettingEntrySingle single = 1;
+         * @generated from protobuf field: soulfire.v1.SettingEntrySingle single = 1;
          */
-        single: ClientPluginSettingEntrySingle;
+        single: SettingEntrySingle;
     } | {
         oneofKind: "minMaxPair";
         /**
-         * @generated from protobuf field: soulfire.v1.ClientPluginSettingEntryMinMaxPair minMaxPair = 2;
+         * @generated from protobuf field: soulfire.v1.SettingEntryMinMaxPair minMaxPair = 2;
          */
-        minMaxPair: ClientPluginSettingEntryMinMaxPair;
+        minMaxPair: SettingEntryMinMaxPair;
     } | {
         oneofKind: undefined;
     };
 }
 /**
- * @generated from protobuf message soulfire.v1.ClientPluginSettingsPage
+ * @generated from protobuf message soulfire.v1.SettingsPage
  */
-export interface ClientPluginSettingsPage {
+export interface SettingsPage {
     /**
-     * @generated from protobuf field: bool hidden = 1;
+     * @generated from protobuf field: soulfire.v1.SettingsPage.Type type = 1;
      */
-    hidden: boolean;
+    type: SettingsPage_Type;
+    /**
+     * @generated from protobuf field: optional string owningPlugin = 2;
+     */
+    owningPlugin?: string;
     /**
      * The name of the page for these settings
      *
-     * @generated from protobuf field: string pageName = 2;
+     * @generated from protobuf field: string pageName = 3;
      */
     pageName: string;
     /**
      * What namespace the settings of this page represent
      *
-     * @generated from protobuf field: string namespace = 3;
+     * @generated from protobuf field: string namespace = 4;
      */
     namespace: string;
     /**
-     * @generated from protobuf field: repeated soulfire.v1.ClientPluginSettingEntry entries = 4;
+     * @generated from protobuf field: repeated soulfire.v1.SettingEntry entries = 5;
      */
-    entries: ClientPluginSettingEntry[];
+    entries: SettingEntry[];
+}
+/**
+ * @generated from protobuf enum soulfire.v1.SettingsPage.Type
+ */
+export enum SettingsPage_Type {
+    /**
+     * @generated from protobuf enum value: SERVER = 0;
+     */
+    SERVER = 0,
+    /**
+     * @generated from protobuf enum value: INSTANCE = 1;
+     */
+    INSTANCE = 1
 }
 /**
  * @generated from protobuf message soulfire.v1.PermissionMessage
@@ -298,9 +331,9 @@ export interface PermissionMessage {
     granted: boolean;
 }
 /**
- * @generated from protobuf message soulfire.v1.ClientPlugin
+ * @generated from protobuf message soulfire.v1.ServerPlugin
  */
-export interface ClientPlugin {
+export interface ServerPlugin {
     /**
      * @generated from protobuf field: string id = 1;
      */
@@ -314,9 +347,13 @@ export interface ClientPlugin {
      */
     description: string;
     /**
-     * @generated from protobuf field: string provider = 4;
+     * @generated from protobuf field: string author = 4;
      */
-    provider: string;
+    author: string;
+    /**
+     * @generated from protobuf field: string license = 5;
+     */
+    license: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.ClientDataResponse
@@ -331,13 +368,27 @@ export interface ClientDataResponse {
      */
     permissions: PermissionMessage[];
     /**
-     * @generated from protobuf field: repeated soulfire.v1.ClientPlugin plugins = 3;
+     * @generated from protobuf field: repeated soulfire.v1.ServerPlugin plugins = 3;
      */
-    plugins: ClientPlugin[];
+    plugins: ServerPlugin[];
     /**
-     * @generated from protobuf field: repeated soulfire.v1.ClientPluginSettingsPage pluginSettings = 4;
+     * @generated from protobuf field: repeated soulfire.v1.SettingsPage settings = 5;
      */
-    pluginSettings: ClientPluginSettingsPage[];
+    settings: SettingsPage[];
+}
+/**
+ * @generated from protobuf message soulfire.v1.ServerUpdateConfigRequest
+ */
+export interface ServerUpdateConfigRequest {
+    /**
+     * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace settings = 1;
+     */
+    settings: SettingsNamespace[];
+}
+/**
+ * @generated from protobuf message soulfire.v1.ServerUpdateConfigResponse
+ */
+export interface ServerUpdateConfigResponse {
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ClientDataRequest$Type extends MessageType<ClientDataRequest> {
@@ -433,94 +484,108 @@ class ComboSetting$Type extends MessageType<ComboSetting> {
  */
 export const ComboSetting = new ComboSetting$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ClientPluginSettingType$Type extends MessageType<ClientPluginSettingType> {
+class StringListSetting$Type extends MessageType<StringListSetting> {
     constructor() {
-        super("soulfire.v1.ClientPluginSettingType", [
+        super("soulfire.v1.StringListSetting", [
+            { no: 1, name: "def", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.StringListSetting
+ */
+export const StringListSetting = new StringListSetting$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SettingType$Type extends MessageType<SettingType> {
+    constructor() {
+        super("soulfire.v1.SettingType", [
             { no: 1, name: "string", kind: "message", oneof: "value", T: () => StringSetting },
             { no: 2, name: "int", kind: "message", oneof: "value", T: () => IntSetting },
             { no: 3, name: "double", kind: "message", oneof: "value", T: () => DoubleSetting },
             { no: 4, name: "bool", kind: "message", oneof: "value", T: () => BoolSetting },
-            { no: 5, name: "combo", kind: "message", oneof: "value", T: () => ComboSetting }
+            { no: 5, name: "combo", kind: "message", oneof: "value", T: () => ComboSetting },
+            { no: 6, name: "stringList", kind: "message", oneof: "value", T: () => StringListSetting }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.ClientPluginSettingType
+ * @generated MessageType for protobuf message soulfire.v1.SettingType
  */
-export const ClientPluginSettingType = new ClientPluginSettingType$Type();
+export const SettingType = new SettingType$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ClientPluginSettingEntrySingle$Type extends MessageType<ClientPluginSettingEntrySingle> {
+class SettingEntrySingle$Type extends MessageType<SettingEntrySingle> {
     constructor() {
-        super("soulfire.v1.ClientPluginSettingEntrySingle", [
+        super("soulfire.v1.SettingEntrySingle", [
             { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "cliFlags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "type", kind: "message", T: () => ClientPluginSettingType }
+            { no: 5, name: "type", kind: "message", T: () => SettingType }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.ClientPluginSettingEntrySingle
+ * @generated MessageType for protobuf message soulfire.v1.SettingEntrySingle
  */
-export const ClientPluginSettingEntrySingle = new ClientPluginSettingEntrySingle$Type();
+export const SettingEntrySingle = new SettingEntrySingle$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ClientPluginSettingEntryMinMaxPairSingle$Type extends MessageType<ClientPluginSettingEntryMinMaxPairSingle> {
+class SettingEntryMinMaxPairSingle$Type extends MessageType<SettingEntryMinMaxPairSingle> {
     constructor() {
-        super("soulfire.v1.ClientPluginSettingEntryMinMaxPairSingle", [
+        super("soulfire.v1.SettingEntryMinMaxPairSingle", [
             { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "cliFlags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "intSetting", kind: "message", T: () => IntSetting }
+            { no: 5, name: "intSetting", kind: "message", T: () => IntSetting }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.ClientPluginSettingEntryMinMaxPairSingle
+ * @generated MessageType for protobuf message soulfire.v1.SettingEntryMinMaxPairSingle
  */
-export const ClientPluginSettingEntryMinMaxPairSingle = new ClientPluginSettingEntryMinMaxPairSingle$Type();
+export const SettingEntryMinMaxPairSingle = new SettingEntryMinMaxPairSingle$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ClientPluginSettingEntryMinMaxPair$Type extends MessageType<ClientPluginSettingEntryMinMaxPair> {
+class SettingEntryMinMaxPair$Type extends MessageType<SettingEntryMinMaxPair> {
     constructor() {
-        super("soulfire.v1.ClientPluginSettingEntryMinMaxPair", [
-            { no: 1, name: "min", kind: "message", T: () => ClientPluginSettingEntryMinMaxPairSingle },
-            { no: 2, name: "max", kind: "message", T: () => ClientPluginSettingEntryMinMaxPairSingle }
+        super("soulfire.v1.SettingEntryMinMaxPair", [
+            { no: 1, name: "min", kind: "message", T: () => SettingEntryMinMaxPairSingle },
+            { no: 2, name: "max", kind: "message", T: () => SettingEntryMinMaxPairSingle }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.ClientPluginSettingEntryMinMaxPair
+ * @generated MessageType for protobuf message soulfire.v1.SettingEntryMinMaxPair
  */
-export const ClientPluginSettingEntryMinMaxPair = new ClientPluginSettingEntryMinMaxPair$Type();
+export const SettingEntryMinMaxPair = new SettingEntryMinMaxPair$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ClientPluginSettingEntry$Type extends MessageType<ClientPluginSettingEntry> {
+class SettingEntry$Type extends MessageType<SettingEntry> {
     constructor() {
-        super("soulfire.v1.ClientPluginSettingEntry", [
-            { no: 1, name: "single", kind: "message", oneof: "value", T: () => ClientPluginSettingEntrySingle },
-            { no: 2, name: "minMaxPair", kind: "message", oneof: "value", T: () => ClientPluginSettingEntryMinMaxPair }
+        super("soulfire.v1.SettingEntry", [
+            { no: 1, name: "single", kind: "message", oneof: "value", T: () => SettingEntrySingle },
+            { no: 2, name: "minMaxPair", kind: "message", oneof: "value", T: () => SettingEntryMinMaxPair }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.ClientPluginSettingEntry
+ * @generated MessageType for protobuf message soulfire.v1.SettingEntry
  */
-export const ClientPluginSettingEntry = new ClientPluginSettingEntry$Type();
+export const SettingEntry = new SettingEntry$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ClientPluginSettingsPage$Type extends MessageType<ClientPluginSettingsPage> {
+class SettingsPage$Type extends MessageType<SettingsPage> {
     constructor() {
-        super("soulfire.v1.ClientPluginSettingsPage", [
-            { no: 1, name: "hidden", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "pageName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "entries", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ClientPluginSettingEntry }
+        super("soulfire.v1.SettingsPage", [
+            { no: 1, name: "type", kind: "enum", T: () => ["soulfire.v1.SettingsPage.Type", SettingsPage_Type] },
+            { no: 2, name: "owningPlugin", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "pageName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "entries", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingEntry }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.ClientPluginSettingsPage
+ * @generated MessageType for protobuf message soulfire.v1.SettingsPage
  */
-export const ClientPluginSettingsPage = new ClientPluginSettingsPage$Type();
+export const SettingsPage = new SettingsPage$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PermissionMessage$Type extends MessageType<PermissionMessage> {
     constructor() {
@@ -536,28 +601,29 @@ class PermissionMessage$Type extends MessageType<PermissionMessage> {
  */
 export const PermissionMessage = new PermissionMessage$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ClientPlugin$Type extends MessageType<ClientPlugin> {
+class ServerPlugin$Type extends MessageType<ServerPlugin> {
     constructor() {
-        super("soulfire.v1.ClientPlugin", [
+        super("soulfire.v1.ServerPlugin", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "version", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "provider", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "author", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "license", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.ClientPlugin
+ * @generated MessageType for protobuf message soulfire.v1.ServerPlugin
  */
-export const ClientPlugin = new ClientPlugin$Type();
+export const ServerPlugin = new ServerPlugin$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ClientDataResponse$Type extends MessageType<ClientDataResponse> {
     constructor() {
         super("soulfire.v1.ClientDataResponse", [
             { no: 1, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "permissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PermissionMessage },
-            { no: 3, name: "plugins", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ClientPlugin },
-            { no: 4, name: "pluginSettings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ClientPluginSettingsPage }
+            { no: 3, name: "plugins", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ServerPlugin },
+            { no: 5, name: "settings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingsPage }
         ]);
     }
 }
@@ -565,6 +631,28 @@ class ClientDataResponse$Type extends MessageType<ClientDataResponse> {
  * @generated MessageType for protobuf message soulfire.v1.ClientDataResponse
  */
 export const ClientDataResponse = new ClientDataResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ServerUpdateConfigRequest$Type extends MessageType<ServerUpdateConfigRequest> {
+    constructor() {
+        super("soulfire.v1.ServerUpdateConfigRequest", [
+            { no: 1, name: "settings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingsNamespace }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ServerUpdateConfigRequest
+ */
+export const ServerUpdateConfigRequest = new ServerUpdateConfigRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ServerUpdateConfigResponse$Type extends MessageType<ServerUpdateConfigResponse> {
+    constructor() {
+        super("soulfire.v1.ServerUpdateConfigResponse", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ServerUpdateConfigResponse
+ */
+export const ServerUpdateConfigResponse = new ServerUpdateConfigResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.ConfigService
  */

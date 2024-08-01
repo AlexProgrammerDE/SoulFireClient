@@ -268,9 +268,7 @@ function AccountSettings() {
       </Button>
       <div className="flex flex-col gap-2">
         <ClientSettingsPageComponent
-          data={
-            clientInfo.pluginSettings.find((s) => s.namespace === 'account')!
-          }
+          data={clientInfo.settings.find((s) => s.namespace === 'account')!}
         />
       </div>
       <DataTable

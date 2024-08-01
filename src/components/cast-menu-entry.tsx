@@ -10,6 +10,7 @@ import { invoke } from '@tauri-apps/api';
 import { toast } from 'sonner';
 import { emit, listen } from '@tauri-apps/api/event';
 import { cn } from '@/lib/utils.ts';
+import { CastIcon, RadioTowerIcon } from 'lucide-react';
 
 type MediaDeviceInfo = {
   id: string;
@@ -101,10 +102,6 @@ export default function CastMenuEntry() {
           devices.map((currentDevice) => (
             <MenubarItem
               key={currentDevice.info.id}
-              className={cn({
-                'text-green-500': currentDevice.transport_id !== null,
-                'text-red-500': currentDevice.transport_id === null,
-              })}
               onClick={() => {
                 if (currentDevice.transport_id !== null) {
                   toast(`Already connected to ${currentDevice.info.name}`);
@@ -142,7 +139,13 @@ export default function CastMenuEntry() {
                 );
               }}
             >
-              <p>{currentDevice.info.name}</p>
+              <CastIcon
+                className={cn('w-4 h-4 mr-2', {
+                  'text-green-500': currentDevice.transport_id !== null,
+                  'text-red-500': currentDevice.transport_id === null,
+                })}
+              />
+              <span>{currentDevice.info.name}</span>
             </MenubarItem>
           ))
         ) : (
@@ -171,7 +174,8 @@ export default function CastMenuEntry() {
             );
           }}
         >
-          Broadcast test
+          <RadioTowerIcon className="w-4 h-4 mr-2" />
+          <span>Broadcast test</span>
         </MenubarItem>
       </MenubarContent>
     </MenubarMenu>

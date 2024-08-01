@@ -16,7 +16,7 @@ function SettingsNamespace() {
   const { namespace } = Route.useParams();
   const clientInfo = useContext(ClientInfoContext);
   const instanceInfo = useContext(InstanceInfoContext);
-  const settingsEntry = clientInfo.pluginSettings.find(
+  const settingsEntry = clientInfo.settings.find(
     (s) => s.namespace === namespace,
   );
   if (!settingsEntry) {
@@ -40,16 +40,16 @@ function SettingsNamespace() {
   return (
     <div className="flex h-full w-full flex-col gap-4">
       <Button asChild variant="secondary">
-        {settingsEntry.hidden ? (
+        {settingsEntry.owningPlugin ? (
           <Link
-            to="/dashboard/$instance"
+            to="/dashboard/$instance/plugins"
             params={{ instance: instanceInfo.id }}
           >
             Back
           </Link>
         ) : (
           <Link
-            to="/dashboard/$instance/plugins"
+            to="/dashboard/$instance"
             params={{ instance: instanceInfo.id }}
           >
             Back

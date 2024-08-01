@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { SettingsPage_Type } from '@/generated/soulfire/config.ts';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance/plugins')({
   component: Plugins,
@@ -20,8 +21,11 @@ function Plugins() {
         </Link>
       </Button>
       <div className="grid h-full w-full auto-rows-fr grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {clientInfo.pluginSettings
-          .filter((pluginSetting) => !pluginSetting.hidden)
+        {clientInfo.settings
+          .filter(
+            (pluginSetting) =>
+              pluginSetting.type === SettingsPage_Type.INSTANCE,
+          )
           .map((pluginSetting) => (
             <Button
               key={pluginSetting.namespace}

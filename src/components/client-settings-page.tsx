@@ -1,12 +1,13 @@
 import {
   BoolSetting,
-  ClientPluginSettingEntryMinMaxPair,
-  ClientPluginSettingEntryMinMaxPairSingle,
-  ClientPluginSettingEntrySingle,
-  ClientPluginSettingsPage,
+  SettingEntryMinMaxPair,
+  SettingEntryMinMaxPairSingle,
+  SettingEntrySingle,
+  SettingsPage,
   ComboSetting,
   DoubleSetting,
   IntSetting,
+  StringListSetting,
   StringSetting,
 } from '@/generated/soulfire/config.ts';
 import {
@@ -48,6 +49,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { deepEqual } from '@tanstack/react-router';
 
 function updateEntry(
   namespace: string,
@@ -107,7 +109,7 @@ function StringComponent(props: {
     props.settingKey,
     profile,
     props.entry.def,
-  );
+  ) as string;
   const [value, setValue] = useState(serverValue);
   const ref = useRef<HTMLInputElement>(null);
 
@@ -115,7 +117,7 @@ function StringComponent(props: {
     if (props.allowsRemoteUpdate && value !== serverValue) {
       setValue(serverValue);
       if (ref.current) {
-        ref.current.value = serverValue as string;
+        ref.current.value = String(serverValue);
       }
     }
   }, [props.allowsRemoteUpdate, serverValue, value]);
@@ -124,7 +126,7 @@ function StringComponent(props: {
     <Input
       ref={ref}
       type={props.entry.secret ? 'password' : 'text'}
-      defaultValue={value as string}
+      defaultValue={value}
       onChange={(e) => {
         const value = e.currentTarget.value;
         setValue(value);
@@ -147,7 +149,7 @@ function IntComponent(props: {
     props.settingKey,
     profile,
     props.entry.def,
-  );
+  ) as number;
   const [value, setValue] = useState(serverValue);
   const ref = useRef<HTMLInputElement>(null);
 
@@ -155,7 +157,7 @@ function IntComponent(props: {
     if (props.allowsRemoteUpdate && value !== serverValue) {
       setValue(serverValue);
       if (ref.current) {
-        ref.current.value = serverValue as string;
+        ref.current.value = String(serverValue);
       }
     }
   }, [props.allowsRemoteUpdate, serverValue, value]);
@@ -167,7 +169,7 @@ function IntComponent(props: {
       min={props.entry.min}
       max={props.entry.max}
       step={props.entry.step}
-      defaultValue={value as number}
+      defaultValue={value}
       onChange={(e) => {
         const value = parseInt(e.currentTarget.value);
         setValue(value);
@@ -190,7 +192,7 @@ function DoubleComponent(props: {
     props.settingKey,
     profile,
     props.entry.def,
-  );
+  ) as number;
   const [value, setValue] = useState(serverValue);
   const ref = useRef<HTMLInputElement>(null);
 
@@ -198,7 +200,7 @@ function DoubleComponent(props: {
     if (props.allowsRemoteUpdate && value !== serverValue) {
       setValue(serverValue);
       if (ref.current) {
-        ref.current.value = serverValue as string;
+        ref.current.value = String(serverValue);
       }
     }
   }, [props.allowsRemoteUpdate, serverValue, value]);
@@ -210,7 +212,7 @@ function DoubleComponent(props: {
       min={props.entry.min}
       max={props.entry.max}
       step={props.entry.step}
-      defaultValue={value as number}
+      defaultValue={value}
       onChange={(e) => {
         const value = parseFloat(e.currentTarget.value);
         setValue(value);
@@ -233,7 +235,7 @@ function BoolComponent(props: {
     props.settingKey,
     profile,
     props.entry.def,
-  );
+  ) as boolean;
   const [value, setValue] = useState(serverValue);
   const ref = useRef<HTMLButtonElement>(null);
 
@@ -250,8 +252,12 @@ function BoolComponent(props: {
     <Checkbox
       ref={ref}
       className="my-auto"
-      defaultChecked={value as boolean}
+      defaultChecked={value}
       onCheckedChange={(value) => {
+        if (value === 'indeterminate') {
+          return;
+        }
+
         setValue(value);
         props.changeCallback(value);
       }}
@@ -273,7 +279,7 @@ function ComboComponent(props: {
     props.settingKey,
     profile,
     props.entry.options[props.entry.def].id,
-  );
+  ) as string;
   const [value, setValue] = useState(serverValue);
 
   useEffect(() => {
@@ -331,10 +337,74 @@ function ComboComponent(props: {
   );
 }
 
+function StringListComponent(props: {
+  namespace: string;
+  settingKey: string;
+  entry: StringListSetting;
+  changeCallback: (value: JsonValue) => void;
+  allowsRemoteUpdate: boolean;
+}) {
+  const profile = useContext(ProfileContext);
+  const serverValue = getEntry(
+    props.namespace,
+    props.settingKey,
+    profile,
+    props.entry.def,
+  ) as string[];
+  const [value, setValue] = useState(serverValue);
+
+  useEffect(() => {
+    if (props.allowsRemoteUpdate && !deepEqual(value, serverValue)) {
+      setValue(serverValue);
+    }
+  }, [props.allowsRemoteUpdate, serverValue, value]);
+
+  return (
+    <div className="flex flex-col gap-1">
+      <Input
+        type="text"
+        onChange={(e) => {
+          const inputValue = e.currentTarget.value;
+          const resultArray = [...value, inputValue];
+          setValue(resultArray);
+          props.changeCallback(resultArray);
+        }}
+      />
+      <div className="flex flex-col gap-1">
+        {value.map((item, index) => (
+          <div key={index} className="flex flex-row gap-1">
+            <Input
+              type="text"
+              defaultValue={item}
+              onChange={(e) => {
+                const resultArray = [...value];
+                resultArray[index] = e.currentTarget.value;
+                setValue(resultArray);
+                props.changeCallback(resultArray);
+              }}
+            />
+            <Button
+              variant="outline"
+              onClick={() => {
+                const resultArray = [...value];
+                resultArray.splice(index, 1);
+                setValue(resultArray);
+                props.changeCallback(resultArray);
+              }}
+            >
+              Remove
+            </Button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function SingleComponent(props: {
   namespace: string;
   settingKey: string;
-  entry: ClientPluginSettingEntrySingle;
+  entry: SettingEntrySingle;
 }) {
   const queryClient = useQueryClient();
   const instanceInfo = useContext(InstanceInfoContext);
@@ -468,12 +538,28 @@ function SingleComponent(props: {
           />
         </div>
       );
+    case 'stringList':
+      return (
+        <div className="flex flex-col gap-1">
+          <ComponentTitle
+            title={props.entry.uiName}
+            description={props.entry.description}
+          />
+          <StringListComponent
+            namespace={props.namespace}
+            settingKey={props.settingKey}
+            entry={props.entry.type.value.stringList}
+            changeCallback={changeCallback}
+            allowsRemoteUpdate={allowsRemoteUpdate}
+          />
+        </div>
+      );
   }
 }
 
 function MinMaxComponentSingle(props: {
   namespace: string;
-  entry: ClientPluginSettingEntryMinMaxPairSingle;
+  entry: SettingEntryMinMaxPairSingle;
 }) {
   const queryClient = useQueryClient();
   const instanceInfo = useContext(InstanceInfoContext);
@@ -545,7 +631,7 @@ function MinMaxComponentSingle(props: {
 
 function MinMaxComponent(props: {
   namespace: string;
-  entry: ClientPluginSettingEntryMinMaxPair;
+  entry: SettingEntryMinMaxPair;
 }) {
   if (!props.entry.min || !props.entry.max) {
     return null;
@@ -568,7 +654,7 @@ function MinMaxComponent(props: {
 export default function ClientSettingsPageComponent({
   data,
 }: {
-  data: ClientPluginSettingsPage;
+  data: SettingsPage;
 }) {
   return (
     <>

@@ -5,47 +5,21 @@ import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { MessageType } from "@protobuf-ts/runtime";
 import { ProxyProto } from "./common";
 import { MinecraftAccountProto } from "./common";
-import { Value } from "../google/protobuf/struct";
-/**
- * @generated from protobuf message soulfire.v1.SettingsEntry
- */
-export interface SettingsEntry {
-    /**
-     * @generated from protobuf field: string key = 1;
-     */
-    key: string;
-    /**
-     * @generated from protobuf field: google.protobuf.Value value = 2;
-     */
-    value?: Value;
-}
-/**
- * @generated from protobuf message soulfire.v1.SettingsNamespace
- */
-export interface SettingsNamespace {
-    /**
-     * @generated from protobuf field: string namespace = 1;
-     */
-    namespace: string;
-    /**
-     * @generated from protobuf field: repeated soulfire.v1.SettingsEntry entries = 2;
-     */
-    entries: SettingsEntry[];
-}
+import { SettingsNamespace } from "./common";
 /**
  * @generated from protobuf message soulfire.v1.InstanceConfig
  */
 export interface InstanceConfig {
     /**
-     * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace settings = 3;
+     * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace settings = 1;
      */
     settings: SettingsNamespace[];
     /**
-     * @generated from protobuf field: repeated soulfire.v1.MinecraftAccountProto accounts = 4;
+     * @generated from protobuf field: repeated soulfire.v1.MinecraftAccountProto accounts = 2;
      */
     accounts: MinecraftAccountProto[];
     /**
-     * @generated from protobuf field: repeated soulfire.v1.ProxyProto proxies = 5;
+     * @generated from protobuf field: repeated soulfire.v1.ProxyProto proxies = 3;
      */
     proxies: ProxyProto[];
 }
@@ -210,38 +184,12 @@ export enum InstanceState {
     PAUSED = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
-class SettingsEntry$Type extends MessageType<SettingsEntry> {
-    constructor() {
-        super("soulfire.v1.SettingsEntry", [
-            { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "value", kind: "message", T: () => Value }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.SettingsEntry
- */
-export const SettingsEntry = new SettingsEntry$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class SettingsNamespace$Type extends MessageType<SettingsNamespace> {
-    constructor() {
-        super("soulfire.v1.SettingsNamespace", [
-            { no: 1, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "entries", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingsEntry }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.SettingsNamespace
- */
-export const SettingsNamespace = new SettingsNamespace$Type();
-// @generated message type with reflection information, may provide speed optimized methods
 class InstanceConfig$Type extends MessageType<InstanceConfig> {
     constructor() {
         super("soulfire.v1.InstanceConfig", [
-            { no: 3, name: "settings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingsNamespace },
-            { no: 4, name: "accounts", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => MinecraftAccountProto },
-            { no: 5, name: "proxies", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ProxyProto }
+            { no: 1, name: "settings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingsNamespace },
+            { no: 2, name: "accounts", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => MinecraftAccountProto },
+            { no: 3, name: "proxies", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ProxyProto }
         ]);
     }
 }

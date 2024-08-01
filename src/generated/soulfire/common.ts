@@ -2,6 +2,7 @@
 // @generated from protobuf file "soulfire/common.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 import { MessageType } from "@protobuf-ts/runtime";
+import { Value } from "../google/protobuf/struct";
 import { Struct } from "../google/protobuf/struct";
 /**
  * @generated from protobuf message soulfire.v1.ProxyProto
@@ -181,6 +182,32 @@ export enum MinecraftAccountProto_AccountTypeProto {
      */
     OFFLINE = 4
 }
+/**
+ * @generated from protobuf message soulfire.v1.SettingsEntry
+ */
+export interface SettingsEntry {
+    /**
+     * @generated from protobuf field: string key = 1;
+     */
+    key: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Value value = 2;
+     */
+    value?: Value;
+}
+/**
+ * @generated from protobuf message soulfire.v1.SettingsNamespace
+ */
+export interface SettingsNamespace {
+    /**
+     * @generated from protobuf field: string namespace = 1;
+     */
+    namespace: string;
+    /**
+     * @generated from protobuf field: repeated soulfire.v1.SettingsEntry entries = 2;
+     */
+    entries: SettingsEntry[];
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class ProxyProto$Type extends MessageType<ProxyProto> {
     constructor() {
@@ -269,3 +296,29 @@ class MinecraftAccountProto_BedrockData$Type extends MessageType<MinecraftAccoun
  * @generated MessageType for protobuf message soulfire.v1.MinecraftAccountProto.BedrockData
  */
 export const MinecraftAccountProto_BedrockData = new MinecraftAccountProto_BedrockData$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SettingsEntry$Type extends MessageType<SettingsEntry> {
+    constructor() {
+        super("soulfire.v1.SettingsEntry", [
+            { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "value", kind: "message", T: () => Value }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.SettingsEntry
+ */
+export const SettingsEntry = new SettingsEntry$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SettingsNamespace$Type extends MessageType<SettingsNamespace> {
+    constructor() {
+        super("soulfire.v1.SettingsNamespace", [
+            { no: 1, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "entries", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingsEntry }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.SettingsNamespace
+ */
+export const SettingsNamespace = new SettingsNamespace$Type();
