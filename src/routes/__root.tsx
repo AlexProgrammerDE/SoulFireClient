@@ -16,6 +16,7 @@ import { isTauri } from '@/lib/utils.ts';
 import { appConfigDir, resolve } from '@tauri-apps/api/path';
 import { createDir, readDir } from '@tauri-apps/api/fs';
 import { arch, locale, platform, type, version } from '@tauri-apps/api/os';
+import { appWindow } from '@tauri-apps/api/window';
 
 export const Route = createRootRoute({
   loader: async () => {
@@ -39,6 +40,7 @@ export const Route = createRootRoute({
         platformName: await platform(),
         osLocale: await locale(),
         archName: await arch(),
+        theme: await appWindow.theme(),
       };
     } else {
       systemInfo = null;
@@ -71,7 +73,7 @@ function RootLayout() {
       <QueryClientProvider client={queryClientInstance}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme={systemInfo?.theme ?? 'system'}
           enableSystem
           disableTransitionOnChange
         >
