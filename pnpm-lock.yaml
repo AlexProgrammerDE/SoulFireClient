@@ -140,7 +140,7 @@ importers:
         version: 9.8.0
       '@nabla/vite-plugin-eslint':
         specifier: ^2.0.4
-        version: 2.0.4(eslint@8.57.0)(vite@5.3.5(@types/node@20.14.13))
+        version: 2.0.4(eslint@8.57.0)(vite@5.3.5(@types/node@20.14.14))
       '@protobuf-ts/plugin':
         specifier: ^2.9.4
         version: 2.9.4
@@ -152,7 +152,7 @@ importers:
         version: 1.46.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/router-plugin':
         specifier: ^1.45.8
-        version: 1.45.13(vite@5.3.5(@types/node@20.14.13))
+        version: 1.45.13(vite@5.3.5(@types/node@20.14.14))
       '@tauri-apps/cli':
         specifier: ^1.5.11
         version: 1.6.0
@@ -167,7 +167,7 @@ importers:
         version: 2.0.7
       '@types/node':
         specifier: ^20
-        version: 20.14.13
+        version: 20.14.14
       '@types/react':
         specifier: ^18
         version: 18.3.3
@@ -185,7 +185,7 @@ importers:
         version: 7.18.0(eslint@8.57.0)(typescript@5.5.4)
       '@vitejs/plugin-react-swc':
         specifier: ^3.6.0
-        version: 3.7.0(vite@5.3.5(@types/node@20.14.13))
+        version: 3.7.0(vite@5.3.5(@types/node@20.14.14))
       autoprefixer:
         specifier: ^10.0.1
         version: 10.4.19(postcss@8.4.40)
@@ -239,13 +239,13 @@ importers:
         version: 7.18.0(eslint@8.57.0)(typescript@5.5.4)
       vite:
         specifier: ^5.1.6
-        version: 5.3.5(@types/node@20.14.13)
+        version: 5.3.5(@types/node@20.14.14)
       vite-bundle-visualizer:
         specifier: ^1.2.1
         version: 1.2.1(rollup@4.19.0)
       vite-plugin-vercel:
         specifier: ^8.0.0
-        version: 8.0.0(vite@5.3.5(@types/node@20.14.13))
+        version: 8.0.0(vite@5.3.5(@types/node@20.14.14))
 
 packages:
 
@@ -1676,8 +1676,8 @@ packages:
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
 
-  '@types/node@20.14.13':
-    resolution: {integrity: sha512-+bHoGiZb8UiQ0+WEtmph2IWQCjIqg8MDZMAV+ppRRhUZnquF5mQkP/9vpSwJClEiSM/C7fZZExPzfU0vJTyp8w==}
+  '@types/node@20.14.14':
+    resolution: {integrity: sha512-d64f00982fS9YoOgJkAMolK7MN8Iq3TDdVjchbYHdEmjth/DHowx82GnoA+tVUAN+7vxfYUgAzi+JXbKNd2SDQ==}
 
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
@@ -4235,13 +4235,13 @@ snapshots:
       - encoding
       - supports-color
 
-  '@nabla/vite-plugin-eslint@2.0.4(eslint@8.57.0)(vite@5.3.5(@types/node@20.14.13))':
+  '@nabla/vite-plugin-eslint@2.0.4(eslint@8.57.0)(vite@5.3.5(@types/node@20.14.14))':
     dependencies:
       '@types/eslint': 8.56.10
       chalk: 4.1.2
       debug: 4.3.5
       eslint: 8.57.0
-      vite: 5.3.5(@types/node@20.14.13)
+      vite: 5.3.5(@types/node@20.14.14)
     transitivePeerDependencies:
       - supports-color
 
@@ -5014,7 +5014,7 @@ snapshots:
       prettier: 3.3.3
       zod: 3.23.8
 
-  '@tanstack/router-plugin@1.45.13(vite@5.3.5(@types/node@20.14.13))':
+  '@tanstack/router-plugin@1.45.13(vite@5.3.5(@types/node@20.14.14))':
     dependencies:
       '@babel/core': 7.24.9
       '@babel/generator': 7.25.0
@@ -5034,7 +5034,7 @@ snapshots:
       unplugin: 1.12.0
       zod: 3.23.8
     optionalDependencies:
-      vite: 5.3.5(@types/node@20.14.13)
+      vite: 5.3.5(@types/node@20.14.14)
     transitivePeerDependencies:
       - supports-color
 
@@ -5125,7 +5125,7 @@ snapshots:
 
   '@types/json-schema@7.0.15': {}
 
-  '@types/node@20.14.13':
+  '@types/node@20.14.14':
     dependencies:
       undici-types: 5.26.5
 
@@ -5289,10 +5289,10 @@ snapshots:
     optionalDependencies:
       ajv: 6.12.6
 
-  '@vitejs/plugin-react-swc@3.7.0(vite@5.3.5(@types/node@20.14.13))':
+  '@vitejs/plugin-react-swc@3.7.0(vite@5.3.5(@types/node@20.14.14))':
     dependencies:
       '@swc/core': 1.5.24
-      vite: 5.3.5(@types/node@20.14.13)
+      vite: 5.3.5(@types/node@20.14.14)
     transitivePeerDependencies:
       - '@swc/helpers'
 
@@ -7347,7 +7347,7 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-plugin-vercel@8.0.0(vite@5.3.5(@types/node@20.14.13)):
+  vite-plugin-vercel@8.0.0(vite@5.3.5(@types/node@20.14.14)):
     dependencies:
       '@brillout/libassert': 0.5.8
       '@manypkg/find-root': 2.2.2
@@ -7357,19 +7357,19 @@ snapshots:
       esbuild: 0.23.0
       fast-glob: 3.3.2
       magicast: 0.3.4
-      vite: 5.3.5(@types/node@20.14.13)
+      vite: 5.3.5(@types/node@20.14.14)
       zod: 3.23.8
     transitivePeerDependencies:
       - encoding
       - supports-color
 
-  vite@5.3.5(@types/node@20.14.13):
+  vite@5.3.5(@types/node@20.14.14):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.40
       rollup: 4.19.0
     optionalDependencies:
-      '@types/node': 20.14.13
+      '@types/node': 20.14.14
       fsevents: 2.3.3
 
   webidl-conversions@3.0.1: {}
