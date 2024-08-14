@@ -170,7 +170,7 @@ export const TerminalComponent = () => {
         } as CSSProperties
       }
     >
-      <div className="whitespace-pre-wrap pl-1 h-full">
+      <div className="whitespace-pre-wrap py-0.5 pl-0.5 h-full">
         {entries.map((entry) => {
           return (
             <div key={entry[0]}>
