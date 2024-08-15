@@ -1,33 +1,14 @@
 import { CSSProperties, useContext, useEffect, useRef, useState } from 'react';
 import { LogsServiceClient } from '@/generated/soulfire/logs.client.ts';
 import { TransportContext } from './providers/transport-context.tsx';
-import { ansicolor, parse } from 'ansicolor';
 import { ScrollArea } from './ui/scroll-area.tsx';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
 import { flavorEntries } from '@catppuccin/palette';
-
-const rgbToArray = (rgb: {
-  r: number;
-  g: number;
-  b: number;
-}): [number, number, number] => {
-  return [rgb.r, rgb.g, rgb.b];
-};
+import { AnsiHtml } from 'fancy-ansi/react';
 
 const hslToString = (rgb: { h: number; s: number; l: number }): string => {
   return `${Math.round(rgb.h)}, ${Math.round(rgb.s * 100)}%, ${Math.round(rgb.l * 100)}%`;
 };
-
-function cssToStyles(css: string) {
-  return css
-    .split(';')
-    .map((cur) => cur.split(':'))
-    .reduce((acc: Record<string, string>, [key, value]) => {
-      key = key.replace(/-./g, (css) => css.toUpperCase()[1]);
-      acc[key] = value;
-      return acc;
-    }, {});
-}
 
 const MAX_TERMINAL_ENTRIES = 500;
 
@@ -41,38 +22,6 @@ export const TerminalComponent = () => {
   const selectedTheme = flavorEntries.find(
     (entry) => entry[0] === terminalTheme.value,
   )![1];
-  ansicolor.rgb = {
-    black: [0, 0, 0],
-    darkGray: rgbToArray(
-      selectedTheme.dark
-        ? selectedTheme.colors.surface1.rgb
-        : selectedTheme.colors.subtext1.rgb,
-    ),
-    lightGray: rgbToArray(
-      selectedTheme.dark
-        ? selectedTheme.colors.surface2.rgb
-        : selectedTheme.colors.subtext0.rgb,
-    ),
-    white: rgbToArray(selectedTheme.colors.text.rgb),
-
-    red: rgbToArray(selectedTheme.colors.red.rgb),
-    lightRed: rgbToArray(selectedTheme.colors.red.rgb),
-
-    green: rgbToArray(selectedTheme.colors.green.rgb),
-    lightGreen: rgbToArray(selectedTheme.colors.green.rgb),
-
-    yellow: rgbToArray(selectedTheme.colors.yellow.rgb),
-    lightYellow: rgbToArray(selectedTheme.colors.yellow.rgb),
-
-    blue: rgbToArray(selectedTheme.colors.blue.rgb),
-    lightBlue: rgbToArray(selectedTheme.colors.blue.rgb),
-
-    magenta: rgbToArray(selectedTheme.colors.pink.rgb),
-    lightMagenta: rgbToArray(selectedTheme.colors.pink.rgb),
-
-    cyan: rgbToArray(selectedTheme.colors.teal.rgb),
-    lightCyan: rgbToArray(selectedTheme.colors.teal.rgb),
-  };
 
   const handleScroll = () => {
     if (paneRef.current) {
@@ -167,6 +116,26 @@ export const TerminalComponent = () => {
         {
           backgroundColor: selectedTheme.colors.base.hex,
           '--border': hslToString(selectedTheme.colors.surface0.hsl),
+          '--ansi-black': selectedTheme.dark
+            ? selectedTheme.colors.surface1.hex
+            : selectedTheme.colors.subtext1.hex,
+          '--ansi-red': selectedTheme.colors.red.hex,
+          '--ansi-green': selectedTheme.colors.green.hex,
+          '--ansi-yellow': selectedTheme.colors.yellow.hex,
+          '--ansi-blue': selectedTheme.colors.blue.hex,
+          '--ansi-magenta': selectedTheme.colors.pink.hex,
+          '--ansi-cyan': selectedTheme.colors.teal.hex,
+          '--ansi-white': selectedTheme.colors.text.hex,
+          '--ansi-bright-black': selectedTheme.dark
+            ? selectedTheme.colors.surface2.hex
+            : selectedTheme.colors.subtext0.hex,
+          '--ansi-bright-red': selectedTheme.colors.red.hex,
+          '--ansi-bright-green': selectedTheme.colors.green.hex,
+          '--ansi-bright-yellow': selectedTheme.colors.yellow.hex,
+          '--ansi-bright-blue': selectedTheme.colors.blue.hex,
+          '--ansi-bright-magenta': selectedTheme.colors.pink.hex,
+          '--ansi-bright-cyan': selectedTheme.colors.teal.hex,
+          '--ansi-bright-white': selectedTheme.colors.text.hex,
         } as CSSProperties
       }
     >
@@ -174,20 +143,7 @@ export const TerminalComponent = () => {
         {entries.map((entry) => {
           return (
             <div key={entry[0]}>
-              {parse(entry[1]).spans.map((span, index) => {
-                return (
-                  <span
-                    style={cssToStyles(
-                      span.css === ''
-                        ? `color: hsl(${hslToString(selectedTheme.colors.text.hsl)})`
-                        : span.css,
-                    )}
-                    key={index}
-                  >
-                    {span.text}
-                  </span>
-                );
-              })}
+              <AnsiHtml text={entry[1]} />
             </div>
           );
         })}
