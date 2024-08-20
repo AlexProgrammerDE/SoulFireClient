@@ -14,15 +14,6 @@ export default defineConfig({
       process.env.VITE_VERCEL_ENV ?? process.env.NODE_ENV,
     ),
   },
-  // @ts-expect-error - not in types
-  vercel: {
-    rewrites: [
-      {
-        source: '/(.*)',
-        destination: '/index.html',
-      },
-    ],
-  },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
