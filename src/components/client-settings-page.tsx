@@ -49,6 +49,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
 
 function updateEntry(
   namespace: string,
@@ -413,21 +414,35 @@ function StringListComponent(props: {
   }, [props.allowsRemoteUpdate, serverValue, value]);
 
   return (
-    <div className="flex flex-col gap-1">
-      <Input
-        type="text"
-        defaultValue={newEntryInput}
-        onChange={(e) => {
-          setNewEntryInput(e.currentTarget.value);
-        }}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            insertValue(newEntryInput);
-            setNewEntryInput('');
-          }
-        }}
-      />
-      <div className="flex flex-col gap-1">
+    <Card>
+      <CardHeader>
+        <div className="flex flex-row gap-1">
+          <Input
+            type="text"
+            value={newEntryInput}
+            onChange={(e) => {
+              setNewEntryInput(e.currentTarget.value);
+            }}
+            placeholder="Add new entry..."
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                insertValue(newEntryInput);
+                setNewEntryInput('');
+              }
+            }}
+          />
+          <Button
+            variant="outline"
+            onClick={() => {
+              insertValue(newEntryInput);
+              setNewEntryInput('');
+            }}
+          >
+            Add
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-1">
         {value.map((item) => (
           <div key={item.id} className="flex flex-row gap-1">
             <Input
@@ -447,8 +462,8 @@ function StringListComponent(props: {
             </Button>
           </div>
         ))}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
 
