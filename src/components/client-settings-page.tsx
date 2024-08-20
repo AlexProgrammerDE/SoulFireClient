@@ -1,12 +1,12 @@
 import {
   BoolSetting,
+  ComboSetting,
+  DoubleSetting,
+  IntSetting,
   SettingEntryMinMaxPair,
   SettingEntryMinMaxPairSingle,
   SettingEntrySingle,
   SettingsPage,
-  ComboSetting,
-  DoubleSetting,
-  IntSetting,
   StringListSetting,
   StringSetting,
 } from '@/generated/soulfire/config.ts';
@@ -49,7 +49,6 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
-import { deepEqual } from '@tanstack/react-router';
 
 function updateEntry(
   namespace: string,
@@ -337,6 +336,31 @@ function ComboComponent(props: {
   );
 }
 
+function stringArrayEqual(a: string[], b: string[]): boolean {
+  if (a.length !== b.length) {
+    return false;
+  }
+
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+type IdValue<T> = { id: string; value: T };
+
+function makeIdValueArray<T>(values: T[]): IdValue<T>[] {
+  return values.map((value) => makeIdValueSingle(value));
+}
+
+function makeIdValueSingle<T>(value: T): IdValue<T> {
+  const randomId = Math.random().toString(36).substring(7);
+  return { id: randomId, value };
+}
+
 function StringListComponent(props: {
   namespace: string;
   settingKey: string;
@@ -351,11 +375,40 @@ function StringListComponent(props: {
     profile,
     props.entry.def,
   ) as string[];
-  const [value, setValue] = useState(serverValue);
+  const [value, setValue] = useState<IdValue<string>[]>(
+    makeIdValueArray(serverValue),
+  );
+  const [newEntryInput, setNewEntryInput] = useState('');
+
+  const insertValue = (newValue: string) => {
+    const resultArray = [...value, makeIdValueSingle(newValue)];
+    setValue(resultArray);
+    props.changeCallback(resultArray.map((i) => i.value));
+  };
+  const updateId = (id: string, newValue: string) => {
+    const resultArray = [...value];
+    const index = resultArray.findIndex((item) => item.id === id);
+    resultArray[index] = { id, value: newValue };
+    setValue(resultArray);
+    props.changeCallback(resultArray.map((i) => i.value));
+  };
+  const deleteId = (id: string) => {
+    const resultArray = [...value];
+    const index = resultArray.findIndex((item) => item.id === id);
+    resultArray.splice(index, 1);
+    setValue(resultArray);
+    props.changeCallback(resultArray.map((i) => i.value));
+  };
 
   useEffect(() => {
-    if (props.allowsRemoteUpdate && !deepEqual(value, serverValue)) {
-      setValue(serverValue);
+    if (
+      props.allowsRemoteUpdate &&
+      !stringArrayEqual(
+        value.map((i) => i.value),
+        serverValue,
+      )
+    ) {
+      setValue(makeIdValueArray(serverValue));
     }
   }, [props.allowsRemoteUpdate, serverValue, value]);
 
@@ -363,33 +416,31 @@ function StringListComponent(props: {
     <div className="flex flex-col gap-1">
       <Input
         type="text"
+        defaultValue={newEntryInput}
         onChange={(e) => {
-          const inputValue = e.currentTarget.value;
-          const resultArray = [...value, inputValue];
-          setValue(resultArray);
-          props.changeCallback(resultArray);
+          setNewEntryInput(e.currentTarget.value);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            insertValue(newEntryInput);
+            setNewEntryInput('');
+          }
         }}
       />
       <div className="flex flex-col gap-1">
-        {value.map((item, index) => (
-          <div key={index} className="flex flex-row gap-1">
+        {value.map((item) => (
+          <div key={item.id} className="flex flex-row gap-1">
             <Input
               type="text"
-              defaultValue={item}
+              defaultValue={item.value}
               onChange={(e) => {
-                const resultArray = [...value];
-                resultArray[index] = e.currentTarget.value;
-                setValue(resultArray);
-                props.changeCallback(resultArray);
+                updateId(item.id, e.currentTarget.value);
               }}
             />
             <Button
               variant="outline"
               onClick={() => {
-                const resultArray = [...value];
-                resultArray.splice(index, 1);
-                setValue(resultArray);
-                props.changeCallback(resultArray);
+                deleteId(item.id);
               }}
             >
               Remove
