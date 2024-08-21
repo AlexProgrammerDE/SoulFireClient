@@ -150,7 +150,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   const instanceInfo = useContext(InstanceInfoContext);
   const [proxyTypeSelected, setProxyTypeSelected] =
     useState<UIProxyType | null>(null);
-  const setProfileMutation = useMutation({
+  const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
@@ -198,7 +198,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             proxiesToAdd.push(proxy);
           }
 
-          await setProfileMutation.mutateAsync({
+          await setProfileMutation({
             ...profile,
             proxies: [...profile.proxies, ...proxiesToAdd],
           });
@@ -263,7 +263,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             ),
           };
 
-          toast.promise(setProfileMutation.mutateAsync(newProfile), {
+          toast.promise(setProfileMutation(newProfile), {
             loading: 'Removing proxies...',
             success: `Removed ${beforeSize - newProfile.proxies.length} proxies`,
             error: 'Failed to remove proxies',
