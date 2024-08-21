@@ -95,7 +95,7 @@
     "typescript-eslint": "^7.16.1",
     "vite": "^5.1.6",
     "vite-bundle-visualizer": "^1.2.1",
-    "vite-plugin-vercel": "^8.0.0"
+    "vite-plugin-vercel": "^9.0.0"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
