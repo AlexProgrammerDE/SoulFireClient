@@ -62,7 +62,7 @@ jobs:
         with:
           args: ${{ matrix.args }}
 
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: tauri-artifact-${{ matrix.name }}
           path: './src-tauri/target${{ matrix.targetPath }}/release/bundle'
