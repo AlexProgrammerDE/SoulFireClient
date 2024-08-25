@@ -88,7 +88,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   const instanceInfo = useContext(InstanceInfoContext);
   const [accountTypeSelected, setAccountTypeSelected] =
     useState<MinecraftAccountProto_AccountTypeProto | null>(null);
-  const setProfileMutation = useMutation({
+  const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
@@ -139,7 +139,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
             }
           }
 
-          await setProfileMutation.mutateAsync({
+          await setProfileMutation({
             ...profile,
             accounts: [...profile.accounts, ...accountsToAdd],
           });
@@ -229,7 +229,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
             ),
           };
 
-          toast.promise(setProfileMutation.mutateAsync(newProfile), {
+          toast.promise(setProfileMutation(newProfile), {
             loading: 'Removing accounts...',
             success: () =>
               `Removed ${beforeSize - newProfile.accounts.length} accounts`,
