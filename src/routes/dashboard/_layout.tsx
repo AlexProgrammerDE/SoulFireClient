@@ -24,7 +24,7 @@ import { TerminalThemeContext } from '@/components/providers/terminal-theme-cont
 export const Route = createFileRoute('/dashboard/_layout')({
   beforeLoad: ({ location }) => {
     if (!isAuthenticated()) {
-      throw redirect({
+      return redirect({
         to: '/',
         search: {
           redirect: location.href,
