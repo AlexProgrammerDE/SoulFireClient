@@ -116,7 +116,7 @@ function InstanceSelectPage() {
   });
 
   if (!instanceList.data) {
-    throw instanceList.error;
+    throw instanceList.error ?? new Error('No data');
   }
 
   return (
