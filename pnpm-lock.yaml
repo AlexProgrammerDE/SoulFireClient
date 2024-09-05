@@ -152,7 +152,7 @@ importers:
         version: 1.53.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/router-plugin':
         specifier: ^1.45.8
-        version: 1.52.0(vite@5.4.3(@types/node@20.16.5))
+        version: 1.54.0(vite@5.4.3(@types/node@20.16.5))(webpack-sources@3.2.3)
       '@tauri-apps/cli':
         specifier: ^1.5.11
         version: 1.6.1
@@ -1551,12 +1551,12 @@ packages:
       react: '>=18'
       react-dom: '>=18'
 
-  '@tanstack/router-generator@1.52.0':
-    resolution: {integrity: sha512-p1q+pGt5kh9a2d0I3inoRCEaqL1NXPOKarcvNrwn8wP4K6IXXSipZiXIsC4bribVdzBlBwhiyCkDjAUVV0l0xg==}
+  '@tanstack/router-generator@1.54.0':
+    resolution: {integrity: sha512-JH0Dmb5LB5WBQYdrNC9N97NTQbN7MuslhbH2v+IiOiwV9guUhCc5ChIaTCoM3oU3oIElhsSuc1v3uL4hua+f9g==}
     engines: {node: '>=12'}
 
-  '@tanstack/router-plugin@1.52.0':
-    resolution: {integrity: sha512-CfZL2MeNquohnSuUUvfYNl3QGl1jD1JH/3lTnlx8TY4JMdz1tWuDhNfuJuPh32mNAT0ueFzgUnrEHDEjMRxq7Q==}
+  '@tanstack/router-plugin@1.54.0':
+    resolution: {integrity: sha512-x7BhjIZtrAU7jFl08cn6azM2/HoPodhShW7O9xPTt+HwD6ENfxB+TFL2/cvt8EpK3UHvCz2+9Pfa853ZsjIOlA==}
     engines: {node: '>=12'}
     peerDependencies:
       '@rsbuild/core': '>=1.0.0'
@@ -1575,6 +1575,10 @@ packages:
 
   '@tanstack/table-core@8.20.5':
     resolution: {integrity: sha512-P9dF7XbibHph2PFRz8gfBKEXEY/HJPOhym8CHmjF8y3q5mWpKx9xtZapXQUWCgkqvsK0R46Azuz+VaxD4Xl+Tg==}
+    engines: {node: '>=12'}
+
+  '@tanstack/virtual-file-routes@1.54.0':
+    resolution: {integrity: sha512-D2FrtW8lG03P4eiPIQmM1Org++/DgMfq3BRTBrz69JmBFvwXAUD3Zh9Efs7KiPOWwtr0peRSxYuMKPl93O/ghQ==}
     engines: {node: '>=12'}
 
   '@tauri-apps/api@1.6.0':
@@ -3569,9 +3573,14 @@ packages:
   unload@2.4.1:
     resolution: {integrity: sha512-IViSAm8Z3sRBYA+9wc0fLQmU9Nrxb16rcDmIiR6Y9LJSZzI7QY5QsDhqPpKOjAn0O9/kfK1TfNEMMAGPTIraPw==}
 
-  unplugin@1.12.3:
-    resolution: {integrity: sha512-my8DH0/T/Kx33KO+6QXAqdeMYgyy0GktlOpdQjpagfHKw5DrD0ctPr7SHUyOT3g4ZVpzCQGt/qcpuoKJ/pniHA==}
+  unplugin@1.13.1:
+    resolution: {integrity: sha512-6Kq1iSSwg7KyjcThRUks9LuqDAKvtnioxbL9iEtB9ctTyBA5OmrB8gZd/d225VJu1w3UpUsKV7eGrvf59J7+VA==}
     engines: {node: '>=14.0.0'}
+    peerDependencies:
+      webpack-sources: ^3
+    peerDependenciesMeta:
+      webpack-sources:
+        optional: true
 
   update-browserslist-db@1.1.0:
     resolution: {integrity: sha512-EdRAaAyk2cUE1wOf2DkEhzxqOQvFOoRJFNS6NeyJ01Gp2beMRpBAINjM2iDXE3KCuKhwnvHIQCJm6ThL2Z+HzQ==}
@@ -4929,12 +4938,13 @@ snapshots:
     transitivePeerDependencies:
       - csstype
 
-  '@tanstack/router-generator@1.52.0':
+  '@tanstack/router-generator@1.54.0':
     dependencies:
+      '@tanstack/virtual-file-routes': 1.54.0
       prettier: 3.3.3
       zod: 3.23.8
 
-  '@tanstack/router-plugin@1.52.0(vite@5.4.3(@types/node@20.16.5))':
+  '@tanstack/router-plugin@1.54.0(vite@5.4.3(@types/node@20.16.5))(webpack-sources@3.2.3)':
     dependencies:
       '@babel/core': 7.25.2
       '@babel/generator': 7.25.6
@@ -4944,23 +4954,27 @@ snapshots:
       '@babel/template': 7.25.0
       '@babel/traverse': 7.25.6
       '@babel/types': 7.25.6
-      '@tanstack/router-generator': 1.52.0
+      '@tanstack/router-generator': 1.54.0
+      '@tanstack/virtual-file-routes': 1.54.0
       '@types/babel__core': 7.20.5
       '@types/babel__generator': 7.6.8
       '@types/babel__template': 7.4.4
       '@types/babel__traverse': 7.20.6
       babel-dead-code-elimination: 1.0.6
       chokidar: 3.6.0
-      unplugin: 1.12.3
+      unplugin: 1.13.1(webpack-sources@3.2.3)
       zod: 3.23.8
     optionalDependencies:
       vite: 5.4.3(@types/node@20.16.5)
     transitivePeerDependencies:
       - supports-color
+      - webpack-sources
 
   '@tanstack/store@0.5.5': {}
 
   '@tanstack/table-core@8.20.5': {}
+
+  '@tanstack/virtual-file-routes@1.54.0': {}
 
   '@tauri-apps/api@1.6.0': {}
 
@@ -7132,11 +7146,12 @@ snapshots:
 
   unload@2.4.1: {}
 
-  unplugin@1.12.3:
+  unplugin@1.13.1(webpack-sources@3.2.3):
     dependencies:
       acorn: 8.12.1
-      webpack-sources: 3.2.3
       webpack-virtual-modules: 0.6.2
+    optionalDependencies:
+      webpack-sources: 3.2.3
 
   update-browserslist-db@1.1.0(browserslist@4.23.3):
     dependencies:
@@ -7221,7 +7236,8 @@ snapshots:
 
   webidl-conversions@3.0.1: {}
 
-  webpack-sources@3.2.3: {}
+  webpack-sources@3.2.3:
+    optional: true
 
   webpack-virtual-modules@0.6.2: {}
 
