@@ -85,7 +85,7 @@ function getEntry(
 
 function ComponentTitle(props: { title: string; description: string }) {
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={200}>
       <Tooltip>
         <TooltipTrigger className="w-fit">{props.title}</TooltipTrigger>
         <TooltipContent>
