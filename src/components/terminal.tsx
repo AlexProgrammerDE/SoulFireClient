@@ -90,15 +90,9 @@ export const TerminalComponent = () => {
         for (const line of message.message.split('\n')) {
           const randomString = Math.random().toString(36).substring(7);
           setEntries((prev) => {
-            let resultingArray = [...prev, [randomString, line] as const];
+            const resultingArray = [...prev, [randomString, line] as const];
 
-            if (resultingArray.length > MAX_TERMINAL_ENTRIES) {
-              resultingArray = resultingArray.slice(
-                resultingArray.length - MAX_TERMINAL_ENTRIES,
-              );
-            }
-
-            return resultingArray;
+            return resultingArray.slice(-MAX_TERMINAL_ENTRIES);
           });
         }
       });
