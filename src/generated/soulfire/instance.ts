@@ -171,9 +171,9 @@ export interface InstanceStateChangeResponse {
  */
 export enum InstanceState {
     /**
-     * @generated from protobuf enum value: STOPPED = 0;
+     * @generated from protobuf enum value: STARTING = 0;
      */
-    STOPPED = 0,
+    STARTING = 0,
     /**
      * @generated from protobuf enum value: RUNNING = 1;
      */
@@ -181,7 +181,15 @@ export enum InstanceState {
     /**
      * @generated from protobuf enum value: PAUSED = 2;
      */
-    PAUSED = 2
+    PAUSED = 2,
+    /**
+     * @generated from protobuf enum value: STOPPING = 3;
+     */
+    STOPPING = 3,
+    /**
+     * @generated from protobuf enum value: STOPPED = 4;
+     */
+    STOPPED = 4
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class InstanceConfig$Type extends MessageType<InstanceConfig> {

@@ -188,15 +188,11 @@ export interface SettingEntrySingle {
      */
     uiName: string;
     /**
-     * @generated from protobuf field: repeated string cliFlags = 3;
-     */
-    cliFlags: string[];
-    /**
-     * @generated from protobuf field: string description = 4;
+     * @generated from protobuf field: string description = 3;
      */
     description: string;
     /**
-     * @generated from protobuf field: soulfire.v1.SettingType type = 5;
+     * @generated from protobuf field: soulfire.v1.SettingType type = 4;
      */
     type?: SettingType;
 }
@@ -518,9 +514,8 @@ class SettingEntrySingle$Type extends MessageType<SettingEntrySingle> {
         super("soulfire.v1.SettingEntrySingle", [
             { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "cliFlags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "type", kind: "message", T: () => SettingType }
+            { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "type", kind: "message", T: () => SettingType }
         ]);
     }
 }

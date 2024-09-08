@@ -6,7 +6,6 @@ option java_multiple_files = true;
 package soulfire.v1;
 
 import "soulfire/common.proto";
-import "google/protobuf/struct.proto";
 
 message InstanceConfig {
   repeated SettingsNamespace settings = 1;
@@ -30,9 +29,11 @@ message InstanceDeleteResponse {
 }
 
 enum InstanceState {
-  STOPPED = 0;
+  STARTING = 0;
   RUNNING = 1;
   PAUSED = 2;
+  STOPPING = 3;
+  STOPPED = 4;
 }
 
 message InstanceListRequest {

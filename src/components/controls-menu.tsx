@@ -116,7 +116,10 @@ export default function ControlsMenu() {
         className="h-full w-full"
         variant="secondary"
         onClick={() => toggleMutation.mutate()}
-        disabled={instanceInfo.state === InstanceState.STOPPED}
+        disabled={
+          instanceInfo.state === InstanceState.STOPPING ||
+          instanceInfo.state === InstanceState.STOPPED
+        }
       >
         {instanceInfo.state === InstanceState.PAUSED ? 'Resume' : 'Pause'}
       </Button>
@@ -124,7 +127,10 @@ export default function ControlsMenu() {
         className="h-full w-full"
         variant="secondary"
         onClick={() => stopMutation.mutate()}
-        disabled={instanceInfo.state === InstanceState.STOPPED}
+        disabled={
+          instanceInfo.state === InstanceState.STOPPING ||
+          instanceInfo.state === InstanceState.STOPPED
+        }
       >
         Stop
       </Button>
