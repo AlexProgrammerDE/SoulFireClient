@@ -10,6 +10,7 @@ import { InstanceConfig } from '@/generated/soulfire/instance.ts';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { queryClientInstance } from '@/lib/query.ts';
 import { useQuery } from '@tanstack/react-query';
+import { LoadingComponent } from '@/components/loading-component.tsx';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance')({
   beforeLoad: (props) => {
@@ -59,19 +60,29 @@ function TerminalSide() {
 function InstanceLayout() {
   const { instance } = Route.useParams();
   const { infoQueryOptions } = Route.useRouteContext();
-  const { data } = useQuery(infoQueryOptions);
+  const result = useQuery(infoQueryOptions);
+
+  if (result.isError) {
+    throw result.error;
+  }
+
+  if (result.isLoading || !result.data) {
+    return <LoadingComponent />;
+  }
 
   return (
     <>
       <InstanceInfoContext.Provider
         value={{
           id: instance,
-          friendlyName: data!.instanceInfo.friendlyName,
-          state: data!.instanceInfo.state,
+          friendlyName: result.data.instanceInfo.friendlyName,
+          state: result.data.instanceInfo.state,
         }}
       >
         <ProfileContext.Provider
-          value={convertFromProto(data!.instanceInfo.config as InstanceConfig)}
+          value={convertFromProto(
+            result.data.instanceInfo.config as InstanceConfig,
+          )}
         >
           <DashboardMenuHeader />
           <div className="grid flex-grow grid-cols-1 gap-4 md:grid-cols-2">

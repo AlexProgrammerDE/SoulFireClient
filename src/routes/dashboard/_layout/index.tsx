@@ -18,6 +18,8 @@ import { toast } from 'sonner';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { queryClientInstance } from '@/lib/query.ts';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { InstanceState } from '@/generated/soulfire/instance.ts';
+import { LoadingComponent } from '@/components/loading-component.tsx';
 
 const listQueryFn = async ({ signal }: { signal: AbortSignal }) => {
   const transport = createTransport();
@@ -115,8 +117,12 @@ function InstanceSelectPage() {
     },
   });
 
-  if (!instanceList.data) {
-    throw instanceList.error ?? new Error('No data');
+  if (instanceList.isError) {
+    throw instanceList.error;
+  }
+
+  if (instanceList.isLoading || !instanceList.data) {
+    return <LoadingComponent />;
   }
 
   return (
@@ -136,7 +142,11 @@ function InstanceSelectPage() {
                   to="/dashboard/$instance"
                   params={{ instance: instance.id }}
                 >
-                  Instance: {instance.friendlyName}
+                  Instance: {instance.friendlyName} (
+                  {Object.entries(InstanceState).find(
+                    (e) => e[1] === instance.state,
+                  )![0] ?? 'UNKNOWN'}
+                  )
                 </Link>
               </Button>
               <Button
