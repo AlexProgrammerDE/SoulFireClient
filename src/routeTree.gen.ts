@@ -163,21 +163,140 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  IndexRoute,
-  DashboardRoute: DashboardRoute.addChildren({
-    DashboardLayoutRoute: DashboardLayoutRoute.addChildren({
-      DashboardLayoutInstanceRoute: DashboardLayoutInstanceRoute.addChildren({
-        DashboardLayoutInstanceAccountsRoute,
-        DashboardLayoutInstancePluginsRoute,
-        DashboardLayoutInstanceProxiesRoute,
-        DashboardLayoutInstanceIndexRoute,
-        DashboardLayoutInstanceSettingsNamespaceRoute,
-      }),
-      DashboardLayoutIndexRoute,
-    }),
-  }),
-})
+interface DashboardLayoutInstanceRouteChildren {
+  DashboardLayoutInstanceAccountsRoute: typeof DashboardLayoutInstanceAccountsRoute
+  DashboardLayoutInstancePluginsRoute: typeof DashboardLayoutInstancePluginsRoute
+  DashboardLayoutInstanceProxiesRoute: typeof DashboardLayoutInstanceProxiesRoute
+  DashboardLayoutInstanceIndexRoute: typeof DashboardLayoutInstanceIndexRoute
+  DashboardLayoutInstanceSettingsNamespaceRoute: typeof DashboardLayoutInstanceSettingsNamespaceRoute
+}
+
+const DashboardLayoutInstanceRouteChildren: DashboardLayoutInstanceRouteChildren =
+  {
+    DashboardLayoutInstanceAccountsRoute: DashboardLayoutInstanceAccountsRoute,
+    DashboardLayoutInstancePluginsRoute: DashboardLayoutInstancePluginsRoute,
+    DashboardLayoutInstanceProxiesRoute: DashboardLayoutInstanceProxiesRoute,
+    DashboardLayoutInstanceIndexRoute: DashboardLayoutInstanceIndexRoute,
+    DashboardLayoutInstanceSettingsNamespaceRoute:
+      DashboardLayoutInstanceSettingsNamespaceRoute,
+  }
+
+const DashboardLayoutInstanceRouteWithChildren =
+  DashboardLayoutInstanceRoute._addFileChildren(
+    DashboardLayoutInstanceRouteChildren,
+  )
+
+interface DashboardLayoutRouteChildren {
+  DashboardLayoutInstanceRoute: typeof DashboardLayoutInstanceRouteWithChildren
+  DashboardLayoutIndexRoute: typeof DashboardLayoutIndexRoute
+}
+
+const DashboardLayoutRouteChildren: DashboardLayoutRouteChildren = {
+  DashboardLayoutInstanceRoute: DashboardLayoutInstanceRouteWithChildren,
+  DashboardLayoutIndexRoute: DashboardLayoutIndexRoute,
+}
+
+const DashboardLayoutRouteWithChildren = DashboardLayoutRoute._addFileChildren(
+  DashboardLayoutRouteChildren,
+)
+
+interface DashboardRouteChildren {
+  DashboardLayoutRoute: typeof DashboardLayoutRouteWithChildren
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardLayoutRoute: DashboardLayoutRouteWithChildren,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardLayoutRouteWithChildren
+  '/dashboard/$instance': typeof DashboardLayoutInstanceRouteWithChildren
+  '/dashboard/': typeof DashboardLayoutIndexRoute
+  '/dashboard/$instance/accounts': typeof DashboardLayoutInstanceAccountsRoute
+  '/dashboard/$instance/plugins': typeof DashboardLayoutInstancePluginsRoute
+  '/dashboard/$instance/proxies': typeof DashboardLayoutInstanceProxiesRoute
+  '/dashboard/$instance/': typeof DashboardLayoutInstanceIndexRoute
+  '/dashboard/$instance/settings/$namespace': typeof DashboardLayoutInstanceSettingsNamespaceRoute
+}
+
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardLayoutIndexRoute
+  '/dashboard/$instance/accounts': typeof DashboardLayoutInstanceAccountsRoute
+  '/dashboard/$instance/plugins': typeof DashboardLayoutInstancePluginsRoute
+  '/dashboard/$instance/proxies': typeof DashboardLayoutInstanceProxiesRoute
+  '/dashboard/$instance': typeof DashboardLayoutInstanceIndexRoute
+  '/dashboard/$instance/settings/$namespace': typeof DashboardLayoutInstanceSettingsNamespaceRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/dashboard/_layout': typeof DashboardLayoutRouteWithChildren
+  '/dashboard/_layout/$instance': typeof DashboardLayoutInstanceRouteWithChildren
+  '/dashboard/_layout/': typeof DashboardLayoutIndexRoute
+  '/dashboard/_layout/$instance/accounts': typeof DashboardLayoutInstanceAccountsRoute
+  '/dashboard/_layout/$instance/plugins': typeof DashboardLayoutInstancePluginsRoute
+  '/dashboard/_layout/$instance/proxies': typeof DashboardLayoutInstanceProxiesRoute
+  '/dashboard/_layout/$instance/': typeof DashboardLayoutInstanceIndexRoute
+  '/dashboard/_layout/$instance/settings/$namespace': typeof DashboardLayoutInstanceSettingsNamespaceRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/dashboard/$instance'
+    | '/dashboard/'
+    | '/dashboard/$instance/accounts'
+    | '/dashboard/$instance/plugins'
+    | '/dashboard/$instance/proxies'
+    | '/dashboard/$instance/'
+    | '/dashboard/$instance/settings/$namespace'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/dashboard'
+    | '/dashboard/$instance/accounts'
+    | '/dashboard/$instance/plugins'
+    | '/dashboard/$instance/proxies'
+    | '/dashboard/$instance'
+    | '/dashboard/$instance/settings/$namespace'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/dashboard/_layout'
+    | '/dashboard/_layout/$instance'
+    | '/dashboard/_layout/'
+    | '/dashboard/_layout/$instance/accounts'
+    | '/dashboard/_layout/$instance/plugins'
+    | '/dashboard/_layout/$instance/proxies'
+    | '/dashboard/_layout/$instance/'
+    | '/dashboard/_layout/$instance/settings/$namespace'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRouteWithChildren,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 
