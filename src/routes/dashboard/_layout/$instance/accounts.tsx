@@ -262,7 +262,11 @@ function AccountSettings() {
   return (
     <div className="flex h-full w-full flex-col gap-4">
       <Button asChild variant="secondary">
-        <Link to="/dashboard/$instance" params={{ instance: instanceInfo.id }}>
+        <Link
+          to="/dashboard/$instance"
+          params={{ instance: instanceInfo.id }}
+          search={{}}
+        >
           Back
         </Link>
       </Button>

@@ -297,6 +297,7 @@ function ProxySettings() {
           params={{
             instance: instanceInfo.id,
           }}
+          search={{}}
         >
           Back
         </Link>

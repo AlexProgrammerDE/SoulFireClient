@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "fix": "prettier --write .",
     "preview": "vite preview",
     "generate-icons": "tauri icon -v public/logo.png",
     "dev-tauri": "RUST_LOG=info tauri dev",

@@ -141,6 +141,7 @@ function InstanceSelectPage() {
                 <Link
                   to="/dashboard/$instance"
                   params={{ instance: instance.id }}
+                  search={{}}
                 >
                   Instance: {instance.friendlyName} (
                   {Object.entries(InstanceState).find(

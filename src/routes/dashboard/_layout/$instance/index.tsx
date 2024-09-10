@@ -17,6 +17,7 @@ export default function Dashboard() {
         <Link
           to="/dashboard/$instance/settings/$namespace"
           params={{ instance: instanceInfo.id, namespace: 'bot' }}
+          search={{}}
         >
           Bot Settings
         </Link>
@@ -25,6 +26,7 @@ export default function Dashboard() {
         <Link
           to="/dashboard/$instance/plugins"
           params={{ instance: instanceInfo.id }}
+          search={{}}
         >
           Plugin Settings
         </Link>
@@ -33,6 +35,7 @@ export default function Dashboard() {
         <Link
           to="/dashboard/$instance/accounts"
           params={{ instance: instanceInfo.id }}
+          search={{}}
         >
           Account Settings
         </Link>
@@ -41,6 +44,7 @@ export default function Dashboard() {
         <Link
           to="/dashboard/$instance/proxies"
           params={{ instance: instanceInfo.id }}
+          search={{}}
         >
           Proxy Settings
         </Link>
@@ -49,6 +53,7 @@ export default function Dashboard() {
         <Link
           to="/dashboard/$instance/settings/$namespace"
           params={{ instance: instanceInfo.id, namespace: 'dev' }}
+          search={{}}
         >
           Dev Settings
         </Link>

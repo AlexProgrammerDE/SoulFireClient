@@ -28,6 +28,7 @@ function SettingsNamespace() {
             <Link
               to="/dashboard/$instance/plugins"
               params={{ instance: instanceInfo.id }}
+              search={{}}
             >
               Back
             </Link>
@@ -44,6 +45,7 @@ function SettingsNamespace() {
           <Link
             to="/dashboard/$instance/plugins"
             params={{ instance: instanceInfo.id }}
+            search={{}}
           >
             Back
           </Link>
@@ -51,6 +53,7 @@ function SettingsNamespace() {
           <Link
             to="/dashboard/$instance"
             params={{ instance: instanceInfo.id }}
+            search={{}}
           >
             Back
           </Link>
