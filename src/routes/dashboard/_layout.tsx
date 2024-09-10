@@ -1,14 +1,7 @@
 import { TransportContext } from '@/components/providers/transport-context.tsx';
-import {
-  createFileRoute,
-  Outlet,
-  redirect,
-  useNavigate,
-  useRouter,
-} from '@tanstack/react-router';
+import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 import { ConfigServiceClient } from '@/generated/soulfire/config.client.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import { Button } from '@/components/ui/button.tsx';
 import { createTransport, isAuthenticated } from '@/lib/web-rpc.ts';
 import { getTerminalTheme } from '@/lib/utils.ts';
 import {
