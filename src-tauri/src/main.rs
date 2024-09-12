@@ -65,9 +65,7 @@ fn main() {
         let child_process = Arc::clone(&child_process);
         tauri::async_runtime::spawn(async move {
           let mut child_process = child_process.lock().await;
-          println!("Killing child process");
           if let Some(child) = child_process.take() {
-            println!("Killing child process 2");
             child.kill().unwrap();
           }
         });
