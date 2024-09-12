@@ -50,6 +50,7 @@ import {
   UnplugIcon,
   UploadIcon,
 } from 'lucide-react';
+import { emit } from '@tauri-apps/api/event';
 
 function data2blob(data: string) {
   const bytes = new Array(data.length);
@@ -104,6 +105,7 @@ export const DashboardMenuHeader = () => {
                     to: '/',
                     replace: true,
                   });
+                  await emit('kill-integrated-server', {});
                   toast.success('Disconnected');
                 })();
               }}

@@ -1,4 +1,7 @@
 use std::net::TcpListener;
+use std::sync::Arc;
+use log::info;
+use crate::sf_loader::IntegratedServerState;
 
 pub fn extract_tar_gz(data: &[u8], target_dir: &std::path::Path, strip_prefix: &str) {
   let decompressed = flate2::read::GzDecoder::new(data);
@@ -93,4 +96,17 @@ pub fn detect_os() -> &'static str {
   } else {
     "unknown"
   }
+}
+
+pub fn kill_child_process(state: &IntegratedServerState) {
+  let child_process = Arc::clone(&state.child_process);
+  let starting = Arc::clone(&state.starting);
+  tauri::async_runtime::spawn(async move {
+    let mut child_process = child_process.lock().await;
+    if let Some(child) = child_process.take() {
+      child.kill().unwrap();
+      starting.store(false, std::sync::atomic::Ordering::Relaxed);
+      info!("Killed child process");
+    }
+  });
 }

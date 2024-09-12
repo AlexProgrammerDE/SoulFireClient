@@ -9,7 +9,7 @@ use tauri::async_runtime::Mutex;
 use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_next_available_port, get_java_exec_name};
 
 pub struct IntegratedServerState {
-  pub starting: AtomicBool,
+  pub starting: Arc<AtomicBool>,
   pub child_process: Arc<Mutex<Option<Box<CommandChild>>>>
 }
 
