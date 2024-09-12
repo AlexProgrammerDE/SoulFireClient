@@ -211,15 +211,11 @@ export interface SettingEntryMinMaxPairSingle {
      */
     uiName: string;
     /**
-     * @generated from protobuf field: repeated string cliFlags = 3;
-     */
-    cliFlags: string[];
-    /**
-     * @generated from protobuf field: string description = 4;
+     * @generated from protobuf field: string description = 3;
      */
     description: string;
     /**
-     * @generated from protobuf field: soulfire.v1.IntSetting intSetting = 5;
+     * @generated from protobuf field: soulfire.v1.IntSetting intSetting = 4;
      */
     intSetting?: IntSetting;
 }
@@ -529,9 +525,8 @@ class SettingEntryMinMaxPairSingle$Type extends MessageType<SettingEntryMinMaxPa
         super("soulfire.v1.SettingEntryMinMaxPairSingle", [
             { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "cliFlags", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "intSetting", kind: "message", T: () => IntSetting }
+            { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "intSetting", kind: "message", T: () => IntSetting }
         ]);
     }
 }
