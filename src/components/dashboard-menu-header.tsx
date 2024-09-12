@@ -151,7 +151,10 @@ export const DashboardMenuHeader = () => {
             <MenubarContent>
               {isTauri() && systemInfo ? (
                 <MenubarSub>
-                  <MenubarSubTrigger>Load Profile</MenubarSubTrigger>
+                  <MenubarSubTrigger>
+                    <DownloadIcon className="w-4 h-4 mr-2" />
+                    <span>Load Profile</span>
+                  </MenubarSubTrigger>
                   <MenubarSubContent>
                     {systemInfo.availableProfiles.length > 0 && (
                       <>
