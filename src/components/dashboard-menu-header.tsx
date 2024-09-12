@@ -46,7 +46,7 @@ import {
   FolderIcon,
   LaptopMinimalIcon,
   LifeBuoyIcon,
-  LogOutIcon,
+  ListIcon,
   PaintRollerIcon,
   PowerIcon,
   UnplugIcon,
@@ -102,18 +102,16 @@ export const DashboardMenuHeader = () => {
             <MenubarItem
               onClick={() => {
                 void (async () => {
-                  localStorage.removeItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY);
-                  localStorage.removeItem(LOCAL_STORAGE_SERVER_TOKEN_KEY);
                   await navigate({
                     to: '/',
                     replace: true,
                   });
-                  toast.success('Logged out');
+                  toast.success('Disconnected');
                 })();
               }}
             >
-              <LogOutIcon className="w-4 h-4 mr-2" />
-              <span>Log out</span>
+              <UnplugIcon className="w-4 h-4 mr-2" />
+              <span>Disconnect</span>
             </MenubarItem>
             {isTauri() && (
               <MenubarItem onClick={() => void exit(0)}>
@@ -298,7 +296,7 @@ export const DashboardMenuHeader = () => {
                   });
                 }}
               >
-                <UnplugIcon className="w-4 h-4 mr-2" />
+                <ListIcon className="w-4 h-4 mr-2" />
                 <span>Back to selection</span>
               </MenubarItem>
             </MenubarContent>
