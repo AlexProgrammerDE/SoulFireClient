@@ -1,13 +1,16 @@
+use std::sync::Arc;
 use std::sync::atomic::AtomicBool;
 use log::info;
 use serde::Serialize;
-use tauri::api::process::Command;
+use tauri::api::process::{Command, CommandChild};
 use tauri::api::process::CommandEvent::Stdout;
 use tauri::{AppHandle, Manager};
+use tauri::async_runtime::Mutex;
 use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_next_available_port, get_java_exec_name};
 
 pub struct IntegratedServerState {
   pub starting: AtomicBool,
+  pub child_process: Arc<Mutex<Option<Box<CommandChild>>>>
 }
 
 #[tauri::command]
@@ -154,6 +157,8 @@ pub async fn run_integrated_server(app_handle: AppHandle, integrated_server_stat
       }
     }
   };
+
+  integrated_server_state.child_process.lock().await.replace(Box::from(child));
 
   let url = format!("http://127.0.0.1:{}", available_port);
   return Ok(format!("{}\n{}", url, token));
