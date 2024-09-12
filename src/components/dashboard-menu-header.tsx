@@ -27,8 +27,6 @@ import { toast } from 'sonner';
 import CastMenuEntry from '@/components/cast-menu-entry.tsx';
 import {
   convertToProto,
-  LOCAL_STORAGE_SERVER_ADDRESS_KEY,
-  LOCAL_STORAGE_SERVER_TOKEN_KEY,
   LOCAL_STORAGE_TERMINAL_THEME_KEY,
   ProfileRoot,
 } from '@/lib/types.ts';
