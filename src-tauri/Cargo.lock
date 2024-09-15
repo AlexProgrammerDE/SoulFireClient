@@ -4017,7 +4017,7 @@ dependencies = [
 
 [[package]]
 name = "soulfire"
-version = "1.1.0"
+version = "1.1.1"
 dependencies = [
  "discord-presence",
  "env_logger",
