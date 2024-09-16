@@ -40,9 +40,12 @@ enum UIProxyType {
   URI,
 }
 
-function uiProxyTypeToProto(
-  type: UIProxyType.HTTP | UIProxyType.SOCKS4 | UIProxyType.SOCKS5,
-): ProxyProto_Type {
+type SimpleProxyType =
+  | UIProxyType.HTTP
+  | UIProxyType.SOCKS4
+  | UIProxyType.SOCKS5;
+
+function uiProxyTypeToProto(type: SimpleProxyType): ProxyProto_Type {
   switch (type) {
     case UIProxyType.HTTP:
       return ProxyProto_Type.HTTP;
@@ -53,7 +56,7 @@ function uiProxyTypeToProto(
   }
 }
 
-function parseNormalProxy(line: string): ProfileProxy {
+function parseNormalProxy(line: string, type: SimpleProxyType): ProfileProxy {
   const parts = line.split(':');
   if (parts.length < 2) {
     throw new Error('Invalid proxy format');
@@ -64,7 +67,7 @@ function parseNormalProxy(line: string): ProfileProxy {
 
   const host = parts[0] + ':' + parts[1];
   return {
-    type: uiProxyTypeToProto(UIProxyType.HTTP),
+    type: uiProxyTypeToProto(type),
     address: host.startsWith('/') ? `unix://${host}` : `inet://${host}`,
     username: parts[2],
     password: parts[3],
@@ -188,7 +191,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               case UIProxyType.HTTP:
               case UIProxyType.SOCKS4:
               case UIProxyType.SOCKS5:
-                proxy = parseNormalProxy(line);
+                proxy = parseNormalProxy(line, proxyTypeSelected);
                 break;
               case UIProxyType.URI:
                 proxy = parseURIProxy(line);
