@@ -170,10 +170,6 @@ export enum MinecraftAccountProto_AccountTypeProto {
      */
     MICROSOFT_BEDROCK_CREDENTIALS = 1,
     /**
-     * @generated from protobuf enum value: EASY_MC = 2;
-     */
-    EASY_MC = 2,
-    /**
      * @generated from protobuf enum value: THE_ALTENING = 3;
      */
     THE_ALTENING = 3,
@@ -228,10 +224,6 @@ export enum AccountTypeCredentials {
      * @generated from protobuf enum value: MICROSOFT_BEDROCK_CREDENTIALS = 1;
      */
     MICROSOFT_BEDROCK_CREDENTIALS = 1,
-    /**
-     * @generated from protobuf enum value: EASY_MC = 2;
-     */
-    EASY_MC = 2,
     /**
      * @generated from protobuf enum value: THE_ALTENING = 3;
      */

@@ -255,13 +255,6 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              setAccountTypeCredentialsSelected(AccountTypeCredentials.EASY_MC)
-            }
-          >
-            EasyMC
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() =>
               setAccountTypeCredentialsSelected(
                 AccountTypeCredentials.THE_ALTENING,
               )
