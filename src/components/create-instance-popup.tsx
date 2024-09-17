@@ -53,9 +53,9 @@ export function CreateInstancePopup({
 
   return (
     <Form {...form}>
-      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
         <Credenza open={open} onOpenChange={setOpen}>
-          <CredenzaContent className="gap-4 pb-4">
+          <CredenzaContent className="pb-4">
+            <form className="flex flex-col gap-4" onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
             <CredenzaHeader>
               <CredenzaTitle>Create a new instance</CredenzaTitle>
               <CredenzaDescription>
@@ -87,9 +87,9 @@ export function CreateInstancePopup({
               </CredenzaClose>
               <Button type="submit">Create</Button>
             </CredenzaFooter>
+            </form>
           </CredenzaContent>
         </Credenza>
-      </form>
     </Form>
   );
 }
