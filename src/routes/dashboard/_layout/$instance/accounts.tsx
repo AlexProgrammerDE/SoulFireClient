@@ -12,13 +12,19 @@ import {
   ProfileRoot,
 } from '@/lib/types.ts';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
-import { MinecraftAccountProto_AccountTypeProto } from '@/generated/soulfire/common.ts';
+import {
+  AccountTypeCredentials,
+  AccountTypeDeviceCode,
+  MinecraftAccountProto_AccountTypeProto,
+} from '@/generated/soulfire/common.ts';
 import { PlusIcon, TrashIcon } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
 import { toast } from 'sonner';
@@ -28,6 +34,8 @@ import ImportDialog from '@/components/import-dialog.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { isTauri } from '@/lib/utils.ts';
+import { open as shellOpen } from '@tauri-apps/api/shell';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance/accounts')({
   component: AccountSettings,
@@ -75,6 +83,7 @@ const columns: ColumnDef<ProfileAccount>[] = [
     accessorKey: 'profileId',
     header: 'Profile ID',
   },
+
   {
     accessorKey: 'lastKnownName',
     header: 'Last Known Name',
@@ -86,8 +95,8 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
   const instanceInfo = useContext(InstanceInfoContext);
-  const [accountTypeSelected, setAccountTypeSelected] =
-    useState<MinecraftAccountProto_AccountTypeProto | null>(null);
+  const [accountTypeCredentialsSelected, setAccountTypeCredentialsSelected] =
+    useState<AccountTypeCredentials | null>(null);
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
       const instanceService = new InstanceServiceClient(transport);
@@ -105,14 +114,14 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
 
   const textSelectedCallback = useCallback(
     (text: string) => {
-      if (accountTypeSelected === null) return;
+      if (accountTypeCredentialsSelected === null) return;
 
       if (text.length === 0) {
         toast.error('No accounts to import');
         return;
       }
 
-      setAccountTypeSelected(null);
+      setAccountTypeCredentialsSelected(null);
       const textSplit = text
         .split('\n')
         .map((t) => t.trim())
@@ -124,17 +133,14 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           for (const line of textSplit) {
             const {
               response: { account },
-            } = await service.login({
-              service: accountTypeSelected,
+            } = await service.loginCredentials({
+              service: accountTypeCredentialsSelected,
               payload: line,
             });
 
             if (account) {
               accountsToAdd.push({
-                type: account.type,
-                profileId: account.profileId,
-                lastKnownName: account.lastKnownName,
-                accountData: account.accountData,
+                ...account,
               });
             }
           }
@@ -155,7 +161,60 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         },
       );
     },
-    [accountTypeSelected, profile, setProfileMutation, transport],
+    [accountTypeCredentialsSelected, profile, setProfileMutation, transport],
+  );
+
+  const deviceCodeSelected = useCallback(
+    (type: AccountTypeDeviceCode) => {
+      const service = new MCAuthServiceClient(transport);
+      toast.promise(
+        (async () => {
+          const promise = new Promise<ProfileAccount>((resolve, reject) => {
+            try {
+              service
+                .loginDeviceCode({
+                  service: type,
+                })
+                .responses.onMessage((message) => {
+                  if (message.data.oneofKind === 'account') {
+                    resolve(message.data.account);
+                  } else if (message.data.oneofKind === 'deviceCode') {
+                    if (isTauri()) {
+                      void shellOpen(
+                        message.data.deviceCode.directVerificationUri,
+                      );
+                    } else {
+                      window.open(
+                        message.data.deviceCode.directVerificationUri,
+                      );
+                    }
+                  }
+                });
+            } catch (e) {
+              if (e instanceof Error) {
+                reject(e);
+              } else {
+                reject(new Error('Unknown error'));
+              }
+            }
+          });
+
+          await setProfileMutation({
+            ...profile,
+            accounts: [...profile.accounts, await promise],
+          });
+        })(),
+        {
+          loading: 'Importing account...',
+          success: 'Account imported!',
+          error: (e) => {
+            console.error(e);
+            return 'Failed to import accounts';
+          },
+        },
+      );
+    },
+    [profile, setProfileMutation, transport],
   );
 
   return (
@@ -167,50 +226,76 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+          <DropdownMenuLabel>Java Edition</DropdownMenuLabel>
+          <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() =>
-              setAccountTypeSelected(
-                MinecraftAccountProto_AccountTypeProto.OFFLINE,
-              )
+              setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE)
             }
           >
             Offline
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              setAccountTypeSelected(
-                MinecraftAccountProto_AccountTypeProto.MICROSOFT_JAVA,
+              setAccountTypeCredentialsSelected(
+                AccountTypeCredentials.MICROSOFT_JAVA_CREDENTIALS,
               )
             }
           >
-            Microsoft Java
+            Microsoft Credentials
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              setAccountTypeSelected(
-                MinecraftAccountProto_AccountTypeProto.MICROSOFT_BEDROCK,
+              deviceCodeSelected(
+                AccountTypeDeviceCode.MICROSOFT_JAVA_DEVICE_CODE,
               )
             }
           >
-            Microsoft Bedrock
+            Microsoft Device Code
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              setAccountTypeSelected(
-                MinecraftAccountProto_AccountTypeProto.EASY_MC,
-              )
+              setAccountTypeCredentialsSelected(AccountTypeCredentials.EASY_MC)
             }
           >
             EasyMC
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              setAccountTypeSelected(
-                MinecraftAccountProto_AccountTypeProto.THE_ALTENING,
+              setAccountTypeCredentialsSelected(
+                AccountTypeCredentials.THE_ALTENING,
               )
             }
           >
             The Altening
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuLabel>Bedrock Edition</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() =>
+              setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE)
+            }
+          >
+            Offline
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() =>
+              setAccountTypeCredentialsSelected(
+                AccountTypeCredentials.MICROSOFT_BEDROCK_CREDENTIALS,
+              )
+            }
+          >
+            Microsoft Credentials
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() =>
+              deviceCodeSelected(
+                AccountTypeDeviceCode.MICROSOFT_BEDROCK_DEVICE_CODE,
+              )
+            }
+          >
+            Microsoft Device Code
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -242,11 +327,11 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       >
         <TrashIcon className="h-4 w-4" />
       </Button>
-      {accountTypeSelected !== null && (
+      {accountTypeCredentialsSelected !== null && (
         <ImportDialog
-          title={`Import ${getEnumKeyByValue(MinecraftAccountProto_AccountTypeProto, accountTypeSelected)} accounts`}
+          title={`Import ${getEnumKeyByValue(MinecraftAccountProto_AccountTypeProto, accountTypeCredentialsSelected)} accounts`}
           description="Paste your accounts here, one per line"
-          closer={() => setAccountTypeSelected(null)}
+          closer={() => setAccountTypeCredentialsSelected(null)}
           listener={textSelectedCallback}
         />
       )}

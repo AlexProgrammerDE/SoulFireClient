@@ -351,18 +351,12 @@ export const DashboardMenuHeader = () => {
         <MenubarMenu>
           <MenubarTrigger>Help</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem
-              onClick={() => {
-                if (isTauri()) {
-                  void shellOpen('https://soulfiremc.com/docs');
-                } else {
-                  window.open('https://soulfiremc.com/docs');
-                }
-              }}
-            >
-              <BookOpenTextIcon className="w-4 h-4 mr-2" />
-              <span>Documentation</span>
-            </MenubarItem>
+            <a href="https://soulfiremc.com/docs" target="_blank">
+              <MenubarItem>
+                <BookOpenTextIcon className="w-4 h-4 mr-2" />
+                <span>Documentation</span>
+              </MenubarItem>
+            </a>
             <a
               href="https://github.com/AlexProgrammerDE/SoulFireClient"
               target="_blank"

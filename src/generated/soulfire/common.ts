@@ -162,13 +162,13 @@ export interface MinecraftAccountProto_BedrockData {
  */
 export enum MinecraftAccountProto_AccountTypeProto {
     /**
-     * @generated from protobuf enum value: MICROSOFT_JAVA = 0;
+     * @generated from protobuf enum value: MICROSOFT_JAVA_CREDENTIALS = 0;
      */
-    MICROSOFT_JAVA = 0,
+    MICROSOFT_JAVA_CREDENTIALS = 0,
     /**
-     * @generated from protobuf enum value: MICROSOFT_BEDROCK = 1;
+     * @generated from protobuf enum value: MICROSOFT_BEDROCK_CREDENTIALS = 1;
      */
-    MICROSOFT_BEDROCK = 1,
+    MICROSOFT_BEDROCK_CREDENTIALS = 1,
     /**
      * @generated from protobuf enum value: EASY_MC = 2;
      */
@@ -180,7 +180,15 @@ export enum MinecraftAccountProto_AccountTypeProto {
     /**
      * @generated from protobuf enum value: OFFLINE = 4;
      */
-    OFFLINE = 4
+    OFFLINE = 4,
+    /**
+     * @generated from protobuf enum value: MICROSOFT_JAVA_DEVICE_CODE = 5;
+     */
+    MICROSOFT_JAVA_DEVICE_CODE = 5,
+    /**
+     * @generated from protobuf enum value: MICROSOFT_BEDROCK_DEVICE_CODE = 6;
+     */
+    MICROSOFT_BEDROCK_DEVICE_CODE = 6
 }
 /**
  * @generated from protobuf message soulfire.v1.SettingsEntry
@@ -207,6 +215,44 @@ export interface SettingsNamespace {
      * @generated from protobuf field: repeated soulfire.v1.SettingsEntry entries = 2;
      */
     entries: SettingsEntry[];
+}
+/**
+ * @generated from protobuf enum soulfire.v1.AccountTypeCredentials
+ */
+export enum AccountTypeCredentials {
+    /**
+     * @generated from protobuf enum value: MICROSOFT_JAVA_CREDENTIALS = 0;
+     */
+    MICROSOFT_JAVA_CREDENTIALS = 0,
+    /**
+     * @generated from protobuf enum value: MICROSOFT_BEDROCK_CREDENTIALS = 1;
+     */
+    MICROSOFT_BEDROCK_CREDENTIALS = 1,
+    /**
+     * @generated from protobuf enum value: EASY_MC = 2;
+     */
+    EASY_MC = 2,
+    /**
+     * @generated from protobuf enum value: THE_ALTENING = 3;
+     */
+    THE_ALTENING = 3,
+    /**
+     * @generated from protobuf enum value: OFFLINE = 4;
+     */
+    OFFLINE = 4
+}
+/**
+ * @generated from protobuf enum soulfire.v1.AccountTypeDeviceCode
+ */
+export enum AccountTypeDeviceCode {
+    /**
+     * @generated from protobuf enum value: MICROSOFT_JAVA_DEVICE_CODE = 0;
+     */
+    MICROSOFT_JAVA_DEVICE_CODE = 0,
+    /**
+     * @generated from protobuf enum value: MICROSOFT_BEDROCK_DEVICE_CODE = 1;
+     */
+    MICROSOFT_BEDROCK_DEVICE_CODE = 1
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ProxyProto$Type extends MessageType<ProxyProto> {
