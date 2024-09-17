@@ -52,10 +52,10 @@ export function CreateInstancePopup({
   });
 
   return (
-    <Credenza open={open} onOpenChange={setOpen}>
-      <CredenzaContent>
-        <Form {...form}>
-          <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
+    <Form {...form}>
+      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
+        <Credenza open={open} onOpenChange={setOpen}>
+          <CredenzaContent className="gap-4 pb-4">
             <CredenzaHeader>
               <CredenzaTitle>Create a new instance</CredenzaTitle>
               <CredenzaDescription>
@@ -63,7 +63,7 @@ export function CreateInstancePopup({
                 can be any name you want, for example, "My Minecraft Bot".
               </CredenzaDescription>
             </CredenzaHeader>
-            <CredenzaBody className="space-y-4">
+            <CredenzaBody>
               <FormField
                 control={form.control}
                 name="friendlyName"
@@ -87,9 +87,9 @@ export function CreateInstancePopup({
               </CredenzaClose>
               <Button type="submit">Create</Button>
             </CredenzaFooter>
-          </form>
-        </Form>
-      </CredenzaContent>
-    </Credenza>
+          </CredenzaContent>
+        </Credenza>
+      </form>
+    </Form>
   );
 }

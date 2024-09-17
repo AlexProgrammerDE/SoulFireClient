@@ -196,7 +196,7 @@ const LoginForm = () => {
       {'REMOTE' === loginType ? (
         <Form {...form}>
           <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
-            <CardContent className="space-y-4">
+            <CardContent className="flex flex-col gap-4">
               <FormField
                 control={form.control}
                 name="address"
