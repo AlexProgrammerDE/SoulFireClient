@@ -13,6 +13,7 @@ import { isTauri } from '@/lib/utils.ts';
 import { clipboard } from '@tauri-apps/api';
 import { downloadDir } from '@tauri-apps/api/path';
 import { open } from '@tauri-apps/api/dialog';
+import { readTextFile } from '@tauri-apps/api/fs';
 
 export default function ImportDialog(props: {
   title: string;
@@ -68,7 +69,12 @@ export default function ImportDialog(props: {
                       });
 
                       if (input) {
-                        props.listener(Array.isArray(input) ? input[0] : input);
+                        const singleInput = Array.isArray(input)
+                          ? input[0]
+                          : input;
+                        const data = await readTextFile(singleInput);
+
+                        props.listener(data);
                       }
                     })();
                   } else {
