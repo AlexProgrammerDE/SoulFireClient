@@ -15,6 +15,7 @@ import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import {
   AccountTypeCredentials,
   AccountTypeDeviceCode,
+  MinecraftAccountProto,
   MinecraftAccountProto_AccountTypeProto,
 } from '@/generated/soulfire/common.ts';
 import { PlusIcon, TrashIcon } from 'lucide-react';
@@ -130,19 +131,16 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       toast.promise(
         (async () => {
           const accountsToAdd: ProfileAccount[] = [];
-          for (const line of textSplit) {
-            const {
-              response: { account },
-            } = await service.loginCredentials({
-              service: accountTypeCredentialsSelected,
-              payload: line,
-            });
+          const {
+            response: { account },
+          } = await service.loginCredentials({
+            service: accountTypeCredentialsSelected,
+            payload: textSplit,
+            maxConcurrency: 1,
+          });
 
-            if (account) {
-              accountsToAdd.push({
-                ...account,
-              });
-            }
+          if (account) {
+            accountsToAdd.push(...account);
           }
 
           await setProfileMutation({

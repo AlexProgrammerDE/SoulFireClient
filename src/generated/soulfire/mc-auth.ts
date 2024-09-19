@@ -20,18 +20,22 @@ export interface CredentialsAuthRequest {
      */
     proxy?: ProxyProto;
     /**
-     * @generated from protobuf field: string payload = 3;
+     * @generated from protobuf field: int32 maxConcurrency = 3;
      */
-    payload: string;
+    maxConcurrency: number;
+    /**
+     * @generated from protobuf field: repeated string payload = 4;
+     */
+    payload: string[];
 }
 /**
  * @generated from protobuf message soulfire.v1.CredentialsAuthResponse
  */
 export interface CredentialsAuthResponse {
     /**
-     * @generated from protobuf field: soulfire.v1.MinecraftAccountProto account = 1;
+     * @generated from protobuf field: repeated soulfire.v1.MinecraftAccountProto account = 1;
      */
-    account?: MinecraftAccountProto;
+    account: MinecraftAccountProto[];
 }
 /**
  * @generated from protobuf message soulfire.v1.DeviceCodeAuthRequest
@@ -118,7 +122,8 @@ class CredentialsAuthRequest$Type extends MessageType<CredentialsAuthRequest> {
         super("soulfire.v1.CredentialsAuthRequest", [
             { no: 1, name: "service", kind: "enum", T: () => ["soulfire.v1.AccountTypeCredentials", AccountTypeCredentials] },
             { no: 2, name: "proxy", kind: "message", T: () => ProxyProto },
-            { no: 3, name: "payload", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "maxConcurrency", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "payload", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -130,7 +135,7 @@ export const CredentialsAuthRequest = new CredentialsAuthRequest$Type();
 class CredentialsAuthResponse$Type extends MessageType<CredentialsAuthResponse> {
     constructor() {
         super("soulfire.v1.CredentialsAuthResponse", [
-            { no: 1, name: "account", kind: "message", T: () => MinecraftAccountProto }
+            { no: 1, name: "account", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => MinecraftAccountProto }
         ]);
     }
 }
