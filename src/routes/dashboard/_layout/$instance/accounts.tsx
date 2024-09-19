@@ -15,7 +15,6 @@ import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import {
   AccountTypeCredentials,
   AccountTypeDeviceCode,
-  MinecraftAccountProto,
   MinecraftAccountProto_AccountTypeProto,
 } from '@/generated/soulfire/common.ts';
 import { PlusIcon, TrashIcon } from 'lucide-react';
