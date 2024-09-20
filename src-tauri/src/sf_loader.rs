@@ -127,6 +127,14 @@ pub async fn run_integrated_server(app_handle: AppHandle, integrated_server_stat
     .current_dir(soul_fire_rundir)
     .args(&[
       format!("-Dsf.grpc.port={}", available_port).as_str(),
+      "-XX:+EnableDynamicAgentLoading",
+      "-XX:+UnlockExperimentalVMOptions",
+      "-XX:+UseG1GC",
+      "-XX:G1NewSizePercent=20",
+      "-XX:G1ReservePercent=20",
+      "-XX:MaxGCPauseMillis=50",
+      "-XX:G1HeapRegionSize=32M",
+      "-Dsf.flags.v1=true",
       "-jar",
       soul_fire_version_file.to_str().unwrap()
     ]);
