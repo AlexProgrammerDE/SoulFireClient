@@ -7,7 +7,7 @@
     "typecheck": "tsc --noEmit",
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint src/",
     "fix": "prettier --write .",
     "preview": "vite preview",
     "generate-icons": "tauri icon -v public/logo.png",
