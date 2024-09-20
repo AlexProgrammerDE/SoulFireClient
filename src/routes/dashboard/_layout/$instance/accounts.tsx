@@ -35,7 +35,7 @@ import { InstanceInfoContext } from '@/components/providers/instance-info-contex
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isTauri } from '@/lib/utils.ts';
-import { open as shellOpen } from '@tauri-apps/api/shell';
+import { open as shellOpen } from '@tauri-apps/plugin-shell';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance/accounts')({
   component: AccountSettings,

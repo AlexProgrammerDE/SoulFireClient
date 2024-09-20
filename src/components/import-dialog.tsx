@@ -10,10 +10,10 @@ import { Button } from '@/components/ui/button.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
 import { useRef, useState } from 'react';
 import { isTauri } from '@/lib/utils.ts';
-import { clipboard } from '@tauri-apps/api';
 import { downloadDir } from '@tauri-apps/api/path';
-import { open } from '@tauri-apps/api/dialog';
-import { readTextFile } from '@tauri-apps/api/fs';
+import { open } from '@tauri-apps/plugin-dialog';
+import { readTextFile } from '@tauri-apps/plugin-fs';
+import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
 
 export default function ImportDialog(props: {
   title: string;
@@ -69,10 +69,7 @@ export default function ImportDialog(props: {
                       });
 
                       if (input) {
-                        const singleInput = Array.isArray(input)
-                          ? input[0]
-                          : input;
-                        const data = await readTextFile(singleInput);
+                        const data = await readTextFile(input);
 
                         props.listener(data);
                       }

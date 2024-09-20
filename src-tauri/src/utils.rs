@@ -1,7 +1,7 @@
+use crate::sf_loader::IntegratedServerState;
+use log::info;
 use std::net::TcpListener;
 use std::sync::Arc;
-use log::info;
-use crate::sf_loader::IntegratedServerState;
 
 pub fn extract_tar_gz(data: &[u8], target_dir: &std::path::Path, strip_prefix: &str) {
   let decompressed = flate2::read::GzDecoder::new(data);

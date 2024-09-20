@@ -6,7 +6,7 @@ import {
   MenubarTrigger,
 } from '@/components/ui/menubar.tsx';
 import { useEffect, useState } from 'react';
-import { invoke } from '@tauri-apps/api';
+import { invoke } from '@tauri-apps/api/core';
 import { toast } from 'sonner';
 import { emit, listen } from '@tauri-apps/api/event';
 import { cn } from '@/lib/utils.ts';

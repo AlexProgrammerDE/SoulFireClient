@@ -13,15 +13,15 @@ import {
 } from '@/components/ui/menubar.tsx';
 import { useTheme } from 'next-themes';
 import { isTauri } from '@/lib/utils.ts';
-import { exit } from '@tauri-apps/api/process';
+import { exit } from '@tauri-apps/plugin-process';
 import { AboutPopup } from '@/components/about-popup.tsx';
 import { useContext, useRef, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { saveAs } from 'file-saver';
-import { createDir, readTextFile, writeTextFile } from '@tauri-apps/api/fs';
-import { open, save } from '@tauri-apps/api/dialog';
-import { open as shellOpen } from '@tauri-apps/api/shell';
+import { mkdir, readTextFile, writeTextFile } from '@tauri-apps/plugin-fs';
+import { open, save } from '@tauri-apps/plugin-dialog';
+import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { appConfigDir, appDataDir, resolve } from '@tauri-apps/api/path';
 import { toast } from 'sonner';
 import CastMenuEntry from '@/components/cast-menu-entry.tsx';
@@ -199,7 +199,7 @@ export const DashboardMenuHeader = () => {
                             await appConfigDir(),
                             'profile',
                           );
-                          await createDir(profileDir, { recursive: true });
+                          await mkdir(profileDir, { recursive: true });
 
                           const selected = await open({
                             title: 'Load Profile',
@@ -215,10 +215,7 @@ export const DashboardMenuHeader = () => {
                           });
 
                           if (selected) {
-                            const single = Array.isArray(selected)
-                              ? selected[0]
-                              : selected;
-                            const data = await readTextFile(single);
+                            const data = await readTextFile(selected);
                             toast.promise(
                               setProfileMutation.mutateAsync(
                                 JSON.parse(data) as ProfileRoot,
@@ -260,7 +257,7 @@ export const DashboardMenuHeader = () => {
                         await appConfigDir(),
                         'profile',
                       );
-                      await createDir(profileDir, { recursive: true });
+                      await mkdir(profileDir, { recursive: true });
 
                       let selected = await save({
                         title: 'Save Profile',

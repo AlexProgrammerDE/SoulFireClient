@@ -1,95 +1,62 @@
 {
-  "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+  "$schema": "https://schema.tauri.app/config/2.0.0-rc",
   "build": {
     "beforeBuildCommand": "pnpm run build",
     "beforeDevCommand": "pnpm run dev",
-    "devPath": "http://localhost:5173",
-    "distDir": "../dist",
-    "withGlobalTauri": true
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:5173"
   },
-  "package": {
-    "productName": "SoulFire"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": false,
-      "process": {
-        "all": true
-      },
-      "path": {
-        "all": true
-      },
-      "fs": {
-        "all": true,
-        "scope": ["$APPCONFIG/profile/*", "$APPCONFIG/profile"]
-      },
-      "clipboard": {
-        "all": true
-      },
-      "dialog": {
-        "all": true
-      },
-      "os": {
-        "all": true
-      },
-      "shell": {
-        "all": true
-      },
-      "window": {
-        "all": true
-      }
+  "bundle": {
+    "active": true,
+    "category": "DeveloperTool",
+    "copyright": "",
+    "targets": "all",
+    "externalBin": [],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
     },
-    "systemTray": {
-      "iconPath": "icons/icon.png",
-      "iconAsTemplate": true
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "longDescription": "Advanced Minecraft Server-Stresser Tool. Launch bot attacks on your servers to measure performance.",
+    "macOS": {
+      "entitlements": null,
+      "exceptionDomain": "",
+      "frameworks": [],
+      "providerShortName": null,
+      "signingIdentity": null
     },
-    "bundle": {
-      "active": true,
-      "category": "DeveloperTool",
-      "copyright": "",
+    "resources": [],
+    "shortDescription": "Advanced Minecraft Server-Stresser Tool.",
+    "linux": {
       "deb": {
         "depends": []
-      },
-      "externalBin": [],
-      "identifier": "com.soulfiremc.app",
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "longDescription": "Advanced Minecraft Server-Stresser Tool. Launch bot attacks on your servers to measure performance.",
-      "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
-        "frameworks": [],
-        "providerShortName": null,
-        "signingIdentity": null
-      },
-      "resources": [],
-      "shortDescription": "Advanced Minecraft Server-Stresser Tool.",
-      "targets": "all",
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
       }
     },
-    "security": {
-      "csp": null
-    },
+    "createUpdaterArtifacts": "v1Compatible"
+  },
+  "productName": "SoulFire",
+  "mainBinaryName": "SoulFire",
+  "identifier": "com.soulfiremc.app",
+  "plugins": {
     "updater": {
-      "active": true,
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDI0QUFBREZCNjZGNjcyMjYKUldRbWN2Wm0rNjJxSkJGM3p1dlJiTkMydnRZTjR2d3JuYnJ5eWNKanZjRnlWc2FKaGoyVmdDNlcK",
       "windows": {
         "installMode": "passive"
       },
       "endpoints": [
         "https://gist.githubusercontent.com/AlexProgrammerDE/66024f243a31c7d7d449c54205d37d0c/raw/update.json"
-      ],
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDI0QUFBREZCNjZGNjcyMjYKUldRbWN2Wm0rNjJxSkJGM3p1dlJiTkMydnRZTjR2d3JuYnJ5eWNKanZjRnlWc2FKaGoyVmdDNlcK",
-      "dialog": true
-    },
+      ]
+    }
+  },
+  "app": {
+    "withGlobalTauri": true,
     "windows": [
       {
         "label": "main",
@@ -99,6 +66,13 @@
         "width": 1200,
         "center": true
       }
-    ]
+    ],
+    "trayIcon": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true
+    },
+    "security": {
+      "csp": null
+    }
   }
 }

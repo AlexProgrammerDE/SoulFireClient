@@ -26,20 +26,9 @@ pub fn load_discord_rpc() {
   if let Err(why) = drpc.set_activity(|a| {
     a.state("Idling")
       .details("Professional bot tool")
-      .timestamps(|timestamps| {
-        timestamps
-          .start(epoch_secs)
-      })
-      .assets(|assets| {
-        assets
-          .large_image("logo")
-          .large_text("SoulFire logo")
-      })
-      .append_buttons(|button| {
-        button
-          .label("Learn more")
-          .url("https://soulfiremc.com")
-      })
+      .timestamps(|timestamps| timestamps.start(epoch_secs))
+      .assets(|assets| assets.large_image("logo").large_text("SoulFire logo"))
+      .append_buttons(|button| button.label("Learn more").url("https://soulfiremc.com"))
   }) {
     error!("Failed to set presence: {}", why);
   }

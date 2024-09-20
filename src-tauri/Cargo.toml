@@ -5,19 +5,20 @@ description = "Frontend client for SoulFire."
 authors = ["Pistonmaster"]
 license = "GPL-3.0"
 repository = "https://github.com/AlexProgrammerDE/SoulFireClient"
-default-run = "soulfire"
 edition = "2021"
 rust-version = "1.60"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[lib]
+name = "soulfire_lib"
+crate-type = ["staticlib", "cdylib", "rlib", "lib"]
 
 [build-dependencies]
-tauri-build = { version = "1.5.1", features = [] }
+tauri-build = { version = "2.0.0-rc", features = [] }
 
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.6.1", features = [ "updater", "fs-all", "path-all", "process-all", "system-tray", "window-all", "shell-all", "os-all", "dialog-all", "clipboard-all", "devtools" ] }
+tauri = { version = "2.0.0-rc", features = [ "devtools" , "tray-icon"] }
 reqwest = { version = "0.12.4", features = ["json"] }
 tar = "0.4.40"
 flate2 = "1.0.30"
@@ -28,9 +29,12 @@ mdns-sd = "0.11.1"
 env_logger = "0.11.3"
 log = "0.4.21"
 discord-presence = "1.2.0"
+tauri-plugin-dialog = "2.0.0-rc"
+tauri-plugin-fs = "2.0.0-rc"
+tauri-plugin-os = "2.0.0-rc"
+tauri-plugin-shell = "2.0.0-rc"
+tauri-plugin-clipboard-manager = "2.0.0-alpha.2"
+tauri-plugin-process = "2.0.0-rc"
 
-[features]
-# this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.
-# If you use cargo directly instead of tauri's cli you can use this feature flag to switch between tauri's `dev` and `build` modes.
-# DO NOT REMOVE!!
-custom-protocol = [ "tauri/custom-protocol" ]
+[target."cfg(not(any(target_os = \"android\", target_os = \"ios\")))".dependencies]
+tauri-plugin-updater = "2.0.0-rc"

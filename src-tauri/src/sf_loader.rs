@@ -1,33 +1,47 @@
-use std::sync::Arc;
-use std::sync::atomic::AtomicBool;
+use crate::utils::{
+  detect_architecture, detect_os, extract_tar_gz, extract_zip, find_next_available_port,
+  get_java_exec_name,
+};
 use log::info;
 use serde::Serialize;
-use tauri::api::process::{Command, CommandChild};
-use tauri::api::process::CommandEvent::Stdout;
-use tauri::{AppHandle, Manager};
+use std::sync::atomic::AtomicBool;
+use std::sync::Arc;
 use tauri::async_runtime::Mutex;
-use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_next_available_port, get_java_exec_name};
+use tauri::{AppHandle, Emitter, Manager};
+use tauri_plugin_shell::process::CommandEvent::Stdout;
+use tauri_plugin_shell::process::CommandChild;
+use tauri_plugin_shell::ShellExt;
 
 pub struct IntegratedServerState {
   pub starting: Arc<AtomicBool>,
-  pub child_process: Arc<Mutex<Option<Box<CommandChild>>>>
+  pub child_process: Arc<Mutex<Option<Box<CommandChild>>>>,
 }
 
 #[tauri::command]
-pub async fn run_integrated_server(app_handle: AppHandle, integrated_server_state: tauri::State<'_, IntegratedServerState>) -> Result<String, ()> {
-  if integrated_server_state.starting.load(std::sync::atomic::Ordering::Relaxed) {
+pub async fn run_integrated_server(
+  app_handle: AppHandle,
+  integrated_server_state: tauri::State<'_, IntegratedServerState>,
+) -> Result<String, ()> {
+  if integrated_server_state
+    .starting
+    .load(std::sync::atomic::Ordering::Relaxed)
+  {
     return Ok("Server already starting".to_string());
   }
 
-  integrated_server_state.starting.store(true, std::sync::atomic::Ordering::Relaxed);
+  integrated_server_state
+    .starting
+    .store(true, std::sync::atomic::Ordering::Relaxed);
 
   let soul_fire_version = "1.12.1";
 
   fn send_log<S: Serialize + Clone>(app_handle: &AppHandle, payload: S) {
-    app_handle.emit_all("integrated-server-start-log", payload).unwrap();
+    app_handle
+      .emit("integrated-server-start-log", payload)
+      .unwrap();
   }
 
-  let app_local_data_dir = app_handle.path_resolver().app_local_data_dir().unwrap();
+  let app_local_data_dir = app_handle.path().app_local_data_dir().unwrap();
   let jvm_dir = app_local_data_dir.join("jvm-21");
   if !jvm_dir.exists() {
     let adoptium_os = detect_os();
@@ -44,10 +58,16 @@ pub async fn run_integrated_server(app_handle: AppHandle, integrated_server_stat
     let security_version = jvm_json[0]["version"]["security"].as_u64().unwrap();
     let build_version = jvm_json[0]["version"]["build"].as_u64().unwrap();
     info!("Download URL: {}", download_url);
-    let jdk_archive_dir_name = format!("jdk-{}.{}.{}+{}", major_version, minor_version, security_version, build_version);
+    let jdk_archive_dir_name = format!(
+      "jdk-{}.{}.{}+{}",
+      major_version, minor_version, security_version, build_version
+    );
 
     fn send_download_progress(app_handle: &AppHandle, progress: u64, total: u64) {
-      send_log(app_handle, format!("Downloading JVM... {}%", progress * 100 / total));
+      send_log(
+        app_handle,
+        format!("Downloading JVM... {}%", progress * 100 / total),
+      );
     }
 
     send_download_progress(&app_handle, 0, 1);
@@ -80,14 +100,18 @@ pub async fn run_integrated_server(app_handle: AppHandle, integrated_server_stat
     std::fs::create_dir(&jars_dir).unwrap();
   }
 
-  let soul_fire_version_file = jars_dir.join(format!("SoulFireDedicated-{}.jar", soul_fire_version));
+  let soul_fire_version_file =
+    jars_dir.join(format!("SoulFireDedicated-{}.jar", soul_fire_version));
   if !soul_fire_version_file.exists() {
     send_log(&app_handle, "Fetching SoulFire data...");
     let soul_fire_url = format!("https://github.com/AlexProgrammerDE/SoulFire/releases/download/{}/SoulFireDedicated-{}.jar", soul_fire_version, soul_fire_version);
     info!("SoulFire URL: {}", soul_fire_url);
 
     fn send_download_progress(app_handle: &AppHandle, progress: u64, total: u64) {
-      send_log(app_handle, format!("Downloading SoulFire... {}%", progress * 100 / total));
+      send_log(
+        app_handle,
+        format!("Downloading SoulFire... {}%", progress * 100 / total),
+      );
     }
 
     send_download_progress(&app_handle, 0, 1);
@@ -123,7 +147,7 @@ pub async fn run_integrated_server(app_handle: AppHandle, integrated_server_stat
   let available_port = find_next_available_port(38765).unwrap();
 
   info!("Java Executable: {}", java_exec_path);
-  let command = Command::new(java_exec_path)
+  let command = app_handle.shell().command(java_exec_path)
     .current_dir(soul_fire_rundir)
     .args(&[
       format!("-Dsf.grpc.port={}", available_port).as_str(),
@@ -138,7 +162,7 @@ pub async fn run_integrated_server(app_handle: AppHandle, integrated_server_stat
       "-XX:+UseCriticalJavaThreadPriority",
       "-Dsf.flags.v1=true",
       "-jar",
-      soul_fire_version_file.to_str().unwrap()
+      soul_fire_version_file.to_str().unwrap(),
     ]);
 
   let (mut rx, mut child) = command.spawn().expect("Failed to spawn sidecar");
@@ -146,6 +170,7 @@ pub async fn run_integrated_server(app_handle: AppHandle, integrated_server_stat
   // Print all rx messages
   while let Some(message) = rx.recv().await {
     if let Stdout(line) = message {
+      let line = String::from_utf8(line).unwrap();
       let line = strip_ansi_escapes::strip_str(line);
       if line.contains("Finished loading!") {
         send_log(&app_handle, "Generating token...");
@@ -156,11 +181,14 @@ pub async fn run_integrated_server(app_handle: AppHandle, integrated_server_stat
     }
   }
 
-  child.write("generate-token\n".as_bytes()).expect("Failed to write to dedicated server");
+  child
+    .write("generate-token\n".as_bytes())
+    .expect("Failed to write to dedicated server");
 
   let token: String = loop {
     if let Some(message) = rx.recv().await {
       if let Stdout(line) = message {
+        let line = String::from_utf8(line).unwrap();
         if line.contains("JWT") {
           break line.split_whitespace().last().unwrap().to_string();
         }
@@ -168,8 +196,12 @@ pub async fn run_integrated_server(app_handle: AppHandle, integrated_server_stat
     }
   };
 
-  integrated_server_state.child_process.lock().await.replace(Box::from(child));
+  integrated_server_state
+    .child_process
+    .lock()
+    .await
+    .replace(Box::from(child));
 
   let url = format!("http://127.0.0.1:{}", available_port);
-  return Ok(format!("{}\n{}", url, token));
+  Ok(format!("{}\n{}", url, token))
 }

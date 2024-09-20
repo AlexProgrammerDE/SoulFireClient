@@ -23,13 +23,13 @@ import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { LaptopMinimalIcon, LoaderCircleIcon, ServerIcon } from 'lucide-react';
-import { invoke } from '@tauri-apps/api';
 import { listen } from '@tauri-apps/api/event';
 import {
   LOCAL_STORAGE_SERVER_ADDRESS_KEY,
   LOCAL_STORAGE_SERVER_TOKEN_KEY,
 } from '@/lib/types.ts';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
+import { invoke } from '@tauri-apps/api/core';
 
 export const Route = createFileRoute('/')({
   component: Index,

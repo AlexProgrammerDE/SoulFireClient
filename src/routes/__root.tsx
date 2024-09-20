@@ -14,9 +14,9 @@ import {
 } from '@/components/providers/system-info-context.tsx';
 import { isTauri } from '@/lib/utils.ts';
 import { appConfigDir, resolve } from '@tauri-apps/api/path';
-import { createDir, readDir } from '@tauri-apps/api/fs';
-import { arch, locale, platform, type, version } from '@tauri-apps/api/os';
-import { appWindow } from '@tauri-apps/api/window';
+import { mkdir, readDir } from '@tauri-apps/plugin-fs';
+import { arch, locale, platform, type, version } from '@tauri-apps/plugin-os';
+import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
 
 export const Route = createRootRoute({
   loader: async () => {
@@ -25,21 +25,22 @@ export const Route = createRootRoute({
       const profileDir = await resolve(
         await resolve(await appConfigDir(), 'profile'),
       );
-      await createDir(profileDir, { recursive: true });
+      await mkdir(profileDir, { recursive: true });
 
       const availableProfiles = (await readDir(profileDir))
-        .filter((file) => !file.children)
+        .filter((file) => file.isFile)
         .filter((file) => file.name)
-        .map((file) => file.name!)
+        .map((file) => file.name)
         .filter((file) => file.endsWith('.json'));
 
+      const appWindow = getCurrentWebviewWindow();
       systemInfo = {
         availableProfiles,
-        osType: await type(),
-        osVersion: await version(),
-        platformName: await platform(),
+        osType: type(),
+        osVersion: version(),
+        platformName: platform(),
         osLocale: await locale(),
-        archName: await arch(),
+        archName: arch(),
         theme: await appWindow.theme(),
       };
     } else {

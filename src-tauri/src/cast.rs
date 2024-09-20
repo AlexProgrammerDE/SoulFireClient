@@ -1,17 +1,17 @@
-use std::str::FromStr;
-use std::sync::atomic::AtomicBool;
-use std::sync::mpsc::{channel, Sender};
-use std::thread;
 use log::{error, info};
 use mdns_sd::{ServiceDaemon, ServiceEvent};
-use rust_cast::{CastDevice, ChannelMessage};
-use rust_cast::ChannelMessage::Connection;
 use rust_cast::channels::connection::ConnectionResponse;
 use rust_cast::channels::heartbeat::HeartbeatResponse;
 use rust_cast::channels::receiver::CastDeviceApp;
 use rust_cast::message_manager::CastMessagePayload;
+use rust_cast::ChannelMessage::Connection;
+use rust_cast::{CastDevice, ChannelMessage};
 use serde_json::{json, Map, Value};
-use tauri::{AppHandle, async_runtime, Manager};
+use std::str::FromStr;
+use std::sync::atomic::AtomicBool;
+use std::sync::mpsc::{channel, Sender};
+use std::thread;
+use tauri::{async_runtime, AppHandle, Emitter, Listener};
 
 const SERVICE_TYPE: &str = "_googlecast._tcp.local.";
 const DEFAULT_DESTINATION_ID: &str = "receiver-0";
@@ -27,12 +27,20 @@ pub struct CastRunningState {
 }
 
 #[tauri::command]
-pub fn discover_casts(app_handle: AppHandle, cast_running_state: tauri::State<'_, CastRunningState>) {
-  if cast_running_state.running.load(std::sync::atomic::Ordering::Relaxed) {
+pub fn discover_casts(
+  app_handle: AppHandle,
+  cast_running_state: tauri::State<'_, CastRunningState>,
+) {
+  if cast_running_state
+    .running
+    .load(std::sync::atomic::Ordering::Relaxed)
+  {
     return;
   }
 
-  cast_running_state.running.store(true, std::sync::atomic::Ordering::Relaxed);
+  cast_running_state
+    .running
+    .store(true, std::sync::atomic::Ordering::Relaxed);
 
   async_runtime::spawn(discover_casts_async(app_handle));
 }
@@ -60,13 +68,21 @@ async fn discover_casts_async(app_handle: AppHandle) {
   while let Ok(event) = receiver.recv() {
     match event {
       ServiceEvent::ServiceResolved(info) => {
-        if info.get_properties().get_property_val_str(CAST_MODEL_NAME).unwrap() != CAST_SCREEN_MODEL_NAME {
+        if info
+          .get_properties()
+          .get_property_val_str(CAST_MODEL_NAME)
+          .unwrap()
+          != CAST_SCREEN_MODEL_NAME
+        {
           continue;
         }
 
         let full_name = info.get_fullname();
         let id = info.get_properties().get_property_val_str(CAST_ID).unwrap();
-        let name = info.get_properties().get_property_val_str(CAST_FRIENDLY_NAME).unwrap();
+        let name = info
+          .get_properties()
+          .get_property_val_str(CAST_FRIENDLY_NAME)
+          .unwrap();
         let address = info.get_hostname();
         let port = info.get_port();
 
@@ -77,26 +93,32 @@ async fn discover_casts_async(app_handle: AppHandle) {
         announced_full_names.push(full_name.to_string());
 
         info!("Discovered cast device: {} at {}", name, address);
-        app_handle.emit_all("cast-device-discovered",
-                            json!({
-                                        "id": id,
-                                        "full_name": full_name,
-                                        "name": name,
-                                        "address": address,
-                                        "port": port
-                                    }),
-        ).unwrap();
+        app_handle
+          .emit(
+            "cast-device-discovered",
+            json!({
+                            "id": id,
+                            "full_name": full_name,
+                            "name": name,
+                            "address": address,
+                            "port": port
+                        }),
+          )
+          .unwrap();
       }
       ServiceEvent::ServiceRemoved(_, full_name) => {
         if announced_full_names.contains(&full_name) {
           announced_full_names.retain(|x| x != &full_name);
 
           info!("Removed cast device: {}", full_name);
-          app_handle.emit_all("cast-device-removed",
-                              json!({
-                                            "full_name": full_name
-                                        }),
-          ).unwrap();
+          app_handle
+            .emit(
+              "cast-device-removed",
+              json!({
+                                "full_name": full_name
+                            }),
+            )
+            .unwrap();
         }
       }
       _ => {}
@@ -104,7 +126,12 @@ async fn discover_casts_async(app_handle: AppHandle) {
   }
 }
 
-fn create_cast_connection(address: String, port: u16, app_handle: AppHandle, channel: Sender<String>) {
+fn create_cast_connection(
+  address: String,
+  port: u16,
+  app_handle: AppHandle,
+  channel: Sender<String>,
+) {
   let cast_device = match CastDevice::connect_without_host_verification(&address, port) {
     Ok(cast_device) => cast_device,
     Err(err) => panic!("Could not establish connection with Cast Device: {:?}", err),
@@ -119,7 +146,10 @@ fn create_cast_connection(address: String, port: u16, app_handle: AppHandle, cha
   let app_to_run = CastDeviceApp::from_str(CAST_APP_ID).unwrap();
   let application = cast_device.receiver.launch_app(&app_to_run).unwrap();
 
-  cast_device.connection.disconnect(DEFAULT_DESTINATION_ID).unwrap();
+  cast_device
+    .connection
+    .disconnect(DEFAULT_DESTINATION_ID)
+    .unwrap();
 
   cast_device
     .connection
@@ -128,15 +158,24 @@ fn create_cast_connection(address: String, port: u16, app_handle: AppHandle, cha
 
   info!("Connected to application: {:?}", application);
 
-  cast_device.receiver.broadcast_message(CAST_APP_NAMESPACE, &json!({
-        "type": "INITIAL_HELLO"
-    })).unwrap();
+  cast_device
+    .receiver
+    .broadcast_message(
+      CAST_APP_NAMESPACE,
+      &json!({
+                "type": "INITIAL_HELLO"
+            }),
+    )
+    .unwrap();
 
   let mut sent_success = false;
   let (tx, rx) = std::sync::mpsc::sync_channel(64);
   loop {
     if let Ok(message) = rx.try_recv() {
-      cast_device.receiver.broadcast_message(CAST_APP_NAMESPACE, &message).unwrap();
+      cast_device
+        .receiver
+        .broadcast_message(CAST_APP_NAMESPACE, &message)
+        .unwrap();
       info!("Sent message: {:?}", message);
     }
 
@@ -161,14 +200,18 @@ fn create_cast_connection(address: String, port: u16, app_handle: AppHandle, cha
                             "type": "CHALLENGE_RESPONSE",
                             "challenge": challenge
                         });
-            cast_device.receiver.broadcast_message(CAST_APP_NAMESPACE, &response).unwrap();
+            cast_device
+              .receiver
+              .broadcast_message(CAST_APP_NAMESPACE, &response)
+              .unwrap();
           } else if message_type == "LOGIN_SUCCESS" {
             info!("Successfully logged in to Cast Device");
 
             let tx = tx.clone();
-            app_handle.listen_global("cast-global-message", move |event| {
-              let message = event.payload().unwrap();
-              let message_json: Map<String, Value> = serde_json::from_str(&message).unwrap();
+            app_handle.listen("cast-global-message", move |event| {
+              let message = event.payload();
+              let message_json: Map<String, Value> =
+                serde_json::from_str(&message).unwrap();
 
               tx.send(message_json).unwrap();
             });
@@ -183,9 +226,14 @@ fn create_cast_connection(address: String, port: u16, app_handle: AppHandle, cha
       Ok(Connection(connection)) => {
         if let ConnectionResponse::Close = connection {
           info!("Connection closed");
-          app_handle.emit_all("cast-device-disconnected", json!({
-                        "transport_id": application.transport_id
-                    })).unwrap();
+          app_handle
+            .emit(
+              "cast-device-disconnected",
+              json!({
+                                "transport_id": application.transport_id
+                            }),
+            )
+            .unwrap();
           break;
         }
       }
