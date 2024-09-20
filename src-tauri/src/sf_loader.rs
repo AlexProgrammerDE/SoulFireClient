@@ -21,7 +21,7 @@ pub async fn run_integrated_server(app_handle: AppHandle, integrated_server_stat
 
   integrated_server_state.starting.store(true, std::sync::atomic::Ordering::Relaxed);
 
-  let soul_fire_version = "1.12.0";
+  let soul_fire_version = "1.12.1";
 
   fn send_log<S: Serialize + Clone>(app_handle: &AppHandle, payload: S) {
     app_handle.emit_all("integrated-server-start-log", payload).unwrap();
