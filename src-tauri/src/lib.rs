@@ -79,7 +79,6 @@ async fn update(app: tauri::AppHandle) -> tauri::Result<()> {
   if let Some(update) = app.updater().unwrap().check().await.unwrap() {
     let mut downloaded = 0;
 
-    // alternatively we could also call update.download() and update.install() separately
     update.download_and_install(|chunk_length, content_length| {
       downloaded += chunk_length;
       println!("downloaded {downloaded} from {content_length:?}");
