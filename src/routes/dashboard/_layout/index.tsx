@@ -105,7 +105,10 @@ function InstanceSelectPage() {
       toast.promise(promise, {
         loading: 'Deleting instance...',
         success: 'Instance deleted',
-        error: 'Failed to delete instance',
+        error: (e) => {
+          console.error(e);
+          return 'Failed to delete instance';
+        },
       });
 
       return promise;

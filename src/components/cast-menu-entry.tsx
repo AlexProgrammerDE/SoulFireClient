@@ -134,7 +134,10 @@ export default function CastMenuEntry() {
 
                       return `Connected to ${currentDevice.info.name}!`;
                     },
-                    error: `Failed to connect to ${currentDevice.info.name}`,
+                    error: (e) => {
+                      console.error(e);
+                      return `Failed to connect to ${currentDevice.info.name}`;
+                    },
                   },
                 );
               }}
@@ -169,7 +172,10 @@ export default function CastMenuEntry() {
               {
                 loading: 'Broadcasting message...',
                 success: 'Message broadcasted!',
-                error: 'Failed to broadcast message',
+                error: (e) => {
+                  console.error(e);
+                  return 'Failed to broadcast message';
+                },
               },
             );
           }}

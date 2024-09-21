@@ -138,7 +138,10 @@ export const DashboardMenuHeader = () => {
                 {
                   loading: 'Loading profile...',
                   success: 'Profile loaded',
-                  error: 'Failed to load profile',
+                  error: (e) => {
+                    console.error(e);
+                    return 'Failed to load profile';
+                  },
                 },
               );
             };
@@ -180,7 +183,10 @@ export const DashboardMenuHeader = () => {
                                   {
                                     loading: 'Loading profile...',
                                     success: 'Profile loaded',
-                                    error: 'Failed to load profile',
+                                    error: (e) => {
+                                      console.error(e);
+                                      return 'Failed to load profile';
+                                    },
                                   },
                                 );
                               })();
@@ -223,7 +229,10 @@ export const DashboardMenuHeader = () => {
                               {
                                 loading: 'Loading profile...',
                                 success: 'Profile loaded',
-                                error: 'Failed to load profile',
+                                error: (e) => {
+                                  console.error(e);
+                                  return 'Failed to load profile';
+                                },
                               },
                             );
                           }

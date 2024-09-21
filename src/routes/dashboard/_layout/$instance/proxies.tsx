@@ -269,7 +269,10 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           toast.promise(setProfileMutation(newProfile), {
             loading: 'Removing proxies...',
             success: `Removed ${beforeSize - newProfile.proxies.length} proxies`,
-            error: 'Failed to remove proxies',
+            error: (e) => {
+              console.error(e);
+              return 'Failed to remove proxies';
+            },
           });
         }}
       >
