@@ -76,5 +76,6 @@
     "shell:default",
     "clipboard-manager:default",
     "updater:default"
-  ]
+  ],
+  "capabilities": []
 }
