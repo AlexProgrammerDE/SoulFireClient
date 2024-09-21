@@ -13,36 +13,40 @@ import {
   SystemInfoContext,
 } from '@/components/providers/system-info-context.tsx';
 import { isTauri } from '@/lib/utils.ts';
-import { appConfigDir, resolve } from '@tauri-apps/api/path';
-import { mkdir, readDir } from '@tauri-apps/plugin-fs';
+import { appConfigDir, BaseDirectory, resolve } from '@tauri-apps/api/path';
+import { mkdir, readDir, watch } from '@tauri-apps/plugin-fs';
 import { arch, locale, platform, type, version } from '@tauri-apps/plugin-os';
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
+
+async function createSystemInfo() {
+  const profileDir = await resolve(
+    await resolve(await appConfigDir(), 'profile'),
+  );
+  await mkdir(profileDir, { recursive: true });
+
+  const availableProfiles = (await readDir(profileDir))
+    .filter((file) => file.isFile)
+    .filter((file) => file.name)
+    .map((file) => file.name)
+    .filter((file) => file.endsWith('.json'));
+
+  const appWindow = getCurrentWebviewWindow();
+  return {
+    availableProfiles,
+    osType: type(),
+    osVersion: version(),
+    platformName: platform(),
+    osLocale: await locale(),
+    archName: arch(),
+    theme: await appWindow.theme(),
+  };
+}
 
 export const Route = createRootRoute({
   loader: async () => {
     let systemInfo: SystemInfo | null;
     if (isTauri()) {
-      const profileDir = await resolve(
-        await resolve(await appConfigDir(), 'profile'),
-      );
-      await mkdir(profileDir, { recursive: true });
-
-      const availableProfiles = (await readDir(profileDir))
-        .filter((file) => file.isFile)
-        .filter((file) => file.name)
-        .map((file) => file.name)
-        .filter((file) => file.endsWith('.json'));
-
-      const appWindow = getCurrentWebviewWindow();
-      systemInfo = {
-        availableProfiles,
-        osType: type(),
-        osVersion: version(),
-        platformName: platform(),
-        osLocale: await locale(),
-        archName: arch(),
-        theme: await appWindow.theme(),
-      };
+      systemInfo = await createSystemInfo();
     } else {
       systemInfo = null;
     }
@@ -62,6 +66,9 @@ const ReactQueryDevtoolsProduction = lazy(() =>
 
 function RootLayout() {
   const { systemInfo } = Route.useLoaderData();
+  const [systemInfoState, setSystemInfoState] = useState<SystemInfo | null>(
+    systemInfo,
+  );
   const [showDevtools, setShowDevtools] = useState(false);
 
   useEffect(() => {
@@ -69,16 +76,47 @@ function RootLayout() {
     window.toggleDevtools = () => setShowDevtools((old) => !old);
   }, []);
 
+  useEffect(() => {
+    if (isTauri()) {
+      let didUnmount = false;
+      let unwatch: null | (() => void) = null;
+      void watch(
+        'profile',
+        () => {
+          void createSystemInfo().then(setSystemInfoState);
+        },
+        {
+          baseDir: BaseDirectory.AppConfig,
+          delayMs: 500,
+          recursive: true,
+        },
+      ).then((unwatchFn) => {
+        if (didUnmount) {
+          unwatchFn();
+        } else {
+          unwatch = unwatchFn;
+        }
+      });
+
+      return () => {
+        didUnmount = true;
+        if (unwatch) {
+          unwatch();
+        }
+      };
+    }
+  }, []);
+
   return (
     <>
       <QueryClientProvider client={queryClientInstance}>
         <ThemeProvider
           attribute="class"
-          defaultTheme={systemInfo?.theme ?? 'system'}
+          defaultTheme={systemInfoState?.theme ?? 'system'}
           enableSystem
           disableTransitionOnChange
         >
-          <SystemInfoContext.Provider value={systemInfo}>
+          <SystemInfoContext.Provider value={systemInfoState}>
             <main vaul-drawer-wrapper="" className="flex h-screen w-screen">
               <Outlet />
             </main>

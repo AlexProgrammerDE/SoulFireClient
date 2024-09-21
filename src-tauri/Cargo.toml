@@ -30,7 +30,7 @@ env_logger = "0.11.3"
 log = "0.4.21"
 discord-presence = "1.2.0"
 tauri-plugin-dialog = "2.0.0-rc"
-tauri-plugin-fs = "2.0.0-rc"
+tauri-plugin-fs = { version = "2.0.0-rc", features = ["watch"] }
 tauri-plugin-os = "2.0.0-rc"
 tauri-plugin-shell = "2.0.0-rc"
 tauri-plugin-clipboard-manager = "2.0.0-alpha.2"
