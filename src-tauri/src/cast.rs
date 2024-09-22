@@ -1,4 +1,4 @@
-use log::{error, info};
+use log::{debug, error, info};
 use mdns_sd::{ServiceDaemon, ServiceEvent};
 use rust_cast::channels::connection::ConnectionResponse;
 use rust_cast::channels::heartbeat::HeartbeatResponse;
@@ -138,6 +138,8 @@ fn create_cast_connection(
   };
 
   info!("Connected to Cast Device: {:?} {:?}", address, port);
+  
+  // Switch to messages with the device system
   cast_device
     .connection
     .connect(DEFAULT_DESTINATION_ID.to_string())
@@ -146,11 +148,11 @@ fn create_cast_connection(
   let app_to_run = CastDeviceApp::from_str(CAST_APP_ID).unwrap();
   let application = cast_device.receiver.launch_app(&app_to_run).unwrap();
 
+  // Switch from device system to messages with the application
   cast_device
     .connection
     .disconnect(DEFAULT_DESTINATION_ID)
     .unwrap();
-
   cast_device
     .connection
     .connect(&application.transport_id)
@@ -158,6 +160,7 @@ fn create_cast_connection(
 
   info!("Connected to application: {:?}", application);
 
+  // Start health check with the application
   cast_device
     .receiver
     .broadcast_message(
@@ -181,8 +184,17 @@ fn create_cast_connection(
 
     match cast_device.receive() {
       Ok(ChannelMessage::Heartbeat(response)) => {
-        if let HeartbeatResponse::Ping = response {
-          cast_device.heartbeat.pong().unwrap();
+        match response {
+          HeartbeatResponse::Ping => {
+            debug!("Received Ping from Cast Device, sending Pong");
+            cast_device.heartbeat.pong().unwrap();
+          }
+          HeartbeatResponse::Pong => {
+            debug!("Received Pong from Cast Device");
+          }
+          HeartbeatResponse::NotImplemented(message_type, _) => {
+            error!("Received unknown message type: {}", message_type);
+          }
         }
       }
       Ok(ChannelMessage::Raw(response)) => {
@@ -224,21 +236,34 @@ fn create_cast_connection(
         }
       }
       Ok(Connection(connection)) => {
-        if let ConnectionResponse::Close = connection {
-          info!("Connection closed");
-          app_handle
-            .emit(
-              "cast-device-disconnected",
-              json!({
+        match connection {
+          ConnectionResponse::Connect => {
+            info!("Connected to Cast Device");
+          }
+          ConnectionResponse::Close => {
+            info!("Connection closed");
+            app_handle
+              .emit(
+                "cast-device-disconnected",
+                json!({
                                 "transport_id": application.transport_id
                             }),
-            )
-            .unwrap();
-          break;
+              )
+              .unwrap();
+            break;
+          }
+          ConnectionResponse::NotImplemented(message_type, _) => {
+            error!("Received unknown message type: {}", message_type);
+          }
         }
       }
+      Ok(ChannelMessage::Media(response)) => {
+        debug!("Received Media message: {:?}", response);
+      }
+      Ok(ChannelMessage::Receiver(response)) => {
+        debug!("Received Receiver message: {:?}", response);
+      }
       Err(error) => error!("Error occurred while receiving message {}", error),
-      _ => {}
     }
   }
 }
