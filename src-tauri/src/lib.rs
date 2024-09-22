@@ -21,6 +21,7 @@ mod utils;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
   env_logger::init();
+  rustls::crypto::ring::default_provider().install_default().expect("Failed to install rustls crypto provider");
 
   thread::spawn(|| load_discord_rpc());
 

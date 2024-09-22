@@ -4670,6 +4670,7 @@ dependencies = [
  "mdns-sd",
  "reqwest",
  "rust_cast",
+ "rustls",
  "serde",
  "serde_json",
  "strip-ansi-escapes",
