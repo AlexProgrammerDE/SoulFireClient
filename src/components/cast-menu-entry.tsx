@@ -20,10 +20,6 @@ type MediaDeviceInfo = {
   port: number;
 };
 
-type MediaDeviceRemoved = {
-  full_name: string;
-};
-
 type MediaDeviceDisconnected = {
   transport_id: string;
 };
@@ -37,33 +33,22 @@ export default function CastMenuEntry() {
   const [devices, setDevices] = useState<MediaDeviceState[]>([]);
 
   useEffect(() => {
+    const interval = setInterval(() => {
+      void invoke('get_casts').then((result) => {
+        const devices = result as MediaDeviceInfo[];
+        setDevices((oldDevices) => {
+          return devices.map((device) => {
+            const oldDevice = oldDevices.find((d) => d.info.id === device.id);
+            return {
+              info: device,
+              transport_id: oldDevice?.transport_id ?? null,
+            };
+          });
+        });
+      });
+    }, 1_000);
+
     let listening = true;
-    void listen('cast-device-discovered', (event) => {
-      if (!listening) {
-        return;
-      }
-
-      const payload = event.payload as MediaDeviceInfo;
-      setDevices((devices) => [
-        ...devices,
-        {
-          info: payload,
-          transport_id: null,
-        },
-      ]);
-    });
-
-    void listen('cast-device-removed', (event) => {
-      if (!listening) {
-        return;
-      }
-
-      const payload = event.payload as MediaDeviceRemoved;
-      setDevices((devices) =>
-        devices.filter((device) => device.info.full_name !== payload.full_name),
-      );
-    });
-
     void listen('cast-device-disconnected', (event) => {
       if (!listening) {
         return;
@@ -86,6 +71,7 @@ export default function CastMenuEntry() {
     });
 
     return () => {
+      clearInterval(interval);
       listening = false;
     };
   }, []);

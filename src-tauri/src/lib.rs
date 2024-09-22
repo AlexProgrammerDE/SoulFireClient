@@ -1,12 +1,12 @@
-use crate::cast::{connect_cast, discover_casts, CastRunningState};
+use crate::cast::{connect_cast, discover_casts, get_casts, CastRunningState};
 use crate::discord::load_discord_rpc;
 use crate::sf_loader::{run_integrated_server, IntegratedServerState};
 use crate::utils::kill_child_process;
+use log::info;
 use std::ops::Deref;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 use std::{env, thread};
-use log::info;
 use tauri::async_runtime::Mutex;
 use tauri::{Emitter, Listener, Manager};
 use tauri_plugin_updater::UpdaterExt;
@@ -34,6 +34,7 @@ pub fn run() {
     .plugin(tauri_plugin_dialog::init())
     .manage(CastRunningState {
       running: AtomicBool::new(false),
+      announced_devices: Mutex::new(Vec::new()),
     })
     .manage(IntegratedServerState {
       starting: Arc::new(AtomicBool::new(false)),
@@ -42,7 +43,8 @@ pub fn run() {
     .invoke_handler(tauri::generate_handler![
             run_integrated_server,
             discover_casts,
-            connect_cast
+            connect_cast,
+            get_casts
         ])
     .setup(|app| {
       #[cfg(all(desktop))]

@@ -8,12 +8,13 @@ use rust_cast::ChannelMessage::Connection;
 use rust_cast::{CastDevice, ChannelMessage};
 use serde_json::{json, Map, Value};
 use std::str::FromStr;
-use std::sync::Arc;
+use std::sync::{Arc};
 use std::sync::atomic::AtomicBool;
 use std::sync::mpsc::{channel, Sender};
 use std::thread;
 use async_std::task::sleep;
-use tauri::{AppHandle, Emitter, Listener};
+use tauri::{AppHandle, Emitter, Listener, Manager};
+use tauri::async_runtime::Mutex;
 
 const SERVICE_TYPE: &str = "_googlecast._tcp.local.";
 const DEFAULT_DESTINATION_ID: &str = "receiver-0";
@@ -24,8 +25,31 @@ const CAST_ID: &str = "id";
 const CAST_APP_ID: &str = "3F768D1D";
 const CAST_APP_NAMESPACE: &str = "urn:x-cast:com.soulfiremc";
 
+pub struct DiscoveredCast {
+  pub id: String,
+  pub full_name: String,
+  pub name: String,
+  pub address: String,
+  pub port: u16,
+}
+
 pub struct CastRunningState {
   pub running: AtomicBool,
+  pub announced_devices: Mutex<Vec<DiscoveredCast>>,
+}
+
+impl CastRunningState {
+  pub async fn add_discovered_device(&self, device: DiscoveredCast) {
+    self.announced_devices.lock().await.push(device);
+  }
+
+  pub async fn contains_discovered_device(&self, full_name: String) -> bool {
+    self.announced_devices.lock().await.iter().any(|x| x.full_name == full_name)
+  }
+
+  pub async fn remove_discovered_device(&self, full_name: String) {
+    self.announced_devices.lock().await.retain(|x| x.full_name != full_name);
+  }
 }
 
 #[tauri::command]
@@ -47,17 +71,6 @@ pub fn discover_casts(
   tauri::async_runtime::spawn(discover_casts_async(app_handle));
 }
 
-#[tauri::command]
-pub async fn connect_cast(address: String, port: u16, app_handle: AppHandle) -> String {
-  let (tx, rx) = channel();
-
-  thread::spawn(move || {
-    create_cast_connection(address, port, app_handle, tx);
-  });
-
-  rx.recv().unwrap()
-}
-
 async fn discover_casts_async(app_handle: AppHandle) {
   info!("Discovering Cast Devices...");
   let mdns = ServiceDaemon::new().expect("Failed to create mDNS daemon.");
@@ -66,7 +79,7 @@ async fn discover_casts_async(app_handle: AppHandle) {
     .browse(SERVICE_TYPE)
     .expect("Failed to browse mDNS services.");
 
-  let mut announced_full_names = vec![];
+  let cast_running_state = app_handle.state::<CastRunningState>();
   while let Ok(event) = receiver.recv() {
     match event {
       ServiceEvent::ServiceResolved(info) => {
@@ -88,11 +101,17 @@ async fn discover_casts_async(app_handle: AppHandle) {
         let address = info.get_hostname();
         let port = info.get_port();
 
-        if announced_full_names.contains(&full_name.to_string()) {
+        if cast_running_state.contains_discovered_device(full_name.to_string()).await {
           continue;
         }
 
-        announced_full_names.push(full_name.to_string());
+        cast_running_state.add_discovered_device(DiscoveredCast {
+          id: id.to_string(),
+          full_name: full_name.to_string(),
+          name: name.to_string(),
+          address: address.to_string(),
+          port,
+        }).await;
 
         info!("Discovered cast device: {} at {}", name, address);
         app_handle
@@ -109,8 +128,8 @@ async fn discover_casts_async(app_handle: AppHandle) {
           .unwrap();
       }
       ServiceEvent::ServiceRemoved(_, full_name) => {
-        if announced_full_names.contains(&full_name) {
-          announced_full_names.retain(|x| x != &full_name);
+        if cast_running_state.contains_discovered_device(full_name.to_string()).await {
+          cast_running_state.remove_discovered_device(full_name.to_string()).await;
 
           info!("Removed cast device: {}", full_name);
           app_handle
@@ -126,6 +145,38 @@ async fn discover_casts_async(app_handle: AppHandle) {
       _ => {}
     }
   }
+}
+
+#[tauri::command]
+pub async fn get_casts(
+  cast_running_state: tauri::State<'_, CastRunningState>,
+) -> Result<Value, ()> {
+  let devices = cast_running_state.announced_devices.lock().await;
+  let devices_json: Vec<Value> = devices
+    .iter()
+    .map(|device| {
+      json!({
+                "id": device.id,
+                "full_name": device.full_name,
+                "name": device.name,
+                "address": device.address,
+                "port": device.port
+            })
+    })
+    .collect();
+
+  Ok(json!(devices_json))
+}
+
+#[tauri::command]
+pub async fn connect_cast(address: String, port: u16, app_handle: AppHandle) -> String {
+  let (tx, rx) = channel();
+
+  thread::spawn(move || {
+    create_cast_connection(address, port, app_handle, tx);
+  });
+
+  rx.recv().unwrap()
 }
 
 fn create_cast_connection(
@@ -176,7 +227,7 @@ fn create_cast_connection(
   let mut sent_success = false;
   let (send_frontend, read_frontend) = std::sync::mpsc::sync_channel(64);
   let should_send_healthcheck = Arc::new(AtomicBool::new(true));
-  
+
   let should_send_healthcheck_clone = should_send_healthcheck.clone();
   tauri::async_runtime::spawn(async move {
     loop {
@@ -184,7 +235,7 @@ fn create_cast_connection(
       should_send_healthcheck_clone.store(true, std::sync::atomic::Ordering::Relaxed);
     }
   });
-  
+
   loop {
     while let Ok(message) = read_frontend.try_recv() {
       cast_device
