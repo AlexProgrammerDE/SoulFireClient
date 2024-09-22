@@ -5,25 +5,25 @@ use log::{error, info};
 
 const CLIENT_ID: u64 = 1248603974475583608;
 pub fn load_discord_rpc() {
-  let mut drpc = Client::new(CLIENT_ID);
+  let mut discord_rpc = Client::new(CLIENT_ID);
 
-  let _ready = drpc.on_ready(|_ctx| {
+  let _ready = discord_rpc.on_ready(|_ctx| {
     info!("Discord RPC ready!");
   });
 
-  let _ready = drpc.on_error(|error| {
+  let _error = discord_rpc.on_error(|error| {
     error!("Discord RPC error: {:?}", error);
   });
 
-  drpc.start();
+  discord_rpc.start();
 
   let start = SystemTime::now();
   let epoch_secs = start
     .duration_since(UNIX_EPOCH)
     .expect("Time went backwards")
     .as_secs();
-  drpc.block_until_event(Event::Ready).unwrap();
-  if let Err(why) = drpc.set_activity(|a| {
+  discord_rpc.block_until_event(Event::Ready).unwrap();
+  if let Err(why) = discord_rpc.set_activity(|a| {
     a.state("Idling")
       .details("Professional bot tool")
       .timestamps(|timestamps| timestamps.start(epoch_secs))
@@ -33,5 +33,5 @@ pub fn load_discord_rpc() {
     error!("Failed to set presence: {}", why);
   }
 
-  drpc.block_on().unwrap();
+  discord_rpc.block_on().unwrap();
 }

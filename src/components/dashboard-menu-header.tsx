@@ -177,9 +177,11 @@ export const DashboardMenuHeader = () => {
                                 );
 
                                 toast.promise(
-                                  setProfileMutation.mutateAsync(
-                                    JSON.parse(data) as ProfileRoot,
-                                  ),
+                                  (async () => {
+                                    await setProfileMutation.mutateAsync(
+                                      JSON.parse(data) as ProfileRoot,
+                                    );
+                                  })(),
                                   {
                                     loading: 'Loading profile...',
                                     success: 'Profile loaded',
@@ -223,9 +225,11 @@ export const DashboardMenuHeader = () => {
                           if (selected) {
                             const data = await readTextFile(selected);
                             toast.promise(
-                              setProfileMutation.mutateAsync(
-                                JSON.parse(data) as ProfileRoot,
-                              ),
+                              (async () => {
+                                await setProfileMutation.mutateAsync(
+                                  JSON.parse(data) as ProfileRoot,
+                                );
+                              })(),
                               {
                                 loading: 'Loading profile...',
                                 success: 'Profile loaded',
@@ -236,8 +240,6 @@ export const DashboardMenuHeader = () => {
                               },
                             );
                           }
-
-                          toast.success('Profile loaded');
                         })();
                       }}
                     >
