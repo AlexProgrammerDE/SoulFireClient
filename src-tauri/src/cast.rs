@@ -8,10 +8,12 @@ use rust_cast::ChannelMessage::Connection;
 use rust_cast::{CastDevice, ChannelMessage};
 use serde_json::{json, Map, Value};
 use std::str::FromStr;
+use std::sync::Arc;
 use std::sync::atomic::AtomicBool;
 use std::sync::mpsc::{channel, Sender};
 use std::thread;
-use tauri::{async_runtime, AppHandle, Emitter, Listener};
+use async_std::task::sleep;
+use tauri::{AppHandle, Emitter, Listener};
 
 const SERVICE_TYPE: &str = "_googlecast._tcp.local.";
 const DEFAULT_DESTINATION_ID: &str = "receiver-0";
@@ -42,7 +44,7 @@ pub fn discover_casts(
     .running
     .store(true, std::sync::atomic::Ordering::Relaxed);
 
-  async_runtime::spawn(discover_casts_async(app_handle));
+  tauri::async_runtime::spawn(discover_casts_async(app_handle));
 }
 
 #[tauri::command]
@@ -138,7 +140,7 @@ fn create_cast_connection(
   };
 
   info!("Connected to Cast Device: {:?} {:?}", address, port);
-  
+
   // Switch to messages with the device system
   cast_device
     .connection
@@ -172,14 +174,29 @@ fn create_cast_connection(
     .unwrap();
 
   let mut sent_success = false;
-  let (tx, rx) = std::sync::mpsc::sync_channel(64);
+  let (send_frontend, read_frontend) = std::sync::mpsc::sync_channel(64);
+  let should_send_healthcheck = Arc::new(AtomicBool::new(true));
+  
+  let should_send_healthcheck_clone = should_send_healthcheck.clone();
+  tauri::async_runtime::spawn(async move {
+    loop {
+      sleep(std::time::Duration::from_secs(5)).await;
+      should_send_healthcheck_clone.store(true, std::sync::atomic::Ordering::Relaxed);
+    }
+  });
+  
   loop {
-    if let Ok(message) = rx.try_recv() {
+    while let Ok(message) = read_frontend.try_recv() {
       cast_device
         .receiver
         .broadcast_message(CAST_APP_NAMESPACE, &message)
         .unwrap();
       info!("Sent message: {:?}", message);
+    }
+
+    if should_send_healthcheck.load(std::sync::atomic::Ordering::Relaxed) {
+      cast_device.heartbeat.ping().unwrap();
+      should_send_healthcheck.store(false, std::sync::atomic::Ordering::Relaxed);
     }
 
     match cast_device.receive() {
@@ -219,13 +236,13 @@ fn create_cast_connection(
           } else if message_type == "LOGIN_SUCCESS" {
             info!("Successfully logged in to Cast Device");
 
-            let tx = tx.clone();
+            let send_frontend_clone = send_frontend.clone();
             app_handle.listen("cast-global-message", move |event| {
               let message = event.payload();
               let message_json: Map<String, Value> =
                 serde_json::from_str(&message).unwrap();
 
-              tx.send(message_json).unwrap();
+              send_frontend_clone.send(message_json).unwrap();
             });
 
             if !sent_success {
