@@ -6,6 +6,7 @@ use std::ops::Deref;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 use std::{env, thread};
+use log::info;
 use tauri::async_runtime::Mutex;
 use tauri::{Emitter, Listener, Manager};
 use tauri_plugin_updater::UpdaterExt;
@@ -76,18 +77,21 @@ pub fn run() {
 }
 
 async fn update(app: tauri::AppHandle) -> tauri::Result<()> {
+  info!("Checking for updates");
   if let Some(update) = app.updater().unwrap().check().await.unwrap() {
     let mut downloaded = 0;
 
     update.download_and_install(|chunk_length, content_length| {
       downloaded += chunk_length;
-      println!("downloaded {downloaded} from {content_length:?}");
+      info!("Downloaded {downloaded} from {content_length:?}");
     }, || {
-      println!("download finished");
+      info!("Download finished");
     }).await.unwrap();
 
-    println!("update installed");
+    info!("Update installed");
     app.restart();
+  } else {
+    info!("No update found");
   }
 
   Ok(())
