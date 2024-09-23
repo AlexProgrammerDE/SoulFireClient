@@ -158,7 +158,7 @@ importers:
         version: 1.1.1
       '@eslint/js':
         specifier: ^9.7.0
-        version: 9.11.0
+        version: 9.11.1
       '@nabla/vite-plugin-eslint':
         specifier: ^2.0.4
         version: 2.0.4(eslint@8.57.1)(vite@5.4.7(@types/node@20.16.5))
@@ -683,8 +683,8 @@ packages:
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@eslint/js@9.11.0':
-    resolution: {integrity: sha512-LPkkenkDqyzTFauZLLAPhIb48fj6drrfMvRGSL9tS3AcZBSVTllemLSNyCvHNNL2t797S/6DJNSIwRwXgMO/eQ==}
+  '@eslint/js@9.11.1':
+    resolution: {integrity: sha512-/qu+TWz8WwPWc7/HcIJKi+c+MOm46GdVaSlTTQcaqaL53+GsoA6MxWp5PtTx48qbSP7ylM1Kn7nhvkugfJvRSA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@floating-ui/core@1.6.3':
@@ -4117,7 +4117,7 @@ snapshots:
 
   '@eslint/js@8.57.1': {}
 
-  '@eslint/js@9.11.0': {}
+  '@eslint/js@9.11.1': {}
 
   '@floating-ui/core@1.6.3':
     dependencies:
