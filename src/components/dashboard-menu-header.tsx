@@ -100,14 +100,21 @@ export const DashboardMenuHeader = () => {
           <MenubarContent>
             <MenubarItem
               onClick={() => {
-                void (async () => {
+                const disconnect = async () => {
+                  await emit('kill-integrated-server', {});
                   await navigate({
                     to: '/',
                     replace: true,
                   });
-                  await emit('kill-integrated-server', {});
-                  toast.success('Disconnected');
-                })();
+                };
+                toast.promise(disconnect(), {
+                  loading: 'Disconnecting...',
+                  success: 'Disconnected',
+                  error: (e) => {
+                    console.error(e);
+                    return 'Failed to disconnect';
+                  },
+                });
               }}
             >
               <UnplugIcon className="w-4 h-4 mr-2" />
