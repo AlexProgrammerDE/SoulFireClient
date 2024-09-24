@@ -28,7 +28,8 @@ function Plugins() {
         {clientInfo.settings
           .filter(
             (pluginSetting) =>
-              pluginSetting.type === SettingsPage_Type.INSTANCE,
+              pluginSetting.type === SettingsPage_Type.INSTANCE &&
+              pluginSetting.owningPlugin !== undefined,
           )
           .map((pluginSetting) => (
             <Button
