@@ -172,7 +172,7 @@ export const DashboardMenuHeader = () => {
                           <MenubarItem
                             key={file}
                             onClick={() => {
-                              void (async () => {
+                              const loadProfile = async () => {
                                 const data = await readTextFile(
                                   await resolve(
                                     await resolve(
@@ -183,22 +183,18 @@ export const DashboardMenuHeader = () => {
                                   ),
                                 );
 
-                                toast.promise(
-                                  (async () => {
-                                    await setProfileMutation.mutateAsync(
-                                      JSON.parse(data) as ProfileRoot,
-                                    );
-                                  })(),
-                                  {
-                                    loading: 'Loading profile...',
-                                    success: 'Profile loaded',
-                                    error: (e) => {
-                                      console.error(e);
-                                      return 'Failed to load profile';
-                                    },
-                                  },
+                                await setProfileMutation.mutateAsync(
+                                  JSON.parse(data) as ProfileRoot,
                                 );
-                              })();
+                              };
+                              toast.promise(loadProfile(), {
+                                loading: 'Loading profile...',
+                                success: 'Profile loaded',
+                                error: (e) => {
+                                  console.error(e);
+                                  return 'Failed to load profile';
+                                },
+                              });
                             }}
                           >
                             {file}
