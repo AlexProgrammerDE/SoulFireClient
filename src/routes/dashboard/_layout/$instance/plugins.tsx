@@ -4,6 +4,8 @@ import { ClientInfoContext } from '@/components/providers/client-info-context.ts
 import { Button } from '@/components/ui/button.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { SettingsPage_Type } from '@/generated/soulfire/config.ts';
+import SettingsPageButton from '@/components/settings-page-button.tsx';
+import { Undo2Icon } from 'lucide-react';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance/plugins')({
   component: Plugins,
@@ -15,13 +17,16 @@ function Plugins() {
 
   return (
     <div className="flex h-full w-full flex-col gap-4">
-      <Button asChild variant="secondary">
+      <Button asChild variant="secondary" className="flex flex-row gap-1">
         <Link
           to="/dashboard/$instance"
           params={{ instance: instanceInfo.id }}
           search={{}}
         >
-          Back
+          <div>
+            <Undo2Icon className="h-4" />
+          </div>
+          <span>Back</span>
         </Link>
       </Button>
       <div className="grid h-full w-full auto-rows-fr grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -32,23 +37,10 @@ function Plugins() {
               pluginSetting.owningPlugin !== undefined,
           )
           .map((pluginSetting) => (
-            <Button
+            <SettingsPageButton
               key={pluginSetting.namespace}
-              asChild
-              variant="secondary"
-              className="h-full w-full"
-            >
-              <Link
-                to="/dashboard/$instance/settings/$namespace"
-                params={{
-                  instance: instanceInfo.id,
-                  namespace: pluginSetting.namespace,
-                }}
-                search={{}}
-              >
-                {pluginSetting.pageName}
-              </Link>
-            </Button>
+              page={pluginSetting}
+            />
           ))}
       </div>
     </div>

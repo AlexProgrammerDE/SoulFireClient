@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button.tsx';
 import { useContext } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import ClientSettingsPageComponent from '@/components/client-settings-page.tsx';
+import ClientSettingsPageComponent from '@/components/settings-page.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from '@/components/ui/card.tsx';
 import { Badge } from '@/components/ui/badge.tsx';
+import { Undo2Icon } from 'lucide-react';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/$instance/settings/$namespace',
@@ -50,14 +51,17 @@ function SettingsNamespace() {
   );
   return (
     <div className="flex h-full w-full flex-col gap-4">
-      <Button asChild variant="secondary">
+      <Button asChild variant="secondary" className="flex flex-row gap-1">
         {settingsEntry.owningPlugin ? (
           <Link
             to="/dashboard/$instance/plugins"
             params={{ instance: instanceInfo.id }}
             search={{}}
           >
-            Back
+            <div>
+              <Undo2Icon className="h-4" />
+            </div>
+            <span>Back</span>
           </Link>
         ) : (
           <Link
@@ -65,7 +69,10 @@ function SettingsNamespace() {
             params={{ instance: instanceInfo.id }}
             search={{}}
           >
-            Back
+            <div>
+              <Undo2Icon className="h-4" />
+            </div>
+            <span>Back</span>
           </Link>
         )}
       </Button>

@@ -8,6 +8,7 @@ import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { PlayIcon, SquareIcon, TimerIcon, TimerOffIcon } from 'lucide-react';
 
 export default function ControlsMenu() {
   const queryClient = useQueryClient();
@@ -105,15 +106,18 @@ export default function ControlsMenu() {
   return (
     <div className="grid grid-rows-3 gap-4">
       <Button
-        className="h-full w-full"
+        className="h-full w-full flex flex-row gap-1"
         variant="secondary"
         onClick={() => startMutation.mutate()}
         disabled={instanceInfo.state !== InstanceState.STOPPED}
       >
-        Start
+        <div>
+          <PlayIcon className="h-4" />
+        </div>
+        <span>Start</span>
       </Button>
       <Button
-        className="h-full w-full"
+        className="h-full w-full flex flex-row gap-1"
         variant="secondary"
         onClick={() => toggleMutation.mutate()}
         disabled={
@@ -121,10 +125,19 @@ export default function ControlsMenu() {
           instanceInfo.state === InstanceState.STOPPED
         }
       >
-        {instanceInfo.state === InstanceState.PAUSED ? 'Resume' : 'Pause'}
+        <div>
+          {instanceInfo.state === InstanceState.PAUSED ? (
+            <TimerOffIcon className="h-4" />
+          ) : (
+            <TimerIcon className="h-4" />
+          )}
+        </div>
+        <span>
+          {instanceInfo.state === InstanceState.PAUSED ? 'Resume' : 'Pause'}
+        </span>
       </Button>
       <Button
-        className="h-full w-full"
+        className="h-full w-full flex flex-row gap-1"
         variant="secondary"
         onClick={() => stopMutation.mutate()}
         disabled={
@@ -132,7 +145,10 @@ export default function ControlsMenu() {
           instanceInfo.state === InstanceState.STOPPED
         }
       >
-        Stop
+        <div>
+          <SquareIcon className="h-4" />
+        </div>
+        <span>Stop</span>
       </Button>
     </div>
   );

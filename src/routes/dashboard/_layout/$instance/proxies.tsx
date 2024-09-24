@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { useCallback, useContext, useState } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import ClientSettingsPageComponent from '@/components/client-settings-page.tsx';
+import ClientSettingsPageComponent from '@/components/settings-page.tsx';
 import { DataTable } from '@/components/data-table.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
@@ -21,7 +21,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
-import { PlusIcon, TrashIcon } from 'lucide-react';
+import { PlusIcon, TrashIcon, Undo2Icon } from 'lucide-react';
 import ImportDialog from '@/components/import-dialog.tsx';
 import URI from 'urijs';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
@@ -297,7 +297,7 @@ function ProxySettings() {
 
   return (
     <div className="flex h-full w-full flex-col gap-4">
-      <Button asChild variant="secondary">
+      <Button asChild variant="secondary" className="flex flex-row gap-1">
         <Link
           to="/dashboard/$instance"
           params={{
@@ -305,7 +305,10 @@ function ProxySettings() {
           }}
           search={{}}
         >
-          Back
+          <div>
+            <Undo2Icon className="h-4" />
+          </div>
+          <span>Back</span>
         </Link>
       </Button>
       <div className="flex flex-col gap-2">

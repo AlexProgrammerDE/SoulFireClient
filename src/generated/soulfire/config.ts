@@ -291,6 +291,12 @@ export interface SettingsPage {
      * @generated from protobuf field: repeated soulfire.v1.SettingEntry entries = 5;
      */
     entries: SettingEntry[];
+    /**
+     * https://lucide.dev icon id for this page (Usually rendered left of the page name)
+     *
+     * @generated from protobuf field: string iconId = 6;
+     */
+    iconId: string;
 }
 /**
  * @generated from protobuf enum soulfire.v1.SettingsPage.Type
@@ -568,7 +574,8 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
             { no: 2, name: "owningPlugin", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "pageName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "entries", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingEntry }
+            { no: 5, name: "entries", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingEntry },
+            { no: 6, name: "iconId", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
