@@ -5,6 +5,13 @@ import { ClientInfoContext } from '@/components/providers/client-info-context.ts
 import ClientSettingsPageComponent from '@/components/client-settings-page.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card.tsx';
+import { Badge } from '@/components/ui/badge.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/$instance/settings/$namespace',
@@ -38,6 +45,9 @@ function SettingsNamespace() {
     );
   }
 
+  const pluginInfo = clientInfo.plugins.find(
+    (plugin) => plugin.id === settingsEntry.owningPlugin,
+  );
   return (
     <div className="flex h-full w-full flex-col gap-4">
       <Button asChild variant="secondary">
@@ -59,6 +69,19 @@ function SettingsNamespace() {
           </Link>
         )}
       </Button>
+      {pluginInfo && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-xl">{settingsEntry.pageName}</CardTitle>
+            <CardDescription>{pluginInfo.description}</CardDescription>
+            <div className="flex flex-wrap gap-2 mt-2">
+              <Badge variant="secondary">Version: {pluginInfo.version}</Badge>
+              <Badge variant="secondary">Author: {pluginInfo.author}</Badge>
+              <Badge variant="secondary">License: {pluginInfo.license}</Badge>
+            </div>
+          </CardHeader>
+        </Card>
+      )}
       <ScrollArea className="h-full w-full pr-4">
         <div className="flex flex-col gap-2">
           <ClientSettingsPageComponent data={settingsEntry} />
