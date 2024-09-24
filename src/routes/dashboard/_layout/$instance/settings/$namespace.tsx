@@ -71,7 +71,7 @@ function SettingsNamespace() {
       </Button>
       {pluginInfo && (
         <Card>
-          <CardHeader>
+          <CardHeader className="p-4">
             <CardTitle className="text-xl">{settingsEntry.pageName}</CardTitle>
             <CardDescription>{pluginInfo.description}</CardDescription>
             <div className="flex flex-wrap gap-2 mt-2">
