@@ -6,12 +6,40 @@
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173"
   },
+  "productName": "SoulFire",
+  "mainBinaryName": "soulfire",
+  "identifier": "com.soulfiremc.app",
+  "app": {
+    "enableGTKAppId": true,
+    "macOSPrivateApi": true,
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "label": "main",
+        "fullscreen": false,
+        "height": 675,
+        "resizable": true,
+        "width": 1200,
+        "center": true
+      }
+    ],
+    "trayIcon": {
+      "iconPath": "icons/icon.png",
+      "iconAsTemplate": true
+    },
+    "security": {
+      "csp": null
+    }
+  },
   "bundle": {
     "active": true,
     "category": "DeveloperTool",
     "copyright": "AlexProgrammerDE Ⓒ 2024",
     "publisher": "SoulFireMC",
     "targets": "all",
+    "homepage": "https://soulfiremc.com",
+    "license": "GPL-3.0",
+    "licenseFile": "../LICENSE",
     "externalBin": [],
     "windows": {
       "certificateThumbprint": null,
@@ -42,9 +70,6 @@
     },
     "createUpdaterArtifacts": "v1Compatible"
   },
-  "productName": "SoulFire",
-  "mainBinaryName": "soulfire",
-  "identifier": "com.soulfiremc.app",
   "plugins": {
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDI0QUFBREZCNjZGNjcyMjYKUldRbWN2Wm0rNjJxSkJGM3p1dlJiTkMydnRZTjR2d3JuYnJ5eWNKanZjRnlWc2FKaGoyVmdDNlcK",
@@ -54,26 +79,6 @@
       "endpoints": [
         "https://gist.githubusercontent.com/AlexProgrammerDE/66024f243a31c7d7d449c54205d37d0c/raw/update.json"
       ]
-    }
-  },
-  "app": {
-    "withGlobalTauri": true,
-    "windows": [
-      {
-        "label": "main",
-        "fullscreen": false,
-        "height": 675,
-        "resizable": true,
-        "width": 1200,
-        "center": true
-      }
-    ],
-    "trayIcon": {
-      "iconPath": "icons/icon.png",
-      "iconAsTemplate": true
-    },
-    "security": {
-      "csp": null
     }
   }
 }
