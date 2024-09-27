@@ -31,6 +31,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance')({
   beforeLoad: (props) => {
@@ -311,7 +312,9 @@ function InstanceLayout() {
               </ResizablePanel>
               <ResizableHandle withHandle />
               <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-                <Outlet />
+                <ScrollArea className="md:h-[calc(100vh-2.5rem)] w-full pr-4">
+                  <Outlet />
+                </ScrollArea>
               </ResizablePanel>
             </ResizablePanelGroup>
           </div>

@@ -104,9 +104,9 @@ export default function ControlsMenu() {
   });
 
   return (
-    <div className="grid grid-rows-3 gap-4">
+    <div className="flex flex-wrap gap-4">
       <Button
-        className="h-full w-full flex flex-row gap-1"
+        className="flex flex-row gap-1"
         variant="secondary"
         onClick={() => startMutation.mutate()}
         disabled={instanceInfo.state !== InstanceState.STOPPED}
@@ -117,7 +117,7 @@ export default function ControlsMenu() {
         <span>Start</span>
       </Button>
       <Button
-        className="h-full w-full flex flex-row gap-1"
+        className="flex flex-row gap-1"
         variant="secondary"
         onClick={() => toggleMutation.mutate()}
         disabled={
@@ -137,7 +137,7 @@ export default function ControlsMenu() {
         </span>
       </Button>
       <Button
-        className="h-full w-full flex flex-row gap-1"
+        className="flex flex-row gap-1"
         variant="secondary"
         onClick={() => stopMutation.mutate()}
         disabled={
