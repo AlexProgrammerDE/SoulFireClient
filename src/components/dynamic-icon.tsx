@@ -10,14 +10,7 @@ const DynamicIcon = ({ name, ...props }: IconProps) => {
   const LucideIcon = lazy(dynamicIconImports[name]);
 
   return (
-    <Suspense
-      fallback={
-        <div
-          className={props.className}
-          style={{ backgroundColor: 'transparent', width: 24, height: 24 }}
-        />
-      }
-    >
+    <Suspense fallback={<div className={props.className} />}>
       <LucideIcon {...props} />
     </Suspense>
   );
