@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { TerminalComponent } from '@/components/terminal.tsx';
 import ControlsMenu from '@/components/controls-menu.tsx';
-import { CommandInput } from '@/components/ui/command.tsx';
+import CommandInput from '@/components/command-input.tsx';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance/controls')({
   component: Console,
