@@ -142,7 +142,7 @@ function InstanceSelectPage() {
             <div key={instance.id} className="flex flex-row gap-2">
               <Button asChild variant="secondary">
                 <Link
-                  to="/dashboard/$instance"
+                  to="/dashboard/$instance/controls"
                   params={{ instance: instance.id }}
                   search={{}}
                 >

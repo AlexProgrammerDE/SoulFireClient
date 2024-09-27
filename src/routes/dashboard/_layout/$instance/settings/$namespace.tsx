@@ -12,7 +12,6 @@ import {
   CardTitle,
 } from '@/components/ui/card.tsx';
 import { Badge } from '@/components/ui/badge.tsx';
-import { Undo2Icon } from 'lucide-react';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/$instance/settings/$namespace',
@@ -50,32 +49,7 @@ function SettingsNamespace() {
     (plugin) => plugin.id === settingsEntry.owningPlugin,
   );
   return (
-    <div className="flex h-full w-full flex-col gap-4">
-      <Button asChild variant="secondary" className="flex flex-row gap-1">
-        {settingsEntry.owningPlugin ? (
-          <Link
-            to="/dashboard/$instance/plugins"
-            params={{ instance: instanceInfo.id }}
-            search={{}}
-          >
-            <div>
-              <Undo2Icon className="h-4" />
-            </div>
-            <span>Back</span>
-          </Link>
-        ) : (
-          <Link
-            to="/dashboard/$instance"
-            params={{ instance: instanceInfo.id }}
-            search={{}}
-          >
-            <div>
-              <Undo2Icon className="h-4" />
-            </div>
-            <span>Back</span>
-          </Link>
-        )}
-      </Button>
+    <div className="flex h-full w-full flex-col gap-4 p-4">
       {pluginInfo && (
         <Card>
           <CardHeader className="p-4">

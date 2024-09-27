@@ -1,3 +1,3 @@
-/// <reference types="vite/client" />
+/// <reference types="@rsbuild/core/types" />
 declare const APP_VERSION: string;
 declare const APP_ENVIRONMENT: string;

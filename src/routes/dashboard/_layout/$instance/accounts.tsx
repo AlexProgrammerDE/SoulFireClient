@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { useCallback, useContext, useState } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { Button } from '@/components/ui/button.tsx';
@@ -17,7 +17,7 @@ import {
   AccountTypeDeviceCode,
   MinecraftAccountProto_AccountTypeProto,
 } from '@/generated/soulfire/common.ts';
-import { PlusIcon, TrashIcon, Undo2Icon } from 'lucide-react';
+import { PlusIcon, TrashIcon } from 'lucide-react';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import {
   DropdownMenu,
@@ -332,22 +332,9 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
 function AccountSettings() {
   const clientInfo = useContext(ClientInfoContext);
   const profile = useContext(ProfileContext);
-  const instanceInfo = useContext(InstanceInfoContext);
 
   return (
-    <div className="flex h-full w-full flex-col gap-4">
-      <Button asChild variant="secondary" className="flex flex-row gap-1">
-        <Link
-          to="/dashboard/$instance"
-          params={{ instance: instanceInfo.id }}
-          search={{}}
-        >
-          <div>
-            <Undo2Icon className="h-4" />
-          </div>
-          <span>Back</span>
-        </Link>
-      </Button>
+    <div className="flex h-full w-full flex-col gap-4 p-4">
       <div className="flex flex-col gap-2">
         <ClientSettingsPageComponent
           data={clientInfo.settings.find((s) => s.namespace === 'account')!}

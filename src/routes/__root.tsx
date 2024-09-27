@@ -17,6 +17,7 @@ import { appConfigDir, BaseDirectory, resolve } from '@tauri-apps/api/path';
 import { mkdir, readDir, watch } from '@tauri-apps/plugin-fs';
 import { arch, locale, platform, type, version } from '@tauri-apps/plugin-os';
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 async function createSystemInfo() {
   const profileDir = await resolve(
@@ -116,12 +117,14 @@ function RootLayout() {
           enableSystem
           disableTransitionOnChange
         >
-          <SystemInfoContext.Provider value={systemInfoState}>
-            <main vaul-drawer-wrapper="" className="flex h-screen w-screen">
-              <Outlet />
-            </main>
-          </SystemInfoContext.Provider>
-          <Toaster richColors />
+          <TooltipProvider delayDuration={0}>
+            <SystemInfoContext.Provider value={systemInfoState}>
+              <main vaul-drawer-wrapper="" className="flex h-screen w-screen">
+                <Outlet />
+              </main>
+            </SystemInfoContext.Provider>
+            <Toaster richColors />
+          </TooltipProvider>
         </ThemeProvider>
         <TailwindIndicator />
         <ReactQueryDevtools initialIsOpen />
