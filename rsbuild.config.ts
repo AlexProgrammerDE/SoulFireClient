@@ -25,7 +25,7 @@ export default defineConfig({
   },
   output: {
     sourceMap: {
-      js: dev ? 'eval-cheap-module-source-map' : 'source-map',
+      js: dev ? 'cheap-module-source-map' : 'source-map',
       css: true,
     },
   },

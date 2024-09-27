@@ -10,7 +10,6 @@ Tools used:
 - Tauri
 - shadcn/ui
 - TailwindCSS
-- XTerm
 - protobuf-ts
 - and more...
 

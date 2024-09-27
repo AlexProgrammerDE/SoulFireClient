@@ -8,4 +8,7 @@ module.exports = {
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs', 'src/generated'],
   parser: '@typescript-eslint/parser',
+  rules: {
+    '@typescript-eslint/no-empty-object-type': 'off',
+  },
 };
