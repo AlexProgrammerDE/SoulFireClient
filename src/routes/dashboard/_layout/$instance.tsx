@@ -194,7 +194,16 @@ function InstanceLayout() {
   const devSettings = clientInfo.settings.find(
     (settings) => settings.namespace === 'dev',
   );
-  if (!botSettings || !accountSettings || !proxySettings || !devSettings) {
+  const firstPluginSettings = clientInfo.settings.find(
+    (settings) => settings.owningPlugin !== undefined,
+  );
+  if (
+    !botSettings ||
+    !accountSettings ||
+    !proxySettings ||
+    !devSettings ||
+    !firstPluginSettings
+  ) {
     throw new Error('Namespaces missing');
   }
 
@@ -264,8 +273,11 @@ function InstanceLayout() {
                       title: 'Plugin Settings',
                       icon: BlocksIcon,
                       linkProps: {
-                        to: '/dashboard/$instance/plugins',
-                        params: { instance: instance },
+                        to: '/dashboard/$instance/settings/$namespace',
+                        params: {
+                          instance: instance,
+                          namespace: firstPluginSettings.namespace,
+                        },
                       },
                     },
                     {
