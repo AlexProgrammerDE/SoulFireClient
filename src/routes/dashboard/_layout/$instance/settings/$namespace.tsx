@@ -2,7 +2,6 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useContext } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import ClientSettingsPageComponent from '@/components/settings-page.tsx';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Card,
   CardDescription,
@@ -72,11 +71,9 @@ function SettingsNamespace() {
             </CardHeader>
           </Card>
         )}
-        <ScrollArea className="h-full w-full pr-4">
-          <div className="flex flex-col gap-2">
-            <ClientSettingsPageComponent data={settingsEntry} />
-          </div>
-        </ScrollArea>
+        <div className="flex flex-col gap-2">
+          <ClientSettingsPageComponent data={settingsEntry} />
+        </div>
       </div>
     </div>
   );
