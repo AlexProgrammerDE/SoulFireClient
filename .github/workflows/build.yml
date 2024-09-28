@@ -54,7 +54,7 @@ jobs:
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
             ~/.cargo/git/db/
-            target/
+            src-tauri/target/
           key: ${{ matrix.name }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ matrix.name }}-cargo-
 
