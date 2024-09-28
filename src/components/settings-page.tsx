@@ -28,7 +28,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command.tsx';
-import { Check, ChevronsUpDown } from 'lucide-react';
+import { Check, ChevronsUpDown, PlusIcon, TrashIcon } from 'lucide-react';
 import { cn } from '@/lib/utils.ts';
 import {
   useCallback,
@@ -412,7 +412,7 @@ function StringListComponent(props: {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader className="p-4">
         <div className="flex flex-row gap-1">
           <Input
             type="text"
@@ -430,16 +430,18 @@ function StringListComponent(props: {
           />
           <Button
             variant="outline"
+            className="flex flex-row gap-1"
             onClick={() => {
               insertValue(newEntryInput);
               setNewEntryInput('');
             }}
           >
-            Add
+            <PlusIcon className="h-4 w-4" />
+            <span>Add</span>
           </Button>
         </div>
       </CardHeader>
-      <CardContent className="flex flex-col gap-1">
+      <CardContent className="flex flex-col gap-1 p-4 pt-0">
         {value.map((item) => (
           <div key={item.id} className="flex flex-row gap-1">
             <Input
@@ -451,11 +453,13 @@ function StringListComponent(props: {
             />
             <Button
               variant="outline"
+              className="flex flex-row gap-1"
               onClick={() => {
                 deleteId(item.id);
               }}
             >
-              Remove
+              <TrashIcon className="h-4 w-4" />
+              <span>Remove</span>
             </Button>
           </div>
         ))}
