@@ -101,7 +101,9 @@ export const DashboardMenuHeader = () => {
             <MenubarItem
               onClick={() => {
                 const disconnect = async () => {
-                  await emit('kill-integrated-server', {});
+                  if (isTauri()) {
+                    await emit('kill-integrated-server', {});
+                  }
                   await navigate({
                     to: '/',
                     replace: true,
