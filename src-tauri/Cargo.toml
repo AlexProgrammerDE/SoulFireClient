@@ -18,7 +18,7 @@ tauri-build = { version = "2.0.0-rc", features = [] }
 [dependencies]
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "2.0.0-rc", features = [ "devtools" , "tray-icon"] }
+tauri = { version = "2.0.0-rc", features = [ "macos-private-api", "devtools" , "tray-icon"] }
 reqwest = { version = "0.12.4", features = ["json"] }
 tar = "0.4.40"
 flate2 = "1.0.30"
