@@ -11,6 +11,7 @@ import {
 import { Badge } from '@/components/ui/badge.tsx';
 import { SettingsPage_Type } from '@/generated/soulfire/config.ts';
 import SettingsPageButton from '@/components/settings-page-button.tsx';
+import { Separator } from '@/components/ui/separator.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/$instance/settings/$namespace',
@@ -26,8 +27,8 @@ function SettingsNamespace() {
   );
   if (!settingsEntry) {
     return (
-      <div className="flex h-full w-full p-4">
-        <div className="m-auto flex flex-col gap-2">
+      <div className="flex h-full w-full p-2">
+        <div className="m-auto flex flex-col">
           <p>No settings found for {namespace}</p>
         </div>
       </div>
@@ -38,24 +39,29 @@ function SettingsNamespace() {
     (plugin) => plugin.id === settingsEntry.owningPlugin,
   );
   return (
-    <div className="flex h-full w-full flex-row p-4 gap-4">
+    <div className="flex h-full w-full flex-row px-2 gap-2">
       {pluginInfo && (
-        <div className="shrink flex h-full flex-col gap-1">
-          {clientInfo.settings
-            .filter(
-              (pluginSetting) =>
-                pluginSetting.type === SettingsPage_Type.INSTANCE &&
-                pluginSetting.owningPlugin !== undefined,
-            )
-            .map((pluginSetting) => (
-              <SettingsPageButton
-                key={pluginSetting.namespace}
-                page={pluginSetting}
-              />
-            ))}
-        </div>
+        <>
+          <div className="shrink flex h-full flex-col gap-1 py-2">
+            {clientInfo.settings
+              .filter(
+                (pluginSetting) =>
+                  pluginSetting.type === SettingsPage_Type.INSTANCE &&
+                  pluginSetting.owningPlugin !== undefined,
+              )
+              .map((pluginSetting) => (
+                <SettingsPageButton
+                  key={pluginSetting.namespace}
+                  page={pluginSetting}
+                />
+              ))}
+          </div>
+          <div>
+            <Separator orientation="vertical" />
+          </div>
+        </>
       )}
-      <div className="grow flex h-full flex-col gap-4">
+      <div className="grow flex h-full flex-col gap-4 py-2">
         {pluginInfo && (
           <Card>
             <CardHeader className="p-4">

@@ -105,7 +105,7 @@ export const TerminalComponent = () => {
   return (
     <ScrollArea
       viewportRef={paneRef}
-      className="md:h-[calc(75vh-8rem)] w-full pr-4 font-mono rounded-md text-xs"
+      className="h-[calc(75vh-8rem)] pr-4 font-mono rounded-md text-xs"
       style={
         {
           backgroundColor: selectedTheme.colors.base.hex,
