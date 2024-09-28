@@ -295,7 +295,7 @@ function ProxySettings() {
   const profile = useContext(ProfileContext);
 
   return (
-    <div className="flex h-full w-full flex-col gap-4 p-2">
+    <div className="flex h-full w-full flex-col gap-4 py-2 pl-2">
       <div className="flex flex-col gap-2">
         <ClientSettingsPageComponent
           data={clientInfo.settings.find((s) => s.namespace === 'proxy')!}
