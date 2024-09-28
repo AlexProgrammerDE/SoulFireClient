@@ -4,6 +4,7 @@ import {
   Link,
   LinkProps,
   Outlet,
+  useRouterState,
 } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
@@ -76,10 +77,23 @@ interface NavProps {
     label?: string;
     icon: (props: { className: string }) => ReactNode;
     linkProps: LinkProps;
+    extraActiveUrls?: string[];
   }[];
 }
 
 function Nav({ links, isCollapsed }: NavProps) {
+  const collapsedActiveClassName = cn(
+    buttonVariants({ variant: 'default', size: 'icon' }),
+    'h-9 w-9',
+    'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white',
+  );
+  const expandedActiveClassName = cn(
+    buttonVariants({ variant: 'default', size: 'sm' }),
+    'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white',
+    'justify-start',
+  );
+  const router = useRouterState();
+
   return (
     <div
       data-collapsed={isCollapsed}
@@ -93,17 +107,17 @@ function Nav({ links, isCollapsed }: NavProps) {
                 <Link
                   {...link.linkProps}
                   activeProps={{
-                    className: cn(
-                      buttonVariants({ variant: 'default', size: 'icon' }),
-                      'h-9 w-9',
-                      'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white',
-                    ),
+                    className: collapsedActiveClassName,
                   }}
                   inactiveProps={{
-                    className: cn(
-                      buttonVariants({ variant: 'ghost', size: 'icon' }),
-                      'h-9 w-9',
-                    ),
+                    className: (link.extraActiveUrls ?? []).includes(
+                      router.location.pathname,
+                    )
+                      ? collapsedActiveClassName
+                      : cn(
+                          buttonVariants({ variant: 'ghost', size: 'icon' }),
+                          'h-9 w-9',
+                        ),
                   }}
                 >
                   <link.icon className="h-4 w-4" />
@@ -131,10 +145,14 @@ function Nav({ links, isCollapsed }: NavProps) {
                 ),
               }}
               inactiveProps={{
-                className: cn(
-                  buttonVariants({ variant: 'ghost', size: 'sm' }),
-                  'justify-start',
-                ),
+                className: (link.extraActiveUrls ?? []).includes(
+                  router.location.pathname,
+                )
+                  ? expandedActiveClassName
+                  : cn(
+                      buttonVariants({ variant: 'ghost', size: 'sm' }),
+                      'justify-start',
+                    ),
               }}
             >
               {({ isActive }) => {
@@ -279,6 +297,17 @@ function InstanceLayout() {
                           namespace: firstPluginSettings.namespace,
                         },
                       },
+                      extraActiveUrls: clientInfo.settings
+                        .filter(
+                          (settings) =>
+                            settings.owningPlugin !== undefined &&
+                            settings.namespace !==
+                              firstPluginSettings.namespace,
+                        )
+                        .map(
+                          (settings) =>
+                            `/dashboard/${instance}/settings/${settings.namespace}`,
+                        ),
                     },
                     {
                       title: 'Account Settings',

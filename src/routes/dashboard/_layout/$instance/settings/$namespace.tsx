@@ -41,7 +41,7 @@ function SettingsNamespace() {
   return (
     <div className="flex h-full w-full flex-row p-4 gap-4">
       {pluginInfo && (
-        <div className="shrink flex h-full flex-col gap-4">
+        <div className="shrink flex h-full flex-col gap-1">
           {clientInfo.settings
             .filter(
               (pluginSetting) =>
