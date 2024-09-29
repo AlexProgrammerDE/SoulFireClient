@@ -6,6 +6,7 @@ use log::info;
 use serde::Serialize;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
+use sha2::Digest;
 use tauri::async_runtime::Mutex;
 use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_shell::process::CommandEvent::Stdout;
@@ -53,6 +54,7 @@ pub async fn run_integrated_server(
     send_log(&app_handle, "Fetching JVM data...");
     let response = reqwest::get(&jvm_url).await.unwrap();
     let jvm_json: serde_json::Value = response.json().await.unwrap();
+    let checksum = jvm_json[0]["binary"]["package"]["checksum"].as_str().unwrap();
     let download_url = jvm_json[0]["binary"]["package"]["link"].as_str().unwrap();
     let major_version = jvm_json[0]["version"]["major"].as_u64().unwrap();
     let minor_version = jvm_json[0]["version"]["minor"].as_u64().unwrap();
@@ -80,6 +82,16 @@ pub async fn run_integrated_server(
       downloaded_size += chunk.len() as u64;
       content.extend_from_slice(&chunk);
       send_download_progress(&app_handle, downloaded_size, total_size);
+    }
+
+    send_log(&app_handle, "Verifying sha256 checksum...");
+    let mut hasher = sha2::Sha256::new();
+    hasher.update(&content);
+    let hash = hasher.finalize();
+    let hash = format!("{:x}", hash);
+    if hash != checksum {
+      send_log(&app_handle, "Checksum verification failed");
+      return Err(());
     }
 
     send_log(&app_handle, "Extracting JVM...");
