@@ -11,6 +11,7 @@ use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_shell::process::CommandEvent::Stdout;
 use tauri_plugin_shell::process::CommandChild;
 use tauri_plugin_shell::ShellExt;
+use tempfile::tempdir;
 
 pub struct IntegratedServerState {
   pub starting: Arc<AtomicBool>,
@@ -82,14 +83,19 @@ pub async fn run_integrated_server(
     }
 
     send_log(&app_handle, "Extracting JVM...");
+
+    let jvm_tmp_dir = tempdir().unwrap();
     if download_url.ends_with(".tar.gz") {
-      extract_tar_gz(&content[..], &jvm_dir, &jdk_archive_dir_name);
+      extract_tar_gz(&content[..], jvm_tmp_dir.path());
     } else if download_url.ends_with(".zip") {
-      extract_zip(&content[..], &jvm_dir, &jdk_archive_dir_name);
+      extract_zip(&content[..], jvm_tmp_dir.path());
     } else {
       panic!("Unsupported JVM archive format");
     }
 
+    std::fs::rename(jvm_tmp_dir.path().join(jdk_archive_dir_name), &jvm_dir).unwrap();
+
+    jvm_tmp_dir.close().unwrap();
     send_log(&app_handle, "Downloaded JVM");
   } else {
     send_log(&app_handle, "JVM already downloaded");

@@ -3,24 +3,22 @@ use log::info;
 use std::net::TcpListener;
 use std::sync::Arc;
 
-pub fn extract_tar_gz(data: &[u8], target_dir: &std::path::Path, strip_prefix: &str) {
+pub fn extract_tar_gz(data: &[u8], target_dir: &std::path::Path) {
   let decompressed = flate2::read::GzDecoder::new(data);
   let mut archive = tar::Archive::new(decompressed);
   for entry in archive.entries().unwrap() {
     let mut entry = entry.unwrap();
     let path = entry.path().unwrap();
-    let path = path.strip_prefix(&strip_prefix).unwrap();
     let path = target_dir.join(path);
     entry.unpack(path).unwrap();
   }
 }
 
-pub fn extract_zip(data: &[u8], target_dir: &std::path::Path, strip_prefix: &str) {
+pub fn extract_zip(data: &[u8], target_dir: &std::path::Path) {
   let mut archive = zip::ZipArchive::new(std::io::Cursor::new(data)).unwrap();
   for i in 0..archive.len() {
     let mut file_data = archive.by_index(i).unwrap();
     let path = file_data.enclosed_name().unwrap();
-    let path = path.strip_prefix(&strip_prefix).unwrap();
     let path = target_dir.join(path);
     if file_data.is_dir() {
       std::fs::create_dir_all(&path).unwrap();
