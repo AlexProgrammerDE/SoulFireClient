@@ -98,30 +98,32 @@ export const DashboardMenuHeader = () => {
             <img src="/logo.png" alt="SoulFIre logo" className="h-6" />
           </MenubarTrigger>
           <MenubarContent>
-            <MenubarItem
-              onClick={() => {
-                const disconnect = async () => {
-                  if (isTauri()) {
-                    await emit('kill-integrated-server', {});
-                  }
-                  await navigate({
-                    to: '/',
-                    replace: true,
+            {transport && (
+              <MenubarItem
+                onClick={() => {
+                  const disconnect = async () => {
+                    if (isTauri()) {
+                      await emit('kill-integrated-server', {});
+                    }
+                    await navigate({
+                      to: '/',
+                      replace: true,
+                    });
+                  };
+                  toast.promise(disconnect(), {
+                    loading: 'Disconnecting...',
+                    success: 'Disconnected',
+                    error: (e) => {
+                      console.error(e);
+                      return 'Failed to disconnect';
+                    },
                   });
-                };
-                toast.promise(disconnect(), {
-                  loading: 'Disconnecting...',
-                  success: 'Disconnected',
-                  error: (e) => {
-                    console.error(e);
-                    return 'Failed to disconnect';
-                  },
-                });
-              }}
-            >
-              <UnplugIcon className="w-4 h-4 mr-2" />
-              <span>Disconnect</span>
-            </MenubarItem>
+                }}
+              >
+                <UnplugIcon className="w-4 h-4 mr-2" />
+                <span>Disconnect</span>
+              </MenubarItem>
+            )}
             {isTauri() && (
               <MenubarItem onClick={() => void exit(0)}>
                 <PowerIcon className="w-4 h-4 mr-2" />

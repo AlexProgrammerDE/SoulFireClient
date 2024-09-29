@@ -12,12 +12,13 @@ import {
   SystemInfo,
   SystemInfoContext,
 } from '@/components/providers/system-info-context.tsx';
-import { isTauri } from '@/lib/utils.ts';
+import { getTerminalTheme, isTauri } from '@/lib/utils.ts';
 import { appConfigDir, BaseDirectory, resolve } from '@tauri-apps/api/path';
 import { mkdir, readDir, watch } from '@tauri-apps/plugin-fs';
 import { arch, locale, platform, type, version } from '@tauri-apps/plugin-os';
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { TerminalThemeContext } from '@/components/providers/terminal-theme-context';
 
 async function createSystemInfo() {
   const profileDir = await resolve(
@@ -71,6 +72,7 @@ function RootLayout() {
     systemInfo,
   );
   const [showDevtools, setShowDevtools] = useState(false);
+  const [terminalTheme, setTerminalTheme] = useState(getTerminalTheme());
 
   useEffect(() => {
     // @ts-expect-error - not in types
@@ -119,9 +121,19 @@ function RootLayout() {
         >
           <TooltipProvider delayDuration={0}>
             <SystemInfoContext.Provider value={systemInfoState}>
-              <main vaul-drawer-wrapper="" className="flex h-screen w-screen">
-                <Outlet />
-              </main>
+              <TerminalThemeContext.Provider
+                value={{
+                  value: terminalTheme,
+                  setter: setTerminalTheme,
+                }}
+              >
+                <main
+                  vaul-drawer-wrapper=""
+                  className="flex h-screen w-screen flex-col"
+                >
+                  <Outlet />
+                </main>
+              </TerminalThemeContext.Provider>
             </SystemInfoContext.Provider>
             <Toaster richColors />
           </TooltipProvider>

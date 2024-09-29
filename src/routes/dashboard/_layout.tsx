@@ -3,7 +3,6 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 import { ConfigServiceClient } from '@/generated/soulfire/config.client.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { createTransport, isAuthenticated } from '@/lib/web-rpc.ts';
-import { getTerminalTheme } from '@/lib/utils.ts';
 import {
   Card,
   CardContent,
@@ -11,8 +10,6 @@ import {
   CardTitle,
 } from '@/components/ui/card.tsx';
 import { LoaderCircleIcon } from 'lucide-react';
-import { useState } from 'react';
-import { TerminalThemeContext } from '@/components/providers/terminal-theme-context';
 import { ErrorComponent } from '@/components/error-component.tsx';
 
 export const Route = createFileRoute('/dashboard/_layout')({
@@ -58,22 +55,12 @@ export const Route = createFileRoute('/dashboard/_layout')({
 
 function DashboardLayout() {
   const { transport, clientData } = Route.useLoaderData();
-  const [terminalTheme, setTerminalTheme] = useState(getTerminalTheme());
 
   return (
-    <div className="flex h-screen w-screen flex-col">
-      <TransportContext.Provider value={transport}>
-        <ClientInfoContext.Provider value={clientData}>
-          <TerminalThemeContext.Provider
-            value={{
-              value: terminalTheme,
-              setter: setTerminalTheme,
-            }}
-          >
-            <Outlet />
-          </TerminalThemeContext.Provider>
-        </ClientInfoContext.Provider>
-      </TransportContext.Provider>
-    </div>
+    <TransportContext.Provider value={transport}>
+      <ClientInfoContext.Provider value={clientData}>
+        <Outlet />
+      </ClientInfoContext.Provider>
+    </TransportContext.Provider>
   );
 }
