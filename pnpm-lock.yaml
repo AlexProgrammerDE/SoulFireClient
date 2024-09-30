@@ -176,7 +176,7 @@ importers:
         version: 1.0.8
       '@rsbuild/plugin-eslint':
         specifier: ^1.0.3
-        version: 1.0.3(@rsbuild/core@1.0.8)(eslint@8.57.1)
+        version: 1.0.4(@rsbuild/core@1.0.8)(eslint@8.57.1)
       '@rsbuild/plugin-react':
         specifier: ^1.0.2
         version: 1.0.3(@rsbuild/core@1.0.8)
@@ -239,7 +239,7 @@ importers:
         version: 9.1.0(eslint@8.57.1)
       eslint-plugin-prettier:
         specifier: ^5.2.1
-        version: 5.2.1(@types/eslint@8.56.10)(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)
+        version: 5.2.1(@types/eslint@8.56.12)(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3)
       eslint-plugin-react:
         specifier: ^7.34.4
         version: 7.37.0(eslint@8.57.1)
@@ -1466,8 +1466,8 @@ packages:
     engines: {node: '>=16.7.0'}
     hasBin: true
 
-  '@rsbuild/plugin-eslint@1.0.3':
-    resolution: {integrity: sha512-ENz1AlwzKTsmXy6shtkad4qeceWP+FMzoOuJez7haLxnaMIibgsnK9RSKB08+nJgaT131nMBf/DlXEkS8MBXHg==}
+  '@rsbuild/plugin-eslint@1.0.4':
+    resolution: {integrity: sha512-wcj2KVkncwEpBcfuVsmqo/9Siw0igudk/KdKX50ZQyVSHo2cfcWSmMJJqBQMFK9AqU7L6+HdBAkU26STG8S4jQ==}
     peerDependencies:
       '@rsbuild/core': 1.x || ^1.0.1-beta.0
       eslint: ^8.0.0 || ^9.0.0
@@ -1769,6 +1769,9 @@ packages:
 
   '@types/eslint@8.56.10':
     resolution: {integrity: sha512-Shavhk87gCtY2fhXDctcfS3e6FdxWkCx1iUZ9eEUbh7rTqlZT0/IzOkCOVt0fCjcFuZ9FPYfuezTBImfHCDBGQ==}
+
+  '@types/eslint@8.56.12':
+    resolution: {integrity: sha512-03ruubjWyOHlmljCVoxSuNDdmfZDzsrrz0P2LeJsOXr+ZwFQ+0yQIwNCwt/GYhV7Z31fgtXJTAEs+FYlEL851g==}
 
   '@types/eslint__js@8.42.3':
     resolution: {integrity: sha512-alfG737uhmPdnvkrLdZLcEKJ/B8s9Y4hrZ+YAdzUeoArBlSUERA2E87ROfOaS4jd/C45fzOoZzidLc1IPwLqOw==}
@@ -2413,12 +2416,11 @@ packages:
     peerDependencies:
       eslint: ^3 || ^4 || ^5 || ^6 || ^7 || ^8 || ^9.7
 
-  eslint-rspack-plugin@4.2.0:
-    resolution: {integrity: sha512-N+aOSi5OT5FHRngQJkff0xdiNGd7L9INieFVkzEfjN7M1VNXVwYStyP3AiLp4RnL4MyAKakN80Ct5Bv+x5upNw==}
+  eslint-rspack-plugin@4.2.1:
+    resolution: {integrity: sha512-jv+VggchVC56U9ZxP2RUXTVOeOyjKVuTxGSQdp6YkPLLi9JTHFW5Fwkqi84NrOD3itBQz5m+Agvx6faAV1MJbg==}
     engines: {node: '>= 16.0.0'}
     peerDependencies:
       eslint: ^8.0.0 || ^9.0.0
-      webpack: ^5.0.0
 
   eslint-scope@5.1.1:
     resolution: {integrity: sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw==}
@@ -5018,10 +5020,10 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  '@rsbuild/plugin-eslint@1.0.3(@rsbuild/core@1.0.8)(eslint@8.57.1)':
+  '@rsbuild/plugin-eslint@1.0.4(@rsbuild/core@1.0.8)(eslint@8.57.1)':
     dependencies:
       eslint: 8.57.1
-      eslint-rspack-plugin: 4.2.0(eslint@8.57.1)(webpack@5.95.0)
+      eslint-rspack-plugin: 4.2.1(eslint@8.57.1)
       webpack: 5.95.0
     optionalDependencies:
       '@rsbuild/core': 1.0.8
@@ -5330,14 +5332,18 @@ snapshots:
       '@types/estree': 1.0.5
       '@types/json-schema': 7.0.15
 
+  '@types/eslint@8.56.12':
+    dependencies:
+      '@types/estree': 1.0.6
+      '@types/json-schema': 7.0.15
+
   '@types/eslint__js@8.42.3':
     dependencies:
       '@types/eslint': 8.56.10
 
   '@types/estree@1.0.5': {}
 
-  '@types/estree@1.0.6':
-    optional: true
+  '@types/estree@1.0.6': {}
 
   '@types/file-saver@2.0.7': {}
 
@@ -6133,14 +6139,14 @@ snapshots:
     dependencies:
       eslint: 8.57.1
 
-  eslint-plugin-prettier@5.2.1(@types/eslint@8.56.10)(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3):
+  eslint-plugin-prettier@5.2.1(@types/eslint@8.56.12)(eslint-config-prettier@9.1.0(eslint@8.57.1))(eslint@8.57.1)(prettier@3.3.3):
     dependencies:
       eslint: 8.57.1
       prettier: 3.3.3
       prettier-linter-helpers: 1.0.0
       synckit: 0.9.1
     optionalDependencies:
-      '@types/eslint': 8.56.10
+      '@types/eslint': 8.56.12
       eslint-config-prettier: 9.1.0(eslint@8.57.1)
 
   eslint-plugin-react-hooks@4.6.2(eslint@8.57.1):
@@ -6173,15 +6179,14 @@ snapshots:
       string.prototype.matchall: 4.0.11
       string.prototype.repeat: 1.0.0
 
-  eslint-rspack-plugin@4.2.0(eslint@8.57.1)(webpack@5.95.0):
+  eslint-rspack-plugin@4.2.1(eslint@8.57.1):
     dependencies:
-      '@types/eslint': 8.56.10
+      '@types/eslint': 8.56.12
       eslint: 8.57.1
       jest-worker: 29.7.0
       micromatch: 4.0.8
       normalize-path: 3.0.0
       schema-utils: 4.2.0
-      webpack: 5.95.0
 
   eslint-scope@5.1.1:
     dependencies:
