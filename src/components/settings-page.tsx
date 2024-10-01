@@ -234,22 +234,17 @@ function BoolComponent(props: {
     props.entry.def,
   ) as boolean;
   const [value, setValue] = useState(serverValue);
-  const ref = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (props.allowsRemoteUpdate && value !== serverValue) {
       setValue(serverValue);
-      if (ref.current) {
-        ref.current.click();
-      }
     }
   }, [props.allowsRemoteUpdate, serverValue, value]);
 
   return (
     <Checkbox
-      ref={ref}
       className="my-auto"
-      defaultChecked={value}
+      checked={value}
       onCheckedChange={(value) => {
         if (value === 'indeterminate') {
           return;
