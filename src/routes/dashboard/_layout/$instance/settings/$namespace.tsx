@@ -39,7 +39,7 @@ function SettingsNamespace() {
     (plugin) => plugin.id === settingsEntry.owningPlugin,
   );
   return (
-    <div className="flex h-full w-full flex-row pl-2 gap-2">
+    <div className="grow flex h-full w-full flex-row pl-2 gap-2">
       {pluginInfo && (
         <>
           <div className="shrink flex h-full flex-col gap-1 py-2">

@@ -9,7 +9,7 @@ export const Route = createFileRoute('/dashboard/_layout/$instance/controls')({
 
 function Console() {
   return (
-    <div className="flex h-full w-full flex-col gap-2 py-2 pl-2">
+    <div className="grow flex h-full w-full flex-col gap-2 py-2 pl-2">
       <div className="flex flex-col gap-2">
         <TerminalComponent />
         <CommandInput />
