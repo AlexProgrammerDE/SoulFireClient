@@ -5,6 +5,7 @@ import { ScrollArea } from './ui/scroll-area.tsx';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
 import { flavorEntries } from '@catppuccin/palette';
 import { AnsiHtml } from 'fancy-ansi/react';
+import { isDemo } from '@/lib/utils.ts';
 
 const hslToString = (rgb: { h: number; s: number; l: number }): string => {
   return `${Math.round(rgb.h)}, ${Math.round(rgb.s * 100)}%, ${Math.round(rgb.l * 100)}%`;
@@ -14,7 +15,22 @@ const MAX_TERMINAL_ENTRIES = 500;
 
 export const TerminalComponent = () => {
   const [gotPrevious, setGotPrevious] = useState(false);
-  const [entries, setEntries] = useState<(readonly [string, string])[]>([]);
+  const [entries, setEntries] = useState<(readonly [string, string])[]>(
+    isDemo()
+      ? [
+          ['entry1', 'Welcome to demo mode! 🧪'],
+          ['entry2', 'This is a read-only instance of SoulFire'],
+          [
+            'entry3',
+            'Check out all the menus and features before deciding to install SoulFire :D',
+          ],
+          [
+            'entry4',
+            'Feel free to join our Discord server if you would like to reach out: https://soulfiremc.com/discord',
+          ],
+        ]
+      : [],
+  );
   const transport = useContext(TransportContext);
   const terminalTheme = useContext(TerminalThemeContext);
   const paneRef = useRef<HTMLDivElement>(null);

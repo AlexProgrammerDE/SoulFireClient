@@ -11,7 +11,11 @@ import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { ProfileContext } from '@/components/providers/profile-context';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { convertFromProto } from '@/lib/types.ts';
-import { InstanceConfig } from '@/generated/soulfire/instance.ts';
+import {
+  InstanceConfig,
+  InstanceInfoResponse,
+  InstanceState,
+} from '@/generated/soulfire/instance.ts';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { queryClientInstance } from '@/lib/query.ts';
 import { useQuery } from '@tanstack/react-query';
@@ -33,6 +37,10 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
+import {
+  MinecraftAccountProto_AccountTypeProto,
+  ProxyProto_Type,
+} from '@/generated/soulfire/common.ts';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance')({
   beforeLoad: (props) => {
@@ -40,8 +48,44 @@ export const Route = createFileRoute('/dashboard/_layout/$instance')({
     return {
       infoQueryOptions: {
         queryKey: ['instance-info', instance],
-        queryFn: async ({ signal }: { signal: AbortSignal }) => {
+        queryFn: async ({
+          signal,
+        }: {
+          signal: AbortSignal;
+        }): Promise<{
+          instanceInfo: InstanceInfoResponse;
+        }> => {
           const transport = createTransport();
+          if (transport === null) {
+            return {
+              instanceInfo: {
+                friendlyName: 'Demo',
+                config: {
+                  settings: [],
+                  accounts: [
+                    {
+                      type: MinecraftAccountProto_AccountTypeProto.OFFLINE,
+                      profileId: '607d30e7-115b-3838-914a-e4229c2b985d',
+                      lastKnownName: 'Pistonmaster',
+                      accountData: {
+                        oneofKind: 'offlineJavaData',
+                        offlineJavaData: {},
+                      },
+                    },
+                  ],
+                  proxies: [
+                    {
+                      type: ProxyProto_Type.SOCKS5,
+                      address: '127.0.0.1',
+                      username: 'admin',
+                      password: 'admin',
+                    },
+                  ],
+                },
+                state: InstanceState.RUNNING,
+              },
+            };
+          }
 
           const instanceService = new InstanceServiceClient(transport);
           const result = await instanceService.getInstanceInfo(

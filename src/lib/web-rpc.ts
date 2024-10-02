@@ -3,6 +3,7 @@ import {
   LOCAL_STORAGE_SERVER_TOKEN_KEY,
 } from '@/lib/types.ts';
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
+import { isDemo } from '@/lib/utils.ts';
 
 export const isAuthenticated = () => {
   return (
@@ -12,6 +13,10 @@ export const isAuthenticated = () => {
 };
 
 export const createTransport = () => {
+  if (isDemo()) {
+    return null;
+  }
+
   const address = localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY);
   const token = localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY);
 

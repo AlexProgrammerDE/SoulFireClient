@@ -18,11 +18,33 @@ import { toast } from 'sonner';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { queryClientInstance } from '@/lib/query.ts';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { InstanceState } from '@/generated/soulfire/instance.ts';
+import {
+  InstanceListResponse,
+  InstanceState,
+} from '@/generated/soulfire/instance.ts';
 import { LoadingComponent } from '@/components/loading-component.tsx';
 
-const listQueryFn = async ({ signal }: { signal: AbortSignal }) => {
+const listQueryFn = async ({
+  signal,
+}: {
+  signal: AbortSignal;
+}): Promise<{
+  instanceList: InstanceListResponse;
+}> => {
   const transport = createTransport();
+  if (transport === null) {
+    return {
+      instanceList: {
+        instances: [
+          {
+            id: 'demo',
+            friendlyName: 'Demo',
+            state: InstanceState.RUNNING,
+          },
+        ],
+      },
+    };
+  }
 
   const instanceService = new InstanceServiceClient(transport);
   const result = await instanceService.listInstances(

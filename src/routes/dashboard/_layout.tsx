@@ -11,6 +11,9 @@ import {
 } from '@/components/ui/card.tsx';
 import { LoaderCircleIcon } from 'lucide-react';
 import { ErrorComponent } from '@/components/error-component.tsx';
+import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
+import { ClientDataResponse } from '@/generated/soulfire/config.ts';
+import demoData from '@/demo-data.json';
 
 export const Route = createFileRoute('/dashboard/_layout')({
   beforeLoad: ({ location }) => {
@@ -23,8 +26,19 @@ export const Route = createFileRoute('/dashboard/_layout')({
       });
     }
   },
-  loader: async (props) => {
+  loader: async (
+    props,
+  ): Promise<{
+    transport: GrpcWebFetchTransport | null;
+    clientData: ClientDataResponse;
+  }> => {
     const transport = createTransport();
+    if (transport === null) {
+      return {
+        transport,
+        clientData: demoData as never,
+      };
+    }
 
     const configService = new ConfigServiceClient(transport);
     const result = await configService.getClientData(

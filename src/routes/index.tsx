@@ -22,7 +22,12 @@ import {
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { LaptopMinimalIcon, LoaderCircleIcon, ServerIcon } from 'lucide-react';
+import {
+  FlaskConicalIcon,
+  LaptopMinimalIcon,
+  LoaderCircleIcon,
+  ServerIcon,
+} from 'lucide-react';
 import { listen } from '@tauri-apps/api/event';
 import {
   LOCAL_STORAGE_SERVER_ADDRESS_KEY,
@@ -31,6 +36,7 @@ import {
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { invoke } from '@tauri-apps/api/core';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
+import { isDemo } from '@/lib/utils.ts';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -71,17 +77,21 @@ function Index() {
   );
   const systemInfo = useContext(SystemInfoContext);
 
+  const targetRedirect = useCallback(async () => {
+    await navigate({
+      to: searchParams.redirect ?? '/dashboard',
+      replace: true,
+    });
+  }, [navigate, searchParams.redirect]);
+
   const redirectWithCredentials = useCallback(
     async (address: string, token: string) => {
       localStorage.setItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY, address.trim());
       localStorage.setItem(LOCAL_STORAGE_SERVER_TOKEN_KEY, token.trim());
 
-      await navigate({
-        to: searchParams.redirect ?? '/dashboard',
-        replace: true,
-      });
+      await targetRedirect();
     },
-    [navigate, searchParams.redirect],
+    [targetRedirect],
   );
 
   function onSubmit(values: FormSchemaType) {
@@ -136,7 +146,7 @@ function Index() {
             <CardContent className="flex flex-col gap-2">
               <div className="flex w-full flex-col gap-1">
                 <Button
-                  disabled={!systemInfo}
+                  disabled={!systemInfo || isDemo()}
                   variant="outline"
                   className="flex w-full gap-2"
                   onClick={() => setLoginType('INTEGRATED')}
@@ -144,20 +154,45 @@ function Index() {
                   <LaptopMinimalIcon className="h-6 w-6" />
                   <p>Use integrated server</p>
                 </Button>
-                {!systemInfo ? (
+                {!systemInfo && !isDemo() ? (
                   <p className="text-xs text-gray-500">
                     Integrated server is not available on this platform.
                   </p>
                 ) : null}
+                {isDemo() ? (
+                  <p className="text-xs text-gray-500">
+                    Integrated server is not available in demo mode.
+                  </p>
+                ) : null}
               </div>
-              <Button
-                variant="outline"
-                className="flex w-full gap-2"
-                onClick={() => setLoginType('REMOTE')}
-              >
-                <ServerIcon className="h-6 w-6" />
-                <p>Connect to remote server</p>
-              </Button>
+              <div className="flex w-full flex-col gap-1">
+                <Button
+                  disabled={isDemo()}
+                  variant="outline"
+                  className="flex w-full gap-2"
+                  onClick={() => setLoginType('REMOTE')}
+                >
+                  <ServerIcon className="h-6 w-6" />
+                  <p>Connect to remote server</p>
+                </Button>
+                {isDemo() ? (
+                  <p className="text-xs text-gray-500">
+                    Remote server is not available in demo mode.
+                  </p>
+                ) : null}
+              </div>
+              {isDemo() && (
+                <Button
+                  variant="outline"
+                  className="flex w-full gap-2"
+                  onClick={() => {
+                    void targetRedirect();
+                  }}
+                >
+                  <FlaskConicalIcon className="h-6 w-6" />
+                  <p>Use demo server</p>
+                </Button>
+              )}
               <div className="absolute text-xs text-gray-500 text-center bottom-0 left-0 right-0 mb-2">
                 <p className="mb-1">
                   SoulFire Client {APP_VERSION} - {APP_ENVIRONMENT}
