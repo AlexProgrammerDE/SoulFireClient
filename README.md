@@ -25,4 +25,4 @@ See which branches are at which URLs:
 
 - [`release`](https://app.soulfiremc.com) -> app.soulfiremc.com
 - [`main`](https://preview.soulfiremc.com) -> preview.soulfiremc.com
-- [`demo`](https://preview.soulfiremc.com) -> demo.soulfiremc.com
+- [`demo`](https://demo.soulfiremc.com) -> demo.soulfiremc.com
