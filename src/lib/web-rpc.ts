@@ -6,6 +6,8 @@ import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 import { isDemo } from '@/lib/utils.ts';
 
 export const isAuthenticated = () => {
+  if (isDemo()) return true;
+
   return (
     localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY) !== null &&
     localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY) !== null
