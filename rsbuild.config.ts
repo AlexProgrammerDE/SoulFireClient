@@ -5,6 +5,17 @@ import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { pluginEslint } from '@rsbuild/plugin-eslint';
 
 const dev = process.env.NODE_ENV !== 'production';
+
+const baseEnv = process.env.VERCEL_ENV ?? process.env.NODE_ENV;
+let appEnv: string;
+if (baseEnv === 'production') {
+  appEnv = 'production';
+} else if (baseEnv === 'preview') {
+  appEnv = 'preview';
+} else {
+  appEnv = 'development';
+}
+
 export default defineConfig({
   plugins: [pluginReact(), pluginTypeCheck(), pluginEslint()],
   tools: {
@@ -18,9 +29,7 @@ export default defineConfig({
   source: {
     define: {
       APP_VERSION: JSON.stringify(process.env.npm_package_version),
-      APP_ENVIRONMENT: JSON.stringify(
-        process.env.VERCEL_ENV ?? process.env.NODE_ENV,
-      ),
+      APP_ENVIRONMENT: JSON.stringify(appEnv),
     },
   },
   output: {
