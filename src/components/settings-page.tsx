@@ -478,6 +478,10 @@ function SingleComponent(props: {
   }, 5_000);
   const setProfileMutation = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
+      if (transport === null) {
+        return;
+      }
+
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,
@@ -633,6 +637,10 @@ function MinMaxComponentSingle(props: {
   }, 5_000);
   const setProfileMutation = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
+      if (transport === null) {
+        return;
+      }
+
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,

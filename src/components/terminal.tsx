@@ -15,7 +15,7 @@ const MAX_TERMINAL_ENTRIES = 500;
 export const TerminalComponent = () => {
   const [gotPrevious, setGotPrevious] = useState(false);
   const [entries, setEntries] = useState<(readonly [string, string])[]>([]);
-  const serverConnection = useContext(TransportContext);
+  const transport = useContext(TransportContext);
   const terminalTheme = useContext(TerminalThemeContext);
   const paneRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
@@ -51,8 +51,12 @@ export const TerminalComponent = () => {
       return;
     }
 
+    if (transport === null) {
+      return;
+    }
+
     const abortController = new AbortController();
-    const logsService = new LogsServiceClient(serverConnection);
+    const logsService = new LogsServiceClient(transport);
     void logsService
       .getPrevious(
         {
@@ -74,11 +78,15 @@ export const TerminalComponent = () => {
     return () => {
       abortController.abort();
     };
-  }, [gotPrevious, serverConnection]);
+  }, [gotPrevious, transport]);
 
   useEffect(() => {
+    if (transport === null) {
+      return;
+    }
+
     const abortController = new AbortController();
-    const logsService = new LogsServiceClient(serverConnection);
+    const logsService = new LogsServiceClient(transport);
     logsService
       .subscribe(
         {},
@@ -100,7 +108,7 @@ export const TerminalComponent = () => {
     return () => {
       abortController.abort();
     };
-  }, [serverConnection]);
+  }, [transport]);
 
   return (
     <ScrollArea

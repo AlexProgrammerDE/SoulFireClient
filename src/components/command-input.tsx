@@ -25,6 +25,10 @@ export default function CommandInput() {
       const currentVal = currenTarget.value;
       currenTarget.value = '';
 
+      if (transport === null) {
+        return;
+      }
+
       const commandService = new CommandServiceClient(transport);
       void commandService.executeCommand({
         command: currentVal,
@@ -37,6 +41,10 @@ export default function CommandInput() {
   };
 
   const handleTabPress = async (text: string, element: HTMLInputElement) => {
+    if (transport === null) {
+      return;
+    }
+
     const commandService = new CommandServiceClient(transport);
 
     let completionStateNew: CompletionState;

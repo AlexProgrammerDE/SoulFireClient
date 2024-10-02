@@ -65,6 +65,10 @@ function InstanceSelectPage() {
   const [createOpen, setCreateOpen] = useState(false);
   const addMutation = useMutation({
     mutationFn: async (values: CreateInstanceType) => {
+      if (transport === null) {
+        return;
+      }
+
       const instanceService = new InstanceServiceClient(transport);
       const promise = instanceService
         .createInstance({
@@ -96,6 +100,10 @@ function InstanceSelectPage() {
   });
   const deleteMutation = useMutation({
     mutationFn: async (instanceId: string) => {
+      if (transport === null) {
+        return;
+      }
+
       const instanceService = new InstanceServiceClient(transport);
       const promise = instanceService
         .deleteInstance({

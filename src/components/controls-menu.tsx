@@ -17,6 +17,10 @@ export default function ControlsMenu() {
   const instanceInfo = useContext(InstanceInfoContext);
   const startMutation = useMutation({
     mutationFn: () => {
+      if (transport === null) {
+        return Promise.resolve() as never;
+      }
+
       const client = new InstanceServiceClient(transport);
       const promise = client
         .updateInstanceConfig({
@@ -48,6 +52,10 @@ export default function ControlsMenu() {
   });
   const toggleMutation = useMutation({
     mutationFn: () => {
+      if (transport === null) {
+        return Promise.resolve() as never;
+      }
+
       const client = new InstanceServiceClient(transport);
       const current = instanceInfo.state;
       const promise = client
@@ -78,6 +86,10 @@ export default function ControlsMenu() {
   });
   const stopMutation = useMutation({
     mutationFn: () => {
+      if (transport === null) {
+        return Promise.resolve() as never;
+      }
+
       const client = new InstanceServiceClient(transport);
       const promise = client
         .changeInstanceState({

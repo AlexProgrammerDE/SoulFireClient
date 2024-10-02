@@ -155,6 +155,10 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
     useState<UIProxyType | null>(null);
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
+      if (transport === null) {
+        return;
+      }
+
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,

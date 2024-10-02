@@ -99,6 +99,10 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
     useState<AccountTypeCredentials | null>(null);
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
+      if (transport === null) {
+        return;
+      }
+
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,
@@ -122,6 +126,11 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       }
 
       setAccountTypeCredentialsSelected(null);
+
+      if (transport === null) {
+        return;
+      }
+
       const textSplit = text
         .split('\n')
         .map((t) => t.trim())
@@ -163,6 +172,10 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
 
   const deviceCodeSelected = useCallback(
     (type: AccountTypeDeviceCode) => {
+      if (transport === null) {
+        return;
+      }
+
       const service = new MCAuthServiceClient(transport);
       toast.promise(
         (async () => {

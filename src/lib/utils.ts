@@ -13,3 +13,7 @@ export function cn(...inputs: ClassValue[]) {
 export function isTauri() {
   return (window as never)['__TAURI__'] !== undefined;
 }
+
+export function isDemo() {
+  return document.location.host === 'demo.soulfiremc.com';
+}

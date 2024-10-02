@@ -74,6 +74,10 @@ export const DashboardMenuHeader = () => {
   const terminalTheme = useContext(TerminalThemeContext);
   const setProfileMutation = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
+      if (transport === null) {
+        return;
+      }
+
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,
