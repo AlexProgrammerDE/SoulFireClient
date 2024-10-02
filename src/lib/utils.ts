@@ -15,5 +15,5 @@ export function isTauri() {
 }
 
 export function isDemo() {
-  return document.location.host === 'demo.soulfiremc.com' || true;
+  return document.location.host === 'demo.soulfiremc.com';
 }
