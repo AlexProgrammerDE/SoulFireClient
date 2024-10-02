@@ -27,7 +27,7 @@ function SettingsNamespace() {
   );
   if (!settingsEntry) {
     return (
-      <div className="flex h-full w-full p-2">
+      <div className="grow flex h-full w-full p-2">
         <div className="m-auto flex flex-col">
           <p>No settings found for {namespace}</p>
         </div>
