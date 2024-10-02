@@ -75,8 +75,19 @@ export const Route = createFileRoute('/dashboard/_layout/$instance')({
                   ],
                   proxies: [
                     {
+                      type: ProxyProto_Type.HTTP,
+                      address: '127.0.0.1:8080',
+                      username: 'admin',
+                      password: 'admin',
+                    },
+                    {
+                      type: ProxyProto_Type.SOCKS4,
+                      address: '127.0.0.1:8081',
+                      username: 'admin',
+                    },
+                    {
                       type: ProxyProto_Type.SOCKS5,
-                      address: '127.0.0.1',
+                      address: '127.0.0.1:8082',
                       username: 'admin',
                       password: 'admin',
                     },
