@@ -133,6 +133,7 @@ export const TerminalComponent = () => {
       style={
         {
           backgroundColor: selectedTheme.colors.base.hex,
+          color: selectedTheme.colors.text.hex,
           '--border': hslToString(selectedTheme.colors.surface0.hsl),
           '--ansi-black': selectedTheme.dark
             ? selectedTheme.colors.surface1.hex
