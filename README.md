@@ -3,9 +3,14 @@
 This is a frontend for the [SoulFire server](https://github.com/AlexProgrammerDE/SoulFire).
 It mainly targets the web, but uses native APIs using Tauri.
 
-Tools used:
+> [!NOTE]  
+> For more info about SoulFire and installation instructions, take a look at the main [SoulFire repository](https://github.com/AlexProgrammerDE/SoulFire).
 
-- Vite
+## About the client
+
+Tools used for this client:
+
+- Rspack
 - tanstack-router
 - Tauri
 - shadcn/ui
