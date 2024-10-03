@@ -5243,9 +5243,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-clipboard-manager"
-version = "2.0.0"
+version = "2.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8336820003f8fac414d444a7aeeb9b927760b529e39736d3344852fd4ff776f0"
+checksum = "78b7d556886c15849198c0948fd7f4c880492f0461539176da0a8a70272e2904"
 dependencies = [
  "arboard",
  "image",
@@ -5259,9 +5259,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-dialog"
-version = "2.0.0"
+version = "2.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6da13d0dd431efe6b5e40a3314d7a33d7bce8f8ed34e2bf044f95ccad82f10ec"
+checksum = "ddb2fe88b602461c118722c574e2775ab26a4e68886680583874b2f6520608b7"
 dependencies = [
  "log",
  "raw-window-handle",
@@ -5300,9 +5300,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-os"
-version = "2.0.0"
+version = "2.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fac65dc1cf2276651d6a53976a3be618434aacfd5a39eeecc4be9ea74e07f4fb"
+checksum = "fbc5f23a86f37687c7f4fecfdc706b279087bc44f7a46702f7307ff1551ee03a"
 dependencies = [
  "gethostname 0.5.0",
  "log",
