@@ -1,5 +1,5 @@
 {
-  "extends": ["config:base"],
+  "extends": ["config:base", "group:allNonMajor"],
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
