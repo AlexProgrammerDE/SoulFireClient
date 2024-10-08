@@ -173,16 +173,16 @@ importers:
         version: 2.9.4
       '@rsbuild/core':
         specifier: ^1.0.7
-        version: 1.0.10
+        version: 1.0.11
       '@rsbuild/plugin-eslint':
         specifier: ^1.0.3
-        version: 1.0.4(@rsbuild/core@1.0.10)(eslint@8.57.1)
+        version: 1.0.4(@rsbuild/core@1.0.11)(eslint@8.57.1)
       '@rsbuild/plugin-react':
         specifier: ^1.0.2
-        version: 1.0.3(@rsbuild/core@1.0.10)
+        version: 1.0.3(@rsbuild/core@1.0.11)
       '@rsbuild/plugin-type-check':
         specifier: ^1.0.1
-        version: 1.0.1(@rsbuild/core@1.0.10)(typescript@5.6.2)
+        version: 1.0.1(@rsbuild/core@1.0.11)(typescript@5.6.2)
       '@tanstack/eslint-plugin-query':
         specifier: ^5.51.15
         version: 5.59.2(eslint@8.57.1)(typescript@5.6.2)
@@ -194,7 +194,7 @@ importers:
         version: 1.58.12
       '@tanstack/router-plugin':
         specifier: ^1.45.8
-        version: 1.62.0(@rsbuild/core@1.0.10)(vite@5.4.8(@types/node@20.16.11)(terser@5.34.0))(webpack-sources@3.2.3)(webpack@5.95.0)
+        version: 1.62.0(@rsbuild/core@1.0.11)(vite@5.4.8(@types/node@20.16.11)(terser@5.34.0))(webpack-sources@3.2.3)(webpack@5.95.0)
       '@tauri-apps/cli':
         specifier: 2.0.2
         version: 2.0.2
@@ -1483,8 +1483,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rsbuild/core@1.0.10':
-    resolution: {integrity: sha512-617N8YzDeH5vymeeOyCqK0toO9yt7s2yey49OIvW9jZqBo0IvgbkFNQf34LDLsxVzy+cpf1nGrcYWjPKhVuGfQ==}
+  '@rsbuild/core@1.0.11':
+    resolution: {integrity: sha512-kYM5gl8XbYK9DX/7uAJ+DyOgHUN8Ihk2P8buJDjIa/sbbuYixjF2KtDgcqxWDzP4oRi2NMPPe4gqzksVwVvmqw==}
     engines: {node: '>=16.7.0'}
     hasBin: true
 
@@ -5053,7 +5053,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.24.0':
     optional: true
 
-  '@rsbuild/core@1.0.10':
+  '@rsbuild/core@1.0.11':
     dependencies:
       '@rspack/core': 1.0.8(@swc/helpers@0.5.13)
       '@rspack/lite-tapable': 1.0.1
@@ -5062,26 +5062,26 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  '@rsbuild/plugin-eslint@1.0.4(@rsbuild/core@1.0.10)(eslint@8.57.1)':
+  '@rsbuild/plugin-eslint@1.0.4(@rsbuild/core@1.0.11)(eslint@8.57.1)':
     dependencies:
       eslint: 8.57.1
       eslint-rspack-plugin: 4.2.1(eslint@8.57.1)
       webpack: 5.95.0
     optionalDependencies:
-      '@rsbuild/core': 1.0.10
+      '@rsbuild/core': 1.0.11
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
       - uglify-js
       - webpack-cli
 
-  '@rsbuild/plugin-react@1.0.3(@rsbuild/core@1.0.10)':
+  '@rsbuild/plugin-react@1.0.3(@rsbuild/core@1.0.11)':
     dependencies:
-      '@rsbuild/core': 1.0.10
+      '@rsbuild/core': 1.0.11
       '@rspack/plugin-react-refresh': 1.0.0(react-refresh@0.14.2)
       react-refresh: 0.14.2
 
-  '@rsbuild/plugin-type-check@1.0.1(@rsbuild/core@1.0.10)(typescript@5.6.2)':
+  '@rsbuild/plugin-type-check@1.0.1(@rsbuild/core@1.0.11)(typescript@5.6.2)':
     dependencies:
       deepmerge: 4.3.1
       fork-ts-checker-webpack-plugin: 9.0.2(typescript@5.6.2)(webpack@5.95.0)
@@ -5089,7 +5089,7 @@ snapshots:
       reduce-configs: 1.0.0
       webpack: 5.95.0
     optionalDependencies:
-      '@rsbuild/core': 1.0.10
+      '@rsbuild/core': 1.0.11
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
@@ -5237,7 +5237,7 @@ snapshots:
       tsx: 4.19.1
       zod: 3.23.8
 
-  '@tanstack/router-plugin@1.62.0(@rsbuild/core@1.0.10)(vite@5.4.8(@types/node@20.16.11)(terser@5.34.0))(webpack-sources@3.2.3)(webpack@5.95.0)':
+  '@tanstack/router-plugin@1.62.0(@rsbuild/core@1.0.11)(vite@5.4.8(@types/node@20.16.11)(terser@5.34.0))(webpack-sources@3.2.3)(webpack@5.95.0)':
     dependencies:
       '@babel/core': 7.25.7
       '@babel/generator': 7.25.7
@@ -5258,7 +5258,7 @@ snapshots:
       unplugin: 1.14.1(webpack-sources@3.2.3)
       zod: 3.23.8
     optionalDependencies:
-      '@rsbuild/core': 1.0.10
+      '@rsbuild/core': 1.0.11
       vite: 5.4.8(@types/node@20.16.11)(terser@5.34.0)
       webpack: 5.95.0
     transitivePeerDependencies:
