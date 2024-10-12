@@ -284,7 +284,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
       </Button>
       {proxyTypeSelected !== null && (
         <ImportDialog
-          title={`Import ${getEnumKeyByValue(ProxyProto_Type, proxyTypeSelected)} proxies`}
+          title={`Import ${getEnumKeyByValue(UIProxyType, proxyTypeSelected)} proxies`}
           description="Paste your proxies here, one per line"
           closer={() => setProxyTypeSelected(null)}
           listener={textSelectedCallback}
