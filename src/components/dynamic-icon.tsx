@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import { LucideProps } from 'lucide-react';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
 import loadable from '@loadable/component';
@@ -24,9 +24,7 @@ const DynamicIcon = ({ name, ...props }: IconProps) => {
   const LucideIcon = mappedImports[name];
 
   return (
-    <Suspense fallback={<div className={props.className} />}>
-      <LucideIcon {...props} />
-    </Suspense>
+    <LucideIcon fallback={<div className={props.className} />} {...props} />
   );
 };
 
