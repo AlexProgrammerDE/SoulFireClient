@@ -266,6 +266,15 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           <DropdownMenuItem
             onClick={() =>
               setAccountTypeCredentialsSelected(
+                AccountTypeCredentials.MICROSOFT_JAVA_REFRESH_TOKEN,
+              )
+            }
+          >
+            Microsoft Refresh Token
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() =>
+              setAccountTypeCredentialsSelected(
                 AccountTypeCredentials.THE_ALTENING,
               )
             }

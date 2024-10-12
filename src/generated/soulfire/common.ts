@@ -184,7 +184,11 @@ export enum MinecraftAccountProto_AccountTypeProto {
     /**
      * @generated from protobuf enum value: MICROSOFT_BEDROCK_DEVICE_CODE = 6;
      */
-    MICROSOFT_BEDROCK_DEVICE_CODE = 6
+    MICROSOFT_BEDROCK_DEVICE_CODE = 6,
+    /**
+     * @generated from protobuf enum value: MICROSOFT_JAVA_REFRESH_TOKEN = 7;
+     */
+    MICROSOFT_JAVA_REFRESH_TOKEN = 7
 }
 /**
  * @generated from protobuf message soulfire.v1.SettingsEntry
@@ -231,7 +235,11 @@ export enum AccountTypeCredentials {
     /**
      * @generated from protobuf enum value: OFFLINE = 4;
      */
-    OFFLINE = 4
+    OFFLINE = 4,
+    /**
+     * @generated from protobuf enum value: MICROSOFT_JAVA_REFRESH_TOKEN = 5;
+     */
+    MICROSOFT_JAVA_REFRESH_TOKEN = 5
 }
 /**
  * @generated from protobuf enum soulfire.v1.AccountTypeDeviceCode
