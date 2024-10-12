@@ -14,6 +14,7 @@ import { downloadDir } from '@tauri-apps/api/path';
 import { open } from '@tauri-apps/plugin-dialog';
 import { readTextFile } from '@tauri-apps/plugin-fs';
 import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
+import { ClipboardIcon, FileIcon, TextIcon } from 'lucide-react';
 
 export default function ImportDialog(props: {
   title: string;
@@ -79,7 +80,8 @@ export default function ImportDialog(props: {
                   }
                 }}
               >
-                From file
+                <FileIcon className="w-4 h-4 mr-2" />
+                <span>From file</span>
               </Button>
               <Button
                 variant="secondary"
@@ -94,7 +96,8 @@ export default function ImportDialog(props: {
                   })();
                 }}
               >
-                From clipboard
+                <ClipboardIcon className="w-4 h-4 mr-2" />
+                <span>From clipboard</span>
               </Button>
             </div>
             <Textarea
@@ -107,7 +110,8 @@ export default function ImportDialog(props: {
               className="w-full"
               onClick={() => props.listener(inputText)}
             >
-              Load from text
+              <TextIcon className="w-4 h-4 mr-2" />
+              <span>Load from text</span>
             </Button>
           </div>
         </CredenzaBody>
