@@ -32,7 +32,7 @@ export default function ImportDialog(props: {
           <CredenzaTitle>{props.title}</CredenzaTitle>
           <CredenzaDescription>{props.description}</CredenzaDescription>
         </CredenzaHeader>
-        <CredenzaBody>
+        <CredenzaBody className="pb-4">
           <div className="flex flex-col gap-4">
             <div className="flex flex-row justify-between gap-4">
               {!isTauri() && (
