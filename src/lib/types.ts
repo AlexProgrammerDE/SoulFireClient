@@ -19,7 +19,7 @@ export type ProfileRoot = {
 
 export function getEnumKeyByValue<E extends object>(
   enumObj: E,
-  value: number,
+  value: E[keyof E],
 ): keyof E {
   return Object.entries(enumObj).find(([, v]) => v === value)?.[0] as keyof E;
 }

@@ -341,7 +341,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       </Button>
       {accountTypeCredentialsSelected !== null && (
         <ImportDialog
-          title={`Import ${getEnumKeyByValue(MinecraftAccountProto_AccountTypeProto, accountTypeCredentialsSelected)} accounts`}
+          title={`Import ${getEnumKeyByValue(AccountTypeCredentials, accountTypeCredentialsSelected)} accounts`}
           description="Paste your accounts here, one per line"
           closer={() => setAccountTypeCredentialsSelected(null)}
           listener={textSelectedCallback}
