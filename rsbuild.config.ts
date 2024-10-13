@@ -33,12 +33,15 @@ export default defineConfig({
     },
   },
   output: {
+    target: 'web',
     sourceMap: {
       js: dev ? 'cheap-module-source-map' : 'source-map',
       css: true,
     },
   },
   server: {
+    strictPort: true,
+    host: process.env.TAURI_DEV_HOST ?? undefined,
     headers: {
       'X-DNS-Prefetch-Control': 'on',
       'X-XSS-Protection': '1; mode=block',
