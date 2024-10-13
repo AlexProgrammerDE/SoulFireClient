@@ -5,19 +5,30 @@ import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { MessageType } from "@protobuf-ts/runtime";
 import { ProxyProto } from "./common";
 /**
+ * @generated from protobuf message soulfire.v1.HeaderPair
+ */
+export interface HeaderPair {
+    /**
+     * @generated from protobuf field: string key = 1;
+     */
+    key: string;
+    /**
+     * @generated from protobuf field: string value = 2;
+     */
+    value: string;
+}
+/**
  * @generated from protobuf message soulfire.v1.DownloadRequest
  */
 export interface DownloadRequest {
     /**
-     * @generated from protobuf field: string url = 1;
+     * @generated from protobuf field: string uri = 1;
      */
-    url: string;
+    uri: string;
     /**
-     * @generated from protobuf field: map<string, string> headers = 2;
+     * @generated from protobuf field: repeated soulfire.v1.HeaderPair headers = 2;
      */
-    headers: {
-        [key: string]: string;
-    };
+    headers: HeaderPair[];
     /**
      * @generated from protobuf field: optional soulfire.v1.ProxyProto proxy = 3;
      */
@@ -32,22 +43,33 @@ export interface DownloadResponse {
      */
     data: Uint8Array;
     /**
-     * @generated from protobuf field: map<string, string> headers = 2;
+     * @generated from protobuf field: repeated soulfire.v1.HeaderPair headers = 2;
      */
-    headers: {
-        [key: string]: string;
-    };
+    headers: HeaderPair[];
     /**
-     * @generated from protobuf field: int32 status_code = 3;
+     * @generated from protobuf field: int32 statusCode = 3;
      */
     statusCode: number;
 }
 // @generated message type with reflection information, may provide speed optimized methods
+class HeaderPair$Type extends MessageType<HeaderPair> {
+    constructor() {
+        super("soulfire.v1.HeaderPair", [
+            { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "value", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.HeaderPair
+ */
+export const HeaderPair = new HeaderPair$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class DownloadRequest$Type extends MessageType<DownloadRequest> {
     constructor() {
         super("soulfire.v1.DownloadRequest", [
-            { no: 1, name: "url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "headers", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
+            { no: 1, name: "uri", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "headers", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HeaderPair },
             { no: 3, name: "proxy", kind: "message", T: () => ProxyProto }
         ]);
     }
@@ -61,8 +83,8 @@ class DownloadResponse$Type extends MessageType<DownloadResponse> {
     constructor() {
         super("soulfire.v1.DownloadResponse", [
             { no: 1, name: "data", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "headers", kind: "map", K: 9 /*ScalarType.STRING*/, V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ } },
-            { no: 3, name: "status_code", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 2, name: "headers", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HeaderPair },
+            { no: 3, name: "statusCode", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
 }

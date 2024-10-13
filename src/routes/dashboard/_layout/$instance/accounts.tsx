@@ -345,6 +345,17 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           description="Paste your accounts here, one per line"
           closer={() => setAccountTypeCredentialsSelected(null)}
           listener={textSelectedCallback}
+          filters={[
+            {
+              name: 'Text File',
+              mimeType: 'text/plain',
+              extensions: ['txt'],
+            },
+          ]}
+          allowMultiple={true}
+          textInput={{
+            defaultValue: '',
+          }}
         />
       )}
     </>

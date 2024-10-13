@@ -8,21 +8,124 @@ import {
 } from '@/components/ui/credenza.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { isTauri } from '@/lib/utils.ts';
 import { downloadDir } from '@tauri-apps/api/path';
 import { open } from '@tauri-apps/plugin-dialog';
 import { readTextFile } from '@tauri-apps/plugin-fs';
 import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
-import { ClipboardIcon, FileIcon, TextIcon } from 'lucide-react';
+import { ClipboardIcon, FileIcon, GlobeIcon, TextIcon } from 'lucide-react';
+import { Separator } from '@/components/ui/separator.tsx';
+import { Input } from '@/components/ui/input.tsx';
+import { toast } from 'sonner';
+import MimeMatcher from 'mime-matcher';
+import { TransportContext } from '@/components/providers/transport-context.tsx';
+import { DownloadServiceClient } from '@/generated/soulfire/download.client.ts';
 
-export default function ImportDialog(props: {
+export type TextInput = {
+  defaultValue: string;
+};
+
+export type ImportDialogProps = {
   title: string;
   description: string;
   closer: () => void;
-  listener: (text: string) => void;
-}) {
+  listener: (data: string) => void;
+  filters: {
+    name: string;
+    mimeType: string;
+    extensions: string[];
+  }[];
+  allowMultiple: boolean;
+  textInput: TextInput | null;
+};
+
+export default function ImportDialog(props: ImportDialogProps) {
+  const [menuState, setMenuState] = useState<'main' | 'url'>('main');
+
+  switch (menuState) {
+    case 'url':
+      return <UrlDialog {...props} />;
+    case 'main':
+      return (
+        <MainDialog {...props} openUrlDialog={() => setMenuState('url')} />
+      );
+  }
+}
+
+function UrlDialog(props: ImportDialogProps) {
+  const transport = useContext(TransportContext);
   const [inputText, setInputText] = useState('');
+
+  return (
+    <Credenza open={true} onOpenChange={props.closer}>
+      <CredenzaContent>
+        <CredenzaHeader>
+          <CredenzaTitle>{props.title}</CredenzaTitle>
+          <CredenzaDescription>
+            Loading from URL will make the SoulFire server make a GET request to
+            the target server and use the response as the data.
+          </CredenzaDescription>
+        </CredenzaHeader>
+        <CredenzaBody className="pb-4 md:pb-0">
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4">
+              <Input
+                placeholder="Put URL here..."
+                defaultValue={inputText}
+                type="url"
+                onChange={(e) => setInputText(e.currentTarget.value)}
+              />
+              <Button
+                variant="secondary"
+                className="w-full"
+                onClick={() => {
+                  if (inputText === '') {
+                    toast.error('Please enter a valid URL');
+                    return;
+                  }
+
+                  const download = async () => {
+                    if (transport === null) {
+                      return;
+                    }
+
+                    const service = new DownloadServiceClient(transport);
+                    const { response } = await service.download({
+                      uri: inputText,
+                      headers: [],
+                    });
+
+                    const decoder = new TextDecoder();
+                    props.listener(decoder.decode(response.data));
+                  };
+
+                  toast.promise(download(), {
+                    loading: 'Downloading data...',
+                    success: 'Data loaded',
+                    error: (e) => {
+                      console.error(e);
+                      return 'Failed to download data';
+                    },
+                  });
+                }}
+              >
+                <GlobeIcon className="w-4 h-4 mr-2" />
+                <span>Load from URL</span>
+              </Button>
+            </div>
+          </div>
+        </CredenzaBody>
+      </CredenzaContent>
+    </Credenza>
+  );
+}
+
+function MainDialog(
+  props: ImportDialogProps & {
+    openUrlDialog: () => void;
+  },
+) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -34,23 +137,33 @@ export default function ImportDialog(props: {
         </CredenzaHeader>
         <CredenzaBody className="pb-4 md:pb-0">
           <div className="flex flex-col gap-4">
-            <div className="flex flex-row justify-between gap-4">
+            <div className="flex flex-col md:flex-row justify-between gap-4">
               {!isTauri() && (
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept=".txt"
+                  accept={props.filters.map((f) => f.mimeType).join(',')}
+                  multiple={props.allowMultiple}
                   className="hidden"
                   onChange={(e) => {
-                    const file = (e.target as HTMLInputElement).files?.item(0);
-                    if (!file) return;
+                    const target = e.target as HTMLInputElement;
+                    if (!target.files) {
+                      return;
+                    }
 
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                      const data = reader.result as string;
-                      props.listener(data);
-                    };
-                    reader.readAsText(file);
+                    for (let i = 0; i < target.files.length; i++) {
+                      const file = target.files.item(i);
+                      if (!file) {
+                        continue;
+                      }
+
+                      const reader = new FileReader();
+                      reader.onload = () => {
+                        const data = reader.result as string;
+                        props.listener(data);
+                      };
+                      reader.readAsText(file);
+                    }
                   }}
                 />
               )}
@@ -63,14 +176,20 @@ export default function ImportDialog(props: {
                       const downloadsDir = await downloadDir();
                       const input = await open({
                         title: props.title,
-                        filters: [{ name: 'Text', extensions: ['txt'] }],
+                        filters: props.filters,
                         defaultPath: downloadsDir,
-                        multiple: false,
+                        multiple: props.allowMultiple,
                         directory: false,
                       });
+                      if (input === null) {
+                        return;
+                      }
 
-                      if (input) {
-                        const data = await readTextFile(input);
+                      const toParse: string[] = Array.isArray(input)
+                        ? input
+                        : [input];
+                      for (const file of toParse) {
+                        const data = await readTextFile(file);
 
                         props.listener(data);
                       }
@@ -86,12 +205,44 @@ export default function ImportDialog(props: {
               <Button
                 variant="secondary"
                 className="w-full"
+                onClick={props.openUrlDialog}
+              >
+                <GlobeIcon className="w-4 h-4 mr-2" />
+                <span>From URL</span>
+              </Button>
+              <Button
+                variant="secondary"
+                className="w-full"
                 onClick={() => {
                   void (async () => {
                     if (isTauri()) {
                       props.listener((await clipboard.readText()) ?? '');
                     } else {
-                      props.listener(await navigator.clipboard.readText());
+                      const mimeTypes = props.filters.map((f) => f.mimeType);
+                      const matcher = new MimeMatcher(...mimeTypes);
+                      let clipboardEntries = (await navigator.clipboard.read())
+                        .map((item) => ({
+                          item,
+                          firstSupportedType: item.types.find((t) =>
+                            matcher.match(t),
+                          ),
+                        }))
+                        .filter((e) => {
+                          return e.firstSupportedType !== undefined;
+                        });
+                      if (!props.allowMultiple && clipboardEntries.length > 1) {
+                        toast.warning(
+                          'You had multiple items in the clipboard, only using first one.',
+                        );
+                        clipboardEntries = [clipboardEntries[0]];
+                      }
+
+                      for (const entry of clipboardEntries) {
+                        const blob = await entry.item.getType(
+                          entry.firstSupportedType!,
+                        );
+                        props.listener(await blob.text());
+                      }
                     }
                   })();
                 }}
@@ -100,22 +251,40 @@ export default function ImportDialog(props: {
                 <span>From clipboard</span>
               </Button>
             </div>
-            <Textarea
-              placeholder="Put text here..."
-              defaultValue={inputText}
-              onChange={(e) => setInputText(e.currentTarget.value)}
-            />
-            <Button
-              variant="secondary"
-              className="w-full"
-              onClick={() => props.listener(inputText)}
-            >
-              <TextIcon className="w-4 h-4 mr-2" />
-              <span>Load from text</span>
-            </Button>
+            {props.textInput !== null && (
+              <TextInput {...props} textInput={props.textInput} />
+            )}
           </div>
         </CredenzaBody>
       </CredenzaContent>
     </Credenza>
+  );
+}
+
+function TextInput(
+  props: Omit<ImportDialogProps, 'textInput'> & {
+    textInput: TextInput;
+  },
+) {
+  const [inputText, setInputText] = useState(props.textInput.defaultValue);
+  return (
+    <>
+      <Separator orientation="horizontal" />
+      <div className="flex flex-col gap-4">
+        <Textarea
+          placeholder="Put text here..."
+          defaultValue={inputText}
+          onChange={(e) => setInputText(e.currentTarget.value)}
+        />
+        <Button
+          variant="secondary"
+          className="w-full"
+          onClick={() => props.listener(inputText)}
+        >
+          <TextIcon className="w-4 h-4 mr-2" />
+          <span>Load from text</span>
+        </Button>
+      </div>
+    </>
   );
 }

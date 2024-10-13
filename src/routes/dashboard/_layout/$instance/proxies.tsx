@@ -288,6 +288,17 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           description="Paste your proxies here, one per line"
           closer={() => setProxyTypeSelected(null)}
           listener={textSelectedCallback}
+          filters={[
+            {
+              name: 'Text File',
+              mimeType: 'text/plain',
+              extensions: ['txt'],
+            },
+          ]}
+          allowMultiple={true}
+          textInput={{
+            defaultValue: '',
+          }}
         />
       )}
     </>

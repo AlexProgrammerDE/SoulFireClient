@@ -122,6 +122,9 @@ importers:
       lucide-react:
         specifier: ^0.452.0
         version: 0.452.0(react@18.3.1)
+      mime-matcher:
+        specifier: ^1.0.5
+        version: 1.0.5
       next-themes:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -3009,6 +3012,9 @@ packages:
   mime-db@1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
     engines: {node: '>= 0.6'}
+
+  mime-matcher@1.0.5:
+    resolution: {integrity: sha512-a7pOrNMfuCXHhw2gZ7el3sGsxbquOxM4n7zy2n3N3hbcZICE5keAdXvC4gGSfz5Wpxn+Meh2Y3bhvs9tmw1cmQ==}
 
   mime-types@2.1.35:
     resolution: {integrity: sha512-ZDY+bPm5zTTF+YpCrAU9nK0UgICYPT0QtT1NZWFv4s++TNkcgVaT0g6+4R2uI4MjQjzysHB1zxuWL50hzaeXiw==}
@@ -6834,6 +6840,8 @@ snapshots:
       picomatch: 2.3.1
 
   mime-db@1.52.0: {}
+
+  mime-matcher@1.0.5: {}
 
   mime-types@2.1.35:
     dependencies:
