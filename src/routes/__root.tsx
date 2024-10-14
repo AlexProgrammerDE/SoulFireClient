@@ -32,15 +32,19 @@ async function createSystemInfo() {
     .map((file) => file.name)
     .filter((file) => file.endsWith('.json'));
 
-  const appWindow = getCurrentWebviewWindow();
+  const osType = type();
+  const theme =
+    osType === 'android' || osType === 'ios'
+      ? null
+      : await getCurrentWebviewWindow().theme();
   return {
     availableProfiles,
-    osType: type(),
+    osType,
     osVersion: version(),
     platformName: platform(),
     osLocale: await locale(),
     archName: arch(),
-    theme: await appWindow.theme(),
+    theme,
   };
 }
 
