@@ -91,6 +91,10 @@ pub fn detect_os() -> &'static str {
     "solaris"
   } else if cfg!(target_os = "aix") {
     "aix"
+  } else if cfg!(target_os = "android") {
+    "android"
+  } else if cfg!(target_os = "ios") {
+    "ios"
   } else {
     "unknown"
   }
