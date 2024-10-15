@@ -33,10 +33,8 @@ async function createSystemInfo() {
     .filter((file) => file.endsWith('.json'));
 
   const osType = type();
-  const theme =
-    osType === 'android' || osType === 'ios'
-      ? null
-      : await getCurrentWebviewWindow().theme();
+  const mobile = osType === 'android' || osType === 'ios';
+  const theme = mobile ? null : await getCurrentWebviewWindow().theme();
   return {
     availableProfiles,
     osType,
@@ -45,6 +43,7 @@ async function createSystemInfo() {
     osLocale: await locale(),
     archName: arch(),
     theme,
+    mobile,
   };
 }
 

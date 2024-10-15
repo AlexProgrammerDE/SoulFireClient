@@ -154,7 +154,7 @@ function Index() {
                   <LaptopMinimalIcon className="h-6 w-6" />
                   <p>Use integrated server</p>
                 </Button>
-                {!systemInfo && !isDemo() ? (
+                {(!systemInfo && !isDemo()) || systemInfo?.mobile ? (
                   <p className="text-xs text-gray-500">
                     Integrated server is not available on this platform.
                   </p>

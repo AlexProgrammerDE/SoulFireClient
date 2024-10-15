@@ -30,7 +30,8 @@ pub fn run() {
 
   thread::spawn(|| load_discord_rpc());
 
-  tauri::Builder::default().plugin(tauri_plugin_process::init())
+  tauri::Builder::default()
+    .plugin(tauri_plugin_process::init())
     .plugin(tauri_plugin_clipboard_manager::init())
     .plugin(tauri_plugin_shell::init())
     .plugin(tauri_plugin_os::init())

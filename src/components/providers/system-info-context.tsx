@@ -9,6 +9,7 @@ export type SystemInfo = {
   osLocale: string | null;
   archName: string;
   theme: Theme | null;
+  mobile: boolean;
 };
 
 export const SystemInfoContext = createContext<SystemInfo | null>(null);
