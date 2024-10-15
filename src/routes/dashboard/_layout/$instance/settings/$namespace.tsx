@@ -88,7 +88,7 @@ function SettingsNamespace() {
               }}
               defaultValue={settingsEntry.namespace}
             >
-              <SelectTrigger>
+              <SelectTrigger className="flex md:hidden">
                 <SelectValue placeholder="Select a plugin" />
               </SelectTrigger>
               <SelectContent>
