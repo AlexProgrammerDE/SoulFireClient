@@ -23,21 +23,14 @@ mod utils;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
   env_logger::init();
-  #[cfg(all(desktop))]
+  #[cfg(desktop)]
   {
     rustls::crypto::ring::default_provider().install_default().expect("Failed to install rustls crypto provider");
   }
 
   thread::spawn(|| load_discord_rpc());
 
-  let mut builder = tauri::Builder::default();
-
-  #[cfg(all(desktop))]
-  {
-    builder = builder.plugin(tauri_plugin_updater::Builder::new().build());
-  }
-
-  builder.plugin(tauri_plugin_process::init())
+  tauri::Builder::default().plugin(tauri_plugin_process::init())
     .plugin(tauri_plugin_clipboard_manager::init())
     .plugin(tauri_plugin_shell::init())
     .plugin(tauri_plugin_os::init())
@@ -58,13 +51,16 @@ pub fn run() {
             get_casts
         ])
     .setup(|app| {
-      #[cfg(all(desktop))]
+      #[cfg(desktop)]
+      app.handle().plugin(tauri_plugin_updater::Builder::new().build()).unwrap();
+
+      #[cfg(desktop)]
       {
         let handle = app.handle();
         tray::create_tray(handle)?;
       }
 
-      #[cfg(all(desktop))]
+      #[cfg(desktop)]
       {
         let main_window = app.get_webview_window("main").unwrap();
         let app_version = &app.package_info().version;
@@ -77,7 +73,7 @@ pub fn run() {
         app_handle.emit("integrated-server-killed", ()).unwrap();
       });
 
-      #[cfg(all(desktop))]
+      #[cfg(desktop)]
       {
         let handle = app.handle().clone();
         tauri::async_runtime::spawn(async move {
