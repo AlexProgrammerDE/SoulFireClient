@@ -146,7 +146,7 @@ function Index() {
             <CardContent className="flex flex-col gap-2">
               <div className="flex w-full flex-col gap-1">
                 <Button
-                  disabled={!systemInfo || isDemo()}
+                  disabled={!systemInfo || isDemo() || systemInfo?.mobile}
                   variant="outline"
                   className="flex w-full gap-2"
                   onClick={() => setLoginType('INTEGRATED')}
