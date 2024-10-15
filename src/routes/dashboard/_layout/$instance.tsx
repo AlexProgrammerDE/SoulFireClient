@@ -36,7 +36,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area.tsx';
+import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import {
   MinecraftAccountProto_AccountTypeProto,
   ProxyProto_Type,
@@ -412,7 +412,6 @@ function InstanceLayout() {
                   <div className="flex flex-col min-h-[calc(100vh-2.5rem)] w-full">
                     <Outlet />
                   </div>
-                  <ScrollBar orientation="horizontal" />
                 </ScrollArea>
               </ResizablePanel>
             </ResizablePanelGroup>

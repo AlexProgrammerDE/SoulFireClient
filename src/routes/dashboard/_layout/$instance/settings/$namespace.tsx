@@ -12,6 +12,16 @@ import { Badge } from '@/components/ui/badge.tsx';
 import { SettingsPage_Type } from '@/generated/soulfire/config.ts';
 import SettingsPageButton from '@/components/settings-page-button.tsx';
 import { Separator } from '@/components/ui/separator.tsx';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select.tsx';
+import DynamicIcon from '@/components/dynamic-icon.tsx';
+import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/$instance/settings/$namespace',
@@ -21,6 +31,8 @@ export const Route = createFileRoute(
 
 function SettingsNamespace() {
   const { namespace } = Route.useParams();
+  const navigate = Route.useNavigate();
+  const instanceInfo = useContext(InstanceInfoContext);
   const clientInfo = useContext(ClientInfoContext);
   const settingsEntry = clientInfo.settings.find(
     (s) => s.namespace === namespace,
@@ -42,7 +54,7 @@ function SettingsNamespace() {
     <div className="grow flex h-full w-full flex-row pl-2 gap-2">
       {pluginInfo && (
         <>
-          <div className="shrink flex h-full flex-col gap-1 py-2">
+          <div className="shrink hidden md:flex h-full flex-col gap-1 py-2">
             {clientInfo.settings
               .filter(
                 (pluginSetting) =>
@@ -56,26 +68,74 @@ function SettingsNamespace() {
                 />
               ))}
           </div>
-          <div>
+          <div className="hidden md:block">
             <Separator orientation="vertical" />
           </div>
         </>
       )}
       <div className="grow flex h-full flex-col gap-4 py-2">
         {pluginInfo && (
-          <Card>
-            <CardHeader className="p-4">
-              <CardTitle className="text-xl">
-                {settingsEntry.pageName}
-              </CardTitle>
-              <CardDescription>{pluginInfo.description}</CardDescription>
-              <div className="flex flex-wrap gap-2 mt-2">
-                <Badge variant="secondary">Version: {pluginInfo.version}</Badge>
-                <Badge variant="secondary">Author: {pluginInfo.author}</Badge>
-                <Badge variant="secondary">License: {pluginInfo.license}</Badge>
-              </div>
-            </CardHeader>
-          </Card>
+          <>
+            <Select
+              onValueChange={(value) => {
+                void navigate({
+                  to: '/dashboard/$instance/settings/$namespace',
+                  params: {
+                    instance: instanceInfo.id,
+                    namespace: value,
+                  },
+                });
+              }}
+              defaultValue={settingsEntry.namespace}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a plugin" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {clientInfo.settings
+                    .filter(
+                      (pluginSetting) =>
+                        pluginSetting.type === SettingsPage_Type.INSTANCE &&
+                        pluginSetting.owningPlugin !== undefined,
+                    )
+                    .map((pluginSetting) => (
+                      <SelectItem
+                        key={pluginSetting.namespace}
+                        value={pluginSetting.namespace}
+                      >
+                        <div className="inline-flex items-center">
+                          <div>
+                            <DynamicIcon
+                              name={pluginSetting.iconId as never}
+                              className="mr-2 h-4 w-4"
+                            />
+                          </div>
+                          <span>{pluginSetting.pageName}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Card>
+              <CardHeader className="p-4">
+                <CardTitle className="text-xl">
+                  {settingsEntry.pageName}
+                </CardTitle>
+                <CardDescription>{pluginInfo.description}</CardDescription>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  <Badge variant="secondary">
+                    Version: {pluginInfo.version}
+                  </Badge>
+                  <Badge variant="secondary">Author: {pluginInfo.author}</Badge>
+                  <Badge variant="secondary">
+                    License: {pluginInfo.license}
+                  </Badge>
+                </div>
+              </CardHeader>
+            </Card>
+          </>
         )}
         <div className="flex flex-col gap-2">
           <ClientSettingsPageComponent data={settingsEntry} />
