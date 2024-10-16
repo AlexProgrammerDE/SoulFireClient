@@ -23,6 +23,7 @@ import {
   InstanceState,
 } from '@/generated/soulfire/instance.ts';
 import { LoadingComponent } from '@/components/loading-component.tsx';
+import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 
 const listQueryFn = async ({
   signal,
@@ -101,7 +102,7 @@ function InstanceSelectPage() {
         loading: 'Creating instance...',
         success: (r) => {
           void navigate({
-            to: '/dashboard/$instance',
+            to: '/dashboard/$instance/controls',
             params: { instance: r.id },
           });
           return 'Instance created successfully';
@@ -161,46 +162,48 @@ function InstanceSelectPage() {
   return (
     <>
       <DashboardMenuHeader />
-      <div className="flex justify-center flex-grow">
-        <div className="flex flex-col justify-center gap-4">
-          {instanceList.data.instanceList.instances.length == 0 && (
-            <div className="flex flex-col gap-4 p-4">
-              <h1>No instances found</h1>
-            </div>
-          )}
-          {instanceList.data.instanceList.instances.map((instance) => (
-            <div key={instance.id} className="flex flex-row gap-2">
-              <Button asChild variant="secondary">
-                <Link
-                  to="/dashboard/$instance/controls"
-                  params={{ instance: instance.id }}
-                  search={{}}
+      <ScrollArea className="h-[calc(100vh-2.5rem)] w-full pr-4">
+        <div className="flex flex-col min-h-[calc(100vh-2.5rem)] w-full">
+          <div className="flex flex-col p-4 m-auto gap-4">
+            {instanceList.data.instanceList.instances.length == 0 && (
+              <div className="flex flex-col gap-4 p-4">
+                <h1>No instances found</h1>
+              </div>
+            )}
+            {instanceList.data.instanceList.instances.map((instance) => (
+              <div key={instance.id} className="flex flex-row gap-2">
+                <Button asChild variant="secondary">
+                  <Link
+                    to="/dashboard/$instance/controls"
+                    params={{ instance: instance.id }}
+                    search={{}}
+                  >
+                    Instance: {instance.friendlyName} (
+                    {Object.entries(InstanceState).find(
+                      (e) => e[1] === instance.state,
+                    )![0] ?? 'UNKNOWN'}
+                    )
+                  </Link>
+                </Button>
+                <Button
+                  variant="destructive"
+                  onClick={() => {
+                    deleteMutation.mutate(instance.id);
+                  }}
                 >
-                  Instance: {instance.friendlyName} (
-                  {Object.entries(InstanceState).find(
-                    (e) => e[1] === instance.state,
-                  )![0] ?? 'UNKNOWN'}
-                  )
-                </Link>
-              </Button>
-              <Button
-                variant="destructive"
-                onClick={() => {
-                  deleteMutation.mutate(instance.id);
-                }}
-              >
-                <TrashIcon className="w-fit h-4" />
-              </Button>
-            </div>
-          ))}
-          <Button onClick={() => setCreateOpen(true)}>Create instance</Button>
-          <CreateInstancePopup
-            open={createOpen}
-            setOpen={setCreateOpen}
-            onSubmit={(values) => addMutation.mutate(values)}
-          />
+                  <TrashIcon className="w-fit h-4" />
+                </Button>
+              </div>
+            ))}
+            <Button onClick={() => setCreateOpen(true)}>Create instance</Button>
+            <CreateInstancePopup
+              open={createOpen}
+              setOpen={setCreateOpen}
+              onSubmit={(values) => addMutation.mutate(values)}
+            />
+          </div>
         </div>
-      </div>
+      </ScrollArea>
     </>
   );
 }
