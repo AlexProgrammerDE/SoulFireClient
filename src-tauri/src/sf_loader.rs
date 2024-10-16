@@ -147,6 +147,8 @@ pub async fn run_integrated_server(
     send_log(&app_handle, "SoulFire already downloaded");
   }
 
+  info!("Integrated Server SoulFire Jar: {}", soul_fire_version_file.to_str().unwrap());
+
   let soul_fire_rundir = app_local_data_dir.join("soulfire");
   if !soul_fire_rundir.exists() {
     std::fs::create_dir(&soul_fire_rundir).unwrap();
@@ -158,10 +160,11 @@ pub async fn run_integrated_server(
   let java_bin_dir = jvm_dir.join("bin");
   let java_exec_path = java_bin_dir.join(java_exec_name);
   let java_exec_path = java_exec_path.to_str().unwrap();
+  info!("Integrated Server Java Executable: {}", java_exec_path);
 
   let available_port = find_random_available_port().unwrap();
+  info!("Integrated Server Port: {}", available_port);
 
-  info!("Java Executable: {}", java_exec_path);
   let command = app_handle.shell().command(java_exec_path)
     .current_dir(soul_fire_rundir)
     .args(&[
