@@ -128,12 +128,18 @@ export const DashboardMenuHeader = () => {
                 <span>Disconnect</span>
               </MenubarItem>
             )}
-            {isTauri() && (
-              <MenubarItem onClick={() => void exit(0)}>
-                <PowerIcon className="w-4 h-4 mr-2" />
-                <span>Exit</span>
-              </MenubarItem>
-            )}
+            <MenubarItem
+              onClick={() => {
+                if (isTauri()) {
+                  void exit(0);
+                } else {
+                  window.close();
+                }
+              }}
+            >
+              <PowerIcon className="w-4 h-4 mr-2" />
+              <span>Exit</span>
+            </MenubarItem>
           </MenubarContent>
         </MenubarMenu>
         <input
