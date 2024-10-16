@@ -425,7 +425,7 @@ export const DashboardMenuHeader = () => {
               </MenubarItem>
             </a>
             <MenubarSeparator />
-            {isTauri() && (
+            {isTauri() && systemInfo && !systemInfo.mobile && (
               <>
                 <MenubarItem
                   onClick={() => {
