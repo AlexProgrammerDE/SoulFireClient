@@ -237,6 +237,51 @@ function Nav({ links, isCollapsed }: NavProps) {
   );
 }
 
+function MobileNav({ links }: Omit<NavProps, 'isCollapsed'>) {
+  const router = useRouterState();
+
+  return (
+    <div className="flex flex-row h-12 items-center justify-center border-t gap-1">
+      {links.map((link) => (
+        <Tooltip key={JSON.stringify(link.linkProps)} delayDuration={0}>
+          <TooltipTrigger asChild>
+            <Link
+              {...link.linkProps}
+              activeProps={{
+                className: collapsedActiveClassName,
+              }}
+              inactiveProps={{
+                className: (link.extraActiveUrls ?? []).includes(
+                  router.location.pathname,
+                )
+                  ? collapsedActiveClassName
+                  : cn(
+                      buttonVariants({
+                        variant: 'ghost',
+                        size: 'icon',
+                      }),
+                      'h-9 w-9',
+                    ),
+              }}
+            >
+              <link.icon className="h-4 w-4" />
+              <span className="sr-only">{link.title}</span>
+            </Link>
+          </TooltipTrigger>
+          <TooltipContent side="top" className="flex items-center gap-4">
+            {link.title}
+            {link.label && (
+              <span className="ml-auto text-muted-foreground">
+                {link.label}
+              </span>
+            )}
+          </TooltipContent>
+        </Tooltip>
+      ))}
+    </div>
+  );
+}
+
 const defaultLayout = [10, 32];
 const defaultCollapsed = false;
 const navCollapsedSize = 1;
@@ -244,7 +289,6 @@ const navCollapsedSize = 1;
 function InstanceLayout() {
   const { instance } = Route.useParams();
   const { infoQueryOptions } = Route.useRouteContext();
-  const router = useRouterState();
   const result = useQuery(infoQueryOptions);
   const clientInfo = useContext(ClientInfoContext);
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
@@ -401,50 +445,7 @@ function InstanceLayout() {
                     <Outlet />
                   </div>
                 </ScrollArea>
-                <div className="flex flex-row h-12 items-center justify-center border-t gap-1">
-                  {navLinks.map((link) => (
-                    <Tooltip
-                      key={JSON.stringify(link.linkProps)}
-                      delayDuration={0}
-                    >
-                      <TooltipTrigger asChild>
-                        <Link
-                          {...link.linkProps}
-                          activeProps={{
-                            className: collapsedActiveClassName,
-                          }}
-                          inactiveProps={{
-                            className: (link.extraActiveUrls ?? []).includes(
-                              router.location.pathname,
-                            )
-                              ? collapsedActiveClassName
-                              : cn(
-                                  buttonVariants({
-                                    variant: 'ghost',
-                                    size: 'icon',
-                                  }),
-                                  'h-9 w-9',
-                                ),
-                          }}
-                        >
-                          <link.icon className="h-4 w-4" />
-                          <span className="sr-only">{link.title}</span>
-                        </Link>
-                      </TooltipTrigger>
-                      <TooltipContent
-                        side="top"
-                        className="flex items-center gap-4"
-                      >
-                        {link.title}
-                        {link.label && (
-                          <span className="ml-auto text-muted-foreground">
-                            {link.label}
-                          </span>
-                        )}
-                      </TooltipContent>
-                    </Tooltip>
-                  ))}
-                </div>
+                <MobileNav links={navLinks} />
               </ResizablePanel>
             </ResizablePanelGroup>
           </div>
