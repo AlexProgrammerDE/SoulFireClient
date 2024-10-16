@@ -37,22 +37,11 @@ pub fn get_java_exec_name() -> &'static str {
   }
 }
 
-pub fn find_next_available_port(start_port: u16) -> Option<u16> {
-  for port in start_port..=u16::MAX {
-    if is_port_available(port) {
-      return Some(port);
-    }
-  }
-  None
-}
-
-pub fn is_port_available(port: u16) -> bool {
-  match TcpListener::bind(("127.0.0.1", port)) {
-    Ok(listener) => {
-      drop(listener);
-      true
-    }
-    Err(_) => false,
+pub fn find_random_available_port() -> Option<u16> {
+  if let Ok(listener) = TcpListener::bind("127.0.0.1:0") {
+    Some(listener.local_addr().unwrap().port())
+  } else {
+    None
   }
 }
 

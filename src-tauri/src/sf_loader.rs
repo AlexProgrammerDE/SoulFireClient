@@ -1,7 +1,4 @@
-use crate::utils::{
-  detect_architecture, detect_os, extract_tar_gz, extract_zip, find_next_available_port,
-  get_java_exec_name,
-};
+use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_random_available_port, get_java_exec_name};
 use log::info;
 use serde::Serialize;
 use std::sync::atomic::AtomicBool;
@@ -162,7 +159,7 @@ pub async fn run_integrated_server(
   let java_exec_path = java_bin_dir.join(java_exec_name);
   let java_exec_path = java_exec_path.to_str().unwrap();
 
-  let available_port = find_next_available_port(38765).unwrap();
+  let available_port = find_random_available_port().unwrap();
 
   info!("Java Executable: {}", java_exec_path);
   let command = app_handle.shell().command(java_exec_path)
