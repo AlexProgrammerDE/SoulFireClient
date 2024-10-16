@@ -136,17 +136,18 @@ interface NavProps {
   }[];
 }
 
+const collapsedActiveClassName = cn(
+  buttonVariants({ variant: 'default', size: 'icon' }),
+  'h-9 w-9',
+  'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white',
+);
+const expandedActiveClassName = cn(
+  buttonVariants({ variant: 'default', size: 'sm' }),
+  'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white',
+  'justify-start',
+);
+
 function Nav({ links, isCollapsed }: NavProps) {
-  const collapsedActiveClassName = cn(
-    buttonVariants({ variant: 'default', size: 'icon' }),
-    'h-9 w-9',
-    'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white',
-  );
-  const expandedActiveClassName = cn(
-    buttonVariants({ variant: 'default', size: 'sm' }),
-    'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white',
-    'justify-start',
-  );
   const router = useRouterState();
 
   return (
@@ -243,6 +244,7 @@ const navCollapsedSize = 1;
 function InstanceLayout() {
   const { instance } = Route.useParams();
   const { infoQueryOptions } = Route.useRouteContext();
+  const router = useRouterState();
   const result = useQuery(infoQueryOptions);
   const clientInfo = useContext(ClientInfoContext);
   const [isCollapsed, setIsCollapsed] = useState(defaultCollapsed);
@@ -280,6 +282,77 @@ function InstanceLayout() {
     throw new Error('Namespaces missing');
   }
 
+  const navLinks: NavProps['links'] = [
+    {
+      title: 'Console',
+      icon: TerminalIcon,
+      linkProps: {
+        to: '/dashboard/$instance/controls',
+        params: { instance: instance },
+      },
+    },
+    {
+      title: 'Bot Settings',
+      icon: (props) => (
+        <DynamicIcon {...props} name={botSettings.iconId as never} />
+      ),
+      linkProps: {
+        to: '/dashboard/$instance/settings/$namespace',
+        params: { instance: instance, namespace: 'bot' },
+      },
+    },
+    {
+      title: 'Plugin Settings',
+      icon: BlocksIcon,
+      linkProps: {
+        to: '/dashboard/$instance/settings/$namespace',
+        params: {
+          instance: instance,
+          namespace: firstPluginSettings.namespace,
+        },
+      },
+      extraActiveUrls: clientInfo.settings
+        .filter(
+          (settings) =>
+            settings.owningPlugin !== undefined &&
+            settings.namespace !== firstPluginSettings.namespace,
+        )
+        .map(
+          (settings) => `/dashboard/${instance}/settings/${settings.namespace}`,
+        ),
+    },
+    {
+      title: 'Account Settings',
+      icon: (props) => (
+        <DynamicIcon {...props} name={accountSettings.iconId as never} />
+      ),
+      linkProps: {
+        to: '/dashboard/$instance/accounts',
+        params: { instance: instance },
+      },
+    },
+    {
+      title: 'Proxy Settings',
+      icon: (props) => (
+        <DynamicIcon {...props} name={proxySettings.iconId as never} />
+      ),
+      linkProps: {
+        to: '/dashboard/$instance/proxies',
+        params: { instance: instance },
+      },
+    },
+    {
+      title: 'Dev Settings',
+      icon: (props) => (
+        <DynamicIcon {...props} name={devSettings.iconId as never} />
+      ),
+      linkProps: {
+        to: '/dashboard/$instance/settings/$namespace',
+        params: { instance: instance, namespace: 'dev' },
+      },
+    },
+  ];
+
   return (
     <>
       <InstanceInfoContext.Provider
@@ -314,105 +387,64 @@ function InstanceLayout() {
                   setIsCollapsed(false);
                 }}
                 className={cn(
+                  'hidden md:flex',
                   isCollapsed &&
                     'min-w-[50px] transition-all duration-300 ease-in-out',
                 )}
               >
-                <Nav
-                  isCollapsed={isCollapsed}
-                  links={[
-                    {
-                      title: 'Console',
-                      icon: TerminalIcon,
-                      linkProps: {
-                        to: '/dashboard/$instance/controls',
-                        params: { instance: instance },
-                      },
-                    },
-                    {
-                      title: 'Bot Settings',
-                      icon: (props) => (
-                        <DynamicIcon
-                          {...props}
-                          name={botSettings.iconId as never}
-                        />
-                      ),
-                      linkProps: {
-                        to: '/dashboard/$instance/settings/$namespace',
-                        params: { instance: instance, namespace: 'bot' },
-                      },
-                    },
-                    {
-                      title: 'Plugin Settings',
-                      icon: BlocksIcon,
-                      linkProps: {
-                        to: '/dashboard/$instance/settings/$namespace',
-                        params: {
-                          instance: instance,
-                          namespace: firstPluginSettings.namespace,
-                        },
-                      },
-                      extraActiveUrls: clientInfo.settings
-                        .filter(
-                          (settings) =>
-                            settings.owningPlugin !== undefined &&
-                            settings.namespace !==
-                              firstPluginSettings.namespace,
-                        )
-                        .map(
-                          (settings) =>
-                            `/dashboard/${instance}/settings/${settings.namespace}`,
-                        ),
-                    },
-                    {
-                      title: 'Account Settings',
-                      icon: (props) => (
-                        <DynamicIcon
-                          {...props}
-                          name={accountSettings.iconId as never}
-                        />
-                      ),
-                      linkProps: {
-                        to: '/dashboard/$instance/accounts',
-                        params: { instance: instance },
-                      },
-                    },
-                    {
-                      title: 'Proxy Settings',
-                      icon: (props) => (
-                        <DynamicIcon
-                          {...props}
-                          name={proxySettings.iconId as never}
-                        />
-                      ),
-                      linkProps: {
-                        to: '/dashboard/$instance/proxies',
-                        params: { instance: instance },
-                      },
-                    },
-                    {
-                      title: 'Dev Settings',
-                      icon: (props) => (
-                        <DynamicIcon
-                          {...props}
-                          name={devSettings.iconId as never}
-                        />
-                      ),
-                      linkProps: {
-                        to: '/dashboard/$instance/settings/$namespace',
-                        params: { instance: instance, namespace: 'dev' },
-                      },
-                    },
-                  ]}
-                />
+                <Nav isCollapsed={isCollapsed} links={navLinks} />
               </ResizablePanel>
-              <ResizableHandle withHandle />
+              <ResizableHandle className="hidden md:flex" withHandle />
               <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-                <ScrollArea className="h-[calc(100vh-2.5rem)] w-full pr-4">
-                  <div className="flex flex-col min-h-[calc(100vh-2.5rem)] w-full">
+                <ScrollArea className="h-[calc(100vh-5.5rem)] md:h-[calc(100vh-2.5rem)] w-full pr-4">
+                  <div className="flex flex-col min-h-[calc(100vh-5.5rem)] md:min-h-[calc(100vh-2.5rem)] w-full">
                     <Outlet />
                   </div>
                 </ScrollArea>
+                <div className="flex flex-row h-12 items-center justify-center border-t gap-1">
+                  {navLinks.map((link) => (
+                    <Tooltip
+                      key={JSON.stringify(link.linkProps)}
+                      delayDuration={0}
+                    >
+                      <TooltipTrigger asChild>
+                        <Link
+                          {...link.linkProps}
+                          activeProps={{
+                            className: collapsedActiveClassName,
+                          }}
+                          inactiveProps={{
+                            className: (link.extraActiveUrls ?? []).includes(
+                              router.location.pathname,
+                            )
+                              ? collapsedActiveClassName
+                              : cn(
+                                  buttonVariants({
+                                    variant: 'ghost',
+                                    size: 'icon',
+                                  }),
+                                  'h-9 w-9',
+                                ),
+                          }}
+                        >
+                          <link.icon className="h-4 w-4" />
+                          <span className="sr-only">{link.title}</span>
+                        </Link>
+                      </TooltipTrigger>
+                      <TooltipContent
+                        side="top"
+                        className="flex items-center gap-4"
+                      >
+                        {link.title}
+                        {link.label && (
+                          <span className="ml-auto text-muted-foreground">
+                            {link.label}
+                          </span>
+                        )}
+                      </TooltipContent>
+                    </Tooltip>
+                  ))}
+                </div>
               </ResizablePanel>
             </ResizablePanelGroup>
           </div>

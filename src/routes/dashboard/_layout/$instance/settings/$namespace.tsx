@@ -75,7 +75,7 @@ function SettingsNamespace() {
       )}
       <div className="grow flex h-full flex-col gap-4 py-2">
         {pluginInfo && (
-          <>
+          <div className="flex flex-col gap-2">
             <Select
               onValueChange={(value) => {
                 void navigate({
@@ -135,7 +135,7 @@ function SettingsNamespace() {
                 </div>
               </CardHeader>
             </Card>
-          </>
+          </div>
         )}
         <div className="flex flex-col gap-2">
           <ClientSettingsPageComponent data={settingsEntry} />
