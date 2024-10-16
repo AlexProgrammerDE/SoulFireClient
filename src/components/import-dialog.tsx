@@ -21,6 +21,7 @@ import { toast } from 'sonner';
 import MimeMatcher from 'mime-matcher';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { DownloadServiceClient } from '@/generated/soulfire/download.client.ts';
+import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 
 export type TextInput = {
   defaultValue: string;
@@ -126,6 +127,7 @@ function MainDialog(
     openUrlDialog: () => void;
   },
 ) {
+  const systemInfo = useContext(SystemInfoContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -176,7 +178,7 @@ function MainDialog(
                       const downloadsDir = await downloadDir();
                       const input = await open({
                         title: props.title,
-                        filters: props.filters,
+                        filters: systemInfo?.mobile ? undefined : props.filters,
                         defaultPath: downloadsDir,
                         multiple: props.allowMultiple,
                         directory: false,

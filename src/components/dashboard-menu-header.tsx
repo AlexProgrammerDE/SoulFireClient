@@ -228,12 +228,14 @@ export const DashboardMenuHeader = () => {
 
                           const selected = await open({
                             title: 'Load Profile',
-                            filters: [
-                              {
-                                name: 'SoulFire JSON Profile',
-                                extensions: ['json'],
-                              },
-                            ],
+                            filters: systemInfo.mobile
+                              ? undefined
+                              : [
+                                  {
+                                    name: 'SoulFire JSON Profile',
+                                    extensions: ['json'],
+                                  },
+                                ],
                             defaultPath: profileDir,
                             multiple: false,
                             directory: false,
