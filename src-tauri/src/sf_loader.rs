@@ -61,8 +61,8 @@ pub async fn run_integrated_server(
     let security_version = jvm_json[0]["version"]["security"].as_u64().unwrap();
     let build_version = jvm_json[0]["version"]["build"].as_u64().unwrap();
     info!("Download URL: {}", download_url);
-    let jdk_archive_dir_name = format!(
-      "jdk-{}.{}.{}+{}",
+    let jre_archive_dir_name = format!(
+      "jre-{}.{}.{}+{}",
       major_version, minor_version, security_version, build_version
     );
 
@@ -105,7 +105,7 @@ pub async fn run_integrated_server(
       panic!("Unsupported JVM archive format");
     }
 
-    std::fs::rename(jvm_tmp_dir.path().join(jdk_archive_dir_name), &jvm_dir).unwrap();
+    std::fs::rename(jvm_tmp_dir.path().join(jre_archive_dir_name), &jvm_dir).unwrap();
 
     jvm_tmp_dir.close().unwrap();
     send_log(&app_handle, "Downloaded JVM");
