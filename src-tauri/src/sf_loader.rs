@@ -48,7 +48,7 @@ pub async fn run_integrated_server(
   if !jvm_dir.exists() {
     let adoptium_os = detect_os();
     let adoptium_arch = detect_architecture();
-    let jvm_url = format!("https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture={}&image_type=jdk&os={}&vendor=eclipse", adoptium_arch, adoptium_os);
+    let jvm_url = format!("https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture={}&image_type=jre&os={}&vendor=eclipse", adoptium_arch, adoptium_os);
     info!("JVM URL: {}", jvm_url);
 
     send_log(&app_handle, "Fetching JVM data...");
