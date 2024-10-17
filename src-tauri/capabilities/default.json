@@ -63,6 +63,7 @@
     "fs:allow-appconfig-write-recursive",
     "os:default",
     "shell:default",
-    "clipboard-manager:default"
+    "clipboard-manager:default",
+    "log:default"
   ]
 }

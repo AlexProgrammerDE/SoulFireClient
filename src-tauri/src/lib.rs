@@ -22,7 +22,6 @@ mod utils;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-  env_logger::init();
   #[cfg(desktop)]
   {
     rustls::crypto::ring::default_provider().install_default().expect("Failed to install rustls crypto provider");
@@ -31,6 +30,14 @@ pub fn run() {
   thread::spawn(|| load_discord_rpc());
 
   tauri::Builder::default()
+    .plugin(tauri_plugin_log::Builder::new()
+      .level(log::LevelFilter::Info)
+      .target(tauri_plugin_log::Target::new(
+        tauri_plugin_log::TargetKind::Webview,
+      ))
+      .max_file_size(50_000)
+      .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepAll)
+      .build())
     .plugin(tauri_plugin_process::init())
     .plugin(tauri_plugin_clipboard_manager::init())
     .plugin(tauri_plugin_shell::init())

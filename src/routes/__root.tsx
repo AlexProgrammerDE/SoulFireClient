@@ -19,6 +19,7 @@ import { arch, locale, platform, type, version } from '@tauri-apps/plugin-os';
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context';
+import { attachConsole } from '@tauri-apps/plugin-log';
 
 async function createSystemInfo() {
   const profileDir = await resolve(
@@ -51,6 +52,7 @@ export const Route = createRootRoute({
   loader: async () => {
     let systemInfo: SystemInfo | null;
     if (isTauri()) {
+      await attachConsole();
       systemInfo = await createSystemInfo();
     } else {
       systemInfo = null;
