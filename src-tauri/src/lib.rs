@@ -36,9 +36,9 @@ pub fn run() {
       .with_colors(tauri_plugin_log::fern::colors::ColoredLevelConfig {
         error: Color::Red,
         warn: Color::Yellow,
-        debug: Color::Green,
+        debug: Color::Cyan,
         info: Color::Green,
-        trace: Color::Green,
+        trace: Color::Blue,
       })
       .target(tauri_plugin_log::Target::new(
         tauri_plugin_log::TargetKind::Webview,
