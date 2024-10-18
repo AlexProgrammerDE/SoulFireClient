@@ -8,6 +8,7 @@ use std::sync::Arc;
 use std::{env, thread};
 use tauri::async_runtime::Mutex;
 use tauri::{Emitter, Listener, Manager};
+use tauri_plugin_log::fern::colors::Color;
 #[cfg(desktop)]
 use tauri_plugin_updater;
 
@@ -32,6 +33,13 @@ pub fn run() {
   tauri::Builder::default()
     .plugin(tauri_plugin_log::Builder::new()
       .level(log::LevelFilter::Info)
+      .with_colors(tauri_plugin_log::fern::colors::ColoredLevelConfig {
+        error: Color::Red,
+        warn: Color::Yellow,
+        debug: Color::Green,
+        info: Color::Green,
+        trace: Color::Green,
+      })
       .target(tauri_plugin_log::Target::new(
         tauri_plugin_log::TargetKind::Webview,
       ))
