@@ -51,6 +51,7 @@ import {
   UploadIcon,
 } from 'lucide-react';
 import { emit } from '@tauri-apps/api/event';
+import SFLogo from 'public/logo.svg?react';
 
 function data2blob(data: string) {
   const bytes = new Array(data.length);
@@ -99,7 +100,7 @@ export const DashboardMenuHeader = () => {
       >
         <MenubarMenu>
           <MenubarTrigger>
-            <img src="/logo.png" alt="SoulFIre logo" className="h-6" />
+            <SFLogo className="size-6" />
           </MenubarTrigger>
           <MenubarContent>
             {transport && (

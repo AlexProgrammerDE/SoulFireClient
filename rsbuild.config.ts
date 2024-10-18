@@ -3,6 +3,7 @@ import { pluginReact } from '@rsbuild/plugin-react';
 import { TanStackRouterRspack } from '@tanstack/router-plugin/rspack';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { pluginEslint } from '@rsbuild/plugin-eslint';
+import { pluginSvgr } from '@rsbuild/plugin-svgr';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -17,7 +18,7 @@ if (baseEnv === 'production') {
 }
 
 export default defineConfig({
-  plugins: [pluginReact(), pluginTypeCheck(), pluginEslint()],
+  plugins: [pluginReact(), pluginTypeCheck(), pluginEslint(), pluginSvgr()],
   tools: {
     rspack: {
       plugins: [TanStackRouterRspack()],
