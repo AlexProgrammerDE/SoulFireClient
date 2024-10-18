@@ -133,7 +133,7 @@ export const DashboardMenuHeader = () => {
                 if (isTauri()) {
                   void exit(0);
                 } else {
-                  window.location.href = 'about:new';
+                  window.location.href = 'about:blank';
                 }
               }}
             >
