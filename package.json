@@ -13,7 +13,7 @@
     "lint": "eslint src/",
     "fix": "prettier --write .",
     "generate-icons": "tauri icon -v public/logo.png",
-    "dev-tauri": "RUST_LOG=info tauri dev",
+    "dev-tauri": "cross-env RUST_LOG=info tauri dev",
     "build-tauri": "tauri build",
     "generate-proto": "protoc --ts_out src/generated --ts_opt long_type_string --ts_opt optimize_code_size --proto_path protos $(find protos -iname \"*.proto\")",
     "prepare": "husky"
@@ -97,6 +97,7 @@
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "autoprefixer": "^10.0.1",
+    "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
