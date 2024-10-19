@@ -1,5 +1,5 @@
 use crate::sf_loader::IntegratedServerState;
-use log::info;
+use log::{error, info};
 use std::net::TcpListener;
 use std::sync::Arc;
 
@@ -20,6 +20,10 @@ pub enum SFError {
   NoPortAvailable,
   #[error("invalid zip data")]
   InvalidZipData,
+  #[error("no default window icon")]
+  NoDefaultWindowIcon,
+  #[error("no main window")]
+  NoMainWindow,
 }
 
 #[derive(Debug, thiserror::Error)]
@@ -38,7 +42,9 @@ pub enum SFAnyError {
   ZipError(#[from] zip::result::ZipError),
   #[cfg(desktop)]
   #[error(transparent)]
-  UpdaterError(#[from] tauri_plugin_updater::Error)
+  UpdaterError(#[from] tauri_plugin_updater::Error),
+  #[error(transparent)]
+  DiscordError(#[from] discord_presence::DiscordError),
 }
 
 impl serde::Serialize for SFAnyError {
@@ -148,9 +154,16 @@ pub fn kill_child_process(state: &IntegratedServerState) {
   tauri::async_runtime::spawn(async move {
     let mut child_process = child_process.lock().await;
     if let Some(child) = child_process.take() {
-      child.kill().unwrap();
-      starting.store(false, std::sync::atomic::Ordering::Relaxed);
-      info!("Killed child process");
+      match child.kill() {
+        Ok(_) => {
+          starting.store(false, std::sync::atomic::Ordering::Relaxed);
+          info!("Killed child process");
+        }
+        Err(err) => {
+          starting.store(false, std::sync::atomic::Ordering::Relaxed);
+          error!("Error killing child process: {err}");
+        }
+      }
     }
   });
 }

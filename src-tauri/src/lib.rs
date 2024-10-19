@@ -29,7 +29,14 @@ pub fn run() {
     rustls::crypto::ring::default_provider().install_default().expect("Failed to install rustls crypto provider");
   }
 
-  thread::spawn(|| load_discord_rpc());
+  thread::spawn(|| {
+    match load_discord_rpc() {
+      Ok(_) => {},
+      Err(error) => {
+        error!("Fatal discord error: {error}");
+      }
+    }
+  });
 
   tauri::Builder::default()
     .plugin(tauri_plugin_log::Builder::new()
