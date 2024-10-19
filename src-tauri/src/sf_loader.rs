@@ -1,4 +1,4 @@
-use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_random_available_port, get_java_exec_name};
+use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_random_available_port, get_java_exec_name, SFAnyError, SFError};
 use log::info;
 use serde::Serialize;
 use sha2::Digest;
@@ -11,46 +11,6 @@ use tauri_plugin_shell::process::CommandEvent::Stdout;
 use tauri_plugin_shell::ShellExt;
 use tempfile::tempdir;
 
-#[derive(Debug, thiserror::Error)]
-#[non_exhaustive]
-pub enum SFError {
-  #[error("checksum of downloaded jvm data does not match")]
-  InvalidJvmChecksum,
-  #[error("json field was invalid/not found: {0}")]
-  JsonFieldInvalid(String),
-  #[error("jwt line was invalid")]
-  JwtLineInvalid,
-  #[error("path could not be converted to string")]
-  PathCouldNotBeConverted,
-  #[error("no content length header present")]
-  NoContentLengthHeader,
-  #[error("no port available")]
-  NoPortAvailable,
-}
-
-#[derive(Debug, thiserror::Error)]
-pub enum Error {
-  #[error(transparent)]
-  SFError(#[from] SFError),
-  #[error(transparent)]
-  Io(#[from] std::io::Error),
-  #[error(transparent)]
-  Tauri(#[from] tauri::Error),
-  #[error(transparent)]
-  Reqwest(#[from] reqwest::Error),
-  #[error(transparent)]
-  FromUtf8(#[from] std::string::FromUtf8Error),
-}
-
-impl serde::Serialize for Error {
-  fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-  where
-    S: serde::ser::Serializer,
-  {
-    serializer.serialize_str(self.to_string().as_ref())
-  }
-}
-
 pub struct IntegratedServerState {
   pub starting: Arc<AtomicBool>,
   pub child_process: Arc<Mutex<Option<Box<CommandChild>>>>,
@@ -60,7 +20,7 @@ pub struct IntegratedServerState {
 pub async fn run_integrated_server(
   app_handle: AppHandle,
   integrated_server_state: tauri::State<'_, IntegratedServerState>,
-) -> Result<String, Error> {
+) -> Result<String, SFAnyError> {
   if integrated_server_state
     .starting
     .load(std::sync::atomic::Ordering::Relaxed)
@@ -127,16 +87,16 @@ pub async fn run_integrated_server(
     let hash = format!("{:x}", hash);
     if hash != checksum {
       send_log(&app_handle, "Checksum verification failed")?;
-      return Err(Error::from(SFError::InvalidJvmChecksum));
+      return Err(SFAnyError::from(SFError::InvalidJvmChecksum));
     }
 
     send_log(&app_handle, "Extracting JVM...")?;
 
     let jvm_tmp_dir = tempdir()?;
     if download_url.ends_with(".tar.gz") {
-      extract_tar_gz(&content[..], jvm_tmp_dir.path());
+      let _ = extract_tar_gz(&content[..], jvm_tmp_dir.path())?;
     } else if download_url.ends_with(".zip") {
-      extract_zip(&content[..], jvm_tmp_dir.path());
+      let _ = extract_zip(&content[..], jvm_tmp_dir.path())?;
     } else {
       panic!("Unsupported JVM archive format");
     }

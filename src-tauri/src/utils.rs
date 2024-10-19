@@ -3,30 +3,78 @@ use log::info;
 use std::net::TcpListener;
 use std::sync::Arc;
 
-pub fn extract_tar_gz(data: &[u8], target_dir: &std::path::Path) {
-  let decompressed = flate2::read::GzDecoder::new(data);
-  let mut archive = tar::Archive::new(decompressed);
-  for entry in archive.entries().unwrap() {
-    let mut entry = entry.unwrap();
-    let path = entry.path().unwrap();
-    let path = target_dir.join(path);
-    entry.unpack(path).unwrap();
+#[derive(Debug, thiserror::Error)]
+#[non_exhaustive]
+pub enum SFError {
+  #[error("checksum of downloaded jvm data does not match")]
+  InvalidJvmChecksum,
+  #[error("json field was invalid/not found: {0}")]
+  JsonFieldInvalid(String),
+  #[error("jwt line was invalid")]
+  JwtLineInvalid,
+  #[error("path could not be converted to string")]
+  PathCouldNotBeConverted,
+  #[error("no content length header present")]
+  NoContentLengthHeader,
+  #[error("no port available")]
+  NoPortAvailable,
+  #[error("invalid zip data")]
+  InvalidZipData,
+}
+
+#[derive(Debug, thiserror::Error)]
+pub enum SFAnyError {
+  #[error(transparent)]
+  SFError(#[from] SFError),
+  #[error(transparent)]
+  Io(#[from] std::io::Error),
+  #[error(transparent)]
+  Tauri(#[from] tauri::Error),
+  #[error(transparent)]
+  Reqwest(#[from] reqwest::Error),
+  #[error(transparent)]
+  FromUtf8(#[from] std::string::FromUtf8Error),
+  #[error(transparent)]
+  ZipError(#[from] zip::result::ZipError),
+}
+
+impl serde::Serialize for SFAnyError {
+  fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+  where
+    S: serde::ser::Serializer,
+  {
+    serializer.serialize_str(self.to_string().as_ref())
   }
 }
 
-pub fn extract_zip(data: &[u8], target_dir: &std::path::Path) {
-  let mut archive = zip::ZipArchive::new(std::io::Cursor::new(data)).unwrap();
+pub fn extract_tar_gz(data: &[u8], target_dir: &std::path::Path) -> Result<(), SFAnyError> {
+  let decompressed = flate2::read::GzDecoder::new(data);
+  let mut archive = tar::Archive::new(decompressed);
+  for entry in archive.entries()? {
+    let mut entry = entry?;
+    let path = entry.path()?;
+    let path = target_dir.join(path);
+    entry.unpack(path)?;
+  }
+
+  Ok(())
+}
+
+pub fn extract_zip(data: &[u8], target_dir: &std::path::Path) -> Result<(), SFAnyError> {
+  let mut archive = zip::ZipArchive::new(std::io::Cursor::new(data))?;
   for i in 0..archive.len() {
-    let mut file_data = archive.by_index(i).unwrap();
-    let path = file_data.enclosed_name().unwrap();
+    let mut file_data = archive.by_index(i)?;
+    let path = file_data.enclosed_name().ok_or(SFError::InvalidZipData)?;
     let path = target_dir.join(path);
     if file_data.is_dir() {
-      std::fs::create_dir_all(&path).unwrap();
+      std::fs::create_dir_all(&path)?;
     } else {
-      let mut file = std::fs::File::create(&path).unwrap();
-      std::io::copy(&mut file_data, &mut file).unwrap();
+      let mut file = std::fs::File::create(&path)?;
+      std::io::copy(&mut file_data, &mut file)?;
     }
   }
+
+  Ok(())
 }
 
 pub fn get_java_exec_name() -> &'static str {
@@ -39,10 +87,12 @@ pub fn get_java_exec_name() -> &'static str {
 
 pub fn find_random_available_port() -> Option<u16> {
   if let Ok(listener) = TcpListener::bind("127.0.0.1:0") {
-    Some(listener.local_addr().unwrap().port())
-  } else {
-    None
+    if let Ok(local_addr) = listener.local_addr() {
+      return Some(local_addr.port());
+    }
   }
+
+  None
 }
 
 pub fn detect_architecture() -> &'static str {
