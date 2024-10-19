@@ -90,6 +90,7 @@
   }
 
   * {
-    @apply border-border;
+    -webkit-user-drag: none;
+    @apply border-border select-none;
   }
 }
