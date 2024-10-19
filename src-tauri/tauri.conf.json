@@ -71,7 +71,7 @@
         "depends": []
       }
     },
-    "createUpdaterArtifacts": true,
+    "createUpdaterArtifacts": "v1Compatible",
     "android": {
       "minSdkVersion": 28
     }
