@@ -36,7 +36,7 @@
     "category": "DeveloperTool",
     "copyright": "AlexProgrammerDE Ⓒ 2024",
     "publisher": "SoulFireMC",
-    "targets": ["deb", "rpm", "appimage", "nsis", "dmg"],
+    "targets": ["deb", "rpm", "appimage", "nsis", "app", "dmg"],
     "homepage": "https://soulfiremc.com",
     "license": "GPL-3.0",
     "licenseFile": "../LICENSE",
