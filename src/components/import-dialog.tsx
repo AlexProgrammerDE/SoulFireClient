@@ -44,22 +44,35 @@ export type ImportDialogProps = {
 export default function ImportDialog(props: ImportDialogProps) {
   const [menuState, setMenuState] = useState<'main' | 'url'>('main');
 
-  switch (menuState) {
-    case 'url':
-      return <UrlDialog {...props} />;
-    case 'main':
-      return (
-        <MainDialog {...props} openUrlDialog={() => setMenuState('url')} />
-      );
-  }
+  return (
+    <>
+      <UrlDialog
+        {...props}
+        open={menuState === 'url'}
+        closer={() => {
+          setMenuState('main');
+          props.closer();
+        }}
+      />
+      <MainDialog
+        {...props}
+        open={menuState === 'main'}
+        openUrlDialog={() => setMenuState('url')}
+      />
+    </>
+  );
 }
 
-function UrlDialog(props: ImportDialogProps) {
+function UrlDialog(
+  props: ImportDialogProps & {
+    open: boolean;
+  },
+) {
   const transport = useContext(TransportContext);
   const [inputText, setInputText] = useState('');
 
   return (
-    <Credenza open={true} onOpenChange={props.closer}>
+    <Credenza open={props.open} onOpenChange={props.closer}>
       <CredenzaContent>
         <CredenzaHeader>
           <CredenzaTitle>{props.title}</CredenzaTitle>
@@ -125,6 +138,7 @@ function UrlDialog(props: ImportDialogProps) {
 
 function MainDialog(
   props: ImportDialogProps & {
+    open: boolean;
     openUrlDialog: () => void;
   },
 ) {
@@ -132,7 +146,7 @@ function MainDialog(
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <Credenza open={true} onOpenChange={props.closer}>
+    <Credenza open={props.open} onOpenChange={props.closer}>
       <CredenzaContent>
         <CredenzaHeader>
           <CredenzaTitle>{props.title}</CredenzaTitle>
