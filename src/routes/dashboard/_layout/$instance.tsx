@@ -441,7 +441,7 @@ function InstanceLayout() {
               <ResizableHandle className="hidden md:flex" withHandle />
               <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
                 <ScrollArea className="h-[calc(100vh-5.5rem)] md:h-[calc(100vh-2.5rem)] w-full pr-4">
-                  <div className="flex flex-col min-h-[calc(100vh-5.5rem)] md:min-h-[calc(100vh-2.5rem)] w-full max-w-screen-lg">
+                  <div className="flex flex-col min-h-[calc(100vh-5.5rem)] md:min-h-[calc(100vh-2.5rem)] w-full">
                     <Outlet />
                   </div>
                 </ScrollArea>

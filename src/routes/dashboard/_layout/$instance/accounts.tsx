@@ -367,7 +367,7 @@ function AccountSettings() {
   const profile = useContext(ProfileContext);
 
   return (
-    <div className="grow flex h-full w-full flex-col gap-4 py-2 pl-2">
+    <div className="grow flex h-full w-full flex-col gap-4 py-2 pl-2 max-w-4xl">
       <div className="flex flex-col gap-2">
         <ClientSettingsPageComponent
           data={clientInfo.settings.find((s) => s.namespace === 'account')!}

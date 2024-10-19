@@ -526,7 +526,7 @@ function SingleComponent(props: {
   switch (props.entry.type.value.oneofKind) {
     case 'string':
       return (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
             title={props.entry.uiName}
             description={props.entry.description}
@@ -542,7 +542,7 @@ function SingleComponent(props: {
       );
     case 'int':
       return (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
             title={props.entry.uiName}
             description={props.entry.description}
@@ -558,7 +558,7 @@ function SingleComponent(props: {
       );
     case 'bool':
       return (
-        <div className="flex flex-row gap-1">
+        <div className="flex flex-row gap-1 max-w-xl">
           <BoolComponent
             namespace={props.namespace}
             settingKey={props.settingKey}
@@ -574,7 +574,7 @@ function SingleComponent(props: {
       );
     case 'double':
       return (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
             title={props.entry.uiName}
             description={props.entry.description}
@@ -590,7 +590,7 @@ function SingleComponent(props: {
       );
     case 'combo':
       return (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
             title={props.entry.uiName}
             description={props.entry.description}
@@ -606,7 +606,7 @@ function SingleComponent(props: {
       );
     case 'stringList':
       return (
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
             title={props.entry.uiName}
             description={props.entry.description}
@@ -683,7 +683,7 @@ function MinMaxComponentSingle(props: {
   }
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 max-w-xl">
       <ComponentTitle
         title={props.entry.uiName}
         description={props.entry.description}

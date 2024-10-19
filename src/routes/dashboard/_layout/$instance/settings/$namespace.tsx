@@ -118,7 +118,7 @@ function SettingsNamespace() {
                 </SelectGroup>
               </SelectContent>
             </Select>
-            <Card>
+            <Card className="max-w-4xl">
               <CardHeader className="p-4">
                 <CardTitle className="text-xl">
                   {settingsEntry.pageName}
