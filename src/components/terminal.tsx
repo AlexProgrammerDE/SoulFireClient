@@ -158,7 +158,7 @@ export const TerminalComponent = () => {
         } as CSSProperties
       }
     >
-      <div className="whitespace-pre-wrap py-0.5 pl-0.5 h-full leading-3">
+      <div className="whitespace-pre-wrap py-0.5 pl-0.5 h-full leading-3 cursor-text">
         {entries.map((entry) => {
           return (
             <div key={entry[0]} className="py-0.5">

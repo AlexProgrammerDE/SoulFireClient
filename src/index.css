@@ -86,7 +86,7 @@
 
   body {
     font-family: 'Geist Variable', sans-serif;
-    @apply overflow-hidden bg-background text-foreground antialiased;
+    @apply overflow-hidden bg-background text-foreground antialiased cursor-default;
   }
 
   * {
