@@ -72,6 +72,7 @@ function UrlDialog(props: ImportDialogProps) {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-4">
               <Input
+                autoFocus
                 placeholder="Put URL here..."
                 defaultValue={inputText}
                 type="url"
@@ -274,6 +275,7 @@ function TextInput(
       <Separator orientation="horizontal" />
       <div className="flex flex-col gap-4">
         <Textarea
+          autoFocus
           placeholder="Put text here..."
           defaultValue={inputText}
           onChange={(e) => setInputText(e.currentTarget.value)}

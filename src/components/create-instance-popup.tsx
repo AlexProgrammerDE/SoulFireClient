@@ -74,7 +74,11 @@ export function CreateInstancePopup({
                   <FormItem>
                     <FormLabel>Friendly name</FormLabel>
                     <FormControl>
-                      <Input placeholder="My Minecraft Bot" {...field} />
+                      <Input
+                        autoFocus
+                        placeholder="My Minecraft Bot"
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>
                       This is how you'll identify this instance.

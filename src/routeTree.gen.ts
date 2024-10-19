@@ -29,11 +29,13 @@ const DashboardImport = createFileRoute('/dashboard')()
 // Create/Update Routes
 
 const DashboardRoute = DashboardImport.update({
+  id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => rootRoute,
 } as any)
 
 const IndexRoute = IndexImport.update({
+  id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
 } as any)
@@ -44,35 +46,41 @@ const DashboardLayoutRoute = DashboardLayoutImport.update({
 } as any)
 
 const DashboardLayoutIndexRoute = DashboardLayoutIndexImport.update({
+  id: '/',
   path: '/',
   getParentRoute: () => DashboardLayoutRoute,
 } as any)
 
 const DashboardLayoutInstanceRoute = DashboardLayoutInstanceImport.update({
+  id: '/$instance',
   path: '/$instance',
   getParentRoute: () => DashboardLayoutRoute,
 } as any)
 
 const DashboardLayoutInstanceProxiesRoute =
   DashboardLayoutInstanceProxiesImport.update({
+    id: '/proxies',
     path: '/proxies',
     getParentRoute: () => DashboardLayoutInstanceRoute,
   } as any)
 
 const DashboardLayoutInstanceControlsRoute =
   DashboardLayoutInstanceControlsImport.update({
+    id: '/controls',
     path: '/controls',
     getParentRoute: () => DashboardLayoutInstanceRoute,
   } as any)
 
 const DashboardLayoutInstanceAccountsRoute =
   DashboardLayoutInstanceAccountsImport.update({
+    id: '/accounts',
     path: '/accounts',
     getParentRoute: () => DashboardLayoutInstanceRoute,
   } as any)
 
 const DashboardLayoutInstanceSettingsNamespaceRoute =
   DashboardLayoutInstanceSettingsNamespaceImport.update({
+    id: '/settings/$namespace',
     path: '/settings/$namespace',
     getParentRoute: () => DashboardLayoutInstanceRoute,
   } as any)

@@ -64,6 +64,7 @@ export function DataTable<TData, TValue>({
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
         <Input
+          autoFocus
           placeholder={`Filter ${filterDisplayName}...`}
           value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
