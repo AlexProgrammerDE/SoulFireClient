@@ -40,6 +40,7 @@ rustls = "0.23.12"
 tempfile = "3.6.0"
 sha2 = "0.10.8"
 openssl = { version = "0.10", features = ["vendored"] }
+thiserror = "1.0.63"
 
 [target."cfg(not(any(target_os = \"android\", target_os = \"ios\")))".dependencies]
 tauri-plugin-updater = "2.0.0-rc"
