@@ -36,7 +36,7 @@
     "category": "DeveloperTool",
     "copyright": "AlexProgrammerDE Ⓒ 2024",
     "publisher": "SoulFireMC",
-    "targets": "all",
+    "targets": ["deb", "rpm", "appimage", "nsis", "app"],
     "homepage": "https://soulfiremc.com",
     "license": "GPL-3.0",
     "licenseFile": "../LICENSE",
@@ -44,7 +44,10 @@
     "windows": {
       "certificateThumbprint": null,
       "digestAlgorithm": "sha256",
-      "timestampUrl": ""
+      "timestampUrl": "",
+      "nsis": {
+        "installMode": "currentUser"
+      }
     },
     "icon": [
       "icons/32x32.png",
