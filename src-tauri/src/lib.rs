@@ -69,9 +69,6 @@ pub fn run() {
         ])
     .setup(|app| {
       #[cfg(desktop)]
-      app.handle().plugin(tauri_plugin_updater::Builder::new().build()).unwrap();
-
-      #[cfg(desktop)]
       {
         let handle = app.handle();
         tray::create_tray(handle)?;
@@ -92,6 +89,7 @@ pub fn run() {
 
       #[cfg(desktop)]
       {
+        app.handle().plugin(tauri_plugin_updater::Builder::new().build()).unwrap();
         let handle = app.handle().clone();
         tauri::async_runtime::spawn(async move {
           match updater::update(handle).await {
