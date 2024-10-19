@@ -6,6 +6,7 @@ use std::ops::Deref;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 use std::{env, thread};
+use log::{error, info};
 use tauri::async_runtime::Mutex;
 use tauri::{Emitter, Listener, Manager};
 use tauri_plugin_log::fern::colors::Color;
@@ -93,7 +94,14 @@ pub fn run() {
       {
         let handle = app.handle().clone();
         tauri::async_runtime::spawn(async move {
-          let _ = updater::update(handle).await;
+          match updater::update(handle).await {
+            Ok(()) => {
+              info!("Updater finished");
+            }
+            Err(error) => {
+              error!("An updater error occurred! {error}");
+            }
+          }
         });
       }
       Ok(())

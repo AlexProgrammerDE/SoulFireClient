@@ -1,9 +1,10 @@
 use log::info;
 use tauri_plugin_updater::UpdaterExt;
+use crate::utils::SFAnyError;
 
-pub(crate) async fn update(app: tauri::AppHandle) -> tauri::Result<()> {
+pub(crate) async fn update(app: tauri::AppHandle) -> Result<(), SFAnyError> {
   info!("Checking for updates");
-  if let Some(update) = app.updater().unwrap().check().await.unwrap() {
+  if let Some(update) = app.updater()?.check().await? {
     let mut downloaded = 0;
 
     update.download_and_install(|chunk_length, content_length| {
@@ -11,7 +12,7 @@ pub(crate) async fn update(app: tauri::AppHandle) -> tauri::Result<()> {
       info!("Downloaded {downloaded} from {content_length:?}");
     }, || {
       info!("Download finished");
-    }).await.unwrap();
+    }).await?;
 
     info!("Update installed");
     app.restart();

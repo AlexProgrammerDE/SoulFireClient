@@ -36,6 +36,9 @@ pub enum SFAnyError {
   FromUtf8(#[from] std::string::FromUtf8Error),
   #[error(transparent)]
   ZipError(#[from] zip::result::ZipError),
+  #[cfg(desktop)]
+  #[error(transparent)]
+  UpdaterError(#[from] tauri_plugin_updater::Error)
 }
 
 impl serde::Serialize for SFAnyError {
