@@ -10,7 +10,7 @@ It mainly targets the web, but uses native APIs using Tauri.
 
 Tools used for this client:
 
-- Rspack
+- Rsbuild
 - tanstack-router
 - Tauri
 - shadcn/ui
