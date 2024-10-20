@@ -73,7 +73,7 @@ importers:
         version: 8.20.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/router-devtools':
         specifier: ^1.20.1
-        version: 1.74.0(@tanstack/react-router@1.74.0(@tanstack/router-generator@1.73.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 1.74.2(@tanstack/react-router@1.74.2(@tanstack/router-generator@1.74.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tauri-apps/api':
         specifier: 2.0.2
         version: 2.0.2
@@ -82,10 +82,10 @@ importers:
         version: 2.0.0
       '@tauri-apps/plugin-dialog':
         specifier: ^2.0.0-rc
-        version: 2.0.0
+        version: 2.0.1
       '@tauri-apps/plugin-fs':
         specifier: ^2.0.0-rc
-        version: 2.0.0
+        version: 2.0.1
       '@tauri-apps/plugin-log':
         specifier: ^2.0.0
         version: 2.0.0
@@ -97,7 +97,7 @@ importers:
         version: 2.0.0
       '@tauri-apps/plugin-shell':
         specifier: ^2.0.0-rc
-        version: 2.0.0
+        version: 2.0.1
       '@tauri-apps/plugin-updater':
         specifier: ^2.0.0-rc
         version: 2.0.0
@@ -179,31 +179,31 @@ importers:
         version: 2.9.4
       '@rsbuild/core':
         specifier: ^1.0.7
-        version: 1.0.15
+        version: 1.0.16
       '@rsbuild/plugin-eslint':
         specifier: ^1.0.3
-        version: 1.0.4(@rsbuild/core@1.0.15)(eslint@8.57.1)
+        version: 1.0.4(@rsbuild/core@1.0.16)(eslint@8.57.1)
       '@rsbuild/plugin-react':
         specifier: ^1.0.2
-        version: 1.0.5(@rsbuild/core@1.0.15)
+        version: 1.0.5(@rsbuild/core@1.0.16)
       '@rsbuild/plugin-svgr':
         specifier: ^1.0.4
-        version: 1.0.4(@rsbuild/core@1.0.15)(typescript@5.6.3)
+        version: 1.0.4(@rsbuild/core@1.0.16)(typescript@5.6.3)
       '@rsbuild/plugin-type-check':
         specifier: ^1.0.1
-        version: 1.0.1(@rsbuild/core@1.0.15)(typescript@5.6.3)
+        version: 1.0.1(@rsbuild/core@1.0.16)(typescript@5.6.3)
       '@tanstack/eslint-plugin-query':
         specifier: ^5.51.15
         version: 5.59.7(eslint@8.57.1)(typescript@5.6.3)
       '@tanstack/react-router':
         specifier: ^1.20.1
-        version: 1.74.0(@tanstack/router-generator@1.73.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 1.74.2(@tanstack/router-generator@1.74.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@tanstack/router-cli':
         specifier: ^1.58.12
-        version: 1.73.1
+        version: 1.74.2
       '@tanstack/router-plugin':
         specifier: ^1.45.8
-        version: 1.73.1(@rsbuild/core@1.0.15)(vite@5.4.8(@types/node@20.16.13)(terser@5.34.0))(webpack-sources@3.2.3)(webpack@5.95.0)
+        version: 1.74.2(@rsbuild/core@1.0.16)(vite@5.4.8(@types/node@20.16.13)(terser@5.34.0))(webpack-sources@3.2.3)(webpack@5.95.0)
       '@tauri-apps/cli':
         specifier: 2.0.3
         version: 2.0.3
@@ -1495,8 +1495,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rsbuild/core@1.0.15':
-    resolution: {integrity: sha512-LIOgs4UzfFeT3sZnPMww1JbqF7zkGNMZdMJ6vV8xEXGOU4t8Z6QAtM5A0FGRfb2mYW5u2+XnMog+JAbo2RrN/A==}
+  '@rsbuild/core@1.0.16':
+    resolution: {integrity: sha512-ioQg9HfDh5eXPZi+An7yCRaSE9TH4W3IBqrxBrv4IjOg/ajpVpKidiKwyYpX3QPbxY1ybfvQTH7HwATND4crCA==}
     engines: {node: '>=16.7.0'}
     hasBin: true
 
@@ -1710,11 +1710,11 @@ packages:
     peerDependencies:
       react: ^18 || ^19
 
-  '@tanstack/react-router@1.74.0':
-    resolution: {integrity: sha512-dthfscAM25bi1AjA38t9jPsU2jqNk0f6a6ziorEi845ss6Uwrbw4FSFQ1oI1UmUfaJR73S5SO8TGXKZAIxhlWQ==}
+  '@tanstack/react-router@1.74.2':
+    resolution: {integrity: sha512-8z7X0gUl3thLNpPiCbYiVL10StLupI5b8r3h6wNkuYNxNoPMQFEcFe8sv+XlqaSX740e0hEjydSX7XRVntkVJg==}
     engines: {node: '>=12'}
     peerDependencies:
-      '@tanstack/router-generator': 1.73.1
+      '@tanstack/router-generator': 1.74.2
       react: '>=18'
       react-dom: '>=18'
     peerDependenciesMeta:
@@ -1734,25 +1734,25 @@ packages:
       react: '>=16.8'
       react-dom: '>=16.8'
 
-  '@tanstack/router-cli@1.73.1':
-    resolution: {integrity: sha512-lyiHD97jhWuJ8ypzcxZlaNYIMp+Jy7B0K5NFdIUD/0darhXzX/Mx+lymA8YHJISqgdz6gVB/64WF0dYC/TnzpA==}
+  '@tanstack/router-cli@1.74.2':
+    resolution: {integrity: sha512-nlAnU+uBNfGr2pMWrc092rwTCO9LrwdHvqfa/qAANg2c9auX7L8/QxUSImqW3nPgj1JGmR341jZICLBWzpWrgg==}
     engines: {node: '>=12'}
     hasBin: true
 
-  '@tanstack/router-devtools@1.74.0':
-    resolution: {integrity: sha512-lr7e5PU43tDD//7mN+bBfSgQphchzHk5NbhzlwgEuEW74lYc6CCRUUeORR+pPAUFdf8+7yQ6iv5Ow7iaXb17ng==}
+  '@tanstack/router-devtools@1.74.2':
+    resolution: {integrity: sha512-Cvl1NfEUzBOEnxvfKrE9a7OaxNbqZ8kMulNXUhcDZpnbLmRKr4PCj7G6yKJ6td58va9f6QqNQtXFeUbI9rky+w==}
     engines: {node: '>=12'}
     peerDependencies:
-      '@tanstack/react-router': ^1.74.0
+      '@tanstack/react-router': ^1.74.2
       react: '>=18'
       react-dom: '>=18'
 
-  '@tanstack/router-generator@1.73.1':
-    resolution: {integrity: sha512-+oHYnspeS3f4bpbnUymH9dEGJbxhfV0rSwHl0cTq4pXSPXuLYcqYZmSGCqBfiq6CGtgOXZ2wEUMgezt3R2PvZg==}
+  '@tanstack/router-generator@1.74.2':
+    resolution: {integrity: sha512-S69fXvYcL+tQsO5Fe9ju/XVa/hZvk4pCaWbtoR2MNjIgR2RmjiFKOgXYeLRMNom/IpP/HAQmQ3m1DwU9jjSUKA==}
     engines: {node: '>=12'}
 
-  '@tanstack/router-plugin@1.73.1':
-    resolution: {integrity: sha512-pJMTWVFEIvTXLL6kzYZlPRlQ7WwfsBNZGIJck+dX0NQVjw6CEj1a4w9hlJFSqIOBbRdjtY6hS3Y00DDFGf9Inw==}
+  '@tanstack/router-plugin@1.74.2':
+    resolution: {integrity: sha512-HcG0FwSZ77g0QH9Ev2I1QYeXS+WWjdThO5Whgm/9abkyJq5GfsiLm2Ey2cw2Va+iHgD2nQdkraP9xL/z9/s6BQ==}
     engines: {node: '>=12'}
     peerDependencies:
       '@rsbuild/core': '>=1.0.2'
@@ -1848,11 +1848,11 @@ packages:
   '@tauri-apps/plugin-clipboard-manager@2.0.0':
     resolution: {integrity: sha512-V1sXmbjnwfXt/r48RJMwfUmDMSaP/8/YbH4CLNxt+/sf1eHlIP8PRFdFDQwLN0cNQKu2rqQVbG/Wc/Ps6cDUhw==}
 
-  '@tauri-apps/plugin-dialog@2.0.0':
-    resolution: {integrity: sha512-ApNkejXP2jpPBSifznPPcHTXxu9/YaRW+eJ+8+nYwqp0lLUtebFHG4QhxitM43wwReHE81WAV1DQ/b+2VBftOA==}
+  '@tauri-apps/plugin-dialog@2.0.1':
+    resolution: {integrity: sha512-fnUrNr6EfvTqdls/ufusU7h6UbNFzLKvHk/zTuOiBq01R3dTODqwctZlzakdbfSp/7pNwTKvgKTAgl/NAP/Z0Q==}
 
-  '@tauri-apps/plugin-fs@2.0.0':
-    resolution: {integrity: sha512-BNEeQQ5aH8J5SwYuWgRszVyItsmquRuzK2QRkVj8Z0sCsLnSvJFYI3JHRzzr3ltZGq1nMPtblrlZzuKqVzRawA==}
+  '@tauri-apps/plugin-fs@2.0.1':
+    resolution: {integrity: sha512-PkeZG2WAob9Xpmr66aPvj+McDVgFjV2a7YBzYVZjiCvbGeMs6Yk09tlXhCe3EyZdT/pwWMSi8lXUace+hlsjsw==}
 
   '@tauri-apps/plugin-log@2.0.0':
     resolution: {integrity: sha512-C+NII9vzswqnOQE8k7oRtnaw0z5TZsMmnirRhXkCKDEhQQH9841Us/PC1WHtGiAaJ8za1A1JB2xXndEq/47X/w==}
@@ -1863,8 +1863,8 @@ packages:
   '@tauri-apps/plugin-process@2.0.0':
     resolution: {integrity: sha512-OYzi0GnkrF4NAnsHZU7U3tjSoP0PbeAlO7T1Z+vJoBUH9sFQ1NSLqWYWQyf8hcb3gVWe7P1JggjiskO+LST1ug==}
 
-  '@tauri-apps/plugin-shell@2.0.0':
-    resolution: {integrity: sha512-OpW2+ycgJLrEoZityWeWYk+6ZWP9VyiAfbO+N/O8VfLkqyOym8kXh7odKDfINx9RAotkSGBtQM4abyKfJDkcUg==}
+  '@tauri-apps/plugin-shell@2.0.1':
+    resolution: {integrity: sha512-akU1b77sw3qHiynrK0s930y8zKmcdrSD60htjH+mFZqv5WaakZA/XxHR3/sF1nNv9Mgmt/Shls37HwnOr00aSw==}
 
   '@tauri-apps/plugin-updater@2.0.0':
     resolution: {integrity: sha512-N0cl71g7RPr7zK2Fe5aoIwzw14NcdLcz7XMGFWZVjprsqgDRWoxbnUkknyCQMZthjhGkppCd/wN2MIsUz+eAhQ==}
@@ -5289,7 +5289,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.24.0':
     optional: true
 
-  '@rsbuild/core@1.0.15':
+  '@rsbuild/core@1.0.16':
     dependencies:
       '@rspack/core': 1.0.13(@swc/helpers@0.5.13)
       '@rspack/lite-tapable': 1.0.1
@@ -5298,35 +5298,35 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  '@rsbuild/plugin-eslint@1.0.4(@rsbuild/core@1.0.15)(eslint@8.57.1)':
+  '@rsbuild/plugin-eslint@1.0.4(@rsbuild/core@1.0.16)(eslint@8.57.1)':
     dependencies:
       eslint: 8.57.1
       eslint-rspack-plugin: 4.2.1(eslint@8.57.1)
       webpack: 5.95.0
     optionalDependencies:
-      '@rsbuild/core': 1.0.15
+      '@rsbuild/core': 1.0.16
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
       - uglify-js
       - webpack-cli
 
-  '@rsbuild/plugin-react@1.0.4(@rsbuild/core@1.0.15)':
+  '@rsbuild/plugin-react@1.0.4(@rsbuild/core@1.0.16)':
     dependencies:
-      '@rsbuild/core': 1.0.15
+      '@rsbuild/core': 1.0.16
       '@rspack/plugin-react-refresh': 1.0.0(react-refresh@0.14.2)
       react-refresh: 0.14.2
 
-  '@rsbuild/plugin-react@1.0.5(@rsbuild/core@1.0.15)':
+  '@rsbuild/plugin-react@1.0.5(@rsbuild/core@1.0.16)':
     dependencies:
-      '@rsbuild/core': 1.0.15
+      '@rsbuild/core': 1.0.16
       '@rspack/plugin-react-refresh': 1.0.0(react-refresh@0.14.2)
       react-refresh: 0.14.2
 
-  '@rsbuild/plugin-svgr@1.0.4(@rsbuild/core@1.0.15)(typescript@5.6.3)':
+  '@rsbuild/plugin-svgr@1.0.4(@rsbuild/core@1.0.16)(typescript@5.6.3)':
     dependencies:
-      '@rsbuild/core': 1.0.15
-      '@rsbuild/plugin-react': 1.0.4(@rsbuild/core@1.0.15)
+      '@rsbuild/core': 1.0.16
+      '@rsbuild/plugin-react': 1.0.4(@rsbuild/core@1.0.16)
       '@svgr/core': 8.1.0(typescript@5.6.3)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.6.3))
       '@svgr/plugin-svgo': 8.1.0(@svgr/core@8.1.0(typescript@5.6.3))(typescript@5.6.3)
@@ -5336,7 +5336,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@rsbuild/plugin-type-check@1.0.1(@rsbuild/core@1.0.15)(typescript@5.6.3)':
+  '@rsbuild/plugin-type-check@1.0.1(@rsbuild/core@1.0.16)(typescript@5.6.3)':
     dependencies:
       deepmerge: 4.3.1
       fork-ts-checker-webpack-plugin: 9.0.2(typescript@5.6.3)(webpack@5.95.0)
@@ -5344,7 +5344,7 @@ snapshots:
       reduce-configs: 1.0.0
       webpack: 5.95.0
     optionalDependencies:
-      '@rsbuild/core': 1.0.15
+      '@rsbuild/core': 1.0.16
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
@@ -5524,7 +5524,7 @@ snapshots:
       '@tanstack/query-core': 5.59.13
       react: 18.3.1
 
-  '@tanstack/react-router@1.74.0(@tanstack/router-generator@1.73.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@tanstack/react-router@1.74.2(@tanstack/router-generator@1.74.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@tanstack/history': 1.61.1
       '@tanstack/react-store': 0.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -5533,7 +5533,7 @@ snapshots:
       tiny-invariant: 1.3.3
       tiny-warning: 1.0.3
     optionalDependencies:
-      '@tanstack/router-generator': 1.73.1
+      '@tanstack/router-generator': 1.74.2
 
   '@tanstack/react-store@0.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -5548,15 +5548,15 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@tanstack/router-cli@1.73.1':
+  '@tanstack/router-cli@1.74.2':
     dependencies:
-      '@tanstack/router-generator': 1.73.1
+      '@tanstack/router-generator': 1.74.2
       chokidar: 3.6.0
       yargs: 17.7.2
 
-  '@tanstack/router-devtools@1.74.0(@tanstack/react-router@1.74.0(@tanstack/router-generator@1.73.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@tanstack/router-devtools@1.74.2(@tanstack/react-router@1.74.2(@tanstack/router-generator@1.74.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(csstype@3.1.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@tanstack/react-router': 1.74.0(@tanstack/router-generator@1.73.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tanstack/react-router': 1.74.2(@tanstack/router-generator@1.74.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       clsx: 2.1.1
       goober: 2.1.16(csstype@3.1.3)
       react: 18.3.1
@@ -5564,14 +5564,14 @@ snapshots:
     transitivePeerDependencies:
       - csstype
 
-  '@tanstack/router-generator@1.73.1':
+  '@tanstack/router-generator@1.74.2':
     dependencies:
       '@tanstack/virtual-file-routes': 1.64.0
       prettier: 3.3.3
       tsx: 4.19.1
       zod: 3.23.8
 
-  '@tanstack/router-plugin@1.73.1(@rsbuild/core@1.0.15)(vite@5.4.8(@types/node@20.16.13)(terser@5.34.0))(webpack-sources@3.2.3)(webpack@5.95.0)':
+  '@tanstack/router-plugin@1.74.2(@rsbuild/core@1.0.16)(vite@5.4.8(@types/node@20.16.13)(terser@5.34.0))(webpack-sources@3.2.3)(webpack@5.95.0)':
     dependencies:
       '@babel/core': 7.25.8
       '@babel/generator': 7.25.7
@@ -5581,7 +5581,7 @@ snapshots:
       '@babel/template': 7.25.7
       '@babel/traverse': 7.25.7
       '@babel/types': 7.25.8
-      '@tanstack/router-generator': 1.73.1
+      '@tanstack/router-generator': 1.74.2
       '@tanstack/virtual-file-routes': 1.64.0
       '@types/babel__core': 7.20.5
       '@types/babel__generator': 7.6.8
@@ -5592,7 +5592,7 @@ snapshots:
       unplugin: 1.14.1(webpack-sources@3.2.3)
       zod: 3.23.8
     optionalDependencies:
-      '@rsbuild/core': 1.0.15
+      '@rsbuild/core': 1.0.16
       vite: 5.4.8(@types/node@20.16.13)(terser@5.34.0)
       webpack: 5.95.0
     transitivePeerDependencies:
@@ -5654,11 +5654,11 @@ snapshots:
     dependencies:
       '@tauri-apps/api': 2.0.2
 
-  '@tauri-apps/plugin-dialog@2.0.0':
+  '@tauri-apps/plugin-dialog@2.0.1':
     dependencies:
       '@tauri-apps/api': 2.0.2
 
-  '@tauri-apps/plugin-fs@2.0.0':
+  '@tauri-apps/plugin-fs@2.0.1':
     dependencies:
       '@tauri-apps/api': 2.0.2
 
@@ -5674,7 +5674,7 @@ snapshots:
     dependencies:
       '@tauri-apps/api': 2.0.2
 
-  '@tauri-apps/plugin-shell@2.0.0':
+  '@tauri-apps/plugin-shell@2.0.1':
     dependencies:
       '@tauri-apps/api': 2.0.2
 

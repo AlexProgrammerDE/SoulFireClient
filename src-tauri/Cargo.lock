@@ -5402,9 +5402,9 @@ checksum = "4873307b7c257eddcb50c9bedf158eb669578359fb28428bef438fec8e6ba7c2"
 
 [[package]]
 name = "tauri"
-version = "2.0.4"
+version = "2.0.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "44438500b50708bfc1e6083844e135d1b516325aae58710dcd8fb67e050ae87c"
+checksum = "5ce2818e803ce3097987296623ed8c0d9f65ed93b4137ff9a83e168bdbf62932"
 dependencies = [
  "anyhow",
  "bytes",
@@ -5548,9 +5548,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-dialog"
-version = "2.0.1"
+version = "2.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ddb2fe88b602461c118722c574e2775ab26a4e68886680583874b2f6520608b7"
+checksum = "6ff33d09331cc22bf4771a2633b62afc1038e36273eef22bff12f53d33decd91"
 dependencies = [
  "log",
  "raw-window-handle",
@@ -5566,9 +5566,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-fs"
-version = "2.0.1"
+version = "2.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ab300488ebec3487ca5f56289692e7e45feb07eea8d5e1dba497f7dc9dd9c407"
+checksum = "16d0816b27207c29aaff632c73b702785140cf16fe6150c201a2720245b8ea88"
 dependencies = [
  "anyhow",
  "dunce",
@@ -5639,9 +5639,9 @@ dependencies = [
 
 [[package]]
 name = "tauri-plugin-shell"
-version = "2.0.1"
+version = "2.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "371fb9aca2823990a2d0db7970573be5fdf07881fcaa2b835b29631feb84aec1"
+checksum = "0ad7880c5586b6b2104be451e3d7fc0f3800c84bda69e9ba81c828f87cb34267"
 dependencies = [
  "encoding_rs",
  "log",
