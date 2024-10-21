@@ -1,10 +1,21 @@
-import { createFileRoute, deepEqual, Link, LinkProps, Outlet, useRouterState } from '@tanstack/react-router';
+import {
+  createFileRoute,
+  deepEqual,
+  Link,
+  LinkProps,
+  Outlet,
+  useRouterState,
+} from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { ProfileContext } from '@/components/providers/profile-context';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { convertFromProto } from '@/lib/types.ts';
-import { InstanceConfig, InstanceInfoResponse, InstanceState } from '@/generated/soulfire/instance.ts';
+import {
+  InstanceConfig,
+  InstanceInfoResponse,
+  InstanceState,
+} from '@/generated/soulfire/instance.ts';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { queryClientInstance } from '@/lib/query.ts';
 import { useQuery } from '@tanstack/react-query';
@@ -14,11 +25,22 @@ import { ClientInfoContext } from '@/components/providers/client-info-context.ts
 import { buttonVariants } from '@/components/ui/button.tsx';
 import { BlocksIcon, TerminalIcon } from 'lucide-react';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable.tsx';
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from '@/components/ui/resizable.tsx';
 import { cn } from '@/lib/utils.ts';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
-import { MinecraftAccountProto_AccountTypeProto, ProxyProto_Type } from '@/generated/soulfire/common.ts';
+import {
+  MinecraftAccountProto_AccountTypeProto,
+  ProxyProto_Type,
+} from '@/generated/soulfire/common.ts';
 
 export const Route = createFileRoute('/dashboard/_layout/$instance')({
   beforeLoad: (props) => {
@@ -92,7 +114,8 @@ export const Route = createFileRoute('/dashboard/_layout/$instance')({
         },
         signal: props.abortController.signal,
         refetchInterval: 3_000,
-        structuralSharing: (prev: unknown, next: unknown) => (deepEqual(prev, next) ? prev : next),
+        structuralSharing: (prev: unknown, next: unknown) =>
+          deepEqual(prev, next) ? prev : next,
       },
     };
   },
@@ -113,14 +136,31 @@ interface NavProps {
   }[];
 }
 
-const collapsedActiveClassName = cn(buttonVariants({ variant: 'default', size: 'icon' }), 'h-9 w-9', 'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white');
-const expandedActiveClassName = cn(buttonVariants({ variant: 'default', size: 'sm' }), 'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white', 'justify-start');
+const collapsedActiveClassName = cn(
+  buttonVariants({
+    variant: 'default',
+    size: 'icon',
+  }),
+  'h-9 w-9',
+  'dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white',
+);
+const expandedActiveClassName = cn(
+  buttonVariants({
+    variant: 'default',
+    size: 'sm',
+  }),
+  'dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white',
+  'justify-start',
+);
 
 function Nav({ links, isCollapsed }: NavProps) {
   const router = useRouterState();
 
   return (
-    <div data-collapsed={isCollapsed} className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2 grow">
+    <div
+      data-collapsed={isCollapsed}
+      className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2 grow"
+    >
       <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
         {links.map((link) =>
           isCollapsed ? (
@@ -132,7 +172,17 @@ function Nav({ links, isCollapsed }: NavProps) {
                     className: collapsedActiveClassName,
                   }}
                   inactiveProps={{
-                    className: (link.extraActiveUrls ?? []).includes(router.location.pathname) ? collapsedActiveClassName : cn(buttonVariants({ variant: 'ghost', size: 'icon' }), 'h-9 w-9'),
+                    className: (link.extraActiveUrls ?? []).includes(
+                      router.location.pathname,
+                    )
+                      ? collapsedActiveClassName
+                      : cn(
+                          buttonVariants({
+                            variant: 'ghost',
+                            size: 'icon',
+                          }),
+                          'h-9 w-9',
+                        ),
                   }}
                 >
                   <link.icon className="h-4 w-4" />
@@ -141,7 +191,11 @@ function Nav({ links, isCollapsed }: NavProps) {
               </TooltipTrigger>
               <TooltipContent side="right" className="flex items-center gap-4">
                 {link.title}
-                {link.label && <span className="ml-auto text-muted-foreground">{link.label}</span>}
+                {link.label && (
+                  <span className="ml-auto text-muted-foreground">
+                    {link.label}
+                  </span>
+                )}
               </TooltipContent>
             </Tooltip>
           ) : (
@@ -152,7 +206,17 @@ function Nav({ links, isCollapsed }: NavProps) {
                 className: expandedActiveClassName,
               }}
               inactiveProps={{
-                className: (link.extraActiveUrls ?? []).includes(router.location.pathname) ? expandedActiveClassName : cn(buttonVariants({ variant: 'ghost', size: 'sm' }), 'justify-start'),
+                className: (link.extraActiveUrls ?? []).includes(
+                  router.location.pathname,
+                )
+                  ? expandedActiveClassName
+                  : cn(
+                      buttonVariants({
+                        variant: 'ghost',
+                        size: 'sm',
+                      }),
+                      'justify-start',
+                    ),
               }}
             >
               {({ isActive }) => {
@@ -160,7 +224,16 @@ function Nav({ links, isCollapsed }: NavProps) {
                   <>
                     <link.icon className="mr-2 h-4 w-4" />
                     {link.title}
-                    {link.label && <span className={cn('ml-auto', isActive && 'text-background dark:text-white')}>{link.label}</span>}
+                    {link.label && (
+                      <span
+                        className={cn(
+                          'ml-auto',
+                          isActive && 'text-background dark:text-white',
+                        )}
+                      >
+                        {link.label}
+                      </span>
+                    )}
                   </>
                 );
               }}
@@ -186,7 +259,9 @@ function MobileNav({ links }: Omit<NavProps, 'isCollapsed'>) {
                 className: collapsedActiveClassName,
               }}
               inactiveProps={{
-                className: (link.extraActiveUrls ?? []).includes(router.location.pathname)
+                className: (link.extraActiveUrls ?? []).includes(
+                  router.location.pathname,
+                )
                   ? collapsedActiveClassName
                   : cn(
                       buttonVariants({
@@ -203,7 +278,11 @@ function MobileNav({ links }: Omit<NavProps, 'isCollapsed'>) {
           </TooltipTrigger>
           <TooltipContent side="top" className="flex items-center gap-4">
             {link.title}
-            {link.label && <span className="ml-auto text-muted-foreground">{link.label}</span>}
+            {link.label && (
+              <span className="ml-auto text-muted-foreground">
+                {link.label}
+              </span>
+            )}
           </TooltipContent>
         </Tooltip>
       ))}
@@ -230,12 +309,28 @@ function InstanceLayout() {
     return <LoadingComponent />;
   }
 
-  const botSettings = clientInfo.settings.find((settings) => settings.namespace === 'bot');
-  const accountSettings = clientInfo.settings.find((settings) => settings.namespace === 'account');
-  const proxySettings = clientInfo.settings.find((settings) => settings.namespace === 'proxy');
-  const devSettings = clientInfo.settings.find((settings) => settings.namespace === 'dev');
-  const firstPluginSettings = clientInfo.settings.find((settings) => settings.owningPlugin !== undefined);
-  if (!botSettings || !accountSettings || !proxySettings || !devSettings || !firstPluginSettings) {
+  const botSettings = clientInfo.settings.find(
+    (settings) => settings.namespace === 'bot',
+  );
+  const accountSettings = clientInfo.settings.find(
+    (settings) => settings.namespace === 'account',
+  );
+  const proxySettings = clientInfo.settings.find(
+    (settings) => settings.namespace === 'proxy',
+  );
+  const devSettings = clientInfo.settings.find(
+    (settings) => settings.namespace === 'dev',
+  );
+  const firstPluginSettings = clientInfo.settings.find(
+    (settings) => settings.owningPlugin !== undefined,
+  );
+  if (
+    !botSettings ||
+    !accountSettings ||
+    !proxySettings ||
+    !devSettings ||
+    !firstPluginSettings
+  ) {
     throw new Error('Namespaces missing');
   }
 
@@ -250,7 +345,9 @@ function InstanceLayout() {
     },
     {
       title: 'Bot Settings',
-      icon: (props) => <DynamicIcon {...props} name={botSettings.iconId as never} />,
+      icon: (props) => (
+        <DynamicIcon {...props} name={botSettings.iconId as never} />
+      ),
       linkProps: {
         to: '/dashboard/$instance/settings/$namespace',
         params: { instance: instance, namespace: 'bot' },
@@ -266,11 +363,21 @@ function InstanceLayout() {
           namespace: firstPluginSettings.namespace,
         },
       },
-      extraActiveUrls: clientInfo.settings.filter((settings) => settings.owningPlugin !== undefined && settings.namespace !== firstPluginSettings.namespace).map((settings) => `/dashboard/${instance}/settings/${settings.namespace}`),
+      extraActiveUrls: clientInfo.settings
+        .filter(
+          (settings) =>
+            settings.owningPlugin !== undefined &&
+            settings.namespace !== firstPluginSettings.namespace,
+        )
+        .map(
+          (settings) => `/dashboard/${instance}/settings/${settings.namespace}`,
+        ),
     },
     {
       title: 'Account Settings',
-      icon: (props) => <DynamicIcon {...props} name={accountSettings.iconId as never} />,
+      icon: (props) => (
+        <DynamicIcon {...props} name={accountSettings.iconId as never} />
+      ),
       linkProps: {
         to: '/dashboard/$instance/accounts',
         params: { instance: instance },
@@ -278,7 +385,9 @@ function InstanceLayout() {
     },
     {
       title: 'Proxy Settings',
-      icon: (props) => <DynamicIcon {...props} name={proxySettings.iconId as never} />,
+      icon: (props) => (
+        <DynamicIcon {...props} name={proxySettings.iconId as never} />
+      ),
       linkProps: {
         to: '/dashboard/$instance/proxies',
         params: { instance: instance },
@@ -286,7 +395,9 @@ function InstanceLayout() {
     },
     {
       title: 'Dev Settings',
-      icon: (props) => <DynamicIcon {...props} name={devSettings.iconId as never} />,
+      icon: (props) => (
+        <DynamicIcon {...props} name={devSettings.iconId as never} />
+      ),
       linkProps: {
         to: '/dashboard/$instance/settings/$namespace',
         params: { instance: instance, namespace: 'dev' },
@@ -303,10 +414,18 @@ function InstanceLayout() {
           state: result.data.instanceInfo.state,
         }}
       >
-        <ProfileContext.Provider value={convertFromProto(result.data.instanceInfo.config as InstanceConfig)}>
+        <ProfileContext.Provider
+          value={convertFromProto(
+            result.data.instanceInfo.config as InstanceConfig,
+          )}
+        >
           <DashboardMenuHeader />
           <div className="flex flex-grow">
-            <ResizablePanelGroup autoSaveId="main-layout" direction="horizontal" className="h-full items-stretch">
+            <ResizablePanelGroup
+              autoSaveId="main-layout"
+              direction="horizontal"
+              className="h-full items-stretch"
+            >
               <ResizablePanel
                 defaultSize={defaultLayout[0]}
                 collapsedSize={navCollapsedSize}
@@ -319,7 +438,11 @@ function InstanceLayout() {
                 onResize={() => {
                   setIsCollapsed(false);
                 }}
-                className={cn('hidden md:flex', isCollapsed && 'min-w-[50px] transition-all duration-300 ease-in-out')}
+                className={cn(
+                  'hidden md:flex',
+                  isCollapsed &&
+                    'min-w-[50px] transition-all duration-300 ease-in-out',
+                )}
               >
                 <Nav isCollapsed={isCollapsed} links={navLinks} />
               </ResizablePanel>
