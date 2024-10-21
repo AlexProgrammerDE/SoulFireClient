@@ -86,11 +86,11 @@
 
   body {
     font-family: 'Geist Variable', sans-serif;
-    @apply overflow-hidden bg-background text-foreground antialiased cursor-default;
+    @apply overflow-hidden bg-background text-foreground antialiased cursor-default select-none;
   }
 
   * {
     -webkit-user-drag: none;
-    @apply border-border select-none;
+    @apply border-border;
   }
 }
