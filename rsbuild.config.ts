@@ -4,6 +4,7 @@ import { TanStackRouterRspack } from '@tanstack/router-plugin/rspack';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { pluginEslint } from '@rsbuild/plugin-eslint';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
+import tauriConf from './src-tauri/tauri.conf.json';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -48,6 +49,7 @@ export default defineConfig({
       'X-XSS-Protection': '1; mode=block',
       'X-Frame-Options': 'SAMEORIGIN',
       'X-Content-Type-Options': 'nosniff',
+      'Content-Security-Policy': tauriConf.app.security.csp,
     },
   },
 });
