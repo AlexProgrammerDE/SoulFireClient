@@ -77,6 +77,15 @@ pub fn run() {
     .setup(|app| {
       #[cfg(desktop)]
       {
+        app.handle().plugin(tauri_plugin_single_instance::init(|app, args, cwd| {
+          let _ = app.get_webview_window("main")
+            .expect("no main window")
+            .set_focus();
+        }));
+      }
+      
+      #[cfg(desktop)]
+      {
         let handle = app.handle();
         tray::create_tray(handle)?;
       }
@@ -87,12 +96,6 @@ pub fn run() {
         let app_version = &app.package_info().version;
         let _ = main_window.set_title(format!("SoulFireClient {app_version}").as_str());
       }
-
-      let app_handle = app.handle().clone();
-      app.listen("kill-integrated-server", move |_event| {
-        kill_child_process(app_handle.state::<IntegratedServerState>().deref());
-        app_handle.emit("integrated-server-killed", ()).unwrap();
-      });
 
       #[cfg(desktop)]
       {
@@ -109,6 +112,13 @@ pub fn run() {
           }
         });
       }
+
+      let app_handle = app.handle().clone();
+      app.listen("kill-integrated-server", move |_event| {
+        kill_child_process(app_handle.state::<IntegratedServerState>().deref());
+        app_handle.emit("integrated-server-killed", ()).unwrap();
+      });
+
       Ok(())
     })
     .on_window_event(move |window, event| {
