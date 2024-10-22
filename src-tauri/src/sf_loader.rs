@@ -35,6 +35,7 @@ pub async fn run_integrated_server(
   let soul_fire_version = "1.14.0";
 
   fn send_log<S: Serialize + Clone>(app_handle: &AppHandle, payload: S) -> tauri::Result<()> {
+    info!("{}", serde_json::to_string(&payload)?);
     app_handle
       .emit("integrated-server-start-log", payload)
   }
@@ -218,6 +219,8 @@ pub async fn run_integrated_server(
     .lock()
     .await
     .replace(Box::from(child));
+
+  info!("Integrated Server ready for use!");
 
   let url = format!("http://127.0.0.1:{}", available_port);
   Ok(format!("{}\n{}", url, token))
