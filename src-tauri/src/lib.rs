@@ -77,13 +77,13 @@ pub fn run() {
     .setup(|app| {
       #[cfg(desktop)]
       {
-        app.handle().plugin(tauri_plugin_single_instance::init(|app, args, cwd| {
+        app.handle().plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
           let _ = app.get_webview_window("main")
             .expect("no main window")
             .set_focus();
-        }));
+        })).unwrap();
       }
-      
+
       #[cfg(desktop)]
       {
         let handle = app.handle();

@@ -84,7 +84,7 @@ pub async fn run_integrated_server(
     let mut hasher = sha2::Sha256::new();
     hasher.update(&content);
     let hash = hasher.finalize();
-    let hash = format!("{:x}", hash);
+    let hash = hex::encode(hash);
     if hash != checksum {
       send_log(&app_handle, "Checksum verification failed")?;
       return Err(SFAnyError::from(SFError::InvalidJvmChecksum));

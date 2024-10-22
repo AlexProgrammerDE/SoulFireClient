@@ -5006,6 +5006,7 @@ dependencies = [
  "async-std",
  "discord-presence",
  "flate2",
+ "hex",
  "log",
  "mdns-sd",
  "openssl",
