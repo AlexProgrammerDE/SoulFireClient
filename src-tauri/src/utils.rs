@@ -20,8 +20,10 @@ pub enum SFError {
   NoPortAvailable,
   #[error("invalid zip data")]
   InvalidZipData,
+  #[cfg(desktop)]
   #[error("no default window icon")]
   NoDefaultWindowIcon,
+  #[cfg(desktop)]
   #[error("no main window")]
   NoMainWindow,
 }
