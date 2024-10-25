@@ -162,10 +162,14 @@ pub async fn run_integrated_server(
   let java_exec_path = java_exec_path.to_str().ok_or(SFError::PathCouldNotBeConverted)?;
   info!("Integrated Server Java Executable: {}", java_exec_path);
 
+  let java_lib_dir = jvm_dir.join("lib");
+  let java_lib_server_dir = jvm_dir.join("server");
   let available_port = find_random_available_port().ok_or(SFError::NoPortAvailable)?;
   info!("Integrated Server Port: {}", available_port);
 
+  let current_ld_library_path = std::env::var("LD_LIBRARY_PATH").unwrap_or("".to_string());
   let command = app_handle.shell().command(java_exec_path)
+    .env("LD_LIBRARY_PATH", format!("{:?}:{:?}:{}", java_lib_dir, java_lib_server_dir, current_ld_library_path))
     .current_dir(soul_fire_rundir)
     .args(&[
       format!("-Dsf.grpc.port={}", available_port).as_str(),
