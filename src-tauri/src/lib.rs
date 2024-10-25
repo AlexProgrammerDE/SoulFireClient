@@ -2,11 +2,11 @@ use crate::cast::{connect_cast, discover_casts, get_casts, CastRunningState};
 use crate::discord::load_discord_rpc;
 use crate::sf_loader::{run_integrated_server, IntegratedServerState};
 use crate::utils::kill_child_process;
+use log::{error, info};
 use std::ops::Deref;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 use std::{env, thread};
-use log::{error, info};
 use tauri::async_runtime::Mutex;
 use tauri::{Emitter, Listener, Manager};
 use tauri_plugin_log::fern::colors::Color;
@@ -24,20 +24,6 @@ mod utils;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-  #[cfg(desktop)]
-  {
-    rustls::crypto::ring::default_provider().install_default().expect("Failed to install rustls crypto provider");
-  }
-
-  thread::spawn(|| {
-    match load_discord_rpc() {
-      Ok(_) => {},
-      Err(error) => {
-        error!("Fatal discord error: {error}");
-      }
-    }
-  });
-
   tauri::Builder::default()
     .plugin(tauri_plugin_log::Builder::new()
       .level(log::LevelFilter::Info)
@@ -75,6 +61,24 @@ pub fn run() {
             get_casts
         ])
     .setup(|app| {
+      std::panic::set_hook(Box::new(|panic_info| {
+        error!("{}", format!("{}", panic_info).replace('\n', " "));
+      }));
+
+      #[cfg(desktop)]
+      {
+        rustls::crypto::ring::default_provider().install_default().expect("Failed to install rustls crypto provider");
+      }
+
+      thread::spawn(|| {
+        match load_discord_rpc() {
+          Ok(_) => {}
+          Err(error) => {
+            error!("Fatal discord error: {error}");
+          }
+        }
+      });
+
       #[cfg(desktop)]
       {
         app.handle().plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
