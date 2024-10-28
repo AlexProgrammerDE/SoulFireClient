@@ -77,7 +77,7 @@ jobs:
         if: matrix.type == 'android'
         run: |
           sudo apt-get update
-          sudo apt-get install -y android-sdk build-essentials cmake
+          sudo apt-get install -y android-sdk build-essential cmake
 
       - uses: nttld/setup-ndk@v1
         id: setup-ndk
