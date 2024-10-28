@@ -163,6 +163,7 @@ function IntComponent(props: {
     <Input
       ref={ref}
       type="number"
+      inputMode="numeric"
       min={props.entry.min}
       max={props.entry.max}
       step={props.entry.step}
@@ -206,6 +207,7 @@ function DoubleComponent(props: {
     <Input
       ref={ref}
       type="number"
+      inputMode="decimal"
       min={props.entry.min}
       max={props.entry.max}
       step={props.entry.step}

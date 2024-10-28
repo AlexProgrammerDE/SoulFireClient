@@ -91,7 +91,6 @@ export default function CommandInput() {
 
   return (
     <Input
-      autoCapitalize="none"
       autoFocus
       placeholder="Enter command"
       onKeyDown={handleKeyDown}

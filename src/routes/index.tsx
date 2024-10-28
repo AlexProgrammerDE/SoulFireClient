@@ -239,6 +239,8 @@ function Index() {
                           <FormLabel>Address</FormLabel>
                           <FormControl>
                             <Input
+                              type="url"
+                              inputMode="url"
                               placeholder="http://localhost:38765"
                               {...field}
                             />

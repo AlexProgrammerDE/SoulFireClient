@@ -76,6 +76,7 @@ function UrlDialog(props: ImportDialogProps) {
                 placeholder="Put URL here..."
                 defaultValue={inputText}
                 type="url"
+                inputMode="url"
                 onChange={(e) => setInputText(e.currentTarget.value)}
               />
               <Button
