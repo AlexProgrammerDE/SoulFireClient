@@ -80,6 +80,7 @@ jobs:
           sudo apt-get install -y android-sdk
 
       - uses: nttld/setup-ndk@v1
+        id: setup-ndk
         if: matrix.type == 'android'
         with:
           ndk-version: r26d
@@ -110,10 +111,10 @@ jobs:
           export PATH=$PATH:$ANDROID_HOME/tools
           export PATH=$PATH:$ANDROID_HOME/platform-tools
           export PATH=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
+          export ANDROID_NDK=$NDK_HOME
+          export ANDROID_NDK_HOME=$NDK_HOME
           cargo tauri android build
         env:
-          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-          ANDROID_NDK: ${{ steps.setup-ndk.outputs.ndk-path }}
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
       - uses: actions/upload-artifact@v4
