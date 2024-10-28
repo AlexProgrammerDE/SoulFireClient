@@ -153,7 +153,7 @@ function Index() {
                     className="flex w-full gap-2"
                     onClick={() => setLoginType('INTEGRATED')}
                   >
-                    <LaptopMinimalIcon className="h-6 w-6" />
+                    <LaptopMinimalIcon className="size-5" />
                     <p>Use integrated server</p>
                   </Button>
                   {(!systemInfo && !isDemo()) || systemInfo?.mobile ? (
@@ -174,7 +174,7 @@ function Index() {
                     className="flex w-full gap-2"
                     onClick={() => setLoginType('REMOTE')}
                   >
-                    <ServerIcon className="h-6 w-6" />
+                    <ServerIcon className="size-5" />
                     <p>Connect to remote server</p>
                   </Button>
                   {isDemo() ? (
@@ -191,7 +191,7 @@ function Index() {
                       void targetRedirect();
                     }}
                   >
-                    <FlaskConicalIcon className="h-6 w-6" />
+                    <FlaskConicalIcon className="size-5" />
                     <p>Use demo server</p>
                   </Button>
                 )}
