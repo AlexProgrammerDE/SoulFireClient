@@ -104,7 +104,17 @@ jobs:
 
       - name: build android project
         if: matrix.type == 'android'
-        run: cargo tauri android build
+        run: |
+          export ANDROID_HOME=$HOME/Android/Sdk
+          export ANDROID_SDK_HOME=$ANDROID_HOME
+          export PATH=$PATH:$ANDROID_HOME/tools
+          export PATH=$PATH:$ANDROID_HOME/platform-tools
+          export PATH=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
+          cargo tauri android build
+        env:
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+          ANDROID_NDK: ${{ steps.setup-ndk.outputs.ndk-path }}
+          NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
       - uses: actions/upload-artifact@v4
         if: matrix.type == 'desktop'
