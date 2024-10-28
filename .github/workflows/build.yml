@@ -85,6 +85,15 @@ jobs:
           sudo apt-get install -y android-sdk build-essential cmake openjdk-21-jdk
           sudo apt-get purge openjdk-11*
 
+      - name: Set up JDK 21
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Verify Java version
+        run: java -version
+
       - uses: nttld/setup-ndk@v1
         id: setup-ndk
         if: matrix.type == 'android'
