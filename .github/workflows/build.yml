@@ -38,7 +38,7 @@ jobs:
             args: ''
             targetPath: ''
             name: 'android'
-            rust-targets: 'aarch64-linux-android'
+            rust-targets: 'aarch64-linux-android,armv7-linux-androideabi'
 
     runs-on: ${{ matrix.platform }}
     steps:
