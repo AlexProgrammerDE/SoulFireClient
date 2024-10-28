@@ -85,6 +85,10 @@ jobs:
         with:
           args: ${{ matrix.args }}
 
+      - name: install tauri cli
+        if: matrix.type == 'android'
+        run: cargo install tauri-cli
+
       - name: build android project
         if: matrix.type == 'android'
         run: cargo tauri android build
