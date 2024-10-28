@@ -126,3 +126,9 @@ jobs:
         with:
           name: tauri-artifact-${{ matrix.name }}
           path: './src-tauri/target${{ matrix.targetPath }}/release/bundle'
+
+      - uses: actions/upload-artifact@v4
+        if: matrix.type == 'android'
+        with:
+          name: tauri-artifact-${{ matrix.name }}
+          path: './src-tauri/gen/android/app/build/outputs'
