@@ -1,3 +1,6 @@
+@import url('non.geist');
+@import url('non.geist/mono');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -81,11 +84,10 @@
 @layer base {
   html,
   body {
-    @apply h-screen max-h-screen w-screen;
+    @apply h-screen max-h-screen w-screen font-sans;
   }
 
   body {
-    font-family: 'Geist Variable', sans-serif;
     @apply overflow-hidden bg-background text-foreground antialiased cursor-default select-none;
   }
 

@@ -1,11 +1,16 @@
 import type { Config } from 'tailwindcss';
 import tailwindAnimate from 'tailwindcss-animate';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 const config = {
   darkMode: ['class'],
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   prefix: '',
   theme: {
+    fontFamily: {
+      sans: ['Geist Variable', ...defaultTheme.fontFamily.sans],
+      mono: ['Geist Mono Variable', ...defaultTheme.fontFamily.mono],
+    },
     container: {
       center: true,
       padding: '2rem',
