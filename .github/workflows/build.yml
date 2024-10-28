@@ -93,6 +93,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Verify Java version
+        if: matrix.type == 'android'
         run: java -version
 
       - uses: nttld/setup-ndk@v1
