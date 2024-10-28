@@ -82,8 +82,8 @@ jobs:
         if: matrix.type == 'android'
         run: |
           sudo apt-get update
-          sudo apt-mark hold openjdk-11-jdk
           sudo apt-get install -y android-sdk build-essential cmake openjdk-21-jdk
+          sudo apt-get purge openjdk-11*
 
       - uses: nttld/setup-ndk@v1
         id: setup-ndk
