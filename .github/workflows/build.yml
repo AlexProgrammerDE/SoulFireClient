@@ -82,8 +82,7 @@ jobs:
         if: matrix.type == 'android'
         run: |
           sudo apt-get update
-          sudo apt-get install -y android-sdk build-essential cmake openjdk-21-jdk
-          sudo apt-get purge openjdk-11*
+          sudo apt-get install -y build-essential cmake
 
       - name: Set up JDK 21
         if: matrix.type == 'android'
@@ -92,17 +91,17 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Verify Java version
+      - name: Setup Android SDK
         if: matrix.type == 'android'
-        run: java -version
+        uses: android-actions/setup-android@v3
 
       - uses: nttld/setup-ndk@v1
         id: setup-ndk
         if: matrix.type == 'android'
         with:
           ndk-version: r26d
-          link-to-sdk: true
-          add-to-path: true
+          link-to-sdk: false
+          add-to-path: false
 
       - name: install frontend dependencies
         run: pnpm install
@@ -139,7 +138,7 @@ jobs:
       - name: build android project
         if: matrix.type == 'android'
         run: |
-          export ANDROID_HOME=/usr/lib/android-sdk
+          export ANDROID_HOME=$HOME/.android/sdk
           export ANDROID_SDK_HOME=$ANDROID_HOME
           export PATH=$PATH:$ANDROID_HOME/tools
           export PATH=$PATH:$ANDROID_HOME/platform-tools
