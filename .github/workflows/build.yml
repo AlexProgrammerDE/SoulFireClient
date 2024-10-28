@@ -113,6 +113,8 @@ jobs:
           export PATH=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
           export ANDROID_NDK=$NDK_HOME
           export ANDROID_NDK_HOME=$NDK_HOME
+
+          rustup target add aarch64-linux-android
           cargo tauri android build
         env:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
