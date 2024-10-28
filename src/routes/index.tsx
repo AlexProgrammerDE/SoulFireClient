@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/form.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useContext, useEffect, useState } from 'react';
 import {
   FlaskConicalIcon,
   LaptopMinimalIcon,
@@ -38,6 +38,11 @@ import { invoke } from '@tauri-apps/api/core';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { isDemo } from '@/lib/utils.ts';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip.tsx';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -61,6 +66,21 @@ const formSchema = z.object({
 type FormSchemaType = z.infer<typeof formSchema>;
 
 type LoginType = 'INTEGRATED' | 'REMOTE';
+
+function DisabledTooltip(props: {
+  getDisabled: () => ReactNode | null;
+  provider: (disabled: boolean) => ReactNode;
+}) {
+  const disabled = props.getDisabled();
+  return disabled === null ? (
+    props.provider(false)
+  ) : (
+    <Tooltip>
+      <TooltipTrigger>{props.provider(true)}</TooltipTrigger>
+      <TooltipContent>{disabled}</TooltipContent>
+    </Tooltip>
+  );
+}
 
 function Index() {
   const navigate = useNavigate();
@@ -147,41 +167,64 @@ function Index() {
             {null === loginType ? (
               <CardContent className="flex flex-col gap-2">
                 <div className="flex w-full flex-col gap-1">
-                  <Button
-                    disabled={!systemInfo || isDemo() || systemInfo?.mobile}
-                    variant="outline"
-                    className="flex w-full gap-2"
-                    onClick={() => setLoginType('INTEGRATED')}
-                  >
-                    <LaptopMinimalIcon className="size-5" />
-                    <p>Use integrated server</p>
-                  </Button>
-                  {(!systemInfo && !isDemo()) || systemInfo?.mobile ? (
-                    <p className="text-xs text-gray-500">
-                      Integrated server is not available on this platform.
-                    </p>
-                  ) : null}
-                  {isDemo() ? (
-                    <p className="text-xs text-gray-500">
-                      Integrated server is not available in demo mode.
-                    </p>
-                  ) : null}
+                  <DisabledTooltip
+                    getDisabled={() => {
+                      if (isDemo()) {
+                        return (
+                          <p>
+                            Integrated server is not available in demo mode.
+                          </p>
+                        );
+                      }
+
+                      if (systemInfo === null || systemInfo?.mobile) {
+                        return (
+                          <p>
+                            Integrated server is not available on this platform.
+                          </p>
+                        );
+                      }
+
+                      return null;
+                    }}
+                    provider={(disabled) => (
+                      <Button
+                        disabled={disabled}
+                        variant="outline"
+                        className="flex w-full gap-2"
+                        onClick={() => setLoginType('INTEGRATED')}
+                      >
+                        <LaptopMinimalIcon className="size-5" />
+                        <p>Use integrated server</p>
+                      </Button>
+                    )}
+                  />
                 </div>
                 <div className="flex w-full flex-col gap-1">
-                  <Button
-                    disabled={isDemo()}
-                    variant="outline"
-                    className="flex w-full gap-2"
-                    onClick={() => setLoginType('REMOTE')}
-                  >
-                    <ServerIcon className="size-5" />
-                    <p>Connect to remote server</p>
-                  </Button>
-                  {isDemo() ? (
-                    <p className="text-xs text-gray-500">
-                      Remote server is not available in demo mode.
-                    </p>
-                  ) : null}
+                  <DisabledTooltip
+                    getDisabled={() => {
+                      if (isDemo()) {
+                        return (
+                          <p>
+                            Integrated server is not available in demo mode.
+                          </p>
+                        );
+                      }
+
+                      return null;
+                    }}
+                    provider={(disabled) => (
+                      <Button
+                        disabled={disabled}
+                        variant="outline"
+                        className="flex w-full gap-2"
+                        onClick={() => setLoginType('REMOTE')}
+                      >
+                        <ServerIcon className="size-5" />
+                        <p>Connect to remote server</p>
+                      </Button>
+                    )}
+                  />
                 </div>
                 {isDemo() && (
                   <Button
