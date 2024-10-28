@@ -73,6 +73,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
+      - name: install dependencies (android only)
+        if: matrix.type == 'android'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y android-sdk
+
+      - uses: nttld/setup-ndk@v1
+        if: matrix.type == 'android'
+        with:
+          ndk-version: r26d
+          link-to-sdk: true
+          add-to-path: true
+
       - name: install frontend dependencies
         run: pnpm install
 
