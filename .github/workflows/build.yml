@@ -14,26 +14,31 @@ jobs:
             args: '--target aarch64-apple-darwin'
             targetPath: '/aarch64-apple-darwin'
             name: 'macos-aarch64'
+            rust-targets: 'aarch64-apple-darwin'
           - platform: 'macos-latest'
             type: 'desktop'
             args: '--target x86_64-apple-darwin'
             targetPath: '/x86_64-apple-darwin'
             name: 'macos-x86_64'
+            rust-targets: 'x86_64-apple-darwin'
           - platform: 'ubuntu-22.04'
             type: 'desktop'
             args: ''
             targetPath: ''
             name: 'linux'
+            rust-targets: ''
           - platform: 'windows-latest'
             type: 'desktop'
             args: ''
             targetPath: ''
             name: 'windows'
+            rust-targets: ''
           - platform: 'ubuntu-22.04'
             type: 'android'
             args: ''
             targetPath: ''
             name: 'android'
+            rust-targets: 'aarch64-linux-android'
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -52,7 +57,7 @@ jobs:
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@nightly
         with:
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+          targets: ${{ matrix.rust-targets }}
 
       - name: set up cargo cache
         uses: actions/cache@v4
@@ -118,7 +123,6 @@ jobs:
           export ANDROID_NDK_HOME=$NDK_HOME
           export PATH=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
 
-          rustup target add aarch64-linux-android
           cargo tauri android build
         env:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
