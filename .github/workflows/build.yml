@@ -77,7 +77,7 @@ jobs:
         if: matrix.type == 'android'
         run: |
           sudo apt-get update
-          sudo apt-get install -y android-sdk
+          sudo apt-get install -y android-sdk build-essentials cmake
 
       - uses: nttld/setup-ndk@v1
         id: setup-ndk
@@ -101,7 +101,9 @@ jobs:
 
       - name: install tauri cli
         if: matrix.type == 'android'
-        run: cargo install tauri-cli
+        run: |
+          cargo install tauri-cli
+          cargo install --force --locked bindgen-cli
 
       - name: build android project
         if: matrix.type == 'android'
