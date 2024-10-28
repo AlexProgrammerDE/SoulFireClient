@@ -112,9 +112,10 @@ jobs:
           export ANDROID_SDK_HOME=$ANDROID_HOME
           export PATH=$PATH:$ANDROID_HOME/tools
           export PATH=$PATH:$ANDROID_HOME/platform-tools
-          export PATH=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
+
           export ANDROID_NDK=$NDK_HOME
           export ANDROID_NDK_HOME=$NDK_HOME
+          export PATH=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
 
           rustup target add aarch64-linux-android
           cargo tauri android build
