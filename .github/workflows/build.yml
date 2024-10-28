@@ -14,26 +14,31 @@ jobs:
             args: '--target aarch64-apple-darwin'
             targetPath: '/aarch64-apple-darwin'
             name: 'macos-aarch64'
+            rust-targets: 'aarch64-apple-darwin'
           - platform: 'macos-latest'
             type: 'desktop'
             args: '--target x86_64-apple-darwin'
             targetPath: '/x86_64-apple-darwin'
             name: 'macos-x86_64'
+            rust-targets: 'x86_64-apple-darwin'
           - platform: 'ubuntu-22.04'
             type: 'desktop'
             args: ''
             targetPath: ''
             name: 'linux'
+            rust-targets: ''
           - platform: 'windows-latest'
             type: 'desktop'
             args: ''
             targetPath: ''
             name: 'windows'
+            rust-targets: ''
           - platform: 'ubuntu-22.04'
             type: 'android'
             args: ''
             targetPath: ''
             name: 'android'
+            rust-targets: 'aarch64-linux-android'
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -52,7 +57,7 @@ jobs:
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@nightly
         with:
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+          targets: ${{ matrix.rust-targets }}
 
       - name: set up cargo cache
         uses: actions/cache@v4
@@ -106,6 +111,20 @@ jobs:
           cargo install tauri-cli
           cargo install --force --locked bindgen-cli
 
+      - name: Decode JKS file
+        if: matrix.type == 'android'
+        run: |
+          echo "${{ secrets.TAURI_ANDROID_KEYSTORE_FILE }}" | base64 --decode > /tmp/keystore.jks
+
+      - name: Configure android build
+        if: matrix.type == 'android'
+        run: |
+          cat <<EOF > src-tauri/gen/android/keystore.properties
+          password=${{ secrets.TAURI_ANDROID_KEYSTORE_PASSWORD }}
+          keyAlias=upload
+          storeFile=/tmp/keystore.jks
+          EOF
+
       - name: build android project
         if: matrix.type == 'android'
         run: |
@@ -118,7 +137,6 @@ jobs:
           export ANDROID_NDK_HOME=$NDK_HOME
           export PATH=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
 
-          rustup target add aarch64-linux-android
           cargo tauri android build
         env:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
