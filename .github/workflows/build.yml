@@ -137,7 +137,6 @@ jobs:
       - name: build android project
         if: matrix.type == 'android'
         run: |
-          export ANDROID_HOME=$HOME/.android/sdk
           export ANDROID_SDK_HOME=$ANDROID_HOME
           export PATH=$PATH:$ANDROID_HOME/tools
           export PATH=$PATH:$ANDROID_HOME/platform-tools
