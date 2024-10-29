@@ -91,7 +91,6 @@ export default function CommandInput() {
 
   return (
     <Input
-      autoFocus
       placeholder="Enter command"
       onKeyDown={handleKeyDown}
       onChange={(e) => {
