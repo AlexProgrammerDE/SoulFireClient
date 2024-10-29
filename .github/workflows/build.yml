@@ -67,6 +67,7 @@ jobs:
             ~/.cargo/bin/
             ~/.cargo/registry/index/
             ~/.cargo/registry/cache/
+            ~/.cargo/registry/src/
             ~/.cargo/git/db/
             src-tauri/target/
           key: ${{ matrix.name }}-cargo-${{ hashFiles('**/Cargo.lock') }}
@@ -82,7 +83,7 @@ jobs:
         if: matrix.type == 'android'
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake golang-go libunwind-dev
+          sudo apt-get install -y build-essential cmake
 
       - name: Set up JDK 21
         if: matrix.type == 'android'
