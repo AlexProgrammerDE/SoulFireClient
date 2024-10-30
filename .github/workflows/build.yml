@@ -61,6 +61,7 @@ jobs:
 
       - name: set up cargo cache
         uses: actions/cache@v4
+        if: matrix.type != 'android'
         continue-on-error: false
         with:
           path: |
