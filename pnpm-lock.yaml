@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@catppuccin/palette':
         specifier: ^1.2.0
-        version: 1.5.0
+        version: 1.6.0
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.9.1(react-hook-form@7.53.1(react@18.3.1))
@@ -397,8 +397,8 @@ packages:
     resolution: {integrity: sha512-Z/yiTPj+lDVnF7lWeKCIJzaIkI0vYO87dMpZ4bg4TDrFe4XXLFWL1TbXU27gBP3QccxV9mZICCrnjnYlJjXHOA==}
     engines: {node: '>=6.9.0'}
 
-  '@catppuccin/palette@1.5.0':
-    resolution: {integrity: sha512-SQd/1h2gkK+nA5SWfd7NnUA/RsM8fIMJaqB8HzwATlNSDtPzTI7qmy3ei+jlgThlGILvdDt0C5CJ+3n/G9trKw==}
+  '@catppuccin/palette@1.6.0':
+    resolution: {integrity: sha512-UATz7Km0PcT11YzFeUpdbCb4Jedv2nGcihgdxkYz/NKbxy83wEzdajxzhA90jbOa/KRxpYmI/h+npfXSspfR5A==}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -4196,7 +4196,7 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@catppuccin/palette@1.5.0': {}
+  '@catppuccin/palette@1.6.0': {}
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
