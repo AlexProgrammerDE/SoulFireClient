@@ -92,7 +92,7 @@
     "@types/eslint__js": "^8.42.3",
     "@types/file-saver": "^2.0.7",
     "@types/loadable__component": "^5.13.9",
-    "@types/node": "^20",
+    "@types/node": "^22.0.0",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/urijs": "^1.19.25",

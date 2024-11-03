@@ -203,7 +203,7 @@ importers:
         version: 1.78.3
       '@tanstack/router-plugin':
         specifier: ^1.45.8
-        version: 1.78.3(@rsbuild/core@1.0.19)(vite@5.4.8(@types/node@20.17.6)(terser@5.34.0))(webpack-sources@3.2.3)(webpack@5.95.0)
+        version: 1.78.3(@rsbuild/core@1.0.19)(vite@5.4.8(@types/node@22.8.7)(terser@5.34.0))(webpack-sources@3.2.3)(webpack@5.95.0)
       '@tauri-apps/cli':
         specifier: 2.0.4
         version: 2.0.4
@@ -220,8 +220,8 @@ importers:
         specifier: ^5.13.9
         version: 5.13.9
       '@types/node':
-        specifier: ^20
-        version: 20.17.6
+        specifier: ^22.0.0
+        version: 22.8.7
       '@types/react':
         specifier: ^18
         version: 18.3.12
@@ -1766,8 +1766,8 @@ packages:
   '@types/loadable__component@5.13.9':
     resolution: {integrity: sha512-QWOtIkwZqHNdQj3nixQ8oyihQiTMKZLk/DNuvNxMSbTfxf47w+kqcbnxlUeBgAxdOtW0Dh48dTAIp83iJKtnrQ==}
 
-  '@types/node@20.17.6':
-    resolution: {integrity: sha512-VEI7OdvK2wP7XHnsuXbAJnEpEkF6NjSN45QJlL4VGqZSXsnicpesdTWsg9RISeSdYd3yeRj/y3k5KGjUXYnFwQ==}
+  '@types/node@22.8.7':
+    resolution: {integrity: sha512-LidcG+2UeYIWcMuMUpBKOnryBWG/rnmOHQR5apjn8myTQcx3rinFRn7DcIFhMnS0PPFSC6OafdIKEad0lj6U0Q==}
 
   '@types/prop-types@15.7.13':
     resolution: {integrity: sha512-hCZTSvwbzWGvhqxp/RqVqwU999pBf2vp7hzIjiYOsl8wqOmUxkQ6ddw1cV3l8811+kdUFus/q4d1Y3E3SyEifA==}
@@ -4426,7 +4426,7 @@ snapshots:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 20.17.6
+      '@types/node': 22.8.7
       '@types/yargs': 17.0.33
       chalk: 4.1.2
 
@@ -5266,7 +5266,7 @@ snapshots:
       tsx: 4.19.2
       zod: 3.23.8
 
-  '@tanstack/router-plugin@1.78.3(@rsbuild/core@1.0.19)(vite@5.4.8(@types/node@20.17.6)(terser@5.34.0))(webpack-sources@3.2.3)(webpack@5.95.0)':
+  '@tanstack/router-plugin@1.78.3(@rsbuild/core@1.0.19)(vite@5.4.8(@types/node@22.8.7)(terser@5.34.0))(webpack-sources@3.2.3)(webpack@5.95.0)':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/generator': 7.26.2
@@ -5288,7 +5288,7 @@ snapshots:
       zod: 3.23.8
     optionalDependencies:
       '@rsbuild/core': 1.0.19
-      vite: 5.4.8(@types/node@20.17.6)(terser@5.34.0)
+      vite: 5.4.8(@types/node@22.8.7)(terser@5.34.0)
       webpack: 5.95.0
     transitivePeerDependencies:
       - supports-color
@@ -5438,7 +5438,7 @@ snapshots:
     dependencies:
       '@types/react': 18.3.12
 
-  '@types/node@20.17.6':
+  '@types/node@22.8.7':
     dependencies:
       undici-types: 6.19.8
 
@@ -6848,7 +6848,7 @@ snapshots:
   jest-util@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 20.17.6
+      '@types/node': 22.8.7
       chalk: 4.1.2
       ci-info: 3.9.0
       graceful-fs: 4.2.11
@@ -6856,13 +6856,13 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 20.17.6
+      '@types/node': 22.8.7
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
   jest-worker@29.7.0:
     dependencies:
-      '@types/node': 20.17.6
+      '@types/node': 22.8.7
       jest-util: 29.7.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
@@ -7844,13 +7844,13 @@ snapshots:
       - '@types/react'
       - '@types/react-dom'
 
-  vite@5.4.8(@types/node@20.17.6)(terser@5.34.0):
+  vite@5.4.8(@types/node@22.8.7)(terser@5.34.0):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.47
       rollup: 4.24.3
     optionalDependencies:
-      '@types/node': 20.17.6
+      '@types/node': 22.8.7
       fsevents: 2.3.3
       terser: 5.34.0
     optional: true
