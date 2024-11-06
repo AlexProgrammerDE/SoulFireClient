@@ -4998,6 +4998,7 @@ dependencies = [
  "log",
  "mdns-sd",
  "openssl",
+ "regex",
  "reqwest",
  "rust_cast",
  "rustls",

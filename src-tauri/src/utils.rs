@@ -1,7 +1,13 @@
+use std::collections::HashMap;
+use std::{env, fs};
 use crate::sf_loader::IntegratedServerState;
 use log::{error, info};
 use std::net::TcpListener;
+use std::path::PathBuf;
+use std::process::Command;
 use std::sync::Arc;
+use async_std::prelude::FutureExt;
+use regex::Regex;
 
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
@@ -168,4 +174,191 @@ pub fn kill_child_process(state: &IntegratedServerState) {
       }
     }
   });
+}
+
+#[cfg(not(target_os = "linux"))]
+fn find_java_installations() -> Vec<PathBuf> {
+  // todo: MacOS & Windows
+  Vec::new()
+}
+#[cfg(target_os = "linux")]
+fn find_potential_java_installations(other_installations: &mut Vec<&str>) -> Vec<PathBuf> {
+  let mut java_installations = Vec::new();
+
+  // common locations
+  let mut common_locations = vec![
+    "/usr/lib/jvm/",
+    "/usr/java/",
+    "/opt/java/",
+    "/usr/local/java/",
+  ];
+
+  other_installations.append(&mut common_locations); // other installations first
+
+
+
+  for location in common_locations {
+    if let Ok(entries) = fs::read_dir(location) {
+      for entry in entries {
+        if let Ok(entry) = entry {
+          let path = entry.path();
+          if path.is_dir() {
+            java_installations.push(path);
+          }
+        }
+      }
+    }
+  }
+
+  // try te get the main java
+  if let Ok(java_home) = env::var("JAVA_HOME") {
+    java_installations.push(PathBuf::from(java_home));
+  }
+
+  if let Ok(home_dir) = env::var("HOME") {
+    let user_java_dir = PathBuf::from(home_dir.clone()).join(".local/share/java/");
+    if user_java_dir.exists() {
+      java_installations.push(user_java_dir);
+    }
+
+    // will iterate in these two common folders and detect javas inside
+    let mut jdks_dirs = Vec::new();
+    jdks_dirs.push(PathBuf::from(home_dir).join(".jdks"));
+    jdks_dirs.push(PathBuf::from("/usr/lib/jvm/"));
+    for jdks_dir in jdks_dirs {
+      if jdks_dir.exists() {
+        if let Ok(entries) = fs::read_dir(jdks_dir) {
+          for entry in entries {
+            if let Ok(entry) = entry {
+              let path = entry.path();
+              if path.is_dir() {
+                let java_bin_path = path.join("bin").join("java");
+                if java_bin_path.exists() {
+                  java_installations.push(java_bin_path);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // use update-alternatives to detect others
+  if let Ok(output) = Command::new("update-alternatives")
+      .arg("--list")
+      .arg("java")
+      .output()
+  {
+    if output.status.success() {
+      let output_str = String::from_utf8_lossy(&output.stdout);
+      for line in output_str.lines() {
+        if !line.is_empty() {
+          java_installations.push(PathBuf::from(line));
+        }
+      }
+    }
+  }
+
+  // use of the 'which' command to detect javas in the paths
+  if let Ok(output) = Command::new("which")
+      .arg("java")
+      .output()
+  {
+    if output.status.success() {
+      let output_str = String::from_utf8_lossy(&output.stdout);
+      let path = output_str.trim();
+      if !path.is_empty() {
+        java_installations.push(PathBuf::from(path));
+      }
+    }
+  }
+
+  // Some linux uses where command
+  if let Ok(output) = Command::new("where")
+      .arg("java")
+      .output()
+  {
+    if output.status.success() {
+      let output_str = String::from_utf8_lossy(&output.stdout);
+      let path = output_str.trim();
+      if !path.is_empty() {
+        java_installations.push(PathBuf::from(path));
+      }
+    }
+  }
+
+  // if some detections are folder (like JAVA_HOME) we use the bin/java inside
+  java_installations.iter_mut().for_each(|path| {
+    if path.is_dir() {
+      *path = path.join("bin/java");
+    }
+  });
+
+  java_installations
+}
+
+fn detect_javas(other_installations: &mut Vec<&str>) -> HashMap<PathBuf, u8> {
+  let mut map = HashMap::new();
+  let potential_java_installations: Vec<PathBuf> = find_potential_java_installations(other_installations);
+
+  for java_path in potential_java_installations {
+    if let Some(version) = detect_java_version(&java_path) {
+      map.insert(java_path, version);
+    } else {
+      eprintln!("Failed to detect Java version at {:?}", java_path);
+    }
+  }
+
+  map
+}
+
+fn detect_java_version(java_path: &PathBuf) -> Option<u8> {
+  // try to execute it to get version
+  // todo: test to run a dummy jar on it to fully test if the jvm isn't broken
+  let output = Command::new(java_path)
+      .arg("-version")
+      .output()
+      .ok()?;
+
+  let output_str = String::from_utf8(output.stderr).ok()?;
+  let lines: Vec<&str> = output_str.lines().collect();
+
+  let version_line = lines.get(0)?;
+
+
+  // Regex of java version (x.y.z)
+  let re = Regex::new(r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)").unwrap();
+  if let Some(caps) = re.captures(version_line) {
+    let major = caps.get(1).unwrap().as_str().parse::<u8>().unwrap();
+    let minor = caps.get(2).unwrap().as_str().parse::<u8>().unwrap();
+
+    return if major == 1 { // java 1.8 1.7 etc...
+      Some(minor)
+    } else {
+      Some(major)
+    };
+  }
+
+  None
+}
+
+pub(crate) fn get_best_java(other_installations: &mut Vec<&str>) -> Option<PathBuf> {
+  let javas: HashMap<PathBuf, u8> = detect_javas(other_installations);
+
+  // find the first java 21
+  if let Some((path, _)) = javas.iter().find(|(_, &value)| value == 21) {
+    return Some(path.clone());
+  }
+
+  // if not found, find the closest to 21
+  let closest = javas.iter().min_by_key(|(_, &value)| {
+    if value < 21 {
+      (21 - value, false)
+    } else {
+      (value - 21, true)
+    }
+  });
+
+  closest.map(|(path, _)| path.clone())
 }
