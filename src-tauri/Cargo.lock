@@ -1697,16 +1697,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "fs-more"
-version = "0.8.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bbe0081d1a388d5115ce63bd6663559ae17e0d1d9657461fddf15d8e14e3badd"
-dependencies = [
- "dunce",
- "thiserror",
-]
-
-[[package]]
 name = "fs_extra"
 version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5004,7 +4994,6 @@ dependencies = [
  "async-std",
  "discord-presence",
  "flate2",
- "fs-more",
  "hex",
  "log",
  "mdns-sd",
@@ -5029,7 +5018,6 @@ dependencies = [
  "tauri-plugin-shell",
  "tauri-plugin-single-instance",
  "tauri-plugin-updater",
- "tempfile",
  "thiserror",
  "zip",
 ]
