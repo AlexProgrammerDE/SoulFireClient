@@ -1,3 +1,4 @@
+use crate::utils::SFError;
 use crate::cast::{connect_cast, discover_casts, get_casts, CastRunningState};
 use crate::discord::load_discord_rpc;
 use crate::sf_loader::{run_integrated_server, IntegratedServerState};
@@ -85,7 +86,7 @@ pub fn run() {
           let _ = app.get_webview_window("main")
             .expect("no main window")
             .set_focus();
-        })).unwrap();
+        }))?;
       }
 
       #[cfg(desktop)]
@@ -96,14 +97,14 @@ pub fn run() {
 
       #[cfg(desktop)]
       {
-        let main_window = app.get_webview_window("main").unwrap();
+        let main_window = app.get_webview_window("main").ok_or(SFError::NoMainWindow)?;
         let app_version = &app.package_info().version;
         let _ = main_window.set_title(format!("SoulFireClient {app_version}").as_str());
       }
 
       #[cfg(desktop)]
       {
-        app.handle().plugin(tauri_plugin_updater::Builder::new().build()).unwrap();
+        app.handle().plugin(tauri_plugin_updater::Builder::new().build())?;
         let handle = app.handle().clone();
         tauri::async_runtime::spawn(async move {
           match updater::update(handle).await {
@@ -121,7 +122,9 @@ pub fn run() {
       app.listen("kill-integrated-server", move |_event| {
         info!("Got request to kill integrated server");
         kill_child_process(app_handle.state::<IntegratedServerState>().deref());
-        app_handle.emit("integrated-server-killed", ()).unwrap();
+        if let Err(error) = app_handle.emit("integrated-server-killed", ()) {
+          error!("An emit error occurred! {error}");
+        }
       });
 
       Ok(())
