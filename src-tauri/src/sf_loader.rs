@@ -103,7 +103,7 @@ pub async fn run_integrated_server(
     } else if download_url.ends_with(".zip") {
       let _ = extract_zip(&content[..], jvm_tmp_dir.path())?;
     } else {
-      panic!("Unsupported JVM archive format");
+      return Err(SFAnyError::from(SFError::InvalidArchiveType));
     }
 
     std::fs::rename(jvm_tmp_dir.path().join(jvm_archive_dir_name), &jvm_dir)?;

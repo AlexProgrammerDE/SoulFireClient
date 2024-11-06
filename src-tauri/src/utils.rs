@@ -25,6 +25,8 @@ pub enum SFError {
   NoPortAvailable,
   #[error("invalid zip data")]
   InvalidZipData,
+  #[error("invalid jre archive file extension")]
+  InvalidArchiveType,
   #[cfg(desktop)]
   #[error("no default window icon")]
   NoDefaultWindowIcon,
