@@ -1,4 +1,4 @@
-use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_random_available_port, get_java_exec_name, SFAnyError, SFError};
+use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_random_available_port, get_best_java, get_java_exec_name, SFAnyError, SFError};
 use log::info;
 use serde::Serialize;
 use sha2::Digest;
@@ -42,7 +42,8 @@ pub async fn run_integrated_server(
 
   let app_local_data_dir = app_handle.path().app_local_data_dir()?;
   let jvm_dir = app_local_data_dir.join("jvm-21");
-  if !jvm_dir.exists() {
+  let mut java = get_best_java(&mut vec![jvm_dir.to_str().unwrap()]);
+  if java.is_none() {
     let adoptium_os = detect_os();
     let adoptium_arch = detect_architecture();
     let jvm_url = format!("https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture={}&image_type=jre&os={}&vendor=eclipse", adoptium_arch, adoptium_os);
@@ -106,8 +107,11 @@ pub async fn run_integrated_server(
 
     jvm_tmp_dir.close()?;
     send_log(&app_handle, "Downloaded JVM")?;
+
+    // todo: should be .exe on windows
+    java = Some(jvm_dir.join("bin").join("java"));
   } else {
-    send_log(&app_handle, "JVM already downloaded")?;
+    send_log(&app_handle, "JVM detected")?;
   }
 
   let jars_dir = app_local_data_dir.join("jars");
@@ -158,7 +162,7 @@ pub async fn run_integrated_server(
 
   let java_exec_name = get_java_exec_name();
   let java_bin_dir = jvm_dir.join("bin");
-  let java_exec_path = java_bin_dir.join(java_exec_name);
+  let java_exec_path = java.unwrap();
   let java_exec_path = java_exec_path.to_str().ok_or(SFError::PathCouldNotBeConverted)?;
   info!("Integrated Server Java Executable: {}", java_exec_path);
 
