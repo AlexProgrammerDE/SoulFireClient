@@ -1,3 +1,5 @@
+#![feature(let_chains)]
+
 use crate::utils::SFError;
 use crate::cast::{connect_cast, discover_casts, get_casts, CastRunningState};
 use crate::discord::load_discord_rpc;

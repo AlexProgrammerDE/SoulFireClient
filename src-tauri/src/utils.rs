@@ -6,7 +6,6 @@ use std::net::TcpListener;
 use std::path::PathBuf;
 use std::process::Command;
 use std::sync::Arc;
-use std::{env, fs};
 
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
@@ -54,6 +53,16 @@ pub enum SFAnyError {
   UpdaterError(#[from] tauri_plugin_updater::Error),
   #[error(transparent)]
   DiscordError(#[from] discord_presence::DiscordError),
+  #[error(transparent)]
+  MDNSSSError(#[from] mdns_sd::Error),
+  #[error(transparent)]
+  RecvError(#[from] std::sync::mpsc::RecvError),
+  #[error(transparent)]
+  RustCastError(#[from] rust_cast::errors::Error),
+  #[error(transparent)]
+  SerdeError(#[from] serde_json::Error),
+  #[error(transparent)]
+  SendError(#[from] std::sync::mpsc::SendError<String>),
 }
 
 impl serde::Serialize for SFAnyError {
@@ -197,7 +206,7 @@ fn find_potential_java_installations(other_installations: &mut Vec<&str>) -> Vec
   other_installations.append(&mut common_locations); // other installations first
 
   for location in common_locations {
-    if let Ok(entries) = fs::read_dir(location) {
+    if let Ok(entries) = std::fs::read_dir(location) {
       for entry in entries {
         if let Ok(entry) = entry {
           let path = entry.path();
@@ -210,11 +219,11 @@ fn find_potential_java_installations(other_installations: &mut Vec<&str>) -> Vec
   }
 
   // try te get the main java
-  if let Ok(java_home) = env::var("JAVA_HOME") {
+  if let Ok(java_home) = std::env::var("JAVA_HOME") {
     java_installations.push(PathBuf::from(java_home));
   }
 
-  if let Ok(home_dir) = env::var("HOME") {
+  if let Ok(home_dir) = std::env::var("HOME") {
     let user_java_dir = PathBuf::from(home_dir.clone()).join(".local/share/java/");
     if user_java_dir.exists() {
       java_installations.push(user_java_dir);
@@ -226,7 +235,7 @@ fn find_potential_java_installations(other_installations: &mut Vec<&str>) -> Vec
     jdks_dirs.push(PathBuf::from("/usr/lib/jvm/"));
     for jdks_dir in jdks_dirs {
       if jdks_dir.exists() {
-        if let Ok(entries) = fs::read_dir(jdks_dir) {
+        if let Ok(entries) = std::fs::read_dir(jdks_dir) {
           for entry in entries {
             if let Ok(entry) = entry {
               let path = entry.path();

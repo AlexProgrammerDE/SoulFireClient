@@ -1,3 +1,5 @@
+use crate::utils::{SFAnyError, SFError};
+use async_std::task::sleep;
 use log::{debug, error, info};
 use mdns_sd::{ServiceDaemon, ServiceEvent};
 use rust_cast::channels::connection::ConnectionResponse;
@@ -8,13 +10,12 @@ use rust_cast::ChannelMessage::Connection;
 use rust_cast::{CastDevice, ChannelMessage};
 use serde_json::{json, Map, Value};
 use std::str::FromStr;
-use std::sync::{Arc};
 use std::sync::atomic::AtomicBool;
 use std::sync::mpsc::{channel, Sender};
+use std::sync::Arc;
 use std::thread;
-use async_std::task::sleep;
-use tauri::{AppHandle, Emitter, Listener, Manager};
 use tauri::async_runtime::Mutex;
+use tauri::{AppHandle, Emitter, Listener, Manager};
 
 const SERVICE_TYPE: &str = "_googlecast._tcp.local.";
 const DEFAULT_DESTINATION_ID: &str = "receiver-0";
@@ -71,33 +72,33 @@ pub fn discover_casts(
   tauri::async_runtime::spawn(discover_casts_async(app_handle));
 }
 
-async fn discover_casts_async(app_handle: AppHandle) {
+async fn discover_casts_async(app_handle: AppHandle) -> Result<(), SFAnyError> {
   info!("Discovering Cast Devices...");
   let mdns = ServiceDaemon::new().expect("Failed to create mDNS daemon.");
 
-  let receiver = mdns
-    .browse(SERVICE_TYPE)
-    .expect("Failed to browse mDNS services.");
+  let receiver = mdns.browse(SERVICE_TYPE)?;
 
   let cast_running_state = app_handle.state::<CastRunningState>();
   while let Ok(event) = receiver.recv() {
     match event {
       ServiceEvent::ServiceResolved(info) => {
-        if info
+        if let Some(model_name) = info
           .get_properties()
           .get_property_val_str(CAST_MODEL_NAME)
-          .unwrap()
-          != CAST_SCREEN_MODEL_NAME
+          && model_name != CAST_SCREEN_MODEL_NAME
         {
           continue;
         }
 
         let full_name = info.get_fullname();
-        let id = info.get_properties().get_property_val_str(CAST_ID).unwrap();
+        let id = info.get_properties().get_property_val_str(CAST_ID);
+        let Some(id) = id else { continue; };
+
         let name = info
           .get_properties()
-          .get_property_val_str(CAST_FRIENDLY_NAME)
-          .unwrap();
+          .get_property_val_str(CAST_FRIENDLY_NAME);
+        let Some(name) = name else { continue; };
+
         let address = info.get_hostname();
         let port = info.get_port();
 
@@ -124,8 +125,7 @@ async fn discover_casts_async(app_handle: AppHandle) {
                             "address": address,
                             "port": port
                         }),
-          )
-          .unwrap();
+          )?;
       }
       ServiceEvent::ServiceRemoved(_, full_name) => {
         if cast_running_state.contains_discovered_device(full_name.to_string()).await {
@@ -138,19 +138,20 @@ async fn discover_casts_async(app_handle: AppHandle) {
               json!({
                                 "full_name": full_name
                             }),
-            )
-            .unwrap();
+            )?;
         }
       }
       _ => {}
     }
   }
+
+  Ok(())
 }
 
 #[tauri::command]
 pub async fn get_casts(
   cast_running_state: tauri::State<'_, CastRunningState>,
-) -> Result<Value, ()> {
+) -> Result<Value, SFAnyError> {
   let devices = cast_running_state.announced_devices.lock().await;
   let devices_json: Vec<Value> = devices
     .iter()
@@ -169,14 +170,16 @@ pub async fn get_casts(
 }
 
 #[tauri::command]
-pub async fn connect_cast(address: String, port: u16, app_handle: AppHandle) -> String {
+pub async fn connect_cast(address: String, port: u16, app_handle: AppHandle) -> Result<String, SFAnyError> {
   let (tx, rx) = channel();
 
   thread::spawn(move || {
-    create_cast_connection(address, port, app_handle, tx);
+    if let Err(error) = create_cast_connection(address, port, app_handle, tx) {
+      error!("Error during cast connection! {error}")
+    }
   });
 
-  rx.recv().unwrap()
+  Ok(rx.recv()?)
 }
 
 fn create_cast_connection(
@@ -184,32 +187,26 @@ fn create_cast_connection(
   port: u16,
   app_handle: AppHandle,
   channel: Sender<String>,
-) {
-  let cast_device = match CastDevice::connect_without_host_verification(&address, port) {
-    Ok(cast_device) => cast_device,
-    Err(err) => panic!("Could not establish connection with Cast Device: {:?}", err),
-  };
+) -> Result<(), SFAnyError> {
+  let cast_device = CastDevice::connect_without_host_verification(&address, port)?;
 
   info!("Connected to Cast Device: {:?} {:?}", address, port);
 
   // Switch to messages with the device system
   cast_device
     .connection
-    .connect(DEFAULT_DESTINATION_ID.to_string())
-    .unwrap();
+    .connect(DEFAULT_DESTINATION_ID.to_string())?;
 
   let app_to_run = CastDeviceApp::from_str(CAST_APP_ID).unwrap();
-  let application = cast_device.receiver.launch_app(&app_to_run).unwrap();
+  let application = cast_device.receiver.launch_app(&app_to_run)?;
 
   // Switch from device system to messages with the application
   cast_device
     .connection
-    .disconnect(DEFAULT_DESTINATION_ID)
-    .unwrap();
+    .disconnect(DEFAULT_DESTINATION_ID)?;
   cast_device
     .connection
-    .connect(&application.transport_id)
-    .unwrap();
+    .connect(&application.transport_id)?;
 
   info!("Connected to application: {:?}", application);
 
@@ -221,8 +218,7 @@ fn create_cast_connection(
       &json!({
                 "type": "INITIAL_HELLO"
             }),
-    )
-    .unwrap();
+    )?;
 
   let mut sent_success = false;
   let (send_frontend, read_frontend) = std::sync::mpsc::sync_channel(64);
@@ -240,13 +236,12 @@ fn create_cast_connection(
     while let Ok(message) = read_frontend.try_recv() {
       cast_device
         .receiver
-        .broadcast_message(CAST_APP_NAMESPACE, &message)
-        .unwrap();
+        .broadcast_message(CAST_APP_NAMESPACE, &message)?;
       info!("Sent message: {:?}", message);
     }
 
     if should_send_healthcheck.load(std::sync::atomic::Ordering::Relaxed) {
-      cast_device.heartbeat.ping().unwrap();
+      cast_device.heartbeat.ping()?;
       should_send_healthcheck.store(false, std::sync::atomic::Ordering::Relaxed);
     }
 
@@ -255,7 +250,7 @@ fn create_cast_connection(
         match response {
           HeartbeatResponse::Ping => {
             debug!("Received Ping from Cast Device, sending Pong");
-            cast_device.heartbeat.pong().unwrap();
+            cast_device.heartbeat.pong()?;
           }
           HeartbeatResponse::Pong => {
             debug!("Received Pong from Cast Device");
@@ -271,19 +266,18 @@ fn create_cast_connection(
             continue;
           };
 
-          let json_message: Map<String, Value> = serde_json::from_str(&message).unwrap();
+          let json_message: Map<String, Value> = serde_json::from_str(&message)?;
           info!("Received message: {:?}", json_message);
-          let message_type = json_message.get("type").unwrap().as_str().unwrap();
+          let message_type = json_message.get("type").ok_or(SFError::JsonFieldInvalid("type".to_string()))?.as_str().ok_or(SFError::JsonFieldInvalid("type".to_string()))?;
           if message_type == "CHALLENGE_REQUEST" {
-            let challenge = json_message.get("challenge").unwrap().as_str().unwrap();
+            let challenge = json_message.get("challenge").ok_or(SFError::JsonFieldInvalid("challenge".to_string()))?.as_str().ok_or(SFError::JsonFieldInvalid("challenge".to_string()))?;
             let response = json!({
                             "type": "CHALLENGE_RESPONSE",
                             "challenge": challenge
                         });
             cast_device
               .receiver
-              .broadcast_message(CAST_APP_NAMESPACE, &response)
-              .unwrap();
+              .broadcast_message(CAST_APP_NAMESPACE, &response)?;
           } else if message_type == "LOGIN_SUCCESS" {
             info!("Successfully logged in to Cast Device");
 
@@ -297,7 +291,7 @@ fn create_cast_connection(
             });
 
             if !sent_success {
-              channel.send(application.transport_id.to_owned()).unwrap();
+              channel.send(application.transport_id.to_owned())?;
               sent_success = true;
             }
           }
@@ -316,8 +310,7 @@ fn create_cast_connection(
                 json!({
                                 "transport_id": application.transport_id
                             }),
-              )
-              .unwrap();
+              )?;
             break;
           }
           ConnectionResponse::NotImplemented(message_type, _) => {
@@ -334,4 +327,6 @@ fn create_cast_connection(
       Err(error) => error!("Error occurred while receiving message {}", error),
     }
   }
+
+  Ok(())
 }
