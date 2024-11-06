@@ -1,12 +1,12 @@
-use std::collections::HashMap;
-use std::{env, fs};
 use crate::sf_loader::IntegratedServerState;
 use log::{error, info};
+use regex::Regex;
+use std::collections::HashMap;
 use std::net::TcpListener;
 use std::path::PathBuf;
 use std::process::Command;
 use std::sync::Arc;
-use regex::Regex;
+use std::{env, fs};
 
 #[derive(Debug, thiserror::Error)]
 #[non_exhaustive]
@@ -194,8 +194,6 @@ fn find_potential_java_installations(other_installations: &mut Vec<&str>) -> Vec
 
   other_installations.append(&mut common_locations); // other installations first
 
-
-
   for location in common_locations {
     if let Ok(entries) = fs::read_dir(location) {
       for entry in entries {
@@ -245,9 +243,9 @@ fn find_potential_java_installations(other_installations: &mut Vec<&str>) -> Vec
 
   // use update-alternatives to detect others
   if let Ok(output) = Command::new("update-alternatives")
-      .arg("--list")
-      .arg("java")
-      .output()
+    .arg("--list")
+    .arg("java")
+    .output()
   {
     if output.status.success() {
       let output_str = String::from_utf8_lossy(&output.stdout);
@@ -261,8 +259,8 @@ fn find_potential_java_installations(other_installations: &mut Vec<&str>) -> Vec
 
   // use of the 'which' command to detect javas in the paths
   if let Ok(output) = Command::new("which")
-      .arg("java")
-      .output()
+    .arg("java")
+    .output()
   {
     if output.status.success() {
       let output_str = String::from_utf8_lossy(&output.stdout);
@@ -275,8 +273,8 @@ fn find_potential_java_installations(other_installations: &mut Vec<&str>) -> Vec
 
   // Some linux uses where command
   if let Ok(output) = Command::new("where")
-      .arg("java")
-      .output()
+    .arg("java")
+    .output()
   {
     if output.status.success() {
       let output_str = String::from_utf8_lossy(&output.stdout);
@@ -316,15 +314,14 @@ fn detect_java_version(java_path: &PathBuf) -> Option<u8> {
   // try to execute it to get version
   // todo: test to run a dummy jar on it to fully test if the jvm isn't broken
   let output = Command::new(java_path)
-      .arg("-version")
-      .output()
-      .ok()?;
+    .arg("-version")
+    .output()
+    .ok()?;
 
   let output_str = String::from_utf8(output.stderr).ok()?;
   let lines: Vec<&str> = output_str.lines().collect();
 
   let version_line = lines.get(0)?;
-
 
   // Regex of java version (x.y.z)
   let re = Regex::new(r"(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)").unwrap();

@@ -42,8 +42,11 @@ pub async fn run_integrated_server(
 
   let app_local_data_dir = app_handle.path().app_local_data_dir()?;
   let jvm_dir = app_local_data_dir.join("jvm-21");
-  let mut java = get_best_java(&mut vec![jvm_dir.to_str().unwrap()]);
-  if java.is_none() {
+  let java = get_best_java(&mut vec![jvm_dir.to_str().ok_or(SFError::PathCouldNotBeConverted)?]);
+  let java = if let Some(path) = java {
+    send_log(&app_handle, "JVM detected")?;
+    path
+  } else {
     let adoptium_os = detect_os();
     let adoptium_arch = detect_architecture();
     let jvm_url = format!("https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture={}&image_type=jre&os={}&vendor=eclipse", adoptium_arch, adoptium_os);
@@ -108,10 +111,8 @@ pub async fn run_integrated_server(
     jvm_tmp_dir.close()?;
     send_log(&app_handle, "Downloaded JVM")?;
 
-    java = Some(jvm_dir.join("bin").join(get_java_exec_name()));
-  } else {
-    send_log(&app_handle, "JVM detected")?;
-  }
+    jvm_dir.join("bin").join(get_java_exec_name())
+  };
 
   let jars_dir = app_local_data_dir.join("jars");
   if !jars_dir.exists() {
@@ -159,7 +160,7 @@ pub async fn run_integrated_server(
 
   send_log(&app_handle, "Starting SoulFire server...")?;
 
-  let java_exec_path = java.unwrap();
+  let java_exec_path = java;
   let java_exec_path = java_exec_path.to_str().ok_or(SFError::PathCouldNotBeConverted)?;
   info!("Integrated Server Java Executable: {}", java_exec_path);
 
