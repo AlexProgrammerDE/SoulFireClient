@@ -108,8 +108,7 @@ pub async fn run_integrated_server(
     jvm_tmp_dir.close()?;
     send_log(&app_handle, "Downloaded JVM")?;
 
-    // todo: should be .exe on windows
-    java = Some(jvm_dir.join("bin").join("java"));
+    java = Some(jvm_dir.join("bin").join(get_java_exec_name()));
   } else {
     send_log(&app_handle, "JVM detected")?;
   }
@@ -160,8 +159,6 @@ pub async fn run_integrated_server(
 
   send_log(&app_handle, "Starting SoulFire server...")?;
 
-  let java_exec_name = get_java_exec_name();
-  let java_bin_dir = jvm_dir.join("bin");
   let java_exec_path = java.unwrap();
   let java_exec_path = java_exec_path.to_str().ok_or(SFError::PathCouldNotBeConverted)?;
   info!("Integrated Server Java Executable: {}", java_exec_path);

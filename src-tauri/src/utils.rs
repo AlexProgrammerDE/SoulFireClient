@@ -6,7 +6,6 @@ use std::net::TcpListener;
 use std::path::PathBuf;
 use std::process::Command;
 use std::sync::Arc;
-use async_std::prelude::FutureExt;
 use regex::Regex;
 
 #[derive(Debug, thiserror::Error)]
