@@ -43,6 +43,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip.tsx';
+import { toast } from 'sonner';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -127,12 +128,22 @@ function Index() {
         if (!listening) return;
         setLatestLog(event.payload as string);
       });
-      void invoke('run_integrated_server').then((payload) => {
-        const payloadString = payload as string;
-        const split = payloadString.split('\n');
+      toast.promise(
+        invoke('run_integrated_server').then((payload) => {
+          const payloadString = payload as string;
+          const split = payloadString.split('\n');
 
-        void redirectWithCredentials(split[0], split[1]);
-      });
+          void redirectWithCredentials(split[0], split[1]);
+        }),
+        {
+          loading: 'Starting integrated server...',
+          success: 'Integrated server started',
+          error: (e) => {
+            console.error(e);
+            return 'Failed to start integrated server';
+          },
+        },
+      );
 
       return () => {
         listening = false;
