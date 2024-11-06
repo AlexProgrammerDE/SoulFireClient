@@ -1,9 +1,13 @@
+use std::fs;
+#[cfg(target_os = "linux")]
+use std::os::unix::fs::PermissionsExt;
 use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_random_available_port, get_best_java, get_java_exec_name, SFAnyError, SFError};
 use log::info;
 use serde::Serialize;
 use sha2::Digest;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
+use fs_more::directory::{DestinationDirectoryRule, DirectoryMoveWithProgressOptions};
 use tauri::async_runtime::Mutex;
 use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_shell::process::CommandChild;
@@ -106,7 +110,30 @@ pub async fn run_integrated_server(
       return Err(SFAnyError::from(SFError::InvalidArchiveType));
     }
 
-    std::fs::rename(jvm_tmp_dir.path().join(jvm_archive_dir_name), &jvm_dir)?;
+    fs::create_dir(&jvm_dir)?;
+
+    let source_path = jvm_tmp_dir.path().join(jvm_archive_dir_name);
+    let source_path = source_path.as_path();
+    let destination_path = jvm_dir.as_path();
+
+    let _ = fs_more::directory::move_directory_with_progress(
+      source_path,
+      destination_path,
+      DirectoryMoveWithProgressOptions {
+        destination_directory_rule: DestinationDirectoryRule::AllowEmpty,
+        ..Default::default()
+      },
+      |progress| {
+        let percent_moved =
+            (progress.bytes_finished as f64) / (progress.bytes_total as f64)
+                * 100.0;
+        info!(
+          "Moving JVM {:.2}%",
+          percent_moved,
+        );
+      }
+    ).unwrap();
+
 
     jvm_tmp_dir.close()?;
     send_log(&app_handle, "Downloaded JVM")?;
@@ -116,7 +143,7 @@ pub async fn run_integrated_server(
 
   let jars_dir = app_local_data_dir.join("jars");
   if !jars_dir.exists() {
-    std::fs::create_dir(&jars_dir)?;
+    fs::create_dir(&jars_dir)?;
   }
 
   let soul_fire_version_file =
@@ -145,7 +172,7 @@ pub async fn run_integrated_server(
     }
 
     send_log(&app_handle, "Saving SoulFire...")?;
-    std::fs::write(&soul_fire_version_file, &content)?;
+    fs::write(&soul_fire_version_file, &content)?;
     send_log(&app_handle, "Downloaded SoulFire")?;
   } else {
     send_log(&app_handle, "SoulFire already downloaded")?;
@@ -155,7 +182,7 @@ pub async fn run_integrated_server(
 
   let soul_fire_rundir = app_local_data_dir.join("soulfire");
   if !soul_fire_rundir.exists() {
-    std::fs::create_dir(&soul_fire_rundir)?;
+    fs::create_dir(&soul_fire_rundir)?;
   }
 
   send_log(&app_handle, "Starting SoulFire server...")?;
@@ -163,6 +190,21 @@ pub async fn run_integrated_server(
   let java_exec_path = java;
   let java_exec_path = java_exec_path.to_str().ok_or(SFError::PathCouldNotBeConverted)?;
   info!("Integrated Server Java Executable: {}", java_exec_path);
+
+  if cfg!(target_os = "linux") {
+    let perms = fs::metadata(java_exec_path)?.permissions();
+    let mode = perms.mode();
+
+    // check if the file already has execute permissions
+    if (mode & 0o111) != 0 {
+      info!("Java already has execute permissions");
+    } else {
+      // add execute permissions
+      let new_mode = mode | 0o111;
+      fs::set_permissions(java_exec_path, PermissionsExt::from_mode(new_mode))?;
+      info!("Execute permissions added to java");
+    }
+  }
 
   let java_lib_dir = jvm_dir.join("lib");
   let java_lib_server_dir = jvm_dir.join("server");
