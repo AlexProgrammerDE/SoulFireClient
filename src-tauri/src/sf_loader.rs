@@ -1,4 +1,3 @@
-use std::fs;
 use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_random_available_port, get_java_exec_name, SFAnyError, SFError};
 use log::info;
 use serde::Serialize;
@@ -104,14 +103,14 @@ pub async fn run_integrated_server(
       return Err(SFAnyError::from(SFError::InvalidArchiveType));
     }
 
-    fs::rename(jvm_tmp_dir.as_path().join(jvm_archive_dir_name), &jvm_dir)?;
+    std::fs::rename(jvm_tmp_dir.as_path().join(jvm_archive_dir_name), &jvm_dir)?;
 
     send_log(&app_handle, "Downloaded JVM")?;
   };
 
   let jars_dir = app_local_data_dir.join("jars");
   if !jars_dir.exists() {
-    fs::create_dir(&jars_dir)?;
+    std::fs::create_dir(&jars_dir)?;
   }
 
   let soul_fire_version_file =
@@ -140,7 +139,7 @@ pub async fn run_integrated_server(
     }
 
     send_log(&app_handle, "Saving SoulFire...")?;
-    fs::write(&soul_fire_version_file, &content)?;
+    std::fs::write(&soul_fire_version_file, &content)?;
     send_log(&app_handle, "Downloaded SoulFire")?;
   } else {
     send_log(&app_handle, "SoulFire already downloaded")?;
@@ -150,7 +149,7 @@ pub async fn run_integrated_server(
 
   let soul_fire_rundir = app_local_data_dir.join("soulfire");
   if !soul_fire_rundir.exists() {
-    fs::create_dir(&soul_fire_rundir)?;
+    std::fs::create_dir(&soul_fire_rundir)?;
   }
 
   send_log(&app_handle, "Starting SoulFire server...")?;
