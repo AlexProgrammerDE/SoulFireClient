@@ -9,7 +9,6 @@ use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_shell::process::CommandChild;
 use tauri_plugin_shell::process::CommandEvent::Stdout;
 use tauri_plugin_shell::ShellExt;
-use tempfile::tempdir;
 
 pub struct IntegratedServerState {
   pub starting: Arc<AtomicBool>,
@@ -42,7 +41,9 @@ pub async fn run_integrated_server(
 
   let app_local_data_dir = app_handle.path().app_local_data_dir()?;
   let jvm_dir = app_local_data_dir.join("jvm-21");
-  if !jvm_dir.exists() {
+  if jvm_dir.exists() {
+    send_log(&app_handle, "JVM detected")?;
+  } else {
     let adoptium_os = detect_os();
     let adoptium_arch = detect_architecture();
     let jvm_url = format!("https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture={}&image_type=jre&os={}&vendor=eclipse", adoptium_arch, adoptium_os);
@@ -93,22 +94,19 @@ pub async fn run_integrated_server(
 
     send_log(&app_handle, "Extracting JVM...")?;
 
-    let jvm_tmp_dir = tempdir()?;
+    let jvm_tmp_dir = app_handle.path().cache_dir()?;
     if download_url.ends_with(".tar.gz") {
-      let _ = extract_tar_gz(&content[..], jvm_tmp_dir.path())?;
+      let _ = extract_tar_gz(&content[..], jvm_tmp_dir.as_path())?;
     } else if download_url.ends_with(".zip") {
-      let _ = extract_zip(&content[..], jvm_tmp_dir.path())?;
+      let _ = extract_zip(&content[..], jvm_tmp_dir.as_path())?;
     } else {
-      panic!("Unsupported JVM archive format");
+      return Err(SFAnyError::from(SFError::InvalidArchiveType));
     }
 
-    std::fs::rename(jvm_tmp_dir.path().join(jvm_archive_dir_name), &jvm_dir)?;
+    std::fs::rename(jvm_tmp_dir.as_path().join(jvm_archive_dir_name), &jvm_dir)?;
 
-    jvm_tmp_dir.close()?;
     send_log(&app_handle, "Downloaded JVM")?;
-  } else {
-    send_log(&app_handle, "JVM already downloaded")?;
-  }
+  };
 
   let jars_dir = app_local_data_dir.join("jars");
   if !jars_dir.exists() {

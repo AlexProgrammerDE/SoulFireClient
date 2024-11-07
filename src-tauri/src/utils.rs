@@ -20,6 +20,8 @@ pub enum SFError {
   NoPortAvailable,
   #[error("invalid zip data")]
   InvalidZipData,
+  #[error("invalid jre archive file extension")]
+  InvalidArchiveType,
   #[cfg(desktop)]
   #[error("no default window icon")]
   NoDefaultWindowIcon,
@@ -47,6 +49,16 @@ pub enum SFAnyError {
   UpdaterError(#[from] tauri_plugin_updater::Error),
   #[error(transparent)]
   DiscordError(#[from] discord_presence::DiscordError),
+  #[error(transparent)]
+  MDNSSSError(#[from] mdns_sd::Error),
+  #[error(transparent)]
+  RecvError(#[from] std::sync::mpsc::RecvError),
+  #[error(transparent)]
+  RustCastError(#[from] rust_cast::errors::Error),
+  #[error(transparent)]
+  SerdeError(#[from] serde_json::Error),
+  #[error(transparent)]
+  SendError(#[from] std::sync::mpsc::SendError<String>),
 }
 
 impl serde::Serialize for SFAnyError {
