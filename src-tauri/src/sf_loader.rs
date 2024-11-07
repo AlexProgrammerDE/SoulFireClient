@@ -94,7 +94,7 @@ pub async fn run_integrated_server(
 
     send_log(&app_handle, "Extracting JVM...")?;
 
-    let jvm_tmp_dir = app_handle.path().cache_dir()?;
+    let jvm_tmp_dir = app_handle.path().cache_dir()?.join("jvm-extract");
     if download_url.ends_with(".tar.gz") {
       let _ = extract_tar_gz(&content[..], jvm_tmp_dir.as_path())?;
     } else if download_url.ends_with(".zip") {
