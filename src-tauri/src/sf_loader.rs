@@ -4,6 +4,7 @@ use serde::Serialize;
 use sha2::Digest;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
+use async_std::fs;
 use tauri::async_runtime::Mutex;
 use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_shell::process::CommandChild;
@@ -95,6 +96,7 @@ pub async fn run_integrated_server(
     send_log(&app_handle, "Extracting JVM...")?;
 
     let jvm_tmp_dir = app_handle.path().cache_dir()?.join("jvm-extract");
+    fs::create_dir_all(&jvm_tmp_dir).await?;
     if download_url.ends_with(".tar.gz") {
       let _ = extract_tar_gz(&content[..], jvm_tmp_dir.as_path())?;
     } else if download_url.ends_with(".zip") {
