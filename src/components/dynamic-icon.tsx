@@ -1,31 +1,35 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { LucideProps } from 'lucide-react';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
-import loadable from '@loadable/component';
 
 interface IconProps extends Omit<LucideProps, 'ref'> {
   name: keyof typeof dynamicIconImports;
 }
 
-const mappedImports = Object.entries(dynamicIconImports).reduce(
-  (acc, [name, importFn]) => {
-    acc[name as unknown as keyof typeof dynamicIconImports] = loadable(
-      importFn,
-      {
-        cacheKey: () => name,
-      },
-    );
-    return acc;
-  },
-  {} as Record<keyof typeof dynamicIconImports, ReturnType<typeof loadable>>,
-);
+const cache = new Map<
+  string,
+  React.LazyExoticComponent<React.ComponentType<LucideProps>>
+>();
 
-const DynamicIcon = ({ name, ...props }: IconProps) => {
-  const LucideIcon = mappedImports[name];
+function loadCachedIcon(name: keyof typeof dynamicIconImports) {
+  const value = cache.get(name);
+  if (value !== undefined) {
+    return value;
+  }
+
+  const lazyValue = React.lazy(dynamicIconImports[name]);
+  cache.set(name, lazyValue);
+  return lazyValue;
+}
+
+const DynamicIcon = React.memo(({ name, ...props }: IconProps) => {
+  const LazyIcon = loadCachedIcon(name);
 
   return (
-    <LucideIcon fallback={<div className={props.className} />} {...props} />
+    <Suspense fallback={<div className={props.className} />}>
+      <LazyIcon {...props} />
+    </Suspense>
   );
-};
+});
 
 export default DynamicIcon;
