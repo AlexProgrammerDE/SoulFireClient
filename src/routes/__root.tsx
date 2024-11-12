@@ -123,7 +123,7 @@ function RootLayout() {
           enableSystem
           disableTransitionOnChange
         >
-          <TooltipProvider delayDuration={0}>
+          <TooltipProvider delayDuration={500}>
             <SystemInfoContext.Provider value={systemInfoState}>
               <TerminalThemeContext.Provider
                 value={{
