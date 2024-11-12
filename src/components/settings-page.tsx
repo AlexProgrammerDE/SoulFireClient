@@ -42,6 +42,7 @@ import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
 import { deepEqual } from '@tanstack/react-router';
+import { InstanceInfoResponse } from '@/generated/soulfire/instance.ts';
 
 function updateEntry(
   namespace: string,
@@ -341,7 +342,13 @@ function SingleComponent(props: {
   const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
-  const queryKey = ['settings-entry', props.namespace, props.settingKey];
+  const instanceInfoQueryKey = ['instance-info', instanceInfo.id];
+  const queryKey = [
+    'settings-entry',
+    instanceInfo.id,
+    props.namespace,
+    props.settingKey,
+  ];
   const valueQuery = useQuery({
     queryKey,
     queryFn: async (): Promise<JsonValue> => {
@@ -411,18 +418,38 @@ function SingleComponent(props: {
         return;
       }
 
+      const targetProfile = convertToProto(
+        updateEntry(props.namespace, props.entry.key, value, profile),
+      );
+      await queryClient.cancelQueries({ queryKey: instanceInfoQueryKey });
+      queryClient.setQueryData<{
+        instanceInfo: InstanceInfoResponse;
+      }>(instanceInfoQueryKey, (old) => {
+        if (old === undefined) {
+          return;
+        }
+
+        return {
+          instanceInfo: {
+            ...old.instanceInfo,
+            config: targetProfile,
+          },
+        };
+      });
+
       await queryClient.cancelQueries({ queryKey });
       queryClient.setQueryData(queryKey, value);
 
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,
-        config: convertToProto(
-          updateEntry(props.namespace, props.entry.key, value, profile),
-        ),
+        config: targetProfile,
       });
     },
     onSettled: () => {
+      void queryClient.invalidateQueries({
+        queryKey,
+      });
       void queryClient.invalidateQueries({
         queryKey,
       });
@@ -547,7 +574,13 @@ function MinMaxComponentSingle(props: {
   const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
-  const queryKey = ['settings-entry', props.namespace, props.entry.key];
+  const instanceInfoQueryKey = ['instance-info', instanceInfo.id];
+  const queryKey = [
+    'settings-entry',
+    instanceInfo.id,
+    props.namespace,
+    props.entry.key,
+  ];
   const valueQuery = useQuery({
     queryKey,
     queryFn: async (): Promise<JsonValue> => {
@@ -572,15 +605,32 @@ function MinMaxComponentSingle(props: {
         return;
       }
 
+      const targetProfile = convertToProto(
+        updateEntry(props.namespace, props.entry.key, value, profile),
+      );
+      await queryClient.cancelQueries({ queryKey: instanceInfoQueryKey });
+      queryClient.setQueryData<{
+        instanceInfo: InstanceInfoResponse;
+      }>(instanceInfoQueryKey, (old) => {
+        if (old === undefined) {
+          return;
+        }
+
+        return {
+          instanceInfo: {
+            ...old.instanceInfo,
+            config: targetProfile,
+          },
+        };
+      });
+
       await queryClient.cancelQueries({ queryKey });
       queryClient.setQueryData(queryKey, value);
 
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,
-        config: convertToProto(
-          updateEntry(props.namespace, props.entry.key, value, profile),
-        ),
+        config: targetProfile,
       });
     },
     onSettled: () => {
