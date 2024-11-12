@@ -30,6 +30,8 @@ import {
 } from 'lucide-react';
 import { listen } from '@tauri-apps/api/event';
 import {
+  LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY,
+  LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY,
   LOCAL_STORAGE_SERVER_ADDRESS_KEY,
   LOCAL_STORAGE_SERVER_TOKEN_KEY,
 } from '@/lib/types.ts';
@@ -89,8 +91,9 @@ function Index() {
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      address: localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY) ?? '',
-      token: localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY) ?? '',
+      address:
+        localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY) ?? '',
+      token: localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY) ?? '',
     },
   });
   const [loginType, setLoginType] = useState<LoginType | null>(null);
@@ -117,6 +120,15 @@ function Index() {
   );
 
   function onSubmit(values: FormSchemaType) {
+    localStorage.setItem(
+      LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY,
+      values.address.trim(),
+    );
+    localStorage.setItem(
+      LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY,
+      values.token.trim(),
+    );
+
     void redirectWithCredentials(values.address, values.token);
   }
 
