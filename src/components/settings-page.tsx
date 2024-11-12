@@ -30,18 +30,18 @@ import {
 } from '@/components/ui/command.tsx';
 import { Check, ChevronsUpDown, PlusIcon, TrashIcon } from 'lucide-react';
 import { cn } from '@/lib/utils.ts';
-import { useCallback, useContext, useMemo, useRef, useState } from 'react';
+import { useContext, useMemo, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { convertToProto, ProfileRoot } from '@/lib/types.ts';
 import { JsonValue } from '@protobuf-ts/runtime';
-import { useDebouncedCallback } from 'use-debounce';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
+import { deepEqual } from '@tanstack/react-router';
 
 function updateEntry(
   namespace: string,
@@ -341,37 +341,100 @@ function SingleComponent(props: {
   const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
+  const queryKey = ['settings-entry', props.namespace, props.settingKey];
+  const valueQuery = useQuery({
+    queryKey,
+    queryFn: async (): Promise<JsonValue> => {
+      switch (props.entry.type?.value.oneofKind) {
+        case 'string': {
+          return getEntry(
+            props.namespace,
+            props.settingKey,
+            profile,
+            props.entry.type.value.string.def,
+          );
+        }
+        case 'int': {
+          return getEntry(
+            props.namespace,
+            props.settingKey,
+            profile,
+            props.entry.type.value.int.def,
+          );
+        }
+        case 'bool': {
+          return getEntry(
+            props.namespace,
+            props.settingKey,
+            profile,
+            props.entry.type.value.bool.def,
+          );
+        }
+        case 'double': {
+          return getEntry(
+            props.namespace,
+            props.settingKey,
+            profile,
+            props.entry.type.value.double.def,
+          );
+        }
+        case 'combo': {
+          return getEntry(
+            props.namespace,
+            props.settingKey,
+            profile,
+            props.entry.type.value.combo.options[
+              props.entry.type.value.combo.def
+            ]!.id,
+          );
+        }
+        case 'stringList': {
+          return getEntry(
+            props.namespace,
+            props.settingKey,
+            profile,
+            props.entry.type.value.stringList.def,
+          );
+        }
+        case undefined: {
+          return null;
+        }
+      }
+    },
+    refetchInterval: 3_000,
+    structuralSharing: (prev: unknown, next: unknown) =>
+      deepEqual(prev, next) ? prev : next,
+  });
   const setValueMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
       if (transport === null) {
         return;
       }
 
+      await queryClient.cancelQueries({ queryKey });
+      queryClient.setQueryData(queryKey, value);
+
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,
-        config: convertToProto(profile),
+        config: convertToProto(
+          updateEntry(props.namespace, props.entry.key, value, profile),
+        ),
       });
     },
-    onSuccess: () => {
+    onSettled: () => {
       void queryClient.invalidateQueries({
-        queryKey: ['instance-info', instanceInfo.id],
+        queryKey,
       });
     },
   });
 
-  if (!props.entry.type) {
+  if (!props.entry.type || !valueQuery.data) {
     return null;
   }
 
   switch (props.entry.type.value.oneofKind) {
     case 'string': {
-      const value = getEntry(
-        props.namespace,
-        props.settingKey,
-        profile,
-        props.entry.type.value.string.def,
-      );
       return (
         <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
@@ -382,19 +445,13 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.string}
-            value={value}
+            value={valueQuery.data}
             changeCallback={setValueMutation.mutate}
           />
         </div>
       );
     }
     case 'int': {
-      const value = getEntry(
-        props.namespace,
-        props.settingKey,
-        profile,
-        props.entry.type.value.int.def,
-      );
       return (
         <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
@@ -405,26 +462,20 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.int}
-            value={value}
+            value={valueQuery.data}
             changeCallback={setValueMutation.mutate}
           />
         </div>
       );
     }
     case 'bool': {
-      const value = getEntry(
-        props.namespace,
-        props.settingKey,
-        profile,
-        props.entry.type.value.bool.def,
-      );
       return (
         <div className="flex flex-row gap-1 max-w-xl">
           <BoolComponent
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.bool}
-            value={value}
+            value={valueQuery.data}
             changeCallback={setValueMutation.mutate}
           />
           <ComponentTitle
@@ -435,12 +486,6 @@ function SingleComponent(props: {
       );
     }
     case 'double': {
-      const value = getEntry(
-        props.namespace,
-        props.settingKey,
-        profile,
-        props.entry.type.value.double.def,
-      );
       return (
         <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
@@ -451,20 +496,13 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.double}
-            value={value}
+            value={valueQuery.data}
             changeCallback={setValueMutation.mutate}
           />
         </div>
       );
     }
     case 'combo': {
-      const value = getEntry(
-        props.namespace,
-        props.settingKey,
-        profile,
-        props.entry.type.value.combo.options[props.entry.type.value.combo.def]!
-          .id,
-      );
       return (
         <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
@@ -475,19 +513,13 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.combo}
-            value={value}
+            value={valueQuery.data}
             changeCallback={setValueMutation.mutate}
           />
         </div>
       );
     }
     case 'stringList': {
-      const value = getEntry(
-        props.namespace,
-        props.settingKey,
-        profile,
-        props.entry.type.value.stringList.def,
-      );
       return (
         <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
@@ -498,7 +530,7 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.stringList}
-            value={value}
+            value={valueQuery.data}
             changeCallback={setValueMutation.mutate}
           />
         </div>
@@ -515,35 +547,53 @@ function MinMaxComponentSingle(props: {
   const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
+  const queryKey = ['settings-entry', props.namespace, props.entry.key];
+  const valueQuery = useQuery({
+    queryKey,
+    queryFn: async (): Promise<JsonValue> => {
+      if (props.entry.intSetting === undefined) {
+        return null;
+      }
+
+      return getEntry(
+        props.namespace,
+        props.entry.key,
+        profile,
+        props.entry.intSetting.def,
+      );
+    },
+    refetchInterval: 3_000,
+    structuralSharing: (prev: unknown, next: unknown) =>
+      deepEqual(prev, next) ? prev : next,
+  });
   const setValueMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
       if (transport === null) {
         return;
       }
 
+      await queryClient.cancelQueries({ queryKey });
+      queryClient.setQueryData(queryKey, value);
+
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,
-        config: convertToProto(profile),
+        config: convertToProto(
+          updateEntry(props.namespace, props.entry.key, value, profile),
+        ),
       });
     },
-    onSuccess: () => {
+    onSettled: () => {
       void queryClient.invalidateQueries({
-        queryKey: ['instance-info', instanceInfo.id],
+        queryKey,
       });
     },
   });
 
-  if (!props.entry.intSetting) {
+  if (!props.entry.intSetting || !valueQuery.data) {
     return null;
   }
 
-  const value = getEntry(
-    props.namespace,
-    props.settingKey,
-    profile,
-    props.entry.type.value.int.def,
-  );
   return (
     <div className="flex flex-col gap-1 max-w-xl">
       <ComponentTitle
@@ -554,7 +604,7 @@ function MinMaxComponentSingle(props: {
         namespace={props.namespace}
         settingKey={props.entry.key}
         entry={props.entry.intSetting}
-        value={value}
+        value={valueQuery.data}
         changeCallback={setValueMutation.mutate}
       />
     </div>
