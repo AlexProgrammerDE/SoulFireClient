@@ -152,10 +152,22 @@ jobs:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
       - uses: actions/upload-artifact@v4
+        id: upload-desktop-artifact
         if: matrix.type == 'desktop'
         with:
           name: tauri-artifact-${{ matrix.name }}
           path: './src-tauri/target${{ matrix.targetPath }}/release/bundle'
+
+      - uses: signpath/github-action-submit-signing-request@v1
+        if: matrix.type == 'desktop'
+        with:
+          api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
+          organization-id: 'e091b552-3623-4d9d-83d7-059d8f32978b'
+          project-slug: 'SoulFireClient'
+          signing-policy-slug: 'test-signing'
+          github-artifact-id: '${{ steps.upload-desktop-artifact.outputs.artifact-id }}'
+          wait-for-completion: true
+          output-artifact-directory: '/path/to/signed/artifact/directory'
 
       - uses: actions/upload-artifact@v4
         if: matrix.type == 'android'
