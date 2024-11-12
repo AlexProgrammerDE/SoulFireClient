@@ -456,7 +456,7 @@ function SingleComponent(props: {
     },
   });
 
-  if (!props.entry.type || !valueQuery.data) {
+  if (!props.entry.type || valueQuery.data === undefined) {
     return null;
   }
 
@@ -640,7 +640,7 @@ function MinMaxComponentSingle(props: {
     },
   });
 
-  if (!props.entry.intSetting || !valueQuery.data) {
+  if (!props.entry.intSetting || valueQuery.data === undefined) {
     return null;
   }
 
