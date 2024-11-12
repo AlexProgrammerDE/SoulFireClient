@@ -36,12 +36,11 @@ import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { convertToProto, ProfileRoot } from '@/lib/types.ts';
 import { JsonValue } from '@protobuf-ts/runtime';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
-import { deepEqual } from '@tanstack/react-router';
 import { InstanceInfoResponse } from '@/generated/soulfire/instance.ts';
 
 function updateEntry(
@@ -343,75 +342,63 @@ function SingleComponent(props: {
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
   const instanceInfoQueryKey = ['instance-info', instanceInfo.id];
-  const queryKey = [
-    'settings-entry',
-    instanceInfo.id,
-    props.namespace,
-    props.settingKey,
-  ];
-  const valueQuery = useQuery({
-    queryKey,
-    queryFn: async (): Promise<JsonValue> => {
-      switch (props.entry.type?.value.oneofKind) {
-        case 'string': {
-          return getEntry(
-            props.namespace,
-            props.settingKey,
-            profile,
-            props.entry.type.value.string.def,
-          );
-        }
-        case 'int': {
-          return getEntry(
-            props.namespace,
-            props.settingKey,
-            profile,
-            props.entry.type.value.int.def,
-          );
-        }
-        case 'bool': {
-          return getEntry(
-            props.namespace,
-            props.settingKey,
-            profile,
-            props.entry.type.value.bool.def,
-          );
-        }
-        case 'double': {
-          return getEntry(
-            props.namespace,
-            props.settingKey,
-            profile,
-            props.entry.type.value.double.def,
-          );
-        }
-        case 'combo': {
-          return getEntry(
-            props.namespace,
-            props.settingKey,
-            profile,
-            props.entry.type.value.combo.options[
-              props.entry.type.value.combo.def
-            ]!.id,
-          );
-        }
-        case 'stringList': {
-          return getEntry(
-            props.namespace,
-            props.settingKey,
-            profile,
-            props.entry.type.value.stringList.def,
-          );
-        }
-        case undefined: {
-          return null;
-        }
+  const value = useMemo(() => {
+    switch (props.entry.type?.value.oneofKind) {
+      case 'string': {
+        return getEntry(
+          props.namespace,
+          props.settingKey,
+          profile,
+          props.entry.type.value.string.def,
+        );
       }
-    },
-    refetchInterval: 3_000,
-    structuralSharing: (prev: unknown, next: unknown) =>
-      deepEqual(prev, next) ? prev : next,
-  });
+      case 'int': {
+        return getEntry(
+          props.namespace,
+          props.settingKey,
+          profile,
+          props.entry.type.value.int.def,
+        );
+      }
+      case 'bool': {
+        return getEntry(
+          props.namespace,
+          props.settingKey,
+          profile,
+          props.entry.type.value.bool.def,
+        );
+      }
+      case 'double': {
+        return getEntry(
+          props.namespace,
+          props.settingKey,
+          profile,
+          props.entry.type.value.double.def,
+        );
+      }
+      case 'combo': {
+        return getEntry(
+          props.namespace,
+          props.settingKey,
+          profile,
+          props.entry.type.value.combo.options[
+            props.entry.type.value.combo.def
+          ]!.id,
+        );
+      }
+      case 'stringList': {
+        return getEntry(
+          props.namespace,
+          props.settingKey,
+          profile,
+          props.entry.type.value.stringList.def,
+        );
+      }
+      case undefined: {
+        return null;
+      }
+    }
+  }, [profile, props.entry, props.namespace, props.settingKey]);
   const setValueMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
       if (transport === null) {
@@ -437,9 +424,6 @@ function SingleComponent(props: {
         };
       });
 
-      await queryClient.cancelQueries({ queryKey });
-      queryClient.setQueryData(queryKey, value);
-
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,
@@ -448,15 +432,12 @@ function SingleComponent(props: {
     },
     onSettled: () => {
       void queryClient.invalidateQueries({
-        queryKey,
-      });
-      void queryClient.invalidateQueries({
-        queryKey,
+        queryKey: instanceInfoQueryKey,
       });
     },
   });
 
-  if (!props.entry.type || valueQuery.data === undefined) {
+  if (!props.entry.type || value === undefined) {
     return null;
   }
 
@@ -472,7 +453,7 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.string}
-            value={valueQuery.data}
+            value={value}
             changeCallback={setValueMutation.mutate}
           />
         </div>
@@ -489,7 +470,7 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.int}
-            value={valueQuery.data}
+            value={value}
             changeCallback={setValueMutation.mutate}
           />
         </div>
@@ -502,7 +483,7 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.bool}
-            value={valueQuery.data}
+            value={value}
             changeCallback={setValueMutation.mutate}
           />
           <ComponentTitle
@@ -523,7 +504,7 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.double}
-            value={valueQuery.data}
+            value={value}
             changeCallback={setValueMutation.mutate}
           />
         </div>
@@ -540,7 +521,7 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.combo}
-            value={valueQuery.data}
+            value={value}
             changeCallback={setValueMutation.mutate}
           />
         </div>
@@ -557,7 +538,7 @@ function SingleComponent(props: {
             namespace={props.namespace}
             settingKey={props.settingKey}
             entry={props.entry.type.value.stringList}
-            value={valueQuery.data}
+            value={value}
             changeCallback={setValueMutation.mutate}
           />
         </div>
@@ -575,30 +556,18 @@ function MinMaxComponentSingle(props: {
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
   const instanceInfoQueryKey = ['instance-info', instanceInfo.id];
-  const queryKey = [
-    'settings-entry',
-    instanceInfo.id,
-    props.namespace,
-    props.entry.key,
-  ];
-  const valueQuery = useQuery({
-    queryKey,
-    queryFn: async (): Promise<JsonValue> => {
-      if (props.entry.intSetting === undefined) {
-        return null;
-      }
+  const value = useMemo(() => {
+    if (props.entry.intSetting === undefined) {
+      return null;
+    }
 
-      return getEntry(
-        props.namespace,
-        props.entry.key,
-        profile,
-        props.entry.intSetting.def,
-      );
-    },
-    refetchInterval: 3_000,
-    structuralSharing: (prev: unknown, next: unknown) =>
-      deepEqual(prev, next) ? prev : next,
-  });
+    return getEntry(
+      props.namespace,
+      props.entry.key,
+      profile,
+      props.entry.intSetting.def,
+    );
+  }, [profile, props.entry.intSetting, props.entry.key, props.namespace]);
   const setValueMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
       if (transport === null) {
@@ -624,9 +593,6 @@ function MinMaxComponentSingle(props: {
         };
       });
 
-      await queryClient.cancelQueries({ queryKey });
-      queryClient.setQueryData(queryKey, value);
-
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,
@@ -635,12 +601,12 @@ function MinMaxComponentSingle(props: {
     },
     onSettled: () => {
       void queryClient.invalidateQueries({
-        queryKey,
+        queryKey: instanceInfoQueryKey,
       });
     },
   });
 
-  if (!props.entry.intSetting || valueQuery.data === undefined) {
+  if (!props.entry.intSetting || value === undefined) {
     return null;
   }
 
@@ -654,7 +620,7 @@ function MinMaxComponentSingle(props: {
         namespace={props.namespace}
         settingKey={props.entry.key}
         entry={props.entry.intSetting}
-        value={valueQuery.data}
+        value={value}
         changeCallback={setValueMutation.mutate}
       />
     </div>
