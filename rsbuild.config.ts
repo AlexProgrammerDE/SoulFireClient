@@ -19,18 +19,7 @@ if (baseEnv === 'production') {
 }
 
 export default defineConfig({
-  plugins: [
-    pluginReact(),
-    pluginTypeCheck(),
-    pluginEslint(),
-    pluginSvgr(),
-    // pluginBabel({
-    //   include: /\.(?:jsx|tsx)$/,
-    //   babelLoaderOptions(opts) {
-    //     opts.plugins?.unshift('babel-plugin-react-compiler');
-    //   },
-    // }),
-  ],
+  plugins: [pluginReact(), pluginTypeCheck(), pluginEslint(), pluginSvgr()],
   tools: {
     rspack: {
       plugins: [TanStackRouterRspack()],
