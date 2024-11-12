@@ -5,7 +5,6 @@ import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { pluginEslint } from '@rsbuild/plugin-eslint';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import tauriConf from './src-tauri/tauri.conf.json';
-import { pluginBabel } from '@rsbuild/plugin-babel';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -25,12 +24,12 @@ export default defineConfig({
     pluginTypeCheck(),
     pluginEslint(),
     pluginSvgr(),
-    pluginBabel({
-      include: /\.(?:jsx|tsx)$/,
-      babelLoaderOptions(opts) {
-        opts.plugins?.unshift('babel-plugin-react-compiler');
-      },
-    }),
+    // pluginBabel({
+    //   include: /\.(?:jsx|tsx)$/,
+    //   babelLoaderOptions(opts) {
+    //     opts.plugins?.unshift('babel-plugin-react-compiler');
+    //   },
+    // }),
   ],
   tools: {
     rspack: {
