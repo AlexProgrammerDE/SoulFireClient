@@ -109,9 +109,7 @@ jobs:
 
       - name: install signpath command
         if: matrix.name == 'windows'
-        run: |
-          Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
-          Install-Module -Force -Name SignPath
+        run: Install-Module -scope CurrentUser -Force -Name SignPath
 
       - uses: tauri-apps/tauri-action@v0
         if: matrix.type == 'desktop'
