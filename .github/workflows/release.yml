@@ -63,6 +63,10 @@ jobs:
       - name: install frontend dependencies
         run: pnpm install
 
+      - name: install signpath command
+        if: matrix.name == 'windows'
+        run: Install-Module -scope CurrentUser -Force -Name SignPath
+
       - uses: tauri-apps/tauri-action@v0
         env:
           SIGNPATH_POLICY_SLUG: release-signing
