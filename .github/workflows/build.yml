@@ -121,7 +121,6 @@ jobs:
       - name: install tauri cli
         if: matrix.type == 'android'
         run: |
-          cargo install tauri-cli
           cargo install --force --locked bindgen-cli
 
       - name: Decode JKS file
@@ -149,7 +148,7 @@ jobs:
           export ANDROID_NDK_HOME=$NDK_HOME
           export PATH=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
 
-          cargo tauri android build --debug
+          pnpm tauri android build --debug
         env:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
