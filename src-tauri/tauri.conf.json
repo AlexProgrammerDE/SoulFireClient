@@ -63,7 +63,7 @@
       "exceptionDomain": "",
       "frameworks": [],
       "providerShortName": null,
-      "signingIdentity": null
+      "signingIdentity": "-"
     },
     "resources": [],
     "shortDescription": "Advanced Minecraft Server-Stresser Tool.",
