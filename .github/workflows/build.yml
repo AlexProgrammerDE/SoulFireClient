@@ -167,7 +167,14 @@ jobs:
           signing-policy-slug: 'test-signing'
           github-artifact-id: '${{ steps.upload-desktop-artifact.outputs.artifact-id }}'
           wait-for-completion: true
-          output-artifact-directory: '/path/to/signed/artifact/directory'
+          output-artifact-directory: '.'
+
+      - uses: actions/upload-artifact@v4
+        id: upload-signed-windows-artifact
+        if: matrix.name == 'windows'
+        with:
+          name: tauri-artifact-${{ matrix.name }}
+          path: '.'
 
       - uses: actions/upload-artifact@v4
         if: matrix.type == 'android'
