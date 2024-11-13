@@ -48,7 +48,8 @@
       "nsis": {
         "installMode": "currentUser",
         "installerIcon": "icons/icon.ico"
-      }
+      },
+      "signCommand": "Submit-SigningRequest -InputArtifactPath \"%1\" -ApiToken \"$env:SIGNPATH_API_KEY\" -OrganizationId \"e091b552-3623-4d9d-83d7-059d8f32978b\" -ProjectSlug \"SoulFireClient\" -SigningPolicySlug \"$env:SIGNPATH_POLICY_SLUG\" -OutputArtifactPath \"%1\" -WaitForCompletion"
     },
     "icon": [
       "icons/32x32.png",
