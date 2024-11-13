@@ -12,7 +12,7 @@
     "lint": "eslint src/",
     "fix": "prettier --write .",
     "generate-icons": "tauri icon -v public/logo.png",
-    "dev-tauri": "RUST_LOG=info tauri dev",
+    "dev-tauri": "cross-env RUST_LOG=info tauri dev",
     "build-tauri": "tauri build",
     "generate-proto": "protoc --ts_out src/generated --ts_opt long_type_string --ts_opt optimize_code_size --proto_path protos $(find protos -iname \"*.proto\")",
     "prepare": "husky"
@@ -51,6 +51,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "cmdk": "^1.0.0",
+    "cross-env": "^7.0.3",
     "debounce": "^2.1.0",
     "deep-equal": "^2.2.3",
     "fancy-ansi": "^0.1.2",
@@ -113,5 +114,6 @@
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
-  }
+  },
+  "packageManager": "pnpm@9.1.4+sha512.9df9cf27c91715646c7d675d1c9c8e41f6fce88246f1318c1aa6a1ed1aeb3c4f032fcdf4ba63cc69c4fe6d634279176b5358727d8f2cc1e65b65f43ce2f8bfb0"
 }

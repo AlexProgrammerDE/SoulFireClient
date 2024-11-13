@@ -20,7 +20,9 @@
         "height": 675,
         "resizable": true,
         "width": 1200,
-        "center": true
+        "center": true,
+        "transparent": true,
+        "decorations": false
       }
     ],
     "trayIcon": {

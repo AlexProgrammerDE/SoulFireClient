@@ -15,10 +15,10 @@ const config = {
     },
     extend: {
       colors: {
-        border: 'hsl(var(--border))',
+        border: 'hsl(var(--border) / 0.9)',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
+        background: 'hsl(var(--background) / 0)',
         foreground: 'hsl(var(--foreground))',
         primary: {
           DEFAULT: 'hsl(var(--primary))',
@@ -33,7 +33,7 @@ const config = {
           foreground: 'hsl(var(--destructive-foreground))',
         },
         muted: {
-          DEFAULT: 'hsl(var(--muted))',
+          DEFAULT: 'hsl(var(--muted) / 0.5)',
           foreground: 'hsl(var(--muted-foreground))',
         },
         accent: {
@@ -41,11 +41,11 @@ const config = {
           foreground: 'hsl(var(--accent-foreground))',
         },
         popover: {
-          DEFAULT: 'hsl(var(--popover))',
+          DEFAULT: 'hsl(var(--popover) / 0.95)',
           foreground: 'hsl(var(--popover-foreground))',
         },
         card: {
-          DEFAULT: 'hsl(var(--card))',
+          DEFAULT: 'hsl(var(--card) / 0.3)',
           foreground: 'hsl(var(--card-foreground))',
         },
       },

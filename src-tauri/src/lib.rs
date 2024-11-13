@@ -10,6 +10,7 @@ use std::{env, thread};
 use tauri::async_runtime::Mutex;
 use tauri::{Emitter, Listener, Manager};
 use tauri_plugin_updater::UpdaterExt;
+use window_vibrancy::*;
 
 #[cfg(desktop)]
 mod tray;
@@ -57,6 +58,12 @@ pub fn run() {
       let main_window = app.get_webview_window("main").unwrap();
       let app_version = &app.package_info().version;
       let _ = main_window.set_title(format!("SoulFireClient {app_version}").as_str());
+
+      #[cfg(target_os = "macos")]
+      apply_vibrancy(&main_window, NSVisualEffectMaterial::HudWindow, None, None).expect("Unsupported platform! 'apply_vibrancy' is only supported on macOS");
+
+      #[cfg(target_os = "windows")]
+      apply_acrylic(&main_window, Some((18, 18, 18, 125))).expect("Unsupported platform! 'apply_acrylic' is only supported on Windows");
 
       let app_handle = app.handle().clone();
       app.listen("kill-integrated-server", move |_event| {
