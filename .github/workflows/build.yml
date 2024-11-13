@@ -121,8 +121,8 @@ jobs:
       - name: install tauri cli
         if: matrix.type == 'android'
         run: |
-          cargo install tauri-cli
-          cargo install --force --locked bindgen-cli
+          cargo install --debug tauri-cli
+          cargo install --debug --force --locked bindgen-cli
 
       - name: Decode JKS file
         if: matrix.type == 'android'
