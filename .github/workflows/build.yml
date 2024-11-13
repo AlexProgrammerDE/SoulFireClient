@@ -173,7 +173,7 @@ jobs:
         id: upload-signed-windows-artifact
         if: matrix.name == 'windows'
         with:
-          name: tauri-artifact-${{ matrix.name }}
+          name: tauri-artifact-${{ matrix.name }}-signed
           path: 'signed-windows-artifact'
 
       - uses: actions/upload-artifact@v4
