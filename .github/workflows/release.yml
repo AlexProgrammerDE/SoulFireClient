@@ -76,4 +76,6 @@ jobs:
           prerelease: false
           includeUpdaterJson: true
           updaterJsonPreferNsis: true
+          includeDebug: false
+          includeRelease: true
           args: ${{ matrix.args }}
