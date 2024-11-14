@@ -81,7 +81,7 @@ jobs:
         shell: powershell
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
-          Install-Module -Name SignPath -Force -SkipPublisherCheck
+          Install-Module -scope CurrentUser -Force -Name SignPath
 
       - name: 'Desktop: Build tauri project'
         if: matrix.type == 'desktop'
