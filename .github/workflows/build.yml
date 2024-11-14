@@ -99,11 +99,11 @@ jobs:
         with:
           name: tauri-artifact-${{ matrix.name }}
           path: |
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/dmg/*.dmg
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/nsis/*.exe
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/appimage/*.AppImage
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/deb/*.deb
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/rpm/*.rpm
+            ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/dmg/*.dmg
+            ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/nsis/*.exe
+            ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/appimage/*.AppImage
+            ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/deb/*.deb
+            ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/rpm/*.rpm
           if-no-files-found: error
 
       ###########
