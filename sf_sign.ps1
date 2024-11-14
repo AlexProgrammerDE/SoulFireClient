@@ -2,9 +2,6 @@ param (
     [string]$filePath
 )
 
-$ErrorActionPreference = 'Stop'
-$PSNativeCommandUseErrorActionPreference = $true
-
 Write-Host "SF starting signing $filePath"
 
 Import-Module SignPath
