@@ -128,6 +128,21 @@ jobs:
           includeRelease: false
           args: ${{ matrix.args }}
 
+      - uses: actions/upload-artifact@v4
+        if: matrix.type == 'desktop'
+        with:
+          name: tauri-artifact-${{ matrix.name }}
+          path: |
+            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/dmg/*.dmg
+            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/nsis/*.exe
+            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/appimage/*.AppImage
+            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/deb/*.deb
+            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/rpm/*.rpm
+          if-no-files-found: error
+
+      ###########
+      # Android #
+      ###########
       - name: install tauri cli
         if: matrix.type == 'android'
         run: |
@@ -159,18 +174,13 @@ jobs:
           export ANDROID_NDK_HOME=$NDK_HOME
           export PATH=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
 
-          cargo tauri android build --debug
+          cargo tauri android build
         env:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
-
-      - uses: actions/upload-artifact@v4
-        if: matrix.type == 'desktop'
-        with:
-          name: tauri-artifact-${{ matrix.name }}
-          path: './src-tauri/target${{ matrix.targetPath }}/release/bundle'
 
       - uses: actions/upload-artifact@v4
         if: matrix.type == 'android'
         with:
           name: tauri-artifact-${{ matrix.name }}
           path: './src-tauri/gen/android/app/build/outputs'
+          if-no-files-found: error
