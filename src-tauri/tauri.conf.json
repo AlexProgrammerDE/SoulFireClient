@@ -49,7 +49,7 @@
         "installMode": "currentUser",
         "installerIcon": "icons/icon.ico"
       },
-      "signCommand": "powershell -ExecutionPolicy Bypass -File D:\\a\\SoulFireClient\\SoulFireClient\\sf_sign.ps1 -filePath %1"
+      "signCommand": "powershell.exe -ExecutionPolicy Bypass -File D:\\a\\SoulFireClient\\SoulFireClient\\sf_sign.ps1 -filePath %1"
     },
     "icon": [
       "icons/32x32.png",
