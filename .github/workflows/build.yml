@@ -42,7 +42,6 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: ilammy/setup-nasm@v1
       - uses: actions/checkout@v4
 
       - name: setup node
@@ -59,50 +58,17 @@ jobs:
         with:
           targets: ${{ matrix.rust-targets }}
 
-      - name: set up cargo cache
-        uses: actions/cache@v4
+      - uses: Swatinem/rust-cache@v2
         if: matrix.type != 'android'
-        continue-on-error: false
         with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            src-tauri/target/
-          key: ${{ matrix.name }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: ${{ matrix.name }}-cargo-
+          prefix-key: ${{ matrix.name }}
+          workspaces: src-tauri
 
       - name: install dependencies (ubuntu only)
         if: matrix.platform == 'ubuntu-22.04' && matrix.type == 'desktop'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
-
-      - name: install dependencies (android only)
-        if: matrix.type == 'android'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential cmake golang-go libunwind-dev
-
-      - name: Set up JDK 21
-        if: matrix.type == 'android'
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: Setup Android SDK
-        if: matrix.type == 'android'
-        uses: android-actions/setup-android@v3
-
-      - uses: nttld/setup-ndk@v1
-        id: setup-ndk
-        if: matrix.type == 'android'
-        with:
-          ndk-version: r26d
-          link-to-sdk: false
-          add-to-path: false
 
       - name: install frontend dependencies
         run: pnpm install
@@ -143,6 +109,34 @@ jobs:
       ###########
       # Android #
       ###########
+      - name: install dependencies (android only)
+        if: matrix.type == 'android'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential cmake golang-go libunwind-dev
+
+      - name: Set up JDK 21
+        if: matrix.type == 'android'
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - uses: ilammy/setup-nasm@v1
+        if: matrix.type == 'android'
+
+      - name: Setup Android SDK
+        if: matrix.type == 'android'
+        uses: android-actions/setup-android@v3
+
+      - uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        if: matrix.type == 'android'
+        with:
+          ndk-version: r26d
+          link-to-sdk: false
+          add-to-path: false
+
       - name: install tauri cli
         if: matrix.type == 'android'
         run: |
