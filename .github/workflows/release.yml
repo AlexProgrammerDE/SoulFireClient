@@ -65,8 +65,9 @@ jobs:
 
       - name: install signpath command
         if: matrix.name == 'windows'
+        shell: powershell
         run: |
-          powershell -Command "Install-Module -Name SignPath -Scope AllUsers -Force -SkipPublisherCheck"
+          Install-Module -Name SignPath -Scope AllUsers -Force -SkipPublisherCheck
 
       - uses: tauri-apps/tauri-action@v0
         env:
