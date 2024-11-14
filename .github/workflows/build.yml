@@ -61,8 +61,8 @@ jobs:
           targets: ${{ matrix.rust-targets }}
 
       - name: 'Desktop: Cache dependencies'
-        uses: Swatinem/rust-cache@v2
         if: matrix.type == 'desktop'
+        uses: Swatinem/rust-cache@v2
         with:
           prefix-key: ${{ matrix.name }}
           workspaces: src-tauri
@@ -85,8 +85,8 @@ jobs:
           Install-Module -Name SignPath -Force -SkipPublisherCheck
 
       - name: 'Desktop: Build tauri project'
-        uses: tauri-apps/tauri-action@v0
         if: matrix.type == 'desktop'
+        uses: tauri-apps/tauri-action@v0
         env:
           SIGNPATH_POLICY_SLUG: test-signing
           SIGNPATH_API_KEY: ${{ secrets.SIGNPATH_API_TOKEN }}
@@ -99,8 +99,8 @@ jobs:
           args: ${{ matrix.args }}
 
       - name: 'Desktop: Upload artifact'
-        uses: actions/upload-artifact@v4
         if: matrix.type == 'desktop'
+        uses: actions/upload-artifact@v4
         with:
           name: tauri-artifact-${{ matrix.name }}
           path: |
@@ -129,17 +129,17 @@ jobs:
           distribution: 'temurin'
 
       - name: 'Android: Set up nasm'
-        uses: ilammy/setup-nasm@v1
         if: matrix.type == 'android'
+        uses: ilammy/setup-nasm@v1
 
       - name: 'Android: Setup Android SDK'
         if: matrix.type == 'android'
         uses: android-actions/setup-android@v3
 
       - name: 'Android: Set up NDK'
-        uses: nttld/setup-ndk@v1
-        id: setup-ndk
         if: matrix.type == 'android'
+        id: setup-ndk
+        uses: nttld/setup-ndk@v1
         with:
           ndk-version: r26d
           link-to-sdk: false
@@ -181,8 +181,8 @@ jobs:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
       - name: 'Android: Upload artifact'
-        uses: actions/upload-artifact@v4
         if: matrix.type == 'android'
+        uses: actions/upload-artifact@v4
         with:
           name: tauri-artifact-${{ matrix.name }}
           path: './src-tauri/gen/android/app/build/outputs'
