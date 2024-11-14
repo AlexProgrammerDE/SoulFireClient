@@ -109,9 +109,10 @@ jobs:
 
       - name: install signpath command
         if: matrix.name == 'windows'
-        shell: powershell
         run: |
-          Install-Module -Name SignPath -Scope AllUsers -Force -SkipPublisherCheck
+          Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module -Scope CurrentUser -Name SignPath -Force -SkipPublisherCheck
 
       - uses: tauri-apps/tauri-action@v0
         if: matrix.type == 'desktop'
