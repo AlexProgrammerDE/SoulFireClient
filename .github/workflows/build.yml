@@ -111,7 +111,7 @@ jobs:
         if: matrix.name == 'windows'
         run: |
           Set-ExecutionPolicy -ExecutionPolicy Unrestricted
-          Install-Module -Scope AllUsers -Force -Name SignPath
+          Install-Module -Name SignPath -Scope CurrentUser -Force -SkipPublisherCheck
 
       - uses: tauri-apps/tauri-action@v0
         if: matrix.type == 'desktop'
