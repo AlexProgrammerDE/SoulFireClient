@@ -24,54 +24,48 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: ilammy/setup-nasm@v1
-      - uses: actions/checkout@v4
+      - name: 'Shared: Checkout'
+        uses: actions/checkout@v4
 
-      - name: setup node
+      - name: 'Shared: Setup node'
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
-      - uses: pnpm/action-setup@v4
+      - name: 'Shared: Install pnpm'
+        uses: pnpm/action-setup@v4
         with:
           version: 9
 
-      - name: install Rust stable
+      - name: 'Shared: Install Rust toolchain'
         uses: dtolnay/rust-toolchain@nightly
         with:
-          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+          targets: ${{ matrix.rust-targets }}
 
-      - name: set up cargo cache
-        uses: actions/cache@v4
-        continue-on-error: false
+      - name: 'Desktop: Cache dependencies'
+        uses: Swatinem/rust-cache@v2
         with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/index/
-            ~/.cargo/registry/cache/
-            ~/.cargo/git/db/
-            target/
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: ${{ runner.os }}-cargo-
+          prefix-key: ${{ matrix.name }}
+          workspaces: src-tauri
 
-      - name: install dependencies (ubuntu only)
+      - name: 'Ubuntu: Install dependencies'
         if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: install frontend dependencies
+      - name: 'Shared: Install frontend dependencies'
         run: pnpm install
 
-      - name: install signpath command
-        if: matrix.name == 'windows'
+      - name: 'Windows: Install SignPath command'
         shell: powershell
         run: |
           Set-ExecutionPolicy -ExecutionPolicy Unrestricted
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module -Name SignPath -Force -SkipPublisherCheck
 
-      - uses: tauri-apps/tauri-action@v0
+      - name: 'Desktop: Build tauri project'
+        uses: tauri-apps/tauri-action@v0
         env:
           SIGNPATH_POLICY_SLUG: release-signing
           SIGNPATH_API_KEY: ${{ secrets.SIGNPATH_API_TOKEN }}

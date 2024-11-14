@@ -67,7 +67,7 @@ jobs:
           prefix-key: ${{ matrix.name }}
           workspaces: src-tauri
 
-      - name: 'Ubuntu: Install dependencies (ubuntu only)'
+      - name: 'Ubuntu: Install dependencies'
         if: matrix.platform == 'ubuntu-22.04' && matrix.type == 'desktop'
         run: |
           sudo apt-get update
@@ -115,7 +115,7 @@ jobs:
       ###########
       # Android #
       ###########
-      - name: 'Android: Install dependencies (android only)'
+      - name: 'Android: Install dependencies'
         if: matrix.type == 'android'
         run: |
           sudo apt-get update
