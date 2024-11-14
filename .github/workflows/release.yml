@@ -60,7 +60,6 @@ jobs:
       - name: 'Windows: Install SignPath command'
         shell: powershell
         run: |
-          Set-ExecutionPolicy -ExecutionPolicy Unrestricted
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module -Name SignPath -Force -SkipPublisherCheck
 
