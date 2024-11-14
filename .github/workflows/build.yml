@@ -42,38 +42,41 @@ jobs:
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - uses: actions/checkout@v4
+      - name: 'Shared: Checkout'
+        uses: actions/checkout@v4
 
-      - name: setup node
+      - name: 'Shared: Setup node'
         uses: actions/setup-node@v4
         with:
           node-version: lts/*
 
-      - uses: pnpm/action-setup@v4
+      - name: 'Shared: Install pnpm'
+        uses: pnpm/action-setup@v4
         with:
           version: 9
 
-      - name: install Rust stable
+      - name: 'Shared: Install Rust toolchain'
         uses: dtolnay/rust-toolchain@nightly
         with:
           targets: ${{ matrix.rust-targets }}
 
-      - uses: Swatinem/rust-cache@v2
-        if: matrix.type != 'android'
+      - name: 'Desktop: Cache dependencies'
+        uses: Swatinem/rust-cache@v2
+        if: matrix.type == 'desktop'
         with:
           prefix-key: ${{ matrix.name }}
           workspaces: src-tauri
 
-      - name: install dependencies (ubuntu only)
+      - name: 'Ubuntu: Install dependencies (ubuntu only)'
         if: matrix.platform == 'ubuntu-22.04' && matrix.type == 'desktop'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
 
-      - name: install frontend dependencies
+      - name: 'Shared: Install frontend dependencies'
         run: pnpm install
 
-      - name: install signpath command
+      - name: 'Windows: Install SignPath command'
         if: matrix.name == 'windows'
         shell: powershell
         run: |
@@ -81,7 +84,8 @@ jobs:
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module -Name SignPath -Force -SkipPublisherCheck
 
-      - uses: tauri-apps/tauri-action@v0
+      - name: 'Desktop: Build tauri project'
+        uses: tauri-apps/tauri-action@v0
         if: matrix.type == 'desktop'
         env:
           SIGNPATH_POLICY_SLUG: test-signing
@@ -94,7 +98,8 @@ jobs:
           includeRelease: false
           args: ${{ matrix.args }}
 
-      - uses: actions/upload-artifact@v4
+      - name: 'Desktop: Upload artifact'
+        uses: actions/upload-artifact@v4
         if: matrix.type == 'desktop'
         with:
           name: tauri-artifact-${{ matrix.name }}
@@ -110,27 +115,29 @@ jobs:
       ###########
       # Android #
       ###########
-      - name: install dependencies (android only)
+      - name: 'Android: Install dependencies (android only)'
         if: matrix.type == 'android'
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential cmake golang-go libunwind-dev
 
-      - name: Set up JDK 21
+      - name: 'Android: Set up JDK 21'
         if: matrix.type == 'android'
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
 
-      - uses: ilammy/setup-nasm@v1
+      - name: 'Android: Set up nasm'
+        uses: ilammy/setup-nasm@v1
         if: matrix.type == 'android'
 
-      - name: Setup Android SDK
+      - name: 'Android: Setup Android SDK'
         if: matrix.type == 'android'
         uses: android-actions/setup-android@v3
 
-      - uses: nttld/setup-ndk@v1
+      - name: 'Android: Set up NDK'
+        uses: nttld/setup-ndk@v1
         id: setup-ndk
         if: matrix.type == 'android'
         with:
@@ -138,18 +145,18 @@ jobs:
           link-to-sdk: false
           add-to-path: false
 
-      - name: install tauri cli
+      - name: 'Android: Install tauri cli'
         if: matrix.type == 'android'
         run: |
           cargo install --debug tauri-cli
           cargo install --debug --force --locked bindgen-cli
 
-      - name: Decode JKS file
+      - name: 'Android: Decode JKS file'
         if: matrix.type == 'android'
         run: |
           echo "${{ secrets.TAURI_ANDROID_KEYSTORE_FILE }}" | base64 --decode > /tmp/keystore.jks
 
-      - name: Configure android build
+      - name: 'Android: Configure android build'
         if: matrix.type == 'android'
         run: |
           cat <<EOF > src-tauri/gen/android/keystore.properties
@@ -158,7 +165,7 @@ jobs:
           storeFile=/tmp/keystore.jks
           EOF
 
-      - name: build android project
+      - name: 'Android: Build android project'
         if: matrix.type == 'android'
         run: |
           export ANDROID_SDK_HOME=$ANDROID_HOME
@@ -173,7 +180,8 @@ jobs:
         env:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
-      - uses: actions/upload-artifact@v4
+      - name: 'Android: Upload artifact'
+        uses: actions/upload-artifact@v4
         if: matrix.type == 'android'
         with:
           name: tauri-artifact-${{ matrix.name }}
