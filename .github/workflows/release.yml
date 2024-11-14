@@ -66,8 +66,8 @@ jobs:
       - name: install signpath command
         if: matrix.name == 'windows'
         run: |
-          Set-ExecutionPolicy -ExecutionPolicy Unrestricted
-          Install-Module -Scope AllUsers -Force -Name SignPath
+          powershell -Command "Set-ExecutionPolicy -ExecutionPolicy Unrestricted"
+          powershell -Command "Install-Module -Name SignPath -Scope AllUsers -Force -SkipPublisherCheck"
 
       - uses: tauri-apps/tauri-action@v0
         env:
