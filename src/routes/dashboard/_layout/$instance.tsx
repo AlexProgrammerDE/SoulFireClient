@@ -318,6 +318,9 @@ function InstanceLayout() {
   const proxySettings = clientInfo.settings.find(
     (settings) => settings.namespace === 'proxy',
   );
+  const aiSettings = clientInfo.settings.find(
+    (settings) => settings.namespace === 'ai',
+  );
   const devSettings = clientInfo.settings.find(
     (settings) => settings.namespace === 'dev',
   );
@@ -328,6 +331,7 @@ function InstanceLayout() {
     !botSettings ||
     !accountSettings ||
     !proxySettings ||
+    !aiSettings ||
     !devSettings ||
     !firstPluginSettings
   ) {
@@ -391,6 +395,16 @@ function InstanceLayout() {
       linkProps: {
         to: '/dashboard/$instance/proxies',
         params: { instance: instance },
+      },
+    },
+    {
+      title: 'AI Settings',
+      icon: (props) => (
+        <DynamicIcon {...props} name={aiSettings.iconId as never} />
+      ),
+      linkProps: {
+        to: '/dashboard/$instance/settings/$namespace',
+        params: { instance: instance, namespace: 'ai' },
       },
     },
     {
