@@ -1,9 +1,4 @@
-import {
-  createFileRoute,
-  deepEqual,
-  Link,
-  useNavigate,
-} from '@tanstack/react-router';
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import {
@@ -68,8 +63,6 @@ export const Route = createFileRoute('/dashboard/_layout/')({
         queryFn: listQueryFn,
         signal: props.abortController.signal,
         refetchInterval: 3_000,
-        structuralSharing: (prev: unknown, next: unknown) =>
-          deepEqual(prev, next) ? prev : next,
       },
     };
   },

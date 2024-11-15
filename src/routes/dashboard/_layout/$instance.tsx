@@ -1,6 +1,5 @@
 import {
   createFileRoute,
-  deepEqual,
   Link,
   LinkProps,
   Outlet,
@@ -114,8 +113,6 @@ export const Route = createFileRoute('/dashboard/_layout/$instance')({
         },
         signal: props.abortController.signal,
         refetchInterval: 3_000,
-        structuralSharing: (prev: unknown, next: unknown) =>
-          deepEqual(prev, next) ? prev : next,
       },
     };
   },
