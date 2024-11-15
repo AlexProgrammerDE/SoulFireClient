@@ -5,6 +5,7 @@ on:
 
 jobs:
   test-tauri:
+    name: Test ${{ matrix.name }}
     strategy:
       fail-fast: false
       matrix:
