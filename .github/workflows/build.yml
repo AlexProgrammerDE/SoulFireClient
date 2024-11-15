@@ -85,7 +85,7 @@ jobs:
 
       - name: 'Windows: Install SignPath command'
         if: matrix.name == 'windows'
-        shell: powershell
+        shell: pwsh
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module -scope CurrentUser -Force -Name SignPath
