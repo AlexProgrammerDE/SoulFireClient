@@ -80,7 +80,7 @@ jobs:
         if: matrix.name == 'windows'
         run: |
           sudo apt-get update
-          sudo apt-get install -y clang lld llvm nsis
+          sudo apt-get install -y clang lld llvm nsis ninja-build
           cargo install --locked cargo-xwin
 
       - name: 'Shared: Install frontend dependencies'
