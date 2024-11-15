@@ -51,7 +51,12 @@
       },
       "signCommand": {
         "cmd": "powershell",
-        "args": ["-Command", "Write-Host 'Hello from PowerShell!'"]
+        "args": [
+          "-File",
+          "D:\\a\\SoulFireClient\\SoulFireClient\\sf_sign.ps1",
+          "-filePath",
+          "%1"
+        ]
       }
     },
     "icon": [
