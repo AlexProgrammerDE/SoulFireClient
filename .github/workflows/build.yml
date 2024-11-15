@@ -27,12 +27,12 @@ jobs:
             targetPath: ''
             name: 'linux'
             rust-targets: ''
-          - platform: 'windows-latest'
+          - platform: 'ubuntu-22.04'
             type: 'desktop'
-            args: ''
-            targetPath: ''
+            args: '--runner cargo-xwin --target x86_64-pc-windows-msvc'
+            targetPath: '/x86_64-pc-windows-msvc'
             name: 'windows'
-            rust-targets: ''
+            rust-targets: 'x86_64-pc-windows-msvc'
           - platform: 'ubuntu-22.04'
             type: 'android'
             args: ''
@@ -67,11 +67,18 @@ jobs:
           prefix-key: ${{ matrix.name }}
           workspaces: src-tauri
 
-      - name: 'Ubuntu: Install dependencies'
-        if: matrix.platform == 'ubuntu-22.04' && matrix.type == 'desktop'
+      - name: 'Ubuntu: Install linux dependencies'
+        if: matrix.name == 'linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: 'Ubuntu: Install windows dependencies'
+        if: matrix.name == 'windows'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang lld llvm nsis
+          cargo install --debug --force --locked cargo-xwin
 
       - name: 'Shared: Install frontend dependencies'
         run: pnpm install
@@ -147,7 +154,7 @@ jobs:
       - name: 'Android: Install tauri cli'
         if: matrix.type == 'android'
         run: |
-          cargo install --debug tauri-cli
+          cargo install --debug --force --locked tauri-cli
           cargo install --debug --force --locked bindgen-cli
 
       - name: 'Android: Decode JKS file'
