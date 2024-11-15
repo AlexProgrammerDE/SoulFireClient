@@ -22,19 +22,19 @@ jobs:
             targetPath: '/x86_64-apple-darwin'
             name: 'macos-x86_64'
             rust-targets: 'x86_64-apple-darwin'
-          - platform: 'ubuntu-22.04'
+          - platform: 'ubuntu-24.04'
             type: 'desktop'
             args: ''
             targetPath: ''
             name: 'linux'
             rust-targets: ''
-          - platform: 'ubuntu-22.04'
+          - platform: 'ubuntu-24.04'
             type: 'desktop'
             args: '--runner cargo-xwin --target x86_64-pc-windows-msvc'
             targetPath: '/x86_64-pc-windows-msvc'
             name: 'windows'
             rust-targets: 'x86_64-pc-windows-msvc'
-          - platform: 'ubuntu-22.04'
+          - platform: 'ubuntu-24.04'
             type: 'android'
             args: ''
             targetPath: ''
@@ -85,7 +85,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y clang lld llvm nsis ninja-build
           cargo install --locked cargo-xwin
-          cargo xwin --install
 
       - name: 'Shared: Install frontend dependencies'
         run: pnpm install
