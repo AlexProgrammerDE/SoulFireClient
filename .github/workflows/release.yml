@@ -27,6 +27,9 @@ jobs:
       - name: 'Shared: Checkout'
         uses: actions/checkout@v4
 
+      - name: 'Shared: Set up nasm'
+        uses: ilammy/setup-nasm@v1
+
       - name: 'Shared: Setup node'
         uses: actions/setup-node@v4
         with:
@@ -47,6 +50,8 @@ jobs:
         with:
           prefix-key: ${{ matrix.name }}
           workspaces: src-tauri
+          cache-on-failure: true
+          cache-all-crates: true
 
       - name: 'Ubuntu: Install dependencies'
         if: matrix.platform == 'ubuntu-22.04'

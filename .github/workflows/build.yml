@@ -46,6 +46,9 @@ jobs:
       - name: 'Shared: Checkout'
         uses: actions/checkout@v4
 
+      - name: 'Shared: Set up nasm'
+        uses: ilammy/setup-nasm@v1
+
       - name: 'Shared: Setup node'
         uses: actions/setup-node@v4
         with:
@@ -136,10 +139,6 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-
-      - name: 'Android: Set up nasm'
-        if: matrix.type == 'android'
-        uses: ilammy/setup-nasm@v1
 
       - name: 'Android: Setup Android SDK'
         if: matrix.type == 'android'
