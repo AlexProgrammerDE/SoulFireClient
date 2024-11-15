@@ -66,6 +66,8 @@ jobs:
         with:
           prefix-key: ${{ matrix.name }}
           workspaces: src-tauri
+          cache-on-failure: true
+          cache-all-crates: true
 
       - name: 'Ubuntu: Install linux dependencies'
         if: matrix.name == 'linux'
