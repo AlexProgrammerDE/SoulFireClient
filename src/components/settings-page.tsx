@@ -3,10 +3,9 @@ import {
   ComboSetting,
   DoubleSetting,
   IntSetting,
-  SettingEntryMinMaxPair,
-  SettingEntryMinMaxPairSingle,
-  SettingEntrySingle,
+  MinMaxSetting,
   SettingsPage,
+  SettingType,
   StringListSetting,
   StringSetting,
 } from '@/generated/soulfire/config.ts';
@@ -87,11 +86,9 @@ function ComponentTitle(props: { title: string; description: string }) {
 }
 
 function StringComponent(props: {
-  namespace: string;
-  settingKey: string;
   entry: StringSetting;
-  value: JsonValue;
-  changeCallback: (value: JsonValue) => void;
+  value: string;
+  changeCallback: (value: string) => void;
 }) {
   const ref = useRef<HTMLInputElement>(null);
 
@@ -108,11 +105,9 @@ function StringComponent(props: {
 }
 
 function IntComponent(props: {
-  namespace: string;
-  settingKey: string;
   entry: IntSetting;
-  value: JsonValue;
-  changeCallback: (value: JsonValue) => void;
+  value: number;
+  changeCallback: (value: number) => void;
 }) {
   const ref = useRef<HTMLInputElement>(null);
 
@@ -124,7 +119,7 @@ function IntComponent(props: {
       min={props.entry.min}
       max={props.entry.max}
       step={props.entry.step}
-      value={props.value as number}
+      value={props.value}
       onChange={(e) => {
         props.changeCallback(parseInt(e.currentTarget.value));
       }}
@@ -133,11 +128,9 @@ function IntComponent(props: {
 }
 
 function DoubleComponent(props: {
-  namespace: string;
-  settingKey: string;
   entry: DoubleSetting;
-  value: JsonValue;
-  changeCallback: (value: JsonValue) => void;
+  value: number;
+  changeCallback: (value: number) => void;
 }) {
   const ref = useRef<HTMLInputElement>(null);
 
@@ -149,7 +142,7 @@ function DoubleComponent(props: {
       min={props.entry.min}
       max={props.entry.max}
       step={props.entry.step}
-      value={props.value as number}
+      value={props.value}
       onChange={(e) => {
         props.changeCallback(parseFloat(e.currentTarget.value));
       }}
@@ -158,16 +151,14 @@ function DoubleComponent(props: {
 }
 
 function BoolComponent(props: {
-  namespace: string;
-  settingKey: string;
   entry: BoolSetting;
-  value: JsonValue;
-  changeCallback: (value: JsonValue) => void;
+  value: boolean;
+  changeCallback: (value: boolean) => void;
 }) {
   return (
     <Checkbox
       className="my-auto"
-      checked={props.value as boolean}
+      checked={props.value}
       onCheckedChange={(value) => {
         if (value === 'indeterminate') {
           return;
@@ -180,11 +171,9 @@ function BoolComponent(props: {
 }
 
 function ComboComponent(props: {
-  namespace: string;
-  settingKey: string;
   entry: ComboSetting;
-  value: JsonValue;
-  changeCallback: (value: JsonValue) => void;
+  value: string;
+  changeCallback: (value: string) => void;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -247,14 +236,14 @@ function makeIdValueSingle<T>(value: T): IdValue<T> {
 }
 
 function StringListComponent(props: {
-  namespace: string;
-  settingKey: string;
   entry: StringListSetting;
-  value: JsonValue;
-  changeCallback: (value: JsonValue) => void;
+  value: string[];
+  changeCallback: (value: string[]) => void;
 }) {
-  const castValue = props.value as string[];
-  const idValueArray = useMemo(() => makeIdValueArray(castValue), [castValue]);
+  const idValueArray = useMemo(
+    () => makeIdValueArray(props.value),
+    [props.value],
+  );
   const [newEntryInput, setNewEntryInput] = useState('');
 
   const insertValue = (newValue: string) => {
@@ -332,10 +321,38 @@ function StringListComponent(props: {
   );
 }
 
-function SingleComponent(props: {
+function MinMaxComponent(props: {
+  entry: MinMaxSetting;
+  value: number;
+  changeCallback: (value: number) => void;
+}) {
+  const ref = useRef<HTMLInputElement>(null);
+
+  return (
+    <Input
+      ref={ref}
+      type="number"
+      inputMode="numeric"
+      min={props.entry.min}
+      max={props.entry.max}
+      step={props.entry.step}
+      value={props.value as number}
+      onChange={(e) => {
+        props.changeCallback(parseInt(e.currentTarget.value));
+      }}
+    />
+  );
+}
+
+type MinMaxType = {
+  min: number;
+  max: number;
+};
+
+function EntryComponent(props: {
   namespace: string;
   settingKey: string;
-  entry: SettingEntrySingle;
+  entry: SettingType;
 }) {
   const queryClient = useQueryClient();
   const instanceInfo = useContext(InstanceInfoContext);
@@ -343,13 +360,13 @@ function SingleComponent(props: {
   const transport = useContext(TransportContext);
   const instanceInfoQueryKey = ['instance-info', instanceInfo.id];
   const value = useMemo(() => {
-    switch (props.entry.type?.value.oneofKind) {
+    switch (props.entry.value.oneofKind) {
       case 'string': {
         return getEntry(
           props.namespace,
           props.settingKey,
           profile,
-          props.entry.type.value.string.def,
+          props.entry.value.string.def,
         );
       }
       case 'int': {
@@ -357,7 +374,7 @@ function SingleComponent(props: {
           props.namespace,
           props.settingKey,
           profile,
-          props.entry.type.value.int.def,
+          props.entry.value.int.def,
         );
       }
       case 'bool': {
@@ -365,7 +382,7 @@ function SingleComponent(props: {
           props.namespace,
           props.settingKey,
           profile,
-          props.entry.type.value.bool.def,
+          props.entry.value.bool.def,
         );
       }
       case 'double': {
@@ -373,7 +390,7 @@ function SingleComponent(props: {
           props.namespace,
           props.settingKey,
           profile,
-          props.entry.type.value.double.def,
+          props.entry.value.double.def,
         );
       }
       case 'combo': {
@@ -381,9 +398,7 @@ function SingleComponent(props: {
           props.namespace,
           props.settingKey,
           profile,
-          props.entry.type.value.combo.options[
-            props.entry.type.value.combo.def
-          ]!.id,
+          props.entry.value.combo.def,
         );
       }
       case 'stringList': {
@@ -391,8 +406,14 @@ function SingleComponent(props: {
           props.namespace,
           props.settingKey,
           profile,
-          props.entry.type.value.stringList.def,
+          props.entry.value.stringList.def,
         );
+      }
+      case 'minMax': {
+        return getEntry(props.namespace, props.settingKey, profile, {
+          min: props.entry.value.minMax.minDef,
+          max: props.entry.value.minMax.maxDef,
+        });
       }
       case undefined: {
         return null;
@@ -406,7 +427,7 @@ function SingleComponent(props: {
       }
 
       const targetProfile = convertToProto(
-        updateEntry(props.namespace, props.entry.key, value, profile),
+        updateEntry(props.namespace, props.settingKey, value, profile),
       );
       await queryClient.cancelQueries({ queryKey: instanceInfoQueryKey });
       queryClient.setQueryData<{
@@ -437,23 +458,21 @@ function SingleComponent(props: {
     },
   });
 
-  if (!props.entry.type || value === undefined) {
+  if (!props.entry || value === undefined) {
     return null;
   }
 
-  switch (props.entry.type.value.oneofKind) {
+  switch (props.entry.value.oneofKind) {
     case 'string': {
       return (
         <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
-            title={props.entry.uiName}
-            description={props.entry.description}
+            title={props.entry.value.string.uiName}
+            description={props.entry.value.string.description}
           />
           <StringComponent
-            namespace={props.namespace}
-            settingKey={props.settingKey}
-            entry={props.entry.type.value.string}
-            value={value}
+            entry={props.entry.value.string}
+            value={value as string}
             changeCallback={setValueMutation.mutate}
           />
         </div>
@@ -463,14 +482,12 @@ function SingleComponent(props: {
       return (
         <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
-            title={props.entry.uiName}
-            description={props.entry.description}
+            title={props.entry.value.int.uiName}
+            description={props.entry.value.int.description}
           />
           <IntComponent
-            namespace={props.namespace}
-            settingKey={props.settingKey}
-            entry={props.entry.type.value.int}
-            value={value}
+            entry={props.entry.value.int}
+            value={value as number}
             changeCallback={setValueMutation.mutate}
           />
         </div>
@@ -480,15 +497,13 @@ function SingleComponent(props: {
       return (
         <div className="flex flex-row gap-1 max-w-xl">
           <BoolComponent
-            namespace={props.namespace}
-            settingKey={props.settingKey}
-            entry={props.entry.type.value.bool}
-            value={value}
+            entry={props.entry.value.bool}
+            value={value as boolean}
             changeCallback={setValueMutation.mutate}
           />
           <ComponentTitle
-            title={props.entry.uiName}
-            description={props.entry.description}
+            title={props.entry.value.bool.uiName}
+            description={props.entry.value.bool.description}
           />
         </div>
       );
@@ -497,14 +512,12 @@ function SingleComponent(props: {
       return (
         <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
-            title={props.entry.uiName}
-            description={props.entry.description}
+            title={props.entry.value.double.uiName}
+            description={props.entry.value.double.description}
           />
           <DoubleComponent
-            namespace={props.namespace}
-            settingKey={props.settingKey}
-            entry={props.entry.type.value.double}
-            value={value}
+            entry={props.entry.value.double}
+            value={value as number}
             changeCallback={setValueMutation.mutate}
           />
         </div>
@@ -514,14 +527,12 @@ function SingleComponent(props: {
       return (
         <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
-            title={props.entry.uiName}
-            description={props.entry.description}
+            title={props.entry.value.combo.uiName}
+            description={props.entry.value.combo.description}
           />
           <ComboComponent
-            namespace={props.namespace}
-            settingKey={props.settingKey}
-            entry={props.entry.type.value.combo}
-            value={value}
+            entry={props.entry.value.combo}
+            value={value as string}
             changeCallback={setValueMutation.mutate}
           />
         </div>
@@ -531,122 +542,57 @@ function SingleComponent(props: {
       return (
         <div className="flex flex-col gap-1 max-w-xl">
           <ComponentTitle
-            title={props.entry.uiName}
-            description={props.entry.description}
+            title={props.entry.value.stringList.uiName}
+            description={props.entry.value.stringList.description}
           />
           <StringListComponent
-            namespace={props.namespace}
-            settingKey={props.settingKey}
-            entry={props.entry.type.value.stringList}
-            value={value}
+            entry={props.entry.value.stringList}
+            value={value as string[]}
             changeCallback={setValueMutation.mutate}
           />
         </div>
       );
     }
-  }
-}
-
-function MinMaxComponentSingle(props: {
-  namespace: string;
-  entry: SettingEntryMinMaxPairSingle;
-}) {
-  const queryClient = useQueryClient();
-  const instanceInfo = useContext(InstanceInfoContext);
-  const profile = useContext(ProfileContext);
-  const transport = useContext(TransportContext);
-  const instanceInfoQueryKey = ['instance-info', instanceInfo.id];
-  const value = useMemo(() => {
-    if (props.entry.intSetting === undefined) {
-      return null;
-    }
-
-    return getEntry(
-      props.namespace,
-      props.entry.key,
-      profile,
-      props.entry.intSetting.def,
-    );
-  }, [profile, props.entry.intSetting, props.entry.key, props.namespace]);
-  const setValueMutation = useMutation({
-    mutationFn: async (value: JsonValue) => {
-      if (transport === null) {
-        return;
-      }
-
-      const targetProfile = convertToProto(
-        updateEntry(props.namespace, props.entry.key, value, profile),
+    case 'minMax': {
+      const castValue = value as MinMaxType;
+      return (
+        <>
+          <div className="flex flex-col gap-1 max-w-xl">
+            <ComponentTitle
+              title={props.entry.value.minMax.minUiName}
+              description={props.entry.value.minMax.minDescription}
+            />
+            <MinMaxComponent
+              entry={props.entry.value.minMax}
+              value={castValue.min}
+              changeCallback={(v) => {
+                setValueMutation.mutate({
+                  max: castValue.max < v ? v : castValue.max,
+                  min: v,
+                });
+              }}
+            />
+          </div>
+          <div className="flex flex-col gap-1 max-w-xl">
+            <ComponentTitle
+              title={props.entry.value.minMax.maxUiName}
+              description={props.entry.value.minMax.maxDescription}
+            />
+            <MinMaxComponent
+              entry={props.entry.value.minMax}
+              value={(value as MinMaxType).max}
+              changeCallback={(v) => {
+                setValueMutation.mutate({
+                  max: v,
+                  min: castValue.min > v ? v : castValue.min,
+                });
+              }}
+            />
+          </div>
+        </>
       );
-      await queryClient.cancelQueries({ queryKey: instanceInfoQueryKey });
-      queryClient.setQueryData<{
-        instanceInfo: InstanceInfoResponse;
-      }>(instanceInfoQueryKey, (old) => {
-        if (old === undefined) {
-          return;
-        }
-
-        return {
-          instanceInfo: {
-            ...old.instanceInfo,
-            config: targetProfile,
-          },
-        };
-      });
-
-      const instanceService = new InstanceServiceClient(transport);
-      await instanceService.updateInstanceConfig({
-        id: instanceInfo.id,
-        config: targetProfile,
-      });
-    },
-    onSettled: () => {
-      void queryClient.invalidateQueries({
-        queryKey: instanceInfoQueryKey,
-      });
-    },
-  });
-
-  if (!props.entry.intSetting || value === undefined) {
-    return null;
+    }
   }
-
-  return (
-    <div className="flex flex-col gap-1 max-w-xl">
-      <ComponentTitle
-        title={props.entry.uiName}
-        description={props.entry.description}
-      />
-      <IntComponent
-        namespace={props.namespace}
-        settingKey={props.entry.key}
-        entry={props.entry.intSetting}
-        value={value}
-        changeCallback={setValueMutation.mutate}
-      />
-    </div>
-  );
-}
-
-function MinMaxComponent(props: {
-  namespace: string;
-  entry: SettingEntryMinMaxPair;
-}) {
-  if (!props.entry.min || !props.entry.max) {
-    return null;
-  }
-
-  return (
-    <>
-      <MinMaxComponentSingle
-        namespace={props.namespace}
-        entry={props.entry.min}
-      />
-      <MinMaxComponentSingle
-        namespace={props.namespace}
-        entry={props.entry.max}
-      />
-    </>
-  );
 }
 
 export default function ClientSettingsPageComponent({
@@ -657,29 +603,14 @@ export default function ClientSettingsPageComponent({
   return (
     <>
       {data.entries.map((page) => {
-        if (page.value.oneofKind === 'single') {
-          return (
-            <SingleComponent
-              namespace={data.namespace}
-              key={'single|' + page.value.single.key}
-              settingKey={page.value.single.key}
-              entry={page.value.single}
-            />
-          );
-        } else if (page.value.oneofKind === 'minMaxPair') {
-          return (
-            <MinMaxComponent
-              namespace={data.namespace}
-              key={
-                'min-max|' +
-                page.value.minMaxPair.min?.key +
-                '|' +
-                page.value.minMaxPair.max?.key
-              }
-              entry={page.value.minMaxPair}
-            />
-          );
-        }
+        return (
+          <EntryComponent
+            namespace={data.namespace}
+            key={page.key}
+            settingKey={page.key}
+            entry={page.type!}
+          />
+        );
       })}
     </>
   );

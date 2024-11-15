@@ -14,11 +14,19 @@ export interface ClientDataRequest {
  */
 export interface StringSetting {
     /**
-     * @generated from protobuf field: string def = 1;
+     * @generated from protobuf field: string uiName = 1;
+     */
+    uiName: string;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+    /**
+     * @generated from protobuf field: string def = 3;
      */
     def: string;
     /**
-     * @generated from protobuf field: bool secret = 2;
+     * @generated from protobuf field: bool secret = 4;
      */
     secret: boolean;
 }
@@ -27,23 +35,31 @@ export interface StringSetting {
  */
 export interface IntSetting {
     /**
-     * @generated from protobuf field: int32 def = 1;
+     * @generated from protobuf field: string uiName = 1;
+     */
+    uiName: string;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+    /**
+     * @generated from protobuf field: int32 def = 3;
      */
     def: number;
     /**
-     * @generated from protobuf field: int32 min = 2;
+     * @generated from protobuf field: int32 min = 4;
      */
     min: number;
     /**
-     * @generated from protobuf field: int32 max = 3;
+     * @generated from protobuf field: int32 max = 5;
      */
     max: number;
     /**
-     * @generated from protobuf field: int32 step = 4;
+     * @generated from protobuf field: int32 step = 6;
      */
     step: number;
     /**
-     * @generated from protobuf field: optional string format = 5;
+     * @generated from protobuf field: optional string format = 7;
      */
     format?: string;
 }
@@ -52,23 +68,31 @@ export interface IntSetting {
  */
 export interface DoubleSetting {
     /**
-     * @generated from protobuf field: double def = 1;
+     * @generated from protobuf field: string uiName = 1;
+     */
+    uiName: string;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+    /**
+     * @generated from protobuf field: double def = 3;
      */
     def: number;
     /**
-     * @generated from protobuf field: double min = 2;
+     * @generated from protobuf field: double min = 4;
      */
     min: number;
     /**
-     * @generated from protobuf field: double max = 3;
+     * @generated from protobuf field: double max = 5;
      */
     max: number;
     /**
-     * @generated from protobuf field: double step = 4;
+     * @generated from protobuf field: double step = 6;
      */
     step: number;
     /**
-     * @generated from protobuf field: optional string format = 5;
+     * @generated from protobuf field: optional string format = 7;
      */
     format?: string;
 }
@@ -77,7 +101,15 @@ export interface DoubleSetting {
  */
 export interface BoolSetting {
     /**
-     * @generated from protobuf field: bool def = 1;
+     * @generated from protobuf field: string uiName = 1;
+     */
+    uiName: string;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+    /**
+     * @generated from protobuf field: bool def = 3;
      */
     def: boolean;
 }
@@ -103,24 +135,85 @@ export interface ComboOption {
  */
 export interface ComboSetting {
     /**
+     * @generated from protobuf field: string uiName = 1;
+     */
+    uiName: string;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+    /**
      * List of options
      *
-     * @generated from protobuf field: repeated soulfire.v1.ComboOption options = 1;
+     * @generated from protobuf field: repeated soulfire.v1.ComboOption options = 3;
      */
     options: ComboOption[];
     /**
-     * @generated from protobuf field: int32 def = 2;
+     * @generated from protobuf field: string def = 4;
      */
-    def: number;
+    def: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.StringListSetting
  */
 export interface StringListSetting {
     /**
-     * @generated from protobuf field: repeated string def = 1;
+     * @generated from protobuf field: string uiName = 1;
+     */
+    uiName: string;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+    /**
+     * @generated from protobuf field: repeated string def = 3;
      */
     def: string[];
+}
+/**
+ * @generated from protobuf message soulfire.v1.MinMaxSetting
+ */
+export interface MinMaxSetting {
+    /**
+     * @generated from protobuf field: string minUiName = 1;
+     */
+    minUiName: string;
+    /**
+     * @generated from protobuf field: string maxUiName = 2;
+     */
+    maxUiName: string;
+    /**
+     * @generated from protobuf field: string minDescription = 3;
+     */
+    minDescription: string;
+    /**
+     * @generated from protobuf field: string maxDescription = 4;
+     */
+    maxDescription: string;
+    /**
+     * @generated from protobuf field: int32 minDef = 5;
+     */
+    minDef: number;
+    /**
+     * @generated from protobuf field: int32 maxDef = 6;
+     */
+    maxDef: number;
+    /**
+     * @generated from protobuf field: int32 min = 7;
+     */
+    min: number;
+    /**
+     * @generated from protobuf field: int32 max = 8;
+     */
+    max: number;
+    /**
+     * @generated from protobuf field: int32 step = 9;
+     */
+    step: number;
+    /**
+     * @generated from protobuf field: optional string format = 10;
+     */
+    format?: string;
 }
 /**
  * A single setting type with optional default value
@@ -168,75 +261,14 @@ export interface SettingType {
          */
         stringList: StringListSetting;
     } | {
+        oneofKind: "minMax";
+        /**
+         * @generated from protobuf field: soulfire.v1.MinMaxSetting minMax = 7;
+         */
+        minMax: MinMaxSetting;
+    } | {
         oneofKind: undefined;
     };
-}
-/**
- * A single option in the settings page
- *
- * @generated from protobuf message soulfire.v1.SettingEntrySingle
- */
-export interface SettingEntrySingle {
-    /**
-     * Basically we only send a kv map to the server with every setting entry
-     *
-     * @generated from protobuf field: string key = 1;
-     */
-    key: string;
-    /**
-     * @generated from protobuf field: string uiName = 2;
-     */
-    uiName: string;
-    /**
-     * @generated from protobuf field: string description = 3;
-     */
-    description: string;
-    /**
-     * @generated from protobuf field: soulfire.v1.SettingType type = 4;
-     */
-    type?: SettingType;
-}
-/**
- * @generated from protobuf message soulfire.v1.SettingEntryMinMaxPairSingle
- */
-export interface SettingEntryMinMaxPairSingle {
-    /**
-     * Basically we only send a kv map to the server with every setting entry
-     *
-     * @generated from protobuf field: string key = 1;
-     */
-    key: string;
-    /**
-     * @generated from protobuf field: string uiName = 2;
-     */
-    uiName: string;
-    /**
-     * @generated from protobuf field: string description = 3;
-     */
-    description: string;
-    /**
-     * @generated from protobuf field: soulfire.v1.IntSetting intSetting = 4;
-     */
-    intSetting?: IntSetting;
-}
-/**
- * A paired option in the settings page
- *
- * @generated from protobuf message soulfire.v1.SettingEntryMinMaxPair
- */
-export interface SettingEntryMinMaxPair {
-    /**
-     * Required to be IntSetting
-     *
-     * @generated from protobuf field: soulfire.v1.SettingEntryMinMaxPairSingle min = 1;
-     */
-    min?: SettingEntryMinMaxPairSingle;
-    /**
-     * Required to be IntSetting
-     *
-     * @generated from protobuf field: soulfire.v1.SettingEntryMinMaxPairSingle max = 2;
-     */
-    max?: SettingEntryMinMaxPairSingle;
 }
 /**
  * A entry in the settings page
@@ -245,23 +277,15 @@ export interface SettingEntryMinMaxPair {
  */
 export interface SettingEntry {
     /**
-     * @generated from protobuf oneof: value
+     * Basically we only send a kv map to the server with every setting entry
+     *
+     * @generated from protobuf field: string key = 1;
      */
-    value: {
-        oneofKind: "single";
-        /**
-         * @generated from protobuf field: soulfire.v1.SettingEntrySingle single = 1;
-         */
-        single: SettingEntrySingle;
-    } | {
-        oneofKind: "minMaxPair";
-        /**
-         * @generated from protobuf field: soulfire.v1.SettingEntryMinMaxPair minMaxPair = 2;
-         */
-        minMaxPair: SettingEntryMinMaxPair;
-    } | {
-        oneofKind: undefined;
-    };
+    key: string;
+    /**
+     * @generated from protobuf field: soulfire.v1.SettingType type = 4;
+     */
+    type?: SettingType;
 }
 /**
  * @generated from protobuf message soulfire.v1.SettingsPage
@@ -402,8 +426,10 @@ export const ClientDataRequest = new ClientDataRequest$Type();
 class StringSetting$Type extends MessageType<StringSetting> {
     constructor() {
         super("soulfire.v1.StringSetting", [
-            { no: 1, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "secret", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 1, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "secret", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -415,11 +441,13 @@ export const StringSetting = new StringSetting$Type();
 class IntSetting$Type extends MessageType<IntSetting> {
     constructor() {
         super("soulfire.v1.IntSetting", [
-            { no: 1, name: "def", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 2, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 3, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 4, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 5, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "def", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 5, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 7, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -431,11 +459,13 @@ export const IntSetting = new IntSetting$Type();
 class DoubleSetting$Type extends MessageType<DoubleSetting> {
     constructor() {
         super("soulfire.v1.DoubleSetting", [
-            { no: 1, name: "def", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 2, name: "min", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 3, name: "max", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 4, name: "step", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 5, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "def", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 4, name: "min", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 5, name: "max", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 6, name: "step", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+            { no: 7, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -447,7 +477,9 @@ export const DoubleSetting = new DoubleSetting$Type();
 class BoolSetting$Type extends MessageType<BoolSetting> {
     constructor() {
         super("soulfire.v1.BoolSetting", [
-            { no: 1, name: "def", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 1, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "def", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -472,8 +504,10 @@ export const ComboOption = new ComboOption$Type();
 class ComboSetting$Type extends MessageType<ComboSetting> {
     constructor() {
         super("soulfire.v1.ComboSetting", [
-            { no: 1, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ComboOption },
-            { no: 2, name: "def", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 1, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ComboOption },
+            { no: 4, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -485,7 +519,9 @@ export const ComboSetting = new ComboSetting$Type();
 class StringListSetting$Type extends MessageType<StringListSetting> {
     constructor() {
         super("soulfire.v1.StringListSetting", [
-            { no: 1, name: "def", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "def", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -493,6 +529,27 @@ class StringListSetting$Type extends MessageType<StringListSetting> {
  * @generated MessageType for protobuf message soulfire.v1.StringListSetting
  */
 export const StringListSetting = new StringListSetting$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MinMaxSetting$Type extends MessageType<MinMaxSetting> {
+    constructor() {
+        super("soulfire.v1.MinMaxSetting", [
+            { no: 1, name: "minUiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "maxUiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "minDescription", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "maxDescription", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "minDef", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "maxDef", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 7, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 8, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 9, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 10, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.MinMaxSetting
+ */
+export const MinMaxSetting = new MinMaxSetting$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SettingType$Type extends MessageType<SettingType> {
     constructor() {
@@ -502,7 +559,8 @@ class SettingType$Type extends MessageType<SettingType> {
             { no: 3, name: "double", kind: "message", oneof: "value", T: () => DoubleSetting },
             { no: 4, name: "bool", kind: "message", oneof: "value", T: () => BoolSetting },
             { no: 5, name: "combo", kind: "message", oneof: "value", T: () => ComboSetting },
-            { no: 6, name: "stringList", kind: "message", oneof: "value", T: () => StringListSetting }
+            { no: 6, name: "stringList", kind: "message", oneof: "value", T: () => StringListSetting },
+            { no: 7, name: "minMax", kind: "message", oneof: "value", T: () => MinMaxSetting }
         ]);
     }
 }
@@ -511,54 +569,11 @@ class SettingType$Type extends MessageType<SettingType> {
  */
 export const SettingType = new SettingType$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class SettingEntrySingle$Type extends MessageType<SettingEntrySingle> {
-    constructor() {
-        super("soulfire.v1.SettingEntrySingle", [
-            { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "type", kind: "message", T: () => SettingType }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.SettingEntrySingle
- */
-export const SettingEntrySingle = new SettingEntrySingle$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class SettingEntryMinMaxPairSingle$Type extends MessageType<SettingEntryMinMaxPairSingle> {
-    constructor() {
-        super("soulfire.v1.SettingEntryMinMaxPairSingle", [
-            { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "intSetting", kind: "message", T: () => IntSetting }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.SettingEntryMinMaxPairSingle
- */
-export const SettingEntryMinMaxPairSingle = new SettingEntryMinMaxPairSingle$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class SettingEntryMinMaxPair$Type extends MessageType<SettingEntryMinMaxPair> {
-    constructor() {
-        super("soulfire.v1.SettingEntryMinMaxPair", [
-            { no: 1, name: "min", kind: "message", T: () => SettingEntryMinMaxPairSingle },
-            { no: 2, name: "max", kind: "message", T: () => SettingEntryMinMaxPairSingle }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.SettingEntryMinMaxPair
- */
-export const SettingEntryMinMaxPair = new SettingEntryMinMaxPair$Type();
-// @generated message type with reflection information, may provide speed optimized methods
 class SettingEntry$Type extends MessageType<SettingEntry> {
     constructor() {
         super("soulfire.v1.SettingEntry", [
-            { no: 1, name: "single", kind: "message", oneof: "value", T: () => SettingEntrySingle },
-            { no: 2, name: "minMaxPair", kind: "message", oneof: "value", T: () => SettingEntryMinMaxPair }
+            { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "type", kind: "message", T: () => SettingType }
         ]);
     }
 }
