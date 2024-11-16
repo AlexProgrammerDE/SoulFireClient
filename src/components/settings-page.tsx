@@ -94,6 +94,7 @@ function StringComponent(props: {
   if (props.entry.textarea) {
     return (
       <Textarea
+        placeholder={props.entry.placeholder}
         value={props.value}
         onChange={(e) => {
           props.changeCallback(e.currentTarget.value);
@@ -103,6 +104,7 @@ function StringComponent(props: {
   } else {
     return (
       <Input
+        placeholder={props.entry.placeholder}
         type={props.entry.secret ? 'password' : 'text'}
         value={props.value as string}
         onChange={(e) => {
@@ -120,6 +122,7 @@ function IntComponent(props: {
 }) {
   return (
     <Input
+      placeholder={props.entry.placeholder}
       type="number"
       inputMode="numeric"
       min={props.entry.min}
@@ -140,6 +143,7 @@ function DoubleComponent(props: {
 }) {
   return (
     <Input
+      placeholder={props.entry.placeholder}
       type="number"
       inputMode="decimal"
       min={props.entry.min}
@@ -325,12 +329,14 @@ function StringListComponent(props: {
 }
 
 function MinMaxComponent(props: {
+  placeholder: string;
   entry: MinMaxSetting;
   value: number;
   changeCallback: (value: number) => void;
 }) {
   return (
     <Input
+      placeholder={props.placeholder}
       type="number"
       inputMode="numeric"
       min={props.entry.min}
@@ -563,6 +569,7 @@ function EntryComponent(props: {
               description={props.entry.value.minMax.minDescription}
             />
             <MinMaxComponent
+              placeholder={props.entry.value.minMax.minPlaceholder}
               entry={props.entry.value.minMax}
               value={castValue.min}
               changeCallback={(v) => {
@@ -579,6 +586,7 @@ function EntryComponent(props: {
               description={props.entry.value.minMax.maxDescription}
             />
             <MinMaxComponent
+              placeholder={props.entry.value.minMax.maxPlaceholder}
               entry={props.entry.value.minMax}
               value={(value as MinMaxType).max}
               changeCallback={(v) => {

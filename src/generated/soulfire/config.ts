@@ -33,6 +33,10 @@ export interface StringSetting {
      * @generated from protobuf field: bool textarea = 5;
      */
     textarea: boolean;
+    /**
+     * @generated from protobuf field: string placeholder = 6;
+     */
+    placeholder: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.IntSetting
@@ -66,6 +70,10 @@ export interface IntSetting {
      * @generated from protobuf field: optional string format = 7;
      */
     format?: string;
+    /**
+     * @generated from protobuf field: string placeholder = 8;
+     */
+    placeholder: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.DoubleSetting
@@ -99,6 +107,10 @@ export interface DoubleSetting {
      * @generated from protobuf field: optional string format = 7;
      */
     format?: string;
+    /**
+     * @generated from protobuf field: string placeholder = 8;
+     */
+    placeholder: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.BoolSetting
@@ -218,6 +230,14 @@ export interface MinMaxSetting {
      * @generated from protobuf field: optional string format = 10;
      */
     format?: string;
+    /**
+     * @generated from protobuf field: string minPlaceholder = 11;
+     */
+    minPlaceholder: string;
+    /**
+     * @generated from protobuf field: string maxPlaceholder = 12;
+     */
+    maxPlaceholder: string;
 }
 /**
  * A single setting type with optional default value
@@ -434,7 +454,8 @@ class StringSetting$Type extends MessageType<StringSetting> {
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "secret", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 5, name: "textarea", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 5, name: "textarea", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 6, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -452,7 +473,8 @@ class IntSetting$Type extends MessageType<IntSetting> {
             { no: 4, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 5, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 6, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 7, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 7, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -470,7 +492,8 @@ class DoubleSetting$Type extends MessageType<DoubleSetting> {
             { no: 4, name: "min", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 5, name: "max", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 6, name: "step", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 7, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 7, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -547,7 +570,9 @@ class MinMaxSetting$Type extends MessageType<MinMaxSetting> {
             { no: 7, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 8, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 9, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 10, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 10, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "minPlaceholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 12, name: "maxPlaceholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
