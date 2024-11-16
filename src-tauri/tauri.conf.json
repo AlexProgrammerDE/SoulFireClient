@@ -83,7 +83,8 @@
       "rpm": {
         "depends": [],
         "compression": {
-          "type": "none"
+          "type": "xz",
+          "level": 2
         }
       }
     },
