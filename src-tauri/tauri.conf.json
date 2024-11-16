@@ -79,6 +79,12 @@
     "linux": {
       "deb": {
         "depends": []
+      },
+      "rpm": {
+        "compression": {
+          "type": "zstd",
+          "level": 6
+        }
       }
     },
     "createUpdaterArtifacts": true,
