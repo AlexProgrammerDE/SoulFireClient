@@ -29,7 +29,7 @@ import {
 } from '@/components/ui/command.tsx';
 import { Check, ChevronsUpDown, PlusIcon, TrashIcon } from 'lucide-react';
 import { cn } from '@/lib/utils.ts';
-import { useContext, useMemo, useRef, useState } from 'react';
+import { useContext, useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
@@ -41,6 +41,7 @@ import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
 import { InstanceInfoResponse } from '@/generated/soulfire/instance.ts';
+import { Textarea } from '@/components/ui/textarea.tsx';
 
 function updateEntry(
   namespace: string,
@@ -90,18 +91,26 @@ function StringComponent(props: {
   value: string;
   changeCallback: (value: string) => void;
 }) {
-  const ref = useRef<HTMLInputElement>(null);
-
-  return (
-    <Input
-      ref={ref}
-      type={props.entry.secret ? 'password' : 'text'}
-      value={props.value as string}
-      onChange={(e) => {
-        props.changeCallback(e.currentTarget.value);
-      }}
-    />
-  );
+  if (props.entry.textarea) {
+    return (
+      <Textarea
+        value={props.value}
+        onChange={(e) => {
+          props.changeCallback(e.currentTarget.value);
+        }}
+      />
+    );
+  } else {
+    return (
+      <Input
+        type={props.entry.secret ? 'password' : 'text'}
+        value={props.value as string}
+        onChange={(e) => {
+          props.changeCallback(e.currentTarget.value);
+        }}
+      />
+    );
+  }
 }
 
 function IntComponent(props: {
@@ -109,11 +118,8 @@ function IntComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
-  const ref = useRef<HTMLInputElement>(null);
-
   return (
     <Input
-      ref={ref}
       type="number"
       inputMode="numeric"
       min={props.entry.min}
@@ -132,11 +138,8 @@ function DoubleComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
-  const ref = useRef<HTMLInputElement>(null);
-
   return (
     <Input
-      ref={ref}
       type="number"
       inputMode="decimal"
       min={props.entry.min}
@@ -326,11 +329,8 @@ function MinMaxComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
-  const ref = useRef<HTMLInputElement>(null);
-
   return (
     <Input
-      ref={ref}
       type="number"
       inputMode="numeric"
       min={props.entry.min}

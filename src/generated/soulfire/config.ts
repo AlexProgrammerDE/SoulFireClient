@@ -29,6 +29,10 @@ export interface StringSetting {
      * @generated from protobuf field: bool secret = 4;
      */
     secret: boolean;
+    /**
+     * @generated from protobuf field: bool textarea = 5;
+     */
+    textarea: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.IntSetting
@@ -429,7 +433,8 @@ class StringSetting$Type extends MessageType<StringSetting> {
             { no: 1, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "secret", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 4, name: "secret", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 5, name: "textarea", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
