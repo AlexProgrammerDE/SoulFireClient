@@ -80,7 +80,7 @@ function ComponentTitle(props: { title: string; description: string }) {
     <Tooltip>
       <TooltipTrigger className="w-fit">{props.title}</TooltipTrigger>
       <TooltipContent>
-        <p>{props.description}</p>
+        <p className="whitespace-pre-line">{props.description}</p>
       </TooltipContent>
     </Tooltip>
   );
