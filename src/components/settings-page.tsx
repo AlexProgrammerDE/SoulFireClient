@@ -29,7 +29,7 @@ import {
 } from '@/components/ui/command.tsx';
 import { Check, ChevronsUpDown, PlusIcon, TrashIcon } from 'lucide-react';
 import { cn } from '@/lib/utils.ts';
-import { useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
@@ -91,11 +91,23 @@ function StringComponent(props: {
   value: string;
   changeCallback: (value: string) => void;
 }) {
+  const textAreRef = useRef<HTMLTextAreaElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (textAreRef.current && props.value !== textAreRef.current.value) {
+      textAreRef.current.value = props.value;
+    } else if (inputRef.current && props.value !== inputRef.current.value) {
+      inputRef.current.value = props.value;
+    }
+  }, [props.value]);
+
   if (props.entry.textarea) {
     return (
       <Textarea
+        ref={textAreRef}
         placeholder={props.entry.placeholder}
-        value={props.value}
+        defaultValue={props.value}
         onChange={(e) => {
           props.changeCallback(e.currentTarget.value);
         }}
@@ -104,9 +116,10 @@ function StringComponent(props: {
   } else {
     return (
       <Input
+        ref={inputRef}
         placeholder={props.entry.placeholder}
         type={props.entry.secret ? 'password' : 'text'}
-        value={props.value as string}
+        defaultValue={props.value}
         onChange={(e) => {
           props.changeCallback(e.currentTarget.value);
         }}
@@ -120,15 +133,24 @@ function IntComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
+  const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (ref.current && props.value.toString() !== ref.current.value) {
+      ref.current.value = props.value.toString();
+    }
+  }, [props.value]);
+
   return (
     <Input
+      ref={ref}
       placeholder={props.entry.placeholder}
       type="number"
       inputMode="numeric"
       min={props.entry.min}
       max={props.entry.max}
       step={props.entry.step}
-      value={props.value}
+      defaultValue={props.value}
       onChange={(e) => {
         props.changeCallback(parseInt(e.currentTarget.value));
       }}
@@ -141,15 +163,24 @@ function DoubleComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
+  const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (ref.current && props.value.toString() !== ref.current.value) {
+      ref.current.value = props.value.toString();
+    }
+  }, [props.value]);
+
   return (
     <Input
+      ref={ref}
       placeholder={props.entry.placeholder}
       type="number"
       inputMode="decimal"
       min={props.entry.min}
       max={props.entry.max}
       step={props.entry.step}
-      value={props.value}
+      defaultValue={props.value}
       onChange={(e) => {
         props.changeCallback(parseFloat(e.currentTarget.value));
       }}
@@ -334,6 +365,14 @@ function MinMaxComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
+  const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (ref.current && props.value.toString() !== ref.current.value) {
+      ref.current.value = props.value.toString();
+    }
+  }, [props.value]);
+
   return (
     <Input
       placeholder={props.placeholder}
@@ -342,7 +381,7 @@ function MinMaxComponent(props: {
       min={props.entry.min}
       max={props.entry.max}
       step={props.entry.step}
-      value={props.value as number}
+      defaultValue={props.value}
       onChange={(e) => {
         props.changeCallback(parseInt(e.currentTarget.value));
       }}
@@ -588,7 +627,7 @@ function EntryComponent(props: {
             <MinMaxComponent
               placeholder={props.entry.value.minMax.maxPlaceholder}
               entry={props.entry.value.minMax}
-              value={(value as MinMaxType).max}
+              value={castValue.max}
               changeCallback={(v) => {
                 setValueMutation.mutate({
                   max: v,
