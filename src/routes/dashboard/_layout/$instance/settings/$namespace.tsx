@@ -132,6 +132,13 @@ function SettingsNamespace() {
                   <Badge variant="secondary">
                     License: {pluginInfo.license}
                   </Badge>
+                  <a
+                    href={pluginInfo.website}
+                    className="inline-flex items-center"
+                    target="_blank"
+                  >
+                    <Badge variant="secondary">Website</Badge>
+                  </a>
                 </div>
               </CardHeader>
             </Card>

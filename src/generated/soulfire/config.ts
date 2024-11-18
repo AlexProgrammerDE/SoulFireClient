@@ -400,6 +400,10 @@ export interface ServerPlugin {
      * @generated from protobuf field: string license = 5;
      */
     license: string;
+    /**
+     * @generated from protobuf field: string website = 6;
+     */
+    website: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.ClientDataResponse
@@ -650,7 +654,8 @@ class ServerPlugin$Type extends MessageType<ServerPlugin> {
             { no: 2, name: "version", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "author", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "license", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 5, name: "license", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "website", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
