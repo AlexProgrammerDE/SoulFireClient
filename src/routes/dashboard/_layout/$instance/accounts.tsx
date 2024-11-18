@@ -159,7 +159,17 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         })(),
         {
           loading: 'Importing accounts...',
-          success: (r) => `${r} accounts imported!`,
+          success: (r) => {
+            if (r === 0) {
+              return 'Failed to import any accounts';
+            } else if (r !== textSplit.length) {
+              return `Imported ${r} accounts, failed to import ${
+                textSplit.length - r
+              } accounts`;
+            } else {
+              return `${r} accounts imported!`;
+            }
+          },
           error: (e) => {
             console.error(e);
             return 'Failed to import accounts';
