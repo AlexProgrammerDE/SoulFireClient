@@ -19,6 +19,7 @@ import {
 } from '@/generated/soulfire/instance.ts';
 import { LoadingComponent } from '@/components/loading-component.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
+import { getEnumKeyByValue } from '@/lib/types.ts';
 
 const listQueryFn = async ({
   signal,
@@ -172,10 +173,7 @@ function InstanceSelectPage() {
                     search={{}}
                   >
                     Instance: {instance.friendlyName} (
-                    {Object.entries(InstanceState).find(
-                      (e) => e[1] === instance.state,
-                    )![0] ?? 'UNKNOWN'}
-                    )
+                    {getEnumKeyByValue(InstanceState, instance.state)})
                   </Link>
                 </Button>
                 <Button
