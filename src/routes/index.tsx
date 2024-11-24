@@ -166,8 +166,8 @@ function Index() {
   return (
     <>
       <DashboardMenuHeader />
-      <ScrollArea className="h-[calc(100vh-2.5rem)] w-full pr-4">
-        <div className="flex flex-col min-h-[calc(100vh-2.5rem)] w-full">
+      <ScrollArea className="h-[calc(100dvh-2.5rem)] w-full pr-4">
+        <div className="flex flex-col min-h-[calc(100dvh-2.5rem)] w-full">
           <Card className="m-auto w-full max-w-[450px] border-none">
             <CardHeader>
               <CardTitle>Connect to a SoulFire server</CardTitle>

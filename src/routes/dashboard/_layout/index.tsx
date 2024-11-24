@@ -156,8 +156,8 @@ function InstanceSelectPage() {
   return (
     <>
       <DashboardMenuHeader />
-      <ScrollArea className="h-[calc(100vh-2.5rem)] w-full pr-4">
-        <div className="flex flex-col min-h-[calc(100vh-2.5rem)] w-full">
+      <ScrollArea className="h-[calc(100dvh-2.5rem)] w-full pr-4">
+        <div className="flex flex-col min-h-[calc(100dvh-2.5rem)] w-full">
           <div className="flex flex-col p-4 m-auto gap-4">
             {instanceList.data.instanceList.instances.length == 0 && (
               <div className="flex flex-col gap-4 p-4">

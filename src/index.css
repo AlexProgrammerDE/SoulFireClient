@@ -84,7 +84,7 @@
 @layer base {
   html,
   body {
-    @apply h-screen max-h-screen w-screen font-sans;
+    @apply h-dvh max-h-dvh w-dvw font-sans;
   }
 
   body {

@@ -133,7 +133,7 @@ function RootLayout() {
               >
                 <main
                   vaul-drawer-wrapper=""
-                  className="flex h-screen w-screen flex-col"
+                  className="flex h-dvh w-dvw flex-col"
                 >
                   <Outlet />
                 </main>
