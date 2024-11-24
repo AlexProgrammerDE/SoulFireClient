@@ -15,12 +15,20 @@ jobs:
         include:
           - platform: 'macos-latest'
             args: '--target aarch64-apple-darwin'
+            name: 'macos-aarch64'
+            rust-targets: 'aarch64-apple-darwin'
           - platform: 'macos-latest'
             args: '--target x86_64-apple-darwin'
+            name: 'macos-x86_64'
+            rust-targets: 'x86_64-apple-darwin'
           - platform: 'ubuntu-22.04'
             args: ''
+            name: 'linux'
+            rust-targets: ''
           - platform: 'windows-latest'
             args: ''
+            name: 'windows'
+            rust-targets: ''
 
     runs-on: ${{ matrix.platform }}
     steps:
