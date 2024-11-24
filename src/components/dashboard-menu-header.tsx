@@ -104,32 +104,30 @@ export const DashboardMenuHeader = () => {
             <SFLogo className="size-6" />
           </MenubarTrigger>
           <MenubarContent>
-            {transport && (
-              <MenubarItem
-                onClick={() => {
-                  const disconnect = async () => {
-                    if (isTauri()) {
-                      await emit('kill-integrated-server', {});
-                    }
-                    await navigate({
-                      to: '/',
-                      replace: true,
-                    });
-                  };
-                  toast.promise(disconnect(), {
-                    loading: 'Disconnecting...',
-                    success: 'Disconnected',
-                    error: (e) => {
-                      console.error(e);
-                      return 'Failed to disconnect';
-                    },
+            <MenubarItem
+              onClick={() => {
+                const disconnect = async () => {
+                  if (isTauri()) {
+                    await emit('kill-integrated-server', {});
+                  }
+                  await navigate({
+                    to: '/',
+                    replace: true,
                   });
-                }}
-              >
-                <UnplugIcon className="w-4 h-4 mr-2" />
-                <span>Disconnect</span>
-              </MenubarItem>
-            )}
+                };
+                toast.promise(disconnect(), {
+                  loading: 'Disconnecting...',
+                  success: 'Disconnected',
+                  error: (e) => {
+                    console.error(e);
+                    return 'Failed to disconnect';
+                  },
+                });
+              }}
+            >
+              <UnplugIcon className="w-4 h-4 mr-2" />
+              <span>Disconnect</span>
+            </MenubarItem>
             <MenubarItem
               onClick={() => {
                 if (isTauri()) {
