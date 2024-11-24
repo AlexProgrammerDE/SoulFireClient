@@ -53,6 +53,7 @@ import {
 } from 'lucide-react';
 import { emit } from '@tauri-apps/api/event';
 import SFLogo from 'public/logo.svg?react';
+import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 
 function data2blob(data: string) {
   const bytes = new Array(data.length);
@@ -72,6 +73,7 @@ export const DashboardMenuHeader = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
+  const clientInfo = useContext(ClientInfoContext);
   const instanceInfo = useContext(InstanceInfoContext);
   const terminalTheme = useContext(TerminalThemeContext);
   const setProfileMutation = useMutation({
@@ -104,30 +106,32 @@ export const DashboardMenuHeader = () => {
             <SFLogo className="size-6" />
           </MenubarTrigger>
           <MenubarContent>
-            <MenubarItem
-              onClick={() => {
-                const disconnect = async () => {
-                  if (isTauri()) {
-                    await emit('kill-integrated-server', {});
-                  }
-                  await navigate({
-                    to: '/',
-                    replace: true,
+            {clientInfo && (
+              <MenubarItem
+                onClick={() => {
+                  const disconnect = async () => {
+                    if (isTauri()) {
+                      await emit('kill-integrated-server', {});
+                    }
+                    await navigate({
+                      to: '/',
+                      replace: true,
+                    });
+                  };
+                  toast.promise(disconnect(), {
+                    loading: 'Disconnecting...',
+                    success: 'Disconnected',
+                    error: (e) => {
+                      console.error(e);
+                      return 'Failed to disconnect';
+                    },
                   });
-                };
-                toast.promise(disconnect(), {
-                  loading: 'Disconnecting...',
-                  success: 'Disconnected',
-                  error: (e) => {
-                    console.error(e);
-                    return 'Failed to disconnect';
-                  },
-                });
-              }}
-            >
-              <UnplugIcon className="w-4 h-4 mr-2" />
-              <span>Disconnect</span>
-            </MenubarItem>
+                }}
+              >
+                <UnplugIcon className="w-4 h-4 mr-2" />
+                <span>Disconnect</span>
+              </MenubarItem>
+            )}
             <MenubarItem
               onClick={() => {
                 if (isTauri()) {
