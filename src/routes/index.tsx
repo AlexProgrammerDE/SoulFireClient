@@ -38,7 +38,7 @@ import {
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { invoke } from '@tauri-apps/api/core';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
-import { isDemo } from '@/lib/utils.ts';
+import { cancellablePromiseDefault, isDemo } from '@/lib/utils.ts';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import {
   Tooltip,
@@ -135,11 +135,11 @@ function Index() {
   // Hook for loading the integrated server
   useEffect(() => {
     if (loginType === 'INTEGRATED') {
-      let listening = true;
-      void listen('integrated-server-start-log', (event) => {
-        if (!listening) return;
-        setLatestLog(event.payload as string);
-      });
+      const cancel = cancellablePromiseDefault(
+        listen('integrated-server-start-log', (event) => {
+          setLatestLog(event.payload as string);
+        }),
+      );
       toast.promise(
         invoke('run_integrated_server').then((payload) => {
           const payloadString = payload as string;
@@ -158,7 +158,7 @@ function Index() {
       );
 
       return () => {
-        listening = false;
+        cancel();
       };
     }
   }, [loginType, redirectWithCredentials]);

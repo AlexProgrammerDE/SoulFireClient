@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { toast } from 'sonner';
 import { emit, listen } from '@tauri-apps/api/event';
-import { cn } from '@/lib/utils.ts';
+import { cn, cancellablePromiseDefault } from '@/lib/utils.ts';
 import { CastIcon, RadioTowerIcon } from 'lucide-react';
 
 type MediaDeviceInfo = {
@@ -48,31 +48,28 @@ export default function CastMenuEntry() {
       });
     }, 1_000);
 
-    let listening = true;
-    void listen('cast-device-disconnected', (event) => {
-      if (!listening) {
-        return;
-      }
+    const cancel = cancellablePromiseDefault(
+      listen('cast-device-disconnected', (event) => {
+        const payload = event.payload as MediaDeviceDisconnected;
+        setDevices((devices) =>
+          devices.map((device) => {
+            if (device.transport_id === payload.transport_id) {
+              toast(`Disconnected from ${device.info.name}`);
+              return {
+                ...device,
+                transport_id: null,
+              };
+            }
 
-      const payload = event.payload as MediaDeviceDisconnected;
-      setDevices((devices) =>
-        devices.map((device) => {
-          if (device.transport_id === payload.transport_id) {
-            toast(`Disconnected from ${device.info.name}`);
-            return {
-              ...device,
-              transport_id: null,
-            };
-          }
-
-          return device;
-        }),
-      );
-    });
+            return device;
+          }),
+        );
+      }),
+    );
 
     return () => {
       clearInterval(interval);
-      listening = false;
+      cancel();
     };
   }, []);
 
