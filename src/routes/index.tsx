@@ -28,7 +28,7 @@ import {
   LoaderCircleIcon,
   ServerIcon,
 } from 'lucide-react';
-import { listen } from '@tauri-apps/api/event';
+import { emit, listen } from '@tauri-apps/api/event';
 import {
   LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY,
   LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY,
@@ -141,12 +141,14 @@ function Index() {
         }),
       );
       toast.promise(
-        invoke('run_integrated_server').then((payload) => {
+        (async () => {
+          await emit('kill-integrated-server', {});
+          const payload = await invoke('run_integrated_server');
           const payloadString = payload as string;
           const split = payloadString.split('\n');
 
-          void redirectWithCredentials(split[0], split[1]);
-        }),
+          await redirectWithCredentials(split[0], split[1]);
+        })(),
         {
           loading: 'Starting integrated server...',
           success: 'Integrated server started',
