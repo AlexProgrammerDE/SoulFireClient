@@ -21,10 +21,15 @@ import { ClientDataResponse } from '@/generated/soulfire/config.ts';
 import demoData from '@/demo-data.json';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { Button } from '@/components/ui/button.tsx';
+import { isTauri } from '@/lib/utils.ts';
+import { emit } from '@tauri-apps/api/event';
 
 export const Route = createFileRoute('/dashboard/_layout')({
-  beforeLoad: ({ location }) => {
+  beforeLoad: async ({ location }) => {
     if (!isAuthenticated()) {
+      if (isTauri()) {
+        await emit('kill-integrated-server', {});
+      }
       return redirect({
         to: '/',
         search: {
@@ -75,15 +80,20 @@ function ErrorComponent({ error }: { error: Error }) {
       <div className="flex flex-grow">
         <div className="m-auto flex flex-col gap-2">
           <h1 className="text-2xl font-bold">Error</h1>
-          <p className="text-red-500">{error.message}</p>
+          <p className="text-red-500">{error.message} (more info in console)</p>
           <div className="flex flex-row gap-2">
             <Button
               className="w-fit"
               onClick={() => {
-                void navigate({
-                  to: '/',
-                  replace: true,
-                });
+                (async () => {
+                  if (isTauri()) {
+                    await emit('kill-integrated-server', {});
+                  }
+                  await navigate({
+                    to: '/',
+                    replace: true,
+                  });
+                })();
               }}
             >
               Back to login
