@@ -395,7 +395,13 @@ function MinMaxComponent(props: {
       step={props.entry.step}
       defaultValue={props.value}
       onChange={(e) => {
-        props.changeCallback(parseInt(e.currentTarget.value));
+        const currentValue = parseInt(e.currentTarget.value);
+
+        if (!Number.isFinite(currentValue)) {
+          return;
+        }
+
+        props.changeCallback(currentValue);
       }}
     />
   );
