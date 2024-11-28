@@ -185,7 +185,7 @@ importers:
         version: 1.1.0(@rsbuild/core@1.1.6)(@rspack/core@1.1.4(@swc/helpers@0.5.15))(typescript@5.7.2)
       '@tanstack/eslint-plugin-query':
         specifier: ^5.51.15
-        version: 5.61.4(eslint@8.57.1)(typescript@5.7.2)
+        version: 5.61.6(eslint@8.57.1)(typescript@5.7.2)
       '@tanstack/react-router':
         specifier: ^1.20.1
         version: 1.84.0(@tanstack/router-generator@1.83.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1522,8 +1522,8 @@ packages:
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
 
-  '@tanstack/eslint-plugin-query@5.61.4':
-    resolution: {integrity: sha512-QVVsY8hwrX9r6c8lLV48oY682SU2GeVlo0hWMSaOKkI05Yi4bXhw5jv7E2qkbjGrgA6DcVl3o/F0dT4wpT+/SQ==}
+  '@tanstack/eslint-plugin-query@5.61.6':
+    resolution: {integrity: sha512-39DEve67KRcUOv4WI3svSyKzFGEhPTH4gzy99UBh2PmrDOUvAjfG59zSheNJFLHHokpSOQYJhFRNuMlC00CBMw==}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
 
@@ -5096,7 +5096,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@tanstack/eslint-plugin-query@5.61.4(eslint@8.57.1)(typescript@5.7.2)':
+  '@tanstack/eslint-plugin-query@5.61.6(eslint@8.57.1)(typescript@5.7.2)':
     dependencies:
       '@typescript-eslint/utils': 8.16.0(eslint@8.57.1)(typescript@5.7.2)
       eslint: 8.57.1
