@@ -38,7 +38,7 @@
     "@radix-ui/react-tooltip": "^1.1.2",
     "@tanstack/query-broadcast-client-experimental": "^5.51.15",
     "@tanstack/react-query": "^5.51.15",
-    "@tanstack/react-query-devtools": "5.61.5",
+    "@tanstack/react-query-devtools": "5.62.0",
     "@tanstack/react-table": "^8.17.3",
     "@tanstack/router-devtools": "^1.20.1",
     "@tauri-apps/api": "2.1.1",
