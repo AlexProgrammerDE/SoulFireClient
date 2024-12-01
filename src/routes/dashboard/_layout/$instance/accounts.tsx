@@ -83,7 +83,6 @@ const columns: ColumnDef<ProfileAccount>[] = [
     accessorKey: 'profileId',
     header: 'Profile ID',
   },
-
   {
     accessorKey: 'lastKnownName',
     header: 'Last Known Name',
