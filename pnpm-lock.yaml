@@ -170,19 +170,19 @@ importers:
         version: 2.9.4
       '@rsbuild/core':
         specifier: ^1.0.7
-        version: 1.1.6
+        version: 1.1.7
       '@rsbuild/plugin-eslint':
         specifier: ^1.0.3
-        version: 1.1.0(@rsbuild/core@1.1.6)(eslint@8.57.1)
+        version: 1.1.0(@rsbuild/core@1.1.7)(eslint@8.57.1)
       '@rsbuild/plugin-react':
         specifier: ^1.0.2
-        version: 1.0.7(@rsbuild/core@1.1.6)
+        version: 1.0.7(@rsbuild/core@1.1.7)
       '@rsbuild/plugin-svgr':
         specifier: ^1.0.4
-        version: 1.0.5(@rsbuild/core@1.1.6)(typescript@5.7.2)
+        version: 1.0.5(@rsbuild/core@1.1.7)(typescript@5.7.2)
       '@rsbuild/plugin-type-check':
         specifier: ^1.0.1
-        version: 1.1.0(@rsbuild/core@1.1.6)(@rspack/core@1.1.4(@swc/helpers@0.5.15))(typescript@5.7.2)
+        version: 1.1.0(@rsbuild/core@1.1.7)(@rspack/core@1.1.4(@swc/helpers@0.5.15))(typescript@5.7.2)
       '@tanstack/eslint-plugin-query':
         specifier: ^5.51.15
         version: 5.61.6(eslint@8.57.1)(typescript@5.7.2)
@@ -194,7 +194,7 @@ importers:
         version: 1.84.4
       '@tanstack/router-plugin':
         specifier: ^1.45.8
-        version: 1.84.4(@rsbuild/core@1.1.6)(vite@5.4.8(@types/node@22.10.1)(terser@5.36.0))(webpack@5.95.0)
+        version: 1.84.4(@rsbuild/core@1.1.7)(vite@5.4.8(@types/node@22.10.1)(terser@5.36.0))(webpack@5.95.0)
       '@tauri-apps/cli':
         specifier: 2.1.0
         version: 2.1.0
@@ -1336,8 +1336,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rsbuild/core@1.1.6':
-    resolution: {integrity: sha512-u9Elj+xfgIPRD8rEXioE6xBJOdEGt0Pw1iJiGm/gU28FmH3QmOEFq2Jvo70RsOISNOy18kEM9y0RsqVgtVrpNw==}
+  '@rsbuild/core@1.1.7':
+    resolution: {integrity: sha512-YI8qGKa37e5X3av4cB4i06MZv89URW39SrfNqTR6Td7VPznX+n4pHcrYqj86sEM2/XPX57/UL9Hi/Nhu+A003g==}
     engines: {node: '>=16.7.0'}
     hasBin: true
 
@@ -3711,9 +3711,6 @@ packages:
   tslib@2.7.0:
     resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
 
-  tslib@2.8.0:
-    resolution: {integrity: sha512-jWVzBLplnCmoaTr13V9dYbiQ99wvZRd0vNWaDRg+aVYRcjDF3nDksxFDE/+fkXnKhpnUUkmx5pK/v8mCtLVqZA==}
-
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
@@ -4887,36 +4884,36 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.28.0':
     optional: true
 
-  '@rsbuild/core@1.1.6':
+  '@rsbuild/core@1.1.7':
     dependencies:
       '@rspack/core': 1.1.4(@swc/helpers@0.5.15)
       '@rspack/lite-tapable': 1.0.1
       '@swc/helpers': 0.5.15
       core-js: 3.39.0
 
-  '@rsbuild/plugin-eslint@1.1.0(@rsbuild/core@1.1.6)(eslint@8.57.1)':
+  '@rsbuild/plugin-eslint@1.1.0(@rsbuild/core@1.1.7)(eslint@8.57.1)':
     dependencies:
       eslint: 8.57.1
       eslint-rspack-plugin: 4.2.1(eslint@8.57.1)
     optionalDependencies:
-      '@rsbuild/core': 1.1.6
+      '@rsbuild/core': 1.1.7
 
-  '@rsbuild/plugin-react@1.0.6(@rsbuild/core@1.1.6)':
+  '@rsbuild/plugin-react@1.0.6(@rsbuild/core@1.1.7)':
     dependencies:
-      '@rsbuild/core': 1.1.6
+      '@rsbuild/core': 1.1.7
       '@rspack/plugin-react-refresh': 1.0.0(react-refresh@0.14.2)
       react-refresh: 0.14.2
 
-  '@rsbuild/plugin-react@1.0.7(@rsbuild/core@1.1.6)':
+  '@rsbuild/plugin-react@1.0.7(@rsbuild/core@1.1.7)':
     dependencies:
-      '@rsbuild/core': 1.1.6
+      '@rsbuild/core': 1.1.7
       '@rspack/plugin-react-refresh': 1.0.0(react-refresh@0.14.2)
       react-refresh: 0.14.2
 
-  '@rsbuild/plugin-svgr@1.0.5(@rsbuild/core@1.1.6)(typescript@5.7.2)':
+  '@rsbuild/plugin-svgr@1.0.5(@rsbuild/core@1.1.7)(typescript@5.7.2)':
     dependencies:
-      '@rsbuild/core': 1.1.6
-      '@rsbuild/plugin-react': 1.0.6(@rsbuild/core@1.1.6)
+      '@rsbuild/core': 1.1.7
+      '@rsbuild/plugin-react': 1.0.6(@rsbuild/core@1.1.7)
       '@svgr/core': 8.1.0(typescript@5.7.2)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.7.2))
       '@svgr/plugin-svgo': 8.1.0(@svgr/core@8.1.0(typescript@5.7.2))(typescript@5.7.2)
@@ -4926,14 +4923,14 @@ snapshots:
       - supports-color
       - typescript
 
-  '@rsbuild/plugin-type-check@1.1.0(@rsbuild/core@1.1.6)(@rspack/core@1.1.4(@swc/helpers@0.5.15))(typescript@5.7.2)':
+  '@rsbuild/plugin-type-check@1.1.0(@rsbuild/core@1.1.7)(@rspack/core@1.1.4(@swc/helpers@0.5.15))(typescript@5.7.2)':
     dependencies:
       deepmerge: 4.3.1
       json5: 2.2.3
       reduce-configs: 1.1.0
       ts-checker-rspack-plugin: 1.0.1(@rspack/core@1.1.4(@swc/helpers@0.5.15))(typescript@5.7.2)
     optionalDependencies:
-      '@rsbuild/core': 1.1.6
+      '@rsbuild/core': 1.1.7
     transitivePeerDependencies:
       - '@rspack/core'
       - typescript
@@ -5158,7 +5155,7 @@ snapshots:
       tsx: 4.19.2
       zod: 3.23.8
 
-  '@tanstack/router-plugin@1.84.4(@rsbuild/core@1.1.6)(vite@5.4.8(@types/node@22.10.1)(terser@5.36.0))(webpack@5.95.0)':
+  '@tanstack/router-plugin@1.84.4(@rsbuild/core@1.1.7)(vite@5.4.8(@types/node@22.10.1)(terser@5.36.0))(webpack@5.95.0)':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/generator': 7.26.2
@@ -5179,7 +5176,7 @@ snapshots:
       unplugin: 1.16.0
       zod: 3.23.8
     optionalDependencies:
-      '@rsbuild/core': 1.1.6
+      '@rsbuild/core': 1.1.7
       vite: 5.4.8(@types/node@22.10.1)(terser@5.36.0)
       webpack: 5.95.0
     transitivePeerDependencies:
@@ -5955,7 +5952,7 @@ snapshots:
   dot-case@3.0.4:
     dependencies:
       no-case: 3.0.4
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   eastasianwidth@0.2.0: {}
 
@@ -6753,7 +6750,7 @@ snapshots:
 
   lower-case@2.0.2:
     dependencies:
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   lru-cache@10.4.3: {}
 
@@ -6834,7 +6831,7 @@ snapshots:
   no-case@3.0.4:
     dependencies:
       lower-case: 2.0.2
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   node-releases@2.0.18: {}
 
@@ -7267,7 +7264,7 @@ snapshots:
   snake-case@3.0.4:
     dependencies:
       dot-case: 3.0.4
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   sonner@1.7.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
@@ -7495,8 +7492,6 @@ snapshots:
   tslib@2.6.3: {}
 
   tslib@2.7.0: {}
-
-  tslib@2.8.0: {}
 
   tslib@2.8.1: {}
 
