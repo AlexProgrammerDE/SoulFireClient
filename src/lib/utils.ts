@@ -17,3 +17,31 @@ export function isTauri() {
 export function isDemo() {
   return document.location.host === 'demo.soulfiremc.com';
 }
+
+export function cancellablePromiseDefault<T extends () => void>(
+  promise: Promise<T>,
+): () => void {
+  return cancellablePromise(promise, (run) => run());
+}
+
+export function cancellablePromise<T>(
+  promise: Promise<T>,
+  cancel: (value: T) => void,
+): () => void {
+  let cancelled = false;
+  let resolvedValue: T | null = null;
+  promise.then((value) => {
+    if (cancelled) {
+      cancel(value);
+    } else {
+      resolvedValue = value;
+    }
+  });
+
+  return () => {
+    cancelled = true;
+    if (resolvedValue != null) {
+      cancel(resolvedValue);
+    }
+  };
+}

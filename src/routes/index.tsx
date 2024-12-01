@@ -28,7 +28,7 @@ import {
   LoaderCircleIcon,
   ServerIcon,
 } from 'lucide-react';
-import { listen } from '@tauri-apps/api/event';
+import { emit, listen } from '@tauri-apps/api/event';
 import {
   LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY,
   LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY,
@@ -38,7 +38,7 @@ import {
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { invoke } from '@tauri-apps/api/core';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
-import { isDemo } from '@/lib/utils.ts';
+import { cancellablePromiseDefault, isDemo } from '@/lib/utils.ts';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import {
   Tooltip,
@@ -135,18 +135,20 @@ function Index() {
   // Hook for loading the integrated server
   useEffect(() => {
     if (loginType === 'INTEGRATED') {
-      let listening = true;
-      void listen('integrated-server-start-log', (event) => {
-        if (!listening) return;
-        setLatestLog(event.payload as string);
-      });
+      const cancel = cancellablePromiseDefault(
+        listen('integrated-server-start-log', (event) => {
+          setLatestLog(event.payload as string);
+        }),
+      );
       toast.promise(
-        invoke('run_integrated_server').then((payload) => {
+        (async () => {
+          await emit('kill-integrated-server', {});
+          const payload = await invoke('run_integrated_server');
           const payloadString = payload as string;
           const split = payloadString.split('\n');
 
-          void redirectWithCredentials(split[0], split[1]);
-        }),
+          await redirectWithCredentials(split[0], split[1]);
+        })(),
         {
           loading: 'Starting integrated server...',
           success: 'Integrated server started',
@@ -158,7 +160,7 @@ function Index() {
       );
 
       return () => {
-        listening = false;
+        cancel();
       };
     }
   }, [loginType, redirectWithCredentials]);
