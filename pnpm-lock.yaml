@@ -75,17 +75,17 @@ importers:
         specifier: 2.1.1
         version: 2.1.1
       '@tauri-apps/plugin-clipboard-manager':
-        specifier: 2.0.0
-        version: 2.0.0
+        specifier: 2.0.1
+        version: 2.0.1
       '@tauri-apps/plugin-dialog':
         specifier: ^2.0.0-rc
         version: 2.0.1
       '@tauri-apps/plugin-fs':
         specifier: ^2.0.0-rc
-        version: 2.0.2
+        version: 2.0.3
       '@tauri-apps/plugin-log':
         specifier: ^2.0.0
-        version: 2.0.0
+        version: 2.0.1
       '@tauri-apps/plugin-os':
         specifier: ^2.0.0-rc
         version: 2.0.0
@@ -251,7 +251,7 @@ importers:
         version: 5.0.0(eslint@8.57.1)
       eslint-plugin-react-refresh:
         specifier: ^0.4.6
-        version: 0.4.14(eslint@8.57.1)
+        version: 0.4.16(eslint@8.57.1)
       globals:
         specifier: ^15.8.0
         version: 15.13.0
@@ -1686,17 +1686,17 @@ packages:
     engines: {node: '>= 10'}
     hasBin: true
 
-  '@tauri-apps/plugin-clipboard-manager@2.0.0':
-    resolution: {integrity: sha512-V1sXmbjnwfXt/r48RJMwfUmDMSaP/8/YbH4CLNxt+/sf1eHlIP8PRFdFDQwLN0cNQKu2rqQVbG/Wc/Ps6cDUhw==}
+  '@tauri-apps/plugin-clipboard-manager@2.0.1':
+    resolution: {integrity: sha512-JDzqqhEnIAvt3HAsejgdvPfb74da1CagHfT+71qJL6Jip4Qzu+TzxaYXilIT5p5N8ZFwE7K1nJJ2aGsEUHvJtg==}
 
   '@tauri-apps/plugin-dialog@2.0.1':
     resolution: {integrity: sha512-fnUrNr6EfvTqdls/ufusU7h6UbNFzLKvHk/zTuOiBq01R3dTODqwctZlzakdbfSp/7pNwTKvgKTAgl/NAP/Z0Q==}
 
-  '@tauri-apps/plugin-fs@2.0.2':
-    resolution: {integrity: sha512-4YZaX2j7ta81M5/DL8aN10kTnpUkEpkPo1FTYPT8Dd0ImHe3azM8i8MrtjrDGoyBYLPO3zFv7df/mSCYF8oA0Q==}
+  '@tauri-apps/plugin-fs@2.0.3':
+    resolution: {integrity: sha512-3Xv9cg5krj/2gSo1HFn9GbKUE0keh+DMx7O+hQeSzg1T4yGY5Fv/+yBISmrPa2j9thi3qcjgPj8PnMH4rbl/Dw==}
 
-  '@tauri-apps/plugin-log@2.0.0':
-    resolution: {integrity: sha512-C+NII9vzswqnOQE8k7oRtnaw0z5TZsMmnirRhXkCKDEhQQH9841Us/PC1WHtGiAaJ8za1A1JB2xXndEq/47X/w==}
+  '@tauri-apps/plugin-log@2.0.1':
+    resolution: {integrity: sha512-zFT3S/Q5liMKIjPPdUZL8aNbjvhHvyfkhuqct3/MQ6/7rk4ODstcUPu320KJBjZrNNH/UM+kaQBGrioIwtmP/Q==}
 
   '@tauri-apps/plugin-os@2.0.0':
     resolution: {integrity: sha512-M7hG/nNyQYTJxVG/UhTKhp9mpXriwWzrs9mqDreB8mIgqA3ek5nHLdwRZJWhkKjZrnDT4v9CpA9BhYeplTlAiA==}
@@ -2410,10 +2410,10 @@ packages:
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
 
-  eslint-plugin-react-refresh@0.4.14:
-    resolution: {integrity: sha512-aXvzCTK7ZBv1e7fahFuR3Z/fyQQSIQ711yPgYRj+Oj64tyTgO4iQIDmYXDBqvSWQ/FA4OSCsXOStlF+noU0/NA==}
+  eslint-plugin-react-refresh@0.4.16:
+    resolution: {integrity: sha512-slterMlxAhov/DZO8NScf6mEeMBBXodFUolijDvrtTxyezyLoTQaa73FyYus/VbTdftd8wBgBxPMRk3poleXNQ==}
     peerDependencies:
-      eslint: '>=7'
+      eslint: '>=8.40'
 
   eslint-plugin-react@7.37.2:
     resolution: {integrity: sha512-EsTAnj9fLVr/GZleBLFbj/sSuXeWmp1eXIN60ceYnZveqEaUCyW4X+Vh4WTdUhCkW4xutXYqTXCUSyqD4rB75w==}
@@ -5233,7 +5233,7 @@ snapshots:
       '@tauri-apps/cli-win32-ia32-msvc': 2.1.0
       '@tauri-apps/cli-win32-x64-msvc': 2.1.0
 
-  '@tauri-apps/plugin-clipboard-manager@2.0.0':
+  '@tauri-apps/plugin-clipboard-manager@2.0.1':
     dependencies:
       '@tauri-apps/api': 2.1.1
 
@@ -5241,11 +5241,11 @@ snapshots:
     dependencies:
       '@tauri-apps/api': 2.1.1
 
-  '@tauri-apps/plugin-fs@2.0.2':
+  '@tauri-apps/plugin-fs@2.0.3':
     dependencies:
       '@tauri-apps/api': 2.1.1
 
-  '@tauri-apps/plugin-log@2.0.0':
+  '@tauri-apps/plugin-log@2.0.1':
     dependencies:
       '@tauri-apps/api': 2.1.1
 
@@ -6159,7 +6159,7 @@ snapshots:
     dependencies:
       eslint: 8.57.1
 
-  eslint-plugin-react-refresh@0.4.14(eslint@8.57.1):
+  eslint-plugin-react-refresh@0.4.16(eslint@8.57.1):
     dependencies:
       eslint: 8.57.1
 
