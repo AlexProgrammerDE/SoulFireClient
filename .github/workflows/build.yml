@@ -150,7 +150,6 @@ jobs:
         if: matrix.type == 'android'
         run: |
           cargo install --debug --force --locked tauri-cli
-          cargo install --debug --force --locked bindgen-cli
 
       - name: 'Android: Decode JKS file'
         if: matrix.type == 'android'
