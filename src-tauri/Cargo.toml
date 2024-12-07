@@ -47,7 +47,7 @@ tauri-plugin-single-instance = { version = "2.0.1", features = ["semver", "deep-
 
 [target."cfg(any(target_os = \"android\", target_os = \"ios\"))".dependencies]
 openssl = { version = "0.10", features = ["vendored"] }
-aws-lc-sys = { version = "0.22.0", features = ["bindgen"] }
+aws-lc-sys = { version = "0.23.0", features = ["bindgen"] }
 
 [profile.dev]
 incremental = true
