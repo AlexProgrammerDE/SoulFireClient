@@ -5,26 +5,21 @@ import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { MessageType } from "@protobuf-ts/runtime";
 import { AccountTypeDeviceCode } from "./common";
 import { MinecraftAccountProto } from "./common";
-import { ProxyProto } from "./common";
 import { AccountTypeCredentials } from "./common";
 /**
  * @generated from protobuf message soulfire.v1.CredentialsAuthRequest
  */
 export interface CredentialsAuthRequest {
     /**
-     * @generated from protobuf field: soulfire.v1.AccountTypeCredentials service = 1;
+     * @generated from protobuf field: string instanceId = 1;
+     */
+    instanceId: string;
+    /**
+     * @generated from protobuf field: soulfire.v1.AccountTypeCredentials service = 2;
      */
     service: AccountTypeCredentials;
     /**
-     * @generated from protobuf field: optional soulfire.v1.ProxyProto proxy = 2;
-     */
-    proxy?: ProxyProto;
-    /**
-     * @generated from protobuf field: int32 maxConcurrency = 3;
-     */
-    maxConcurrency: number;
-    /**
-     * @generated from protobuf field: repeated string payload = 4;
+     * @generated from protobuf field: repeated string payload = 3;
      */
     payload: string[];
 }
@@ -42,13 +37,13 @@ export interface CredentialsAuthResponse {
  */
 export interface DeviceCodeAuthRequest {
     /**
-     * @generated from protobuf field: soulfire.v1.AccountTypeDeviceCode service = 1;
+     * @generated from protobuf field: string instanceId = 1;
+     */
+    instanceId: string;
+    /**
+     * @generated from protobuf field: soulfire.v1.AccountTypeDeviceCode service = 2;
      */
     service: AccountTypeDeviceCode;
-    /**
-     * @generated from protobuf field: optional soulfire.v1.ProxyProto proxy = 2;
-     */
-    proxy?: ProxyProto;
 }
 /**
  * @generated from protobuf message soulfire.v1.DeviceCode
@@ -99,13 +94,13 @@ export interface DeviceCodeAuthResponse {
  */
 export interface RefreshRequest {
     /**
-     * @generated from protobuf field: soulfire.v1.MinecraftAccountProto account = 1;
+     * @generated from protobuf field: string instanceId = 1;
+     */
+    instanceId: string;
+    /**
+     * @generated from protobuf field: soulfire.v1.MinecraftAccountProto account = 2;
      */
     account?: MinecraftAccountProto;
-    /**
-     * @generated from protobuf field: optional soulfire.v1.ProxyProto proxy = 2;
-     */
-    proxy?: ProxyProto;
 }
 /**
  * @generated from protobuf message soulfire.v1.RefreshResponse
@@ -120,10 +115,9 @@ export interface RefreshResponse {
 class CredentialsAuthRequest$Type extends MessageType<CredentialsAuthRequest> {
     constructor() {
         super("soulfire.v1.CredentialsAuthRequest", [
-            { no: 1, name: "service", kind: "enum", T: () => ["soulfire.v1.AccountTypeCredentials", AccountTypeCredentials] },
-            { no: 2, name: "proxy", kind: "message", T: () => ProxyProto },
-            { no: 3, name: "maxConcurrency", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 4, name: "payload", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "service", kind: "enum", T: () => ["soulfire.v1.AccountTypeCredentials", AccountTypeCredentials] },
+            { no: 3, name: "payload", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -147,8 +141,8 @@ export const CredentialsAuthResponse = new CredentialsAuthResponse$Type();
 class DeviceCodeAuthRequest$Type extends MessageType<DeviceCodeAuthRequest> {
     constructor() {
         super("soulfire.v1.DeviceCodeAuthRequest", [
-            { no: 1, name: "service", kind: "enum", T: () => ["soulfire.v1.AccountTypeDeviceCode", AccountTypeDeviceCode] },
-            { no: 2, name: "proxy", kind: "message", T: () => ProxyProto }
+            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "service", kind: "enum", T: () => ["soulfire.v1.AccountTypeDeviceCode", AccountTypeDeviceCode] }
         ]);
     }
 }
@@ -188,8 +182,8 @@ export const DeviceCodeAuthResponse = new DeviceCodeAuthResponse$Type();
 class RefreshRequest$Type extends MessageType<RefreshRequest> {
     constructor() {
         super("soulfire.v1.RefreshRequest", [
-            { no: 1, name: "account", kind: "message", T: () => MinecraftAccountProto },
-            { no: 2, name: "proxy", kind: "message", T: () => ProxyProto }
+            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "account", kind: "message", T: () => MinecraftAccountProto }
         ]);
     }
 }

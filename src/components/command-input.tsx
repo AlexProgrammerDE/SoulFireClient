@@ -2,6 +2,7 @@ import { Input } from '@/components/ui/input.tsx';
 import { KeyboardEventHandler, useContext, useState } from 'react';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { CommandServiceClient } from '@/generated/soulfire/command.client.ts';
+import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 
 type CompletionState = {
   lastWritten: string;
@@ -11,6 +12,7 @@ type CompletionState = {
 
 export default function CommandInput() {
   const transport = useContext(TransportContext);
+  const instanceInfo = useContext(InstanceInfoContext);
   const [completionState, setCompletionState] = useState<CompletionState>({
     lastWritten: '',
     receivedCompletions: null,
@@ -31,6 +33,7 @@ export default function CommandInput() {
 
       const commandService = new CommandServiceClient(transport);
       void commandService.executeCommand({
+        instanceId: instanceInfo.id,
         command: currentVal,
       });
     } else if (e.key === 'Tab') {
@@ -53,6 +56,7 @@ export default function CommandInput() {
       completionState.index === null
     ) {
       const { response } = await commandService.tabCompleteCommand({
+        instanceId: instanceInfo.id,
         command: text,
       });
 

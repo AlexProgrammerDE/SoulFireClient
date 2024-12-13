@@ -141,9 +141,9 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           const {
             response: { account },
           } = await service.loginCredentials({
+            instanceId: instanceInfo.id,
             service: accountTypeCredentialsSelected,
             payload: textSplit,
-            maxConcurrency: 1,
           });
 
           if (account) {
@@ -176,7 +176,13 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         },
       );
     },
-    [accountTypeCredentialsSelected, profile, setProfileMutation, transport],
+    [
+      accountTypeCredentialsSelected,
+      instanceInfo.id,
+      profile,
+      setProfileMutation,
+      transport,
+    ],
   );
 
   const deviceCodeSelected = useCallback(
@@ -192,6 +198,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
             try {
               service
                 .loginDeviceCode({
+                  instanceId: instanceInfo.id,
                   service: type,
                 })
                 .responses.onMessage((message) => {
@@ -233,7 +240,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         },
       );
     },
-    [profile, setProfileMutation, transport],
+    [instanceInfo.id, profile, setProfileMutation, transport],
   );
 
   return (

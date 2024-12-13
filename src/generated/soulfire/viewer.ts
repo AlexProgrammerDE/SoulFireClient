@@ -7,6 +7,10 @@ import { MessageType } from "@protobuf-ts/runtime";
  * @generated from protobuf message soulfire.v1.ViewerListRequest
  */
 export interface ViewerListRequest {
+    /**
+     * @generated from protobuf field: string instanceId = 1;
+     */
+    instanceId: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.ViewerListResponse
@@ -30,7 +34,9 @@ export interface ViewerDataResponse {
 // @generated message type with reflection information, may provide speed optimized methods
 class ViewerListRequest$Type extends MessageType<ViewerListRequest> {
     constructor() {
-        super("soulfire.v1.ViewerListRequest", []);
+        super("soulfire.v1.ViewerListRequest", [
+            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
     }
 }
 /**

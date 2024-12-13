@@ -22,15 +22,19 @@ export interface HeaderPair {
  */
 export interface DownloadRequest {
     /**
-     * @generated from protobuf field: string uri = 1;
+     * @generated from protobuf field: string instanceId = 1;
+     */
+    instanceId: string;
+    /**
+     * @generated from protobuf field: string uri = 2;
      */
     uri: string;
     /**
-     * @generated from protobuf field: repeated soulfire.v1.HeaderPair headers = 2;
+     * @generated from protobuf field: repeated soulfire.v1.HeaderPair headers = 3;
      */
     headers: HeaderPair[];
     /**
-     * @generated from protobuf field: optional soulfire.v1.ProxyProto proxy = 3;
+     * @generated from protobuf field: optional soulfire.v1.ProxyProto proxy = 4;
      */
     proxy?: ProxyProto;
 }
@@ -68,9 +72,10 @@ export const HeaderPair = new HeaderPair$Type();
 class DownloadRequest$Type extends MessageType<DownloadRequest> {
     constructor() {
         super("soulfire.v1.DownloadRequest", [
-            { no: 1, name: "uri", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "headers", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HeaderPair },
-            { no: 3, name: "proxy", kind: "message", T: () => ProxyProto }
+            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "uri", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "headers", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HeaderPair },
+            { no: 4, name: "proxy", kind: "message", T: () => ProxyProto }
         ]);
     }
 }

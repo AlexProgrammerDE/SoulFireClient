@@ -22,6 +22,7 @@ import MimeMatcher from 'mime-matcher';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { DownloadServiceClient } from '@/generated/soulfire/download.client.ts';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
+import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 
 export type TextInput = {
   defaultValue: string;
@@ -56,6 +57,7 @@ export default function ImportDialog(props: ImportDialogProps) {
 
 function UrlDialog(props: ImportDialogProps) {
   const transport = useContext(TransportContext);
+  const instanceInfo = useContext(InstanceInfoContext);
   const [inputText, setInputText] = useState('');
 
   return (
@@ -95,6 +97,7 @@ function UrlDialog(props: ImportDialogProps) {
 
                     const service = new DownloadServiceClient(transport);
                     const { response } = await service.download({
+                      instanceId: instanceInfo.id,
                       uri: inputText,
                       headers: [],
                     });

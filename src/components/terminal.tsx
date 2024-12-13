@@ -6,6 +6,7 @@ import { TerminalThemeContext } from '@/components/providers/terminal-theme-cont
 import { flavorEntries } from '@catppuccin/palette';
 import { AnsiHtml } from 'fancy-ansi/react';
 import { isDemo } from '@/lib/utils.ts';
+import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 
 const hslToString = (rgb: { h: number; s: number; l: number }): string => {
   return `${Math.round(rgb.h)}, ${Math.round(rgb.s * 100)}%, ${Math.round(rgb.l * 100)}%`;
@@ -33,6 +34,7 @@ export const TerminalComponent = () => {
   );
   const transport = useContext(TransportContext);
   const terminalTheme = useContext(TerminalThemeContext);
+  const instanceInfo = useContext(InstanceInfoContext);
   const paneRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const selectedTheme = flavorEntries.find(
@@ -76,6 +78,7 @@ export const TerminalComponent = () => {
     void logsService
       .getPrevious(
         {
+          instanceId: instanceInfo.id,
           // Max allowed amount of entries by the server
           count: 300,
         },
@@ -94,7 +97,7 @@ export const TerminalComponent = () => {
     return () => {
       abortController.abort();
     };
-  }, [gotPrevious, transport]);
+  }, [gotPrevious, instanceInfo.id, transport]);
 
   useEffect(() => {
     if (transport === null) {
@@ -105,7 +108,9 @@ export const TerminalComponent = () => {
     const logsService = new LogsServiceClient(transport);
     logsService
       .subscribe(
-        {},
+        {
+          instanceId: instanceInfo.id,
+        },
         {
           abort: abortController.signal,
         },
@@ -124,7 +129,7 @@ export const TerminalComponent = () => {
     return () => {
       abortController.abort();
     };
-  }, [transport]);
+  }, [instanceInfo.id, transport]);
 
   return (
     <ScrollArea

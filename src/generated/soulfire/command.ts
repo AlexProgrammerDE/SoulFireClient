@@ -8,7 +8,11 @@ import { MessageType } from "@protobuf-ts/runtime";
  */
 export interface CommandRequest {
     /**
-     * @generated from protobuf field: string command = 1;
+     * @generated from protobuf field: string instanceId = 1;
+     */
+    instanceId: string;
+    /**
+     * @generated from protobuf field: string command = 2;
      */
     command: string;
 }
@@ -26,7 +30,11 @@ export interface CommandResponse {
  */
 export interface CommandCompletionRequest {
     /**
-     * @generated from protobuf field: string command = 1;
+     * @generated from protobuf field: string instanceId = 1;
+     */
+    instanceId: string;
+    /**
+     * @generated from protobuf field: string command = 2;
      */
     command: string;
 }
@@ -43,7 +51,8 @@ export interface CommandCompletionResponse {
 class CommandRequest$Type extends MessageType<CommandRequest> {
     constructor() {
         super("soulfire.v1.CommandRequest", [
-            { no: 1, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -67,7 +76,8 @@ export const CommandResponse = new CommandResponse$Type();
 class CommandCompletionRequest$Type extends MessageType<CommandCompletionRequest> {
     constructor() {
         super("soulfire.v1.CommandCompletionRequest", [
-            { no: 1, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }

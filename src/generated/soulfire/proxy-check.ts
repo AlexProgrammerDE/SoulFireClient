@@ -9,26 +9,13 @@ import { ProxyProto } from "./common";
  */
 export interface ProxyCheckRequest {
     /**
-     * @generated from protobuf field: repeated soulfire.v1.ProxyProto proxy = 1;
+     * @generated from protobuf field: string instanceId = 1;
+     */
+    instanceId: string;
+    /**
+     * @generated from protobuf field: repeated soulfire.v1.ProxyProto proxy = 2;
      */
     proxy: ProxyProto[];
-    /**
-     * @generated from protobuf field: soulfire.v1.ProxyCheckRequest.Target target = 2;
-     */
-    target: ProxyCheckRequest_Target;
-}
-/**
- * @generated from protobuf enum soulfire.v1.ProxyCheckRequest.Target
- */
-export enum ProxyCheckRequest_Target {
-    /**
-     * @generated from protobuf enum value: IPIFY = 0;
-     */
-    IPIFY = 0,
-    /**
-     * @generated from protobuf enum value: AWS = 1;
-     */
-    AWS = 1
 }
 /**
  * @generated from protobuf message soulfire.v1.ProxyCheckResponseSingle
@@ -64,8 +51,8 @@ export interface ProxyCheckResponse {
 class ProxyCheckRequest$Type extends MessageType<ProxyCheckRequest> {
     constructor() {
         super("soulfire.v1.ProxyCheckRequest", [
-            { no: 1, name: "proxy", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ProxyProto },
-            { no: 2, name: "target", kind: "enum", T: () => ["soulfire.v1.ProxyCheckRequest.Target", ProxyCheckRequest_Target] }
+            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "proxy", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ProxyProto }
         ]);
     }
 }
