@@ -3,7 +3,7 @@
 // tslint:disable
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { MessageType } from "@protobuf-ts/runtime";
-import { PermissionMessage } from "./config";
+import { InstancePermission } from "./common";
 import { ProxyProto } from "./common";
 import { MinecraftAccountProto } from "./common";
 import { SettingsNamespace } from "./common";
@@ -88,6 +88,19 @@ export interface InstanceListResponse_Instance {
     state: InstanceState;
 }
 /**
+ * @generated from protobuf message soulfire.v1.InstancePermissionState
+ */
+export interface InstancePermissionState {
+    /**
+     * @generated from protobuf field: soulfire.v1.InstancePermission instancePermission = 1;
+     */
+    instancePermission: InstancePermission;
+    /**
+     * @generated from protobuf field: bool granted = 2;
+     */
+    granted: boolean;
+}
+/**
  * @generated from protobuf message soulfire.v1.InstanceInfoRequest
  */
 export interface InstanceInfoRequest {
@@ -113,9 +126,9 @@ export interface InstanceInfoResponse {
      */
     state: InstanceState;
     /**
-     * @generated from protobuf field: repeated soulfire.v1.PermissionMessage instancePermissions = 4;
+     * @generated from protobuf field: repeated soulfire.v1.InstancePermissionState instancePermissions = 4;
      */
-    instancePermissions: PermissionMessage[];
+    instancePermissions: InstancePermissionState[];
 }
 /**
  * @generated from protobuf message soulfire.v1.InstanceUpdateFriendlyNameRequest
@@ -293,6 +306,19 @@ class InstanceListResponse_Instance$Type extends MessageType<InstanceListRespons
  */
 export const InstanceListResponse_Instance = new InstanceListResponse_Instance$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class InstancePermissionState$Type extends MessageType<InstancePermissionState> {
+    constructor() {
+        super("soulfire.v1.InstancePermissionState", [
+            { no: 1, name: "instancePermission", kind: "enum", T: () => ["soulfire.v1.InstancePermission", InstancePermission] },
+            { no: 2, name: "granted", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstancePermissionState
+ */
+export const InstancePermissionState = new InstancePermissionState$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class InstanceInfoRequest$Type extends MessageType<InstanceInfoRequest> {
     constructor() {
         super("soulfire.v1.InstanceInfoRequest", [
@@ -311,7 +337,7 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
             { no: 1, name: "friendlyName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "config", kind: "message", T: () => InstanceConfig },
             { no: 3, name: "state", kind: "enum", T: () => ["soulfire.v1.InstanceState", InstanceState] },
-            { no: 4, name: "instancePermissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PermissionMessage }
+            { no: 4, name: "instancePermissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => InstancePermissionState }
         ]);
     }
 }

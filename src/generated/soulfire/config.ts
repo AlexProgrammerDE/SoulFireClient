@@ -4,6 +4,7 @@
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { MessageType } from "@protobuf-ts/runtime";
 import { SettingsNamespace } from "./common";
+import { GlobalPermission } from "./common";
 /**
  * @generated from protobuf message soulfire.v1.ClientDataRequest
  */
@@ -360,19 +361,15 @@ export enum SettingsPage_Type {
     INSTANCE = 1
 }
 /**
- * @generated from protobuf message soulfire.v1.PermissionMessage
+ * @generated from protobuf message soulfire.v1.GlobalPermissionState
  */
-export interface PermissionMessage {
+export interface GlobalPermissionState {
     /**
-     * @generated from protobuf field: string id = 1;
+     * @generated from protobuf field: soulfire.v1.GlobalPermission globalPermission = 1;
      */
-    id: string;
+    globalPermission: GlobalPermission;
     /**
-     * @generated from protobuf field: string description = 2;
-     */
-    description: string;
-    /**
-     * @generated from protobuf field: bool granted = 3;
+     * @generated from protobuf field: bool granted = 2;
      */
     granted: boolean;
 }
@@ -414,9 +411,9 @@ export interface ClientDataResponse {
      */
     username: string;
     /**
-     * @generated from protobuf field: repeated soulfire.v1.PermissionMessage serverPermissions = 2;
+     * @generated from protobuf field: repeated soulfire.v1.GlobalPermissionState serverPermissions = 2;
      */
-    serverPermissions: PermissionMessage[];
+    serverPermissions: GlobalPermissionState[];
     /**
      * @generated from protobuf field: repeated soulfire.v1.ServerPlugin plugins = 3;
      */
@@ -633,19 +630,18 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
  */
 export const SettingsPage = new SettingsPage$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class PermissionMessage$Type extends MessageType<PermissionMessage> {
+class GlobalPermissionState$Type extends MessageType<GlobalPermissionState> {
     constructor() {
-        super("soulfire.v1.PermissionMessage", [
-            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "granted", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        super("soulfire.v1.GlobalPermissionState", [
+            { no: 1, name: "globalPermission", kind: "enum", T: () => ["soulfire.v1.GlobalPermission", GlobalPermission] },
+            { no: 2, name: "granted", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.PermissionMessage
+ * @generated MessageType for protobuf message soulfire.v1.GlobalPermissionState
  */
-export const PermissionMessage = new PermissionMessage$Type();
+export const GlobalPermissionState = new GlobalPermissionState$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ServerPlugin$Type extends MessageType<ServerPlugin> {
     constructor() {
@@ -668,7 +664,7 @@ class ClientDataResponse$Type extends MessageType<ClientDataResponse> {
     constructor() {
         super("soulfire.v1.ClientDataResponse", [
             { no: 1, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "serverPermissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PermissionMessage },
+            { no: 2, name: "serverPermissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => GlobalPermissionState },
             { no: 3, name: "plugins", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ServerPlugin },
             { no: 5, name: "settings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingsPage }
         ]);

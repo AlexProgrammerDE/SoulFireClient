@@ -254,6 +254,80 @@ export enum AccountTypeDeviceCode {
      */
     MICROSOFT_BEDROCK_DEVICE_CODE = 1
 }
+/**
+ * @generated from protobuf enum soulfire.v1.GlobalPermission
+ */
+export enum GlobalPermission {
+    /**
+     * @generated from protobuf enum value: CREATE_INSTANCE = 0;
+     */
+    CREATE_INSTANCE = 0,
+    /**
+     * @generated from protobuf enum value: SUBSCRIBE_LOGS = 1;
+     */
+    SUBSCRIBE_LOGS = 1,
+    /**
+     * @generated from protobuf enum value: SERVER_CONFIG = 2;
+     */
+    SERVER_CONFIG = 2
+}
+/**
+ * @generated from protobuf enum soulfire.v1.InstancePermission
+ */
+export enum InstancePermission {
+    /**
+     * @generated from protobuf enum value: COMMAND_EXECUTION = 0;
+     */
+    COMMAND_EXECUTION = 0,
+    /**
+     * @generated from protobuf enum value: COMMAND_COMPLETION = 1;
+     */
+    COMMAND_COMPLETION = 1,
+    /**
+     * @generated from protobuf enum value: READ_INSTANCE = 2;
+     */
+    READ_INSTANCE = 2,
+    /**
+     * @generated from protobuf enum value: UPDATE_INSTANCE = 3;
+     */
+    UPDATE_INSTANCE = 3,
+    /**
+     * @generated from protobuf enum value: DELETE_INSTANCE = 4;
+     */
+    DELETE_INSTANCE = 4,
+    /**
+     * @generated from protobuf enum value: CHANGE_INSTANCE_STATE = 5;
+     */
+    CHANGE_INSTANCE_STATE = 5,
+    /**
+     * @generated from protobuf enum value: AUTHENTICATE_MC_ACCOUNT = 6;
+     */
+    AUTHENTICATE_MC_ACCOUNT = 6,
+    /**
+     * @generated from protobuf enum value: CHECK_PROXY = 7;
+     */
+    CHECK_PROXY = 7,
+    /**
+     * @generated from protobuf enum value: DOWNLOAD_URL = 8;
+     */
+    DOWNLOAD_URL = 8,
+    /**
+     * @generated from protobuf enum value: UPLOAD_OBJECT_STORAGE = 9;
+     */
+    UPLOAD_OBJECT_STORAGE = 9,
+    /**
+     * @generated from protobuf enum value: DOWNLOAD_OBJECT_STORAGE = 10;
+     */
+    DOWNLOAD_OBJECT_STORAGE = 10,
+    /**
+     * @generated from protobuf enum value: DELETE_OBJECT_STORAGE = 11;
+     */
+    DELETE_OBJECT_STORAGE = 11,
+    /**
+     * @generated from protobuf enum value: LIST_OBJECT_STORAGE = 12;
+     */
+    LIST_OBJECT_STORAGE = 12
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class ProxyProto$Type extends MessageType<ProxyProto> {
     constructor() {
