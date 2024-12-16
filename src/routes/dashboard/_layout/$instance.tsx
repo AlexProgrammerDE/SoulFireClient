@@ -59,6 +59,7 @@ export const Route = createFileRoute('/dashboard/_layout/$instance')({
             return {
               instanceInfo: {
                 friendlyName: 'Demo',
+                instancePermissions: [],
                 config: {
                   settings: [],
                   accounts: [

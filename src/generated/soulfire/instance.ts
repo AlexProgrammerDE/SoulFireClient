@@ -3,6 +3,7 @@
 // tslint:disable
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { MessageType } from "@protobuf-ts/runtime";
+import { PermissionMessage } from "./config";
 import { ProxyProto } from "./common";
 import { MinecraftAccountProto } from "./common";
 import { SettingsNamespace } from "./common";
@@ -111,6 +112,10 @@ export interface InstanceInfoResponse {
      * @generated from protobuf field: soulfire.v1.InstanceState state = 3;
      */
     state: InstanceState;
+    /**
+     * @generated from protobuf field: repeated soulfire.v1.PermissionMessage instancePermissions = 4;
+     */
+    instancePermissions: PermissionMessage[];
 }
 /**
  * @generated from protobuf message soulfire.v1.InstanceUpdateFriendlyNameRequest
@@ -305,7 +310,8 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
         super("soulfire.v1.InstanceInfoResponse", [
             { no: 1, name: "friendlyName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "config", kind: "message", T: () => InstanceConfig },
-            { no: 3, name: "state", kind: "enum", T: () => ["soulfire.v1.InstanceState", InstanceState] }
+            { no: 3, name: "state", kind: "enum", T: () => ["soulfire.v1.InstanceState", InstanceState] },
+            { no: 4, name: "instancePermissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PermissionMessage }
         ]);
     }
 }

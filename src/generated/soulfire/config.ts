@@ -414,9 +414,9 @@ export interface ClientDataResponse {
      */
     username: string;
     /**
-     * @generated from protobuf field: repeated soulfire.v1.PermissionMessage permissions = 2;
+     * @generated from protobuf field: repeated soulfire.v1.PermissionMessage serverPermissions = 2;
      */
-    permissions: PermissionMessage[];
+    serverPermissions: PermissionMessage[];
     /**
      * @generated from protobuf field: repeated soulfire.v1.ServerPlugin plugins = 3;
      */
@@ -668,7 +668,7 @@ class ClientDataResponse$Type extends MessageType<ClientDataResponse> {
     constructor() {
         super("soulfire.v1.ClientDataResponse", [
             { no: 1, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "permissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PermissionMessage },
+            { no: 2, name: "serverPermissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => PermissionMessage },
             { no: 3, name: "plugins", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ServerPlugin },
             { no: 5, name: "settings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingsPage }
         ]);
