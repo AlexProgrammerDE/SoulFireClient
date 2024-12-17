@@ -1,0 +1,30 @@
+id: com.soulfiremc.SoulFire
+
+runtime: org.gnome.Platform
+runtime-version: '46'
+sdk: org.gnome.Sdk
+
+command: soulfire
+finish-args:
+  - --socket=wayland # Permission needed to show the window
+  - --socket=fallback-x11 # Permission needed to show the window
+  - --device=dri # OpenGL, not necessary for all projects
+  - --share=ipc
+
+modules:
+  - name: binary
+    buildsystem: simple
+    sources:
+      - type: file
+        url: https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/1.5.0/SoulFire_1.5.0_amd64.deb
+        sha256: ac726e3f9e799b5ebcde5a8d845f622d3b3308d73f987d2c4bcb4516fbfe64ee
+        only-arches: [x86_64]
+    build-commands:
+      - ar -x *.deb
+      - tar -xf data.tar.gz
+      - 'install -Dm755 usr/bin/soulfire /app/bin/soulfire'
+      - install -Dm644 usr/share/applications/SoulFire.desktop /app/share/applications/com.soulfiremc.SoulFire.desktop
+      - install -Dm644 usr/share/icons/hicolor/128x128/apps/soulfire.png /app/share/icons/hicolor/128x128/apps/com.soulfiremc.SoulFire.png
+      - install -Dm644 usr/share/icons/hicolor/32x32/apps/soulfire.png /app/share/icons/hicolor/32x32/apps/com.soulfiremc.SoulFire.png
+      - install -Dm644 usr/share/icons/hicolor/256x256@2/apps/soulfire.png /app/share/icons/hicolor/256x256@2/apps/com.soulfiremc.SoulFire.png
+      #- install -Dm644 com.soulfiremc.SoulFire.metainfo.xml /app/share/metainfo/com.soulfiremc.SoulFire.rosary.metainfo.xml
