@@ -1,6 +1,15 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { LOCAL_STORAGE_TERMINAL_THEME_KEY } from '@/lib/types.ts';
+import {
+  GlobalPermission,
+  InstancePermission,
+} from '@/generated/soulfire/common.ts';
+import { ClientDataResponse } from '@/generated/soulfire/config.ts';
+import {
+  InstanceInfoResponse,
+  InstanceListResponse_Instance,
+} from '@/generated/soulfire/instance.ts';
 
 export function getTerminalTheme() {
   return localStorage.getItem(LOCAL_STORAGE_TERMINAL_THEME_KEY) ?? 'mocha';
@@ -44,4 +53,32 @@ export function cancellablePromise<T>(
       cancel(resolvedValue);
     }
   };
+}
+
+export function hasGlobalPermission(
+  clientData: ClientDataResponse,
+  permission: GlobalPermission,
+) {
+  if (isDemo()) {
+    return true;
+  }
+
+  return clientData.serverPermissions
+    .filter((p) => p.granted)
+    .map((p) => p.globalPermission)
+    .includes(permission);
+}
+
+export function hasInstancePermission(
+  clientData: InstanceInfoResponse | InstanceListResponse_Instance,
+  permission: InstancePermission,
+) {
+  if (isDemo()) {
+    return true;
+  }
+
+  return clientData.instancePermissions
+    .filter((p) => p.granted)
+    .map((p) => p.instancePermission)
+    .includes(permission);
 }

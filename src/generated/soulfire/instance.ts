@@ -86,6 +86,10 @@ export interface InstanceListResponse_Instance {
      * @generated from protobuf field: soulfire.v1.InstanceState state = 3;
      */
     state: InstanceState;
+    /**
+     * @generated from protobuf field: repeated soulfire.v1.InstancePermissionState instancePermissions = 4;
+     */
+    instancePermissions: InstancePermissionState[];
 }
 /**
  * @generated from protobuf message soulfire.v1.InstancePermissionState
@@ -297,7 +301,8 @@ class InstanceListResponse_Instance$Type extends MessageType<InstanceListRespons
         super("soulfire.v1.InstanceListResponse.Instance", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "friendlyName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "state", kind: "enum", T: () => ["soulfire.v1.InstanceState", InstanceState] }
+            { no: 3, name: "state", kind: "enum", T: () => ["soulfire.v1.InstanceState", InstanceState] },
+            { no: 4, name: "instancePermissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => InstancePermissionState }
         ]);
     }
 }

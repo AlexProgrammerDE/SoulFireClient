@@ -20,6 +20,12 @@ import {
 import { LoadingComponent } from '@/components/loading-component.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import { getEnumKeyByValue } from '@/lib/types.ts';
+import { hasGlobalPermission, hasInstancePermission } from '@/lib/utils.ts';
+import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
+import {
+  GlobalPermission,
+  InstancePermission,
+} from '@/generated/soulfire/common.ts';
 
 const listQueryFn = async ({
   signal,
@@ -37,6 +43,7 @@ const listQueryFn = async ({
             id: 'demo',
             friendlyName: 'Demo',
             state: InstanceState.RUNNING,
+            instancePermissions: [],
           },
         ],
       },
@@ -79,6 +86,7 @@ function InstanceSelectPage() {
   const { listQueryOptions } = Route.useRouteContext();
   const instanceList = useQuery(listQueryOptions);
   const transport = useContext(TransportContext);
+  const clientInfo = useContext(ClientInfoContext);
   const [createOpen, setCreateOpen] = useState(false);
   const addMutation = useMutation({
     mutationFn: async (values: CreateInstanceType) => {
@@ -176,17 +184,29 @@ function InstanceSelectPage() {
                     {getEnumKeyByValue(InstanceState, instance.state)})
                   </Link>
                 </Button>
-                <Button
-                  variant="destructive"
-                  onClick={() => {
-                    deleteMutation.mutate(instance.id);
-                  }}
-                >
-                  <TrashIcon className="w-fit h-4" />
-                </Button>
+                {hasInstancePermission(
+                  instance,
+                  InstancePermission.DELETE_INSTANCE,
+                ) && (
+                  <Button
+                    variant="destructive"
+                    onClick={() => {
+                      deleteMutation.mutate(instance.id);
+                    }}
+                  >
+                    <TrashIcon className="w-fit h-4" />
+                  </Button>
+                )}
               </div>
             ))}
-            <Button onClick={() => setCreateOpen(true)}>Create instance</Button>
+            {hasGlobalPermission(
+              clientInfo,
+              GlobalPermission.CREATE_INSTANCE,
+            ) && (
+              <Button onClick={() => setCreateOpen(true)}>
+                Create instance
+              </Button>
+            )}
             <CreateInstancePopup
               open={createOpen}
               setOpen={setCreateOpen}
