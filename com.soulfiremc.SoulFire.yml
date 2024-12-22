@@ -10,6 +10,7 @@ finish-args:
   - --socket=fallback-x11 # Permission needed to show the window
   - --device=dri # OpenGL, not necessary for all projects
   - --share=ipc
+  - --share=network
 
 modules:
   - shared-modules/libayatana-appindicator/libayatana-appindicator-gtk3.json
