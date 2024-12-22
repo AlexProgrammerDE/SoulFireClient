@@ -12,6 +12,7 @@ finish-args:
   - --share=ipc
 
 modules:
+  - shared-modules/libayatana-appindicator/libayatana-appindicator-gtk3.json
   - name: binary
     buildsystem: simple
     sources:

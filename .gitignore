@@ -24,3 +24,7 @@ dist-ssr
 *.sw?
 .eslintcache
 .vercel
+
+.flatpak-builder/
+builddir/
+repo/
