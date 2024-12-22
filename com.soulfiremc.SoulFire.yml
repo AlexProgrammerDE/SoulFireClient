@@ -22,6 +22,7 @@ modules:
     build-commands:
       - ar -x *.deb
       - tar -xf data.tar.gz
+      - sed -i 's/^Icon=soulfire$/Icon=com.soulfiremc.SoulFire/' usr/share/applications/SoulFire.desktop
       - 'install -Dm755 usr/bin/soulfire /app/bin/soulfire'
       - install -Dm644 usr/share/applications/SoulFire.desktop /app/share/applications/com.soulfiremc.SoulFire.desktop
       - install -Dm644 usr/share/icons/hicolor/128x128/apps/soulfire.png /app/share/icons/hicolor/128x128/apps/com.soulfiremc.SoulFire.png
