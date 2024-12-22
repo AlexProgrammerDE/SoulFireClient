@@ -35,9 +35,6 @@ jobs:
     steps:
       - name: 'Shared: Checkout'
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          submodules: recursive
 
       - name: 'Shared: Set up nasm'
         uses: ilammy/setup-nasm@v1
