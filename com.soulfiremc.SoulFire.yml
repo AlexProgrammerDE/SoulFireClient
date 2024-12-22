@@ -24,7 +24,7 @@ modules:
       - tar -xf data.tar.gz
       - 'install -Dm755 usr/bin/soulfire /app/bin/soulfire'
       - install -Dm644 usr/share/applications/SoulFire.desktop /app/share/applications/com.soulfiremc.SoulFire.desktop
-      - install -Dm644 usr/share/icons/hicolor/128x128/apps/soulfire.png /app/share/icons/hicolor/128x128/apps/soulfire.png
-      - install -Dm644 usr/share/icons/hicolor/32x32/apps/soulfire.png /app/share/icons/hicolor/32x32/apps/soulfire.png
-      - install -Dm644 usr/share/icons/hicolor/256x256@2/apps/soulfire.png /app/share/icons/hicolor/256x256@2/apps/soulfire.png
-      #- install -Dm644 soulfire.metainfo.xml /app/share/metainfo/soulfire.rosary.metainfo.xml
+      - install -Dm644 usr/share/icons/hicolor/128x128/apps/soulfire.png /app/share/icons/hicolor/128x128/apps/com.soulfiremc.SoulFire.png
+      - install -Dm644 usr/share/icons/hicolor/32x32/apps/soulfire.png /app/share/icons/hicolor/32x32/apps/com.soulfiremc.SoulFire.png
+      - install -Dm644 usr/share/icons/hicolor/256x256@2/apps/soulfire.png /app/share/icons/hicolor/256x256@2/apps/com.soulfiremc.SoulFire.png
+      #- install -Dm644 com.soulfiremc.SoulFire.metainfo.xml /app/share/metainfo/com.soulfiremc.SoulFire.rosary.metainfo.xml
