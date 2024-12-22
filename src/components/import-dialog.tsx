@@ -9,7 +9,7 @@ import {
 import { Button } from '@/components/ui/button.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
 import { useContext, useRef, useState } from 'react';
-import { isTauri } from '@/lib/utils.ts';
+import { hasInstancePermission, isTauri } from '@/lib/utils.ts';
 import { downloadDir } from '@tauri-apps/api/path';
 import { open } from '@tauri-apps/plugin-dialog';
 import { readTextFile } from '@tauri-apps/plugin-fs';
@@ -23,6 +23,7 @@ import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { DownloadServiceClient } from '@/generated/soulfire/download.client.ts';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { InstancePermission } from '@/generated/soulfire/common.ts';
 
 export type TextInput = {
   defaultValue: string;
@@ -132,6 +133,7 @@ function MainDialog(
     openUrlDialog: () => void;
   },
 ) {
+  const instanceInfo = useContext(InstanceInfoContext);
   const systemInfo = useContext(SystemInfoContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -209,14 +211,19 @@ function MainDialog(
                 <FileIcon className="w-4 h-4 mr-2" />
                 <span>From file</span>
               </Button>
-              <Button
-                variant="secondary"
-                className="w-full"
-                onClick={props.openUrlDialog}
-              >
-                <GlobeIcon className="w-4 h-4 mr-2" />
-                <span>From URL</span>
-              </Button>
+              {hasInstancePermission(
+                instanceInfo,
+                InstancePermission.DOWNLOAD_URL,
+              ) && (
+                <Button
+                  variant="secondary"
+                  className="w-full"
+                  onClick={props.openUrlDialog}
+                >
+                  <GlobeIcon className="w-4 h-4 mr-2" />
+                  <span>From URL</span>
+                </Button>
+              )}
               <Button
                 variant="secondary"
                 className="w-full"

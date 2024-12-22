@@ -422,8 +422,7 @@ function InstanceLayout() {
       <InstanceInfoContext.Provider
         value={{
           id: instance,
-          friendlyName: result.data.instanceInfo.friendlyName,
-          state: result.data.instanceInfo.state,
+          ...result.data.instanceInfo,
         }}
       >
         <ProfileContext.Provider
