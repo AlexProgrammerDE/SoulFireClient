@@ -27,7 +27,7 @@ jobs:
             name: 'linux'
             rust-targets: ''
           - platform: 'windows-latest'
-            args: '--config src-tauri/tauri.preview.conf.json'
+            args: ''
             name: 'windows'
             rust-targets: ''
 
