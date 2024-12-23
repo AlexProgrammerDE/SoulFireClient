@@ -71,13 +71,6 @@ jobs:
       - name: 'Shared: Install frontend dependencies'
         run: pnpm install
 
-      - name: 'Windows: Install SignPath command'
-        if: matrix.name == 'windows'
-        shell: powershell
-        run: |
-          Set-PSRepository PSGallery -InstallationPolicy Trusted
-          Install-Module -scope CurrentUser -Force -Name SignPath
-
       - name: 'Desktop: Build tauri project'
         uses: tauri-apps/tauri-action@v0
         env:
