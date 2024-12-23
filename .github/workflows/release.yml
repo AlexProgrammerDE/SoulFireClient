@@ -14,27 +14,29 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: 'macos-latest'
+          - platform: 'macos-14'
             args: '--target aarch64-apple-darwin'
-            name: 'macos-aarch64'
+            name: 'macOS 14 (AMD64)'
             rust-targets: 'aarch64-apple-darwin'
-          - platform: 'macos-latest'
+          - platform: 'macos-13'
             args: '--target x86_64-apple-darwin'
-            name: 'macos-x86_64'
+            name: 'macOS 13 (AMD64)'
             rust-targets: 'x86_64-apple-darwin'
           - platform: 'ubuntu-22.04'
             args: ''
-            name: 'linux'
+            name: 'Ubuntu 22.04'
             rust-targets: ''
-          - platform: 'windows-latest'
+          - platform: 'windows-2025'
             args: ''
-            name: 'windows'
+            name: 'Windows Server 2025'
             rust-targets: ''
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - name: 'Shared: Checkout'
+      - name: 'Shared: Checkout Repository'
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: 'Shared: Set up nasm'
         uses: ilammy/setup-nasm@v1
@@ -63,7 +65,7 @@ jobs:
           cache-all-crates: true
 
       - name: 'Ubuntu: Install dependencies'
-        if: matrix.platform == 'ubuntu-22.04'
+        if: matrix.name == 'linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf

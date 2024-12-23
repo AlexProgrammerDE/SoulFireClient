@@ -10,41 +10,43 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: 'macos-latest'
+          - platform: 'macos-14'
             type: 'desktop'
             args: '--target aarch64-apple-darwin --config src-tauri/tauri.preview.conf.json'
             targetPath: '/aarch64-apple-darwin'
-            name: 'macos-aarch64'
+            name: 'macOS 14 (ARM64)'
             rust-targets: 'aarch64-apple-darwin'
-          - platform: 'macos-latest'
+          - platform: 'macos-13'
             type: 'desktop'
             args: '--target x86_64-apple-darwin --config src-tauri/tauri.preview.conf.json'
             targetPath: '/x86_64-apple-darwin'
-            name: 'macos-x86_64'
+            name: 'macOS 13 (AMD64)'
             rust-targets: 'x86_64-apple-darwin'
-          - platform: 'ubuntu-24.04'
+          - platform: 'ubuntu-22.04'
             type: 'desktop'
             args: '--config src-tauri/tauri.preview.conf.json'
             targetPath: ''
-            name: 'linux'
+            name: 'Ubuntu 22.04'
             rust-targets: ''
-          - platform: 'windows-latest'
+          - platform: 'windows-2025'
             type: 'desktop'
             args: '--config src-tauri/tauri.preview.conf.json'
             targetPath: ''
-            name: 'windows'
+            name: 'Windows Server 2025'
             rust-targets: ''
-          - platform: 'ubuntu-24.04'
+          - platform: 'ubuntu-22.04'
             type: 'android'
             args: '--config src-tauri/tauri.preview.conf.json'
             targetPath: ''
-            name: 'android'
+            name: 'Android'
             rust-targets: 'aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android'
 
     runs-on: ${{ matrix.platform }}
     steps:
-      - name: 'Shared: Checkout'
+      - name: 'Shared: Checkout repository'
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: 'Shared: Set up nasm'
         uses: ilammy/setup-nasm@v1
@@ -103,7 +105,7 @@ jobs:
           includeRelease: false
           args: ${{ matrix.args }}
 
-      - name: 'Desktop: Upload artifact'
+      - name: 'Desktop: Upload artifacts'
         if: matrix.type == 'desktop'
         uses: actions/upload-artifact@v4
         with:
@@ -132,6 +134,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+          check-latest: true
 
       - name: 'Android: Setup Android SDK'
         if: matrix.type == 'android'
@@ -146,7 +149,7 @@ jobs:
           link-to-sdk: false
           add-to-path: false
 
-      - name: 'Android: Install tauri cli'
+      - name: 'Android: Install tauri CLI'
         if: matrix.type == 'android'
         run: |
           cargo install --debug --force --locked tauri-cli
@@ -180,7 +183,7 @@ jobs:
         env:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
-      - name: 'Android: Upload artifact'
+      - name: 'Android: Upload artifacts'
         if: matrix.type == 'android'
         uses: actions/upload-artifact@v4
         with:
@@ -191,16 +194,17 @@ jobs:
   flatpak:
     name: Flatpak
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container:
       image: bilelmoussaoui/flatpak-github-actions:gnome-46
       options: --privileged
 
     steps:
-      - name: 'Checkout'
+      - name: 'Checkout repository'
         uses: actions/checkout@v4
         with:
           submodules: true
+          persist-credentials: false
 
       - name: 'Build'
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
