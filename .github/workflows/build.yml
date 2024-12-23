@@ -30,7 +30,7 @@ jobs:
             rust-targets: ''
           - platform: 'windows-latest'
             type: 'desktop'
-            args: '--config src-tauri/tauri.preview.conf.json'
+            args: ''
             targetPath: ''
             name: 'windows'
             rust-targets: ''
