@@ -86,8 +86,6 @@ jobs:
         if: matrix.type == 'desktop'
         uses: tauri-apps/tauri-action@v0
         env:
-          SIGNPATH_POLICY_SLUG: test-signing
-          SIGNPATH_API_KEY: ${{ secrets.SIGNPATH_API_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
