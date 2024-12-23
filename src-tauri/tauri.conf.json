@@ -48,15 +48,6 @@
       "nsis": {
         "installMode": "currentUser",
         "installerIcon": "icons/icon.ico"
-      },
-      "signCommand": {
-        "cmd": "powershell",
-        "args": [
-          "-File",
-          "D:\\a\\SoulFireClient\\SoulFireClient\\sf_sign.ps1",
-          "-filePath",
-          "%1"
-        ]
       }
     },
     "icon": [
