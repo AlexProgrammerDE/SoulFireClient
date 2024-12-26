@@ -63,18 +63,22 @@ jobs:
         include:
           - platform: 'macos-14'
             args: '--target aarch64-apple-darwin'
+            target-path: '/aarch64-apple-darwin'
             name: 'macOS 14 (ARM64)'
             rust-targets: 'aarch64-apple-darwin'
           - platform: 'macos-13'
             args: '--target x86_64-apple-darwin'
+            target-path: '/x86_64-apple-darwin'
             name: 'macOS 13 (AMD64)'
             rust-targets: 'x86_64-apple-darwin'
           - platform: 'ubuntu-22.04'
             args: ''
+            target-path: ''
             name: 'Ubuntu 22.04'
             rust-targets: ''
           - platform: 'windows-2025'
             args: ''
+            target-path: ''
             name: 'Windows Server 2025'
             rust-targets: ''
 
@@ -139,7 +143,7 @@ jobs:
         with:
           name: windows-unsigned
           path: |
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/nsis/*.exe
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/nsis/*.exe
           if-no-files-found: error
 
       - name: Publish to GitHub Release
@@ -148,8 +152,8 @@ jobs:
           tag_name: ${{ needs.create-release.outputs.tag_name }}
           prerelease: true
           files: |
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/dmg/*.dmg
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/appimage/*.AppImage
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/deb/*.deb
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/rpm/*.rpm
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/macos/*.app.tar.gz
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/dmg/*.dmg
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/deb/*.deb
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/rpm/*.rpm
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app.tar.gz
