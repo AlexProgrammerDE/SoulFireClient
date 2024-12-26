@@ -100,7 +100,7 @@ jobs:
         if: matrix.type == 'desktop'
         uses: actions/upload-artifact@v4
         with:
-          name: tauri-artifact-${{ matrix.name }}
+          name: tauri-artifact-${{ matrix.platform }}
           path: |
             ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/nsis/*.exe
@@ -178,7 +178,7 @@ jobs:
         if: matrix.type == 'Android'
         uses: actions/upload-artifact@v4
         with:
-          name: tauri-artifact-${{ matrix.name }}
+          name: tauri-artifact-${{ matrix.platform }}
           path: './src-tauri/gen/android/app/build/outputs'
           if-no-files-found: error
 
