@@ -131,12 +131,17 @@ jobs:
       - name: 'Desktop: Upload artifacts'
         uses: actions/upload-artifact@v4
         with:
-          name: tauri-artifact-${{ matrix.artifact-name }}
+          name: windows-unsigned
           path: |
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/nsis/*.exe
+          if-no-files-found: error
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/appimage/*.AppImage
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/deb/*.deb
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/rpm/*.rpm
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/macos/*.app
-          if-no-files-found: error
