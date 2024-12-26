@@ -46,8 +46,8 @@ jobs:
               tag_name: `${process.env.PACKAGE_VERSION}`,
               name: `SoulFireClient ${process.env.PACKAGE_VERSION}`,
               body: 'Take a look at the assets to download and install this app.',
-              draft: true,
-              prerelease: false
+              draft: false,
+              prerelease: true
             })
             return data.id
 
@@ -146,9 +146,10 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.create-release.outputs.tag_name }}
+          prerelease: true
           files: |
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/appimage/*.AppImage
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/deb/*.deb
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/rpm/*.rpm
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/macos/*.app
+            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/macos/*.app.tar.gz
