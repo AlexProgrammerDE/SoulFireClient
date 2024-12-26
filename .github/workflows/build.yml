@@ -76,15 +76,15 @@ jobs:
           cache-all-crates: true
 
       - name: 'Ubuntu: Install linux dependencies'
-        if: matrix.name == 'linux'
+        if: matrix.name == 'Ubuntu 22.04'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf librust-atk-dev
 
       - name: 'Shared: Install frontend dependencies'
         run: pnpm install
 
-      - name: 'Desktop: Build tauri project'
+      - name: 'Desktop: Build Tauri project'
         if: matrix.type == 'desktop'
         uses: tauri-apps/tauri-action@v0
         env:
@@ -114,13 +114,13 @@ jobs:
       # Android #
       ###########
       - name: 'Android: Install dependencies'
-        if: matrix.type == 'android'
+        if: matrix.type == 'Android'
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential cmake golang-go libunwind-dev
 
       - name: 'Android: Set up JDK 21'
-        if: matrix.type == 'android'
+        if: matrix.type == 'Android'
         uses: actions/setup-java@v4
         with:
           java-version: '21'
@@ -128,11 +128,11 @@ jobs:
           check-latest: true
 
       - name: 'Android: Setup Android SDK'
-        if: matrix.type == 'android'
+        if: matrix.type == 'Android'
         uses: android-actions/setup-android@v3
 
       - name: 'Android: Set up NDK'
-        if: matrix.type == 'android'
+        if: matrix.type == 'Android'
         id: setup-ndk
         uses: nttld/setup-ndk@v1
         with:
@@ -140,18 +140,18 @@ jobs:
           link-to-sdk: false
           add-to-path: false
 
-      - name: 'Android: Install tauri CLI'
-        if: matrix.type == 'android'
+      - name: 'Android: Install Tauri CLI'
+        if: matrix.type == 'Android'
         run: |
           cargo install --debug --force --locked tauri-cli
 
       - name: 'Android: Decode JKS file'
-        if: matrix.type == 'android'
+        if: matrix.type == 'Android'
         run: |
           echo "${{ secrets.TAURI_ANDROID_KEYSTORE_FILE }}" | base64 --decode > /tmp/keystore.jks
 
-      - name: 'Android: Configure android build'
-        if: matrix.type == 'android'
+      - name: 'Android: Configure Android build'
+        if: matrix.type == 'Android'
         run: |
           cat <<EOF > src-tauri/gen/android/keystore.properties
           password=${{ secrets.TAURI_ANDROID_KEYSTORE_PASSWORD }}
@@ -159,8 +159,8 @@ jobs:
           storeFile=/tmp/keystore.jks
           EOF
 
-      - name: 'Android: Build android project'
-        if: matrix.type == 'android'
+      - name: 'Android: Build Android project'
+        if: matrix.type == 'Android'
         run: |
           export ANDROID_SDK_HOME=$ANDROID_HOME
           export PATH=$PATH:$ANDROID_HOME/tools
@@ -175,7 +175,7 @@ jobs:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
       - name: 'Android: Upload artifacts'
-        if: matrix.type == 'android'
+        if: matrix.type == 'Android'
         uses: actions/upload-artifact@v4
         with:
           name: tauri-artifact-${{ matrix.name }}
@@ -183,11 +183,11 @@ jobs:
           if-no-files-found: error
 
   flatpak:
-    name: Flatpak
+    name: Build Flatpak
 
     runs-on: ubuntu-22.04
     container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-46
+      image: bilelmoussaoui/flatpak-github-actions:gnome-42
       options: --privileged
 
     steps:
@@ -197,7 +197,7 @@ jobs:
           submodules: true
           persist-credentials: false
 
-      - name: 'Build'
+      - name: 'Build Flatpak project'
         uses: flatpak/flatpak-github-actions/flatpak-builder@v6
         with:
           bundle: soulfire.flatpak

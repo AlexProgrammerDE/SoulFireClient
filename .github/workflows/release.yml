@@ -65,7 +65,7 @@ jobs:
           cache-all-crates: true
 
       - name: 'Ubuntu: Install dependencies'
-        if: matrix.name == 'linux'
+        if: matrix.name == 'Ubuntu 22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
