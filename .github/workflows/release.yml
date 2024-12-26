@@ -171,7 +171,7 @@ jobs:
 
           curl -o latest.json https://github.com/repos/${{ github.repository }}/releases/download/${{ needs.create-release.outputs.tag_name }}/latest.json
 
-          jq ".platforms.windows-x86_64.signature = \"$(cat $fileName.sig)\"" latest.json > latest.json.tmp
+          jq ".platforms[\"windows-x86_64\"].signature = \"$(cat $fileName.sig)\"" latest.json > latest.json.tmp
           mv latest.json.tmp latest.json
 
       - name: 'Windows: Upload signed artifact'
