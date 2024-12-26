@@ -140,42 +140,42 @@ jobs:
           includeRelease: true
           args: ${{ matrix.args }}
 
-      - name: 'Desktop: Upload artifacts (Ubuntu)'
+      - name: 'Windows: Upload unsigned artifact'
+        id: upload-unsigned-artifact
+        if: matrix.platform == 'windows-2025'
         uses: actions/upload-artifact@v4
-        if: matrix.name == 'Ubuntu 22.04'
         with:
-          name: tauri-artifact-ubuntu-2204
+          name: windows-unsigned
           path: |
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/appimage/*.AppImage
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/deb/*.deb
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/rpm/*.rpm
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/nsis/*.exe
           if-no-files-found: error
 
-      - name: 'Desktop: Upload artifacts (macOS ARM64)'
-        uses: actions/upload-artifact@v4
-        if: matrix.name == 'macOS 14 (ARM64)'
+      - name: 'Windows: Submit signing request'
+        if: matrix.platform == 'windows-2025'
+        uses: signpath/github-action-submit-signing-request@v1.1
         with:
-          name: tauri-artifact-macos-14-arm64
-          path: |
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/dmg/*.dmg
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/macos/*.app
-          if-no-files-found: error
+          api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
+          organization-id: 'e091b552-3623-4d9d-83d7-059d8f32978b'
+          project-slug: 'SoulFireClient'
+          signing-policy-slug: 'release-signing'
+          github-artifact-id: '${{ steps.upload-unsigned-artifact.outputs.artifact-id }}'
+          wait-for-completion: true
+          output-artifact-directory: '/signed'
 
-      - name: 'Desktop: Upload artifacts (macOS AMD64)'
-        uses: actions/upload-artifact@v4
-        if: matrix.name == 'macOS 13 (AMD64)'
-        with:
-          name: tauri-artifact-macos-13-amd64
-          path: |
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/dmg/*.dmg
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/macos/*.app
-          if-no-files-found: error
+      - name: 'Windows: Prepare signed artifact'
+        if: matrix.platform == 'windows-2025'
+        shell: bash
+        run: |
+          cd signed
+          fileName=$(ls *.exe)
+          pnpm tauri signer sign -k "${{ secrets.TAURI_PRIVATE_KEY }}" -p "${{ secrets.TAURI_KEY_PASSWORD }}"
 
-      - name: 'Desktop: Upload artifacts (Windows)'
-        uses: actions/upload-artifact@v4
-        if: matrix.name == 'Windows Server 2025'
+      - name: 'Windows: Upload signed artifact'
+        if: matrix.platform == 'windows-2025'
+        uses: softprops/action-gh-release@v2
         with:
-          name: tauri-artifact-windows-2025
-          path: |
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/nsis/*.exe
-          if-no-files-found: error
+          tag_name: ${{ needs.create-release.outputs.tag_name }}
+          prerelease: true
+          files: |
+            ./signed/*.exe
+            ./signed/*.exe.sig
