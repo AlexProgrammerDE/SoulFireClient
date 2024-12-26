@@ -167,9 +167,6 @@ jobs:
         shell: bash
         run: |
           cd signed
-          zipName=$(ls *.zip)
-          unzip -o $zipName
-          rm $zipName
           fileName=$(ls *.exe)
           pnpm tauri signer sign -k "${{ secrets.TAURI_PRIVATE_KEY }}" -p "${{ secrets.TAURI_KEY_PASSWORD }}"
 
