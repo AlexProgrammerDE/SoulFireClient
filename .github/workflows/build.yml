@@ -105,7 +105,7 @@ jobs:
         if: matrix.type == 'desktop'
         uses: actions/upload-artifact@v4
         with:
-          name: tauri-artifact-${{ matrix.artfact-name }}
+          name: tauri-artifact-${{ matrix.artifact-name }}
           path: |
             ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/nsis/*.exe
