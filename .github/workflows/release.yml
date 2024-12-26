@@ -133,11 +133,15 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
+          releaseId: ${{ needs.create-release.outputs.release_id }}
+          includeUpdaterJson: true
+          updaterJsonPreferNsis: true
           includeDebug: false
           includeRelease: true
           args: ${{ matrix.args }}
 
-      - name: 'Windows: Upload artifacts'
+      - name: 'Windows: Upload unsigned artifact'
+        id: upload-unsigned-artifact
         if: matrix.platform == 'windows-2025'
         uses: actions/upload-artifact@v4
         with:
@@ -146,14 +150,14 @@ jobs:
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/nsis/*.exe
           if-no-files-found: error
 
-      - name: Publish to GitHub Release
-        uses: softprops/action-gh-release@v2
+      - name: 'Windows: Submit signing request'
+        if: matrix.platform == 'windows-2025'
+        uses: signpath/github-action-submit-signing-request@v1.1
         with:
-          tag_name: ${{ needs.create-release.outputs.tag_name }}
-          prerelease: true
-          files: |
-            ./src-tauri/target${{ matrix.target-path }}/release/bundle/dmg/*.dmg
-            ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage
-            ./src-tauri/target${{ matrix.target-path }}/release/bundle/deb/*.deb
-            ./src-tauri/target${{ matrix.target-path }}/release/bundle/rpm/*.rpm
-            ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app.tar.gz
+          api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
+          organization-id: 'e091b552-3623-4d9d-83d7-059d8f32978b'
+          project-slug: 'SoulFireClient'
+          signing-policy-slug: 'release-signing'
+          github-artifact-id: '${{ steps.upload-unsigned-artifact.outputs.artifact-id }}'
+          wait-for-completion: true
+          output-artifact-directory: '/tmp'
