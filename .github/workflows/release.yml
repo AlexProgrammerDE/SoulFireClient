@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       release_id: ${{ steps.create-release.outputs.result }}
+      tag_name: ${{ steps.get-version.outputs.PACKAGE_VERSION }}
 
     steps:
       - name: 'Checkout Repository'
@@ -28,6 +29,7 @@ jobs:
           node-version: lts/*
 
       - name: 'Get Version'
+        id: get-version
         run: echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
 
       - name: 'Create Release'
@@ -128,7 +130,8 @@ jobs:
           includeRelease: true
           args: ${{ matrix.args }}
 
-      - name: 'Desktop: Upload artifacts'
+      - name: 'Windows: Upload artifacts'
+        if: matrix.platform == 'windows-2025'
         uses: actions/upload-artifact@v4
         with:
           name: windows-unsigned
@@ -136,9 +139,10 @@ jobs:
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/nsis/*.exe
           if-no-files-found: error
 
-      - name: Release
+      - name: Publish to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ needs.create-release.outputs.tag_name }}
           files: |
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/appimage/*.AppImage
