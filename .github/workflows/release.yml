@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-22.04
     outputs:
       release_id: ${{ steps.create-release.outputs.result }}
+      tag_name: ${{ steps.get-version.outputs.PACKAGE_VERSION }}
 
     steps:
       - name: 'Checkout Repository'
@@ -28,6 +29,7 @@ jobs:
           node-version: lts/*
 
       - name: 'Get Version'
+        id: get-version
         run: echo "PACKAGE_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
 
       - name: 'Create Release'
