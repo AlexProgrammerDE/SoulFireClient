@@ -15,35 +15,30 @@ jobs:
             args: '--target aarch64-apple-darwin'
             targetPath: '/aarch64-apple-darwin'
             name: 'macOS 14 (ARM64)'
-            artifact-name: 'macos-14-arm64'
             rust-targets: 'aarch64-apple-darwin'
           - platform: 'macos-13'
             type: 'desktop'
             args: '--target x86_64-apple-darwin'
             targetPath: '/x86_64-apple-darwin'
             name: 'macOS 13 (AMD64)'
-            artifact-name: 'macos-13-amd64'
             rust-targets: 'x86_64-apple-darwin'
           - platform: 'ubuntu-22.04'
             type: 'desktop'
             args: ''
             targetPath: ''
             name: 'Ubuntu 22.04'
-            artifact-name: 'ubuntu-22.04'
             rust-targets: ''
           - platform: 'windows-2025'
             type: 'desktop'
             args: ''
             targetPath: ''
             name: 'Windows Server 2025'
-            artifact-name: 'winsrv-2025'
             rust-targets: ''
           - platform: 'ubuntu-22.04'
             type: 'android'
             args: ''
             targetPath: ''
             name: 'Android'
-            artifact-name: 'android'
             rust-targets: 'aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android'
 
     runs-on: ${{ matrix.platform }}
@@ -101,18 +96,44 @@ jobs:
           includeRelease: false
           args: ${{ matrix.args }}
 
-      - name: 'Desktop: Upload artifacts'
-        if: matrix.type == 'desktop'
+      - name: 'Desktop: Upload artifacts (Ubuntu)'
         uses: actions/upload-artifact@v4
+        if: matrix.name == 'Ubuntu 22.04'
         with:
-          name: tauri-artifact-${{ matrix.artifact-name }}
+          name: tauri-artifact-ubuntu-2204
           path: |
-            ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/dmg/*.dmg
-            ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/nsis/*.exe
             ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/appimage/*.AppImage
             ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/deb/*.deb
             ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/rpm/*.rpm
+          if-no-files-found: error
+
+      - name: 'Desktop: Upload artifacts (macOS ARM64)'
+        uses: actions/upload-artifact@v4
+        if: matrix.name == 'macOS 14 (ARM64)'
+        with:
+          name: tauri-artifact-macos-14-arm64
+          path: |
+            ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/macos/*.app
+          if-no-files-found: error
+
+      - name: 'Desktop: Upload artifacts (macOS AMD64)'
+        uses: actions/upload-artifact@v4
+        if: matrix.name == 'macOS 13 (AMD64)'
+        with:
+          name: tauri-artifact-macos-13-amd64
+          path: |
+            ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/dmg/*.dmg
+            ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/macos/*.app
+          if-no-files-found: error
+
+      - name: 'Desktop: Upload artifacts (Windows)'
+        uses: actions/upload-artifact@v4
+        if: matrix.name == 'Windows Server 2025'
+        with:
+          name: tauri-artifact-windows-2025
+          path: |
+            ./src-tauri/target${{ matrix.targetPath }}/debug/bundle/nsis/*.exe
           if-no-files-found: error
 
       ###########
@@ -180,10 +201,10 @@ jobs:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
       - name: 'Android: Upload artifacts'
-        if: matrix.type == 'Android'
+        if: matrix.name == 'Android'
         uses: actions/upload-artifact@v4
         with:
-          name: tauri-artifact-${{ matrix.artifact-name }}
+          name: tauri-artifact-android
           path: './src-tauri/gen/android/app/build/outputs'
           if-no-files-found: error
 

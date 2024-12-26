@@ -12,7 +12,7 @@ jobs:
     permissions:
       contents: write
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       release_id: ${{ steps.create-release.outputs.result }}
 
@@ -128,15 +128,42 @@ jobs:
           includeRelease: true
           args: ${{ matrix.args }}
 
-      - name: 'Desktop: Upload artifacts'
+      - name: 'Desktop: Upload artifacts (Ubuntu)'
         uses: actions/upload-artifact@v4
+        if: matrix.name == 'Ubuntu 22.04'
         with:
-          name: tauri-artifact-${{ matrix.artifact-name }}
+          name: tauri-artifact-ubuntu-2204
           path: |
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/dmg/*.dmg
-            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/nsis/*.exe
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/appimage/*.AppImage
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/deb/*.deb
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/rpm/*.rpm
+          if-no-files-found: error
+
+      - name: 'Desktop: Upload artifacts (macOS ARM64)'
+        uses: actions/upload-artifact@v4
+        if: matrix.name == 'macOS 14 (ARM64)'
+        with:
+          name: tauri-artifact-macos-14-arm64
+          path: |
+            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.targetPath }}/release/bundle/macos/*.app
+          if-no-files-found: error
+
+      - name: 'Desktop: Upload artifacts (macOS AMD64)'
+        uses: actions/upload-artifact@v4
+        if: matrix.name == 'macOS 13 (AMD64)'
+        with:
+          name: tauri-artifact-macos-13-amd64
+          path: |
+            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/dmg/*.dmg
+            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/macos/*.app
+          if-no-files-found: error
+
+      - name: 'Desktop: Upload artifacts (Windows)'
+        uses: actions/upload-artifact@v4
+        if: matrix.name == 'Windows Server 2025'
+        with:
+          name: tauri-artifact-windows-2025
+          path: |
+            ./src-tauri/target${{ matrix.targetPath }}/release/bundle/nsis/*.exe
           if-no-files-found: error
