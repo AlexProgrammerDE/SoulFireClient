@@ -45,7 +45,7 @@ jobs:
               repo: context.repo.repo,
               tag_name: `${process.env.PACKAGE_VERSION}`,
               name: `SoulFireClient ${process.env.PACKAGE_VERSION}`,
-              body: 'Take a look at the assets to download and install this app.',
+              body: 'See the assets to download this version and install.',
               draft: false,
               prerelease: true
             })
@@ -127,13 +127,12 @@ jobs:
       - name: 'Desktop: Build tauri project'
         uses: tauri-apps/tauri-action@v0
         env:
-          SIGNPATH_POLICY_SLUG: release-signing
-          SIGNPATH_API_KEY: ${{ secrets.SIGNPATH_API_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
           releaseId: ${{ needs.create-release.outputs.release_id }}
+          releaseBody: 'See the assets to download this version and install.'
           includeUpdaterJson: true
           updaterJsonPreferNsis: true
           includeDebug: false
