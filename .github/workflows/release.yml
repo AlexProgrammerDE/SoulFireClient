@@ -169,7 +169,7 @@ jobs:
           fileName=$(ls signed/*.exe)
           pnpm tauri signer sign -k "${{ secrets.TAURI_PRIVATE_KEY }}" -p "${{ secrets.TAURI_KEY_PASSWORD }}" $fileName
 
-          curl -o latest.json https://github.com/repos/${{ github.repository }}/releases/download/${{ needs.create-release.outputs.tag_name }}/latest.json
+          curl -L -o latest.json https://github.com/${{ github.repository }}/releases/download/${{ needs.create-release.outputs.tag_name }}/latest.json
 
           jq ".platforms[\"windows-x86_64\"].signature = \"$(cat $fileName.sig)\"" latest.json > latest.json.tmp
           mv latest.json.tmp latest.json
