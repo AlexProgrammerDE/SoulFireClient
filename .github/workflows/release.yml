@@ -160,4 +160,24 @@ jobs:
           signing-policy-slug: 'release-signing'
           github-artifact-id: '${{ steps.upload-unsigned-artifact.outputs.artifact-id }}'
           wait-for-completion: true
-          output-artifact-directory: '/tmp'
+          output-artifact-directory: '/signed'
+
+      - name: 'Windows: Prepare signed artifact'
+        if: matrix.platform == 'windows-2025'
+        shell: bash
+        run: |
+          cd signed
+          zipName=$(ls *.zip)
+          unzip -o $zipName
+          rm $zipName
+          fileName=$(ls *.exe)
+          pnpm tauri signer sign -k "${{ secrets.TAURI_PRIVATE_KEY }}" -p "${{ secrets.TAURI_KEY_PASSWORD }}"
+
+      - name: 'Windows: Upload signed artifact'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.create-release.outputs.tag_name }}
+          prerelease: true
+          files: |
+            ./signed/*.exe
+            ./signed/*.exe.sig
