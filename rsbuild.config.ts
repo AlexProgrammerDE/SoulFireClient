@@ -23,6 +23,9 @@ export default defineConfig({
   tools: {
     rspack: {
       plugins: [TanStackRouterRspack()],
+      output: {
+        asyncChunks: false,
+      },
     },
   },
   html: {
@@ -44,8 +47,8 @@ export default defineConfig({
   performance: {
     chunkSplit: {
       strategy: 'split-by-size',
-      minSize: 30000,
-      maxSize: 50000,
+      minSize: 300000,
+      maxSize: 500000,
     },
   },
   server: {
