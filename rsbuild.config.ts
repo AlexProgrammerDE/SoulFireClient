@@ -41,6 +41,13 @@ export default defineConfig({
       css: true,
     },
   },
+  performance: {
+    chunkSplit: {
+      strategy: 'split-by-size',
+      minSize: 30000,
+      maxSize: 50000,
+    },
+  },
   server: {
     strictPort: true,
     host: process.env.TAURI_DEV_HOST ?? undefined,
