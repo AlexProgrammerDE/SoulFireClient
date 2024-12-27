@@ -12,7 +12,7 @@ jobs:
     permissions:
       contents: write
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       release_id: ${{ steps.create-release.outputs.result }}
       tag_name: ${{ steps.get-version.outputs.PACKAGE_VERSION }}
