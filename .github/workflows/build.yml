@@ -13,13 +13,13 @@ jobs:
           - platform: 'macos-14'
             type: 'desktop'
             args: '--target aarch64-apple-darwin'
-            target-path: 'aarch64-apple-darwin'
+            target-path: '/aarch64-apple-darwin'
             name: 'macOS 14 (ARM64)'
             rust-targets: 'aarch64-apple-darwin'
           - platform: 'macos-13'
             type: 'desktop'
             args: '--target x86_64-apple-darwin'
-            target-path: 'x86_64-apple-darwin'
+            target-path: '/x86_64-apple-darwin'
             name: 'macOS 13 (AMD64)'
             rust-targets: 'x86_64-apple-darwin'
           - platform: 'ubuntu-22.04'
@@ -102,9 +102,9 @@ jobs:
         with:
           name: tauri-artifact-ubuntu-2204
           path: |
-            ./src-tauri/target/${{ matrix.targetPath }}/debug/bundle/appimage/*.AppImage
-            ./src-tauri/target/${{ matrix.targetPath }}/debug/bundle/deb/*.deb
-            ./src-tauri/target/${{ matrix.targetPath }}/debug/bundle/rpm/*.rpm
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/appimage/*.AppImage
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/deb/*.deb
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/rpm/*.rpm
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (macOS ARM64)'
@@ -113,8 +113,8 @@ jobs:
         with:
           name: tauri-artifact-macos-14-arm64
           path: |
-            ./src-tauri/target/${{ matrix.targetPath }}/debug/bundle/dmg/*.dmg
-            ./src-tauri/target/${{ matrix.targetPath }}/debug/bundle/macos/*.app
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/dmg/*.dmg
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/macos/*.app
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (macOS AMD64)'
@@ -123,8 +123,8 @@ jobs:
         with:
           name: tauri-artifact-macos-13-amd64
           path: |
-            ./src-tauri/target/${{ matrix.targetPath }}/debug/bundle/dmg/*.dmg
-            ./src-tauri/target/${{ matrix.targetPath }}/debug/bundle/macos/*.app
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/dmg/*.dmg
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/macos/*.app
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (Windows)'
@@ -133,7 +133,7 @@ jobs:
         with:
           name: tauri-artifact-windows-2025
           path: |
-            ./src-tauri/target/${{ matrix.targetPath }}/debug/bundle/nsis/*.exe
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/nsis/*.exe
           if-no-files-found: error
 
       ###########
