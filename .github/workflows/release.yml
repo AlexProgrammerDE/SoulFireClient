@@ -61,10 +61,10 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: 'macos-14'
+          - platform: 'macos-15'
             args: '--target aarch64-apple-darwin'
             target-path: '/aarch64-apple-darwin'
-            name: 'macOS 14 (ARM64)'
+            name: 'macOS 15 (ARM64)'
             rust-targets: 'aarch64-apple-darwin'
           - platform: 'macos-13'
             args: '--target x86_64-apple-darwin'

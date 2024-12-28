@@ -10,11 +10,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: 'macos-14'
+          - platform: 'macos-15'
             type: 'desktop'
             args: '--target aarch64-apple-darwin'
             target-path: '/aarch64-apple-darwin'
-            name: 'macOS 14 (ARM64)'
+            name: 'macOS 15 (ARM64)'
             rust-targets: 'aarch64-apple-darwin'
           - platform: 'macos-13'
             type: 'desktop'
@@ -109,9 +109,9 @@ jobs:
 
       - name: 'Desktop: Upload artifacts (macOS ARM64)'
         uses: actions/upload-artifact@v4
-        if: matrix.name == 'macOS 14 (ARM64)'
+        if: matrix.name == 'macOS 15 (ARM64)'
         with:
-          name: tauri-artifact-macos-14-arm64
+          name: tauri-artifact-macos-15-arm64
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/macos/*.app
