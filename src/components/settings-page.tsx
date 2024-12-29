@@ -33,25 +33,22 @@ import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
-import { convertToProto, ProfileRoot } from '@/lib/types.ts';
+import { BaseSettings, convertToProto } from '@/lib/types.ts';
 import { JsonValue } from '@protobuf-ts/runtime';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
-import {
-  InstanceConfig,
-  InstanceInfoResponse,
-} from '@/generated/soulfire/instance.ts';
+import { InstanceInfoResponse } from '@/generated/soulfire/instance.ts';
 import { Textarea } from '@/components/ui/textarea.tsx';
 
-function updateEntry(
+function updateEntry<T extends BaseSettings>(
   namespace: string,
   settingKey: string,
   value: JsonValue,
-  profile: ProfileRoot,
-): ProfileRoot {
+  profile: T,
+): T {
   return {
     ...profile,
     settings: {
@@ -67,10 +64,10 @@ function updateEntry(
 function getEntry(
   namespace: string,
   settingKey: string,
-  profile: ProfileRoot,
+  config: BaseSettings,
   defaultValue: JsonValue,
 ): JsonValue {
-  const current = profile.settings[namespace]?.[settingKey];
+  const current = config.settings[namespace]?.[settingKey];
   if (current === undefined) {
     return defaultValue;
   }
@@ -415,21 +412,21 @@ type MinMaxType = {
   max: number;
 };
 
-function EntryComponent(props: {
+function EntryComponent<T extends BaseSettings>(props: {
   namespace: string;
   settingKey: string;
   entry: SettingType;
   invalidateQuery: () => Promise<void>;
-  setConfig: (config: InstanceConfig) => Promise<void>;
+  setConfig: (config: T) => Promise<void>;
+  config: T;
 }) {
-  const profile = useContext(ProfileContext);
   const value = useMemo(() => {
     switch (props.entry.value.oneofKind) {
       case 'string': {
         return getEntry(
           props.namespace,
           props.settingKey,
-          profile,
+          props.config,
           props.entry.value.string.def,
         );
       }
@@ -437,7 +434,7 @@ function EntryComponent(props: {
         return getEntry(
           props.namespace,
           props.settingKey,
-          profile,
+          props.config,
           props.entry.value.int.def,
         );
       }
@@ -445,7 +442,7 @@ function EntryComponent(props: {
         return getEntry(
           props.namespace,
           props.settingKey,
-          profile,
+          props.config,
           props.entry.value.bool.def,
         );
       }
@@ -453,7 +450,7 @@ function EntryComponent(props: {
         return getEntry(
           props.namespace,
           props.settingKey,
-          profile,
+          props.config,
           props.entry.value.double.def,
         );
       }
@@ -461,7 +458,7 @@ function EntryComponent(props: {
         return getEntry(
           props.namespace,
           props.settingKey,
-          profile,
+          props.config,
           props.entry.value.combo.def,
         );
       }
@@ -469,12 +466,12 @@ function EntryComponent(props: {
         return getEntry(
           props.namespace,
           props.settingKey,
-          profile,
+          props.config,
           props.entry.value.stringList.def,
         );
       }
       case 'minMax': {
-        return getEntry(props.namespace, props.settingKey, profile, {
+        return getEntry(props.namespace, props.settingKey, props.config, {
           min: props.entry.value.minMax.minDef,
           max: props.entry.value.minMax.maxDef,
         });
@@ -483,14 +480,12 @@ function EntryComponent(props: {
         return null;
       }
     }
-  }, [profile, props.entry, props.namespace, props.settingKey]);
+  }, [props.config, props.entry, props.namespace, props.settingKey]);
   const setValueMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
-      const targetProfile = convertToProto(
-        updateEntry(props.namespace, props.settingKey, value, profile),
+      await props.setConfig(
+        updateEntry(props.namespace, props.settingKey, value, props.config),
       );
-
-      await props.setConfig(targetProfile);
     },
     onSettled: () => {
       void props.invalidateQuery();
@@ -636,14 +631,16 @@ function EntryComponent(props: {
   }
 }
 
-function ClientSettingsPageComponent({
+function ClientSettingsPageComponent<T extends BaseSettings>({
   data,
   invalidateQuery,
   setConfig,
+  config,
 }: {
   data: SettingsPage;
   invalidateQuery: () => Promise<void>;
-  setConfig: (config: InstanceConfig) => Promise<void>;
+  setConfig: (config: T) => Promise<void>;
+  config: T;
 }) {
   return (
     <>
@@ -656,6 +653,7 @@ function ClientSettingsPageComponent({
             entry={page.type!}
             setConfig={setConfig}
             invalidateQuery={invalidateQuery}
+            config={config}
           />
         );
       })}
@@ -672,14 +670,16 @@ export function InstanceSettingsPageComponent({
   const instanceInfo = useContext(InstanceInfoContext);
   const transport = useContext(TransportContext);
   const instanceInfoQueryKey = ['instance-info', instanceInfo.id];
+  const profile = useContext(ProfileContext);
   return (
     <ClientSettingsPageComponent
       data={data}
-      setConfig={async (targetProfile) => {
+      setConfig={async (jsonProfile) => {
         if (transport === null) {
           return;
         }
 
+        const targetProfile = convertToProto(jsonProfile);
         await queryClient.cancelQueries({
           queryKey: instanceInfoQueryKey,
         });
@@ -709,6 +709,7 @@ export function InstanceSettingsPageComponent({
           queryKey: instanceInfoQueryKey,
         });
       }}
+      config={profile}
     />
   );
 }

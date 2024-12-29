@@ -13,8 +13,11 @@ export const LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY = 'form-server-address';
 export const LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY = 'form-server-token';
 export const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
 
-export type ProfileRoot = {
+export type BaseSettings = {
   settings: Record<string, Record<string, JsonValue>>;
+};
+
+export type ProfileRoot = BaseSettings & {
   accounts: ProfileAccount[];
   proxies: ProfileProxy[];
 };
