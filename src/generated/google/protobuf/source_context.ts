@@ -32,8 +32,7 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-import { MessageType } from '@protobuf-ts/runtime';
-
+import { MessageType } from "@protobuf-ts/runtime";
 /**
  * `SourceContext` represents information about the source of a
  * protobuf element, like the file in which it is defined.
