@@ -18,11 +18,11 @@ import {
 import { LoaderCircleIcon } from 'lucide-react';
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 import { ClientDataResponse } from '@/generated/soulfire/config.ts';
-import demoData from '@/demo-data.json';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { isTauri } from '@/lib/utils.ts';
 import { emit } from '@tauri-apps/api/event';
+import { demoData } from '@/demo-data.ts';
 
 export const Route = createFileRoute('/dashboard/_layout')({
   beforeLoad: async ({ location }) => {
@@ -48,7 +48,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
     if (transport === null) {
       return {
         transport,
-        clientData: demoData as never,
+        clientData: demoData,
       };
     }
 
@@ -60,6 +60,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
       },
     );
 
+    console.log(result.response);
     return {
       transport,
       clientData: result.response,

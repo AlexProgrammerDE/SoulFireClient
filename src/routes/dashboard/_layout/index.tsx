@@ -8,7 +8,7 @@ import {
 import { useContext, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
-import { TrashIcon } from 'lucide-react';
+import { LayoutDashboardIcon, PlusIcon, TrashIcon } from 'lucide-react';
 import { toast } from 'sonner';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { queryClientInstance } from '@/lib/query.ts';
@@ -203,8 +203,15 @@ function InstanceSelectPage() {
               clientInfo,
               GlobalPermission.CREATE_INSTANCE,
             ) && (
-              <Button onClick={() => setCreateOpen(true)}>
-                Create instance
+              <Button
+                variant="secondary"
+                className="flex flex-row gap-1"
+                onClick={() => setCreateOpen(true)}
+              >
+                <div>
+                  <PlusIcon className="h-4" />
+                </div>
+                <span>Create instance</span>
               </Button>
             )}
             {hasGlobalPermission(
@@ -212,14 +219,18 @@ function InstanceSelectPage() {
               GlobalPermission.CREATE_INSTANCE,
             ) && (
               <Button
-                variant="outline"
+                variant="secondary"
+                className="flex flex-row gap-1"
                 onClick={() =>
                   void navigate({
                     to: '/dashboard/admin/overview',
                   })
                 }
               >
-                Admin panel
+                <div>
+                  <LayoutDashboardIcon className="h-4" />
+                </div>
+                <span>Admin panel</span>
               </Button>
             )}
             <CreateInstancePopup
