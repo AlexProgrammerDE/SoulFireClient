@@ -40,7 +40,10 @@ import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
-import { InstanceInfoResponse } from '@/generated/soulfire/instance.ts';
+import {
+  InstanceConfig,
+  InstanceInfoResponse,
+} from '@/generated/soulfire/instance.ts';
 import { Textarea } from '@/components/ui/textarea.tsx';
 
 function updateEntry(
@@ -416,12 +419,10 @@ function EntryComponent(props: {
   namespace: string;
   settingKey: string;
   entry: SettingType;
+  invalidateQuery: () => Promise<void>;
+  setConfig: (config: InstanceConfig) => Promise<void>;
 }) {
-  const queryClient = useQueryClient();
-  const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
-  const transport = useContext(TransportContext);
-  const instanceInfoQueryKey = ['instance-info', instanceInfo.id];
   const value = useMemo(() => {
     switch (props.entry.value.oneofKind) {
       case 'string': {
@@ -485,39 +486,14 @@ function EntryComponent(props: {
   }, [profile, props.entry, props.namespace, props.settingKey]);
   const setValueMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
-      if (transport === null) {
-        return;
-      }
-
       const targetProfile = convertToProto(
         updateEntry(props.namespace, props.settingKey, value, profile),
       );
-      await queryClient.cancelQueries({ queryKey: instanceInfoQueryKey });
-      queryClient.setQueryData<{
-        instanceInfo: InstanceInfoResponse;
-      }>(instanceInfoQueryKey, (old) => {
-        if (old === undefined) {
-          return;
-        }
 
-        return {
-          instanceInfo: {
-            ...old.instanceInfo,
-            config: targetProfile,
-          },
-        };
-      });
-
-      const instanceService = new InstanceServiceClient(transport);
-      await instanceService.updateInstanceConfig({
-        id: instanceInfo.id,
-        config: targetProfile,
-      });
+      await props.setConfig(targetProfile);
     },
     onSettled: () => {
-      void queryClient.invalidateQueries({
-        queryKey: instanceInfoQueryKey,
-      });
+      void props.invalidateQuery();
     },
   });
 
@@ -660,10 +636,14 @@ function EntryComponent(props: {
   }
 }
 
-export default function ClientSettingsPageComponent({
+function ClientSettingsPageComponent({
   data,
+  invalidateQuery,
+  setConfig,
 }: {
   data: SettingsPage;
+  invalidateQuery: () => Promise<void>;
+  setConfig: (config: InstanceConfig) => Promise<void>;
 }) {
   return (
     <>
@@ -674,9 +654,61 @@ export default function ClientSettingsPageComponent({
             key={page.key}
             settingKey={page.key}
             entry={page.type!}
+            setConfig={setConfig}
+            invalidateQuery={invalidateQuery}
           />
         );
       })}
     </>
+  );
+}
+
+export function InstanceSettingsPageComponent({
+  data,
+}: {
+  data: SettingsPage;
+}) {
+  const queryClient = useQueryClient();
+  const instanceInfo = useContext(InstanceInfoContext);
+  const transport = useContext(TransportContext);
+  const instanceInfoQueryKey = ['instance-info', instanceInfo.id];
+  return (
+    <ClientSettingsPageComponent
+      data={data}
+      setConfig={async (targetProfile) => {
+        if (transport === null) {
+          return;
+        }
+
+        await queryClient.cancelQueries({
+          queryKey: instanceInfoQueryKey,
+        });
+        queryClient.setQueryData<{
+          instanceInfo: InstanceInfoResponse;
+        }>(instanceInfoQueryKey, (old) => {
+          if (old === undefined) {
+            return;
+          }
+
+          return {
+            instanceInfo: {
+              ...old.instanceInfo,
+              config: targetProfile,
+            },
+          };
+        });
+
+        const instanceService = new InstanceServiceClient(transport);
+        await instanceService.updateInstanceConfig({
+          id: instanceInfo.id,
+          config: targetProfile,
+        });
+      }}
+      invalidateQuery={async () => {
+        await queryClient.invalidateQueries({
+          queryKey: instanceInfoQueryKey,
+        });
+      }}
+    />
   );
 }

@@ -2,7 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useCallback, useContext, useState } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import ClientSettingsPageComponent from '@/components/settings-page.tsx';
+import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import { DataTable } from '@/components/data-table.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
@@ -312,7 +312,7 @@ function ProxySettings() {
   return (
     <div className="grow flex h-full w-full flex-col gap-4 py-2 pl-2 max-w-4xl">
       <div className="flex flex-col gap-2">
-        <ClientSettingsPageComponent
+        <InstanceSettingsPageComponent
           data={clientInfo.settings.find((s) => s.namespace === 'proxy')!}
         />
       </div>

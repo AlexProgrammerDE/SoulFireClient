@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useContext } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import ClientSettingsPageComponent from '@/components/settings-page.tsx';
+import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import {
   Card,
   CardDescription,
@@ -145,7 +145,7 @@ function SettingsNamespace() {
           </div>
         )}
         <div className="flex flex-col gap-2">
-          <ClientSettingsPageComponent data={settingsEntry} />
+          <InstanceSettingsPageComponent data={settingsEntry} />
         </div>
       </div>
     </div>
