@@ -10,7 +10,7 @@ export default function SettingsPageButton({ page }: { page: SettingsPage }) {
   const instanceInfo = useContext(InstanceInfoContext);
   return (
     <Link
-      to="/dashboard/$instance/settings/$namespace"
+      to="/dashboard/instance/$instance/settings/$namespace"
       params={{
         instance: instanceInfo.id,
         namespace: page.namespace,

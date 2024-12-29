@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
-import { convertToProto } from '@/lib/types.ts';
+import { convertToInstanceProto } from '@/lib/types.ts';
 import { toast } from 'sonner';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
@@ -25,7 +25,7 @@ export default function ControlsMenu() {
       const promise = client
         .updateInstanceConfig({
           id: instanceInfo.id,
-          config: convertToProto(profile),
+          config: convertToInstanceProto(profile),
         })
         .then(() => {
           return client.changeInstanceState({

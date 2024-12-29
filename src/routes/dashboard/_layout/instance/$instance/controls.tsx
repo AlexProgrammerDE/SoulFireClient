@@ -8,7 +8,9 @@ import { getEnumKeyByValue } from '@/lib/types.ts';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { Badge } from '@/components/ui/badge';
 
-export const Route = createFileRoute('/dashboard/_layout/$instance/controls')({
+export const Route = createFileRoute(
+  '/dashboard/_layout/instance/$instance/controls',
+)({
   component: Console,
 });
 

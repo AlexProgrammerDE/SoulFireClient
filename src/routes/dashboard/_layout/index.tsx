@@ -104,7 +104,7 @@ function InstanceSelectPage() {
         loading: 'Creating instance...',
         success: (r) => {
           void navigate({
-            to: '/dashboard/$instance/controls',
+            to: '/dashboard/instance/$instance/controls',
             params: { instance: r.id },
           });
           return 'Instance created successfully';
@@ -176,7 +176,7 @@ function InstanceSelectPage() {
               <div key={instance.id} className="flex flex-row gap-2">
                 <Button asChild variant="secondary">
                   <Link
-                    to="/dashboard/$instance/controls"
+                    to="/dashboard/instance/$instance/controls"
                     params={{ instance: instance.id }}
                     search={{}}
                   >
@@ -205,6 +205,21 @@ function InstanceSelectPage() {
             ) && (
               <Button onClick={() => setCreateOpen(true)}>
                 Create instance
+              </Button>
+            )}
+            {hasGlobalPermission(
+              clientInfo,
+              GlobalPermission.CREATE_INSTANCE,
+            ) && (
+              <Button
+                variant="outline"
+                onClick={() =>
+                  void navigate({
+                    to: '/dashboard/admin/overview',
+                  })
+                }
+              >
+                Admin panel
               </Button>
             )}
             <CreateInstancePopup

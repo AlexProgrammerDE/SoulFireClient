@@ -6,6 +6,7 @@ import {
 import { Value } from '@/generated/google/protobuf/struct.ts';
 import { JsonValue } from '@protobuf-ts/runtime/build/types/json-typings';
 import { InstanceConfig } from '@/generated/soulfire/instance.ts';
+import { ServerConfig } from '@/generated/soulfire/server.ts';
 
 export const LOCAL_STORAGE_SERVER_ADDRESS_KEY = 'server-address';
 export const LOCAL_STORAGE_SERVER_TOKEN_KEY = 'server-token';
@@ -43,7 +44,7 @@ export type ProfileProxy = {
   password?: string;
 };
 
-export function convertToProto(data: ProfileRoot): InstanceConfig {
+export function convertToInstanceProto(data: ProfileRoot): InstanceConfig {
   return {
     settings: Object.entries(data.settings).map(([key, value]) => ({
       namespace: key,
@@ -57,7 +58,7 @@ export function convertToProto(data: ProfileRoot): InstanceConfig {
   };
 }
 
-export function convertFromProto(data: InstanceConfig): ProfileRoot {
+export function convertFromInstanceProto(data: InstanceConfig): ProfileRoot {
   const settings: Record<string, Record<string, JsonValue>> = {};
   for (const namespace of data.settings) {
     const entries: Record<string, JsonValue> = {};
@@ -71,5 +72,32 @@ export function convertFromProto(data: InstanceConfig): ProfileRoot {
     settings: settings,
     accounts: data.accounts,
     proxies: data.proxies,
+  };
+}
+
+export function convertToServerProto(data: BaseSettings): ServerConfig {
+  return {
+    settings: Object.entries(data.settings).map(([key, value]) => ({
+      namespace: key,
+      entries: Object.entries(value).map(([key, value]) => ({
+        key: key,
+        value: Value.fromJson(value),
+      })),
+    })),
+  };
+}
+
+export function convertFromServerProto(data: ServerConfig): BaseSettings {
+  const settings: Record<string, Record<string, JsonValue>> = {};
+  for (const namespace of data.settings) {
+    const entries: Record<string, JsonValue> = {};
+    for (const entry of namespace.entries) {
+      entries[entry.key] = Value.toJson(entry.value as Value);
+    }
+    settings[namespace.namespace] = entries;
+  }
+
+  return {
+    settings: settings,
   };
 }

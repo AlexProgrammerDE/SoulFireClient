@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button.tsx';
 import { DataTable } from '@/components/data-table.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
 import {
-  convertToProto,
+  convertToInstanceProto,
   getEnumKeyByValue,
   ProfileAccount,
   ProfileRoot,
@@ -37,7 +37,9 @@ import { isTauri } from '@/lib/utils.ts';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 
-export const Route = createFileRoute('/dashboard/_layout/$instance/accounts')({
+export const Route = createFileRoute(
+  '/dashboard/_layout/instance/$instance/accounts',
+)({
   component: AccountSettings,
 });
 
@@ -105,7 +107,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,
-        config: convertToProto(profile),
+        config: convertToInstanceProto(profile),
       });
     },
     onSuccess: () => {

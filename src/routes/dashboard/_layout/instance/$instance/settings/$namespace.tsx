@@ -24,7 +24,7 @@ import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 
 export const Route = createFileRoute(
-  '/dashboard/_layout/$instance/settings/$namespace',
+  '/dashboard/_layout/instance/$instance/settings/$namespace',
 )({
   component: SettingsNamespace,
 });
@@ -35,7 +35,7 @@ function SettingsNamespace() {
   const instanceInfo = useContext(InstanceInfoContext);
   const clientInfo = useContext(ClientInfoContext);
   const settingsEntry = clientInfo.settings.find(
-    (s) => s.namespace === namespace,
+    (s) => s.namespace === namespace && s.type === SettingsPage_Type.INSTANCE,
   );
   if (!settingsEntry) {
     return (
@@ -79,7 +79,7 @@ function SettingsNamespace() {
             <Select
               onValueChange={(value) => {
                 void navigate({
-                  to: '/dashboard/$instance/settings/$namespace',
+                  to: '/dashboard/instance/$instance/settings/$namespace',
                   params: {
                     instance: instanceInfo.id,
                     namespace: value,

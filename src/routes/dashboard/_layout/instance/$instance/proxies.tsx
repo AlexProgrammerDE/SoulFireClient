@@ -7,7 +7,7 @@ import { DataTable } from '@/components/data-table.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
 import {
-  convertToProto,
+  convertToInstanceProto,
   getEnumKeyByValue,
   ProfileProxy,
   ProfileRoot,
@@ -29,7 +29,9 @@ import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export const Route = createFileRoute('/dashboard/_layout/$instance/proxies')({
+export const Route = createFileRoute(
+  '/dashboard/_layout/instance/$instance/proxies',
+)({
   component: ProxySettings,
 });
 
@@ -162,7 +164,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,
-        config: convertToProto(profile),
+        config: convertToInstanceProto(profile),
       });
     },
     onSuccess: () => {

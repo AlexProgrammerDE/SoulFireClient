@@ -22,11 +22,18 @@ import { saveAs } from 'file-saver';
 import { mkdir, readTextFile, writeTextFile } from '@tauri-apps/plugin-fs';
 import { open, save } from '@tauri-apps/plugin-dialog';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
-import { appConfigDir, appDataDir, resolve } from '@tauri-apps/api/path';
+import {
+  appConfigDir,
+  appDataDir,
+  downloadDir,
+  resolve,
+} from '@tauri-apps/api/path';
 import { toast } from 'sonner';
 import CastMenuEntry from '@/components/cast-menu-entry.tsx';
 import {
-  convertToProto,
+  BaseSettings,
+  convertToInstanceProto,
+  convertToServerProto,
   LOCAL_STORAGE_TERMINAL_THEME_KEY,
   ProfileRoot,
 } from '@/lib/types.ts';
@@ -54,6 +61,8 @@ import {
 import { emit } from '@tauri-apps/api/event';
 import SFLogo from 'public/logo.svg?react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
+import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
+import { ServerConfigContext } from '@/components/providers/server-config-context.tsx';
 
 function data2blob(data: string) {
   const bytes = new Array(data.length);
@@ -70,8 +79,10 @@ export const DashboardMenuHeader = () => {
   const [aboutOpen, setAboutOpen] = useState(false);
   const navigate = useNavigate();
   const systemInfo = useContext(SystemInfoContext);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const instanceProfileInputRef = useRef<HTMLInputElement>(null);
+  const serverConfigInputRef = useRef<HTMLInputElement>(null);
   const profile = useContext(ProfileContext);
+  const serverConfig = useContext(ServerConfigContext);
   const transport = useContext(TransportContext);
   const clientInfo = useContext(ClientInfoContext);
   const instanceInfo = useContext(InstanceInfoContext);
@@ -85,12 +96,29 @@ export const DashboardMenuHeader = () => {
       const instanceService = new InstanceServiceClient(transport);
       await instanceService.updateInstanceConfig({
         id: instanceInfo.id,
-        config: convertToProto(profile),
+        config: convertToInstanceProto(profile),
       });
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({
         queryKey: ['instance-info', instanceInfo.id],
+      });
+    },
+  });
+  const setServerConfigMutation = useMutation({
+    mutationFn: async (profile: BaseSettings) => {
+      if (transport === null) {
+        return;
+      }
+
+      const serverService = new ServerServiceClient(transport);
+      await serverService.updateServerConfig({
+        config: convertToServerProto(profile),
+      });
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ['server-info'],
       });
     },
   });
@@ -147,7 +175,7 @@ export const DashboardMenuHeader = () => {
           </MenubarContent>
         </MenubarMenu>
         <input
-          ref={fileInputRef}
+          ref={instanceProfileInputRef}
           type="file"
           accept=".json"
           className="hidden"
@@ -166,6 +194,35 @@ export const DashboardMenuHeader = () => {
                   error: (e) => {
                     console.error(e);
                     return 'Failed to load profile';
+                  },
+                },
+              );
+            };
+            reader.readAsText(file);
+          }}
+        />
+        <input
+          ref={serverConfigInputRef}
+          type="file"
+          accept=".json"
+          className="hidden"
+          onInput={(e) => {
+            const file = (e.target as HTMLInputElement).files?.item(0);
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = () => {
+              const data = reader.result as string;
+              toast.promise(
+                setServerConfigMutation.mutateAsync(
+                  JSON.parse(data) as ProfileRoot,
+                ),
+                {
+                  loading: 'Loading config...',
+                  success: 'Config loaded',
+                  error: (e) => {
+                    console.error(e);
+                    return 'Failed to load config';
                   },
                 },
               );
@@ -274,7 +331,7 @@ export const DashboardMenuHeader = () => {
                 <>
                   <MenubarItem
                     onClick={() => {
-                      fileInputRef.current?.click();
+                      instanceProfileInputRef.current?.click();
                     }}
                   >
                     <DownloadIcon className="w-4 h-4 mr-2" />
@@ -321,6 +378,113 @@ export const DashboardMenuHeader = () => {
               >
                 <UploadIcon className="w-4 h-4 mr-2" />
                 <span>Save Profile</span>
+              </MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem
+                onClick={() => {
+                  void navigate({
+                    to: '/dashboard',
+                  });
+                }}
+              >
+                <ListIcon className="w-4 h-4 mr-2" />
+                <span>Back to selection</span>
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+        )}
+        {serverConfig && (
+          <MenubarMenu>
+            <MenubarTrigger>Instance</MenubarTrigger>
+            <MenubarContent>
+              {isTauri() && systemInfo ? (
+                <MenubarItem
+                  onClick={() => {
+                    void (async () => {
+                      const selected = await open({
+                        title: 'Load Config',
+                        filters: systemInfo.mobile
+                          ? undefined
+                          : [
+                              {
+                                name: 'SoulFire JSON Config',
+                                extensions: ['json'],
+                              },
+                            ],
+                        defaultPath: await downloadDir(),
+                        multiple: false,
+                        directory: false,
+                      });
+
+                      if (selected) {
+                        const data = await readTextFile(selected);
+                        toast.promise(
+                          (async () => {
+                            await setServerConfigMutation.mutateAsync(
+                              JSON.parse(data) as BaseSettings,
+                            );
+                          })(),
+                          {
+                            loading: 'Loading config...',
+                            success: 'Config loaded',
+                            error: (e) => {
+                              console.error(e);
+                              return 'Failed to load config';
+                            },
+                          },
+                        );
+                      }
+                    })();
+                  }}
+                >
+                  <DownloadIcon className="w-4 h-4 mr-2" />
+                  <span>Load Config</span>
+                </MenubarItem>
+              ) : (
+                <>
+                  <MenubarItem
+                    onClick={() => {
+                      serverConfigInputRef.current?.click();
+                    }}
+                  >
+                    <DownloadIcon className="w-4 h-4 mr-2" />
+                    <span>Load Config</span>
+                  </MenubarItem>
+                </>
+              )}
+              <MenubarItem
+                onClick={() => {
+                  const data = JSON.stringify(serverConfig, null, 2);
+                  if (isTauri()) {
+                    void (async () => {
+                      let selected = await save({
+                        title: 'Save Config',
+                        filters: [
+                          {
+                            name: 'SoulFire JSON Config',
+                            extensions: ['json'],
+                          },
+                        ],
+                        defaultPath: await downloadDir(),
+                      });
+
+                      if (selected) {
+                        if (!selected.endsWith('.json')) {
+                          selected += '.json';
+                        }
+
+                        await writeTextFile(selected, data);
+                      }
+                    })();
+                  } else {
+                    saveAs(data2blob(data), 'config.json');
+                  }
+
+                  toast.success('Config saved');
+                }}
+              >
+                <UploadIcon className="w-4 h-4 mr-2" />
+                <span>Save Config</span>
               </MenubarItem>
               <MenubarSeparator />
               <MenubarItem

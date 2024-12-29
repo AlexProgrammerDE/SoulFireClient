@@ -7,9 +7,9 @@ import {
 } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
-import { ProfileContext } from '@/components/providers/profile-context';
+import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
-import { convertFromProto } from '@/lib/types.ts';
+import { convertFromInstanceProto } from '@/lib/types.ts';
 import {
   InstanceConfig,
   InstanceInfoResponse,
@@ -34,14 +34,14 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@/components/ui/tooltip';
+} from '@/components/ui/tooltip.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import {
   MinecraftAccountProto_AccountTypeProto,
   ProxyProto_Type,
 } from '@/generated/soulfire/common.ts';
 
-export const Route = createFileRoute('/dashboard/_layout/$instance')({
+export const Route = createFileRoute('/dashboard/_layout/instance/$instance')({
   beforeLoad: (props) => {
     const { instance } = props.params;
     return {
@@ -337,7 +337,7 @@ function InstanceLayout() {
       title: 'Console',
       icon: TerminalIcon,
       linkProps: {
-        to: '/dashboard/$instance/controls',
+        to: '/dashboard/instance/$instance/controls',
         params: { instance: instance },
       },
     },
@@ -347,7 +347,7 @@ function InstanceLayout() {
         <DynamicIcon {...props} name={botSettings.iconId as never} />
       ),
       linkProps: {
-        to: '/dashboard/$instance/settings/$namespace',
+        to: '/dashboard/instance/$instance/settings/$namespace',
         params: { instance: instance, namespace: 'bot' },
       },
     },
@@ -355,7 +355,7 @@ function InstanceLayout() {
       title: 'Plugin Settings',
       icon: BlocksIcon,
       linkProps: {
-        to: '/dashboard/$instance/settings/$namespace',
+        to: '/dashboard/instance/$instance/settings/$namespace',
         params: {
           instance: instance,
           namespace: firstPluginSettings.namespace,
@@ -377,7 +377,7 @@ function InstanceLayout() {
         <DynamicIcon {...props} name={accountSettings.iconId as never} />
       ),
       linkProps: {
-        to: '/dashboard/$instance/accounts',
+        to: '/dashboard/instance/$instance/accounts',
         params: { instance: instance },
       },
     },
@@ -387,7 +387,7 @@ function InstanceLayout() {
         <DynamicIcon {...props} name={proxySettings.iconId as never} />
       ),
       linkProps: {
-        to: '/dashboard/$instance/proxies',
+        to: '/dashboard/instance/$instance/proxies',
         params: { instance: instance },
       },
     },
@@ -397,7 +397,7 @@ function InstanceLayout() {
         <DynamicIcon {...props} name={aiSettings.iconId as never} />
       ),
       linkProps: {
-        to: '/dashboard/$instance/settings/$namespace',
+        to: '/dashboard/instance/$instance/settings/$namespace',
         params: { instance: instance, namespace: 'ai' },
       },
     },
@@ -412,7 +412,7 @@ function InstanceLayout() {
         }}
       >
         <ProfileContext.Provider
-          value={convertFromProto(
+          value={convertFromInstanceProto(
             result.data.instanceInfo.config as InstanceConfig,
           )}
         >
