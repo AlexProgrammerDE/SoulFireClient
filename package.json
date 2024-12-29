@@ -15,7 +15,7 @@
     "generate-icons": "tauri icon -v public/logo.png",
     "dev-tauri": "cross-env RUST_LOG=info tauri dev",
     "build-tauri": "tauri build",
-    "generate-proto": "protoc --ts_out src/generated --ts_opt long_type_string --ts_opt optimize_code_size --proto_path protos $(find protos -iname \"*.proto\")",
+    "generate-proto": "tsx generate-proto.ts",
     "prepare": "husky",
     "pre-commit": "npx lint-staged"
   },
