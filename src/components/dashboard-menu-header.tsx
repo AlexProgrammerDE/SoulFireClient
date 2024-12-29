@@ -395,7 +395,7 @@ export const DashboardMenuHeader = () => {
         )}
         {serverConfig && (
           <MenubarMenu>
-            <MenubarTrigger>Instance</MenubarTrigger>
+            <MenubarTrigger>Server</MenubarTrigger>
             <MenubarContent>
               {isTauri() && systemInfo ? (
                 <MenubarItem
