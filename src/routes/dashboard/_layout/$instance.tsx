@@ -319,9 +319,6 @@ function InstanceLayout() {
   const aiSettings = clientInfo.settings.find(
     (settings) => settings.namespace === 'ai',
   );
-  const devSettings = clientInfo.settings.find(
-    (settings) => settings.namespace === 'dev',
-  );
   const firstPluginSettings = clientInfo.settings.find(
     (settings) => settings.owningPlugin !== undefined,
   );
@@ -330,7 +327,6 @@ function InstanceLayout() {
     !accountSettings ||
     !proxySettings ||
     !aiSettings ||
-    !devSettings ||
     !firstPluginSettings
   ) {
     throw new Error('Namespaces missing');
@@ -403,16 +399,6 @@ function InstanceLayout() {
       linkProps: {
         to: '/dashboard/$instance/settings/$namespace',
         params: { instance: instance, namespace: 'ai' },
-      },
-    },
-    {
-      title: 'Dev Settings',
-      icon: (props) => (
-        <DynamicIcon {...props} name={devSettings.iconId as never} />
-      ),
-      linkProps: {
-        to: '/dashboard/$instance/settings/$namespace',
-        params: { instance: instance, namespace: 'dev' },
       },
     },
   ];
