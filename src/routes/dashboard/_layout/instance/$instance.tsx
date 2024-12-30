@@ -16,8 +16,6 @@ import {
   MinecraftAccountProto_AccountTypeProto,
   ProxyProto_Type,
 } from '@/generated/soulfire/common.ts';
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar.tsx';
-import { AppSidebar } from '@/components/app-sidebar';
 
 export const Route = createFileRoute('/dashboard/_layout/instance/$instance')({
   beforeLoad: (props) => {
@@ -127,12 +125,7 @@ function InstanceLayout() {
             result.data.instanceInfo.config as InstanceConfig,
           )}
         >
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset>
-              <Outlet />
-            </SidebarInset>
-          </SidebarProvider>
+          <Outlet />
         </ProfileContext.Provider>
       </InstanceInfoContext.Provider>
     </>

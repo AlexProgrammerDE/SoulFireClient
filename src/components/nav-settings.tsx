@@ -27,7 +27,11 @@ type NavLinks = {
   linkProps: LinkProps;
 }[];
 
-export function NavSettings() {
+export function NavSettings({
+  expandPluginSettings,
+}: {
+  expandPluginSettings: boolean;
+}) {
   const instanceInfo = useContext(InstanceInfoContext);
   const clientInfo = useContext(ClientInfoContext);
 
@@ -126,7 +130,7 @@ export function NavSettings() {
         ))}
         <Collapsible
           asChild
-          defaultOpen={false}
+          defaultOpen={expandPluginSettings}
           className="group/collapsible group-data-[collapsible=icon]:hidden"
         >
           <SidebarMenuItem>

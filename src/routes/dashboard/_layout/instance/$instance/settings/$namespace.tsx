@@ -35,6 +35,7 @@ function SettingsNamespace() {
     <InstancePageLayout
       extraCrumbs={['Settings']}
       pageName={settingsEntry.pageName}
+      expandPluginSettings={pluginInfo !== undefined}
     >
       <div className="grow flex h-full w-full flex-row gap-2">
         <div className="grow flex h-full flex-col gap-4 pb-4">
