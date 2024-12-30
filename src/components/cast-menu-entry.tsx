@@ -1,16 +1,18 @@
-import {
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarTrigger,
-} from '@/components/ui/menubar.tsx';
 import { useEffect, useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { toast } from 'sonner';
 import { emit, listen } from '@tauri-apps/api/event';
-import { cn, cancellablePromiseDefault } from '@/lib/utils.ts';
+import { cancellablePromiseDefault, cn } from '@/lib/utils.ts';
 import { CastIcon, RadioTowerIcon } from 'lucide-react';
+import {
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+} from '@/components/ui/dropdown-menu.tsx';
 
 type MediaDeviceInfo = {
   id: string;
@@ -78,95 +80,102 @@ export default function CastMenuEntry() {
   }, []);
 
   return (
-    <MenubarMenu>
-      <MenubarTrigger>Cast</MenubarTrigger>
-      <MenubarContent>
-        {devices.length > 0 ? (
-          devices.map((currentDevice) => (
-            <MenubarItem
-              key={currentDevice.info.id}
-              onClick={() => {
-                if (currentDevice.transport_id !== null) {
-                  toast(`Already connected to ${currentDevice.info.name}`);
-                  return;
-                }
+    <DropdownMenuGroup>
+      <DropdownMenuSub>
+        <DropdownMenuSubTrigger>
+          <CastIcon className="h-4" />
+          <span>Cast</span>
+        </DropdownMenuSubTrigger>
+        <DropdownMenuPortal>
+          <DropdownMenuSubContent>
+            {devices.length > 0 ? (
+              devices.map((currentDevice) => (
+                <DropdownMenuItem
+                  key={currentDevice.info.id}
+                  onClick={() => {
+                    if (currentDevice.transport_id !== null) {
+                      toast(`Already connected to ${currentDevice.info.name}`);
+                      return;
+                    }
 
+                    toast.promise(
+                      invoke('connect_cast', {
+                        address: currentDevice.info.address,
+                        port: currentDevice.info.port,
+                      }),
+                      {
+                        loading: `Connecting to ${currentDevice.info.name}...`,
+                        success: (transportId) => {
+                          setDevices((devices) =>
+                            devices.map((device) => {
+                              if (
+                                device.info.full_name ===
+                                currentDevice.info.full_name
+                              ) {
+                                return {
+                                  ...device,
+                                  transport_id: transportId as string,
+                                };
+                              }
+
+                              return device;
+                            }),
+                          );
+
+                          return `Connected to ${currentDevice.info.name}!`;
+                        },
+                        error: (e) => {
+                          console.error(e);
+                          return `Failed to connect to ${currentDevice.info.name}`;
+                        },
+                      },
+                    );
+                  }}
+                >
+                  <CastIcon
+                    className={cn('w-4 h-4 mr-2', {
+                      'text-green-500': currentDevice.transport_id !== null,
+                      'text-red-500': currentDevice.transport_id === null,
+                    })}
+                  />
+                  <span>{currentDevice.info.name}</span>
+                </DropdownMenuItem>
+              ))
+            ) : (
+              <DropdownMenuItem
+                disabled
+                onClick={() => {
+                  toast('No devices found');
+                }}
+              >
+                No devices found
+              </DropdownMenuItem>
+            )}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => {
                 toast.promise(
-                  invoke('connect_cast', {
-                    address: currentDevice.info.address,
-                    port: currentDevice.info.port,
+                  emit('cast-global-message', {
+                    type: 'DISPLAY_LOGS',
+                    logs: ['Hello from SoulFire!'],
                   }),
                   {
-                    loading: `Connecting to ${currentDevice.info.name}...`,
-                    success: (transportId) => {
-                      setDevices((devices) =>
-                        devices.map((device) => {
-                          if (
-                            device.info.full_name ===
-                            currentDevice.info.full_name
-                          ) {
-                            return {
-                              ...device,
-                              transport_id: transportId as string,
-                            };
-                          }
-
-                          return device;
-                        }),
-                      );
-
-                      return `Connected to ${currentDevice.info.name}!`;
-                    },
+                    loading: 'Broadcasting message...',
+                    success: 'Message broadcasted!',
                     error: (e) => {
                       console.error(e);
-                      return `Failed to connect to ${currentDevice.info.name}`;
+                      return 'Failed to broadcast message';
                     },
                   },
                 );
               }}
             >
-              <CastIcon
-                className={cn('w-4 h-4 mr-2', {
-                  'text-green-500': currentDevice.transport_id !== null,
-                  'text-red-500': currentDevice.transport_id === null,
-                })}
-              />
-              <span>{currentDevice.info.name}</span>
-            </MenubarItem>
-          ))
-        ) : (
-          <MenubarItem
-            disabled
-            onClick={() => {
-              toast('No devices found');
-            }}
-          >
-            No devices found
-          </MenubarItem>
-        )}
-        <MenubarSeparator />
-        <MenubarItem
-          onClick={() => {
-            toast.promise(
-              emit('cast-global-message', {
-                type: 'DISPLAY_LOGS',
-                logs: ['Hello from SoulFire!'],
-              }),
-              {
-                loading: 'Broadcasting message...',
-                success: 'Message broadcasted!',
-                error: (e) => {
-                  console.error(e);
-                  return 'Failed to broadcast message';
-                },
-              },
-            );
-          }}
-        >
-          <RadioTowerIcon className="w-4 h-4 mr-2" />
-          <span>Broadcast test</span>
-        </MenubarItem>
-      </MenubarContent>
-    </MenubarMenu>
+              <RadioTowerIcon className="h-4" />
+              <span>Broadcast test</span>
+            </DropdownMenuItem>
+          </DropdownMenuSubContent>
+        </DropdownMenuPortal>
+      </DropdownMenuSub>
+    </DropdownMenuGroup>
   );
 }

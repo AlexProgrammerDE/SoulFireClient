@@ -1,14 +1,26 @@
 import * as React from 'react';
-import { useContext, useState } from 'react';
-import { ChevronsUpDown, GalleryVerticalEndIcon, Plus } from 'lucide-react';
-
+import { useContext, useRef, useState } from 'react';
+import {
+  ChevronsUpDownIcon,
+  DownloadIcon,
+  FileIcon,
+  FolderIcon,
+  GalleryVerticalEndIcon,
+  MinusIcon,
+  PlusIcon,
+  UploadIcon,
+} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
@@ -19,10 +31,20 @@ import {
 } from '@/components/ui/sidebar';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
-import { getEnumKeyByValue } from '@/lib/types.ts';
+import {
+  convertToInstanceProto,
+  getEnumKeyByValue,
+  ProfileRoot,
+} from '@/lib/types.ts';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { useNavigate } from '@tanstack/react-router';
-import { toCapitalizedWords } from '@/lib/utils.ts';
+import {
+  data2blob,
+  hasGlobalPermission,
+  hasInstancePermission,
+  isTauri,
+  toCapitalizedWords,
+} from '@/lib/utils.ts';
 import {
   CreateInstancePopup,
   CreateInstanceType,
@@ -32,6 +54,17 @@ import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { toast } from 'sonner';
 import { listQueryKey } from '@/routes/dashboard/_layout.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
+import { mkdir, readTextFile, writeTextFile } from '@tauri-apps/plugin-fs';
+import { appConfigDir, resolve } from '@tauri-apps/api/path';
+import { open, save } from '@tauri-apps/plugin-dialog';
+import { saveAs } from 'file-saver';
+import { ProfileContext } from '@/components/providers/profile-context.tsx';
+import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
+import {
+  GlobalPermission,
+  InstancePermission,
+} from '@/generated/soulfire/common.ts';
+import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 
 export function InstanceSwitcher() {
   const navigate = useNavigate();
@@ -40,7 +73,29 @@ export function InstanceSwitcher() {
   const { isMobile } = useSidebar();
   const instanceInfo = useContext(InstanceInfoContext);
   const instanceList = useContext(InstanceListContext);
+  const profile = useContext(ProfileContext);
+  const systemInfo = useContext(SystemInfoContext);
+  const clientInfo = useContext(ClientInfoContext);
+  const instanceProfileInputRef = useRef<HTMLInputElement>(null);
   const [createOpen, setCreateOpen] = useState(false);
+  const setProfileMutation = useMutation({
+    mutationFn: async (profile: ProfileRoot) => {
+      if (transport === null) {
+        return;
+      }
+
+      const instanceService = new InstanceServiceClient(transport);
+      await instanceService.updateInstanceConfig({
+        id: instanceInfo.id,
+        config: convertToInstanceProto(profile),
+      });
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ['instance-info', instanceInfo.id],
+      });
+    },
+  });
   const addMutation = useMutation({
     mutationFn: async (values: CreateInstanceType) => {
       if (transport === null) {
@@ -56,6 +111,7 @@ export function InstanceSwitcher() {
       toast.promise(promise, {
         loading: 'Creating instance...',
         success: (r) => {
+          setCreateOpen(false);
           void navigate({
             to: '/dashboard/instance/$instance/controls',
             params: { instance: r.id },
@@ -128,7 +184,7 @@ export function InstanceSwitcher() {
                   )}
                 </span>
               </div>
-              <ChevronsUpDown className="ml-auto" />
+              <ChevronsUpDownIcon className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -159,17 +215,242 @@ export function InstanceSwitcher() {
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
+            <input
+              ref={instanceProfileInputRef}
+              type="file"
+              accept=".json"
+              className="hidden"
+              onInput={(e) => {
+                const file = (e.target as HTMLInputElement).files?.item(0);
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = () => {
+                  const data = reader.result as string;
+                  toast.promise(
+                    setProfileMutation.mutateAsync(
+                      JSON.parse(data) as ProfileRoot,
+                    ),
+                    {
+                      loading: 'Loading profile...',
+                      success: 'Profile loaded',
+                      error: (e) => {
+                        console.error(e);
+                        return 'Failed to load profile';
+                      },
+                    },
+                  );
+                };
+                reader.readAsText(file);
+              }}
+            />
+            {isTauri() && systemInfo ? (
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger className="gap-2 p-2">
+                  <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                    <UploadIcon className="size-4" />
+                  </div>
+                  <div className="font-medium text-muted-foreground">
+                    Load Profile
+                  </div>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    {systemInfo.availableProfiles.length > 0 && (
+                      <>
+                        {systemInfo.availableProfiles.map((file) => (
+                          <DropdownMenuItem
+                            className="gap-2 p-2"
+                            key={file}
+                            onClick={() => {
+                              const loadProfile = async () => {
+                                const data = await readTextFile(
+                                  await resolve(
+                                    await resolve(
+                                      await appConfigDir(),
+                                      'profile',
+                                    ),
+                                    file,
+                                  ),
+                                );
+
+                                await setProfileMutation.mutateAsync(
+                                  JSON.parse(data) as ProfileRoot,
+                                );
+                              };
+                              toast.promise(loadProfile(), {
+                                loading: 'Loading profile...',
+                                success: 'Profile loaded',
+                                error: (e) => {
+                                  console.error(e);
+                                  return 'Failed to load profile';
+                                },
+                              });
+                            }}
+                          >
+                            <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                              <FileIcon className="size-4" />
+                            </div>
+                            {file}
+                          </DropdownMenuItem>
+                        ))}
+                        <DropdownMenuSeparator />
+                      </>
+                    )}
+                    <DropdownMenuItem
+                      className="gap-2 p-2"
+                      onClick={() => {
+                        void (async () => {
+                          const profileDir = await resolve(
+                            await appConfigDir(),
+                            'profile',
+                          );
+                          await mkdir(profileDir, { recursive: true });
+
+                          const selected = await open({
+                            title: 'Load Profile',
+                            filters: systemInfo.mobile
+                              ? undefined
+                              : [
+                                  {
+                                    name: 'SoulFire JSON Profile',
+                                    extensions: ['json'],
+                                  },
+                                ],
+                            defaultPath: profileDir,
+                            multiple: false,
+                            directory: false,
+                          });
+
+                          if (selected) {
+                            const data = await readTextFile(selected);
+                            toast.promise(
+                              (async () => {
+                                await setProfileMutation.mutateAsync(
+                                  JSON.parse(data) as ProfileRoot,
+                                );
+                              })(),
+                              {
+                                loading: 'Loading profile...',
+                                success: 'Profile loaded',
+                                error: (e) => {
+                                  console.error(e);
+                                  return 'Failed to load profile';
+                                },
+                              },
+                            );
+                          }
+                        })();
+                      }}
+                    >
+                      <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                        <FolderIcon className="size-4" />
+                      </div>
+                      Load from file
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+            ) : (
+              <>
+                <DropdownMenuItem
+                  className="gap-2 p-2"
+                  onClick={() => {
+                    instanceProfileInputRef.current?.click();
+                  }}
+                >
+                  <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                    <UploadIcon className="size-4" />
+                  </div>
+                  <div className="font-medium text-muted-foreground">
+                    Load Profile
+                  </div>
+                </DropdownMenuItem>
+              </>
+            )}
             <DropdownMenuItem
-              onClick={() => setCreateOpen(true)}
               className="gap-2 p-2"
+              onClick={() => {
+                const data = JSON.stringify(profile, null, 2);
+                if (isTauri()) {
+                  void (async () => {
+                    const profileDir = await resolve(
+                      await appConfigDir(),
+                      'profile',
+                    );
+                    await mkdir(profileDir, { recursive: true });
+
+                    let selected = await save({
+                      title: 'Save Profile',
+                      filters: [
+                        {
+                          name: 'SoulFire JSON Profile',
+                          extensions: ['json'],
+                        },
+                      ],
+                      defaultPath: profileDir,
+                    });
+
+                    if (selected) {
+                      if (!selected.endsWith('.json')) {
+                        selected += '.json';
+                      }
+
+                      await writeTextFile(selected, data);
+                    }
+                  })();
+                } else {
+                  saveAs(data2blob(data), 'profile.json');
+                }
+
+                toast.success('Profile saved');
+              }}
             >
               <div className="flex size-6 items-center justify-center rounded-md border bg-background">
-                <Plus className="size-4" />
+                <DownloadIcon className="size-4" />
               </div>
               <div className="font-medium text-muted-foreground">
-                Add instance
+                Save Profile
               </div>
             </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            {hasGlobalPermission(
+              clientInfo,
+              GlobalPermission.CREATE_INSTANCE,
+            ) && (
+              <DropdownMenuItem
+                onClick={() => setCreateOpen(true)}
+                className="gap-2 p-2"
+              >
+                <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                  <PlusIcon className="size-4" />
+                </div>
+                <div className="font-medium text-muted-foreground">
+                  Create instance
+                </div>
+              </DropdownMenuItem>
+            )}
+            {hasInstancePermission(
+              instanceInfo,
+              InstancePermission.DELETE_INSTANCE,
+            ) && (
+              <DropdownMenuItem
+                onClick={() => {
+                  deleteMutation.mutate(instanceInfo.id);
+                  void navigate({
+                    to: '/dashboard',
+                  });
+                }}
+                className="gap-2 p-2"
+              >
+                <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                  <MinusIcon className="size-4" />
+                </div>
+                <div className="font-medium text-muted-foreground">
+                  Delete instance
+                </div>
+              </DropdownMenuItem>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
         <CreateInstancePopup

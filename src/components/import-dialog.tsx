@@ -117,7 +117,7 @@ function UrlDialog(props: ImportDialogProps) {
                   });
                 }}
               >
-                <GlobeIcon className="w-4 h-4 mr-2" />
+                <GlobeIcon className="h-4" />
                 <span>Load from URL</span>
               </Button>
             </div>
@@ -208,7 +208,7 @@ function MainDialog(
                   }
                 }}
               >
-                <FileIcon className="w-4 h-4 mr-2" />
+                <FileIcon className="h-4" />
                 <span>From file</span>
               </Button>
               {hasInstancePermission(
@@ -220,7 +220,7 @@ function MainDialog(
                   className="w-full"
                   onClick={props.openUrlDialog}
                 >
-                  <GlobeIcon className="w-4 h-4 mr-2" />
+                  <GlobeIcon className="h-4" />
                   <span>From URL</span>
                 </Button>
               )}
@@ -261,7 +261,7 @@ function MainDialog(
                   })();
                 }}
               >
-                <ClipboardIcon className="w-4 h-4 mr-2" />
+                <ClipboardIcon className="h-4" />
                 <span>From clipboard</span>
               </Button>
             </div>
@@ -296,7 +296,7 @@ function TextInput(
           className="w-full"
           onClick={() => props.listener(inputText)}
         >
-          <TextIcon className="w-4 h-4 mr-2" />
+          <TextIcon className="h-4" />
           <span>Load from text</span>
         </Button>
       </div>

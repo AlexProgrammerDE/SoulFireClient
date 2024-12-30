@@ -2,16 +2,13 @@ import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { useContext } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
-import { LayoutDashboardIcon, PlusIcon, TrashIcon } from 'lucide-react';
+import { LayoutDashboardIcon } from 'lucide-react';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import { getEnumKeyByValue } from '@/lib/types.ts';
-import { hasGlobalPermission, hasInstancePermission } from '@/lib/utils.ts';
+import { hasGlobalPermission } from '@/lib/utils.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import {
-  GlobalPermission,
-  InstancePermission,
-} from '@/generated/soulfire/common.ts';
+import { GlobalPermission } from '@/generated/soulfire/common.ts';
 import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
 
 export const Route = createFileRoute('/dashboard/_layout/')({
@@ -46,27 +43,8 @@ function InstanceSelectPage() {
                     {getEnumKeyByValue(InstanceState, instance.state)})
                   </Link>
                 </Button>
-                {hasInstancePermission(
-                  instance,
-                  InstancePermission.DELETE_INSTANCE,
-                ) && (
-                  <Button variant="destructive" onClick={() => {}}>
-                    <TrashIcon className="w-fit h-4" />
-                  </Button>
-                )}
               </div>
             ))}
-            {hasGlobalPermission(
-              clientInfo,
-              GlobalPermission.CREATE_INSTANCE,
-            ) && (
-              <Button variant="secondary" className="flex flex-row gap-1">
-                <div>
-                  <PlusIcon className="h-4" />
-                </div>
-                <span>Create instance</span>
-              </Button>
-            )}
             {hasGlobalPermission(
               clientInfo,
               GlobalPermission.CREATE_INSTANCE,

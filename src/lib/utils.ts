@@ -101,3 +101,12 @@ export async function getGravatarUrl(email: string) {
   const hash = await getSHA256Hash(email);
   return `https://www.gravatar.com/avatar/${hash}?d=404`;
 }
+
+export function data2blob(data: string) {
+  const bytes = new Array(data.length);
+  for (let i = 0; i < data.length; i++) {
+    bytes[i] = data.charCodeAt(i);
+  }
+
+  return new Blob([new Uint8Array(bytes)]);
+}

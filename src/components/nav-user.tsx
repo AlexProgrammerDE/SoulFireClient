@@ -5,9 +5,10 @@ import {
   Bell,
   ChevronsUpDown,
   CreditCard,
+  LaptopMinimalIcon,
   LogOutIcon,
+  PaintRollerIcon,
   PowerIcon,
-  Sparkles,
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -17,7 +18,13 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
@@ -33,10 +40,17 @@ import { emit } from '@tauri-apps/api/event';
 import { toast } from 'sonner';
 import { exit } from '@tauri-apps/plugin-process';
 import { useNavigate } from '@tanstack/react-router';
+import { LOCAL_STORAGE_TERMINAL_THEME_KEY } from '@/lib/types.ts';
+import { flavorEntries } from '@catppuccin/palette';
+import { useTheme } from 'next-themes';
+import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
+import CastMenuEntry from '@/components/cast-menu-entry.tsx';
 
 export function NavUser() {
   const navigate = useNavigate();
   const clientInfo = useContext(ClientInfoContext);
+  const terminalTheme = useContext(TerminalThemeContext);
+  const { theme, setTheme } = useTheme();
   const { isMobile } = useSidebar();
 
   return (
@@ -91,11 +105,59 @@ export function NavUser() {
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Sparkles />
-                Upgrade to Pro
-              </DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <PaintRollerIcon className="h-4" />
+                  <span>Theme</span>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuRadioGroup
+                      value={theme}
+                      onValueChange={(e) => setTheme(e)}
+                    >
+                      <DropdownMenuRadioItem value="system">
+                        System
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="dark">
+                        Dark
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="light">
+                        Light
+                      </DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <LaptopMinimalIcon className="h-4" />
+                  <span>Terminal</span>
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuRadioGroup
+                      value={terminalTheme.value}
+                      onValueChange={(e) => {
+                        localStorage.setItem(
+                          LOCAL_STORAGE_TERMINAL_THEME_KEY,
+                          e,
+                        );
+                        terminalTheme.setter(e);
+                      }}
+                    >
+                      {flavorEntries.map((entry) => (
+                        <DropdownMenuRadioItem key={entry[0]} value={entry[0]}>
+                          {entry[1].emoji} {entry[1].name}
+                        </DropdownMenuRadioItem>
+                      ))}
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
             </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            {isTauri() && <CastMenuEntry />}
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>

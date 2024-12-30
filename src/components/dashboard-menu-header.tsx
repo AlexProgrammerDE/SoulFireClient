@@ -3,121 +3,27 @@ import {
   MenubarContent,
   MenubarItem,
   MenubarMenu,
-  MenubarRadioGroup,
-  MenubarRadioItem,
   MenubarSeparator,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
   MenubarTrigger,
 } from '@/components/ui/menubar.tsx';
-import { useTheme } from 'next-themes';
 import { isTauri } from '@/lib/utils.ts';
 import { AboutPopup } from '@/components/about-popup.tsx';
-import { useContext, useRef, useState } from 'react';
-import { useNavigate } from '@tanstack/react-router';
-import { ProfileContext } from '@/components/providers/profile-context.tsx';
-import { saveAs } from 'file-saver';
-import { mkdir, readTextFile, writeTextFile } from '@tauri-apps/plugin-fs';
-import { open, save } from '@tauri-apps/plugin-dialog';
+import { useContext, useState } from 'react';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
-import {
-  appConfigDir,
-  appDataDir,
-  downloadDir,
-  resolve,
-} from '@tauri-apps/api/path';
-import { toast } from 'sonner';
-import CastMenuEntry from '@/components/cast-menu-entry.tsx';
-import {
-  BaseSettings,
-  convertToInstanceProto,
-  convertToServerProto,
-  LOCAL_STORAGE_TERMINAL_THEME_KEY,
-  ProfileRoot,
-} from '@/lib/types.ts';
+import { appConfigDir, appDataDir } from '@tauri-apps/api/path';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
-import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
-import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
-import { flavorEntries } from '@catppuccin/palette';
 import {
   BookOpenTextIcon,
   CircleHelpIcon,
   CoffeeIcon,
-  DownloadIcon,
   FolderIcon,
-  LaptopMinimalIcon,
   LifeBuoyIcon,
-  ListIcon,
-  PaintRollerIcon,
-  UploadIcon,
 } from 'lucide-react';
 import SFLogo from 'public/logo.svg?react';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
-import { ServerConfigContext } from '@/components/providers/server-config-context.tsx';
-
-function data2blob(data: string) {
-  const bytes = new Array(data.length);
-  for (let i = 0; i < data.length; i++) {
-    bytes[i] = data.charCodeAt(i);
-  }
-
-  return new Blob([new Uint8Array(bytes)]);
-}
 
 export const DashboardMenuHeader = () => {
-  const queryClient = useQueryClient();
-  const { theme, setTheme } = useTheme();
   const [aboutOpen, setAboutOpen] = useState(false);
-  const navigate = useNavigate();
   const systemInfo = useContext(SystemInfoContext);
-  const instanceProfileInputRef = useRef<HTMLInputElement>(null);
-  const serverConfigInputRef = useRef<HTMLInputElement>(null);
-  const profile = useContext(ProfileContext);
-  const serverConfig = useContext(ServerConfigContext);
-  const transport = useContext(TransportContext);
-  const clientInfo = useContext(ClientInfoContext);
-  const instanceInfo = useContext(InstanceInfoContext);
-  const terminalTheme = useContext(TerminalThemeContext);
-  const setProfileMutation = useMutation({
-    mutationFn: async (profile: ProfileRoot) => {
-      if (transport === null) {
-        return;
-      }
-
-      const instanceService = new InstanceServiceClient(transport);
-      await instanceService.updateInstanceConfig({
-        id: instanceInfo.id,
-        config: convertToInstanceProto(profile),
-      });
-    },
-    onSuccess: () => {
-      void queryClient.invalidateQueries({
-        queryKey: ['instance-info', instanceInfo.id],
-      });
-    },
-  });
-  const setServerConfigMutation = useMutation({
-    mutationFn: async (profile: BaseSettings) => {
-      if (transport === null) {
-        return;
-      }
-
-      const serverService = new ServerServiceClient(transport);
-      await serverService.updateServerConfig({
-        config: convertToServerProto(profile),
-      });
-    },
-    onSuccess: () => {
-      void queryClient.invalidateQueries({
-        queryKey: ['server-info'],
-      });
-    },
-  });
 
   return (
     <>
@@ -129,383 +35,13 @@ export const DashboardMenuHeader = () => {
           <MenubarTrigger>
             <SFLogo className="size-6" />
           </MenubarTrigger>
-          <MenubarContent></MenubarContent>
         </MenubarMenu>
-        <input
-          ref={instanceProfileInputRef}
-          type="file"
-          accept=".json"
-          className="hidden"
-          onInput={(e) => {
-            const file = (e.target as HTMLInputElement).files?.item(0);
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = () => {
-              const data = reader.result as string;
-              toast.promise(
-                setProfileMutation.mutateAsync(JSON.parse(data) as ProfileRoot),
-                {
-                  loading: 'Loading profile...',
-                  success: 'Profile loaded',
-                  error: (e) => {
-                    console.error(e);
-                    return 'Failed to load profile';
-                  },
-                },
-              );
-            };
-            reader.readAsText(file);
-          }}
-        />
-        <input
-          ref={serverConfigInputRef}
-          type="file"
-          accept=".json"
-          className="hidden"
-          onInput={(e) => {
-            const file = (e.target as HTMLInputElement).files?.item(0);
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = () => {
-              const data = reader.result as string;
-              toast.promise(
-                setServerConfigMutation.mutateAsync(
-                  JSON.parse(data) as ProfileRoot,
-                ),
-                {
-                  loading: 'Loading config...',
-                  success: 'Config loaded',
-                  error: (e) => {
-                    console.error(e);
-                    return 'Failed to load config';
-                  },
-                },
-              );
-            };
-            reader.readAsText(file);
-          }}
-        />
-        {profile && (
-          <MenubarMenu>
-            <MenubarTrigger>Instance</MenubarTrigger>
-            <MenubarContent>
-              {isTauri() && systemInfo ? (
-                <MenubarSub>
-                  <MenubarSubTrigger>
-                    <DownloadIcon className="w-4 h-4 mr-2" />
-                    <span>Load Profile</span>
-                  </MenubarSubTrigger>
-                  <MenubarSubContent>
-                    {systemInfo.availableProfiles.length > 0 && (
-                      <>
-                        {systemInfo.availableProfiles.map((file) => (
-                          <MenubarItem
-                            key={file}
-                            onClick={() => {
-                              const loadProfile = async () => {
-                                const data = await readTextFile(
-                                  await resolve(
-                                    await resolve(
-                                      await appConfigDir(),
-                                      'profile',
-                                    ),
-                                    file,
-                                  ),
-                                );
-
-                                await setProfileMutation.mutateAsync(
-                                  JSON.parse(data) as ProfileRoot,
-                                );
-                              };
-                              toast.promise(loadProfile(), {
-                                loading: 'Loading profile...',
-                                success: 'Profile loaded',
-                                error: (e) => {
-                                  console.error(e);
-                                  return 'Failed to load profile';
-                                },
-                              });
-                            }}
-                          >
-                            {file}
-                          </MenubarItem>
-                        ))}
-                        <MenubarSeparator />
-                      </>
-                    )}
-                    <MenubarItem
-                      onClick={() => {
-                        void (async () => {
-                          const profileDir = await resolve(
-                            await appConfigDir(),
-                            'profile',
-                          );
-                          await mkdir(profileDir, { recursive: true });
-
-                          const selected = await open({
-                            title: 'Load Profile',
-                            filters: systemInfo.mobile
-                              ? undefined
-                              : [
-                                  {
-                                    name: 'SoulFire JSON Profile',
-                                    extensions: ['json'],
-                                  },
-                                ],
-                            defaultPath: profileDir,
-                            multiple: false,
-                            directory: false,
-                          });
-
-                          if (selected) {
-                            const data = await readTextFile(selected);
-                            toast.promise(
-                              (async () => {
-                                await setProfileMutation.mutateAsync(
-                                  JSON.parse(data) as ProfileRoot,
-                                );
-                              })(),
-                              {
-                                loading: 'Loading profile...',
-                                success: 'Profile loaded',
-                                error: (e) => {
-                                  console.error(e);
-                                  return 'Failed to load profile';
-                                },
-                              },
-                            );
-                          }
-                        })();
-                      }}
-                    >
-                      Load from file
-                    </MenubarItem>
-                  </MenubarSubContent>
-                </MenubarSub>
-              ) : (
-                <>
-                  <MenubarItem
-                    onClick={() => {
-                      instanceProfileInputRef.current?.click();
-                    }}
-                  >
-                    <DownloadIcon className="w-4 h-4 mr-2" />
-                    <span>Load Profile</span>
-                  </MenubarItem>
-                </>
-              )}
-              <MenubarItem
-                onClick={() => {
-                  const data = JSON.stringify(profile, null, 2);
-                  if (isTauri()) {
-                    void (async () => {
-                      const profileDir = await resolve(
-                        await appConfigDir(),
-                        'profile',
-                      );
-                      await mkdir(profileDir, { recursive: true });
-
-                      let selected = await save({
-                        title: 'Save Profile',
-                        filters: [
-                          {
-                            name: 'SoulFire JSON Profile',
-                            extensions: ['json'],
-                          },
-                        ],
-                        defaultPath: profileDir,
-                      });
-
-                      if (selected) {
-                        if (!selected.endsWith('.json')) {
-                          selected += '.json';
-                        }
-
-                        await writeTextFile(selected, data);
-                      }
-                    })();
-                  } else {
-                    saveAs(data2blob(data), 'profile.json');
-                  }
-
-                  toast.success('Profile saved');
-                }}
-              >
-                <UploadIcon className="w-4 h-4 mr-2" />
-                <span>Save Profile</span>
-              </MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem
-                onClick={() => {
-                  void navigate({
-                    to: '/dashboard',
-                  });
-                }}
-              >
-                <ListIcon className="w-4 h-4 mr-2" />
-                <span>Back to selection</span>
-              </MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-        )}
-        {serverConfig && (
-          <MenubarMenu>
-            <MenubarTrigger>Server</MenubarTrigger>
-            <MenubarContent>
-              {isTauri() && systemInfo ? (
-                <MenubarItem
-                  onClick={() => {
-                    void (async () => {
-                      const selected = await open({
-                        title: 'Load Config',
-                        filters: systemInfo.mobile
-                          ? undefined
-                          : [
-                              {
-                                name: 'SoulFire JSON Config',
-                                extensions: ['json'],
-                              },
-                            ],
-                        defaultPath: await downloadDir(),
-                        multiple: false,
-                        directory: false,
-                      });
-
-                      if (selected) {
-                        const data = await readTextFile(selected);
-                        toast.promise(
-                          (async () => {
-                            await setServerConfigMutation.mutateAsync(
-                              JSON.parse(data) as BaseSettings,
-                            );
-                          })(),
-                          {
-                            loading: 'Loading config...',
-                            success: 'Config loaded',
-                            error: (e) => {
-                              console.error(e);
-                              return 'Failed to load config';
-                            },
-                          },
-                        );
-                      }
-                    })();
-                  }}
-                >
-                  <DownloadIcon className="w-4 h-4 mr-2" />
-                  <span>Load Config</span>
-                </MenubarItem>
-              ) : (
-                <>
-                  <MenubarItem
-                    onClick={() => {
-                      serverConfigInputRef.current?.click();
-                    }}
-                  >
-                    <DownloadIcon className="w-4 h-4 mr-2" />
-                    <span>Load Config</span>
-                  </MenubarItem>
-                </>
-              )}
-              <MenubarItem
-                onClick={() => {
-                  const data = JSON.stringify(serverConfig, null, 2);
-                  if (isTauri()) {
-                    void (async () => {
-                      let selected = await save({
-                        title: 'Save Config',
-                        filters: [
-                          {
-                            name: 'SoulFire JSON Config',
-                            extensions: ['json'],
-                          },
-                        ],
-                        defaultPath: await downloadDir(),
-                      });
-
-                      if (selected) {
-                        if (!selected.endsWith('.json')) {
-                          selected += '.json';
-                        }
-
-                        await writeTextFile(selected, data);
-                      }
-                    })();
-                  } else {
-                    saveAs(data2blob(data), 'config.json');
-                  }
-
-                  toast.success('Config saved');
-                }}
-              >
-                <UploadIcon className="w-4 h-4 mr-2" />
-                <span>Save Config</span>
-              </MenubarItem>
-              <MenubarSeparator />
-              <MenubarItem
-                onClick={() => {
-                  void navigate({
-                    to: '/dashboard',
-                  });
-                }}
-              >
-                <ListIcon className="w-4 h-4 mr-2" />
-                <span>Back to selection</span>
-              </MenubarItem>
-            </MenubarContent>
-          </MenubarMenu>
-        )}
-        <MenubarMenu>
-          <MenubarTrigger>View</MenubarTrigger>
-          <MenubarContent>
-            <MenubarSub>
-              <MenubarSubTrigger>
-                <PaintRollerIcon className="w-4 h-4 mr-2" />
-                <span>Theme</span>
-              </MenubarSubTrigger>
-              <MenubarSubContent>
-                <MenubarRadioGroup
-                  value={theme}
-                  onValueChange={(e) => setTheme(e)}
-                >
-                  <MenubarRadioItem value="system">System</MenubarRadioItem>
-                  <MenubarRadioItem value="dark">Dark</MenubarRadioItem>
-                  <MenubarRadioItem value="light">Light</MenubarRadioItem>
-                </MenubarRadioGroup>
-              </MenubarSubContent>
-            </MenubarSub>
-            <MenubarSub>
-              <MenubarSubTrigger>
-                <LaptopMinimalIcon className="w-4 h-4 mr-2" />
-                <span>Terminal</span>
-              </MenubarSubTrigger>
-              <MenubarSubContent>
-                <MenubarRadioGroup
-                  value={terminalTheme.value}
-                  onValueChange={(e) => {
-                    localStorage.setItem(LOCAL_STORAGE_TERMINAL_THEME_KEY, e);
-                    terminalTheme.setter(e);
-                  }}
-                >
-                  {flavorEntries.map((entry) => (
-                    <MenubarRadioItem key={entry[0]} value={entry[0]}>
-                      {entry[1].emoji} {entry[1].name}
-                    </MenubarRadioItem>
-                  ))}
-                </MenubarRadioGroup>
-              </MenubarSubContent>
-            </MenubarSub>
-          </MenubarContent>
-        </MenubarMenu>
-        {isTauri() && <CastMenuEntry />}
         <MenubarMenu>
           <MenubarTrigger>Help</MenubarTrigger>
           <MenubarContent>
             <a href="https://soulfiremc.com/docs" target="_blank">
               <MenubarItem>
-                <BookOpenTextIcon className="w-4 h-4 mr-2" />
+                <BookOpenTextIcon className="h-4" />
                 <span>Documentation</span>
               </MenubarItem>
             </a>
@@ -546,13 +82,13 @@ export const DashboardMenuHeader = () => {
             <MenubarSeparator />
             <a href="https://ko-fi.com/alexprogrammerde" target="_blank">
               <MenubarItem>
-                <CoffeeIcon className="w-4 h-4 mr-2" />
+                <CoffeeIcon className="h-4" />
                 <span>Buy me a Coffee</span>
               </MenubarItem>
             </a>
             <a href="https://soulfiremc.com/discord" target="_blank">
               <MenubarItem>
-                <LifeBuoyIcon className="w-4 h-4 mr-2" />
+                <LifeBuoyIcon className="h-4" />
                 <span>Support</span>
               </MenubarItem>
             </a>
@@ -566,7 +102,7 @@ export const DashboardMenuHeader = () => {
                     })();
                   }}
                 >
-                  <FolderIcon className="w-4 h-4 mr-2" />
+                  <FolderIcon className="h-4" />
                   <span>Config directory</span>
                 </MenubarItem>
                 <MenubarItem
@@ -576,7 +112,7 @@ export const DashboardMenuHeader = () => {
                     })();
                   }}
                 >
-                  <FolderIcon className="w-4 h-4 mr-2" />
+                  <FolderIcon className="h-4" />
                   <span>Data directory</span>
                 </MenubarItem>
                 <MenubarSeparator />
@@ -587,7 +123,7 @@ export const DashboardMenuHeader = () => {
                 setAboutOpen(true);
               }}
             >
-              <CircleHelpIcon className="w-4 h-4 mr-2" />
+              <CircleHelpIcon className="h-4" />
               <span>About</span>
             </MenubarItem>
           </MenubarContent>
