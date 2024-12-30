@@ -5,7 +5,8 @@ import {
   Bell,
   ChevronsUpDown,
   CreditCard,
-  LogOut,
+  LogOutIcon,
+  PowerIcon,
   Sparkles,
 } from 'lucide-react';
 
@@ -27,8 +28,14 @@ import {
 } from '@/components/ui/sidebar';
 import { useContext } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
+import { isTauri } from '@/lib/utils.ts';
+import { emit } from '@tauri-apps/api/event';
+import { toast } from 'sonner';
+import { exit } from '@tauri-apps/plugin-process';
+import { useNavigate } from '@tanstack/react-router';
 
 export function NavUser() {
+  const navigate = useNavigate();
   const clientInfo = useContext(ClientInfoContext);
   const { isMobile } = useSidebar();
 
@@ -43,7 +50,7 @@ export function NavUser() {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage
-                  src={clientInfo.username}
+                  src={clientInfo.gravatarUrl}
                   alt={clientInfo.username}
                 />
                 <AvatarFallback className="rounded-lg">
@@ -69,7 +76,7 @@ export function NavUser() {
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
-                    src={clientInfo.username}
+                    src={clientInfo.gravatarUrl}
                     alt={clientInfo.username}
                   />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
@@ -105,9 +112,43 @@ export function NavUser() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOut />
-              Log out
+            {clientInfo && (
+              <DropdownMenuItem
+                onClick={() => {
+                  const disconnect = async () => {
+                    if (isTauri()) {
+                      await emit('kill-integrated-server', {});
+                    }
+                    await navigate({
+                      to: '/',
+                      replace: true,
+                    });
+                  };
+                  toast.promise(disconnect(), {
+                    loading: 'Disconnecting...',
+                    success: 'Disconnected',
+                    error: (e) => {
+                      console.error(e);
+                      return 'Failed to disconnect';
+                    },
+                  });
+                }}
+              >
+                <LogOutIcon className="h-4 mr-2" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            )}
+            <DropdownMenuItem
+              onClick={() => {
+                if (isTauri()) {
+                  void exit(0);
+                } else {
+                  window.location.href = 'about:blank';
+                }
+              }}
+            >
+              <PowerIcon className="h-4 mr-2" />
+              <span>Exit</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

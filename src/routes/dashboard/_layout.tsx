@@ -25,7 +25,7 @@ import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 import { ClientDataResponse } from '@/generated/soulfire/config.ts';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { isTauri } from '@/lib/utils.ts';
+import { getGravatarUrl, isTauri } from '@/lib/utils.ts';
 import { emit } from '@tauri-apps/api/event';
 import { demoData } from '@/demo-data.ts';
 import {
@@ -103,12 +103,14 @@ export const Route = createFileRoute('/dashboard/_layout')({
   ): Promise<{
     transport: GrpcWebFetchTransport | null;
     clientData: ClientDataResponse;
+    gravatarUrl: string;
   }> => {
     const transport = createTransport();
     if (transport === null) {
       return {
         transport,
         clientData: demoData,
+        gravatarUrl: await getGravatarUrl(demoData.email),
       };
     }
 
@@ -125,6 +127,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
     return {
       transport,
       clientData: configResult.response,
+      gravatarUrl: await getGravatarUrl(configResult.response.email),
     };
   },
   errorComponent: ErrorComponent,
@@ -198,7 +201,7 @@ function PendingComponent() {
 }
 
 function DashboardLayout() {
-  const { transport, clientData } = Route.useLoaderData();
+  const { transport, clientData, gravatarUrl } = Route.useLoaderData();
   const { listQueryOptions } = Route.useRouteContext();
   const instanceList = useQuery(listQueryOptions);
 
@@ -212,7 +215,12 @@ function DashboardLayout() {
 
   return (
     <TransportContext.Provider value={transport}>
-      <ClientInfoContext.Provider value={clientData}>
+      <ClientInfoContext.Provider
+        value={{
+          ...clientData,
+          gravatarUrl,
+        }}
+      >
         <InstanceListContext.Provider value={instanceList.data.instanceList}>
           <Outlet />
         </InstanceListContext.Provider>

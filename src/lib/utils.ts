@@ -89,3 +89,15 @@ export function toCapitalizedWords(str: string) {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join(' ');
 }
+
+export async function getSHA256Hash(input: string): Promise<string> {
+  const textAsBuffer = new TextEncoder().encode(input);
+  const hashBuffer = await window.crypto.subtle.digest('SHA-256', textAsBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((item) => item.toString(16).padStart(2, '0')).join('');
+}
+
+export async function getGravatarUrl(email: string) {
+  const hash = await getSHA256Hash(email);
+  return `https://www.gravatar.com/avatar/${hash}?d=404`;
+}

@@ -13,7 +13,6 @@ import {
 } from '@/components/ui/menubar.tsx';
 import { useTheme } from 'next-themes';
 import { isTauri } from '@/lib/utils.ts';
-import { exit } from '@tauri-apps/plugin-process';
 import { AboutPopup } from '@/components/about-popup.tsx';
 import { useContext, useRef, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
@@ -54,11 +53,8 @@ import {
   LifeBuoyIcon,
   ListIcon,
   PaintRollerIcon,
-  PowerIcon,
-  UnplugIcon,
   UploadIcon,
 } from 'lucide-react';
-import { emit } from '@tauri-apps/api/event';
 import SFLogo from 'public/logo.svg?react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
@@ -133,46 +129,7 @@ export const DashboardMenuHeader = () => {
           <MenubarTrigger>
             <SFLogo className="size-6" />
           </MenubarTrigger>
-          <MenubarContent>
-            {clientInfo && (
-              <MenubarItem
-                onClick={() => {
-                  const disconnect = async () => {
-                    if (isTauri()) {
-                      await emit('kill-integrated-server', {});
-                    }
-                    await navigate({
-                      to: '/',
-                      replace: true,
-                    });
-                  };
-                  toast.promise(disconnect(), {
-                    loading: 'Disconnecting...',
-                    success: 'Disconnected',
-                    error: (e) => {
-                      console.error(e);
-                      return 'Failed to disconnect';
-                    },
-                  });
-                }}
-              >
-                <UnplugIcon className="w-4 h-4 mr-2" />
-                <span>Disconnect</span>
-              </MenubarItem>
-            )}
-            <MenubarItem
-              onClick={() => {
-                if (isTauri()) {
-                  void exit(0);
-                } else {
-                  window.location.href = 'about:blank';
-                }
-              }}
-            >
-              <PowerIcon className="w-4 h-4 mr-2" />
-              <span>Exit</span>
-            </MenubarItem>
-          </MenubarContent>
+          <MenubarContent></MenubarContent>
         </MenubarMenu>
         <input
           ref={instanceProfileInputRef}
