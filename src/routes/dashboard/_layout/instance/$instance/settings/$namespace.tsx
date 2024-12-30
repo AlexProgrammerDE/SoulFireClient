@@ -32,7 +32,10 @@ function SettingsNamespace() {
     (plugin) => plugin.id === settingsEntry.owningPlugin,
   );
   return (
-    <InstancePageLayout pageName={settingsEntry.pageName}>
+    <InstancePageLayout
+      extraCrumbs={['Settings']}
+      pageName={settingsEntry.pageName}
+    >
       <div className="grow flex h-full w-full flex-row gap-2">
         <div className="grow flex h-full flex-col gap-4 pb-4">
           {pluginInfo && (

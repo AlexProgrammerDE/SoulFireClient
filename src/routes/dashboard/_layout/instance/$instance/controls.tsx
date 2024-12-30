@@ -19,7 +19,7 @@ function Console() {
   const instanceInfo = useContext(InstanceInfoContext);
 
   return (
-    <InstancePageLayout pageName="Console">
+    <InstancePageLayout extraCrumbs={['Controls']} pageName="Console">
       <div className="grow flex h-full w-full flex-col gap-2 pb-4">
         <div className="flex flex-col gap-2">
           <h2 className="text-xl font-semibold">

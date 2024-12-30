@@ -386,7 +386,7 @@ function AccountSettings() {
   const profile = useContext(ProfileContext);
 
   return (
-    <InstancePageLayout pageName="Account Settings">
+    <InstancePageLayout extraCrumbs={['Settings']} pageName="Account Settings">
       <div className="grow flex h-full w-full flex-col gap-4 pb-4 max-w-4xl">
         <div className="flex flex-col gap-2">
           <InstanceSettingsPageComponent

@@ -13,6 +13,7 @@ import { InstanceInfoContext } from '@/components/providers/instance-info-contex
 
 export default function InstancePageLayout(props: {
   children: ReactNode;
+  extraCrumbs?: string[];
   pageName: string;
 }) {
   const instanceInfo = useContext(InstanceInfoContext);
@@ -28,6 +29,14 @@ export default function InstancePageLayout(props: {
               <BreadcrumbItem className="hidden md:block">
                 {instanceInfo.friendlyName}
               </BreadcrumbItem>
+              {(props.extraCrumbs || []).map((crumb) => (
+                <>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem className="hidden md:block">
+                    {crumb}
+                  </BreadcrumbItem>
+                </>
+              ))}
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
                 <BreadcrumbPage>{props.pageName}</BreadcrumbPage>

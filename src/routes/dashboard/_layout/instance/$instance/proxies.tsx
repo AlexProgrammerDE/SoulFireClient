@@ -313,7 +313,7 @@ function ProxySettings() {
   const profile = useContext(ProfileContext);
 
   return (
-    <InstancePageLayout pageName="Proxy Settings">
+    <InstancePageLayout extraCrumbs={['Settings']} pageName="Proxy Settings">
       <div className="grow flex h-full w-full flex-col gap-4 pb-4 max-w-4xl">
         <div className="flex flex-col gap-2">
           <InstanceSettingsPageComponent
