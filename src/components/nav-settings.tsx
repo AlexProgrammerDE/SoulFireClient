@@ -143,7 +143,7 @@ export function NavSettings({
             <CollapsibleTrigger
               onClick={(e) => {
                 // When sidebar closed, open sidebar and make sure collapsible is expanded
-                if (!sidebar.open) {
+                if (!sidebar.isMobile && !sidebar.open) {
                   e.preventDefault();
                   sidebar.setOpen(true);
                   if (!pluginCollapsibleOpen) {
