@@ -205,6 +205,9 @@ export function InstanceSwitcher() {
     return () => document.removeEventListener('keydown', down);
   }, [instanceList.instances, navigate]);
 
+  const capitalizedState = toCapitalizedWords(
+    getEnumKeyByValue(InstanceState, instanceInfo.state),
+  );
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -213,6 +216,7 @@ export function InstanceSwitcher() {
             <SidebarMenuButton
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+              tooltip={`${instanceInfo.friendlyName} | ${capitalizedState}`}
             >
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <InstanceIcon className="size-4" />
@@ -221,11 +225,7 @@ export function InstanceSwitcher() {
                 <span className="truncate font-semibold">
                   {instanceInfo.friendlyName}
                 </span>
-                <span className="truncate text-xs">
-                  {toCapitalizedWords(
-                    getEnumKeyByValue(InstanceState, instanceInfo.state),
-                  )}
-                </span>
+                <span className="truncate text-xs">{capitalizedState}</span>
               </div>
               <ChevronsUpDownIcon className="ml-auto" />
             </SidebarMenuButton>

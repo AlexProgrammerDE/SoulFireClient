@@ -38,7 +38,7 @@ export function NavControls() {
       <SidebarMenu>
         {navLinks.map((item) => (
           <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild tooltip={item.title}>
               <Link {...item.linkProps}>
                 <item.icon />
                 <span>{item.title}</span>
