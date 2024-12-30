@@ -10,6 +10,7 @@ import {
   InstanceInfoResponse,
   InstanceListResponse_Instance,
 } from '@/generated/soulfire/instance.ts';
+import { sha256 } from 'js-sha256';
 
 export function getTerminalTheme() {
   return localStorage.getItem(LOCAL_STORAGE_TERMINAL_THEME_KEY) ?? 'mocha';
@@ -90,15 +91,8 @@ export function toCapitalizedWords(str: string) {
     .join(' ');
 }
 
-export async function getSHA256Hash(input: string): Promise<string> {
-  const textAsBuffer = new TextEncoder().encode(input);
-  const hashBuffer = await window.crypto.subtle.digest('SHA-256', textAsBuffer);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map((item) => item.toString(16).padStart(2, '0')).join('');
-}
-
-export async function getGravatarUrl(email: string) {
-  const hash = await getSHA256Hash(email);
+export function getGravatarUrl(email: string) {
+  const hash = sha256(email);
   return `https://www.gravatar.com/avatar/${hash}?d=404`;
 }
 

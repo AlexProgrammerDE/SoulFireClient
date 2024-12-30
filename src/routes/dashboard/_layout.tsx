@@ -109,7 +109,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
       return {
         transport,
         clientData: demoData,
-        gravatarUrl: await getGravatarUrl(demoData.email),
+        gravatarUrl: getGravatarUrl(demoData.email),
       };
     }
 
@@ -126,7 +126,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
     return {
       transport,
       clientData: configResult.response,
-      gravatarUrl: await getGravatarUrl(configResult.response.email),
+      gravatarUrl: getGravatarUrl(configResult.response.email),
     };
   },
   errorComponent: ErrorComponent,
