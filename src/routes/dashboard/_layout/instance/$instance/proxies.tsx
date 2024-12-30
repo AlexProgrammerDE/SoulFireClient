@@ -28,6 +28,7 @@ import { InstanceInfoContext } from '@/components/providers/instance-info-contex
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import InstancePageLayout from '@/components/instance-page-layout.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/proxies',
@@ -312,19 +313,21 @@ function ProxySettings() {
   const profile = useContext(ProfileContext);
 
   return (
-    <div className="grow flex h-full w-full flex-col gap-4 py-2 pl-2 max-w-4xl">
-      <div className="flex flex-col gap-2">
-        <InstanceSettingsPageComponent
-          data={clientInfo.settings.find((s) => s.namespace === 'proxy')!}
+    <InstancePageLayout pageName="Proxy Settings">
+      <div className="grow flex h-full w-full flex-col gap-4 pb-4 max-w-4xl">
+        <div className="flex flex-col gap-2">
+          <InstanceSettingsPageComponent
+            data={clientInfo.settings.find((s) => s.namespace === 'proxy')!}
+          />
+        </div>
+        <DataTable
+          filterDisplayName="proxies"
+          filterKey="address"
+          columns={columns}
+          data={profile.proxies}
+          extraHeader={ExtraHeader}
         />
       </div>
-      <DataTable
-        filterDisplayName="proxies"
-        filterKey="address"
-        columns={columns}
-        data={profile.proxies}
-        extraHeader={ExtraHeader}
-      />
-    </div>
+    </InstancePageLayout>
   );
 }

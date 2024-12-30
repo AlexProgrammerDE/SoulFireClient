@@ -7,6 +7,7 @@ import { InstanceInfoContext } from '@/components/providers/instance-info-contex
 import { getEnumKeyByValue } from '@/lib/types.ts';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { Badge } from '@/components/ui/badge';
+import InstancePageLayout from '@/components/instance-page-layout';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/controls',
@@ -18,18 +19,20 @@ function Console() {
   const instanceInfo = useContext(InstanceInfoContext);
 
   return (
-    <div className="grow flex h-full w-full flex-col gap-2 py-2 pl-2">
-      <div className="flex flex-col gap-2">
-        <h2 className="text-xl font-semibold">
-          {instanceInfo.friendlyName}
-          <Badge className="m-auto ml-2" variant="secondary">
-            {getEnumKeyByValue(InstanceState, instanceInfo.state)}
-          </Badge>
-        </h2>
-        <TerminalComponent />
-        <CommandInput />
+    <InstancePageLayout pageName="Console">
+      <div className="grow flex h-full w-full flex-col gap-2 pb-4">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-xl font-semibold">
+            {instanceInfo.friendlyName}
+            <Badge className="m-auto ml-2" variant="secondary">
+              {getEnumKeyByValue(InstanceState, instanceInfo.state)}
+            </Badge>
+          </h2>
+          <TerminalComponent />
+          <CommandInput />
+        </div>
+        <ControlsMenu />
       </div>
-      <ControlsMenu />
-    </div>
+    </InstancePageLayout>
   );
 }

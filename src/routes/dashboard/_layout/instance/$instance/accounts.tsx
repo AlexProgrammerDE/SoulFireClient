@@ -36,6 +36,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isTauri } from '@/lib/utils.ts';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
+import InstancePageLayout from '@/components/instance-page-layout.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/accounts',
@@ -385,19 +386,21 @@ function AccountSettings() {
   const profile = useContext(ProfileContext);
 
   return (
-    <div className="grow flex h-full w-full flex-col gap-4 py-2 pl-2 max-w-4xl">
-      <div className="flex flex-col gap-2">
-        <InstanceSettingsPageComponent
-          data={clientInfo.settings.find((s) => s.namespace === 'account')!}
+    <InstancePageLayout pageName="Account Settings">
+      <div className="grow flex h-full w-full flex-col gap-4 pb-4 max-w-4xl">
+        <div className="flex flex-col gap-2">
+          <InstanceSettingsPageComponent
+            data={clientInfo.settings.find((s) => s.namespace === 'account')!}
+          />
+        </div>
+        <DataTable
+          filterDisplayName="accounts"
+          filterKey="lastKnownName"
+          columns={columns}
+          data={profile.accounts}
+          extraHeader={ExtraHeader}
         />
       </div>
-      <DataTable
-        filterDisplayName="accounts"
-        filterKey="lastKnownName"
-        columns={columns}
-        data={profile.accounts}
-        extraHeader={ExtraHeader}
-      />
-    </div>
+    </InstancePageLayout>
   );
 }

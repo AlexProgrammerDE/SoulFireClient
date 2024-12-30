@@ -1,4 +1,4 @@
-import { createFileRoute, LinkProps, Outlet } from '@tanstack/react-router';
+import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
@@ -12,30 +12,12 @@ import {
 import { queryClientInstance } from '@/lib/query.ts';
 import { useQuery } from '@tanstack/react-query';
 import { LoadingComponent } from '@/components/loading-component.tsx';
-import { ReactNode, useContext } from 'react';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import { BlocksIcon, TerminalIcon } from 'lucide-react';
-import DynamicIcon from '@/components/dynamic-icon.tsx';
-import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import {
   MinecraftAccountProto_AccountTypeProto,
   ProxyProto_Type,
 } from '@/generated/soulfire/common.ts';
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from '@/components/ui/sidebar.tsx';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar.tsx';
 import { AppSidebar } from '@/components/app-sidebar';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
-import { Separator } from '@/components/ui/separator';
 
 export const Route = createFileRoute('/dashboard/_layout/instance/$instance')({
   beforeLoad: (props) => {
@@ -119,22 +101,10 @@ export const Route = createFileRoute('/dashboard/_layout/instance/$instance')({
   component: InstanceLayout,
 });
 
-interface NavProps {
-  isCollapsed: boolean;
-  links: {
-    title: string;
-    label?: string;
-    icon: (props: { className: string }) => ReactNode;
-    linkProps: LinkProps;
-    extraActiveUrls?: string[];
-  }[];
-}
-
 function InstanceLayout() {
   const { instance } = Route.useParams();
   const { infoQueryOptions } = Route.useRouteContext();
   const result = useQuery(infoQueryOptions);
-  const clientInfo = useContext(ClientInfoContext);
 
   if (result.isError) {
     throw result.error;
@@ -143,102 +113,6 @@ function InstanceLayout() {
   if (result.isLoading || !result.data) {
     return <LoadingComponent />;
   }
-
-  const botSettings = clientInfo.settings.find(
-    (settings) => settings.namespace === 'bot',
-  );
-  const accountSettings = clientInfo.settings.find(
-    (settings) => settings.namespace === 'account',
-  );
-  const proxySettings = clientInfo.settings.find(
-    (settings) => settings.namespace === 'proxy',
-  );
-  const aiSettings = clientInfo.settings.find(
-    (settings) => settings.namespace === 'ai',
-  );
-  const firstPluginSettings = clientInfo.settings.find(
-    (settings) => settings.owningPlugin !== undefined,
-  );
-  if (
-    !botSettings ||
-    !accountSettings ||
-    !proxySettings ||
-    !aiSettings ||
-    !firstPluginSettings
-  ) {
-    throw new Error('Namespaces missing');
-  }
-
-  const navLinks: NavProps['links'] = [
-    {
-      title: 'Console',
-      icon: TerminalIcon,
-      linkProps: {
-        to: '/dashboard/instance/$instance/controls',
-        params: { instance: instance },
-      },
-    },
-    {
-      title: 'Bot Settings',
-      icon: (props) => (
-        <DynamicIcon {...props} name={botSettings.iconId as never} />
-      ),
-      linkProps: {
-        to: '/dashboard/instance/$instance/settings/$namespace',
-        params: { instance: instance, namespace: 'bot' },
-      },
-    },
-    {
-      title: 'Plugin Settings',
-      icon: BlocksIcon,
-      linkProps: {
-        to: '/dashboard/instance/$instance/settings/$namespace',
-        params: {
-          instance: instance,
-          namespace: firstPluginSettings.namespace,
-        },
-      },
-      extraActiveUrls: clientInfo.settings
-        .filter(
-          (settings) =>
-            settings.owningPlugin !== undefined &&
-            settings.namespace !== firstPluginSettings.namespace,
-        )
-        .map(
-          (settings) => `/dashboard/${instance}/settings/${settings.namespace}`,
-        ),
-    },
-    {
-      title: 'Account Settings',
-      icon: (props) => (
-        <DynamicIcon {...props} name={accountSettings.iconId as never} />
-      ),
-      linkProps: {
-        to: '/dashboard/instance/$instance/accounts',
-        params: { instance: instance },
-      },
-    },
-    {
-      title: 'Proxy Settings',
-      icon: (props) => (
-        <DynamicIcon {...props} name={proxySettings.iconId as never} />
-      ),
-      linkProps: {
-        to: '/dashboard/instance/$instance/proxies',
-        params: { instance: instance },
-      },
-    },
-    {
-      title: 'AI Settings',
-      icon: (props) => (
-        <DynamicIcon {...props} name={aiSettings.iconId as never} />
-      ),
-      linkProps: {
-        to: '/dashboard/instance/$instance/settings/$namespace',
-        params: { instance: instance, namespace: 'ai' },
-      },
-    },
-  ];
 
   return (
     <>
@@ -256,30 +130,7 @@ function InstanceLayout() {
           <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-              <header className="flex h-16 shrink-0 items-center gap-2">
-                <div className="flex items-center gap-2 px-4">
-                  <SidebarTrigger className="-ml-1" />
-                  <Separator orientation="vertical" className="mr-2 h-4" />
-                  <Breadcrumb>
-                    <BreadcrumbList>
-                      <BreadcrumbItem className="hidden md:block">
-                        <BreadcrumbLink href="#">
-                          Building Your Application
-                        </BreadcrumbLink>
-                      </BreadcrumbItem>
-                      <BreadcrumbSeparator className="hidden md:block" />
-                      <BreadcrumbItem>
-                        <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-                      </BreadcrumbItem>
-                    </BreadcrumbList>
-                  </Breadcrumb>
-                </div>
-              </header>
-              <ScrollArea className="h-dvh w-full pr-4">
-                <div className="flex flex-col min-h-dvh w-full">
-                  <Outlet />
-                </div>
-              </ScrollArea>
+              <Outlet />
             </SidebarInset>
           </SidebarProvider>
         </ProfileContext.Provider>
