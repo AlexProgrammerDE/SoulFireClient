@@ -7,13 +7,7 @@ import * as React from 'react';
 import { useMemo } from 'react';
 import { Label, Pie, PieChart } from 'recharts';
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   ChartConfig,
   ChartContainer,
@@ -94,11 +88,11 @@ const usersChartConfig = {
   },
   user: {
     label: 'User',
-    color: 'hsl(var(--chart-1))',
+    color: 'hsl(var(--chart-2))',
   },
   admin: {
     label: 'Admin',
-    color: 'hsl(var(--chart-2))',
+    color: 'hsl(var(--chart-1))',
   },
   other: {
     label: 'Other',
@@ -135,7 +129,6 @@ export function UsersChart(props: { userList: UserListResponse }) {
     <Card className="flex flex-col border-0">
       <CardHeader className="items-center pb-0">
         <CardTitle>Total users on this server</CardTitle>
-        <CardDescription>Chart is divided by role</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -197,11 +190,11 @@ const instancesChartConfig = {
   },
   active: {
     label: 'Active',
-    color: 'hsl(var(--chart-1))',
+    color: 'hsl(var(--chart-2))',
   },
   stopped: {
     label: 'Stopped',
-    color: 'hsl(var(--chart-2))',
+    color: 'hsl(var(--chart-1))',
   },
   other: {
     label: 'Other',
@@ -238,7 +231,6 @@ export function InstancesChart(props: { instanceList: InstanceListResponse }) {
     <Card className="flex flex-col border-0">
       <CardHeader className="items-center pb-0">
         <CardTitle>Total instances on this server</CardTitle>
-        <CardDescription>Chart is by instance state</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
