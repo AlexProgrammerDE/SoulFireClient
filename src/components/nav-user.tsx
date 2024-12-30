@@ -6,8 +6,11 @@ import {
   FolderIcon,
   LaptopMinimalIcon,
   LogOutIcon,
+  MoonIcon,
   PaintRollerIcon,
   PowerIcon,
+  SunIcon,
+  SunMoonIcon,
 } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -112,7 +115,7 @@ export function NavUser() {
             <DropdownMenuGroup>
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
-                  <PaintRollerIcon className="h-4" />
+                  <PaintRollerIcon />
                   Theme
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
@@ -122,12 +125,15 @@ export function NavUser() {
                       onValueChange={(e) => setTheme(e)}
                     >
                       <DropdownMenuRadioItem value="system">
+                        <SunMoonIcon className="h-4 mr-1" />
                         System
                       </DropdownMenuRadioItem>
                       <DropdownMenuRadioItem value="dark">
+                        <MoonIcon className="h-4 mr-1" />
                         Dark
                       </DropdownMenuRadioItem>
                       <DropdownMenuRadioItem value="light">
+                        <SunIcon className="h-4 mr-1" />
                         Light
                       </DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>
@@ -136,7 +142,7 @@ export function NavUser() {
               </DropdownMenuSub>
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
-                  <LaptopMinimalIcon className="h-4" />
+                  <LaptopMinimalIcon />
                   Terminal
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
@@ -161,11 +167,12 @@ export function NavUser() {
                 </DropdownMenuPortal>
               </DropdownMenuSub>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              {isTauri() && systemInfo && !systemInfo.mobile && (
-                <>
-                  <CastMenuEntry />
+            {isTauri() && systemInfo && !systemInfo.mobile && (
+              <>
+                <DropdownMenuSeparator />
+                <CastMenuEntry />
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
                   <DropdownMenuItem
                     onClick={() => {
                       void (async () => {
@@ -186,9 +193,11 @@ export function NavUser() {
                     <FolderIcon />
                     Data directory
                   </DropdownMenuItem>
-                  <DropdownMenuSeparator />
-                </>
-              )}
+                </DropdownMenuGroup>
+              </>
+            )}
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
               <DropdownMenuItem
                 onClick={() => {
                   setAboutOpen(true);
