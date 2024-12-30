@@ -28,14 +28,69 @@ import { Button } from '@/components/ui/button.tsx';
 import { isTauri } from '@/lib/utils.ts';
 import { emit } from '@tauri-apps/api/event';
 import { demoData } from '@/demo-data.ts';
+import {
+  InstanceListResponse,
+  InstanceState,
+} from '@/generated/soulfire/instance.ts';
+import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
+import { queryClientInstance } from '@/lib/query.ts';
+import { useQuery } from '@tanstack/react-query';
+import { LoadingComponent } from '@/components/loading-component.tsx';
+import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
 
+const listQueryFn = async ({
+  signal,
+}: {
+  signal: AbortSignal;
+}): Promise<{
+  instanceList: InstanceListResponse;
+}> => {
+  const transport = createTransport();
+  if (transport === null) {
+    return {
+      instanceList: {
+        instances: [
+          {
+            id: 'demo',
+            friendlyName: 'Demo',
+            state: InstanceState.RUNNING,
+            instancePermissions: [],
+          },
+        ],
+      },
+    };
+  }
+
+  const instanceService = new InstanceServiceClient(transport);
+  const result = await instanceService.listInstances(
+    {},
+    {
+      abort: signal,
+    },
+  );
+
+  return {
+    instanceList: result.response,
+  };
+};
+
+export const listQueryKey = ['instance-list'];
 export const Route = createFileRoute('/dashboard/_layout')({
-  beforeLoad: async ({ location }) => {
-    if (!isAuthenticated()) {
+  beforeLoad: async ({ location, abortController }) => {
+    if (isAuthenticated()) {
+      return {
+        listQueryOptions: {
+          queryKey: listQueryKey,
+          queryFn: listQueryFn,
+          signal: abortController.signal,
+          refetchInterval: 3_000,
+        },
+      };
+    } else {
       if (isTauri()) {
         await emit('kill-integrated-server', {});
       }
-      return redirect({
+      throw redirect({
         to: '/',
         search: {
           redirect: location.href,
@@ -58,17 +113,18 @@ export const Route = createFileRoute('/dashboard/_layout')({
     }
 
     const configService = new ConfigServiceClient(transport);
-    const result = await configService.getClientData(
+    const configResult = await configService.getClientData(
       {},
       {
         abort: props.abortController.signal,
       },
     );
 
-    console.log(result.response);
+    await queryClientInstance.prefetchQuery(props.context.listQueryOptions);
+
     return {
       transport,
-      clientData: result.response,
+      clientData: configResult.response,
     };
   },
   errorComponent: ErrorComponent,
@@ -143,11 +199,23 @@ function PendingComponent() {
 
 function DashboardLayout() {
   const { transport, clientData } = Route.useLoaderData();
+  const { listQueryOptions } = Route.useRouteContext();
+  const instanceList = useQuery(listQueryOptions);
+
+  if (instanceList.isError) {
+    throw instanceList.error;
+  }
+
+  if (instanceList.isLoading || !instanceList.data) {
+    return <LoadingComponent />;
+  }
 
   return (
     <TransportContext.Provider value={transport}>
       <ClientInfoContext.Provider value={clientData}>
-        <Outlet />
+        <InstanceListContext.Provider value={instanceList.data.instanceList}>
+          <Outlet />
+        </InstanceListContext.Provider>
       </ClientInfoContext.Provider>
     </TransportContext.Provider>
   );

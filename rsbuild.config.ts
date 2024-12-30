@@ -19,7 +19,14 @@ if (baseEnv === 'production') {
 }
 
 export default defineConfig({
-  plugins: [pluginReact(), pluginTypeCheck(), pluginEslint(), pluginSvgr()],
+  plugins: [
+    pluginReact(),
+    pluginTypeCheck(),
+    pluginEslint({
+      enable: process.env.NODE_ENV === 'production',
+    }),
+    pluginSvgr(),
+  ],
   tools: {
     rspack: {
       plugins: [TanStackRouterRspack()],

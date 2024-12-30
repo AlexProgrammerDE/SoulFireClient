@@ -419,6 +419,10 @@ export interface ClientDataResponse {
      */
     role: UserRole;
     /**
+     * @generated from protobuf field: string email = 8;
+     */
+    email: string;
+    /**
      * @generated from protobuf field: repeated soulfire.v1.GlobalPermissionState serverPermissions = 2;
      */
     serverPermissions: GlobalPermissionState[];
@@ -660,6 +664,7 @@ class ClientDataResponse$Type extends MessageType<ClientDataResponse> {
             { no: 6, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 1, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "role", kind: "enum", T: () => ["soulfire.v1.UserRole", UserRole] },
+            { no: 8, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "serverPermissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => GlobalPermissionState },
             { no: 3, name: "plugins", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ServerPlugin },
             { no: 5, name: "settings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingsPage }

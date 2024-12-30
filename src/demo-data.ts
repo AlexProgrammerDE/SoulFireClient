@@ -3,6 +3,7 @@ import { ClientDataResponse } from '@/generated/soulfire/config.ts';
 export const demoData: ClientDataResponse = {
   id: 'f8030fa8-3be6-45c8-93f9-476ca39d42d5',
   username: 'root',
+  email: 'root@soulfiremc.com',
   role: 0,
   serverPermissions: [
     {

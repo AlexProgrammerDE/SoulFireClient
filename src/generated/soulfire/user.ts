@@ -16,6 +16,10 @@ export interface UserCreateRequest {
      * @generated from protobuf field: soulfire.v1.UserRole role = 2;
      */
     role: UserRole;
+    /**
+     * @generated from protobuf field: string email = 3;
+     */
+    email: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.UserCreateResponse
@@ -70,6 +74,10 @@ export interface UserListResponse_User {
      * @generated from protobuf field: soulfire.v1.UserRole role = 3;
      */
     role: UserRole;
+    /**
+     * @generated from protobuf field: string email = 4;
+     */
+    email: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.UserInfoRequest
@@ -92,13 +100,18 @@ export interface UserInfoResponse {
      * @generated from protobuf field: soulfire.v1.UserRole role = 2;
      */
     role: UserRole;
+    /**
+     * @generated from protobuf field: string email = 3;
+     */
+    email: string;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class UserCreateRequest$Type extends MessageType<UserCreateRequest> {
     constructor() {
         super("soulfire.v1.UserCreateRequest", [
             { no: 1, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "role", kind: "enum", T: () => ["soulfire.v1.UserRole", UserRole] }
+            { no: 2, name: "role", kind: "enum", T: () => ["soulfire.v1.UserRole", UserRole] },
+            { no: 3, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -168,7 +181,8 @@ class UserListResponse_User$Type extends MessageType<UserListResponse_User> {
         super("soulfire.v1.UserListResponse.User", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "role", kind: "enum", T: () => ["soulfire.v1.UserRole", UserRole] }
+            { no: 3, name: "role", kind: "enum", T: () => ["soulfire.v1.UserRole", UserRole] },
+            { no: 4, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -193,7 +207,8 @@ class UserInfoResponse$Type extends MessageType<UserInfoResponse> {
     constructor() {
         super("soulfire.v1.UserInfoResponse", [
             { no: 1, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "role", kind: "enum", T: () => ["soulfire.v1.UserRole", UserRole] }
+            { no: 2, name: "role", kind: "enum", T: () => ["soulfire.v1.UserRole", UserRole] },
+            { no: 3, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
