@@ -41,7 +41,7 @@ export default function InstancePageLayout(props: {
                 </BreadcrumbItem>
                 {(props.extraCrumbs || []).map((crumb) => (
                   <>
-                    <BreadcrumbSeparator />
+                    <BreadcrumbSeparator className="hidden md:block" />
                     <BreadcrumbItem className="hidden md:block">
                       {crumb}
                     </BreadcrumbItem>
