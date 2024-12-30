@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import InstancePageLayout from '@/components/instance-page-layout';
 
 export const Route = createFileRoute(
-  '/dashboard/_layout/instance/$instance/controls',
+  '/dashboard/_layout/instance/$instance/console',
 )({
   component: Console,
 });

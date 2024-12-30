@@ -139,7 +139,7 @@ export function InstanceSwitcher() {
         success: (r) => {
           setCreateOpen(false);
           void navigate({
-            to: '/dashboard/instance/$instance/controls',
+            to: '/dashboard/instance/$instance/console',
             params: { instance: r.id },
           });
           return 'Instance created successfully';
@@ -229,7 +229,7 @@ export function InstanceSwitcher() {
                   key={instance.id}
                   onClick={() =>
                     void navigate({
-                      to: '/dashboard/instance/$instance/controls',
+                      to: '/dashboard/instance/$instance/console',
                       params: { instance: instance.id },
                     })
                   }

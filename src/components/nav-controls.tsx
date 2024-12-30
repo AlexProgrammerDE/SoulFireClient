@@ -26,7 +26,7 @@ export function NavControls() {
       title: 'Console',
       icon: TerminalIcon,
       linkProps: {
-        to: '/dashboard/instance/$instance/controls',
+        to: '/dashboard/instance/$instance/console',
         params: { instance: instanceInfo.id },
       },
     },
