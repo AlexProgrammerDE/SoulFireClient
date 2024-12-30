@@ -7,9 +7,10 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from '@/components/ui/sidebar';
 import { Link, LinkProps } from '@tanstack/react-router';
-import { ReactNode, useContext } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { InstanceInfoContext } from './providers/instance-info-context';
@@ -32,6 +33,9 @@ export function NavSettings({
 }: {
   expandPluginSettings: boolean;
 }) {
+  const sidebar = useSidebar();
+  const [pluginCollapsibleOpen, setPluginCollapsibleOpen] =
+    useState(expandPluginSettings);
   const instanceInfo = useContext(InstanceInfoContext);
   const clientInfo = useContext(ClientInfoContext);
 
@@ -131,10 +135,24 @@ export function NavSettings({
         <Collapsible
           asChild
           defaultOpen={expandPluginSettings}
-          className="group/collapsible group-data-[collapsible=icon]:hidden"
+          open={pluginCollapsibleOpen}
+          onOpenChange={setPluginCollapsibleOpen}
+          className="group/collapsible"
         >
           <SidebarMenuItem>
-            <CollapsibleTrigger asChild>
+            <CollapsibleTrigger
+              onClick={(e) => {
+                // When sidebar closed, open sidebar and make sure collapsible is expanded
+                if (!sidebar.open) {
+                  e.preventDefault();
+                  sidebar.setOpen(true);
+                  if (!pluginCollapsibleOpen) {
+                    setPluginCollapsibleOpen(true);
+                  }
+                }
+              }}
+              asChild
+            >
               <SidebarMenuButton tooltip="Plugin Settings">
                 <BlocksIcon />
                 <span>Plugin Settings</span>
