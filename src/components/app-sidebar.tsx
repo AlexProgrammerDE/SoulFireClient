@@ -1,8 +1,11 @@
 import * as React from 'react';
 import {
   BookOpen,
+  BookOpenTextIcon,
   Bot,
+  CoffeeIcon,
   Frame,
+  LifeBuoyIcon,
   Map,
   PieChart,
   Settings2,
@@ -19,7 +22,8 @@ import {
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from '@/components/ui/sidebar'; // This is sample data.
+} from '@/components/ui/sidebar';
+import { NavSecondary } from '@/components/nav-secondary.tsx';
 
 // This is sample data.
 const data = {
@@ -138,6 +142,26 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
         <NavProjects projects={data.projects} />
+        <NavSecondary
+          items={[
+            {
+              title: 'Documentation',
+              url: 'https://soulfiremc.com/docs',
+              icon: BookOpenTextIcon,
+            },
+            {
+              title: 'Buy me a Coffee',
+              url: 'https://ko-fi.com/alexprogrammerde',
+              icon: CoffeeIcon,
+            },
+            {
+              title: 'Support',
+              url: 'https://soulfiremc.com/discord',
+              icon: LifeBuoyIcon,
+            },
+          ]}
+          className="mt-auto"
+        />
       </SidebarContent>
       <SidebarFooter>
         <NavUser />

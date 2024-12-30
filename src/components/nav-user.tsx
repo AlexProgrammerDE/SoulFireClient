@@ -1,13 +1,10 @@
 'use client';
 
 import {
-  BookOpenTextIcon,
   ChevronsUpDown,
   CircleHelpIcon,
-  CoffeeIcon,
   FolderIcon,
   LaptopMinimalIcon,
-  LifeBuoyIcon,
   LogOutIcon,
   PaintRollerIcon,
   PowerIcon,
@@ -163,27 +160,6 @@ export function NavUser() {
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>
               </DropdownMenuSub>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <a href="https://soulfiremc.com/docs" target="_blank">
-                <DropdownMenuItem>
-                  <BookOpenTextIcon className="h-4" />
-                  Documentation
-                </DropdownMenuItem>
-              </a>
-              <a href="https://ko-fi.com/alexprogrammerde" target="_blank">
-                <DropdownMenuItem>
-                  <CoffeeIcon />
-                  Buy me a Coffee
-                </DropdownMenuItem>
-              </a>
-              <a href="https://soulfiremc.com/discord" target="_blank">
-                <DropdownMenuItem>
-                  <LifeBuoyIcon />
-                  Support
-                </DropdownMenuItem>
-              </a>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
