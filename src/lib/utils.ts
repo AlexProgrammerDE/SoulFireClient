@@ -129,3 +129,9 @@ export function selectRandomEntry<T>(list: T[], seedString: string): T {
   const randomIndex = Math.floor(seededRandom(seed) * list.length);
   return list[randomIndex];
 }
+
+export function getCookie(name: string) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(';').shift();
+}

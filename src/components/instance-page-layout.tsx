@@ -15,6 +15,7 @@ import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import { ReactNode, useContext } from 'react';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { AppSidebar } from '@/components/app-sidebar.tsx';
+import { getCookie } from '@/lib/utils.ts';
 
 export default function InstancePageLayout(props: {
   children: ReactNode;
@@ -23,9 +24,10 @@ export default function InstancePageLayout(props: {
   expandPluginSettings?: boolean;
 }) {
   const instanceInfo = useContext(InstanceInfoContext);
+  const defaultOpen = getCookie('sidebar:state') === 'true';
 
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar expandPluginSettings={props.expandPluginSettings ?? false} />
       <SidebarInset>
         <header className="flex h-16 shrink-0 items-center gap-2">
