@@ -15,7 +15,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card.tsx';
-import { LoaderCircleIcon, LogOutIcon, RotateCwIcon } from 'lucide-react';
+import {
+  BugIcon,
+  LoaderCircleIcon,
+  LogOutIcon,
+  RotateCwIcon,
+} from 'lucide-react';
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 import { ClientDataResponse } from '@/generated/soulfire/config.ts';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
@@ -80,7 +85,10 @@ function ErrorComponent({ error }: { error: Error }) {
       <DashboardMenuHeader />
       <div className="flex flex-grow">
         <div className="m-auto flex flex-col gap-2">
-          <h1 className="text-2xl font-bold">Error</h1>
+          <h1 className="text-2xl font-bold gap-1 flex fle-row">
+            <BugIcon className="h-8" />
+            Error
+          </h1>
           <p className="text-red-500">{error.message} (more info in console)</p>
           <div className="flex flex-row gap-2">
             <Button
