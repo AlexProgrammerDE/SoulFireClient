@@ -15,7 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card.tsx';
-import { LoaderCircleIcon } from 'lucide-react';
+import { LoaderCircleIcon, LogOutIcon, RotateCwIcon } from 'lucide-react';
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 import { ClientDataResponse } from '@/generated/soulfire/config.ts';
 import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
@@ -97,13 +97,15 @@ function ErrorComponent({ error }: { error: Error }) {
                 })();
               }}
             >
-              Back to login
+              <LogOutIcon className="h-4" />
+              Log out
             </Button>
             <Button
               onClick={() => {
                 void router.invalidate();
               }}
             >
+              <RotateCwIcon className="h-4" />
               Reload page
             </Button>
           </div>

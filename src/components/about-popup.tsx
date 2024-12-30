@@ -11,6 +11,14 @@ import {
 import { Button } from '@/components/ui/button.tsx';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { useContext } from 'react';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from './ui/table';
 
 export function AboutPopup({
   open,
@@ -31,22 +39,63 @@ export function AboutPopup({
           </CredenzaDescription>
         </CredenzaHeader>
         <CredenzaBody>
-          {systemInfo !== null ? (
-            <>
-              <p>
-                Operating System: {systemInfo.osType} {systemInfo.osVersion}
-              </p>
-              <p>Platform: {systemInfo.platformName}</p>
-              <p>Locale: {systemInfo.osLocale ?? 'Unknown'}</p>
-              <p>Architecture: {systemInfo.archName}</p>
-            </>
-          ) : (
-            <>
-              <p>Browser: {navigator.userAgent}</p>
-              <p>Locale: {navigator.language}</p>
-              <p>Environment: {APP_ENVIRONMENT}</p>
-            </>
-          )}
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Type</TableHead>
+                <TableHead>Value</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {systemInfo !== null ? (
+                <>
+                  <TableRow>
+                    <TableCell>Operating System</TableCell>
+                    <TableCell>
+                      {systemInfo.osType} {systemInfo.osVersion}
+                    </TableCell>
+                  </TableRow>
+
+                  <TableRow>
+                    <TableCell>Platform</TableCell>
+                    <TableCell>{systemInfo.platformName}</TableCell>
+                  </TableRow>
+
+                  <TableRow>
+                    <TableCell>Locale</TableCell>
+                    <TableCell>{systemInfo.osLocale ?? 'Unknown'}</TableCell>
+                  </TableRow>
+
+                  <TableRow>
+                    <TableCell>Architecture</TableCell>
+                    <TableCell>{systemInfo.archName}</TableCell>
+                  </TableRow>
+
+                  <TableRow>
+                    <TableCell>Environment</TableCell>
+                    <TableCell>{APP_ENVIRONMENT}</TableCell>
+                  </TableRow>
+                </>
+              ) : (
+                <>
+                  <TableRow>
+                    <TableCell>Browser</TableCell>
+                    <TableCell>{navigator.userAgent}</TableCell>
+                  </TableRow>
+
+                  <TableRow>
+                    <TableCell>Locale</TableCell>
+                    <TableCell>{navigator.language}</TableCell>
+                  </TableRow>
+
+                  <TableRow>
+                    <TableCell>Environment</TableCell>
+                    <TableCell>{APP_ENVIRONMENT}</TableCell>
+                  </TableRow>
+                </>
+              )}
+            </TableBody>
+          </Table>
         </CredenzaBody>
         <CredenzaFooter>
           <CredenzaClose asChild>
