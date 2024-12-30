@@ -243,7 +243,29 @@ export function InstanceSwitcher() {
                 </DropdownMenuItem>
               );
             })}
+            {hasGlobalPermission(
+              clientInfo,
+              GlobalPermission.CREATE_INSTANCE,
+            ) && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => setCreateOpen(true)}
+                  className="gap-2 p-2"
+                >
+                  <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                    <PlusIcon className="size-4" />
+                  </div>
+                  <div className="font-medium text-muted-foreground">
+                    Create instance
+                  </div>
+                </DropdownMenuItem>
+              </>
+            )}
             <DropdownMenuSeparator />
+            <DropdownMenuLabel className="text-xs text-muted-foreground">
+              {instanceInfo.friendlyName}
+            </DropdownMenuLabel>
             <input
               ref={instanceProfileInputRef}
               type="file"
@@ -443,22 +465,6 @@ export function InstanceSwitcher() {
               </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            {hasGlobalPermission(
-              clientInfo,
-              GlobalPermission.CREATE_INSTANCE,
-            ) && (
-              <DropdownMenuItem
-                onClick={() => setCreateOpen(true)}
-                className="gap-2 p-2"
-              >
-                <div className="flex size-6 items-center justify-center rounded-md border bg-background">
-                  <PlusIcon className="size-4" />
-                </div>
-                <div className="font-medium text-muted-foreground">
-                  Create instance
-                </div>
-              </DropdownMenuItem>
-            )}
             {hasInstancePermission(
               instanceInfo,
               InstancePermission.DELETE_INSTANCE,
