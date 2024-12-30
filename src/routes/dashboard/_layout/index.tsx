@@ -1,7 +1,6 @@
 import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { useContext } from 'react';
 import { Button } from '@/components/ui/button.tsx';
-import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { LayoutDashboardIcon } from 'lucide-react';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
@@ -22,9 +21,8 @@ function InstanceSelectPage() {
 
   return (
     <>
-      <DashboardMenuHeader />
-      <ScrollArea className="h-[calc(100dvh-2.5rem)] w-full pr-4">
-        <div className="flex flex-col min-h-[calc(100dvh-2.5rem)] w-full">
+      <ScrollArea className="h-dvh w-full pr-4">
+        <div className="flex flex-col min-h-dvh w-full">
           <div className="flex flex-col p-4 m-auto gap-4">
             {instanceList.instances.length == 0 && (
               <div className="flex flex-col gap-4 p-4">

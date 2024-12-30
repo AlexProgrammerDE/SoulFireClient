@@ -23,7 +23,6 @@ import {
 } from 'lucide-react';
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 import { ClientDataResponse } from '@/generated/soulfire/config.ts';
-import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { getGravatarUrl, isTauri } from '@/lib/utils.ts';
 import { emit } from '@tauri-apps/api/event';
@@ -141,7 +140,6 @@ function ErrorComponent({ error }: { error: Error }) {
 
   return (
     <>
-      <DashboardMenuHeader />
       <div className="flex flex-grow">
         <div className="m-auto flex flex-col gap-2">
           <h1 className="text-2xl font-bold gap-1 flex fle-row">
@@ -185,7 +183,7 @@ function ErrorComponent({ error }: { error: Error }) {
 function PendingComponent() {
   return (
     <>
-      <DashboardMenuHeader />
+      +{' '}
       <div className="flex flex-grow">
         <Card className="m-auto text-center w-full max-w-[450px] border-none">
           <CardHeader className="pb-0">

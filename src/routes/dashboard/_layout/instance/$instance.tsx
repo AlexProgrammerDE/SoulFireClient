@@ -9,7 +9,6 @@ import {
   InstanceInfoResponse,
   InstanceState,
 } from '@/generated/soulfire/instance.ts';
-import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { queryClientInstance } from '@/lib/query.ts';
 import { useQuery } from '@tanstack/react-query';
 import { LoadingComponent } from '@/components/loading-component.tsx';
@@ -254,7 +253,6 @@ function InstanceLayout() {
             result.data.instanceInfo.config as InstanceConfig,
           )}
         >
-          <DashboardMenuHeader />
           <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
@@ -277,8 +275,8 @@ function InstanceLayout() {
                   </Breadcrumb>
                 </div>
               </header>
-              <ScrollArea className="h-[calc(100dvh-2.5rem)] w-full pr-4">
-                <div className="flex flex-col min-h-[calc(100dvh-5.5rem)] md:min-h-[calc(100dvh-2.5rem)] w-full">
+              <ScrollArea className="h-dvh w-full pr-4">
+                <div className="flex flex-col min-h-dvh w-full">
                   <Outlet />
                 </div>
               </ScrollArea>

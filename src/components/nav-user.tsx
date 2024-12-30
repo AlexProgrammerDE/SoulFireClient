@@ -1,11 +1,13 @@
 'use client';
 
 import {
-  BadgeCheck,
-  Bell,
+  BookOpenTextIcon,
   ChevronsUpDown,
-  CreditCard,
+  CircleHelpIcon,
+  CoffeeIcon,
+  FolderIcon,
   LaptopMinimalIcon,
+  LifeBuoyIcon,
   LogOutIcon,
   PaintRollerIcon,
   PowerIcon,
@@ -33,7 +35,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { isTauri } from '@/lib/utils.ts';
 import { emit } from '@tauri-apps/api/event';
@@ -45,11 +47,17 @@ import { flavorEntries } from '@catppuccin/palette';
 import { useTheme } from 'next-themes';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
 import CastMenuEntry from '@/components/cast-menu-entry.tsx';
+import { open as shellOpen } from '@tauri-apps/plugin-shell';
+import { appConfigDir, appDataDir } from '@tauri-apps/api/path';
+import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
+import { AboutPopup } from '@/components/about-popup.tsx';
 
 export function NavUser() {
   const navigate = useNavigate();
   const clientInfo = useContext(ClientInfoContext);
   const terminalTheme = useContext(TerminalThemeContext);
+  const [aboutOpen, setAboutOpen] = useState(false);
+  const systemInfo = useContext(SystemInfoContext);
   const { theme, setTheme } = useTheme();
   const { isMobile } = useSidebar();
 
@@ -108,7 +116,7 @@ export function NavUser() {
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
                   <PaintRollerIcon className="h-4" />
-                  <span>Theme</span>
+                  Theme
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
                   <DropdownMenuSubContent>
@@ -132,7 +140,7 @@ export function NavUser() {
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
                   <LaptopMinimalIcon className="h-4" />
-                  <span>Terminal</span>
+                  Terminal
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
                   <DropdownMenuSubContent>
@@ -157,63 +165,107 @@ export function NavUser() {
               </DropdownMenuSub>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            {isTauri() && <CastMenuEntry />}
+            <DropdownMenuGroup>
+              <a href="https://soulfiremc.com/docs" target="_blank">
+                <DropdownMenuItem>
+                  <BookOpenTextIcon className="h-4" />
+                  Documentation
+                </DropdownMenuItem>
+              </a>
+              <a href="https://ko-fi.com/alexprogrammerde" target="_blank">
+                <DropdownMenuItem>
+                  <CoffeeIcon />
+                  Buy me a Coffee
+                </DropdownMenuItem>
+              </a>
+              <a href="https://soulfiremc.com/discord" target="_blank">
+                <DropdownMenuItem>
+                  <LifeBuoyIcon />
+                  Support
+                </DropdownMenuItem>
+              </a>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Bell />
-                Notifications
+              {isTauri() && systemInfo && !systemInfo.mobile && (
+                <>
+                  <CastMenuEntry />
+                  <DropdownMenuItem
+                    onClick={() => {
+                      void (async () => {
+                        await shellOpen(await appConfigDir());
+                      })();
+                    }}
+                  >
+                    <FolderIcon />
+                    Config directory
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      void (async () => {
+                        await shellOpen(await appDataDir());
+                      })();
+                    }}
+                  >
+                    <FolderIcon />
+                    Data directory
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                </>
+              )}
+              <DropdownMenuItem
+                onClick={() => {
+                  setAboutOpen(true);
+                }}
+              >
+                <CircleHelpIcon />
+                About
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            {clientInfo && (
+            <DropdownMenuGroup>
+              {clientInfo && (
+                <DropdownMenuItem
+                  onClick={() => {
+                    const disconnect = async () => {
+                      if (isTauri()) {
+                        await emit('kill-integrated-server', {});
+                      }
+                      await navigate({
+                        to: '/',
+                        replace: true,
+                      });
+                    };
+                    toast.promise(disconnect(), {
+                      loading: 'Disconnecting...',
+                      success: 'Disconnected',
+                      error: (e) => {
+                        console.error(e);
+                        return 'Failed to disconnect';
+                      },
+                    });
+                  }}
+                >
+                  <LogOutIcon />
+                  Log out
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem
                 onClick={() => {
-                  const disconnect = async () => {
-                    if (isTauri()) {
-                      await emit('kill-integrated-server', {});
-                    }
-                    await navigate({
-                      to: '/',
-                      replace: true,
-                    });
-                  };
-                  toast.promise(disconnect(), {
-                    loading: 'Disconnecting...',
-                    success: 'Disconnected',
-                    error: (e) => {
-                      console.error(e);
-                      return 'Failed to disconnect';
-                    },
-                  });
+                  if (isTauri()) {
+                    void exit(0);
+                  } else {
+                    window.location.href = 'about:blank';
+                  }
                 }}
               >
-                <LogOutIcon className="h-4 mr-2" />
-                <span>Log out</span>
+                <PowerIcon />
+                Exit
               </DropdownMenuItem>
-            )}
-            <DropdownMenuItem
-              onClick={() => {
-                if (isTauri()) {
-                  void exit(0);
-                } else {
-                  window.location.href = 'about:blank';
-                }
-              }}
-            >
-              <PowerIcon className="h-4 mr-2" />
-              <span>Exit</span>
-            </DropdownMenuItem>
+            </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
+        <AboutPopup open={aboutOpen} setOpen={setAboutOpen} />
       </SidebarMenuItem>
     </SidebarMenu>
   );

@@ -7,7 +7,6 @@ import {
 } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { convertFromServerProto } from '@/lib/types.ts';
-import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { queryClientInstance } from '@/lib/query.ts';
 import { useQuery } from '@tanstack/react-query';
 import { LoadingComponent } from '@/components/loading-component.tsx';
@@ -301,7 +300,6 @@ function AdminLayout() {
             result.data.serverInfo.config as ServerConfig,
           )}
         >
-          <DashboardMenuHeader />
           <div className="flex flex-grow">
             <ResizablePanelGroup
               autoSaveId="main-layout"
@@ -330,8 +328,8 @@ function AdminLayout() {
               </ResizablePanel>
               <ResizableHandle className="hidden md:flex" withHandle />
               <ResizablePanel defaultSize={defaultLayout[1]} minSize={30}>
-                <ScrollArea className="h-[calc(100dvh-5.5rem)] md:h-[calc(100dvh-2.5rem)] w-full pr-4">
-                  <div className="flex flex-col min-h-[calc(100dvh-5.5rem)] md:min-h-[calc(100dvh-2.5rem)] w-full">
+                <ScrollArea className="h-dvh w-full pr-4">
+                  <div className="flex flex-col min-h-dvh w-full">
                     <Outlet />
                   </div>
                 </ScrollArea>

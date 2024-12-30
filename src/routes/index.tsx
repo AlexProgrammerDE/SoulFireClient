@@ -37,7 +37,6 @@ import {
 } from '@/lib/types.ts';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { invoke } from '@tauri-apps/api/core';
-import { DashboardMenuHeader } from '@/components/dashboard-menu-header.tsx';
 import { cancellablePromiseDefault, isDemo } from '@/lib/utils.ts';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import {
@@ -167,9 +166,8 @@ function Index() {
 
   return (
     <>
-      <DashboardMenuHeader />
-      <ScrollArea className="h-[calc(100dvh-2.5rem)] w-full pr-4">
-        <div className="flex flex-col min-h-[calc(100dvh-2.5rem)] w-full">
+      <ScrollArea className="h-dvh w-full pr-4">
+        <div className="flex flex-col min-h-dvh w-full">
           <Card className="m-auto w-full max-w-[450px] border-none">
             <CardHeader>
               <CardTitle>Connect to a SoulFire server</CardTitle>
