@@ -110,3 +110,28 @@ export function data2blob(data: string) {
 
   return new Blob([new Uint8Array(bytes)]);
 }
+
+export function hashStringToSeed(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash |= 0; // Convert to 32-bit integer
+  }
+  return hash;
+}
+
+export function seededRandom(seed: number): number {
+  const x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+export function selectRandomEntry<T>(list: T[], seedString: string): T {
+  if (!Array.isArray(list) || list.length === 0) {
+    throw new Error('List must be a non-empty array');
+  }
+
+  const seed = hashStringToSeed(seedString);
+  const randomIndex = Math.floor(seededRandom(seed) * list.length);
+  return list[randomIndex];
+}

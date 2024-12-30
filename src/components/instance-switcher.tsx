@@ -1,13 +1,22 @@
 import * as React from 'react';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useMemo, useRef, useState } from 'react';
 import {
+  AppleIcon,
+  CarrotIcon,
   ChevronsUpDownIcon,
+  CitrusIcon,
+  CookieIcon,
+  CroissantIcon,
   DownloadIcon,
   FileIcon,
+  FishIcon,
   FolderIcon,
-  GalleryVerticalEndIcon,
   MinusIcon,
+  PickaxeIcon,
   PlusIcon,
+  PopcornIcon,
+  ShovelIcon,
+  SwordIcon,
   UploadIcon,
 } from 'lucide-react';
 import {
@@ -43,6 +52,7 @@ import {
   hasGlobalPermission,
   hasInstancePermission,
   isTauri,
+  selectRandomEntry,
   toCapitalizedWords,
 } from '@/lib/utils.ts';
 import {
@@ -66,6 +76,19 @@ import {
 } from '@/generated/soulfire/common.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 
+const iconPool = [
+  PickaxeIcon,
+  AppleIcon,
+  ShovelIcon,
+  SwordIcon,
+  FishIcon,
+  CitrusIcon,
+  PopcornIcon,
+  CookieIcon,
+  CarrotIcon,
+  CroissantIcon,
+];
+
 export function InstanceSwitcher() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -78,6 +101,9 @@ export function InstanceSwitcher() {
   const clientInfo = useContext(ClientInfoContext);
   const instanceProfileInputRef = useRef<HTMLInputElement>(null);
   const [createOpen, setCreateOpen] = useState(false);
+  const InstanceIcon = useMemo(() => {
+    return selectRandomEntry(iconPool, instanceInfo.id);
+  }, [instanceInfo.id]);
   const setProfileMutation = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
       if (transport === null) {
@@ -172,7 +198,7 @@ export function InstanceSwitcher() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <GalleryVerticalEndIcon className="size-4" />
+                <InstanceIcon className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
@@ -196,24 +222,27 @@ export function InstanceSwitcher() {
             <DropdownMenuLabel className="text-xs text-muted-foreground">
               Instances
             </DropdownMenuLabel>
-            {instanceList.instances.map((instance, index) => (
-              <DropdownMenuItem
-                key={instance.id}
-                onClick={() =>
-                  void navigate({
-                    to: '/dashboard/instance/$instance/controls',
-                    params: { instance: instance.id },
-                  })
-                }
-                className="gap-2 p-2"
-              >
-                <div className="flex size-6 items-center justify-center rounded-sm border">
-                  <GalleryVerticalEndIcon className="size-4 shrink-0" />
-                </div>
-                {instance.friendlyName}
-                <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            ))}
+            {instanceList.instances.map((instance, index) => {
+              const InstanceIcon = selectRandomEntry(iconPool, instance.id);
+              return (
+                <DropdownMenuItem
+                  key={instance.id}
+                  onClick={() =>
+                    void navigate({
+                      to: '/dashboard/instance/$instance/controls',
+                      params: { instance: instance.id },
+                    })
+                  }
+                  className="gap-2 p-2"
+                >
+                  <div className="flex size-6 items-center justify-center rounded-sm border">
+                    <InstanceIcon className="size-4 shrink-0" />
+                  </div>
+                  {instance.friendlyName}
+                  <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              );
+            })}
             <DropdownMenuSeparator />
             <input
               ref={instanceProfileInputRef}
