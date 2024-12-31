@@ -26,6 +26,7 @@ import {
   FlaskConicalIcon,
   LaptopMinimalIcon,
   LoaderCircleIcon,
+  SatelliteDishIcon,
   ServerIcon,
 } from 'lucide-react';
 import { emit, listen } from '@tauri-apps/api/event';
@@ -165,16 +166,20 @@ function Index() {
   }, [loginType, redirectWithCredentials]);
 
   return (
-    <>
-      <ScrollArea className="h-dvh w-full pr-4">
-        <div className="flex flex-col min-h-dvh w-full">
-          <Card className="m-auto w-full max-w-[450px] border-none">
-            <CardHeader>
-              <CardTitle>Connect to a SoulFire server</CardTitle>
+    <ScrollArea className="h-dvh w-full pr-4 bg-muted">
+      <div className="flex flex-col min-h-dvh w-full">
+        <div className="flex flex-col gap-6 m-auto w-full max-w-[450px]">
+          <Card>
+            <CardHeader className="text-center">
+              <CardTitle className="flex flex-row gap-2 text-xl mx-auto">
+                <SatelliteDishIcon />
+                Connect to a SoulFire server
+              </CardTitle>
               {null === loginType ? (
                 <CardDescription>
-                  Integrated server runs a bundled server on the client. Remote
-                  connects to a remote dedicated SoulFire server.
+                  Integrated server runs SoulFire on your machine.
+                  <br />
+                  Dedicated SoulFire servers run on remote machines.
                 </CardDescription>
               ) : null}
               {'INTEGRATED' === loginType ? (
@@ -182,8 +187,8 @@ function Index() {
               ) : null}
               {'REMOTE' === loginType ? (
                 <CardDescription>
-                  Put in the address and token of the server you want to connect
-                  to.
+                  Put in the address and token of the SoulFire server you want
+                  to connect to.
                 </CardDescription>
               ) : null}
             </CardHeader>
@@ -217,7 +222,7 @@ function Index() {
                         onClick={() => setLoginType('INTEGRATED')}
                       >
                         <LaptopMinimalIcon className="size-5" />
-                        Use integrated server
+                        Integrated server (local)
                       </Button>
                     )}
                   />
@@ -242,7 +247,7 @@ function Index() {
                         onClick={() => setLoginType('REMOTE')}
                       >
                         <ServerIcon className="size-5" />
-                        Connect to remote server
+                        Dedicated server (remote)
                       </Button>
                     )}
                   />
@@ -255,34 +260,9 @@ function Index() {
                     }}
                   >
                     <FlaskConicalIcon className="size-5" />
-                    Use demo server
+                    Demo server
                   </Button>
                 )}
-                <div className="absolute text-xs text-gray-500 text-center bottom-0 left-0 right-0 mb-2">
-                  <p className="mb-1">
-                    SoulFire Client {APP_VERSION} - {APP_ENVIRONMENT}
-                  </p>
-                  {!systemInfo && (
-                    <>
-                      {APP_ENVIRONMENT === 'production' && (
-                        <a
-                          className="text-blue-500"
-                          href="https://preview.soulfiremc.com"
-                        >
-                          Looking for preview?
-                        </a>
-                      )}
-                      {APP_ENVIRONMENT === 'preview' && (
-                        <a
-                          className="text-blue-500"
-                          href="https://app.soulfiremc.com"
-                        >
-                          Looking for production?
-                        </a>
-                      )}
-                    </>
-                  )}
-                </div>
               </CardContent>
             ) : null}
             {'INTEGRATED' === loginType ? (
@@ -352,8 +332,33 @@ function Index() {
               </Form>
             ) : null}
           </Card>
+          <div className="text-balance text-xs text-muted-foreground text-center">
+            <p className="mb-1">
+              SoulFire Client {APP_VERSION} - {APP_ENVIRONMENT}
+            </p>
+            {!systemInfo && (
+              <>
+                {APP_ENVIRONMENT === 'production' && (
+                  <a
+                    className="text-blue-500"
+                    href="https://preview.soulfiremc.com"
+                  >
+                    Looking for preview?
+                  </a>
+                )}
+                {APP_ENVIRONMENT === 'preview' && (
+                  <a
+                    className="text-blue-500"
+                    href="https://app.soulfiremc.com"
+                  >
+                    Looking for production?
+                  </a>
+                )}
+              </>
+            )}
+          </div>
         </div>
-      </ScrollArea>
-    </>
+      </div>
+    </ScrollArea>
   );
 }
