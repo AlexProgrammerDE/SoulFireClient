@@ -146,7 +146,9 @@ function ErrorComponent({ error }: { error: Error }) {
             <BugIcon className="h-8" />
             Error
           </h1>
-          <p className="text-red-500">{error.message} (more info in console)</p>
+          <p className="text-red-500 max-w-2xl">
+            {error.message} (more info in console)
+          </p>
           <div className="flex flex-row gap-2">
             <Button
               className="w-fit"
