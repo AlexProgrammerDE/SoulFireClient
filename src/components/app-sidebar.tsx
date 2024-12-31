@@ -23,11 +23,11 @@ export function AppSidebar({
 }) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
+      <SidebarHeader className="h-16">
         <InstanceSwitcher />
       </SidebarHeader>
-      <ScrollArea className="h-full w-full pr-2">
-        <SidebarContent>
+      <ScrollArea className="h-[calc(100svh-4rem-4rem)] w-full pr-2">
+        <SidebarContent className="min-h-[calc(100svh-4rem-4rem)]">
           <NavControls />
           <NavSettings expandPluginSettings={expandPluginSettings} />
           <NavSecondary
@@ -52,7 +52,7 @@ export function AppSidebar({
           />
         </SidebarContent>
       </ScrollArea>
-      <SidebarFooter>
+      <SidebarFooter className="h-16">
         <NavUser />
       </SidebarFooter>
       <SidebarRail />
