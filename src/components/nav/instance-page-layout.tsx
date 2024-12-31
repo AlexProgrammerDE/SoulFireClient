@@ -14,7 +14,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import { ReactNode, useContext } from 'react';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
-import { InstanceSidebar } from '@/components/instance-sidebar.tsx';
+import { InstanceSidebar } from '@/components/nav/instance-sidebar.tsx';
 import { getCookie } from '@/lib/utils.ts';
 
 export default function InstancePageLayout(props: {

@@ -31,13 +31,13 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu.tsx';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/sidebar.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
 import {
@@ -58,7 +58,7 @@ import {
 import {
   CreateInstancePopup,
   CreateInstanceType,
-} from '@/components/create-instance-popup.tsx';
+} from '@/components/dialog/create-instance-popup.tsx';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { toast } from 'sonner';

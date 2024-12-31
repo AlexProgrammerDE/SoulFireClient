@@ -7,7 +7,7 @@ import {
   CredenzaFooter,
   CredenzaHeader,
   CredenzaTitle,
-} from './ui/credenza';
+} from '../ui/credenza.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { useContext } from 'react';
@@ -18,7 +18,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from './ui/table';
+} from '../ui/table.tsx';
 
 export function AboutPopup({
   open,

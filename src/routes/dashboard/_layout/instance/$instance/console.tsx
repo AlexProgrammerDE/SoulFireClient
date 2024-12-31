@@ -7,7 +7,7 @@ import { InstanceInfoContext } from '@/components/providers/instance-info-contex
 import { getEnumKeyByValue } from '@/lib/types.ts';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { Badge } from '@/components/ui/badge';
-import InstancePageLayout from '@/components/instance-page-layout';
+import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/console',

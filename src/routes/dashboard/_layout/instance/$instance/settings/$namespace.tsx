@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/card.tsx';
 import { Badge } from '@/components/ui/badge.tsx';
 import { SettingsPage_Type } from '@/generated/soulfire/config.ts';
-import InstancePageLayout from '@/components/instance-page-layout';
+import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/settings/$namespace',

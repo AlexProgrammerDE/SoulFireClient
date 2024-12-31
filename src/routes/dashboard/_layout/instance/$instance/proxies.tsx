@@ -22,13 +22,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
 import { PlusIcon, TrashIcon } from 'lucide-react';
-import ImportDialog from '@/components/import-dialog.tsx';
+import ImportDialog from '@/components/dialog/import-dialog.tsx';
 import URI from 'urijs';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import InstancePageLayout from '@/components/instance-page-layout.tsx';
+import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/proxies',

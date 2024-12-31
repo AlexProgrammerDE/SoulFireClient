@@ -8,12 +8,12 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   useSidebar,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/sidebar.tsx';
 import { Link, LinkProps } from '@tanstack/react-router';
 import { ReactNode, useContext, useState } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
-import { InstanceInfoContext } from './providers/instance-info-context';
+import { InstanceInfoContext } from '../providers/instance-info-context.tsx';
 import {
   Collapsible,
   CollapsibleContent,

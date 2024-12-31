@@ -13,7 +13,11 @@ import {
   SunMoonIcon,
 } from 'lucide-react';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from '@/components/ui/avatar.tsx';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,13 +32,13 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from '@/components/ui/dropdown-menu.tsx';
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/sidebar.tsx';
 import { useContext, useState } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { isTauri } from '@/lib/utils.ts';
@@ -46,11 +50,11 @@ import { LOCAL_STORAGE_TERMINAL_THEME_KEY } from '@/lib/types.ts';
 import { flavorEntries } from '@catppuccin/palette';
 import { useTheme } from 'next-themes';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
-import CastMenuEntry from '@/components/cast-menu-entry.tsx';
+import CastMenuEntry from '@/components/nav/cast-menu-entry.tsx';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { appConfigDir, appDataDir } from '@tauri-apps/api/path';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
-import { AboutPopup } from '@/components/about-popup.tsx';
+import { AboutPopup } from '@/components/dialog/about-popup.tsx';
 
 export function NavUser() {
   const navigate = useNavigate();

@@ -7,7 +7,7 @@ import {
   CredenzaFooter,
   CredenzaHeader,
   CredenzaTitle,
-} from './ui/credenza';
+} from '../ui/credenza.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';

@@ -29,14 +29,14 @@ import {
 import { toast } from 'sonner';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { MCAuthServiceClient } from '@/generated/soulfire/mc-auth.client.ts';
-import ImportDialog from '@/components/import-dialog.tsx';
+import ImportDialog from '@/components/dialog/import-dialog.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isTauri } from '@/lib/utils.ts';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
-import InstancePageLayout from '@/components/instance-page-layout.tsx';
+import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/accounts',

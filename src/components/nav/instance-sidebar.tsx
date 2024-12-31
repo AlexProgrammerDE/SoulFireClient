@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { BookOpenTextIcon, CoffeeIcon, LifeBuoyIcon } from 'lucide-react';
 
-import { NavControls } from '@/components/nav-controls.tsx';
-import { NavSettings } from '@/components/nav-settings.tsx';
-import { NavUser } from '@/components/nav-user';
-import { InstanceSwitcher } from '@/components/instance-switcher.tsx';
+import { NavControls } from '@/components/nav/nav-controls.tsx';
+import { NavSettings } from '@/components/nav/nav-settings.tsx';
+import { NavUser } from '@/components/nav/nav-user.tsx';
+import { InstanceSwitcher } from '@/components/nav/instance-switcher.tsx';
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from '@/components/ui/sidebar';
-import { NavSecondary } from '@/components/nav-secondary.tsx';
+} from '@/components/ui/sidebar.tsx';
+import { NavSecondary } from '@/components/nav/nav-secondary.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 
 export function InstanceSidebar({
