@@ -118,18 +118,14 @@ export default function ControlsMenu() {
   return (
     <div className="flex flex-wrap gap-1">
       <Button
-        className="flex flex-row gap-1"
         variant="secondary"
         onClick={() => startMutation.mutate()}
         disabled={instanceInfo.state !== InstanceState.STOPPED}
       >
-        <div>
-          <PlayIcon className="h-4" />
-        </div>
-        <span>Start</span>
+        <PlayIcon className="h-4" />
+        Start
       </Button>
       <Button
-        className="flex flex-row gap-1"
         variant="secondary"
         onClick={() => toggleMutation.mutate()}
         disabled={
@@ -137,19 +133,14 @@ export default function ControlsMenu() {
           instanceInfo.state === InstanceState.STOPPED
         }
       >
-        <div>
-          {instanceInfo.state === InstanceState.PAUSED ? (
-            <TimerOffIcon className="h-4" />
-          ) : (
-            <TimerIcon className="h-4" />
-          )}
-        </div>
-        <span>
-          {instanceInfo.state === InstanceState.PAUSED ? 'Resume' : 'Pause'}
-        </span>
+        {instanceInfo.state === InstanceState.PAUSED ? (
+          <TimerOffIcon className="h-4" />
+        ) : (
+          <TimerIcon className="h-4" />
+        )}
+        {instanceInfo.state === InstanceState.PAUSED ? 'Resume' : 'Pause'}
       </Button>
       <Button
-        className="flex flex-row gap-1"
         variant="secondary"
         onClick={() => stopMutation.mutate()}
         disabled={
@@ -157,10 +148,8 @@ export default function ControlsMenu() {
           instanceInfo.state === InstanceState.STOPPED
         }
       >
-        <div>
-          <SquareIcon className="h-4" />
-        </div>
-        <span>Stop</span>
+        <SquareIcon className="h-4" />
+        Stop
       </Button>
     </div>
   );

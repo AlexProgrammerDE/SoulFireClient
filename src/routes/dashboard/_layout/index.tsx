@@ -49,17 +49,14 @@ function InstanceSelectPage() {
             ) && (
               <Button
                 variant="secondary"
-                className="flex flex-row gap-1"
                 onClick={() =>
                   void navigate({
                     to: '/dashboard/admin/overview',
                   })
                 }
               >
-                <div>
-                  <LayoutDashboardIcon className="h-4" />
-                </div>
-                <span>Admin panel</span>
+                <LayoutDashboardIcon className="h-4" />
+                Admin panel
               </Button>
             )}
           </div>

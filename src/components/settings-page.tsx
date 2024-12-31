@@ -340,14 +340,13 @@ function StringListComponent(props: {
           />
           <Button
             variant="outline"
-            className="flex flex-row gap-1"
             onClick={() => {
               insertValue(newEntryInput);
               setNewEntryInput('');
             }}
           >
             <PlusIcon className="h-4 w-4" />
-            <span>Add</span>
+            Add
           </Button>
         </div>
       </CardHeader>
@@ -363,13 +362,12 @@ function StringListComponent(props: {
             />
             <Button
               variant="outline"
-              className="flex flex-row gap-1"
               onClick={() => {
                 deleteId(item.id);
               }}
             >
               <TrashIcon className="h-4 w-4" />
-              <span>Remove</span>
+              Remove
             </Button>
           </div>
         ))}

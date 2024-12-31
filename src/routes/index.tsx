@@ -214,11 +214,10 @@ function Index() {
                       <Button
                         disabled={disabled}
                         variant="outline"
-                        className="flex w-full gap-2"
                         onClick={() => setLoginType('INTEGRATED')}
                       >
                         <LaptopMinimalIcon className="size-5" />
-                        <p>Use integrated server</p>
+                        Use integrated server
                       </Button>
                     )}
                   />
@@ -240,11 +239,10 @@ function Index() {
                       <Button
                         disabled={disabled}
                         variant="outline"
-                        className="flex w-full gap-2"
                         onClick={() => setLoginType('REMOTE')}
                       >
                         <ServerIcon className="size-5" />
-                        <p>Connect to remote server</p>
+                        Connect to remote server
                       </Button>
                     )}
                   />
@@ -252,13 +250,12 @@ function Index() {
                 {isDemo() && (
                   <Button
                     variant="outline"
-                    className="flex w-full gap-2"
                     onClick={() => {
                       void targetRedirect();
                     }}
                   >
                     <FlaskConicalIcon className="size-5" />
-                    <p>Use demo server</p>
+                    Use demo server
                   </Button>
                 )}
                 <div className="absolute text-xs text-gray-500 text-center bottom-0 left-0 right-0 mb-2">
