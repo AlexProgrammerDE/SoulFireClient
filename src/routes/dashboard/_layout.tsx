@@ -36,6 +36,7 @@ import { queryClientInstance } from '@/lib/query.ts';
 import { useQuery } from '@tanstack/react-query';
 import { LoadingComponent } from '@/components/loading-component.tsx';
 import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
+import { useState } from 'react';
 
 const listQueryFn = async ({
   signal,
@@ -137,6 +138,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
 function ErrorComponent({ error }: { error: Error }) {
   const navigate = useNavigate();
   const router = useRouter();
+  const [revalidating, setRevalidating] = useState(false);
 
   return (
     <>
@@ -169,10 +171,22 @@ function ErrorComponent({ error }: { error: Error }) {
             </Button>
             <Button
               onClick={() => {
-                void router.invalidate();
+                setRevalidating(true);
+                void router
+                  .invalidate()
+                  .then(() => {
+                    setRevalidating(false);
+                  })
+                  .catch(() => {
+                    setRevalidating(false);
+                  });
               }}
             >
-              <RotateCwIcon className="h-4" />
+              {revalidating ? (
+                <LoaderCircleIcon className="h-4 animate-spin" />
+              ) : (
+                <RotateCwIcon className="h-4" />
+              )}
               Reload page
             </Button>
           </div>
