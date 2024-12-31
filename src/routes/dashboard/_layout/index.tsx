@@ -3,7 +3,11 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { getEnumKeyByValue } from '@/lib/types.ts';
-import { instanceIconPool, selectRandomEntry } from '@/lib/utils.ts';
+import {
+  instanceIconPool,
+  selectRandomEntry,
+  toCapitalizedWords,
+} from '@/lib/utils.ts';
 import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import {
@@ -53,8 +57,10 @@ function InstanceSelectPage() {
                   </CardHeader>
                   <CardHeader>
                     <CardTitle>{instance.friendlyName}</CardTitle>
-                    <CardDescription>
-                      {getEnumKeyByValue(InstanceState, instance.state)}
+                    <CardDescription className="font-semibold">
+                      {toCapitalizedWords(
+                        getEnumKeyByValue(InstanceState, instance.state),
+                      )}
                     </CardDescription>
                   </CardHeader>
                 </Card>
