@@ -15,7 +15,7 @@ import {
 import { NavSecondary } from '@/components/nav-secondary.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 
-export function AppSidebar({
+export function InstanceSidebar({
   expandPluginSettings,
   ...props
 }: React.ComponentProps<typeof Sidebar> & {
