@@ -1,10 +1,9 @@
-import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import * as React from 'react';
 import { useContext } from 'react';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { getEnumKeyByValue } from '@/lib/types.ts';
 import { instanceIconPool, selectRandomEntry } from '@/lib/utils.ts';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import {
@@ -13,21 +12,23 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card.tsx';
+import { SearchXIcon } from 'lucide-react';
 
 export const Route = createFileRoute('/dashboard/_layout/')({
   component: InstanceSelectPage,
 });
 
 function InstanceSelectPage() {
-  const navigate = useNavigate();
-  const clientInfo = useContext(ClientInfoContext);
   const instanceList = useContext(InstanceListContext);
 
   return (
     <UserPageLayout pageName="Instances">
       {instanceList.instances.length == 0 ? (
-        <div className="flex flex-col gap-4 p-4">
-          <h1>No instances found</h1>
+        <div className="flex flex-1 size-full">
+          <div className="m-auto flex flex-row gap-2">
+            <SearchXIcon className="size-7 m-auto" />
+            <h1 className="text-xl font-bold m-auto">No instances found</h1>
+          </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-4">
