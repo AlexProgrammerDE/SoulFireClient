@@ -56,7 +56,7 @@ import { appConfigDir, appDataDir } from '@tauri-apps/api/path';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { AboutPopup } from '@/components/dialog/about-popup.tsx';
 
-export function NavUser() {
+export function NavUserControl() {
   const navigate = useNavigate();
   const clientInfo = useContext(ClientInfoContext);
   const terminalTheme = useContext(TerminalThemeContext);

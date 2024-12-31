@@ -1,22 +1,13 @@
 import * as React from 'react';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  AppleIcon,
-  CarrotIcon,
   ChevronsUpDownIcon,
-  CitrusIcon,
-  CookieIcon,
-  CroissantIcon,
   DownloadIcon,
   FileIcon,
-  FishIcon,
   FolderIcon,
+  HomeIcon,
   MinusIcon,
-  PickaxeIcon,
   PlusIcon,
-  PopcornIcon,
-  ShovelIcon,
-  SwordIcon,
   UploadIcon,
 } from 'lucide-react';
 import {
@@ -46,11 +37,12 @@ import {
   ProfileRoot,
 } from '@/lib/types.ts';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
-import { useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import {
   data2blob,
   hasGlobalPermission,
   hasInstancePermission,
+  instanceIconPool,
   isTauri,
   selectRandomEntry,
   toCapitalizedWords,
@@ -76,19 +68,6 @@ import {
 } from '@/generated/soulfire/common.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 
-const iconPool = [
-  PickaxeIcon,
-  AppleIcon,
-  ShovelIcon,
-  SwordIcon,
-  FishIcon,
-  CitrusIcon,
-  PopcornIcon,
-  CookieIcon,
-  CarrotIcon,
-  CroissantIcon,
-];
-
 export function InstanceSwitcher() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -102,7 +81,7 @@ export function InstanceSwitcher() {
   const instanceProfileInputRef = useRef<HTMLInputElement>(null);
   const [createOpen, setCreateOpen] = useState(false);
   const InstanceIcon = useMemo(() => {
-    return selectRandomEntry(iconPool, instanceInfo.id);
+    return selectRandomEntry(instanceIconPool, instanceInfo.id);
   }, [instanceInfo.id]);
   const setProfileMutation = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
@@ -240,44 +219,55 @@ export function InstanceSwitcher() {
               Instances
             </DropdownMenuLabel>
             {instanceList.instances.map((instance, index) => {
-              const InstanceIcon = selectRandomEntry(iconPool, instance.id);
+              const InstanceIcon = selectRandomEntry(
+                instanceIconPool,
+                instance.id,
+              );
               return (
                 <DropdownMenuItem
                   key={instance.id}
-                  onClick={() =>
-                    void navigate({
-                      to: '/dashboard/instance/$instance/console',
-                      params: { instance: instance.id },
-                    })
-                  }
+                  asChild
                   className="gap-2 p-2"
                 >
-                  <div className="flex size-6 items-center justify-center rounded-sm border">
-                    <InstanceIcon className="size-4 shrink-0" />
-                  </div>
-                  {instance.friendlyName}
-                  <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+                  <Link
+                    to="/dashboard/instance/$instance/console"
+                    params={{ instance: instance.id }}
+                  >
+                    <div className="flex size-6 items-center justify-center rounded-sm border">
+                      <InstanceIcon className="size-4 shrink-0" />
+                    </div>
+                    {instance.friendlyName}
+                    <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+                  </Link>
                 </DropdownMenuItem>
               );
             })}
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild className="gap-2 p-2">
+              <Link to="/dashboard">
+                <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                  <HomeIcon className="size-4" />
+                </div>
+                <div className="font-medium text-muted-foreground">
+                  Back to dashboard
+                </div>
+              </Link>
+            </DropdownMenuItem>
             {hasGlobalPermission(
               clientInfo,
               GlobalPermission.CREATE_INSTANCE,
             ) && (
-              <>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={() => setCreateOpen(true)}
-                  className="gap-2 p-2"
-                >
-                  <div className="flex size-6 items-center justify-center rounded-md border bg-background">
-                    <PlusIcon className="size-4" />
-                  </div>
-                  <div className="font-medium text-muted-foreground">
-                    Create instance
-                  </div>
-                </DropdownMenuItem>
-              </>
+              <DropdownMenuItem
+                onClick={() => setCreateOpen(true)}
+                className="gap-2 p-2"
+              >
+                <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                  <PlusIcon className="size-4" />
+                </div>
+                <div className="font-medium text-muted-foreground">
+                  Create instance
+                </div>
+              </DropdownMenuItem>
             )}
             <DropdownMenuSeparator />
             <DropdownMenuLabel className="text-xs text-muted-foreground">

@@ -11,6 +11,18 @@ import {
   InstanceListResponse_Instance,
 } from '@/generated/soulfire/instance.ts';
 import { sha256 } from 'js-sha256';
+import {
+  AppleIcon,
+  CarrotIcon,
+  CitrusIcon,
+  CookieIcon,
+  CroissantIcon,
+  FishIcon,
+  PickaxeIcon,
+  PopcornIcon,
+  ShovelIcon,
+  SwordIcon,
+} from 'lucide-react';
 
 export function getTerminalTheme() {
   return localStorage.getItem(LOCAL_STORAGE_TERMINAL_THEME_KEY) ?? 'mocha';
@@ -135,3 +147,16 @@ export function getCookie(name: string) {
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop()?.split(';').shift();
 }
+
+export const instanceIconPool = [
+  PickaxeIcon,
+  AppleIcon,
+  ShovelIcon,
+  SwordIcon,
+  FishIcon,
+  CitrusIcon,
+  PopcornIcon,
+  CookieIcon,
+  CarrotIcon,
+  CroissantIcon,
+];
