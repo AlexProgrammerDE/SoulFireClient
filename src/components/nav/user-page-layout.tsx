@@ -21,6 +21,7 @@ export default function UserPageLayout(props: {
   children: ReactNode;
   extraCrumbs?: string[];
   pageName: string;
+  showUserCrumb: boolean;
 }) {
   const clientInfo = useContext(ClientInfoContext);
   const defaultOpen = getCookie('sidebar:state') === 'true';
@@ -35,18 +36,22 @@ export default function UserPageLayout(props: {
             <Separator orientation="vertical" className="mr-2 h-4" />
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem className="hidden md:block">
-                  {clientInfo.username}
-                </BreadcrumbItem>
+                {props.showUserCrumb && (
+                  <>
+                    <BreadcrumbItem className="hidden md:block">
+                      {clientInfo.username}
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator className="hidden md:block" />
+                  </>
+                )}
                 {(props.extraCrumbs || []).map((crumb) => (
                   <>
-                    <BreadcrumbSeparator className="hidden md:block" />
                     <BreadcrumbItem className="hidden md:block">
                       {crumb}
                     </BreadcrumbItem>
+                    <BreadcrumbSeparator className="hidden md:block" />
                   </>
                 ))}
-                <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
                   <BreadcrumbPage>{props.pageName}</BreadcrumbPage>
                 </BreadcrumbItem>

@@ -22,6 +22,7 @@ import {
   InstanceListResponse,
   InstanceState,
 } from '@/generated/soulfire/instance.ts';
+import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/admin/_layout/overview',
@@ -299,12 +300,20 @@ function OverviewPage() {
   }
 
   return (
-    <div className="grow flex h-full w-full flex-col gap-2 py-2 pl-2">
-      <h2 className="text-xl font-semibold">Welcome to the admin dashboard</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        <UsersChart userList={result.data.userList} />
-        <InstancesChart instanceList={result.data.instanceList} />
+    <UserPageLayout
+      showUserCrumb={false}
+      extraCrumbs={['Admin']}
+      pageName="Overview"
+    >
+      <div className="grow flex h-full w-full flex-col gap-2 py-2 pl-2">
+        <h2 className="text-xl font-semibold">
+          Welcome to the admin dashboard
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2">
+          <UsersChart userList={result.data.userList} />
+          <InstancesChart instanceList={result.data.instanceList} />
+        </div>
       </div>
-    </div>
+    </UserPageLayout>
   );
 }

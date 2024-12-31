@@ -10,7 +10,9 @@ import {
 } from '@/components/ui/sidebar.tsx';
 import { Link, LinkProps } from '@tanstack/react-router';
 import * as React from 'react';
-import { ReactNode } from 'react';
+import { ReactNode, useContext } from 'react';
+import DynamicIcon from '@/components/dynamic-icon.tsx';
+import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 
 type NavLinks = {
   title: string;
@@ -19,6 +21,15 @@ type NavLinks = {
 }[];
 
 export function NavUserAdmin() {
+  const clientInfo = useContext(ClientInfoContext);
+
+  const devSettings = clientInfo.settings.find(
+    (settings) => settings.namespace === 'dev',
+  );
+  if (!devSettings) {
+    throw new Error('Namespaces missing');
+  }
+
   const navLinks: NavLinks = [
     {
       title: 'Overview',
@@ -26,6 +37,16 @@ export function NavUserAdmin() {
       linkProps: {
         to: '/dashboard/admin/overview',
         params: {},
+      },
+    },
+    {
+      title: 'Dev Settings',
+      icon: (props) => (
+        <DynamicIcon {...props} name={devSettings.iconId as never} />
+      ),
+      linkProps: {
+        to: '/dashboard/admin/settings/$namespace',
+        params: { namespace: 'dev' },
       },
     },
   ];
