@@ -3,7 +3,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { toast } from 'sonner';
 import { emit, listen } from '@tauri-apps/api/event';
 import { cancellablePromiseDefault, cn } from '@/lib/utils.ts';
-import { CastIcon, RadioTowerIcon } from 'lucide-react';
+import { CastIcon, RadioTowerIcon, SearchXIcon } from 'lucide-react';
 import {
   DropdownMenuGroup,
   DropdownMenuItem,
@@ -83,7 +83,7 @@ export default function CastMenuEntry() {
     <DropdownMenuGroup>
       <DropdownMenuSub>
         <DropdownMenuSubTrigger>
-          <CastIcon className="h-4" />
+          <CastIcon />
           <span>Cast</span>
         </DropdownMenuSubTrigger>
         <DropdownMenuPortal>
@@ -133,7 +133,7 @@ export default function CastMenuEntry() {
                   }}
                 >
                   <CastIcon
-                    className={cn('w-4 h-4 mr-2', {
+                    className={cn({
                       'text-green-500': currentDevice.transport_id !== null,
                       'text-red-500': currentDevice.transport_id === null,
                     })}
@@ -148,6 +148,7 @@ export default function CastMenuEntry() {
                   toast('No devices found');
                 }}
               >
+                <SearchXIcon />
                 No devices found
               </DropdownMenuItem>
             )}
@@ -170,8 +171,8 @@ export default function CastMenuEntry() {
                 );
               }}
             >
-              <RadioTowerIcon className="h-4" />
-              <span>Broadcast test</span>
+              <RadioTowerIcon />
+              Broadcast test
             </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuPortal>
