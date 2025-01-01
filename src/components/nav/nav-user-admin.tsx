@@ -23,10 +23,13 @@ type NavLinks = {
 export function NavUserAdmin() {
   const clientInfo = useContext(ClientInfoContext);
 
+  const serverSettings = clientInfo.settings.find(
+    (settings) => settings.namespace === 'server',
+  );
   const devSettings = clientInfo.settings.find(
     (settings) => settings.namespace === 'dev',
   );
-  if (!devSettings) {
+  if (!serverSettings || !devSettings) {
     throw new Error('Namespaces missing');
   }
 
@@ -37,6 +40,16 @@ export function NavUserAdmin() {
       linkProps: {
         to: '/dashboard/admin/overview',
         params: {},
+      },
+    },
+    {
+      title: 'Server Settings',
+      icon: (props) => (
+        <DynamicIcon {...props} name={serverSettings.iconId as never} />
+      ),
+      linkProps: {
+        to: '/dashboard/admin/settings/$namespace',
+        params: { namespace: 'server' },
       },
     },
     {

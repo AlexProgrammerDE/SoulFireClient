@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { BookOpenTextIcon, CoffeeIcon, LifeBuoyIcon } from 'lucide-react';
 
 import { NavControls } from '@/components/nav/nav-controls.tsx';
 import { NavSettings } from '@/components/nav/nav-settings.tsx';
@@ -30,26 +29,7 @@ export function InstanceSidebar({
         <SidebarContent className="min-h-[calc(100svh-4rem-4rem)]">
           <NavControls />
           <NavSettings expandPluginSettings={expandPluginSettings} />
-          <NavSecondary
-            items={[
-              {
-                title: 'Documentation',
-                url: 'https://soulfiremc.com/docs',
-                icon: BookOpenTextIcon,
-              },
-              {
-                title: 'Buy me a Coffee',
-                url: 'https://ko-fi.com/alexprogrammerde',
-                icon: CoffeeIcon,
-              },
-              {
-                title: 'Support',
-                url: 'https://soulfiremc.com/discord',
-                icon: LifeBuoyIcon,
-              },
-            ]}
-            className="mt-auto"
-          />
+          <NavSecondary className="mt-auto" />
         </SidebarContent>
       </ScrollArea>
       <SidebarFooter className="h-16 justify-center">

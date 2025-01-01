@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { BookOpenTextIcon, CoffeeIcon, LifeBuoyIcon } from 'lucide-react';
 import { NavUserControl } from '@/components/nav/nav-user-control.tsx';
 import {
   Sidebar,
@@ -30,26 +29,7 @@ export function UserSidebar({
             clientInfo,
             GlobalPermission.READ_SERVER_CONFIG,
           ) && <NavUserAdmin />}
-          <NavSecondary
-            items={[
-              {
-                title: 'Documentation',
-                url: 'https://soulfiremc.com/docs',
-                icon: BookOpenTextIcon,
-              },
-              {
-                title: 'Buy me a Coffee',
-                url: 'https://ko-fi.com/alexprogrammerde',
-                icon: CoffeeIcon,
-              },
-              {
-                title: 'Support',
-                url: 'https://soulfiremc.com/discord',
-                icon: LifeBuoyIcon,
-              },
-            ]}
-            className="mt-auto"
-          />
+          <NavSecondary className="mt-auto" />
         </SidebarContent>
       </ScrollArea>
       <SidebarFooter className="h-16 justify-center">

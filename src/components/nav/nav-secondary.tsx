@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { type LucideIcon } from 'lucide-react';
+import {
+  BookOpenTextIcon,
+  CoffeeIcon,
+  LifeBuoyIcon,
+  type LucideIcon,
+} from 'lucide-react';
 
 import {
   SidebarGroup,
@@ -9,16 +14,33 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar.tsx';
 
+type NavLinks = {
+  title: string;
+  url: string;
+  icon: LucideIcon;
+}[];
+
 export function NavSecondary({
-  items,
   ...props
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon: LucideIcon;
-  }[];
-} & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+}: React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+  const items: NavLinks = [
+    {
+      title: 'Documentation',
+      url: 'https://soulfiremc.com/docs',
+      icon: BookOpenTextIcon,
+    },
+    {
+      title: 'Buy me a Coffee',
+      url: 'https://ko-fi.com/alexprogrammerde',
+      icon: CoffeeIcon,
+    },
+    {
+      title: 'Support',
+      url: 'https://soulfiremc.com/discord',
+      icon: LifeBuoyIcon,
+    },
+  ];
+
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
