@@ -26,7 +26,7 @@ function InstanceSelectPage() {
   const instanceList = useContext(InstanceListContext);
 
   return (
-    <UserPageLayout showUserCrumb={false} pageName="Instances">
+    <UserPageLayout showUserCrumb={true} pageName="Instances">
       {instanceList.instances.length == 0 ? (
         <div className="flex flex-1 size-full">
           <div className="m-auto flex flex-row gap-2">
