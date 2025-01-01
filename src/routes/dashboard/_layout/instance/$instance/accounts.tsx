@@ -390,7 +390,11 @@ function AccountSettings() {
       <div className="grow flex h-full w-full flex-col gap-4 pb-4 max-w-4xl">
         <div className="flex flex-col gap-2">
           <InstanceSettingsPageComponent
-            data={clientInfo.settings.find((s) => s.namespace === 'account')!}
+            data={
+              clientInfo.instanceSettings.find(
+                (s) => s.namespace === 'account',
+              )!
+            }
           />
         </div>
         <DataTable

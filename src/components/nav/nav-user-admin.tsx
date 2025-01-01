@@ -23,10 +23,10 @@ type NavLinks = {
 export function NavUserAdmin() {
   const clientInfo = useContext(ClientInfoContext);
 
-  const serverSettings = clientInfo.settings.find(
+  const serverSettings = clientInfo.serverSettings.find(
     (settings) => settings.namespace === 'server',
   );
-  const devSettings = clientInfo.settings.find(
+  const devSettings = clientInfo.serverSettings.find(
     (settings) => settings.namespace === 'dev',
   );
   if (!serverSettings || !devSettings) {

@@ -9,7 +9,6 @@ import {
   CardTitle,
 } from '@/components/ui/card.tsx';
 import { Badge } from '@/components/ui/badge.tsx';
-import { SettingsPage_Type } from '@/generated/soulfire/config.ts';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 
 export const Route = createFileRoute(
@@ -21,8 +20,8 @@ export const Route = createFileRoute(
 function SettingsNamespace() {
   const { namespace } = Route.useParams();
   const clientInfo = useContext(ClientInfoContext);
-  const settingsEntry = clientInfo.settings.find(
-    (s) => s.namespace === namespace && s.type === SettingsPage_Type.INSTANCE,
+  const settingsEntry = clientInfo.instanceSettings.find(
+    (s) => s.namespace === namespace,
   );
   if (!settingsEntry) {
     throw new Error('Settings entry not found');

@@ -317,10 +317,6 @@ export interface SettingEntry {
  */
 export interface SettingsPage {
     /**
-     * @generated from protobuf field: soulfire.v1.SettingsPage.Type type = 1;
-     */
-    type: SettingsPage_Type;
-    /**
      * @generated from protobuf field: optional string owning_plugin = 2;
      */
     owningPlugin?: string;
@@ -346,19 +342,6 @@ export interface SettingsPage {
      * @generated from protobuf field: string icon_id = 6;
      */
     iconId: string;
-}
-/**
- * @generated from protobuf enum soulfire.v1.SettingsPage.Type
- */
-export enum SettingsPage_Type {
-    /**
-     * @generated from protobuf enum value: SERVER = 0;
-     */
-    SERVER = 0,
-    /**
-     * @generated from protobuf enum value: INSTANCE = 1;
-     */
-    INSTANCE = 1
 }
 /**
  * @generated from protobuf message soulfire.v1.GlobalPermissionState
@@ -431,9 +414,13 @@ export interface ClientDataResponse {
      */
     plugins: ServerPlugin[];
     /**
-     * @generated from protobuf field: repeated soulfire.v1.SettingsPage settings = 5;
+     * @generated from protobuf field: repeated soulfire.v1.SettingsPage server_settings = 9;
      */
-    settings: SettingsPage[];
+    serverSettings: SettingsPage[];
+    /**
+     * @generated from protobuf field: repeated soulfire.v1.SettingsPage instance_settings = 10;
+     */
+    instanceSettings: SettingsPage[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ClientDataRequest$Type extends MessageType<ClientDataRequest> {
@@ -614,7 +601,6 @@ export const SettingEntry = new SettingEntry$Type();
 class SettingsPage$Type extends MessageType<SettingsPage> {
     constructor() {
         super("soulfire.v1.SettingsPage", [
-            { no: 1, name: "type", kind: "enum", T: () => ["soulfire.v1.SettingsPage.Type", SettingsPage_Type] },
             { no: 2, name: "owning_plugin", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "page_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
@@ -667,7 +653,8 @@ class ClientDataResponse$Type extends MessageType<ClientDataResponse> {
             { no: 8, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "server_permissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => GlobalPermissionState },
             { no: 3, name: "plugins", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ServerPlugin },
-            { no: 5, name: "settings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingsPage }
+            { no: 9, name: "server_settings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingsPage },
+            { no: 10, name: "instance_settings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingsPage }
         ]);
     }
 }

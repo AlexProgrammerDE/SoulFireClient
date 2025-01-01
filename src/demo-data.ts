@@ -208,9 +208,8 @@ export const demoData: ClientDataResponse = {
       website: 'https://soulfiremc.com',
     },
   ],
-  settings: [
+  serverSettings: [
     {
-      type: 0,
       pageName: 'Dev Settings',
       namespace: 'dev',
       entries: [
@@ -282,8 +281,9 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'bug',
     },
+  ],
+  instanceSettings: [
     {
-      type: 1,
       pageName: 'Bot Settings',
       namespace: 'bot',
       entries: [
@@ -795,7 +795,6 @@ export const demoData: ClientDataResponse = {
       iconId: 'bot',
     },
     {
-      type: 1,
       pageName: 'Account Settings',
       namespace: 'account',
       entries: [
@@ -866,7 +865,6 @@ export const demoData: ClientDataResponse = {
       iconId: 'users',
     },
     {
-      type: 1,
       pageName: 'Proxy Settings',
       namespace: 'proxy',
       entries: [
@@ -929,7 +927,6 @@ export const demoData: ClientDataResponse = {
       iconId: 'waypoints',
     },
     {
-      type: 1,
       pageName: 'AI Settings',
       namespace: 'ai',
       entries: [
@@ -1004,7 +1001,6 @@ export const demoData: ClientDataResponse = {
       iconId: 'sparkles',
     },
     {
-      type: 1,
       pageName: 'Auto Jump',
       namespace: 'auto-jump',
       entries: [
@@ -1048,7 +1044,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'auto-jump',
     },
     {
-      type: 1,
       pageName: 'Client Brand',
       namespace: 'client-brand',
       entries: [
@@ -1086,7 +1081,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'client-brand',
     },
     {
-      type: 1,
       pageName: 'AI Chat Bot',
       namespace: 'ai-chat-bot',
       entries: [
@@ -1188,7 +1182,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'ai-chat-bot',
     },
     {
-      type: 1,
       pageName: 'Auto Reconnect',
       namespace: 'auto-reconnect',
       entries: [
@@ -1231,7 +1224,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'auto-reconnect',
     },
     {
-      type: 1,
       pageName: 'Client Settings',
       namespace: 'client-settings',
       entries: [
@@ -1498,7 +1490,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'client-settings',
     },
     {
-      type: 1,
       pageName: 'Chat Control',
       namespace: 'chat-control',
       entries: [
@@ -1537,7 +1528,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'chat-control',
     },
     {
-      type: 1,
       pageName: 'Auto Register',
       namespace: 'auto-register',
       entries: [
@@ -1624,7 +1614,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'auto-register',
     },
     {
-      type: 1,
       pageName: 'Server List Bypass',
       namespace: 'server-list-bypass',
       entries: [
@@ -1668,7 +1657,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'server-list-bypass',
     },
     {
-      type: 1,
       pageName: 'Anti AFK',
       namespace: 'anti-afk',
       entries: [
@@ -1732,7 +1720,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'anti-afk',
     },
     {
-      type: 1,
       pageName: 'Auto Totem',
       namespace: 'auto-totem',
       entries: [
@@ -1775,7 +1762,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'auto-totem',
     },
     {
-      type: 1,
       pageName: 'Auto Eat',
       namespace: 'auto-eat',
       entries: [
@@ -1818,7 +1804,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'auto-eat',
     },
     {
-      type: 1,
       pageName: 'Auto Armor',
       namespace: 'auto-armor',
       entries: [
@@ -1861,7 +1846,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'auto-armor',
     },
     {
-      type: 1,
       pageName: 'POV Server',
       namespace: 'pov-server',
       entries: [
@@ -1931,7 +1915,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'pov-server',
     },
     {
-      type: 1,
       pageName: 'Auto Chat Message',
       namespace: 'auto-chat-message',
       entries: [
@@ -1988,7 +1971,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'auto-chat-message',
     },
     {
-      type: 1,
       pageName: 'Kill Aura',
       namespace: 'kill-aura',
       entries: [
@@ -2130,7 +2112,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'kill-aura',
     },
     {
-      type: 1,
       pageName: 'Auto Respawn',
       namespace: 'auto-respawn',
       entries: [
@@ -2173,7 +2154,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'auto-respawn',
     },
     {
-      type: 1,
       pageName: 'Chat Message Logger',
       namespace: 'chat-message-logger',
       entries: [
@@ -2195,7 +2175,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'chat-message-logger',
     },
     {
-      type: 1,
       pageName: 'Fake Virtual Host',
       namespace: 'fake-virtual-host',
       entries: [
@@ -2251,7 +2230,6 @@ export const demoData: ClientDataResponse = {
       owningPlugin: 'fake-virtual-host',
     },
     {
-      type: 1,
       pageName: 'Forwarding Bypass',
       namespace: 'forwarding-bypass',
       entries: [

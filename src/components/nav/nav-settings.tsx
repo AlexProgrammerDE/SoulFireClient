@@ -20,7 +20,6 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible.tsx';
 import { BlocksIcon, ChevronRightIcon } from 'lucide-react';
-import { SettingsPage_Type } from '@/generated/soulfire/config.ts';
 
 type NavLinks = {
   title: string;
@@ -39,16 +38,16 @@ export function NavSettings({
   const instanceInfo = useContext(InstanceInfoContext);
   const clientInfo = useContext(ClientInfoContext);
 
-  const botSettings = clientInfo.settings.find(
+  const botSettings = clientInfo.instanceSettings.find(
     (settings) => settings.namespace === 'bot',
   );
-  const accountSettings = clientInfo.settings.find(
+  const accountSettings = clientInfo.instanceSettings.find(
     (settings) => settings.namespace === 'account',
   );
-  const proxySettings = clientInfo.settings.find(
+  const proxySettings = clientInfo.instanceSettings.find(
     (settings) => settings.namespace === 'proxy',
   );
-  const aiSettings = clientInfo.settings.find(
+  const aiSettings = clientInfo.instanceSettings.find(
     (settings) => settings.namespace === 'ai',
   );
   if (!botSettings || !accountSettings || !proxySettings || !aiSettings) {
@@ -98,12 +97,8 @@ export function NavSettings({
     },
   ];
 
-  const pluginSettingLinks: NavLinks = clientInfo.settings
-    .filter(
-      (setting) =>
-        setting.owningPlugin !== undefined &&
-        setting.type === SettingsPage_Type.INSTANCE,
-    )
+  const pluginSettingLinks: NavLinks = clientInfo.instanceSettings
+    .filter((setting) => setting.owningPlugin !== undefined)
     .map((setting) => ({
       title: setting.pageName,
       icon: (props) => (
