@@ -9,11 +9,6 @@ import {
   StringListSetting,
   StringSetting,
 } from '@/generated/soulfire/config.ts';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import {
   Popover,
@@ -27,7 +22,13 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command.tsx';
-import { Check, ChevronsUpDown, PlusIcon, TrashIcon } from 'lucide-react';
+import {
+  Check,
+  ChevronsUpDown,
+  InfoIcon,
+  PlusIcon,
+  TrashIcon,
+} from 'lucide-react';
 import { cn } from '@/lib/utils.ts';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input.tsx';
@@ -82,14 +83,37 @@ function getEntry(
   return current;
 }
 
-function ComponentTitle(props: { title: string; description: string }) {
+function ComponentTitle(props: {
+  title: string;
+  description: string;
+  onClick?: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Tooltip>
-      <TooltipTrigger className="w-fit">{props.title}</TooltipTrigger>
-      <TooltipContent>
-        <p className="whitespace-pre-line">{props.description}</p>
-      </TooltipContent>
-    </Tooltip>
+    <div className="flex flex-row gap-2 w-fit items-center">
+      <p
+        onClick={props.onClick}
+        className={cn({
+          'cursor-pointer': props.onClick !== undefined,
+        })}
+      >
+        {props.title}
+      </p>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <InfoIcon
+            className="h-4 w-4 shrink-0 opacity-50 cursor-pointer"
+            onClick={() => {
+              setOpen(!open);
+            }}
+          />
+        </PopoverTrigger>
+        <PopoverContent>
+          <p className="whitespace-pre-line">{props.description}</p>
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 }
 
@@ -211,19 +235,30 @@ function BoolComponent(props: {
   entry: BoolSetting;
   value: boolean;
   changeCallback: (value: boolean) => void;
+  title: string;
+  description: string;
 }) {
   return (
-    <Checkbox
-      className="my-auto"
-      checked={props.value}
-      onCheckedChange={(value) => {
-        if (value === 'indeterminate') {
-          return;
-        }
+    <>
+      <Checkbox
+        className="my-auto"
+        checked={props.value}
+        onCheckedChange={(value) => {
+          if (value === 'indeterminate') {
+            return;
+          }
 
-        props.changeCallback(value);
-      }}
-    />
+          props.changeCallback(value);
+        }}
+      />
+      <ComponentTitle
+        title={props.title}
+        description={props.description}
+        onClick={() => {
+          props.changeCallback(!props.value);
+        }}
+      />
+    </>
   );
 }
 
@@ -539,8 +574,6 @@ function EntryComponent<T extends BaseSettings>(props: {
             entry={props.entry.value.bool}
             value={value as boolean}
             changeCallback={setValueMutation.mutate}
-          />
-          <ComponentTitle
             title={props.entry.value.bool.uiName}
             description={props.entry.value.bool.description}
           />
