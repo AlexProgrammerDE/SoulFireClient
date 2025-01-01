@@ -61,8 +61,8 @@ export default function UserPageLayout(props: {
               </Breadcrumb>
             </div>
           </header>
-          <ScrollArea className="h-[calc(100dvh-4rem)] w-full px-4">
-            <div className="flex flex-col min-h-[calc(100dvh-4rem)] w-full">
+          <ScrollArea className="h-[calc(100dvh-4rem)] w-full">
+            <div className="flex flex-col min-h-[calc(100dvh-4rem)] w-full px-4">
               {props.children}
             </div>
           </ScrollArea>
