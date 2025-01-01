@@ -51,38 +51,38 @@ export interface MinecraftAccountProto {
      */
     type: MinecraftAccountProto_AccountTypeProto;
     /**
-     * @generated from protobuf field: string profileId = 2;
+     * @generated from protobuf field: string profile_id = 2;
      */
     profileId: string;
     /**
-     * @generated from protobuf field: string lastKnownName = 3;
+     * @generated from protobuf field: string last_known_name = 3;
      */
     lastKnownName: string;
     /**
-     * @generated from protobuf oneof: accountData
+     * @generated from protobuf oneof: account_data
      */
     accountData: {
         oneofKind: "onlineSimpleJavaData";
         /**
-         * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.OnlineSimpleJavaData onlineSimpleJavaData = 4;
+         * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.OnlineSimpleJavaData online_simple_java_data = 4;
          */
         onlineSimpleJavaData: MinecraftAccountProto_OnlineSimpleJavaData;
     } | {
         oneofKind: "onlineChainJavaData";
         /**
-         * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.OnlineChainJavaData onlineChainJavaData = 5;
+         * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.OnlineChainJavaData online_chain_java_data = 5;
          */
         onlineChainJavaData: MinecraftAccountProto_OnlineChainJavaData;
     } | {
         oneofKind: "offlineJavaData";
         /**
-         * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.OfflineJavaData offlineJavaData = 6;
+         * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.OfflineJavaData offline_java_data = 6;
          */
         offlineJavaData: MinecraftAccountProto_OfflineJavaData;
     } | {
         oneofKind: "bedrockData";
         /**
-         * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.BedrockData bedrockData = 7;
+         * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.BedrockData bedrock_data = 7;
          */
         bedrockData: MinecraftAccountProto_BedrockData;
     } | {
@@ -94,11 +94,11 @@ export interface MinecraftAccountProto {
  */
 export interface MinecraftAccountProto_OnlineSimpleJavaData {
     /**
-     * @generated from protobuf field: string authToken = 1;
+     * @generated from protobuf field: string auth_token = 1;
      */
     authToken: string;
     /**
-     * @generated from protobuf field: int64 tokenExpireAt = 2;
+     * @generated from protobuf field: int64 token_expire_at = 2;
      */
     tokenExpireAt: string;
 }
@@ -107,15 +107,15 @@ export interface MinecraftAccountProto_OnlineSimpleJavaData {
  */
 export interface MinecraftAccountProto_OnlineChainJavaData {
     /**
-     * @generated from protobuf field: string authToken = 1;
+     * @generated from protobuf field: string auth_token = 1;
      */
     authToken: string;
     /**
-     * @generated from protobuf field: int64 tokenExpireAt = 2;
+     * @generated from protobuf field: int64 token_expire_at = 2;
      */
     tokenExpireAt: string;
     /**
-     * @generated from protobuf field: google.protobuf.Struct authChain = 3;
+     * @generated from protobuf field: google.protobuf.Struct auth_chain = 3;
      */
     authChain?: Struct;
 }
@@ -129,31 +129,31 @@ export interface MinecraftAccountProto_OfflineJavaData {
  */
 export interface MinecraftAccountProto_BedrockData {
     /**
-     * @generated from protobuf field: string mojangJwt = 1;
+     * @generated from protobuf field: string mojang_jwt = 1;
      */
     mojangJwt: string;
     /**
-     * @generated from protobuf field: string identityJwt = 2;
+     * @generated from protobuf field: string identity_jwt = 2;
      */
     identityJwt: string;
     /**
-     * @generated from protobuf field: string publicKey = 3;
+     * @generated from protobuf field: string public_key = 3;
      */
     publicKey: string;
     /**
-     * @generated from protobuf field: string privateKey = 4;
+     * @generated from protobuf field: string private_key = 4;
      */
     privateKey: string;
     /**
-     * @generated from protobuf field: string deviceId = 5;
+     * @generated from protobuf field: string device_id = 5;
      */
     deviceId: string;
     /**
-     * @generated from protobuf field: string playFabId = 6;
+     * @generated from protobuf field: string play_fab_id = 6;
      */
     playFabId: string;
     /**
-     * @generated from protobuf field: google.protobuf.Struct authChain = 7;
+     * @generated from protobuf field: google.protobuf.Struct auth_chain = 7;
      */
     authChain?: Struct;
 }
@@ -385,12 +385,12 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
     constructor() {
         super("soulfire.v1.MinecraftAccountProto", [
             { no: 1, name: "type", kind: "enum", T: () => ["soulfire.v1.MinecraftAccountProto.AccountTypeProto", MinecraftAccountProto_AccountTypeProto] },
-            { no: 2, name: "profileId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "lastKnownName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "onlineSimpleJavaData", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OnlineSimpleJavaData },
-            { no: 5, name: "onlineChainJavaData", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OnlineChainJavaData },
-            { no: 6, name: "offlineJavaData", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OfflineJavaData },
-            { no: 7, name: "bedrockData", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_BedrockData }
+            { no: 2, name: "profile_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "last_known_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "online_simple_java_data", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OnlineSimpleJavaData },
+            { no: 5, name: "online_chain_java_data", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OnlineChainJavaData },
+            { no: 6, name: "offline_java_data", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OfflineJavaData },
+            { no: 7, name: "bedrock_data", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_BedrockData }
         ]);
     }
 }
@@ -402,8 +402,8 @@ export const MinecraftAccountProto = new MinecraftAccountProto$Type();
 class MinecraftAccountProto_OnlineSimpleJavaData$Type extends MessageType<MinecraftAccountProto_OnlineSimpleJavaData> {
     constructor() {
         super("soulfire.v1.MinecraftAccountProto.OnlineSimpleJavaData", [
-            { no: 1, name: "authToken", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "tokenExpireAt", kind: "scalar", T: 3 /*ScalarType.INT64*/ }
+            { no: 1, name: "auth_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "token_expire_at", kind: "scalar", T: 3 /*ScalarType.INT64*/ }
         ]);
     }
 }
@@ -415,9 +415,9 @@ export const MinecraftAccountProto_OnlineSimpleJavaData = new MinecraftAccountPr
 class MinecraftAccountProto_OnlineChainJavaData$Type extends MessageType<MinecraftAccountProto_OnlineChainJavaData> {
     constructor() {
         super("soulfire.v1.MinecraftAccountProto.OnlineChainJavaData", [
-            { no: 1, name: "authToken", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "tokenExpireAt", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 3, name: "authChain", kind: "message", T: () => Struct }
+            { no: 1, name: "auth_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "token_expire_at", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+            { no: 3, name: "auth_chain", kind: "message", T: () => Struct }
         ]);
     }
 }
@@ -439,13 +439,13 @@ export const MinecraftAccountProto_OfflineJavaData = new MinecraftAccountProto_O
 class MinecraftAccountProto_BedrockData$Type extends MessageType<MinecraftAccountProto_BedrockData> {
     constructor() {
         super("soulfire.v1.MinecraftAccountProto.BedrockData", [
-            { no: 1, name: "mojangJwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "identityJwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "publicKey", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "privateKey", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "deviceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "playFabId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "authChain", kind: "message", T: () => Struct }
+            { no: 1, name: "mojang_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "identity_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "public_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "private_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "device_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "play_fab_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "auth_chain", kind: "message", T: () => Struct }
         ]);
     }
 }

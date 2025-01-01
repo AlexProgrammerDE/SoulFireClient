@@ -15,7 +15,7 @@ export interface ClientDataRequest {
  */
 export interface StringSetting {
     /**
-     * @generated from protobuf field: string uiName = 1;
+     * @generated from protobuf field: string ui_name = 1;
      */
     uiName: string;
     /**
@@ -44,7 +44,7 @@ export interface StringSetting {
  */
 export interface IntSetting {
     /**
-     * @generated from protobuf field: string uiName = 1;
+     * @generated from protobuf field: string ui_name = 1;
      */
     uiName: string;
     /**
@@ -81,7 +81,7 @@ export interface IntSetting {
  */
 export interface DoubleSetting {
     /**
-     * @generated from protobuf field: string uiName = 1;
+     * @generated from protobuf field: string ui_name = 1;
      */
     uiName: string;
     /**
@@ -118,7 +118,7 @@ export interface DoubleSetting {
  */
 export interface BoolSetting {
     /**
-     * @generated from protobuf field: string uiName = 1;
+     * @generated from protobuf field: string ui_name = 1;
      */
     uiName: string;
     /**
@@ -143,7 +143,7 @@ export interface ComboOption {
     /**
      * Displayed to user
      *
-     * @generated from protobuf field: string displayName = 2;
+     * @generated from protobuf field: string display_name = 2;
      */
     displayName: string;
 }
@@ -152,7 +152,7 @@ export interface ComboOption {
  */
 export interface ComboSetting {
     /**
-     * @generated from protobuf field: string uiName = 1;
+     * @generated from protobuf field: string ui_name = 1;
      */
     uiName: string;
     /**
@@ -175,7 +175,7 @@ export interface ComboSetting {
  */
 export interface StringListSetting {
     /**
-     * @generated from protobuf field: string uiName = 1;
+     * @generated from protobuf field: string ui_name = 1;
      */
     uiName: string;
     /**
@@ -192,27 +192,27 @@ export interface StringListSetting {
  */
 export interface MinMaxSetting {
     /**
-     * @generated from protobuf field: string minUiName = 1;
+     * @generated from protobuf field: string min_ui_name = 1;
      */
     minUiName: string;
     /**
-     * @generated from protobuf field: string maxUiName = 2;
+     * @generated from protobuf field: string max_ui_name = 2;
      */
     maxUiName: string;
     /**
-     * @generated from protobuf field: string minDescription = 3;
+     * @generated from protobuf field: string min_description = 3;
      */
     minDescription: string;
     /**
-     * @generated from protobuf field: string maxDescription = 4;
+     * @generated from protobuf field: string max_description = 4;
      */
     maxDescription: string;
     /**
-     * @generated from protobuf field: int32 minDef = 5;
+     * @generated from protobuf field: int32 min_def = 5;
      */
     minDef: number;
     /**
-     * @generated from protobuf field: int32 maxDef = 6;
+     * @generated from protobuf field: int32 max_def = 6;
      */
     maxDef: number;
     /**
@@ -232,11 +232,11 @@ export interface MinMaxSetting {
      */
     format?: string;
     /**
-     * @generated from protobuf field: string minPlaceholder = 11;
+     * @generated from protobuf field: string min_placeholder = 11;
      */
     minPlaceholder: string;
     /**
-     * @generated from protobuf field: string maxPlaceholder = 12;
+     * @generated from protobuf field: string max_placeholder = 12;
      */
     maxPlaceholder: string;
 }
@@ -282,13 +282,13 @@ export interface SettingType {
     } | {
         oneofKind: "stringList";
         /**
-         * @generated from protobuf field: soulfire.v1.StringListSetting stringList = 6;
+         * @generated from protobuf field: soulfire.v1.StringListSetting string_list = 6;
          */
         stringList: StringListSetting;
     } | {
         oneofKind: "minMax";
         /**
-         * @generated from protobuf field: soulfire.v1.MinMaxSetting minMax = 7;
+         * @generated from protobuf field: soulfire.v1.MinMaxSetting min_max = 7;
          */
         minMax: MinMaxSetting;
     } | {
@@ -321,13 +321,13 @@ export interface SettingsPage {
      */
     type: SettingsPage_Type;
     /**
-     * @generated from protobuf field: optional string owningPlugin = 2;
+     * @generated from protobuf field: optional string owning_plugin = 2;
      */
     owningPlugin?: string;
     /**
      * The name of the page for these settings
      *
-     * @generated from protobuf field: string pageName = 3;
+     * @generated from protobuf field: string page_name = 3;
      */
     pageName: string;
     /**
@@ -343,7 +343,7 @@ export interface SettingsPage {
     /**
      * https://lucide.dev icon id for this page (Usually rendered left of the page name)
      *
-     * @generated from protobuf field: string iconId = 6;
+     * @generated from protobuf field: string icon_id = 6;
      */
     iconId: string;
 }
@@ -365,7 +365,7 @@ export enum SettingsPage_Type {
  */
 export interface GlobalPermissionState {
     /**
-     * @generated from protobuf field: soulfire.v1.GlobalPermission globalPermission = 1;
+     * @generated from protobuf field: soulfire.v1.GlobalPermission global_permission = 1;
      */
     globalPermission: GlobalPermission;
     /**
@@ -423,7 +423,7 @@ export interface ClientDataResponse {
      */
     email: string;
     /**
-     * @generated from protobuf field: repeated soulfire.v1.GlobalPermissionState serverPermissions = 2;
+     * @generated from protobuf field: repeated soulfire.v1.GlobalPermissionState server_permissions = 2;
      */
     serverPermissions: GlobalPermissionState[];
     /**
@@ -449,7 +449,7 @@ export const ClientDataRequest = new ClientDataRequest$Type();
 class StringSetting$Type extends MessageType<StringSetting> {
     constructor() {
         super("soulfire.v1.StringSetting", [
-            { no: 1, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "secret", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
@@ -466,7 +466,7 @@ export const StringSetting = new StringSetting$Type();
 class IntSetting$Type extends MessageType<IntSetting> {
     constructor() {
         super("soulfire.v1.IntSetting", [
-            { no: 1, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "def", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 4, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
@@ -485,7 +485,7 @@ export const IntSetting = new IntSetting$Type();
 class DoubleSetting$Type extends MessageType<DoubleSetting> {
     constructor() {
         super("soulfire.v1.DoubleSetting", [
-            { no: 1, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "def", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 4, name: "min", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
@@ -504,7 +504,7 @@ export const DoubleSetting = new DoubleSetting$Type();
 class BoolSetting$Type extends MessageType<BoolSetting> {
     constructor() {
         super("soulfire.v1.BoolSetting", [
-            { no: 1, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "def", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
@@ -519,7 +519,7 @@ class ComboOption$Type extends MessageType<ComboOption> {
     constructor() {
         super("soulfire.v1.ComboOption", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "displayName", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -531,7 +531,7 @@ export const ComboOption = new ComboOption$Type();
 class ComboSetting$Type extends MessageType<ComboSetting> {
     constructor() {
         super("soulfire.v1.ComboSetting", [
-            { no: 1, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ComboOption },
             { no: 4, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
@@ -546,7 +546,7 @@ export const ComboSetting = new ComboSetting$Type();
 class StringListSetting$Type extends MessageType<StringListSetting> {
     constructor() {
         super("soulfire.v1.StringListSetting", [
-            { no: 1, name: "uiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "def", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
@@ -560,18 +560,18 @@ export const StringListSetting = new StringListSetting$Type();
 class MinMaxSetting$Type extends MessageType<MinMaxSetting> {
     constructor() {
         super("soulfire.v1.MinMaxSetting", [
-            { no: 1, name: "minUiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "maxUiName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "minDescription", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "maxDescription", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "minDef", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "maxDef", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 1, name: "min_ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "max_ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "min_description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "max_description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "min_def", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 6, name: "max_def", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 7, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 8, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 9, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 10, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 11, name: "minPlaceholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 12, name: "maxPlaceholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 11, name: "min_placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 12, name: "max_placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -588,8 +588,8 @@ class SettingType$Type extends MessageType<SettingType> {
             { no: 3, name: "double", kind: "message", oneof: "value", T: () => DoubleSetting },
             { no: 4, name: "bool", kind: "message", oneof: "value", T: () => BoolSetting },
             { no: 5, name: "combo", kind: "message", oneof: "value", T: () => ComboSetting },
-            { no: 6, name: "stringList", kind: "message", oneof: "value", T: () => StringListSetting },
-            { no: 7, name: "minMax", kind: "message", oneof: "value", T: () => MinMaxSetting }
+            { no: 6, name: "string_list", kind: "message", oneof: "value", T: () => StringListSetting },
+            { no: 7, name: "min_max", kind: "message", oneof: "value", T: () => MinMaxSetting }
         ]);
     }
 }
@@ -615,11 +615,11 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
     constructor() {
         super("soulfire.v1.SettingsPage", [
             { no: 1, name: "type", kind: "enum", T: () => ["soulfire.v1.SettingsPage.Type", SettingsPage_Type] },
-            { no: 2, name: "owningPlugin", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "pageName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "owning_plugin", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "page_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "entries", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingEntry },
-            { no: 6, name: "iconId", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 6, name: "icon_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -631,7 +631,7 @@ export const SettingsPage = new SettingsPage$Type();
 class GlobalPermissionState$Type extends MessageType<GlobalPermissionState> {
     constructor() {
         super("soulfire.v1.GlobalPermissionState", [
-            { no: 1, name: "globalPermission", kind: "enum", T: () => ["soulfire.v1.GlobalPermission", GlobalPermission] },
+            { no: 1, name: "global_permission", kind: "enum", T: () => ["soulfire.v1.GlobalPermission", GlobalPermission] },
             { no: 2, name: "granted", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
@@ -665,7 +665,7 @@ class ClientDataResponse$Type extends MessageType<ClientDataResponse> {
             { no: 1, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "role", kind: "enum", T: () => ["soulfire.v1.UserRole", UserRole] },
             { no: 8, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "serverPermissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => GlobalPermissionState },
+            { no: 2, name: "server_permissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => GlobalPermissionState },
             { no: 3, name: "plugins", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ServerPlugin },
             { no: 5, name: "settings", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingsPage }
         ]);

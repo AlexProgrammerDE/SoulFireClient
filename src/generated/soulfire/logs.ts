@@ -8,7 +8,7 @@ import { MessageType } from "@protobuf-ts/runtime";
  */
 export interface PreviousLogRequest {
     /**
-     * @generated from protobuf field: string instanceId = 1;
+     * @generated from protobuf field: string instance_id = 1;
      */
     instanceId: string;
     /**
@@ -30,7 +30,7 @@ export interface PreviousLogResponse {
  */
 export interface LogRequest {
     /**
-     * @generated from protobuf field: string instanceId = 1;
+     * @generated from protobuf field: string instance_id = 1;
      */
     instanceId: string;
 }
@@ -47,7 +47,7 @@ export interface LogResponse {
 class PreviousLogRequest$Type extends MessageType<PreviousLogRequest> {
     constructor() {
         super("soulfire.v1.PreviousLogRequest", [
-            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "count", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
@@ -72,7 +72,7 @@ export const PreviousLogResponse = new PreviousLogResponse$Type();
 class LogRequest$Type extends MessageType<LogRequest> {
     constructor() {
         super("soulfire.v1.LogRequest", [
-            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }

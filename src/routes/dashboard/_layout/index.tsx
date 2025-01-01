@@ -3,11 +3,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { getEnumKeyByValue } from '@/lib/types.ts';
-import {
-  instanceIconPool,
-  selectRandomEntry,
-  toCapitalizedWords,
-} from '@/lib/utils.ts';
+import { toCapitalizedWords } from '@/lib/utils.ts';
 import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import {
@@ -17,6 +13,7 @@ import {
   CardTitle,
 } from '@/components/ui/card.tsx';
 import { SearchXIcon } from 'lucide-react';
+import DynamicIcon, { LucideIconName } from '@/components/dynamic-icon.tsx';
 
 export const Route = createFileRoute('/dashboard/_layout/')({
   component: InstanceSelectPage,
@@ -37,10 +34,6 @@ function InstanceSelectPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-4">
           {instanceList.instances.map((instance) => {
-            const InstanceIcon = selectRandomEntry(
-              instanceIconPool,
-              instance.id,
-            );
             return (
               <Link
                 key={instance.id}
@@ -52,7 +45,10 @@ function InstanceSelectPage() {
                 <Card className="w-full flex flex-row">
                   <CardHeader className="pr-0">
                     <div className="flex aspect-square size-12 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                      <InstanceIcon className="size-8 shrink-0" />
+                      <DynamicIcon
+                        name={instance.icon as LucideIconName}
+                        className="size-8 shrink-0"
+                      />
                     </div>
                   </CardHeader>
                   <CardHeader>

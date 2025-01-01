@@ -8,8 +8,8 @@ import type { InstanceStateChangeResponse } from "./instance";
 import type { InstanceStateChangeRequest } from "./instance";
 import type { InstanceUpdateConfigResponse } from "./instance";
 import type { InstanceUpdateConfigRequest } from "./instance";
-import type { InstanceUpdateFriendlyNameResponse } from "./instance";
-import type { InstanceUpdateFriendlyNameRequest } from "./instance";
+import type { InstanceUpdateMetaResponse } from "./instance";
+import type { InstanceUpdateMetaRequest } from "./instance";
 import type { InstanceInfoResponse } from "./instance";
 import type { InstanceInfoRequest } from "./instance";
 import type { InstanceListResponse } from "./instance";
@@ -42,9 +42,9 @@ export interface IInstanceServiceClient {
      */
     getInstanceInfo(input: InstanceInfoRequest, options?: RpcOptions): UnaryCall<InstanceInfoRequest, InstanceInfoResponse>;
     /**
-     * @generated from protobuf rpc: updateInstanceFriendlyName(soulfire.v1.InstanceUpdateFriendlyNameRequest) returns (soulfire.v1.InstanceUpdateFriendlyNameResponse);
+     * @generated from protobuf rpc: updateInstanceMeta(soulfire.v1.InstanceUpdateMetaRequest) returns (soulfire.v1.InstanceUpdateMetaResponse);
      */
-    updateInstanceFriendlyName(input: InstanceUpdateFriendlyNameRequest, options?: RpcOptions): UnaryCall<InstanceUpdateFriendlyNameRequest, InstanceUpdateFriendlyNameResponse>;
+    updateInstanceMeta(input: InstanceUpdateMetaRequest, options?: RpcOptions): UnaryCall<InstanceUpdateMetaRequest, InstanceUpdateMetaResponse>;
     /**
      * @generated from protobuf rpc: updateInstanceConfig(soulfire.v1.InstanceUpdateConfigRequest) returns (soulfire.v1.InstanceUpdateConfigResponse);
      */
@@ -92,11 +92,11 @@ export class InstanceServiceClient implements IInstanceServiceClient, ServiceInf
         return stackIntercept<InstanceInfoRequest, InstanceInfoResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: updateInstanceFriendlyName(soulfire.v1.InstanceUpdateFriendlyNameRequest) returns (soulfire.v1.InstanceUpdateFriendlyNameResponse);
+     * @generated from protobuf rpc: updateInstanceMeta(soulfire.v1.InstanceUpdateMetaRequest) returns (soulfire.v1.InstanceUpdateMetaResponse);
      */
-    updateInstanceFriendlyName(input: InstanceUpdateFriendlyNameRequest, options?: RpcOptions): UnaryCall<InstanceUpdateFriendlyNameRequest, InstanceUpdateFriendlyNameResponse> {
+    updateInstanceMeta(input: InstanceUpdateMetaRequest, options?: RpcOptions): UnaryCall<InstanceUpdateMetaRequest, InstanceUpdateMetaResponse> {
         const method = this.methods[4], opt = this._transport.mergeOptions(options);
-        return stackIntercept<InstanceUpdateFriendlyNameRequest, InstanceUpdateFriendlyNameResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<InstanceUpdateMetaRequest, InstanceUpdateMetaResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: updateInstanceConfig(soulfire.v1.InstanceUpdateConfigRequest) returns (soulfire.v1.InstanceUpdateConfigResponse);

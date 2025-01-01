@@ -9,7 +9,7 @@ import { ProxyProto } from "./common";
  */
 export interface ProxyCheckRequest {
     /**
-     * @generated from protobuf field: string instanceId = 1;
+     * @generated from protobuf field: string instance_id = 1;
      */
     instanceId: string;
     /**
@@ -34,7 +34,7 @@ export interface ProxyCheckResponseSingle {
      */
     latency: number;
     /**
-     * @generated from protobuf field: string realIp = 4;
+     * @generated from protobuf field: string real_ip = 4;
      */
     realIp: string;
 }
@@ -51,7 +51,7 @@ export interface ProxyCheckResponse {
 class ProxyCheckRequest$Type extends MessageType<ProxyCheckRequest> {
     constructor() {
         super("soulfire.v1.ProxyCheckRequest", [
-            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "proxy", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ProxyProto }
         ]);
     }
@@ -67,7 +67,7 @@ class ProxyCheckResponseSingle$Type extends MessageType<ProxyCheckResponseSingle
             { no: 1, name: "proxy", kind: "message", T: () => ProxyProto },
             { no: 2, name: "valid", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 3, name: "latency", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 4, name: "realIp", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "real_ip", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }

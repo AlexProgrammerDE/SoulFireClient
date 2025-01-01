@@ -8,7 +8,7 @@ import { MessageType } from "@protobuf-ts/runtime";
  */
 export interface ObjectStorageUploadRequest {
     /**
-     * @generated from protobuf field: string instanceId = 1;
+     * @generated from protobuf field: string instance_id = 1;
      */
     instanceId: string;
     /**
@@ -16,7 +16,7 @@ export interface ObjectStorageUploadRequest {
      */
     data: Uint8Array;
     /**
-     * @generated from protobuf field: string fileName = 3;
+     * @generated from protobuf field: string file_name = 3;
      */
     fileName: string;
 }
@@ -30,11 +30,11 @@ export interface ObjectStorageUploadResponse {
  */
 export interface ObjectStorageDownloadRequest {
     /**
-     * @generated from protobuf field: string instanceId = 1;
+     * @generated from protobuf field: string instance_id = 1;
      */
     instanceId: string;
     /**
-     * @generated from protobuf field: string fileName = 2;
+     * @generated from protobuf field: string file_name = 2;
      */
     fileName: string;
 }
@@ -52,11 +52,11 @@ export interface ObjectStorageDownloadResponse {
  */
 export interface ObjectStorageDeleteRequest {
     /**
-     * @generated from protobuf field: string instanceId = 1;
+     * @generated from protobuf field: string instance_id = 1;
      */
     instanceId: string;
     /**
-     * @generated from protobuf field: string fileName = 2;
+     * @generated from protobuf field: string file_name = 2;
      */
     fileName: string;
 }
@@ -70,7 +70,7 @@ export interface ObjectStorageDeleteResponse {
  */
 export interface ObjectStorageListRequest {
     /**
-     * @generated from protobuf field: string instanceId = 1;
+     * @generated from protobuf field: string instance_id = 1;
      */
     instanceId: string;
 }
@@ -79,7 +79,7 @@ export interface ObjectStorageListRequest {
  */
 export interface ObjectStorageListResponse {
     /**
-     * @generated from protobuf field: repeated string fileNames = 1;
+     * @generated from protobuf field: repeated string file_names = 1;
      */
     fileNames: string[];
 }
@@ -87,9 +87,9 @@ export interface ObjectStorageListResponse {
 class ObjectStorageUploadRequest$Type extends MessageType<ObjectStorageUploadRequest> {
     constructor() {
         super("soulfire.v1.ObjectStorageUploadRequest", [
-            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "data", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 3, name: "fileName", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "file_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -111,8 +111,8 @@ export const ObjectStorageUploadResponse = new ObjectStorageUploadResponse$Type(
 class ObjectStorageDownloadRequest$Type extends MessageType<ObjectStorageDownloadRequest> {
     constructor() {
         super("soulfire.v1.ObjectStorageDownloadRequest", [
-            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "fileName", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "file_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -136,8 +136,8 @@ export const ObjectStorageDownloadResponse = new ObjectStorageDownloadResponse$T
 class ObjectStorageDeleteRequest$Type extends MessageType<ObjectStorageDeleteRequest> {
     constructor() {
         super("soulfire.v1.ObjectStorageDeleteRequest", [
-            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "fileName", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "file_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -159,7 +159,7 @@ export const ObjectStorageDeleteResponse = new ObjectStorageDeleteResponse$Type(
 class ObjectStorageListRequest$Type extends MessageType<ObjectStorageListRequest> {
     constructor() {
         super("soulfire.v1.ObjectStorageListRequest", [
-            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -171,7 +171,7 @@ export const ObjectStorageListRequest = new ObjectStorageListRequest$Type();
 class ObjectStorageListResponse$Type extends MessageType<ObjectStorageListResponse> {
     constructor() {
         super("soulfire.v1.ObjectStorageListResponse", [
-            { no: 1, name: "fileNames", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "file_names", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }

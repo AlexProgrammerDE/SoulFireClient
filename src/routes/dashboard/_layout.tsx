@@ -53,6 +53,7 @@ const listQueryFn = async ({
           {
             id: 'demo',
             friendlyName: 'Demo',
+            icon: 'pickaxe',
             state: InstanceState.RUNNING,
             instancePermissions: [],
           },

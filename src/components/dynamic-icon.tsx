@@ -2,8 +2,10 @@ import React, { Suspense } from 'react';
 import { LucideProps } from 'lucide-react';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
 
-interface IconProps extends Omit<LucideProps, 'ref'> {
-  name: keyof typeof dynamicIconImports;
+export type LucideIconName = keyof typeof dynamicIconImports;
+
+export interface IconProps extends Omit<LucideProps, 'ref'> {
+  name: LucideIconName;
 }
 
 const cache = new Map<
@@ -11,7 +13,7 @@ const cache = new Map<
   React.LazyExoticComponent<React.ComponentType<LucideProps>>
 >();
 
-function loadCachedIcon(name: keyof typeof dynamicIconImports) {
+function loadCachedIcon(name: LucideIconName) {
   const value = cache.get(name);
   if (value !== undefined) {
     return value;

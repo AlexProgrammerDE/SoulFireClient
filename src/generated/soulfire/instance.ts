@@ -79,15 +79,19 @@ export interface InstanceListResponse_Instance {
      */
     id: string;
     /**
-     * @generated from protobuf field: string friendlyName = 2;
+     * @generated from protobuf field: string friendly_name = 2;
      */
     friendlyName: string;
+    /**
+     * @generated from protobuf field: string icon = 5;
+     */
+    icon: string;
     /**
      * @generated from protobuf field: soulfire.v1.InstanceState state = 3;
      */
     state: InstanceState;
     /**
-     * @generated from protobuf field: repeated soulfire.v1.InstancePermissionState instancePermissions = 4;
+     * @generated from protobuf field: repeated soulfire.v1.InstancePermissionState instance_permissions = 4;
      */
     instancePermissions: InstancePermissionState[];
 }
@@ -96,7 +100,7 @@ export interface InstanceListResponse_Instance {
  */
 export interface InstancePermissionState {
     /**
-     * @generated from protobuf field: soulfire.v1.InstancePermission instancePermission = 1;
+     * @generated from protobuf field: soulfire.v1.InstancePermission instance_permission = 1;
      */
     instancePermission: InstancePermission;
     /**
@@ -118,9 +122,13 @@ export interface InstanceInfoRequest {
  */
 export interface InstanceInfoResponse {
     /**
-     * @generated from protobuf field: string friendlyName = 1;
+     * @generated from protobuf field: string friendly_name = 1;
      */
     friendlyName: string;
+    /**
+     * @generated from protobuf field: string icon = 5;
+     */
+    icon: string;
     /**
      * @generated from protobuf field: soulfire.v1.InstanceConfig config = 2;
      */
@@ -130,27 +138,41 @@ export interface InstanceInfoResponse {
      */
     state: InstanceState;
     /**
-     * @generated from protobuf field: repeated soulfire.v1.InstancePermissionState instancePermissions = 4;
+     * @generated from protobuf field: repeated soulfire.v1.InstancePermissionState instance_permissions = 4;
      */
     instancePermissions: InstancePermissionState[];
 }
 /**
- * @generated from protobuf message soulfire.v1.InstanceUpdateFriendlyNameRequest
+ * @generated from protobuf message soulfire.v1.InstanceUpdateMetaRequest
  */
-export interface InstanceUpdateFriendlyNameRequest {
+export interface InstanceUpdateMetaRequest {
     /**
      * @generated from protobuf field: string id = 1;
      */
     id: string;
     /**
-     * @generated from protobuf field: string friendlyName = 2;
+     * @generated from protobuf oneof: meta
      */
-    friendlyName: string;
+    meta: {
+        oneofKind: "friendlyName";
+        /**
+         * @generated from protobuf field: string friendly_name = 2;
+         */
+        friendlyName: string;
+    } | {
+        oneofKind: "icon";
+        /**
+         * @generated from protobuf field: string icon = 3;
+         */
+        icon: string;
+    } | {
+        oneofKind: undefined;
+    };
 }
 /**
- * @generated from protobuf message soulfire.v1.InstanceUpdateFriendlyNameResponse
+ * @generated from protobuf message soulfire.v1.InstanceUpdateMetaResponse
  */
-export interface InstanceUpdateFriendlyNameResponse {
+export interface InstanceUpdateMetaResponse {
 }
 /**
  * @generated from protobuf message soulfire.v1.InstanceUpdateConfigRequest
@@ -300,9 +322,10 @@ class InstanceListResponse_Instance$Type extends MessageType<InstanceListRespons
     constructor() {
         super("soulfire.v1.InstanceListResponse.Instance", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "friendlyName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "friendly_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "icon", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "state", kind: "enum", T: () => ["soulfire.v1.InstanceState", InstanceState] },
-            { no: 4, name: "instancePermissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => InstancePermissionState }
+            { no: 4, name: "instance_permissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => InstancePermissionState }
         ]);
     }
 }
@@ -314,7 +337,7 @@ export const InstanceListResponse_Instance = new InstanceListResponse_Instance$T
 class InstancePermissionState$Type extends MessageType<InstancePermissionState> {
     constructor() {
         super("soulfire.v1.InstancePermissionState", [
-            { no: 1, name: "instancePermission", kind: "enum", T: () => ["soulfire.v1.InstancePermission", InstancePermission] },
+            { no: 1, name: "instance_permission", kind: "enum", T: () => ["soulfire.v1.InstancePermission", InstancePermission] },
             { no: 2, name: "granted", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
@@ -339,10 +362,11 @@ export const InstanceInfoRequest = new InstanceInfoRequest$Type();
 class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
     constructor() {
         super("soulfire.v1.InstanceInfoResponse", [
-            { no: 1, name: "friendlyName", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "friendly_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "icon", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "config", kind: "message", T: () => InstanceConfig },
             { no: 3, name: "state", kind: "enum", T: () => ["soulfire.v1.InstanceState", InstanceState] },
-            { no: 4, name: "instancePermissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => InstancePermissionState }
+            { no: 4, name: "instance_permissions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => InstancePermissionState }
         ]);
     }
 }
@@ -351,28 +375,29 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
  */
 export const InstanceInfoResponse = new InstanceInfoResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class InstanceUpdateFriendlyNameRequest$Type extends MessageType<InstanceUpdateFriendlyNameRequest> {
+class InstanceUpdateMetaRequest$Type extends MessageType<InstanceUpdateMetaRequest> {
     constructor() {
-        super("soulfire.v1.InstanceUpdateFriendlyNameRequest", [
+        super("soulfire.v1.InstanceUpdateMetaRequest", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "friendlyName", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "friendly_name", kind: "scalar", oneof: "meta", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "icon", kind: "scalar", oneof: "meta", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.InstanceUpdateFriendlyNameRequest
+ * @generated MessageType for protobuf message soulfire.v1.InstanceUpdateMetaRequest
  */
-export const InstanceUpdateFriendlyNameRequest = new InstanceUpdateFriendlyNameRequest$Type();
+export const InstanceUpdateMetaRequest = new InstanceUpdateMetaRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class InstanceUpdateFriendlyNameResponse$Type extends MessageType<InstanceUpdateFriendlyNameResponse> {
+class InstanceUpdateMetaResponse$Type extends MessageType<InstanceUpdateMetaResponse> {
     constructor() {
-        super("soulfire.v1.InstanceUpdateFriendlyNameResponse", []);
+        super("soulfire.v1.InstanceUpdateMetaResponse", []);
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.InstanceUpdateFriendlyNameResponse
+ * @generated MessageType for protobuf message soulfire.v1.InstanceUpdateMetaResponse
  */
-export const InstanceUpdateFriendlyNameResponse = new InstanceUpdateFriendlyNameResponse$Type();
+export const InstanceUpdateMetaResponse = new InstanceUpdateMetaResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class InstanceUpdateConfigRequest$Type extends MessageType<InstanceUpdateConfigRequest> {
     constructor() {
@@ -427,7 +452,7 @@ export const InstanceService = new ServiceType("soulfire.v1.InstanceService", [
     { name: "deleteInstance", options: {}, I: InstanceDeleteRequest, O: InstanceDeleteResponse },
     { name: "listInstances", options: {}, I: InstanceListRequest, O: InstanceListResponse },
     { name: "getInstanceInfo", options: {}, I: InstanceInfoRequest, O: InstanceInfoResponse },
-    { name: "updateInstanceFriendlyName", options: {}, I: InstanceUpdateFriendlyNameRequest, O: InstanceUpdateFriendlyNameResponse },
+    { name: "updateInstanceMeta", options: {}, I: InstanceUpdateMetaRequest, O: InstanceUpdateMetaResponse },
     { name: "updateInstanceConfig", options: {}, I: InstanceUpdateConfigRequest, O: InstanceUpdateConfigResponse },
     { name: "changeInstanceState", options: {}, I: InstanceStateChangeRequest, O: InstanceStateChangeResponse }
 ]);

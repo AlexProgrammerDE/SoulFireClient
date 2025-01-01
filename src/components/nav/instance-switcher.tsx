@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import {
   ChevronsUpDownIcon,
   DownloadIcon,
@@ -42,9 +42,7 @@ import {
   data2blob,
   hasGlobalPermission,
   hasInstancePermission,
-  instanceIconPool,
   isTauri,
-  selectRandomEntry,
   toCapitalizedWords,
 } from '@/lib/utils.ts';
 import {
@@ -67,6 +65,7 @@ import {
   InstancePermission,
 } from '@/generated/soulfire/common.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
+import DynamicIcon, { LucideIconName } from '@/components/dynamic-icon.tsx';
 
 export function InstanceSwitcher() {
   const navigate = useNavigate();
@@ -80,9 +79,6 @@ export function InstanceSwitcher() {
   const clientInfo = useContext(ClientInfoContext);
   const instanceProfileInputRef = useRef<HTMLInputElement>(null);
   const [createOpen, setCreateOpen] = useState(false);
-  const InstanceIcon = useMemo(() => {
-    return selectRandomEntry(instanceIconPool, instanceInfo.id);
-  }, [instanceInfo.id]);
   const setProfileMutation = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
       if (transport === null) {
@@ -198,7 +194,10 @@ export function InstanceSwitcher() {
               tooltip={`${instanceInfo.friendlyName} | ${capitalizedState}`}
             >
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <InstanceIcon className="size-4" />
+                <DynamicIcon
+                  name={instanceInfo.icon as LucideIconName}
+                  className="size-4"
+                />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
@@ -219,10 +218,6 @@ export function InstanceSwitcher() {
               Instances
             </DropdownMenuLabel>
             {instanceList.instances.map((instance, index) => {
-              const InstanceIcon = selectRandomEntry(
-                instanceIconPool,
-                instance.id,
-              );
               return (
                 <DropdownMenuItem
                   key={instance.id}
@@ -234,7 +229,10 @@ export function InstanceSwitcher() {
                     params={{ instance: instance.id }}
                   >
                     <div className="flex size-6 items-center justify-center rounded-sm border">
-                      <InstanceIcon className="size-4 shrink-0" />
+                      <DynamicIcon
+                        name={instance.icon as LucideIconName}
+                        className="size-4 shrink-0"
+                      />
                     </div>
                     {instance.friendlyName}
                     <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>

@@ -22,7 +22,7 @@ export interface HeaderPair {
  */
 export interface DownloadRequest {
     /**
-     * @generated from protobuf field: string instanceId = 1;
+     * @generated from protobuf field: string instance_id = 1;
      */
     instanceId: string;
     /**
@@ -51,7 +51,7 @@ export interface DownloadResponse {
      */
     headers: HeaderPair[];
     /**
-     * @generated from protobuf field: int32 statusCode = 3;
+     * @generated from protobuf field: int32 status_code = 3;
      */
     statusCode: number;
 }
@@ -72,7 +72,7 @@ export const HeaderPair = new HeaderPair$Type();
 class DownloadRequest$Type extends MessageType<DownloadRequest> {
     constructor() {
         super("soulfire.v1.DownloadRequest", [
-            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "uri", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "headers", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HeaderPair },
             { no: 4, name: "proxy", kind: "message", T: () => ProxyProto }
@@ -89,7 +89,7 @@ class DownloadResponse$Type extends MessageType<DownloadResponse> {
         super("soulfire.v1.DownloadResponse", [
             { no: 1, name: "data", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
             { no: 2, name: "headers", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => HeaderPair },
-            { no: 3, name: "statusCode", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
+            { no: 3, name: "status_code", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
 }

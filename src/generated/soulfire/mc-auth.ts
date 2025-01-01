@@ -11,7 +11,7 @@ import { AccountTypeCredentials } from "./common";
  */
 export interface CredentialsAuthRequest {
     /**
-     * @generated from protobuf field: string instanceId = 1;
+     * @generated from protobuf field: string instance_id = 1;
      */
     instanceId: string;
     /**
@@ -37,7 +37,7 @@ export interface CredentialsAuthResponse {
  */
 export interface DeviceCodeAuthRequest {
     /**
-     * @generated from protobuf field: string instanceId = 1;
+     * @generated from protobuf field: string instance_id = 1;
      */
     instanceId: string;
     /**
@@ -50,19 +50,19 @@ export interface DeviceCodeAuthRequest {
  */
 export interface DeviceCode {
     /**
-     * @generated from protobuf field: string deviceCode = 1;
+     * @generated from protobuf field: string device_code = 1;
      */
     deviceCode: string;
     /**
-     * @generated from protobuf field: string userCode = 2;
+     * @generated from protobuf field: string user_code = 2;
      */
     userCode: string;
     /**
-     * @generated from protobuf field: string verificationUri = 3;
+     * @generated from protobuf field: string verification_uri = 3;
      */
     verificationUri: string;
     /**
-     * @generated from protobuf field: string directVerificationUri = 4;
+     * @generated from protobuf field: string direct_verification_uri = 4;
      */
     directVerificationUri: string;
 }
@@ -82,7 +82,7 @@ export interface DeviceCodeAuthResponse {
     } | {
         oneofKind: "deviceCode";
         /**
-         * @generated from protobuf field: soulfire.v1.DeviceCode deviceCode = 2;
+         * @generated from protobuf field: soulfire.v1.DeviceCode device_code = 2;
          */
         deviceCode: DeviceCode;
     } | {
@@ -94,7 +94,7 @@ export interface DeviceCodeAuthResponse {
  */
 export interface RefreshRequest {
     /**
-     * @generated from protobuf field: string instanceId = 1;
+     * @generated from protobuf field: string instance_id = 1;
      */
     instanceId: string;
     /**
@@ -115,7 +115,7 @@ export interface RefreshResponse {
 class CredentialsAuthRequest$Type extends MessageType<CredentialsAuthRequest> {
     constructor() {
         super("soulfire.v1.CredentialsAuthRequest", [
-            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "service", kind: "enum", T: () => ["soulfire.v1.AccountTypeCredentials", AccountTypeCredentials] },
             { no: 3, name: "payload", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
@@ -141,7 +141,7 @@ export const CredentialsAuthResponse = new CredentialsAuthResponse$Type();
 class DeviceCodeAuthRequest$Type extends MessageType<DeviceCodeAuthRequest> {
     constructor() {
         super("soulfire.v1.DeviceCodeAuthRequest", [
-            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "service", kind: "enum", T: () => ["soulfire.v1.AccountTypeDeviceCode", AccountTypeDeviceCode] }
         ]);
     }
@@ -154,10 +154,10 @@ export const DeviceCodeAuthRequest = new DeviceCodeAuthRequest$Type();
 class DeviceCode$Type extends MessageType<DeviceCode> {
     constructor() {
         super("soulfire.v1.DeviceCode", [
-            { no: 1, name: "deviceCode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "userCode", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "verificationUri", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "directVerificationUri", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "device_code", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "user_code", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "verification_uri", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "direct_verification_uri", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -170,7 +170,7 @@ class DeviceCodeAuthResponse$Type extends MessageType<DeviceCodeAuthResponse> {
     constructor() {
         super("soulfire.v1.DeviceCodeAuthResponse", [
             { no: 1, name: "account", kind: "message", oneof: "data", T: () => MinecraftAccountProto },
-            { no: 2, name: "deviceCode", kind: "message", oneof: "data", T: () => DeviceCode }
+            { no: 2, name: "device_code", kind: "message", oneof: "data", T: () => DeviceCode }
         ]);
     }
 }
@@ -182,7 +182,7 @@ export const DeviceCodeAuthResponse = new DeviceCodeAuthResponse$Type();
 class RefreshRequest$Type extends MessageType<RefreshRequest> {
     constructor() {
         super("soulfire.v1.RefreshRequest", [
-            { no: 1, name: "instanceId", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "account", kind: "message", T: () => MinecraftAccountProto }
         ]);
     }

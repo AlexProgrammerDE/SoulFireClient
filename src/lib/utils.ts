@@ -11,18 +11,6 @@ import {
   InstanceListResponse_Instance,
 } from '@/generated/soulfire/instance.ts';
 import { sha256 } from 'js-sha256';
-import {
-  AppleIcon,
-  CarrotIcon,
-  CitrusIcon,
-  CookieIcon,
-  CroissantIcon,
-  FishIcon,
-  PickaxeIcon,
-  PopcornIcon,
-  ShovelIcon,
-  SwordIcon,
-} from 'lucide-react';
 
 export function getTerminalTheme() {
   return localStorage.getItem(LOCAL_STORAGE_TERMINAL_THEME_KEY) ?? 'mocha';
@@ -104,8 +92,7 @@ export function toCapitalizedWords(str: string) {
 }
 
 export function getGravatarUrl(email: string) {
-  const hash = sha256(email);
-  return `https://www.gravatar.com/avatar/${hash}?d=404`;
+  return `https://www.gravatar.com/avatar/${sha256(email)}?d=404`;
 }
 
 export function data2blob(data: string) {
@@ -117,46 +104,8 @@ export function data2blob(data: string) {
   return new Blob([new Uint8Array(bytes)]);
 }
 
-export function hashStringToSeed(str: string): number {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash |= 0; // Convert to 32-bit integer
-  }
-  return hash;
-}
-
-export function seededRandom(seed: number): number {
-  const x = Math.sin(seed) * 10000;
-  return x - Math.floor(x);
-}
-
-export function selectRandomEntry<T>(list: T[], seedString: string): T {
-  if (!Array.isArray(list) || list.length === 0) {
-    throw new Error('List must be a non-empty array');
-  }
-
-  const seed = hashStringToSeed(seedString);
-  const randomIndex = Math.floor(seededRandom(seed) * list.length);
-  return list[randomIndex];
-}
-
 export function getCookie(name: string) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop()?.split(';').shift();
 }
-
-export const instanceIconPool = [
-  PickaxeIcon,
-  AppleIcon,
-  ShovelIcon,
-  SwordIcon,
-  FishIcon,
-  CitrusIcon,
-  PopcornIcon,
-  CookieIcon,
-  CarrotIcon,
-  CroissantIcon,
-];
