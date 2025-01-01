@@ -52,7 +52,7 @@ export function UserSidebar({
           />
         </SidebarContent>
       </ScrollArea>
-      <SidebarFooter className="h-16">
+      <SidebarFooter className="h-16 justify-center">
         <NavUserControl />
       </SidebarFooter>
       <SidebarRail />
