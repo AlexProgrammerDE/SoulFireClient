@@ -33,7 +33,7 @@ function InstanceSelectPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-4">
-          {instanceList.instances.map((instance) => {
+          {instanceList.instances.map((instance, index) => {
             return (
               <Link
                 key={instance.id}
@@ -58,6 +58,11 @@ function InstanceSelectPage() {
                         getEnumKeyByValue(InstanceState, instance.state),
                       )}
                     </CardDescription>
+                  </CardHeader>
+                  <CardHeader className="ml-auto">
+                    <p className="m-auto mb-auo text-2xl tracking-widest opacity-60">
+                      ⌘{index + 1}
+                    </p>
                   </CardHeader>
                 </Card>
               </Link>

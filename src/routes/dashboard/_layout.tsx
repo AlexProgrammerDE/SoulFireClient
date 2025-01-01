@@ -36,7 +36,7 @@ import { queryClientInstance } from '@/lib/query.ts';
 import { useQuery } from '@tanstack/react-query';
 import { LoadingComponent } from '@/components/loading-component.tsx';
 import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 const listQueryFn = async ({
   signal,
@@ -215,6 +215,30 @@ function PendingComponent() {
   );
 }
 
+function InstanceSwitchKeybinds() {
+  const navigate = useNavigate();
+  const instanceList = useContext(InstanceListContext);
+
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey) {
+        const numberKey = parseInt(e.key);
+        if (numberKey > 0 && numberKey <= instanceList.instances.length) {
+          e.preventDefault();
+          void navigate({
+            to: '/dashboard/instance/$instance/console',
+            params: { instance: instanceList.instances[numberKey - 1].id },
+          });
+        }
+      }
+    };
+    document.addEventListener('keydown', down);
+    return () => document.removeEventListener('keydown', down);
+  }, [instanceList.instances, navigate]);
+
+  return null;
+}
+
 function DashboardLayout() {
   const { transport, clientData, gravatarUrl } = Route.useLoaderData();
   const { listQueryOptions } = Route.useRouteContext();
@@ -237,6 +261,7 @@ function DashboardLayout() {
         }}
       >
         <InstanceListContext.Provider value={instanceList.data.instanceList}>
+          <InstanceSwitchKeybinds />
           <Outlet />
         </InstanceListContext.Provider>
       </ClientInfoContext.Provider>

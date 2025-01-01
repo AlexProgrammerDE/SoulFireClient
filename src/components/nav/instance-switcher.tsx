@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import {
   ChevronsUpDownIcon,
   DownloadIcon,
@@ -162,23 +162,6 @@ export function InstanceSwitcher() {
       });
     },
   });
-
-  useEffect(() => {
-    const down = (e: KeyboardEvent) => {
-      if (e.metaKey || e.ctrlKey) {
-        const numberKey = parseInt(e.key);
-        if (numberKey > 0 && numberKey <= instanceList.instances.length) {
-          e.preventDefault();
-          void navigate({
-            to: '/dashboard/instance/$instance/console',
-            params: { instance: instanceList.instances[numberKey - 1].id },
-          });
-        }
-      }
-    };
-    document.addEventListener('keydown', down);
-    return () => document.removeEventListener('keydown', down);
-  }, [instanceList.instances, navigate]);
 
   const capitalizedState = toCapitalizedWords(
     getEnumKeyByValue(InstanceState, instanceInfo.state),
