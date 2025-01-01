@@ -125,7 +125,12 @@ export function NavSettings({
         {navLinks.map((item) => (
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild tooltip={item.title}>
-              <Link {...item.linkProps}>
+              <Link
+                activeProps={{
+                  'data-active': true,
+                }}
+                {...item.linkProps}
+              >
                 <item.icon />
                 <span>{item.title}</span>
               </Link>
@@ -164,7 +169,12 @@ export function NavSettings({
                 {pluginSettingLinks.map((subItem) => (
                   <SidebarMenuSubItem key={subItem.title}>
                     <SidebarMenuSubButton asChild>
-                      <Link {...subItem.linkProps}>
+                      <Link
+                        activeProps={{
+                          'data-active': true,
+                        }}
+                        {...subItem.linkProps}
+                      >
                         <subItem.icon />
                         <span>{subItem.title}</span>
                       </Link>

@@ -58,7 +58,12 @@ export function NavUserAdmin() {
         {navLinks.map((item) => (
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild tooltip={item.title}>
-              <Link {...item.linkProps}>
+              <Link
+                activeProps={{
+                  'data-active': true,
+                }}
+                {...item.linkProps}
+              >
                 <item.icon />
                 <span>{item.title}</span>
               </Link>
