@@ -15,7 +15,7 @@ import {
 import { SearchXIcon } from 'lucide-react';
 import DynamicIcon, { LucideIconName } from '@/components/dynamic-icon.tsx';
 
-export const Route = createFileRoute('/dashboard/_layout/')({
+export const Route = createFileRoute('/dashboard/_layout/user/instances')({
   component: InstanceSelectPage,
 });
 

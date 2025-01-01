@@ -225,7 +225,7 @@ export function InstanceSwitcher() {
             })}
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild className="gap-2 p-2">
-              <Link to="/dashboard">
+              <Link to="/dashboard/user/instances">
                 <div className="flex size-6 items-center justify-center rounded-md border bg-background">
                   <HomeIcon className="size-4" />
                 </div>
@@ -461,7 +461,7 @@ export function InstanceSwitcher() {
                 onClick={() => {
                   deleteMutation.mutate(instanceInfo.id);
                   void navigate({
-                    to: '/dashboard',
+                    to: '/dashboard/user/instances',
                   });
                 }}
                 className="gap-2 p-2"

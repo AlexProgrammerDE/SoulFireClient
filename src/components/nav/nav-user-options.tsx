@@ -78,7 +78,7 @@ export function NavUserOptions() {
       title: 'Instances',
       icon: Grid2x2Icon,
       linkProps: {
-        to: '/dashboard',
+        to: '/dashboard/user/instances',
         params: {},
       },
     },
