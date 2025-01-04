@@ -47,7 +47,7 @@ pub fn create_tray<R: Runtime>(app: &AppHandle<R>) -> Result<(), SFAnyError> {
   let _ = TrayIconBuilder::with_id("tray")
     .icon(app.default_window_icon().ok_or(SFError::NoDefaultWindowIcon)?.clone())
     .menu(&menu)
-    .menu_on_left_click(false)
+    .show_menu_on_left_click(false)
     .on_menu_event(move |app, event| {
       match handle_menu_event(app.clone(), event) {
         Ok(_) => {}
