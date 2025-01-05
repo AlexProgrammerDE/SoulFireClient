@@ -13,6 +13,14 @@ const cache = new Map<
   React.LazyExoticComponent<React.ComponentType<LucideProps>>
 >();
 
+export function convertUnsafeIconName(name: string): LucideIconName {
+  if (name in dynamicIconImports) {
+    return name as LucideIconName;
+  }
+
+  throw new Error(`Invalid icon name: ${name}`);
+}
+
 function loadCachedIcon(name: LucideIconName) {
   const value = cache.get(name);
   if (value !== undefined) {

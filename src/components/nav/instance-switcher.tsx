@@ -65,7 +65,9 @@ import {
   InstancePermission,
 } from '@/generated/soulfire/common.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import DynamicIcon, { LucideIconName } from '@/components/dynamic-icon.tsx';
+import DynamicIcon, {
+  convertUnsafeIconName,
+} from '@/components/dynamic-icon.tsx';
 
 export function InstanceSwitcher() {
   const navigate = useNavigate();
@@ -178,7 +180,7 @@ export function InstanceSwitcher() {
             >
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <DynamicIcon
-                  name={instanceInfo.icon as LucideIconName}
+                  name={convertUnsafeIconName(instanceInfo.icon)}
                   className="size-4"
                 />
               </div>
@@ -213,7 +215,7 @@ export function InstanceSwitcher() {
                   >
                     <div className="flex size-6 items-center justify-center rounded-sm border">
                       <DynamicIcon
-                        name={instance.icon as LucideIconName}
+                        name={convertUnsafeIconName(instance.icon)}
                         className="size-4 shrink-0"
                       />
                     </div>

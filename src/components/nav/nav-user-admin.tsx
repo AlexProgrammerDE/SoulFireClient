@@ -11,7 +11,9 @@ import {
 import { Link, LinkProps } from '@tanstack/react-router';
 import * as React from 'react';
 import { ReactNode, useContext } from 'react';
-import DynamicIcon from '@/components/dynamic-icon.tsx';
+import DynamicIcon, {
+  convertUnsafeIconName,
+} from '@/components/dynamic-icon.tsx';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 
 type NavLinks = {
@@ -45,7 +47,10 @@ export function NavUserAdmin() {
     {
       title: 'Server Settings',
       icon: (props) => (
-        <DynamicIcon {...props} name={serverSettings.iconId as never} />
+        <DynamicIcon
+          {...props}
+          name={convertUnsafeIconName(serverSettings.iconId)}
+        />
       ),
       linkProps: {
         to: '/dashboard/admin/settings/$namespace',
@@ -55,7 +60,10 @@ export function NavUserAdmin() {
     {
       title: 'Dev Settings',
       icon: (props) => (
-        <DynamicIcon {...props} name={devSettings.iconId as never} />
+        <DynamicIcon
+          {...props}
+          name={convertUnsafeIconName(devSettings.iconId)}
+        />
       ),
       linkProps: {
         to: '/dashboard/admin/settings/$namespace',

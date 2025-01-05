@@ -12,7 +12,9 @@ import {
 import { Link, LinkProps } from '@tanstack/react-router';
 import { ReactNode, useContext, useState } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import DynamicIcon from '@/components/dynamic-icon.tsx';
+import DynamicIcon, {
+  convertUnsafeIconName,
+} from '@/components/dynamic-icon.tsx';
 import { InstanceInfoContext } from '../providers/instance-info-context.tsx';
 import {
   Collapsible,
@@ -58,7 +60,10 @@ export function NavSettings({
     {
       title: 'Bot Settings',
       icon: (props) => (
-        <DynamicIcon {...props} name={botSettings.iconId as never} />
+        <DynamicIcon
+          {...props}
+          name={convertUnsafeIconName(botSettings.iconId)}
+        />
       ),
       linkProps: {
         to: '/dashboard/instance/$instance/settings/$namespace',
@@ -68,7 +73,10 @@ export function NavSettings({
     {
       title: 'Account Settings',
       icon: (props) => (
-        <DynamicIcon {...props} name={accountSettings.iconId as never} />
+        <DynamicIcon
+          {...props}
+          name={convertUnsafeIconName(accountSettings.iconId)}
+        />
       ),
       linkProps: {
         to: '/dashboard/instance/$instance/accounts',
@@ -78,7 +86,10 @@ export function NavSettings({
     {
       title: 'Proxy Settings',
       icon: (props) => (
-        <DynamicIcon {...props} name={proxySettings.iconId as never} />
+        <DynamicIcon
+          {...props}
+          name={convertUnsafeIconName(proxySettings.iconId)}
+        />
       ),
       linkProps: {
         to: '/dashboard/instance/$instance/proxies',
@@ -88,7 +99,10 @@ export function NavSettings({
     {
       title: 'AI Settings',
       icon: (props) => (
-        <DynamicIcon {...props} name={aiSettings.iconId as never} />
+        <DynamicIcon
+          {...props}
+          name={convertUnsafeIconName(aiSettings.iconId)}
+        />
       ),
       linkProps: {
         to: '/dashboard/instance/$instance/settings/$namespace',
@@ -102,7 +116,7 @@ export function NavSettings({
     .map((setting) => ({
       title: setting.pageName,
       icon: (props) => (
-        <DynamicIcon {...props} name={setting.iconId as never} />
+        <DynamicIcon {...props} name={convertUnsafeIconName(setting.iconId)} />
       ),
       linkProps: {
         to: '/dashboard/instance/$instance/settings/$namespace',

@@ -13,7 +13,9 @@ import {
   CardTitle,
 } from '@/components/ui/card.tsx';
 import { SearchXIcon } from 'lucide-react';
-import DynamicIcon, { LucideIconName } from '@/components/dynamic-icon.tsx';
+import DynamicIcon, {
+  convertUnsafeIconName,
+} from '@/components/dynamic-icon.tsx';
 
 export const Route = createFileRoute('/dashboard/_layout/user/instances')({
   component: InstanceSelectPage,
@@ -46,7 +48,7 @@ function InstanceSelectPage() {
                   <CardHeader className="pr-0">
                     <div className="flex aspect-square size-12 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                       <DynamicIcon
-                        name={instance.icon as LucideIconName}
+                        name={convertUnsafeIconName(instance.icon)}
                         className="size-8 shrink-0"
                       />
                     </div>
