@@ -166,7 +166,7 @@ function Index() {
   }, [loginType, redirectWithCredentials]);
 
   return (
-    <ScrollArea className="h-dvh w-full pr-4 bg-muted">
+    <ScrollArea className="h-dvh w-full px-4 bg-muted">
       <div className="flex flex-col min-h-dvh w-full">
         <div className="flex flex-col gap-6 m-auto w-full max-w-[450px]">
           <Card>
@@ -217,6 +217,7 @@ function Index() {
                     }}
                     provider={(disabled) => (
                       <Button
+                        className="w-full"
                         disabled={disabled}
                         variant="outline"
                         onClick={() => setLoginType('INTEGRATED')}
@@ -242,6 +243,7 @@ function Index() {
                     }}
                     provider={(disabled) => (
                       <Button
+                        className="w-full"
                         disabled={disabled}
                         variant="outline"
                         onClick={() => setLoginType('REMOTE')}
@@ -254,6 +256,7 @@ function Index() {
                 </div>
                 {isDemo() && (
                   <Button
+                    className="w-full"
                     variant="outline"
                     onClick={() => {
                       void targetRedirect();
