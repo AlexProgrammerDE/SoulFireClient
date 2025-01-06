@@ -27,6 +27,13 @@ export default function InstancePageLayout(props: {
   const instanceInfo = useContext(InstanceInfoContext);
   const defaultOpen = getCookie('sidebar:state') === 'true';
 
+  const CrumbComponent = (props: { crumb: string }) => (
+    <>
+      <BreadcrumbSeparator className="hidden md:block" />
+      <BreadcrumbItem className="hidden md:block">{props.crumb}</BreadcrumbItem>
+    </>
+  );
+
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <InstanceSidebar
@@ -44,12 +51,7 @@ export default function InstancePageLayout(props: {
                     {instanceInfo.friendlyName}
                   </BreadcrumbItem>
                   {(props.extraCrumbs || []).map((crumb) => (
-                    <>
-                      <BreadcrumbSeparator className="hidden md:block" />
-                      <BreadcrumbItem className="hidden md:block">
-                        {crumb}
-                      </BreadcrumbItem>
-                    </>
+                    <CrumbComponent crumb={crumb} key={crumb} />
                   ))}
                   <BreadcrumbSeparator className="hidden md:block" />
                   <BreadcrumbItem>

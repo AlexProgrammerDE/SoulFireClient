@@ -27,6 +27,13 @@ export default function UserPageLayout(props: {
   const clientInfo = useContext(ClientInfoContext);
   const defaultOpen = getCookie('sidebar:state') === 'true';
 
+  const CrumbComponent = (props: { crumb: string }) => (
+    <>
+      <BreadcrumbSeparator className="hidden md:block" />
+      <BreadcrumbItem className="hidden md:block">{props.crumb}</BreadcrumbItem>
+    </>
+  );
+
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <UserSidebar />
@@ -47,12 +54,7 @@ export default function UserPageLayout(props: {
                     </>
                   )}
                   {(props.extraCrumbs || []).map((crumb) => (
-                    <>
-                      <BreadcrumbItem className="hidden md:block">
-                        {crumb}
-                      </BreadcrumbItem>
-                      <BreadcrumbSeparator className="hidden md:block" />
-                    </>
+                    <CrumbComponent crumb={crumb} key={crumb} />
                   ))}
                   <BreadcrumbItem>
                     <BreadcrumbPage>{props.pageName}</BreadcrumbPage>
