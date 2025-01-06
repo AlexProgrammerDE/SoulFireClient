@@ -1,4 +1,10 @@
-import { CSSProperties, useContext, useEffect, useRef, useState } from 'react';
+import React, {
+  CSSProperties,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { LogsServiceClient } from '@/generated/soulfire/logs.client.ts';
 import { TransportContext } from './providers/transport-context.tsx';
 import { ScrollArea } from './ui/scroll-area.tsx';
@@ -16,19 +22,26 @@ const MAX_TERMINAL_ENTRIES = 500;
 
 export const TerminalComponent = () => {
   const [gotPrevious, setGotPrevious] = useState(false);
-  const [entries, setEntries] = useState<(readonly [string, string])[]>(
+  const [entries, setEntries] = useState<
+    {
+      id: string;
+      message: string;
+    }[]
+  >(
     isDemo()
       ? [
-          ['entry1', 'Welcome to demo mode! 🧪'],
-          ['entry2', 'This is a read-only instance of SoulFire'],
-          [
-            'entry3',
-            'Check out all the menus and features before deciding to install SoulFire :D',
-          ],
-          [
-            'entry4',
-            'Feel free to join our Discord server if you would like to reach out: https://soulfiremc.com/discord',
-          ],
+          { id: 'entry1', message: 'Welcome to demo mode! 🧪' },
+          { id: 'entry2', message: 'This is a read-only instance of SoulFire' },
+          {
+            id: 'entry3',
+            message:
+              'Check out all the menus and features before deciding to install SoulFire :D',
+          },
+          {
+            id: 'entry4',
+            message:
+              'Feel free to join our Discord server if you would like to reach out: https://soulfiremc.com/discord',
+          },
         ]
       : [],
   );
@@ -78,7 +91,12 @@ export const TerminalComponent = () => {
     void logsService
       .getPrevious(
         {
-          instanceId: instanceInfo.id,
+          scope: {
+            oneofKind: 'instance',
+            instance: {
+              instanceId: instanceInfo.id,
+            },
+          },
           // Max allowed amount of entries by the server
           count: 300,
         },
@@ -86,10 +104,18 @@ export const TerminalComponent = () => {
           abort: abortController.signal,
         },
       )
-      .then((response) => {
-        for (const line of response.response.messages) {
-          const randomString = Math.random().toString(36).substring(7);
-          setEntries((prev) => [...prev, [randomString, line] as const]);
+      .then((call) => {
+        for (const message of call.response.messages) {
+          const split = message.message.split('\n');
+          for (let i = 0; i < split.length; i++) {
+            setEntries((prev) => [
+              ...prev,
+              {
+                id: message.id + '-' + i,
+                message: split[i] + '\n',
+              },
+            ]);
+          }
         }
         setGotPrevious(true);
       });
@@ -109,17 +135,33 @@ export const TerminalComponent = () => {
     logsService
       .subscribe(
         {
-          instanceId: instanceInfo.id,
+          scope: {
+            oneofKind: 'instance',
+            instance: {
+              instanceId: instanceInfo.id,
+            },
+          },
         },
         {
           abort: abortController.signal,
         },
       )
-      .responses.onMessage((message) => {
-        for (const line of message.message.split('\n')) {
-          const randomString = Math.random().toString(36).substring(7);
+      .responses.onMessage((response) => {
+        const message = response.message;
+        if (message === undefined) {
+          return;
+        }
+
+        const split = message.message.split('\n');
+        for (let i = 0; i < split.length; i++) {
           setEntries((prev) => {
-            const resultingArray = [...prev, [randomString, line] as const];
+            const resultingArray = [
+              ...prev,
+              {
+                id: message.id + '-' + i,
+                message: split[i] + '\n',
+              },
+            ];
 
             return resultingArray.slice(-MAX_TERMINAL_ENTRIES);
           });
@@ -163,15 +205,11 @@ export const TerminalComponent = () => {
         } as CSSProperties
       }
     >
-      <div className="whitespace-pre-wrap py-0.5 pl-0.5 h-full">
+      <p className="whitespace-pre-wrap py-0.5 pl-0.5 h-full select-text">
         {entries.map((entry) => {
-          return (
-            <div key={entry[0]}>
-              <AnsiHtml className="select-text" text={entry[1]} />
-            </div>
-          );
+          return <AnsiHtml key={entry.id} text={entry.message} />;
         })}
-      </div>
+      </p>
     </ScrollArea>
   );
 };
