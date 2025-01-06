@@ -21,9 +21,10 @@ import {
 } from '@/components/ui/form.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { ReactNode, useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import {
   FlaskConicalIcon,
+  InfoIcon,
   LaptopMinimalIcon,
   LoaderCircleIcon,
   SatelliteDishIcon,
@@ -40,12 +41,13 @@ import { SystemInfoContext } from '@/components/providers/system-info-context.ts
 import { invoke } from '@tauri-apps/api/core';
 import { cancellablePromiseDefault, isDemo } from '@/lib/utils.ts';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip.tsx';
 import { toast } from 'sonner';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import Logo from 'public/logo.png';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -69,21 +71,6 @@ const formSchema = z.object({
 type FormSchemaType = z.infer<typeof formSchema>;
 
 type LoginType = 'INTEGRATED' | 'REMOTE';
-
-function DisabledTooltip(props: {
-  getDisabled: () => ReactNode | null;
-  provider: (disabled: boolean) => ReactNode;
-}) {
-  const disabled = props.getDisabled();
-  return disabled === null ? (
-    props.provider(false)
-  ) : (
-    <Tooltip>
-      <TooltipTrigger>{props.provider(true)}</TooltipTrigger>
-      <TooltipContent>{disabled}</TooltipContent>
-    </Tooltip>
-  );
-}
 
 function Index() {
   const navigate = useNavigate();
@@ -169,6 +156,16 @@ function Index() {
     <ScrollArea className="h-dvh w-full px-4 bg-muted">
       <div className="flex flex-col min-h-dvh w-full">
         <div className="flex flex-col gap-6 m-auto w-full max-w-[450px]">
+          <div className="text-center flex flex-row items-center justify-center gap-2">
+            <img
+              className="size-8"
+              width={32}
+              height={32}
+              src={Logo}
+              alt="SoulFire Logo"
+            />
+            <p className="font-medium tracking-wide">SoulFire</p>
+          </div>
           <Card>
             <CardHeader className="text-center">
               <CardTitle className="flex flex-row gap-2 text-xl mx-auto">
@@ -177,9 +174,7 @@ function Index() {
               </CardTitle>
               {null === loginType ? (
                 <CardDescription>
-                  Integrated server runs SoulFire on your machine.
-                  <br />
-                  Dedicated SoulFire servers run on remote machines.
+                  Select which type of SoulFire server to connect to.
                 </CardDescription>
               ) : null}
               {'INTEGRATED' === loginType ? (
@@ -194,77 +189,75 @@ function Index() {
             </CardHeader>
             {null === loginType ? (
               <CardContent className="flex flex-col gap-2">
-                <div className="flex w-full flex-col gap-1">
-                  <DisabledTooltip
-                    getDisabled={() => {
-                      if (isDemo()) {
-                        return (
-                          <p>
-                            Integrated server is not available in demo mode.
-                          </p>
-                        );
-                      }
-
-                      if (systemInfo === null || systemInfo?.mobile) {
-                        return (
-                          <p>
-                            Integrated server is not available on this platform.
-                          </p>
-                        );
-                      }
-
-                      return null;
-                    }}
-                    provider={(disabled) => (
-                      <Button
-                        className="w-full"
-                        disabled={disabled}
-                        variant="outline"
-                        onClick={() => setLoginType('INTEGRATED')}
-                      >
-                        <LaptopMinimalIcon className="size-5" />
-                        Integrated server (local)
-                      </Button>
-                    )}
-                  />
-                </div>
-                <div className="flex w-full flex-col gap-1">
-                  <DisabledTooltip
-                    getDisabled={() => {
-                      if (isDemo()) {
-                        return (
-                          <p>
-                            Integrated server is not available in demo mode.
-                          </p>
-                        );
-                      }
-
-                      return null;
-                    }}
-                    provider={(disabled) => (
-                      <Button
-                        className="w-full"
-                        disabled={disabled}
-                        variant="outline"
-                        onClick={() => setLoginType('REMOTE')}
-                      >
-                        <ServerIcon className="size-5" />
-                        Dedicated server (remote)
-                      </Button>
-                    )}
-                  />
-                </div>
-                {isDemo() && (
+                <div className="flex flex-row gap-2">
                   <Button
+                    disabled={isDemo() || !systemInfo || systemInfo.mobile}
                     className="w-full"
                     variant="outline"
-                    onClick={() => {
-                      void targetRedirect();
-                    }}
+                    onClick={() => setLoginType('INTEGRATED')}
                   >
-                    <FlaskConicalIcon className="size-5" />
-                    Demo server
+                    <LaptopMinimalIcon className="size-5" />
+                    Integrated server (local)
                   </Button>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button className="w-fit" variant="outline">
+                        <InfoIcon className="size-5" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      Runs a SoulFire server on your computer. The setup is
+                      automatic and requires no configuration. (Requires the
+                      desktop app)
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <div className="flex flex-row gap-2">
+                  <Button
+                    disabled={isDemo()}
+                    className="w-full"
+                    variant="outline"
+                    onClick={() => setLoginType('REMOTE')}
+                  >
+                    <ServerIcon className="size-5" />
+                    Dedicated server (remote)
+                  </Button>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button className="w-fit" variant="outline">
+                        <InfoIcon className="size-5" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                      Connects to a remote instance of the SoulFire server. You
+                      will need to provide the address and token of the server.
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                {isDemo() && (
+                  <div className="flex flex-row gap-2">
+                    <Button
+                      className="w-full"
+                      variant="outline"
+                      onClick={() => {
+                        void targetRedirect();
+                      }}
+                    >
+                      <FlaskConicalIcon className="size-5" />
+                      Demo server
+                    </Button>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button className="w-fit" variant="outline">
+                          <InfoIcon className="size-5" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        Simulates a virtual server with demo data. This server
+                        is read-only and you cannot make any changes to it.
+                      </PopoverContent>
+                    </Popover>
+                  </div>
                 )}
               </CardContent>
             ) : null}
