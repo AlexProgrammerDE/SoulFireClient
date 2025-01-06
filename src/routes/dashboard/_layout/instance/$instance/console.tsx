@@ -28,7 +28,14 @@ function Console() {
               {getEnumKeyByValue(InstanceState, instanceInfo.state)}
             </Badge>
           </h2>
-          <TerminalComponent />
+          <TerminalComponent
+            scope={{
+              oneofKind: 'instance',
+              instance: {
+                instanceId: instanceInfo.id,
+              },
+            }}
+          />
           <CommandInput />
         </div>
         <ControlsMenu />

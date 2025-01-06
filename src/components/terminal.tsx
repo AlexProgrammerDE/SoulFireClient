@@ -12,7 +12,7 @@ import { TerminalThemeContext } from '@/components/providers/terminal-theme-cont
 import { flavorEntries } from '@catppuccin/palette';
 import { AnsiHtml } from 'fancy-ansi/react';
 import { isDemo } from '@/lib/utils.ts';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { LogRequest, PreviousLogRequest } from '@/generated/soulfire/logs.ts';
 
 const hslToString = (rgb: { h: number; s: number; l: number }): string => {
   return `${Math.round(rgb.h)}, ${Math.round(rgb.s * 100)}%, ${Math.round(rgb.l * 100)}%`;
@@ -20,7 +20,9 @@ const hslToString = (rgb: { h: number; s: number; l: number }): string => {
 
 const MAX_TERMINAL_ENTRIES = 500;
 
-export const TerminalComponent = () => {
+export const TerminalComponent = (props: {
+  scope: PreviousLogRequest['scope'] | LogRequest['scope'];
+}) => {
   const [gotPrevious, setGotPrevious] = useState(false);
   const [entries, setEntries] = useState<
     {
@@ -30,15 +32,15 @@ export const TerminalComponent = () => {
   >(
     isDemo()
       ? [
-          { id: 'entry1', message: 'Welcome to demo mode! 🧪' },
-          { id: 'entry2', message: 'This is a read-only instance of SoulFire' },
+          { id: 'demo-1', message: 'Welcome to demo mode! 🧪' },
+          { id: 'demo-2', message: 'This is a read-only instance of SoulFire' },
           {
-            id: 'entry3',
+            id: 'demo-3',
             message:
               'Check out all the menus and features before deciding to install SoulFire :D',
           },
           {
-            id: 'entry4',
+            id: 'demo-4',
             message:
               'Feel free to join our Discord server if you would like to reach out: https://soulfiremc.com/discord',
           },
@@ -47,7 +49,6 @@ export const TerminalComponent = () => {
   );
   const transport = useContext(TransportContext);
   const terminalTheme = useContext(TerminalThemeContext);
-  const instanceInfo = useContext(InstanceInfoContext);
   const paneRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const selectedTheme = flavorEntries.find(
@@ -91,12 +92,7 @@ export const TerminalComponent = () => {
     void logsService
       .getPrevious(
         {
-          scope: {
-            oneofKind: 'instance',
-            instance: {
-              instanceId: instanceInfo.id,
-            },
-          },
+          scope: props.scope,
           // Max allowed amount of entries by the server
           count: 300,
         },
@@ -134,7 +130,7 @@ export const TerminalComponent = () => {
     return () => {
       abortController.abort();
     };
-  }, [gotPrevious, instanceInfo.id, transport]);
+  }, [gotPrevious, props.scope, transport]);
 
   useEffect(() => {
     if (transport === null) {
@@ -146,12 +142,7 @@ export const TerminalComponent = () => {
     logsService
       .subscribe(
         {
-          scope: {
-            oneofKind: 'instance',
-            instance: {
-              instanceId: instanceInfo.id,
-            },
-          },
+          scope: props.scope,
         },
         {
           abort: abortController.signal,
@@ -182,7 +173,7 @@ export const TerminalComponent = () => {
     return () => {
       abortController.abort();
     };
-  }, [instanceInfo.id, transport]);
+  }, [props.scope, transport]);
 
   return (
     <ScrollArea
