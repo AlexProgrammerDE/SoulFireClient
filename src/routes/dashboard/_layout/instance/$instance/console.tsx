@@ -36,7 +36,14 @@ function Console() {
               },
             }}
           />
-          <CommandInput />
+          <CommandInput
+            scope={{
+              oneofKind: 'instance',
+              instance: {
+                instanceId: instanceInfo.id,
+              },
+            }}
+          />
         </div>
         <ControlsMenu />
       </div>

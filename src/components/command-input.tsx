@@ -2,7 +2,10 @@ import { Input } from '@/components/ui/input.tsx';
 import { KeyboardEventHandler, useContext, useState } from 'react';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { CommandServiceClient } from '@/generated/soulfire/command.client.ts';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import {
+  CommandCompletionRequest,
+  CommandRequest,
+} from '@/generated/soulfire/command.ts';
 
 type CompletionState = {
   lastWritten: string;
@@ -10,9 +13,10 @@ type CompletionState = {
   index: number | null;
 };
 
-export default function CommandInput() {
+export default function CommandInput(props: {
+  scope: CommandRequest['scope'] | CommandCompletionRequest['scope'];
+}) {
   const transport = useContext(TransportContext);
-  const instanceInfo = useContext(InstanceInfoContext);
   const [completionState, setCompletionState] = useState<CompletionState>({
     lastWritten: '',
     receivedCompletions: null,
@@ -33,12 +37,7 @@ export default function CommandInput() {
 
       const commandService = new CommandServiceClient(transport);
       void commandService.executeCommand({
-        scope: {
-          oneofKind: 'instance',
-          instance: {
-            instanceId: instanceInfo.id,
-          },
-        },
+        scope: props.scope,
         command: currentVal,
       });
     } else if (e.key === 'Tab') {
@@ -61,12 +60,7 @@ export default function CommandInput() {
       completionState.index === null
     ) {
       const { response } = await commandService.tabCompleteCommand({
-        scope: {
-          oneofKind: 'instance',
-          instance: {
-            instanceId: instanceInfo.id,
-          },
-        },
+        scope: props.scope,
         command: text,
       });
 
