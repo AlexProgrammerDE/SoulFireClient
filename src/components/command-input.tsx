@@ -33,7 +33,12 @@ export default function CommandInput() {
 
       const commandService = new CommandServiceClient(transport);
       void commandService.executeCommand({
-        instanceId: instanceInfo.id,
+        scope: {
+          oneofKind: 'instance',
+          instance: {
+            instanceId: instanceInfo.id,
+          },
+        },
         command: currentVal,
       });
     } else if (e.key === 'Tab') {
@@ -56,7 +61,12 @@ export default function CommandInput() {
       completionState.index === null
     ) {
       const { response } = await commandService.tabCompleteCommand({
-        instanceId: instanceInfo.id,
+        scope: {
+          oneofKind: 'instance',
+          instance: {
+            instanceId: instanceInfo.id,
+          },
+        },
         command: text,
       });
 

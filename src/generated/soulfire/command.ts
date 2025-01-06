@@ -4,15 +4,43 @@
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { MessageType } from "@protobuf-ts/runtime";
 /**
- * @generated from protobuf message soulfire.v1.CommandRequest
+ * @generated from protobuf message soulfire.v1.GlobalCommandScope
  */
-export interface CommandRequest {
+export interface GlobalCommandScope {
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceCommandScope
+ */
+export interface InstanceCommandScope {
     /**
      * @generated from protobuf field: string instance_id = 1;
      */
     instanceId: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.CommandRequest
+ */
+export interface CommandRequest {
     /**
-     * @generated from protobuf field: string command = 2;
+     * @generated from protobuf oneof: scope
+     */
+    scope: {
+        oneofKind: "global";
+        /**
+         * @generated from protobuf field: soulfire.v1.GlobalCommandScope global = 1;
+         */
+        global: GlobalCommandScope;
+    } | {
+        oneofKind: "instance";
+        /**
+         * @generated from protobuf field: soulfire.v1.InstanceCommandScope instance = 2;
+         */
+        instance: InstanceCommandScope;
+    } | {
+        oneofKind: undefined;
+    };
+    /**
+     * @generated from protobuf field: string command = 3;
      */
     command: string;
 }
@@ -30,11 +58,25 @@ export interface CommandResponse {
  */
 export interface CommandCompletionRequest {
     /**
-     * @generated from protobuf field: string instance_id = 1;
+     * @generated from protobuf oneof: scope
      */
-    instanceId: string;
+    scope: {
+        oneofKind: "global";
+        /**
+         * @generated from protobuf field: soulfire.v1.GlobalCommandScope global = 1;
+         */
+        global: GlobalCommandScope;
+    } | {
+        oneofKind: "instance";
+        /**
+         * @generated from protobuf field: soulfire.v1.InstanceCommandScope instance = 2;
+         */
+        instance: InstanceCommandScope;
+    } | {
+        oneofKind: undefined;
+    };
     /**
-     * @generated from protobuf field: string command = 2;
+     * @generated from protobuf field: string command = 3;
      */
     command: string;
 }
@@ -48,11 +90,34 @@ export interface CommandCompletionResponse {
     suggestions: string[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
+class GlobalCommandScope$Type extends MessageType<GlobalCommandScope> {
+    constructor() {
+        super("soulfire.v1.GlobalCommandScope", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GlobalCommandScope
+ */
+export const GlobalCommandScope = new GlobalCommandScope$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceCommandScope$Type extends MessageType<InstanceCommandScope> {
+    constructor() {
+        super("soulfire.v1.InstanceCommandScope", [
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceCommandScope
+ */
+export const InstanceCommandScope = new InstanceCommandScope$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class CommandRequest$Type extends MessageType<CommandRequest> {
     constructor() {
         super("soulfire.v1.CommandRequest", [
-            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "global", kind: "message", oneof: "scope", T: () => GlobalCommandScope },
+            { no: 2, name: "instance", kind: "message", oneof: "scope", T: () => InstanceCommandScope },
+            { no: 3, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -76,8 +141,9 @@ export const CommandResponse = new CommandResponse$Type();
 class CommandCompletionRequest$Type extends MessageType<CommandCompletionRequest> {
     constructor() {
         super("soulfire.v1.CommandCompletionRequest", [
-            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "global", kind: "message", oneof: "scope", T: () => GlobalCommandScope },
+            { no: 2, name: "instance", kind: "message", oneof: "scope", T: () => InstanceCommandScope },
+            { no: 3, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }

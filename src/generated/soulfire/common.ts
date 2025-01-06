@@ -263,9 +263,9 @@ export enum GlobalPermission {
      */
     CREATE_INSTANCE = 0,
     /**
-     * @generated from protobuf enum value: SUBSCRIBE_LOGS = 1;
+     * @generated from protobuf enum value: GLOBAL_SUBSCRIBE_LOGS = 1;
      */
-    SUBSCRIBE_LOGS = 1,
+    GLOBAL_SUBSCRIBE_LOGS = 1,
     /**
      * @generated from protobuf enum value: READ_CLIENT_DATA = 2;
      */
@@ -293,20 +293,28 @@ export enum GlobalPermission {
     /**
      * @generated from protobuf enum value: DELETE_USER = 8;
      */
-    DELETE_USER = 8
+    DELETE_USER = 8,
+    /**
+     * @generated from protobuf enum value: GLOBAL_COMMAND_EXECUTION = 9;
+     */
+    GLOBAL_COMMAND_EXECUTION = 9,
+    /**
+     * @generated from protobuf enum value: GLOBAL_COMMAND_COMPLETION = 10;
+     */
+    GLOBAL_COMMAND_COMPLETION = 10
 }
 /**
  * @generated from protobuf enum soulfire.v1.InstancePermission
  */
 export enum InstancePermission {
     /**
-     * @generated from protobuf enum value: COMMAND_EXECUTION = 0;
+     * @generated from protobuf enum value: INSTANCE_COMMAND_EXECUTION = 0;
      */
-    COMMAND_EXECUTION = 0,
+    INSTANCE_COMMAND_EXECUTION = 0,
     /**
-     * @generated from protobuf enum value: COMMAND_COMPLETION = 1;
+     * @generated from protobuf enum value: INSTANCE_COMMAND_COMPLETION = 1;
      */
-    COMMAND_COMPLETION = 1,
+    INSTANCE_COMMAND_COMPLETION = 1,
     /**
      * @generated from protobuf enum value: READ_INSTANCE = 2;
      */
@@ -350,7 +358,11 @@ export enum InstancePermission {
     /**
      * @generated from protobuf enum value: LIST_OBJECT_STORAGE = 12;
      */
-    LIST_OBJECT_STORAGE = 12
+    LIST_OBJECT_STORAGE = 12,
+    /**
+     * @generated from protobuf enum value: INSTANCE_SUBSCRIBE_LOGS = 13;
+     */
+    INSTANCE_SUBSCRIBE_LOGS = 13
 }
 /**
  * @generated from protobuf enum soulfire.v1.UserRole
