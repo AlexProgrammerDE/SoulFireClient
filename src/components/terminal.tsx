@@ -105,6 +105,17 @@ export const TerminalComponent = () => {
         },
       )
       .then((call) => {
+        if (call.response.messages.length === 0) {
+          setEntries((prev) => [
+            ...prev,
+            {
+              id: 'empty',
+              message:
+                '🧙 Looks like there are no logs to display; try running some commands!',
+            },
+          ]);
+        }
+
         for (const message of call.response.messages) {
           const split = message.message.split('\n');
           for (let i = 0; i < split.length; i++) {
@@ -112,7 +123,7 @@ export const TerminalComponent = () => {
               ...prev,
               {
                 id: message.id + '-' + i,
-                message: split[i] + '\n',
+                message: split[i],
               },
             ]);
           }
@@ -159,7 +170,7 @@ export const TerminalComponent = () => {
               ...prev,
               {
                 id: message.id + '-' + i,
-                message: split[i] + '\n',
+                message: split[i],
               },
             ];
 
@@ -207,7 +218,7 @@ export const TerminalComponent = () => {
     >
       <p className="whitespace-pre-wrap py-0.5 pl-0.5 h-full select-text">
         {entries.map((entry) => {
-          return <AnsiHtml key={entry.id} text={entry.message} />;
+          return <AnsiHtml key={entry.id} text={entry.message + '\n'} />;
         })}
       </p>
     </ScrollArea>
