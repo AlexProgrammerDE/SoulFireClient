@@ -22,6 +22,7 @@ import { Route as DashboardLayoutInstanceInstanceProxiesImport } from './routes/
 import { Route as DashboardLayoutInstanceInstanceConsoleImport } from './routes/dashboard/_layout/instance/$instance/console'
 import { Route as DashboardLayoutInstanceInstanceAccountsImport } from './routes/dashboard/_layout/instance/$instance/accounts'
 import { Route as DashboardLayoutAdminLayoutOverviewImport } from './routes/dashboard/_layout/admin/_layout/overview'
+import { Route as DashboardLayoutAdminLayoutConsoleImport } from './routes/dashboard/_layout/admin/_layout/console'
 import { Route as DashboardLayoutInstanceInstanceSettingsNamespaceImport } from './routes/dashboard/_layout/instance/$instance/settings/$namespace'
 import { Route as DashboardLayoutAdminLayoutSettingsNamespaceImport } from './routes/dashboard/_layout/admin/_layout/settings/$namespace'
 
@@ -104,6 +105,13 @@ const DashboardLayoutAdminLayoutOverviewRoute =
     getParentRoute: () => DashboardLayoutAdminLayoutRoute,
   } as any)
 
+const DashboardLayoutAdminLayoutConsoleRoute =
+  DashboardLayoutAdminLayoutConsoleImport.update({
+    id: '/console',
+    path: '/console',
+    getParentRoute: () => DashboardLayoutAdminLayoutRoute,
+  } as any)
+
 const DashboardLayoutInstanceInstanceSettingsNamespaceRoute =
   DashboardLayoutInstanceInstanceSettingsNamespaceImport.update({
     id: '/settings/$namespace',
@@ -171,6 +179,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardLayoutUserInstancesImport
       parentRoute: typeof DashboardLayoutImport
     }
+    '/dashboard/_layout/admin/_layout/console': {
+      id: '/dashboard/_layout/admin/_layout/console'
+      path: '/console'
+      fullPath: '/dashboard/admin/console'
+      preLoaderRoute: typeof DashboardLayoutAdminLayoutConsoleImport
+      parentRoute: typeof DashboardLayoutAdminLayoutImport
+    }
     '/dashboard/_layout/admin/_layout/overview': {
       id: '/dashboard/_layout/admin/_layout/overview'
       path: '/overview'
@@ -219,12 +234,15 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface DashboardLayoutAdminLayoutRouteChildren {
+  DashboardLayoutAdminLayoutConsoleRoute: typeof DashboardLayoutAdminLayoutConsoleRoute
   DashboardLayoutAdminLayoutOverviewRoute: typeof DashboardLayoutAdminLayoutOverviewRoute
   DashboardLayoutAdminLayoutSettingsNamespaceRoute: typeof DashboardLayoutAdminLayoutSettingsNamespaceRoute
 }
 
 const DashboardLayoutAdminLayoutRouteChildren: DashboardLayoutAdminLayoutRouteChildren =
   {
+    DashboardLayoutAdminLayoutConsoleRoute:
+      DashboardLayoutAdminLayoutConsoleRoute,
     DashboardLayoutAdminLayoutOverviewRoute:
       DashboardLayoutAdminLayoutOverviewRoute,
     DashboardLayoutAdminLayoutSettingsNamespaceRoute:
@@ -306,6 +324,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/admin': typeof DashboardLayoutAdminLayoutRouteWithChildren
   '/dashboard/instance/$instance': typeof DashboardLayoutInstanceInstanceRouteWithChildren
   '/dashboard/user/instances': typeof DashboardLayoutUserInstancesRoute
+  '/dashboard/admin/console': typeof DashboardLayoutAdminLayoutConsoleRoute
   '/dashboard/admin/overview': typeof DashboardLayoutAdminLayoutOverviewRoute
   '/dashboard/instance/$instance/accounts': typeof DashboardLayoutInstanceInstanceAccountsRoute
   '/dashboard/instance/$instance/console': typeof DashboardLayoutInstanceInstanceConsoleRoute
@@ -320,6 +339,7 @@ export interface FileRoutesByTo {
   '/dashboard/admin': typeof DashboardLayoutAdminLayoutRouteWithChildren
   '/dashboard/instance/$instance': typeof DashboardLayoutInstanceInstanceRouteWithChildren
   '/dashboard/user/instances': typeof DashboardLayoutUserInstancesRoute
+  '/dashboard/admin/console': typeof DashboardLayoutAdminLayoutConsoleRoute
   '/dashboard/admin/overview': typeof DashboardLayoutAdminLayoutOverviewRoute
   '/dashboard/instance/$instance/accounts': typeof DashboardLayoutInstanceInstanceAccountsRoute
   '/dashboard/instance/$instance/console': typeof DashboardLayoutInstanceInstanceConsoleRoute
@@ -337,6 +357,7 @@ export interface FileRoutesById {
   '/dashboard/_layout/admin/_layout': typeof DashboardLayoutAdminLayoutRouteWithChildren
   '/dashboard/_layout/instance/$instance': typeof DashboardLayoutInstanceInstanceRouteWithChildren
   '/dashboard/_layout/user/instances': typeof DashboardLayoutUserInstancesRoute
+  '/dashboard/_layout/admin/_layout/console': typeof DashboardLayoutAdminLayoutConsoleRoute
   '/dashboard/_layout/admin/_layout/overview': typeof DashboardLayoutAdminLayoutOverviewRoute
   '/dashboard/_layout/instance/$instance/accounts': typeof DashboardLayoutInstanceInstanceAccountsRoute
   '/dashboard/_layout/instance/$instance/console': typeof DashboardLayoutInstanceInstanceConsoleRoute
@@ -353,6 +374,7 @@ export interface FileRouteTypes {
     | '/dashboard/admin'
     | '/dashboard/instance/$instance'
     | '/dashboard/user/instances'
+    | '/dashboard/admin/console'
     | '/dashboard/admin/overview'
     | '/dashboard/instance/$instance/accounts'
     | '/dashboard/instance/$instance/console'
@@ -366,6 +388,7 @@ export interface FileRouteTypes {
     | '/dashboard/admin'
     | '/dashboard/instance/$instance'
     | '/dashboard/user/instances'
+    | '/dashboard/admin/console'
     | '/dashboard/admin/overview'
     | '/dashboard/instance/$instance/accounts'
     | '/dashboard/instance/$instance/console'
@@ -381,6 +404,7 @@ export interface FileRouteTypes {
     | '/dashboard/_layout/admin/_layout'
     | '/dashboard/_layout/instance/$instance'
     | '/dashboard/_layout/user/instances'
+    | '/dashboard/_layout/admin/_layout/console'
     | '/dashboard/_layout/admin/_layout/overview'
     | '/dashboard/_layout/instance/$instance/accounts'
     | '/dashboard/_layout/instance/$instance/console'
@@ -443,6 +467,7 @@ export const routeTree = rootRoute
       "filePath": "dashboard/_layout/admin/_layout.tsx",
       "parent": "/dashboard/_layout/admin",
       "children": [
+        "/dashboard/_layout/admin/_layout/console",
         "/dashboard/_layout/admin/_layout/overview",
         "/dashboard/_layout/admin/_layout/settings/$namespace"
       ]
@@ -460,6 +485,10 @@ export const routeTree = rootRoute
     "/dashboard/_layout/user/instances": {
       "filePath": "dashboard/_layout/user/instances.tsx",
       "parent": "/dashboard/_layout"
+    },
+    "/dashboard/_layout/admin/_layout/console": {
+      "filePath": "dashboard/_layout/admin/_layout/console.tsx",
+      "parent": "/dashboard/_layout/admin/_layout"
     },
     "/dashboard/_layout/admin/_layout/overview": {
       "filePath": "dashboard/_layout/admin/_layout/overview.tsx",

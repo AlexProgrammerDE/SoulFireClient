@@ -1,6 +1,6 @@
 'use client';
 
-import { LayoutDashboardIcon } from 'lucide-react';
+import { LayoutDashboardIcon, TerminalIcon } from 'lucide-react';
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -41,6 +41,14 @@ export function NavUserAdmin() {
       icon: LayoutDashboardIcon,
       linkProps: {
         to: '/dashboard/admin/overview',
+        params: {},
+      },
+    },
+    {
+      title: 'Admin Console',
+      icon: TerminalIcon,
+      linkProps: {
+        to: '/dashboard/admin/console',
         params: {},
       },
     },

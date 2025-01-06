@@ -29,8 +29,8 @@ export default function InstancePageLayout(props: {
 
   const CrumbComponent = (props: { crumb: string }) => (
     <>
-      <BreadcrumbSeparator className="hidden md:block" />
       <BreadcrumbItem className="hidden md:block">{props.crumb}</BreadcrumbItem>
+      <BreadcrumbSeparator className="hidden md:block" />
     </>
   );
 
