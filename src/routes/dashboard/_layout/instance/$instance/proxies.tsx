@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, deepEqual } from '@tanstack/react-router';
 import { useCallback, useContext, useState } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { Button } from '@/components/ui/button.tsx';
@@ -19,9 +19,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
-import { PlusIcon, TrashIcon } from 'lucide-react';
+import { PlusIcon, TrashIcon, Wand2Icon } from 'lucide-react';
 import ImportDialog from '@/components/dialog/import-dialog.tsx';
 import URI from 'urijs';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
@@ -29,6 +31,7 @@ import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
+import { ProxyCheckServiceClient } from '@/generated/soulfire/proxy-check.client.ts';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/proxies',
@@ -236,6 +239,8 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+          <DropdownMenuLabel>Proxy type</DropdownMenuLabel>
+          <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => setProxyTypeSelected(UIProxyType.HTTP)}
           >
@@ -258,6 +263,60 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      <Button
+        variant="outline"
+        disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
+        onClick={() => {
+          if (transport === null) {
+            return;
+          }
+
+          const beforeSize = profile.proxies.length;
+          const selectedRows = props.table
+            .getFilteredSelectedRowModel()
+            .rows.map((r) => r.original);
+
+          toast.promise(
+            (async () => {
+              const service = new ProxyCheckServiceClient(transport);
+              const result = await service.check({
+                instanceId: instanceInfo.id,
+                proxy: selectedRows,
+              });
+              const newProfile = {
+                ...profile,
+                proxies: profile.proxies.filter((a) => {
+                  const valid = result.response.response.find((r) =>
+                    deepEqual(r.proxy, a),
+                  );
+
+                  // This one was not supposed to be checked
+                  if (valid === undefined) {
+                    return true;
+                  }
+
+                  return valid.valid;
+                }),
+              };
+
+              await setProfileMutation(newProfile);
+
+              return newProfile;
+            })(),
+            {
+              loading: 'Checking proxies...',
+              success: (newProfile) =>
+                `Removed ${beforeSize - newProfile.proxies.length} broken proxies`,
+              error: (e) => {
+                console.error(e);
+                return 'Failed to check proxies';
+              },
+            },
+          );
+        }}
+      >
+        <Wand2Icon className="h-4 w-4" />
+      </Button>
       <Button
         variant="outline"
         disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
