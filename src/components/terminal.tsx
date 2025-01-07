@@ -137,7 +137,6 @@ export const TerminalComponent = (props: {
       return;
     }
 
-    console.log('rerender');
     const abortController = new AbortController();
     const logsService = new LogsServiceClient(transport);
     logsService
