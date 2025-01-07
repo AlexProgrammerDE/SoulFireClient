@@ -3,8 +3,8 @@ import { ClientDataResponse } from '@/generated/soulfire/config.ts';
 export const demoData: ClientDataResponse = {
   id: 'f8030fa8-3be6-45c8-93f9-476ca39d42d5',
   username: 'root',
-  email: 'root@soulfiremc.com',
   role: 0,
+  email: 'root@soulfiremc.com',
   serverPermissions: [
     {
       globalPermission: 0,
@@ -40,6 +40,14 @@ export const demoData: ClientDataResponse = {
     },
     {
       globalPermission: 8,
+      granted: true,
+    },
+    {
+      globalPermission: 9,
+      granted: true,
+    },
+    {
+      globalPermission: 10,
       granted: true,
     },
   ],
@@ -178,7 +186,8 @@ export const demoData: ClientDataResponse = {
     {
       id: 'chat-message-logger',
       version: '1.0.0',
-      description: 'Logs all received chat messages to the terminal',
+      description:
+        'Logs all received chat messages to the terminal\nIncludes deduplication to prevent spamming the same message too often',
       author: 'AlexProgrammerDE',
       license: 'GPL-3.0',
       website: 'https://soulfiremc.com',
@@ -209,6 +218,62 @@ export const demoData: ClientDataResponse = {
     },
   ],
   serverSettings: [
+    {
+      pageName: 'Server Settings',
+      namespace: 'server',
+      entries: [
+        {
+          key: 'public-address',
+          type: {
+            value: {
+              oneofKind: 'string',
+              string: {
+                uiName: 'Public address',
+                description:
+                  'The address clients on the internet use to connect to this SoulFire instance.\nUsed for links in E-Mails.',
+                def: 'http://127.0.0.1:38765',
+                secret: false,
+                textarea: false,
+                placeholder: '',
+              },
+            },
+          },
+        },
+        {
+          key: 'have-i-been-pwned-check',
+          type: {
+            value: {
+              oneofKind: 'bool',
+              bool: {
+                uiName: 'Have I Been Pwned check',
+                description:
+                  'Check if passwords are strong using the secure haveibeenpwned.com API',
+                def: true,
+              },
+            },
+          },
+        },
+        {
+          key: 'have-i-been-pwned-limit',
+          type: {
+            value: {
+              oneofKind: 'int',
+              int: {
+                uiName: 'Have I Been Pwned limit',
+                description:
+                  'If the password is used more than this number of times, it is considered unsafe.',
+                def: 0,
+                min: 0,
+                max: 2147483647,
+                step: 1,
+                placeholder: '',
+              },
+            },
+          },
+        },
+      ],
+      iconId: 'server',
+    },
     {
       pageName: 'Dev Settings',
       namespace: 'dev',
@@ -2166,6 +2231,24 @@ export const demoData: ClientDataResponse = {
                 uiName: 'Log chat to terminal',
                 description: 'Log all received chat messages to the terminal',
                 def: true,
+              },
+            },
+          },
+        },
+        {
+          key: 'deduplicate-amount',
+          type: {
+            value: {
+              oneofKind: 'int',
+              int: {
+                uiName: 'Deduplicate amount',
+                description:
+                  'How often should the same message be logged before it will not be logged again? (within 5 seconds)',
+                def: 1,
+                min: 1,
+                max: 2147483647,
+                step: 1,
+                placeholder: '',
               },
             },
           },
