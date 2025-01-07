@@ -13,12 +13,23 @@ import { flavorEntries } from '@catppuccin/palette';
 import { AnsiHtml } from 'fancy-ansi/react';
 import { isDemo } from '@/lib/utils.ts';
 import { LogRequest, PreviousLogRequest } from '@/generated/soulfire/logs.ts';
+import { stripAnsi } from 'fancy-ansi';
 
 const hslToString = (rgb: { h: number; s: number; l: number }): string => {
   return `${Math.round(rgb.h)}, ${Math.round(rgb.s * 100)}%, ${Math.round(rgb.l * 100)}%`;
 };
 
 const MAX_TERMINAL_ENTRIES = 500;
+
+const MemoAnsiHtml = React.memo((props: { text: string }) => {
+  return (
+    <AnsiHtml
+      text={
+        stripAnsi(props.text).endsWith('\n') ? props.text : props.text + '\n'
+      }
+    />
+  );
+});
 
 export const TerminalComponent = (props: {
   scope: PreviousLogRequest['scope'] | LogRequest['scope'];
@@ -113,16 +124,7 @@ export const TerminalComponent = (props: {
         }
 
         for (const message of call.response.messages) {
-          const split = message.message.split('\n');
-          for (let i = 0; i < split.length; i++) {
-            setEntries((prev) => [
-              ...prev,
-              {
-                id: message.id + '-' + i,
-                message: split[i],
-              },
-            ]);
-          }
+          setEntries((prev) => [...prev, message]);
         }
         setGotPrevious(true);
       });
@@ -154,20 +156,14 @@ export const TerminalComponent = (props: {
           return;
         }
 
-        const split = message.message.split('\n');
-        for (let i = 0; i < split.length; i++) {
-          setEntries((prev) => {
-            const resultingArray = [
-              ...prev.filter((entry) => entry.id !== 'empty'),
-              {
-                id: message.id + '-' + i,
-                message: split[i],
-              },
-            ];
+        setEntries((prev) => {
+          const resultingArray = [
+            ...prev.filter((entry) => entry.id !== 'empty'),
+            message,
+          ];
 
-            return resultingArray.slice(-MAX_TERMINAL_ENTRIES);
-          });
-        }
+          return resultingArray.slice(-MAX_TERMINAL_ENTRIES);
+        });
       });
 
     return () => {
@@ -175,6 +171,7 @@ export const TerminalComponent = (props: {
     };
   }, [props.scope, transport]);
 
+  console.log('entries', entries);
   return (
     <ScrollArea
       viewportRef={paneRef}
@@ -209,7 +206,7 @@ export const TerminalComponent = (props: {
     >
       <p className="whitespace-pre-wrap py-0.5 pl-0.5 h-full select-text">
         {entries.map((entry) => {
-          return <AnsiHtml key={entry.id} text={entry.message + '\n'} />;
+          return <MemoAnsiHtml key={entry.id} text={entry.message} />;
         })}
       </p>
     </ScrollArea>
