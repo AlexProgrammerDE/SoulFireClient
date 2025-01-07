@@ -56,7 +56,7 @@ export default function CastMenuEntry() {
         setDevices((devices) =>
           devices.map((device) => {
             if (device.transport_id === payload.transport_id) {
-              toast(`Disconnected from ${device.info.name}`);
+              toast.info(`Disconnected from ${device.info.name}`);
               return {
                 ...device,
                 transport_id: null,
@@ -94,7 +94,9 @@ export default function CastMenuEntry() {
                   key={currentDevice.info.id}
                   onClick={() => {
                     if (currentDevice.transport_id !== null) {
-                      toast(`Already connected to ${currentDevice.info.name}`);
+                      toast.warning(
+                        `Already connected to ${currentDevice.info.name}`,
+                      );
                       return;
                     }
 
@@ -145,7 +147,7 @@ export default function CastMenuEntry() {
               <DropdownMenuItem
                 disabled
                 onClick={() => {
-                  toast('No devices found');
+                  toast.warning('No devices found');
                 }}
               >
                 <SearchXIcon />

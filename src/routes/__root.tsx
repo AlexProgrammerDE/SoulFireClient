@@ -139,7 +139,7 @@ function RootLayout() {
                 </main>
               </TerminalThemeContext.Provider>
             </SystemInfoContext.Provider>
-            <Toaster richColors />
+            <Toaster richColors pauseWhenPageIsHidden />
           </TooltipProvider>
         </ThemeProvider>
         <TailwindIndicator />
