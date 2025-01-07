@@ -2,12 +2,17 @@ import { createFileRoute } from '@tanstack/react-router';
 import { TerminalComponent } from '@/components/terminal.tsx';
 import ControlsMenu from '@/components/controls-menu.tsx';
 import CommandInput from '@/components/command-input.tsx';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { getEnumKeyByValue } from '@/lib/types.ts';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { Badge } from '@/components/ui/badge';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
+import { LogRequest, PreviousLogRequest } from '@/generated/soulfire/logs.ts';
+import {
+  CommandCompletionRequest,
+  CommandRequest,
+} from '@/generated/soulfire/command.ts';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/console',
@@ -17,6 +22,20 @@ export const Route = createFileRoute(
 
 function Console() {
   const instanceInfo = useContext(InstanceInfoContext);
+  const scope = useMemo<
+    | PreviousLogRequest['scope']
+    | LogRequest['scope']
+    | CommandRequest['scope']
+    | CommandCompletionRequest['scope']
+  >(
+    () => ({
+      oneofKind: 'instance',
+      instance: {
+        instanceId: instanceInfo.id,
+      },
+    }),
+    [instanceInfo.id],
+  );
 
   return (
     <InstancePageLayout extraCrumbs={['Controls']} pageName="Console">
@@ -28,22 +47,8 @@ function Console() {
               {getEnumKeyByValue(InstanceState, instanceInfo.state)}
             </Badge>
           </h2>
-          <TerminalComponent
-            scope={{
-              oneofKind: 'instance',
-              instance: {
-                instanceId: instanceInfo.id,
-              },
-            }}
-          />
-          <CommandInput
-            scope={{
-              oneofKind: 'instance',
-              instance: {
-                instanceId: instanceInfo.id,
-              },
-            }}
-          />
+          <TerminalComponent scope={scope} />
+          <CommandInput scope={scope} />
         </div>
         <ControlsMenu />
       </div>

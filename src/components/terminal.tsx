@@ -137,6 +137,7 @@ export const TerminalComponent = (props: {
       return;
     }
 
+    console.log('rerender');
     const abortController = new AbortController();
     const logsService = new LogsServiceClient(transport);
     logsService
@@ -158,7 +159,7 @@ export const TerminalComponent = (props: {
         for (let i = 0; i < split.length; i++) {
           setEntries((prev) => {
             const resultingArray = [
-              ...prev,
+              ...prev.filter((entry) => entry.id !== 'empty'),
               {
                 id: message.id + '-' + i,
                 message: split[i],
