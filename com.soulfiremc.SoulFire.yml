@@ -11,6 +11,18 @@ finish-args:
   - --device=dri
   - --share=ipc
   - --share=network
+  # See https://github.com/tauri-apps/tauri/issues/9304
+  - --env=WEBKIT_DISABLE_DMABUF_RENDERER=1
+  # for Discord RPC mods
+  - --filesystem=xdg-run/app/com.discordapp.Discord:create
+  # Profile drag&drop
+  - --filesystem=xdg-download:ro
+  # Userspace visibility for manual hugepages configuration
+  # Required for -XX:+UseLargePages
+  - --filesystem=/sys/kernel/mm/hugepages:ro
+  # Userspace visibility for transparent hugepages configuration
+  # Required for -XX:+UseTransparentHugePages
+  - --filesystem=/sys/kernel/mm/transparent_hugepage:ro
 
 modules:
   - shared-modules/libayatana-appindicator/libayatana-appindicator-gtk3.json
