@@ -718,7 +718,7 @@ dependencies = [
  "semver",
  "serde",
  "serde_json",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
 ]
 
 [[package]]
@@ -1272,7 +1272,7 @@ dependencies = [
  "quork",
  "serde",
  "serde_json",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "uuid",
 ]
 
@@ -4061,7 +4061,7 @@ dependencies = [
  "rustc-hash 2.1.0",
  "rustls",
  "socket2",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "tokio",
  "tracing",
 ]
@@ -4080,7 +4080,7 @@ dependencies = [
  "rustls",
  "rustls-pki-types",
  "slab",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "tinyvec",
  "tracing",
  "web-time",
@@ -4109,7 +4109,7 @@ dependencies = [
  "cfg-if",
  "nix",
  "quork-proc",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "windows",
 ]
 
@@ -4970,7 +4970,7 @@ dependencies = [
  "tauri-plugin-shell",
  "tauri-plugin-single-instance",
  "tauri-plugin-updater",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "zip",
 ]
 
@@ -5275,7 +5275,7 @@ dependencies = [
  "tauri-runtime",
  "tauri-runtime-wry",
  "tauri-utils",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "tokio",
  "tray-icon",
  "url",
@@ -5328,7 +5328,7 @@ dependencies = [
  "sha2 0.10.8",
  "syn 2.0.95",
  "tauri-utils",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "time",
  "url",
  "uuid",
@@ -5378,7 +5378,7 @@ dependencies = [
  "serde_json",
  "tauri",
  "tauri-plugin",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
 ]
 
 [[package]]
@@ -5394,7 +5394,7 @@ dependencies = [
  "tauri",
  "tauri-plugin",
  "tauri-utils",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "tracing",
  "url",
  "windows-registry 0.3.0",
@@ -5415,7 +5415,7 @@ dependencies = [
  "tauri",
  "tauri-plugin",
  "tauri-plugin-fs",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "url",
 ]
 
@@ -5438,7 +5438,7 @@ dependencies = [
  "tauri",
  "tauri-plugin",
  "tauri-utils",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "toml 0.8.19",
  "url",
  "uuid",
@@ -5462,7 +5462,7 @@ dependencies = [
  "swift-rs",
  "tauri",
  "tauri-plugin",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "time",
 ]
 
@@ -5481,7 +5481,7 @@ dependencies = [
  "sys-locale",
  "tauri",
  "tauri-plugin",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
 ]
 
 [[package]]
@@ -5511,7 +5511,7 @@ dependencies = [
  "shared_child",
  "tauri",
  "tauri-plugin",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "tokio",
 ]
 
@@ -5526,7 +5526,7 @@ dependencies = [
  "serde_json",
  "tauri",
  "tauri-plugin-deep-link",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "tracing",
  "windows-sys 0.59.0",
  "zbus 4.4.0",
@@ -5554,7 +5554,7 @@ dependencies = [
  "tauri",
  "tauri-plugin",
  "tempfile",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "time",
  "tokio",
  "url",
@@ -5576,7 +5576,7 @@ dependencies = [
  "serde",
  "serde_json",
  "tauri-utils",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "url",
  "windows",
 ]
@@ -5636,7 +5636,7 @@ dependencies = [
  "serde_json",
  "serde_with",
  "swift-rs",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "toml 0.8.19",
  "url",
  "urlpattern",
@@ -5696,11 +5696,11 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
-version = "2.0.9"
+version = "2.0.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f072643fd0190df67a8bab670c20ef5d8737177d6ac6b2e9a236cb096206b2cc"
+checksum = "a3ac7f54ca534db81081ef1c1e7f6ea8a3ef428d2fc069097c079443d24124d3"
 dependencies = [
- "thiserror-impl 2.0.9",
+ "thiserror-impl 2.0.10",
 ]
 
 [[package]]
@@ -5716,9 +5716,9 @@ dependencies = [
 
 [[package]]
 name = "thiserror-impl"
-version = "2.0.9"
+version = "2.0.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7b50fa271071aae2e6ee85f842e2e28ba8cd2c5fb67f11fcb1fd70b276f9e7d4"
+checksum = "9e9465d30713b56a37ede7185763c3492a91be2f5fa68d958c44e41ab9248beb"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -6966,7 +6966,7 @@ dependencies = [
  "sha2 0.10.8",
  "soup3",
  "tao-macros",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "url",
  "webkit2gtk",
  "webkit2gtk-sys",
@@ -7294,7 +7294,7 @@ dependencies = [
  "pbkdf2",
  "rand 0.8.5",
  "sha1",
- "thiserror 2.0.9",
+ "thiserror 2.0.10",
  "time",
  "zeroize",
  "zopfli",
