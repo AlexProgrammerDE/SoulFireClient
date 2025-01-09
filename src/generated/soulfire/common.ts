@@ -320,9 +320,13 @@ export enum InstancePermission {
      */
     READ_INSTANCE = 2,
     /**
-     * @generated from protobuf enum value: UPDATE_INSTANCE = 3;
+     * @generated from protobuf enum value: UPDATE_INSTANCE_META = 3;
      */
-    UPDATE_INSTANCE = 3,
+    UPDATE_INSTANCE_META = 3,
+    /**
+     * @generated from protobuf enum value: UPDATE_INSTANCE_CONFIG = 14;
+     */
+    UPDATE_INSTANCE_CONFIG = 14,
     /**
      * @generated from protobuf enum value: DELETE_INSTANCE = 4;
      */
