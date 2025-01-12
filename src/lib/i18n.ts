@@ -18,6 +18,8 @@ i18n
 
     supportedLngs: APP_LOCALES.split(','),
     nonExplicitSupportedLngs: true,
+    returnEmptyString: false,
+    returnNull: false,
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
