@@ -5,6 +5,7 @@ import {
   createRouter,
   RouterProvider,
 } from '@tanstack/react-router';
+import '@/lib/i18n';
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen';
