@@ -1,0 +1,3 @@
+files:
+  - source: /locales/locale.json
+    translation: /locales/locale_%osx_locale%.json
