@@ -1,0 +1,46 @@
+{
+  "header": {
+    "image": {
+      "alt": "SoulFire logo"
+    },
+    "title": "SoulFire"
+  },
+  "connect": {
+    "title": "Connect to a SoulFire server",
+    "description": "Select which type of SoulFire server to connect to.",
+    "integrated": {
+      "title": "Integrated server (local)",
+      "description": "Runs a SoulFire server on your computer. The setup is automatic and requires no configuration. (Requires the desktop app)"
+    },
+    "dedicated": {
+      "title": "Dedicated server (remote)",
+      "description": "Connects to a remote instance of the SoulFire server. You will need to provide the address and token of the server."
+    },
+    "demo": {
+      "title": "Demo server",
+      "description": "Simulates a virtual server with demo data. This server is read-only and you cannot make any changes to it."
+    }
+  },
+  "dedicated": {
+    "description": "Put in the address and token of the SoulFire server you want to connect to.",
+    "form": {
+      "address": {
+        "title": "Address",
+        "description": "Address of the server you want to connect to.",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "Token",
+        "placeholder": "Secret token",
+        "description": "Token to authenticate with the server."
+      },
+      "back": "Back",
+      "connect": "Connect"
+    }
+  },
+  "footer": {
+    "version": "SoulFire Client {{version}} - {{environment}}",
+    "preview": "Looking for preview?",
+    "production": "Looking for production?"
+  }
+}

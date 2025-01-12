@@ -48,6 +48,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import Logo from 'public/logo.png';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -70,9 +71,10 @@ const formSchema = z.object({
 });
 type FormSchemaType = z.infer<typeof formSchema>;
 
-type LoginType = 'INTEGRATED' | 'REMOTE';
+type LoginType = 'INTEGRATED' | 'DEDICATED';
 
 function Index() {
+  const { t } = useTranslation('login');
   const navigate = useNavigate();
   const searchParams: Record<string, string> = Route.useSearch();
   const form = useForm<FormSchemaType>({
@@ -162,29 +164,24 @@ function Index() {
               width={32}
               height={32}
               src={Logo}
-              alt="SoulFire Logo"
+              alt={t('header.image.alt')}
             />
-            <p className="font-medium tracking-wide">SoulFire</p>
+            <p className="font-medium tracking-wide">{t('header.title')}</p>
           </div>
           <Card>
             <CardHeader className="text-center">
               <CardTitle className="flex flex-row gap-2 text-xl mx-auto">
                 <SatelliteDishIcon />
-                Connect to a SoulFire server
+                {t('connect.title')}
               </CardTitle>
               {null === loginType ? (
-                <CardDescription>
-                  Select which type of SoulFire server to connect to.
-                </CardDescription>
+                <CardDescription>{t('connect.description')}</CardDescription>
               ) : null}
               {'INTEGRATED' === loginType ? (
                 <CardDescription>{latestLog}</CardDescription>
               ) : null}
-              {'REMOTE' === loginType ? (
-                <CardDescription>
-                  Put in the address and token of the SoulFire server you want
-                  to connect to.
-                </CardDescription>
+              {'DEDICATED' === loginType ? (
+                <CardDescription>{t('dedicated.description')}</CardDescription>
               ) : null}
             </CardHeader>
             {null === loginType ? (
@@ -197,7 +194,7 @@ function Index() {
                     onClick={() => setLoginType('INTEGRATED')}
                   >
                     <LaptopMinimalIcon className="size-5" />
-                    Integrated server (local)
+                    {t('connect.integrated.title')}
                   </Button>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -206,9 +203,7 @@ function Index() {
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent>
-                      Runs a SoulFire server on your computer. The setup is
-                      automatic and requires no configuration. (Requires the
-                      desktop app)
+                      {t('connect.integrated.description')}
                     </PopoverContent>
                   </Popover>
                 </div>
@@ -217,10 +212,10 @@ function Index() {
                     disabled={isDemo()}
                     className="w-full"
                     variant="outline"
-                    onClick={() => setLoginType('REMOTE')}
+                    onClick={() => setLoginType('DEDICATED')}
                   >
                     <ServerIcon className="size-5" />
-                    Dedicated server (remote)
+                    {t('connect.dedicated.title')}
                   </Button>
                   <Popover>
                     <PopoverTrigger asChild>
@@ -229,8 +224,7 @@ function Index() {
                       </Button>
                     </PopoverTrigger>
                     <PopoverContent>
-                      Connects to a remote instance of the SoulFire server. You
-                      will need to provide the address and token of the server.
+                      {t('connect.dedicated.description')}
                     </PopoverContent>
                   </Popover>
                 </div>
@@ -244,7 +238,7 @@ function Index() {
                       }}
                     >
                       <FlaskConicalIcon className="size-5" />
-                      Demo server
+                      {t('connect.demo.title')}
                     </Button>
                     <Popover>
                       <PopoverTrigger asChild>
@@ -253,8 +247,7 @@ function Index() {
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent>
-                        Simulates a virtual server with demo data. This server
-                        is read-only and you cannot make any changes to it.
+                        {t('connect.demo.description')}
                       </PopoverContent>
                     </Popover>
                   </div>
@@ -266,7 +259,7 @@ function Index() {
                 <LoaderCircleIcon className="m-auto h-12 w-12 animate-spin" />
               </CardContent>
             ) : null}
-            {'REMOTE' === loginType ? (
+            {'DEDICATED' === loginType ? (
               <Form {...form}>
                 <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
                   <CardContent className="flex flex-col gap-4">
@@ -275,17 +268,21 @@ function Index() {
                       name="address"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Address</FormLabel>
+                          <FormLabel>
+                            {t('dedicated.form.address.title')}
+                          </FormLabel>
                           <FormControl>
                             <Input
                               type="url"
                               inputMode="url"
-                              placeholder="http://localhost:38765"
+                              placeholder={t(
+                                'dedicated.form.address.placeholder',
+                              )}
                               {...field}
                             />
                           </FormControl>
                           <FormDescription>
-                            Address of the server you want to connect to.
+                            {t('dedicated.form.address.description')}
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -296,16 +293,20 @@ function Index() {
                       name="token"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Token</FormLabel>
+                          <FormLabel>
+                            {t('dedicated.form.token.title')}
+                          </FormLabel>
                           <FormControl>
                             <Input
                               type="password"
-                              placeholder="Secret token"
+                              placeholder={t(
+                                'dedicated.form.token.placeholder',
+                              )}
                               {...field}
                             />
                           </FormControl>
                           <FormDescription>
-                            Token to authenticate with the server.
+                            {t('dedicated.form.token.description')}
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -320,9 +321,9 @@ function Index() {
                         setLoginType(null);
                       }}
                     >
-                      Back
+                      {t('dedicated.form.back')}
                     </Button>
-                    <Button type="submit">Connect</Button>
+                    <Button type="submit">{t('dedicated.form.connect')}</Button>
                   </CardFooter>
                 </form>
               </Form>
@@ -330,7 +331,10 @@ function Index() {
           </Card>
           <div className="text-balance text-xs text-muted-foreground text-center">
             <p className="mb-1">
-              SoulFire Client {APP_VERSION} - {APP_ENVIRONMENT}
+              {t('footer.version', {
+                version: APP_VERSION,
+                environment: APP_ENVIRONMENT,
+              })}
             </p>
             {!systemInfo && (
               <>
@@ -339,7 +343,7 @@ function Index() {
                     className="text-blue-500"
                     href="https://preview.soulfiremc.com"
                   >
-                    Looking for preview?
+                    {t('footer.preview')}
                   </a>
                 )}
                 {APP_ENVIRONMENT === 'preview' && (
@@ -347,7 +351,7 @@ function Index() {
                     className="text-blue-500"
                     href="https://app.soulfiremc.com"
                   >
-                    Looking for production?
+                    {t('footer.production')}
                   </a>
                 )}
               </>

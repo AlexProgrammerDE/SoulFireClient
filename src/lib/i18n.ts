@@ -16,6 +16,8 @@ i18n
     fallbackLng: 'en',
     debug: true,
 
+    supportedLngs: APP_LOCALES.split(','),
+    nonExplicitSupportedLngs: true,
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },

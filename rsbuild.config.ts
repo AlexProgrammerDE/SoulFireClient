@@ -5,6 +5,7 @@ import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
 import { pluginEslint } from '@rsbuild/plugin-eslint';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import tauriConf from './src-tauri/tauri.conf.json';
+import * as fs from 'node:fs';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -17,6 +18,12 @@ if (baseEnv === 'production') {
 } else {
   appEnv = 'development';
 }
+
+const locales = fs
+  .readdirSync('./locales', { withFileTypes: true })
+  .filter((dirent) => dirent.isDirectory())
+  .map((dirent) => dirent.name)
+  .join(',');
 
 export default defineConfig({
   plugins: [
@@ -42,6 +49,7 @@ export default defineConfig({
     define: {
       APP_VERSION: JSON.stringify(process.env.npm_package_version),
       APP_ENVIRONMENT: JSON.stringify(appEnv),
+      APP_LOCALES: JSON.stringify(locales),
     },
   },
   output: {
