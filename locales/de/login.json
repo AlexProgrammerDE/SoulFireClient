@@ -1,46 +1,46 @@
 {
   "header": {
     "image": {
-      "alt": ""
+      "alt": "SoulFire Logo"
     },
-    "title": ""
+    "title": "SoulFire"
   },
   "connect": {
-    "title": "",
-    "description": "",
+    "title": "Verbinde dich mit einem SoulFire Server",
+    "description": "Wähle den Typ des SoulFire Servers, mit dem du dich verbinden möchtest.",
     "integrated": {
-      "title": "",
-      "description": ""
+      "title": "Integrierter Server (lokal)",
+      "description": "Führt einen SoulFire Server auf deinem Computer aus. Das Setup ist automatisch und erfordert keine Konfiguration. (Erfordert die Desktop-App)"
     },
     "dedicated": {
-      "title": "",
-      "description": ""
+      "title": "Dedizierter Server (Remote)",
+      "description": "Verbindet sich mit einer remote Instanz des SoulFire Servers. Du musst die Adresse und das Token des Servers angeben."
     },
     "demo": {
-      "title": "",
-      "description": ""
+      "title": "Demo Server",
+      "description": "Simuliert einen virtuellen Server mit Demo-Daten. Dieser Server ist schreibgeschützt und Sie können keine Änderungen vornehmen."
     }
   },
   "dedicated": {
-    "description": "",
+    "description": "Geben Sie die Adresse und das Token des SoulFire Servers ein, mit dem Sie sich verbinden möchten.",
     "form": {
       "address": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "Adresse",
+        "description": "Adresse des Servers, mit dem Sie sich verbinden möchten.",
+        "placeholder": "http://localhost:38765"
       },
       "token": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "Token",
+        "placeholder": "Geheimer Token",
+        "description": "Token zum Authentifizieren mit dem Server."
       },
-      "back": "",
-      "connect": ""
+      "back": "Zurück",
+      "connect": "Verbinden"
     }
   },
   "footer": {
-    "version": "",
-    "preview": "",
-    "production": ""
+    "version": "SoulFire Client {{version}} - {{environment}}",
+    "preview": "Suchst du Vorschau?",
+    "production": "Suchst du Produktion?"
   }
 }
