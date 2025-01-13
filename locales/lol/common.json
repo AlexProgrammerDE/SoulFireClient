@@ -44,9 +44,105 @@
       }
     },
     "import": {
+      "main": {
+        "fromFile": "",
+        "fromUrl": "",
+        "firstClipboardItem": "",
+        "fromClipboard": "",
+        "textarea": {
+          "placeholder": "",
+          "submit": ""
+        }
+      },
       "url": {
-        "description": ""
+        "description": "",
+        "form": {
+          "url": {
+            "placeholder": "",
+            "empty": ""
+          }
+        },
+        "submit": "",
+        "toast": {
+          "loading": "",
+          "success": "",
+          "error": ""
+        }
       }
     }
+  },
+  "commandInput": {
+    "placeholder": ""
+  },
+  "controls": {
+    "start": "",
+    "resume": "",
+    "pause": "",
+    "stop": "",
+    "startToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "resumeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "pauseToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "stopToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
+  },
+  "icon": {
+    "invalidName": ""
+  },
+  "dataTable": {
+    "noResults": "",
+    "rowsSelected": "",
+    "rowsPerPage": "",
+    "currentPage": "",
+    "goFirst": "",
+    "goPrevious": "",
+    "goNext": "",
+    "goLast": ""
+  },
+  "pluginCard": {
+    "version": "",
+    "author": "",
+    "license": "",
+    "website": ""
+  },
+  "settingsPage": {
+    "stringList": {
+      "placeholder": "",
+      "add": "",
+      "remove": ""
+    }
+  },
+  "terminal": {
+    "noLogs": "",
+    "demo-1": "",
+    "demo-2": "",
+    "demo-3": "",
+    "demo-4": ""
+  },
+  "uiBreadcrumb": {
+    "more": ""
+  },
+  "uiDialog": {
+    "close": ""
+  },
+  "uiSheet": {
+    "close": ""
+  },
+  "uiSidebar": {
+    "toggle": ""
   }
 }
