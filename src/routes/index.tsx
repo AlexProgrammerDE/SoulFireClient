@@ -39,7 +39,12 @@ import {
 } from '@/lib/types.ts';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { invoke } from '@tauri-apps/api/core';
-import { cancellablePromiseDefault, isDemo } from '@/lib/utils.ts';
+import {
+  cancellablePromiseDefault,
+  getLanguageName,
+  isDemo,
+  languageEmoji,
+} from '@/lib/utils.ts';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import { toast } from 'sonner';
 import {
@@ -49,6 +54,15 @@ import {
 } from '@/components/ui/popover';
 import Logo from 'public/logo.png';
 import { useTranslation } from 'react-i18next';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -74,7 +88,7 @@ type FormSchemaType = z.infer<typeof formSchema>;
 type LoginType = 'INTEGRATED' | 'DEDICATED';
 
 function Index() {
-  const { t } = useTranslation('login');
+  const { t, i18n } = useTranslation('login');
   const navigate = useNavigate();
   const searchParams: Record<string, string> = Route.useSearch();
   const form = useForm<FormSchemaType>({
@@ -327,33 +341,63 @@ function Index() {
               </Form>
             ) : null}
           </Card>
-          <div className="text-balance text-xs text-muted-foreground text-center">
-            <p className="mb-1">
-              {t('footer.version', {
-                version: APP_VERSION,
-                environment: APP_ENVIRONMENT,
-              })}
-            </p>
-            {!systemInfo && (
-              <>
-                {APP_ENVIRONMENT === 'production' && (
-                  <a
-                    className="text-blue-500"
-                    href="https://preview.soulfiremc.com"
+          <div>
+            <div className="text-balance text-xs text-muted-foreground text-center">
+              <p className="mb-1">
+                {t('footer.version', {
+                  version: APP_VERSION,
+                  environment: APP_ENVIRONMENT,
+                })}
+              </p>
+              {!systemInfo && (
+                <>
+                  {APP_ENVIRONMENT === 'production' && (
+                    <a
+                      className="text-blue-500"
+                      href="https://preview.soulfiremc.com"
+                    >
+                      {t('footer.preview')}
+                    </a>
+                  )}
+                  {APP_ENVIRONMENT === 'preview' && (
+                    <a
+                      className="text-blue-500"
+                      href="https://app.soulfiremc.com"
+                    >
+                      {t('footer.production')}
+                    </a>
+                  )}
+                </>
+              )}
+            </div>
+            <div className="flex flex-row justify-center">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    className="w-fit text-balance text-sm text-muted-foreground"
+                    variant="ghost"
                   >
-                    {t('footer.preview')}
-                  </a>
-                )}
-                {APP_ENVIRONMENT === 'preview' && (
-                  <a
-                    className="text-blue-500"
-                    href="https://app.soulfiremc.com"
+                    {languageEmoji(i18n.language as never)}{' '}
+                    {getLanguageName(i18n.language, i18n.language)}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56">
+                  <DropdownMenuLabel>Locale</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuRadioGroup
+                    value={i18n.language}
+                    onValueChange={i18n.changeLanguage}
                   >
-                    {t('footer.production')}
-                  </a>
-                )}
-              </>
-            )}
+                    {APP_LOCALES.split(',').map((lang) => (
+                      <DropdownMenuRadioItem key={lang} value={lang}>
+                        {languageEmoji(lang as never)}{' '}
+                        {getLanguageName(lang, lang)}
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
         </div>
       </div>

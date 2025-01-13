@@ -109,3 +109,35 @@ export function getCookie(name: string) {
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop()?.split(';').shift();
 }
+
+export function languageEmoji(language: string) {
+  if (language === 'lol') {
+    return '🐱';
+  }
+
+  if (language === 'en') {
+    language = 'gb';
+  } else if (language === 'cs') {
+    language = 'cz';
+  }
+
+  // Convert the language code to uppercase (ISO 3166-1 alpha-2 format)
+  const countryCode = language.toUpperCase();
+
+  // Map each letter to the corresponding regional indicator symbol
+  return countryCode
+    .split('')
+    .map((char) => String.fromCodePoint(0x1f1e6 + char.charCodeAt(0) - 65))
+    .join('');
+}
+
+export function getLanguageName(languageCode: string, displayLanguage: string) {
+  if (languageCode === 'lol') {
+    return 'LOLCAT';
+  }
+
+  const displayNames = new Intl.DisplayNames([displayLanguage], {
+    type: 'language',
+  });
+  return displayNames.of(languageCode) ?? languageCode;
+}
