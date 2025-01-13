@@ -1,1 +1,14 @@
-{}
+{
+  "error": {
+    "noAddressOrToken": "",
+    "page": {
+      "title": "",
+      "message": "",
+      "logOut": "",
+      "reloadPage": ""
+    }
+  },
+  "pending": {
+    "connecting": ""
+  }
+}
