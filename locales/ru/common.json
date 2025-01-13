@@ -133,16 +133,24 @@
     "demo-3": "",
     "demo-4": ""
   },
-  "uiBreadcrumb": {
-    "more": ""
+  "castMenu": {
+    "title": "",
+    "disconnected": "",
+    "alreadyConnected": "",
+    "connectToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "noDevices": "",
+    "broadcastLabel": "",
+    "broadcastToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
   },
-  "uiDialog": {
-    "close": "Закрыть"
-  },
-  "uiSheet": {
-    "close": "Закрыть"
-  },
-  "uiSidebar": {
-    "toggle": ""
+  "instanceSidebar": {
+    "backToDashboard": ""
   }
 }
