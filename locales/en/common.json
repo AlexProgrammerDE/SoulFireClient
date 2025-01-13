@@ -183,6 +183,11 @@
     "serverSettings": "Server Settings",
     "devSettings": "Dev Settings"
   },
+  "sidebar": {
+    "documentation": "Documentation",
+    "buyMeACoffee": "Buy me a coffee",
+    "support": "Support"
+  },
   "breadcrumbs": {
     "admin": "Admin",
     "settings": "Settings",

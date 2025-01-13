@@ -13,6 +13,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar.tsx';
+import { useTranslation } from 'react-i18next';
 
 type NavLinks = {
   title: string;
@@ -23,19 +24,20 @@ type NavLinks = {
 export function NavSecondary({
   ...props
 }: React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+  const { t } = useTranslation('common');
   const items: NavLinks = [
     {
-      title: 'Documentation',
+      title: t('sidebar.documentation'),
       url: 'https://soulfiremc.com/docs',
       icon: BookOpenTextIcon,
     },
     {
-      title: 'Buy me a Coffee',
+      title: t('sidebar.buyMeACoffee'),
       url: 'https://ko-fi.com/alexprogrammerde',
       icon: CoffeeIcon,
     },
     {
-      title: 'Support',
+      title: t('sidebar.support'),
       url: 'https://soulfiremc.com/discord',
       icon: LifeBuoyIcon,
     },
