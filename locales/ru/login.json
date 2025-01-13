@@ -22,11 +22,11 @@
     }
   },
   "integrated": {
-    "preparing": "",
+    "preparing": "Подготовка к запуску встроенного сервера...",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Запуск встроенного сервера...",
+      "success": "Встроенный сервер запущен",
+      "error": "Не удалось запустить встроенный сервер"
     }
   },
   "dedicated": {
@@ -38,7 +38,7 @@
         "placeholder": "http://localhost:38765"
       },
       "token": {
-        "title": "Token",
+        "title": "Токен",
         "placeholder": "Секретный токен",
         "description": "Токен для аутентификации на сервере."
       },

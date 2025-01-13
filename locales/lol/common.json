@@ -1,21 +1,21 @@
 {
   "error": {
-    "noAddressOrToken": "",
+    "noAddressOrToken": "No servr addres or token findz",
     "page": {
-      "title": "",
-      "message": "",
-      "logOut": "",
-      "reloadPage": ""
+      "title": "Ewwow",
+      "message": "{{message}} (moar inof in consoel)",
+      "logOut": "Walk out",
+      "reloadPage": "Spin paeg"
     }
   },
   "pending": {
-    "connecting": ""
+    "connecting": "Catwalking..."
   },
   "dialog": {
     "about": {
-      "title": "",
-      "description": "",
-      "type": "",
+      "title": "Who SoulFire",
+      "description": "I zee vawiant {{version}} of SoulFire cwient.",
+      "type": "Tyep",
       "value": "",
       "fields": {
         "operatingSystem": "",
