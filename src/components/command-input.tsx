@@ -6,6 +6,7 @@ import {
   CommandCompletionRequest,
   CommandRequest,
 } from '@/generated/soulfire/command.ts';
+import { useTranslation } from 'react-i18next';
 
 type CompletionState = {
   lastWritten: string;
@@ -16,6 +17,7 @@ type CompletionState = {
 export default function CommandInput(props: {
   scope: CommandRequest['scope'] | CommandCompletionRequest['scope'];
 }) {
+  const { t } = useTranslation('common');
   const transport = useContext(TransportContext);
   const [completionState, setCompletionState] = useState<CompletionState>({
     lastWritten: '',
@@ -99,7 +101,7 @@ export default function CommandInput(props: {
 
   return (
     <Input
-      placeholder="Enter command"
+      placeholder={t('commandInput.placeholder')}
       onKeyDown={handleKeyDown}
       onChange={(e) => {
         setCompletionState({

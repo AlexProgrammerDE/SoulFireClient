@@ -70,5 +70,34 @@
         }
       }
     }
+  },
+  "commandInput": {
+    "placeholder": "Enter command"
+  },
+  "controls": {
+    "start": "Start",
+    "resume": "Resume",
+    "pause": "Pause",
+    "stop": "Stop",
+    "startToast": {
+      "loading": "Starting attack...",
+      "success": "Attack started successfully",
+      "error": "Failed to start attack"
+    },
+    "resumeToast": {
+      "loading": "Resuming attack...",
+      "success": "Attack resumed successfully",
+      "error": "Failed to resume attack"
+    },
+    "pauseToast": {
+      "loading": "Pausing attack...",
+      "success": "Attack paused successfully",
+      "error": "Failed to pause attack"
+    },
+    "stopToast": {
+      "loading": "Stopping attack...",
+      "success": "Attack stopped successfully",
+      "error": "Failed to stop attack"
+    }
   }
 }

@@ -9,8 +9,10 @@ import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PlayIcon, SquareIcon, TimerIcon, TimerOffIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function ControlsMenu() {
+  const { t } = useTranslation('common');
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
   const profile = useContext(ProfileContext);
@@ -34,11 +36,11 @@ export default function ControlsMenu() {
           });
         });
       toast.promise(promise, {
-        loading: 'Starting attack...',
-        success: `Attack started successfully`,
+        loading: t('controls.startToast.loading'),
+        success: t('controls.startToast.success'),
         error: (e) => {
           console.error(e);
-          return 'Failed to start attack';
+          return t('controls.startToast.error');
         },
       });
 
@@ -67,14 +69,25 @@ export default function ControlsMenu() {
               : InstanceState.PAUSED,
         })
         .then();
-      toast.promise(promise, {
-        loading: 'Toggling attack state...',
-        success: `Attack state toggled to ${current === InstanceState.PAUSED ? 'running' : 'paused'}`,
-        error: (e) => {
-          console.error(e);
-          return 'Failed to toggle attack state';
-        },
-      });
+      if (current === InstanceState.PAUSED) {
+        toast.promise(promise, {
+          loading: t('controls.resumeToast.loading'),
+          success: t('controls.resumeToast.success'),
+          error: (e) => {
+            console.error(e);
+            return t('controls.resumeToast.error');
+          },
+        });
+      } else {
+        toast.promise(promise, {
+          loading: t('controls.pauseToast.loading'),
+          success: t('controls.pauseToast.success'),
+          error: (e) => {
+            console.error(e);
+            return t('controls.pauseToast.error');
+          },
+        });
+      }
 
       return promise;
     },
@@ -98,11 +111,11 @@ export default function ControlsMenu() {
         })
         .then();
       toast.promise(promise, {
-        loading: 'Stopping attack...',
-        success: `Attack stopped successfully`,
+        loading: t('controls.stopToast.loading'),
+        success: t('controls.stopToast.success'),
         error: (e) => {
           console.error(e);
-          return 'Failed to stop attack';
+          return t('controls.stopToast.error');
         },
       });
 
@@ -123,7 +136,7 @@ export default function ControlsMenu() {
         disabled={instanceInfo.state !== InstanceState.STOPPED}
       >
         <PlayIcon className="h-4" />
-        Start
+        {t('controls.start')}
       </Button>
       <Button
         variant="secondary"
@@ -138,7 +151,9 @@ export default function ControlsMenu() {
         ) : (
           <TimerIcon className="h-4" />
         )}
-        {instanceInfo.state === InstanceState.PAUSED ? 'Resume' : 'Pause'}
+        {instanceInfo.state === InstanceState.PAUSED
+          ? t('controls.resume')
+          : t('controls.pause')}
       </Button>
       <Button
         variant="secondary"
@@ -149,7 +164,7 @@ export default function ControlsMenu() {
         }
       >
         <SquareIcon className="h-4" />
-        Stop
+        {t('controls.stop')}
       </Button>
     </div>
   );
