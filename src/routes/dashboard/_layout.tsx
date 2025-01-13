@@ -37,6 +37,7 @@ import { useQuery } from '@tanstack/react-query';
 import { LoadingComponent } from '@/components/loading-component.tsx';
 import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
 import { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const listQueryFn = async ({
   signal,
@@ -137,6 +138,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
 });
 
 function ErrorComponent({ error }: { error: Error }) {
+  const { t } = useTranslation('common');
   const navigate = useNavigate();
   const router = useRouter();
   const [revalidating, setRevalidating] = useState(false);
@@ -147,10 +149,12 @@ function ErrorComponent({ error }: { error: Error }) {
         <div className="m-auto flex flex-col gap-2">
           <h1 className="text-2xl font-bold gap-1 flex fle-row">
             <BugIcon className="h-8" />
-            Error
+            {t('error.page.title')}
           </h1>
           <p className="text-red-500 max-w-2xl">
-            {error.message} (more info in console)
+            {t('error.page.message', {
+              message: error.message,
+            })}
           </p>
           <div className="flex flex-row gap-2">
             <Button
@@ -168,12 +172,12 @@ function ErrorComponent({ error }: { error: Error }) {
               }}
             >
               <LogOutIcon className="h-4" />
-              Log out
+              {t('error.page.logOut')}
             </Button>
             <Button
               onClick={() => {
                 setRevalidating(true);
-                void router
+                router
                   .invalidate()
                   .then(() => {
                     setRevalidating(false);
@@ -188,7 +192,7 @@ function ErrorComponent({ error }: { error: Error }) {
               ) : (
                 <RotateCwIcon className="h-4" />
               )}
-              Reload page
+              {t('error.page.reloadPage')}
             </Button>
           </div>
         </div>
@@ -198,13 +202,15 @@ function ErrorComponent({ error }: { error: Error }) {
 }
 
 function PendingComponent() {
+  const { t } = useTranslation('common');
+
   return (
     <>
       +{' '}
       <div className="flex flex-grow">
         <Card className="m-auto text-center w-full max-w-[450px] border-none">
           <CardHeader className="pb-0">
-            <CardTitle>Connecting...</CardTitle>
+            <CardTitle>{t('pending.connecting')}</CardTitle>
           </CardHeader>
           <CardContent className="flex h-32 w-full">
             <LoaderCircleIcon className="m-auto h-12 w-12 animate-spin" />

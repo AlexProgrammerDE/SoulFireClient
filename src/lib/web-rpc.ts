@@ -4,6 +4,7 @@ import {
 } from '@/lib/types.ts';
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 import { isDemo } from '@/lib/utils.ts';
+import i18n from '@/lib/i18n.ts';
 
 export const isAuthenticated = () => {
   if (isDemo()) return true;
@@ -23,7 +24,7 @@ export const createTransport = () => {
   const token = localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY);
 
   if (!address || !token) {
-    throw new Error('No server address or token');
+    throw new Error(i18n.t('common:error.noAddressOrToken'));
   }
 
   return new GrpcWebFetchTransport({
