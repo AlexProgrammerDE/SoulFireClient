@@ -86,9 +86,7 @@ function Index() {
     },
   });
   const [loginType, setLoginType] = useState<LoginType | null>(null);
-  const [latestLog, setLatestLog] = useState<string>(
-    'Preparing to start integrated server...',
-  );
+  const [latestLog, setLatestLog] = useState<string>(t('integrated.preparing'));
   const systemInfo = useContext(SystemInfoContext);
 
   const targetRedirect = useCallback(async () => {
@@ -139,11 +137,11 @@ function Index() {
           await redirectWithCredentials(split[0], split[1]);
         })(),
         {
-          loading: 'Starting integrated server...',
-          success: 'Integrated server started',
+          loading: t('integrated.toast.loading'),
+          success: t('integrated.toast.success'),
           error: (e) => {
             console.error(e);
-            return 'Failed to start integrated server';
+            return t('integrated.toast.error');
           },
         },
       );

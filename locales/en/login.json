@@ -21,6 +21,14 @@
       "description": "Simulates a virtual server with demo data. This server is read-only and you cannot make any changes to it."
     }
   },
+  "integrated": {
+    "preparing": "Preparing to start integrated server...",
+    "toast": {
+      "loading": "Starting integrated server...",
+      "success": "Integrated server started",
+      "error": "Failed to start integrated server"
+    }
+  },
   "dedicated": {
     "description": "Put in the address and token of the SoulFire server you want to connect to.",
     "form": {
