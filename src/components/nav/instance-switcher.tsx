@@ -45,10 +45,7 @@ import {
   isTauri,
   toCapitalizedWords,
 } from '@/lib/utils.ts';
-import {
-  CreateInstancePopup,
-  CreateInstanceType,
-} from '@/components/dialog/create-instance-popup.tsx';
+import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.tsx';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { toast } from 'sonner';
@@ -98,42 +95,6 @@ export function InstanceSwitcher() {
     onSuccess: () => {
       void queryClient.invalidateQueries({
         queryKey: ['instance-info', instanceInfo.id],
-      });
-    },
-  });
-  const addMutation = useMutation({
-    mutationFn: async (values: CreateInstanceType) => {
-      if (transport === null) {
-        return;
-      }
-
-      const instanceService = new InstanceServiceClient(transport);
-      const promise = instanceService
-        .createInstance({
-          friendlyName: values.friendlyName,
-        })
-        .then((r) => r.response);
-      toast.promise(promise, {
-        loading: 'Creating instance...',
-        success: (r) => {
-          setCreateOpen(false);
-          void navigate({
-            to: '/dashboard/instance/$instance/console',
-            params: { instance: r.id },
-          });
-          return 'Instance created successfully';
-        },
-        error: (e) => {
-          console.error(e);
-          return 'Failed to create instance';
-        },
-      });
-
-      return promise;
-    },
-    onSuccess: () => {
-      void queryClient.invalidateQueries({
-        queryKey: listQueryKey,
       });
     },
   });
@@ -480,11 +441,7 @@ export function InstanceSwitcher() {
             )}
           </DropdownMenuContent>
         </DropdownMenu>
-        <CreateInstancePopup
-          open={createOpen}
-          setOpen={setCreateOpen}
-          onSubmit={(values) => addMutation.mutate(values)}
-        />
+        <CreateInstancePopup open={createOpen} setOpen={setCreateOpen} />
       </SidebarMenuItem>
     </SidebarMenu>
   );

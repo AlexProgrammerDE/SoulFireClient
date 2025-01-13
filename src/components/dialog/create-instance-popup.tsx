@@ -23,6 +23,13 @@ import {
 } from '@/components/ui/form.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { useTranslation } from 'react-i18next';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
+import { toast } from 'sonner';
+import { listQueryKey } from '@/routes/dashboard/_layout.tsx';
+import { useNavigate } from '@tanstack/react-router';
+import { useContext } from 'react';
+import { TransportContext } from '../providers/transport-context.tsx';
 
 export type CreateInstanceType = {
   friendlyName: string;
@@ -31,12 +38,13 @@ export type CreateInstanceType = {
 export function CreateInstancePopup({
   open,
   setOpen,
-  onSubmit,
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
-  onSubmit: (values: CreateInstanceType) => void;
 }) {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const transport = useContext(TransportContext);
   const { t } = useTranslation('common');
   const formSchema = z.object({
     friendlyName: z
@@ -54,6 +62,42 @@ export function CreateInstancePopup({
       friendlyName: '',
     },
   });
+  const addMutation = useMutation({
+    mutationFn: async (values: CreateInstanceType) => {
+      if (transport === null) {
+        return;
+      }
+
+      const instanceService = new InstanceServiceClient(transport);
+      const promise = instanceService
+        .createInstance({
+          friendlyName: values.friendlyName,
+        })
+        .then((r) => r.response);
+      toast.promise(promise, {
+        loading: 'Creating instance...',
+        success: (r) => {
+          setOpen(false);
+          void navigate({
+            to: '/dashboard/instance/$instance/console',
+            params: { instance: r.id },
+          });
+          return 'Instance created successfully';
+        },
+        error: (e) => {
+          console.error(e);
+          return 'Failed to create instance';
+        },
+      });
+
+      return promise;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({
+        queryKey: listQueryKey,
+      });
+    },
+  });
 
   return (
     <Form {...form}>
@@ -61,7 +105,9 @@ export function CreateInstancePopup({
         <CredenzaContent className="pb-4">
           <form
             className="flex flex-col gap-4"
-            onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
+            onSubmit={(e) =>
+              void form.handleSubmit((data) => addMutation.mutate(data))(e)
+            }
           >
             <CredenzaHeader>
               <CredenzaTitle>{t('dialog.createInstance.title')}</CredenzaTitle>
