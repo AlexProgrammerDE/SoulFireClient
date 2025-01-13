@@ -21,6 +21,14 @@
       "description": "Simuliert einen virtuellen Server mit Demo-Daten. Dieser Server ist schreibgeschützt und Sie können keine Änderungen vornehmen."
     }
   },
+  "integrated": {
+    "preparing": "",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
+  },
   "dedicated": {
     "description": "Geben Sie die Adresse und das Token des SoulFire Servers ein, mit dem Sie sich verbinden möchten.",
     "form": {
