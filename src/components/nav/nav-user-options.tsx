@@ -15,6 +15,7 @@ import { hasGlobalPermission } from '@/lib/utils';
 import { GlobalPermission } from '@/generated/soulfire/common.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.tsx';
+import { useTranslation } from 'react-i18next';
 
 type NavLinks = {
   title: string;
@@ -23,12 +24,13 @@ type NavLinks = {
 }[];
 
 export function NavUserOptions() {
+  const { t } = useTranslation('common');
   const clientInfo = useContext(ClientInfoContext);
   const [createOpen, setCreateOpen] = useState(false);
 
   const navLinks: NavLinks = [
     {
-      title: 'Instances',
+      title: t('userSidebar.instances'),
       icon: Grid2x2Icon,
       linkProps: {
         to: '/dashboard/user/instances',
@@ -39,7 +41,7 @@ export function NavUserOptions() {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>User</SidebarGroupLabel>
+      <SidebarGroupLabel>{t('userSidebar.userGroup')}</SidebarGroupLabel>
       <SidebarMenu>
         {navLinks.map((item) => (
           <SidebarMenuItem key={item.title}>
@@ -60,10 +62,10 @@ export function NavUserOptions() {
           <SidebarMenuItem>
             <SidebarMenuButton
               onClick={() => setCreateOpen(true)}
-              tooltip="Create Instance"
+              tooltip={t('ucreateToastserSidebar.createInstance')}
             >
               <PlusIcon />
-              <span>Create Instance</span>
+              <span>{t('userSidebar.createInstance')}</span>
             </SidebarMenuButton>
             <CreateInstancePopup open={createOpen} setOpen={setCreateOpen} />
           </SidebarMenuItem>

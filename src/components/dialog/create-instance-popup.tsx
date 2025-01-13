@@ -75,18 +75,18 @@ export function CreateInstancePopup({
         })
         .then((r) => r.response);
       toast.promise(promise, {
-        loading: 'Creating instance...',
+        loading: t('dialog.createInstance.createToast.loading'),
         success: (r) => {
           setOpen(false);
           void navigate({
             to: '/dashboard/instance/$instance/console',
             params: { instance: r.id },
           });
-          return 'Instance created successfully';
+          return t('dialog.createInstance.createToast.success');
         },
         error: (e) => {
           console.error(e);
-          return 'Failed to create instance';
+          return t('dialog.createInstance.createToast.error');
         },
       });
 

@@ -39,7 +39,7 @@ export function NavUserAdmin() {
 
   const navLinks: NavLinks = [
     {
-      title: 'Overview',
+      title: t('userSidebar.adminOverview'),
       icon: LayoutDashboardIcon,
       linkProps: {
         to: '/dashboard/admin/overview',
@@ -47,7 +47,7 @@ export function NavUserAdmin() {
       },
     },
     {
-      title: 'Admin Console',
+      title: t('userSidebar.adminConsole'),
       icon: TerminalIcon,
       linkProps: {
         to: '/dashboard/admin/console',
@@ -55,7 +55,7 @@ export function NavUserAdmin() {
       },
     },
     {
-      title: 'Server Settings',
+      title: t('userSidebar.serverSettings'),
       icon: (props) => (
         <DynamicIcon
           {...props}
@@ -68,7 +68,7 @@ export function NavUserAdmin() {
       },
     },
     {
-      title: 'Dev Settings',
+      title: t('userSidebar.devSettings'),
       icon: (props) => (
         <DynamicIcon
           {...props}
@@ -84,7 +84,7 @@ export function NavUserAdmin() {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Admin</SidebarGroupLabel>
+      <SidebarGroupLabel>{t('userSidebar.adminGroup')}</SidebarGroupLabel>
       <SidebarMenu>
         {navLinks.map((item) => (
           <SidebarMenuItem key={item.title}>

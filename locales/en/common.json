@@ -42,6 +42,11 @@
         },
         "cancel": "Cancel",
         "create": "Create"
+      },
+      "createToast": {
+        "loading": "Creating instance...",
+        "success": "Instance created successfully",
+        "error": "Failed to create instance"
       }
     },
     "import": {
@@ -167,6 +172,16 @@
   },
   "instanceSidebar": {
     "backToDashboard": "Back to dashboard"
+  },
+  "userSidebar": {
+    "userGroup": "User",
+    "instances": "Instances",
+    "createInstance": "Create Instance",
+    "adminGroup": "Admin",
+    "adminOverview": "Admin Overview",
+    "adminConsole": "Admin Console",
+    "serverSettings": "Server Settings",
+    "devSettings": "Dev Settings"
   },
   "breadcrumbs": {
     "admin": "Admin",
