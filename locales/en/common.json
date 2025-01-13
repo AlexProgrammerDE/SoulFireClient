@@ -1,1 +1,14 @@
-{}
+{
+  "error": {
+    "noAddressOrToken": "No server address or token found",
+    "page": {
+      "title": "Error",
+      "message": "{{message}} (more info in console)",
+      "logOut": "Log out",
+      "reloadPage": "Reload page"
+    }
+  },
+  "pending": {
+    "connecting": "Connecting..."
+  }
+}
