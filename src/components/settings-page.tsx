@@ -50,6 +50,7 @@ import { Textarea } from '@/components/ui/textarea.tsx';
 import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
 import { ServerInfoResponse } from '@/generated/soulfire/server.ts';
 import { ServerConfigContext } from '@/components/providers/server-config-context.tsx';
+import { useTranslation } from 'react-i18next';
 
 function updateEntry<T extends BaseSettings>(
   namespace: string,
@@ -332,6 +333,7 @@ function StringListComponent(props: {
   value: string[];
   changeCallback: (value: string[]) => void;
 }) {
+  const { t } = useTranslation('common');
   const idValueArray = useMemo(
     () => makeIdValueArray(props.value),
     [props.value],
@@ -365,7 +367,7 @@ function StringListComponent(props: {
             onChange={(e) => {
               setNewEntryInput(e.currentTarget.value);
             }}
-            placeholder="Add new entry..."
+            placeholder={t('settingsPage.stringList.placeholder')}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 insertValue(newEntryInput);
@@ -381,7 +383,7 @@ function StringListComponent(props: {
             }}
           >
             <PlusIcon className="h-4 w-4" />
-            Add
+            {t('settingsPage.stringList.add')}
           </Button>
         </div>
       </CardHeader>
@@ -402,7 +404,7 @@ function StringListComponent(props: {
               }}
             >
               <TrashIcon className="h-4 w-4" />
-              Remove
+              {t('settingsPage.stringList.remove')}
             </Button>
           </div>
         ))}

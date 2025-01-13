@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { LucideProps } from 'lucide-react';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
+import i18n from '@/lib/i18n';
 
 export type LucideIconName = keyof typeof dynamicIconImports;
 
@@ -18,7 +19,11 @@ export function convertUnsafeIconName(name: string): LucideIconName {
     return name as LucideIconName;
   }
 
-  throw new Error(`Invalid icon name: ${name}`);
+  throw new Error(
+    i18n.t('icon.invalidName', {
+      name,
+    }),
+  );
 }
 
 function loadCachedIcon(name: LucideIconName) {

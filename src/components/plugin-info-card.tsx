@@ -6,11 +6,13 @@ import {
 } from '@/components/ui/card.tsx';
 import { Badge } from '@/components/ui/badge.tsx';
 import { ServerPlugin, SettingsPage } from '@/generated/soulfire/config.ts';
+import { useTranslation } from 'react-i18next';
 
 export function PluginInfoCard(props: {
   pluginInfo: ServerPlugin;
   settingsEntry: SettingsPage;
 }) {
+  const { t } = useTranslation('common');
   return (
     <Card className="max-w-4xl">
       <CardHeader className="p-4">
@@ -21,15 +23,31 @@ export function PluginInfoCard(props: {
           {props.pluginInfo.description}
         </CardDescription>
         <div className="flex flex-wrap gap-2 mt-2">
-          <Badge variant="secondary">Version: {props.pluginInfo.version}</Badge>
-          <Badge variant="secondary">Author: {props.pluginInfo.author}</Badge>
-          <Badge variant="secondary">License: {props.pluginInfo.license}</Badge>
+          <Badge variant="secondary">
+            {t('pluginCard.version', {
+              version: props.pluginInfo.version,
+            })}
+          </Badge>
+          <Badge variant="secondary">
+            {t('pluginCard.author', {
+              version: props.pluginInfo.author,
+            })}
+          </Badge>
+          <Badge variant="secondary">
+            {t('pluginCard.license', {
+              version: props.pluginInfo.license,
+            })}
+          </Badge>
           <a
             href={props.pluginInfo.website}
             className="inline-flex items-center"
             target="_blank"
           >
-            <Badge variant="secondary">Website</Badge>
+            <Badge variant="secondary">
+              {t('pluginCard.version', {
+                version: props.pluginInfo.website,
+              })}
+            </Badge>
           </a>
         </div>
       </CardHeader>

@@ -14,6 +14,7 @@ import { AnsiHtml } from 'fancy-ansi/react';
 import { isDemo } from '@/lib/utils.ts';
 import { LogRequest, PreviousLogRequest } from '@/generated/soulfire/logs.ts';
 import { stripAnsi } from 'fancy-ansi';
+import { useTranslation } from 'react-i18next';
 
 const hslToString = (rgb: { h: number; s: number; l: number }): string => {
   return `${Math.round(rgb.h)}, ${Math.round(rgb.s * 100)}%, ${Math.round(rgb.l * 100)}%`;
@@ -34,6 +35,7 @@ const MemoAnsiHtml = React.memo((props: { text: string }) => {
 export const TerminalComponent = (props: {
   scope: PreviousLogRequest['scope'] | LogRequest['scope'];
 }) => {
+  const { t } = useTranslation('common');
   const [gotPrevious, setGotPrevious] = useState(false);
   const [entries, setEntries] = useState<
     {
@@ -43,17 +45,15 @@ export const TerminalComponent = (props: {
   >(
     isDemo()
       ? [
-          { id: 'demo-1', message: 'Welcome to demo mode! 🧪' },
-          { id: 'demo-2', message: 'This is a read-only instance of SoulFire' },
+          { id: 'demo-1', message: t('terminal.demo-1') },
+          { id: 'demo-2', message: t('terminal.demo-2') },
           {
             id: 'demo-3',
-            message:
-              'Check out all the menus and features before deciding to install SoulFire :D',
+            message: t('terminal.demo-3'),
           },
           {
             id: 'demo-4',
-            message:
-              'Feel free to join our Discord server if you would like to reach out: https://soulfiremc.com/discord',
+            message: t('terminal.demo-4'),
           },
         ]
       : [],
@@ -117,8 +117,7 @@ export const TerminalComponent = (props: {
             ...prev,
             {
               id: 'empty',
-              message:
-                '🧙 Looks like there are no logs to display; try running some commands!',
+              message: t('terminal.noLogs'),
             },
           ]);
         }
@@ -132,7 +131,7 @@ export const TerminalComponent = (props: {
     return () => {
       abortController.abort();
     };
-  }, [gotPrevious, props.scope, transport]);
+  }, [gotPrevious, props.scope, t, transport]);
 
   useEffect(() => {
     if (transport === null) {

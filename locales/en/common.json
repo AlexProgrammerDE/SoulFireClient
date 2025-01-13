@@ -99,5 +99,38 @@
       "success": "Attack stopped successfully",
       "error": "Failed to stop attack"
     }
+  },
+  "icon": {
+    "invalidName": "Invalid icon name: {{name}}"
+  },
+  "dataTable": {
+    "noResults": "No results.",
+    "rowsSelected": "{{amount}} of {{total}} row(s) selected",
+    "rowsPerPage": "Rows per page",
+    "currentPage": "Page {{page}} of {{total}}",
+    "goFirst": "Go to first page",
+    "goPrevious": "Go to previous page",
+    "goNext": "Go to next page",
+    "goLast": "Go to last page"
+  },
+  "pluginCard": {
+    "version": "Version: {{version}}",
+    "author": "Author: {{author}}",
+    "license": "License: {{license}}",
+    "website": "Website"
+  },
+  "settingsPage": {
+    "stringList": {
+      "placeholder": "Add a new entry...",
+      "add": "Add",
+      "remove": "Remove"
+    }
+  },
+  "terminal": {
+    "noLogs": "🧙 Looks like there are no logs to display; try running some commands!",
+    "demo-1": "Welcome to demo mode! 🧪",
+    "demo-2": "This is a read-only instance of SoulFire",
+    "demo-3": "Check out all the menus and features before deciding to install SoulFire :D",
+    "demo-4": "Feel free to join our Discord server if you would like to reach out: https://soulfiremc.com/discord"
   }
 }
