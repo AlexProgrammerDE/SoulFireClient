@@ -29,3 +29,4 @@ protobuf
 src-tauri/target
 pnpm-lock.yaml
 shared-modules
+locales
