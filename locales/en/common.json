@@ -1,4 +1,5 @@
 {
+  "locale": "Locale",
   "error": {
     "noAddressOrToken": "No server address or token found",
     "page": {
@@ -121,6 +122,7 @@
   },
   "settingsPage": {
     "entryNotFound": "Settings entry not found",
+    "namespacesNotFound": "Settings namespaces not found",
     "stringList": {
       "placeholder": "Add a new entry...",
       "add": "Add",

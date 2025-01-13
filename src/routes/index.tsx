@@ -382,18 +382,23 @@ function Index() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
-                  <DropdownMenuLabel>Locale</DropdownMenuLabel>
+                  <DropdownMenuLabel>{t('common:locale')}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioGroup
                     value={i18n.language}
                     onValueChange={i18n.changeLanguage}
                   >
-                    {APP_LOCALES.split(',').map((lang) => (
-                      <DropdownMenuRadioItem key={lang} value={lang}>
-                        {languageEmoji(lang as never)}{' '}
-                        {getLanguageName(lang, lang)}
-                      </DropdownMenuRadioItem>
-                    ))}
+                    {(i18n.options.supportedLngs
+                      ? i18n.options.supportedLngs
+                      : []
+                    )
+                      .filter((lang) => lang !== 'cimode')
+                      .map((lang) => (
+                        <DropdownMenuRadioItem key={lang} value={lang}>
+                          {languageEmoji(lang as never)}{' '}
+                          {getLanguageName(lang, lang)}
+                        </DropdownMenuRadioItem>
+                      ))}
                   </DropdownMenuRadioGroup>
                 </DropdownMenuContent>
               </DropdownMenu>

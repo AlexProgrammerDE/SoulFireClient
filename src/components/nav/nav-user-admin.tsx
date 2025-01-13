@@ -15,6 +15,7 @@ import DynamicIcon, {
   convertUnsafeIconName,
 } from '@/components/dynamic-icon.tsx';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
+import { useTranslation } from 'react-i18next';
 
 type NavLinks = {
   title: string;
@@ -23,6 +24,7 @@ type NavLinks = {
 }[];
 
 export function NavUserAdmin() {
+  const { t } = useTranslation('common');
   const clientInfo = useContext(ClientInfoContext);
 
   const serverSettings = clientInfo.serverSettings.find(
@@ -32,7 +34,7 @@ export function NavUserAdmin() {
     (settings) => settings.namespace === 'dev',
   );
   if (!serverSettings || !devSettings) {
-    throw new Error('Namespaces missing');
+    throw new Error(t('settingsPage.namespacesNotFound'));
   }
 
   const navLinks: NavLinks = [

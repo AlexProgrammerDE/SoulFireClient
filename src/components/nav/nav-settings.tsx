@@ -22,6 +22,7 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible.tsx';
 import { BlocksIcon, ChevronRightIcon } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 type NavLinks = {
   title: string;
@@ -34,6 +35,7 @@ export function NavSettings({
 }: {
   expandPluginSettings: boolean;
 }) {
+  const { t } = useTranslation('common');
   const sidebar = useSidebar();
   const [pluginCollapsibleOpen, setPluginCollapsibleOpen] =
     useState(expandPluginSettings);
@@ -53,7 +55,7 @@ export function NavSettings({
     (settings) => settings.namespace === 'ai',
   );
   if (!botSettings || !accountSettings || !proxySettings || !aiSettings) {
-    throw new Error('Namespaces missing');
+    throw new Error(t('settingsPage.namespacesNotFound'));
   }
 
   const navLinks: NavLinks = [
