@@ -1,1 +1,52 @@
-{}
+{
+  "error": {
+    "noAddressOrToken": "",
+    "page": {
+      "title": "",
+      "message": "",
+      "logOut": "",
+      "reloadPage": ""
+    }
+  },
+  "pending": {
+    "connecting": ""
+  },
+  "dialog": {
+    "about": {
+      "title": "",
+      "description": "",
+      "type": "",
+      "value": "",
+      "fields": {
+        "operatingSystem": "",
+        "platform": "",
+        "locale": "",
+        "architecture": "",
+        "environment": "",
+        "browser": ""
+      },
+      "close": ""
+    },
+    "createInstance": {
+      "title": "",
+      "description": "",
+      "form": {
+        "friendlyName": {
+          "label": "",
+          "placeholder": "",
+          "description": "",
+          "min": "",
+          "max": "",
+          "regex": ""
+        },
+        "cancel": "",
+        "create": ""
+      }
+    },
+    "import": {
+      "url": {
+        "description": ""
+      }
+    }
+  }
+}
