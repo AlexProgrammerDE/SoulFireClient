@@ -1,11 +1,11 @@
 {
   "error": {
-    "noAddressOrToken": "",
+    "noAddressOrToken": "Адрес сервера или токен не найдены",
     "page": {
       "title": "Ошибка",
       "message": "{{message}} (подробнее в консоли)",
       "logOut": "Выйти",
-      "reloadPage": ""
+      "reloadPage": "Перезагрузить страницу"
     }
   },
   "pending": {
@@ -14,39 +14,135 @@
   "dialog": {
     "about": {
       "title": "О SoulFire",
-      "description": "",
-      "type": "",
-      "value": "",
+      "description": "Вы используете версию {{version}} клиента SoulFire.",
+      "type": "Тип",
+      "value": "Значение",
       "fields": {
-        "operatingSystem": "",
-        "platform": "",
-        "locale": "",
-        "architecture": "",
-        "environment": "",
-        "browser": ""
+        "operatingSystem": "Операционная система",
+        "platform": "Платформа",
+        "locale": "Локализация",
+        "architecture": "Архитектура",
+        "environment": "Среда окружения",
+        "browser": "Браузер"
       },
       "close": "Закрыть"
     },
     "createInstance": {
-      "title": "",
-      "description": "",
+      "title": "Создать новый экземпляр",
+      "description": "Для экземпляров нужны дружелюбные имена, чтобы вы могли их различать. Это может быть любое имя, например, «My Minecraft Bot».",
       "form": {
         "friendlyName": {
-          "label": "",
-          "placeholder": "",
-          "description": "",
-          "min": "",
-          "max": "",
-          "regex": ""
+          "label": "Дружелюбное имя",
+          "placeholder": "My Minecraft Bot",
+          "description": "Имя, которое вы хотите дать этому экземпляру.",
+          "min": "Дружелюбное имя должно содержать не менее 3 символов.",
+          "max": "Дружелюбное имя должно содержать не более 50 символов.",
+          "regex": "Дружелюбное имя может содержать только буквы, цифры и пробелы"
         },
         "cancel": "Отмена",
         "create": "Создать"
       }
     },
     "import": {
+      "main": {
+        "fromFile": "",
+        "fromUrl": "",
+        "firstClipboardItem": "",
+        "fromClipboard": "",
+        "textarea": {
+          "placeholder": "",
+          "submit": ""
+        }
+      },
       "url": {
-        "description": ""
+        "description": "Загрузка с URL заставит сервер SoulFire выполнить GET-запрос к целевому серверу и использовать полученный ответ в качестве данных.",
+        "form": {
+          "url": {
+            "placeholder": "",
+            "empty": ""
+          }
+        },
+        "submit": "",
+        "toast": {
+          "loading": "",
+          "success": "",
+          "error": ""
+        }
       }
     }
+  },
+  "commandInput": {
+    "placeholder": ""
+  },
+  "controls": {
+    "start": "",
+    "resume": "",
+    "pause": "",
+    "stop": "",
+    "startToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "resumeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "pauseToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "stopToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
+  },
+  "icon": {
+    "invalidName": ""
+  },
+  "dataTable": {
+    "noResults": "",
+    "rowsSelected": "",
+    "rowsPerPage": "",
+    "currentPage": "",
+    "goFirst": "",
+    "goPrevious": "",
+    "goNext": "",
+    "goLast": ""
+  },
+  "pluginCard": {
+    "version": "",
+    "author": "",
+    "license": "",
+    "website": ""
+  },
+  "settingsPage": {
+    "stringList": {
+      "placeholder": "",
+      "add": "",
+      "remove": ""
+    }
+  },
+  "terminal": {
+    "noLogs": "",
+    "demo-1": "",
+    "demo-2": "",
+    "demo-3": "",
+    "demo-4": ""
+  },
+  "uiBreadcrumb": {
+    "more": ""
+  },
+  "uiDialog": {
+    "close": "Закрыть"
+  },
+  "uiSheet": {
+    "close": "Закрыть"
+  },
+  "uiSidebar": {
+    "toggle": ""
   }
 }
