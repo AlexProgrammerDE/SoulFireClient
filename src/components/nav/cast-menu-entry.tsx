@@ -13,6 +13,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
+import { useTranslation } from 'react-i18next';
 
 type MediaDeviceInfo = {
   id: string;
@@ -32,6 +33,7 @@ type MediaDeviceState = {
 };
 
 export default function CastMenuEntry() {
+  const { t } = useTranslation('common');
   const [devices, setDevices] = useState<MediaDeviceState[]>([]);
 
   useEffect(() => {
@@ -56,7 +58,11 @@ export default function CastMenuEntry() {
         setDevices((devices) =>
           devices.map((device) => {
             if (device.transport_id === payload.transport_id) {
-              toast.info(`Disconnected from ${device.info.name}`);
+              toast.info(
+                t('castMenu.disconnected', {
+                  device: device.info.name,
+                }),
+              );
               return {
                 ...device,
                 transport_id: null,
@@ -73,7 +79,7 @@ export default function CastMenuEntry() {
       clearInterval(interval);
       cancel();
     };
-  }, []);
+  }, [t]);
 
   useEffect(() => {
     void invoke('discover_casts');
@@ -84,7 +90,7 @@ export default function CastMenuEntry() {
       <DropdownMenuSub>
         <DropdownMenuSubTrigger>
           <CastIcon />
-          <span>Cast</span>
+          <span>{t('castMenu.title')}</span>
         </DropdownMenuSubTrigger>
         <DropdownMenuPortal>
           <DropdownMenuSubContent>
@@ -95,7 +101,9 @@ export default function CastMenuEntry() {
                   onClick={() => {
                     if (currentDevice.transport_id !== null) {
                       toast.warning(
-                        `Already connected to ${currentDevice.info.name}`,
+                        t('castMenu.alreadyConnected', {
+                          device: currentDevice.info.name,
+                        }),
                       );
                       return;
                     }
@@ -106,7 +114,9 @@ export default function CastMenuEntry() {
                         port: currentDevice.info.port,
                       }),
                       {
-                        loading: `Connecting to ${currentDevice.info.name}...`,
+                        loading: t('castMenu.connectToast.loading', {
+                          device: currentDevice.info.name,
+                        }),
                         success: (transportId) => {
                           setDevices((devices) =>
                             devices.map((device) => {
@@ -124,11 +134,15 @@ export default function CastMenuEntry() {
                             }),
                           );
 
-                          return `Connected to ${currentDevice.info.name}!`;
+                          return t('castMenu.connectToast.success', {
+                            device: currentDevice.info.name,
+                          });
                         },
                         error: (e) => {
                           console.error(e);
-                          return `Failed to connect to ${currentDevice.info.name}`;
+                          return t('castMenu.connectToast.error', {
+                            device: currentDevice.info.name,
+                          });
                         },
                       },
                     );
@@ -147,11 +161,11 @@ export default function CastMenuEntry() {
               <DropdownMenuItem
                 disabled
                 onClick={() => {
-                  toast.warning('No devices found');
+                  toast.warning(t('castMenu.noDevices'));
                 }}
               >
                 <SearchXIcon />
-                No devices found
+                <span>{t('castMenu.noDevices')}</span>
               </DropdownMenuItem>
             )}
             <DropdownMenuSeparator />
@@ -163,18 +177,18 @@ export default function CastMenuEntry() {
                     logs: ['Hello from SoulFire!'],
                   }),
                   {
-                    loading: 'Broadcasting message...',
-                    success: 'Message broadcasted!',
+                    loading: t('castMenu.broadcastToast.loading'),
+                    success: t('castMenu.broadcastToast.success'),
                     error: (e) => {
                       console.error(e);
-                      return 'Failed to broadcast message';
+                      return t('castMenu.broadcastToast.error');
                     },
                   },
                 );
               }}
             >
               <RadioTowerIcon />
-              Broadcast test
+              <span>{t('castMenu.broadcastLabel')}</span>
             </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuPortal>

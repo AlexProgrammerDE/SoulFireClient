@@ -20,6 +20,7 @@ import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { HomeIcon } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 export default function InstancePageLayout(props: {
   children: ReactNode;
@@ -27,6 +28,7 @@ export default function InstancePageLayout(props: {
   pageName: string;
   expandPluginSettings?: boolean;
 }) {
+  const { t } = useTranslation('common');
   const instanceInfo = useContext(InstanceInfoContext);
   const defaultOpen = getCookie('sidebar:state') === 'true';
 
@@ -51,7 +53,9 @@ export default function InstancePageLayout(props: {
               <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
                 <Link to="/dashboard/user/instances">
                   <HomeIcon />
-                  <span className="sr-only">Back to dashboard</span>
+                  <span className="sr-only">
+                    {t('instanceSidebar.backToDashboard')}
+                  </span>
                 </Link>
               </Button>
               <Separator orientation="vertical" className="mr-2 h-4" />

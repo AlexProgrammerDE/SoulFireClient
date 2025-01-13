@@ -132,5 +132,25 @@
     "demo-2": "This is a read-only instance of SoulFire",
     "demo-3": "Check out all the menus and features before deciding to install SoulFire :D",
     "demo-4": "Feel free to join our Discord server if you would like to reach out: https://soulfiremc.com/discord"
+  },
+  "castMenu": {
+    "title": "Cast",
+    "disconnected": "Disconnected from {{device}}",
+    "alreadyConnected": "Already connected to {{device}}",
+    "connectToast": {
+      "loading": "Connecting to {{device}}...",
+      "success": "Connected to {{device}}",
+      "error": "Failed to connect to {{device}}"
+    },
+    "noDevices": "No devices found",
+    "broadcastLabel": "Broadcast test",
+    "broadcastToast": {
+      "loading": "Broadcasting message...",
+      "success": "Message broadcasted!",
+      "error": "Failed to broadcast message"
+    }
+  },
+  "instanceSidebar": {
+    "backToDashboard": "Back to dashboard"
   }
 }

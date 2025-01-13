@@ -68,8 +68,10 @@ import { ClientInfoContext } from '@/components/providers/client-info-context.ts
 import DynamicIcon, {
   convertUnsafeIconName,
 } from '@/components/dynamic-icon.tsx';
+import { useTranslation } from 'react-i18next';
 
 export function InstanceSwitcher() {
+  const { t } = useTranslation('common');
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
@@ -232,7 +234,7 @@ export function InstanceSwitcher() {
                   <HomeIcon className="size-4" />
                 </div>
                 <div className="font-medium text-muted-foreground">
-                  Back to dashboard
+                  {t('instanceSidebar.backToDashboard')}
                 </div>
               </Link>
             </DropdownMenuItem>
