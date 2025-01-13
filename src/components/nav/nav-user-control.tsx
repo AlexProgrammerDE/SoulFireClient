@@ -4,6 +4,7 @@ import {
   ChevronsUpDown,
   CircleHelpIcon,
   FolderIcon,
+  LanguagesIcon,
   LaptopMinimalIcon,
   LogOutIcon,
   MoonIcon,
@@ -41,7 +42,7 @@ import {
 } from '@/components/ui/sidebar.tsx';
 import { useContext, useState } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import { isTauri } from '@/lib/utils.ts';
+import { getLanguageName, isTauri, languageEmoji } from '@/lib/utils.ts';
 import { emit } from '@tauri-apps/api/event';
 import { toast } from 'sonner';
 import { exit } from '@tauri-apps/plugin-process';
@@ -55,8 +56,10 @@ import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { appConfigDir, appDataDir } from '@tauri-apps/api/path';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { AboutPopup } from '@/components/dialog/about-popup.tsx';
+import { useTranslation } from 'react-i18next';
 
 export function NavUserControl() {
+  const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
   const clientInfo = useContext(ClientInfoContext);
   const terminalTheme = useContext(TerminalThemeContext);
@@ -167,6 +170,31 @@ export function NavUserControl() {
                           {entry[1].emoji} {entry[1].name}
                         </DropdownMenuRadioItem>
                       ))}
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <LanguagesIcon />
+                  {t('locale')}
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuRadioGroup
+                      value={i18n.resolvedLanguage ?? i18n.language}
+                      onValueChange={i18n.changeLanguage}
+                    >
+                      {(i18n.options.supportedLngs
+                        ? i18n.options.supportedLngs
+                        : []
+                      )
+                        .filter((lang) => lang !== 'cimode')
+                        .map((lang) => (
+                          <DropdownMenuRadioItem key={lang} value={lang}>
+                            {languageEmoji(lang)} {getLanguageName(lang, lang)}
+                          </DropdownMenuRadioItem>
+                        ))}
                     </DropdownMenuRadioGroup>
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>

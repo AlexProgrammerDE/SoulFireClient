@@ -33,7 +33,7 @@ void i18n
     },
     detection: {
       order: ['localStorage', 'navigator'],
-      caches: [],
+      caches: ['localStorage'],
     },
   });
 

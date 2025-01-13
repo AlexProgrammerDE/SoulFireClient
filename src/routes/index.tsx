@@ -377,15 +377,18 @@ function Index() {
                     className="w-fit text-balance text-sm text-muted-foreground"
                     variant="ghost"
                   >
-                    {languageEmoji(i18n.language as never)}{' '}
-                    {getLanguageName(i18n.language, i18n.language)}
+                    {languageEmoji(i18n.resolvedLanguage ?? i18n.language)}{' '}
+                    {getLanguageName(
+                      i18n.resolvedLanguage ?? i18n.language,
+                      i18n.resolvedLanguage ?? i18n.language,
+                    )}
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56">
                   <DropdownMenuLabel>{t('common:locale')}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioGroup
-                    value={i18n.language}
+                    value={i18n.resolvedLanguage ?? i18n.language}
                     onValueChange={i18n.changeLanguage}
                   >
                     {(i18n.options.supportedLngs
@@ -395,8 +398,7 @@ function Index() {
                       .filter((lang) => lang !== 'cimode')
                       .map((lang) => (
                         <DropdownMenuRadioItem key={lang} value={lang}>
-                          {languageEmoji(lang as never)}{' '}
-                          {getLanguageName(lang, lang)}
+                          {languageEmoji(lang)} {getLanguageName(lang, lang)}
                         </DropdownMenuRadioItem>
                       ))}
                   </DropdownMenuRadioGroup>
