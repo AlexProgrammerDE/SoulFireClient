@@ -150,7 +150,7 @@ function Index() {
         cancel();
       };
     }
-  }, [loginType, redirectWithCredentials]);
+  }, [loginType, redirectWithCredentials, t]);
 
   return (
     <ScrollArea className="h-dvh w-full px-4 bg-muted">

@@ -31,6 +31,10 @@ void i18n
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
+    detection: {
+      order: ['localStorage', 'navigator'],
+      caches: [],
+    },
   });
 
 z.setErrorMap(zodI18nMap);
