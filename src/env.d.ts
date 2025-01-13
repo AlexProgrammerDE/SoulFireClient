@@ -2,6 +2,7 @@
 declare const APP_VERSION: string;
 declare const APP_ENVIRONMENT: 'production' | 'development' | 'preview';
 declare const APP_LOCALES: string;
+declare const APP_NAMESPACES: string;
 
 declare module '*.svg' {
   const content: string;

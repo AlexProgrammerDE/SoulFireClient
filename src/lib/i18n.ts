@@ -4,7 +4,7 @@ import { initReactI18next } from 'react-i18next';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-i18n
+void i18n
   .use(
     resourcesToBackend(
       (lng: string, ns: string) => import(`../../locales/${lng}/${ns}.json`),
@@ -13,10 +13,12 @@ i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
+    defaultNS: 'common',
     fallbackLng: 'en',
     debug: true,
 
     supportedLngs: APP_LOCALES.split(','),
+    ns: APP_NAMESPACES.split(','),
     nonExplicitSupportedLngs: true,
     returnEmptyString: false,
     returnNull: false,
