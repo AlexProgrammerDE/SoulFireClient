@@ -77,7 +77,7 @@ function UrlDialog(props: ImportDialogProps) {
             <div className="flex flex-col gap-4">
               <Input
                 autoFocus
-                placeholder="Put URL here..."
+                placeholder={t('dialog.import.url.form.url.placeholder')}
                 defaultValue={inputText}
                 type="url"
                 inputMode="url"
@@ -88,7 +88,7 @@ function UrlDialog(props: ImportDialogProps) {
                 className="w-full"
                 onClick={() => {
                   if (inputText === '') {
-                    toast.error('Please enter a valid URL');
+                    toast.error(t('dialog.import.url.form.url.empty'));
                     return;
                   }
 
@@ -109,17 +109,17 @@ function UrlDialog(props: ImportDialogProps) {
                   };
 
                   toast.promise(download(), {
-                    loading: 'Downloading data...',
-                    success: 'Data loaded',
+                    loading: t('dialog.import.url.toast.loading'),
+                    success: t('dialog.import.url.toast.success'),
                     error: (e) => {
                       console.error(e);
-                      return 'Failed to download data';
+                      return t('dialog.import.url.toast.error');
                     },
                   });
                 }}
               >
                 <GlobeIcon className="h-4" />
-                <span>Load from URL</span>
+                <span>{t('dialog.import.url.submit')}</span>
               </Button>
             </div>
           </div>
@@ -134,6 +134,7 @@ function MainDialog(
     openUrlDialog: () => void;
   },
 ) {
+  const { t } = useTranslation('common');
   const instanceInfo = useContext(InstanceInfoContext);
   const systemInfo = useContext(SystemInfoContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -210,7 +211,7 @@ function MainDialog(
                 }}
               >
                 <FileIcon className="h-4" />
-                <span>From file</span>
+                <span>{t('dialog.import.main.fromFile')}</span>
               </Button>
               {hasInstancePermission(
                 instanceInfo,
@@ -222,7 +223,7 @@ function MainDialog(
                   onClick={props.openUrlDialog}
                 >
                   <GlobeIcon className="h-4" />
-                  <span>From URL</span>
+                  <span>{t('dialog.import.main.fromUrl')}</span>
                 </Button>
               )}
               <Button
@@ -247,7 +248,7 @@ function MainDialog(
                         });
                       if (!props.allowMultiple && clipboardEntries.length > 1) {
                         toast.warning(
-                          'You had multiple items in the clipboard, only using first one.',
+                          t('dialog.import.main.firstClipboardItem'),
                         );
                         clipboardEntries = [clipboardEntries[0]];
                       }
@@ -263,7 +264,7 @@ function MainDialog(
                 }}
               >
                 <ClipboardIcon className="h-4" />
-                <span>From clipboard</span>
+                <span>{t('dialog.import.main.fromClipboard')}</span>
               </Button>
             </div>
             {props.textInput !== null && (
@@ -281,6 +282,7 @@ function TextInput(
     textInput: TextInput;
   },
 ) {
+  const { t } = useTranslation('common');
   const [inputText, setInputText] = useState(props.textInput.defaultValue);
   return (
     <>
@@ -288,7 +290,7 @@ function TextInput(
       <div className="flex flex-col gap-4">
         <Textarea
           autoFocus
-          placeholder="Put text here..."
+          placeholder={t('dialog.import.textarea.placeholder')}
           defaultValue={inputText}
           onChange={(e) => setInputText(e.currentTarget.value)}
         />
@@ -298,7 +300,7 @@ function TextInput(
           onClick={() => props.listener(inputText)}
         >
           <TextIcon className="h-4" />
-          <span>Load from text</span>
+          <span>{t('dialog.import.textarea.submit')}</span>
         </Button>
       </div>
     </>

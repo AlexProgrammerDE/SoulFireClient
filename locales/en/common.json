@@ -44,8 +44,30 @@
       }
     },
     "import": {
+      "main": {
+        "fromFile": "From file",
+        "fromUrl": "From URL",
+        "firstClipboardItem": "You had multiple items in the clipboard, only using first one.",
+        "fromClipboard": "From clipboard",
+        "textarea": {
+          "placeholder": "Put text here...",
+          "submit": "Load from text"
+        }
+      },
       "url": {
-        "description": "Loading from URL will make the SoulFire server make a GET request to the target server and use the response as the data."
+        "description": "Loading from URL will make the SoulFire server make a GET request to the target server and use the response as the data.",
+        "form": {
+          "url": {
+            "placeholder": "Put URL here...",
+            "empty": "Please enter a valid URL"
+          }
+        },
+        "submit": "Load from URL",
+        "toast": {
+          "loading": "Downloading data...",
+          "success": "Data loaded!",
+          "error": "Failed to download data"
+        }
       }
     }
   }
