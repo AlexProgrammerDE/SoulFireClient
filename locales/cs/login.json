@@ -21,6 +21,14 @@
       "description": ""
     }
   },
+  "integrated": {
+    "preparing": "",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
+  },
   "dedicated": {
     "description": "",
     "form": {
