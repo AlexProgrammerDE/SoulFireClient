@@ -19,6 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from '../ui/table.tsx';
+import { useTranslation } from 'react-i18next';
 
 export function AboutPopup({
   open,
@@ -27,69 +28,80 @@ export function AboutPopup({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) {
+  const { t } = useTranslation('common');
   const systemInfo = useContext(SystemInfoContext);
 
   return (
     <Credenza open={open} onOpenChange={setOpen}>
       <CredenzaContent>
         <CredenzaHeader>
-          <CredenzaTitle>About SoulFire</CredenzaTitle>
+          <CredenzaTitle>{t('dialog.about.title')}</CredenzaTitle>
           <CredenzaDescription>
-            You are running version {APP_VERSION} of the SoulFire client.
+            {t('dialog.about.description', {
+              version: APP_VERSION,
+            })}
           </CredenzaDescription>
         </CredenzaHeader>
         <CredenzaBody>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Type</TableHead>
-                <TableHead>Value</TableHead>
+                <TableHead>{t('dialog.about.type')}</TableHead>
+                <TableHead>{t('dialog.about.value')}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {systemInfo !== null ? (
                 <>
                   <TableRow>
-                    <TableCell>Operating System</TableCell>
+                    <TableCell>
+                      {t('dialog.about.fields.operatingSystem')}
+                    </TableCell>
                     <TableCell>
                       {systemInfo.osType} {systemInfo.osVersion}
                     </TableCell>
                   </TableRow>
 
                   <TableRow>
-                    <TableCell>Platform</TableCell>
+                    <TableCell>{t('dialog.about.fields.platform')}</TableCell>
                     <TableCell>{systemInfo.platformName}</TableCell>
                   </TableRow>
 
                   <TableRow>
-                    <TableCell>Locale</TableCell>
+                    <TableCell>{t('dialog.about.fields.locale')}</TableCell>
                     <TableCell>{systemInfo.osLocale ?? 'Unknown'}</TableCell>
                   </TableRow>
 
                   <TableRow>
-                    <TableCell>Architecture</TableCell>
+                    <TableCell>
+                      {t('dialog.about.fields.architecture')}
+                    </TableCell>
                     <TableCell>{systemInfo.archName}</TableCell>
                   </TableRow>
 
                   <TableRow>
-                    <TableCell>Environment</TableCell>
+                    <TableCell>
+                      {t('dialog.about.fields.environment')}
+                    </TableCell>
                     <TableCell>{APP_ENVIRONMENT}</TableCell>
                   </TableRow>
                 </>
               ) : (
                 <>
                   <TableRow>
-                    <TableCell>Browser</TableCell>
+                    <TableCell>{t('dialog.about.fields.browser')}</TableCell>
                     <TableCell>{navigator.userAgent}</TableCell>
                   </TableRow>
 
                   <TableRow>
-                    <TableCell>Locale</TableCell>
+                    <TableCell>{t('dialog.about.fields.locale')}</TableCell>
                     <TableCell>{navigator.language}</TableCell>
                   </TableRow>
 
                   <TableRow>
-                    <TableCell>Environment</TableCell>
+                    <TableCell>
+                      {t('dialog.about.fields.environment')}
+                    </TableCell>
                     <TableCell>{APP_ENVIRONMENT}</TableCell>
                   </TableRow>
                 </>
@@ -99,7 +111,7 @@ export function AboutPopup({
         </CredenzaBody>
         <CredenzaFooter>
           <CredenzaClose asChild>
-            <Button>Close</Button>
+            <Button>{t('dialog.about.close')}</Button>
           </CredenzaClose>
         </CredenzaFooter>
       </CredenzaContent>

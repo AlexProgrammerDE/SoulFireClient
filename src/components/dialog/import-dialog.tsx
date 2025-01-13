@@ -24,6 +24,7 @@ import { DownloadServiceClient } from '@/generated/soulfire/download.client.ts';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { InstancePermission } from '@/generated/soulfire/common.ts';
+import { useTranslation } from 'react-i18next';
 
 export type TextInput = {
   defaultValue: string;
@@ -57,6 +58,7 @@ export default function ImportDialog(props: ImportDialogProps) {
 }
 
 function UrlDialog(props: ImportDialogProps) {
+  const { t } = useTranslation('common');
   const transport = useContext(TransportContext);
   const instanceInfo = useContext(InstanceInfoContext);
   const [inputText, setInputText] = useState('');
@@ -67,8 +69,7 @@ function UrlDialog(props: ImportDialogProps) {
         <CredenzaHeader>
           <CredenzaTitle>{props.title}</CredenzaTitle>
           <CredenzaDescription>
-            Loading from URL will make the SoulFire server make a GET request to
-            the target server and use the response as the data.
+            {t('dialog.import.url.description')}
           </CredenzaDescription>
         </CredenzaHeader>
         <CredenzaBody className="pb-4 md:pb-0">

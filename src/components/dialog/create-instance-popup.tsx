@@ -22,18 +22,11 @@ import {
   FormMessage,
 } from '@/components/ui/form.tsx';
 import { Input } from '@/components/ui/input.tsx';
+import { useTranslation } from 'react-i18next';
 
-const formSchema = z.object({
-  friendlyName: z
-    .string()
-    .min(1, 'Friendly name is required')
-    .max(255, 'Friendly name is too long')
-    .regex(
-      /^[a-zA-Z0-9 ]+$/,
-      'Friendly name can only contain letters, numbers, and spaces',
-    ),
-});
-export type CreateInstanceType = z.infer<typeof formSchema>;
+export type CreateInstanceType = {
+  friendlyName: string;
+};
 
 export function CreateInstancePopup({
   open,
@@ -44,6 +37,17 @@ export function CreateInstancePopup({
   setOpen: (open: boolean) => void;
   onSubmit: (values: CreateInstanceType) => void;
 }) {
+  const { t } = useTranslation('common');
+  const formSchema = z.object({
+    friendlyName: z
+      .string()
+      .min(3, t('dialog.createInstance.form.friendlyName.min'))
+      .max(50, t('dialog.createInstance.form.friendlyName.max'))
+      .regex(
+        /^[a-zA-Z0-9 ]+$/,
+        t('dialog.createInstance.form.friendlyName.regex'),
+      ),
+  });
   const form = useForm<CreateInstanceType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,10 +64,9 @@ export function CreateInstancePopup({
             onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}
           >
             <CredenzaHeader>
-              <CredenzaTitle>Create a new instance</CredenzaTitle>
+              <CredenzaTitle>{t('dialog.createInstance.title')}</CredenzaTitle>
               <CredenzaDescription>
-                Instances need friendly names for you to distinguish them. It It
-                can be any name you want, for example, "My Minecraft Bot".
+                {t('dialog.createInstance.description')}
               </CredenzaDescription>
             </CredenzaHeader>
             <CredenzaBody>
@@ -72,16 +75,20 @@ export function CreateInstancePopup({
                 name="friendlyName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Friendly name</FormLabel>
+                    <FormLabel>
+                      {t('dialog.createInstance.form.friendlyName.label')}
+                    </FormLabel>
                     <FormControl>
                       <Input
                         autoFocus
-                        placeholder="My Minecraft Bot"
+                        placeholder={t(
+                          'dialog.createInstance.form.friendlyName.placeholder',
+                        )}
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      This is how you'll identify this instance.
+                      {t('dialog.createInstance.form.friendlyName.description')}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -90,9 +97,13 @@ export function CreateInstancePopup({
             </CredenzaBody>
             <CredenzaFooter className="justify-between">
               <CredenzaClose asChild>
-                <Button variant="outline">Close</Button>
+                <Button variant="outline">
+                  {t('dialog.createInstance.form.cancel')}
+                </Button>
               </CredenzaClose>
-              <Button type="submit">Create</Button>
+              <Button type="submit">
+                {t('dialog.createInstance.form.create')}
+              </Button>
             </CredenzaFooter>
           </form>
         </CredenzaContent>

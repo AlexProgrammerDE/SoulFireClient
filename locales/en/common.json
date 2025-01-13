@@ -10,5 +10,43 @@
   },
   "pending": {
     "connecting": "Connecting..."
+  },
+  "dialog": {
+    "about": {
+      "title": "About SoulFire",
+      "description": "You are running version {{version}} of the SoulFire client.",
+      "type": "Type",
+      "value": "Value",
+      "fields": {
+        "operatingSystem": "Operating System",
+        "platform": "Platform",
+        "locale": "Locale",
+        "architecture": "Architecture",
+        "environment": "Environment",
+        "browser": "Browser"
+      },
+      "close": "Close"
+    },
+    "createInstance": {
+      "title": "Create a new instance",
+      "description": "Instances need friendly names for you to distinguish them. It can be any name you want, for example, \"My Minecraft Bot\".",
+      "form": {
+        "friendlyName": {
+          "label": "Friendly name",
+          "placeholder": "My Minecraft Bot",
+          "description": "The name you want to give to this instance.",
+          "min": "The friendly name must be at least 3 characters long.",
+          "max": "The friendly name must be at most 50 characters long.",
+          "regex": "Friendly name can only contain letters, numbers, and spaces"
+        },
+        "cancel": "Cancel",
+        "create": "Create"
+      }
+    },
+    "import": {
+      "url": {
+        "description": "Loading from URL will make the SoulFire server make a GET request to the target server and use the response as the data."
+      }
+    }
   }
 }

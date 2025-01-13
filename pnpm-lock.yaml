@@ -182,6 +182,9 @@ importers:
       zod:
         specifier: ^3.24.1
         version: 3.24.1
+      zod-i18n-map:
+        specifier: ^2.27.0
+        version: 2.27.0(i18next@24.2.1(typescript@5.7.3))(zod@3.24.1)
     devDependencies:
       '@eslint/compat':
         specifier: ^1.1.1
@@ -4117,6 +4120,12 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+
+  zod-i18n-map@2.27.0:
+    resolution: {integrity: sha512-ORu9XpiVh3WDiEUs5Cr9siGgnpeODoBsTIgSD8sQCH9B//f9KowlzqHUEdPYb3vFonaSH8yPvPCOFM4niwp3Sg==}
+    peerDependencies:
+      i18next: '>=21.3.0'
+      zod: '>=3.17.0'
 
   zod@3.24.1:
     resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
@@ -8132,5 +8141,10 @@ snapshots:
       yargs-parser: 21.1.1
 
   yocto-queue@0.1.0: {}
+
+  zod-i18n-map@2.27.0(i18next@24.2.1(typescript@5.7.3))(zod@3.24.1):
+    dependencies:
+      i18next: 24.2.1(typescript@5.7.3)
+      zod: 3.24.1
 
   zod@3.24.1: {}
