@@ -120,6 +120,7 @@
     "website": "Website"
   },
   "settingsPage": {
+    "entryNotFound": "Settings entry not found",
     "stringList": {
       "placeholder": "Add a new entry...",
       "add": "Add",
@@ -164,5 +165,10 @@
   },
   "instanceSidebar": {
     "backToDashboard": "Back to dashboard"
+  },
+  "breadcrumbs": {
+    "admin": "Admin",
+    "settings": "Settings",
+    "controls": "Controls"
   }
 }

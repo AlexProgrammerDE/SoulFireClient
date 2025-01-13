@@ -13,6 +13,7 @@ import {
   CommandCompletionRequest,
   CommandRequest,
 } from '@/generated/soulfire/command.ts';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/console',
@@ -21,6 +22,7 @@ export const Route = createFileRoute(
 });
 
 function Console() {
+  const { t } = useTranslation('common');
   const instanceInfo = useContext(InstanceInfoContext);
   const scope = useMemo<
     | PreviousLogRequest['scope']
@@ -38,7 +40,10 @@ function Console() {
   );
 
   return (
-    <InstancePageLayout extraCrumbs={['Controls']} pageName="Console">
+    <InstancePageLayout
+      extraCrumbs={[t('breadcrumbs.controls')]}
+      pageName="Console"
+    >
       <div className="grow flex h-full w-full flex-col gap-2 pb-4">
         <div className="flex flex-col gap-2">
           <h2 className="text-xl font-semibold">

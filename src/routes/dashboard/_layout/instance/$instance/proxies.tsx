@@ -32,6 +32,7 @@ import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { ProxyCheckServiceClient } from '@/generated/soulfire/proxy-check.client.ts';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/proxies',
@@ -368,11 +369,15 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
 }
 
 function ProxySettings() {
+  const { t } = useTranslation('common');
   const clientInfo = useContext(ClientInfoContext);
   const profile = useContext(ProfileContext);
 
   return (
-    <InstancePageLayout extraCrumbs={['Settings']} pageName="Proxy Settings">
+    <InstancePageLayout
+      extraCrumbs={[t('breadcrumbs.settings')]}
+      pageName="Proxy Settings"
+    >
       <div className="grow flex h-full w-full flex-col gap-4 pb-4 max-w-4xl">
         <div className="flex flex-col gap-2">
           <InstanceSettingsPageComponent

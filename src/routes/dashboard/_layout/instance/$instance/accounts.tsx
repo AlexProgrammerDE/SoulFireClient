@@ -37,6 +37,7 @@ import { isTauri } from '@/lib/utils.ts';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/accounts',
@@ -382,11 +383,15 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
 }
 
 function AccountSettings() {
+  const { t } = useTranslation('common');
   const clientInfo = useContext(ClientInfoContext);
   const profile = useContext(ProfileContext);
 
   return (
-    <InstancePageLayout extraCrumbs={['Settings']} pageName="Account Settings">
+    <InstancePageLayout
+      extraCrumbs={[t('breadcrumbs.settings')]}
+      pageName="Account Settings"
+    >
       <div className="grow flex h-full w-full flex-col gap-4 pb-4 max-w-4xl">
         <div className="flex flex-col gap-2">
           <InstanceSettingsPageComponent

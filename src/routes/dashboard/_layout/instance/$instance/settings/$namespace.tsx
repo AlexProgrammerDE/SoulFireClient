@@ -4,6 +4,7 @@ import { ClientInfoContext } from '@/components/providers/client-info-context.ts
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/settings/$namespace',
@@ -12,13 +13,14 @@ export const Route = createFileRoute(
 });
 
 function SettingsNamespace() {
+  const { t } = useTranslation('common');
   const { namespace } = Route.useParams();
   const clientInfo = useContext(ClientInfoContext);
   const settingsEntry = clientInfo.instanceSettings.find(
     (s) => s.namespace === namespace,
   );
   if (!settingsEntry) {
-    throw new Error('Settings entry not found');
+    throw new Error(t('settingsPage.entryNotFound'));
   }
 
   const pluginInfo = clientInfo.plugins.find(
@@ -26,7 +28,7 @@ function SettingsNamespace() {
   );
   return (
     <InstancePageLayout
-      extraCrumbs={['Settings']}
+      extraCrumbs={[t('breadcrumbs.settings')]}
       pageName={settingsEntry.pageName}
       expandPluginSettings={pluginInfo !== undefined}
     >

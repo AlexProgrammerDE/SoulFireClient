@@ -23,6 +23,7 @@ import {
   InstanceState,
 } from '@/generated/soulfire/instance.ts';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/admin/_layout/overview',
@@ -288,6 +289,7 @@ export function InstancesChart(props: { instanceList: InstanceListResponse }) {
 }
 
 function OverviewPage() {
+  const { t } = useTranslation('common');
   const { infoQueryOptions } = Route.useRouteContext();
   const result = useQuery(infoQueryOptions);
 
@@ -302,7 +304,7 @@ function OverviewPage() {
   return (
     <UserPageLayout
       showUserCrumb={false}
-      extraCrumbs={['Admin']}
+      extraCrumbs={[t('breadcrumbs.admin')]}
       pageName="Overview"
     >
       <div className="grow flex h-full w-full flex-col gap-2 py-2 pl-2">

@@ -4,6 +4,7 @@ import { ClientInfoContext } from '@/components/providers/client-info-context.ts
 import { AdminSettingsPageComponent } from '@/components/settings-page.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout';
 import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/admin/_layout/settings/$namespace',
@@ -12,13 +13,14 @@ export const Route = createFileRoute(
 });
 
 function SettingsNamespace() {
+  const { t } = useTranslation('common');
   const { namespace } = Route.useParams();
   const clientInfo = useContext(ClientInfoContext);
   const settingsEntry = clientInfo.serverSettings.find(
     (s) => s.namespace === namespace,
   );
   if (!settingsEntry) {
-    throw new Error('Settings entry not found');
+    throw new Error(t('settingsPage.entryNotFound'));
   }
 
   const pluginInfo = clientInfo.plugins.find(
@@ -27,7 +29,7 @@ function SettingsNamespace() {
   return (
     <UserPageLayout
       showUserCrumb={false}
-      extraCrumbs={['Admin', 'Settings']}
+      extraCrumbs={[t('breadcrumbs.admin'), t('breadcrumbs.settings')]}
       pageName={settingsEntry.pageName}
     >
       <div className="grow flex h-full w-full flex-row pl-2 gap-2">

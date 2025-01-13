@@ -35,41 +35,39 @@ function InstanceSelectPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 w-full gap-4">
-          {instanceList.instances.map((instance, index) => {
-            return (
-              <Link
-                key={instance.id}
-                to="/dashboard/instance/$instance/console"
-                params={{ instance: instance.id }}
-                search={{}}
-                className="w-full max-h-fit"
-              >
-                <Card className="w-full flex flex-row">
-                  <CardHeader className="pr-0">
-                    <div className="flex aspect-square size-12 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                      <DynamicIcon
-                        name={convertUnsafeIconName(instance.icon)}
-                        className="size-8 shrink-0"
-                      />
-                    </div>
-                  </CardHeader>
-                  <CardHeader>
-                    <CardTitle>{instance.friendlyName}</CardTitle>
-                    <CardDescription className="font-semibold">
-                      {toCapitalizedWords(
-                        getEnumKeyByValue(InstanceState, instance.state),
-                      )}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardHeader className="ml-auto">
-                    <p className="m-auto mb-auo text-2xl tracking-widest opacity-60">
-                      ⌘{index + 1}
-                    </p>
-                  </CardHeader>
-                </Card>
-              </Link>
-            );
-          })}
+          {instanceList.instances.map((instance, index) => (
+            <Link
+              key={instance.id}
+              to="/dashboard/instance/$instance/console"
+              params={{ instance: instance.id }}
+              search={{}}
+              className="w-full max-h-fit"
+            >
+              <Card className="w-full flex flex-row">
+                <CardHeader className="pr-0">
+                  <div className="flex aspect-square size-12 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+                    <DynamicIcon
+                      name={convertUnsafeIconName(instance.icon)}
+                      className="size-8 shrink-0"
+                    />
+                  </div>
+                </CardHeader>
+                <CardHeader>
+                  <CardTitle>{instance.friendlyName}</CardTitle>
+                  <CardDescription className="font-semibold">
+                    {toCapitalizedWords(
+                      getEnumKeyByValue(InstanceState, instance.state),
+                    )}
+                  </CardDescription>
+                </CardHeader>
+                <CardHeader className="ml-auto">
+                  <p className="m-auto mb-auo text-2xl tracking-widest opacity-60">
+                    ⌘{index + 1}
+                  </p>
+                </CardHeader>
+              </Card>
+            </Link>
+          ))}
         </div>
       )}
     </UserPageLayout>

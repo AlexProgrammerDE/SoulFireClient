@@ -8,6 +8,7 @@ import {
   CommandRequest,
 } from '@/generated/soulfire/command.ts';
 import { LogRequest, PreviousLogRequest } from '@/generated/soulfire/logs.ts';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/admin/_layout/console',
@@ -16,6 +17,7 @@ export const Route = createFileRoute(
 });
 
 function Console() {
+  const { t } = useTranslation('common');
   const scope = useMemo<
     | PreviousLogRequest['scope']
     | LogRequest['scope']
@@ -32,7 +34,7 @@ function Console() {
   return (
     <UserPageLayout
       showUserCrumb={false}
-      extraCrumbs={['Admin']}
+      extraCrumbs={[t('breadcrumbs.admin')]}
       pageName="Console"
     >
       <div className="flex flex-col gap-2">
