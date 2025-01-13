@@ -2,18 +2,18 @@
   "error": {
     "noAddressOrToken": "",
     "page": {
-      "title": "",
-      "message": "",
-      "logOut": "",
+      "title": "Ошибка",
+      "message": "{{message}} (подробнее в консоли)",
+      "logOut": "Выйти",
       "reloadPage": ""
     }
   },
   "pending": {
-    "connecting": ""
+    "connecting": "Подключение..."
   },
   "dialog": {
     "about": {
-      "title": "",
+      "title": "О SoulFire",
       "description": "",
       "type": "",
       "value": "",
@@ -25,7 +25,7 @@
         "environment": "",
         "browser": ""
       },
-      "close": ""
+      "close": "Закрыть"
     },
     "createInstance": {
       "title": "",
@@ -39,8 +39,8 @@
           "max": "",
           "regex": ""
         },
-        "cancel": "",
-        "create": ""
+        "cancel": "Отмена",
+        "create": "Создать"
       }
     },
     "import": {
