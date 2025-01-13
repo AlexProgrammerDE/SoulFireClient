@@ -133,6 +133,18 @@
     "demo-3": "Check out all the menus and features before deciding to install SoulFire :D",
     "demo-4": "Feel free to join our Discord server if you would like to reach out: https://soulfiremc.com/discord"
   },
+  "uiBreadcrumb": {
+    "more": "More"
+  },
+  "uiDialog": {
+    "close": "Close"
+  },
+  "uiSheet": {
+    "close": "Close"
+  },
+  "uiSidebar": {
+    "toggle": "Toggle Sidebar"
+  },
   "castMenu": {
     "title": "Cast",
     "disconnected": "Disconnected from {{device}}",
