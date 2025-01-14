@@ -1,0 +1,54 @@
+{
+  "header": {
+    "image": {
+      "alt": ""
+    },
+    "title": ""
+  },
+  "connect": {
+    "title": "",
+    "description": "",
+    "integrated": {
+      "title": "",
+      "description": "Runz SoulFier servr on ur computr. Srsly teh setup iz automatic an requirez no configurashun, Srsly. (requirez teh desktop app)"
+    },
+    "dedicated": {
+      "title": "Dedicatd servr (remoet)",
+      "description": "Connects 2 remoet instanec ov teh SoulFier servr. Srsly u will ned 2 provied teh addres an token ov teh servr."
+    },
+    "demo": {
+      "title": "Deom servr",
+      "description": "Simulates vurtual servr wif deom daat. Dis servr iz read-only an u cannot mak any changez 2 it."
+    }
+  },
+  "integrated": {
+    "preparing": "Preparing 2 start integratd servr...",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
+  },
+  "dedicated": {
+    "description": "",
+    "form": {
+      "address": {
+        "title": "",
+        "description": "",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "",
+        "placeholder": "",
+        "description": ""
+      },
+      "back": "",
+      "connect": ""
+    }
+  },
+  "footer": {
+    "version": "",
+    "preview": "",
+    "production": ""
+  }
+}

@@ -1,0 +1,255 @@
+{
+  "locale": "",
+  "error": {
+    "noAddressOrToken": "",
+    "page": {
+      "title": "",
+      "message": "",
+      "logOut": "",
+      "reloadPage": ""
+    }
+  },
+  "pending": {
+    "connecting": ""
+  },
+  "dialog": {
+    "about": {
+      "title": "",
+      "description": "",
+      "type": "",
+      "value": "",
+      "fields": {
+        "operatingSystem": "",
+        "platform": "",
+        "locale": "",
+        "architecture": "",
+        "environment": "",
+        "browser": ""
+      },
+      "close": ""
+    },
+    "createInstance": {
+      "title": "",
+      "description": "",
+      "form": {
+        "friendlyName": {
+          "label": "",
+          "placeholder": "",
+          "description": "",
+          "min": "",
+          "max": "",
+          "regex": ""
+        },
+        "cancel": "",
+        "create": ""
+      },
+      "createToast": {
+        "loading": "",
+        "success": "",
+        "error": ""
+      }
+    },
+    "import": {
+      "main": {
+        "fromFile": "",
+        "fromUrl": "",
+        "firstClipboardItem": "",
+        "fromClipboard": "",
+        "textarea": {
+          "placeholder": "",
+          "submit": ""
+        }
+      },
+      "url": {
+        "description": "",
+        "form": {
+          "url": {
+            "placeholder": "",
+            "empty": ""
+          }
+        },
+        "submit": "",
+        "toast": {
+          "loading": "",
+          "success": "",
+          "error": ""
+        }
+      }
+    }
+  },
+  "commandInput": {
+    "placeholder": ""
+  },
+  "controls": {
+    "start": "",
+    "resume": "",
+    "pause": "",
+    "stop": "",
+    "startToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "resumeToast": {
+      "loading": "",
+      "success": "Ataque reanudado con éxito",
+      "error": ""
+    },
+    "pauseToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "stopToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
+  },
+  "icon": {
+    "invalidName": ""
+  },
+  "dataTable": {
+    "noResults": "",
+    "rowsSelected": "",
+    "rowsPerPage": "",
+    "currentPage": "",
+    "goFirst": "",
+    "goPrevious": "",
+    "goNext": "",
+    "goLast": ""
+  },
+  "pluginCard": {
+    "version": "",
+    "author": "",
+    "license": "",
+    "website": ""
+  },
+  "settingsPage": {
+    "entryNotFound": "",
+    "namespacesNotFound": "",
+    "stringList": {
+      "placeholder": "",
+      "add": "",
+      "remove": ""
+    }
+  },
+  "terminal": {
+    "noLogs": "",
+    "demo-1": "",
+    "demo-2": "",
+    "demo-3": "",
+    "demo-4": ""
+  },
+  "uiBreadcrumb": {
+    "more": ""
+  },
+  "uiDialog": {
+    "close": ""
+  },
+  "uiSheet": {
+    "close": ""
+  },
+  "uiSidebar": {
+    "toggle": ""
+  },
+  "castMenu": {
+    "title": "",
+    "disconnected": "",
+    "alreadyConnected": "",
+    "connectToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "noDevices": "",
+    "broadcastLabel": "",
+    "broadcastToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
+  },
+  "instanceSidebar": {
+    "backToDashboard": "",
+    "deleteToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "instancesGroup": "",
+    "createInstance": "",
+    "loadProfileToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "loadProfile": "",
+    "loadFromFile": "",
+    "profileSaved": "",
+    "saveProfile": "",
+    "deleteInstance": "",
+    "controlsGroup": "",
+    "console": "",
+    "settingsGroup": "",
+    "pluginSettings": "",
+    "botSettings": "",
+    "accountSettings": "",
+    "proxySettings": "",
+    "aiSettings": ""
+  },
+  "userSidebar": {
+    "userGroup": "",
+    "instances": "",
+    "createInstance": "",
+    "adminGroup": "",
+    "adminOverview": "",
+    "adminConsole": "",
+    "serverSettings": "",
+    "devSettings": "",
+    "theme": {
+      "title": "",
+      "system": "",
+      "light": "",
+      "dark": ""
+    },
+    "terminal": {
+      "title": ""
+    },
+    "configDir": "",
+    "dataDir": "",
+    "about": "",
+    "logOut": "",
+    "logOutToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "exit": ""
+  },
+  "sidebar": {
+    "documentation": "",
+    "buyMeACoffee": "",
+    "support": ""
+  },
+  "breadcrumbs": {
+    "admin": "",
+    "settings": "",
+    "controls": ""
+  },
+  "noInstancesFound": "",
+  "pageName": {
+    "console": "",
+    "instances": "",
+    "proxySettings": "",
+    "overview": "",
+    "accountSettings": ""
+  },
+  "instanceState": {
+    "starting": "",
+    "running": "",
+    "paused": "",
+    "stopping": "",
+    "stopped": ""
+  }
+}

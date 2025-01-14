@@ -1,0 +1,25 @@
+{
+  "overview": {
+    "welcome": "",
+    "instancesChart": {
+      "title": "",
+      "instances": "Instanzen",
+      "label": {
+        "state": "",
+        "active": "",
+        "stopped": "Gestoppt",
+        "other": ""
+      }
+    },
+    "usersChart": {
+      "title": "",
+      "users": "",
+      "label": {
+        "role": "",
+        "user": "Nutzer",
+        "admin": "Admin",
+        "other": ""
+      }
+    }
+  }
+}

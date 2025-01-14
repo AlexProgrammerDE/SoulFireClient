@@ -1,0 +1,54 @@
+{
+  "header": {
+    "image": {
+      "alt": "SoulFire Logo"
+    },
+    "title": "SoulFire"
+  },
+  "connect": {
+    "title": "Verbinde dich mit einem SoulFire Server",
+    "description": "Wähle den Typ des SoulFire Servers, mit dem du dich verbinden möchtest.",
+    "integrated": {
+      "title": "Integrierter Server (lokal)",
+      "description": "Führt einen SoulFire Server auf deinem Computer aus. Das Setup ist automatisch und erfordert keine Konfiguration. (Erfordert die Desktop-App)"
+    },
+    "dedicated": {
+      "title": "Dedizierter Server (Remote)",
+      "description": "Verbindet sich mit einer remote Instanz des SoulFire Servers. Du musst die Adresse und das Token des Servers angeben."
+    },
+    "demo": {
+      "title": "Demo Server",
+      "description": "Simuliert einen virtuellen Server mit Demo-Daten. Dieser Server ist schreibgeschützt und Sie können keine Änderungen vornehmen."
+    }
+  },
+  "integrated": {
+    "preparing": "Bereite vor, den integrierten Server zu starten...",
+    "toast": {
+      "loading": "Starte den integrierten Server...",
+      "success": "Integrierter Server gestartet",
+      "error": "Fehler beim Starten des integrierten Servers"
+    }
+  },
+  "dedicated": {
+    "description": "Geben Sie die Adresse und das Token des SoulFire Servers ein, mit dem Sie sich verbinden möchten.",
+    "form": {
+      "address": {
+        "title": "Adresse",
+        "description": "Adresse des Servers, mit dem Sie sich verbinden möchten.",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "Token",
+        "placeholder": "Geheimer Token",
+        "description": "Token zum Authentifizieren mit dem Server."
+      },
+      "back": "Zurück",
+      "connect": "Verbinden"
+    }
+  },
+  "footer": {
+    "version": "SoulFire Client {{version}} - {{environment}}",
+    "preview": "Suchst du Vorschau?",
+    "production": "Suchst du Produktion?"
+  }
+}

@@ -1,0 +1,255 @@
+{
+  "locale": "Linguagem",
+  "error": {
+    "noAddressOrToken": "Nenhum endereço de servidor ou token encontrado",
+    "page": {
+      "title": "Erro",
+      "message": "{{message}} (mais informações no console)",
+      "logOut": "Sair",
+      "reloadPage": "Recarregar página"
+    }
+  },
+  "pending": {
+    "connecting": "Conectando..."
+  },
+  "dialog": {
+    "about": {
+      "title": "Sobre SoulFire",
+      "description": "Você está executando a versão {{version}} do cliente SoulFire.",
+      "type": "Tipo",
+      "value": "Valor",
+      "fields": {
+        "operatingSystem": "Sistema Operacional",
+        "platform": "Plataforma",
+        "locale": "Região",
+        "architecture": "Arquitetura",
+        "environment": "Ambiente",
+        "browser": "Navegador"
+      },
+      "close": "Fechar"
+    },
+    "createInstance": {
+      "title": "Criar uma nova instância",
+      "description": "As instâncias precisam de nomes amigáveis para que você os distingua. Pode ser qualquer nome que você quiser, por exemplo, \"Meu Bot de Minecraft\".",
+      "form": {
+        "friendlyName": {
+          "label": "Nome amigável",
+          "placeholder": "Meu Bot de Minecraft",
+          "description": "O nome que quer dar para esta instância.",
+          "min": "O nome amigável deve ter pelo menos 3 caracteres.",
+          "max": "O nome amigável deve ter no máximo 50 caracteres.",
+          "regex": "Nome amigável só pode conter letras, números e espaços"
+        },
+        "cancel": "Cancelar",
+        "create": "Criar"
+      },
+      "createToast": {
+        "loading": "Criando instância...",
+        "success": "Instância criada com sucesso",
+        "error": "Falha ao criar instância"
+      }
+    },
+    "import": {
+      "main": {
+        "fromFile": "Do arquivo",
+        "fromUrl": "Da URL",
+        "firstClipboardItem": "Havia vários itens na área de transferência, usando apenas o primeiro.",
+        "fromClipboard": "Da área de transferência",
+        "textarea": {
+          "placeholder": "Coloque o texto aqui...",
+          "submit": "Carregar do texto"
+        }
+      },
+      "url": {
+        "description": "Carregar a partir da URL fará com que o servidor SoulFire faça uma solicitação GET para o servidor de destino e use a resposta como dados.",
+        "form": {
+          "url": {
+            "placeholder": "Coloque a URL aqui...",
+            "empty": "Por favor, insira uma URL válida"
+          }
+        },
+        "submit": "Carregar do URL",
+        "toast": {
+          "loading": "Baixando dados...",
+          "success": "Dados carregados!",
+          "error": "Falha ao baixar dados"
+        }
+      }
+    }
+  },
+  "commandInput": {
+    "placeholder": "Digite o comando"
+  },
+  "controls": {
+    "start": "Iniciar",
+    "resume": "Continuar",
+    "pause": "Pausar",
+    "stop": "Parar",
+    "startToast": {
+      "loading": "Iniciando ataque...",
+      "success": "Ataque iniciado com sucesso",
+      "error": "Falha ao iniciar ataque"
+    },
+    "resumeToast": {
+      "loading": "Retomando ataque...",
+      "success": "Ataque retomado com sucesso",
+      "error": "Falha ao retomar o ataque"
+    },
+    "pauseToast": {
+      "loading": "Pausando ataque...",
+      "success": "Ataque pausado com sucesso",
+      "error": "Falha ao pausar o ataque"
+    },
+    "stopToast": {
+      "loading": "Parando o ataque...",
+      "success": "Ataque interrompido com sucesso",
+      "error": "Falha ao interromper o ataque"
+    }
+  },
+  "icon": {
+    "invalidName": "Nome de ícone inválido: {{name}}"
+  },
+  "dataTable": {
+    "noResults": "Sem resultados.",
+    "rowsSelected": "{{amount}} de {{total}} linha(s) selecionada(s)",
+    "rowsPerPage": "Linhas por página",
+    "currentPage": "Página {{page}} de {{total}}",
+    "goFirst": "Ir para a primeira página",
+    "goPrevious": "Ir para a página anterior",
+    "goNext": "Ir para a proxima página",
+    "goLast": "Ir para a última página"
+  },
+  "pluginCard": {
+    "version": "Versão {{version}}",
+    "author": "Autor: {{author}}",
+    "license": "Licença: {license}",
+    "website": "Site"
+  },
+  "settingsPage": {
+    "entryNotFound": "Entrada de configurações não encontrada",
+    "namespacesNotFound": "Namespaces de configurações não encontrados",
+    "stringList": {
+      "placeholder": "Adicionar uma nova entrada...",
+      "add": "Adicionar",
+      "remove": "Remover"
+    }
+  },
+  "terminal": {
+    "noLogs": "🧙 Parece que não há logs para exibir; tente executar alguns comandos!",
+    "demo-1": "Bem-vindo ao modo de demonstração! 🧪",
+    "demo-2": "Esta é uma instância somente leitura de SoulFire",
+    "demo-3": "Confira todos os menus e recursos antes de decidir instalar o SoulFire :D",
+    "demo-4": "Sinta-se à vontade para entrar no nosso servidor do Discord se quiser falar conosco: https://soulfiremc.com/discord"
+  },
+  "uiBreadcrumb": {
+    "more": "Mais"
+  },
+  "uiDialog": {
+    "close": "Fechar"
+  },
+  "uiSheet": {
+    "close": "Fechar"
+  },
+  "uiSidebar": {
+    "toggle": "Alternar a barra lateral"
+  },
+  "castMenu": {
+    "title": "Transmitir",
+    "disconnected": "Desconectado de {{device}}",
+    "alreadyConnected": "Já conectado a {{device}}",
+    "connectToast": {
+      "loading": "Conectando a {{device}}...",
+      "success": "Conectado a {{device}}",
+      "error": "Falha ao conectar-se ao {{device}}"
+    },
+    "noDevices": "Nenhum dispositivo encontrado",
+    "broadcastLabel": "Transmitir teste",
+    "broadcastToast": {
+      "loading": "Transmitindo mensagem...",
+      "success": "Mensagem transmitida!",
+      "error": "Falha ao transmitir a mensagem"
+    }
+  },
+  "instanceSidebar": {
+    "backToDashboard": "Voltar ao painel de controle",
+    "deleteToast": {
+      "loading": "Excluindo instância...",
+      "success": "Instância excluída",
+      "error": "Falha ao excluir instância"
+    },
+    "instancesGroup": "Instâncias",
+    "createInstance": "Criar Instância",
+    "loadProfileToast": {
+      "loading": "Carregando perfil...",
+      "success": "Perfil carregado",
+      "error": "Falha ao carregar o perfil"
+    },
+    "loadProfile": "Carregar Perfil",
+    "loadFromFile": "Carregar do arquivo",
+    "profileSaved": "Perfil salvo",
+    "saveProfile": "Salvar Perfil",
+    "deleteInstance": "Deletar Instancia",
+    "controlsGroup": "Controles",
+    "console": "Console",
+    "settingsGroup": "Configurações",
+    "pluginSettings": "Definições de Plugin",
+    "botSettings": "Configurações do Bot",
+    "accountSettings": "Configurações da Conta",
+    "proxySettings": "Configurações de Proxy",
+    "aiSettings": "Configurações de IA"
+  },
+  "userSidebar": {
+    "userGroup": "Usuário",
+    "instances": "Instâncias",
+    "createInstance": "Criar Instância",
+    "adminGroup": "Admin",
+    "adminOverview": "Visão Geral do Administrador",
+    "adminConsole": "Console de Administração",
+    "serverSettings": "Configurações do servidor",
+    "devSettings": "Configurações de Desenvolvedor",
+    "theme": {
+      "title": "Tema",
+      "system": "Sistema",
+      "light": "Claro",
+      "dark": "Escuro"
+    },
+    "terminal": {
+      "title": "Terminal"
+    },
+    "configDir": "Diretório de configuração",
+    "dataDir": "Diretório de dados",
+    "about": "Sobre",
+    "logOut": "Sair",
+    "logOutToast": {
+      "loading": "Saindo...",
+      "success": "Sessão terminada",
+      "error": "Falha ao encerrar sessão"
+    },
+    "exit": "Sair"
+  },
+  "sidebar": {
+    "documentation": "Documentação",
+    "buyMeACoffee": "Compre-me um café",
+    "support": "Suporte"
+  },
+  "breadcrumbs": {
+    "admin": "Admin",
+    "settings": "Configurações",
+    "controls": "Controles"
+  },
+  "noInstancesFound": "Nenhuma instância encontrada",
+  "pageName": {
+    "console": "Console",
+    "instances": "Instâncias",
+    "proxySettings": "Configurações de Proxy",
+    "overview": "Visão geral",
+    "accountSettings": "Configurações da Conta"
+  },
+  "instanceState": {
+    "starting": "A iniciar",
+    "running": "Em execução",
+    "paused": "Pausado",
+    "stopping": "Interrompendo",
+    "stopped": "Interrompido"
+  }
+}
