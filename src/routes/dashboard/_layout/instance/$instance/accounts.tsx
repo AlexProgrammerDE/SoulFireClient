@@ -94,6 +94,7 @@ const columns: ColumnDef<ProfileAccount>[] = [
 ];
 
 function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
+  const { t } = useTranslation('instance');
   const queryClient = useQueryClient();
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);
@@ -161,21 +162,24 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           return accountsToAdd.length;
         })(),
         {
-          loading: 'Importing accounts...',
+          loading: t('account.listImportToast.loading'),
           success: (r) => {
             if (r === 0) {
-              return 'Failed to import any accounts';
+              return t('account.listImportToast.allFailed');
             } else if (r !== textSplit.length) {
-              return `Imported ${r} accounts, failed to import ${
-                textSplit.length - r
-              } accounts`;
+              return t('account.listImportToast.someFailed', {
+                count: r,
+                failed: textSplit.length - r,
+              });
             } else {
-              return `${r} accounts imported!`;
+              return t('account.listImportToast.noneFailed', {
+                count: r,
+              });
             }
           },
           error: (e) => {
             console.error(e);
-            return 'Failed to import accounts';
+            return t('account.listImportToast.error');
           },
         },
       );

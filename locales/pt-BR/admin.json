@@ -3,11 +3,11 @@
     "welcome": "",
     "instancesChart": {
       "title": "",
-      "instances": "",
+      "instances": "Instâncias",
       "label": {
         "state": "",
         "active": "",
-        "stopped": "",
+        "stopped": "Interrompido",
         "other": ""
       }
     },
@@ -16,8 +16,8 @@
       "users": "",
       "label": {
         "role": "",
-        "user": "",
-        "admin": "",
+        "user": "Usuário",
+        "admin": "Admin",
         "other": ""
       }
     }
