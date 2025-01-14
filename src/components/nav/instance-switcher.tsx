@@ -33,17 +33,15 @@ import { InstanceInfoContext } from '@/components/providers/instance-info-contex
 import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
 import {
   convertToInstanceProto,
-  getEnumKeyByValue,
   ProfileRoot,
+  translateInstanceState,
 } from '@/lib/types.ts';
-import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { Link, useNavigate } from '@tanstack/react-router';
 import {
   data2blob,
   hasGlobalPermission,
   hasInstancePermission,
   isTauri,
-  toCapitalizedWords,
 } from '@/lib/utils.ts';
 import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.tsx';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -68,7 +66,7 @@ import DynamicIcon, {
 import { useTranslation } from 'react-i18next';
 
 export function InstanceSwitcher() {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
@@ -128,9 +126,7 @@ export function InstanceSwitcher() {
     },
   });
 
-  const capitalizedState = toCapitalizedWords(
-    getEnumKeyByValue(InstanceState, instanceInfo.state),
-  );
+  const capitalizedState = translateInstanceState(i18n, instanceInfo.state);
   return (
     <SidebarMenu>
       <SidebarMenuItem>

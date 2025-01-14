@@ -1,9 +1,7 @@
 import { createFileRoute, Link } from '@tanstack/react-router';
 import * as React from 'react';
 import { useContext } from 'react';
-import { InstanceState } from '@/generated/soulfire/instance.ts';
-import { getEnumKeyByValue } from '@/lib/types.ts';
-import { toCapitalizedWords } from '@/lib/utils.ts';
+import { translateInstanceState } from '@/lib/types.ts';
 import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import {
@@ -23,7 +21,7 @@ export const Route = createFileRoute('/dashboard/_layout/user/instances')({
 });
 
 function InstanceSelectPage() {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const instanceList = useContext(InstanceListContext);
 
   return (
@@ -59,9 +57,7 @@ function InstanceSelectPage() {
                 <CardHeader>
                   <CardTitle>{instance.friendlyName}</CardTitle>
                   <CardDescription className="font-semibold">
-                    {toCapitalizedWords(
-                      getEnumKeyByValue(InstanceState, instance.state),
-                    )}
+                    {translateInstanceState(i18n, instance.state)}
                   </CardDescription>
                 </CardHeader>
                 <CardHeader className="ml-auto">

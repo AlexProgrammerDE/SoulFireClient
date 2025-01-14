@@ -5,8 +5,12 @@ import {
 } from '@/generated/soulfire/common.ts';
 import { Value } from '@/generated/google/protobuf/struct.ts';
 import { JsonValue } from '@protobuf-ts/runtime/build/types/json-typings';
-import { InstanceConfig } from '@/generated/soulfire/instance.ts';
+import {
+  InstanceConfig,
+  InstanceState,
+} from '@/generated/soulfire/instance.ts';
 import { ServerConfig } from '@/generated/soulfire/server.ts';
+import { i18n } from 'i18next';
 
 export const LOCAL_STORAGE_SERVER_ADDRESS_KEY = 'server-address';
 export const LOCAL_STORAGE_SERVER_TOKEN_KEY = 'server-token';
@@ -28,6 +32,15 @@ export function getEnumKeyByValue<E extends object>(
   value: E[keyof E],
 ): keyof E {
   return Object.entries(enumObj).find(([, v]) => v === value)?.[0] as keyof E;
+}
+
+export function translateInstanceState(
+  i18n: i18n,
+  state: InstanceState,
+): string {
+  return i18n.t(
+    `instanceState.${getEnumKeyByValue(InstanceState, state).toLowerCase()}`,
+  );
 }
 
 export type ProfileAccount = {
