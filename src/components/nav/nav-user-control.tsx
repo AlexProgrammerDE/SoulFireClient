@@ -109,7 +109,9 @@ export function NavUserControl() {
                     src={clientInfo.gravatarUrl}
                     alt={clientInfo.username}
                   />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg">
+                    {clientInfo.username.slice(0, 2).toUpperCase()}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
@@ -124,7 +126,7 @@ export function NavUserControl() {
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
                   <PaintRollerIcon />
-                  Theme
+                  {t('userSidebar.theme.title')}
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
                   <DropdownMenuSubContent>
@@ -134,15 +136,15 @@ export function NavUserControl() {
                     >
                       <DropdownMenuRadioItem value="system">
                         <SunMoonIcon className="h-4 mr-1" />
-                        System
+                        {t('userSidebar.theme.system')}
                       </DropdownMenuRadioItem>
                       <DropdownMenuRadioItem value="dark">
                         <MoonIcon className="h-4 mr-1" />
-                        Dark
+                        {t('userSidebar.theme.dark')}
                       </DropdownMenuRadioItem>
                       <DropdownMenuRadioItem value="light">
                         <SunIcon className="h-4 mr-1" />
-                        Light
+                        {t('userSidebar.theme.light')}
                       </DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>
                   </DropdownMenuSubContent>
@@ -151,7 +153,7 @@ export function NavUserControl() {
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
                   <LaptopMinimalIcon />
-                  Terminal
+                  {t('userSidebar.terminal.title')}
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
                   <DropdownMenuSubContent>
@@ -214,7 +216,7 @@ export function NavUserControl() {
                     }}
                   >
                     <FolderIcon />
-                    Config directory
+                    {t('userSidebar.configDir')}
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => {
@@ -224,7 +226,7 @@ export function NavUserControl() {
                     }}
                   >
                     <FolderIcon />
-                    Data directory
+                    {t('userSidebar.dataDir')}
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
               </>
@@ -237,7 +239,7 @@ export function NavUserControl() {
                 }}
               >
                 <CircleHelpIcon />
-                About
+                {t('userSidebar.about')}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
@@ -255,17 +257,17 @@ export function NavUserControl() {
                       });
                     };
                     toast.promise(disconnect(), {
-                      loading: 'Disconnecting...',
-                      success: 'Disconnected',
+                      loading: t('userSidebar.logOutToast.loading'),
+                      success: t('userSidebar.logOutToast.success'),
                       error: (e) => {
                         console.error(e);
-                        return 'Failed to disconnect';
+                        return t('userSidebar.logOutToast.error');
                       },
                     });
                   }}
                 >
                   <LogOutIcon />
-                  Log out
+                  {t('userSidebar.logOut')}
                 </DropdownMenuItem>
               )}
               <DropdownMenuItem
@@ -278,7 +280,7 @@ export function NavUserControl() {
                 }}
               >
                 <PowerIcon />
-                Exit
+                {t('userSidebar.exit')}
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

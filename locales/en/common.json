@@ -206,7 +206,26 @@
     "adminOverview": "Admin Overview",
     "adminConsole": "Admin Console",
     "serverSettings": "Server Settings",
-    "devSettings": "Dev Settings"
+    "devSettings": "Dev Settings",
+    "theme": {
+      "title": "Theme",
+      "system": "System",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "terminal": {
+      "title": "Terminal"
+    },
+    "configDir": "Config directory",
+    "dataDir": "Data directory",
+    "about": "About",
+    "logOut": "Log out",
+    "logOutToast": {
+        "loading": "Logging out...",
+        "success": "Logged out",
+        "error": "Failed to log out"
+    },
+    "exit": "Exit"
   },
   "sidebar": {
     "documentation": "Documentation",
