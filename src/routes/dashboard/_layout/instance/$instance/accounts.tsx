@@ -390,7 +390,7 @@ function AccountSettings() {
   return (
     <InstancePageLayout
       extraCrumbs={[t('breadcrumbs.settings')]}
-      pageName="Account Settings"
+      pageName={t('pageName.accountSettings')}
     >
       <div className="grow flex h-full w-full flex-col gap-4 pb-4 max-w-4xl">
         <div className="flex flex-col gap-2">

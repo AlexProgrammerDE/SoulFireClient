@@ -35,7 +35,7 @@ function Console() {
     <UserPageLayout
       showUserCrumb={false}
       extraCrumbs={[t('breadcrumbs.admin')]}
-      pageName="Console"
+      pageName={t('pageName.console')}
     >
       <div className="flex flex-col gap-2">
         <TerminalComponent scope={scope} />

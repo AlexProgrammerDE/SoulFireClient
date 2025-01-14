@@ -42,7 +42,7 @@ function Console() {
   return (
     <InstancePageLayout
       extraCrumbs={[t('breadcrumbs.controls')]}
-      pageName="Console"
+      pageName={t('pageName.console')}
     >
       <div className="grow flex h-full w-full flex-col gap-2 pb-4">
         <div className="flex flex-col gap-2">

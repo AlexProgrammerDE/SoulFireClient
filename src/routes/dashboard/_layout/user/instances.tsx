@@ -16,21 +16,25 @@ import { SearchXIcon } from 'lucide-react';
 import DynamicIcon, {
   convertUnsafeIconName,
 } from '@/components/dynamic-icon.tsx';
+import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/dashboard/_layout/user/instances')({
   component: InstanceSelectPage,
 });
 
 function InstanceSelectPage() {
+  const { t } = useTranslation('common');
   const instanceList = useContext(InstanceListContext);
 
   return (
-    <UserPageLayout showUserCrumb={true} pageName="Instances">
+    <UserPageLayout showUserCrumb={true} pageName={t('pageName.instances')}>
       {instanceList.instances.length == 0 ? (
         <div className="flex flex-1 size-full">
           <div className="m-auto flex flex-row gap-2">
             <SearchXIcon className="size-7 m-auto" />
-            <h1 className="text-xl font-bold m-auto">No instances found</h1>
+            <h1 className="text-xl font-bold m-auto">
+              {t('noInstancesFound')}
+            </h1>
           </div>
         </div>
       ) : (

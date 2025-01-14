@@ -221,9 +221,9 @@
     "about": "About",
     "logOut": "Log out",
     "logOutToast": {
-        "loading": "Logging out...",
-        "success": "Logged out",
-        "error": "Failed to log out"
+      "loading": "Logging out...",
+      "success": "Logged out",
+      "error": "Failed to log out"
     },
     "exit": "Exit"
   },
@@ -236,5 +236,13 @@
     "admin": "Admin",
     "settings": "Settings",
     "controls": "Controls"
+  },
+  "noInstancesFound": "No instances found",
+  "pageName": {
+    "console": "Console",
+    "instances": "Instances",
+    "proxySettings": "Proxy Settings",
+    "overview": "Overview",
+    "accountSettings": "Account Settings"
   }
 }
