@@ -221,7 +221,7 @@ importers:
         version: 1.95.5(@tanstack/react-router@1.95.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@tanstack/router-plugin':
         specifier: ^1.45.8
-        version: 1.95.5(@rsbuild/core@1.1.13)(@tanstack/react-router@1.95.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(vite@5.4.8(@types/node@22.10.5)(terser@5.37.0))(webpack@5.95.0)
+        version: 1.95.5(@rsbuild/core@1.1.13)(@tanstack/react-router@1.95.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(vite@5.4.8(@types/node@22.10.6)(terser@5.37.0))(webpack@5.95.0)
       '@tauri-apps/cli':
         specifier: 2.2.4
         version: 2.2.4
@@ -239,7 +239,7 @@ importers:
         version: 5.13.9
       '@types/node':
         specifier: ^22.0.0
-        version: 22.10.5
+        version: 22.10.6
       '@types/react':
         specifier: ^19.0.0
         version: 19.0.6
@@ -257,7 +257,7 @@ importers:
         version: 8.20.0(eslint@9.18.0(jiti@1.21.7))(typescript@5.7.3)
       autoprefixer:
         specifier: ^10.0.1
-        version: 10.4.20(postcss@8.4.49)
+        version: 10.4.20(postcss@8.5.0)
       cross-env:
         specifier: ^7.0.3
         version: 7.0.3
@@ -290,7 +290,7 @@ importers:
         version: 15.3.0
       postcss:
         specifier: ^8
-        version: 8.4.49
+        version: 8.5.0
       prettier:
         specifier: ^3.3.3
         version: 3.4.2
@@ -1844,8 +1844,8 @@ packages:
   '@types/loadable__component@5.13.9':
     resolution: {integrity: sha512-QWOtIkwZqHNdQj3nixQ8oyihQiTMKZLk/DNuvNxMSbTfxf47w+kqcbnxlUeBgAxdOtW0Dh48dTAIp83iJKtnrQ==}
 
-  '@types/node@22.10.5':
-    resolution: {integrity: sha512-F8Q+SeGimwOo86fiovQh8qiXfFEh2/ocYv7tU5pJ3EXMSSxk1Joj5wefpFK2fHTf/N6HKGSxIDBT9f3gCxXPkQ==}
+  '@types/node@22.10.6':
+    resolution: {integrity: sha512-qNiuwC4ZDAUNcY47xgaSuS92cjf8JbSUoaKS77bmLG1rU7MlATVSiw/IlrjtIyyskXBZ8KkNfjK/P5na7rgXbQ==}
 
   '@types/react-dom@19.0.3':
     resolution: {integrity: sha512-0Knk+HJiMP/qOZgMyNFamlIjw9OFCsyC2ZbigmEEyXXixgre6IQpm/4V+r3qH4GC1JPvRJKInw+on2rV6YZLeA==}
@@ -3182,8 +3182,8 @@ packages:
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
-  nanoid@3.3.7:
-    resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
+  nanoid@3.3.8:
+    resolution: {integrity: sha512-WNLf5Sd8oZxOm+TzppcYk8gVOgP+l58xNy58D0nbUnOxOWRWvlcCV4kUF7ltmI6PsrLl/BgKEyS4mqsGChFN0w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
@@ -3396,8 +3396,8 @@ packages:
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
 
-  postcss@8.4.49:
-    resolution: {integrity: sha512-OCVPnIObs4N29kxTjzLfUryOkvZEq+pf8jTF0lg8E7uETuWHA+v7j3c/xJmiqpX450191LlmZfUKkXxkTry7nA==}
+  postcss@8.5.0:
+    resolution: {integrity: sha512-27VKOqrYfPncKA2NrFOVhP5MGAfHKLYn/Q0mz9cNQyRAKYi3VNHwYU2qKKqPCqgBmeeJ0uAFB56NumXZ5ZReXg==}
     engines: {node: ^10 || ^12 || >=14}
 
   prelude-ls@1.2.1:
@@ -4539,7 +4539,7 @@ snapshots:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 22.10.5
+      '@types/node': 22.10.6
       '@types/yargs': 17.0.33
       chalk: 4.1.2
 
@@ -5405,7 +5405,7 @@ snapshots:
     optionalDependencies:
       '@tanstack/react-router': 1.95.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
-  '@tanstack/router-plugin@1.95.5(@rsbuild/core@1.1.13)(@tanstack/react-router@1.95.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(vite@5.4.8(@types/node@22.10.5)(terser@5.37.0))(webpack@5.95.0)':
+  '@tanstack/router-plugin@1.95.5(@rsbuild/core@1.1.13)(@tanstack/react-router@1.95.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(vite@5.4.8(@types/node@22.10.6)(terser@5.37.0))(webpack@5.95.0)':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/generator': 7.26.5
@@ -5427,7 +5427,7 @@ snapshots:
       zod: 3.24.1
     optionalDependencies:
       '@rsbuild/core': 1.1.13
-      vite: 5.4.8(@types/node@22.10.5)(terser@5.37.0)
+      vite: 5.4.8(@types/node@22.10.6)(terser@5.37.0)
       webpack: 5.95.0
     transitivePeerDependencies:
       - '@tanstack/react-router'
@@ -5599,7 +5599,7 @@ snapshots:
     dependencies:
       '@types/react': 19.0.6
 
-  '@types/node@22.10.5':
+  '@types/node@22.10.6':
     dependencies:
       undici-types: 6.20.0
 
@@ -5953,14 +5953,14 @@ snapshots:
       get-intrinsic: 1.2.7
       is-array-buffer: 3.0.5
 
-  autoprefixer@10.4.20(postcss@8.4.49):
+  autoprefixer@10.4.20(postcss@8.5.0):
     dependencies:
       browserslist: 4.23.3
       caniuse-lite: 1.0.30001646
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.1
-      postcss: 8.4.49
+      postcss: 8.5.0
       postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.7:
@@ -7022,7 +7022,7 @@ snapshots:
   jest-util@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 22.10.5
+      '@types/node': 22.10.6
       chalk: 4.1.2
       ci-info: 3.9.0
       graceful-fs: 4.2.11
@@ -7030,14 +7030,14 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 22.10.5
+      '@types/node': 22.10.6
       merge-stream: 2.0.0
       supports-color: 8.1.1
     optional: true
 
   jest-worker@29.7.0:
     dependencies:
-      '@types/node': 22.10.5
+      '@types/node': 22.10.6
       jest-util: 29.7.0
       merge-stream: 2.0.0
       supports-color: 8.1.1
@@ -7207,7 +7207,7 @@ snapshots:
       object-assign: 4.1.1
       thenify-all: 1.6.0
 
-  nanoid@3.3.7: {}
+  nanoid@3.3.8: {}
 
   natural-compare@1.4.0: {}
 
@@ -7365,28 +7365,28 @@ snapshots:
 
   possible-typed-array-names@1.0.0: {}
 
-  postcss-import@15.1.0(postcss@8.4.49):
+  postcss-import@15.1.0(postcss@8.5.0):
     dependencies:
-      postcss: 8.4.49
+      postcss: 8.5.0
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
       resolve: 1.22.9
 
-  postcss-js@4.0.1(postcss@8.4.49):
+  postcss-js@4.0.1(postcss@8.5.0):
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.4.49
+      postcss: 8.5.0
 
-  postcss-load-config@4.0.2(postcss@8.4.49):
+  postcss-load-config@4.0.2(postcss@8.5.0):
     dependencies:
       lilconfig: 3.1.3
       yaml: 2.6.1
     optionalDependencies:
-      postcss: 8.4.49
+      postcss: 8.5.0
 
-  postcss-nested@6.2.0(postcss@8.4.49):
+  postcss-nested@6.2.0(postcss@8.5.0):
     dependencies:
-      postcss: 8.4.49
+      postcss: 8.5.0
       postcss-selector-parser: 6.1.2
 
   postcss-selector-parser@6.1.2:
@@ -7396,9 +7396,9 @@ snapshots:
 
   postcss-value-parser@4.2.0: {}
 
-  postcss@8.4.49:
+  postcss@8.5.0:
     dependencies:
-      nanoid: 3.3.7
+      nanoid: 3.3.8
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -7895,11 +7895,11 @@ snapshots:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.1.1
-      postcss: 8.4.49
-      postcss-import: 15.1.0(postcss@8.4.49)
-      postcss-js: 4.0.1(postcss@8.4.49)
-      postcss-load-config: 4.0.2(postcss@8.4.49)
-      postcss-nested: 6.2.0(postcss@8.4.49)
+      postcss: 8.5.0
+      postcss-import: 15.1.0(postcss@8.5.0)
+      postcss-js: 4.0.1(postcss@8.5.0)
+      postcss-load-config: 4.0.2(postcss@8.5.0)
+      postcss-nested: 6.2.0(postcss@8.5.0)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.9
       sucrase: 3.35.0
@@ -8116,13 +8116,13 @@ snapshots:
       d3-time: 3.1.0
       d3-timer: 3.0.1
 
-  vite@5.4.8(@types/node@22.10.5)(terser@5.37.0):
+  vite@5.4.8(@types/node@22.10.6)(terser@5.37.0):
     dependencies:
       esbuild: 0.21.5
-      postcss: 8.4.49
+      postcss: 8.5.0
       rollup: 4.30.1
     optionalDependencies:
-      '@types/node': 22.10.5
+      '@types/node': 22.10.6
       fsevents: 2.3.3
       terser: 5.37.0
     optional: true
