@@ -1,4 +1,4 @@
 files:
-  - source: /locales/en/*.json
+  - source: /locales/en-US/*.json
     translation: /locales/%locale%/%original_file_name%
     type: i18next_json

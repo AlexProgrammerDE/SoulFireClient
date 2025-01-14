@@ -20,7 +20,7 @@ void i18n
   .use(initReactI18next)
   .init({
     defaultNS: 'common',
-    fallbackLng: 'en',
+    fallbackLng: 'en-US',
     debug: true,
 
     supportedLngs: APP_LOCALES.split(','),

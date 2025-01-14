@@ -26,7 +26,7 @@ const locales = fs
   .join(',');
 
 const namespaces = fs
-  .readdirSync('./locales/en', { withFileTypes: true })
+  .readdirSync('./locales/en-US', { withFileTypes: true })
   .filter((dirent) => dirent.isFile())
   .map((dirent) => dirent.name.split('.')[0])
   .join(',');

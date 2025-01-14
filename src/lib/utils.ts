@@ -110,29 +110,22 @@ export function getCookie(name: string) {
   if (parts.length === 2) return parts.pop()?.split(';').shift();
 }
 
-export function languageEmoji(language: string) {
-  if (language === 'lol') {
+export function languageEmoji(locale: string) {
+  if (locale === 'lol-US') {
     return '🐱';
   }
 
-  if (language === 'en') {
-    language = 'gb';
-  } else if (language === 'cs') {
-    language = 'cz';
-  }
-
-  // Convert the language code to uppercase (ISO 3166-1 alpha-2 format)
-  const countryCode = language.toUpperCase();
-
-  // Map each letter to the corresponding regional indicator symbol
+  const countryCode = locale.split('-')[1];
+  if (!countryCode) return '';
   return countryCode
+    .toUpperCase()
     .split('')
-    .map((char) => String.fromCodePoint(0x1f1e6 + char.charCodeAt(0) - 65))
+    .map((char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
     .join('');
 }
 
 export function getLanguageName(languageCode: string, displayLanguage: string) {
-  if (languageCode === 'lol') {
+  if (languageCode === 'lol-US') {
     return 'LOLCAT';
   }
 
