@@ -3,7 +3,7 @@
     "image": {
       "alt": "Logo SoulFire"
     },
-    "title": "SoulFire"
+    "title": ""
   },
   "connect": {
     "title": "Conecte-se a um servidor SoulFire",
@@ -35,10 +35,10 @@
       "address": {
         "title": "Endereço",
         "description": "Endereço do servidor ao qual você deseja se conectar.",
-        "placeholder": "http://localhost:38765"
+        "placeholder": ""
       },
       "token": {
-        "title": "Token",
+        "title": "",
         "placeholder": "Token Secreto",
         "description": "Token para autenticação com o servidor."
       },
