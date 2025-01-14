@@ -30,12 +30,12 @@ export function PluginInfoCard(props: {
           </Badge>
           <Badge variant="secondary">
             {t('pluginCard.author', {
-              version: props.pluginInfo.author,
+              author: props.pluginInfo.author,
             })}
           </Badge>
           <Badge variant="secondary">
             {t('pluginCard.license', {
-              version: props.pluginInfo.license,
+              license: props.pluginInfo.license,
             })}
           </Badge>
           <a
@@ -44,8 +44,8 @@ export function PluginInfoCard(props: {
             target="_blank"
           >
             <Badge variant="secondary">
-              {t('pluginCard.version', {
-                version: props.pluginInfo.website,
+              {t('pluginCard.website', {
+                website: props.pluginInfo.website,
               })}
             </Badge>
           </a>
