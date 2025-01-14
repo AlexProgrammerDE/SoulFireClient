@@ -1,8 +1,8 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
+use crate::utils::SFAnyError;
 use discord_presence::{Client, Event};
 use log::{debug, error, info};
-use crate::utils::SFAnyError;
 
 const CLIENT_ID: u64 = 1248603974475583608;
 pub fn load_discord_rpc() -> Result<(), SFAnyError> {
@@ -20,8 +20,7 @@ pub fn load_discord_rpc() -> Result<(), SFAnyError> {
 
   let start = SystemTime::now();
   let epoch_secs = start
-    .duration_since(UNIX_EPOCH)
-    .expect("Time went backwards")
+    .duration_since(UNIX_EPOCH)?
     .as_secs();
   discord_rpc.block_until_event(Event::Ready)?;
   if let Err(why) = discord_rpc.set_activity(|a| {

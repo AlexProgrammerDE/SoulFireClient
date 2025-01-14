@@ -186,7 +186,7 @@ pub async fn run_integrated_server(
       soul_fire_version_file.to_str().ok_or(SFError::PathCouldNotBeConverted)?,
     ]);
 
-  let (mut rx, mut child) = command.spawn().expect("Failed to spawn sidecar");
+  let (mut rx, mut child) = command.spawn()?;
 
   // Print all rx messages
   while let Some(message) = rx.recv().await {
@@ -202,9 +202,7 @@ pub async fn run_integrated_server(
     }
   }
 
-  child
-    .write("generate-token\n".as_bytes())
-    .expect("Failed to write to dedicated server");
+  child.write("generate-token\n".as_bytes())?;
 
   let token: String = loop {
     if let Some(message) = rx.recv().await {

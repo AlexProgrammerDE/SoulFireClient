@@ -74,7 +74,7 @@ pub fn discover_casts(
 
 async fn discover_casts_async(app_handle: AppHandle) -> Result<(), SFAnyError> {
   info!("Discovering Cast Devices...");
-  let mdns = ServiceDaemon::new().expect("Failed to create mDNS daemon.");
+  let mdns = ServiceDaemon::new()?;
 
   let receiver = mdns.browse(SERVICE_TYPE)?;
 

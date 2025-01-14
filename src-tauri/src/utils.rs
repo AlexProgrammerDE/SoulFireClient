@@ -59,6 +59,8 @@ pub enum SFAnyError {
   SerdeError(#[from] serde_json::Error),
   #[error(transparent)]
   SendError(#[from] std::sync::mpsc::SendError<String>),
+  #[error(transparent)]
+  SystemTimeError(#[from] std::time::SystemTimeError),
 }
 
 impl serde::Serialize for SFAnyError {
