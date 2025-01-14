@@ -188,7 +188,15 @@
     "loadFromFile": "Load from file",
     "profileSaved": "Profile saved",
     "saveProfile": "Save Profile",
-    "deleteInstance": "Delete Instance"
+    "deleteInstance": "Delete Instance",
+    "controlsGroup": "Controls",
+    "console": "Console",
+    "settingsGroup": "Settings",
+    "pluginSettings": "Plugin Settings",
+    "botSettings": "Bot Settings",
+    "accountSettings": "Account Settings",
+    "proxySettings": "Proxy Settings",
+    "aiSettings": "AI Settings"
   },
   "userSidebar": {
     "userGroup": "User",

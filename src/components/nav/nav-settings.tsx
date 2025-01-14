@@ -60,7 +60,7 @@ export function NavSettings({
 
   const navLinks: NavLinks = [
     {
-      title: 'Bot Settings',
+      title: t('instanceSidebar.botSettings'),
       icon: (props) => (
         <DynamicIcon
           {...props}
@@ -73,7 +73,7 @@ export function NavSettings({
       },
     },
     {
-      title: 'Account Settings',
+      title: t('instanceSidebar.accountSettings'),
       icon: (props) => (
         <DynamicIcon
           {...props}
@@ -86,7 +86,7 @@ export function NavSettings({
       },
     },
     {
-      title: 'Proxy Settings',
+      title: t('instanceSidebar.proxySettings'),
       icon: (props) => (
         <DynamicIcon
           {...props}
@@ -99,7 +99,7 @@ export function NavSettings({
       },
     },
     {
-      title: 'AI Settings',
+      title: t('instanceSidebar.aiSettings'),
       icon: (props) => (
         <DynamicIcon
           {...props}
@@ -131,7 +131,9 @@ export function NavSettings({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Settings</SidebarGroupLabel>
+      <SidebarGroupLabel>
+        {t('instanceSidebar.settingsGroup')}
+      </SidebarGroupLabel>
       <SidebarMenu>
         {navLinks.map((item) => (
           <SidebarMenuItem key={item.title}>
@@ -169,9 +171,9 @@ export function NavSettings({
               }}
               asChild
             >
-              <SidebarMenuButton tooltip="Plugin Settings">
+              <SidebarMenuButton tooltip={t('instanceSidebar.pluginSettings')}>
                 <BlocksIcon />
-                <span>Plugin Settings</span>
+                <span>{t('instanceSidebar.pluginSettings')}</span>
                 <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
               </SidebarMenuButton>
             </CollapsibleTrigger>

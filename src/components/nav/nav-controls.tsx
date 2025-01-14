@@ -11,6 +11,7 @@ import {
 import { Link, LinkProps } from '@tanstack/react-router';
 import { ReactNode, useContext } from 'react';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { useTranslation } from 'react-i18next';
 
 type NavLinks = {
   title: string;
@@ -19,11 +20,12 @@ type NavLinks = {
 }[];
 
 export function NavControls() {
+  const { t } = useTranslation('common');
   const instanceInfo = useContext(InstanceInfoContext);
 
   const navLinks: NavLinks = [
     {
-      title: 'Console',
+      title: t('instanceSidebar.console'),
       icon: TerminalIcon,
       linkProps: {
         to: '/dashboard/instance/$instance/console',
@@ -34,7 +36,9 @@ export function NavControls() {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Controls</SidebarGroupLabel>
+      <SidebarGroupLabel>
+        {t('instanceSidebar.controlsGroup')}
+      </SidebarGroupLabel>
       <SidebarMenu>
         {navLinks.map((item) => (
           <SidebarMenuItem key={item.title}>
