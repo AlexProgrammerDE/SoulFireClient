@@ -1,4 +1,5 @@
 {
+  "locale": "",
   "error": {
     "noAddressOrToken": "No servr addres or token findz",
     "page": {
@@ -41,6 +42,11 @@
         },
         "cancel": "",
         "create": ""
+      },
+      "createToast": {
+        "loading": "",
+        "success": "",
+        "error": ""
       }
     },
     "import": {
@@ -120,6 +126,8 @@
     "website": ""
   },
   "settingsPage": {
+    "entryNotFound": "",
+    "namespacesNotFound": "",
     "stringList": {
       "placeholder": "",
       "add": "",
@@ -144,5 +152,97 @@
   },
   "uiSidebar": {
     "toggle": ""
+  },
+  "castMenu": {
+    "title": "",
+    "disconnected": "",
+    "alreadyConnected": "",
+    "connectToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "noDevices": "",
+    "broadcastLabel": "",
+    "broadcastToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
+  },
+  "instanceSidebar": {
+    "backToDashboard": "",
+    "deleteToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "instancesGroup": "",
+    "createInstance": "",
+    "loadProfileToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "loadProfile": "",
+    "loadFromFile": "",
+    "profileSaved": "",
+    "saveProfile": "",
+    "deleteInstance": "",
+    "controlsGroup": "",
+    "console": "",
+    "settingsGroup": "",
+    "pluginSettings": "",
+    "botSettings": "",
+    "accountSettings": "",
+    "proxySettings": "",
+    "aiSettings": ""
+  },
+  "userSidebar": {
+    "userGroup": "",
+    "instances": "",
+    "createInstance": "",
+    "adminGroup": "",
+    "adminOverview": "",
+    "adminConsole": "",
+    "serverSettings": "",
+    "devSettings": "",
+    "theme": {
+      "title": "",
+      "system": "",
+      "light": "",
+      "dark": ""
+    },
+    "terminal": {
+      "title": ""
+    },
+    "configDir": "",
+    "dataDir": "",
+    "about": "",
+    "logOut": "Walk out",
+    "logOutToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "exit": ""
+  },
+  "sidebar": {
+    "documentation": "",
+    "buyMeACoffee": "",
+    "support": ""
+  },
+  "breadcrumbs": {
+    "admin": "",
+    "settings": "",
+    "controls": ""
+  },
+  "noInstancesFound": "",
+  "pageName": {
+    "console": "",
+    "instances": "",
+    "proxySettings": "",
+    "overview": "",
+    "accountSettings": ""
   }
 }

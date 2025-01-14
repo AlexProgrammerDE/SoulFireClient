@@ -1,4 +1,5 @@
 {
+  "locale": "Локализация",
   "error": {
     "noAddressOrToken": "Адрес сервера или токен не найдены",
     "page": {
@@ -41,97 +42,104 @@
         },
         "cancel": "Отмена",
         "create": "Создать"
+      },
+      "createToast": {
+        "loading": "",
+        "success": "",
+        "error": ""
       }
     },
     "import": {
       "main": {
-        "fromFile": "",
-        "fromUrl": "",
-        "firstClipboardItem": "",
-        "fromClipboard": "",
+        "fromFile": "Из файла",
+        "fromUrl": "Из URL-адреса",
+        "firstClipboardItem": "У вас было несколько элементов в буфере обмена, но импортировался только первый элемент.",
+        "fromClipboard": "Из буфера обмена",
         "textarea": {
-          "placeholder": "",
-          "submit": ""
+          "placeholder": "Вставьте текст суда...",
+          "submit": "Загрузить из текста"
         }
       },
       "url": {
         "description": "Загрузка с URL заставит сервер SoulFire выполнить GET-запрос к целевому серверу и использовать полученный ответ в качестве данных.",
         "form": {
           "url": {
-            "placeholder": "",
-            "empty": ""
+            "placeholder": "Вставьте URL суда...",
+            "empty": "Пожалуйста, введите правильную ссылку"
           }
         },
-        "submit": "",
+        "submit": "Загрузить из URL",
         "toast": {
-          "loading": "",
-          "success": "",
-          "error": ""
+          "loading": "Загрузка данных...",
+          "success": "Данные загружены!",
+          "error": "Не удалось загрузить данные"
         }
       }
     }
   },
   "commandInput": {
-    "placeholder": ""
+    "placeholder": "Введите команду"
   },
   "controls": {
-    "start": "",
-    "resume": "",
-    "pause": "",
-    "stop": "",
+    "start": "Запуск",
+    "resume": "Возобновить",
+    "pause": "Пауза",
+    "stop": "Остановить",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Запуск атаки...",
+      "success": "Атака успешно началась",
+      "error": "Не удалось начать атаку"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Возобновление атаки...",
+      "success": "Атака успешно возобновлена",
+      "error": "Не удалось возобновить атаку"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Приостановка атаки...",
+      "success": "Атака успешно приостановлена",
+      "error": "Не удалось возобновить атаку"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Прекращение атаки...",
+      "success": "Атака успешно остановлена",
+      "error": "Не удалось остановить атаку"
     }
   },
   "icon": {
-    "invalidName": ""
+    "invalidName": "Недопустимое имя иконки: {{name}}"
   },
   "dataTable": {
-    "noResults": "",
-    "rowsSelected": "",
-    "rowsPerPage": "",
-    "currentPage": "",
-    "goFirst": "",
-    "goPrevious": "",
-    "goNext": "",
-    "goLast": ""
+    "noResults": "Нет данных.",
+    "rowsSelected": "Выбрано {{amount}} из {{total}} строк",
+    "rowsPerPage": "Строк на странице",
+    "currentPage": "Страница {{page}} из {{total}}",
+    "goFirst": "Перейти на первую страницу",
+    "goPrevious": "Вернуться на предыдущую страницу",
+    "goNext": "Перейти на следующую страницу",
+    "goLast": "Перейти на последнюю страницу"
   },
   "pluginCard": {
-    "version": "",
-    "author": "",
-    "license": "",
-    "website": ""
+    "version": "Версия: {{version}}",
+    "author": "Автор: {{author}}",
+    "license": "Лицензия: {{license}}",
+    "website": "Сайт"
   },
   "settingsPage": {
+    "entryNotFound": "",
+    "namespacesNotFound": "",
     "stringList": {
-      "placeholder": "",
-      "add": "",
-      "remove": ""
+      "placeholder": "Добавить новую запись...",
+      "add": "Добавить",
+      "remove": "Удалить"
     }
   },
   "terminal": {
-    "noLogs": "",
-    "demo-1": "",
-    "demo-2": "",
-    "demo-3": "",
-    "demo-4": ""
+    "noLogs": "🧙 Похоже, нет записей для отображения; попробуйте выполнить несколько команд!",
+    "demo-1": "Добро пожаловать в демонстрационный режим! 🧪",
+    "demo-2": "Это экземпляр SoulFire только для чтения",
+    "demo-3": "Ознакомьтесь со всеми меню и функциями перед установкой SoulFire :D",
+    "demo-4": "Не стесняйтесь присоединиться к нашему серверу Discord: https://soulfiremc.com/discord"
   },
   "uiBreadcrumb": {
     "more": ""
@@ -144,5 +152,97 @@
   },
   "uiSidebar": {
     "toggle": ""
+  },
+  "castMenu": {
+    "title": "Транслировать экран",
+    "disconnected": "Отключен от {{device}}",
+    "alreadyConnected": "Уже подключен к {{device}}",
+    "connectToast": {
+      "loading": "Подключение к {{device}}...",
+      "success": "Подключено к {{device}}",
+      "error": "Не удалось подключиться к {{device}}"
+    },
+    "noDevices": "Устройства не найдены",
+    "broadcastLabel": "Тест трансляции",
+    "broadcastToast": {
+      "loading": "Транслирование сообщения...",
+      "success": "Сообщение отправлено!",
+      "error": "Не удалось отправить сообщение"
+    }
+  },
+  "instanceSidebar": {
+    "backToDashboard": "Назад на главную панель",
+    "deleteToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "instancesGroup": "",
+    "createInstance": "",
+    "loadProfileToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "loadProfile": "",
+    "loadFromFile": "",
+    "profileSaved": "",
+    "saveProfile": "",
+    "deleteInstance": "",
+    "controlsGroup": "",
+    "console": "",
+    "settingsGroup": "",
+    "pluginSettings": "",
+    "botSettings": "",
+    "accountSettings": "",
+    "proxySettings": "",
+    "aiSettings": ""
+  },
+  "userSidebar": {
+    "userGroup": "",
+    "instances": "",
+    "createInstance": "",
+    "adminGroup": "",
+    "adminOverview": "",
+    "adminConsole": "",
+    "serverSettings": "",
+    "devSettings": "",
+    "theme": {
+      "title": "",
+      "system": "",
+      "light": "",
+      "dark": ""
+    },
+    "terminal": {
+      "title": ""
+    },
+    "configDir": "",
+    "dataDir": "",
+    "about": "",
+    "logOut": "Выйти",
+    "logOutToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "exit": ""
+  },
+  "sidebar": {
+    "documentation": "",
+    "buyMeACoffee": "",
+    "support": ""
+  },
+  "breadcrumbs": {
+    "admin": "",
+    "settings": "",
+    "controls": ""
+  },
+  "noInstancesFound": "",
+  "pageName": {
+    "console": "",
+    "instances": "",
+    "proxySettings": "",
+    "overview": "",
+    "accountSettings": ""
   }
 }

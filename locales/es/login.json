@@ -34,7 +34,7 @@
     "form": {
       "address": {
         "title": "Dirección de conexión",
-        "description": "La dirección IP del servidor a la que deseas conectarse",
+        "description": "La dirección IP del servidor a la que deseas conectarse.",
         "placeholder": ""
       },
       "token": {
