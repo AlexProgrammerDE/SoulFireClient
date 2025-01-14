@@ -1,0 +1,54 @@
+{
+  "header": {
+    "image": {
+      "alt": "SoulFire imagen logotipo"
+    },
+    "title": ""
+  },
+  "connect": {
+    "title": "Conectarse a un servidor SoulFire",
+    "description": "Seleccione el tipo de servidor de SoulFire al que conectar.",
+    "integrated": {
+      "title": "Servidor integrado (local)",
+      "description": "Ejecuta un servidor de SoulFire en tu equipo. La initialización es automática y no requiere configuración. (Requiere la aplicación de escritorio)"
+    },
+    "dedicated": {
+      "title": "Servidor dedicado (remoto)",
+      "description": "Se conecta a una instancia remota de un servidor de SoulFire. Necesitarás proporcionar la dirección de conexión y el token del servidor."
+    },
+    "demo": {
+      "title": "Servidor de demostración",
+      "description": "Simula un servidor virtual con datos de demostración. Este servidor es de sólo lectura y no puede hacer ningún cambio en él."
+    }
+  },
+  "integrated": {
+    "preparing": "",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
+  },
+  "dedicated": {
+    "description": "Introduzca la dirección de conexión y el token del servidor de SoulFire al que desea conectarse.",
+    "form": {
+      "address": {
+        "title": "Dirección de conexión",
+        "description": "La dirección IP del servidor a la que deseas conectarse.",
+        "placeholder": ""
+      },
+      "token": {
+        "title": "",
+        "placeholder": "Token secreto",
+        "description": "Token de autenticación con el servidor de SoulFire."
+      },
+      "back": "Volver",
+      "connect": "Conectarse"
+    }
+  },
+  "footer": {
+    "version": "Cliente SoulFire {{version}} - {{environment}}",
+    "preview": "¿En busca de una vista de prueba?",
+    "production": ""
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "header": {
+    "image": {
+      "alt": ""
+    },
+    "title": ""
+  },
+  "connect": {
+    "title": "",
+    "description": "",
+    "integrated": {
+      "title": "",
+      "description": ""
+    },
+    "dedicated": {
+      "title": "",
+      "description": ""
+    },
+    "demo": {
+      "title": "",
+      "description": ""
+    }
+  },
+  "integrated": {
+    "preparing": "",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
+  },
+  "dedicated": {
+    "description": "",
+    "form": {
+      "address": {
+        "title": "",
+        "description": "",
+        "placeholder": ""
+      },
+      "token": {
+        "title": "",
+        "placeholder": "",
+        "description": ""
+      },
+      "back": "",
+      "connect": ""
+    }
+  },
+  "footer": {
+    "version": "",
+    "preview": "",
+    "production": ""
+  }
+}

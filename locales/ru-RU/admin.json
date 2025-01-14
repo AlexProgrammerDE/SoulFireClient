@@ -1,0 +1,25 @@
+{
+  "overview": {
+    "welcome": "",
+    "instancesChart": {
+      "title": "",
+      "instances": "Экземпляры",
+      "label": {
+        "state": "",
+        "active": "",
+        "stopped": "",
+        "other": ""
+      }
+    },
+    "usersChart": {
+      "title": "",
+      "users": "",
+      "label": {
+        "role": "",
+        "user": "Пользователь",
+        "admin": "Администратор",
+        "other": ""
+      }
+    }
+  }
+}
