@@ -61,6 +61,8 @@ pub enum SFAnyError {
   SendError(#[from] std::sync::mpsc::SendError<String>),
   #[error(transparent)]
   SystemTimeError(#[from] std::time::SystemTimeError),
+  #[error(transparent)]
+  ShellError(#[from] tauri_plugin_shell::Error),
 }
 
 impl serde::Serialize for SFAnyError {
