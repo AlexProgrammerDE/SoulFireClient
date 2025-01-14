@@ -4,7 +4,7 @@ import { queryClientInstance } from '@/lib/query.ts';
 import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
 import { UserListResponse } from '@/generated/soulfire/user.ts';
 import * as React from 'react';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import { Label, Pie, PieChart } from 'recharts';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -23,7 +23,8 @@ import {
   InstanceState,
 } from '@/generated/soulfire/instance.ts';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
+import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/admin/_layout/overview',
@@ -86,18 +87,18 @@ export const Route = createFileRoute(
 
 const usersChartConfig = {
   users: {
-    label: 'Role',
+    label: <Trans i18nKey="admin:overview.usersChart.label.role" />,
   },
   user: {
-    label: 'User',
+    label: <Trans i18nKey="admin:overview.usersChart.label.user" />,
     color: 'hsl(var(--chart-2))',
   },
   admin: {
-    label: 'Admin',
+    label: <Trans i18nKey="admin:overview.usersChart.label.admin" />,
     color: 'hsl(var(--chart-1))',
   },
   other: {
-    label: 'Other',
+    label: <Trans i18nKey="admin:overview.usersChart.label.other" />,
     color: 'hsl(var(--chart-3))',
   },
 } satisfies ChartConfig;
@@ -107,6 +108,7 @@ function forType(userList: UserListResponse, type: UserRole) {
 }
 
 export function UsersChart(props: { userList: UserListResponse }) {
+  const { t } = useTranslation('admin');
   const chartData = useMemo(
     () => [
       {
@@ -130,7 +132,7 @@ export function UsersChart(props: { userList: UserListResponse }) {
   return (
     <Card className="flex flex-col border-0">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Total users on this server</CardTitle>
+        <CardTitle>{t('overview.usersChart.title')}</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -171,7 +173,7 @@ export function UsersChart(props: { userList: UserListResponse }) {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Users
+                          {t('overview.usersChart.users')}
                         </tspan>
                       </text>
                     );
@@ -188,23 +190,24 @@ export function UsersChart(props: { userList: UserListResponse }) {
 
 const instancesChartConfig = {
   instances: {
-    label: 'State',
+    label: <Trans i18nKey="admin:overview.instancesChart.label.state" />,
   },
   active: {
-    label: 'Active',
+    label: <Trans i18nKey="admin:overview.instancesChart.label.active" />,
     color: 'hsl(var(--chart-2))',
   },
   stopped: {
-    label: 'Stopped',
+    label: <Trans i18nKey="admin:overview.instancesChart.label.stopped" />,
     color: 'hsl(var(--chart-1))',
   },
   other: {
-    label: 'Other',
+    label: <Trans i18nKey="admin:overview.instancesChart.label.other" />,
     color: 'hsl(var(--chart-3))',
   },
 } satisfies ChartConfig;
 
 export function InstancesChart(props: { instanceList: InstanceListResponse }) {
+  const { t } = useTranslation('admin');
   const chartData = useMemo(
     () => [
       {
@@ -232,7 +235,7 @@ export function InstancesChart(props: { instanceList: InstanceListResponse }) {
   return (
     <Card className="flex flex-col border-0">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Total instances on this server</CardTitle>
+        <CardTitle>{t('overview.instancesChart.title')}</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -273,7 +276,7 @@ export function InstancesChart(props: { instanceList: InstanceListResponse }) {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Instances
+                          {t('overview.instancesChart.instances')}
                         </tspan>
                       </text>
                     );
@@ -292,6 +295,7 @@ function OverviewPage() {
   const { t } = useTranslation('common');
   const { infoQueryOptions } = Route.useRouteContext();
   const result = useQuery(infoQueryOptions);
+  const clientInfo = useContext(ClientInfoContext);
 
   if (result.isError) {
     throw result.error;
@@ -309,7 +313,9 @@ function OverviewPage() {
     >
       <div className="grow flex h-full w-full flex-col gap-2 py-2 pl-2">
         <h2 className="text-xl font-semibold">
-          Welcome to the admin dashboard
+          {t('admin:overview.welcome', {
+            name: clientInfo.username,
+          })}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2">
           <UsersChart userList={result.data.userList} />

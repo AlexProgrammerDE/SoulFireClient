@@ -1,0 +1,25 @@
+{
+  "overview": {
+    "welcome": "Welcome back, {{name}} 🧙",
+    "instancesChart": {
+      "title": "Total instances on this server",
+      "instances": "Instances",
+      "label": {
+        "state": "State",
+        "active": "Active",
+        "stopped": "Stopped",
+        "other": "Other"
+      }
+    },
+    "usersChart": {
+      "title": "Total users on this server",
+      "users": "Users",
+      "label": {
+        "role": "Role",
+        "user": "User",
+        "admin": "Admin",
+        "other": "Other"
+      }
+    }
+  }
+}
