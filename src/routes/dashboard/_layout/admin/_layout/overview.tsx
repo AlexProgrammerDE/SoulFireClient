@@ -84,29 +84,31 @@ export const Route = createFileRoute(
   component: OverviewPage,
 });
 
-const usersChartConfig = {
-  users: {
-    label: 'Role',
-  },
-  user: {
-    label: 'User',
-    color: 'hsl(var(--chart-2))',
-  },
-  admin: {
-    label: 'Admin',
-    color: 'hsl(var(--chart-1))',
-  },
-  other: {
-    label: 'Other',
-    color: 'hsl(var(--chart-3))',
-  },
-} satisfies ChartConfig;
-
 function forType(userList: UserListResponse, type: UserRole) {
   return userList.users.filter((user) => user.role === type).length;
 }
 
 export function UsersChart(props: { userList: UserListResponse }) {
+  const usersChartConfig = useMemo<ChartConfig>(
+    () => ({
+      users: {
+        label: 'Role',
+      },
+      user: {
+        label: 'User',
+        color: 'hsl(var(--chart-2))',
+      },
+      admin: {
+        label: 'Admin',
+        color: 'hsl(var(--chart-1))',
+      },
+      other: {
+        label: 'Other',
+        color: 'hsl(var(--chart-3))',
+      },
+    }),
+    [],
+  );
   const chartData = useMemo(
     () => [
       {
@@ -186,25 +188,27 @@ export function UsersChart(props: { userList: UserListResponse }) {
   );
 }
 
-const instancesChartConfig = {
-  instances: {
-    label: 'State',
-  },
-  active: {
-    label: 'Active',
-    color: 'hsl(var(--chart-2))',
-  },
-  stopped: {
-    label: 'Stopped',
-    color: 'hsl(var(--chart-1))',
-  },
-  other: {
-    label: 'Other',
-    color: 'hsl(var(--chart-3))',
-  },
-} satisfies ChartConfig;
-
 export function InstancesChart(props: { instanceList: InstanceListResponse }) {
+  const instancesChartConfig = useMemo<ChartConfig>(
+    () => ({
+      instances: {
+        label: 'State',
+      },
+      active: {
+        label: 'Active',
+        color: 'hsl(var(--chart-2))',
+      },
+      stopped: {
+        label: 'Stopped',
+        color: 'hsl(var(--chart-1))',
+      },
+      other: {
+        label: 'Other',
+        color: 'hsl(var(--chart-3))',
+      },
+    }),
+    [props.instanceList],
+  );
   const chartData = useMemo(
     () => [
       {
