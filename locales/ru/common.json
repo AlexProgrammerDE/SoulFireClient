@@ -44,9 +44,9 @@
         "create": "Создать"
       },
       "createToast": {
-        "loading": "",
-        "success": "",
-        "error": ""
+        "loading": "Создание экземпляра...",
+        "success": "Экземпляр успешно создан",
+        "error": "Ошибка создания экземпляра"
       }
     },
     "import": {
@@ -126,8 +126,8 @@
     "website": "Сайт"
   },
   "settingsPage": {
-    "entryNotFound": "",
-    "namespacesNotFound": "",
+    "entryNotFound": "Запись о настройках не найдена",
+    "namespacesNotFound": "Настройки пространства имен не найдены",
     "stringList": {
       "placeholder": "Добавить новую запись...",
       "add": "Добавить",
@@ -142,7 +142,7 @@
     "demo-4": "Не стесняйтесь присоединиться к нашему серверу Discord: https://soulfiremc.com/discord"
   },
   "uiBreadcrumb": {
-    "more": ""
+    "more": "Ещё"
   },
   "uiDialog": {
     "close": "Закрыть"
@@ -151,7 +151,7 @@
     "close": "Закрыть"
   },
   "uiSidebar": {
-    "toggle": ""
+    "toggle": "Переключить боковую панель"
   },
   "castMenu": {
     "title": "Транслировать экран",
@@ -173,76 +173,83 @@
   "instanceSidebar": {
     "backToDashboard": "Назад на главную панель",
     "deleteToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Удаление экземпляра...",
+      "success": "Экземпляр удален",
+      "error": "Не удалось удалить экземпляр"
     },
-    "instancesGroup": "",
-    "createInstance": "",
+    "instancesGroup": "Экземпляры",
+    "createInstance": "Создать экземпляр",
     "loadProfileToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Загрузка профиля...",
+      "success": "Профиль загружен",
+      "error": "Не удалось загрузить профиль"
     },
-    "loadProfile": "",
-    "loadFromFile": "",
-    "profileSaved": "",
-    "saveProfile": "",
-    "deleteInstance": "",
-    "controlsGroup": "",
-    "console": "",
-    "settingsGroup": "",
-    "pluginSettings": "",
-    "botSettings": "",
-    "accountSettings": "",
-    "proxySettings": "",
-    "aiSettings": ""
+    "loadProfile": "Загрузить профиль",
+    "loadFromFile": "Загрузить из файла",
+    "profileSaved": "Профиль сохранён",
+    "saveProfile": "Сохранить профиль",
+    "deleteInstance": "Удалить экземпляр",
+    "controlsGroup": "Управление",
+    "console": "Консоль",
+    "settingsGroup": "Настройки",
+    "pluginSettings": "Настройки плагинов",
+    "botSettings": "Настройки ботов",
+    "accountSettings": "Настройки аккаунтов",
+    "proxySettings": "Настройки прокси",
+    "aiSettings": "Настройки ИИ"
   },
   "userSidebar": {
-    "userGroup": "",
-    "instances": "",
-    "createInstance": "",
-    "adminGroup": "",
-    "adminOverview": "",
-    "adminConsole": "",
-    "serverSettings": "",
-    "devSettings": "",
+    "userGroup": "Пользователь",
+    "instances": "Экземпляры",
+    "createInstance": "Создать экземпляр",
+    "adminGroup": "Администратор",
+    "adminOverview": "Обзор Администратора",
+    "adminConsole": "Консоль администратора",
+    "serverSettings": "Настройки сервера",
+    "devSettings": "Настройки разработчика",
     "theme": {
-      "title": "",
-      "system": "",
-      "light": "",
-      "dark": ""
+      "title": "Тема",
+      "system": "Системная",
+      "light": "Светлая",
+      "dark": "Тёмная"
     },
     "terminal": {
-      "title": ""
+      "title": "Терминал"
     },
-    "configDir": "",
-    "dataDir": "",
-    "about": "",
+    "configDir": "Каталог с конфигурацией",
+    "dataDir": "Каталог с данными",
+    "about": "О программе",
     "logOut": "Выйти",
     "logOutToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Выходим...",
+      "success": "Вы вышли",
+      "error": "Не удалось выйти из системы"
     },
-    "exit": ""
+    "exit": "Выход"
   },
   "sidebar": {
-    "documentation": "",
-    "buyMeACoffee": "",
-    "support": ""
+    "documentation": "Документация",
+    "buyMeACoffee": "Купите мне чашечку кофе",
+    "support": "Поддержка"
   },
   "breadcrumbs": {
-    "admin": "",
-    "settings": "",
-    "controls": ""
+    "admin": "Администратор",
+    "settings": "Настройки",
+    "controls": "Управление"
   },
-  "noInstancesFound": "",
+  "noInstancesFound": "Экземпляры не найдены",
   "pageName": {
-    "console": "",
-    "instances": "",
-    "proxySettings": "",
-    "overview": "",
-    "accountSettings": ""
+    "console": "Консоль",
+    "instances": "Экземпляры",
+    "proxySettings": "Настройки прокси",
+    "overview": "Обзор",
+    "accountSettings": "Настройки аккаунтов"
+  },
+  "instanceState": {
+    "starting": "",
+    "running": "",
+    "paused": "",
+    "stopping": "",
+    "stopped": ""
   }
 }

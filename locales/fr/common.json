@@ -244,5 +244,12 @@
     "proxySettings": "",
     "overview": "",
     "accountSettings": ""
+  },
+  "instanceState": {
+    "starting": "",
+    "running": "",
+    "paused": "",
+    "stopping": "",
+    "stopped": ""
   }
 }
