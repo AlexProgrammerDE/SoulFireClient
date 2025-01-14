@@ -22,11 +22,11 @@
     }
   },
   "integrated": {
-    "preparing": "",
+    "preparing": "Bereite vor, den integrierten Server zu starten...",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Starte den integrierten Server...",
+      "success": "Integrierter Server gestartet",
+      "error": "Fehler beim Starten des integrierten Servers"
     }
   },
   "dedicated": {

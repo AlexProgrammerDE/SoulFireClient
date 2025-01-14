@@ -1,248 +1,248 @@
 {
-  "locale": "",
+  "locale": "Sprache",
   "error": {
-    "noAddressOrToken": "",
+    "noAddressOrToken": "Keine Serveradresse oder Token gefunden",
     "page": {
-      "title": "",
-      "message": "",
-      "logOut": "",
-      "reloadPage": ""
+      "title": "Fehler",
+      "message": "{{message}} (mehr Informationen in der Konsole)",
+      "logOut": "Ausloggen",
+      "reloadPage": "Seite neu laden"
     }
   },
   "pending": {
-    "connecting": ""
+    "connecting": "Verbinde..."
   },
   "dialog": {
     "about": {
-      "title": "",
-      "description": "",
-      "type": "",
-      "value": "",
+      "title": "Über SoulFire",
+      "description": "Du verwendest Version {{version}} des SoulFire Clients.",
+      "type": "Typ",
+      "value": "Wert",
       "fields": {
-        "operatingSystem": "",
-        "platform": "",
-        "locale": "",
-        "architecture": "",
-        "environment": "",
-        "browser": ""
+        "operatingSystem": "Betriebssystem",
+        "platform": "Plattform",
+        "locale": "Sprache",
+        "architecture": "Architektur",
+        "environment": "Umgebung",
+        "browser": "Browser"
       },
-      "close": ""
+      "close": "Schließen"
     },
     "createInstance": {
-      "title": "",
-      "description": "",
+      "title": "Neue Instanz erstellen",
+      "description": "Instanzen benötigen Anzeigenamen, um sie zu unterscheiden. Es kann jeder Name sein, den du möchtest, zum Beispiel \"Mein Minecraft-Bot\".",
       "form": {
         "friendlyName": {
-          "label": "",
-          "placeholder": "",
-          "description": "",
-          "min": "",
-          "max": "",
-          "regex": ""
+          "label": "Anzeigename",
+          "placeholder": "Mein Minecraft-Bot",
+          "description": "Der Name, den Sie dieser Instanz geben möchten.",
+          "min": "Der Name muss mindestens 3 Zeichen lang sein.",
+          "max": "Der Name darf höchstens 50 Zeichen lang sein.",
+          "regex": "Der Anzeigename kann nur Buchstaben, Zahlen und Leerzeichen enthalten"
         },
-        "cancel": "",
-        "create": ""
+        "cancel": "Abbrechen",
+        "create": "Erstellen"
       },
       "createToast": {
-        "loading": "",
-        "success": "",
-        "error": ""
+        "loading": "Instanz wird erstellt...",
+        "success": "Instanz erfolgreich erstellt",
+        "error": "Fehler beim Erstellen der Instanz"
       }
     },
     "import": {
       "main": {
-        "fromFile": "",
-        "fromUrl": "",
-        "firstClipboardItem": "",
-        "fromClipboard": "",
+        "fromFile": "Aus Datei",
+        "fromUrl": "Von URL",
+        "firstClipboardItem": "Du hast mehrere Elemente in der Zwischenablage gehabt, verwende nur den ersten Eintrag.",
+        "fromClipboard": "Aus Zwischenablage",
         "textarea": {
-          "placeholder": "",
-          "submit": ""
+          "placeholder": "Text hier eingeben...",
+          "submit": "Von Text laden"
         }
       },
       "url": {
-        "description": "",
+        "description": "Beim Laden von URL wird der SoulFire Server eine GET-Anfrage an den Zielserver senden und die Antwort als die Daten verwenden.",
         "form": {
           "url": {
-            "placeholder": "",
-            "empty": ""
+            "placeholder": "URL hier eingeben...",
+            "empty": "Bitte geben Sie eine gültige URL ein"
           }
         },
-        "submit": "",
+        "submit": "Von URL laden",
         "toast": {
-          "loading": "",
-          "success": "",
-          "error": ""
+          "loading": "Daten werden heruntergeladen...",
+          "success": "Daten geladen!",
+          "error": "Fehler beim Herunterladen der Daten"
         }
       }
     }
   },
   "commandInput": {
-    "placeholder": ""
+    "placeholder": "Befehl eingeben"
   },
   "controls": {
-    "start": "",
-    "resume": "",
-    "pause": "",
-    "stop": "",
+    "start": "Start",
+    "resume": "Fortsetzen",
+    "pause": "Pausieren",
+    "stop": "Stopp",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Starte Angriff...",
+      "success": "Angriff erfolgreich gestartet",
+      "error": "Fehler beim Start des Angriffs"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Attacke wird fortgesetzt...",
+      "success": "Angriff erfolgreich fortgesetzt",
+      "error": "Fehler beim fortsetzen des Angriffs"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Angriff wird pausiert...",
+      "success": "Angriff erfolgreich pausiert",
+      "error": "Fehler beim Pausieren des Angriffs"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Angriff wird gestoppt...",
+      "success": "Angriff erfolgreich gestoppt",
+      "error": "Fehler beim Stoppen des Angriffs"
     }
   },
   "icon": {
-    "invalidName": ""
+    "invalidName": "Ungültiger Symbolname: {{name}}"
   },
   "dataTable": {
-    "noResults": "",
-    "rowsSelected": "",
-    "rowsPerPage": "",
-    "currentPage": "",
-    "goFirst": "",
-    "goPrevious": "",
-    "goNext": "",
-    "goLast": ""
+    "noResults": "Keine Ergebnisse.",
+    "rowsSelected": "{{amount}} von {{total}} Zeile(n) ausgewählt",
+    "rowsPerPage": "Zeilen pro Seite",
+    "currentPage": "Seite {{page}} von {{total}}",
+    "goFirst": "Zur erste Seite gehen",
+    "goPrevious": "Zur vorherigen Seite gehen",
+    "goNext": "Zur nächsten Seite gehen",
+    "goLast": "Zur letzten Seite gehen"
   },
   "pluginCard": {
-    "version": "",
-    "author": "",
-    "license": "",
-    "website": ""
+    "version": "Version: {{version}}",
+    "author": "Autor: {{author}}",
+    "license": "Lizenz: {{license}}",
+    "website": "Webseite"
   },
   "settingsPage": {
-    "entryNotFound": "",
-    "namespacesNotFound": "",
+    "entryNotFound": "Einstellungseintrag nicht gefunden",
+    "namespacesNotFound": "Einstellungs-Namensräume nicht gefunden",
     "stringList": {
-      "placeholder": "",
-      "add": "",
-      "remove": ""
+      "placeholder": "Neuen Eintrag hinzufügen...",
+      "add": "Hinzufügen",
+      "remove": "Entfernen"
     }
   },
   "terminal": {
-    "noLogs": "",
-    "demo-1": "",
-    "demo-2": "",
-    "demo-3": "",
-    "demo-4": ""
+    "noLogs": "🧙 Es sieht so aus, als gäbe es keine Logs zum Anzeigen; Versuche ein paar Befehle auszuführen!",
+    "demo-1": "Willkommen im Demo Modus! 🧪",
+    "demo-2": "Dies ist eine schreibgeschützte Instanz von SoulFire",
+    "demo-3": "Schau dir alle Menüs und Funktionen an, bevor du SoulFire installierst :D",
+    "demo-4": "Du kannst unserem Discord Server beitreten, wenn du uns anschreiben möchtest: https://soulfiremc.com/discord"
   },
   "uiBreadcrumb": {
-    "more": ""
+    "more": "Mehr"
   },
   "uiDialog": {
-    "close": ""
+    "close": "Schließen"
   },
   "uiSheet": {
-    "close": ""
+    "close": "Schließen"
   },
   "uiSidebar": {
-    "toggle": ""
+    "toggle": "Seitenleiste umschalten"
   },
   "castMenu": {
-    "title": "",
-    "disconnected": "",
-    "alreadyConnected": "",
+    "title": "Cast",
+    "disconnected": "Verbindung zu {{device}} getrennt",
+    "alreadyConnected": "Bereits mit {{device}} verbunden",
     "connectToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Verbinde mit {{device}}...",
+      "success": "Mit {{device}} verbunden",
+      "error": "Verbindung zu {{device}} fehlgeschlagen"
     },
-    "noDevices": "",
-    "broadcastLabel": "",
+    "noDevices": "Keine Geräte gefunden",
+    "broadcastLabel": "Übertragungstest",
     "broadcastToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Nachricht wird übertragen...",
+      "success": "Nachricht verbreitet!",
+      "error": "Senden der Nachricht fehlgeschlagen"
     }
   },
   "instanceSidebar": {
-    "backToDashboard": "",
+    "backToDashboard": "Zurück zum Dashboard",
     "deleteToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Instanz wird gelöscht...",
+      "success": "Instanz gelöscht",
+      "error": "Fehler beim Löschen der Instanz"
     },
-    "instancesGroup": "",
-    "createInstance": "",
+    "instancesGroup": "Instanzen",
+    "createInstance": "Instanz erstellen",
     "loadProfileToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Lade Profil...",
+      "success": "Profil geladen",
+      "error": "Laden des Profils fehlgeschlagen"
     },
-    "loadProfile": "",
-    "loadFromFile": "",
-    "profileSaved": "",
-    "saveProfile": "",
-    "deleteInstance": "",
-    "controlsGroup": "",
-    "console": "",
-    "settingsGroup": "",
-    "pluginSettings": "",
-    "botSettings": "",
-    "accountSettings": "",
-    "proxySettings": "",
-    "aiSettings": ""
+    "loadProfile": "Profil laden",
+    "loadFromFile": "Aus Datei laden",
+    "profileSaved": "Profil gespeichert",
+    "saveProfile": "Profil speichern",
+    "deleteInstance": "Instanz löschen",
+    "controlsGroup": "Steuerung",
+    "console": "Konsole",
+    "settingsGroup": "Einstellungen",
+    "pluginSettings": "Plugin Einstellungen",
+    "botSettings": "Bot Einstellungen",
+    "accountSettings": "Konto Einstellungen",
+    "proxySettings": "Proxy Einstellungen",
+    "aiSettings": "KI Einstellungen"
   },
   "userSidebar": {
-    "userGroup": "",
-    "instances": "",
-    "createInstance": "",
-    "adminGroup": "",
-    "adminOverview": "",
-    "adminConsole": "",
-    "serverSettings": "",
-    "devSettings": "",
+    "userGroup": "Nutzer",
+    "instances": "Instanzen",
+    "createInstance": "Instanz erstellen",
+    "adminGroup": "Admin",
+    "adminOverview": "Admin Übersicht",
+    "adminConsole": "Admin Konsole",
+    "serverSettings": "Server Einstellungen",
+    "devSettings": "Entwickler Einstellungen",
     "theme": {
-      "title": "",
-      "system": "",
-      "light": "",
-      "dark": ""
+      "title": "Farbschema",
+      "system": "System",
+      "light": "Hell",
+      "dark": "Dunkel"
     },
     "terminal": {
-      "title": ""
+      "title": "Terminal"
     },
-    "configDir": "",
-    "dataDir": "",
-    "about": "",
-    "logOut": "",
+    "configDir": "Konfigverzeichnis",
+    "dataDir": "Datenverzeichnis",
+    "about": "Über",
+    "logOut": "Ausloggen",
     "logOutToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Ausloggen...",
+      "success": "Ausgeloggt",
+      "error": "Ausloggen fehlgeschlagen"
     },
-    "exit": ""
+    "exit": "Beenden"
   },
   "sidebar": {
-    "documentation": "",
-    "buyMeACoffee": "",
-    "support": ""
+    "documentation": "Dokumentation",
+    "buyMeACoffee": "Kauf mir einen Kaffee",
+    "support": "Support"
   },
   "breadcrumbs": {
-    "admin": "",
-    "settings": "",
-    "controls": ""
+    "admin": "Admin",
+    "settings": "Einstellungen",
+    "controls": "Steuerung"
   },
-  "noInstancesFound": "",
+  "noInstancesFound": "Keine Instanzen gefunden",
   "pageName": {
-    "console": "",
-    "instances": "",
-    "proxySettings": "",
-    "overview": "",
-    "accountSettings": ""
+    "console": "Konsole",
+    "instances": "Instanzen",
+    "proxySettings": "Proxy Einstellungen",
+    "overview": "Übersicht",
+    "accountSettings": "Konto Einstellungen"
   }
 }
