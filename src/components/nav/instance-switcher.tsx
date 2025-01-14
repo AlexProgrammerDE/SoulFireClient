@@ -111,11 +111,11 @@ export function InstanceSwitcher() {
         })
         .then((r) => r.response);
       toast.promise(promise, {
-        loading: 'Deleting instance...',
-        success: 'Instance deleted',
+        loading: t('instanceSidebar.deleteToast.loading'),
+        success: t('instanceSidebar.deleteToast.success'),
         error: (e) => {
           console.error(e);
-          return 'Failed to delete instance';
+          return t('instanceSidebar.deleteToast.error');
         },
       });
 
@@ -163,7 +163,7 @@ export function InstanceSwitcher() {
             sideOffset={4}
           >
             <DropdownMenuLabel className="text-xs text-muted-foreground">
-              Instances
+              {t('instanceSidebar.instancesGroup')}
             </DropdownMenuLabel>
             {instanceList.instances.map((instance, index) => {
               return (
@@ -211,7 +211,7 @@ export function InstanceSwitcher() {
                   <PlusIcon className="size-4" />
                 </div>
                 <div className="font-medium text-muted-foreground">
-                  Create instance
+                  {t('instanceSidebar.createInstance')}
                 </div>
               </DropdownMenuItem>
             )}
@@ -236,11 +236,11 @@ export function InstanceSwitcher() {
                       JSON.parse(data) as ProfileRoot,
                     ),
                     {
-                      loading: 'Loading profile...',
-                      success: 'Profile loaded',
+                      loading: t('instanceSidebar.loadProfileToast.loading'),
+                      success: t('instanceSidebar.loadProfileToast.success'),
                       error: (e) => {
                         console.error(e);
-                        return 'Failed to load profile';
+                        return t('instanceSidebar.loadProfileToast.error');
                       },
                     },
                   );
@@ -255,7 +255,7 @@ export function InstanceSwitcher() {
                     <UploadIcon className="size-4" />
                   </div>
                   <div className="font-medium text-muted-foreground">
-                    Load Profile
+                    {t('instanceSidebar.loadProfile')}
                   </div>
                 </DropdownMenuSubTrigger>
                 <DropdownMenuPortal>
@@ -283,11 +283,17 @@ export function InstanceSwitcher() {
                                 );
                               };
                               toast.promise(loadProfile(), {
-                                loading: 'Loading profile...',
-                                success: 'Profile loaded',
+                                loading: t(
+                                  'instanceSidebar.loadProfileToast.loading',
+                                ),
+                                success: t(
+                                  'instanceSidebar.loadProfileToast.success',
+                                ),
                                 error: (e) => {
                                   console.error(e);
-                                  return 'Failed to load profile';
+                                  return t(
+                                    'instanceSidebar.loadProfileToast.error',
+                                  );
                                 },
                               });
                             }}
@@ -312,7 +318,7 @@ export function InstanceSwitcher() {
                           await mkdir(profileDir, { recursive: true });
 
                           const selected = await open({
-                            title: 'Load Profile',
+                            title: t('instanceSidebar.loadProfile'),
                             filters: systemInfo.mobile
                               ? undefined
                               : [
@@ -335,11 +341,17 @@ export function InstanceSwitcher() {
                                 );
                               })(),
                               {
-                                loading: 'Loading profile...',
-                                success: 'Profile loaded',
+                                loading: t(
+                                  'instanceSidebar.loadProfileToast.loading',
+                                ),
+                                success: t(
+                                  'instanceSidebar.loadProfileToast.success',
+                                ),
                                 error: (e) => {
                                   console.error(e);
-                                  return 'Failed to load profile';
+                                  return t(
+                                    'instanceSidebar.loadProfileToast.error',
+                                  );
                                 },
                               },
                             );
@@ -350,7 +362,7 @@ export function InstanceSwitcher() {
                       <div className="flex size-6 items-center justify-center rounded-md border bg-background">
                         <FolderIcon className="size-4" />
                       </div>
-                      Load from file
+                      {t('instanceSidebar.loadFromFile')}
                     </DropdownMenuItem>
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>
@@ -367,7 +379,7 @@ export function InstanceSwitcher() {
                     <UploadIcon className="size-4" />
                   </div>
                   <div className="font-medium text-muted-foreground">
-                    Load Profile
+                    {t('instanceSidebar.loadProfile')}
                   </div>
                 </DropdownMenuItem>
               </>
@@ -385,7 +397,7 @@ export function InstanceSwitcher() {
                     await mkdir(profileDir, { recursive: true });
 
                     let selected = await save({
-                      title: 'Save Profile',
+                      title: t('instanceSidebar.saveProfile'),
                       filters: [
                         {
                           name: 'SoulFire JSON Profile',
@@ -407,14 +419,14 @@ export function InstanceSwitcher() {
                   saveAs(data2blob(data), 'profile.json');
                 }
 
-                toast.success('Profile saved');
+                toast.success(t('instanceSidebar.profileSaved'));
               }}
             >
               <div className="flex size-6 items-center justify-center rounded-md border bg-background">
                 <DownloadIcon className="size-4" />
               </div>
               <div className="font-medium text-muted-foreground">
-                Save Profile
+                {t('instanceSidebar.saveProfile')}
               </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
@@ -435,7 +447,7 @@ export function InstanceSwitcher() {
                   <MinusIcon className="size-4" />
                 </div>
                 <div className="font-medium text-muted-foreground">
-                  Delete instance
+                  {t('instanceSidebar.deleteInstance')}
                 </div>
               </DropdownMenuItem>
             )}

@@ -171,7 +171,24 @@
     }
   },
   "instanceSidebar": {
-    "backToDashboard": "Back to dashboard"
+    "backToDashboard": "Back to dashboard",
+    "deleteToast": {
+      "loading": "Deleting instance...",
+      "success": "Instance deleted",
+      "error": "Failed to delete instance"
+    },
+    "instancesGroup": "Instances",
+    "createInstance": "Create Instance",
+    "loadProfileToast": {
+      "loading": "Loading profile...",
+      "success": "Profile loaded",
+      "error": "Failed to load profile"
+    },
+    "loadProfile": "Load Profile",
+    "loadFromFile": "Load from file",
+    "profileSaved": "Profile saved",
+    "saveProfile": "Save Profile",
+    "deleteInstance": "Delete Instance"
   },
   "userSidebar": {
     "userGroup": "User",
