@@ -91,9 +91,9 @@
       "error": "Fehler beim Start des Angriffs"
     },
     "resumeToast": {
-      "loading": "Attacke wird fortgesetzt...",
+      "loading": "Angriff wird fortgesetzt...",
       "success": "Angriff erfolgreich fortgesetzt",
-      "error": "Fehler beim fortsetzen des Angriffs"
+      "error": "Fehler beim Fortsetzen des Angriffs"
     },
     "pauseToast": {
       "loading": "Angriff wird pausiert...",
@@ -230,7 +230,7 @@
   "sidebar": {
     "documentation": "Dokumentation",
     "buyMeACoffee": "Kauf mir einen Kaffee",
-    "support": "Support"
+    "support": "Hilfe"
   },
   "breadcrumbs": {
     "admin": "Admin",
@@ -244,5 +244,12 @@
     "proxySettings": "Proxy Einstellungen",
     "overview": "Übersicht",
     "accountSettings": "Konto Einstellungen"
+  },
+  "instanceState": {
+    "starting": "",
+    "running": "",
+    "paused": "",
+    "stopping": "",
+    "stopped": ""
   }
 }
