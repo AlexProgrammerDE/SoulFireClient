@@ -62,7 +62,7 @@ export function NavUserOptions() {
           <SidebarMenuItem>
             <SidebarMenuButton
               onClick={() => setCreateOpen(true)}
-              tooltip={t('ucreateToastserSidebar.createInstance')}
+              tooltip={t('userSidebar.createInstance')}
             >
               <PlusIcon />
               <span>{t('userSidebar.createInstance')}</span>
