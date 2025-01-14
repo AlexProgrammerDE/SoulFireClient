@@ -1,0 +1,14 @@
+{
+  "proxy": {},
+  "account": {
+    "listImportToast": {
+      "loading": "",
+      "allFailed": "",
+      "someFailed": "",
+      "noneFailed": "",
+      "error": ""
+    },
+    "unknownError": "",
+    "deviceCodeImportToast": {}
+  }
+}
