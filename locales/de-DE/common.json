@@ -117,7 +117,9 @@
     "goFirst": "Zur erste Seite gehen",
     "goPrevious": "Zur vorherigen Seite gehen",
     "goNext": "Zur nächsten Seite gehen",
-    "goLast": "Zur letzten Seite gehen"
+    "goLast": "Zur letzten Seite gehen",
+    "selectAll": "Alle auswählen",
+    "selectRow": "Zeile auswählen"
   },
   "pluginCard": {
     "version": "Version: {{version}}",
