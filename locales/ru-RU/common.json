@@ -117,7 +117,9 @@
     "goFirst": "Перейти на первую страницу",
     "goPrevious": "Вернуться на предыдущую страницу",
     "goNext": "Перейти на следующую страницу",
-    "goLast": "Перейти на последнюю страницу"
+    "goLast": "Перейти на последнюю страницу",
+    "selectAll": "Выбрать все",
+    "selectRow": "Выбрать строку"
   },
   "pluginCard": {
     "version": "Версия: {{version}}",
@@ -246,10 +248,10 @@
     "accountSettings": "Настройки аккаунтов"
   },
   "instanceState": {
-    "starting": "",
-    "running": "",
-    "paused": "",
-    "stopping": "",
-    "stopped": ""
+    "starting": "Запуск",
+    "running": "Запущен",
+    "paused": "Приостановлено",
+    "stopping": "Остановка",
+    "stopped": "Остановлен"
   }
 }

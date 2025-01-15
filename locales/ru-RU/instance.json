@@ -1,14 +1,80 @@
 {
-  "proxy": {},
-  "account": {
+  "proxy": {
+    "filterPlaceholder": "Фильтр прокси...",
     "listImportToast": {
-      "loading": "",
-      "allFailed": "",
-      "someFailed": "",
-      "noneFailed": "",
-      "error": ""
+      "loading": "Импорт прокси...",
+      "success": "Импортировано {{count}} прокси!",
+      "error": "Не удалось импортировать прокси",
+      "noProxies": "Нет прокси для импорта"
     },
-    "unknownError": "",
-    "deviceCodeImportToast": {}
+    "import": {
+      "proxyType": "Тип прокси",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "Импортировать {{type}} прокси",
+        "description": "Вставьте здесь свои прокси, по одном на строу"
+      }
+    },
+    "removeToast": {
+      "loading": "Удаление прокси...",
+      "success": "Удаленно {{count}} прокси!",
+      "error": "Не удалось удалить прокси"
+    },
+    "checkToast": {
+      "loading": "Проверка прокси...",
+      "success": "Удалено {{count}} сломанных прокси серверов!",
+      "error": "Не удалось проверить прокси"
+    },
+    "invalidFormat": "Неверный формат прокси",
+    "invalidType": "Неверный тип прокси: {{type}}",
+    "table": {
+      "type": "Тип",
+      "address": "Адрес",
+      "username": "Имя пользователя",
+      "password": "Пароль"
+    }
+  },
+  "account": {
+    "filterPlaceholder": "Фильтр учетных записей...",
+    "listImportToast": {
+      "loading": "Импорт аккаунтов...",
+      "allFailed": "Не удалось импортировать ни одного аккаунта",
+      "someFailed": "Импортировано {{count}} аккаунтов, не удалось импортировать {{failed}} аккаунтов",
+      "noneFailed": "Импортировано {{count}} аккаунтов!",
+      "error": "Не удалось импортировать аккаунты",
+      "noAccounts": "Нет аккаунтов для импорта"
+    },
+    "unknownError": "Неизвестная ошибка",
+    "deviceCodeImportToast": {
+      "loading": "Импорт аккаунта...",
+      "success": "Аккаунт импортирован!",
+      "error": "Не удалось импортировать аккаунт"
+    },
+    "import": {
+      "javaEdition": "Java Edition",
+      "bedrockEdition": "Bedrock Edition",
+      "offline": "Offline",
+      "microsoftCredentials": "Microsoft Credentials",
+      "microsoftDeviceCode": "Microsoft Device Code",
+      "microsoftRefreshToken": "Microsoft Refresh Token",
+      "theAltening": "The Altening",
+      "dialog": {
+        "title": "Импорт {{type}} аккаунтов",
+        "description": "Вставьте здесь свои аккаунты, по одном на строу"
+      }
+    },
+    "removeToast": {
+      "loading": "Удаление аккаунтов...",
+      "success": "Удалено {{count}} аккаунтов!",
+      "error": "Не удалось удалить аккаунты"
+    },
+    "table": {
+      "type": "Тип",
+      "profileId": "UUID",
+      "lastKnownName": "Имя пользователя"
+    }
   }
 }
