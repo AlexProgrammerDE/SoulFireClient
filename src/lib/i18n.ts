@@ -25,7 +25,8 @@ void i18n
 
     supportedLngs: APP_LOCALES.split(','),
     ns: APP_NAMESPACES.split(','),
-    nonExplicitSupportedLngs: true,
+    lowerCaseLng: false,
+    nonExplicitSupportedLngs: false,
     returnEmptyString: false,
     returnNull: false,
     interpolation: {
