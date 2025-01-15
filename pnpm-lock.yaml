@@ -76,7 +76,7 @@ importers:
         version: 8.20.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@tanstack/router-devtools':
         specifier: ^1.20.1
-        version: 1.95.6(@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(csstype@3.1.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 1.97.0(@tanstack/react-router@1.97.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(csstype@3.1.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@tauri-apps/api':
         specifier: 2.2.0
         version: 2.2.0
@@ -215,13 +215,13 @@ importers:
         version: 5.62.16(eslint@9.18.0(jiti@1.21.7))(typescript@5.7.3)
       '@tanstack/react-router':
         specifier: ^1.20.1
-        version: 1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 1.97.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@tanstack/router-cli':
         specifier: ^1.58.12
-        version: 1.95.6(@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+        version: 1.97.0(@tanstack/react-router@1.97.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@tanstack/router-plugin':
         specifier: ^1.45.8
-        version: 1.95.6(@rsbuild/core@1.1.13)(@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(vite@5.4.8(@types/node@22.10.6)(terser@5.37.0))(webpack@5.95.0)
+        version: 1.97.0(@rsbuild/core@1.1.13)(@tanstack/react-router@1.97.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(vite@5.4.8(@types/node@22.10.6)(terser@5.37.0))(webpack@5.95.0)
       '@tauri-apps/cli':
         specifier: 2.2.4
         version: 2.2.4
@@ -269,7 +269,7 @@ importers:
         version: 10.0.1(eslint@9.18.0(jiti@1.21.7))
       eslint-plugin-prettier:
         specifier: ^5.2.1
-        version: 5.2.1(@types/eslint@8.56.12)(eslint-config-prettier@10.0.1(eslint@9.18.0(jiti@1.21.7)))(eslint@9.18.0(jiti@1.21.7))(prettier@3.4.2)
+        version: 5.2.2(@types/eslint@8.56.12)(eslint-config-prettier@10.0.1(eslint@9.18.0(jiti@1.21.7)))(eslint@9.18.0(jiti@1.21.7))(prettier@3.4.2)
       eslint-plugin-react:
         specifier: ^7.34.4
         version: 7.37.4(eslint@9.18.0(jiti@1.21.7))
@@ -1584,8 +1584,8 @@ packages:
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
 
-  '@tanstack/history@1.95.2':
-    resolution: {integrity: sha512-FgUauZLg+nRybH5dKyAYokmXs064rHc0qpMizKxTegSTMHj/z2B6T7pjEG2Zd6dBegeYNVL97ROg7Srr9cuBug==}
+  '@tanstack/history@1.97.0':
+    resolution: {integrity: sha512-xFdpGJqwSLUJW5TYRNjRO5T41KjGkJeHWyhANZsNJ1KDm7uCVNkfLxNXeCI1XhIFbpzJmk13vo/mY0WJDe0A5g==}
     engines: {node: '>=12'}
 
   '@tanstack/query-broadcast-client-experimental@5.64.1':
@@ -1608,8 +1608,8 @@ packages:
     peerDependencies:
       react: ^18 || ^19
 
-  '@tanstack/react-router@1.95.6':
-    resolution: {integrity: sha512-tajvEcMP/EyTUDee/56+TapM8Fruv8V5JqJbNlrdR1J4QESCf2dFThN+yzX9w11lhnc66ikiqnKccCP9/hfejQ==}
+  '@tanstack/react-router@1.97.0':
+    resolution: {integrity: sha512-0AJbgh3sfZDJCzhHpNzYomH8/BIwz6PQNrwKc9MPrVax23NdFP8pDvxPC6L4AVMDUBetcvnrrzpHgXJTSCj/fA==}
     engines: {node: '>=12'}
     peerDependencies:
       react: '>=18'
@@ -1628,30 +1628,30 @@ packages:
       react: '>=16.8'
       react-dom: '>=16.8'
 
-  '@tanstack/router-cli@1.95.6':
-    resolution: {integrity: sha512-F2AXoaOEEGHQZyTKcDr++0I2O8LLZ8u2zOVdz5xMTIza/SU387vijlfbF7liYW4Biv0eVFvjawwuHMKXp3gzeA==}
+  '@tanstack/router-cli@1.97.0':
+    resolution: {integrity: sha512-5ypOQ6bV29QQF/EqhYFYg/79aisRpT3T8OhTT4Obl8X7RO2LAvQdmN4awZ3zbe0Nz62xddXf+Rpl3Po1VaKTmw==}
     engines: {node: '>=12'}
     hasBin: true
 
-  '@tanstack/router-devtools@1.95.6':
-    resolution: {integrity: sha512-qZFnCLtN4NyE8HtYsp1PW+7mbHyaHYSEn/47YhcWbbNMbNVSEiQ59hJY5zAuC806Xek6HNGtFOwEJGI1VkaagA==}
+  '@tanstack/router-devtools@1.97.0':
+    resolution: {integrity: sha512-iwvCDwAooUs4ZpTZGi+TSZd5XfJNfWUqCmfkDsUK0TX9hTkda2GVFq8hQiA/yFK6Ml777NG1xfpyrojaMBZN9w==}
     engines: {node: '>=12'}
     peerDependencies:
-      '@tanstack/react-router': ^1.95.6
+      '@tanstack/react-router': ^1.97.0
       react: '>=18'
       react-dom: '>=18'
 
-  '@tanstack/router-generator@1.95.6':
-    resolution: {integrity: sha512-TBJt5HQxMG7DwVSbCYB/+Y+qo/SuhP9BQbq7RcrAeTwiQsUBnhHzD9fbBTkx7LQt+Chsf2NPCCaUyzf97R/53Q==}
+  '@tanstack/router-generator@1.97.0':
+    resolution: {integrity: sha512-6gttdJJxWfhGkVK9SisnPpMYrJ8OFhCiOmg+e6ZbVs5z+JlWHByub5SRdFiEDHZ7+WsI11Md9rYLdjDgWrYCaA==}
     engines: {node: '>=12'}
     peerDependencies:
-      '@tanstack/react-router': ^1.95.6
+      '@tanstack/react-router': ^1.97.0
     peerDependenciesMeta:
       '@tanstack/react-router':
         optional: true
 
-  '@tanstack/router-plugin@1.95.6':
-    resolution: {integrity: sha512-IJwdnicU9q845BkoegXKdCSzh2hmeD7eDwxLp1mDsiLemGCr7LJN5zsl8OWIbouMZvAbRW9eSPpICrNuNWVf4w==}
+  '@tanstack/router-plugin@1.97.0':
+    resolution: {integrity: sha512-2YnipljbWaAj0IFAwcTra5arWENN/DAs0OvSEpbk+69ukY7PWw070ul9jjmH0OFp7Xhn8pAq7cmHVH9Y370vGQ==}
     engines: {node: '>=12'}
     peerDependencies:
       '@rsbuild/core': '>=1.0.2'
@@ -1672,8 +1672,8 @@ packages:
     resolution: {integrity: sha512-P9dF7XbibHph2PFRz8gfBKEXEY/HJPOhym8CHmjF8y3q5mWpKx9xtZapXQUWCgkqvsK0R46Azuz+VaxD4Xl+Tg==}
     engines: {node: '>=12'}
 
-  '@tanstack/virtual-file-routes@1.87.6':
-    resolution: {integrity: sha512-PTpeM8SHL7AJM0pJOacFvHribbUODS51qe9NsMqku4mogh6BWObY1EeVmeGnp9o3VngAEsf+rJMs2zqIVz3WFA==}
+  '@tanstack/virtual-file-routes@1.97.0':
+    resolution: {integrity: sha512-UsLBb+ALvxbRTYMlx3WJ36oq13Ps4n8tcN8biFrtiCbA8TiS0sgSAOr0lPQpzQqZuVSjscPjX43ciKf33hvkQw==}
     engines: {node: '>=12'}
 
   '@tauri-apps/api@2.2.0':
@@ -1810,6 +1810,9 @@ packages:
 
   '@types/d3-timer@3.0.2':
     resolution: {integrity: sha512-Ps3T8E8dZDam6fUyNiMkekK3XUsaUEik+idO9/YjPtfj2qruF8tFBXS7XhtE4iIXBLxhmLjP3SXpLhVf21I9Lw==}
+
+  '@types/diff@6.0.0':
+    resolution: {integrity: sha512-dhVCYGv3ZSbzmQaBSagrv1WJ6rXCdkyTcDyoNu1MD8JohI7pR7k8wdZEm+mvdxRKXyHVwckFzWU1vJc+Z29MlA==}
 
   '@types/eslint-config-prettier@6.11.3':
     resolution: {integrity: sha512-3wXCiM8croUnhg9LdtZUJQwNcQYGWxxdOWDjPe1ykCqJFPVpzAKfs/2dgSoCtAvdPeaponcWPI7mPcGGp9dkKQ==}
@@ -2394,6 +2397,10 @@ packages:
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
 
+  diff@7.0.0:
+    resolution: {integrity: sha512-PJWHUb1RFevKCwaFA9RlG5tCd+FO5iRh9A8HEtkmBH2Li03iJriB6m6JIN4rGz3K3JLawI7/veA1xzRKP6ISBw==}
+    engines: {node: '>=0.3.1'}
+
   dlv@1.1.3:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
 
@@ -2430,8 +2437,8 @@ packages:
   electron-to-chromium@1.5.4:
     resolution: {integrity: sha512-orzA81VqLyIGUEA77YkVA1D+N+nNfl2isJVjjmOyrlxuooZ19ynb+dOlaDTqd/idKRS9lDCSBmtzM+kyCsMnkA==}
 
-  electron-to-chromium@1.5.81:
-    resolution: {integrity: sha512-SFsAz1hoR+u1eAWjofSPQnx0InE1QHGUAQ92pqYJPT8GARzmyP1zcEBDBxFFC6okJk2E94Ryfmib4DB8Sc6LBw==}
+  electron-to-chromium@1.5.82:
+    resolution: {integrity: sha512-Zq16uk1hfQhyGx5GpwPAYDwddJuSGhtRhgOA2mCxANYaDT79nAeGnaXogMGng4KqLaJUVnOnuL0+TDop9nLOiA==}
 
   emoji-regex@10.4.0:
     resolution: {integrity: sha512-EC+0oUMY1Rqm4O6LLrgjtYDvcVYTy7chDnM4Q7030tP4Kwj3u/pR6gP9ygnp2CJMK5Gq+9Q2oqmrFJAz01DXjw==}
@@ -2525,8 +2532,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-plugin-prettier@5.2.1:
-    resolution: {integrity: sha512-gH3iR3g4JfF+yYPaJYkN7jEl9QbweL/YfkoRlNnuIEHEz1vHVlCmWOS+eGGiRuzHQXdJFCOTxRgvju9b8VUmrw==}
+  eslint-plugin-prettier@5.2.2:
+    resolution: {integrity: sha512-1yI3/hf35wmlq66C8yOyrujQnel+v5l1Vop5Cl2I6ylyNTT1JbuUUnV3/41PzwTzcyDp/oF0jWE3HXvcH5AQOQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       '@types/eslint': '>=8.0.0'
@@ -3832,8 +3839,8 @@ packages:
     engines: {node: '>=14.0.0'}
     hasBin: true
 
-  synckit@0.9.1:
-    resolution: {integrity: sha512-7gr8p9TQP6RAHusBOSLs46F4564ZrjV8xFmw5zCmgmhGUcw2hxsShhJ6CEiHQMgPDwAQ1fWHPM0ypc4RMAig4A==}
+  synckit@0.9.2:
+    resolution: {integrity: sha512-vrozgXDQwYO72vHjUb/HnFbQx1exDjoKzqx23aXEg2a9VIg2TSFZ8FmeZpTjUCFMYw7mpX4BE2SFu8wI7asYsw==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
   tailwind-merge@2.6.0:
@@ -3921,9 +3928,6 @@ packages:
 
   ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
-
-  tslib@2.6.3:
-    resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
 
   tslib@2.8.1:
     resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
@@ -5333,7 +5337,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@tanstack/history@1.95.2': {}
+  '@tanstack/history@1.97.0': {}
 
   '@tanstack/query-broadcast-client-experimental@5.64.1':
     dependencies:
@@ -5355,9 +5359,9 @@ snapshots:
       '@tanstack/query-core': 5.64.1
       react: 19.0.0
 
-  '@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@tanstack/react-router@1.97.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@tanstack/history': 1.95.2
+      '@tanstack/history': 1.97.0
       '@tanstack/react-store': 0.7.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       jsesc: 3.1.0
       react: 19.0.0
@@ -5378,17 +5382,17 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
-  '@tanstack/router-cli@1.95.6(@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
+  '@tanstack/router-cli@1.97.0(@tanstack/react-router@1.97.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
     dependencies:
-      '@tanstack/router-generator': 1.95.6(@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+      '@tanstack/router-generator': 1.97.0(@tanstack/react-router@1.97.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       chokidar: 3.6.0
       yargs: 17.7.2
     transitivePeerDependencies:
       - '@tanstack/react-router'
 
-  '@tanstack/router-devtools@1.95.6(@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(csstype@3.1.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@tanstack/router-devtools@1.97.0(@tanstack/react-router@1.97.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(csstype@3.1.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
-      '@tanstack/react-router': 1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@tanstack/react-router': 1.97.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       clsx: 2.1.1
       goober: 2.1.16(csstype@3.1.3)
       react: 19.0.0
@@ -5396,16 +5400,16 @@ snapshots:
     transitivePeerDependencies:
       - csstype
 
-  '@tanstack/router-generator@1.95.6(@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
+  '@tanstack/router-generator@1.97.0(@tanstack/react-router@1.97.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
     dependencies:
-      '@tanstack/virtual-file-routes': 1.87.6
+      '@tanstack/virtual-file-routes': 1.97.0
       prettier: 3.4.2
       tsx: 4.19.2
       zod: 3.24.1
     optionalDependencies:
-      '@tanstack/react-router': 1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@tanstack/react-router': 1.97.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
-  '@tanstack/router-plugin@1.95.6(@rsbuild/core@1.1.13)(@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(vite@5.4.8(@types/node@22.10.6)(terser@5.37.0))(webpack@5.95.0)':
+  '@tanstack/router-plugin@1.97.0(@rsbuild/core@1.1.13)(@tanstack/react-router@1.97.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(vite@5.4.8(@types/node@22.10.6)(terser@5.37.0))(webpack@5.95.0)':
     dependencies:
       '@babel/core': 7.26.0
       '@babel/generator': 7.26.5
@@ -5415,14 +5419,17 @@ snapshots:
       '@babel/template': 7.25.9
       '@babel/traverse': 7.26.5
       '@babel/types': 7.26.5
-      '@tanstack/router-generator': 1.95.6(@tanstack/react-router@1.95.6(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
-      '@tanstack/virtual-file-routes': 1.87.6
+      '@tanstack/router-generator': 1.97.0(@tanstack/react-router@1.97.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
+      '@tanstack/virtual-file-routes': 1.97.0
       '@types/babel__core': 7.20.5
       '@types/babel__generator': 7.6.8
       '@types/babel__template': 7.4.4
       '@types/babel__traverse': 7.20.6
+      '@types/diff': 6.0.0
       babel-dead-code-elimination: 1.0.8
+      chalk: 5.4.1
       chokidar: 3.6.0
+      diff: 7.0.0
       unplugin: 1.16.1
       zod: 3.24.1
     optionalDependencies:
@@ -5437,7 +5444,7 @@ snapshots:
 
   '@tanstack/table-core@8.20.5': {}
 
-  '@tanstack/virtual-file-routes@1.87.6': {}
+  '@tanstack/virtual-file-routes@1.97.0': {}
 
   '@tauri-apps/api@2.2.0': {}
 
@@ -5562,6 +5569,8 @@ snapshots:
   '@types/d3-time@3.0.4': {}
 
   '@types/d3-timer@3.0.2': {}
+
+  '@types/diff@6.0.0': {}
 
   '@types/eslint-config-prettier@6.11.3': {}
 
@@ -6014,7 +6023,7 @@ snapshots:
   browserslist@4.24.4:
     dependencies:
       caniuse-lite: 1.0.30001692
-      electron-to-chromium: 1.5.81
+      electron-to-chromium: 1.5.82
       node-releases: 2.0.19
       update-browserslist-db: 1.1.2(browserslist@4.24.4)
 
@@ -6265,6 +6274,8 @@ snapshots:
 
   didyoumean@1.2.2: {}
 
+  diff@7.0.0: {}
+
   dlv@1.1.3: {}
 
   doctrine@2.1.0:
@@ -6309,7 +6320,7 @@ snapshots:
 
   electron-to-chromium@1.5.4: {}
 
-  electron-to-chromium@1.5.81: {}
+  electron-to-chromium@1.5.82: {}
 
   emoji-regex@10.4.0: {}
 
@@ -6502,12 +6513,12 @@ snapshots:
     dependencies:
       eslint: 9.18.0(jiti@1.21.7)
 
-  eslint-plugin-prettier@5.2.1(@types/eslint@8.56.12)(eslint-config-prettier@10.0.1(eslint@9.18.0(jiti@1.21.7)))(eslint@9.18.0(jiti@1.21.7))(prettier@3.4.2):
+  eslint-plugin-prettier@5.2.2(@types/eslint@8.56.12)(eslint-config-prettier@10.0.1(eslint@9.18.0(jiti@1.21.7)))(eslint@9.18.0(jiti@1.21.7))(prettier@3.4.2):
     dependencies:
       eslint: 9.18.0(jiti@1.21.7)
       prettier: 3.4.2
       prettier-linter-helpers: 1.0.0
-      synckit: 0.9.1
+      synckit: 0.9.2
     optionalDependencies:
       '@types/eslint': 8.56.12
       eslint-config-prettier: 10.0.1(eslint@9.18.0(jiti@1.21.7))
@@ -7868,10 +7879,10 @@ snapshots:
       csso: 5.0.5
       picocolors: 1.1.1
 
-  synckit@0.9.1:
+  synckit@0.9.2:
     dependencies:
       '@pkgr/core': 0.1.1
-      tslib: 2.6.3
+      tslib: 2.8.1
 
   tailwind-merge@2.6.0: {}
 
@@ -7968,8 +7979,6 @@ snapshots:
       '@rspack/core': 1.1.8(@swc/helpers@0.5.15)
 
   ts-interface-checker@0.1.13: {}
-
-  tslib@2.6.3: {}
 
   tslib@2.8.1: {}
 

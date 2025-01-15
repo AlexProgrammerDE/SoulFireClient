@@ -1,24 +1,24 @@
 {
   "overview": {
-    "welcome": "",
+    "welcome": "Bem-vindo de volta, {{name}}🧙",
     "instancesChart": {
-      "title": "",
+      "title": "Total de instâncias neste servidor",
       "instances": "Instâncias",
       "label": {
-        "state": "",
-        "active": "",
+        "state": "Estado",
+        "active": "Ativo",
         "stopped": "Interrompido",
-        "other": ""
+        "other": "Outro"
       }
     },
     "usersChart": {
-      "title": "",
-      "users": "",
+      "title": "Total de usuários neste servidor",
+      "users": "Usuários",
       "label": {
-        "role": "",
+        "role": "Função",
         "user": "Usuário",
-        "admin": "",
-        "other": ""
+        "admin": "Administrador",
+        "other": "Outro"
       }
     }
   }
