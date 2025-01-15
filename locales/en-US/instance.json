@@ -1,6 +1,41 @@
 {
   "proxy": {
-    "filterPlaceholder": "Filter proxies..."
+    "filterPlaceholder": "Filter proxies...",
+    "listImportToast": {
+      "loading": "Importing proxies...",
+      "success": "Imported {{count}} proxies!",
+      "error": "Failed to import proxies",
+      "noProxies": "No proxies to import"
+    },
+    "import": {
+      "proxyType": "Proxy Type",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "Import {{type}} proxies",
+        "description": "Paste your proxies here, one per line"
+      }
+    },
+    "removeToast": {
+      "loading": "Removing proxies...",
+      "success": "Removed {{count}} proxies!",
+      "error": "Failed to remove proxies"
+    },
+    "checkToast": {
+      "loading": "Checking proxies...",
+      "success": "Removed {{count}} broken proxies!",
+      "error": "Failed to check proxies"
+    },
+    "invalidFormat": "Invalid proxy format",
+    "invalidType": "Invalid proxy type: {{type}}",
+    "table": {
+      "type": "Type",
+      "address": "Address",
+      "username": "Username",
+      "password": "Password"
+    }
   },
   "account": {
     "filterPlaceholder": "Filter accounts...",

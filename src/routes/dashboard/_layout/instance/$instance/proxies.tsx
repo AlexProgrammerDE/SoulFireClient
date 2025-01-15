@@ -31,11 +31,12 @@ import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { ProxyCheckServiceClient } from '@/generated/soulfire/proxy-check.client.ts';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   SelectAllHeader,
   SelectRowHeader,
 } from '@/components/data-table-selects.tsx';
+import i18n from '@/lib/i18n.ts';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/proxies',
@@ -69,7 +70,7 @@ function uiProxyTypeToProto(type: SimpleProxyType): ProxyProto_Type {
 function parseNormalProxy(line: string, type: SimpleProxyType): ProfileProxy {
   const parts = line.split(':');
   if (parts.length < 2) {
-    throw new Error('Invalid proxy format');
+    throw new Error(i18n.t('instance:proxy.invalidFormat'));
   }
 
   // Fill username and password with undefined if not present
@@ -93,7 +94,11 @@ function parseRawTypeToProto(rawType: string): ProxyProto_Type {
     case 'socks5':
       return ProxyProto_Type.SOCKS5;
     default:
-      throw new Error('Invalid proxy type ' + rawType);
+      throw new Error(
+        i18n.t('instance:proxy.invalidType', {
+          type: rawType,
+        }),
+      );
   }
 }
 
@@ -118,20 +123,20 @@ const columns: ColumnDef<ProfileProxy>[] = [
   },
   {
     accessorKey: 'type',
-    header: 'Type',
+    header: () => <Trans i18nKey="instance:proxy.table.type" />,
     cell: ({ row }) => getEnumKeyByValue(ProxyProto_Type, row.original.type),
   },
   {
     accessorKey: 'address',
-    header: 'Address',
+    header: () => <Trans i18nKey="instance:proxy.table.address" />,
   },
   {
     accessorKey: 'username',
-    header: 'Username',
+    header: () => <Trans i18nKey="instance:proxy.table.username" />,
   },
   {
     accessorKey: 'password',
-    header: 'Password',
+    header: () => <Trans i18nKey="instance:proxy.table.password" />,
   },
 ];
 
@@ -167,7 +172,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
       if (proxyTypeSelected === null) return;
 
       if (text.length === 0) {
-        toast.error('No proxies to import');
+        toast.error(t('proxy.listImportToast.noProxies'));
         return;
       }
 
@@ -202,16 +207,16 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           return proxiesToAdd.length;
         })(),
         {
-          loading: 'Importing proxies...',
-          success: (r) => `${r} proxies imported!`,
+          loading: t('proxy.listImportToast.loading'),
+          success: (r) => t('proxy.listImportToast.success', { count: r }),
           error: (e) => {
             console.error(e);
-            return 'Failed to import proxies';
+            return t('proxy.listImportToast.error');
           },
         },
       );
     },
-    [profile, proxyTypeSelected, setProfileMutation],
+    [profile, proxyTypeSelected, setProfileMutation, t],
   );
 
   return (
@@ -223,27 +228,27 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>Proxy type</DropdownMenuLabel>
+          <DropdownMenuLabel>{t('proxy.import.proxyType')}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => setProxyTypeSelected(UIProxyType.HTTP)}
           >
-            HTTP
+            {t('proxy.import.http')}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setProxyTypeSelected(UIProxyType.SOCKS4)}
           >
-            SOCKS4
+            {t('proxy.import.socks4')}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setProxyTypeSelected(UIProxyType.SOCKS5)}
           >
-            SOCKS5
+            {t('proxy.import.socks5')}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => setProxyTypeSelected(UIProxyType.URI)}
           >
-            URI
+            {t('proxy.import.uri')}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -288,12 +293,14 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               return newProfile;
             })(),
             {
-              loading: 'Checking proxies...',
+              loading: t('proxy.checkToast.loading'),
               success: (newProfile) =>
-                `Removed ${beforeSize - newProfile.proxies.length} broken proxies`,
+                t('proxy.checkToast.success', {
+                  count: beforeSize - newProfile.proxies.length,
+                }),
               error: (e) => {
                 console.error(e);
-                return 'Failed to check proxies';
+                return t('proxy.checkToast.error');
               },
             },
           );
@@ -317,11 +324,13 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           };
 
           toast.promise(setProfileMutation(newProfile), {
-            loading: 'Removing proxies...',
-            success: `Removed ${beforeSize - newProfile.proxies.length} proxies`,
+            loading: t('proxy.removeToast.loading'),
+            success: t('proxy.removeToast.success', {
+              count: beforeSize - newProfile.proxies.length,
+            }),
             error: (e) => {
               console.error(e);
-              return 'Failed to remove proxies';
+              return t('proxy.removeToast.error');
             },
           });
         }}
@@ -330,8 +339,10 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
       </Button>
       {proxyTypeSelected !== null && (
         <ImportDialog
-          title={`Import ${getEnumKeyByValue(UIProxyType, proxyTypeSelected)} proxies`}
-          description="Paste your proxies here, one per line"
+          title={t('proxy.import.dialog.title', {
+            type: getEnumKeyByValue(UIProxyType, proxyTypeSelected),
+          })}
+          description={t('proxy.import.dialog.description')}
           closer={() => setProxyTypeSelected(null)}
           listener={textSelectedCallback}
           filters={[
