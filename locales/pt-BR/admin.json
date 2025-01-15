@@ -1,6 +1,6 @@
 {
   "overview": {
-    "welcome": "Bem-vindo de volta, {{name}}🧙",
+    "welcome": "Bem-vindo de volta, {{name}} 🧙",
     "instancesChart": {
       "title": "Total de instâncias neste servidor",
       "instances": "Instâncias",
