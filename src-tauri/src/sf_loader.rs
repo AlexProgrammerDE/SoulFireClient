@@ -169,6 +169,7 @@ pub async fn run_integrated_server(
   let current_ld_library_path = std::env::var("LD_LIBRARY_PATH").unwrap_or("".to_string());
   let command = app_handle.shell().command(java_exec_path)
     .env("LD_LIBRARY_PATH", format!("{:?}:{:?}:{}", java_lib_dir, java_lib_server_dir, current_ld_library_path))
+    .env("JAVA_HOME", jvm_dir)
     .current_dir(soul_fire_rundir)
     .args(&[
       format!("-Dsf.grpc.port={}", available_port).as_str(),
