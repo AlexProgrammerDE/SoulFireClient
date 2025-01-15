@@ -93,7 +93,7 @@ function parseRawTypeToProto(rawType: string): ProxyProto_Type {
     case 'socks5':
       return ProxyProto_Type.SOCKS5;
     default:
-      throw new Error('Invalid proxy type');
+      throw new Error('Invalid proxy type ' + rawType);
   }
 }
 
@@ -136,6 +136,7 @@ const columns: ColumnDef<ProfileProxy>[] = [
 ];
 
 function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
+  const { t } = useTranslation('instance');
   const queryClient = useQueryClient();
   const profile = useContext(ProfileContext);
   const transport = useContext(TransportContext);

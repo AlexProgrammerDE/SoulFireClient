@@ -17,7 +17,6 @@ import {
   MinecraftAccountProto_AccountTypeProto,
 } from '@/generated/soulfire/common.ts';
 import { PlusIcon, TrashIcon } from 'lucide-react';
-import { Checkbox } from '@/components/ui/checkbox.tsx';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -108,7 +107,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       if (accountTypeCredentialsSelected === null) return;
 
       if (text.length === 0) {
-        toast.error('No accounts to import');
+        toast.error(t('account.listImportToast.noAccounts'));
         return;
       }
 
@@ -172,6 +171,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       instanceInfo.id,
       profile,
       setProfileMutation,
+      t,
       transport,
     ],
   );
@@ -211,7 +211,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
               if (e instanceof Error) {
                 reject(e);
               } else {
-                reject(new Error('Unknown error'));
+                reject(new Error(t('account.unknownError')));
               }
             }
           });
@@ -222,16 +222,16 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           });
         })(),
         {
-          loading: 'Importing account...',
-          success: 'Account imported!',
+          loading: t('account.deviceCodeImportToast.loading'),
+          success: t('account.deviceCodeImportToast.success'),
           error: (e) => {
             console.error(e);
-            return 'Failed to import accounts';
+            return t('account.deviceCodeImportToast.error');
           },
         },
       );
     },
-    [instanceInfo.id, profile, setProfileMutation, transport],
+    [instanceInfo.id, profile, setProfileMutation, t, transport],
   );
 
   return (
@@ -243,14 +243,16 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>Java Edition</DropdownMenuLabel>
+          <DropdownMenuLabel>
+            {t('account.import.javaEdition')}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() =>
               setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE)
             }
           >
-            Offline
+            {t('account.import.offline')}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
@@ -259,7 +261,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
               )
             }
           >
-            Microsoft Credentials
+            {t('account.import.microsoftCredentials')}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
@@ -268,7 +270,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
               )
             }
           >
-            Microsoft Device Code
+            {t('account.import.microsoftDeviceCode')}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
@@ -277,7 +279,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
               )
             }
           >
-            Microsoft Refresh Token
+            {t('account.import.microsoftRefreshToken')}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
@@ -286,17 +288,19 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
               )
             }
           >
-            The Altening
+            {t('account.import.theAltening')}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuLabel>Bedrock Edition</DropdownMenuLabel>
+          <DropdownMenuLabel>
+            {t('account.import.bedrockEdition')}
+          </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() =>
               setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE)
             }
           >
-            Offline
+            {t('account.import.offline')}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
@@ -305,7 +309,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
               )
             }
           >
-            Microsoft Credentials
+            {t('account.import.microsoftCredentials')}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
@@ -314,7 +318,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
               )
             }
           >
-            Microsoft Device Code
+            {t('account.import.microsoftDeviceCode')}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

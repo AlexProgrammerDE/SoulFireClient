@@ -290,7 +290,7 @@ function TextInput(
       <div className="flex flex-col gap-4">
         <Textarea
           autoFocus
-          placeholder={t('dialog.import.textarea.placeholder')}
+          placeholder={t('dialog.import.main.textarea.placeholder')}
           defaultValue={inputText}
           onChange={(e) => setInputText(e.currentTarget.value)}
         />
@@ -300,7 +300,7 @@ function TextInput(
           onClick={() => props.listener(inputText)}
         >
           <TextIcon className="h-4" />
-          <span>{t('dialog.import.textarea.submit')}</span>
+          <span>{t('dialog.import.main.textarea.submit')}</span>
         </Button>
       </div>
     </>

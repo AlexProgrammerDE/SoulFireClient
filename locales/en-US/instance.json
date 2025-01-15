@@ -7,10 +7,23 @@
       "allFailed": "Failed to import any accounts",
       "someFailed": "Imported {{count}} accounts, failed to import {{failed}} accounts",
       "noneFailed": "{{count}} accounts imported!",
-      "error": "Failed to import accounts"
+      "error": "Failed to import accounts",
+      "noAccounts": "No accounts to import"
     },
     "unknownError": "Unknown error",
     "deviceCodeImportToast": {
+      "loading": "Importing account...",
+      "success": "Account imported!",
+      "error": "Failed to import account"
+    },
+    "import": {
+      "javaEdition": "Java Edition",
+      "bedrockEdition": "Bedrock Edition",
+      "offline": "Offline",
+      "microsoftCredentials": "Microsoft Credentials",
+      "microsoftDeviceCode": "Microsoft Device Code",
+      "microsoftRefreshToken": "Microsoft Refresh Token",
+      "theAltening": "The Altening"
     }
   }
 }
