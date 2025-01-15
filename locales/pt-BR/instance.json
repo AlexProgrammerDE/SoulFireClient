@@ -2,13 +2,13 @@
   "proxy": {},
   "account": {
     "listImportToast": {
-      "loading": "",
-      "allFailed": "",
-      "someFailed": "",
-      "noneFailed": "",
-      "error": ""
+      "loading": "Importando contas...",
+      "allFailed": "Falha ao importar contas",
+      "someFailed": "{{count}} Contas importadas, falha ao importar {{failed}} contas",
+      "noneFailed": "{{count}} Contas importadas!",
+      "error": "Falha ao importar contas"
     },
-    "unknownError": "",
+    "unknownError": "Erro desconhecido",
     "deviceCodeImportToast": {}
   }
 }
