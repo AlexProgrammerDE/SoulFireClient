@@ -36,7 +36,7 @@ import { isTauri } from '@/lib/utils.ts';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import {
   SelectAllHeader,
   SelectRowHeader,
@@ -58,7 +58,7 @@ const columns: ColumnDef<ProfileAccount>[] = [
   },
   {
     accessorKey: 'type',
-    header: 'Type',
+    header: () => <Trans i18nKey={'instance:account.table.type'} />,
     cell: ({ row }) =>
       getEnumKeyByValue(
         MinecraftAccountProto_AccountTypeProto,
@@ -67,11 +67,11 @@ const columns: ColumnDef<ProfileAccount>[] = [
   },
   {
     accessorKey: 'profileId',
-    header: 'Profile ID',
+    header: () => <Trans i18nKey={'instance:account.table.profileId'} />,
   },
   {
     accessorKey: 'lastKnownName',
-    header: 'Last Known Name',
+    header: () => <Trans i18nKey={'instance:account.table.lastKnownName'} />,
   },
 ];
 
@@ -338,12 +338,13 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           };
 
           toast.promise(setProfileMutation(newProfile), {
-            loading: 'Removing accounts...',
-            success: () =>
-              `Removed ${beforeSize - newProfile.accounts.length} accounts`,
+            loading: t('account.removeToast.loading'),
+            success: t('account.removeToast.success', {
+              count: beforeSize - newProfile.accounts.length,
+            }),
             error: (e) => {
               console.error(e);
-              return 'Failed to remove accounts';
+              return t('account.removeToast.error');
             },
           });
         }}
@@ -352,8 +353,13 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       </Button>
       {accountTypeCredentialsSelected !== null && (
         <ImportDialog
-          title={`Import ${getEnumKeyByValue(AccountTypeCredentials, accountTypeCredentialsSelected)} accounts`}
-          description="Paste your accounts here, one per line"
+          title={t('account.import.dialog.title', {
+            type: getEnumKeyByValue(
+              AccountTypeCredentials,
+              accountTypeCredentialsSelected,
+            ),
+          })}
+          description={t('account.import.dialog.description')}
           closer={() => setAccountTypeCredentialsSelected(null)}
           listener={textSelectedCallback}
           filters={[

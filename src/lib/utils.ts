@@ -84,13 +84,6 @@ export function hasInstancePermission(
     .includes(permission);
 }
 
-export function toCapitalizedWords(str: string) {
-  return str
-    .split('_')
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
-}
-
 export function getGravatarUrl(email: string) {
   return `https://www.gravatar.com/avatar/${sha256(email)}?d=404`;
 }

@@ -25,7 +25,21 @@
       "microsoftCredentials": "Microsoft Credentials",
       "microsoftDeviceCode": "Microsoft Device Code",
       "microsoftRefreshToken": "Microsoft Refresh Token",
-      "theAltening": "The Altening"
+      "theAltening": "The Altening",
+      "dialog": {
+        "title": "Import {{type}} accounts",
+        "description": "Paste your accounts here, one per line"
+      }
+    },
+    "removeToast": {
+      "loading": "Removing accounts...",
+      "success": "Removed {{count}} accounts!",
+      "error": "Failed to remove accounts"
+    },
+    "table": {
+      "type": "Type",
+      "profileId": "UUID",
+      "lastKnownName": "Username"
     }
   }
 }
