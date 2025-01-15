@@ -8,7 +8,7 @@
   },
   "productName": "SoulFire",
   "mainBinaryName": "soulfire",
-  "identifier": "com.soulfiremc.app",
+  "identifier": "com.soulfiremc.soulfire",
   "app": {
     "enableGTKAppId": true,
     "macOSPrivateApi": true,
