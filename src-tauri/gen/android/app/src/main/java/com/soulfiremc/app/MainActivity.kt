@@ -1,3 +1,3 @@
-package com.soulfiremc.app
+package com.soulfiremc.soulfire
 
 class MainActivity : TauriActivity()
