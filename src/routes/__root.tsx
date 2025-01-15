@@ -83,6 +83,13 @@ function RootLayout() {
     window.toggleDevtools = () => setShowDevtools((old) => !old);
   }, []);
 
+  // Avoid mobile pointer events issues
+  // When dropdowns were open when page is switched, sometimes the body still has pointer-events: none
+  // This will reset it to auto
+  useEffect(() => {
+    document.body.style.pointerEvents = 'auto';
+  }, []);
+
   useEffect(() => {
     if (isTauri()) {
       let didUnmount = false;
