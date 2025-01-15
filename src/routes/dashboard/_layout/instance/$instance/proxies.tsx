@@ -12,7 +12,6 @@ import {
   ProfileProxy,
   ProfileRoot,
 } from '@/lib/types.ts';
-import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { ProxyProto_Type } from '@/generated/soulfire/common.ts';
 import { toast } from 'sonner';
 import {
@@ -33,6 +32,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { ProxyCheckServiceClient } from '@/generated/soulfire/proxy-check.client.ts';
 import { useTranslation } from 'react-i18next';
+import {
+  SelectAllHeader,
+  SelectRowHeader,
+} from '@/components/data-table-selects.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/proxies',
@@ -108,29 +111,8 @@ function parseURIProxy(line: string): ProfileProxy {
 const columns: ColumnDef<ProfileProxy>[] = [
   {
     id: 'select',
-    header: ({ table }) => (
-      <div className="flex">
-        <Checkbox
-          className="my-auto"
-          defaultChecked={
-            table.getIsAllRowsSelected() ||
-            (table.getIsSomeRowsSelected() && 'indeterminate')
-          }
-          onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      </div>
-    ),
-    cell: ({ row }) => (
-      <div className="flex">
-        <Checkbox
-          className="my-auto"
-          defaultChecked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      </div>
-    ),
+    header: SelectAllHeader,
+    cell: SelectRowHeader,
     enableSorting: false,
     enableHiding: false,
   },

@@ -38,6 +38,10 @@ import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { useTranslation } from 'react-i18next';
+import {
+  SelectAllHeader,
+  SelectRowHeader,
+} from '@/components/data-table-selects.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/accounts',
@@ -48,29 +52,8 @@ export const Route = createFileRoute(
 const columns: ColumnDef<ProfileAccount>[] = [
   {
     id: 'select',
-    header: ({ table }) => (
-      <div className="flex">
-        <Checkbox
-          className="my-auto"
-          defaultChecked={
-            table.getIsAllRowsSelected() ||
-            (table.getIsSomeRowsSelected() && 'indeterminate')
-          }
-          onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
-          aria-label="Select all"
-        />
-      </div>
-    ),
-    cell: ({ row }) => (
-      <div className="flex">
-        <Checkbox
-          className="my-auto"
-          defaultChecked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label="Select row"
-        />
-      </div>
-    ),
+    header: SelectAllHeader,
+    cell: SelectRowHeader,
     enableSorting: false,
     enableHiding: false,
   },
