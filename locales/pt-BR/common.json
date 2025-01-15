@@ -190,7 +190,7 @@
     "saveProfile": "Salvar Perfil",
     "deleteInstance": "Deletar Instancia",
     "controlsGroup": "Controles",
-    "console": "",
+    "console": "Console",
     "settingsGroup": "Configurações",
     "pluginSettings": "Definições de Plugin",
     "botSettings": "Configurações do Bot",
@@ -202,7 +202,7 @@
     "userGroup": "Usuário",
     "instances": "Instâncias",
     "createInstance": "Criar Instância",
-    "adminGroup": "",
+    "adminGroup": "Administrador",
     "adminOverview": "Visão Geral do Administrador",
     "adminConsole": "Console de Administração",
     "serverSettings": "Configurações do servidor",
@@ -214,7 +214,7 @@
       "dark": "Escuro"
     },
     "terminal": {
-      "title": ""
+      "title": "Terminal"
     },
     "configDir": "Diretório de configuração",
     "dataDir": "Diretório de dados",
@@ -233,13 +233,13 @@
     "support": "Suporte"
   },
   "breadcrumbs": {
-    "admin": "",
+    "admin": "Administrador",
     "settings": "Configurações",
     "controls": "Controles"
   },
   "noInstancesFound": "Nenhuma instância encontrada",
   "pageName": {
-    "console": "",
+    "console": "Console",
     "instances": "Instâncias",
     "proxySettings": "Configurações de Proxy",
     "overview": "Visão geral",
