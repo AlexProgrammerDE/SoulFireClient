@@ -1,7 +1,9 @@
 {
   "proxy": {
+    "filterPlaceholder": "Filter proxies..."
   },
   "account": {
+    "filterPlaceholder": "Filter accounts...",
     "listImportToast": {
       "loading": "Importing accounts...",
       "allFailed": "Failed to import any accounts",

@@ -27,7 +27,7 @@ import { useTranslation } from 'react-i18next';
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  filterDisplayName: string;
+  filterPlaceholder: string;
   filterKey: string;
   // Element with form param
   extraHeader?: (props: { table: ReactTable<TData> }) => React.ReactNode;
@@ -36,7 +36,7 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-  filterDisplayName,
+  filterPlaceholder,
   filterKey,
   extraHeader,
 }: DataTableProps<TData, TValue>) {
@@ -66,7 +66,7 @@ export function DataTable<TData, TValue>({
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-2">
         <Input
-          placeholder={`Filter ${filterDisplayName}...`}
+          placeholder={filterPlaceholder}
           value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
             table.getColumn(filterKey)?.setFilterValue(event.target.value)

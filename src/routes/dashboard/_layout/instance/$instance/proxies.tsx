@@ -370,7 +370,7 @@ function ProxySettings() {
           />
         </div>
         <DataTable
-          filterDisplayName="proxies"
+          filterPlaceholder={t('instance:proxy.filterPlaceholder')}
           filterKey="address"
           columns={columns}
           data={profile.proxies}

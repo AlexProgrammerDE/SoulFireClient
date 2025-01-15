@@ -394,7 +394,7 @@ function AccountSettings() {
           />
         </div>
         <DataTable
-          filterDisplayName="accounts"
+          filterPlaceholder={t('instance:account.filterPlaceholder')}
           filterKey="lastKnownName"
           columns={columns}
           data={profile.accounts}
