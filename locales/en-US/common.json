@@ -117,7 +117,9 @@
     "goFirst": "Go to first page",
     "goPrevious": "Go to previous page",
     "goNext": "Go to next page",
-    "goLast": "Go to last page"
+    "goLast": "Go to last page",
+    "selectAll": "Select all",
+    "selectRow": "Select row"
   },
   "pluginCard": {
     "version": "Version: {{version}}",
