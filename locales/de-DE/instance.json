@@ -1,14 +1,80 @@
 {
-  "proxy": {},
-  "account": {
+  "proxy": {
+    "filterPlaceholder": "Proxies filtern...",
     "listImportToast": {
-      "loading": "",
-      "allFailed": "",
-      "someFailed": "",
-      "noneFailed": "",
-      "error": ""
+      "loading": "Proxies werden importiert...",
+      "success": "Importierte {{count}} Proxies!",
+      "error": "Fehler beim Importieren der Proxies",
+      "noProxies": "Keine Proxies zu importieren"
     },
-    "unknownError": "",
-    "deviceCodeImportToast": {}
+    "import": {
+      "proxyType": "Proxy Typ",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "Importiere {{type}} Proxies",
+        "description": "Fügen Sie hier Ihre Proxies ein, eine pro Zeile"
+      }
+    },
+    "removeToast": {
+      "loading": "Entferne Proxies...",
+      "success": "Entfernte {{count}} Proxies!",
+      "error": "Fehler beim Entfernen der Proxies"
+    },
+    "checkToast": {
+      "loading": "Überprüfe Proxies...",
+      "success": "Entfernte {{count}} defekte Proxies!",
+      "error": "Fehler beim Prüfen der Proxies"
+    },
+    "invalidFormat": "Ungültiges Proxy Format",
+    "invalidType": "Ungültiger Proxy Typ: {{type}}",
+    "table": {
+      "type": "Typ",
+      "address": "Adresse",
+      "username": "Benutzername",
+      "password": "Passwort"
+    }
+  },
+  "account": {
+    "filterPlaceholder": "Konten filtern...",
+    "listImportToast": {
+      "loading": "Importiere Konten...",
+      "allFailed": "Fehler beim Importieren aller Konten",
+      "someFailed": "Importierte {{count}} Konten, Fehler beim Importieren von {{failed}} Konten",
+      "noneFailed": "{{count}} Konten importiert!",
+      "error": "Fehler beim Importieren der Konten",
+      "noAccounts": "Keine Konten zum Importieren"
+    },
+    "unknownError": "Unbekannter Fehler",
+    "deviceCodeImportToast": {
+      "loading": "Konto wird importiert...",
+      "success": "Konto importiert!",
+      "error": "Fehler beim Importieren des Kontos"
+    },
+    "import": {
+      "javaEdition": "Java Edition",
+      "bedrockEdition": "Bedrock Edition",
+      "offline": "Offline",
+      "microsoftCredentials": "Microsoft Zugangsdaten",
+      "microsoftDeviceCode": "Microsoft Gerätecode",
+      "microsoftRefreshToken": "Microsoft Aktualisierungstoken",
+      "theAltening": "The Altening",
+      "dialog": {
+        "title": "Importiere {{type}} Konten",
+        "description": "Fügen Sie Ihre Konten hier ein, eins pro Zeile"
+      }
+    },
+    "removeToast": {
+      "loading": "Konten werden entfernt...",
+      "success": "{{count}} Konten entfernt!",
+      "error": "Fehler beim Entfernen der Konten"
+    },
+    "table": {
+      "type": "Typ",
+      "profileId": "UUID",
+      "lastKnownName": "Benutzername"
+    }
   }
 }
