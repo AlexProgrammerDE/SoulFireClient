@@ -113,7 +113,7 @@
     "noResults": "Нет данных.",
     "rowsSelected": "Выбрано {{amount}} из {{total}} строк",
     "rowsPerPage": "Строк на странице",
-    "currentPage": "Страница {{page}} из {{total}}",
+    "currentPage": "Страниц {{page}} из {{total}}",
     "goFirst": "Перейти на первую страницу",
     "goPrevious": "Вернуться на предыдущую страницу",
     "goNext": "Перейти на следующую страницу",

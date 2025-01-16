@@ -1,24 +1,24 @@
 {
   "overview": {
-    "welcome": "",
+    "welcome": "Bienvenue, {{name}}🧙",
     "instancesChart": {
-      "title": "",
-      "instances": "",
+      "title": "Nombre total d'instances sur ce serveur",
+      "instances": "Instances",
       "label": {
-        "state": "",
-        "active": "",
-        "stopped": "",
-        "other": ""
+        "state": "État",
+        "active": "Actif",
+        "stopped": "Arrêté",
+        "other": "Autre"
       }
     },
     "usersChart": {
-      "title": "",
-      "users": "",
+      "title": "Nombre total d'utilisateurs sur ce serveur",
+      "users": "Utilisateur·rice·s",
       "label": {
-        "role": "",
-        "user": "",
-        "admin": "",
-        "other": ""
+        "role": "Rôle",
+        "user": "Utilisateur",
+        "admin": "Administrateur",
+        "other": "Autre"
       }
     }
   }
