@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.soulfiremc.soulfire</id>
+
+  <name>SoulFire</name>
+  <summary>Advanced Minecraft Server-Stresser Tool.</summary>
+
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </supports>
+
+  <description>
+    <p>
+      Advanced Minecraft Server-Stresser Tool. Launch bot attacks on your servers to measure performance.
+    </p>
+  </description>
+
+  <launchable type="desktop-id">com.soulfiremc.soulfire.desktop</launchable>
+</component>

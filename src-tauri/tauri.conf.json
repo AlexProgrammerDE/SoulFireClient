@@ -69,7 +69,10 @@
     "shortDescription": "Advanced Minecraft Server-Stresser Tool.",
     "linux": {
       "deb": {
-        "depends": []
+        "depends": [],
+        "files": {
+          "/usr/share/metainfo/com.soulfiremc.soulfire.metainfo.xml": "../com.soulfiremc.soulfire.metainfo.xml"
+        }
       },
       "rpm": {
         "depends": [],
