@@ -8,7 +8,7 @@
   },
   "productName": "SoulFire",
   "mainBinaryName": "soulfire",
-  "identifier": "com.soulfiremc.app",
+  "identifier": "com.soulfiremc.soulfire",
   "app": {
     "enableGTKAppId": true,
     "macOSPrivateApi": true,
@@ -36,7 +36,7 @@
     "category": "DeveloperTool",
     "copyright": "AlexProgrammerDE Ⓒ 2024",
     "publisher": "SoulFireMC",
-    "targets": ["deb", "rpm", "appimage", "nsis", "app", "dmg"],
+    "targets": ["deb", "appimage", "nsis", "app", "dmg"],
     "homepage": "https://soulfiremc.com",
     "license": "GPL-3.0",
     "licenseFile": "../LICENSE",
@@ -69,7 +69,10 @@
     "shortDescription": "Advanced Minecraft Server-Stresser Tool.",
     "linux": {
       "deb": {
-        "depends": []
+        "depends": [],
+        "files": {
+          "/usr/share/metainfo/com.soulfiremc.soulfire.metainfo.xml": "../com.soulfiremc.soulfire.metainfo.xml"
+        }
       },
       "rpm": {
         "depends": [],

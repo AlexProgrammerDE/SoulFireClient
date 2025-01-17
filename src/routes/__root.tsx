@@ -1,4 +1,4 @@
-import { createRootRoute, Outlet } from '@tanstack/react-router';
+import { createRootRoute, Outlet, useLocation } from '@tanstack/react-router';
 import '../App.css';
 import { ThemeProvider } from '@/components/providers/theme-provider.tsx';
 import { Toaster } from '@/components/ui/sonner.tsx';
@@ -70,6 +70,19 @@ const ReactQueryDevtoolsProduction = lazy(() =>
   })),
 );
 
+function PointerReset() {
+  const location = useLocation();
+
+  // Avoid mobile pointer events issues
+  // When dropdowns were open when page is switched, sometimes the body still has pointer-events: none
+  // This will reset it to auto
+  useEffect(() => {
+    document.body.style.pointerEvents = 'auto';
+  }, [location.pathname]);
+
+  return null;
+}
+
 function RootLayout() {
   const { systemInfo } = Route.useLoaderData();
   const [systemInfoState, setSystemInfoState] = useState<SystemInfo | null>(
@@ -135,6 +148,7 @@ function RootLayout() {
                   vaul-drawer-wrapper=""
                   className="flex h-dvh w-dvw flex-col"
                 >
+                  <PointerReset />
                   <Outlet />
                 </main>
               </TerminalThemeContext.Provider>
