@@ -73,13 +73,6 @@
         "files": {
           "/usr/share/metainfo/com.soulfiremc.soulfire.metainfo.xml": "../com.soulfiremc.soulfire.metainfo.xml"
         }
-      },
-      "rpm": {
-        "depends": [],
-        "compression": {
-          "type": "xz",
-          "level": 2
-        }
       }
     },
     "createUpdaterArtifacts": true,

@@ -104,7 +104,6 @@ jobs:
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/appimage/*.AppImage
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/deb/*.deb
-            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/rpm/*.rpm
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (macOS ARM64)'
