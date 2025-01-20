@@ -31,7 +31,7 @@ pub async fn run_integrated_server(
     .starting
     .store(true, std::sync::atomic::Ordering::Relaxed);
 
-  let soul_fire_version = "1.17.0";
+  let soul_fire_version = "1.17.1";
 
   fn send_log<S: Serialize + Clone>(app_handle: &AppHandle, payload: S) -> tauri::Result<()> {
     info!("{}", serde_json::to_string(&payload)?);
@@ -192,7 +192,7 @@ pub async fn run_integrated_server(
   // Print all rx messages
   while let Some(message) = rx.recv().await {
     if let Stdout(line) = message {
-      let line = String::from_utf8(line)?;
+      let line = String::from_utf8_lossy(&line);
       let line = strip_ansi_escapes::strip_str(line);
       if line.contains("Finished loading!") {
         send_log(&app_handle, "Generating token...")?;
@@ -208,7 +208,7 @@ pub async fn run_integrated_server(
   let token: String = loop {
     if let Some(message) = rx.recv().await {
       if let Stdout(line) = message {
-        let line = String::from_utf8(line)?;
+        let line = String::from_utf8_lossy(&line);
         if line.contains("JWT") {
           break line.split_whitespace().last().ok_or(SFError::JwtLineInvalid)?.to_string();
         }
