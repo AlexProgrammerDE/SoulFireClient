@@ -1,0 +1,80 @@
+{
+  "proxy": {
+    "filterPlaceholder": "Filtruj serwery pośredniczące...",
+    "listImportToast": {
+      "loading": "Importowanie serwerów pośredniczących...",
+      "success": "Zaimportowano {{count}} serwerów pośredniczących!",
+      "error": "Nie udało się zaimportować serwerów pośredniczących",
+      "noProxies": "Brak serwerów pośredniczących do importu"
+    },
+    "import": {
+      "proxyType": "Typ serwera pośredniczącego",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "Importuj serwer pośredniczący {{type}}",
+        "description": "Wklej tutaj swoje serwery pośredniczące, po jednym na linię"
+      }
+    },
+    "removeToast": {
+      "loading": "Usuwanie serwerów pośredniczących...",
+      "success": "Usunięto {{count}} serwerów pośredniczących!",
+      "error": "Nie udało się usunąć serwerów pośredniczących"
+    },
+    "checkToast": {
+      "loading": "Sprawdzanie serwerów pośredniczących...",
+      "success": "Usunięto {{count}} uszkodzonych serwerów pośredniczących!",
+      "error": "Nie udało się sprawdzić serwerów pośredniczących"
+    },
+    "invalidFormat": "Nieprawidłowy format serwera pośredniczącego",
+    "invalidType": "Nieprawidłowy typ serwera pośredniczącego: {{type}}",
+    "table": {
+      "type": "Typ",
+      "address": "Adres",
+      "username": "Nazwa użytkownika",
+      "password": "Hasło"
+    }
+  },
+  "account": {
+    "filterPlaceholder": "Filtruj konta...",
+    "listImportToast": {
+      "loading": "Importowanie kont...",
+      "allFailed": "Nie udało się zaimportować żadnych kont",
+      "someFailed": "Zaimportowano {{count}} kont, nie udało się zaimportować {{failed}} kont",
+      "noneFailed": "Zaimportowano {{count}} kont!",
+      "error": "Nie udało się zaimportować kont",
+      "noAccounts": "Brak kont do importu"
+    },
+    "unknownError": "Nieznany błąd",
+    "deviceCodeImportToast": {
+      "loading": "Importowanie konta...",
+      "success": "Konto zaimportowane!",
+      "error": "Nie udało się zaimportować konta"
+    },
+    "import": {
+      "javaEdition": "Edycja Java",
+      "bedrockEdition": "Edycja Bedrock",
+      "offline": "Niedostępny",
+      "microsoftCredentials": "Poświadczenia Microsoft",
+      "microsoftDeviceCode": "Kod urządzenia Microsoft",
+      "microsoftRefreshToken": "Microsoft Refresh Token",
+      "theAltening": "The Altening",
+      "dialog": {
+        "title": "Importuj konta {{type}}",
+        "description": "Wklej tutaj swoje konta, po jednym na linię"
+      }
+    },
+    "removeToast": {
+      "loading": "Usuwanie kont...",
+      "success": "Usunięto {{count}} kont!",
+      "error": "Nie udało się usunąć kont"
+    },
+    "table": {
+      "type": "Typ",
+      "profileId": "UUID",
+      "lastKnownName": "Nazwa użytkownika"
+    }
+  }
+}

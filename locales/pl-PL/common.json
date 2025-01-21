@@ -1,0 +1,257 @@
+{
+  "locale": "Język i region",
+  "error": {
+    "noAddressOrToken": "Nie znaleziono adresu serwera ani tokena",
+    "page": {
+      "title": "Błąd",
+      "message": "{{message}} (szczegóły w konsoli)",
+      "logOut": "Wyloguj się",
+      "reloadPage": "Odśwież stronę"
+    }
+  },
+  "pending": {
+    "connecting": "Łączenie..."
+  },
+  "dialog": {
+    "about": {
+      "title": "O SoulFire",
+      "description": "Używasz wersji {{version}} klienta SoulFire.",
+      "type": "Typ",
+      "value": "Wartość",
+      "fields": {
+        "operatingSystem": "System operacyjny",
+        "platform": "Platforma",
+        "locale": "Język i region",
+        "architecture": "Architektura",
+        "environment": "Środowisko",
+        "browser": "Przeglądarka"
+      },
+      "close": "Zamknij"
+    },
+    "createInstance": {
+      "title": "Stwórz nową instancję",
+      "description": "Instancje potrzebują przyjaznych nazw, aby je rozróżniać. Może to być cokolwiek, na przykład \"Mój bot Minecraft\".",
+      "form": {
+        "friendlyName": {
+          "label": "Przyjazna nazwa",
+          "placeholder": "Mój bot Minecraft",
+          "description": "Nazwa, którą chcesz nadać tej instancji.",
+          "min": "Przyjazna nazwa musi mieć co najmniej 3 znaki.",
+          "max": "Przyjazna nazwa musi mieć nie więcej niż 50 znaków.",
+          "regex": "Przyjazna nazwa może zawierać tylko litery, cyfry i spacje"
+        },
+        "cancel": "Anuluj",
+        "create": "Utwórz"
+      },
+      "createToast": {
+        "loading": "Tworzenie instancji...",
+        "success": "Instancja została pomyślnie utworzona",
+        "error": "Nie udało się utworzyć instancji"
+      }
+    },
+    "import": {
+      "main": {
+        "fromFile": "Z pliku",
+        "fromUrl": "Z adresu URL",
+        "firstClipboardItem": "Masz wiele elementów w schowku, używam pierwszego.",
+        "fromClipboard": "Ze schowka",
+        "textarea": {
+          "placeholder": "Umieść tekst tutaj...",
+          "submit": "Wczytaj z tekstu"
+        }
+      },
+      "url": {
+        "description": "Ładowanie z adresu URL sprawi, że serwer SoulFire wyśle żądanie GET do serwera docelowego i użyje odpowiedzi jako danych.",
+        "form": {
+          "url": {
+            "placeholder": "Umieść tutaj adres URL...",
+            "empty": "Proszę wprowadzić poprawny adres URL"
+          }
+        },
+        "submit": "Wczytaj z adresu URL",
+        "toast": {
+          "loading": "Pobieranie danych...",
+          "success": "Dane załadowane!",
+          "error": "Nie udało się pobrać danych"
+        }
+      }
+    }
+  },
+  "commandInput": {
+    "placeholder": "Wprowadź polecenie"
+  },
+  "controls": {
+    "start": "Rozpocznij",
+    "resume": "Wznów",
+    "pause": "Wstrzymaj",
+    "stop": "Zatrzymaj",
+    "startToast": {
+      "loading": "Zaczynanie ataku...",
+      "success": "Atak rozpoczęty pomyślnie",
+      "error": "Nie udało się rozpocząć ataku"
+    },
+    "resumeToast": {
+      "loading": "Wznawiam atak...",
+      "success": "Atak wznowiony pomyślnie",
+      "error": "Nie udało się wznowić ataku"
+    },
+    "pauseToast": {
+      "loading": "Wstrzymywanie ataku...",
+      "success": "Atak wstrzymany pomyślnie",
+      "error": "Nie udało się wstrzymać ataku"
+    },
+    "stopToast": {
+      "loading": "Zatrzymywanie ataku...",
+      "success": "Atak zatrzymany pomyślnie",
+      "error": "Nie udało się zatrzymać ataku"
+    }
+  },
+  "icon": {
+    "invalidName": "Nieprawidłowa nazwa ikony: {{name}}"
+  },
+  "dataTable": {
+    "noResults": "Brak wyników.",
+    "rowsSelected": "Wybrano {{amount}} z {{total}}",
+    "rowsPerPage": "Wiersze na stronę",
+    "currentPage": "Strona {{page}} z {{total}}",
+    "goFirst": "Przejdź na pierwszą stronę",
+    "goPrevious": "Przejdź na poprzednią stronę",
+    "goNext": "Przejdź na następną stronę",
+    "goLast": "Przejdź na ostatnią stronę",
+    "selectAll": "Zaznacz wszystko",
+    "selectRow": "Zaznacz rząd"
+  },
+  "pluginCard": {
+    "version": "Wersja: {{version}}",
+    "author": "Autor: {{author}}",
+    "license": "Licencja: {{license}}",
+    "website": "Strona Internetowa"
+  },
+  "settingsPage": {
+    "entryNotFound": "Nie znaleziono wpisu w ustawieniach",
+    "namespacesNotFound": "Nie znaleziono przestrzeni nazw w ustawieniach",
+    "stringList": {
+      "placeholder": "Dodaj nowy wpis...",
+      "add": "Dodaj",
+      "remove": "Usuń"
+    }
+  },
+  "terminal": {
+    "noLogs": "🧙 Wygląda na to, że nie ma nic do wyświetlenia; spróbuj użyć komend!",
+    "demo-1": "Witamy w trybie demonstracyjnym! 🧪",
+    "demo-2": "To jest instancja SoulFire tylko do odczytu",
+    "demo-3": "Sprawdź wszystkie menu i funkcje przed podjęciem decyzji o instalacji SoulFire :D",
+    "demo-4": "Dołącz do naszego serwera Discord, jeśli chcesz się skontaktować: https://soulfiremc.com/discord"
+  },
+  "uiBreadcrumb": {
+    "more": "Więcej"
+  },
+  "uiDialog": {
+    "close": "Zamknij"
+  },
+  "uiSheet": {
+    "close": "Zamknij"
+  },
+  "uiSidebar": {
+    "toggle": "Wyświetla/ukrywa panel boczny"
+  },
+  "castMenu": {
+    "title": "Udostępnij",
+    "disconnected": "Odłączono od {{device}}",
+    "alreadyConnected": "Już połączono z {{device}}",
+    "connectToast": {
+      "loading": "Łączenie z {{device}}...",
+      "success": "Połączono z {{device}}",
+      "error": "Nie udało się połączyć z {{device}}"
+    },
+    "noDevices": "Nie znaleziono urządzeń",
+    "broadcastLabel": "Test transmisji",
+    "broadcastToast": {
+      "loading": "Nadawanie wiadomości...",
+      "success": "Wiadomość nadana!",
+      "error": "Nie udało się nadać wiadomości"
+    }
+  },
+  "instanceSidebar": {
+    "backToDashboard": "Wróć do pulpitu",
+    "deleteToast": {
+      "loading": "Usuwanie instancji...",
+      "success": "Instancja usunięta",
+      "error": "Usunięcie instancji nie powiodło się"
+    },
+    "instancesGroup": "Instancje",
+    "createInstance": "Utwórz instancję",
+    "loadProfileToast": {
+      "loading": "Wczytywanie profilu...",
+      "success": "Profil wczytany",
+      "error": "Nie udało się wczytać profilu"
+    },
+    "loadProfile": "Załaduj profil",
+    "loadFromFile": "Wczytaj z pliku",
+    "profileSaved": "Zapisano profil",
+    "saveProfile": "Zapisz profil",
+    "deleteInstance": "Usuń instancję",
+    "controlsGroup": "Sterowanie",
+    "console": "Konsola",
+    "settingsGroup": "Ustawienia",
+    "pluginSettings": "Ustawienia wtyczek",
+    "botSettings": "Ustawienia botów",
+    "accountSettings": "Ustawienia konta",
+    "proxySettings": "Ustawienia serwera proxy",
+    "aiSettings": "Ustawienia SI"
+  },
+  "userSidebar": {
+    "userGroup": "Użytkownik",
+    "instances": "Instancje",
+    "createInstance": "Utwórz instancję",
+    "adminGroup": "Administrator",
+    "adminOverview": "Przegląd administratora",
+    "adminConsole": "Konsola Administratora",
+    "serverSettings": "Ustawienia serwera",
+    "devSettings": "Ustawienia deweloperskie",
+    "theme": {
+      "title": "Motyw",
+      "system": "System",
+      "light": "Jasny",
+      "dark": "Ciemny"
+    },
+    "terminal": {
+      "title": "Konsola"
+    },
+    "configDir": "Katalog konfiguracji",
+    "dataDir": "Katalog danych",
+    "about": "O programie",
+    "logOut": "Wyloguj się",
+    "logOutToast": {
+      "loading": "Wylogowywanie...",
+      "success": "Wylogowano",
+      "error": "Wylogowanie nie powiodło się"
+    },
+    "exit": "Wyjdź"
+  },
+  "sidebar": {
+    "documentation": "Dokumentacja",
+    "buyMeACoffee": "Kup mi kawę",
+    "support": "Wsparcie"
+  },
+  "breadcrumbs": {
+    "admin": "Administrator",
+    "settings": "Ustawienia",
+    "controls": "Sterowanie"
+  },
+  "noInstancesFound": "Nie znaleziono instancji",
+  "pageName": {
+    "console": "Konsola",
+    "instances": "Instancje",
+    "proxySettings": "Ustawienia serwera proxy",
+    "overview": "Przegląd",
+    "accountSettings": "Ustawienia konta"
+  },
+  "instanceState": {
+    "starting": "Uruchamianie",
+    "running": "Uruchomiona",
+    "paused": "Wstrzymana",
+    "stopping": "Zatrzymywanie",
+    "stopped": "Zatrzymana"
+  }
+}

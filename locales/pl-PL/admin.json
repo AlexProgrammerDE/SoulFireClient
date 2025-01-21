@@ -1,0 +1,25 @@
+{
+  "overview": {
+    "welcome": "Witamy ponownie, {{name}}🧙",
+    "instancesChart": {
+      "title": "Wszystkie instancje na tym serwerze",
+      "instances": "Instancje",
+      "label": {
+        "state": "Stan",
+        "active": "Aktywny",
+        "stopped": "Zatrzymana",
+        "other": "Inne"
+      }
+    },
+    "usersChart": {
+      "title": "Wszyscy użytkownicy na tym serwerze",
+      "users": "Użytkownicy",
+      "label": {
+        "role": "Role",
+        "user": "Użytkownik",
+        "admin": "Administrator",
+        "other": "Inne"
+      }
+    }
+  }
+}
