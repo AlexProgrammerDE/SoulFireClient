@@ -1,0 +1,54 @@
+{
+  "header": {
+    "image": {
+      "alt": "Logo SoulFire"
+    },
+    "title": "SoulFire"
+  },
+  "connect": {
+    "title": "Połącz z serwerem SoulFire",
+    "description": "Wybierz typ serwera SoulFire, z którym chcesz się połączyć.",
+    "integrated": {
+      "title": "Serwer zintegrowany (lokalny)",
+      "description": "Uruchamia serwer SoulFire na twoim komputerze. Konfiguracja jest automatyczna i nie wymaga ingerencji użytkownika. (Wymaga aplikacji)"
+    },
+    "dedicated": {
+      "title": "Serwer dedykowany (zdalny)",
+      "description": "Łączy się ze zdalną instancją serwera SoulFire. Będziesz musiał podać adres i token serwera."
+    },
+    "demo": {
+      "title": "Serwer demonstracyjny",
+      "description": "Symuluje serwer wirtualny z danymi demonstracyjnymi. Ten serwer jest tylko do odczytu i nie możesz w nim wprowadzać żadnych zmian."
+    }
+  },
+  "integrated": {
+    "preparing": "Przygotowywanie do uruchomienia zintegrowanego serwera...",
+    "toast": {
+      "loading": "Uruchamianie serwera zintegrowanego...",
+      "success": "Zintegrowany serwer uruchomiony",
+      "error": "Nie udało się uruchomić serwera zintegrowanego"
+    }
+  },
+  "dedicated": {
+    "description": "Umieść adres i token serwera SoulFire, z którym chcesz się połączyć.",
+    "form": {
+      "address": {
+        "title": "Adres",
+        "description": "Adres serwera, z którym chcesz się połączyć.",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "Token",
+        "placeholder": "Tajny token",
+        "description": "Token do uwierzytelniania z serwerem."
+      },
+      "back": "Wróć",
+      "connect": "Połącz"
+    }
+  },
+  "footer": {
+    "version": "Klient SoulFire {{version}} - {{environment}}",
+    "preview": "Szukasz podglądu?",
+    "production": "Szukasz wersji produkcyjnej?"
+  }
+}
