@@ -19,7 +19,7 @@ import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context';
 import { attachConsole } from '@tauri-apps/plugin-log';
-import { AptabaseProvider } from '@aptabase/react';
+import { AptabaseProvider, useAptabase } from '@aptabase/react';
 
 async function createSystemInfo() {
   const profileDir = await resolve(
@@ -84,6 +84,18 @@ function PointerReset() {
   return null;
 }
 
+let appLoaded = false;
+function AppStartedEvent() {
+  const { trackEvent } = useAptabase();
+
+  if (!appLoaded) {
+    appLoaded = true;
+    void trackEvent('app_loaded');
+  }
+
+  return null;
+}
+
 function RootLayout() {
   const { systemInfo } = Route.useLoaderData();
   const [systemInfoState, setSystemInfoState] = useState<SystemInfo | null>(
@@ -133,10 +145,11 @@ function RootLayout() {
       <AptabaseProvider
         appKey="A-SH-6467566517"
         options={{
-          host: 'aptabase.pistonmaster.net',
+          apiUrl: 'https://aptabase.pistonmaster.net/api/v0/event',
           appVersion: APP_VERSION,
         }}
       >
+        <AppStartedEvent />
         <QueryClientProvider client={queryClientInstance}>
           <ThemeProvider
             attribute="class"
