@@ -64,12 +64,19 @@ pub async fn run_integrated_server(
       major_version, minor_version, security_version, build_version
     );
 
-    fn send_download_progress(app_handle: &AppHandle, progress: u64, total: u64) -> tauri::Result<()> {
+    let last_sent_progress = std::sync::atomic::AtomicU64::new(0);
+    let send_download_progress = |app_handle: &AppHandle, progress: u64, total: u64| -> tauri::Result<()> {
+      let percent = progress * 100 / total;
+      if last_sent_progress.load(std::sync::atomic::Ordering::Relaxed) == percent {
+        return Ok(());
+      }
+
+      last_sent_progress.store(percent, std::sync::atomic::Ordering::Relaxed);
       send_log(
         app_handle,
         format!("Downloading JVM... {}%", progress * 100 / total),
       )
-    }
+    };
 
     send_download_progress(&app_handle, 0, 1)?;
     let mut response = reqwest::get(download_url).await?;
@@ -121,12 +128,19 @@ pub async fn run_integrated_server(
     let soul_fire_url = format!("https://github.com/AlexProgrammerDE/SoulFire/releases/download/{}/SoulFireDedicated-{}.jar", soul_fire_version, soul_fire_version);
     info!("SoulFire URL: {}", soul_fire_url);
 
-    fn send_download_progress(app_handle: &AppHandle, progress: u64, total: u64) -> tauri::Result<()> {
+    let last_sent_progress = std::sync::atomic::AtomicU64::new(0);
+    let send_download_progress = |app_handle: &AppHandle, progress: u64, total: u64| -> tauri::Result<()> {
+      let percent = progress * 100 / total;
+      if last_sent_progress.load(std::sync::atomic::Ordering::Relaxed) == percent {
+        return Ok(());
+      }
+
+      last_sent_progress.store(percent, std::sync::atomic::Ordering::Relaxed);
       send_log(
         app_handle,
         format!("Downloading SoulFire... {}%", progress * 100 / total),
       )
-    }
+    };
 
     send_download_progress(&app_handle, 0, 1)?;
     let mut response = reqwest::get(&soul_fire_url).await?;
