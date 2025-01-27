@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@aptabase/react':
+        specifier: ^0.3.5
+        version: 0.3.5(react@19.0.0)
       '@catppuccin/palette':
         specifier: ^1.2.0
         version: 1.7.1
@@ -325,6 +328,11 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
+
+  '@aptabase/react@0.3.5':
+    resolution: {integrity: sha512-uG4OaAv44XqjEhwhvODo56HFmxF4bHj32Ifx6OQvAR8CW3dSasT/6wMYG6pqsayxqPMtuVRaYwsF9zgKzWXNhw==}
+    peerDependencies:
+      react: ^18.0.0
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -4258,6 +4266,10 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
+
+  '@aptabase/react@0.3.5(react@19.0.0)':
+    dependencies:
+      react: 19.0.0
 
   '@babel/code-frame@7.26.2':
     dependencies:

@@ -19,6 +19,7 @@ import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context';
 import { attachConsole } from '@tauri-apps/plugin-log';
+import { AptabaseProvider } from '@aptabase/react';
 
 async function createSystemInfo() {
   const profileDir = await resolve(
@@ -129,41 +130,49 @@ function RootLayout() {
 
   return (
     <>
-      <QueryClientProvider client={queryClientInstance}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme={systemInfoState?.theme ?? 'system'}
-          enableSystem
-          disableTransitionOnChange
-        >
-          <TooltipProvider delayDuration={500}>
-            <SystemInfoContext.Provider value={systemInfoState}>
-              <TerminalThemeContext.Provider
-                value={{
-                  value: terminalTheme,
-                  setter: setTerminalTheme,
-                }}
-              >
-                <main
-                  vaul-drawer-wrapper=""
-                  className="flex h-dvh w-dvw flex-col"
+      <AptabaseProvider
+        appKey="A-SH-6467566517"
+        options={{
+          host: 'aptabase.pistonmaster.net',
+          appVersion: APP_VERSION,
+        }}
+      >
+        <QueryClientProvider client={queryClientInstance}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme={systemInfoState?.theme ?? 'system'}
+            enableSystem
+            disableTransitionOnChange
+          >
+            <TooltipProvider delayDuration={500}>
+              <SystemInfoContext.Provider value={systemInfoState}>
+                <TerminalThemeContext.Provider
+                  value={{
+                    value: terminalTheme,
+                    setter: setTerminalTheme,
+                  }}
                 >
-                  <PointerReset />
-                  <Outlet />
-                </main>
-              </TerminalThemeContext.Provider>
-            </SystemInfoContext.Provider>
-            <Toaster richColors pauseWhenPageIsHidden />
-          </TooltipProvider>
-        </ThemeProvider>
-        <TailwindIndicator />
-        <ReactQueryDevtools initialIsOpen />
-        {showDevtools && (
-          <Suspense fallback={null}>
-            <ReactQueryDevtoolsProduction />
-          </Suspense>
-        )}
-      </QueryClientProvider>
+                  <main
+                    vaul-drawer-wrapper=""
+                    className="flex h-dvh w-dvw flex-col"
+                  >
+                    <PointerReset />
+                    <Outlet />
+                  </main>
+                </TerminalThemeContext.Provider>
+              </SystemInfoContext.Provider>
+              <Toaster richColors pauseWhenPageIsHidden />
+            </TooltipProvider>
+          </ThemeProvider>
+          <TailwindIndicator />
+          <ReactQueryDevtools initialIsOpen />
+          {showDevtools && (
+            <Suspense fallback={null}>
+              <ReactQueryDevtoolsProduction />
+            </Suspense>
+          )}
+        </QueryClientProvider>
+      </AptabaseProvider>
     </>
   );
 }
