@@ -29,7 +29,6 @@
       "error": "Failed to check proxies"
     },
     "invalidFormat": "Invalid proxy format",
-    "invalidType": "Invalid proxy type: {{type}}",
     "table": {
       "type": "Type",
       "address": "Address",

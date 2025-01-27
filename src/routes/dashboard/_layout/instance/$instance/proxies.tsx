@@ -85,7 +85,7 @@ function parseNormalProxy(line: string, type: SimpleProxyType): ProfileProxy {
   };
 }
 
-function parseRawTypeToProto(rawType: string): ProxyProto_Type {
+function parseRawTypeToProto(rawType: string): ProxyProto_Type | null {
   switch (rawType) {
     case 'http':
       return ProxyProto_Type.HTTP;
@@ -94,19 +94,20 @@ function parseRawTypeToProto(rawType: string): ProxyProto_Type {
     case 'socks5':
       return ProxyProto_Type.SOCKS5;
     default:
-      throw new Error(
-        i18n.t('instance:proxy.invalidType', {
-          type: rawType,
-        }),
-      );
+      return null;
   }
 }
 
-function parseURIProxy(line: string): ProfileProxy {
+function parseURIProxy(line: string): ProfileProxy | null {
   const uri = new URI(line);
   const host = uri.host();
+  const type = parseRawTypeToProto(uri.protocol());
+  if (type === null) {
+    return null;
+  }
+
   return {
-    type: parseRawTypeToProto(uri.protocol()),
+    type,
     address: host.startsWith('/') ? `unix://${host}` : `inet://${host}`,
     username: uri.username() === '' ? undefined : uri.username(),
     password: uri.password() === '' ? undefined : uri.password(),
@@ -185,7 +186,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         (async () => {
           const proxiesToAdd: ProfileProxy[] = [];
           for (const line of textSplit) {
-            let proxy: ProfileProxy;
+            let proxy: ProfileProxy | null;
             switch (proxyTypeSelected) {
               case UIProxyType.HTTP:
               case UIProxyType.SOCKS4:
@@ -195,6 +196,10 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               case UIProxyType.URI:
                 proxy = parseURIProxy(line);
                 break;
+            }
+
+            if (proxy === null) {
+              continue;
             }
 
             proxiesToAdd.push(proxy);
