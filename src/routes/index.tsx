@@ -190,7 +190,9 @@ function Index() {
                 <CardDescription>{t('connect.description')}</CardDescription>
               ) : null}
               {'INTEGRATED' === loginType ? (
-                <CardDescription>{latestLog}</CardDescription>
+                <CardDescription className="whitespace-pre-wrap break-all truncate">
+                  {latestLog}
+                </CardDescription>
               ) : null}
               {'DEDICATED' === loginType ? (
                 <CardDescription>{t('dedicated.description')}</CardDescription>
