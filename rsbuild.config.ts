@@ -1,4 +1,5 @@
 import { defineConfig } from '@rsbuild/core';
+import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { TanStackRouterRspack } from '@tanstack/router-plugin/rspack';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
@@ -34,6 +35,12 @@ const namespaces = fs
 export default defineConfig({
   plugins: [
     pluginReact(),
+    pluginBabel({
+      include: /\.(?:jsx|tsx)$/,
+      babelLoaderOptions(opts) {
+        opts.plugins?.unshift('babel-plugin-react-compiler');
+      },
+    }),
     pluginTypeCheck(),
     pluginEslint({
       enable: process.env.NODE_ENV === 'production',
