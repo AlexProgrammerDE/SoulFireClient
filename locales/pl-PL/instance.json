@@ -29,7 +29,6 @@
       "error": "Nie udało się sprawdzić serwerów pośredniczących"
     },
     "invalidFormat": "Nieprawidłowy format serwera pośredniczącego",
-    "invalidType": "Nieprawidłowy typ serwera pośredniczącego: {{type}}",
     "table": {
       "type": "Typ",
       "address": "Adres",

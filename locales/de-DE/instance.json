@@ -29,7 +29,6 @@
       "error": "Fehler beim Prüfen der Proxies"
     },
     "invalidFormat": "Ungültiges Proxy Format",
-    "invalidType": "Ungültiger Proxy Typ: {{type}}",
     "table": {
       "type": "Typ",
       "address": "Adresse",
