@@ -23,6 +23,7 @@ void i18n
     fallbackLng: 'en-US',
     debug: true,
 
+    load: 'currentOnly',
     supportedLngs: APP_LOCALES.split(','),
     ns: APP_NAMESPACES.split(','),
     lowerCaseLng: false,
