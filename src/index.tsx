@@ -6,9 +6,8 @@ import {
   RouterProvider,
 } from '@tanstack/react-router';
 import '@/lib/i18n';
-
-// Import the generated route tree
 import { routeTree } from './routeTree.gen';
+import { isAuthenticated } from '@/lib/web-rpc.ts';
 
 const hashHistory = createHashHistory();
 
@@ -25,6 +24,10 @@ declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;
   }
+}
+
+if (isAuthenticated()) {
+  window.location.hash = '/dashboard/user/instances';
 }
 
 // Render the app
