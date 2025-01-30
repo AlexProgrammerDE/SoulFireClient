@@ -1,11 +1,11 @@
 #![feature(let_chains)]
 
-#[cfg(desktop)]
-use crate::utils::SFError;
 use crate::cast::{connect_cast, discover_casts, get_casts, CastRunningState};
 use crate::discord::load_discord_rpc;
 use crate::sf_loader::{run_integrated_server, IntegratedServerState};
 use crate::utils::kill_child_process;
+#[cfg(desktop)]
+use crate::utils::SFError;
 use log::{error, info};
 use std::ops::Deref;
 use std::sync::atomic::AtomicBool;
@@ -28,7 +28,19 @@ mod utils;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-  tauri::Builder::default()
+  let mut builder = tauri::Builder::default();
+
+  #[cfg(desktop)]
+  {
+    builder = builder.plugin(tauri_plugin_single_instance::init(|app, _argv, _cwd| {
+      let _ = app.get_webview_window("main")
+        .expect("no main window")
+        .set_focus();
+    }));
+  }
+
+  builder
+    .plugin(tauri_plugin_deep_link::init())
     .plugin(tauri_plugin_log::Builder::new()
       .level(log::LevelFilter::Info)
       .with_colors(tauri_plugin_log::fern::colors::ColoredLevelConfig {
@@ -77,15 +89,6 @@ pub fn run() {
           }
         }
       });
-
-      #[cfg(desktop)]
-      {
-        app.handle().plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
-          let _ = app.get_webview_window("main")
-            .expect("no main window")
-            .set_focus();
-        }))?;
-      }
 
       #[cfg(desktop)]
       {

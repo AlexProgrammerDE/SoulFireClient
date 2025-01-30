@@ -64,6 +64,7 @@
     "os:default",
     "shell:default",
     "clipboard-manager:default",
-    "log:default"
+    "log:default",
+    "deep-link:default"
   ]
 }

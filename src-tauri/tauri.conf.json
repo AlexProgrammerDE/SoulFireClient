@@ -89,6 +89,16 @@
       "endpoints": [
         "https://gist.githubusercontent.com/AlexProgrammerDE/80f0942765848a4e5c368e404564e603/raw/soulfireclient_update_v2.json"
       ]
+    },
+    "deep-link": {
+      "mobile": [
+        {
+          "host": "app.soulfiremc.com"
+        }
+      ],
+      "desktop": {
+        "schemes": ["soulfire"]
+      }
     }
   }
 }

@@ -46,6 +46,7 @@
     "@tanstack/router-devtools": "^1.20.1",
     "@tauri-apps/api": "2.2.0",
     "@tauri-apps/plugin-clipboard-manager": "2.2.1",
+    "@tauri-apps/plugin-deep-link": "~2.2.0",
     "@tauri-apps/plugin-dialog": "^2.0.0-rc",
     "@tauri-apps/plugin-fs": "^2.0.0-rc",
     "@tauri-apps/plugin-log": "^2.0.0",
