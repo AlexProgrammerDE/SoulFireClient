@@ -11,9 +11,7 @@ import {
 import { Link, LinkProps } from '@tanstack/react-router';
 import * as React from 'react';
 import { ReactNode, useContext } from 'react';
-import DynamicIcon, {
-  convertUnsafeIconName,
-} from '@/components/dynamic-icon.tsx';
+import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { useTranslation } from 'react-i18next';
 
@@ -56,12 +54,7 @@ export function NavUserAdmin() {
     },
     {
       title: t('userSidebar.serverSettings'),
-      icon: (props) => (
-        <DynamicIcon
-          {...props}
-          name={convertUnsafeIconName(serverSettings.iconId)}
-        />
-      ),
+      icon: (props) => <DynamicIcon {...props} name={serverSettings.iconId} />,
       linkProps: {
         to: '/dashboard/admin/settings/$namespace',
         params: { namespace: 'server' },
@@ -69,12 +62,7 @@ export function NavUserAdmin() {
     },
     {
       title: t('userSidebar.devSettings'),
-      icon: (props) => (
-        <DynamicIcon
-          {...props}
-          name={convertUnsafeIconName(devSettings.iconId)}
-        />
-      ),
+      icon: (props) => <DynamicIcon {...props} name={devSettings.iconId} />,
       linkProps: {
         to: '/dashboard/admin/settings/$namespace',
         params: { namespace: 'dev' },

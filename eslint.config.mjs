@@ -1,7 +1,6 @@
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
 
 export default tseslint.config(
   {
@@ -12,7 +11,6 @@ export default tseslint.config(
   {
     plugins: {
       reactHooks,
-      reactRefresh,
     },
     rules: {
       '@typescript-eslint/no-empty-object-type': 'off',

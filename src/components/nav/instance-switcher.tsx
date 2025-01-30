@@ -60,9 +60,7 @@ import {
   InstancePermission,
 } from '@/generated/soulfire/common.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import DynamicIcon, {
-  convertUnsafeIconName,
-} from '@/components/dynamic-icon.tsx';
+import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { useTranslation } from 'react-i18next';
 
 export function InstanceSwitcher() {
@@ -138,10 +136,7 @@ export function InstanceSwitcher() {
               tooltip={`${instanceInfo.friendlyName} | ${capitalizedState}`}
             >
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                <DynamicIcon
-                  name={convertUnsafeIconName(instanceInfo.icon)}
-                  className="size-4"
-                />
+                <DynamicIcon name={instanceInfo.icon} className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
@@ -174,7 +169,7 @@ export function InstanceSwitcher() {
                   >
                     <div className="flex size-6 items-center justify-center rounded-sm border">
                       <DynamicIcon
-                        name={convertUnsafeIconName(instance.icon)}
+                        name={instance.icon}
                         className="size-4 shrink-0"
                       />
                     </div>

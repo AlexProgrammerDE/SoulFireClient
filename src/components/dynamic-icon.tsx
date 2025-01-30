@@ -6,7 +6,7 @@ import i18n from '@/lib/i18n';
 export type LucideIconName = keyof typeof dynamicIconImports;
 
 export interface IconProps extends Omit<LucideProps, 'ref'> {
-  name: LucideIconName;
+  name: string;
 }
 
 const cache = new Map<
@@ -14,7 +14,7 @@ const cache = new Map<
   React.LazyExoticComponent<React.ComponentType<LucideProps>>
 >();
 
-export function convertUnsafeIconName(name: string): LucideIconName {
+function convertUnsafeIconName(name: string): LucideIconName {
   if (name in dynamicIconImports) {
     return name as LucideIconName;
   }
@@ -38,7 +38,7 @@ function loadCachedIcon(name: LucideIconName) {
 }
 
 const DynamicIcon = React.memo(({ name, ...props }: IconProps) => {
-  const LazyIcon = loadCachedIcon(name);
+  const LazyIcon = loadCachedIcon(convertUnsafeIconName(name));
 
   return (
     <Suspense fallback={<div className={props.className} />}>
