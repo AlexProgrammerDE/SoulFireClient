@@ -1,4 +1,4 @@
-import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -31,14 +31,7 @@ import {
   ServerIcon,
 } from 'lucide-react';
 import { emit, listen } from '@tauri-apps/api/event';
-import {
-  getEnumKeyByValue,
-  LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY,
-  LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY,
-  LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY,
-  LOCAL_STORAGE_SERVER_ADDRESS_KEY,
-  LOCAL_STORAGE_SERVER_TOKEN_KEY,
-} from '@/lib/types.ts';
+import { getEnumKeyByValue, SFServerType } from '@/lib/types.ts';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { invoke } from '@tauri-apps/api/core';
 import {
@@ -74,7 +67,14 @@ import {
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { NextAuthFlowResponse_Failure_Reason } from '@/generated/soulfire/login.ts';
 import { LoginServiceClient } from '@/generated/soulfire/login.client.ts';
-import { createAddressOnlyTransport } from '@/lib/web-rpc.ts';
+import {
+  createAddressOnlyTransport,
+  setAuthentication,
+} from '@/lib/web-rpc.ts';
+
+const LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY = 'form-server-address';
+const LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY = 'form-server-token';
+const LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY = 'form-server-email';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -113,7 +113,11 @@ type TokenFormSchemaType = z.infer<typeof tokenFormSchema>;
 type LoginType = 'INTEGRATED' | 'DEDICATED' | 'EMAIL_CODE' | null;
 
 type TargetRedirectFunction = () => Promise<void>;
-type LoginFunction = (address: string, token: string) => Promise<void>;
+type LoginFunction = (
+  type: SFServerType,
+  address: string,
+  token: string,
+) => Promise<void>;
 
 type AuthFlowData = {
   email: string;
@@ -137,9 +141,8 @@ function Index() {
   }, [navigate, searchParams.redirect]);
 
   const redirectWithCredentials: LoginFunction = useCallback(
-    async (address: string, token: string) => {
-      localStorage.setItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY, address.trim());
-      localStorage.setItem(LOCAL_STORAGE_SERVER_TOKEN_KEY, token.trim());
+    async (type: SFServerType, address: string, token: string) => {
+      setAuthentication(type, address.trim(), token.trim());
 
       await targetRedirect();
     },
@@ -361,7 +364,7 @@ function IntegratedMenu({
         const payloadString = payload as string;
         const split = payloadString.split('\n');
 
-        await redirectWithCredentials(split[0], split[1]);
+        await redirectWithCredentials('integrated', split[0], split[1]);
       })(),
       {
         loading: t('integrated.toast.loading'),
@@ -589,7 +592,7 @@ function TokenForm({
 
     const token = values.token.trim();
     localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY, token);
-    void redirectWithCredentials(address, token);
+    void redirectWithCredentials('dedicated', address, token);
   }
 
   return (
@@ -695,6 +698,7 @@ function EmailCodeMenu(props: {
         .then(({ response }) => {
           if (response.next.oneofKind === 'success') {
             void props.redirectWithCredentials(
+              'dedicated',
               props.authFlowData.address,
               response.next.success.token,
             );

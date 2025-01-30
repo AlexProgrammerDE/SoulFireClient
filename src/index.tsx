@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-router';
 import '@/lib/i18n';
 import { routeTree } from './routeTree.gen';
-import { isAuthenticated } from '@/lib/web-rpc.ts';
+import { getServerType, isAuthenticated } from '@/lib/web-rpc.ts';
 
 const hashHistory = createHashHistory();
 
@@ -28,7 +28,7 @@ declare module '@tanstack/react-router' {
   }
 }
 
-if (isAuthenticated()) {
+if (isAuthenticated() && getServerType() === 'dedicated') {
   window.location.hash = '/dashboard/user/instances';
 }
 

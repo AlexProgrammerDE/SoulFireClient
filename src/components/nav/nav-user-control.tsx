@@ -42,12 +42,16 @@ import {
 } from '@/components/ui/sidebar.tsx';
 import { useContext, useState } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import { getLanguageName, isTauri, languageEmoji } from '@/lib/utils.ts';
+import {
+  getLanguageName,
+  isTauri,
+  languageEmoji,
+  setTerminalTheme,
+} from '@/lib/utils.ts';
 import { emit } from '@tauri-apps/api/event';
 import { toast } from 'sonner';
 import { exit } from '@tauri-apps/plugin-process';
 import { useNavigate } from '@tanstack/react-router';
-import { LOCAL_STORAGE_TERMINAL_THEME_KEY } from '@/lib/types.ts';
 import { flavorEntries } from '@catppuccin/palette';
 import { useTheme } from 'next-themes';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
@@ -161,10 +165,7 @@ export function NavUserControl() {
                     <DropdownMenuRadioGroup
                       value={terminalTheme.value}
                       onValueChange={(e) => {
-                        localStorage.setItem(
-                          LOCAL_STORAGE_TERMINAL_THEME_KEY,
-                          e,
-                        );
+                        setTerminalTheme(e);
                         terminalTheme.setter(e);
                       }}
                     >

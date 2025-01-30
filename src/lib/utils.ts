@@ -1,6 +1,5 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { LOCAL_STORAGE_TERMINAL_THEME_KEY } from '@/lib/types.ts';
 import {
   GlobalPermission,
   InstancePermission,
@@ -11,6 +10,12 @@ import {
   InstanceListResponse_Instance,
 } from '@/generated/soulfire/instance.ts';
 import { sha256 } from 'js-sha256';
+
+const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
+
+export function setTerminalTheme(theme: string) {
+  localStorage.setItem(LOCAL_STORAGE_TERMINAL_THEME_KEY, theme);
+}
 
 export function getTerminalTheme() {
   return localStorage.getItem(LOCAL_STORAGE_TERMINAL_THEME_KEY) ?? 'mocha';
