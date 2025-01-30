@@ -7,7 +7,8 @@
       "message": "{{message}} (more info in console)",
       "logOut": "Log out",
       "reloadPage": "Reload page"
-    }
+    },
+    "connectionFailed": "Connection to the SoulFire server failed."
   },
   "pending": {
     "connecting": "Connecting..."

@@ -103,35 +103,51 @@ export const Route = createFileRoute('/dashboard/_layout')({
   },
   loader: async (
     props,
-  ): Promise<{
-    transport: GrpcWebFetchTransport | null;
-    clientData: ClientDataResponse;
-    gravatarUrl: string;
-  }> => {
+  ): Promise<
+    | {
+        success: true;
+        transport: GrpcWebFetchTransport | null;
+        clientData: ClientDataResponse;
+        gravatarUrl: string;
+      }
+    | {
+        success: false;
+        connectionError: object;
+      }
+  > => {
     const transport = createTransport();
     if (transport === null) {
       return {
+        success: true,
         transport,
         clientData: demoData,
         gravatarUrl: getGravatarUrl(demoData.email),
       };
     }
 
-    const configService = new ConfigServiceClient(transport);
-    const configResult = await configService.getClientData(
-      {},
-      {
-        abort: props.abortController.signal,
-      },
-    );
+    try {
+      const configService = new ConfigServiceClient(transport);
+      const configResult = await configService.getClientData(
+        {},
+        {
+          abort: props.abortController.signal,
+        },
+      );
 
-    await queryClientInstance.prefetchQuery(props.context.listQueryOptions);
+      await queryClientInstance.prefetchQuery(props.context.listQueryOptions);
 
-    return {
-      transport,
-      clientData: configResult.response,
-      gravatarUrl: getGravatarUrl(configResult.response.email),
-    };
+      return {
+        success: true,
+        transport,
+        clientData: configResult.response,
+        gravatarUrl: getGravatarUrl(configResult.response.email),
+      };
+    } catch (e) {
+      return {
+        success: false,
+        connectionError: e as object,
+      };
+    }
   },
   errorComponent: ErrorComponent,
   pendingComponent: PendingComponent,
@@ -245,9 +261,15 @@ function InstanceSwitchKeybinds() {
 }
 
 function DashboardLayout() {
-  const { transport, clientData, gravatarUrl } = Route.useLoaderData();
+  const { t } = useTranslation('common');
+  const loaderData = Route.useLoaderData();
   const { listQueryOptions } = Route.useRouteContext();
   const instanceList = useQuery(listQueryOptions);
+  if (!loaderData.success) {
+    return <ErrorComponent error={new Error(t('error.connectionFailed'))} />;
+  }
+
+  const { transport, clientData, gravatarUrl } = loaderData;
 
   if (instanceList.isError) {
     throw instanceList.error;
