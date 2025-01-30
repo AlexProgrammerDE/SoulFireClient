@@ -3,6 +3,7 @@ import { KeyboardEventHandler, useContext, useState } from 'react';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { CommandServiceClient } from '@/generated/soulfire/command.client.ts';
 import {
+  CommandCompletion,
   CommandCompletionRequest,
   CommandRequest,
 } from '@/generated/soulfire/command.ts';
@@ -10,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 
 type CompletionState = {
   lastWritten: string;
-  receivedCompletions: string[] | null;
+  receivedCompletions: CommandCompletion[] | null;
   index: number | null;
 };
 
@@ -64,6 +65,7 @@ export default function CommandInput(props: {
       const { response } = await commandService.tabCompleteCommand({
         scope: props.scope,
         command: text,
+        cursor: text.length,
       });
 
       completionStateNew = {
@@ -91,7 +93,9 @@ export default function CommandInput(props: {
     if (completionStateNew.receivedCompletions!.length > 0) {
       const split = completionStateNew.lastWritten.split(' ');
       split[split.length - 1] =
-        completionStateNew.receivedCompletions![completionStateNew.index!];
+        completionStateNew.receivedCompletions![
+          completionStateNew.index!
+        ].suggestion;
 
       element.value = split.join(' ');
     }

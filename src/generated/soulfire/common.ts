@@ -295,6 +295,10 @@ export enum GlobalPermission {
      */
     DELETE_USER = 8,
     /**
+     * @generated from protobuf enum value: INVALIDATE_SESSIONS = 11;
+     */
+    INVALIDATE_SESSIONS = 11,
+    /**
      * @generated from protobuf enum value: GLOBAL_COMMAND_EXECUTION = 9;
      */
     GLOBAL_COMMAND_EXECUTION = 9,

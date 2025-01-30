@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { UserService } from "./user";
+import type { InvalidateSessionsResponse } from "./user";
+import type { InvalidateSessionsRequest } from "./user";
 import type { UserInfoResponse } from "./user";
 import type { UserInfoRequest } from "./user";
 import type { UserListResponse } from "./user";
@@ -35,6 +37,10 @@ export interface IUserServiceClient {
      * @generated from protobuf rpc: getUserInfo(soulfire.v1.UserInfoRequest) returns (soulfire.v1.UserInfoResponse);
      */
     getUserInfo(input: UserInfoRequest, options?: RpcOptions): UnaryCall<UserInfoRequest, UserInfoResponse>;
+    /**
+     * @generated from protobuf rpc: invalidateSessions(soulfire.v1.InvalidateSessionsRequest) returns (soulfire.v1.InvalidateSessionsResponse);
+     */
+    invalidateSessions(input: InvalidateSessionsRequest, options?: RpcOptions): UnaryCall<InvalidateSessionsRequest, InvalidateSessionsResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.UserService
@@ -72,5 +78,12 @@ export class UserServiceClient implements IUserServiceClient, ServiceInfo {
     getUserInfo(input: UserInfoRequest, options?: RpcOptions): UnaryCall<UserInfoRequest, UserInfoResponse> {
         const method = this.methods[3], opt = this._transport.mergeOptions(options);
         return stackIntercept<UserInfoRequest, UserInfoResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: invalidateSessions(soulfire.v1.InvalidateSessionsRequest) returns (soulfire.v1.InvalidateSessionsResponse);
+     */
+    invalidateSessions(input: InvalidateSessionsRequest, options?: RpcOptions): UnaryCall<InvalidateSessionsRequest, InvalidateSessionsResponse> {
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
+        return stackIntercept<InvalidateSessionsRequest, InvalidateSessionsResponse>("unary", this._transport, method, opt, input);
     }
 }

@@ -34,3 +34,9 @@ export const createTransport = () => {
     },
   });
 };
+
+export const createAddressOnlyTransport = (address: string) => {
+  return new GrpcWebFetchTransport({
+    baseUrl: address,
+  });
+};

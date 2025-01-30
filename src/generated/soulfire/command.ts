@@ -79,15 +79,32 @@ export interface CommandCompletionRequest {
      * @generated from protobuf field: string command = 3;
      */
     command: string;
+    /**
+     * @generated from protobuf field: int32 cursor = 4;
+     */
+    cursor: number;
+}
+/**
+ * @generated from protobuf message soulfire.v1.CommandCompletion
+ */
+export interface CommandCompletion {
+    /**
+     * @generated from protobuf field: string suggestion = 1;
+     */
+    suggestion: string;
+    /**
+     * @generated from protobuf field: optional string tooltip = 2;
+     */
+    tooltip?: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.CommandCompletionResponse
  */
 export interface CommandCompletionResponse {
     /**
-     * @generated from protobuf field: repeated string suggestions = 1;
+     * @generated from protobuf field: repeated soulfire.v1.CommandCompletion suggestions = 1;
      */
-    suggestions: string[];
+    suggestions: CommandCompletion[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class GlobalCommandScope$Type extends MessageType<GlobalCommandScope> {
@@ -143,7 +160,8 @@ class CommandCompletionRequest$Type extends MessageType<CommandCompletionRequest
         super("soulfire.v1.CommandCompletionRequest", [
             { no: 1, name: "global", kind: "message", oneof: "scope", T: () => GlobalCommandScope },
             { no: 2, name: "instance", kind: "message", oneof: "scope", T: () => InstanceCommandScope },
-            { no: 3, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "cursor", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
 }
@@ -152,10 +170,23 @@ class CommandCompletionRequest$Type extends MessageType<CommandCompletionRequest
  */
 export const CommandCompletionRequest = new CommandCompletionRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class CommandCompletion$Type extends MessageType<CommandCompletion> {
+    constructor() {
+        super("soulfire.v1.CommandCompletion", [
+            { no: 1, name: "suggestion", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "tooltip", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.CommandCompletion
+ */
+export const CommandCompletion = new CommandCompletion$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class CommandCompletionResponse$Type extends MessageType<CommandCompletionResponse> {
     constructor() {
         super("soulfire.v1.CommandCompletionResponse", [
-            { no: 1, name: "suggestions", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "suggestions", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => CommandCompletion }
         ]);
     }
 }

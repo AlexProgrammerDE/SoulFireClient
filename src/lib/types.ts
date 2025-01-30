@@ -16,6 +16,7 @@ export const LOCAL_STORAGE_SERVER_ADDRESS_KEY = 'server-address';
 export const LOCAL_STORAGE_SERVER_TOKEN_KEY = 'server-token';
 export const LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY = 'form-server-address';
 export const LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY = 'form-server-token';
+export const LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY = 'form-server-email';
 export const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
 
 export type BaseSettings = {

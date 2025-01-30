@@ -105,6 +105,22 @@ export interface UserInfoResponse {
      */
     email: string;
 }
+/**
+ * Invalidate all sessions for a user, effectively logging them out of all devices.
+ *
+ * @generated from protobuf message soulfire.v1.InvalidateSessionsRequest
+ */
+export interface InvalidateSessionsRequest {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.InvalidateSessionsResponse
+ */
+export interface InvalidateSessionsResponse {
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class UserCreateRequest$Type extends MessageType<UserCreateRequest> {
     constructor() {
@@ -216,6 +232,28 @@ class UserInfoResponse$Type extends MessageType<UserInfoResponse> {
  * @generated MessageType for protobuf message soulfire.v1.UserInfoResponse
  */
 export const UserInfoResponse = new UserInfoResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InvalidateSessionsRequest$Type extends MessageType<InvalidateSessionsRequest> {
+    constructor() {
+        super("soulfire.v1.InvalidateSessionsRequest", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InvalidateSessionsRequest
+ */
+export const InvalidateSessionsRequest = new InvalidateSessionsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InvalidateSessionsResponse$Type extends MessageType<InvalidateSessionsResponse> {
+    constructor() {
+        super("soulfire.v1.InvalidateSessionsResponse", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InvalidateSessionsResponse
+ */
+export const InvalidateSessionsResponse = new InvalidateSessionsResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.UserService
  */
@@ -223,5 +261,6 @@ export const UserService = new ServiceType("soulfire.v1.UserService", [
     { name: "createUser", options: {}, I: UserCreateRequest, O: UserCreateResponse },
     { name: "deleteUser", options: {}, I: UserDeleteRequest, O: UserDeleteResponse },
     { name: "listUsers", options: {}, I: UserListRequest, O: UserListResponse },
-    { name: "getUserInfo", options: {}, I: UserInfoRequest, O: UserInfoResponse }
+    { name: "getUserInfo", options: {}, I: UserInfoRequest, O: UserInfoResponse },
+    { name: "invalidateSessions", options: {}, I: InvalidateSessionsRequest, O: InvalidateSessionsResponse }
 ]);

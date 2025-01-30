@@ -31,10 +31,15 @@
   },
   "dedicated": {
     "description": "Put in the address and token of the SoulFire server you want to connect to.",
+    "toast": {
+      "loading": "Connecting to server...",
+      "success": "Connected to server",
+      "error": "Failed to connect to server"
+    },
     "form": {
       "address": {
         "title": "Address",
-        "description": "Address of the server you want to connect to.",
+        "description": "Address of your SoulFire server.",
         "placeholder": "http://localhost:38765"
       },
       "token": {
@@ -42,9 +47,25 @@
         "placeholder": "Secret token",
         "description": "Token to authenticate with the server."
       },
+      "email": {
+        "title": "Email",
+        "placeholder": "root@soulfiremc.com",
+        "description": "Email of your SoulFire account."
+      },
       "back": "Back",
-      "connect": "Connect"
+      "useToken": "Use token",
+      "useEmail": "Use email",
+      "login": "Login"
     }
+  },
+  "emailCode": {
+    "description": "If you have an account, we have sent a code to <bold>{{email}}</bold>. Enter it below.",
+    "toast": {
+      "loading": "Checking code...",
+      "success": "Logged in",
+      "error": "Code is invalid"
+    },
+    "back": "Back"
   },
   "footer": {
     "version": "SoulFire Client {{version}} - {{environment}}",
