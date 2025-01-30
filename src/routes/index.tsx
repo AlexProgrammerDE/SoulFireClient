@@ -677,6 +677,7 @@ function EmailCodeMenu(props: {
   const [inputDisabled, setInputDisabled] = useState<boolean>(false);
 
   function setEmailCode(code: string) {
+    setCodeValue(code);
     if (code.length === 6) {
       setInputDisabled(true);
       toast.promise(
@@ -720,7 +721,6 @@ function EmailCodeMenu(props: {
         },
       );
     } else {
-      setCodeValue(code);
       setInputDisabled(false);
     }
   }
