@@ -81,6 +81,7 @@ export const Route = createFileRoute('/')({
     if (isAuthenticated()) {
       throw redirect({
         to: '/dashboard/user/instances',
+        replace: true,
       });
     }
   },
