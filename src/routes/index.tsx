@@ -542,6 +542,7 @@ function EmailForm({
               e.preventDefault();
               setLoginType(null);
             }}
+            type="button"
           >
             {t('dedicated.form.back')}
           </Button>
@@ -644,6 +645,7 @@ function TokenForm({
               e.preventDefault();
               setLoginType(null);
             }}
+            type="button"
           >
             {t('dedicated.form.back')}
           </Button>
