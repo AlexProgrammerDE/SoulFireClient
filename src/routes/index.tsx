@@ -80,7 +80,19 @@ export const Route = createFileRoute('/')({
   component: Index,
 });
 
-const formSchema = z.object({
+const emailFormSchema = z.object({
+  address: z
+    .string()
+    .min(1, 'Address is required')
+    .max(255, 'Address is too long')
+    .url('Address must be a valid URL'),
+  email: z
+    .string()
+    .min(1, 'Email is required')
+    .max(255, 'Email is too long')
+    .email('Email must be a valid'),
+});
+const tokenFormSchema = z.object({
   address: z
     .string()
     .min(1, 'Address is required')
@@ -94,13 +106,9 @@ const formSchema = z.object({
       /e[yw][A-Za-z0-9-_]+\.(?:e[yw][A-Za-z0-9-_]+)?\.[A-Za-z0-9-_]{2,}(?:(?:\.[A-Za-z0-9-_]{2,}){2})?/,
       'Must be a valid JWT token',
     ),
-  email: z
-    .string()
-    .min(1, 'Email is required')
-    .max(255, 'Email is too long')
-    .email('Email must be a valid'),
 });
-type FormSchemaType = z.infer<typeof formSchema>;
+type EmailFormSchemaType = z.infer<typeof emailFormSchema>;
+type TokenFormSchemaType = z.infer<typeof tokenFormSchema>;
 
 type LoginType = 'INTEGRATED' | 'DEDICATED' | 'EMAIL_CODE' | null;
 
@@ -388,6 +396,8 @@ function IntegratedMenu({
   );
 }
 
+type DedicatedType = 'email' | 'token';
+
 function DedicatedMenu({
   redirectWithCredentials,
   setLoginType,
@@ -398,57 +408,7 @@ function DedicatedMenu({
   setAuthFlowData: (data: AuthFlowData) => void;
 }) {
   const { t } = useTranslation('login');
-  const [dedicatedType, setDedicatedType] = useState<'email' | 'token'>(
-    'email',
-  );
-  const form = useForm<FormSchemaType>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      address:
-        localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY) ?? '',
-      token: localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY) ?? '',
-      email: localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY) ?? '',
-    },
-  });
-
-  function onSubmit(values: FormSchemaType) {
-    const address = values.address.trim();
-    localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY, address);
-
-    if (dedicatedType === 'token') {
-      const token = values.token.trim();
-      localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY, token);
-      void redirectWithCredentials(address, token);
-    } else if (dedicatedType === 'email') {
-      const email = values.email.trim();
-      localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY, email);
-      const loginService = new LoginServiceClient(
-        createAddressOnlyTransport(address),
-      );
-      toast.promise(
-        loginService
-          .login({
-            email: email,
-          })
-          .then((response) => {
-            setAuthFlowData({
-              email: email,
-              flowToken: response.response.authFlowToken,
-              address: address,
-            });
-            setLoginType('EMAIL_CODE');
-          }),
-        {
-          loading: t('dedicated.toast.loading'),
-          success: t('dedicated.toast.success'),
-          error: (e) => {
-            console.error(e);
-            return t('dedicated.toast.error');
-          },
-        },
-      );
-    }
-  }
+  const [dedicatedType, setDedicatedType] = useState<DedicatedType>('email');
 
   return (
     <Card>
@@ -459,105 +419,249 @@ function DedicatedMenu({
         </CardTitle>
         <CardDescription>{t('dedicated.description')}</CardDescription>
       </CardHeader>
-      <Form {...form}>
-        <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
-          <CardContent className="flex flex-col gap-4">
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t('dedicated.form.address.title')}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="url"
-                      inputMode="url"
-                      placeholder={t('dedicated.form.address.placeholder')}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    {t('dedicated.form.address.description')}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {dedicatedType === 'token' && (
-              <FormField
-                control={form.control}
-                name="token"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('dedicated.form.token.title')}</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder={t('dedicated.form.token.placeholder')}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      {t('dedicated.form.token.description')}
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+      {dedicatedType === 'email' && (
+        <EmailForm
+          setDedicatedType={setDedicatedType}
+          setLoginType={setLoginType}
+          setAuthFlowData={setAuthFlowData}
+        />
+      )}
+      {dedicatedType === 'token' && (
+        <TokenForm
+          redirectWithCredentials={redirectWithCredentials}
+          setDedicatedType={setDedicatedType}
+          setLoginType={setLoginType}
+        />
+      )}
+    </Card>
+  );
+}
+
+function EmailForm({
+  setLoginType,
+  setAuthFlowData,
+  setDedicatedType,
+}: {
+  setLoginType: (type: LoginType) => void;
+  setAuthFlowData: (data: AuthFlowData) => void;
+  setDedicatedType: (type: DedicatedType) => void;
+}) {
+  const { t } = useTranslation('login');
+  const form = useForm<EmailFormSchemaType>({
+    resolver: zodResolver(emailFormSchema),
+    defaultValues: {
+      address:
+        localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY) ?? '',
+      email: localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY) ?? '',
+    },
+  });
+
+  function onSubmit(values: EmailFormSchemaType) {
+    const address = values.address.trim();
+    localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY, address);
+
+    const email = values.email.trim();
+    localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY, email);
+    const loginService = new LoginServiceClient(
+      createAddressOnlyTransport(address),
+    );
+    toast.promise(
+      loginService
+        .login({
+          email: email,
+        })
+        .then((response) => {
+          setAuthFlowData({
+            email: email,
+            flowToken: response.response.authFlowToken,
+            address: address,
+          });
+          setLoginType('EMAIL_CODE');
+        }),
+      {
+        loading: t('dedicated.toast.loading'),
+        success: t('dedicated.toast.success'),
+        error: (e) => {
+          console.error(e);
+          return t('dedicated.toast.error');
+        },
+      },
+    );
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
+        <CardContent className="flex flex-col gap-4">
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('dedicated.form.address.title')}</FormLabel>
+                <FormControl>
+                  <Input
+                    type="url"
+                    inputMode="url"
+                    placeholder={t('dedicated.form.address.placeholder')}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  {t('dedicated.form.address.description')}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
             )}
-            {dedicatedType === 'email' && (
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('dedicated.form.email.title')}</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder={t('dedicated.form.email.placeholder')}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      {t('dedicated.form.email.description')}
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('dedicated.form.email.title')}</FormLabel>
+                <FormControl>
+                  <Input
+                    type="email"
+                    placeholder={t('dedicated.form.email.placeholder')}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  {t('dedicated.form.email.description')}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
             )}
-          </CardContent>
-          <CardFooter className="flex justify-between">
+          />
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button
+            variant="outline"
+            onClick={(e) => {
+              e.preventDefault();
+              setLoginType(null);
+            }}
+          >
+            {t('dedicated.form.back')}
+          </Button>
+          <div className="flex flex-row gap-2">
             <Button
               variant="outline"
-              onClick={(e) => {
-                e.preventDefault();
-                setLoginType(null);
+              onClick={() => {
+                setDedicatedType('token');
               }}
+              type="button"
             >
-              {t('dedicated.form.back')}
+              {t('dedicated.form.useToken')}
             </Button>
-            <div className="flex flex-row gap-2">
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setDedicatedType(
-                    dedicatedType === 'email' ? 'token' : 'email',
-                  );
-                }}
-                type="button"
-              >
-                {dedicatedType === 'email'
-                  ? t('dedicated.form.useToken')
-                  : t('dedicated.form.useEmail')}
-              </Button>
-              <Button type="submit">{t('dedicated.form.login')}</Button>
-            </div>
-          </CardFooter>
-        </form>
-      </Form>
-    </Card>
+            <Button type="submit">{t('dedicated.form.login')}</Button>
+          </div>
+        </CardFooter>
+      </form>
+    </Form>
+  );
+}
+
+function TokenForm({
+  redirectWithCredentials,
+  setLoginType,
+  setDedicatedType,
+}: {
+  redirectWithCredentials: LoginFunction;
+  setLoginType: (type: LoginType) => void;
+  setDedicatedType: (type: DedicatedType) => void;
+}) {
+  const { t } = useTranslation('login');
+  const form = useForm<TokenFormSchemaType>({
+    resolver: zodResolver(tokenFormSchema),
+    defaultValues: {
+      address:
+        localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY) ?? '',
+      token: localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY) ?? '',
+    },
+  });
+
+  function onSubmit(values: TokenFormSchemaType) {
+    const address = values.address.trim();
+    localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY, address);
+
+    const token = values.token.trim();
+    localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY, token);
+    void redirectWithCredentials(address, token);
+  }
+
+  return (
+    <Form {...form}>
+      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
+        <CardContent className="flex flex-col gap-4">
+          <FormField
+            control={form.control}
+            name="address"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('dedicated.form.address.title')}</FormLabel>
+                <FormControl>
+                  <Input
+                    type="url"
+                    inputMode="url"
+                    placeholder={t('dedicated.form.address.placeholder')}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  {t('dedicated.form.address.description')}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="token"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('dedicated.form.token.title')}</FormLabel>
+                <FormControl>
+                  <Input
+                    type="password"
+                    placeholder={t('dedicated.form.token.placeholder')}
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  {t('dedicated.form.token.description')}
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button
+            variant="outline"
+            onClick={(e) => {
+              e.preventDefault();
+              setLoginType(null);
+            }}
+          >
+            {t('dedicated.form.back')}
+          </Button>
+          <div className="flex flex-row gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setDedicatedType('email');
+              }}
+              type="button"
+            >
+              {t('dedicated.form.useEmail')}
+            </Button>
+            <Button type="submit">{t('dedicated.form.login')}</Button>
+          </div>
+        </CardFooter>
+      </form>
+    </Form>
   );
 }
 
