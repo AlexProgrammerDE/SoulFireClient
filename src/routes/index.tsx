@@ -74,7 +74,7 @@ import {
 import { REGEXP_ONLY_DIGITS } from 'input-otp';
 import { NextAuthFlowResponse_Failure_Reason } from '@/generated/soulfire/login.ts';
 import { LoginServiceClient } from '@/generated/soulfire/login.client.ts';
-import { createAddressOnlyTransport } from '@/lib/web-rpc.ts';
+import { createAddressOnlyTransport, isAuthenticated } from '@/lib/web-rpc.ts';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -145,6 +145,13 @@ function Index() {
     },
     [targetRedirect],
   );
+
+  useEffect(() => {
+    // Previously logged in, restore session
+    if (isAuthenticated()) {
+      void targetRedirect();
+    }
+  }, []);
 
   return (
     <ScrollArea className="h-dvh w-full px-4 bg-muted">
