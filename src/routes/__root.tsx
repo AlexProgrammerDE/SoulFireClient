@@ -6,7 +6,7 @@ import { TailwindIndicator } from '@/components/tailwind-indicator.tsx';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClientInstance } from '@/lib/query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, memo, Suspense, useEffect, useState } from 'react';
 import {
   SystemInfo,
   SystemInfoContext,
@@ -84,17 +84,19 @@ function PointerReset() {
   return null;
 }
 
-let appLoaded = false;
-function AppStartedEvent() {
+const AppStartedEvent = memo(() => {
   const { trackEvent } = useAptabase();
+  const [appLoaded, setAppLoaded] = useState(false);
 
-  if (!appLoaded) {
-    appLoaded = true;
-    void trackEvent('app_loaded');
-  }
+  useEffect(() => {
+    if (!appLoaded) {
+      void trackEvent('app_loaded');
+      setAppLoaded(true);
+    }
+  }, [appLoaded, trackEvent]);
 
   return null;
-}
+});
 
 function RootLayout() {
   const { systemInfo } = Route.useLoaderData();
