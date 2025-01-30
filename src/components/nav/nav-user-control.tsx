@@ -57,6 +57,7 @@ import { appConfigDir, appDataDir } from '@tauri-apps/api/path';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { AboutPopup } from '@/components/dialog/about-popup.tsx';
 import { useTranslation } from 'react-i18next';
+import { logOut } from '@/lib/web-rpc.ts';
 
 export function NavUserControl() {
   const { t, i18n } = useTranslation('common');
@@ -251,6 +252,7 @@ export function NavUserControl() {
                       if (isTauri()) {
                         await emit('kill-integrated-server', {});
                       }
+                      logOut();
                       await navigate({
                         to: '/',
                         replace: true,

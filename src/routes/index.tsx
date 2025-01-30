@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -77,6 +77,13 @@ import { LoginServiceClient } from '@/generated/soulfire/login.client.ts';
 import { createAddressOnlyTransport, isAuthenticated } from '@/lib/web-rpc.ts';
 
 export const Route = createFileRoute('/')({
+  beforeLoad: async () => {
+    if (isAuthenticated()) {
+      throw redirect({
+        to: '/dashboard/user/instances',
+      });
+    }
+  },
   component: Index,
 });
 
@@ -145,13 +152,6 @@ function Index() {
     },
     [targetRedirect],
   );
-
-  useEffect(() => {
-    // Previously logged in, restore session
-    if (isAuthenticated()) {
-      void targetRedirect();
-    }
-  }, []);
 
   return (
     <ScrollArea className="h-dvh w-full px-4 bg-muted">

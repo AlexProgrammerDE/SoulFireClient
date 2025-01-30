@@ -8,7 +8,7 @@ import {
 } from '@tanstack/react-router';
 import { ConfigServiceClient } from '@/generated/soulfire/config.client.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import { createTransport, isAuthenticated } from '@/lib/web-rpc.ts';
+import { createTransport, isAuthenticated, logOut } from '@/lib/web-rpc.ts';
 import {
   Card,
   CardContent,
@@ -92,6 +92,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
       if (isTauri()) {
         await emit('kill-integrated-server', {});
       }
+      logOut();
       throw redirect({
         to: '/',
         search: {
@@ -164,6 +165,7 @@ function ErrorComponent({ error }: { error: Error }) {
                   if (isTauri()) {
                     await emit('kill-integrated-server', {});
                   }
+                  logOut();
                   await navigate({
                     to: '/',
                     replace: true,

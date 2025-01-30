@@ -15,6 +15,11 @@ export const isAuthenticated = () => {
   );
 };
 
+export const logOut = () => {
+  localStorage.removeItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY);
+  localStorage.removeItem(LOCAL_STORAGE_SERVER_TOKEN_KEY);
+};
+
 export const createTransport = () => {
   if (isDemo()) {
     return null;
