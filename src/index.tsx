@@ -17,6 +17,8 @@ const router = createRouter({
   history: hashHistory,
   defaultPreload: 'intent',
   defaultPreloadStaleTime: 10_000,
+  scrollRestoration: true,
+  scrollRestorationBehavior: 'auto',
 });
 
 // Register the router instance for type safety

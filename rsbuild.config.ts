@@ -35,12 +35,6 @@ const namespaces = fs
 export default defineConfig({
   plugins: [
     pluginReact(),
-    pluginBabel({
-      include: /\.(?:jsx|tsx)$/,
-      babelLoaderOptions(opts) {
-        opts.plugins?.unshift('babel-plugin-react-compiler');
-      },
-    }),
     pluginTypeCheck(),
     pluginEslint({
       enable: process.env.NODE_ENV === 'production',
