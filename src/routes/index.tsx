@@ -695,16 +695,18 @@ function EmailCodeMenu(props: {
               );
             } else if (response.next.oneofKind === 'failure') {
               setInputDisabled(false);
+              setCodeValue('');
               throw new Error(
                 getEnumKeyByValue(
                   NextAuthFlowResponse_Failure_Reason,
                   response.next.failure.reason,
                 ),
               );
+            } else {
+              setInputDisabled(false);
+              setCodeValue('');
+              throw new Error('Unknown response type');
             }
-
-            setInputDisabled(false);
-            setCodeValue('');
           }),
         {
           loading: t('emailCode.toast.loading'),
