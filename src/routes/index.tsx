@@ -678,51 +678,52 @@ function EmailCodeMenu(props: {
 
   function setEmailCode(code: string) {
     setCodeValue(code);
-    if (code.length === 6) {
-      setInputDisabled(true);
-      toast.promise(
-        new LoginServiceClient(
-          createAddressOnlyTransport(props.authFlowData.address),
-        )
-          .emailCode({
-            code: code,
-            authFlowToken: props.authFlowData.flowToken,
-          })
-          .then(({ response }) => {
-            if (response.next.oneofKind === 'success') {
-              void props.redirectWithCredentials(
-                props.authFlowData.address,
-                response.next.success.token,
-              );
-            } else if (response.next.oneofKind === 'failure') {
-              setInputDisabled(false);
-              setCodeValue('');
-              throw new Error(
-                getEnumKeyByValue(
-                  NextAuthFlowResponse_Failure_Reason,
-                  response.next.failure.reason,
-                ),
-              );
-            } else {
-              setInputDisabled(false);
-              setCodeValue('');
-              throw new Error('Unknown response type');
-            }
-          }),
-        {
-          loading: t('emailCode.toast.loading'),
-          success: t('emailCode.toast.success'),
-          error: (e) => {
+    if (code.length !== 6) {
+      setInputDisabled(false);
+      return;
+    }
+
+    setInputDisabled(true);
+    toast.promise(
+      new LoginServiceClient(
+        createAddressOnlyTransport(props.authFlowData.address),
+      )
+        .emailCode({
+          code: code,
+          authFlowToken: props.authFlowData.flowToken,
+        })
+        .then(({ response }) => {
+          if (response.next.oneofKind === 'success') {
+            void props.redirectWithCredentials(
+              props.authFlowData.address,
+              response.next.success.token,
+            );
+          } else if (response.next.oneofKind === 'failure') {
             setInputDisabled(false);
             setCodeValue('');
-            console.error(e);
-            return t('emailCode.toast.error');
-          },
+            throw new Error(
+              getEnumKeyByValue(
+                NextAuthFlowResponse_Failure_Reason,
+                response.next.failure.reason,
+              ),
+            );
+          } else {
+            setInputDisabled(false);
+            setCodeValue('');
+            throw new Error('Unknown response type');
+          }
+        }),
+      {
+        loading: t('emailCode.toast.loading'),
+        success: t('emailCode.toast.success'),
+        error: (e) => {
+          setInputDisabled(false);
+          setCodeValue('');
+          console.error(e);
+          return t('emailCode.toast.error');
         },
-      );
-    } else {
-      setInputDisabled(false);
-    }
+      },
+    );
   }
 
   return (
