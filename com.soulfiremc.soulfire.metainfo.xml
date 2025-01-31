@@ -36,4 +36,9 @@
   <url type="vcs-browser">https://github.com/AlexProgrammerDE/SoulFireClient</url>
 
   <launchable type="desktop-id">com.soulfiremc.soulfire.desktop</launchable>
+
+  <releases>
+    <release version="1.8.0" date="2025-01-31"/>
+    <release version="1.7.1" date="2025-01-17"/>
+  </releases>
 </component>
