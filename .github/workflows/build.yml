@@ -206,25 +206,3 @@ jobs:
           name: tauri-artifact-android
           path: './src-tauri/gen/android/app/build/outputs'
           if-no-files-found: error
-
-  flatpak:
-    name: Build Flatpak
-
-    runs-on: ubuntu-22.04
-    container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-42
-      options: --privileged
-
-    steps:
-      - name: 'Checkout repository'
-        uses: actions/checkout@v4
-        with:
-          submodules: true
-          persist-credentials: false
-
-      - name: 'Build Flatpak project'
-        uses: flatpak/flatpak-github-actions/flatpak-builder@v6
-        with:
-          bundle: soulfire.flatpak
-          manifest-path: com.soulfiremc.soulfire.yml
-          cache-key: flatpak-builder-${{ github.sha }}
