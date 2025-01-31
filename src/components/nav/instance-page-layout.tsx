@@ -18,7 +18,7 @@ import { InstanceSidebar } from '@/components/nav/instance-sidebar.tsx';
 import { getCookie } from '@/lib/utils.ts';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { HomeIcon } from 'lucide-react';
+import { BookOpenTextIcon, HomeIcon } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 
@@ -27,6 +27,7 @@ export default function InstancePageLayout(props: {
   extraCrumbs?: string[];
   pageName: string;
   expandPluginSettings?: boolean;
+  documentationLink?: string;
 }) {
   const { t } = useTranslation('common');
   const instanceInfo = useContext(InstanceInfoContext);
@@ -58,6 +59,24 @@ export default function InstancePageLayout(props: {
                   </span>
                 </Link>
               </Button>
+              {props.documentationLink && (
+                <>
+                  <Separator orientation="vertical" className="h-4" />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7"
+                    asChild
+                  >
+                    <a href={props.documentationLink} target="_blank">
+                      <BookOpenTextIcon />
+                      <span className="sr-only">
+                        {t('instanceSidebar.readDocumentation')}
+                      </span>
+                    </a>
+                  </Button>
+                </>
+              )}
               <Separator orientation="vertical" className="mr-2 h-4" />
               <Breadcrumb>
                 <BreadcrumbList>

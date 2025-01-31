@@ -17,13 +17,18 @@ import { getCookie } from '@/lib/utils.ts';
 import { UserSidebar } from '@/components/nav/user-sidebar.tsx';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
+import { BookOpenTextIcon } from 'lucide-react';
+import { Button } from '@/components/ui/button.tsx';
+import { useTranslation } from 'react-i18next';
 
 export default function UserPageLayout(props: {
   children: ReactNode;
   extraCrumbs?: string[];
   pageName: string;
   showUserCrumb: boolean;
+  documentationLink?: string;
 }) {
+  const { t } = useTranslation('common');
   const clientInfo = useContext(ClientInfoContext);
   const defaultOpen = getCookie('sidebar:state') === 'true';
 
@@ -42,6 +47,24 @@ export default function UserPageLayout(props: {
           <header className="flex h-16 shrink-0 items-center gap-2">
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
+              {props.documentationLink && (
+                <>
+                  <Separator orientation="vertical" className="h-4" />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-7 w-7"
+                    asChild
+                  >
+                    <a href={props.documentationLink} target="_blank">
+                      <BookOpenTextIcon />
+                      <span className="sr-only">
+                        {t('userSidebar.readDocumentation')}
+                      </span>
+                    </a>
+                  </Button>
+                </>
+              )}
               <Separator orientation="vertical" className="mr-2 h-4" />
               <Breadcrumb>
                 <BreadcrumbList>

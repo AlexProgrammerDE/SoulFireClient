@@ -376,6 +376,7 @@ function ProxySettings() {
     <InstancePageLayout
       extraCrumbs={[t('breadcrumbs.settings')]}
       pageName={t('pageName.proxySettings')}
+      documentationLink="https://soulfiremc.com/docs/usage/proxies"
     >
       <div className="grow flex h-full w-full flex-col gap-4 pb-4 max-w-4xl">
         <div className="flex flex-col gap-2">
