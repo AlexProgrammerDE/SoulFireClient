@@ -1,9 +1,7 @@
 import { defineConfig } from '@rsbuild/core';
-import { pluginBabel } from '@rsbuild/plugin-babel';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { TanStackRouterRspack } from '@tanstack/router-plugin/rspack';
 import { pluginTypeCheck } from '@rsbuild/plugin-type-check';
-import { pluginEslint } from '@rsbuild/plugin-eslint';
 import { pluginSvgr } from '@rsbuild/plugin-svgr';
 import tauriConf from './src-tauri/tauri.conf.json';
 import * as fs from 'node:fs';
@@ -33,14 +31,7 @@ const namespaces = fs
   .join(',');
 
 export default defineConfig({
-  plugins: [
-    pluginReact(),
-    pluginTypeCheck(),
-    pluginEslint({
-      enable: process.env.NODE_ENV === 'production',
-    }),
-    pluginSvgr(),
-  ],
+  plugins: [pluginReact(), pluginTypeCheck(), pluginSvgr()],
   tools: {
     rspack: {
       plugins: [TanStackRouterRspack()],
