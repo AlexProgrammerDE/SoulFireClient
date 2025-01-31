@@ -31,7 +31,7 @@ pub async fn run_integrated_server(
     .starting
     .store(true, std::sync::atomic::Ordering::Relaxed);
 
-  let soul_fire_version = "1.17.1";
+  let soul_fire_version = "1.18.0";
 
   fn send_log<S: Serialize + Clone>(app_handle: &AppHandle, payload: S) -> tauri::Result<()> {
     info!("{}", serde_json::to_string(&payload)?);
