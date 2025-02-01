@@ -4,8 +4,6 @@ use crate::cast::{connect_cast, discover_casts, get_casts, CastRunningState};
 use crate::discord::load_discord_rpc;
 use crate::sf_loader::{run_integrated_server, IntegratedServerState};
 use crate::utils::kill_child_process;
-#[cfg(desktop)]
-use crate::utils::SFError;
 use log::{error, info};
 use std::ops::Deref;
 use std::sync::atomic::AtomicBool;
