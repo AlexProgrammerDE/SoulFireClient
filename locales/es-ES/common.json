@@ -1,35 +1,36 @@
 {
-  "locale": "",
+  "locale": "Configuración regional",
   "error": {
-    "noAddressOrToken": "",
+    "noAddressOrToken": "No se ha encontrado ninguna dirección de servidor o token",
     "page": {
-      "title": "",
-      "message": "",
-      "logOut": "",
-      "reloadPage": ""
-    }
+      "title": "Error",
+      "message": "{{message}} (más información en consola)",
+      "logOut": "Cerrar Sesión",
+      "reloadPage": "Recargar página"
+    },
+    "connectionFailed": ""
   },
   "pending": {
-    "connecting": ""
+    "connecting": "Conectando..."
   },
   "dialog": {
     "about": {
-      "title": "",
-      "description": "",
-      "type": "",
-      "value": "",
+      "title": "Acerca de SoulFire",
+      "description": "Estás ejecutando la versión {{version}} del cliente de SoulFire.",
+      "type": "Tipo",
+      "value": "Valor",
       "fields": {
-        "operatingSystem": "",
-        "platform": "",
-        "locale": "",
-        "architecture": "",
-        "environment": "",
-        "browser": ""
+        "operatingSystem": "Sistema operativo",
+        "platform": "Plataforma",
+        "locale": "Configuración regional",
+        "architecture": "Arquitectura",
+        "environment": "Entorno",
+        "browser": "Navegador"
       },
-      "close": ""
+      "close": "Cerrar"
     },
     "createInstance": {
-      "title": "",
+      "title": "Crear una instancia nueva",
       "description": "",
       "form": {
         "friendlyName": {
@@ -117,7 +118,9 @@
     "goFirst": "",
     "goPrevious": "",
     "goNext": "",
-    "goLast": ""
+    "goLast": "",
+    "selectAll": "",
+    "selectRow": ""
   },
   "pluginCard": {
     "version": "",
@@ -145,10 +148,10 @@
     "more": ""
   },
   "uiDialog": {
-    "close": ""
+    "close": "Cerrar"
   },
   "uiSheet": {
-    "close": ""
+    "close": "Cerrar"
   },
   "uiSidebar": {
     "toggle": ""
@@ -171,6 +174,7 @@
     }
   },
   "instanceSidebar": {
+    "readDocumentation": "",
     "backToDashboard": "",
     "deleteToast": {
       "loading": "",
@@ -199,6 +203,7 @@
     "aiSettings": ""
   },
   "userSidebar": {
+    "readDocumentation": "",
     "userGroup": "",
     "instances": "",
     "createInstance": "",
@@ -219,7 +224,7 @@
     "configDir": "",
     "dataDir": "",
     "about": "",
-    "logOut": "",
+    "logOut": "Cerrar Sesión",
     "logOutToast": {
       "loading": "",
       "success": "",

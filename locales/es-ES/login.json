@@ -31,10 +31,15 @@
   },
   "dedicated": {
     "description": "Introduzca la dirección de conexión y el token del servidor de SoulFire al que desea conectarse.",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "form": {
       "address": {
         "title": "Dirección de conexión",
-        "description": "La dirección IP del servidor a la que deseas conectarse.",
+        "description": "",
         "placeholder": ""
       },
       "token": {
@@ -42,9 +47,25 @@
         "placeholder": "Token secreto",
         "description": "Token de autenticación con el servidor de SoulFire."
       },
+      "email": {
+        "title": "",
+        "placeholder": "",
+        "description": ""
+      },
       "back": "Volver",
-      "connect": "Conectarse"
+      "useToken": "",
+      "useEmail": "",
+      "login": ""
     }
+  },
+  "emailCode": {
+    "description": "",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "back": "Volver"
   },
   "footer": {
     "version": "Cliente SoulFire {{version}} - {{environment}}",
