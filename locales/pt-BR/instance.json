@@ -1,14 +1,79 @@
 {
-  "proxy": {},
+  "proxy": {
+    "filterPlaceholder": "",
+    "listImportToast": {
+      "loading": "",
+      "success": "",
+      "error": "",
+      "noProxies": ""
+    },
+    "import": {
+      "proxyType": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "uri": "",
+      "dialog": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "checkToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "invalidFormat": "",
+    "table": {
+      "type": "Tipo",
+      "address": "Endereço",
+      "username": "",
+      "password": ""
+    }
+  },
   "account": {
+    "filterPlaceholder": "",
     "listImportToast": {
       "loading": "Importando contas...",
       "allFailed": "Falha ao importar contas",
       "someFailed": "{{count}} Contas importadas, falha ao importar {{failed}} contas",
       "noneFailed": "{{count}} Contas importadas!",
-      "error": "Falha ao importar contas"
+      "error": "Falha ao importar contas",
+      "noAccounts": ""
     },
     "unknownError": "Erro desconhecido",
-    "deviceCodeImportToast": {}
+    "deviceCodeImportToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "import": {
+      "javaEdition": "",
+      "bedrockEdition": "",
+      "offline": "",
+      "microsoftCredentials": "",
+      "microsoftDeviceCode": "",
+      "microsoftRefreshToken": "",
+      "theAltening": "",
+      "dialog": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "type": "Tipo",
+      "profileId": "",
+      "lastKnownName": ""
+    }
   }
 }

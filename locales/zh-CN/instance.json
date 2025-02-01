@@ -1,0 +1,79 @@
+{
+  "proxy": {
+    "filterPlaceholder": "过滤代理服务器...",
+    "listImportToast": {
+      "loading": "正在导入代理...",
+      "success": "成功导入 {{count}} 个代理!",
+      "error": "导入代理失败",
+      "noProxies": "没有代理可导入"
+    },
+    "import": {
+      "proxyType": "代理连接类型",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "导入 {{type}} 个代理",
+        "description": "在这里粘贴您的代理，每行一个"
+      }
+    },
+    "removeToast": {
+      "loading": "正在删除代理...",
+      "success": "删除了 {{count}} 个代理!",
+      "error": "删除代理失败"
+    },
+    "checkToast": {
+      "loading": "正在检查代理...",
+      "success": "删除了 {{count}} 个无效的代理!",
+      "error": "无法检查代理"
+    },
+    "invalidFormat": "无效的代理格式",
+    "table": {
+      "type": "类型",
+      "address": "地址",
+      "username": "用户名",
+      "password": "密码"
+    }
+  },
+  "account": {
+    "filterPlaceholder": "筛选账户...",
+    "listImportToast": {
+      "loading": "导入帐户...",
+      "allFailed": "导入账户失败",
+      "someFailed": "成功导入 {{count}} 个账户,  {{failed}} 个账户导入失败",
+      "noneFailed": "已导入 {{count}} 个账户",
+      "error": "导入帐户失败",
+      "noAccounts": "没有账户可导入"
+    },
+    "unknownError": "未知错误",
+    "deviceCodeImportToast": {
+      "loading": "导入帐户...",
+      "success": "帐户已导入！",
+      "error": "导入帐户失败"
+    },
+    "import": {
+      "javaEdition": "Java 游戏版本",
+      "bedrockEdition": "Bedrock 游戏版本",
+      "offline": "离线",
+      "microsoftCredentials": "Microsoft 账户",
+      "microsoftDeviceCode": "Microsoft 设备代码",
+      "microsoftRefreshToken": "微软刷新令牌",
+      "theAltening": "",
+      "dialog": {
+        "title": "导入 {{type}} 个账户",
+        "description": "在这里粘贴您的帐户，每行一个"
+      }
+    },
+    "removeToast": {
+      "loading": "正在删除帐户...",
+      "success": "删除了 {{count}} 个账户!",
+      "error": "删除帐户失败"
+    },
+    "table": {
+      "type": "类型",
+      "profileId": "UUID",
+      "lastKnownName": "用户名"
+    }
+  }
+}

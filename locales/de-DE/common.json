@@ -7,7 +7,8 @@
       "message": "{{message}} (mehr Informationen in der Konsole)",
       "logOut": "Ausloggen",
       "reloadPage": "Seite neu laden"
-    }
+    },
+    "connectionFailed": ""
   },
   "pending": {
     "connecting": "Verbinde..."
@@ -173,6 +174,7 @@
     }
   },
   "instanceSidebar": {
+    "readDocumentation": "",
     "backToDashboard": "Zurück zum Dashboard",
     "deleteToast": {
       "loading": "Instanz wird gelöscht...",
@@ -201,6 +203,7 @@
     "aiSettings": "KI Einstellungen"
   },
   "userSidebar": {
+    "readDocumentation": "",
     "userGroup": "Nutzer",
     "instances": "Instanzen",
     "createInstance": "Instanz erstellen",
