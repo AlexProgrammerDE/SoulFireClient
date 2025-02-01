@@ -98,13 +98,6 @@ pub fn run() {
 
       #[cfg(desktop)]
       {
-        let main_window = app.get_webview_window("main").ok_or(SFError::NoMainWindow)?;
-        let app_version = &app.package_info().version;
-        let _ = main_window.set_title(format!("SoulFireClient {app_version}").as_str());
-      }
-
-      #[cfg(desktop)]
-      {
         app.handle().plugin(tauri_plugin_updater::Builder::new().build())?;
         let handle = app.handle().clone();
         tauri::async_runtime::spawn(async move {

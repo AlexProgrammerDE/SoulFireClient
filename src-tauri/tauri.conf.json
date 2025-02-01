@@ -15,6 +15,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
+        "title": "SoulFire",
         "label": "main",
         "fullscreen": false,
         "height": 675,
