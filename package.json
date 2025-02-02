@@ -57,6 +57,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.0",
     "cmdk": "^1.0.0",
+    "country-flag-icons": "^1.5.14",
     "fancy-ansi": "^0.1.2",
     "file-saver": "^2.0.5",
     "i18next": "^24.2.1",

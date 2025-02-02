@@ -10,8 +10,22 @@ import {
   InstanceListResponse_Instance,
 } from '@/generated/soulfire/instance.ts';
 import { sha256 } from 'js-sha256';
+import * as Flags from 'country-flag-icons/react/3x2';
+import { type FlagComponent } from 'country-flag-icons/react/1x1';
+import { ReactNode } from 'react';
 
 const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
+
+const emojiMap = APP_LOCALES.split(',').reduce(
+  (acc, locale) => {
+    const countryCode = locale.split('-')[1];
+    if (!countryCode) return acc;
+
+    acc[countryCode] = Flags[countryCode as keyof typeof Flags];
+    return acc;
+  },
+  {} as Record<string, FlagComponent>,
+);
 
 export function setTerminalTheme(theme: string) {
   localStorage.setItem(LOCAL_STORAGE_TERMINAL_THEME_KEY, theme);
@@ -108,18 +122,18 @@ export function getCookie(name: string) {
   if (parts.length === 2) return parts.pop()?.split(';').shift();
 }
 
-export function languageEmoji(locale: string) {
+export function languageEmoji(locale: string): ReactNode {
   if (locale === 'lol-US') {
     return '🐱';
   }
 
   const countryCode = locale.split('-')[1];
   if (!countryCode) return '';
-  return countryCode
-    .toUpperCase()
-    .split('')
-    .map((char) => String.fromCodePoint(char.charCodeAt(0) + 127397))
-    .join('');
+
+  const Flag = emojiMap[countryCode];
+  if (!Flag) return '';
+
+  return <Flag className="size-4 mx-1 align-middle" />;
 }
 
 export function getLanguageName(languageCode: string, displayLanguage: string) {

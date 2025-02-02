@@ -11,7 +11,7 @@ import { ScrollArea } from './ui/scroll-area.tsx';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
 import { flavorEntries } from '@catppuccin/palette';
 import { AnsiHtml } from 'fancy-ansi/react';
-import { isDemo } from '@/lib/utils.ts';
+import { isDemo } from '@/lib/utils.tsx';
 import { LogRequest, PreviousLogRequest } from '@/generated/soulfire/logs.ts';
 import { stripAnsi } from 'fancy-ansi';
 import { useTranslation } from 'react-i18next';

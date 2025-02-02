@@ -11,7 +11,7 @@ import {
   SystemInfo,
   SystemInfoContext,
 } from '@/components/providers/system-info-context.tsx';
-import { getTerminalTheme, isTauri } from '@/lib/utils.ts';
+import { getTerminalTheme, isTauri } from '@/lib/utils.tsx';
 import { appConfigDir, BaseDirectory, resolve } from '@tauri-apps/api/path';
 import { mkdir, readDir, watch } from '@tauri-apps/plugin-fs';
 import { arch, locale, platform, type, version } from '@tauri-apps/plugin-os';

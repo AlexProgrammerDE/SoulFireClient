@@ -9,7 +9,7 @@ import {
 import { Button } from '@/components/ui/button.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
 import { useContext, useRef, useState } from 'react';
-import { hasInstancePermission, isTauri } from '@/lib/utils.ts';
+import { hasInstancePermission, isTauri } from '@/lib/utils.tsx';
 import { downloadDir } from '@tauri-apps/api/path';
 import { open } from '@tauri-apps/plugin-dialog';
 import { readTextFile } from '@tauri-apps/plugin-fs';

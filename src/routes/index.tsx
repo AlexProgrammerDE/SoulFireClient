@@ -39,7 +39,7 @@ import {
   getLanguageName,
   isDemo,
   languageEmoji,
-} from '@/lib/utils.ts';
+} from '@/lib/utils.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import { toast } from 'sonner';
 import {

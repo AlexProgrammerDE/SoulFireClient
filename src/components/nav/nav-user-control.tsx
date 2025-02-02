@@ -47,7 +47,7 @@ import {
   isTauri,
   languageEmoji,
   setTerminalTheme,
-} from '@/lib/utils.ts';
+} from '@/lib/utils.tsx';
 import { emit } from '@tauri-apps/api/event';
 import { toast } from 'sonner';
 import { exit } from '@tauri-apps/plugin-process';

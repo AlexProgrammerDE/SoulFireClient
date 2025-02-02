@@ -1,5 +1,5 @@
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
-import { isDemo } from '@/lib/utils.ts';
+import { isDemo } from '@/lib/utils.tsx';
 import i18n from '@/lib/i18n.ts';
 import { SFServerType } from '@/lib/types.ts';
 

@@ -42,7 +42,7 @@ import {
   hasGlobalPermission,
   hasInstancePermission,
   isTauri,
-} from '@/lib/utils.ts';
+} from '@/lib/utils.tsx';
 import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.tsx';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';

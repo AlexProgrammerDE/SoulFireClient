@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { toast } from 'sonner';
 import { emit, listen } from '@tauri-apps/api/event';
-import { cancellablePromiseDefault, cn } from '@/lib/utils.ts';
+import { cancellablePromiseDefault, cn } from '@/lib/utils.tsx';
 import { CastIcon, RadioTowerIcon, SearchXIcon } from 'lucide-react';
 import {
   DropdownMenuGroup,

@@ -11,7 +11,7 @@ import {
 import { Link, LinkProps } from '@tanstack/react-router';
 import * as React from 'react';
 import { ReactNode, useContext, useState } from 'react';
-import { hasGlobalPermission } from '@/lib/utils';
+import { hasGlobalPermission } from '@/lib/utils.tsx';
 import { GlobalPermission } from '@/generated/soulfire/common.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.tsx';

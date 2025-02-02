@@ -24,7 +24,7 @@ import {
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 import { ClientDataResponse } from '@/generated/soulfire/config.ts';
 import { Button } from '@/components/ui/button.tsx';
-import { getGravatarUrl, isTauri } from '@/lib/utils.ts';
+import { getGravatarUrl, isTauri } from '@/lib/utils.tsx';
 import { emit } from '@tauri-apps/api/event';
 import { demoData } from '@/demo-data.ts';
 import {

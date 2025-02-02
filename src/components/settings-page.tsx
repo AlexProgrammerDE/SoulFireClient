@@ -29,7 +29,7 @@ import {
   PlusIcon,
   TrashIcon,
 } from 'lucide-react';
-import { cn } from '@/lib/utils.ts';
+import { cn } from '@/lib/utils.tsx';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
