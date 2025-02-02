@@ -7,7 +7,8 @@
       "message": "{{message}} (plus d'informations dans la console)",
       "logOut": "Déconnexion",
       "reloadPage": "Recharger la page"
-    }
+    },
+    "connectionFailed": ""
   },
   "pending": {
     "connecting": "Connexion..."
@@ -17,7 +18,7 @@
       "title": "A propos de SoulFire",
       "description": "Vous utilisez la version {{version}} de SoulFire client.",
       "type": "Type",
-      "value": "Valeure",
+      "value": "Valeur",
       "fields": {
         "operatingSystem": "Système d'exploitation",
         "platform": "Plateforme",
@@ -44,9 +45,9 @@
         "create": "Créer"
       },
       "createToast": {
-        "loading": "",
-        "success": "",
-        "error": ""
+        "loading": "Créer une nouvelle instance...",
+        "success": "Instance créée avec succès",
+        "error": "Échec de la création de l'instance"
       }
     },
     "import": {
@@ -117,7 +118,9 @@
     "goFirst": "Aller à la première page",
     "goPrevious": "Page précédente",
     "goNext": "Page suivante",
-    "goLast": "Aller à la dernière page"
+    "goLast": "Aller à la dernière page",
+    "selectAll": "Tout sélectionner",
+    "selectRow": "Sélectionner la ligne"
   },
   "pluginCard": {
     "version": "Version {{version}}",
@@ -126,7 +129,7 @@
     "website": "Site Internet"
   },
   "settingsPage": {
-    "entryNotFound": "",
+    "entryNotFound": "Entrée de paramètres introuvable",
     "namespacesNotFound": "",
     "stringList": {
       "placeholder": "Ajouter une nouvelle entrée...",
@@ -142,7 +145,7 @@
     "demo-4": "N’hésitez pas à rejoindre notre serveur Discord si vous souhaitez nous joindre : https://soulfiremc.com/discord"
   },
   "uiBreadcrumb": {
-    "more": ""
+    "more": "Plus"
   },
   "uiDialog": {
     "close": "Fermer"
@@ -151,7 +154,7 @@
     "close": "Fermer"
   },
   "uiSidebar": {
-    "toggle": ""
+    "toggle": "Activer/désactiver la barre latérale"
   },
   "castMenu": {
     "title": "Diffuser",
@@ -171,85 +174,87 @@
     }
   },
   "instanceSidebar": {
+    "readDocumentation": "",
     "backToDashboard": "Retourner au tableau de bord",
     "deleteToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Suppression de l'instance...",
+      "success": "Instance supprimée",
+      "error": "Échec de la suppression de l'instance"
     },
-    "instancesGroup": "",
-    "createInstance": "",
+    "instancesGroup": "Instances",
+    "createInstance": "Créer une instance",
     "loadProfileToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Chargement du profil...",
+      "success": "Profil chargé",
+      "error": "Échec du chargement du profil"
     },
-    "loadProfile": "",
-    "loadFromFile": "",
-    "profileSaved": "",
-    "saveProfile": "",
-    "deleteInstance": "",
-    "controlsGroup": "",
-    "console": "",
-    "settingsGroup": "",
-    "pluginSettings": "",
-    "botSettings": "",
-    "accountSettings": "",
-    "proxySettings": "",
-    "aiSettings": ""
+    "loadProfile": "Charger le profil",
+    "loadFromFile": "Charger depuis un fichier",
+    "profileSaved": "Profil enregistré",
+    "saveProfile": "Enregistrer le profil",
+    "deleteInstance": "Supprimer l'instance",
+    "controlsGroup": "Contrôles",
+    "console": "Console",
+    "settingsGroup": "Paramètres",
+    "pluginSettings": "Configuration du plugin",
+    "botSettings": "Configuration du bot",
+    "accountSettings": "Paramètres de compte",
+    "proxySettings": "Paramètres de proxy",
+    "aiSettings": "Paramètres IA"
   },
   "userSidebar": {
-    "userGroup": "",
-    "instances": "",
-    "createInstance": "",
-    "adminGroup": "",
-    "adminOverview": "",
-    "adminConsole": "",
-    "serverSettings": "",
-    "devSettings": "",
+    "readDocumentation": "",
+    "userGroup": "Utilisateur",
+    "instances": "Instances",
+    "createInstance": "Créer une instance",
+    "adminGroup": "Administrateur",
+    "adminOverview": "Aperçu admin",
+    "adminConsole": "Console admin",
+    "serverSettings": "Paramètres du serveur",
+    "devSettings": "Paramètres de développement",
     "theme": {
-      "title": "",
-      "system": "",
-      "light": "",
-      "dark": ""
+      "title": "Thème",
+      "system": "Système",
+      "light": "Clair",
+      "dark": "Sombre"
     },
     "terminal": {
-      "title": ""
+      "title": "Terminal"
     },
-    "configDir": "",
-    "dataDir": "",
-    "about": "",
+    "configDir": "Dossier de configuration",
+    "dataDir": "Dossier des données",
+    "about": "À propos",
     "logOut": "Déconnexion",
     "logOutToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Déconnexion...",
+      "success": "Déconnecté !",
+      "error": "Échec de la déconnexion"
     },
-    "exit": ""
+    "exit": "Quitter"
   },
   "sidebar": {
-    "documentation": "",
-    "buyMeACoffee": "",
-    "support": ""
+    "documentation": "Documentation",
+    "buyMeACoffee": "Offrez-moi un café",
+    "support": "Support"
   },
   "breadcrumbs": {
-    "admin": "",
-    "settings": "",
-    "controls": ""
+    "admin": "Administrateur",
+    "settings": "Paramètres",
+    "controls": "Contrôles"
   },
-  "noInstancesFound": "",
+  "noInstancesFound": "Aucune instance n'a été trouvée",
   "pageName": {
-    "console": "",
-    "instances": "",
-    "proxySettings": "",
-    "overview": "",
-    "accountSettings": ""
+    "console": "Console",
+    "instances": "Instances",
+    "proxySettings": "Paramètres de proxy",
+    "overview": "Aperçu",
+    "accountSettings": "Paramètres de compte"
   },
   "instanceState": {
-    "starting": "",
-    "running": "",
-    "paused": "",
-    "stopping": "",
-    "stopped": ""
+    "starting": "Démarrage",
+    "running": "En cours d'exécution",
+    "paused": "Suspendu",
+    "stopping": "Arrêt en cours",
+    "stopped": "Arrêté"
   }
 }

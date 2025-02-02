@@ -31,10 +31,15 @@
   },
   "dedicated": {
     "description": "Umieść adres i token serwera SoulFire, z którym chcesz się połączyć.",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "form": {
       "address": {
         "title": "Adres",
-        "description": "Adres serwera, z którym chcesz się połączyć.",
+        "description": "",
         "placeholder": "http://localhost:38765"
       },
       "token": {
@@ -42,9 +47,25 @@
         "placeholder": "Tajny token",
         "description": "Token do uwierzytelniania z serwerem."
       },
+      "email": {
+        "title": "",
+        "placeholder": "",
+        "description": ""
+      },
       "back": "Wróć",
-      "connect": "Połącz"
+      "useToken": "",
+      "useEmail": "",
+      "login": ""
     }
+  },
+  "emailCode": {
+    "description": "",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "back": "Wróć"
   },
   "footer": {
     "version": "Klient SoulFire {{version}} - {{environment}}",

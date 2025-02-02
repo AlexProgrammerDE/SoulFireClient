@@ -1,14 +1,79 @@
 {
-  "proxy": {},
+  "proxy": {
+    "filterPlaceholder": "",
+    "listImportToast": {
+      "loading": "",
+      "success": "",
+      "error": "",
+      "noProxies": ""
+    },
+    "import": {
+      "proxyType": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "uri": "",
+      "dialog": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "checkToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "invalidFormat": "",
+    "table": {
+      "type": "Tyep",
+      "address": "Addres",
+      "username": "",
+      "password": ""
+    }
+  },
   "account": {
+    "filterPlaceholder": "",
     "listImportToast": {
       "loading": "",
       "allFailed": "",
       "someFailed": "",
       "noneFailed": "",
-      "error": ""
+      "error": "",
+      "noAccounts": ""
     },
     "unknownError": "",
-    "deviceCodeImportToast": {}
+    "deviceCodeImportToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "import": {
+      "javaEdition": "",
+      "bedrockEdition": "",
+      "offline": "",
+      "microsoftCredentials": "",
+      "microsoftDeviceCode": "",
+      "microsoftRefreshToken": "",
+      "theAltening": "",
+      "dialog": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "type": "Tyep",
+      "profileId": "",
+      "lastKnownName": ""
+    }
   }
 }

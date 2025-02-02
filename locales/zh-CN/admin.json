@@ -1,0 +1,25 @@
+{
+  "overview": {
+    "welcome": "欢迎回来, {{name}} 🧙",
+    "instancesChart": {
+      "title": "服务器上的实例总数",
+      "instances": "",
+      "label": {
+        "state": "状态",
+        "active": "",
+        "stopped": "",
+        "other": "其它"
+      }
+    },
+    "usersChart": {
+      "title": "服务器上的用户总数",
+      "users": "用户",
+      "label": {
+        "role": "用户类型",
+        "user": "用户",
+        "admin": "管理员",
+        "other": "其它"
+      }
+    }
+  }
+}

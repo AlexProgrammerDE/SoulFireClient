@@ -1,0 +1,260 @@
+{
+  "locale": "语言",
+  "error": {
+    "noAddressOrToken": "未找到服务器地址或令牌",
+    "page": {
+      "title": "出错",
+      "message": "{{message}} (更多消息请查看控制台)",
+      "logOut": "退出登录",
+      "reloadPage": "重新载入页面"
+    },
+    "connectionFailed": ""
+  },
+  "pending": {
+    "connecting": "正在连接..."
+  },
+  "dialog": {
+    "about": {
+      "title": "关于 SoulFire",
+      "description": "正在运行 {{version}} 版本的 SoulFire 客户端",
+      "type": "类型",
+      "value": "数值",
+      "fields": {
+        "operatingSystem": "操作系统",
+        "platform": "",
+        "locale": "语言",
+        "architecture": "",
+        "environment": "",
+        "browser": "浏览器"
+      },
+      "close": "关闭"
+    },
+    "createInstance": {
+      "title": "创建一个新实例",
+      "description": "实例需要一个名字来区分它们，它可以是你想要的任何名字，例如“Minecraft Bot”。",
+      "form": {
+        "friendlyName": {
+          "label": "一个友好的名称",
+          "placeholder": "My Minecraft Bot",
+          "description": "您想要赋予此实例的名称",
+          "min": "名称至少需要3个字符",
+          "max": "名称最多允许50个字符",
+          "regex": "名称只能包含字母、数字和空格"
+        },
+        "cancel": "取消",
+        "create": "创建"
+      },
+      "createToast": {
+        "loading": "正在创建实例...",
+        "success": "实例已成功创建",
+        "error": "创建实例失败"
+      }
+    },
+    "import": {
+      "main": {
+        "fromFile": "从文件",
+        "fromUrl": "从 URL",
+        "firstClipboardItem": "在剪贴板中有多个项目，只使用第一个。",
+        "fromClipboard": "从剪贴板",
+        "textarea": {
+          "placeholder": "将文本放在这里...",
+          "submit": "从文本加载"
+        }
+      },
+      "url": {
+        "description": "从 URL 加载将使 SoulFire 服务器向目标服务器发出GET 请求，并使用响应作为数据。",
+        "form": {
+          "url": {
+            "placeholder": "将 URL 放在这里...",
+            "empty": "请输入一个有效的 URL"
+          }
+        },
+        "submit": "从 URL 加载",
+        "toast": {
+          "loading": "正在下载数据...",
+          "success": "数据已加载！",
+          "error": "下载数据失败"
+        }
+      }
+    }
+  },
+  "commandInput": {
+    "placeholder": "输入命令"
+  },
+  "controls": {
+    "start": "开始",
+    "resume": "继续",
+    "pause": "暂停",
+    "stop": "停止",
+    "startToast": {
+      "loading": "正在开始攻击...",
+      "success": "攻击已成功开始",
+      "error": "启动攻击失败"
+    },
+    "resumeToast": {
+      "loading": "正在恢复攻击...",
+      "success": "攻击已成功恢复",
+      "error": "恢复攻击失败"
+    },
+    "pauseToast": {
+      "loading": "正在暂停攻击...",
+      "success": "攻击已成功暂停",
+      "error": "暂停攻击失败"
+    },
+    "stopToast": {
+      "loading": "正在停止攻击...",
+      "success": "攻击已成功停止",
+      "error": "停止攻击失败"
+    }
+  },
+  "icon": {
+    "invalidName": "无效的图标名称: {{name}}"
+  },
+  "dataTable": {
+    "noResults": "无结果",
+    "rowsSelected": "",
+    "rowsPerPage": "每页行数",
+    "currentPage": "",
+    "goFirst": "转到第一页",
+    "goPrevious": "转到上一页",
+    "goNext": "转到下一页",
+    "goLast": "转到最后一页",
+    "selectAll": "全选",
+    "selectRow": ""
+  },
+  "pluginCard": {
+    "version": "版本: {{version}}",
+    "author": "作者: {{author}}",
+    "license": "License: {{license}}",
+    "website": "Website"
+  },
+  "settingsPage": {
+    "entryNotFound": "未找到设置项",
+    "namespacesNotFound": "",
+    "stringList": {
+      "placeholder": "添加新条目...",
+      "add": "添加",
+      "remove": "删除"
+    }
+  },
+  "terminal": {
+    "noLogs": "🧙 看起来没有日志可以显示，尝试运行一些命令!",
+    "demo-1": "欢迎来到演示模式！🧪",
+    "demo-2": "这是一个只读的 SoulFire 实例",
+    "demo-3": "在决定安装 SoulFire 之前，请先查看所有菜单和功能",
+    "demo-4": "如果您想要加入我们的Discord服务器，请访问： https://soulfiremc.com/discord"
+  },
+  "uiBreadcrumb": {
+    "more": "更多"
+  },
+  "uiDialog": {
+    "close": "关闭"
+  },
+  "uiSheet": {
+    "close": "关闭"
+  },
+  "uiSidebar": {
+    "toggle": "切换侧边栏"
+  },
+  "castMenu": {
+    "title": "",
+    "disconnected": "与 {{device}} 断开连接",
+    "alreadyConnected": "已连接 {{device}}",
+    "connectToast": {
+      "loading": "正在连接到 {{device}} ...",
+      "success": "",
+      "error": "无法连接到{{device}}"
+    },
+    "noDevices": "未找到设备",
+    "broadcastLabel": "",
+    "broadcastToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
+  },
+  "instanceSidebar": {
+    "readDocumentation": "",
+    "backToDashboard": "返回仪表板",
+    "deleteToast": {
+      "loading": "正在删除实例...",
+      "success": "实例已删除",
+      "error": "删除实例失败"
+    },
+    "instancesGroup": "",
+    "createInstance": "创建实例",
+    "loadProfileToast": {
+      "loading": "正在加载配置文件...",
+      "success": "配置文件已加载",
+      "error": "加载配置文件失败"
+    },
+    "loadProfile": "加载配置文件",
+    "loadFromFile": "从文件中加载",
+    "profileSaved": "配置文件已保存",
+    "saveProfile": "保存配置文件",
+    "deleteInstance": "删除实例",
+    "controlsGroup": "",
+    "console": "控制台",
+    "settingsGroup": "设置",
+    "pluginSettings": "插件设置",
+    "botSettings": "机器人设置",
+    "accountSettings": "帐户设置",
+    "proxySettings": "代理设置",
+    "aiSettings": "AI设置"
+  },
+  "userSidebar": {
+    "readDocumentation": "",
+    "userGroup": "用户",
+    "instances": "",
+    "createInstance": "创建实例",
+    "adminGroup": "管理员",
+    "adminOverview": "管理员概述",
+    "adminConsole": "管理员控制台",
+    "serverSettings": "服务器设置",
+    "devSettings": "开发者设置",
+    "theme": {
+      "title": "主题",
+      "system": "系统",
+      "light": "明亮",
+      "dark": "暗色"
+    },
+    "terminal": {
+      "title": "终端"
+    },
+    "configDir": "配置目录",
+    "dataDir": "数据目录",
+    "about": "关于",
+    "logOut": "退出登录",
+    "logOutToast": {
+      "loading": "正在退出...",
+      "success": "已退出",
+      "error": "退出失败"
+    },
+    "exit": "退出"
+  },
+  "sidebar": {
+    "documentation": "文档",
+    "buyMeACoffee": "捐赠",
+    "support": "支持"
+  },
+  "breadcrumbs": {
+    "admin": "管理员",
+    "settings": "设置",
+    "controls": ""
+  },
+  "noInstancesFound": "未找到实例",
+  "pageName": {
+    "console": "控制台",
+    "instances": "",
+    "proxySettings": "代理设置",
+    "overview": "概况",
+    "accountSettings": "帐户设置"
+  },
+  "instanceState": {
+    "starting": "正在启动",
+    "running": "正在运行",
+    "paused": "已暂停",
+    "stopping": "正在停止",
+    "stopped": ""
+  }
+}

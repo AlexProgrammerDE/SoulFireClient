@@ -31,10 +31,15 @@
   },
   "dedicated": {
     "description": "Введите адрес и токен сервера SoulFire, к которому хотите подключиться.",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "form": {
       "address": {
         "title": "Адрес",
-        "description": "Адрес сервера, к которому вы хотите подключиться.",
+        "description": "",
         "placeholder": "http://localhost:38765"
       },
       "token": {
@@ -42,9 +47,25 @@
         "placeholder": "Секретный токен",
         "description": "Токен для аутентификации на сервере."
       },
+      "email": {
+        "title": "",
+        "placeholder": "",
+        "description": ""
+      },
       "back": "Назад",
-      "connect": "Подключиться"
+      "useToken": "",
+      "useEmail": "",
+      "login": ""
     }
+  },
+  "emailCode": {
+    "description": "",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "back": "Назад"
   },
   "footer": {
     "version": "SoulFire Client {{version}} - {{environment}}",

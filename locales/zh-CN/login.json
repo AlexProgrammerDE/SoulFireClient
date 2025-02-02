@@ -1,0 +1,75 @@
+{
+  "header": {
+    "image": {
+      "alt": "SoulFire 图标"
+    },
+    "title": "SoulFire"
+  },
+  "connect": {
+    "title": "连接到一个 SoulFire 服务器",
+    "description": "选择连接到哪种类型的 SoulFire 服务器",
+    "integrated": {
+      "title": "内置集成服务器 (本地)",
+      "description": "在您的计算机上运行一个 SoulFire 服务器。设置过程是自动的无需手动配置。(需要桌面应用)"
+    },
+    "dedicated": {
+      "title": "专用服务器 (远程)",
+      "description": "要连接到一个 SoulFire 服务器的远程实例。您需要提供服务器的地址和令牌。"
+    },
+    "demo": {
+      "title": "演示服务器",
+      "description": "模拟一个带有演示数据的虚拟服务器，这个服务器是只读的，您不能对它做任何更改。"
+    }
+  },
+  "integrated": {
+    "preparing": "正在准备启动集成服务器...",
+    "toast": {
+      "loading": "正在启动集成服务器...",
+      "success": "集成服务器已启动",
+      "error": "启动集成服务器失败"
+    }
+  },
+  "dedicated": {
+    "description": "放入您要连接的 SoulFire 服务器的地址和令牌。",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "form": {
+      "address": {
+        "title": "地址",
+        "description": "",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "令牌",
+        "placeholder": "保密令牌",
+        "description": "验证服务器的令牌"
+      },
+      "email": {
+        "title": "",
+        "placeholder": "",
+        "description": ""
+      },
+      "back": "返回",
+      "useToken": "",
+      "useEmail": "",
+      "login": ""
+    }
+  },
+  "emailCode": {
+    "description": "",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "back": "返回"
+  },
+  "footer": {
+    "version": "SoulFire 客户端 {{version}} - {{environment}}",
+    "preview": "正在寻找预览吗？",
+    "production": ""
+  }
+}

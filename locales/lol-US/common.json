@@ -1,5 +1,5 @@
 {
-  "locale": "",
+  "locale": "Locael",
   "error": {
     "noAddressOrToken": "No servr addres or token findz",
     "page": {
@@ -7,7 +7,8 @@
       "message": "{{message}} (moar inof in consoel)",
       "logOut": "Walk out",
       "reloadPage": "Spin paeg"
-    }
+    },
+    "connectionFailed": ""
   },
   "pending": {
     "connecting": "Catwalking..."
@@ -17,54 +18,54 @@
       "title": "Who SoulFire",
       "description": "I zee vawiant {{version}} of SoulFire cwient.",
       "type": "Tyep",
-      "value": "",
+      "value": "Value",
       "fields": {
-        "operatingSystem": "",
-        "platform": "",
-        "locale": "",
-        "architecture": "",
-        "environment": "",
-        "browser": ""
+        "operatingSystem": "Operatin Sistem",
+        "platform": "Platform",
+        "locale": "Locael",
+        "architecture": "Architecchur",
+        "environment": "Environment",
+        "browser": "Browsr"
       },
-      "close": ""
+      "close": "Cloes"
     },
     "createInstance": {
-      "title": "",
-      "description": "",
+      "title": "Creaet nu instanec",
+      "description": "Instances ned friendly namez 4 u 2 distinguish dem. Srsly It can bees any naym u wantz, 4 exampel, \"mah Minecraft Bot\".",
       "form": {
         "friendlyName": {
-          "label": "",
-          "placeholder": "",
-          "description": "",
-          "min": "",
-          "max": "",
-          "regex": ""
+          "label": "Friendly naym",
+          "placeholder": "Mah Minecraft Bot",
+          "description": "Teh naym u wantz 2 giv 2 dis instanec.",
+          "min": "Teh friendly naym must bees at least 3 characterz long.",
+          "max": "Teh friendly naym must bees at most 50 characterz long.",
+          "regex": "Friendly naym can only contaen letterz, numberz, an spacez"
         },
-        "cancel": "",
-        "create": ""
+        "cancel": "cancel k?",
+        "create": "Makee Makee"
       },
       "createToast": {
-        "loading": "",
-        "success": "",
-        "error": ""
+        "loading": "Creatin instanec...",
+        "success": "Instanec creatd successfully",
+        "error": "Faild 2 creaet instanec"
       }
     },
     "import": {
       "main": {
-        "fromFile": "",
-        "fromUrl": "",
-        "firstClipboardItem": "",
-        "fromClipboard": "",
+        "fromFile": "Frum fiel",
+        "fromUrl": "Frum URL",
+        "firstClipboardItem": "U had multipel itemz in teh clipboard, only usin furst wan.",
+        "fromClipboard": "Frum clipboard",
         "textarea": {
           "placeholder": "",
           "submit": ""
         }
       },
       "url": {
-        "description": "",
+        "description": "Loadin frum URL will mak teh SoulFire servr mak git request 2 teh target servr an ues teh respones as teh daat.",
         "form": {
           "url": {
-            "placeholder": "",
+            "placeholder": "Put URL hah...",
             "empty": ""
           }
         },
@@ -117,7 +118,9 @@
     "goFirst": "",
     "goPrevious": "",
     "goNext": "",
-    "goLast": ""
+    "goLast": "",
+    "selectAll": "",
+    "selectRow": ""
   },
   "pluginCard": {
     "version": "",
@@ -145,10 +148,10 @@
     "more": ""
   },
   "uiDialog": {
-    "close": ""
+    "close": "Cloes"
   },
   "uiSheet": {
-    "close": ""
+    "close": "Cloes"
   },
   "uiSidebar": {
     "toggle": ""
@@ -171,6 +174,7 @@
     }
   },
   "instanceSidebar": {
+    "readDocumentation": "",
     "backToDashboard": "",
     "deleteToast": {
       "loading": "",
@@ -199,6 +203,7 @@
     "aiSettings": ""
   },
   "userSidebar": {
+    "readDocumentation": "",
     "userGroup": "",
     "instances": "",
     "createInstance": "",

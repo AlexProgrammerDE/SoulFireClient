@@ -7,7 +7,8 @@
       "message": "{{message}} (mais informações no console)",
       "logOut": "Sair",
       "reloadPage": "Recarregar página"
-    }
+    },
+    "connectionFailed": ""
   },
   "pending": {
     "connecting": "Conectando..."
@@ -117,7 +118,9 @@
     "goFirst": "Ir para a primeira página",
     "goPrevious": "Ir para a página anterior",
     "goNext": "Ir para a proxima página",
-    "goLast": "Ir para a última página"
+    "goLast": "Ir para a última página",
+    "selectAll": "",
+    "selectRow": ""
   },
   "pluginCard": {
     "version": "Versão {{version}}",
@@ -171,6 +174,7 @@
     }
   },
   "instanceSidebar": {
+    "readDocumentation": "",
     "backToDashboard": "Voltar ao painel de controle",
     "deleteToast": {
       "loading": "Excluindo instância...",
@@ -199,6 +203,7 @@
     "aiSettings": "Configurações de IA"
   },
   "userSidebar": {
+    "readDocumentation": "",
     "userGroup": "Usuário",
     "instances": "Instâncias",
     "createInstance": "Criar Instância",

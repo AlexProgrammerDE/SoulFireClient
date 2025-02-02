@@ -1,14 +1,79 @@
 {
-  "proxy": {},
-  "account": {
+  "proxy": {
+    "filterPlaceholder": "Filtrer les proxies...",
     "listImportToast": {
-      "loading": "",
-      "allFailed": "",
+      "loading": "Importation des proxys...",
+      "success": "{{count}} proxys importés !",
+      "error": "Impossible d'importer les proxys",
+      "noProxies": "Aucun proxy à importer"
+    },
+    "import": {
+      "proxyType": "Type de proxy",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "Importer des proxies {{type}}",
+        "description": "Collez vos proxys ici, un par ligne"
+      }
+    },
+    "removeToast": {
+      "loading": "Suppression des proxys...",
+      "success": "{{count}} proxys supprimés !",
+      "error": "Impossible de supprimer les proxys"
+    },
+    "checkToast": {
+      "loading": "Vérification des proxys ...",
+      "success": "{{count}} proxys corrompus supprimés !",
+      "error": "Impossible de vérifier les proxys"
+    },
+    "invalidFormat": "Format de proxy invalide",
+    "table": {
+      "type": "Type",
+      "address": "Adresse",
+      "username": "Nom d´utilisateur",
+      "password": "Mot de passe"
+    }
+  },
+  "account": {
+    "filterPlaceholder": "Filtrer les comptes...",
+    "listImportToast": {
+      "loading": "Importation des comptes...",
+      "allFailed": "Impossible d'importer les comptes",
       "someFailed": "",
       "noneFailed": "",
-      "error": ""
+      "error": "",
+      "noAccounts": ""
     },
     "unknownError": "",
-    "deviceCodeImportToast": {}
+    "deviceCodeImportToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "import": {
+      "javaEdition": "",
+      "bedrockEdition": "",
+      "offline": "",
+      "microsoftCredentials": "",
+      "microsoftDeviceCode": "",
+      "microsoftRefreshToken": "",
+      "theAltening": "",
+      "dialog": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "type": "Type",
+      "profileId": "",
+      "lastKnownName": "Nom d´utilisateur"
+    }
   }
 }
