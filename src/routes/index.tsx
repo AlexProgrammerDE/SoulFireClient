@@ -149,6 +149,27 @@ function Index() {
     [targetRedirect],
   );
 
+  const startIntegratedServer = () => {
+    toast.promise(
+      (async () => {
+        await emit('kill-integrated-server', {});
+        const payload = await invoke('run_integrated_server');
+        const payloadString = payload as string;
+        const split = payloadString.split('\n');
+
+        await redirectWithCredentials('integrated', split[0], split[1]);
+      })(),
+      {
+        loading: t('integrated.toast.loading'),
+        success: t('integrated.toast.success'),
+        error: (e) => {
+          console.error(e);
+          return t('integrated.toast.error');
+        },
+      },
+    );
+  };
+
   return (
     <ScrollArea className="h-dvh w-full px-4 bg-muted">
       <div className="flex flex-col min-h-dvh w-full">
@@ -167,6 +188,7 @@ function Index() {
             <DefaultMenu
               setLoginType={setLoginType}
               demoLogin={targetRedirect}
+              startIntegratedServer={startIntegratedServer}
             />
           )}
           {loginType === 'INTEGRATED' && (
@@ -260,6 +282,7 @@ function Index() {
 function DefaultMenu(props: {
   setLoginType: (type: LoginType) => void;
   demoLogin: TargetRedirectFunction;
+  startIntegratedServer: () => void;
 }) {
   const { t } = useTranslation('login');
   const systemInfo = useContext(SystemInfoContext);
@@ -278,7 +301,10 @@ function DefaultMenu(props: {
             disabled={isDemo() || !systemInfo || systemInfo.mobile}
             className="w-full"
             variant="outline"
-            onClick={() => props.setLoginType('INTEGRATED')}
+            onClick={() => {
+              props.startIntegratedServer();
+              props.setLoginType('INTEGRATED');
+            }}
           >
             <LaptopMinimalIcon className="size-5" />
             {t('connect.integrated.title')}
@@ -357,25 +383,6 @@ function IntegratedMenu({
         setLatestLog(event.payload as string);
       }),
     );
-    toast.promise(
-      (async () => {
-        await emit('kill-integrated-server', {});
-        const payload = await invoke('run_integrated_server');
-        const payloadString = payload as string;
-        const split = payloadString.split('\n');
-
-        await redirectWithCredentials('integrated', split[0], split[1]);
-      })(),
-      {
-        loading: t('integrated.toast.loading'),
-        success: t('integrated.toast.success'),
-        error: (e) => {
-          console.error(e);
-          return t('integrated.toast.error');
-        },
-      },
-    );
-
     return () => {
       cancel();
     };
