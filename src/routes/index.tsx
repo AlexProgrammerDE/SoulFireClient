@@ -279,6 +279,19 @@ function Index() {
   );
 }
 
+function LoginCardTitle() {
+  const { t } = useTranslation('login');
+  return (
+    <CardHeader className="text-center">
+      <CardTitle className="flex flex-row items-center gap-2 text-xl mx-auto">
+        <SatelliteDishIcon />
+        {t('connect.title')}
+      </CardTitle>
+      <CardDescription>{t('connect.description')}</CardDescription>
+    </CardHeader>
+  );
+}
+
 function DefaultMenu(props: {
   setLoginType: (type: LoginType) => void;
   demoLogin: TargetRedirectFunction;
@@ -288,13 +301,7 @@ function DefaultMenu(props: {
   const systemInfo = useContext(SystemInfoContext);
   return (
     <Card>
-      <CardHeader className="text-center">
-        <CardTitle className="flex flex-row gap-2 text-xl mx-auto">
-          <SatelliteDishIcon />
-          {t('connect.title')}
-        </CardTitle>
-        <CardDescription>{t('connect.description')}</CardDescription>
-      </CardHeader>
+      <LoginCardTitle />
       <CardContent className="flex flex-col gap-2">
         <div className="flex flex-row gap-2">
           <Button
@@ -391,10 +398,7 @@ function IntegratedMenu({
   return (
     <Card>
       <CardHeader className="text-center">
-        <CardTitle className="flex flex-row gap-2 text-xl mx-auto">
-          <SatelliteDishIcon />
-          {t('connect.title')}
-        </CardTitle>
+        <LoginCardTitle />
         <CardDescription className="whitespace-pre-wrap break-all truncate">
           {latestLog}
         </CardDescription>
@@ -423,10 +427,7 @@ function DedicatedMenu({
   return (
     <Card>
       <CardHeader className="text-center">
-        <CardTitle className="flex flex-row gap-2 text-xl mx-auto">
-          <SatelliteDishIcon />
-          {t('connect.title')}
-        </CardTitle>
+        <LoginCardTitle />
         <CardDescription>{t('dedicated.description')}</CardDescription>
       </CardHeader>
       {dedicatedType === 'email' && (
@@ -740,10 +741,7 @@ function EmailCodeMenu(props: {
   return (
     <Card>
       <CardHeader className="text-center">
-        <CardTitle className="flex flex-row gap-2 text-xl mx-auto">
-          <SatelliteDishIcon />
-          {t('connect.title')}
-        </CardTitle>
+        <LoginCardTitle />
         <CardDescription>
           <Trans
             t={t}
