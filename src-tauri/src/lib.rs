@@ -39,6 +39,7 @@ pub fn run() {
 
   builder
     .plugin(tauri_plugin_deep_link::init())
+    .plugin(tauri_plugin_window_state::Builder::new().build())
     .plugin(tauri_plugin_log::Builder::new()
       .level(log::LevelFilter::Info)
       .with_colors(tauri_plugin_log::fern::colors::ColoredLevelConfig {
