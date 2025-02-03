@@ -20,6 +20,7 @@ import { TooltipProvider } from '@/components/ui/tooltip';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context';
 import { attachConsole } from '@tauri-apps/plugin-log';
 import { AptabaseProvider, useAptabase } from '@aptabase/react';
+import { emit } from '@tauri-apps/api/event';
 
 async function createSystemInfo() {
   const profileDir = await resolve(
@@ -92,6 +93,10 @@ const AppStartedEvent = memo(() => {
     if (!appLoaded) {
       void trackEvent('app_loaded');
       setAppLoaded(true);
+
+      if (isTauri()) {
+        void emit('app-loaded', {});
+      }
     }
   }, [appLoaded, trackEvent]);
 

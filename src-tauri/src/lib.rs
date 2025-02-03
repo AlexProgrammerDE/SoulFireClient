@@ -111,6 +111,11 @@ pub fn run() {
       }
 
       let app_handle = app.handle().clone();
+      app.listen("app-loaded", move |_event| {
+        app_handle.get_webview_window("main").unwrap().show().unwrap();
+      });
+
+      let app_handle = app.handle().clone();
       app.listen("kill-integrated-server", move |_event| {
         info!("Got request to kill integrated server");
         kill_child_process(app_handle.state::<IntegratedServerState>().deref());
