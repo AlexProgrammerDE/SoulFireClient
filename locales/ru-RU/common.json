@@ -8,7 +8,7 @@
       "logOut": "Выйти",
       "reloadPage": "Перезагрузить страницу"
     },
-    "connectionFailed": ""
+    "connectionFailed": "Не удалось подключиться к серверу SoulFire."
   },
   "pending": {
     "connecting": "Подключение..."
@@ -174,7 +174,7 @@
     }
   },
   "instanceSidebar": {
-    "readDocumentation": "",
+    "readDocumentation": "Прочитать документацию",
     "backToDashboard": "Назад на главную панель",
     "deleteToast": {
       "loading": "Удаление экземпляра...",
@@ -203,7 +203,7 @@
     "aiSettings": "Настройки ИИ"
   },
   "userSidebar": {
-    "readDocumentation": "",
+    "readDocumentation": "Прочитать документацию",
     "userGroup": "Пользователь",
     "instances": "Экземпляры",
     "createInstance": "Создать экземпляр",

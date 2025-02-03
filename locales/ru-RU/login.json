@@ -32,14 +32,14 @@
   "dedicated": {
     "description": "Введите адрес и токен сервера SoulFire, к которому хотите подключиться.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Подключение к серверу...",
+      "success": "Подключен к серверу",
+      "error": "Не удалось подключиться к серверу"
     },
     "form": {
       "address": {
         "title": "Адрес",
-        "description": "",
+        "description": "Адрес вашего сервера SoulFire.",
         "placeholder": "http://localhost:38765"
       },
       "token": {
@@ -48,22 +48,22 @@
         "description": "Токен для аутентификации на сервере."
       },
       "email": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "E-mail",
+        "placeholder": "root@soulfiremc.com",
+        "description": "Email вашего аккаунта SoulFire."
       },
       "back": "Назад",
-      "useToken": "",
-      "useEmail": "",
-      "login": ""
+      "useToken": "Использовать токен",
+      "useEmail": "Использовать e-mail",
+      "login": "Войти"
     }
   },
   "emailCode": {
-    "description": "",
+    "description": "Если у вас есть учетная запись, мы отправили код на адрес <bold>{{email}}</bold>. Введите его ниже.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Проверяем код...",
+      "success": "Вход выполнен",
+      "error": "Неверный код"
     },
     "back": "Назад"
   },
