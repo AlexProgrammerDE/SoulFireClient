@@ -46,6 +46,7 @@ pub fn run() {
     .plugin(tauri_plugin_deep_link::init())
     .plugin(tauri_plugin_log::Builder::new()
       .level(log::LevelFilter::Info)
+      .level_for("discord_presence::connection::manager", log::LevelFilter::Off)
       .with_colors(tauri_plugin_log::fern::colors::ColoredLevelConfig {
         error: Color::Red,
         warn: Color::Yellow,
