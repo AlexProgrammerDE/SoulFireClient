@@ -37,6 +37,22 @@
 
   <launchable type="desktop-id">com.soulfiremc.soulfire.desktop</launchable>
 
+  <branding>
+    <color type="primary" scheme_preference="light">#F4F4F5</color>
+    <color type="primary" scheme_preference="dark">#27272A</color>
+  </branding>
+
+  <screenshots>
+    <screenshot type="default">
+      <image>https://github.com/AlexProgrammerDE/SoulFireClient/blob/main/images/controls.png?raw=true</image>
+      <caption>SoulFire instance controls</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://github.com/AlexProgrammerDE/SoulFireClient/blob/main/images/instances.png?raw=true</image>
+      <caption>SoulFire instance overview</caption>
+    </screenshot>
+  </screenshots>
+
   <releases>
     <release version="1.8.1" date="2025-02-05"/>
     <release version="1.8.0" date="2025-01-31"/>
