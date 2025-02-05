@@ -20,7 +20,7 @@ const hslToString = (rgb: { h: number; s: number; l: number }): string => {
   return `${Math.round(rgb.h)}, ${Math.round(rgb.s * 100)}%, ${Math.round(rgb.l * 100)}%`;
 };
 
-const MAX_TERMINAL_ENTRIES = 500;
+const MAX_TERMINAL_ENTRIES = 300;
 
 const MemoAnsiHtml = React.memo((props: { text: string }) => {
   return (
