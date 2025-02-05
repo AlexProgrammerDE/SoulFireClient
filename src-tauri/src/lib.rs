@@ -115,10 +115,13 @@ pub fn run() {
         });
       }
 
-      let app_handle = app.handle().clone();
-      app.listen("app-loaded", move |_event| {
-        app_handle.get_webview_window("main").unwrap().show().unwrap();
-      });
+      #[cfg(desktop)]
+      {
+        let app_handle = app.handle().clone();
+        app.listen("app-loaded", move |_event| {
+          app_handle.get_webview_window("main").unwrap().show().unwrap();
+        });
+      }
 
       let app_handle = app.handle().clone();
       app.listen("kill-integrated-server", move |_event| {
