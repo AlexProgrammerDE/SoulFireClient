@@ -18,9 +18,11 @@
         "title": "SoulFire",
         "label": "main",
         "fullscreen": false,
-        "height": 675,
-        "resizable": true,
         "width": 1200,
+        "height": 675,
+        "minWidth": 940,
+        "minHeight": 500,
+        "resizable": true,
         "center": true,
         "visible": false
       }
