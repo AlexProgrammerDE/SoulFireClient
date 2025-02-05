@@ -51,6 +51,10 @@ pub async fn run_integrated_server(
 
     send_log(&app_handle, "Fetching JVM data...")?;
     let response = reqwest::get(&jvm_url).await?;
+    if !response.status().is_success() {
+      return Err(SFAnyError::from(SFError::DownloadFailed));
+    }
+
     let jvm_json: serde_json::Value = response.json().await?;
     let checksum = jvm_json[0]["binary"]["package"]["checksum"].as_str().ok_or(SFError::JsonFieldInvalid("binary.package.checksum".to_string()))?;
     let download_url = jvm_json[0]["binary"]["package"]["link"].as_str().ok_or(SFError::JsonFieldInvalid("binary.package.link".to_string()))?;
@@ -80,6 +84,10 @@ pub async fn run_integrated_server(
 
     send_download_progress(&app_handle, 0, 1)?;
     let mut response = reqwest::get(download_url).await?;
+    if !response.status().is_success() {
+      return Err(SFAnyError::from(SFError::DownloadFailed));
+    }
+
     let total_size = response.content_length().ok_or(SFError::NoContentLengthHeader)?;
     let mut downloaded_size = 0;
     let mut content = Vec::new();
@@ -144,6 +152,10 @@ pub async fn run_integrated_server(
 
     send_download_progress(&app_handle, 0, 1)?;
     let mut response = reqwest::get(&soul_fire_url).await?;
+    if !response.status().is_success() {
+      return Err(SFAnyError::from(SFError::DownloadFailed));
+    }
+
     let mut content = Vec::new();
     let total_size = response.content_length().ok_or(SFError::NoContentLengthHeader)?;
     let mut downloaded_size = 0;
