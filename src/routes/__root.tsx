@@ -5,8 +5,7 @@ import { Toaster } from '@/components/ui/sonner.tsx';
 import { TailwindIndicator } from '@/components/tailwind-indicator.tsx';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClientInstance } from '@/lib/query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import { lazy, memo, Suspense, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import {
   SystemInfo,
   SystemInfoContext,
@@ -66,12 +65,6 @@ export const Route = createRootRoute({
   component: RootLayout,
 });
 
-const ReactQueryDevtoolsProduction = lazy(() =>
-  import('@tanstack/react-query-devtools/production').then((d) => ({
-    default: d.ReactQueryDevtools,
-  })),
-);
-
 function PointerReset() {
   const location = useLocation();
 
@@ -108,13 +101,7 @@ function RootLayout() {
   const [systemInfoState, setSystemInfoState] = useState<SystemInfo | null>(
     systemInfo,
   );
-  const [showDevtools, setShowDevtools] = useState(false);
   const [terminalTheme, setTerminalTheme] = useState(getTerminalTheme());
-
-  useEffect(() => {
-    // @ts-expect-error - not in types
-    window.toggleDevtools = () => setShowDevtools((old) => !old);
-  }, []);
 
   useEffect(() => {
     if (isTauri()) {
@@ -185,12 +172,6 @@ function RootLayout() {
             </TooltipProvider>
           </ThemeProvider>
           <TailwindIndicator />
-          <ReactQueryDevtools initialIsOpen />
-          {showDevtools && (
-            <Suspense fallback={null}>
-              <ReactQueryDevtoolsProduction />
-            </Suspense>
-          )}
         </QueryClientProvider>
       </AptabaseProvider>
     </>
