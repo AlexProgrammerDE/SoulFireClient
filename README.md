@@ -29,6 +29,14 @@ Tools used for this client:
 - protobuf-ts
 - and more...
 
+## Installation
+
+The SoulFire client can be easily installed using the [official installation guide](https://soulfiremc.com/docs/installation).
+
+<a href='https://flathub.org/apps/com.soulfiremc.soulfire'>
+<img width='240' alt='Get it on Flathub' src='https://flathub.org/api/badge?locale=en'/>
+</a>
+
 ## Linux dependencies
 
 ```bash
