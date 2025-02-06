@@ -28,7 +28,6 @@ pub enum SFError {
   #[cfg(desktop)]
   #[error("no main window")]
   NoMainWindow,
-  #[cfg(desktop)]
   #[error("download failed")]
   DownloadFailed,
 }
