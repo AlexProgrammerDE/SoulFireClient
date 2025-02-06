@@ -16,7 +16,7 @@ import { ReactNode } from 'react';
 
 const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
 
-const emojiMap = APP_LOCALES.split(',').reduce(
+const emojiMap = APP_LOCALES.split(',').reduce<Record<string, FlagComponent>>(
   (acc, locale) => {
     const countryCode = locale.split('-')[1];
     if (!countryCode) return acc;
@@ -24,7 +24,7 @@ const emojiMap = APP_LOCALES.split(',').reduce(
     acc[countryCode] = Flags[countryCode as keyof typeof Flags];
     return acc;
   },
-  {} as Record<string, FlagComponent>,
+  {},
 );
 
 export function setTerminalTheme(theme: string) {
