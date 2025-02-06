@@ -15,33 +15,24 @@ This is a frontend for the [SoulFire server](https://github.com/AlexProgrammerDE
 It mainly targets the web, but uses native APIs using Tauri.
 
 > [!NOTE]
-> For more info about SoulFire and installation instructions, take a look at the main [SoulFire repository](https://github.com/AlexProgrammerDE/SoulFire).
+> For more info about SoulFire, take a look at the main [SoulFire repository](https://github.com/AlexProgrammerDE/SoulFire).
 
 ## About the client
 
-Tools used for this client:
-
-- Rsbuild
-- tanstack-router
-- Tauri
-- shadcn/ui
-- TailwindCSS
-- protobuf-ts
-- and more...
+Built using latest web tech to consistently work on both web, desktop and mobile.
+The client is the GUI for the SoulFire server, but it uses the official SoulFire gRPC API.
+Anything that can be done using the SF client can also be done using gRPC HTTP API calls directly.
 
 ## Installation
 
-The SoulFire client can be easily installed using the [official installation guide](https://soulfiremc.com/docs/installation).
+> [!TIP]
+> Want to check out how SoulFire looks before installing it? Take a look at the official [demo page](https://demo.soulfiremc.com).
+
+For installing SoulFire, please refer to the [installation guide](https://soulfiremc.com/docs/installation).
 
 <a href='https://flathub.org/apps/com.soulfiremc.soulfire'>
 <img width='240' alt='Get it on Flathub' src='https://flathub.org/api/badge?locale=en'/>
 </a>
-
-## Linux dependencies
-
-```bash
-sudo apt install libavahi-client-dev
-```
 
 ## Deployments
 
@@ -50,6 +41,12 @@ See which branches are at which URLs:
 - [`release`](https://app.soulfiremc.com) -> app.soulfiremc.com
 - [`main`](https://preview.soulfiremc.com) -> preview.soulfiremc.com
 - [`demo`](https://demo.soulfiremc.com) -> demo.soulfiremc.com
+
+## Building
+
+The client has a lot of dependencies. You'll need pnpm, latest node and a nightly rust toolchain installed.
+Take a look at the scripts in `package.json` to see how to run a dev env locally.
+You can also refer to the GitHub actions workflows to see how production builds are made.
 
 ## Sponsors
 
