@@ -162,7 +162,7 @@ function ErrorComponent({ error }: { error: Error }) {
 
   return (
     <>
-      <div className="flex flex-grow">
+      <div className="flex grow">
         <div className="m-auto flex flex-col gap-2">
           <h1 className="text-2xl font-bold gap-1 flex fle-row">
             <BugIcon className="h-8" />
@@ -223,7 +223,7 @@ function PendingComponent() {
   const { t } = useTranslation('common');
 
   return (
-    <div className="flex flex-grow">
+    <div className="flex grow">
       <Card className="m-auto text-center w-full max-w-[450px] border-none">
         <CardHeader className="pb-0">
           <CardTitle>{t('pending.connecting')}</CardTitle>
