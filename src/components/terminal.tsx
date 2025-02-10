@@ -32,10 +32,44 @@ const MemoAnsiHtml = React.memo((props: { text: string }) => {
   );
 });
 
-type TerminalLine = {
+function fnv1aHash(str: string): string {
+  let hash = 0x811c9dc5; // FNV offset basis
+  for (let i = 0; i < str.length; i++) {
+    hash ^= str.charCodeAt(i);
+    hash +=
+      (hash << 1) + (hash << 4) + (hash << 7) + (hash << 8) + (hash << 24);
+  }
+  return (hash >>> 0).toString(16);
+}
+
+function convertLine(message: TerminalLineBase): TerminalLine {
+  return {
+    id: message.id,
+    message: message.message,
+    lines: message.message.split('\n').length,
+    hash: fnv1aHash(message.message),
+  };
+}
+
+function limitLength(lines: TerminalLine[]): TerminalLine[] {
+  // Cut from start until we are <= max lines
+  let linesSum = lines.reduce((acc, curr) => acc + curr.lines, 0);
+  while (linesSum > MAX_TERMINAL_LINES) {
+    linesSum -= lines[0].lines;
+    lines = lines.slice(1);
+  }
+
+  return lines;
+}
+
+type TerminalLineBase = {
   id: string;
   message: string;
+};
+
+type TerminalLine = TerminalLineBase & {
   lines: number;
+  hash: string;
 };
 
 export const TerminalComponent = (props: {
@@ -46,26 +80,22 @@ export const TerminalComponent = (props: {
   const [entries, setEntries] = useState<TerminalLine[]>(
     isDemo()
       ? [
-          {
+          convertLine({
             id: 'demo-1',
             message: t('terminal.demo-1'),
-            lines: 1,
-          },
-          {
+          }),
+          convertLine({
             id: 'demo-2',
             message: t('terminal.demo-2'),
-            lines: 1,
-          },
-          {
+          }),
+          convertLine({
             id: 'demo-3',
             message: t('terminal.demo-3'),
-            lines: 1,
-          },
-          {
+          }),
+          convertLine({
             id: 'demo-4',
             message: t('terminal.demo-4'),
-            lines: 1,
-          },
+          }),
         ]
       : [],
   );
@@ -126,33 +156,16 @@ export const TerminalComponent = (props: {
         if (call.response.messages.length === 0) {
           setEntries((prev) => [
             ...prev,
-            {
+            convertLine({
               id: 'empty',
               message: t('terminal.noLogs'),
-              lines: 1,
-            },
+            }),
           ]);
         }
 
         for (const message of call.response.messages) {
           setEntries((prev) => {
-            let result = [
-              ...prev,
-              {
-                id: message.id,
-                message: message.message,
-                lines: message.message.split('\n').length,
-              },
-            ];
-
-            // Cut from start until we are <= max lines
-            let linesSum = result.reduce((acc, curr) => acc + curr.lines, 0);
-            while (linesSum > MAX_TERMINAL_LINES) {
-              linesSum -= result[0].lines;
-              result = result.slice(1);
-            }
-
-            return result;
+            return limitLength([...prev, convertLine(message)]);
           });
         }
         setGotPrevious(true);
@@ -186,23 +199,10 @@ export const TerminalComponent = (props: {
         }
 
         setEntries((prev) => {
-          let result = [
+          return limitLength([
             ...prev.filter((entry) => entry.id !== 'empty'),
-            {
-              id: message.id,
-              message: message.message,
-              lines: message.message.split('\n').length,
-            },
-          ];
-
-          // Cut from start until we are <= max lines
-          let linesSum = result.reduce((acc, curr) => acc + curr.lines, 0);
-          while (linesSum > MAX_TERMINAL_LINES) {
-            linesSum -= result[0].lines;
-            result = result.slice(1);
-          }
-
-          return result;
+            convertLine(message),
+          ]);
         });
       });
 
