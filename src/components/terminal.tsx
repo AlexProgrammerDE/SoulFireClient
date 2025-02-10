@@ -20,7 +20,7 @@ const hslToString = (rgb: { h: number; s: number; l: number }): string => {
   return `${Math.round(rgb.h)}, ${Math.round(rgb.s * 100)}%, ${Math.round(rgb.l * 100)}%`;
 };
 
-const MAX_TERMINAL_ENTRIES = 300;
+const MAX_TERMINAL_LINES = 500;
 
 const MemoAnsiHtml = React.memo((props: { text: string }) => {
   return (
@@ -32,28 +32,39 @@ const MemoAnsiHtml = React.memo((props: { text: string }) => {
   );
 });
 
+type TerminalLine = {
+  id: string;
+  message: string;
+  lines: number;
+};
+
 export const TerminalComponent = (props: {
   scope: PreviousLogRequest['scope'] | LogRequest['scope'];
 }) => {
   const { t } = useTranslation('common');
   const [gotPrevious, setGotPrevious] = useState(false);
-  const [entries, setEntries] = useState<
-    {
-      id: string;
-      message: string;
-    }[]
-  >(
+  const [entries, setEntries] = useState<TerminalLine[]>(
     isDemo()
       ? [
-          { id: 'demo-1', message: t('terminal.demo-1') },
-          { id: 'demo-2', message: t('terminal.demo-2') },
+          {
+            id: 'demo-1',
+            message: t('terminal.demo-1'),
+            lines: 1,
+          },
+          {
+            id: 'demo-2',
+            message: t('terminal.demo-2'),
+            lines: 1,
+          },
           {
             id: 'demo-3',
             message: t('terminal.demo-3'),
+            lines: 1,
           },
           {
             id: 'demo-4',
             message: t('terminal.demo-4'),
+            lines: 1,
           },
         ]
       : [],
@@ -118,12 +129,31 @@ export const TerminalComponent = (props: {
             {
               id: 'empty',
               message: t('terminal.noLogs'),
+              lines: 1,
             },
           ]);
         }
 
         for (const message of call.response.messages) {
-          setEntries((prev) => [...prev, message]);
+          setEntries((prev) => {
+            let result = [
+              ...prev,
+              {
+                id: message.id,
+                message: message.message,
+                lines: message.message.split('\n').length,
+              },
+            ];
+
+            // Cut from start until we are <= max lines
+            let linesSum = result.reduce((acc, curr) => acc + curr.lines, 0);
+            while (linesSum > MAX_TERMINAL_LINES) {
+              linesSum -= result[0].lines;
+              result = result.slice(1);
+            }
+
+            return result;
+          });
         }
         setGotPrevious(true);
       });
@@ -156,12 +186,23 @@ export const TerminalComponent = (props: {
         }
 
         setEntries((prev) => {
-          const resultingArray = [
+          let result = [
             ...prev.filter((entry) => entry.id !== 'empty'),
-            message,
+            {
+              id: message.id,
+              message: message.message,
+              lines: message.message.split('\n').length,
+            },
           ];
 
-          return resultingArray.slice(-MAX_TERMINAL_ENTRIES);
+          // Cut from start until we are <= max lines
+          let linesSum = result.reduce((acc, curr) => acc + curr.lines, 0);
+          while (linesSum > MAX_TERMINAL_LINES) {
+            linesSum -= result[0].lines;
+            result = result.slice(1);
+          }
+
+          return result;
         });
       });
 
