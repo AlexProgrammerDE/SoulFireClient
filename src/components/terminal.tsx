@@ -62,6 +62,18 @@ function limitLength(lines: TerminalLine[]): TerminalLine[] {
   return lines;
 }
 
+function deduplicateConsecutive<T>(
+  arr: T[],
+  getHash: (item: T) => string,
+): T[] {
+  return arr.reduce<T[]>((result, item, index) => {
+    if (index === 0 || getHash(item) !== getHash(arr[index - 1])) {
+      result.push(item);
+    }
+    return result;
+  }, []);
+}
+
 type TerminalLineBase = {
   id: string;
   message: string;
@@ -165,7 +177,10 @@ export const TerminalComponent = (props: {
 
         for (const message of call.response.messages) {
           setEntries((prev) => {
-            return limitLength([...prev, convertLine(message)]);
+            return deduplicateConsecutive(
+              limitLength([...prev, convertLine(message)]),
+              (element) => element.hash,
+            );
           });
         }
         setGotPrevious(true);
@@ -199,10 +214,13 @@ export const TerminalComponent = (props: {
         }
 
         setEntries((prev) => {
-          return limitLength([
-            ...prev.filter((entry) => entry.id !== 'empty'),
-            convertLine(message),
-          ]);
+          return deduplicateConsecutive(
+            limitLength([
+              ...prev.filter((entry) => entry.id !== 'empty'),
+              convertLine(message),
+            ]),
+            (element) => element.hash,
+          );
         });
       });
 
