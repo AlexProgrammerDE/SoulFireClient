@@ -22,7 +22,7 @@
   "dependencies": {
     "@aptabase/react": "^0.3.5",
     "@catppuccin/palette": "^1.2.0",
-    "@hookform/resolvers": "^3.9.1",
+    "@hookform/resolvers": "^4.0.0",
     "@protobuf-ts/grpcweb-transport": "^2.9.4",
     "@protobuf-ts/runtime": "^2.9.4",
     "@protobuf-ts/runtime-rpc": "^2.9.4",
