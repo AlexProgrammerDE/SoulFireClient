@@ -4,7 +4,7 @@
     "noAddressOrToken": "No server address or token found",
     "page": {
       "title": "Error",
-      "message": "{{message}} (more info in console)",
+      "description": "An error occurred while trying to load the page. More information can be found in the console.",
       "logOut": "Log out",
       "reloadPage": "Reload page"
     },

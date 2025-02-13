@@ -11,6 +11,14 @@ import { Button } from '@/components/ui/button.tsx';
 import { isTauri } from '@/lib/utils.tsx';
 import { emit } from '@tauri-apps/api/event';
 import { logOut } from '@/lib/web-rpc.ts';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card.tsx';
 
 export function ErrorComponent({ error }: { error: Error }) {
   const { t } = useTranslation('common');
@@ -20,17 +28,18 @@ export function ErrorComponent({ error }: { error: Error }) {
 
   return (
     <div className="flex grow size-full">
-      <div className="m-auto flex flex-col gap-2">
-        <h1 className="text-2xl font-bold gap-1 flex fle-row">
-          <BugIcon className="h-8" />
-          {t('error.page.title')}
-        </h1>
-        <p className="text-red-500 max-w-2xl">
-          {t('error.page.message', {
-            message: error.message,
-          })}
-        </p>
-        <div className="flex flex-row gap-2">
+      <Card className="m-auto flex flex-col">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-2xl font-bold gap-1 flex fle-row">
+            <BugIcon className="h-8" />
+            {t('error.page.title')}
+          </CardTitle>
+          <CardDescription>{t('error.page.description')}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p className="text-red-500 max-w-2xl truncate">{error.message}</p>
+        </CardContent>
+        <CardFooter className="flex flex-row gap-2">
           <Button
             className="w-fit"
             onClick={() => {
@@ -69,8 +78,8 @@ export function ErrorComponent({ error }: { error: Error }) {
             )}
             {t('error.page.reloadPage')}
           </Button>
-        </div>
-      </div>
+        </CardFooter>
+      </Card>
     </div>
   );
 }
