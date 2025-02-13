@@ -28,7 +28,11 @@ declare module '@tanstack/react-router' {
   }
 }
 
-if (isAuthenticated() && getServerType() === 'dedicated') {
+if (
+  isAuthenticated() &&
+  getServerType() === 'dedicated' &&
+  window.location.hash === ''
+) {
   window.location.hash = '/dashboard/user/instances';
 }
 
