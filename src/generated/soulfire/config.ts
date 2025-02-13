@@ -342,6 +342,12 @@ export interface SettingsPage {
      * @generated from protobuf field: string icon_id = 6;
      */
     iconId: string;
+    /**
+     * Key which makes this plugin "enabled" or "disabled"
+     *
+     * @generated from protobuf field: optional string enabled_key = 7;
+     */
+    enabledKey?: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.GlobalPermissionState
@@ -605,7 +611,8 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
             { no: 3, name: "page_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "entries", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => SettingEntry },
-            { no: 6, name: "icon_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 6, name: "icon_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "enabled_key", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
