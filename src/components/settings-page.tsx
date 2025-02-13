@@ -601,19 +601,21 @@ function ClientSettingsPageComponent<T extends BaseSettings>({
 }) {
   return (
     <>
-      {data.entries.map((page) => {
-        return (
-          <EntryComponent
-            namespace={data.namespace}
-            key={page.key}
-            settingKey={page.key}
-            entry={page.type!}
-            setConfig={setConfig}
-            invalidateQuery={invalidateQuery}
-            config={config}
-          />
-        );
-      })}
+      {data.entries
+        .filter((entry) => entry.key !== data.enabledKey)
+        .map((page) => {
+          return (
+            <EntryComponent
+              namespace={data.namespace}
+              key={page.key}
+              settingKey={page.key}
+              entry={page.type!}
+              setConfig={setConfig}
+              invalidateQuery={invalidateQuery}
+              config={config}
+            />
+          );
+        })}
     </>
   );
 }

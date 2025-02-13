@@ -138,6 +138,8 @@ export const Route = createFileRoute('/dashboard/_layout')({
     }
   },
   component: DashboardLayout,
+  // Ensure we show the pending component when needed
+  wrapInSuspense: true,
   pendingComponent: ConnectingComponent,
 });
 
