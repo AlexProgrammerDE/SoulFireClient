@@ -20,6 +20,8 @@ import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 import { BookOpenTextIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button.tsx';
 import { useTranslation } from 'react-i18next';
+import { CatchBoundary } from '@tanstack/react-router';
+import { ErrorComponent } from '@/components/error-component.tsx';
 
 export default function UserPageLayout(props: {
   children: ReactNode;
@@ -88,7 +90,12 @@ export default function UserPageLayout(props: {
           </header>
           <ScrollArea className="h-[calc(100dvh-4rem)] w-full">
             <div className="flex flex-col min-h-[calc(100dvh-4rem)] w-full px-4">
-              {props.children}
+              <CatchBoundary
+                getResetKey={() => 'user-page-layout'}
+                errorComponent={ErrorComponent}
+              >
+                {props.children}
+              </CatchBoundary>
             </div>
           </ScrollArea>
         </SidebarInset>

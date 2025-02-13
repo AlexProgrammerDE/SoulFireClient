@@ -19,8 +19,9 @@ import { getCookie } from '@/lib/utils.tsx';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { BookOpenTextIcon, HomeIcon } from 'lucide-react';
-import { Link } from '@tanstack/react-router';
+import { CatchBoundary, Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+import { ErrorComponent } from '@/components/error-component.tsx';
 
 export default function InstancePageLayout(props: {
   children: ReactNode;
@@ -96,7 +97,12 @@ export default function InstancePageLayout(props: {
           </header>
           <ScrollArea className="h-[calc(100dvh-4rem)] w-full">
             <div className="flex flex-col min-h-[calc(100dvh-4rem)] w-full px-4">
-              {props.children}
+              <CatchBoundary
+                getResetKey={() => 'instance-page-layout'}
+                errorComponent={ErrorComponent}
+              >
+                {props.children}
+              </CatchBoundary>
             </div>
           </ScrollArea>
         </SidebarInset>
