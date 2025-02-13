@@ -3,6 +3,7 @@ import * as React from 'react';
 import { NavControls } from '@/components/nav/nav-controls.tsx';
 import { NavSettings } from '@/components/nav/nav-settings.tsx';
 import { NavUserControl } from '@/components/nav/nav-user-control.tsx';
+import { NavPlugins } from '@/components/nav/nav-plugins';
 import { InstanceSwitcher } from '@/components/nav/instance-switcher.tsx';
 import {
   Sidebar,
@@ -28,7 +29,8 @@ export function InstanceSidebar({
       <ScrollArea className="h-[calc(100svh-4rem-4rem)] w-full pr-2">
         <SidebarContent className="min-h-[calc(100svh-4rem-4rem)]">
           <NavControls />
-          <NavSettings expandPluginSettings={expandPluginSettings} />
+          <NavSettings />
+          <NavPlugins expandPluginSettings={expandPluginSettings} />
           <NavSecondary className="mt-auto" />
         </SidebarContent>
       </ScrollArea>

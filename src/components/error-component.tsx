@@ -1,0 +1,76 @@
+import { useTranslation } from 'react-i18next';
+import { useNavigate, useRouter } from '@tanstack/react-router';
+import { useState } from 'react';
+import {
+  BugIcon,
+  LoaderCircleIcon,
+  LogOutIcon,
+  RotateCwIcon,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button.tsx';
+import { isTauri } from '@/lib/utils.tsx';
+import { emit } from '@tauri-apps/api/event';
+import { logOut } from '@/lib/web-rpc.ts';
+
+export function ErrorComponent({ error }: { error: Error }) {
+  const { t } = useTranslation('common');
+  const navigate = useNavigate();
+  const router = useRouter();
+  const [revalidating, setRevalidating] = useState(false);
+
+  return (
+    <div className="flex grow size-full">
+      <div className="m-auto flex flex-col gap-2">
+        <h1 className="text-2xl font-bold gap-1 flex fle-row">
+          <BugIcon className="h-8" />
+          {t('error.page.title')}
+        </h1>
+        <p className="text-red-500 max-w-2xl">
+          {t('error.page.message', {
+            message: error.message,
+          })}
+        </p>
+        <div className="flex flex-row gap-2">
+          <Button
+            className="w-fit"
+            onClick={() => {
+              (async () => {
+                if (isTauri()) {
+                  await emit('kill-integrated-server', {});
+                }
+                logOut();
+                await navigate({
+                  to: '/',
+                  replace: true,
+                });
+              })();
+            }}
+          >
+            <LogOutIcon className="h-4" />
+            {t('error.page.logOut')}
+          </Button>
+          <Button
+            onClick={() => {
+              setRevalidating(true);
+              router
+                .invalidate()
+                .then(() => {
+                  setRevalidating(false);
+                })
+                .catch(() => {
+                  setRevalidating(false);
+                });
+            }}
+          >
+            {revalidating ? (
+              <LoaderCircleIcon className="h-4 animate-spin" />
+            ) : (
+              <RotateCwIcon className="h-4" />
+            )}
+            {t('error.page.reloadPage')}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}

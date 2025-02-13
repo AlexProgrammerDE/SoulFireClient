@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 
 type NavLinks = {
   title: string;
-  icon: (props: {}) => ReactNode;
+  icon: (props: { className: string }) => ReactNode;
   linkProps: LinkProps;
 }[];
 
@@ -49,7 +49,7 @@ export function NavControls() {
                 }}
                 {...item.linkProps}
               >
-                <item.icon />
+                <item.icon className="size-4" />
                 <span>{item.title}</span>
               </Link>
             </SidebarMenuButton>

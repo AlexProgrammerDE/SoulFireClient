@@ -21,30 +21,44 @@ import { attachConsole } from '@tauri-apps/plugin-log';
 import { AptabaseProvider, useAptabase } from '@aptabase/react';
 import { emit } from '@tauri-apps/api/event';
 
-async function createSystemInfo() {
+async function getAvailableProfiles() {
   const profileDir = await resolve(
     await resolve(await appConfigDir(), 'profile'),
   );
   await mkdir(profileDir, { recursive: true });
 
-  const availableProfiles = (await readDir(profileDir))
+  return (await readDir(profileDir))
     .filter((file) => file.isFile)
     .filter((file) => file.name)
     .map((file) => file.name)
     .filter((file) => file.endsWith('.json'));
+}
 
+function isMobile() {
   const osType = type();
-  const mobile = osType === 'android' || osType === 'ios';
-  const theme = mobile ? null : await getCurrentWebviewWindow().theme();
+  return osType === 'android' || osType === 'ios';
+}
+
+async function getSystemTheme() {
+  return isMobile() ? null : await getCurrentWebviewWindow().theme();
+}
+
+async function createSystemInfo() {
+  const osType = type();
+  const [availableProfiles, theme, osLocale] = await Promise.all([
+    getAvailableProfiles(),
+    getSystemTheme(),
+    locale(),
+  ]);
   return {
     availableProfiles,
     osType,
     osVersion: version(),
     platformName: platform(),
-    osLocale: await locale(),
+    osLocale,
     archName: arch(),
     theme,
-    mobile,
+    mobile: isMobile(),
   };
 }
 
@@ -52,7 +66,7 @@ export const Route = createRootRoute({
   loader: async () => {
     let systemInfo: SystemInfo | null;
     if (isTauri()) {
-      await attachConsole();
+      void attachConsole();
       systemInfo = await createSystemInfo();
     } else {
       systemInfo = null;
@@ -63,7 +77,23 @@ export const Route = createRootRoute({
     };
   },
   component: RootLayout,
+  // To make pendingComponent work on root route
+  wrapInSuspense: true,
+  pendingComponent: RootPending,
 });
+
+function RootPending() {
+  return (
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <main vaul-drawer-wrapper="" className="flex h-dvh w-dvw flex-col" />
+    </ThemeProvider>
+  );
+}
 
 function PointerReset() {
   const location = useLocation();
@@ -147,7 +177,7 @@ function RootLayout() {
         <QueryClientProvider client={queryClientInstance}>
           <ThemeProvider
             attribute="class"
-            defaultTheme={systemInfoState?.theme ?? 'system'}
+            defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >

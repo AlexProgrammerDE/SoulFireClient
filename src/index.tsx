@@ -8,6 +8,8 @@ import {
 import '@/lib/i18n';
 import { routeTree } from './routeTree.gen';
 import { getServerType, isAuthenticated } from '@/lib/web-rpc.ts';
+import { ErrorComponent } from '@/components/error-component.tsx';
+import { LoadingComponent } from '@/components/loading-component.tsx';
 
 const hashHistory = createHashHistory();
 
@@ -19,6 +21,8 @@ const router = createRouter({
   defaultPreloadStaleTime: 10_000,
   scrollRestoration: true,
   scrollRestorationBehavior: 'auto',
+  defaultErrorComponent: ErrorComponent,
+  defaultPendingComponent: LoadingComponent,
 });
 
 // Register the router instance for type safety

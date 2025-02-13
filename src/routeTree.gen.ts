@@ -19,6 +19,7 @@ import { Route as DashboardLayoutUserInstancesImport } from './routes/dashboard/
 import { Route as DashboardLayoutInstanceInstanceImport } from './routes/dashboard/_layout/instance/$instance'
 import { Route as DashboardLayoutAdminLayoutImport } from './routes/dashboard/_layout/admin/_layout'
 import { Route as DashboardLayoutInstanceInstanceProxiesImport } from './routes/dashboard/_layout/instance/$instance/proxies'
+import { Route as DashboardLayoutInstanceInstanceDiscoverImport } from './routes/dashboard/_layout/instance/$instance/discover'
 import { Route as DashboardLayoutInstanceInstanceConsoleImport } from './routes/dashboard/_layout/instance/$instance/console'
 import { Route as DashboardLayoutInstanceInstanceAccountsImport } from './routes/dashboard/_layout/instance/$instance/accounts'
 import { Route as DashboardLayoutAdminLayoutOverviewImport } from './routes/dashboard/_layout/admin/_layout/overview'
@@ -81,6 +82,13 @@ const DashboardLayoutInstanceInstanceProxiesRoute =
   DashboardLayoutInstanceInstanceProxiesImport.update({
     id: '/proxies',
     path: '/proxies',
+    getParentRoute: () => DashboardLayoutInstanceInstanceRoute,
+  } as any)
+
+const DashboardLayoutInstanceInstanceDiscoverRoute =
+  DashboardLayoutInstanceInstanceDiscoverImport.update({
+    id: '/discover',
+    path: '/discover',
     getParentRoute: () => DashboardLayoutInstanceInstanceRoute,
   } as any)
 
@@ -207,6 +215,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardLayoutInstanceInstanceConsoleImport
       parentRoute: typeof DashboardLayoutInstanceInstanceImport
     }
+    '/dashboard/_layout/instance/$instance/discover': {
+      id: '/dashboard/_layout/instance/$instance/discover'
+      path: '/discover'
+      fullPath: '/dashboard/instance/$instance/discover'
+      preLoaderRoute: typeof DashboardLayoutInstanceInstanceDiscoverImport
+      parentRoute: typeof DashboardLayoutInstanceInstanceImport
+    }
     '/dashboard/_layout/instance/$instance/proxies': {
       id: '/dashboard/_layout/instance/$instance/proxies'
       path: '/proxies'
@@ -268,6 +283,7 @@ const DashboardLayoutAdminRouteWithChildren =
 interface DashboardLayoutInstanceInstanceRouteChildren {
   DashboardLayoutInstanceInstanceAccountsRoute: typeof DashboardLayoutInstanceInstanceAccountsRoute
   DashboardLayoutInstanceInstanceConsoleRoute: typeof DashboardLayoutInstanceInstanceConsoleRoute
+  DashboardLayoutInstanceInstanceDiscoverRoute: typeof DashboardLayoutInstanceInstanceDiscoverRoute
   DashboardLayoutInstanceInstanceProxiesRoute: typeof DashboardLayoutInstanceInstanceProxiesRoute
   DashboardLayoutInstanceInstanceSettingsNamespaceRoute: typeof DashboardLayoutInstanceInstanceSettingsNamespaceRoute
 }
@@ -278,6 +294,8 @@ const DashboardLayoutInstanceInstanceRouteChildren: DashboardLayoutInstanceInsta
       DashboardLayoutInstanceInstanceAccountsRoute,
     DashboardLayoutInstanceInstanceConsoleRoute:
       DashboardLayoutInstanceInstanceConsoleRoute,
+    DashboardLayoutInstanceInstanceDiscoverRoute:
+      DashboardLayoutInstanceInstanceDiscoverRoute,
     DashboardLayoutInstanceInstanceProxiesRoute:
       DashboardLayoutInstanceInstanceProxiesRoute,
     DashboardLayoutInstanceInstanceSettingsNamespaceRoute:
@@ -328,6 +346,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/admin/overview': typeof DashboardLayoutAdminLayoutOverviewRoute
   '/dashboard/instance/$instance/accounts': typeof DashboardLayoutInstanceInstanceAccountsRoute
   '/dashboard/instance/$instance/console': typeof DashboardLayoutInstanceInstanceConsoleRoute
+  '/dashboard/instance/$instance/discover': typeof DashboardLayoutInstanceInstanceDiscoverRoute
   '/dashboard/instance/$instance/proxies': typeof DashboardLayoutInstanceInstanceProxiesRoute
   '/dashboard/admin/settings/$namespace': typeof DashboardLayoutAdminLayoutSettingsNamespaceRoute
   '/dashboard/instance/$instance/settings/$namespace': typeof DashboardLayoutInstanceInstanceSettingsNamespaceRoute
@@ -343,6 +362,7 @@ export interface FileRoutesByTo {
   '/dashboard/admin/overview': typeof DashboardLayoutAdminLayoutOverviewRoute
   '/dashboard/instance/$instance/accounts': typeof DashboardLayoutInstanceInstanceAccountsRoute
   '/dashboard/instance/$instance/console': typeof DashboardLayoutInstanceInstanceConsoleRoute
+  '/dashboard/instance/$instance/discover': typeof DashboardLayoutInstanceInstanceDiscoverRoute
   '/dashboard/instance/$instance/proxies': typeof DashboardLayoutInstanceInstanceProxiesRoute
   '/dashboard/admin/settings/$namespace': typeof DashboardLayoutAdminLayoutSettingsNamespaceRoute
   '/dashboard/instance/$instance/settings/$namespace': typeof DashboardLayoutInstanceInstanceSettingsNamespaceRoute
@@ -361,6 +381,7 @@ export interface FileRoutesById {
   '/dashboard/_layout/admin/_layout/overview': typeof DashboardLayoutAdminLayoutOverviewRoute
   '/dashboard/_layout/instance/$instance/accounts': typeof DashboardLayoutInstanceInstanceAccountsRoute
   '/dashboard/_layout/instance/$instance/console': typeof DashboardLayoutInstanceInstanceConsoleRoute
+  '/dashboard/_layout/instance/$instance/discover': typeof DashboardLayoutInstanceInstanceDiscoverRoute
   '/dashboard/_layout/instance/$instance/proxies': typeof DashboardLayoutInstanceInstanceProxiesRoute
   '/dashboard/_layout/admin/_layout/settings/$namespace': typeof DashboardLayoutAdminLayoutSettingsNamespaceRoute
   '/dashboard/_layout/instance/$instance/settings/$namespace': typeof DashboardLayoutInstanceInstanceSettingsNamespaceRoute
@@ -378,6 +399,7 @@ export interface FileRouteTypes {
     | '/dashboard/admin/overview'
     | '/dashboard/instance/$instance/accounts'
     | '/dashboard/instance/$instance/console'
+    | '/dashboard/instance/$instance/discover'
     | '/dashboard/instance/$instance/proxies'
     | '/dashboard/admin/settings/$namespace'
     | '/dashboard/instance/$instance/settings/$namespace'
@@ -392,6 +414,7 @@ export interface FileRouteTypes {
     | '/dashboard/admin/overview'
     | '/dashboard/instance/$instance/accounts'
     | '/dashboard/instance/$instance/console'
+    | '/dashboard/instance/$instance/discover'
     | '/dashboard/instance/$instance/proxies'
     | '/dashboard/admin/settings/$namespace'
     | '/dashboard/instance/$instance/settings/$namespace'
@@ -408,6 +431,7 @@ export interface FileRouteTypes {
     | '/dashboard/_layout/admin/_layout/overview'
     | '/dashboard/_layout/instance/$instance/accounts'
     | '/dashboard/_layout/instance/$instance/console'
+    | '/dashboard/_layout/instance/$instance/discover'
     | '/dashboard/_layout/instance/$instance/proxies'
     | '/dashboard/_layout/admin/_layout/settings/$namespace'
     | '/dashboard/_layout/instance/$instance/settings/$namespace'
@@ -478,6 +502,7 @@ export const routeTree = rootRoute
       "children": [
         "/dashboard/_layout/instance/$instance/accounts",
         "/dashboard/_layout/instance/$instance/console",
+        "/dashboard/_layout/instance/$instance/discover",
         "/dashboard/_layout/instance/$instance/proxies",
         "/dashboard/_layout/instance/$instance/settings/$namespace"
       ]
@@ -500,6 +525,10 @@ export const routeTree = rootRoute
     },
     "/dashboard/_layout/instance/$instance/console": {
       "filePath": "dashboard/_layout/instance/$instance/console.tsx",
+      "parent": "/dashboard/_layout/instance/$instance"
+    },
+    "/dashboard/_layout/instance/$instance/discover": {
+      "filePath": "dashboard/_layout/instance/$instance/discover.tsx",
       "parent": "/dashboard/_layout/instance/$instance"
     },
     "/dashboard/_layout/instance/$instance/proxies": {

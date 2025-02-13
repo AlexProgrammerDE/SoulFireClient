@@ -4,7 +4,10 @@ import {
   GlobalPermission,
   InstancePermission,
 } from '@/generated/soulfire/common.ts';
-import { ClientDataResponse } from '@/generated/soulfire/config.ts';
+import {
+  ClientDataResponse,
+  SettingType,
+} from '@/generated/soulfire/config.ts';
 import {
   InstanceInfoResponse,
   InstanceListResponse_Instance,
@@ -13,6 +16,8 @@ import { sha256 } from 'js-sha256';
 import * as Flags from 'country-flag-icons/react/3x2';
 import { type FlagComponent } from 'country-flag-icons/react/1x1';
 import { ReactNode } from 'react';
+import { BaseSettings } from '@/lib/types.ts';
+import { JsonValue } from '@protobuf-ts/runtime';
 
 const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
 
@@ -145,4 +150,93 @@ export function getLanguageName(languageCode: string, displayLanguage: string) {
     type: 'language',
   });
   return displayNames.of(languageCode) ?? languageCode;
+}
+
+export function updateEntry<T extends BaseSettings>(
+  namespace: string,
+  settingKey: string,
+  value: JsonValue,
+  profile: T,
+): T {
+  return {
+    ...profile,
+    settings: {
+      ...profile.settings,
+      [namespace]: {
+        ...(profile.settings[namespace] || {}),
+        [settingKey]: value,
+      },
+    },
+  };
+}
+
+function getEntryValue(
+  namespace: string,
+  settingKey: string,
+  config: BaseSettings,
+  defaultValue: JsonValue,
+): JsonValue {
+  const current = config.settings[namespace]?.[settingKey];
+  if (current === undefined) {
+    return defaultValue;
+  }
+
+  return current;
+}
+
+export function getEntryValueByType(
+  namespace: string,
+  settingKey: string,
+  config: BaseSettings,
+  entry: SettingType | undefined,
+): JsonValue {
+  switch (entry?.value.oneofKind) {
+    case 'string': {
+      return getEntryValue(
+        namespace,
+        settingKey,
+        config,
+        entry.value.string.def,
+      );
+    }
+    case 'int': {
+      return getEntryValue(namespace, settingKey, config, entry.value.int.def);
+    }
+    case 'bool': {
+      return getEntryValue(namespace, settingKey, config, entry.value.bool.def);
+    }
+    case 'double': {
+      return getEntryValue(
+        namespace,
+        settingKey,
+        config,
+        entry.value.double.def,
+      );
+    }
+    case 'combo': {
+      return getEntryValue(
+        namespace,
+        settingKey,
+        config,
+        entry.value.combo.def,
+      );
+    }
+    case 'stringList': {
+      return getEntryValue(
+        namespace,
+        settingKey,
+        config,
+        entry.value.stringList.def,
+      );
+    }
+    case 'minMax': {
+      return getEntryValue(namespace, settingKey, config, {
+        min: entry.value.minMax.minDef,
+        max: entry.value.minMax.maxDef,
+      });
+    }
+    case undefined: {
+      return null;
+    }
+  }
 }

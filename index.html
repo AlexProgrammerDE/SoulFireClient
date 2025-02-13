@@ -33,6 +33,38 @@
     <meta name="twitter:image:height" content="512" />
     <meta name="twitter:image:alt" content="SoulFire Logo" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="256x256" />
+    <script>
+      const el = document.documentElement;
+      const systemThemes = ['light', 'dark'];
+
+      function updateDOM(theme) {
+        el.classList.remove(...systemThemes);
+        el.classList.add(theme);
+
+        setColorScheme(theme);
+      }
+
+      function setColorScheme(theme) {
+        if (systemThemes.includes(theme)) {
+          el.style.colorScheme = theme;
+        }
+      }
+
+      function getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches
+          ? 'dark'
+          : 'light';
+      }
+
+      try {
+        const themeName = localStorage.getItem('theme') || 'system';
+        const isSystem = themeName === 'system';
+        const theme = isSystem ? getSystemTheme() : themeName;
+        updateDOM(theme);
+      } catch (e) {
+        //
+      }
+    </script>
   </head>
   <body>
     <div id="<%= mountId %>"></div>

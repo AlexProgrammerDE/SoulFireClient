@@ -196,11 +196,13 @@
     "controlsGroup": "Controls",
     "console": "Console",
     "settingsGroup": "Settings",
+    "pluginsGroup": "Plugins",
     "pluginSettings": "Plugin Settings",
     "botSettings": "Bot Settings",
     "accountSettings": "Account Settings",
     "proxySettings": "Proxy Settings",
-    "aiSettings": "AI Settings"
+    "aiSettings": "AI Settings",
+    "discoverPlugins": "Plugin List"
   },
   "userSidebar": {
     "readDocumentation": "Read documentation",
@@ -240,7 +242,8 @@
   "breadcrumbs": {
     "admin": "Admin",
     "settings": "Settings",
-    "controls": "Controls"
+    "controls": "Controls",
+    "plugins": "Plugins"
   },
   "noInstancesFound": "No instances found",
   "pageName": {
@@ -248,7 +251,8 @@
     "instances": "Instances",
     "proxySettings": "Proxy Settings",
     "overview": "Overview",
-    "accountSettings": "Account Settings"
+    "accountSettings": "Account Settings",
+    "discoverPlugins": "Plugin List"
   },
   "instanceState": {
     "starting": "Starting",

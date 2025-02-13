@@ -51,7 +51,7 @@ export function NavSecondary({
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton asChild size="sm" tooltip={item.title}>
                 <a href={item.url} target="_blank">
-                  <item.icon />
+                  <item.icon className="size-4" />
                   <span>{item.title}</span>
                 </a>
               </SidebarMenuButton>

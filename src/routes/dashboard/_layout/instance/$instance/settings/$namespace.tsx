@@ -28,7 +28,9 @@ function SettingsNamespace() {
   );
   return (
     <InstancePageLayout
-      extraCrumbs={[t('breadcrumbs.settings')]}
+      extraCrumbs={[
+        pluginInfo ? t('breadcrumbs.plugins') : t('breadcrumbs.settings'),
+      ]}
       pageName={settingsEntry.pageName}
       expandPluginSettings={pluginInfo !== undefined}
     >

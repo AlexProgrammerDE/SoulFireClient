@@ -29,7 +29,7 @@ import {
   PlusIcon,
   TrashIcon,
 } from 'lucide-react';
-import { cn } from '@/lib/utils.tsx';
+import { cn, getEntryValueByType, updateEntry } from '@/lib/utils.tsx';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
@@ -51,38 +51,6 @@ import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
 import { ServerInfoResponse } from '@/generated/soulfire/server.ts';
 import { ServerConfigContext } from '@/components/providers/server-config-context.tsx';
 import { useTranslation } from 'react-i18next';
-
-function updateEntry<T extends BaseSettings>(
-  namespace: string,
-  settingKey: string,
-  value: JsonValue,
-  profile: T,
-): T {
-  return {
-    ...profile,
-    settings: {
-      ...profile.settings,
-      [namespace]: {
-        ...(profile.settings[namespace] || {}),
-        [settingKey]: value,
-      },
-    },
-  };
-}
-
-function getEntry(
-  namespace: string,
-  settingKey: string,
-  config: BaseSettings,
-  defaultValue: JsonValue,
-): JsonValue {
-  const current = config.settings[namespace]?.[settingKey];
-  if (current === undefined) {
-    return defaultValue;
-  }
-
-  return current;
-}
 
 function ComponentTitle(props: {
   title: string;
@@ -462,67 +430,16 @@ function EntryComponent<T extends BaseSettings>(props: {
   setConfig: (config: T) => Promise<void>;
   config: T;
 }) {
-  const value = useMemo(() => {
-    switch (props.entry.value.oneofKind) {
-      case 'string': {
-        return getEntry(
-          props.namespace,
-          props.settingKey,
-          props.config,
-          props.entry.value.string.def,
-        );
-      }
-      case 'int': {
-        return getEntry(
-          props.namespace,
-          props.settingKey,
-          props.config,
-          props.entry.value.int.def,
-        );
-      }
-      case 'bool': {
-        return getEntry(
-          props.namespace,
-          props.settingKey,
-          props.config,
-          props.entry.value.bool.def,
-        );
-      }
-      case 'double': {
-        return getEntry(
-          props.namespace,
-          props.settingKey,
-          props.config,
-          props.entry.value.double.def,
-        );
-      }
-      case 'combo': {
-        return getEntry(
-          props.namespace,
-          props.settingKey,
-          props.config,
-          props.entry.value.combo.def,
-        );
-      }
-      case 'stringList': {
-        return getEntry(
-          props.namespace,
-          props.settingKey,
-          props.config,
-          props.entry.value.stringList.def,
-        );
-      }
-      case 'minMax': {
-        return getEntry(props.namespace, props.settingKey, props.config, {
-          min: props.entry.value.minMax.minDef,
-          max: props.entry.value.minMax.maxDef,
-        });
-      }
-      case undefined: {
-        return null;
-      }
-    }
-  }, [props.config, props.entry, props.namespace, props.settingKey]);
+  const value = useMemo(
+    () =>
+      getEntryValueByType(
+        props.namespace,
+        props.settingKey,
+        props.config,
+        props.entry,
+      ),
+    [props.config, props.entry, props.namespace, props.settingKey],
+  );
   const setValueMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
       await props.setConfig(
