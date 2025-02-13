@@ -29,26 +29,26 @@ import {
   PlusIcon,
   TrashIcon,
 } from 'lucide-react';
-import { cn, getEntryValueByType, updateEntry } from '@/lib/utils.tsx';
+import {
+  cn,
+  getEntryValueByType,
+  invalidateInstanceQuery,
+  invalidateServerQuery,
+  setInstanceConfig,
+  setServerConfig,
+  updateEntry,
+} from '@/lib/utils.tsx';
 import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
-import {
-  BaseSettings,
-  convertToInstanceProto,
-  convertToServerProto,
-} from '@/lib/types.ts';
+import { BaseSettings } from '@/lib/types.ts';
 import { JsonValue } from '@protobuf-ts/runtime';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
-import { InstanceInfoResponse } from '@/generated/soulfire/instance.ts';
 import { Textarea } from '@/components/ui/textarea.tsx';
-import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
-import { ServerInfoResponse } from '@/generated/soulfire/server.ts';
 import { ServerConfigContext } from '@/components/providers/server-config-context.tsx';
 import { useTranslation } from 'react-i18next';
 
@@ -626,46 +626,21 @@ export function InstanceSettingsPageComponent({
   const queryClient = useQueryClient();
   const instanceInfo = useContext(InstanceInfoContext);
   const transport = useContext(TransportContext);
-  const instanceInfoQueryKey = ['instance-info', instanceInfo.id];
   const profile = useContext(ProfileContext);
   return (
     <ClientSettingsPageComponent
       data={data}
-      setConfig={async (jsonProfile) => {
-        if (transport === null) {
-          return;
-        }
-
-        const targetProfile = convertToInstanceProto(jsonProfile);
-        await queryClient.cancelQueries({
-          queryKey: instanceInfoQueryKey,
-        });
-        queryClient.setQueryData<{
-          instanceInfo: InstanceInfoResponse;
-        }>(instanceInfoQueryKey, (old) => {
-          if (old === undefined) {
-            return;
-          }
-
-          return {
-            instanceInfo: {
-              ...old.instanceInfo,
-              config: targetProfile,
-            },
-          };
-        });
-
-        const instanceService = new InstanceServiceClient(transport);
-        await instanceService.updateInstanceConfig({
-          id: instanceInfo.id,
-          config: targetProfile,
-        });
-      }}
-      invalidateQuery={async () => {
-        await queryClient.invalidateQueries({
-          queryKey: instanceInfoQueryKey,
-        });
-      }}
+      setConfig={async (jsonProfile) =>
+        await setInstanceConfig(
+          jsonProfile,
+          instanceInfo,
+          transport,
+          queryClient,
+        )
+      }
+      invalidateQuery={async () =>
+        await invalidateInstanceQuery(instanceInfo, queryClient)
+      }
       config={profile}
     />
   );
@@ -675,44 +650,13 @@ export function AdminSettingsPageComponent({ data }: { data: SettingsPage }) {
   const queryClient = useQueryClient();
   const serverConfig = useContext(ServerConfigContext);
   const transport = useContext(TransportContext);
-  const serverInfoQueryKey = ['server-info'];
   return (
     <ClientSettingsPageComponent
       data={data}
-      setConfig={async (jsonProfile) => {
-        if (transport === null) {
-          return;
-        }
-
-        const targetProfile = convertToServerProto(jsonProfile);
-        await queryClient.cancelQueries({
-          queryKey: serverInfoQueryKey,
-        });
-        queryClient.setQueryData<{
-          serverInfo: ServerInfoResponse;
-        }>(serverInfoQueryKey, (old) => {
-          if (old === undefined) {
-            return;
-          }
-
-          return {
-            serverInfo: {
-              ...old.serverInfo,
-              config: targetProfile,
-            },
-          };
-        });
-
-        const instanceService = new ServerServiceClient(transport);
-        await instanceService.updateServerConfig({
-          config: targetProfile,
-        });
-      }}
-      invalidateQuery={async () => {
-        await queryClient.invalidateQueries({
-          queryKey: serverInfoQueryKey,
-        });
-      }}
+      setConfig={async (jsonProfile) =>
+        await setServerConfig(jsonProfile, transport, queryClient)
+      }
+      invalidateQuery={async () => await invalidateServerQuery(queryClient)}
       config={serverConfig}
     />
   );

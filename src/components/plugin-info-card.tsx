@@ -7,18 +7,83 @@ import {
 import { Badge } from '@/components/ui/badge.tsx';
 import { ServerPlugin, SettingsPage } from '@/generated/soulfire/config.ts';
 import { useTranslation } from 'react-i18next';
+import { Switch } from '@/components/ui/switch.tsx';
+import {
+  getEntryValueByType,
+  invalidateInstanceQuery,
+  setInstanceConfig,
+  updateEntry,
+} from '@/lib/utils.tsx';
+import { useContext, useMemo } from 'react';
+import { ProfileContext } from '@/components/providers/profile-context.tsx';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { JsonValue } from '@protobuf-ts/runtime';
+import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { TransportContext } from '@/components/providers/transport-context.tsx';
+import DynamicIcon from './dynamic-icon';
 
 export function PluginInfoCard(props: {
   pluginInfo: ServerPlugin;
   settingsEntry: SettingsPage;
 }) {
   const { t } = useTranslation('common');
+  const profile = useContext(ProfileContext);
+  const instanceInfo = useContext(InstanceInfoContext);
+  const transport = useContext(TransportContext);
+  const queryClient = useQueryClient();
+  const enabledEntry = props.settingsEntry.entries.find(
+    (entry) => entry.key === props.settingsEntry.enabledKey,
+  )!;
+  const enabledValue = useMemo(
+    () =>
+      getEntryValueByType(
+        props.settingsEntry.namespace,
+        props.settingsEntry.enabledKey!,
+        profile,
+        enabledEntry.type,
+      ) === true,
+    [
+      props.settingsEntry.namespace,
+      props.settingsEntry.enabledKey!,
+      profile,
+      enabledEntry.type,
+    ],
+  );
+  const setEnabledMutation = useMutation({
+    mutationFn: async (value: JsonValue) => {
+      await setInstanceConfig(
+        updateEntry(
+          props.settingsEntry.namespace,
+          props.settingsEntry.enabledKey!,
+          value,
+          profile,
+        ),
+        instanceInfo,
+        transport,
+        queryClient,
+      );
+    },
+    onSettled: () => {
+      void invalidateInstanceQuery(instanceInfo, queryClient);
+    },
+  });
+
   return (
     <Card className="max-w-4xl">
       <CardHeader className="p-4">
-        <CardTitle className="text-xl">
-          {props.settingsEntry.pageName}
-        </CardTitle>
+        <div className="flex flex-row items-center justify-between gap-2">
+          <CardTitle className="text-xl flex flex-row items-center gap-2">
+            <DynamicIcon
+              className="size-6 shrink-0"
+              name={props.settingsEntry.iconId}
+            />
+            {props.settingsEntry.pageName}
+          </CardTitle>
+          <Switch
+            checked={enabledValue}
+            onCheckedChange={setEnabledMutation.mutate}
+          />
+        </div>
         <CardDescription className="whitespace-pre-line">
           {props.pluginInfo.description}
         </CardDescription>

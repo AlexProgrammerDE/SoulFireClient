@@ -16,8 +16,18 @@ import { sha256 } from 'js-sha256';
 import * as Flags from 'country-flag-icons/react/3x2';
 import { type FlagComponent } from 'country-flag-icons/react/1x1';
 import { ReactNode } from 'react';
-import { BaseSettings } from '@/lib/types.ts';
+import {
+  BaseSettings,
+  convertToInstanceProto,
+  convertToServerProto,
+  ProfileRoot,
+} from '@/lib/types.ts';
 import { JsonValue } from '@protobuf-ts/runtime';
+import { ServerInfoResponse } from '@/generated/soulfire/server.ts';
+import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
+import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
+import { RpcTransport } from '@protobuf-ts/runtime-rpc';
+import { QueryClient } from '@tanstack/react-query';
 
 const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
 
@@ -239,4 +249,99 @@ export function getEntryValueByType(
       return null;
     }
   }
+}
+
+export const instanceInfoQueryKey = (instanceInfo: { id: string }) => [
+  'instance-info',
+  instanceInfo.id,
+];
+export const serverInfoQueryKey = () => ['server-info'];
+
+export async function setInstanceConfig(
+  jsonProfile: ProfileRoot,
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  const targetProfile = convertToInstanceProto(jsonProfile);
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey(instanceInfo),
+  });
+  queryClient.setQueryData<{
+    instanceInfo: InstanceInfoResponse;
+  }>(instanceInfoQueryKey(instanceInfo), (old) => {
+    if (old === undefined) {
+      return;
+    }
+
+    return {
+      instanceInfo: {
+        ...old.instanceInfo,
+        config: targetProfile,
+      },
+    };
+  });
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.updateInstanceConfig({
+    id: instanceInfo.id,
+    config: targetProfile,
+  });
+}
+
+export async function invalidateInstanceQuery(
+  instanceInfo: {
+    id: string;
+  },
+  queryClient: QueryClient,
+) {
+  await queryClient.invalidateQueries({
+    queryKey: instanceInfoQueryKey(instanceInfo),
+  });
+}
+
+export async function setServerConfig(
+  jsonProfile: BaseSettings,
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  const targetProfile = convertToServerProto(jsonProfile);
+  await queryClient.cancelQueries({
+    queryKey: serverInfoQueryKey(),
+  });
+  queryClient.setQueryData<{
+    serverInfo: ServerInfoResponse;
+  }>(serverInfoQueryKey(), (old) => {
+    if (old === undefined) {
+      return;
+    }
+
+    return {
+      serverInfo: {
+        ...old.serverInfo,
+        config: targetProfile,
+      },
+    };
+  });
+
+  const serverService = new ServerServiceClient(transport);
+  await serverService.updateServerConfig({
+    config: targetProfile,
+  });
+}
+
+export async function invalidateServerQuery(queryClient: QueryClient) {
+  await queryClient.invalidateQueries({
+    queryKey: serverInfoQueryKey(),
+  });
 }
