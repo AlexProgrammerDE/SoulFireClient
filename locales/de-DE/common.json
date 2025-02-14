@@ -4,7 +4,7 @@
     "noAddressOrToken": "Keine Serveradresse oder Token gefunden",
     "page": {
       "title": "Fehler",
-      "message": "{{message}} (mehr Informationen in der Konsole)",
+      "description": "",
       "logOut": "Ausloggen",
       "reloadPage": "Seite neu laden"
     },
@@ -196,11 +196,13 @@
     "controlsGroup": "Steuerung",
     "console": "Konsole",
     "settingsGroup": "Einstellungen",
+    "pluginsGroup": "",
     "pluginSettings": "Plugin Einstellungen",
     "botSettings": "Bot Einstellungen",
     "accountSettings": "Konto Einstellungen",
     "proxySettings": "Proxy Einstellungen",
-    "aiSettings": "KI Einstellungen"
+    "aiSettings": "KI Einstellungen",
+    "discoverPlugins": ""
   },
   "userSidebar": {
     "readDocumentation": "",
@@ -240,7 +242,8 @@
   "breadcrumbs": {
     "admin": "Admin",
     "settings": "Einstellungen",
-    "controls": "Steuerung"
+    "controls": "Steuerung",
+    "plugins": ""
   },
   "noInstancesFound": "Keine Instanzen gefunden",
   "pageName": {
@@ -248,7 +251,8 @@
     "instances": "Instanzen",
     "proxySettings": "Proxy Einstellungen",
     "overview": "Übersicht",
-    "accountSettings": "Konto Einstellungen"
+    "accountSettings": "Konto Einstellungen",
+    "discoverPlugins": ""
   },
   "instanceState": {
     "starting": "Starte",

@@ -4,7 +4,7 @@
     "noAddressOrToken": "未找到服务器地址或令牌",
     "page": {
       "title": "出错",
-      "message": "{{message}} (更多消息请查看控制台)",
+      "description": "",
       "logOut": "退出登录",
       "reloadPage": "重新载入页面"
     },
@@ -196,11 +196,13 @@
     "controlsGroup": "",
     "console": "控制台",
     "settingsGroup": "设置",
+    "pluginsGroup": "",
     "pluginSettings": "插件设置",
     "botSettings": "机器人设置",
     "accountSettings": "帐户设置",
     "proxySettings": "代理设置",
-    "aiSettings": "AI设置"
+    "aiSettings": "AI设置",
+    "discoverPlugins": ""
   },
   "userSidebar": {
     "readDocumentation": "",
@@ -240,7 +242,8 @@
   "breadcrumbs": {
     "admin": "管理员",
     "settings": "设置",
-    "controls": ""
+    "controls": "",
+    "plugins": ""
   },
   "noInstancesFound": "未找到实例",
   "pageName": {
@@ -248,7 +251,8 @@
     "instances": "",
     "proxySettings": "代理设置",
     "overview": "概况",
-    "accountSettings": "帐户设置"
+    "accountSettings": "帐户设置",
+    "discoverPlugins": ""
   },
   "instanceState": {
     "starting": "正在启动",

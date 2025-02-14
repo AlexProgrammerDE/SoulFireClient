@@ -4,7 +4,7 @@
     "noAddressOrToken": "Nenhum endereço de servidor ou token encontrado",
     "page": {
       "title": "Erro",
-      "message": "{{message}} (mais informações no console)",
+      "description": "",
       "logOut": "Sair",
       "reloadPage": "Recarregar página"
     },
@@ -196,11 +196,13 @@
     "controlsGroup": "Controles",
     "console": "Console",
     "settingsGroup": "Configurações",
+    "pluginsGroup": "",
     "pluginSettings": "Definições de Plugin",
     "botSettings": "Configurações do Bot",
     "accountSettings": "Configurações da Conta",
     "proxySettings": "Configurações de Proxy",
-    "aiSettings": "Configurações de IA"
+    "aiSettings": "Configurações de IA",
+    "discoverPlugins": ""
   },
   "userSidebar": {
     "readDocumentation": "",
@@ -240,7 +242,8 @@
   "breadcrumbs": {
     "admin": "Administrador",
     "settings": "Configurações",
-    "controls": "Controles"
+    "controls": "Controles",
+    "plugins": ""
   },
   "noInstancesFound": "Nenhuma instância encontrada",
   "pageName": {
@@ -248,7 +251,8 @@
     "instances": "Instâncias",
     "proxySettings": "Configurações de Proxy",
     "overview": "Visão geral",
-    "accountSettings": "Configurações da Conta"
+    "accountSettings": "Configurações da Conta",
+    "discoverPlugins": ""
   },
   "instanceState": {
     "starting": "A iniciar",
