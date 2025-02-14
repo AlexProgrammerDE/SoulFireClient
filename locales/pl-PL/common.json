@@ -4,7 +4,7 @@
     "noAddressOrToken": "Nie znaleziono adresu serwera ani tokena",
     "page": {
       "title": "Błąd",
-      "message": "{{message}} (szczegóły w konsoli)",
+      "description": "",
       "logOut": "Wyloguj się",
       "reloadPage": "Odśwież stronę"
     },
@@ -196,11 +196,13 @@
     "controlsGroup": "Sterowanie",
     "console": "Konsola",
     "settingsGroup": "Ustawienia",
+    "pluginsGroup": "",
     "pluginSettings": "Ustawienia wtyczek",
     "botSettings": "Ustawienia botów",
     "accountSettings": "Ustawienia konta",
     "proxySettings": "Ustawienia serwera proxy",
-    "aiSettings": "Ustawienia SI"
+    "aiSettings": "Ustawienia SI",
+    "discoverPlugins": ""
   },
   "userSidebar": {
     "readDocumentation": "",
@@ -240,7 +242,8 @@
   "breadcrumbs": {
     "admin": "Administrator",
     "settings": "Ustawienia",
-    "controls": "Sterowanie"
+    "controls": "Sterowanie",
+    "plugins": ""
   },
   "noInstancesFound": "Nie znaleziono instancji",
   "pageName": {
@@ -248,7 +251,8 @@
     "instances": "Instancje",
     "proxySettings": "Ustawienia serwera proxy",
     "overview": "Przegląd",
-    "accountSettings": "Ustawienia konta"
+    "accountSettings": "Ustawienia konta",
+    "discoverPlugins": ""
   },
   "instanceState": {
     "starting": "Uruchamianie",

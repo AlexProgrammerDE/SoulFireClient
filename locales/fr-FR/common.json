@@ -4,7 +4,7 @@
     "noAddressOrToken": "Aucune adresse ou token de serveur trouvé",
     "page": {
       "title": "Erreur",
-      "message": "{{message}} (plus d'informations dans la console)",
+      "description": "",
       "logOut": "Déconnexion",
       "reloadPage": "Recharger la page"
     },
@@ -196,11 +196,13 @@
     "controlsGroup": "Contrôles",
     "console": "Console",
     "settingsGroup": "Paramètres",
+    "pluginsGroup": "",
     "pluginSettings": "Configuration du plugin",
     "botSettings": "Configuration du bot",
     "accountSettings": "Paramètres de compte",
     "proxySettings": "Paramètres de proxy",
-    "aiSettings": "Paramètres IA"
+    "aiSettings": "Paramètres IA",
+    "discoverPlugins": ""
   },
   "userSidebar": {
     "readDocumentation": "",
@@ -240,7 +242,8 @@
   "breadcrumbs": {
     "admin": "Administrateur",
     "settings": "Paramètres",
-    "controls": "Contrôles"
+    "controls": "Contrôles",
+    "plugins": ""
   },
   "noInstancesFound": "Aucune instance n'a été trouvée",
   "pageName": {
@@ -248,7 +251,8 @@
     "instances": "Instances",
     "proxySettings": "Paramètres de proxy",
     "overview": "Aperçu",
-    "accountSettings": "Paramètres de compte"
+    "accountSettings": "Paramètres de compte",
+    "discoverPlugins": ""
   },
   "instanceState": {
     "starting": "Démarrage",

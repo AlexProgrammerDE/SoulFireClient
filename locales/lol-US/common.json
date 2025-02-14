@@ -4,7 +4,7 @@
     "noAddressOrToken": "No servr addres or token findz",
     "page": {
       "title": "Ewwow",
-      "message": "{{message}} (moar inof in consoel)",
+      "description": "",
       "logOut": "Walk out",
       "reloadPage": "Spin paeg"
     },
@@ -196,11 +196,13 @@
     "controlsGroup": "",
     "console": "",
     "settingsGroup": "",
+    "pluginsGroup": "",
     "pluginSettings": "",
     "botSettings": "",
     "accountSettings": "",
     "proxySettings": "",
-    "aiSettings": ""
+    "aiSettings": "",
+    "discoverPlugins": ""
   },
   "userSidebar": {
     "readDocumentation": "",
@@ -240,7 +242,8 @@
   "breadcrumbs": {
     "admin": "",
     "settings": "",
-    "controls": ""
+    "controls": "",
+    "plugins": ""
   },
   "noInstancesFound": "",
   "pageName": {
@@ -248,7 +251,8 @@
     "instances": "",
     "proxySettings": "",
     "overview": "",
-    "accountSettings": ""
+    "accountSettings": "",
+    "discoverPlugins": ""
   },
   "instanceState": {
     "starting": "",

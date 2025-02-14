@@ -4,7 +4,7 @@
     "noAddressOrToken": "Адрес сервера или токен не найдены",
     "page": {
       "title": "Ошибка",
-      "message": "{{message}} (подробнее в консоли)",
+      "description": "",
       "logOut": "Выйти",
       "reloadPage": "Перезагрузить страницу"
     },
@@ -196,11 +196,13 @@
     "controlsGroup": "Управление",
     "console": "Консоль",
     "settingsGroup": "Настройки",
+    "pluginsGroup": "",
     "pluginSettings": "Настройки плагинов",
     "botSettings": "Настройки ботов",
     "accountSettings": "Настройки аккаунтов",
     "proxySettings": "Настройки прокси",
-    "aiSettings": "Настройки ИИ"
+    "aiSettings": "Настройки ИИ",
+    "discoverPlugins": ""
   },
   "userSidebar": {
     "readDocumentation": "Прочитать документацию",
@@ -240,7 +242,8 @@
   "breadcrumbs": {
     "admin": "Администратор",
     "settings": "Настройки",
-    "controls": "Управление"
+    "controls": "Управление",
+    "plugins": ""
   },
   "noInstancesFound": "Экземпляры не найдены",
   "pageName": {
@@ -248,7 +251,8 @@
     "instances": "Экземпляры",
     "proxySettings": "Настройки прокси",
     "overview": "Обзор",
-    "accountSettings": "Настройки аккаунтов"
+    "accountSettings": "Настройки аккаунтов",
+    "discoverPlugins": ""
   },
   "instanceState": {
     "starting": "Запуск",
