@@ -10,6 +10,7 @@ import { routeTree } from './routeTree.gen';
 import { getServerType, isAuthenticated } from '@/lib/web-rpc.ts';
 import { ErrorComponent } from '@/components/error-component.tsx';
 import { LoadingComponent } from '@/components/loading-component.tsx';
+import { NotFoundComponent } from '@/components/not-found-component.tsx';
 
 const hashHistory = createHashHistory();
 
@@ -23,6 +24,7 @@ const router = createRouter({
   scrollRestorationBehavior: 'auto',
   defaultErrorComponent: ErrorComponent,
   defaultPendingComponent: LoadingComponent,
+  defaultNotFoundComponent: NotFoundComponent,
 });
 
 // Register the router instance for type safety

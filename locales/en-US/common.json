@@ -10,6 +10,14 @@
     },
     "connectionFailed": "Connection to the SoulFire server failed."
   },
+  "notFound": {
+    "page": {
+      "title": "Not found",
+      "description": "Could not find a page at this location",
+      "logOut": "Log out",
+      "reloadPage": "Reload page"
+    }
+  },
   "pending": {
     "connecting": "Connecting..."
   },
