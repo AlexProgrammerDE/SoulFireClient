@@ -95,7 +95,7 @@ function RootPending() {
       enableSystem
       disableTransitionOnChange
     >
-      <main vaul-drawer-wrapper="" className="flex h-dvh w-dvw flex-col" />
+      <div vaul-drawer-wrapper="" className="flex h-dvh w-dvw flex-col" />
     </ThemeProvider>
   );
 }
@@ -202,13 +202,13 @@ function RootLayout() {
                     setter: setTerminalTheme,
                   }}
                 >
-                  <main
+                  <div
                     vaul-drawer-wrapper=""
                     className="flex h-dvh w-dvw flex-col"
                   >
                     <PointerReset />
                     <Outlet />
-                  </main>
+                  </div>
                 </TerminalThemeContext.Provider>
               </SystemInfoContext.Provider>
               <Toaster richColors pauseWhenPageIsHidden />

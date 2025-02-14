@@ -172,7 +172,7 @@ function Index() {
 
   return (
     <ScrollArea className="h-dvh w-full px-4 bg-muted">
-      <div className="flex flex-col min-h-dvh w-full">
+      <main className="flex flex-col min-h-dvh w-full">
         <div className="flex flex-col gap-6 m-auto w-full max-w-[450px]">
           <div className="text-center flex flex-row items-center justify-center gap-2">
             <img
@@ -274,7 +274,7 @@ function Index() {
             </div>
           </div>
         </div>
-      </div>
+      </main>
     </ScrollArea>
   );
 }
