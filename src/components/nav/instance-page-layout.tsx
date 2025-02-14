@@ -48,7 +48,7 @@ export default function InstancePageLayout(props: {
       />
       <TooltipProvider delayDuration={500}>
         <SidebarInset>
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b">
+          <header className="flex h-12 shrink-0 items-center gap-2 border-b">
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
               <Separator orientation="vertical" className="h-4" />
@@ -95,8 +95,8 @@ export default function InstancePageLayout(props: {
               </Breadcrumb>
             </div>
           </header>
-          <ScrollArea className="h-[calc(100dvh-4rem)] w-full">
-            <div className="flex flex-col min-h-[calc(100dvh-4rem)] w-full p-4">
+          <ScrollArea className="h-[calc(100dvh-3rem)] w-full">
+            <div className="flex flex-col min-h-[calc(100dvh-3rem)] w-full p-4">
               <CatchBoundary
                 getResetKey={() => 'instance-page-layout'}
                 errorComponent={ErrorComponent}
