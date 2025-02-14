@@ -1,4 +1,9 @@
-import { createRootRoute, Outlet, useLocation } from '@tanstack/react-router';
+import {
+  createRootRoute,
+  deepEqual,
+  Outlet,
+  useLocation,
+} from '@tanstack/react-router';
 import '../App.css';
 import { ThemeProvider } from '@/components/providers/theme-provider.tsx';
 import { Toaster } from '@/components/ui/sonner.tsx';
@@ -140,7 +145,15 @@ function RootLayout() {
       void watch(
         'profile',
         () => {
-          void createSystemInfo().then(setSystemInfoState);
+          void createSystemInfo().then((newSystemInfo) => {
+            setSystemInfoState((oldSystemInfo) => {
+              if (deepEqual(oldSystemInfo, newSystemInfo)) {
+                return oldSystemInfo;
+              } else {
+                return newSystemInfo;
+              }
+            });
+          });
         },
         {
           baseDir: BaseDirectory.AppConfig,
