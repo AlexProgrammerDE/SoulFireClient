@@ -10,6 +10,14 @@
     },
     "connectionFailed": ""
   },
+  "notFound": {
+    "page": {
+      "title": "",
+      "description": "",
+      "logOut": "Walk out",
+      "reloadPage": "Spin paeg"
+    }
+  },
   "pending": {
     "connecting": "Catwalking..."
   },

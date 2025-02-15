@@ -10,6 +10,14 @@
     },
     "connectionFailed": ""
   },
+  "notFound": {
+    "page": {
+      "title": "",
+      "description": "",
+      "logOut": "Wyloguj się",
+      "reloadPage": "Odśwież stronę"
+    }
+  },
   "pending": {
     "connecting": "Łączenie..."
   },

@@ -10,6 +10,14 @@
     },
     "connectionFailed": "Не удалось подключиться к серверу SoulFire."
   },
+  "notFound": {
+    "page": {
+      "title": "",
+      "description": "",
+      "logOut": "Выйти",
+      "reloadPage": "Перезагрузить страницу"
+    }
+  },
   "pending": {
     "connecting": "Подключение..."
   },
