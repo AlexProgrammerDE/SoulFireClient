@@ -10,6 +10,14 @@
     },
     "connectionFailed": ""
   },
+  "notFound": {
+    "page": {
+      "title": "",
+      "description": "",
+      "logOut": "退出登录",
+      "reloadPage": "重新载入页面"
+    }
+  },
   "pending": {
     "connecting": "正在连接..."
   },
