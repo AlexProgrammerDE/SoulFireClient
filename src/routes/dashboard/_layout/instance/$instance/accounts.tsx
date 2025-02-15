@@ -213,16 +213,22 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         return;
       }
 
+      const abortController = new AbortController();
       const service = new MCAuthServiceClient(transport);
       toast.promise(
         (async () => {
           const promise = new Promise<ProfileAccount>((resolve, reject) => {
             try {
               service
-                .loginDeviceCode({
-                  instanceId: instanceInfo.id,
-                  service: type,
-                })
+                .loginDeviceCode(
+                  {
+                    instanceId: instanceInfo.id,
+                    service: type,
+                  },
+                  {
+                    signal: abortController.signal,
+                  },
+                )
                 .responses.onMessage((message) => {
                   if (message.data.oneofKind === 'account') {
                     resolve(message.data.account);
@@ -258,6 +264,12 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           error: (e) => {
             console.error(e);
             return t('account.deviceCodeImportToast.error');
+          },
+          cancel: {
+            label: t('common:cancel'),
+            onClick: () => {
+              abortController.abort();
+            },
           },
         },
       );
