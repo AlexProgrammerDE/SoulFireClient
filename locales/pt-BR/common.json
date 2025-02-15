@@ -10,6 +10,14 @@
     },
     "connectionFailed": ""
   },
+  "notFound": {
+    "page": {
+      "title": "",
+      "description": "",
+      "logOut": "Sair",
+      "reloadPage": "Recarregar página"
+    }
+  },
   "pending": {
     "connecting": "Conectando..."
   },
