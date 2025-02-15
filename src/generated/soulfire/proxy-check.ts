@@ -39,13 +39,58 @@ export interface ProxyCheckResponseSingle {
     realIp: string;
 }
 /**
- * @generated from protobuf message soulfire.v1.ProxyCheckResponse
+ * Full response of all proxies that were checked
+ *
+ * @generated from protobuf message soulfire.v1.ProxyCheckFullList
  */
-export interface ProxyCheckResponse {
+export interface ProxyCheckFullList {
     /**
      * @generated from protobuf field: repeated soulfire.v1.ProxyCheckResponseSingle response = 1;
      */
     response: ProxyCheckResponseSingle[];
+}
+/**
+ * Used when a proxy is successfully checked
+ *
+ * @generated from protobuf message soulfire.v1.ProxyCheckOneSuccess
+ */
+export interface ProxyCheckOneSuccess {
+}
+/**
+ * Used when a proxy is not successfully checked
+ *
+ * @generated from protobuf message soulfire.v1.ProxyCheckOneFailure
+ */
+export interface ProxyCheckOneFailure {
+}
+/**
+ * @generated from protobuf message soulfire.v1.ProxyCheckResponse
+ */
+export interface ProxyCheckResponse {
+    /**
+     * @generated from protobuf oneof: data
+     */
+    data: {
+        oneofKind: "fullList";
+        /**
+         * @generated from protobuf field: soulfire.v1.ProxyCheckFullList full_list = 1;
+         */
+        fullList: ProxyCheckFullList;
+    } | {
+        oneofKind: "oneSuccess";
+        /**
+         * @generated from protobuf field: soulfire.v1.ProxyCheckOneSuccess one_success = 2;
+         */
+        oneSuccess: ProxyCheckOneSuccess;
+    } | {
+        oneofKind: "oneFailure";
+        /**
+         * @generated from protobuf field: soulfire.v1.ProxyCheckOneFailure one_failure = 3;
+         */
+        oneFailure: ProxyCheckOneFailure;
+    } | {
+        oneofKind: undefined;
+    };
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ProxyCheckRequest$Type extends MessageType<ProxyCheckRequest> {
@@ -76,10 +121,44 @@ class ProxyCheckResponseSingle$Type extends MessageType<ProxyCheckResponseSingle
  */
 export const ProxyCheckResponseSingle = new ProxyCheckResponseSingle$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class ProxyCheckFullList$Type extends MessageType<ProxyCheckFullList> {
+    constructor() {
+        super("soulfire.v1.ProxyCheckFullList", [
+            { no: 1, name: "response", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ProxyCheckResponseSingle }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ProxyCheckFullList
+ */
+export const ProxyCheckFullList = new ProxyCheckFullList$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ProxyCheckOneSuccess$Type extends MessageType<ProxyCheckOneSuccess> {
+    constructor() {
+        super("soulfire.v1.ProxyCheckOneSuccess", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ProxyCheckOneSuccess
+ */
+export const ProxyCheckOneSuccess = new ProxyCheckOneSuccess$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ProxyCheckOneFailure$Type extends MessageType<ProxyCheckOneFailure> {
+    constructor() {
+        super("soulfire.v1.ProxyCheckOneFailure", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ProxyCheckOneFailure
+ */
+export const ProxyCheckOneFailure = new ProxyCheckOneFailure$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class ProxyCheckResponse$Type extends MessageType<ProxyCheckResponse> {
     constructor() {
         super("soulfire.v1.ProxyCheckResponse", [
-            { no: 1, name: "response", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ProxyCheckResponseSingle }
+            { no: 1, name: "full_list", kind: "message", oneof: "data", T: () => ProxyCheckFullList },
+            { no: 2, name: "one_success", kind: "message", oneof: "data", T: () => ProxyCheckOneSuccess },
+            { no: 3, name: "one_failure", kind: "message", oneof: "data", T: () => ProxyCheckOneFailure }
         ]);
     }
 }
@@ -91,5 +170,5 @@ export const ProxyCheckResponse = new ProxyCheckResponse$Type();
  * @generated ServiceType for protobuf service soulfire.v1.ProxyCheckService
  */
 export const ProxyCheckService = new ServiceType("soulfire.v1.ProxyCheckService", [
-    { name: "check", options: {}, I: ProxyCheckRequest, O: ProxyCheckResponse }
+    { name: "check", serverStreaming: true, options: {}, I: ProxyCheckRequest, O: ProxyCheckResponse }
 ]);

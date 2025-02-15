@@ -7,16 +7,16 @@ import { ProxyCheckService } from "./proxy-check";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { ProxyCheckResponse } from "./proxy-check";
 import type { ProxyCheckRequest } from "./proxy-check";
-import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
+import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
 /**
  * @generated from protobuf service soulfire.v1.ProxyCheckService
  */
 export interface IProxyCheckServiceClient {
     /**
-     * @generated from protobuf rpc: check(soulfire.v1.ProxyCheckRequest) returns (soulfire.v1.ProxyCheckResponse);
+     * @generated from protobuf rpc: check(soulfire.v1.ProxyCheckRequest) returns (stream soulfire.v1.ProxyCheckResponse);
      */
-    check(input: ProxyCheckRequest, options?: RpcOptions): UnaryCall<ProxyCheckRequest, ProxyCheckResponse>;
+    check(input: ProxyCheckRequest, options?: RpcOptions): ServerStreamingCall<ProxyCheckRequest, ProxyCheckResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.ProxyCheckService
@@ -28,10 +28,10 @@ export class ProxyCheckServiceClient implements IProxyCheckServiceClient, Servic
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * @generated from protobuf rpc: check(soulfire.v1.ProxyCheckRequest) returns (soulfire.v1.ProxyCheckResponse);
+     * @generated from protobuf rpc: check(soulfire.v1.ProxyCheckRequest) returns (stream soulfire.v1.ProxyCheckResponse);
      */
-    check(input: ProxyCheckRequest, options?: RpcOptions): UnaryCall<ProxyCheckRequest, ProxyCheckResponse> {
+    check(input: ProxyCheckRequest, options?: RpcOptions): ServerStreamingCall<ProxyCheckRequest, ProxyCheckResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return stackIntercept<ProxyCheckRequest, ProxyCheckResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<ProxyCheckRequest, ProxyCheckResponse>("serverStreaming", this._transport, method, opt, input);
     }
 }

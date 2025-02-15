@@ -122,49 +122,80 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         .map((t) => t.trim())
         .filter((t) => t.length > 0);
       const service = new MCAuthServiceClient(transport);
-      toast.promise(
-        (async () => {
-          const accountsToAdd: ProfileAccount[] = [];
-          const {
-            response: { account },
-          } = await service.loginCredentials({
-            instanceId: instanceInfo.id,
-            service: accountTypeCredentialsSelected,
-            payload: textSplit,
-          });
 
-          if (account) {
-            accountsToAdd.push(...account);
-          }
+      let total = textSplit.length;
+      let failed = 0;
+      let success = 0;
+      const loadingReport = () =>
+        t('account.listImportToast.loading', {
+          checked: success + failed,
+          total,
+          success,
+          failed,
+        });
+      let toastId = toast.loading(loadingReport());
+      const responses = service.loginCredentials({
+        instanceId: instanceInfo.id,
+        service: accountTypeCredentialsSelected,
+        payload: textSplit,
+      }).responses;
+      responses.onMessage(async (r) => {
+        const data = r.data;
+        switch (data.oneofKind) {
+          case 'fullList':
+            const accountsToAdd = data.fullList.account;
+            const newProfile = {
+              ...profile,
+              accounts: [...profile.accounts, ...accountsToAdd],
+            };
 
-          await setProfileMutation({
-            ...profile,
-            accounts: [...profile.accounts, ...accountsToAdd],
-          });
-          return accountsToAdd.length;
-        })(),
-        {
-          loading: t('account.listImportToast.loading'),
-          success: (r) => {
-            if (r === 0) {
-              return t('account.listImportToast.allFailed');
-            } else if (r !== textSplit.length) {
-              return t('account.listImportToast.someFailed', {
-                count: r,
-                failed: textSplit.length - r,
+            await setProfileMutation(newProfile);
+
+            if (accountsToAdd.length === 0) {
+              toast.success(t('account.listImportToast.allFailed'), {
+                id: toastId,
               });
+            } else if (accountsToAdd.length !== textSplit.length) {
+              toast.success(
+                t('account.listImportToast.someFailed', {
+                  count: accountsToAdd.length,
+                  failed: textSplit.length - accountsToAdd.length,
+                }),
+                {
+                  id: toastId,
+                },
+              );
             } else {
-              return t('account.listImportToast.noneFailed', {
-                count: r,
-              });
+              toast.success(
+                t('account.listImportToast.noneFailed', {
+                  count: accountsToAdd.length,
+                }),
+                {
+                  id: toastId,
+                },
+              );
             }
-          },
-          error: (e) => {
-            console.error(e);
-            return t('account.listImportToast.error');
-          },
-        },
-      );
+            break;
+          case 'oneSuccess':
+            success++;
+            toast.loading(loadingReport(), {
+              id: toastId,
+            });
+            break;
+          case 'oneFailure':
+            failed++;
+            toast.loading(loadingReport(), {
+              id: toastId,
+            });
+            break;
+        }
+      });
+      responses.onError((e) => {
+        console.error(e);
+        toast.error(t('account.listImportToast.error'), {
+          id: toastId,
+        });
+      });
     },
     [
       accountTypeCredentialsSelected,

@@ -24,13 +24,58 @@ export interface CredentialsAuthRequest {
     payload: string[];
 }
 /**
- * @generated from protobuf message soulfire.v1.CredentialsAuthResponse
+ * Full response of all accounts that were authenticated
+ *
+ * @generated from protobuf message soulfire.v1.CredentialsAuthFullList
  */
-export interface CredentialsAuthResponse {
+export interface CredentialsAuthFullList {
     /**
      * @generated from protobuf field: repeated soulfire.v1.MinecraftAccountProto account = 1;
      */
     account: MinecraftAccountProto[];
+}
+/**
+ * Used when an account is successfully authenticated
+ *
+ * @generated from protobuf message soulfire.v1.CredentialsAuthOneSuccess
+ */
+export interface CredentialsAuthOneSuccess {
+}
+/**
+ * Used when an account is not successfully authenticated
+ *
+ * @generated from protobuf message soulfire.v1.CredentialsAuthOneFailure
+ */
+export interface CredentialsAuthOneFailure {
+}
+/**
+ * @generated from protobuf message soulfire.v1.CredentialsAuthResponse
+ */
+export interface CredentialsAuthResponse {
+    /**
+     * @generated from protobuf oneof: data
+     */
+    data: {
+        oneofKind: "fullList";
+        /**
+         * @generated from protobuf field: soulfire.v1.CredentialsAuthFullList full_list = 1;
+         */
+        fullList: CredentialsAuthFullList;
+    } | {
+        oneofKind: "oneSuccess";
+        /**
+         * @generated from protobuf field: soulfire.v1.CredentialsAuthOneSuccess one_success = 2;
+         */
+        oneSuccess: CredentialsAuthOneSuccess;
+    } | {
+        oneofKind: "oneFailure";
+        /**
+         * @generated from protobuf field: soulfire.v1.CredentialsAuthOneFailure one_failure = 3;
+         */
+        oneFailure: CredentialsAuthOneFailure;
+    } | {
+        oneofKind: undefined;
+    };
 }
 /**
  * @generated from protobuf message soulfire.v1.DeviceCodeAuthRequest
@@ -126,10 +171,44 @@ class CredentialsAuthRequest$Type extends MessageType<CredentialsAuthRequest> {
  */
 export const CredentialsAuthRequest = new CredentialsAuthRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class CredentialsAuthFullList$Type extends MessageType<CredentialsAuthFullList> {
+    constructor() {
+        super("soulfire.v1.CredentialsAuthFullList", [
+            { no: 1, name: "account", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => MinecraftAccountProto }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.CredentialsAuthFullList
+ */
+export const CredentialsAuthFullList = new CredentialsAuthFullList$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CredentialsAuthOneSuccess$Type extends MessageType<CredentialsAuthOneSuccess> {
+    constructor() {
+        super("soulfire.v1.CredentialsAuthOneSuccess", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.CredentialsAuthOneSuccess
+ */
+export const CredentialsAuthOneSuccess = new CredentialsAuthOneSuccess$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CredentialsAuthOneFailure$Type extends MessageType<CredentialsAuthOneFailure> {
+    constructor() {
+        super("soulfire.v1.CredentialsAuthOneFailure", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.CredentialsAuthOneFailure
+ */
+export const CredentialsAuthOneFailure = new CredentialsAuthOneFailure$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class CredentialsAuthResponse$Type extends MessageType<CredentialsAuthResponse> {
     constructor() {
         super("soulfire.v1.CredentialsAuthResponse", [
-            { no: 1, name: "account", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => MinecraftAccountProto }
+            { no: 1, name: "full_list", kind: "message", oneof: "data", T: () => CredentialsAuthFullList },
+            { no: 2, name: "one_success", kind: "message", oneof: "data", T: () => CredentialsAuthOneSuccess },
+            { no: 3, name: "one_failure", kind: "message", oneof: "data", T: () => CredentialsAuthOneFailure }
         ]);
     }
 }
@@ -207,7 +286,7 @@ export const RefreshResponse = new RefreshResponse$Type();
  * @generated ServiceType for protobuf service soulfire.v1.MCAuthService
  */
 export const MCAuthService = new ServiceType("soulfire.v1.MCAuthService", [
-    { name: "loginCredentials", options: {}, I: CredentialsAuthRequest, O: CredentialsAuthResponse },
+    { name: "loginCredentials", serverStreaming: true, options: {}, I: CredentialsAuthRequest, O: CredentialsAuthResponse },
     { name: "loginDeviceCode", serverStreaming: true, options: {}, I: DeviceCodeAuthRequest, O: DeviceCodeAuthResponse },
     { name: "refresh", options: {}, I: RefreshRequest, O: RefreshResponse }
 ]);

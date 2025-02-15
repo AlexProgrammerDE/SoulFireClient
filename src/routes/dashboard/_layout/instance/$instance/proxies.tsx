@@ -270,45 +270,73 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             .getFilteredSelectedRowModel()
             .rows.map((r) => r.original);
 
-          toast.promise(
-            (async () => {
-              const service = new ProxyCheckServiceClient(transport);
-              const result = await service.check({
-                instanceId: instanceInfo.id,
-                proxy: selectedRows,
-              });
-              const newProfile = {
-                ...profile,
-                proxies: profile.proxies.filter((a) => {
-                  const valid = result.response.response.find((r) =>
-                    deepEqual(r.proxy, a),
-                  );
+          let total = selectedRows.length;
+          let failed = 0;
+          let success = 0;
+          const loadingReport = () =>
+            t('proxy.checkToast.loading', {
+              checked: success + failed,
+              total,
+              success,
+              failed,
+            });
+          let toastId = toast.loading(loadingReport());
+          const service = new ProxyCheckServiceClient(transport);
+          const responses = service.check({
+            instanceId: instanceInfo.id,
+            proxy: selectedRows,
+          }).responses;
+          responses.onMessage(async (r) => {
+            const data = r.data;
+            switch (data.oneofKind) {
+              case 'fullList':
+                const newProfile = {
+                  ...profile,
+                  proxies: profile.proxies.filter((a) => {
+                    const valid = data.fullList.response.find((r) =>
+                      deepEqual(r.proxy, a),
+                    );
 
-                  // This one was not supposed to be checked
-                  if (valid === undefined) {
-                    return true;
-                  }
+                    // This one was not supposed to be checked
+                    if (valid === undefined) {
+                      return true;
+                    }
 
-                  return valid.valid;
-                }),
-              };
+                    return valid.valid;
+                  }),
+                };
 
-              await setProfileMutation(newProfile);
+                await setProfileMutation(newProfile);
 
-              return newProfile;
-            })(),
-            {
-              loading: t('proxy.checkToast.loading'),
-              success: (newProfile) =>
-                t('proxy.checkToast.success', {
-                  count: beforeSize - newProfile.proxies.length,
-                }),
-              error: (e) => {
-                console.error(e);
-                return t('proxy.checkToast.error');
-              },
-            },
-          );
+                toast.success(
+                  t('proxy.checkToast.success', {
+                    count: beforeSize - newProfile.proxies.length,
+                  }),
+                  {
+                    id: toastId,
+                  },
+                );
+                break;
+              case 'oneSuccess':
+                success++;
+                toast.loading(loadingReport(), {
+                  id: toastId,
+                });
+                break;
+              case 'oneFailure':
+                failed++;
+                toast.loading(loadingReport(), {
+                  id: toastId,
+                });
+                break;
+            }
+          });
+          responses.onError((e) => {
+            console.error(e);
+            toast.error(t('proxy.checkToast.error'), {
+              id: toastId,
+            });
+          });
         }}
       >
         <Wand2Icon className="h-4 w-4" />
