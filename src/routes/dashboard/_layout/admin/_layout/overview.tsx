@@ -15,7 +15,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { UserRole } from '@/generated/soulfire/common.ts';
-import { useQuery } from '@tanstack/react-query';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 import { LoadingComponent } from '@/components/loading-component.tsx';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import {
@@ -30,53 +30,54 @@ export const Route = createFileRoute(
   '/dashboard/_layout/admin/_layout/overview',
 )({
   beforeLoad: (props) => {
-    return {
-      infoQueryOptions: {
-        queryKey: ['overview-info'],
-        queryFn: async ({
-          signal,
-        }: {
-          signal: AbortSignal;
-        }): Promise<{
-          userList: UserListResponse;
-          instanceList: InstanceListResponse;
-        }> => {
-          const transport = createTransport();
-          if (transport === null) {
-            return {
-              userList: {
-                users: [],
-              },
-              instanceList: {
-                instances: [],
-              },
-            };
-          }
-
-          const userService = new UserServiceClient(transport);
-          const userResult = await userService.listUsers(
-            {},
-            {
-              abort: signal,
-            },
-          );
-
-          const instanceService = new InstanceServiceClient(transport);
-          const instanceResult = await instanceService.listInstances(
-            {},
-            {
-              abort: signal,
-            },
-          );
-
+    const infoQueryOptions = queryOptions({
+      queryKey: ['overview-info'],
+      queryFn: async (
+        props,
+      ): Promise<{
+        userList: UserListResponse;
+        instanceList: InstanceListResponse;
+      }> => {
+        const transport = createTransport();
+        if (transport === null) {
           return {
-            userList: userResult.response,
-            instanceList: instanceResult.response,
+            userList: {
+              users: [],
+            },
+            instanceList: {
+              instances: [],
+            },
           };
-        },
-        signal: props.abortController.signal,
-        refetchInterval: 3_000,
+        }
+
+        const userService = new UserServiceClient(transport);
+        const userResult = await userService.listUsers(
+          {},
+          {
+            abort: props.signal,
+          },
+        );
+
+        const instanceService = new InstanceServiceClient(transport);
+        const instanceResult = await instanceService.listInstances(
+          {},
+          {
+            abort: props.signal,
+          },
+        );
+
+        return {
+          userList: userResult.response,
+          instanceList: instanceResult.response,
+        };
       },
+      refetchInterval: 3_000,
+    });
+    props.abortController.signal.addEventListener('abort', () => {
+      void queryClientInstance.cancelQueries(infoQueryOptions);
+    });
+    return {
+      infoQueryOptions,
     };
   },
   loader: async (props) => {

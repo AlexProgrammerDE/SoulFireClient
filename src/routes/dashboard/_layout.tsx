@@ -19,7 +19,7 @@ import {
 } from '@/generated/soulfire/instance.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { queryClientInstance } from '@/lib/query.ts';
-import { useQuery } from '@tanstack/react-query';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 import { LoadingComponent } from '@/components/loading-component.tsx';
 import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
 import { useContext, useEffect } from 'react';
@@ -27,54 +27,53 @@ import { useTranslation } from 'react-i18next';
 import { ConnectingComponent } from '@/components/connecting-component.tsx';
 import { ErrorComponent } from '@/components/error-component.tsx';
 
-const listQueryFn = async ({
-  signal,
-}: {
-  signal: AbortSignal;
-}): Promise<{
-  instanceList: InstanceListResponse;
-}> => {
-  const transport = createTransport();
-  if (transport === null) {
-    return {
-      instanceList: {
-        instances: [
-          {
-            id: 'demo',
-            friendlyName: 'Demo',
-            icon: 'pickaxe',
-            state: InstanceState.RUNNING,
-            instancePermissions: [],
-          },
-        ],
-      },
-    };
-  }
-
-  const instanceService = new InstanceServiceClient(transport);
-  const result = await instanceService.listInstances(
-    {},
-    {
-      abort: signal,
-    },
-  );
-
-  return {
-    instanceList: result.response,
-  };
-};
-
 export const listQueryKey = ['instance-list'];
 export const Route = createFileRoute('/dashboard/_layout')({
-  beforeLoad: async ({ location, abortController }) => {
+  beforeLoad: async (props) => {
     if (isAuthenticated()) {
-      return {
-        listQueryOptions: {
-          queryKey: listQueryKey,
-          queryFn: listQueryFn,
-          signal: abortController.signal,
-          refetchInterval: 3_000,
+      const listQueryOptions = queryOptions({
+        queryKey: listQueryKey,
+        queryFn: async (
+          props,
+        ): Promise<{
+          instanceList: InstanceListResponse;
+        }> => {
+          const transport = createTransport();
+          if (transport === null) {
+            return {
+              instanceList: {
+                instances: [
+                  {
+                    id: 'demo',
+                    friendlyName: 'Demo',
+                    icon: 'pickaxe',
+                    state: InstanceState.RUNNING,
+                    instancePermissions: [],
+                  },
+                ],
+              },
+            };
+          }
+
+          const instanceService = new InstanceServiceClient(transport);
+          const result = await instanceService.listInstances(
+            {},
+            {
+              abort: props.signal,
+            },
+          );
+
+          return {
+            instanceList: result.response,
+          };
         },
+        refetchInterval: 3_000,
+      });
+      props.abortController.signal.addEventListener('abort', () => {
+        void queryClientInstance.cancelQueries(listQueryOptions);
+      });
+      return {
+        listQueryOptions,
       };
     } else {
       if (isTauri()) {
@@ -84,7 +83,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
       throw redirect({
         to: '/',
         search: {
-          redirect: location.href,
+          redirect: props.location.href,
         },
       });
     }

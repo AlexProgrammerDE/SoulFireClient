@@ -67,7 +67,15 @@ export function convertToInstanceProto(data: ProfileRoot): InstanceConfig {
   };
 }
 
-export function convertFromInstanceProto(data: InstanceConfig): ProfileRoot {
+export function convertFromInstanceProto(data?: InstanceConfig): ProfileRoot {
+  if (!data) {
+    return {
+      settings: {},
+      accounts: [],
+      proxies: [],
+    };
+  }
+
   const settings: Record<string, Record<string, JsonValue>> = {};
   for (const namespace of data.settings) {
     const entries: Record<string, JsonValue> = {};
