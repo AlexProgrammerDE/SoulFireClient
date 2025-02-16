@@ -1,5 +1,6 @@
 {
   "locale": "Locael",
+  "cancel": "cancel k?",
   "error": {
     "noAddressOrToken": "No servr addres or token findz",
     "page": {
