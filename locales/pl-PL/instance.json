@@ -24,7 +24,7 @@
       "error": "Nie udało się usunąć serwerów pośredniczących"
     },
     "checkToast": {
-      "loading": "Sprawdzanie serwerów pośredniczących...",
+      "loading": "",
       "success": "Usunięto {{count}} uszkodzonych serwerów pośredniczących!",
       "error": "Nie udało się sprawdzić serwerów pośredniczących"
     },
@@ -39,7 +39,7 @@
   "account": {
     "filterPlaceholder": "Filtruj konta...",
     "listImportToast": {
-      "loading": "Importowanie kont...",
+      "loading": "",
       "allFailed": "Nie udało się zaimportować żadnych kont",
       "someFailed": "Zaimportowano {{count}} kont, nie udało się zaimportować {{failed}} kont",
       "noneFailed": "Zaimportowano {{count}} kont!",

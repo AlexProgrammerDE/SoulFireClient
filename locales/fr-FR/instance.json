@@ -24,7 +24,7 @@
       "error": "Impossible de supprimer les proxys"
     },
     "checkToast": {
-      "loading": "Vérification des proxys ...",
+      "loading": "",
       "success": "{{count}} proxys corrompus supprimés !",
       "error": "Impossible de vérifier les proxys"
     },
@@ -39,7 +39,7 @@
   "account": {
     "filterPlaceholder": "Filtrer les comptes...",
     "listImportToast": {
-      "loading": "Importation des comptes...",
+      "loading": "",
       "allFailed": "Impossible d'importer les comptes",
       "someFailed": "",
       "noneFailed": "",

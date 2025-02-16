@@ -1,5 +1,6 @@
 {
   "locale": "Linguagem",
+  "cancel": "Cancelar",
   "error": {
     "noAddressOrToken": "Nenhum endereço de servidor ou token encontrado",
     "page": {
