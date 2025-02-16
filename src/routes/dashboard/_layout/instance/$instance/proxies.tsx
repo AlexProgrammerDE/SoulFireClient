@@ -297,7 +297,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               proxy: selectedRows,
             },
             {
-              signal: abortController.signal,
+              abort: abortController.signal,
             },
           ).responses;
           responses.onMessage(async (r) => {

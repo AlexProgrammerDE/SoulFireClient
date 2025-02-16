@@ -150,7 +150,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           payload: textSplit,
         },
         {
-          signal: abortController.signal,
+          abort: abortController.signal,
         },
       ).responses;
       responses.onMessage(async (r) => {
@@ -250,7 +250,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
                     service: type,
                   },
                   {
-                    signal: abortController.signal,
+                    abort: abortController.signal,
                   },
                 )
                 .responses.onMessage((message) => {
