@@ -1,5 +1,6 @@
 {
   "locale": "语言",
+  "cancel": "取消",
   "error": {
     "noAddressOrToken": "未找到服务器地址或令牌",
     "page": {

@@ -39,7 +39,7 @@
   "account": {
     "filterPlaceholder": "",
     "listImportToast": {
-      "loading": "Importando contas...",
+      "loading": "",
       "allFailed": "Falha ao importar contas",
       "someFailed": "{{count}} Contas importadas, falha ao importar {{failed}} contas",
       "noneFailed": "{{count}} Contas importadas!",

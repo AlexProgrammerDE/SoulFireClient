@@ -102,18 +102,20 @@ pub fn run() {
 
       #[cfg(desktop)]
       {
-        app.handle().plugin(tauri_plugin_updater::Builder::new().build())?;
-        let handle = app.handle().clone();
-        tauri::async_runtime::spawn(async move {
-          match updater::update(handle).await {
-            Ok(()) => {
-              info!("Updater finished");
+        if env::var("SOULFIRE_DISABLE_UPDATER").is_err() {
+          app.handle().plugin(tauri_plugin_updater::Builder::new().build())?;
+          let handle = app.handle().clone();
+          tauri::async_runtime::spawn(async move {
+            match updater::update(handle).await {
+              Ok(()) => {
+                info!("Updater finished");
+              }
+              Err(error) => {
+                error!("An updater error occurred! {error}");
+              }
             }
-            Err(error) => {
-              error!("An updater error occurred! {error}");
-            }
-          }
-        });
+          });
+        }
       }
 
       #[cfg(desktop)]

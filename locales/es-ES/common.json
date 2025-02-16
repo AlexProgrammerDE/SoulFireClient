@@ -1,5 +1,6 @@
 {
   "locale": "Configuración regional",
+  "cancel": "",
   "error": {
     "noAddressOrToken": "No se ha encontrado ninguna dirección de servidor o token",
     "page": {

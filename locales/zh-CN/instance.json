@@ -24,7 +24,7 @@
       "error": "删除代理失败"
     },
     "checkToast": {
-      "loading": "正在检查代理...",
+      "loading": "",
       "success": "删除了 {{count}} 个无效的代理!",
       "error": "无法检查代理"
     },
@@ -39,7 +39,7 @@
   "account": {
     "filterPlaceholder": "筛选账户...",
     "listImportToast": {
-      "loading": "导入帐户...",
+      "loading": "",
       "allFailed": "导入账户失败",
       "someFailed": "成功导入 {{count}} 个账户,  {{failed}} 个账户导入失败",
       "noneFailed": "已导入 {{count}} 个账户",
