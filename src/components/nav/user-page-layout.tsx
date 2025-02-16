@@ -13,7 +13,6 @@ import {
 } from '@/components/ui/breadcrumb.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import { ReactNode, useContext } from 'react';
-import { getCookie } from '@/lib/utils.tsx';
 import { UserSidebar } from '@/components/nav/user-sidebar.tsx';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
@@ -32,7 +31,7 @@ export default function UserPageLayout(props: {
 }) {
   const { t } = useTranslation('common');
   const clientInfo = useContext(ClientInfoContext);
-  const defaultOpen = getCookie('sidebar:state') === 'true';
+  const defaultOpen = localStorage.getItem('sidebar:state') === 'true';
 
   const CrumbComponent = (props: { crumb: string }) => (
     <>

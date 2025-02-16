@@ -15,7 +15,6 @@ import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import { ReactNode, useContext } from 'react';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { InstanceSidebar } from '@/components/nav/instance-sidebar.tsx';
-import { getCookie } from '@/lib/utils.tsx';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { BookOpenTextIcon, HomeIcon } from 'lucide-react';
@@ -32,7 +31,7 @@ export default function InstancePageLayout(props: {
 }) {
   const { t } = useTranslation('common');
   const instanceInfo = useContext(InstanceInfoContext);
-  const defaultOpen = getCookie('sidebar:state') === 'true';
+  const defaultOpen = localStorage.getItem('sidebar:state') === 'true';
 
   const CrumbComponent = (props: { crumb: string }) => (
     <>
