@@ -6,50 +6,30 @@ export const demoData: ClientDataResponse = {
   role: 0,
   email: 'root@soulfiremc.com',
   serverPermissions: [
-    {
-      globalPermission: 0,
-      granted: true,
-    },
+    { globalPermission: 0, granted: true },
     {
       globalPermission: 1,
       granted: true,
     },
-    {
-      globalPermission: 2,
-      granted: true,
-    },
-    {
-      globalPermission: 3,
-      granted: true,
-    },
+    { globalPermission: 2, granted: true },
+    { globalPermission: 3, granted: true },
     {
       globalPermission: 4,
       granted: true,
     },
-    {
-      globalPermission: 5,
-      granted: true,
-    },
-    {
-      globalPermission: 6,
-      granted: true,
-    },
+    { globalPermission: 5, granted: true },
+    { globalPermission: 6, granted: true },
     {
       globalPermission: 7,
       granted: true,
     },
-    {
-      globalPermission: 8,
-      granted: true,
-    },
+    { globalPermission: 8, granted: true },
+    { globalPermission: 11, granted: true },
     {
       globalPermission: 9,
       granted: true,
     },
-    {
-      globalPermission: 10,
-      granted: true,
-    },
+    { globalPermission: 10, granted: true },
   ],
   plugins: [
     {
@@ -112,7 +92,8 @@ export const demoData: ClientDataResponse = {
     {
       id: 'server-list-bypass',
       version: '1.0.0',
-      description: 'Bypasses server list anti-bots',
+      description:
+        'Pings the server list before connecting. (Bypasses anti-bots like EpicGuard)',
       author: 'AlexProgrammerDE',
       license: 'GPL-3.0',
       website: 'https://soulfiremc.com',
@@ -138,6 +119,15 @@ export const demoData: ClientDataResponse = {
       id: 'auto-eat',
       version: '1.0.0',
       description: 'Automatically eats food when hungry',
+      author: 'AlexProgrammerDE',
+      license: 'GPL-3.0',
+      website: 'https://soulfiremc.com',
+    },
+    {
+      id: 'chat-logger',
+      version: '1.0.0',
+      description:
+        'Logs all received chat messages to the terminal\nIncludes deduplication to prevent spamming the same message too often',
       author: 'AlexProgrammerDE',
       license: 'GPL-3.0',
       website: 'https://soulfiremc.com',
@@ -184,21 +174,20 @@ export const demoData: ClientDataResponse = {
       website: 'https://soulfiremc.com',
     },
     {
-      id: 'chat-message-logger',
-      version: '1.0.0',
-      description:
-        'Logs all received chat messages to the terminal\nIncludes deduplication to prevent spamming the same message too often',
-      author: 'AlexProgrammerDE',
-      license: 'GPL-3.0',
-      website: 'https://soulfiremc.com',
-    },
-    {
       id: 'fake-virtual-host',
       version: '1.0.0',
       description: 'Fakes the virtual host',
       author: 'AlexProgrammerDE',
       license: 'GPL-3.0',
       website: 'https://soulfiremc.com',
+    },
+    {
+      id: 'soulfire-example-plugin',
+      version: '1.0.0-SNAPSHOT',
+      description: 'Example of how to make a plugin for SoulFire.',
+      author: 'Pistonmaster',
+      license: 'MIT',
+      website: 'https://github.com/AlexProgrammerDE/SoulFirePluginExample',
     },
     {
       id: 'mod-loader-support',
@@ -240,32 +229,159 @@ export const demoData: ClientDataResponse = {
           },
         },
         {
-          key: 'have-i-been-pwned-check',
+          key: 'allow-creating-instances',
           type: {
             value: {
               oneofKind: 'bool',
               bool: {
-                uiName: 'Have I Been Pwned check',
-                description:
-                  'Check if passwords are strong using the secure haveibeenpwned.com API',
+                uiName: 'Allow creating instances',
+                description: 'Allow (non-admin) users to create instances.',
                 def: true,
               },
             },
           },
         },
         {
-          key: 'have-i-been-pwned-limit',
+          key: 'allow-deleting-instances',
+          type: {
+            value: {
+              oneofKind: 'bool',
+              bool: {
+                uiName: 'Allow deleting instances',
+                description: 'Allow the owner of an instance to delete it.',
+                def: true,
+              },
+            },
+          },
+        },
+        {
+          key: 'allow-changing-instance-meta',
+          type: {
+            value: {
+              oneofKind: 'bool',
+              bool: {
+                uiName: 'Allow changing instance meta',
+                description:
+                  'Allow the owner of an instance to change meta like instance name and icon.',
+                def: true,
+              },
+            },
+          },
+        },
+        {
+          key: 'email-type',
+          type: {
+            value: {
+              oneofKind: 'combo',
+              combo: {
+                uiName: 'Email Type',
+                description: 'How emails should be delivered.',
+                options: [
+                  { id: 'CONSOLE', displayName: 'Console' },
+                  { id: 'SMTP', displayName: 'SMTP' },
+                ],
+                def: 'CONSOLE',
+              },
+            },
+          },
+        },
+        {
+          key: 'smtp-host',
+          type: {
+            value: {
+              oneofKind: 'string',
+              string: {
+                uiName: 'SMTP Host',
+                description: 'SMTP server host to use for sending emails.',
+                def: 'smtp.gmail.com',
+                secret: false,
+                textarea: false,
+                placeholder: '',
+              },
+            },
+          },
+        },
+        {
+          key: 'smtp-port',
           type: {
             value: {
               oneofKind: 'int',
               int: {
-                uiName: 'Have I Been Pwned limit',
-                description:
-                  'If the password is used more than this number of times, it is considered unsafe.',
-                def: 0,
-                min: 0,
-                max: 2147483647,
+                uiName: 'SMTP Port',
+                description: 'SMTP server port to use for sending emails.',
+                def: 587,
+                min: 1,
+                max: 65535,
                 step: 1,
+                placeholder: '',
+              },
+            },
+          },
+        },
+        {
+          key: 'smtp-username',
+          type: {
+            value: {
+              oneofKind: 'string',
+              string: {
+                uiName: 'SMTP Username',
+                description: 'Username to use for SMTP authentication.',
+                def: '',
+                secret: false,
+                textarea: false,
+                placeholder: '',
+              },
+            },
+          },
+        },
+        {
+          key: 'smtp-password',
+          type: {
+            value: {
+              oneofKind: 'string',
+              string: {
+                uiName: 'SMTP Password',
+                description: 'Password to use for SMTP authentication.',
+                def: '',
+                secret: true,
+                textarea: false,
+                placeholder: '',
+              },
+            },
+          },
+        },
+        {
+          key: 'smtp-type',
+          type: {
+            value: {
+              oneofKind: 'combo',
+              combo: {
+                uiName: 'SMTP Type',
+                description: 'Type of encryption to use for SMTP.',
+                options: [
+                  { id: 'STARTTLS', displayName: 'STARTTLS' },
+                  {
+                    id: 'SSL_TLS',
+                    displayName: 'SSL/TLS',
+                  },
+                  { id: 'NONE', displayName: 'None' },
+                ],
+                def: 'STARTTLS',
+              },
+            },
+          },
+        },
+        {
+          key: 'smtp-from',
+          type: {
+            value: {
+              oneofKind: 'string',
+              string: {
+                uiName: 'SMTP From',
+                description: 'Email address to use as sender for emails.',
+                def: 'soulfire@gmail.com',
+                secret: false,
+                textarea: false,
                 placeholder: '',
               },
             },
@@ -415,346 +531,217 @@ export const demoData: ClientDataResponse = {
                 uiName: 'Protocol Version',
                 description: 'Minecraft protocol version to use',
                 options: [
-                  {
-                    id: 'SPECIAL|766',
-                    displayName: 'Bedrock 1.21.50',
-                  },
+                  { id: 'SPECIAL|766', displayName: 'Bedrock 1.21.50' },
                   {
                     id: 'RELEASE|769',
                     displayName: '1.21.4',
                   },
-                  {
-                    id: 'RELEASE|768',
-                    displayName: '1.21.2-1.21.3',
-                  },
+                  { id: 'RELEASE|768', displayName: '1.21.2-1.21.3' },
                   {
                     id: 'RELEASE|767',
                     displayName: '1.21-1.21.1',
                   },
-                  {
-                    id: 'RELEASE|766',
-                    displayName: '1.20.5-1.20.6',
-                  },
+                  { id: 'RELEASE|766', displayName: '1.20.5-1.20.6' },
                   {
                     id: 'RELEASE|765',
                     displayName: '1.20.3-1.20.4',
                   },
-                  {
-                    id: 'RELEASE|764',
-                    displayName: '1.20.2',
-                  },
+                  { id: 'RELEASE|764', displayName: '1.20.2' },
                   {
                     id: 'RELEASE|763',
                     displayName: '1.20-1.20.1',
                   },
-                  {
-                    id: 'RELEASE|762',
-                    displayName: '1.19.4',
-                  },
+                  { id: 'RELEASE|762', displayName: '1.19.4' },
                   {
                     id: 'RELEASE|761',
                     displayName: '1.19.3',
                   },
-                  {
-                    id: 'RELEASE|760',
-                    displayName: '1.19.1-1.19.2',
-                  },
+                  { id: 'RELEASE|760', displayName: '1.19.1-1.19.2' },
                   {
                     id: 'RELEASE|759',
                     displayName: '1.19',
                   },
-                  {
-                    id: 'RELEASE|758',
-                    displayName: '1.18.2',
-                  },
+                  { id: 'RELEASE|758', displayName: '1.18.2' },
                   {
                     id: 'RELEASE|757',
                     displayName: '1.18-1.18.1',
                   },
-                  {
-                    id: 'RELEASE|756',
-                    displayName: '1.17.1',
-                  },
+                  { id: 'RELEASE|756', displayName: '1.17.1' },
                   {
                     id: 'RELEASE|755',
                     displayName: '1.17',
                   },
-                  {
-                    id: 'RELEASE|754',
-                    displayName: '1.16.4-1.16.5',
-                  },
+                  { id: 'RELEASE|754', displayName: '1.16.4-1.16.5' },
                   {
                     id: 'RELEASE|753',
                     displayName: '1.16.3',
                   },
-                  {
-                    id: 'RELEASE|751',
-                    displayName: '1.16.2',
-                  },
+                  { id: 'RELEASE|751', displayName: '1.16.2' },
                   {
                     id: 'SPECIAL|803',
                     displayName: 'Combat Test 8c',
                   },
-                  {
-                    id: 'RELEASE|736',
-                    displayName: '1.16.1',
-                  },
+                  { id: 'RELEASE|736', displayName: '1.16.1' },
                   {
                     id: 'RELEASE|735',
                     displayName: '1.16',
                   },
-                  {
-                    id: 'SPECIAL|709',
-                    displayName: '20w14infinite',
-                  },
+                  { id: 'SPECIAL|709', displayName: '20w14infinite' },
                   {
                     id: 'RELEASE|578',
                     displayName: '1.15.2',
                   },
-                  {
-                    id: 'RELEASE|575',
-                    displayName: '1.15.1',
-                  },
+                  { id: 'RELEASE|575', displayName: '1.15.1' },
                   {
                     id: 'RELEASE|573',
                     displayName: '1.15',
                   },
-                  {
-                    id: 'RELEASE|498',
-                    displayName: '1.14.4',
-                  },
+                  { id: 'RELEASE|498', displayName: '1.14.4' },
                   {
                     id: 'RELEASE|490',
                     displayName: '1.14.3',
                   },
-                  {
-                    id: 'RELEASE|485',
-                    displayName: '1.14.2',
-                  },
+                  { id: 'RELEASE|485', displayName: '1.14.2' },
                   {
                     id: 'RELEASE|480',
                     displayName: '1.14.1',
                   },
-                  {
-                    id: 'RELEASE|477',
-                    displayName: '1.14',
-                  },
+                  { id: 'RELEASE|477', displayName: '1.14' },
                   {
                     id: 'SPECIAL|1',
                     displayName: '3D Shareware',
                   },
-                  {
-                    id: 'RELEASE|404',
-                    displayName: '1.13.2',
-                  },
+                  { id: 'RELEASE|404', displayName: '1.13.2' },
                   {
                     id: 'RELEASE|401',
                     displayName: '1.13.1',
                   },
-                  {
-                    id: 'RELEASE|393',
-                    displayName: '1.13',
-                  },
+                  { id: 'RELEASE|393', displayName: '1.13' },
                   {
                     id: 'RELEASE|340',
                     displayName: '1.12.2',
                   },
-                  {
-                    id: 'RELEASE|338',
-                    displayName: '1.12.1',
-                  },
+                  { id: 'RELEASE|338', displayName: '1.12.1' },
                   {
                     id: 'RELEASE|335',
                     displayName: '1.12',
                   },
-                  {
-                    id: 'RELEASE|316',
-                    displayName: '1.11.1-1.11.2',
-                  },
+                  { id: 'RELEASE|316', displayName: '1.11.1-1.11.2' },
                   {
                     id: 'RELEASE|315',
                     displayName: '1.11',
                   },
-                  {
-                    id: 'RELEASE|210',
-                    displayName: '1.10.x',
-                  },
+                  { id: 'RELEASE|210', displayName: '1.10.x' },
                   {
                     id: 'RELEASE|110',
                     displayName: '1.9.3-1.9.4',
                   },
-                  {
-                    id: 'RELEASE|109',
-                    displayName: '1.9.2',
-                  },
+                  { id: 'RELEASE|109', displayName: '1.9.2' },
                   {
                     id: 'RELEASE|108',
                     displayName: '1.9.1',
                   },
-                  {
-                    id: 'RELEASE|107',
-                    displayName: '1.9',
-                  },
+                  { id: 'RELEASE|107', displayName: '1.9' },
                   {
                     id: 'RELEASE|47',
                     displayName: '1.8.x',
                   },
-                  {
-                    id: 'RELEASE|5',
-                    displayName: '1.7.6-1.7.10',
-                  },
+                  { id: 'RELEASE|5', displayName: '1.7.6-1.7.10' },
                   {
                     id: 'RELEASE|4',
                     displayName: '1.7.2-1.7.5',
                   },
-                  {
-                    id: 'RELEASE_INITIAL|78',
-                    displayName: '1.6.4',
-                  },
+                  { id: 'RELEASE_INITIAL|78', displayName: '1.6.4' },
                   {
                     id: 'RELEASE_INITIAL|74',
                     displayName: '1.6.2',
                   },
-                  {
-                    id: 'RELEASE_INITIAL|73',
-                    displayName: '1.6.1',
-                  },
+                  { id: 'RELEASE_INITIAL|73', displayName: '1.6.1' },
                   {
                     id: 'RELEASE_INITIAL|61',
                     displayName: '1.5.2',
                   },
-                  {
-                    id: 'RELEASE_INITIAL|60',
-                    displayName: '1.5-1.5.1',
-                  },
+                  { id: 'RELEASE_INITIAL|60', displayName: '1.5-1.5.1' },
                   {
                     id: 'RELEASE_INITIAL|51',
                     displayName: '1.4.6-1.4.7',
                   },
-                  {
-                    id: 'RELEASE_INITIAL|49',
-                    displayName: '1.4.4-1.4.5',
-                  },
+                  { id: 'RELEASE_INITIAL|49', displayName: '1.4.4-1.4.5' },
                   {
                     id: 'RELEASE_INITIAL|47',
                     displayName: '1.4.2',
                   },
-                  {
-                    id: 'RELEASE_INITIAL|39',
-                    displayName: '1.3.1-1.3.2',
-                  },
+                  { id: 'RELEASE_INITIAL|39', displayName: '1.3.1-1.3.2' },
                   {
                     id: 'RELEASE_INITIAL|29',
                     displayName: '1.2.4-1.2.5',
                   },
-                  {
-                    id: 'RELEASE_INITIAL|28',
-                    displayName: '1.2.1-1.2.3',
-                  },
+                  { id: 'RELEASE_INITIAL|28', displayName: '1.2.1-1.2.3' },
                   {
                     id: 'RELEASE_INITIAL|23',
                     displayName: '1.1',
                   },
-                  {
-                    id: 'RELEASE_INITIAL|22',
-                    displayName: '1.0.0-1.0.1',
-                  },
+                  { id: 'RELEASE_INITIAL|22', displayName: '1.0.0-1.0.1' },
                   {
                     id: 'BETA_LATER|17',
                     displayName: 'b1.8-b1.8.1',
                   },
-                  {
-                    id: 'BETA_LATER|14',
-                    displayName: 'b1.7-b1.7.3',
-                  },
+                  { id: 'BETA_LATER|14', displayName: 'b1.7-b1.7.3' },
                   {
                     id: 'BETA_LATER|13',
                     displayName: 'b1.6-b1.6.6',
                   },
-                  {
-                    id: 'BETA_LATER|11',
-                    displayName: 'b1.5-b1.5.2',
-                  },
+                  { id: 'BETA_LATER|11', displayName: 'b1.5-b1.5.2' },
                   {
                     id: 'BETA_LATER|10',
                     displayName: 'b1.4-b1.4.1',
                   },
-                  {
-                    id: 'BETA_LATER|9',
-                    displayName: 'b1.3-b1.3.1',
-                  },
+                  { id: 'BETA_LATER|9', displayName: 'b1.3-b1.3.1' },
                   {
                     id: 'BETA_LATER|8',
                     displayName: 'b1.2-b1.2.2',
                   },
-                  {
-                    id: 'BETA_INITIAL|8',
-                    displayName: 'b1.1.2',
-                  },
+                  { id: 'BETA_INITIAL|8', displayName: 'b1.1.2' },
                   {
                     id: 'BETA_INITIAL|7',
                     displayName: 'b1.0-b1.1.1',
                   },
-                  {
-                    id: 'ALPHA_LATER|6',
-                    displayName: 'a1.2.3.5-a1.2.6',
-                  },
+                  { id: 'ALPHA_LATER|6', displayName: 'a1.2.3.5-a1.2.6' },
                   {
                     id: 'ALPHA_LATER|5',
                     displayName: 'a1.2.3-a1.2.3.4',
                   },
-                  {
-                    id: 'ALPHA_LATER|4',
-                    displayName: 'a1.2.2',
-                  },
+                  { id: 'ALPHA_LATER|4', displayName: 'a1.2.2' },
                   {
                     id: 'ALPHA_LATER|3',
                     displayName: 'a1.2.0-a1.2.1.1',
                   },
-                  {
-                    id: 'ALPHA_LATER|2',
-                    displayName: 'a1.1.0-a1.1.2.1',
-                  },
+                  { id: 'ALPHA_LATER|2', displayName: 'a1.1.0-a1.1.2.1' },
                   {
                     id: 'ALPHA_LATER|1',
                     displayName: 'a1.0.17-a1.0.17.4',
                   },
-                  {
-                    id: 'ALPHA_INITIAL|14',
-                    displayName: 'a1.0.16-a1.0.16.2',
-                  },
+                  { id: 'ALPHA_INITIAL|14', displayName: 'a1.0.16-a1.0.16.2' },
                   {
                     id: 'ALPHA_INITIAL|13',
                     displayName: 'a1.0.15',
                   },
-                  {
-                    id: 'SPECIAL|7',
-                    displayName: 'c0.30 CPE',
-                  },
+                  { id: 'SPECIAL|7', displayName: 'c0.30 CPE' },
                   {
                     id: 'CLASSIC|7',
                     displayName: 'c0.28-c0.30',
                   },
-                  {
-                    id: 'CLASSIC|6',
-                    displayName: 'c0.0.20a-c0.27',
-                  },
+                  { id: 'CLASSIC|6', displayName: 'c0.0.20a-c0.27' },
                   {
                     id: 'CLASSIC|5',
                     displayName: 'c0.0.19a-06',
                   },
-                  {
-                    id: 'CLASSIC|4',
-                    displayName: 'c0.0.18a-02',
-                  },
+                  { id: 'CLASSIC|4', displayName: 'c0.0.18a-02' },
                   {
                     id: 'CLASSIC|3',
                     displayName: 'c0.0.16a-02',
                   },
-                  {
-                    id: 'CLASSIC|0',
-                    displayName: 'c0.0.15a-1',
-                  },
+                  { id: 'CLASSIC|0', displayName: 'c0.0.15a-1' },
                 ],
                 def: 'RELEASE|769',
               },
@@ -895,14 +882,14 @@ export const demoData: ClientDataResponse = {
           },
         },
         {
-          key: 'use-proxies-for-account-import',
+          key: 'use-proxies-for-account-auth',
           type: {
             value: {
               oneofKind: 'bool',
               bool: {
-                uiName: 'Use proxies for account import',
+                uiName: 'Use proxies for account auth',
                 description:
-                  'Should the imported proxies be used to import accounts? (Contact Microsoft login, input credentials, etc.)\nOtherwise the SF server will import accounts directly.',
+                  'Should the imported proxies be used to authenticate accounts? (Contact Microsoft login, input credentials, etc.)\nOtherwise the SF server will authenticate accounts directly.',
                 def: false,
               },
             },
@@ -974,16 +961,27 @@ export const demoData: ClientDataResponse = {
                 description:
                   'What service to use to check if a proxy is working',
                 options: [
-                  {
-                    id: 'IPIFY',
-                    displayName: 'IPIFY',
-                  },
-                  {
-                    id: 'AWS',
-                    displayName: 'AWS',
-                  },
+                  { id: 'IPIFY', displayName: 'IPIFY' },
+                  { id: 'AWS', displayName: 'AWS' },
                 ],
                 def: 'IPIFY',
+              },
+            },
+          },
+        },
+        {
+          key: 'proxy-check-concurrency',
+          type: {
+            value: {
+              oneofKind: 'int',
+              int: {
+                uiName: 'Proxy check concurrency',
+                description: 'Amount of proxies to check at the same time',
+                def: 10,
+                min: 1,
+                max: 2147483647,
+                step: 1,
+                placeholder: '',
               },
             },
           },
@@ -1107,6 +1105,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'footprints',
       owningPlugin: 'auto-jump',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Client Brand',
@@ -1144,6 +1143,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'fingerprint',
       owningPlugin: 'client-brand',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'AI Chat Bot',
@@ -1245,6 +1245,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'bot-message-square',
       owningPlugin: 'ai-chat-bot',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Auto Reconnect',
@@ -1287,6 +1288,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'refresh-ccw',
       owningPlugin: 'auto-reconnect',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Client Settings',
@@ -1349,18 +1351,12 @@ export const demoData: ClientDataResponse = {
                 description:
                   'What type of chat messages the client will receive',
                 options: [
-                  {
-                    id: 'FULL',
-                    displayName: 'Full',
-                  },
+                  { id: 'FULL', displayName: 'Full' },
                   {
                     id: 'SYSTEM',
                     displayName: 'System',
                   },
-                  {
-                    id: 'HIDDEN',
-                    displayName: 'Hidden',
-                  },
+                  { id: 'HIDDEN', displayName: 'Hidden' },
                 ],
                 def: 'FULL',
               },
@@ -1482,10 +1478,7 @@ export const demoData: ClientDataResponse = {
                 uiName: 'Hand preference',
                 description: 'What hand the client prefers to use for items',
                 options: [
-                  {
-                    id: 'LEFT_HAND',
-                    displayName: 'Left Hand',
-                  },
+                  { id: 'LEFT_HAND', displayName: 'Left Hand' },
                   {
                     id: 'RIGHT_HAND',
                     displayName: 'Right Hand',
@@ -1532,18 +1525,12 @@ export const demoData: ClientDataResponse = {
                 uiName: 'Particle Status',
                 description: 'How many particles the client will render',
                 options: [
-                  {
-                    id: 'ALL',
-                    displayName: 'All',
-                  },
+                  { id: 'ALL', displayName: 'All' },
                   {
                     id: 'DECREASED',
                     displayName: 'Decreased',
                   },
-                  {
-                    id: 'MINIMAL',
-                    displayName: 'Minimal',
-                  },
+                  { id: 'MINIMAL', displayName: 'Minimal' },
                 ],
                 def: 'ALL',
               },
@@ -1553,6 +1540,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'settings-2',
       owningPlugin: 'client-settings',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Chat Control',
@@ -1591,6 +1579,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'joystick',
       owningPlugin: 'chat-control',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Auto Register',
@@ -1677,6 +1666,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'key-round',
       owningPlugin: 'auto-register',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Server List Bypass',
@@ -1690,7 +1680,7 @@ export const demoData: ClientDataResponse = {
               bool: {
                 uiName: 'Enable Server List Bypass',
                 description:
-                  'Whether to ping the server list before connecting. (Bypasses anti-bots like EpicGuard)',
+                  'Whether to ping the server list before connecting.',
                 def: false,
               },
             },
@@ -1720,6 +1710,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'network',
       owningPlugin: 'server-list-bypass',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Anti AFK',
@@ -1783,6 +1774,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'activity',
       owningPlugin: 'anti-afk',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Auto Totem',
@@ -1825,6 +1817,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'cross',
       owningPlugin: 'auto-totem',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Auto Eat',
@@ -1867,6 +1860,47 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'drumstick',
       owningPlugin: 'auto-eat',
+      enabledKey: 'enabled',
+    },
+    {
+      pageName: 'Chat Logger',
+      namespace: 'chat-logger',
+      entries: [
+        {
+          key: 'enabled',
+          type: {
+            value: {
+              oneofKind: 'bool',
+              bool: {
+                uiName: 'Log chat to terminal',
+                description: 'Log all received chat messages to the terminal',
+                def: true,
+              },
+            },
+          },
+        },
+        {
+          key: 'deduplicate-amount',
+          type: {
+            value: {
+              oneofKind: 'int',
+              int: {
+                uiName: 'Deduplicate amount',
+                description:
+                  'How often should the same message be logged before it will not be logged again? (within 5 seconds)',
+                def: 1,
+                min: 1,
+                max: 2147483647,
+                step: 1,
+                placeholder: '',
+              },
+            },
+          },
+        },
+      ],
+      iconId: 'logs',
+      owningPlugin: 'chat-logger',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Auto Armor',
@@ -1909,6 +1943,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'shield',
       owningPlugin: 'auto-armor',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'POV Server',
@@ -1978,6 +2013,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'view',
       owningPlugin: 'pov-server',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Auto Chat Message',
@@ -2034,6 +2070,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'message-circle-code',
       owningPlugin: 'auto-chat-message',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Kill Aura',
@@ -2175,6 +2212,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'skull',
       owningPlugin: 'kill-aura',
+      enabledKey: 'enable',
     },
     {
       pageName: 'Auto Respawn',
@@ -2217,45 +2255,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'repeat',
       owningPlugin: 'auto-respawn',
-    },
-    {
-      pageName: 'Chat Message Logger',
-      namespace: 'chat-message-logger',
-      entries: [
-        {
-          key: 'enabled',
-          type: {
-            value: {
-              oneofKind: 'bool',
-              bool: {
-                uiName: 'Log chat to terminal',
-                description: 'Log all received chat messages to the terminal',
-                def: true,
-              },
-            },
-          },
-        },
-        {
-          key: 'deduplicate-amount',
-          type: {
-            value: {
-              oneofKind: 'int',
-              int: {
-                uiName: 'Deduplicate amount',
-                description:
-                  'How often should the same message be logged before it will not be logged again? (within 5 seconds)',
-                def: 1,
-                min: 1,
-                max: 2147483647,
-                step: 1,
-                placeholder: '',
-              },
-            },
-          },
-        },
-      ],
-      iconId: 'logs',
-      owningPlugin: 'chat-message-logger',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Fake Virtual Host',
@@ -2311,11 +2311,64 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'globe',
       owningPlugin: 'fake-virtual-host',
+      enabledKey: 'enabled',
+    },
+    {
+      pageName: 'Hack Jump Boost',
+      namespace: 'hack-jump-boost',
+      entries: [
+        {
+          key: 'enabled',
+          type: {
+            value: {
+              oneofKind: 'bool',
+              bool: {
+                uiName: 'Enable Hack Jump Boost',
+                description: 'Should we hack to add fake jump boost?',
+                def: true,
+              },
+            },
+          },
+        },
+        {
+          key: 'jump-boost-level',
+          type: {
+            value: {
+              oneofKind: 'int',
+              int: {
+                uiName: 'Jump Boost Level',
+                description: 'The level of jump boost',
+                def: 2,
+                min: 0,
+                max: 255,
+                step: 1,
+                placeholder: '',
+              },
+            },
+          },
+        },
+      ],
+      iconId: 'rabbit',
+      owningPlugin: 'soulfire-example-plugin',
+      enabledKey: 'enabled',
     },
     {
       pageName: 'Forwarding Bypass',
       namespace: 'forwarding-bypass',
       entries: [
+        {
+          key: 'enabled',
+          type: {
+            value: {
+              oneofKind: 'bool',
+              bool: {
+                uiName: 'Enable forwarding bypass',
+                description: 'Enable the forwarding bypass',
+                def: false,
+              },
+            },
+          },
+        },
         {
           key: 'forwarding-mode',
           type: {
@@ -2325,28 +2378,15 @@ export const demoData: ClientDataResponse = {
                 uiName: 'Forwarding mode',
                 description: 'What type of forwarding to use',
                 options: [
-                  {
-                    id: 'NONE',
-                    displayName: 'None',
-                  },
-                  {
-                    id: 'LEGACY',
-                    displayName: 'Legacy',
-                  },
+                  { id: 'LEGACY', displayName: 'Legacy' },
                   {
                     id: 'BUNGEE_GUARD',
                     displayName: 'BungeeGuard',
                   },
-                  {
-                    id: 'MODERN',
-                    displayName: 'Modern',
-                  },
-                  {
-                    id: 'SF_BYPASS',
-                    displayName: 'SoulFire Bypass',
-                  },
+                  { id: 'MODERN', displayName: 'Modern' },
+                  { id: 'SF_BYPASS', displayName: 'SoulFire Bypass' },
                 ],
-                def: 'NONE',
+                def: 'LEGACY',
               },
             },
           },
@@ -2371,6 +2411,7 @@ export const demoData: ClientDataResponse = {
       ],
       iconId: 'milestone',
       owningPlugin: 'forwarding-bypass',
+      enabledKey: 'enabled',
     },
   ],
 };
