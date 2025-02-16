@@ -13,7 +13,7 @@ import {
   ProfileRoot,
 } from '@/lib/types.ts';
 import { ProxyProto_Type } from '@/generated/soulfire/common.ts';
-import { toast } from 'sonner';
+import { ExternalToast, toast } from 'sonner';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -270,6 +270,15 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             .getFilteredSelectedRowModel()
             .rows.map((r) => r.original);
 
+          const abortController = new AbortController();
+          const loadingData: ExternalToast = {
+            cancel: {
+              label: t('common:cancel'),
+              onClick: () => {
+                abortController.abort();
+              },
+            },
+          };
           let total = selectedRows.length;
           let failed = 0;
           let success = 0;
@@ -280,7 +289,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               success,
               failed,
             });
-          let toastId = toast.loading(loadingReport());
+          let toastId = toast.loading(loadingReport(), loadingData);
           const service = new ProxyCheckServiceClient(transport);
           const responses = service.check({
             instanceId: instanceInfo.id,
@@ -321,12 +330,14 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
                 success++;
                 toast.loading(loadingReport(), {
                   id: toastId,
+                  ...loadingData,
                 });
                 break;
               case 'oneFailure':
                 failed++;
                 toast.loading(loadingReport(), {
                   id: toastId,
+                  ...loadingData,
                 });
                 break;
             }

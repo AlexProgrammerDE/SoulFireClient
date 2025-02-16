@@ -25,7 +25,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
-import { toast } from 'sonner';
+import { ExternalToast, toast } from 'sonner';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { MCAuthServiceClient } from '@/generated/soulfire/mc-auth.client.ts';
 import ImportDialog from '@/components/dialog/import-dialog.tsx';
@@ -123,6 +123,15 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         .filter((t) => t.length > 0);
       const service = new MCAuthServiceClient(transport);
 
+      const abortController = new AbortController();
+      const loadingData: ExternalToast = {
+        cancel: {
+          label: t('common:cancel'),
+          onClick: () => {
+            abortController.abort();
+          },
+        },
+      };
       let total = textSplit.length;
       let failed = 0;
       let success = 0;
@@ -133,12 +142,17 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           success,
           failed,
         });
-      let toastId = toast.loading(loadingReport());
-      const responses = service.loginCredentials({
-        instanceId: instanceInfo.id,
-        service: accountTypeCredentialsSelected,
-        payload: textSplit,
-      }).responses;
+      let toastId = toast.loading(loadingReport(), loadingData);
+      const responses = service.loginCredentials(
+        {
+          instanceId: instanceInfo.id,
+          service: accountTypeCredentialsSelected,
+          payload: textSplit,
+        },
+        {
+          signal: abortController.signal,
+        },
+      ).responses;
       responses.onMessage(async (r) => {
         const data = r.data;
         switch (data.oneofKind) {
@@ -180,12 +194,14 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
             success++;
             toast.loading(loadingReport(), {
               id: toastId,
+              ...loadingData,
             });
             break;
           case 'oneFailure':
             failed++;
             toast.loading(loadingReport(), {
               id: toastId,
+              ...loadingData,
             });
             break;
         }
