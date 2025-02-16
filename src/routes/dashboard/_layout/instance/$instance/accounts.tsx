@@ -191,6 +191,10 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
             }
             break;
           case 'oneSuccess':
+            if (abortController.signal.aborted) {
+              return;
+            }
+
             success++;
             toast.loading(loadingReport(), {
               id: toastId,
@@ -198,6 +202,10 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
             });
             break;
           case 'oneFailure':
+            if (abortController.signal.aborted) {
+              return;
+            }
+
             failed++;
             toast.loading(loadingReport(), {
               id: toastId,
