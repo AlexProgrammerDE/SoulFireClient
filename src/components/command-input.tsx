@@ -65,6 +65,7 @@ export default function CommandInput(props: {
           return prev;
         }
       });
+      setHistoryIndex(-1);
 
       const commandService = new CommandServiceClient(transport);
       void commandService.executeCommand({
