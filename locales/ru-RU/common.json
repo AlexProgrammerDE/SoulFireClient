@@ -5,7 +5,7 @@
     "noAddressOrToken": "Адрес сервера или токен не найдены",
     "page": {
       "title": "Ошибка",
-      "description": "",
+      "description": "При попытке загрузить страницу произошла ошибка. Более подробную информацию можно найти в консоли.",
       "logOut": "Выйти",
       "reloadPage": "Перезагрузить страницу"
     },
@@ -13,8 +13,8 @@
   },
   "notFound": {
     "page": {
-      "title": "",
-      "description": "",
+      "title": "Не найдено",
+      "description": "Не удалось найти страницу по этому адресу",
       "logOut": "Выйти",
       "reloadPage": "Перезагрузить страницу"
     }
@@ -205,13 +205,13 @@
     "controlsGroup": "Управление",
     "console": "Консоль",
     "settingsGroup": "Настройки",
-    "pluginsGroup": "",
+    "pluginsGroup": "Плагины",
     "pluginSettings": "Настройки плагинов",
     "botSettings": "Настройки ботов",
     "accountSettings": "Настройки аккаунтов",
     "proxySettings": "Настройки прокси",
     "aiSettings": "Настройки ИИ",
-    "discoverPlugins": ""
+    "discoverPlugins": "Список плагинов"
   },
   "userSidebar": {
     "readDocumentation": "Прочитать документацию",
@@ -252,7 +252,7 @@
     "admin": "Администратор",
     "settings": "Настройки",
     "controls": "Управление",
-    "plugins": ""
+    "plugins": "Плагины"
   },
   "noInstancesFound": "Экземпляры не найдены",
   "pageName": {
@@ -261,7 +261,7 @@
     "proxySettings": "Настройки прокси",
     "overview": "Обзор",
     "accountSettings": "Настройки аккаунтов",
-    "discoverPlugins": ""
+    "discoverPlugins": "Список плагинов"
   },
   "instanceState": {
     "starting": "Запуск",
