@@ -15,11 +15,18 @@ type CompletionState = {
   index: number | null;
 };
 
+const SF_COMMAND_HISTORY_KEY = 'sf-command-history';
+const SF_COMMAND_HISTORY_LENGTH = 100;
+
 export default function CommandInput(props: {
   scope: CommandRequest['scope'] | CommandCompletionRequest['scope'];
 }) {
   const { t } = useTranslation('common');
   const transport = useContext(TransportContext);
+  const [commandHistory, setCommandHistory] = useState<string[]>(
+    JSON.parse(localStorage.getItem(SF_COMMAND_HISTORY_KEY) ?? '[]'),
+  );
+  const [historyIndex, setHistoryIndex] = useState<number>(-1);
   const [completionState, setCompletionState] = useState<CompletionState>({
     lastWritten: '',
     receivedCompletions: null,
@@ -27,16 +34,37 @@ export default function CommandInput(props: {
   });
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
-    const currenTarget = e.currentTarget;
+    const currentTarget = e.currentTarget;
     if (e.key === 'Enter') {
       e.preventDefault();
 
-      const currentVal = currenTarget.value;
-      currenTarget.value = '';
+      const currentVal = currentTarget.value.trim();
+      currentTarget.value = '';
 
       if (transport === null) {
         return;
       }
+
+      if (currentVal === '') {
+        return;
+      }
+
+      setCommandHistory((prev) => {
+        if (prev[prev.length - 1] !== currentVal) {
+          while (prev.length >= SF_COMMAND_HISTORY_LENGTH) {
+            prev.shift();
+          }
+
+          const newHistory = [...prev, currentVal];
+          localStorage.setItem(
+            SF_COMMAND_HISTORY_KEY,
+            JSON.stringify(newHistory),
+          );
+          return newHistory;
+        } else {
+          return prev;
+        }
+      });
 
       const commandService = new CommandServiceClient(transport);
       void commandService.executeCommand({
@@ -46,7 +74,35 @@ export default function CommandInput(props: {
     } else if (e.key === 'Tab') {
       e.preventDefault();
 
-      void handleTabPress(currenTarget.value, currenTarget);
+      void handleTabPress(currentTarget.value, currentTarget);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+
+      if (commandHistory.length === 0) {
+        return;
+      }
+
+      if (historyIndex === -1) {
+        setHistoryIndex(commandHistory.length - 1);
+        currentTarget.value = commandHistory[commandHistory.length - 1];
+      } else if (historyIndex > 0) {
+        setHistoryIndex(historyIndex - 1);
+        currentTarget.value = commandHistory[historyIndex - 1];
+      }
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+
+      if (commandHistory.length === 0) {
+        return;
+      }
+
+      if (historyIndex === commandHistory.length - 1) {
+        setHistoryIndex(-1);
+        currentTarget.value = '';
+      } else if (historyIndex >= 0) {
+        setHistoryIndex(historyIndex + 1);
+        currentTarget.value = commandHistory[historyIndex + 1];
+      }
     }
   };
 
