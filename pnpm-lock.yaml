@@ -209,22 +209,22 @@ importers:
         version: 2.9.4
       '@rsbuild/core':
         specifier: ^1.2.8
-        version: 1.2.8
+        version: 1.2.9
       '@rsbuild/plugin-babel':
         specifier: ^1.0.3
-        version: 1.0.3(@rsbuild/core@1.2.8)
+        version: 1.0.4(@rsbuild/core@1.2.9)
       '@rsbuild/plugin-eslint':
         specifier: ^1.1.0
-        version: 1.1.1(@rsbuild/core@1.2.8)(eslint@9.20.1(jiti@2.4.2))
+        version: 1.1.1(@rsbuild/core@1.2.9)(eslint@9.20.1(jiti@2.4.2))
       '@rsbuild/plugin-react':
         specifier: ^1.1.0
-        version: 1.1.0(@rsbuild/core@1.2.8)
+        version: 1.1.1(@rsbuild/core@1.2.9)
       '@rsbuild/plugin-svgr':
         specifier: ^1.0.6
-        version: 1.0.6(@rsbuild/core@1.2.8)(typescript@5.7.3)
+        version: 1.0.7(@rsbuild/core@1.2.9)(typescript@5.7.3)
       '@rsbuild/plugin-type-check':
         specifier: ^1.2.1
-        version: 1.2.1(@rsbuild/core@1.2.8)(@rspack/core@1.2.3(@swc/helpers@0.5.15))(typescript@5.7.3)
+        version: 1.2.1(@rsbuild/core@1.2.9)(@rspack/core@1.2.3(@swc/helpers@0.5.15))(typescript@5.7.3)
       '@tailwindcss/postcss':
         specifier: ^4.0.6
         version: 4.0.7
@@ -239,7 +239,7 @@ importers:
         version: 1.106.0(@tanstack/react-router@1.106.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))
       '@tanstack/router-plugin':
         specifier: ^1.104.1
-        version: 1.106.0(@rsbuild/core@1.2.8)(@tanstack/react-router@1.106.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(vite@5.4.8(@types/node@22.13.4)(lightningcss@1.29.1)(terser@5.39.0))(webpack@5.95.0)
+        version: 1.106.0(@rsbuild/core@1.2.9)(@tanstack/react-router@1.106.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(vite@5.4.8(@types/node@22.13.4)(lightningcss@1.29.1)(terser@5.39.0))(webpack@5.95.0)
       '@tauri-apps/cli':
         specifier: 2.2.7
         version: 2.2.7
@@ -1501,13 +1501,13 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rsbuild/core@1.2.8':
-    resolution: {integrity: sha512-I5cPKnJxkc+K552x17s2BlSs2Ox8bauoWPpy8mPtW7xwT3h9pprPO6zsMPkj/TJhkGLmeJ1bcVxf6NcrP/jWSA==}
+  '@rsbuild/core@1.2.9':
+    resolution: {integrity: sha512-Y3b4Y7lGIvNPywspP38deHkp/EEkTXrJEHeX1K5yz8U/94PkWvPlDebjjiSvmI6TT+9iVzsq22qDlBEdDuJZhA==}
     engines: {node: '>=16.7.0'}
     hasBin: true
 
-  '@rsbuild/plugin-babel@1.0.3':
-    resolution: {integrity: sha512-3S/ykXv7KRo0FxVpkjoHFUwB04nKINIET1kuv4xiRaDmeww1Tp0wl9h4u8a7d7gU/4FllyoUflY8TVhci/o05g==}
+  '@rsbuild/plugin-babel@1.0.4':
+    resolution: {integrity: sha512-ZYbyC3zNYluTWTJDVrAW3eRJfvSTIQlp/bs20iY/MATm8/rRq2xtlAP5keCYxpx5CJZX7IT7i6f4z24/YrJJwA==}
     peerDependencies:
       '@rsbuild/core': 1.x
 
@@ -1520,13 +1520,13 @@ packages:
       '@rsbuild/core':
         optional: true
 
-  '@rsbuild/plugin-react@1.1.0':
-    resolution: {integrity: sha512-uqdRoV2V91G1XIA14dAmxqYTlTDVf0ktpE7TgwG29oQ2j+DerF1kh29WPHK9HvGE34JTfaBrsme2Zmb6bGD0cw==}
+  '@rsbuild/plugin-react@1.1.1':
+    resolution: {integrity: sha512-gkATKrOQauXMMtrYA5jbTQkhmYTE0VXoknPLtVpiXtwDbBUwgX23LFf1XJ51YOwqYpP7g5SfPEMgD2FENtCq0A==}
     peerDependencies:
       '@rsbuild/core': 1.x
 
-  '@rsbuild/plugin-svgr@1.0.6':
-    resolution: {integrity: sha512-znLFk2fumNObMntkjrpZhO3guXmaQZbqv0JjhqBVng63bNdsJAmfZGXX5He8Avp4VDlv6EJI6BC5SIEs8XspTg==}
+  '@rsbuild/plugin-svgr@1.0.7':
+    resolution: {integrity: sha512-+hCaG78P0nt8nrMvdWJ720c0WNj9ogNBL7ib8+UfyYezqliMRR++Zx6QIPXYBfTP+pCa/TKPph/ZQvAdPJq+Ig==}
     peerDependencies:
       '@rsbuild/core': 1.x
 
@@ -2374,6 +2374,9 @@ packages:
 
   caniuse-lite@1.0.30001699:
     resolution: {integrity: sha512-b+uH5BakXZ9Do9iK+CkDmctUSEqZl+SP056vc5usa0PL+ev5OHw003rZXcnjNDv3L8P5j6rwT6C0BPKSikW08w==}
+
+  caniuse-lite@1.0.30001700:
+    resolution: {integrity: sha512-2S6XIXwaE7K7erT8dY+kLQcpa5ms63XlRkMkReXjle+kf6c5g38vyMl+Z5y8dSxOFDhcFe+nxnn261PLxBSQsQ==}
 
   chalk@4.1.2:
     resolution: {integrity: sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==}
@@ -5396,7 +5399,7 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.34.8':
     optional: true
 
-  '@rsbuild/core@1.2.8':
+  '@rsbuild/core@1.2.9':
     dependencies:
       '@rspack/core': 1.2.3(@swc/helpers@0.5.15)
       '@rspack/lite-tapable': 1.0.1
@@ -5405,13 +5408,13 @@ snapshots:
     transitivePeerDependencies:
       - '@rspack/tracing'
 
-  '@rsbuild/plugin-babel@1.0.3(@rsbuild/core@1.2.8)':
+  '@rsbuild/plugin-babel@1.0.4(@rsbuild/core@1.2.9)':
     dependencies:
       '@babel/core': 7.26.9
       '@babel/plugin-proposal-decorators': 7.25.9(@babel/core@7.26.9)
       '@babel/plugin-transform-class-properties': 7.25.9(@babel/core@7.26.9)
       '@babel/preset-typescript': 7.26.0(@babel/core@7.26.9)
-      '@rsbuild/core': 1.2.8
+      '@rsbuild/core': 1.2.9
       '@types/babel__core': 7.20.5
       deepmerge: 4.3.1
       reduce-configs: 1.1.0
@@ -5419,23 +5422,23 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@rsbuild/plugin-eslint@1.1.1(@rsbuild/core@1.2.8)(eslint@9.20.1(jiti@2.4.2))':
+  '@rsbuild/plugin-eslint@1.1.1(@rsbuild/core@1.2.9)(eslint@9.20.1(jiti@2.4.2))':
     dependencies:
       eslint: 9.20.1(jiti@2.4.2)
       eslint-rspack-plugin: 4.2.1(eslint@9.20.1(jiti@2.4.2))
     optionalDependencies:
-      '@rsbuild/core': 1.2.8
+      '@rsbuild/core': 1.2.9
 
-  '@rsbuild/plugin-react@1.1.0(@rsbuild/core@1.2.8)':
+  '@rsbuild/plugin-react@1.1.1(@rsbuild/core@1.2.9)':
     dependencies:
-      '@rsbuild/core': 1.2.8
+      '@rsbuild/core': 1.2.9
       '@rspack/plugin-react-refresh': 1.0.1(react-refresh@0.16.0)
       react-refresh: 0.16.0
 
-  '@rsbuild/plugin-svgr@1.0.6(@rsbuild/core@1.2.8)(typescript@5.7.3)':
+  '@rsbuild/plugin-svgr@1.0.7(@rsbuild/core@1.2.9)(typescript@5.7.3)':
     dependencies:
-      '@rsbuild/core': 1.2.8
-      '@rsbuild/plugin-react': 1.1.0(@rsbuild/core@1.2.8)
+      '@rsbuild/core': 1.2.9
+      '@rsbuild/plugin-react': 1.1.1(@rsbuild/core@1.2.9)
       '@svgr/core': 8.1.0(typescript@5.7.3)
       '@svgr/plugin-jsx': 8.1.0(@svgr/core@8.1.0(typescript@5.7.3))
       '@svgr/plugin-svgo': 8.1.0(@svgr/core@8.1.0(typescript@5.7.3))(typescript@5.7.3)
@@ -5445,14 +5448,14 @@ snapshots:
       - supports-color
       - typescript
 
-  '@rsbuild/plugin-type-check@1.2.1(@rsbuild/core@1.2.8)(@rspack/core@1.2.3(@swc/helpers@0.5.15))(typescript@5.7.3)':
+  '@rsbuild/plugin-type-check@1.2.1(@rsbuild/core@1.2.9)(@rspack/core@1.2.3(@swc/helpers@0.5.15))(typescript@5.7.3)':
     dependencies:
       deepmerge: 4.3.1
       json5: 2.2.3
       reduce-configs: 1.1.0
       ts-checker-rspack-plugin: 1.1.1(@rspack/core@1.2.3(@swc/helpers@0.5.15))(typescript@5.7.3)
     optionalDependencies:
-      '@rsbuild/core': 1.2.8
+      '@rsbuild/core': 1.2.9
     transitivePeerDependencies:
       - '@rspack/core'
       - typescript
@@ -5501,7 +5504,7 @@ snapshots:
       '@module-federation/runtime-tools': 0.8.4
       '@rspack/binding': 1.2.3
       '@rspack/lite-tapable': 1.0.1
-      caniuse-lite: 1.0.30001699
+      caniuse-lite: 1.0.30001700
     optionalDependencies:
       '@swc/helpers': 0.5.15
 
@@ -5747,7 +5750,7 @@ snapshots:
     optionalDependencies:
       '@tanstack/react-router': 1.106.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
 
-  '@tanstack/router-plugin@1.106.0(@rsbuild/core@1.2.8)(@tanstack/react-router@1.106.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(vite@5.4.8(@types/node@22.13.4)(lightningcss@1.29.1)(terser@5.39.0))(webpack@5.95.0)':
+  '@tanstack/router-plugin@1.106.0(@rsbuild/core@1.2.9)(@tanstack/react-router@1.106.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(vite@5.4.8(@types/node@22.13.4)(lightningcss@1.29.1)(terser@5.39.0))(webpack@5.95.0)':
     dependencies:
       '@babel/core': 7.26.9
       '@babel/plugin-syntax-jsx': 7.25.9(@babel/core@7.26.9)
@@ -5766,7 +5769,7 @@ snapshots:
       unplugin: 2.2.0
       zod: 3.24.2
     optionalDependencies:
-      '@rsbuild/core': 1.2.8
+      '@rsbuild/core': 1.2.9
       '@tanstack/react-router': 1.106.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       vite: 5.4.8(@types/node@22.13.4)(lightningcss@1.29.1)(terser@5.39.0)
       webpack: 5.95.0
@@ -6395,6 +6398,8 @@ snapshots:
   camelcase@6.3.0: {}
 
   caniuse-lite@1.0.30001699: {}
+
+  caniuse-lite@1.0.30001700: {}
 
   chalk@4.1.2:
     dependencies:
