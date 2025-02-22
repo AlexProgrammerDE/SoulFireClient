@@ -1,4 +1,4 @@
-use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_random_available_port, get_java_exec_name, SFAnyError, SFError};
+use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_random_available_port, get_java_exec_name, get_java_home_dir, SFAnyError, SFError};
 use log::info;
 use serde::Serialize;
 use sha2::Digest;
@@ -181,21 +181,24 @@ pub async fn run_integrated_server(
 
   send_log(&app_handle, "Starting SoulFire server...")?;
 
+  let java_home_dir = get_java_home_dir(jvm_dir);
   let java_exec_name = get_java_exec_name();
-  let java_bin_dir = jvm_dir.join("bin");
+  let java_bin_dir = java_home_dir.join("bin");
   let java_exec_path = java_bin_dir.join(java_exec_name);
   let java_exec_path = java_exec_path.to_str().ok_or(SFError::PathCouldNotBeConverted)?;
   info!("Integrated Server Java Executable: {}", java_exec_path);
 
-  let java_lib_dir = jvm_dir.join("lib");
-  let java_lib_server_dir = jvm_dir.join("server");
+  let java_lib_dir = java_home_dir.join("lib");
+  let java_lib_server_dir = java_lib_dir.join("server");
   let available_port = find_random_available_port().ok_or(SFError::NoPortAvailable)?;
   info!("Integrated Server Port: {}", available_port);
 
   let current_ld_library_path = std::env::var("LD_LIBRARY_PATH").unwrap_or("".to_string());
+  let current_dyld_library_path = std::env::var("DYLD_LIBRARY_PATH").unwrap_or("".to_string());
   let command = app_handle.shell().command(java_exec_path)
     .env("LD_LIBRARY_PATH", format!("{:?}:{:?}:{}", java_lib_dir, java_lib_server_dir, current_ld_library_path))
-    .env("JAVA_HOME", jvm_dir)
+    .env("DYLD_LIBRARY_PATH", format!("{:?}:{:?}:{}", java_lib_dir, java_lib_server_dir, current_dyld_library_path))
+    .env("JAVA_HOME", java_home_dir)
     .current_dir(soul_fire_rundir)
     .args(&[
       format!("-Dsf.grpc.port={}", available_port).as_str(),

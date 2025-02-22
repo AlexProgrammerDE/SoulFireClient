@@ -1,6 +1,7 @@
 use crate::sf_loader::IntegratedServerState;
 use log::{error, info};
 use std::net::TcpListener;
+use std::path::PathBuf;
 use std::sync::Arc;
 
 #[derive(Debug, thiserror::Error)]
@@ -111,6 +112,14 @@ pub fn get_java_exec_name() -> &'static str {
     "javaw.exe"
   } else {
     "java"
+  }
+}
+
+pub fn get_java_home_dir(base_dir: PathBuf) -> PathBuf {
+  if cfg!(target_os = "macos") {
+    base_dir.join("Contents").join("Home")
+  } else {
+    base_dir
   }
 }
 
