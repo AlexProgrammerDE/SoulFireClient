@@ -48,6 +48,16 @@ export const Route = createFileRoute(
   component: AccountSettings,
 });
 
+function addAndDeduplicate(
+  accounts: ProfileAccount[],
+  newAccounts: ProfileAccount[],
+) {
+  const newAccountsSet = new Set(newAccounts.map((a) => a.profileId));
+  return accounts
+    .filter((a) => !newAccountsSet.has(a.profileId))
+    .concat(newAccounts);
+}
+
 const columns: ColumnDef<ProfileAccount>[] = [
   {
     id: 'select',
@@ -160,7 +170,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
             const accountsToAdd = data.fullList.account;
             const newProfile = {
               ...profile,
-              accounts: [...profile.accounts, ...accountsToAdd],
+              accounts: addAndDeduplicate(profile.accounts, accountsToAdd),
             };
 
             await setProfileMutation(newProfile);
@@ -279,7 +289,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
 
           await setProfileMutation({
             ...profile,
-            accounts: [...profile.accounts, await promise],
+            accounts: addAndDeduplicate(profile.accounts, [await promise]),
           });
         })(),
         {
