@@ -53,6 +53,7 @@ import { Textarea } from '@/components/ui/textarea.tsx';
 import { ServerConfigContext } from '@/components/providers/server-config-context.tsx';
 import { useTranslation } from 'react-i18next';
 import { NumericFormat } from 'react-number-format';
+import { useLocaleNumberFormat } from '@/hooks/use-locale-number-format.tsx';
 
 function ComponentTitle(props: {
   title: string;
@@ -134,6 +135,7 @@ function IntComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
+  const localeNumberFormat = useLocaleNumberFormat();
   const [inputValue, setInputValue] = useState(props.value);
 
   useEffect(() => {
@@ -149,7 +151,12 @@ function IntComponent(props: {
   return (
     <NumericFormat
       value={inputValue}
-      thousandSeparator={props.entry.thousandSeparator}
+      thousandSeparator={
+        props.entry.thousandSeparator
+          ? localeNumberFormat.thousandSeparator
+          : undefined
+      }
+      decimalSeparator={localeNumberFormat.decimalSeparator}
       allowNegative={props.entry.min < 0}
       decimalScale={0}
       onValueChange={(values) => {
@@ -176,6 +183,7 @@ function DoubleComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
+  const localeNumberFormat = useLocaleNumberFormat();
   const [inputValue, setInputValue] = useState(props.value);
 
   useEffect(() => {
@@ -191,7 +199,12 @@ function DoubleComponent(props: {
   return (
     <NumericFormat
       value={inputValue}
-      thousandSeparator={props.entry.thousandSeparator}
+      thousandSeparator={
+        props.entry.thousandSeparator
+          ? localeNumberFormat.thousandSeparator
+          : undefined
+      }
+      decimalSeparator={localeNumberFormat.decimalSeparator}
       allowNegative={props.entry.min < 0}
       decimalScale={props.entry.decimalScale}
       fixedDecimalScale={props.entry.fixedDecimalScale}
@@ -401,6 +414,7 @@ function MinMaxComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
+  const localeNumberFormat = useLocaleNumberFormat();
   const [inputValue, setInputValue] = useState(props.value);
 
   useEffect(() => {
@@ -416,7 +430,12 @@ function MinMaxComponent(props: {
   return (
     <NumericFormat
       value={inputValue}
-      thousandSeparator={props.setting.thousandSeparator}
+      thousandSeparator={
+        props.setting.thousandSeparator
+          ? localeNumberFormat.thousandSeparator
+          : undefined
+      }
+      decimalSeparator={localeNumberFormat.decimalSeparator}
       allowNegative={props.setting.min < 0}
       decimalScale={0}
       onValueChange={(values) => {
