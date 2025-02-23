@@ -124,9 +124,9 @@ export const Route = createFileRoute('/dashboard/_layout')({
       await queryClientInstance.prefetchQuery(props.context.listQueryOptions);
 
       // We need this as demo data
-      if (APP_ENVIRONMENT === 'development') {
-        console.debug(JSON.stringify(configResult.response));
-      }
+      // if (APP_ENVIRONMENT === 'development') {
+      //   console.debug(JSON.stringify(configResult.response));
+      // }
 
       return {
         success: true,

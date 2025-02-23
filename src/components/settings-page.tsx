@@ -53,7 +53,6 @@ import { Textarea } from '@/components/ui/textarea.tsx';
 import { ServerConfigContext } from '@/components/providers/server-config-context.tsx';
 import { useTranslation } from 'react-i18next';
 import { NumericFormat } from 'react-number-format';
-import { SettingsEntry } from '@/generated/soulfire/common.ts';
 
 function ComponentTitle(props: {
   title: string;
@@ -111,7 +110,6 @@ function StringComponent(props: {
       <Textarea
         value={inputValue}
         placeholder={props.entry.placeholder}
-        defaultValue={props.value}
         onChange={(e) => {
           props.changeCallback(e.currentTarget.value);
         }}
@@ -123,7 +121,6 @@ function StringComponent(props: {
         value={inputValue}
         placeholder={props.entry.placeholder}
         type={props.entry.secret ? 'password' : 'text'}
-        defaultValue={props.value}
         onChange={(e) => {
           props.changeCallback(e.currentTarget.value);
         }}
@@ -169,7 +166,6 @@ function IntComponent(props: {
       min={props.entry.min}
       max={props.entry.max}
       step={props.entry.step}
-      defaultValue={props.value}
       customInput={Input}
     />
   );
@@ -213,7 +209,6 @@ function DoubleComponent(props: {
       min={props.entry.min}
       max={props.entry.max}
       step={props.entry.step}
-      defaultValue={props.value}
       customInput={Input}
     />
   );
@@ -438,7 +433,6 @@ function MinMaxComponent(props: {
       min={props.setting.min}
       max={props.setting.max}
       step={props.setting.step}
-      defaultValue={props.value}
       customInput={Input}
     />
   );
