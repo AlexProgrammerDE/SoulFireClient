@@ -17,7 +17,7 @@
     "build-tauri": "tauri build",
     "generate-proto": "tsx generate-proto.ts",
     "prepare": "husky",
-    "pre-commit": "npx lint-staged"
+    "pre-commit": "lint-staged"
   },
   "dependencies": {
     "@aptabase/react": "^0.3.5",
