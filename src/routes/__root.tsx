@@ -45,15 +45,10 @@ function isMobile() {
   return osType === 'android' || osType === 'ios';
 }
 
-async function getSystemTheme() {
-  return isMobile() ? null : await getCurrentWebviewWindow().theme();
-}
-
 async function createSystemInfo() {
   const osType = type();
-  const [availableProfiles, theme, osLocale] = await Promise.all([
+  const [availableProfiles, osLocale] = await Promise.all([
     getAvailableProfiles(),
-    getSystemTheme(),
     locale(),
   ]);
   return {
@@ -63,7 +58,6 @@ async function createSystemInfo() {
     platformName: platform(),
     osLocale,
     archName: arch(),
-    theme,
     mobile: isMobile(),
   };
 }

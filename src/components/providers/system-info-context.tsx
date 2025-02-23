@@ -1,5 +1,4 @@
 import { createContext } from 'react';
-import { type Theme } from '@tauri-apps/api/window';
 
 export type SystemInfo = {
   availableProfiles: string[];
@@ -8,7 +7,6 @@ export type SystemInfo = {
   platformName: string;
   osLocale: string | null;
   archName: string;
-  theme: Theme | null;
   mobile: boolean;
 };
 
