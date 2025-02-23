@@ -6,9 +6,9 @@ import {
   MinMaxSetting,
   MinMaxSettingEntry,
   SettingsPage,
-  SettingType,
   StringListSetting,
   StringSetting,
+  SettingEntry,
 } from '@/generated/soulfire/config.ts';
 import { Button } from '@/components/ui/button.tsx';
 import {
@@ -53,6 +53,7 @@ import { Textarea } from '@/components/ui/textarea.tsx';
 import { ServerConfigContext } from '@/components/providers/server-config-context.tsx';
 import { useTranslation } from 'react-i18next';
 import { NumericFormat } from 'react-number-format';
+import { SettingsEntry } from '@/generated/soulfire/common.ts';
 
 function ComponentTitle(props: {
   title: string;
@@ -450,26 +451,19 @@ type MinMaxType = {
 
 function EntryComponent<T extends BaseSettings>(props: {
   namespace: string;
-  settingKey: string;
-  entry: SettingType;
+  entry: SettingEntry;
   invalidateQuery: () => Promise<void>;
   setConfig: (config: T) => Promise<void>;
   config: T;
 }) {
   const value = useMemo(
-    () =>
-      getEntryValueByType(
-        props.namespace,
-        props.settingKey,
-        props.config,
-        props.entry,
-      ),
-    [props.config, props.entry, props.namespace, props.settingKey],
+    () => getEntryValueByType(props.namespace, props.config, props.entry),
+    [props.config, props.entry, props.namespace],
   );
   const setValueMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
       await props.setConfig(
-        updateEntry(props.namespace, props.settingKey, value, props.config),
+        updateEntry(props.namespace, props.entry.key, value, props.config),
       );
     },
     onSettled: () => {
@@ -634,8 +628,7 @@ function ClientSettingsPageComponent<T extends BaseSettings>({
             <EntryComponent
               namespace={data.namespace}
               key={page.key}
-              settingKey={page.key}
-              entry={page.type!}
+              entry={page}
               setConfig={setConfig}
               invalidateQuery={invalidateQuery}
               config={config}

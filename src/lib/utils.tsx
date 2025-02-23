@@ -6,7 +6,7 @@ import {
 } from '@/generated/soulfire/common.ts';
 import {
   ClientDataResponse,
-  SettingType,
+  SettingEntry,
 } from '@/generated/soulfire/config.ts';
 import {
   InstanceInfoResponse,
@@ -190,51 +190,45 @@ function getEntryValue(
 
 export function getEntryValueByType(
   namespace: string,
-  settingKey: string,
   config: BaseSettings,
-  entry: SettingType | undefined,
+  entry: SettingEntry | undefined,
 ): JsonValue {
   switch (entry?.value.oneofKind) {
     case 'string': {
       return getEntryValue(
         namespace,
-        settingKey,
+        entry.key,
         config,
         entry.value.string.def,
       );
     }
     case 'int': {
-      return getEntryValue(namespace, settingKey, config, entry.value.int.def);
+      return getEntryValue(namespace, entry.key, config, entry.value.int.def);
     }
     case 'bool': {
-      return getEntryValue(namespace, settingKey, config, entry.value.bool.def);
+      return getEntryValue(namespace, entry.key, config, entry.value.bool.def);
     }
     case 'double': {
       return getEntryValue(
         namespace,
-        settingKey,
+        entry.key,
         config,
         entry.value.double.def,
       );
     }
     case 'combo': {
-      return getEntryValue(
-        namespace,
-        settingKey,
-        config,
-        entry.value.combo.def,
-      );
+      return getEntryValue(namespace, entry.key, config, entry.value.combo.def);
     }
     case 'stringList': {
       return getEntryValue(
         namespace,
-        settingKey,
+        entry.key,
         config,
         entry.value.stringList.def,
       );
     }
     case 'minMax': {
-      return getEntryValue(namespace, settingKey, config, {
+      return getEntryValue(namespace, entry.key, config, {
         min: entry.value.minMax.minEntry!.def,
         max: entry.value.minMax.maxEntry!.def,
       });

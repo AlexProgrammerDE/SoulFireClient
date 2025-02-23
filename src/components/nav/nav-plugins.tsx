@@ -63,10 +63,8 @@ export function NavPlugins({
       (setting) =>
         getEntryValueByType(
           setting.namespace,
-          setting.enabledKey!,
           profile,
-          setting.entries.find((entry) => entry.key === setting.enabledKey)!
-            .type,
+          setting.entries.find((entry) => entry.key === setting.enabledKey)!,
         ) === true,
     )
     .map((setting) => ({

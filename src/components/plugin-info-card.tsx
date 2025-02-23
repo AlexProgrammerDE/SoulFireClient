@@ -38,16 +38,10 @@ export function PluginInfoCard(props: {
     () =>
       getEntryValueByType(
         props.settingsEntry.namespace,
-        props.settingsEntry.enabledKey!,
         profile,
-        enabledEntry.type,
+        enabledEntry,
       ) === true,
-    [
-      props.settingsEntry.namespace,
-      props.settingsEntry.enabledKey!,
-      profile,
-      enabledEntry.type,
-    ],
+    [props.settingsEntry.namespace, profile, enabledEntry],
   );
   const setEnabledMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
