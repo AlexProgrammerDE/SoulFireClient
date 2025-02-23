@@ -38,7 +38,7 @@ import {
   setServerConfig,
   updateEntry,
 } from '@/lib/utils.tsx';
-import { useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
@@ -51,6 +51,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
 import { ServerConfigContext } from '@/components/providers/server-config-context.tsx';
 import { useTranslation } from 'react-i18next';
+import { NumericFormat } from 'react-number-format';
 
 function ComponentTitle(props: {
   title: string;
@@ -91,21 +92,22 @@ function StringComponent(props: {
   value: string;
   changeCallback: (value: string) => void;
 }) {
-  const textAreRef = useRef<HTMLTextAreaElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState(props.value);
 
   useEffect(() => {
-    if (textAreRef.current && props.value !== textAreRef.current.value) {
-      textAreRef.current.value = props.value;
-    } else if (inputRef.current && props.value !== inputRef.current.value) {
-      inputRef.current.value = props.value;
-    }
+    setInputValue((old) => {
+      if (old !== props.value) {
+        return props.value;
+      }
+
+      return old;
+    });
   }, [props.value]);
 
   if (props.entry.textarea) {
     return (
       <Textarea
-        ref={textAreRef}
+        value={inputValue}
         placeholder={props.entry.placeholder}
         defaultValue={props.value}
         onChange={(e) => {
@@ -116,7 +118,7 @@ function StringComponent(props: {
   } else {
     return (
       <Input
-        ref={inputRef}
+        value={inputValue}
         placeholder={props.entry.placeholder}
         type={props.entry.secret ? 'password' : 'text'}
         defaultValue={props.value}
@@ -133,26 +135,26 @@ function IntComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
-  const ref = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState(props.value);
 
   useEffect(() => {
-    if (ref.current && props.value.toString() !== ref.current.value) {
-      ref.current.value = props.value.toString();
-    }
+    setInputValue((old) => {
+      if (old !== props.value) {
+        return props.value;
+      }
+
+      return old;
+    });
   }, [props.value]);
 
   return (
-    <Input
-      ref={ref}
-      placeholder={props.entry.placeholder}
-      type="number"
-      inputMode="numeric"
-      min={props.entry.min}
-      max={props.entry.max}
-      step={props.entry.step}
-      defaultValue={props.value}
-      onChange={(e) => {
-        const currentValue = parseInt(e.currentTarget.value);
+    <NumericFormat
+      value={inputValue}
+      thousandSeparator={true}
+      allowNegative={props.entry.min < 0}
+      decimalScale={0}
+      onValueChange={(values) => {
+        const currentValue = parseInt(values.value);
 
         if (!Number.isFinite(currentValue)) {
           return;
@@ -160,6 +162,13 @@ function IntComponent(props: {
 
         props.changeCallback(currentValue);
       }}
+      placeholder={props.entry.placeholder}
+      inputMode="numeric"
+      min={props.entry.min}
+      max={props.entry.max}
+      step={props.entry.step}
+      defaultValue={props.value}
+      customInput={Input}
     />
   );
 }
@@ -169,26 +178,27 @@ function DoubleComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
-  const ref = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState(props.value);
 
   useEffect(() => {
-    if (ref.current && props.value.toString() !== ref.current.value) {
-      ref.current.value = props.value.toString();
-    }
+    setInputValue((old) => {
+      if (old !== props.value) {
+        return props.value;
+      }
+
+      return old;
+    });
   }, [props.value]);
 
   return (
-    <Input
-      ref={ref}
-      placeholder={props.entry.placeholder}
-      type="number"
-      inputMode="decimal"
-      min={props.entry.min}
-      max={props.entry.max}
-      step={props.entry.step}
-      defaultValue={props.value}
-      onChange={(e) => {
-        const currentValue = parseFloat(e.currentTarget.value);
+    <NumericFormat
+      value={inputValue}
+      thousandSeparator={true}
+      allowNegative={props.entry.min < 0}
+      decimalScale={2}
+      fixedDecimalScale={true}
+      onValueChange={(values) => {
+        const currentValue = parseFloat(values.value);
 
         if (!Number.isFinite(currentValue)) {
           return;
@@ -196,6 +206,13 @@ function DoubleComponent(props: {
 
         props.changeCallback(currentValue);
       }}
+      placeholder={props.entry.placeholder}
+      inputMode="decimal"
+      min={props.entry.min}
+      max={props.entry.max}
+      step={props.entry.step}
+      defaultValue={props.value}
+      customInput={Input}
     />
   );
 }
@@ -387,25 +404,26 @@ function MinMaxComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
-  const ref = useRef<HTMLInputElement>(null);
+  const [inputValue, setInputValue] = useState(props.value);
 
   useEffect(() => {
-    if (ref.current && props.value.toString() !== ref.current.value) {
-      ref.current.value = props.value.toString();
-    }
+    setInputValue((old) => {
+      if (old !== props.value) {
+        return props.value;
+      }
+
+      return old;
+    });
   }, [props.value]);
 
   return (
-    <Input
-      placeholder={props.placeholder}
-      type="number"
-      inputMode="numeric"
-      min={props.entry.min}
-      max={props.entry.max}
-      step={props.entry.step}
-      defaultValue={props.value}
-      onChange={(e) => {
-        const currentValue = parseInt(e.currentTarget.value);
+    <NumericFormat
+      value={inputValue}
+      thousandSeparator={true}
+      allowNegative={props.entry.min < 0}
+      decimalScale={0}
+      onValueChange={(values) => {
+        const currentValue = parseInt(values.value);
 
         if (!Number.isFinite(currentValue)) {
           return;
@@ -413,6 +431,13 @@ function MinMaxComponent(props: {
 
         props.changeCallback(currentValue);
       }}
+      placeholder={props.placeholder}
+      inputMode="numeric"
+      min={props.entry.min}
+      max={props.entry.max}
+      step={props.entry.step}
+      defaultValue={props.value}
+      customInput={Input}
     />
   );
 }
