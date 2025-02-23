@@ -15,6 +15,14 @@ export interface LogString {
      * @generated from protobuf field: string message = 2;
      */
     message: string;
+    /**
+     * @generated from protobuf field: optional string instance_id = 3;
+     */
+    instanceId?: string;
+    /**
+     * @generated from protobuf field: optional string bot_id = 4;
+     */
+    botId?: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.GlobalLogScope
@@ -103,7 +111,9 @@ class LogString$Type extends MessageType<LogString> {
     constructor() {
         super("soulfire.v1.LogString", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "instance_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "bot_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }

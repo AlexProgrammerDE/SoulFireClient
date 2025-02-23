@@ -235,8 +235,8 @@ export function getEntryValueByType(
     }
     case 'minMax': {
       return getEntryValue(namespace, settingKey, config, {
-        min: entry.value.minMax.minDef,
-        max: entry.value.minMax.maxDef,
+        min: entry.value.minMax.minEntry!.def,
+        max: entry.value.minMax.maxEntry!.def,
       });
     }
     case undefined: {

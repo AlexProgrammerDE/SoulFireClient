@@ -123,6 +123,7 @@ export const Route = createFileRoute('/dashboard/_layout')({
 
       await queryClientInstance.prefetchQuery(props.context.listQueryOptions);
 
+      console.log(JSON.stringify(configResult.response));
       return {
         success: true,
         transport,

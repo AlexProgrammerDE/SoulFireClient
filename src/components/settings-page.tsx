@@ -4,6 +4,7 @@ import {
   DoubleSetting,
   IntSetting,
   MinMaxSetting,
+  MinMaxSettingEntry,
   SettingsPage,
   SettingType,
   StringListSetting,
@@ -150,7 +151,7 @@ function IntComponent(props: {
   return (
     <NumericFormat
       value={inputValue}
-      thousandSeparator={true}
+      thousandSeparator={props.entry.thousandSeparator}
       allowNegative={props.entry.min < 0}
       decimalScale={0}
       onValueChange={(values) => {
@@ -193,10 +194,10 @@ function DoubleComponent(props: {
   return (
     <NumericFormat
       value={inputValue}
-      thousandSeparator={true}
+      thousandSeparator={props.entry.thousandSeparator}
       allowNegative={props.entry.min < 0}
-      decimalScale={2}
-      fixedDecimalScale={true}
+      decimalScale={props.entry.decimalScale}
+      fixedDecimalScale={props.entry.fixedDecimalScale}
       onValueChange={(values) => {
         const currentValue = parseFloat(values.value);
 
@@ -399,8 +400,8 @@ function StringListComponent(props: {
 }
 
 function MinMaxComponent(props: {
-  placeholder: string;
-  entry: MinMaxSetting;
+  setting: MinMaxSetting;
+  entry: MinMaxSettingEntry;
   value: number;
   changeCallback: (value: number) => void;
 }) {
@@ -419,8 +420,8 @@ function MinMaxComponent(props: {
   return (
     <NumericFormat
       value={inputValue}
-      thousandSeparator={true}
-      allowNegative={props.entry.min < 0}
+      thousandSeparator={props.setting.thousandSeparator}
+      allowNegative={props.setting.min < 0}
       decimalScale={0}
       onValueChange={(values) => {
         const currentValue = parseInt(values.value);
@@ -431,11 +432,11 @@ function MinMaxComponent(props: {
 
         props.changeCallback(currentValue);
       }}
-      placeholder={props.placeholder}
+      placeholder={props.entry.placeholder}
       inputMode="numeric"
-      min={props.entry.min}
-      max={props.entry.max}
-      step={props.entry.step}
+      min={props.setting.min}
+      max={props.setting.max}
+      step={props.setting.step}
       defaultValue={props.value}
       customInput={Input}
     />
@@ -575,12 +576,12 @@ function EntryComponent<T extends BaseSettings>(props: {
         <>
           <div className="flex flex-col gap-1 max-w-xl">
             <ComponentTitle
-              title={props.entry.value.minMax.minUiName}
-              description={props.entry.value.minMax.minDescription}
+              title={props.entry.value.minMax.minEntry!.uiName}
+              description={props.entry.value.minMax.minEntry!.description}
             />
             <MinMaxComponent
-              placeholder={props.entry.value.minMax.minPlaceholder}
-              entry={props.entry.value.minMax}
+              setting={props.entry.value.minMax}
+              entry={props.entry.value.minMax.minEntry!}
               value={castValue.min}
               changeCallback={(v) => {
                 setValueMutation.mutate({
@@ -592,12 +593,12 @@ function EntryComponent<T extends BaseSettings>(props: {
           </div>
           <div className="flex flex-col gap-1 max-w-xl">
             <ComponentTitle
-              title={props.entry.value.minMax.maxUiName}
-              description={props.entry.value.minMax.maxDescription}
+              title={props.entry.value.minMax.maxEntry!.uiName}
+              description={props.entry.value.minMax.maxEntry!.description}
             />
             <MinMaxComponent
-              placeholder={props.entry.value.minMax.maxPlaceholder}
-              entry={props.entry.value.minMax}
+              setting={props.entry.value.minMax}
+              entry={props.entry.value.minMax.maxEntry!}
               value={castValue.max}
               changeCallback={(v) => {
                 setValueMutation.mutate({

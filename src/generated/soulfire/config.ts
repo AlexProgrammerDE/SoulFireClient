@@ -68,13 +68,13 @@ export interface IntSetting {
      */
     step: number;
     /**
-     * @generated from protobuf field: optional string format = 7;
-     */
-    format?: string;
-    /**
-     * @generated from protobuf field: string placeholder = 8;
+     * @generated from protobuf field: string placeholder = 7;
      */
     placeholder: string;
+    /**
+     * @generated from protobuf field: bool thousand_separator = 8;
+     */
+    thousandSeparator: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.DoubleSetting
@@ -105,13 +105,21 @@ export interface DoubleSetting {
      */
     step: number;
     /**
-     * @generated from protobuf field: optional string format = 7;
-     */
-    format?: string;
-    /**
-     * @generated from protobuf field: string placeholder = 8;
+     * @generated from protobuf field: string placeholder = 7;
      */
     placeholder: string;
+    /**
+     * @generated from protobuf field: bool thousand_separator = 8;
+     */
+    thousandSeparator: boolean;
+    /**
+     * @generated from protobuf field: int32 decimal_scale = 9;
+     */
+    decimalScale: number;
+    /**
+     * @generated from protobuf field: bool fixed_decimal_scale = 10;
+     */
+    fixedDecimalScale: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.BoolSetting
@@ -188,57 +196,54 @@ export interface StringListSetting {
     def: string[];
 }
 /**
+ * @generated from protobuf message soulfire.v1.MinMaxSettingEntry
+ */
+export interface MinMaxSettingEntry {
+    /**
+     * @generated from protobuf field: string ui_name = 1;
+     */
+    uiName: string;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+    /**
+     * @generated from protobuf field: int32 def = 3;
+     */
+    def: number;
+    /**
+     * @generated from protobuf field: string placeholder = 4;
+     */
+    placeholder: string;
+}
+/**
  * @generated from protobuf message soulfire.v1.MinMaxSetting
  */
 export interface MinMaxSetting {
     /**
-     * @generated from protobuf field: string min_ui_name = 1;
-     */
-    minUiName: string;
-    /**
-     * @generated from protobuf field: string max_ui_name = 2;
-     */
-    maxUiName: string;
-    /**
-     * @generated from protobuf field: string min_description = 3;
-     */
-    minDescription: string;
-    /**
-     * @generated from protobuf field: string max_description = 4;
-     */
-    maxDescription: string;
-    /**
-     * @generated from protobuf field: int32 min_def = 5;
-     */
-    minDef: number;
-    /**
-     * @generated from protobuf field: int32 max_def = 6;
-     */
-    maxDef: number;
-    /**
-     * @generated from protobuf field: int32 min = 7;
+     * @generated from protobuf field: int32 min = 1;
      */
     min: number;
     /**
-     * @generated from protobuf field: int32 max = 8;
+     * @generated from protobuf field: int32 max = 2;
      */
     max: number;
     /**
-     * @generated from protobuf field: int32 step = 9;
+     * @generated from protobuf field: int32 step = 3;
      */
     step: number;
     /**
-     * @generated from protobuf field: optional string format = 10;
+     * @generated from protobuf field: bool thousand_separator = 4;
      */
-    format?: string;
+    thousandSeparator: boolean;
     /**
-     * @generated from protobuf field: string min_placeholder = 11;
+     * @generated from protobuf field: soulfire.v1.MinMaxSettingEntry minEntry = 5;
      */
-    minPlaceholder: string;
+    minEntry?: MinMaxSettingEntry;
     /**
-     * @generated from protobuf field: string max_placeholder = 12;
+     * @generated from protobuf field: soulfire.v1.MinMaxSettingEntry maxEntry = 6;
      */
-    maxPlaceholder: string;
+    maxEntry?: MinMaxSettingEntry;
 }
 /**
  * A single setting type with optional default value
@@ -465,8 +470,8 @@ class IntSetting$Type extends MessageType<IntSetting> {
             { no: 4, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 5, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 6, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 7, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 7, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "thousand_separator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -484,8 +489,10 @@ class DoubleSetting$Type extends MessageType<DoubleSetting> {
             { no: 4, name: "min", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 5, name: "max", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
             { no: 6, name: "step", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 7, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 7, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 8, name: "thousand_separator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 9, name: "decimal_scale", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 10, name: "fixed_decimal_scale", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -550,21 +557,30 @@ class StringListSetting$Type extends MessageType<StringListSetting> {
  */
 export const StringListSetting = new StringListSetting$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class MinMaxSettingEntry$Type extends MessageType<MinMaxSettingEntry> {
+    constructor() {
+        super("soulfire.v1.MinMaxSettingEntry", [
+            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "def", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.MinMaxSettingEntry
+ */
+export const MinMaxSettingEntry = new MinMaxSettingEntry$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class MinMaxSetting$Type extends MessageType<MinMaxSetting> {
     constructor() {
         super("soulfire.v1.MinMaxSetting", [
-            { no: 1, name: "min_ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "max_ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "min_description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "max_description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "min_def", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "max_def", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 7, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 8, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 9, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 10, name: "format", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 11, name: "min_placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 12, name: "max_placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 1, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 3, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "thousand_separator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 5, name: "minEntry", kind: "message", T: () => MinMaxSettingEntry },
+            { no: 6, name: "maxEntry", kind: "message", T: () => MinMaxSettingEntry }
         ]);
     }
 }
