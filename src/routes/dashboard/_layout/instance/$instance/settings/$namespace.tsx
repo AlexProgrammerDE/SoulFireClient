@@ -5,6 +5,7 @@ import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
 import { useTranslation } from 'react-i18next';
+import { NotFoundComponent } from '@/components/not-found-component.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/settings/$namespace',
@@ -20,7 +21,7 @@ function SettingsNamespace() {
     (s) => s.namespace === namespace,
   );
   if (!settingsEntry) {
-    throw new Error(t('settingsPage.entryNotFound'));
+    return <NotFoundComponent />;
   }
 
   const pluginInfo = clientInfo.plugins.find(

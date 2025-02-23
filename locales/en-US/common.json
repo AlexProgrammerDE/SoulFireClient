@@ -138,7 +138,6 @@
     "website": "Website"
   },
   "settingsPage": {
-    "entryNotFound": "Settings entry not found",
     "namespacesNotFound": "Settings namespaces not found",
     "stringList": {
       "placeholder": "Add a new entry...",
