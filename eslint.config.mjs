@@ -1,7 +1,6 @@
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import reactHooks from 'eslint-plugin-react-hooks';
-import reactCompiler from 'eslint-plugin-react-compiler';
 import react from 'eslint-plugin-react';
 import globals from 'globals';
 
@@ -19,7 +18,6 @@ export default tseslint.config(
   },
   eslint.configs.recommended,
   tseslint.configs.recommended,
-  reactCompiler.configs.recommended,
   {
     plugins: {
       reactHooks,
