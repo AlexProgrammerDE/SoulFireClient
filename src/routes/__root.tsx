@@ -25,6 +25,7 @@ import { TerminalThemeContext } from '@/components/providers/terminal-theme-cont
 import { attachConsole } from '@tauri-apps/plugin-log';
 import { AptabaseProvider, useAptabase } from '@aptabase/react';
 import { emit } from '@tauri-apps/api/event';
+import { useTheme } from 'next-themes';
 
 async function getAvailableProfiles() {
   const profileDir = await resolve(
@@ -95,6 +96,7 @@ function RootPending() {
       enableSystem
       disableTransitionOnChange
     >
+      <WindowThemeSyncer />
       <div vaul-drawer-wrapper="" className="flex h-dvh w-dvw flex-col" />
     </ThemeProvider>
   );
@@ -130,6 +132,22 @@ const AppStartedEvent = memo(() => {
 
   return null;
 });
+
+function WindowThemeSyncer() {
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    if (isTauri()) {
+      if (resolvedTheme === 'dark') {
+        void getCurrentWebviewWindow().setTheme('dark');
+      } else if (resolvedTheme === 'light') {
+        void getCurrentWebviewWindow().setTheme('light');
+      }
+    }
+  }, [resolvedTheme]);
+
+  return null;
+}
 
 function RootLayout() {
   const { systemInfo } = Route.useLoaderData();
@@ -194,6 +212,7 @@ function RootLayout() {
             enableSystem
             disableTransitionOnChange
           >
+            <WindowThemeSyncer />
             <TooltipProvider delayDuration={500}>
               <SystemInfoContext.Provider value={systemInfoState}>
                 <TerminalThemeContext.Provider
