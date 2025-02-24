@@ -20,7 +20,7 @@
     "pre-commit": "lint-staged"
   },
   "dependencies": {
-    "@aptabase/react": "^0.3.5",
+    "@aptabase/react": "^0.4.0",
     "@catppuccin/palette": "^1.7.1",
     "@hookform/resolvers": "^4.0.0",
     "@protobuf-ts/grpcweb-transport": "^2.9.4",
