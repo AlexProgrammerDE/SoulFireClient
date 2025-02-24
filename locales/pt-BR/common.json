@@ -138,7 +138,6 @@
     "website": "Site"
   },
   "settingsPage": {
-    "entryNotFound": "Entrada de configurações não encontrada",
     "namespacesNotFound": "Namespaces de configurações não encontrados",
     "stringList": {
       "placeholder": "Adicionar uma nova entrada...",
