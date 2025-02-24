@@ -5,7 +5,7 @@ import { deepEqual } from '@tanstack/react-router';
 export const queryClientInstance = new QueryClient({
   defaultOptions: {
     queries: {
-      retry: 5,
+      retry: true,
       structuralSharing: (prev: unknown, next: unknown) =>
         deepEqual(prev, next) ? prev : next,
     },
