@@ -138,7 +138,6 @@
     "website": "Site Internet"
   },
   "settingsPage": {
-    "entryNotFound": "Entrée de paramètres introuvable",
     "namespacesNotFound": "",
     "stringList": {
       "placeholder": "Ajouter une nouvelle entrée...",

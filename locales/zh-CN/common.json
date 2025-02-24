@@ -138,7 +138,6 @@
     "website": "Website"
   },
   "settingsPage": {
-    "entryNotFound": "未找到设置项",
     "namespacesNotFound": "",
     "stringList": {
       "placeholder": "添加新条目...",
