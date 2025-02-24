@@ -1,5 +1,11 @@
 import { Input } from '@/components/ui/input.tsx';
-import { KeyboardEventHandler, useContext, useState } from 'react';
+import {
+  KeyboardEventHandler,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { CommandServiceClient } from '@/generated/soulfire/command.client.ts';
 import {
@@ -32,6 +38,32 @@ export default function CommandInput(props: {
     receivedCompletions: null,
     index: null,
   });
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const activeEl = document.activeElement as HTMLElement | null;
+      if (
+        inputRef.current &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.altKey &&
+        event.key.length === 1 &&
+        /[a-zA-Z0-9!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~ ]/.test(event.key) &&
+        (activeEl === null ||
+          (activeEl.tagName !== 'INPUT' &&
+            activeEl.tagName !== 'TEXTAREA' &&
+            !activeEl.isContentEditable))
+      ) {
+        inputRef.current.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
 
   const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
     const currentTarget = e.currentTarget;
@@ -162,6 +194,8 @@ export default function CommandInput(props: {
 
   return (
     <Input
+      ref={inputRef}
+      autoFocus
       placeholder={t('commandInput.placeholder')}
       onKeyDown={handleKeyDown}
       onChange={(e) => {
