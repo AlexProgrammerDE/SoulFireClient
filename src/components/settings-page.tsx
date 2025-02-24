@@ -54,6 +54,37 @@ import { ServerConfigContext } from '@/components/providers/server-config-contex
 import { useTranslation } from 'react-i18next';
 import { NumericFormat } from 'react-number-format';
 import { useLocaleNumberFormat } from '@/hooks/use-locale-number-format.tsx';
+import { toast } from 'sonner';
+import { TFunction } from 'i18next';
+import { NumberFormatValues } from 'react-number-format/types/types';
+
+function isAllowedValidator(
+  t: TFunction,
+  min: number,
+  max: number,
+  parseFunc: (value: string) => number,
+) {
+  return (values: NumberFormatValues) => {
+    const currentValue = parseFunc(values.value);
+
+    if (!Number.isFinite(currentValue)) {
+      return false;
+    }
+
+    if (currentValue >= min && currentValue <= max) {
+      return true;
+    } else {
+      toast.warning(t('settingsPage.invalidNumberToast.title'), {
+        id: 'invalid-number',
+        description: t('settingsPage.invalidNumberToast.title', {
+          min,
+          max,
+        }),
+      });
+      return false;
+    }
+  };
+}
 
 function ComponentTitle(props: {
   title: string;
@@ -90,7 +121,7 @@ function ComponentTitle(props: {
 }
 
 function StringComponent(props: {
-  entry: StringSetting;
+  setting: StringSetting;
   value: string;
   changeCallback: (value: string) => void;
 }) {
@@ -106,11 +137,11 @@ function StringComponent(props: {
     });
   }, [props.value]);
 
-  if (props.entry.textarea) {
+  if (props.setting.textarea) {
     return (
       <Textarea
         value={inputValue}
-        placeholder={props.entry.placeholder}
+        placeholder={props.setting.placeholder}
         onChange={(e) => {
           props.changeCallback(e.currentTarget.value);
         }}
@@ -120,8 +151,8 @@ function StringComponent(props: {
     return (
       <Input
         value={inputValue}
-        placeholder={props.entry.placeholder}
-        type={props.entry.secret ? 'password' : 'text'}
+        placeholder={props.setting.placeholder}
+        type={props.setting.secret ? 'password' : 'text'}
         onChange={(e) => {
           props.changeCallback(e.currentTarget.value);
         }}
@@ -131,10 +162,11 @@ function StringComponent(props: {
 }
 
 function IntComponent(props: {
-  entry: IntSetting;
+  setting: IntSetting;
   value: number;
   changeCallback: (value: number) => void;
 }) {
+  const { t } = useTranslation('common');
   const localeNumberFormat = useLocaleNumberFormat();
   const [inputValue, setInputValue] = useState(props.value);
 
@@ -152,24 +184,19 @@ function IntComponent(props: {
     <NumericFormat
       value={inputValue}
       thousandSeparator={
-        props.entry.thousandSeparator
+        props.setting.thousandSeparator
           ? localeNumberFormat.thousandSeparator
           : undefined
       }
       decimalSeparator={localeNumberFormat.decimalSeparator}
-      allowNegative={props.entry.min < 0}
+      allowNegative={props.setting.min < 0}
       decimalScale={0}
-      isAllowed={(values) => {
-        const currentValue = parseInt(values.value);
-
-        if (!Number.isFinite(currentValue)) {
-          return false;
-        }
-
-        return (
-          currentValue >= props.entry.min && currentValue <= props.entry.max
-        );
-      }}
+      isAllowed={isAllowedValidator(
+        t,
+        props.setting.min,
+        props.setting.max,
+        parseInt,
+      )}
       onValueChange={(values) => {
         const currentValue = parseInt(values.value);
 
@@ -179,21 +206,22 @@ function IntComponent(props: {
 
         props.changeCallback(currentValue);
       }}
-      placeholder={props.entry.placeholder}
+      placeholder={props.setting.placeholder}
       inputMode="numeric"
-      min={props.entry.min}
-      max={props.entry.max}
-      step={props.entry.step}
+      min={props.setting.min}
+      max={props.setting.max}
+      step={props.setting.step}
       customInput={Input}
     />
   );
 }
 
 function DoubleComponent(props: {
-  entry: DoubleSetting;
+  setting: DoubleSetting;
   value: number;
   changeCallback: (value: number) => void;
 }) {
+  const { t } = useTranslation('common');
   const localeNumberFormat = useLocaleNumberFormat();
   const [inputValue, setInputValue] = useState(props.value);
 
@@ -211,25 +239,20 @@ function DoubleComponent(props: {
     <NumericFormat
       value={inputValue}
       thousandSeparator={
-        props.entry.thousandSeparator
+        props.setting.thousandSeparator
           ? localeNumberFormat.thousandSeparator
           : undefined
       }
       decimalSeparator={localeNumberFormat.decimalSeparator}
-      allowNegative={props.entry.min < 0}
-      decimalScale={props.entry.decimalScale}
-      fixedDecimalScale={props.entry.fixedDecimalScale}
-      isAllowed={(values) => {
-        const currentValue = parseFloat(values.value);
-
-        if (!Number.isFinite(currentValue)) {
-          return false;
-        }
-
-        return (
-          currentValue >= props.entry.min && currentValue <= props.entry.max
-        );
-      }}
+      allowNegative={props.setting.min < 0}
+      decimalScale={props.setting.decimalScale}
+      fixedDecimalScale={props.setting.fixedDecimalScale}
+      isAllowed={isAllowedValidator(
+        t,
+        props.setting.min,
+        props.setting.max,
+        parseFloat,
+      )}
       onValueChange={(values) => {
         const currentValue = parseFloat(values.value);
 
@@ -239,18 +262,18 @@ function DoubleComponent(props: {
 
         props.changeCallback(currentValue);
       }}
-      placeholder={props.entry.placeholder}
+      placeholder={props.setting.placeholder}
       inputMode="decimal"
-      min={props.entry.min}
-      max={props.entry.max}
-      step={props.entry.step}
+      min={props.setting.min}
+      max={props.setting.max}
+      step={props.setting.step}
       customInput={Input}
     />
   );
 }
 
 function BoolComponent(props: {
-  entry: BoolSetting;
+  setting: BoolSetting;
   value: boolean;
   changeCallback: (value: boolean) => void;
   title: string;
@@ -281,7 +304,7 @@ function BoolComponent(props: {
 }
 
 function ComboComponent(props: {
-  entry: ComboSetting;
+  setting: ComboSetting;
   value: string;
   changeCallback: (value: string) => void;
 }) {
@@ -297,7 +320,7 @@ function ComboComponent(props: {
           className="w-[200px] justify-between"
         >
           {
-            props.entry.options.find((option) => option.id === props.value)
+            props.setting.options.find((option) => option.id === props.value)
               ?.displayName
           }
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -308,7 +331,7 @@ function ComboComponent(props: {
           <CommandInput placeholder="Search value..." />
           <CommandList>
             <CommandGroup>
-              {props.entry.options.map((option) => (
+              {props.setting.options.map((option) => (
                 <CommandItem
                   key={option.id}
                   value={option.id}
@@ -346,7 +369,7 @@ function makeIdValueSingle<T>(value: T): IdValue<T> {
 }
 
 function StringListComponent(props: {
-  entry: StringListSetting;
+  setting: StringListSetting;
   value: string[];
   changeCallback: (value: string[]) => void;
 }) {
@@ -436,6 +459,7 @@ function MinMaxComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
+  const { t } = useTranslation('common');
   const localeNumberFormat = useLocaleNumberFormat();
   const [inputValue, setInputValue] = useState(props.value);
 
@@ -460,17 +484,12 @@ function MinMaxComponent(props: {
       decimalSeparator={localeNumberFormat.decimalSeparator}
       allowNegative={props.setting.min < 0}
       decimalScale={0}
-      isAllowed={(values) => {
-        const currentValue = parseInt(values.value);
-
-        if (!Number.isFinite(currentValue)) {
-          return false;
-        }
-
-        return (
-          currentValue >= props.setting.min && currentValue <= props.setting.max
-        );
-      }}
+      isAllowed={isAllowedValidator(
+        t,
+        props.setting.min,
+        props.setting.max,
+        parseInt,
+      )}
       onValueChange={(values) => {
         const currentValue = parseInt(values.value);
 
@@ -525,7 +544,7 @@ function EntryComponent<T extends BaseSettings>(props: {
             description={props.entry.value.string.description}
           />
           <StringComponent
-            entry={props.entry.value.string}
+            setting={props.entry.value.string}
             value={value as string}
             changeCallback={setValueMutation.mutate}
           />
@@ -540,7 +559,7 @@ function EntryComponent<T extends BaseSettings>(props: {
             description={props.entry.value.int.description}
           />
           <IntComponent
-            entry={props.entry.value.int}
+            setting={props.entry.value.int}
             value={value as number}
             changeCallback={setValueMutation.mutate}
           />
@@ -551,7 +570,7 @@ function EntryComponent<T extends BaseSettings>(props: {
       return (
         <div className="flex flex-row gap-1 max-w-xl">
           <BoolComponent
-            entry={props.entry.value.bool}
+            setting={props.entry.value.bool}
             value={value as boolean}
             changeCallback={setValueMutation.mutate}
             title={props.entry.value.bool.uiName}
@@ -568,7 +587,7 @@ function EntryComponent<T extends BaseSettings>(props: {
             description={props.entry.value.double.description}
           />
           <DoubleComponent
-            entry={props.entry.value.double}
+            setting={props.entry.value.double}
             value={value as number}
             changeCallback={setValueMutation.mutate}
           />
@@ -583,7 +602,7 @@ function EntryComponent<T extends BaseSettings>(props: {
             description={props.entry.value.combo.description}
           />
           <ComboComponent
-            entry={props.entry.value.combo}
+            setting={props.entry.value.combo}
             value={value as string}
             changeCallback={setValueMutation.mutate}
           />
@@ -598,7 +617,7 @@ function EntryComponent<T extends BaseSettings>(props: {
             description={props.entry.value.stringList.description}
           />
           <StringListComponent
-            entry={props.entry.value.stringList}
+            setting={props.entry.value.stringList}
             value={value as string[]}
             changeCallback={setValueMutation.mutate}
           />

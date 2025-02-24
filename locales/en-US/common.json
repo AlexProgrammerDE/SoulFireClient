@@ -143,6 +143,10 @@
       "placeholder": "Add a new entry...",
       "add": "Add",
       "remove": "Remove"
+    },
+    "invalidNumberToast": {
+      "title": "Invalid number!",
+      "description": "The value must be between {{min}} and {{max}}"
     }
   },
   "terminal": {
