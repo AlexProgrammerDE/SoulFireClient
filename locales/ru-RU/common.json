@@ -138,7 +138,6 @@
     "website": "Сайт"
   },
   "settingsPage": {
-    "entryNotFound": "Запись о настройках не найдена",
     "namespacesNotFound": "Настройки пространства имен не найдены",
     "stringList": {
       "placeholder": "Добавить новую запись...",

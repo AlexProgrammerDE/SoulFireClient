@@ -138,7 +138,6 @@
     "website": "Webseite"
   },
   "settingsPage": {
-    "entryNotFound": "Einstellungseintrag nicht gefunden",
     "namespacesNotFound": "Einstellungs-Namensräume nicht gefunden",
     "stringList": {
       "placeholder": "Neuen Eintrag hinzufügen...",

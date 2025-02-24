@@ -138,7 +138,6 @@
     "website": "Strona Internetowa"
   },
   "settingsPage": {
-    "entryNotFound": "Nie znaleziono wpisu w ustawieniach",
     "namespacesNotFound": "Nie znaleziono przestrzeni nazw w ustawieniach",
     "stringList": {
       "placeholder": "Dodaj nowy wpis...",
