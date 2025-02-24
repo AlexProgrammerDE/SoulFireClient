@@ -5,10 +5,10 @@ import {
   IntSetting,
   MinMaxSetting,
   MinMaxSettingEntry,
+  SettingEntry,
   SettingsPage,
   StringListSetting,
   StringSetting,
-  SettingEntry,
 } from '@/generated/soulfire/config.ts';
 import { Button } from '@/components/ui/button.tsx';
 import {
@@ -159,6 +159,17 @@ function IntComponent(props: {
       decimalSeparator={localeNumberFormat.decimalSeparator}
       allowNegative={props.entry.min < 0}
       decimalScale={0}
+      isAllowed={(values) => {
+        const currentValue = parseInt(values.value);
+
+        if (!Number.isFinite(currentValue)) {
+          return false;
+        }
+
+        return (
+          currentValue >= props.entry.min && currentValue <= props.entry.max
+        );
+      }}
       onValueChange={(values) => {
         const currentValue = parseInt(values.value);
 
@@ -208,6 +219,17 @@ function DoubleComponent(props: {
       allowNegative={props.entry.min < 0}
       decimalScale={props.entry.decimalScale}
       fixedDecimalScale={props.entry.fixedDecimalScale}
+      isAllowed={(values) => {
+        const currentValue = parseFloat(values.value);
+
+        if (!Number.isFinite(currentValue)) {
+          return false;
+        }
+
+        return (
+          currentValue >= props.entry.min && currentValue <= props.entry.max
+        );
+      }}
       onValueChange={(values) => {
         const currentValue = parseFloat(values.value);
 
@@ -438,6 +460,17 @@ function MinMaxComponent(props: {
       decimalSeparator={localeNumberFormat.decimalSeparator}
       allowNegative={props.setting.min < 0}
       decimalScale={0}
+      isAllowed={(values) => {
+        const currentValue = parseInt(values.value);
+
+        if (!Number.isFinite(currentValue)) {
+          return false;
+        }
+
+        return (
+          currentValue >= props.setting.min && currentValue <= props.setting.max
+        );
+      }}
       onValueChange={(values) => {
         const currentValue = parseInt(values.value);
 
@@ -456,11 +489,6 @@ function MinMaxComponent(props: {
     />
   );
 }
-
-type MinMaxType = {
-  min: number;
-  max: number;
-};
 
 function EntryComponent<T extends BaseSettings>(props: {
   namespace: string;
@@ -578,7 +606,10 @@ function EntryComponent<T extends BaseSettings>(props: {
       );
     }
     case 'minMax': {
-      const castValue = value as MinMaxType;
+      const castValue = value as {
+        min: number;
+        max: number;
+      };
       return (
         <>
           <div className="flex flex-col gap-1 max-w-xl">
@@ -592,7 +623,7 @@ function EntryComponent<T extends BaseSettings>(props: {
               value={castValue.min}
               changeCallback={(v) => {
                 setValueMutation.mutate({
-                  max: castValue.max < v ? v : castValue.max,
+                  max: Math.max(castValue.max, v),
                   min: v,
                 });
               }}
@@ -610,7 +641,7 @@ function EntryComponent<T extends BaseSettings>(props: {
               changeCallback={(v) => {
                 setValueMutation.mutate({
                   max: v,
-                  min: castValue.min > v ? v : castValue.min,
+                  min: Math.min(castValue.min, v),
                 });
               }}
             />
@@ -636,18 +667,16 @@ function ClientSettingsPageComponent<T extends BaseSettings>({
     <>
       {data.entries
         .filter((entry) => entry.key !== data.enabledKey)
-        .map((page) => {
-          return (
-            <EntryComponent
-              namespace={data.namespace}
-              key={page.key}
-              entry={page}
-              setConfig={setConfig}
-              invalidateQuery={invalidateQuery}
-              config={config}
-            />
-          );
-        })}
+        .map((page) => (
+          <EntryComponent
+            namespace={data.namespace}
+            key={page.key}
+            entry={page}
+            setConfig={setConfig}
+            invalidateQuery={invalidateQuery}
+            config={config}
+          />
+        ))}
     </>
   );
 }
