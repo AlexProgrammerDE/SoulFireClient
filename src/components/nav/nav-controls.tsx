@@ -1,6 +1,11 @@
 'use client';
 
-import { TerminalIcon } from 'lucide-react';
+import {
+  LogsIcon,
+  ReceiptTextIcon,
+  TerminalIcon,
+  TextSearchIcon,
+} from 'lucide-react';
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -29,6 +34,14 @@ export function NavControls() {
       icon: TerminalIcon,
       linkProps: {
         to: '/dashboard/instance/$instance/console',
+        params: { instance: instanceInfo.id },
+      },
+    },
+    {
+      title: t('instanceSidebar.audit-log'),
+      icon: TextSearchIcon,
+      linkProps: {
+        to: '/dashboard/instance/$instance/audit-log',
         params: { instance: instanceInfo.id },
       },
     },

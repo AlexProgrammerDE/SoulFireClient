@@ -207,6 +207,7 @@
     "deleteInstance": "Delete Instance",
     "controlsGroup": "Controls",
     "console": "Console",
+    "audit-log": "Audit Log",
     "settingsGroup": "Settings",
     "pluginsGroup": "Plugins",
     "pluginSettings": "Plugin Settings",
@@ -260,6 +261,7 @@
   "noInstancesFound": "No instances found",
   "pageName": {
     "console": "Console",
+    "audit-log": "Audit Log",
     "instances": "Instances",
     "proxySettings": "Proxy Settings",
     "overview": "Overview",
@@ -272,5 +274,12 @@
     "paused": "Paused",
     "stopping": "Stopping",
     "stopped": "Stopped"
+  },
+  "auditLog": {
+    "executedCommand": "{{username}} executed command: {{data}}",
+    "startedAttack": "{{username}} started an attack",
+    "resumedAttack": "{{username}} resumed an attack",
+    "pausedAttack": "{{username}} paused an attack",
+    "stoppedAttack": "{{username}} stopped an attack"
   }
 }

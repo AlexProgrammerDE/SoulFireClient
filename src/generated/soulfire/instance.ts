@@ -9,6 +9,23 @@ import { ProxyProto } from "./common";
 import { MinecraftAccountProto } from "./common";
 import { SettingsNamespace } from "./common";
 /**
+ * @generated from protobuf message soulfire.v1.InstanceUser
+ */
+export interface InstanceUser {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: string username = 2;
+     */
+    username: string;
+    /**
+     * @generated from protobuf field: string email = 3;
+     */
+    email: string;
+}
+/**
  * @generated from protobuf message soulfire.v1.InstanceConfig
  */
 export interface InstanceConfig {
@@ -212,56 +229,52 @@ export interface InstanceStateChangeRequest {
 export interface InstanceStateChangeResponse {
 }
 /**
- * @generated from protobuf message soulfire.v1.InstanceAuditLogsRequest
+ * @generated from protobuf message soulfire.v1.InstanceAuditLogRequest
  */
-export interface InstanceAuditLogsRequest {
+export interface InstanceAuditLogRequest {
     /**
      * @generated from protobuf field: string id = 1;
      */
     id: string;
 }
 /**
- * @generated from protobuf message soulfire.v1.InstanceAuditLogsResponse
+ * @generated from protobuf message soulfire.v1.InstanceAuditLogResponse
  */
-export interface InstanceAuditLogsResponse {
+export interface InstanceAuditLogResponse {
     /**
-     * @generated from protobuf field: repeated soulfire.v1.InstanceAuditLogsResponse.AuditLog logs = 1;
+     * @generated from protobuf field: repeated soulfire.v1.InstanceAuditLogResponse.AuditLogEntry entry = 1;
      */
-    logs: InstanceAuditLogsResponse_AuditLog[];
+    entry: InstanceAuditLogResponse_AuditLogEntry[];
 }
 /**
- * @generated from protobuf message soulfire.v1.InstanceAuditLogsResponse.AuditLog
+ * @generated from protobuf message soulfire.v1.InstanceAuditLogResponse.AuditLogEntry
  */
-export interface InstanceAuditLogsResponse_AuditLog {
+export interface InstanceAuditLogResponse_AuditLogEntry {
     /**
      * @generated from protobuf field: string id = 1;
      */
     id: string;
     /**
-     * @generated from protobuf field: string user_id = 2;
+     * @generated from protobuf field: soulfire.v1.InstanceUser user = 2;
      */
-    userId: string;
+    user?: InstanceUser;
     /**
-     * @generated from protobuf field: string user_name = 3;
+     * @generated from protobuf field: soulfire.v1.InstanceAuditLogResponse.AuditLogEntryType type = 3;
      */
-    userName: string;
+    type: InstanceAuditLogResponse_AuditLogEntryType;
     /**
-     * @generated from protobuf field: soulfire.v1.InstanceAuditLogsResponse.AuditLogType type = 4;
-     */
-    type: InstanceAuditLogsResponse_AuditLogType;
-    /**
-     * @generated from protobuf field: google.protobuf.Timestamp timestamp = 5;
+     * @generated from protobuf field: google.protobuf.Timestamp timestamp = 4;
      */
     timestamp?: Timestamp;
     /**
-     * @generated from protobuf field: string data = 6;
+     * @generated from protobuf field: string data = 5;
      */
     data: string;
 }
 /**
- * @generated from protobuf enum soulfire.v1.InstanceAuditLogsResponse.AuditLogType
+ * @generated from protobuf enum soulfire.v1.InstanceAuditLogResponse.AuditLogEntryType
  */
-export enum InstanceAuditLogsResponse_AuditLogType {
+export enum InstanceAuditLogResponse_AuditLogEntryType {
     /**
      * @generated from protobuf enum value: EXECUTE_COMMAND = 0;
      */
@@ -308,6 +321,20 @@ export enum InstanceState {
      */
     STOPPED = 4
 }
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceUser$Type extends MessageType<InstanceUser> {
+    constructor() {
+        super("soulfire.v1.InstanceUser", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceUser
+ */
+export const InstanceUser = new InstanceUser$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class InstanceConfig$Type extends MessageType<InstanceConfig> {
     constructor() {
@@ -518,46 +545,45 @@ class InstanceStateChangeResponse$Type extends MessageType<InstanceStateChangeRe
  */
 export const InstanceStateChangeResponse = new InstanceStateChangeResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class InstanceAuditLogsRequest$Type extends MessageType<InstanceAuditLogsRequest> {
+class InstanceAuditLogRequest$Type extends MessageType<InstanceAuditLogRequest> {
     constructor() {
-        super("soulfire.v1.InstanceAuditLogsRequest", [
+        super("soulfire.v1.InstanceAuditLogRequest", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.InstanceAuditLogsRequest
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAuditLogRequest
  */
-export const InstanceAuditLogsRequest = new InstanceAuditLogsRequest$Type();
+export const InstanceAuditLogRequest = new InstanceAuditLogRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class InstanceAuditLogsResponse$Type extends MessageType<InstanceAuditLogsResponse> {
+class InstanceAuditLogResponse$Type extends MessageType<InstanceAuditLogResponse> {
     constructor() {
-        super("soulfire.v1.InstanceAuditLogsResponse", [
-            { no: 1, name: "logs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => InstanceAuditLogsResponse_AuditLog }
+        super("soulfire.v1.InstanceAuditLogResponse", [
+            { no: 1, name: "entry", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => InstanceAuditLogResponse_AuditLogEntry }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.InstanceAuditLogsResponse
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAuditLogResponse
  */
-export const InstanceAuditLogsResponse = new InstanceAuditLogsResponse$Type();
+export const InstanceAuditLogResponse = new InstanceAuditLogResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class InstanceAuditLogsResponse_AuditLog$Type extends MessageType<InstanceAuditLogsResponse_AuditLog> {
+class InstanceAuditLogResponse_AuditLogEntry$Type extends MessageType<InstanceAuditLogResponse_AuditLogEntry> {
     constructor() {
-        super("soulfire.v1.InstanceAuditLogsResponse.AuditLog", [
+        super("soulfire.v1.InstanceAuditLogResponse.AuditLogEntry", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "user_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "type", kind: "enum", T: () => ["soulfire.v1.InstanceAuditLogsResponse.AuditLogType", InstanceAuditLogsResponse_AuditLogType] },
-            { no: 5, name: "timestamp", kind: "message", T: () => Timestamp },
-            { no: 6, name: "data", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "user", kind: "message", T: () => InstanceUser },
+            { no: 3, name: "type", kind: "enum", T: () => ["soulfire.v1.InstanceAuditLogResponse.AuditLogEntryType", InstanceAuditLogResponse_AuditLogEntryType] },
+            { no: 4, name: "timestamp", kind: "message", T: () => Timestamp },
+            { no: 5, name: "data", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.InstanceAuditLogsResponse.AuditLog
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAuditLogResponse.AuditLogEntry
  */
-export const InstanceAuditLogsResponse_AuditLog = new InstanceAuditLogsResponse_AuditLog$Type();
+export const InstanceAuditLogResponse_AuditLogEntry = new InstanceAuditLogResponse_AuditLogEntry$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.InstanceService
  */
@@ -569,5 +595,5 @@ export const InstanceService = new ServiceType("soulfire.v1.InstanceService", [
     { name: "updateInstanceMeta", options: {}, I: InstanceUpdateMetaRequest, O: InstanceUpdateMetaResponse },
     { name: "updateInstanceConfig", options: {}, I: InstanceUpdateConfigRequest, O: InstanceUpdateConfigResponse },
     { name: "changeInstanceState", options: {}, I: InstanceStateChangeRequest, O: InstanceStateChangeResponse },
-    { name: "getAuditLogs", options: {}, I: InstanceAuditLogsRequest, O: InstanceAuditLogsResponse }
+    { name: "getAuditLog", options: {}, I: InstanceAuditLogRequest, O: InstanceAuditLogResponse }
 ]);

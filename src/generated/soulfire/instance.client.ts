@@ -4,8 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { InstanceService } from "./instance";
-import type { InstanceAuditLogsResponse } from "./instance";
-import type { InstanceAuditLogsRequest } from "./instance";
+import type { InstanceAuditLogResponse } from "./instance";
+import type { InstanceAuditLogRequest } from "./instance";
 import type { InstanceStateChangeResponse } from "./instance";
 import type { InstanceStateChangeRequest } from "./instance";
 import type { InstanceUpdateConfigResponse } from "./instance";
@@ -56,9 +56,9 @@ export interface IInstanceServiceClient {
      */
     changeInstanceState(input: InstanceStateChangeRequest, options?: RpcOptions): UnaryCall<InstanceStateChangeRequest, InstanceStateChangeResponse>;
     /**
-     * @generated from protobuf rpc: getAuditLogs(soulfire.v1.InstanceAuditLogsRequest) returns (soulfire.v1.InstanceAuditLogsResponse);
+     * @generated from protobuf rpc: getAuditLog(soulfire.v1.InstanceAuditLogRequest) returns (soulfire.v1.InstanceAuditLogResponse);
      */
-    getAuditLogs(input: InstanceAuditLogsRequest, options?: RpcOptions): UnaryCall<InstanceAuditLogsRequest, InstanceAuditLogsResponse>;
+    getAuditLog(input: InstanceAuditLogRequest, options?: RpcOptions): UnaryCall<InstanceAuditLogRequest, InstanceAuditLogResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.InstanceService
@@ -119,10 +119,10 @@ export class InstanceServiceClient implements IInstanceServiceClient, ServiceInf
         return stackIntercept<InstanceStateChangeRequest, InstanceStateChangeResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: getAuditLogs(soulfire.v1.InstanceAuditLogsRequest) returns (soulfire.v1.InstanceAuditLogsResponse);
+     * @generated from protobuf rpc: getAuditLog(soulfire.v1.InstanceAuditLogRequest) returns (soulfire.v1.InstanceAuditLogResponse);
      */
-    getAuditLogs(input: InstanceAuditLogsRequest, options?: RpcOptions): UnaryCall<InstanceAuditLogsRequest, InstanceAuditLogsResponse> {
+    getAuditLog(input: InstanceAuditLogRequest, options?: RpcOptions): UnaryCall<InstanceAuditLogRequest, InstanceAuditLogResponse> {
         const method = this.methods[7], opt = this._transport.mergeOptions(options);
-        return stackIntercept<InstanceAuditLogsRequest, InstanceAuditLogsResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<InstanceAuditLogRequest, InstanceAuditLogResponse>("unary", this._transport, method, opt, input);
     }
 }
