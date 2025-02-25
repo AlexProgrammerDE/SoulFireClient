@@ -295,17 +295,13 @@ export enum GlobalPermission {
      */
     DELETE_USER = 8,
     /**
-     * @generated from protobuf enum value: INVALIDATE_SESSIONS = 11;
-     */
-    INVALIDATE_SESSIONS = 11,
-    /**
      * @generated from protobuf enum value: GLOBAL_COMMAND_EXECUTION = 9;
      */
     GLOBAL_COMMAND_EXECUTION = 9,
     /**
-     * @generated from protobuf enum value: GLOBAL_COMMAND_COMPLETION = 10;
+     * @generated from protobuf enum value: INVALIDATE_SESSIONS = 11;
      */
-    GLOBAL_COMMAND_COMPLETION = 10
+    INVALIDATE_SESSIONS = 11
 }
 /**
  * @generated from protobuf enum soulfire.v1.InstancePermission
@@ -315,10 +311,6 @@ export enum InstancePermission {
      * @generated from protobuf enum value: INSTANCE_COMMAND_EXECUTION = 0;
      */
     INSTANCE_COMMAND_EXECUTION = 0,
-    /**
-     * @generated from protobuf enum value: INSTANCE_COMMAND_COMPLETION = 1;
-     */
-    INSTANCE_COMMAND_COMPLETION = 1,
     /**
      * @generated from protobuf enum value: READ_INSTANCE = 2;
      */
@@ -370,7 +362,11 @@ export enum InstancePermission {
     /**
      * @generated from protobuf enum value: INSTANCE_SUBSCRIBE_LOGS = 13;
      */
-    INSTANCE_SUBSCRIBE_LOGS = 13
+    INSTANCE_SUBSCRIBE_LOGS = 13,
+    /**
+     * @generated from protobuf enum value: READ_INSTANCE_AUDIT_LOGS = 15;
+     */
+    READ_INSTANCE_AUDIT_LOGS = 15
 }
 /**
  * @generated from protobuf enum soulfire.v1.UserRole

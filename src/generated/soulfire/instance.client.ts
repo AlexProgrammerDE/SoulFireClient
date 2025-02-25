@@ -4,6 +4,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { InstanceService } from "./instance";
+import type { InstanceAuditLogsResponse } from "./instance";
+import type { InstanceAuditLogsRequest } from "./instance";
 import type { InstanceStateChangeResponse } from "./instance";
 import type { InstanceStateChangeRequest } from "./instance";
 import type { InstanceUpdateConfigResponse } from "./instance";
@@ -53,6 +55,10 @@ export interface IInstanceServiceClient {
      * @generated from protobuf rpc: changeInstanceState(soulfire.v1.InstanceStateChangeRequest) returns (soulfire.v1.InstanceStateChangeResponse);
      */
     changeInstanceState(input: InstanceStateChangeRequest, options?: RpcOptions): UnaryCall<InstanceStateChangeRequest, InstanceStateChangeResponse>;
+    /**
+     * @generated from protobuf rpc: getAuditLogs(soulfire.v1.InstanceAuditLogsRequest) returns (soulfire.v1.InstanceAuditLogsResponse);
+     */
+    getAuditLogs(input: InstanceAuditLogsRequest, options?: RpcOptions): UnaryCall<InstanceAuditLogsRequest, InstanceAuditLogsResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.InstanceService
@@ -111,5 +117,12 @@ export class InstanceServiceClient implements IInstanceServiceClient, ServiceInf
     changeInstanceState(input: InstanceStateChangeRequest, options?: RpcOptions): UnaryCall<InstanceStateChangeRequest, InstanceStateChangeResponse> {
         const method = this.methods[6], opt = this._transport.mergeOptions(options);
         return stackIntercept<InstanceStateChangeRequest, InstanceStateChangeResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: getAuditLogs(soulfire.v1.InstanceAuditLogsRequest) returns (soulfire.v1.InstanceAuditLogsResponse);
+     */
+    getAuditLogs(input: InstanceAuditLogsRequest, options?: RpcOptions): UnaryCall<InstanceAuditLogsRequest, InstanceAuditLogsResponse> {
+        const method = this.methods[7], opt = this._transport.mergeOptions(options);
+        return stackIntercept<InstanceAuditLogsRequest, InstanceAuditLogsResponse>("unary", this._transport, method, opt, input);
     }
 }

@@ -105,14 +105,14 @@ export function hasGlobalPermission(
 }
 
 export function hasInstancePermission(
-  clientData: InstanceInfoResponse | InstanceListResponse_Instance,
+  instanceInfo: InstanceInfoResponse | InstanceListResponse_Instance,
   permission: InstancePermission,
 ) {
   if (isDemo()) {
     return true;
   }
 
-  return clientData.instancePermissions
+  return instanceInfo.instancePermissions
     .filter((p) => p.granted)
     .map((p) => p.instancePermission)
     .includes(permission);

@@ -13,6 +13,8 @@ import {
   CommandRequest,
 } from '@/generated/soulfire/command.ts';
 import { useTranslation } from 'react-i18next';
+import { hasInstancePermission } from '@/lib/utils.tsx';
+import { InstancePermission } from '@/generated/soulfire/common.ts';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/console',
@@ -51,8 +53,14 @@ function Console() {
               {translateInstanceState(i18n, instanceInfo.state)}
             </Badge>
           </h2>
-          <TerminalComponent scope={scope} />
-          <CommandInput scope={scope} />
+          {hasInstancePermission(
+            instanceInfo,
+            InstancePermission.INSTANCE_SUBSCRIBE_LOGS,
+          ) && <TerminalComponent scope={scope} />}
+          {hasInstancePermission(
+            instanceInfo,
+            InstancePermission.INSTANCE_COMMAND_EXECUTION,
+          ) && <CommandInput scope={scope} />}
         </div>
         <ControlsMenu />
       </div>

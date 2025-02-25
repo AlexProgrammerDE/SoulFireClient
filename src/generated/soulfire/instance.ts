@@ -3,6 +3,7 @@
 // tslint:disable
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { MessageType } from "@protobuf-ts/runtime";
+import { Timestamp } from "../google/protobuf/timestamp";
 import { InstancePermission } from "./common";
 import { ProxyProto } from "./common";
 import { MinecraftAccountProto } from "./common";
@@ -209,6 +210,78 @@ export interface InstanceStateChangeRequest {
  * @generated from protobuf message soulfire.v1.InstanceStateChangeResponse
  */
 export interface InstanceStateChangeResponse {
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceAuditLogsRequest
+ */
+export interface InstanceAuditLogsRequest {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceAuditLogsResponse
+ */
+export interface InstanceAuditLogsResponse {
+    /**
+     * @generated from protobuf field: repeated soulfire.v1.InstanceAuditLogsResponse.AuditLog logs = 1;
+     */
+    logs: InstanceAuditLogsResponse_AuditLog[];
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceAuditLogsResponse.AuditLog
+ */
+export interface InstanceAuditLogsResponse_AuditLog {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: string user_id = 2;
+     */
+    userId: string;
+    /**
+     * @generated from protobuf field: string user_name = 3;
+     */
+    userName: string;
+    /**
+     * @generated from protobuf field: soulfire.v1.InstanceAuditLogsResponse.AuditLogType type = 4;
+     */
+    type: InstanceAuditLogsResponse_AuditLogType;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp timestamp = 5;
+     */
+    timestamp?: Timestamp;
+    /**
+     * @generated from protobuf field: string data = 6;
+     */
+    data: string;
+}
+/**
+ * @generated from protobuf enum soulfire.v1.InstanceAuditLogsResponse.AuditLogType
+ */
+export enum InstanceAuditLogsResponse_AuditLogType {
+    /**
+     * @generated from protobuf enum value: EXECUTE_COMMAND = 0;
+     */
+    EXECUTE_COMMAND = 0,
+    /**
+     * @generated from protobuf enum value: START_ATTACK = 1;
+     */
+    START_ATTACK = 1,
+    /**
+     * @generated from protobuf enum value: PAUSE_ATTACK = 2;
+     */
+    PAUSE_ATTACK = 2,
+    /**
+     * @generated from protobuf enum value: RESUME_ATTACK = 3;
+     */
+    RESUME_ATTACK = 3,
+    /**
+     * @generated from protobuf enum value: STOP_ATTACK = 4;
+     */
+    STOP_ATTACK = 4
 }
 /**
  * @generated from protobuf enum soulfire.v1.InstanceState
@@ -444,6 +517,47 @@ class InstanceStateChangeResponse$Type extends MessageType<InstanceStateChangeRe
  * @generated MessageType for protobuf message soulfire.v1.InstanceStateChangeResponse
  */
 export const InstanceStateChangeResponse = new InstanceStateChangeResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceAuditLogsRequest$Type extends MessageType<InstanceAuditLogsRequest> {
+    constructor() {
+        super("soulfire.v1.InstanceAuditLogsRequest", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAuditLogsRequest
+ */
+export const InstanceAuditLogsRequest = new InstanceAuditLogsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceAuditLogsResponse$Type extends MessageType<InstanceAuditLogsResponse> {
+    constructor() {
+        super("soulfire.v1.InstanceAuditLogsResponse", [
+            { no: 1, name: "logs", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => InstanceAuditLogsResponse_AuditLog }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAuditLogsResponse
+ */
+export const InstanceAuditLogsResponse = new InstanceAuditLogsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceAuditLogsResponse_AuditLog$Type extends MessageType<InstanceAuditLogsResponse_AuditLog> {
+    constructor() {
+        super("soulfire.v1.InstanceAuditLogsResponse.AuditLog", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "user_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "user_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "type", kind: "enum", T: () => ["soulfire.v1.InstanceAuditLogsResponse.AuditLogType", InstanceAuditLogsResponse_AuditLogType] },
+            { no: 5, name: "timestamp", kind: "message", T: () => Timestamp },
+            { no: 6, name: "data", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAuditLogsResponse.AuditLog
+ */
+export const InstanceAuditLogsResponse_AuditLog = new InstanceAuditLogsResponse_AuditLog$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.InstanceService
  */
@@ -454,5 +568,6 @@ export const InstanceService = new ServiceType("soulfire.v1.InstanceService", [
     { name: "getInstanceInfo", options: {}, I: InstanceInfoRequest, O: InstanceInfoResponse },
     { name: "updateInstanceMeta", options: {}, I: InstanceUpdateMetaRequest, O: InstanceUpdateMetaResponse },
     { name: "updateInstanceConfig", options: {}, I: InstanceUpdateConfigRequest, O: InstanceUpdateConfigResponse },
-    { name: "changeInstanceState", options: {}, I: InstanceStateChangeRequest, O: InstanceStateChangeResponse }
+    { name: "changeInstanceState", options: {}, I: InstanceStateChangeRequest, O: InstanceStateChangeResponse },
+    { name: "getAuditLogs", options: {}, I: InstanceAuditLogsRequest, O: InstanceAuditLogsResponse }
 ]);

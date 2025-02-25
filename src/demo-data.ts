@@ -24,12 +24,11 @@ export const demoData: ClientDataResponse = {
       granted: true,
     },
     { globalPermission: 8, granted: true },
-    { globalPermission: 11, granted: true },
     {
       globalPermission: 9,
       granted: true,
     },
-    { globalPermission: 10, granted: true },
+    { globalPermission: 11, granted: true },
   ],
   plugins: [
     {
