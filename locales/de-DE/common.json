@@ -143,6 +143,10 @@
       "placeholder": "Neuen Eintrag hinzufügen...",
       "add": "Hinzufügen",
       "remove": "Entfernen"
+    },
+    "invalidNumberToast": {
+      "title": "",
+      "description": ""
     }
   },
   "terminal": {

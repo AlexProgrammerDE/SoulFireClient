@@ -143,6 +143,10 @@
       "placeholder": "Добавить новую запись...",
       "add": "Добавить",
       "remove": "Удалить"
+    },
+    "invalidNumberToast": {
+      "title": "",
+      "description": ""
     }
   },
   "terminal": {

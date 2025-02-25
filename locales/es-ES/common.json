@@ -143,6 +143,10 @@
       "placeholder": "",
       "add": "",
       "remove": ""
+    },
+    "invalidNumberToast": {
+      "title": "",
+      "description": ""
     }
   },
   "terminal": {
