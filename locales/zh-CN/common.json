@@ -143,6 +143,10 @@
       "placeholder": "添加新条目...",
       "add": "添加",
       "remove": "删除"
+    },
+    "invalidNumberToast": {
+      "title": "",
+      "description": ""
     }
   },
   "terminal": {
