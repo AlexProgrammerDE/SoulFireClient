@@ -28,6 +28,7 @@ import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { RpcTransport } from '@protobuf-ts/runtime-rpc';
 import { QueryClient } from '@tanstack/react-query';
+import { Timestamp } from '@/generated/google/protobuf/timestamp.ts';
 
 const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
 
@@ -332,4 +333,11 @@ export async function invalidateServerQuery(queryClient: QueryClient) {
   await queryClient.invalidateQueries({
     queryKey: serverInfoQueryKey(),
   });
+}
+
+export function timestampToDate(timestamp: Timestamp): Date {
+  return new Date(
+    parseInt(timestamp.seconds) * 1000 +
+      Math.floor((timestamp.nanos || 0) / 1e6),
+  );
 }

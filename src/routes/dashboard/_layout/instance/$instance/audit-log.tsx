@@ -15,7 +15,7 @@ import * as React from 'react';
 import { Card, CardDescription } from '@/components/ui/card.tsx';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { SFTimeAgo } from '@/components/SFTimeAgo';
-import { getGravatarUrl } from '@/lib/utils.tsx';
+import { getGravatarUrl, timestampToDate } from '@/lib/utils.tsx';
 
 export const Route = createFileRoute(
   '/dashboard/_layout/instance/$instance/audit-log',
@@ -135,9 +135,7 @@ function AuditLog() {
                     })}
                   </p>
                   <CardDescription>
-                    <SFTimeAgo
-                      date={new Date(parseInt(entry.timestamp!.seconds) * 1000)}
-                    />
+                    <SFTimeAgo date={timestampToDate(entry.timestamp!)} />
                   </CardDescription>
                 </div>
               </Card>
