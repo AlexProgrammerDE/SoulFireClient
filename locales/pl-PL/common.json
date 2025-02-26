@@ -207,6 +207,7 @@
     "deleteInstance": "Usuń instancję",
     "controlsGroup": "Sterowanie",
     "console": "Konsola",
+    "audit-log": "",
     "settingsGroup": "Ustawienia",
     "pluginsGroup": "",
     "pluginSettings": "Ustawienia wtyczek",
@@ -260,6 +261,7 @@
   "noInstancesFound": "Nie znaleziono instancji",
   "pageName": {
     "console": "Konsola",
+    "audit-log": "",
     "instances": "Instancje",
     "proxySettings": "Ustawienia serwera proxy",
     "overview": "Przegląd",
@@ -272,5 +274,13 @@
     "paused": "Wstrzymana",
     "stopping": "Zatrzymywanie",
     "stopped": "Zatrzymana"
+  },
+  "auditLog": {
+    "noEntries": "",
+    "executedCommand": "",
+    "startedAttack": "",
+    "resumedAttack": "",
+    "pausedAttack": "",
+    "stoppedAttack": ""
   }
 }

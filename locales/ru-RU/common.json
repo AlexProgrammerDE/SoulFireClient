@@ -207,6 +207,7 @@
     "deleteInstance": "Удалить экземпляр",
     "controlsGroup": "Управление",
     "console": "Консоль",
+    "audit-log": "",
     "settingsGroup": "Настройки",
     "pluginsGroup": "Плагины",
     "pluginSettings": "Настройки плагинов",
@@ -260,6 +261,7 @@
   "noInstancesFound": "Экземпляры не найдены",
   "pageName": {
     "console": "Консоль",
+    "audit-log": "",
     "instances": "Экземпляры",
     "proxySettings": "Настройки прокси",
     "overview": "Обзор",
@@ -272,5 +274,13 @@
     "paused": "Приостановлено",
     "stopping": "Остановка",
     "stopped": "Остановлен"
+  },
+  "auditLog": {
+    "noEntries": "",
+    "executedCommand": "",
+    "startedAttack": "",
+    "resumedAttack": "",
+    "pausedAttack": "",
+    "stoppedAttack": ""
   }
 }

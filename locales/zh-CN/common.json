@@ -207,6 +207,7 @@
     "deleteInstance": "删除实例",
     "controlsGroup": "",
     "console": "控制台",
+    "audit-log": "",
     "settingsGroup": "设置",
     "pluginsGroup": "",
     "pluginSettings": "插件设置",
@@ -260,6 +261,7 @@
   "noInstancesFound": "未找到实例",
   "pageName": {
     "console": "控制台",
+    "audit-log": "",
     "instances": "",
     "proxySettings": "代理设置",
     "overview": "概况",
@@ -272,5 +274,13 @@
     "paused": "已暂停",
     "stopping": "正在停止",
     "stopped": ""
+  },
+  "auditLog": {
+    "noEntries": "",
+    "executedCommand": "",
+    "startedAttack": "",
+    "resumedAttack": "",
+    "pausedAttack": "",
+    "stoppedAttack": ""
   }
 }
