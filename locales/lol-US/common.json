@@ -207,6 +207,7 @@
     "deleteInstance": "",
     "controlsGroup": "",
     "console": "",
+    "audit-log": "",
     "settingsGroup": "",
     "pluginsGroup": "",
     "pluginSettings": "",
@@ -260,6 +261,7 @@
   "noInstancesFound": "",
   "pageName": {
     "console": "",
+    "audit-log": "",
     "instances": "",
     "proxySettings": "",
     "overview": "",
@@ -272,5 +274,13 @@
     "paused": "",
     "stopping": "",
     "stopped": ""
+  },
+  "auditLog": {
+    "noEntries": "",
+    "executedCommand": "",
+    "startedAttack": "",
+    "resumedAttack": "",
+    "pausedAttack": "",
+    "stoppedAttack": ""
   }
 }
