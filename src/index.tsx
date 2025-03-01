@@ -25,6 +25,7 @@ const router = createRouter({
   defaultErrorComponent: ErrorComponent,
   defaultPendingComponent: LoadingComponent,
   defaultNotFoundComponent: NotFoundComponent,
+  defaultStructuralSharing: true,
 });
 
 // Register the router instance for type safety
