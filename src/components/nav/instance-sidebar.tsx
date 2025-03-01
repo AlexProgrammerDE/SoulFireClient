@@ -15,12 +15,7 @@ import {
 import { NavSecondary } from '@/components/nav/nav-secondary.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 
-export function InstanceSidebar({
-  expandPluginSettings,
-  ...props
-}: React.ComponentProps<typeof Sidebar> & {
-  expandPluginSettings: boolean;
-}) {
+export function InstanceSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader className="h-16">
@@ -30,7 +25,7 @@ export function InstanceSidebar({
         <SidebarContent className="min-h-[calc(100svh-4rem-4rem)]">
           <NavControls />
           <NavSettings />
-          <NavPlugins expandPluginSettings={expandPluginSettings} />
+          <NavPlugins />
           <NavSecondary className="mt-auto" />
         </SidebarContent>
       </ScrollArea>

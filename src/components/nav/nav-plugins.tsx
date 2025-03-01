@@ -9,7 +9,7 @@ import {
   SidebarMenuSubItem,
   useSidebar,
 } from '@/components/ui/sidebar.tsx';
-import { Link, LinkProps } from '@tanstack/react-router';
+import { Link, LinkProps, useParams } from '@tanstack/react-router';
 import { ReactNode, useContext, useState } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
@@ -30,18 +30,23 @@ type NavLinks = {
   linkProps: LinkProps;
 }[];
 
-export function NavPlugins({
-  expandPluginSettings,
-}: {
-  expandPluginSettings: boolean;
-}) {
+export function NavPlugins() {
   const { t } = useTranslation('common');
   const sidebar = useSidebar();
-  const [pluginCollapsibleOpen, setPluginCollapsibleOpen] =
-    useState(expandPluginSettings);
-  const instanceInfo = useContext(InstanceInfoContext);
   const clientInfo = useContext(ClientInfoContext);
+  const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
+  const namespace = useParams({
+    from: '/dashboard/instance/$instance/settings/$namespace',
+    select: (params) => params.namespace,
+    shouldThrow: false,
+  });
+  const settingsEntry = clientInfo.instanceSettings.find(
+    (s) => s.namespace === namespace,
+  );
+  const [pluginCollapsibleOpen, setPluginCollapsibleOpen] = useState(
+    settingsEntry !== undefined && settingsEntry.owningPlugin !== undefined,
+  );
 
   const navLinks: NavLinks = [
     {
@@ -100,7 +105,6 @@ export function NavPlugins({
         ))}
         <Collapsible
           asChild
-          defaultOpen={expandPluginSettings}
           open={pluginCollapsibleOpen}
           onOpenChange={setPluginCollapsibleOpen}
           className="group/collapsible"

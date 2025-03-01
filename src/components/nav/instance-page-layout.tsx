@@ -26,7 +26,6 @@ export default function InstancePageLayout(props: {
   children: ReactNode;
   extraCrumbs?: string[];
   pageName: string;
-  expandPluginSettings?: boolean;
   documentationLink?: string;
 }) {
   const { t } = useTranslation('common');
@@ -42,9 +41,7 @@ export default function InstancePageLayout(props: {
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
-      <InstanceSidebar
-        expandPluginSettings={props.expandPluginSettings ?? false}
-      />
+      <InstanceSidebar />
       <TooltipProvider delayDuration={500}>
         <SidebarInset>
           <header className="flex h-12 shrink-0 items-center gap-2 border-b">
