@@ -12,7 +12,7 @@ import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
 import { ServerInfoContext } from '@/components/providers/server-info-context.tsx';
 import { ServerConfigContext } from '@/components/providers/server-config-context.tsx';
 
-export const Route = createFileRoute('/dashboard/admin')({
+export const Route = createFileRoute('/dashboard/user/admin')({
   beforeLoad: (props) => {
     const infoQueryOptions = queryOptions({
       queryKey: ['server-info'],
