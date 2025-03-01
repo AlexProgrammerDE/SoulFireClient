@@ -26,7 +26,7 @@ import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { toast } from 'sonner';
-import { listQueryKey } from '@/routes/dashboard/_layout.tsx';
+import { listQueryKey } from '@/routes/dashboard.tsx';
 import { useNavigate } from '@tanstack/react-router';
 import { useContext } from 'react';
 import { TransportContext } from '../providers/transport-context.tsx';

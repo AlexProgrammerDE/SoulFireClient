@@ -28,7 +28,7 @@ import { ConnectingComponent } from '@/components/connecting-component.tsx';
 import { ErrorComponent } from '@/components/error-component.tsx';
 
 export const listQueryKey = ['instance-list'];
-export const Route = createFileRoute('/dashboard/_layout')({
+export const Route = createFileRoute('/dashboard')({
   beforeLoad: async (props) => {
     if (isAuthenticated()) {
       const listQueryOptions = queryOptions({

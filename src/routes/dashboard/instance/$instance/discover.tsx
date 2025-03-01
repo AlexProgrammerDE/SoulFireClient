@@ -6,9 +6,7 @@ import { InstanceInfoContext } from '@/components/providers/instance-info-contex
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
 
-export const Route = createFileRoute(
-  '/dashboard/_layout/instance/$instance/discover',
-)({
+export const Route = createFileRoute('/dashboard/instance/$instance/discover')({
   component: Discover,
 });
 

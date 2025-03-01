@@ -1,14 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useContext } from 'react';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
-import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
+import { AdminSettingsPageComponent } from '@/components/settings-page.tsx';
+import UserPageLayout from '@/components/nav/user-page-layout';
 import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
 import { useTranslation } from 'react-i18next';
 import { NotFoundComponent } from '@/components/not-found-component.tsx';
 
 export const Route = createFileRoute(
-  '/dashboard/_layout/instance/$instance/settings/$namespace',
+  '/dashboard/admin/_layout/settings/$namespace',
 )({
   component: SettingsNamespace,
 });
@@ -17,7 +17,7 @@ function SettingsNamespace() {
   const { t } = useTranslation('common');
   const { namespace } = Route.useParams();
   const clientInfo = useContext(ClientInfoContext);
-  const settingsEntry = clientInfo.instanceSettings.find(
+  const settingsEntry = clientInfo.serverSettings.find(
     (s) => s.namespace === namespace,
   );
   if (!settingsEntry) {
@@ -28,14 +28,12 @@ function SettingsNamespace() {
     (plugin) => plugin.id === settingsEntry.owningPlugin,
   );
   return (
-    <InstancePageLayout
-      extraCrumbs={[
-        pluginInfo ? t('breadcrumbs.plugins') : t('breadcrumbs.settings'),
-      ]}
+    <UserPageLayout
+      showUserCrumb={false}
+      extraCrumbs={[t('breadcrumbs.admin'), t('breadcrumbs.settings')]}
       pageName={settingsEntry.pageName}
-      expandPluginSettings={pluginInfo !== undefined}
     >
-      <div className="grow flex h-full w-full flex-row gap-2">
+      <div className="grow flex h-full w-full flex-row pl-2 gap-2">
         <div className="grow flex h-full flex-col gap-4">
           {pluginInfo && (
             <PluginInfoCard
@@ -44,10 +42,10 @@ function SettingsNamespace() {
             />
           )}
           <div className="flex flex-col gap-2">
-            <InstanceSettingsPageComponent data={settingsEntry} />
+            <AdminSettingsPageComponent data={settingsEntry} />
           </div>
         </div>
       </div>
-    </InstancePageLayout>
+    </UserPageLayout>
   );
 }

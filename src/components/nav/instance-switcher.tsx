@@ -47,7 +47,7 @@ import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.t
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { toast } from 'sonner';
-import { listQueryKey } from '@/routes/dashboard/_layout.tsx';
+import { listQueryKey } from '@/routes/dashboard.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { mkdir, readTextFile, writeTextFile } from '@tauri-apps/plugin-fs';
 import { appConfigDir, resolve } from '@tauri-apps/api/path';

@@ -16,7 +16,7 @@ import {
   ProxyProto_Type,
 } from '@/generated/soulfire/common.ts';
 
-export const Route = createFileRoute('/dashboard/_layout/instance/$instance')({
+export const Route = createFileRoute('/dashboard/instance/$instance')({
   beforeLoad: (props) => {
     const { instance } = props.params;
     const infoQueryOptions = queryOptions({

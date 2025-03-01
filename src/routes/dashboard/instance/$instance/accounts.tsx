@@ -42,9 +42,7 @@ import {
   SelectRowHeader,
 } from '@/components/data-table-selects.tsx';
 
-export const Route = createFileRoute(
-  '/dashboard/_layout/instance/$instance/accounts',
-)({
+export const Route = createFileRoute('/dashboard/instance/$instance/accounts')({
   component: AccountSettings,
 });
 

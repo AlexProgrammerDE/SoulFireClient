@@ -14,7 +14,7 @@ import { SearchXIcon } from 'lucide-react';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { useTranslation } from 'react-i18next';
 
-export const Route = createFileRoute('/dashboard/_layout/user/instances')({
+export const Route = createFileRoute('/dashboard/user/instances')({
   component: InstanceSelectPage,
 });
 

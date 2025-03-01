@@ -38,9 +38,7 @@ import {
 } from '@/components/data-table-selects.tsx';
 import i18n from '@/lib/i18n.ts';
 
-export const Route = createFileRoute(
-  '/dashboard/_layout/instance/$instance/proxies',
-)({
+export const Route = createFileRoute('/dashboard/instance/$instance/proxies')({
   component: ProxySettings,
 });
 

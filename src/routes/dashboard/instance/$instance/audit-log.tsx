@@ -17,55 +17,55 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { SFTimeAgo } from '@/components/SFTimeAgo';
 import { getGravatarUrl, timestampToDate } from '@/lib/utils.tsx';
 
-export const Route = createFileRoute(
-  '/dashboard/_layout/instance/$instance/audit-log',
-)({
-  beforeLoad: (props) => {
-    const { instance } = props.params;
-    const auditLogQueryOptions = queryOptions({
-      queryKey: ['instance-audit-log', instance],
-      queryFn: async (
-        props,
-      ): Promise<{
-        auditLog: InstanceAuditLogResponse;
-      }> => {
-        const transport = createTransport();
-        if (transport === null) {
-          return {
-            auditLog: {
-              entry: [],
+export const Route = createFileRoute('/dashboard/instance/$instance/audit-log')(
+  {
+    beforeLoad: (props) => {
+      const { instance } = props.params;
+      const auditLogQueryOptions = queryOptions({
+        queryKey: ['instance-audit-log', instance],
+        queryFn: async (
+          props,
+        ): Promise<{
+          auditLog: InstanceAuditLogResponse;
+        }> => {
+          const transport = createTransport();
+          if (transport === null) {
+            return {
+              auditLog: {
+                entry: [],
+              },
+            };
+          }
+
+          const instanceService = new InstanceServiceClient(transport);
+          const result = await instanceService.getAuditLog(
+            {
+              id: instance,
             },
+            {
+              abort: props.signal,
+            },
+          );
+
+          return {
+            auditLog: result.response,
           };
-        }
-
-        const instanceService = new InstanceServiceClient(transport);
-        const result = await instanceService.getAuditLog(
-          {
-            id: instance,
-          },
-          {
-            abort: props.signal,
-          },
-        );
-
-        return {
-          auditLog: result.response,
-        };
-      },
-      refetchInterval: 3_000,
-    });
-    props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries(auditLogQueryOptions);
-    });
-    return {
-      auditLogQueryOptions: auditLogQueryOptions,
-    };
+        },
+        refetchInterval: 3_000,
+      });
+      props.abortController.signal.addEventListener('abort', () => {
+        void queryClientInstance.cancelQueries(auditLogQueryOptions);
+      });
+      return {
+        auditLogQueryOptions: auditLogQueryOptions,
+      };
+    },
+    loader: async (props) => {
+      await queryClientInstance.prefetchQuery(props.context.infoQueryOptions);
+    },
+    component: AuditLog,
   },
-  loader: async (props) => {
-    await queryClientInstance.prefetchQuery(props.context.infoQueryOptions);
-  },
-  component: AuditLog,
-});
+);
 
 function toI18nKey(type: InstanceAuditLogResponse_AuditLogEntryType) {
   switch (type) {
