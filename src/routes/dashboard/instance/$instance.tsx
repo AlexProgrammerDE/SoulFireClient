@@ -15,6 +15,9 @@ import {
   MinecraftAccountProto_AccountTypeProto,
   ProxyProto_Type,
 } from '@/generated/soulfire/common.ts';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar.tsx';
+import { InstanceSidebar } from '@/components/nav/instance-sidebar.tsx';
+import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 
 export const Route = createFileRoute('/dashboard/instance/$instance')({
   beforeLoad: (props) => {
@@ -104,6 +107,7 @@ function InstanceLayout() {
   const { instance } = Route.useParams();
   const { infoQueryOptions } = Route.useRouteContext();
   const result = useQuery(infoQueryOptions);
+  const defaultOpen = localStorage.getItem('sidebar:state') === 'true';
 
   if (result.isError) {
     throw result.error;
@@ -124,7 +128,14 @@ function InstanceLayout() {
         <ProfileContext.Provider
           value={convertFromInstanceProto(result.data.instanceInfo.config)}
         >
-          <Outlet />
+          <SidebarProvider defaultOpen={defaultOpen}>
+            <InstanceSidebar />
+            <TooltipProvider delayDuration={500}>
+              <SidebarInset>
+                <Outlet />
+              </SidebarInset>
+            </TooltipProvider>
+          </SidebarProvider>
         </ProfileContext.Provider>
       </InstanceInfoContext.Provider>
     </>
