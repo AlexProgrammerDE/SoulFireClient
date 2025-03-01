@@ -40,7 +40,7 @@ export function NavUserAdmin() {
       title: t('userSidebar.adminOverview'),
       icon: LayoutDashboardIcon,
       linkProps: {
-        to: '/dashboard/admin/overview',
+        to: '/dashboard/user/admin/overview',
         params: {},
       },
     },
@@ -48,7 +48,7 @@ export function NavUserAdmin() {
       title: t('userSidebar.adminConsole'),
       icon: TerminalIcon,
       linkProps: {
-        to: '/dashboard/admin/console',
+        to: '/dashboard/user/admin/console',
         params: {},
       },
     },
@@ -56,7 +56,7 @@ export function NavUserAdmin() {
       title: t('userSidebar.serverSettings'),
       icon: (props) => <DynamicIcon {...props} name={serverSettings.iconId} />,
       linkProps: {
-        to: '/dashboard/admin/settings/$namespace',
+        to: '/dashboard/user/admin/settings/$namespace',
         params: { namespace: 'server' },
       },
     },
@@ -64,7 +64,7 @@ export function NavUserAdmin() {
       title: t('userSidebar.devSettings'),
       icon: (props) => <DynamicIcon {...props} name={devSettings.iconId} />,
       linkProps: {
-        to: '/dashboard/admin/settings/$namespace',
+        to: '/dashboard/user/admin/settings/$namespace',
         params: { namespace: 'dev' },
       },
     },
