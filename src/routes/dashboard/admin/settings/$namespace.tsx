@@ -7,9 +7,7 @@ import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
 import { useTranslation } from 'react-i18next';
 import { NotFoundComponent } from '@/components/not-found-component.tsx';
 
-export const Route = createFileRoute(
-  '/dashboard/admin/_layout/settings/$namespace',
-)({
+export const Route = createFileRoute('/dashboard/admin/settings/$namespace')({
   component: SettingsNamespace,
 });
 
