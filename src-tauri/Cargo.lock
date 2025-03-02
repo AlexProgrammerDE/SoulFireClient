@@ -2824,7 +2824,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fc2f4eb4bc735547cfed7c0a4922cbd04a4655978c09b54f1f7b228750664c34"
 dependencies = [
  "cfg-if",
- "windows-targets 0.52.6",
+ "windows-targets 0.48.5",
 ]
 
 [[package]]
@@ -2913,9 +2913,9 @@ checksum = "2532096657941c2fea9c289d370a250971c689d4f143798ff67113ec042024a5"
 
 [[package]]
 name = "mdns-sd"
-version = "0.13.2"
+version = "0.13.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1ff8cdcd0a1427cad221841adb78f233361940f4a1e9f5228d74f3dbce79f433"
+checksum = "400c6168c6a7d2cd936365dc51e0ee4159830876aac224b5e3e042605dcb73f3"
 dependencies = [
  "fastrand",
  "flume",
