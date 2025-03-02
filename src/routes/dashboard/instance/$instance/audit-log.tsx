@@ -14,7 +14,7 @@ import { SearchXIcon } from 'lucide-react';
 import * as React from 'react';
 import { Card, CardDescription } from '@/components/ui/card.tsx';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { SFTimeAgo } from '@/components/SFTimeAgo';
+import { SFTimeAgo } from '@/components/sf-time-ago.tsx';
 import { getGravatarUrl, timestampToDate } from '@/lib/utils.tsx';
 
 export const Route = createFileRoute('/dashboard/instance/$instance/audit-log')(
