@@ -2,7 +2,6 @@ import { createFileRoute } from '@tanstack/react-router';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { useTranslation } from 'react-i18next';
 import { useContext } from 'react';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
 

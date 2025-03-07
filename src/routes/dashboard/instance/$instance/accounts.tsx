@@ -140,7 +140,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           },
         },
       };
-      let total = textSplit.length;
+      const total = textSplit.length;
       let failed = 0;
       let success = 0;
       const loadingReport = () =>
@@ -150,7 +150,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           success,
           failed,
         });
-      let toastId = toast.loading(loadingReport(), loadingData);
+      const toastId = toast.loading(loadingReport(), loadingData);
       const responses = service.loginCredentials(
         {
           instanceId: instanceInfo.id,
@@ -164,7 +164,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       responses.onMessage(async (r) => {
         const data = r.data;
         switch (data.oneofKind) {
-          case 'fullList':
+          case 'fullList': {
             const accountsToAdd = data.fullList.account;
             const newProfile = {
               ...profile,
@@ -198,7 +198,8 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
               );
             }
             break;
-          case 'oneSuccess':
+          }
+          case 'oneSuccess': {
             if (abortController.signal.aborted) {
               return;
             }
@@ -209,7 +210,8 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
               ...loadingData,
             });
             break;
-          case 'oneFailure':
+          }
+          case 'oneFailure': {
             if (abortController.signal.aborted) {
               return;
             }
@@ -220,6 +222,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
               ...loadingData,
             });
             break;
+          }
         }
       });
       responses.onError((e) => {

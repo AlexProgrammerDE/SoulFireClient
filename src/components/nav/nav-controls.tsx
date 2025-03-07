@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  LogsIcon,
-  ReceiptTextIcon,
-  TerminalIcon,
-  TextSearchIcon,
-} from 'lucide-react';
+import { TerminalIcon, TextSearchIcon } from 'lucide-react';
 import {
   SidebarGroup,
   SidebarGroupLabel,

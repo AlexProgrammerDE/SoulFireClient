@@ -277,7 +277,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               },
             },
           };
-          let total = selectedRows.length;
+          const total = selectedRows.length;
           let failed = 0;
           let success = 0;
           const loadingReport = () =>
@@ -287,7 +287,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               success,
               failed,
             });
-          let toastId = toast.loading(loadingReport(), loadingData);
+          const toastId = toast.loading(loadingReport(), loadingData);
           const service = new ProxyCheckServiceClient(transport);
           const responses = service.check(
             {
@@ -301,7 +301,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           responses.onMessage(async (r) => {
             const data = r.data;
             switch (data.oneofKind) {
-              case 'fullList':
+              case 'fullList': {
                 const newProfile = {
                   ...profile,
                   proxies: profile.proxies.filter((a) => {
@@ -329,7 +329,8 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
                   },
                 );
                 break;
-              case 'oneSuccess':
+              }
+              case 'oneSuccess': {
                 if (abortController.signal.aborted) {
                   return;
                 }
@@ -340,7 +341,8 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
                   ...loadingData,
                 });
                 break;
-              case 'oneFailure':
+              }
+              case 'oneFailure': {
                 if (abortController.signal.aborted) {
                   return;
                 }
@@ -351,6 +353,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
                   ...loadingData,
                 });
                 break;
+              }
             }
           });
           responses.onError((e) => {
