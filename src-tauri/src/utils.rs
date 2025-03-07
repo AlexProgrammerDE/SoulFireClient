@@ -31,6 +31,8 @@ pub enum SFError {
   NoMainWindow,
   #[error("download failed")]
   DownloadFailed,
+  #[error("server already starting")]
+  ServerAlreadyStarting,
 }
 
 #[derive(Debug, thiserror::Error)]

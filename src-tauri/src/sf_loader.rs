@@ -24,7 +24,7 @@ pub async fn run_integrated_server(
     .starting
     .load(std::sync::atomic::Ordering::Relaxed)
   {
-    return Ok("Server already starting".to_string());
+    return Err(SFAnyError::from(SFError::ServerAlreadyStarting));
   }
 
   integrated_server_state

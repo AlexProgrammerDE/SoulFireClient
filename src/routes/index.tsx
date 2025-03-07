@@ -310,8 +310,8 @@ function DefaultMenu(props: {
             className="w-full"
             variant="outline"
             onClick={() => {
-              props.startIntegratedServer();
               props.setLoginType('INTEGRATED');
+              props.startIntegratedServer();
             }}
           >
             <LaptopMinimalIcon className="size-5" />
