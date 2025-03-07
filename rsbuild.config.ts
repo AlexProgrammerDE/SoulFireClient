@@ -46,6 +46,9 @@ export default defineConfig({
           },
         ],
       },
+      watchOptions: {
+        ignored: /\.git|node_mobules|src-tauri/,
+      },
     },
   },
   html: {
