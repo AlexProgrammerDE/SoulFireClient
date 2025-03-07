@@ -38,6 +38,14 @@ export default defineConfig({
       output: {
         asyncChunks: false,
       },
+      module: {
+        rules: [
+          {
+            test: /\.png$/,
+            type: 'asset/inline',
+          },
+        ],
+      },
     },
   },
   html: {
