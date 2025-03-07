@@ -163,6 +163,7 @@ function Index() {
         loading: t('integrated.toast.loading'),
         success: t('integrated.toast.success'),
         error: (e) => {
+          setLoginType(null);
           console.error(e);
           return t('integrated.toast.error');
         },
@@ -305,7 +306,7 @@ function DefaultMenu(props: {
       <CardContent className="flex flex-col gap-2">
         <div className="flex flex-row gap-2">
           <Button
-            disabled={isDemo() || !systemInfo || systemInfo.mobile}
+            disabled={isDemo() || !systemInfo}
             className="w-full"
             variant="outline"
             onClick={() => {
