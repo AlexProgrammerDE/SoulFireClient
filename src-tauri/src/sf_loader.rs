@@ -44,30 +44,39 @@ pub async fn run_integrated_server(
   if jvm_dir.exists() {
     send_log(&app_handle, "JVM detected")?;
   } else {
-    let adoptium_os = detect_os();
-    let adoptium_arch = detect_architecture();
-    let jvm_url = format!("https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture={}&image_type=jre&os={}&vendor=eclipse", adoptium_arch, adoptium_os);
-    info!("JVM URL: {}", jvm_url);
+    let checksum: String;
+    let download_url: String;
+    let jvm_archive_dir_name: String;
+    if cfg!(desktop) {
+      let adoptium_os = detect_os();
+      let adoptium_arch = detect_architecture();
+      let jvm_url = format!("https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture={}&image_type=jre&os={}&vendor=eclipse", adoptium_arch, adoptium_os);
+      info!("JVM URL: {}", jvm_url);
 
-    send_log(&app_handle, "Fetching JVM data...")?;
-    let response = reqwest::get(&jvm_url).await?;
-    if !response.status().is_success() {
-      return Err(SFAnyError::from(SFError::DownloadFailed));
+      send_log(&app_handle, "Fetching JVM data...")?;
+      let response = reqwest::get(&jvm_url).await?;
+      if !response.status().is_success() {
+        return Err(SFAnyError::from(SFError::DownloadFailed));
+      }
+
+      let jvm_json: serde_json::Value = response.json().await?;
+      checksum = jvm_json[0]["binary"]["package"]["checksum"].as_str().ok_or(SFError::JsonFieldInvalid("binary.package.checksum".to_string()))?.to_string();
+      download_url = jvm_json[0]["binary"]["package"]["link"].as_str().ok_or(SFError::JsonFieldInvalid("binary.package.link".to_string()))?.to_string();
+      let major_version = jvm_json[0]["version"]["major"].as_u64().ok_or(SFError::JsonFieldInvalid("version.major".to_string()))?;
+      let minor_version = jvm_json[0]["version"]["minor"].as_u64().ok_or(SFError::JsonFieldInvalid("version.minor".to_string()))?;
+      let security_version = jvm_json[0]["version"]["security"].as_u64().ok_or(SFError::JsonFieldInvalid("version.security".to_string()))?;
+      let build_version = jvm_json[0]["version"]["build"].as_u64().ok_or(SFError::JsonFieldInvalid("version.build".to_string()))?;
+      jvm_archive_dir_name = format!(
+        "jdk-{}.{}.{}+{}-jre",
+        major_version, minor_version, security_version, build_version
+      );
+    } else {
+      checksum = "0".to_string();
+      download_url = "http://192.168.178.69:8080/jre.zip".to_string();
+      jvm_archive_dir_name = "jre".to_string();
     }
 
-    let jvm_json: serde_json::Value = response.json().await?;
-    let checksum = jvm_json[0]["binary"]["package"]["checksum"].as_str().ok_or(SFError::JsonFieldInvalid("binary.package.checksum".to_string()))?;
-    let download_url = jvm_json[0]["binary"]["package"]["link"].as_str().ok_or(SFError::JsonFieldInvalid("binary.package.link".to_string()))?;
-    let major_version = jvm_json[0]["version"]["major"].as_u64().ok_or(SFError::JsonFieldInvalid("version.major".to_string()))?;
-    let minor_version = jvm_json[0]["version"]["minor"].as_u64().ok_or(SFError::JsonFieldInvalid("version.minor".to_string()))?;
-    let security_version = jvm_json[0]["version"]["security"].as_u64().ok_or(SFError::JsonFieldInvalid("version.security".to_string()))?;
-    let build_version = jvm_json[0]["version"]["build"].as_u64().ok_or(SFError::JsonFieldInvalid("version.build".to_string()))?;
     info!("Download URL: {}", download_url);
-    let jvm_archive_dir_name = format!(
-      "jdk-{}.{}.{}+{}-jre",
-      major_version, minor_version, security_version, build_version
-    );
-
     let last_sent_progress = std::sync::atomic::AtomicU64::new(0);
     let send_download_progress = |app_handle: &AppHandle, progress: u64, total: u64| -> tauri::Result<()> {
       let percent = progress * 100 / total;
@@ -83,7 +92,7 @@ pub async fn run_integrated_server(
     };
 
     send_download_progress(&app_handle, 0, 1)?;
-    let mut response = reqwest::get(download_url).await?;
+    let mut response = reqwest::get(download_url.clone()).await?;
     if !response.status().is_success() {
       return Err(SFAnyError::from(SFError::DownloadFailed));
     }
@@ -97,23 +106,31 @@ pub async fn run_integrated_server(
       send_download_progress(&app_handle, downloaded_size, total_size)?;
     }
 
-    send_log(&app_handle, "Verifying sha256 checksum...")?;
-    let mut hasher = sha2::Sha256::new();
-    hasher.update(&content);
-    let hash = hasher.finalize();
-    let hash = hex::encode(hash);
-    if hash != checksum {
-      send_log(&app_handle, "Checksum verification failed")?;
-      return Err(SFAnyError::from(SFError::InvalidJvmChecksum));
+    if cfg!(desktop) {
+      send_log(&app_handle, "Verifying sha256 checksum...")?;
+      let mut hasher = sha2::Sha256::new();
+      hasher.update(&content);
+      let hash = hasher.finalize();
+      let hash = hex::encode(hash);
+      if hash != checksum {
+        send_log(&app_handle, "Checksum verification failed")?;
+        return Err(SFAnyError::from(SFError::InvalidJvmChecksum));
+      }
     }
 
     send_log(&app_handle, "Extracting JVM...")?;
 
-    let jvm_tmp_dir = app_handle.path().cache_dir()?.join("jvm-extract");
+    let jvm_tmp_dir = if cfg!(desktop) {
+       app_handle.path().cache_dir()?.join("jvm-extract")
+    } else {
+       app_local_data_dir.join("jvm-extract")
+    };
+
     std::fs::create_dir_all(&jvm_tmp_dir)?;
-    if download_url.ends_with(".tar.gz") {
+    info!("Extracting to: {}", jvm_tmp_dir.to_str().ok_or(SFError::PathCouldNotBeConverted)?);
+    if download_url.clone().ends_with(".tar.gz") {
       let _ = extract_tar_gz(&content[..], jvm_tmp_dir.as_path())?;
-    } else if download_url.ends_with(".zip") {
+    } else if download_url.clone().ends_with(".zip") {
       let _ = extract_zip(&content[..], jvm_tmp_dir.as_path())?;
     } else {
       return Err(SFAnyError::from(SFError::InvalidArchiveType));
@@ -126,7 +143,7 @@ pub async fn run_integrated_server(
 
   let jars_dir = app_local_data_dir.join("jars");
   if !jars_dir.exists() {
-    std::fs::create_dir(&jars_dir)?;
+    std::fs::create_dir_all(&jars_dir)?;
   }
 
   let soul_fire_version_file =
@@ -176,7 +193,7 @@ pub async fn run_integrated_server(
 
   let soul_fire_rundir = app_local_data_dir.join("soulfire");
   if !soul_fire_rundir.exists() {
-    std::fs::create_dir(&soul_fire_rundir)?;
+    std::fs::create_dir_all(&soul_fire_rundir)?;
   }
 
   send_log(&app_handle, "Starting SoulFire server...")?;
