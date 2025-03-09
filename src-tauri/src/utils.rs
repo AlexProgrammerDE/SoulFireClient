@@ -11,6 +11,8 @@ pub enum SFError {
   InvalidJvmChecksum,
   #[error("json field was invalid/not found: {0}")]
   JsonFieldInvalid(String),
+  #[error("jwt line was invalid")]
+  JwtLineInvalid,
   #[error("path could not be converted to string")]
   PathCouldNotBeConverted,
   #[error("no content length header present")]
@@ -191,16 +193,14 @@ pub fn kill_child_process(state: &IntegratedServerState) {
   tauri::async_runtime::spawn(async move {
     let mut child_process = child_process.lock().await;
     if let Some(child) = child_process.take() {
-      unsafe {
-        match child.destroy() {
-          Ok(_) => {
-            starting.store(false, std::sync::atomic::Ordering::Relaxed);
-            info!("Killed child process");
-          }
-          Err(err) => {
-            starting.store(false, std::sync::atomic::Ordering::Relaxed);
-            error!("Error killing child process: {err}");
-          }
+      match child.kill() {
+        Ok(_) => {
+          starting.store(false, std::sync::atomic::Ordering::Relaxed);
+          info!("Killed child process");
+        }
+        Err(err) => {
+          starting.store(false, std::sync::atomic::Ordering::Relaxed);
+          error!("Error killing child process: {err}");
         }
       }
     }

@@ -1,16 +1,18 @@
 use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_random_available_port, get_java_exec_name, get_java_home_dir, SFAnyError, SFError};
-use jni::{InitArgsBuilder, JNIVersion, JavaVM};
 use libloading::{Library, Symbol};
 use log::info;
 use serde::Serialize;
 use sha2::Digest;
-use std::ffi::{CStr, CString};
+use std::ffi::{CString};
 use std::os::raw::{c_char, c_int};
+use std::path::PathBuf;
 use std::ptr;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 use tauri::async_runtime::Mutex;
 use tauri::{AppHandle, Emitter, Manager};
+use tauri_plugin_shell::process::{CommandChild, CommandEvent};
+use tauri_plugin_shell::ShellExt;
 
 type JliLaunchFn = unsafe extern "C" fn(
   argc: c_int,
@@ -31,7 +33,7 @@ type JliLaunchFn = unsafe extern "C" fn(
 
 pub struct IntegratedServerState {
   pub starting: Arc<AtomicBool>,
-  pub child_process: Arc<Mutex<Option<Box<JavaVM>>>>,
+  pub child_process: Arc<Mutex<Option<Box<CommandChild>>>>,
 }
 
 #[tauri::command]
@@ -140,9 +142,9 @@ pub async fn run_integrated_server(
     send_log(&app_handle, "Extracting JVM...")?;
 
     let jvm_tmp_dir = if cfg!(desktop) {
-       app_handle.path().cache_dir()?.join("jvm-extract")
+      app_handle.path().cache_dir()?.join("jvm-extract")
     } else {
-       app_local_data_dir.join("jvm-extract")
+      app_local_data_dir.join("jvm-extract")
     };
 
     std::fs::create_dir_all(&jvm_tmp_dir)?;
@@ -224,10 +226,80 @@ pub async fn run_integrated_server(
   let java_exec_path = java_exec_path.to_str().ok_or(SFError::PathCouldNotBeConverted)?;
   info!("Integrated Server Java Executable: {}", java_exec_path);
 
-  let java_lib_dir = java_home_dir.join("lib");
-  let java_lib_server_dir = java_lib_dir.join("server");
   let available_port = find_random_available_port().ok_or(SFError::NoPortAvailable)?;
   info!("Integrated Server Port: {}", available_port);
+
+  let command = app_handle.shell().command(std::env::current_exe()?)
+    .current_dir(soul_fire_rundir)
+    .args(&[
+      "java_run",
+      app_local_data_dir.to_str().ok_or(SFError::PathCouldNotBeConverted)?,
+      soul_fire_version_file.to_str().ok_or(SFError::PathCouldNotBeConverted)?,
+      available_port.to_string().as_str(),
+    ]);
+
+  let (mut rx, mut child) = command.spawn()?;
+
+  // Print all rx messages
+  while let Some(message) = rx.recv().await {
+    if let CommandEvent::Stdout(line) = message {
+      let line = String::from_utf8_lossy(&line);
+      let line = strip_ansi_escapes::strip_str(line);
+      send_log(&app_handle, &line)?;
+
+      if line.contains("Finished loading!") {
+        send_log(&app_handle, "Generating token...")?;
+        break;
+      }
+    }
+  }
+
+  child.write("generate-token\n".as_bytes())?;
+
+  let token: String = loop {
+    if let Some(message) = rx.recv().await {
+      if let CommandEvent::Stdout(line) = message {
+        let line = String::from_utf8_lossy(&line);
+        if line.contains("JWT") {
+          break line.split_whitespace().last().ok_or(SFError::JwtLineInvalid)?.to_string();
+        }
+      }
+    }
+  };
+
+  integrated_server_state
+    .child_process
+    .lock()
+    .await
+    .replace(Box::from(child));
+
+  info!("Integrated Server ready for use!");
+
+  let url = format!("http://127.0.0.1:{}", available_port);
+  Ok(format!("{}\n{}", url, token))
+}
+
+pub fn run_as_jvm(app_local_data_dir: PathBuf, soul_fire_version_file: PathBuf, available_port: u16) -> Result<(), SFAnyError> {
+  println!("JVM: Running in java mode");
+
+  let jvm_dir = app_local_data_dir.join("jvm-21");
+  let soul_fire_rundir = app_local_data_dir.join("soulfire");
+  if !soul_fire_rundir.exists() {
+    std::fs::create_dir_all(&soul_fire_rundir)?;
+  }
+
+  println!("JVM: Starting SoulFire server...");
+
+  let java_home_dir = get_java_home_dir(jvm_dir);
+  let java_exec_name = get_java_exec_name();
+  let java_bin_dir = java_home_dir.join("bin");
+  let java_exec_path = java_bin_dir.join(java_exec_name);
+  let java_exec_path = java_exec_path.to_str().ok_or(SFError::PathCouldNotBeConverted)?;
+  println!("JVM: Integrated Server Java Executable: {}", java_exec_path);
+
+  let java_lib_dir = java_home_dir.join("lib");
+  let java_lib_server_dir = java_lib_dir.join("server");
+  println!("JVM: Integrated Server Port: {}", available_port);
 
   let current_ld_library_path = std::env::var("LD_LIBRARY_PATH").unwrap_or("".to_string());
   let current_dyld_library_path = std::env::var("DYLD_LIBRARY_PATH").unwrap_or("".to_string());
@@ -245,7 +317,7 @@ pub async fn run_integrated_server(
       java_lib_dir.join("libjli.so")
     };
 
-    info!("Spawning Java VM...");
+    println!("JVM: Spawning Java VM...");
     let lib = Library::new(jli_path).expect("Failed to load JLI library");
 
     // Get the JLI_Launch function
@@ -272,9 +344,9 @@ pub async fn run_integrated_server(
     ];
 
     let mut c_args: Vec<*mut c_char> = args
-        .iter()
-        .map(|s| s.as_ptr() as *mut c_char)
-        .collect();
+      .iter()
+      .map(|s| s.as_ptr() as *mut c_char)
+      .collect();
 
     c_args.push(ptr::null_mut()); // Null-terminate
 
@@ -296,33 +368,8 @@ pub async fn run_integrated_server(
       0,
     );
 
-    println!("JLI_Launch returned: {}", result);
+    println!("JVM: JLI_Launch returned: {}", result);
   }
 
-  let token = "abc";
-  /*
-  {
-    let mut env = jvm.attach_current_thread()?;
-
-    info!("Calling main method...");
-    let return_value = env.call_static_method(
-      "com/soulfiremc/dedicated/SoulFireDedicatedLauncher",
-      "jniMain",
-      "()Ljava/lang/String;",
-      &[]
-    )?.l()?;
-    token = env.get_string((&return_value).into())?.to_str()?.to_string();
-  }
-
-  integrated_server_state
-    .child_process
-    .lock()
-    .await
-    .replace(Box::from(jvm));
-    */
-
-  info!("Integrated Server ready for use!");
-
-  let url = format!("http://127.0.0.1:{}", available_port);
-  Ok(format!("{}\n{}", url, token))
+  Ok(())
 }

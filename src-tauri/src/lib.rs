@@ -2,13 +2,14 @@
 
 use crate::cast::{connect_cast, discover_casts, get_casts, CastRunningState};
 use crate::discord::load_discord_rpc;
-use crate::sf_loader::{run_integrated_server, IntegratedServerState};
+use crate::sf_loader::{run_as_jvm, run_integrated_server, IntegratedServerState};
 use crate::utils::kill_child_process;
 use log::{error, info};
 use std::ops::Deref;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 use std::{env, thread};
+use std::path::PathBuf;
 use tauri::async_runtime::Mutex;
 use tauri::{Emitter, Listener, Manager};
 use tauri_plugin_log::fern::colors::Color;
@@ -26,6 +27,15 @@ mod utils;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+  let args = env::args().collect::<Vec<_>>();
+  if args.len() > 1 && args[1] == "java_run" {
+    let app_local_data_dir = PathBuf::from(args[2].clone());
+    let soul_fire_version_file = PathBuf::from(args[3].clone());
+    let available_port: u16 = args[4].clone().parse().unwrap();
+    run_as_jvm(app_local_data_dir, soul_fire_version_file, available_port).unwrap();
+    return;
+  }
+
   let mut builder = tauri::Builder::default();
 
   #[cfg(desktop)]
