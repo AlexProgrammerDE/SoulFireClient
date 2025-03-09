@@ -1,12 +1,33 @@
 use crate::utils::{detect_architecture, detect_os, extract_tar_gz, extract_zip, find_random_available_port, get_java_exec_name, get_java_home_dir, SFAnyError, SFError};
+use jni::{InitArgsBuilder, JNIVersion, JavaVM};
+use libloading::{Library, Symbol};
 use log::info;
 use serde::Serialize;
 use sha2::Digest;
+use std::ffi::{CStr, CString};
+use std::os::raw::{c_char, c_int};
+use std::ptr;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
-use jni::{InitArgsBuilder, JNIVersion, JavaVM};
 use tauri::async_runtime::Mutex;
 use tauri::{AppHandle, Emitter, Manager};
+
+type JliLaunchFn = unsafe extern "C" fn(
+  argc: c_int,
+  argv: *mut *mut c_char,
+  jargc: c_int,
+  jargv: *const *const c_char,
+  appclassc: c_int,
+  appclassv: *const *const c_char,
+  fullversion: *const c_char,
+  dotversion: *const c_char,
+  pname: *const c_char,
+  lname: *const c_char,
+  javaargs: c_int,
+  cpwildcard: c_int,
+  javaw: c_int,
+  ergo: c_int,
+) -> c_int;
 
 pub struct IntegratedServerState {
   pub starting: Arc<AtomicBool>,
@@ -215,31 +236,71 @@ pub async fn run_integrated_server(
     std::env::set_var("LD_LIBRARY_PATH", format!("{:?}:{:?}:{}", java_lib_dir, java_lib_server_dir, current_ld_library_path));
     std::env::set_var("DYLD_LIBRARY_PATH", format!("{:?}:{:?}:{}", java_lib_dir, java_lib_server_dir, current_dyld_library_path));
     std::env::set_var("JAVA_HOME", java_home_dir);
+
+    let jli_path = if cfg!(target_os = "windows") {
+      java_bin_dir.join("jli.dll")
+    } else if cfg!(target_os = "macos") {
+      java_lib_server_dir.join("libjli.dylib")
+    } else {
+      java_lib_server_dir.join("libjli.so")
+    };
+
+    info!("Spawning Java VM...");
+    let lib = Library::new(jli_path).expect("Failed to load JLI library");
+
+    // Get the JLI_Launch function
+    let jli_launch: Symbol<JliLaunchFn> = lib.get(b"JLI_Launch").expect("Failed to locate JLI_Launch");
+
+    // Prepare arguments
+    let args = vec![
+      CString::new("java").unwrap(),  // Program name
+      CString::new(format!("-Dsf.grpc.port={}", available_port)).unwrap(),
+      CString::new("-XX:+EnableDynamicAgentLoading").unwrap(),
+      CString::new("-XX:+UnlockExperimentalVMOptions").unwrap(),
+      CString::new("-XX:+UseZGC").unwrap(),
+      CString::new("-XX:+ZGenerational").unwrap(),
+      CString::new("-XX:+AlwaysActAsServerClassMachine").unwrap(),
+      CString::new("-XX:+UseNUMA").unwrap(),
+      CString::new("-XX:+UseFastUnorderedTimeStamps").unwrap(),
+      CString::new("-XX:+UseVectorCmov").unwrap(),
+      CString::new("-XX:+UseCriticalJavaThreadPriority").unwrap(),
+      CString::new("-Dsf.flags.v1=true").unwrap(),
+      CString::new("-Dsf.jni.client=true").unwrap(),
+      CString::new(format!("-Duser.dir={}", soul_fire_rundir.to_str().ok_or(SFError::PathCouldNotBeConverted)?)).unwrap(),
+      CString::new("-jar").unwrap(),
+      CString::new(soul_fire_version_file.to_str().ok_or(SFError::PathCouldNotBeConverted)?).unwrap()
+    ];
+
+    let mut c_args: Vec<*mut c_char> = args
+        .iter()
+        .map(|s| s.as_ptr() as *mut c_char)
+        .collect();
+
+    c_args.push(ptr::null_mut()); // Null-terminate
+
+    // Call JLI_Launch
+    let result = jli_launch(
+      c_args.len() as c_int - 1,
+      c_args.as_mut_ptr(),
+      0,
+      ptr::null(),
+      0,
+      ptr::null(),
+      ptr::null(),
+      ptr::null(),
+      ptr::null(),
+      ptr::null(),
+      0,
+      0,
+      0,
+      0,
+    );
+
+    println!("JLI_Launch returned: {}", result);
   }
 
-  info!("Preparing JVM...");
-  let jvm_args = InitArgsBuilder::new()
-    .version(JNIVersion::V8)
-    .option(format!("-Dsf.grpc.port={}", available_port))
-    .option("-XX:+EnableDynamicAgentLoading")
-    .option("-XX:+UnlockExperimentalVMOptions")
-    .option("-XX:+UseZGC")
-    .option("-XX:+ZGenerational")
-    .option("-XX:+AlwaysActAsServerClassMachine")
-    .option("-XX:+UseNUMA")
-    .option("-XX:+UseFastUnorderedTimeStamps")
-    .option("-XX:+UseVectorCmov")
-    .option("-XX:+UseCriticalJavaThreadPriority")
-    .option("-Dsf.flags.v1=true")
-    .option("-Dsf.jni.client=true")
-    .option(format!("-Djava.class.path={}", soul_fire_version_file.to_str().ok_or(SFError::PathCouldNotBeConverted)?))
-    .option(format!("-Duser.dir={}", soul_fire_rundir.to_str().ok_or(SFError::PathCouldNotBeConverted)?))
-    .build()?;
-
-  info!("Spawning Java VM...");
-  let jvm = JavaVM::new(jvm_args)?;
-
-  let token;
+  let token = "abc";
+  /*
   {
     let mut env = jvm.attach_current_thread()?;
 
@@ -258,6 +319,7 @@ pub async fn run_integrated_server(
     .lock()
     .await
     .replace(Box::from(jvm));
+    */
 
   info!("Integrated Server ready for use!");
 
