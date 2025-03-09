@@ -240,9 +240,9 @@ pub async fn run_integrated_server(
     let jli_path = if cfg!(target_os = "windows") {
       java_bin_dir.join("jli.dll")
     } else if cfg!(target_os = "macos") {
-      java_lib_server_dir.join("libjli.dylib")
+      java_lib_dir.join("libjli.dylib")
     } else {
-      java_lib_server_dir.join("libjli.so")
+      java_lib_dir.join("libjli.so")
     };
 
     info!("Spawning Java VM...");
