@@ -13,6 +13,7 @@ use tauri::async_runtime::Mutex;
 use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_shell::process::{CommandChild, CommandEvent};
 use tauri_plugin_shell::ShellExt;
+use crate::{SFMobilePluginExt};
 
 type JliLaunchFn = unsafe extern "C" fn(
   argc: c_int,
@@ -229,7 +230,14 @@ pub async fn run_integrated_server(
   let available_port = find_random_available_port().ok_or(SFError::NoPortAvailable)?;
   info!("Integrated Server Port: {}", available_port);
 
-  let command = app_handle.shell().command(std::env::current_exe()?)
+  let current_executable = if cfg!(target_os = "android") {
+    app_handle.sf_mobile_plugin().native_library_dir()?.join("libsoulfire_lib.so")
+  } else {
+    std::env::current_exe()?
+  };
+  info!("Current Executable: {}", current_executable.to_str().ok_or(SFError::PathCouldNotBeConverted)?);
+
+  let command = app_handle.shell().command(current_executable)
     .current_dir(soul_fire_rundir)
     .args(&[
       "java_run",

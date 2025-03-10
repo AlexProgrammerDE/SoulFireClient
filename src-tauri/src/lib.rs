@@ -3,7 +3,7 @@
 use crate::cast::{connect_cast, discover_casts, get_casts, CastRunningState};
 use crate::discord::load_discord_rpc;
 use crate::sf_loader::{run_as_jvm, run_integrated_server, IntegratedServerState};
-use crate::utils::kill_child_process;
+use crate::utils::{kill_child_process};
 use log::{error, info};
 use std::ops::Deref;
 use std::sync::atomic::AtomicBool;
@@ -11,7 +11,8 @@ use std::sync::Arc;
 use std::{env, thread};
 use std::path::PathBuf;
 use tauri::async_runtime::Mutex;
-use tauri::{Emitter, Listener, Manager};
+use tauri::{Emitter, Listener, Manager, Runtime};
+use tauri::plugin::{Builder, PluginHandle, TauriPlugin};
 use tauri_plugin_log::fern::colors::Color;
 #[cfg(desktop)]
 use tauri_plugin_updater;
@@ -24,6 +25,57 @@ mod cast;
 mod discord;
 mod sf_loader;
 mod utils;
+
+pub struct SFMobilePlugin<R: Runtime>(pub(crate) PluginHandle<R>);
+
+impl<R: Runtime> Clone for SFMobilePlugin<R> {
+  fn clone(&self) -> Self {
+    Self(self.0.clone())
+  }
+}
+
+#[derive(serde::Deserialize)]
+struct PathResponse {
+  path: PathBuf,
+}
+
+impl<R: Runtime> SFMobilePlugin<R> {
+  fn call_resolve(&self, dir: &str) -> tauri::Result<PathBuf> {
+    self
+      .0
+      .run_mobile_plugin::<PathResponse>(dir, ())
+      .map(|r| r.path)
+      .map_err(Into::into)
+  }
+
+  pub fn native_library_dir(&self) -> tauri::Result<PathBuf> {
+    self.call_resolve("getNativeLibraryDir")
+  }
+}
+
+fn init_sf_plugin<R: Runtime>() -> TauriPlugin<R> {
+  Builder::new("sf-mobile-plugin")
+    .setup(|app, _api| {
+      #[cfg(target_os = "android")]
+      {
+        let handle = _api.register_android_plugin("com.soulfiremc.soulfire", "SFMobilePlugin")?;
+        app.manage(SFMobilePlugin(handle));
+      }
+
+      Ok(())
+    })
+    .build()
+}
+
+pub trait SFMobilePluginExt<R: Runtime> {
+  fn sf_mobile_plugin(&self) -> &SFMobilePlugin<R>;
+}
+
+impl<R: Runtime, T: Manager<R>> crate::SFMobilePluginExt<R> for T {
+  fn sf_mobile_plugin(&self) -> &SFMobilePlugin<R> {
+    self.state::<SFMobilePlugin<R>>().inner()
+  }
+}
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -50,6 +102,11 @@ pub fn run() {
         - tauri_plugin_window_state::StateFlags::VISIBLE
         - tauri_plugin_window_state::StateFlags::DECORATIONS)
       .build())
+  }
+
+  #[cfg(target_os = "android")]
+  {
+    builder = builder.plugin(init_sf_plugin());
   }
 
   builder
