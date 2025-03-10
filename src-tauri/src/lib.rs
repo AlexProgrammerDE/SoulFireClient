@@ -39,6 +39,7 @@ struct PathResponse {
   path: PathBuf,
 }
 
+#[cfg(target_os = "android")]
 impl<R: Runtime> SFMobilePlugin<R> {
   fn call_resolve(&self, dir: &str) -> tauri::Result<PathBuf> {
     self
@@ -53,6 +54,7 @@ impl<R: Runtime> SFMobilePlugin<R> {
   }
 }
 
+#[cfg(target_os = "android")]
 fn init_sf_plugin<R: Runtime>() -> TauriPlugin<R> {
   Builder::new("sf-mobile-plugin")
     .setup(|app, _api| {

@@ -230,11 +230,10 @@ pub async fn run_integrated_server(
   let available_port = find_random_available_port().ok_or(SFError::NoPortAvailable)?;
   info!("Integrated Server Port: {}", available_port);
 
-  let current_executable = if cfg!(target_os = "android") {
-    app_handle.sf_mobile_plugin().native_library_dir()?.join("libsoulfire_lib.so")
-  } else {
-    std::env::current_exe()?
-  };
+  #[cfg(target_os = "android")]
+  let current_executable = app_handle.sf_mobile_plugin().native_library_dir()?.join("libsoulfire_lib.so");
+  #[cfg(not(target_os = "android"))]
+  let current_executable = std::env::current_exe()?;
   info!("Current Executable: {}", current_executable.to_str().ok_or(SFError::PathCouldNotBeConverted)?);
 
   let command = app_handle.shell().command(current_executable)
@@ -250,15 +249,26 @@ pub async fn run_integrated_server(
 
   // Print all rx messages
   while let Some(message) = rx.recv().await {
-    if let CommandEvent::Stdout(line) = message {
-      let line = String::from_utf8_lossy(&line);
-      let line = strip_ansi_escapes::strip_str(line);
-      send_log(&app_handle, &line)?;
+    match message {
+      CommandEvent::Stdout(line) => {
+        let line = String::from_utf8_lossy(&line);
+        let line = strip_ansi_escapes::strip_str(line);
+        send_log(&app_handle, &line)?;
 
-      if line.contains("Finished loading!") {
-        send_log(&app_handle, "Generating token...")?;
-        break;
-      }
+        if line.contains("Finished loading!") {
+          send_log(&app_handle, "Generating token...")?;
+          break;
+        }
+      },
+      CommandEvent::Stderr(line) => {
+        let line = String::from_utf8_lossy(&line);
+        let line = strip_ansi_escapes::strip_str(line);
+        send_log(&app_handle, &line)?;
+      },
+      CommandEvent::Error(line) => {
+        send_log(&app_handle, &line)?;
+      },
+      _ => {},
     }
   }
 
@@ -307,7 +317,6 @@ pub fn run_as_jvm(app_local_data_dir: PathBuf, soul_fire_version_file: PathBuf, 
 
   let java_lib_dir = java_home_dir.join("lib");
   let java_lib_server_dir = java_lib_dir.join("server");
-  println!("JVM: Integrated Server Port: {}", available_port);
 
   let current_ld_library_path = std::env::var("LD_LIBRARY_PATH").unwrap_or("".to_string());
   let current_dyld_library_path = std::env::var("DYLD_LIBRARY_PATH").unwrap_or("".to_string());
@@ -345,7 +354,6 @@ pub fn run_as_jvm(app_local_data_dir: PathBuf, soul_fire_version_file: PathBuf, 
       CString::new("-XX:+UseVectorCmov").unwrap(),
       CString::new("-XX:+UseCriticalJavaThreadPriority").unwrap(),
       CString::new("-Dsf.flags.v1=true").unwrap(),
-      CString::new("-Dsf.jni.client=true").unwrap(),
       CString::new(format!("-Duser.dir={}", soul_fire_rundir.to_str().ok_or(SFError::PathCouldNotBeConverted)?)).unwrap(),
       CString::new("-jar").unwrap(),
       CString::new(soul_fire_version_file.to_str().ok_or(SFError::PathCouldNotBeConverted)?).unwrap()
