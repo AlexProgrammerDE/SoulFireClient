@@ -145,8 +145,8 @@
       "remove": "Удалить"
     },
     "invalidNumberToast": {
-      "title": "",
-      "description": ""
+      "title": "Неверное число!",
+      "description": "Значение должно быть от {{min}} до {{max}}"
     }
   },
   "terminal": {
@@ -207,7 +207,7 @@
     "deleteInstance": "Удалить экземпляр",
     "controlsGroup": "Управление",
     "console": "Консоль",
-    "audit-log": "",
+    "audit-log": "Журнал аудита",
     "settingsGroup": "Настройки",
     "pluginsGroup": "Плагины",
     "pluginSettings": "Настройки плагинов",
@@ -261,7 +261,7 @@
   "noInstancesFound": "Экземпляры не найдены",
   "pageName": {
     "console": "Консоль",
-    "audit-log": "",
+    "audit-log": "Журнал аудита",
     "instances": "Экземпляры",
     "proxySettings": "Настройки прокси",
     "overview": "Обзор",
@@ -276,11 +276,11 @@
     "stopped": "Остановлен"
   },
   "auditLog": {
-    "noEntries": "",
-    "executedCommand": "",
-    "startedAttack": "",
-    "resumedAttack": "",
-    "pausedAttack": "",
-    "stoppedAttack": ""
+    "noEntries": "Записи в журнале аудита не найдены",
+    "executedCommand": "{{username}} выполнил команду: {{data}}",
+    "startedAttack": "{{username}} начал атаку",
+    "resumedAttack": "{{username}} возобновил атаку",
+    "pausedAttack": "{{username}} приостановил атаку",
+    "stoppedAttack": "{{username}} остановил атаку"
   }
 }
