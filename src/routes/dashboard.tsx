@@ -135,6 +135,7 @@ export const Route = createFileRoute('/dashboard')({
         gravatarUrl: getGravatarUrl(configResult.response.email),
       };
     } catch (e) {
+      console.error(e);
       return {
         success: false,
         connectionError: e as object,
