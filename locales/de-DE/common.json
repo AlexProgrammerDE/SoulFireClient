@@ -88,7 +88,7 @@
     }
   },
   "commandInput": {
-    "placeholder": "Befehl eingeben"
+    "placeholder": ""
   },
   "controls": {
     "start": "Start",
