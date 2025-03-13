@@ -82,7 +82,7 @@ importers:
         version: 8.21.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@tanstack/router-devtools':
         specifier: ^1.104.3
-        version: 1.114.17(@tanstack/react-router@1.114.17(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@tanstack/router-devtools-core@1.114.0(@tanstack/router-core@1.114.17)(csstype@3.1.3)(solid-js@1.9.5)(tiny-invariant@1.3.3))(csstype@3.1.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 1.114.18(@tanstack/react-router@1.114.17(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@tanstack/router-core@1.114.17)(csstype@3.1.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tiny-invariant@1.3.3)
       '@tauri-apps/api':
         specifier: 2.3.0
         version: 2.3.0
@@ -100,7 +100,7 @@ importers:
         version: 2.2.0
       '@tauri-apps/plugin-log':
         specifier: ^2.2.1
-        version: 2.3.0
+        version: 2.3.1
       '@tauri-apps/plugin-os':
         specifier: ^2.2.0
         version: 2.2.1
@@ -136,7 +136,7 @@ importers:
         version: 2.0.5
       i18next:
         specifier: ^24.2.2
-        version: 24.2.2(typescript@5.8.2)
+        version: 24.2.3(typescript@5.8.2)
       i18next-browser-languagedetector:
         specifier: ^8.0.3
         version: 8.0.4
@@ -169,7 +169,7 @@ importers:
         version: 7.54.2(react@19.0.0)
       react-i18next:
         specifier: ^15.4.0
-        version: 15.4.1(i18next@24.2.2(typescript@5.8.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+        version: 15.4.1(i18next@24.2.3(typescript@5.8.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       react-number-format:
         specifier: ^5.4.3
         version: 5.4.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -190,7 +190,7 @@ importers:
         version: 3.0.2
       tailwindcss-animate:
         specifier: ^1.0.7
-        version: 1.0.7(tailwindcss@4.0.13)
+        version: 1.0.7(tailwindcss@4.0.14)
       urijs:
         specifier: ^1.19.11
         version: 1.19.11
@@ -205,7 +205,7 @@ importers:
         version: 3.24.2
       zod-i18n-map:
         specifier: ^2.27.0
-        version: 2.27.0(i18next@24.2.2(typescript@5.8.2))(zod@3.24.2)
+        version: 2.27.0(i18next@24.2.3(typescript@5.8.2))(zod@3.24.2)
     devDependencies:
       '@eslint/js':
         specifier: ^9.20.0
@@ -230,7 +230,7 @@ importers:
         version: 1.2.1(@rsbuild/core@1.2.18)(@rspack/core@1.2.8(@swc/helpers@0.5.15))(typescript@5.8.2)
       '@tailwindcss/postcss':
         specifier: ^4.0.6
-        version: 4.0.13
+        version: 4.0.14
       '@tanstack/eslint-plugin-query':
         specifier: ^5.66.1
         version: 5.67.2(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)
@@ -323,7 +323,7 @@ importers:
         version: 1.0.1
       tailwindcss:
         specifier: ^4.0.6
-        version: 4.0.13
+        version: 4.0.14
       typescript:
         specifier: ^5.7.3
         version: 5.8.2
@@ -1624,81 +1624,81 @@ packages:
   '@swc/helpers@0.5.15':
     resolution: {integrity: sha512-JQ5TuMi45Owi4/BIMAJBoSQoOJu12oOk/gADqlcUL9JEdHB8vyjUSsxqeNXnmXHjYKMi2WcYtezGEEhqUI/E2g==}
 
-  '@tailwindcss/node@4.0.13':
-    resolution: {integrity: sha512-P9TmtE9Vew0vv5FwyD4bsg/dHHsIsAuUXkenuGUc5gm8fYgaxpdoxIKngCyEMEQxyCKR8PQY5V5VrrKNOx7exg==}
+  '@tailwindcss/node@4.0.14':
+    resolution: {integrity: sha512-Ux9NbFkKWYE4rfUFz6M5JFLs/GEYP6ysxT8uSyPn6aTbh2K3xDE1zz++eVK4Vwx799fzMF8CID9sdHn4j/Ab8w==}
 
-  '@tailwindcss/oxide-android-arm64@4.0.13':
-    resolution: {integrity: sha512-+9zmwaPQ8A9ycDcdb+hRkMn6NzsmZ4YJBsW5Xqq5EdOu9xlIgmuMuJauVzDPB5BSbIWfhPdZ+le8NeRZpl1coA==}
+  '@tailwindcss/oxide-android-arm64@4.0.14':
+    resolution: {integrity: sha512-VBFKC2rFyfJ5J8lRwjy6ub3rgpY186kAcYgiUr8ArR8BAZzMruyeKJ6mlsD22Zp5ZLcPW/FXMasJiJBx0WsdQg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [android]
 
-  '@tailwindcss/oxide-darwin-arm64@4.0.13':
-    resolution: {integrity: sha512-Bj1QGlEJSjs/205CIRfb5/jeveOqzJ4pFMdRxu0gyiYWxBRyxsExXqaD+7162wnLP/EDKh6S1MC9E/1GwEhLtA==}
+  '@tailwindcss/oxide-darwin-arm64@4.0.14':
+    resolution: {integrity: sha512-U3XOwLrefGr2YQZ9DXasDSNWGPZBCh8F62+AExBEDMLDfvLLgI/HDzY8Oq8p/JtqkAY38sWPOaNnRwEGKU5Zmg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@tailwindcss/oxide-darwin-x64@4.0.13':
-    resolution: {integrity: sha512-lRTkxjTpMGXhLLM5GjZ0MtjPczMuhAo9j7PeSsaU6Imkm7W7RbrXfT8aP934kS7cBBV+HKN5U19Z0WWaORfb8Q==}
+  '@tailwindcss/oxide-darwin-x64@4.0.14':
+    resolution: {integrity: sha512-V5AjFuc3ndWGnOi1d379UsODb0TzAS2DYIP/lwEbfvafUaD2aNZIcbwJtYu2DQqO2+s/XBvDVA+w4yUyaewRwg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@tailwindcss/oxide-freebsd-x64@4.0.13':
-    resolution: {integrity: sha512-p/YLyKhs+xFibVeAPlpMGDVMKgjChgzs12VnDFaaqRSJoOz+uJgRSKiir2tn50e7Nm4YYw35q/DRBwpDBNo1MQ==}
+  '@tailwindcss/oxide-freebsd-x64@4.0.14':
+    resolution: {integrity: sha512-tXvtxbaZfcPfqBwW3f53lTcyH6EDT+1eT7yabwcfcxTs+8yTPqxsDUhrqe9MrnEzpNkd+R/QAjJapfd4tjWdLg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [freebsd]
 
-  '@tailwindcss/oxide-linux-arm-gnueabihf@4.0.13':
-    resolution: {integrity: sha512-Ua/5ydE/QOTX8jHuc7M9ICWnaLi6K2MV/r+Ws2OppsOjy8tdlPbqYainJJ6Kl7ofm524K+4Fk9CQITPzeIESPw==}
+  '@tailwindcss/oxide-linux-arm-gnueabihf@4.0.14':
+    resolution: {integrity: sha512-cSeLNWWqIWeSTmBntQvyY2/2gcLX8rkPFfDDTQVF8qbRcRMVPLxBvFVJyfSAYRNch6ZyVH2GI6dtgALOBDpdNA==}
     engines: {node: '>= 10'}
     cpu: [arm]
     os: [linux]
 
-  '@tailwindcss/oxide-linux-arm64-gnu@4.0.13':
-    resolution: {integrity: sha512-/W1+Q6tBAVgZWh/bhfOHo4n7Ryh6E7zYj4bJd9SRbkPyLtRioyK3bi6RLuDj57sa7Amk/DeomSV9iycS0xqIPA==}
+  '@tailwindcss/oxide-linux-arm64-gnu@4.0.14':
+    resolution: {integrity: sha512-bwDWLBalXFMDItcSXzFk6y7QKvj6oFlaY9vM+agTlwFL1n1OhDHYLZkSjaYsh6KCeG0VB0r7H8PUJVOM1LRZyg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@tailwindcss/oxide-linux-arm64-musl@4.0.13':
-    resolution: {integrity: sha512-GQj6TWevNxwsYw20FdT2r2d1f7uiRsF07iFvNYxPIvIyPEV74eZ0zgFEsAH1daK1OxPy+LXdZ4grV17P5tVzhQ==}
+  '@tailwindcss/oxide-linux-arm64-musl@4.0.14':
+    resolution: {integrity: sha512-gVkJdnR/L6iIcGYXx64HGJRmlme2FGr/aZH0W6u4A3RgPMAb+6ELRLi+UBiH83RXBm9vwCfkIC/q8T51h8vUJQ==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@tailwindcss/oxide-linux-x64-gnu@4.0.13':
-    resolution: {integrity: sha512-sQRH09faifF9w9WS6TKDWr1oLi4hoPx0EIWXZHQK/jcjarDpXGQ2DbF0KnALJCwWBxOIP/1nrmU01fZwwMzY3g==}
+  '@tailwindcss/oxide-linux-x64-gnu@4.0.14':
+    resolution: {integrity: sha512-EE+EQ+c6tTpzsg+LGO1uuusjXxYx0Q00JE5ubcIGfsogSKth8n8i2BcS2wYTQe4jXGs+BQs35l78BIPzgwLddw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@tailwindcss/oxide-linux-x64-musl@4.0.13':
-    resolution: {integrity: sha512-Or1N8DIF3tP+LsloJp+UXLTIMMHMUcWXFhJLCsM4T7MzFzxkeReewRWXfk5mk137cdqVeUEH/R50xAhY1mOkTQ==}
+  '@tailwindcss/oxide-linux-x64-musl@4.0.14':
+    resolution: {integrity: sha512-KCCOzo+L6XPT0oUp2Jwh233ETRQ/F6cwUnMnR0FvMUCbkDAzHbcyOgpfuAtRa5HD0WbTbH4pVD+S0pn1EhNfbw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@tailwindcss/oxide-win32-arm64-msvc@4.0.13':
-    resolution: {integrity: sha512-u2mQyqCFrr9vVTP6sfDRfGE6bhOX3/7rInehzxNhHX1HYRIx09H3sDdXzTxnZWKOjIg3qjFTCrYFUZckva5PIg==}
+  '@tailwindcss/oxide-win32-arm64-msvc@4.0.14':
+    resolution: {integrity: sha512-AHObFiFL9lNYcm3tZSPqa/cHGpM5wOrNmM2uOMoKppp+0Hom5uuyRh0QkOp7jftsHZdrZUpmoz0Mp6vhh2XtUg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@tailwindcss/oxide-win32-x64-msvc@4.0.13':
-    resolution: {integrity: sha512-sOEc4iCanp1Yqyeu9suQcEzfaUcHnqjBUgDg0ZXpjUMUwdSi37S1lu1RGoV1BYInvvGu3y3HHTmvsSfDhx2L8w==}
+  '@tailwindcss/oxide-win32-x64-msvc@4.0.14':
+    resolution: {integrity: sha512-rNXXMDJfCJLw/ZaFTOLOHoGULxyXfh2iXTGiChFiYTSgKBKQHIGEpV0yn5N25WGzJJ+VBnRjHzlmDqRV+d//oQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
 
-  '@tailwindcss/oxide@4.0.13':
-    resolution: {integrity: sha512-pTH3Ex5zAWC9LbS+WsYAFmkXQW3NRjmvxkKJY3NP1x0KHBWjz0Q2uGtdGMJzsa0EwoZ7wq9RTbMH1UNPceCpWw==}
+  '@tailwindcss/oxide@4.0.14':
+    resolution: {integrity: sha512-M8VCNyO/NBi5vJ2cRcI9u8w7Si+i76a7o1vveoGtbbjpEYJZYiyc7f2VGps/DqawO56l3tImIbq2OT/533jcrA==}
     engines: {node: '>= 10'}
 
-  '@tailwindcss/postcss@4.0.13':
-    resolution: {integrity: sha512-zTmnPGDYb2HKClTBTBwB+lLQH+Rq4etnQXFXs2lisRyXryUnoJIBByFTljkaK9F1d7o14h6t4NJIlfbZuOHR+A==}
+  '@tailwindcss/postcss@4.0.14':
+    resolution: {integrity: sha512-+uIR6KtKhla1XeIanF27KtrfYy+PX+R679v5LxbkmEZlhQe3g8rk+wKj7Xgt++rWGRuFLGMXY80Ek8JNn+kN/g==}
 
   '@tanstack/eslint-plugin-query@5.67.2':
     resolution: {integrity: sha512-bWAA/0lYGBNv7lIV6tID2o5wC6yWUjkh9yx8ow9YMP3brxIhuUPdCAtJBhXL2nVzJTnc6FRrL401KFG5PPEkZg==}
@@ -1729,12 +1729,11 @@ packages:
     peerDependencies:
       react: ^18 || ^19
 
-  '@tanstack/react-router-devtools@1.114.17':
-    resolution: {integrity: sha512-/Of2oJGuWrVEXrFI8w+aPGkKhAxz8ATg1dT7dHWNwaISFOODHQGOk4kXd6nnzZNckIVGTBsAkHgQXvJ59GK43w==}
+  '@tanstack/react-router-devtools@1.114.18':
+    resolution: {integrity: sha512-axyf1gR9amSg74RQXA9A0FgK9Y+sNm4JIGdhOqj9Bm2i2uzy3OYrKPZU/WVyP5Qq4oYVma2toZ7B2y3LlaGnCw==}
     engines: {node: '>=12'}
     peerDependencies:
       '@tanstack/react-router': ^1.114.17
-      '@tanstack/router-devtools-core': ^1.114.17
       react: '>=18.0.0 || >=19.0.0'
       react-dom: '>=18.0.0 || >=19.0.0'
 
@@ -1767,11 +1766,11 @@ packages:
     resolution: {integrity: sha512-t7ww8LZR0LH96TD9OEupuloyWGDmLGEG20rW1Adve/a5b+u4yap/Vf+aznzrMT+GZ/zyTWLJy2zQg+DjEEUMPA==}
     engines: {node: '>=12'}
 
-  '@tanstack/router-devtools-core@1.114.0':
-    resolution: {integrity: sha512-r+fmLwnUt99WRzSlmeD8gke7rbWyGH7H7HWAvsPuWFJWMxQ2CaKEBQe+kOSXpyV/WDrQwyNO8x7Vq6RF4iGahg==}
+  '@tanstack/router-devtools-core@1.114.17':
+    resolution: {integrity: sha512-DOUvqXSI/GDhkPT9r9ltoTVvgBHSLIdR9f3k6Eg9fNd5Co3gBCrjWLuS9vbvMq/4xaTD6UbRzNWxaycZOF7NMw==}
     engines: {node: '>=12'}
     peerDependencies:
-      '@tanstack/router-core': ^1.112.18
+      '@tanstack/router-core': ^1.114.17
       csstype: ^3.0.10
       solid-js: '>=1.9.5'
       tiny-invariant: ^1.3.3
@@ -1779,8 +1778,8 @@ packages:
       csstype:
         optional: true
 
-  '@tanstack/router-devtools@1.114.17':
-    resolution: {integrity: sha512-mRvatu8YTcaa459GV85NonuT52v/NVsGjQktsX1HSan+tn2f5j/A0JUQwinvk3/YFil6LLpT/D+OwMQgpW8rPw==}
+  '@tanstack/router-devtools@1.114.18':
+    resolution: {integrity: sha512-SN7nEXWSqgieN1KVr4g7CSaQKRuTj994re45PRqyNrwR9dIMoHiLdhGV8cTpMqwQRbcyB54Vw7W8hCt6D/FmwQ==}
     engines: {node: '>=12'}
     peerDependencies:
       '@tanstack/react-router': ^1.114.17
@@ -1916,8 +1915,8 @@ packages:
   '@tauri-apps/plugin-fs@2.2.0':
     resolution: {integrity: sha512-+08mApuONKI8/sCNEZ6AR8vf5vI9DXD4YfrQ9NQmhRxYKMLVhRW164vdW5BSLmMpuevftpQ2FVoL9EFkfG9Z+g==}
 
-  '@tauri-apps/plugin-log@2.3.0':
-    resolution: {integrity: sha512-OhXv6WwumSIPW+pyzoaBm81Lo+hkglNIu9TTlo49l1pms1Rfg/qzRJE0HNOcsgqTGQ0xcMFMqhwMtPlCNUn2+Q==}
+  '@tauri-apps/plugin-log@2.3.1':
+    resolution: {integrity: sha512-nnKGHENWt7teqvUlIKxd6bp2wCUrrLvCvajN6CWbyrHBNKPi/pyKELzD511siEMDEdndbiZ/GEhiK0xBtZopRg==}
 
   '@tauri-apps/plugin-os@2.2.1':
     resolution: {integrity: sha512-cNYpNri2CCc6BaNeB6G/mOtLvg8dFyFQyCUdf2y0K8PIAKGEWdEcu8DECkydU2B+oj4OJihDPD2de5K6cbVl9A==}
@@ -2965,8 +2964,8 @@ packages:
   i18next-resources-to-backend@1.2.1:
     resolution: {integrity: sha512-okHbVA+HZ7n1/76MsfhPqDou0fptl2dAlhRDu2ideXloRRduzHsqDOznJBef+R3DFZnbvWoBW+KxJ7fnFjd6Yw==}
 
-  i18next@24.2.2:
-    resolution: {integrity: sha512-NE6i86lBCKRYZa5TaUDkU5S4HFgLIEJRLr3Whf2psgaxBleQ2LC1YW1Vc+SCgkAW7VEzndT6al6+CzegSUHcTQ==}
+  i18next@24.2.3:
+    resolution: {integrity: sha512-lfbf80OzkocvX7nmZtu7nSTNbrTYR52sLWxPtlXX1zAhVw8WEnFk4puUkCR4B1dNQwbSpEHHHemcZu//7EcB7A==}
     peerDependencies:
       typescript: ^5
     peerDependenciesMeta:
@@ -3969,8 +3968,8 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
 
-  tailwindcss@4.0.13:
-    resolution: {integrity: sha512-gbvFrB0fOsTv/OugXWi2PtflJ4S6/ctu6Mmn3bCftmLY/6xRsQVEJPgIIpABwpZ52DpONkCA3bEj5b54MHxF2Q==}
+  tailwindcss@4.0.14:
+    resolution: {integrity: sha512-92YT2dpt671tFiHH/e1ok9D987N9fHD5VWoly1CdPD/Cd1HMglvZwP3nx2yTj2lbXDAHt8QssZkxTLCCTNL+xw==}
 
   tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
@@ -5445,67 +5444,67 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@tailwindcss/node@4.0.13':
+  '@tailwindcss/node@4.0.14':
     dependencies:
       enhanced-resolve: 5.18.1
       jiti: 2.4.2
-      tailwindcss: 4.0.13
+      tailwindcss: 4.0.14
 
-  '@tailwindcss/oxide-android-arm64@4.0.13':
+  '@tailwindcss/oxide-android-arm64@4.0.14':
     optional: true
 
-  '@tailwindcss/oxide-darwin-arm64@4.0.13':
+  '@tailwindcss/oxide-darwin-arm64@4.0.14':
     optional: true
 
-  '@tailwindcss/oxide-darwin-x64@4.0.13':
+  '@tailwindcss/oxide-darwin-x64@4.0.14':
     optional: true
 
-  '@tailwindcss/oxide-freebsd-x64@4.0.13':
+  '@tailwindcss/oxide-freebsd-x64@4.0.14':
     optional: true
 
-  '@tailwindcss/oxide-linux-arm-gnueabihf@4.0.13':
+  '@tailwindcss/oxide-linux-arm-gnueabihf@4.0.14':
     optional: true
 
-  '@tailwindcss/oxide-linux-arm64-gnu@4.0.13':
+  '@tailwindcss/oxide-linux-arm64-gnu@4.0.14':
     optional: true
 
-  '@tailwindcss/oxide-linux-arm64-musl@4.0.13':
+  '@tailwindcss/oxide-linux-arm64-musl@4.0.14':
     optional: true
 
-  '@tailwindcss/oxide-linux-x64-gnu@4.0.13':
+  '@tailwindcss/oxide-linux-x64-gnu@4.0.14':
     optional: true
 
-  '@tailwindcss/oxide-linux-x64-musl@4.0.13':
+  '@tailwindcss/oxide-linux-x64-musl@4.0.14':
     optional: true
 
-  '@tailwindcss/oxide-win32-arm64-msvc@4.0.13':
+  '@tailwindcss/oxide-win32-arm64-msvc@4.0.14':
     optional: true
 
-  '@tailwindcss/oxide-win32-x64-msvc@4.0.13':
+  '@tailwindcss/oxide-win32-x64-msvc@4.0.14':
     optional: true
 
-  '@tailwindcss/oxide@4.0.13':
+  '@tailwindcss/oxide@4.0.14':
     optionalDependencies:
-      '@tailwindcss/oxide-android-arm64': 4.0.13
-      '@tailwindcss/oxide-darwin-arm64': 4.0.13
-      '@tailwindcss/oxide-darwin-x64': 4.0.13
-      '@tailwindcss/oxide-freebsd-x64': 4.0.13
-      '@tailwindcss/oxide-linux-arm-gnueabihf': 4.0.13
-      '@tailwindcss/oxide-linux-arm64-gnu': 4.0.13
-      '@tailwindcss/oxide-linux-arm64-musl': 4.0.13
-      '@tailwindcss/oxide-linux-x64-gnu': 4.0.13
-      '@tailwindcss/oxide-linux-x64-musl': 4.0.13
-      '@tailwindcss/oxide-win32-arm64-msvc': 4.0.13
-      '@tailwindcss/oxide-win32-x64-msvc': 4.0.13
+      '@tailwindcss/oxide-android-arm64': 4.0.14
+      '@tailwindcss/oxide-darwin-arm64': 4.0.14
+      '@tailwindcss/oxide-darwin-x64': 4.0.14
+      '@tailwindcss/oxide-freebsd-x64': 4.0.14
+      '@tailwindcss/oxide-linux-arm-gnueabihf': 4.0.14
+      '@tailwindcss/oxide-linux-arm64-gnu': 4.0.14
+      '@tailwindcss/oxide-linux-arm64-musl': 4.0.14
+      '@tailwindcss/oxide-linux-x64-gnu': 4.0.14
+      '@tailwindcss/oxide-linux-x64-musl': 4.0.14
+      '@tailwindcss/oxide-win32-arm64-msvc': 4.0.14
+      '@tailwindcss/oxide-win32-x64-msvc': 4.0.14
 
-  '@tailwindcss/postcss@4.0.13':
+  '@tailwindcss/postcss@4.0.14':
     dependencies:
       '@alloc/quick-lru': 5.2.0
-      '@tailwindcss/node': 4.0.13
-      '@tailwindcss/oxide': 4.0.13
+      '@tailwindcss/node': 4.0.14
+      '@tailwindcss/oxide': 4.0.14
       lightningcss: 1.29.2
       postcss: 8.5.3
-      tailwindcss: 4.0.13
+      tailwindcss: 4.0.14
 
   '@tanstack/eslint-plugin-query@5.67.2(eslint@9.22.0(jiti@2.4.2))(typescript@5.8.2)':
     dependencies:
@@ -5537,13 +5536,17 @@ snapshots:
       '@tanstack/query-core': 5.67.3
       react: 19.0.0
 
-  '@tanstack/react-router-devtools@1.114.17(@tanstack/react-router@1.114.17(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@tanstack/router-devtools-core@1.114.0(@tanstack/router-core@1.114.17)(csstype@3.1.3)(solid-js@1.9.5)(tiny-invariant@1.3.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@tanstack/react-router-devtools@1.114.18(@tanstack/react-router@1.114.17(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@tanstack/router-core@1.114.17)(csstype@3.1.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tiny-invariant@1.3.3)':
     dependencies:
       '@tanstack/react-router': 1.114.17(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@tanstack/router-devtools-core': 1.114.0(@tanstack/router-core@1.114.17)(csstype@3.1.3)(solid-js@1.9.5)(tiny-invariant@1.3.3)
+      '@tanstack/router-devtools-core': 1.114.17(@tanstack/router-core@1.114.17)(csstype@3.1.3)(solid-js@1.9.5)(tiny-invariant@1.3.3)
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
       solid-js: 1.9.5
+    transitivePeerDependencies:
+      - '@tanstack/router-core'
+      - csstype
+      - tiny-invariant
 
   '@tanstack/react-router@1.114.17(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -5582,7 +5585,7 @@ snapshots:
       '@tanstack/history': 1.114.12
       '@tanstack/store': 0.7.0
 
-  '@tanstack/router-devtools-core@1.114.0(@tanstack/router-core@1.114.17)(csstype@3.1.3)(solid-js@1.9.5)(tiny-invariant@1.3.3)':
+  '@tanstack/router-devtools-core@1.114.17(@tanstack/router-core@1.114.17)(csstype@3.1.3)(solid-js@1.9.5)(tiny-invariant@1.3.3)':
     dependencies:
       '@tanstack/router-core': 1.114.17
       clsx: 2.1.1
@@ -5592,10 +5595,10 @@ snapshots:
     optionalDependencies:
       csstype: 3.1.3
 
-  '@tanstack/router-devtools@1.114.17(@tanstack/react-router@1.114.17(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@tanstack/router-devtools-core@1.114.0(@tanstack/router-core@1.114.17)(csstype@3.1.3)(solid-js@1.9.5)(tiny-invariant@1.3.3))(csstype@3.1.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+  '@tanstack/router-devtools@1.114.18(@tanstack/react-router@1.114.17(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@tanstack/router-core@1.114.17)(csstype@3.1.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tiny-invariant@1.3.3)':
     dependencies:
       '@tanstack/react-router': 1.114.17(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
-      '@tanstack/react-router-devtools': 1.114.17(@tanstack/react-router@1.114.17(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@tanstack/router-devtools-core@1.114.0(@tanstack/router-core@1.114.17)(csstype@3.1.3)(solid-js@1.9.5)(tiny-invariant@1.3.3))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@tanstack/react-router-devtools': 1.114.18(@tanstack/react-router@1.114.17(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(@tanstack/router-core@1.114.17)(csstype@3.1.3)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(tiny-invariant@1.3.3)
       clsx: 2.1.1
       goober: 2.1.16(csstype@3.1.3)
       react: 19.0.0
@@ -5603,7 +5606,8 @@ snapshots:
     optionalDependencies:
       csstype: 3.1.3
     transitivePeerDependencies:
-      - '@tanstack/router-devtools-core'
+      - '@tanstack/router-core'
+      - tiny-invariant
 
   '@tanstack/router-generator@1.114.17(@tanstack/react-router@1.114.17(react-dom@19.0.0(react@19.0.0))(react@19.0.0))':
     dependencies:
@@ -5715,7 +5719,7 @@ snapshots:
     dependencies:
       '@tauri-apps/api': 2.3.0
 
-  '@tauri-apps/plugin-log@2.3.0':
+  '@tauri-apps/plugin-log@2.3.1':
     dependencies:
       '@tauri-apps/api': 2.3.0
 
@@ -7029,9 +7033,9 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.26.9
 
-  i18next@24.2.2(typescript@5.8.2):
+  i18next@24.2.3(typescript@5.8.2):
     dependencies:
-      '@babel/runtime': 7.26.9
+      '@babel/runtime': 7.26.10
     optionalDependencies:
       typescript: 5.8.2
 
@@ -7601,11 +7605,11 @@ snapshots:
 
   react-hooks@1.0.1: {}
 
-  react-i18next@15.4.1(i18next@24.2.2(typescript@5.8.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
+  react-i18next@15.4.1(i18next@24.2.3(typescript@5.8.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0):
     dependencies:
       '@babel/runtime': 7.26.9
       html-parse-stringify: 3.0.1
-      i18next: 24.2.2(typescript@5.8.2)
+      i18next: 24.2.3(typescript@5.8.2)
       react: 19.0.0
     optionalDependencies:
       react-dom: 19.0.0(react@19.0.0)
@@ -8023,11 +8027,11 @@ snapshots:
 
   tailwind-merge@3.0.2: {}
 
-  tailwindcss-animate@1.0.7(tailwindcss@4.0.13):
+  tailwindcss-animate@1.0.7(tailwindcss@4.0.14):
     dependencies:
-      tailwindcss: 4.0.13
+      tailwindcss: 4.0.14
 
-  tailwindcss@4.0.13: {}
+  tailwindcss@4.0.14: {}
 
   tapable@2.2.1: {}
 
@@ -8352,9 +8356,9 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod-i18n-map@2.27.0(i18next@24.2.2(typescript@5.8.2))(zod@3.24.2):
+  zod-i18n-map@2.27.0(i18next@24.2.3(typescript@5.8.2))(zod@3.24.2):
     dependencies:
-      i18next: 24.2.2(typescript@5.8.2)
+      i18next: 24.2.3(typescript@5.8.2)
       zod: 3.24.2
 
   zod@3.24.2: {}
