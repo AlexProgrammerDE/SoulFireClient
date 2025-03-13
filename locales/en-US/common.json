@@ -88,7 +88,7 @@
     }
   },
   "commandInput": {
-    "placeholder": "Enter command"
+    "placeholder": "Enter command (type 'help' for list)"
   },
   "controls": {
     "start": "Start",
