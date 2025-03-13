@@ -21,6 +21,7 @@ import { JsonValue } from '@protobuf-ts/runtime';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import DynamicIcon from './dynamic-icon';
+import { Link } from '@tanstack/react-router';
 
 export function PluginInfoCard(props: {
   pluginInfo: ServerPlugin;
@@ -66,13 +67,22 @@ export function PluginInfoCard(props: {
     <Card className="max-w-4xl">
       <CardHeader className="p-4">
         <div className="flex flex-row items-center justify-between gap-2">
-          <CardTitle className="text-xl flex flex-row items-center gap-2">
-            <DynamicIcon
-              className="size-6 shrink-0"
-              name={props.settingsEntry.iconId}
-            />
-            {props.settingsEntry.pageName}
-          </CardTitle>
+          <Link
+            to="/dashboard/instance/$instance/settings/$namespace"
+            params={{
+              instance: instanceInfo.id,
+              namespace: props.settingsEntry.namespace,
+            }}
+            search={{}}
+          >
+            <CardTitle className="text-xl flex flex-row items-center gap-2">
+              <DynamicIcon
+                className="size-6 shrink-0"
+                name={props.settingsEntry.iconId}
+              />
+              {props.settingsEntry.pageName}
+            </CardTitle>
+          </Link>
           <Switch
             checked={enabledValue}
             onCheckedChange={setEnabledMutation.mutate}
