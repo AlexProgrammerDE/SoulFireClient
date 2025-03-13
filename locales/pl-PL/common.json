@@ -88,7 +88,7 @@
     }
   },
   "commandInput": {
-    "placeholder": "Wprowadź polecenie"
+    "placeholder": ""
   },
   "controls": {
     "start": "Rozpocznij",
