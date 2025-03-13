@@ -4,13 +4,15 @@ use serde::Serialize;
 use sha2::Digest;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
-use jni::{InitArgsBuilder, JNIVersion, JavaVM};
 use tauri::async_runtime::Mutex;
 use tauri::{AppHandle, Emitter, Manager};
+use tauri_plugin_shell::process::CommandChild;
+use tauri_plugin_shell::process::CommandEvent::Stdout;
+use tauri_plugin_shell::ShellExt;
 
 pub struct IntegratedServerState {
   pub starting: Arc<AtomicBool>,
-  pub child_process: Arc<Mutex<Option<Box<JavaVM>>>>,
+  pub child_process: Arc<Mutex<Option<Box<CommandChild>>>>,
 }
 
 #[tauri::command]
@@ -210,56 +212,61 @@ pub async fn run_integrated_server(
 
   let current_ld_library_path = std::env::var("LD_LIBRARY_PATH").unwrap_or("".to_string());
   let current_dyld_library_path = std::env::var("DYLD_LIBRARY_PATH").unwrap_or("".to_string());
+  let command = app_handle.shell().command(java_exec_path)
+    .env("LD_LIBRARY_PATH", format!("{:?}:{:?}:{}", java_lib_dir, java_lib_server_dir, current_ld_library_path))
+    .env("DYLD_LIBRARY_PATH", format!("{:?}:{:?}:{}", java_lib_dir, java_lib_server_dir, current_dyld_library_path))
+    .env("JAVA_HOME", java_home_dir)
+    .current_dir(soul_fire_rundir)
+    .args(&[
+      format!("-Dsf.grpc.port={}", available_port).as_str(),
+      "-XX:+EnableDynamicAgentLoading",
+      "-XX:+UnlockExperimentalVMOptions",
+      "-XX:+UseZGC",
+      "-XX:+ZGenerational",
+      "-XX:+AlwaysActAsServerClassMachine",
+      "-XX:+UseNUMA",
+      "-XX:+UseFastUnorderedTimeStamps",
+      "-XX:+UseVectorCmov",
+      "-XX:+UseCriticalJavaThreadPriority",
+      "-Dsf.flags.v1=true",
+      "-jar",
+      soul_fire_version_file.to_str().ok_or(SFError::PathCouldNotBeConverted)?,
+    ]);
 
-  unsafe {
-    std::env::set_var("LD_LIBRARY_PATH", format!("{:?}:{:?}:{}", java_lib_dir, java_lib_server_dir, current_ld_library_path));
-    std::env::set_var("DYLD_LIBRARY_PATH", format!("{:?}:{:?}:{}", java_lib_dir, java_lib_server_dir, current_dyld_library_path));
-    std::env::set_var("JAVA_HOME", java_home_dir);
+  let (mut rx, mut child) = command.spawn()?;
+
+  // Print all rx messages
+  while let Some(message) = rx.recv().await {
+    if let Stdout(line) = message {
+      let line = String::from_utf8_lossy(&line);
+      let line = strip_ansi_escapes::strip_str(line);
+      if line.contains("Finished loading!") {
+        send_log(&app_handle, "Generating token...")?;
+        break;
+      } else {
+        send_log(&app_handle, line)?;
+      }
+    }
   }
 
-  info!("Preparing JVM...");
-  let jvm_args = InitArgsBuilder::new()
-    .version(JNIVersion::V8)
-    .option(format!("-Dsf.grpc.port={}", available_port))
-    .option("-XX:+EnableDynamicAgentLoading")
-    .option("-XX:+UnlockExperimentalVMOptions")
-    .option("-XX:+UseZGC")
-    .option("-XX:+ZGenerational")
-    .option("-XX:+AlwaysActAsServerClassMachine")
-    .option("-XX:+UseNUMA")
-    .option("-XX:+UseFastUnorderedTimeStamps")
-    .option("-XX:+UseVectorCmov")
-    .option("-XX:+UseCriticalJavaThreadPriority")
-    .option("-Dsf.flags.v1=true")
-    .option("-Dsf.jni.client=true")
-    .option(format!("-Djava.class.path={}", soul_fire_version_file.to_str().ok_or(SFError::PathCouldNotBeConverted)?))
-    .option(format!("-Duser.dir={}", soul_fire_rundir.to_str().ok_or(SFError::PathCouldNotBeConverted)?))
-    .build()?;
+  child.write("generate-token\n".as_bytes())?;
 
-  info!("Spawning Java VM...");
-  let jvm = JavaVM::new(jvm_args)?;
-
-  let token;
-  {
-    let mut env = jvm.attach_current_thread()?;
-
-    info!("Calling main method...");
-    let return_value = env.call_static_method(
-      "com/soulfiremc/dedicated/SoulFireDedicatedLauncher",
-      "jniMain",
-      "()Ljava/lang/String;",
-      &[]
-    )?.l()?;
-    token = env.get_string((&return_value).into())?.to_str()?.to_string();
-  }
-
-  info!("SoulFire Token: {}", token);
+  let token: String = loop {
+    if let Some(message) = rx.recv().await {
+      if let Stdout(line) = message {
+        let line = String::from_utf8_lossy(&line);
+        if line.contains("JWT") {
+          break line.split_whitespace().last().ok_or(SFError::JwtLineInvalid)?.to_string();
+        }
+      }
+    }
+  };
 
   integrated_server_state
     .child_process
     .lock()
     .await
-    .replace(Box::from(jvm));
+    .replace(Box::from(child));
 
   info!("Integrated Server ready for use!");
 
