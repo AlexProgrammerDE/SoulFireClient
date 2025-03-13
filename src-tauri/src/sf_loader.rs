@@ -126,7 +126,7 @@ pub async fn run_integrated_server(
 
   let jars_dir = app_local_data_dir.join("jars");
   if !jars_dir.exists() {
-    std::fs::create_dir(&jars_dir)?;
+    std::fs::create_dir_all(&jars_dir)?;
   }
 
   let soul_fire_version_file =
@@ -176,7 +176,7 @@ pub async fn run_integrated_server(
 
   let soul_fire_rundir = app_local_data_dir.join("soulfire");
   if !soul_fire_rundir.exists() {
-    std::fs::create_dir(&soul_fire_rundir)?;
+    std::fs::create_dir_all(&soul_fire_rundir)?;
   }
 
   send_log(&app_handle, "Starting SoulFire server...")?;
