@@ -14,8 +14,8 @@ import { SearchXIcon } from 'lucide-react';
 import * as React from 'react';
 import { Card, CardDescription } from '@/components/ui/card.tsx';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { SFTimeAgo } from '@/components/sf-time-ago.tsx';
 import { getGravatarUrl, timestampToDate } from '@/lib/utils.tsx';
+import ReactTimeago from 'react-timeago';
 
 export const Route = createFileRoute('/dashboard/instance/$instance/audit-log')(
   {
@@ -135,7 +135,7 @@ function AuditLog() {
                     })}
                   </p>
                   <CardDescription>
-                    <SFTimeAgo date={timestampToDate(entry.timestamp!)} />
+                    <ReactTimeago date={timestampToDate(entry.timestamp!)} />
                   </CardDescription>
                 </div>
               </Card>
