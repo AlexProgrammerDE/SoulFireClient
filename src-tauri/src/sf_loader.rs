@@ -253,6 +253,8 @@ pub async fn run_integrated_server(
     token = env.get_string((&return_value).into())?.to_str()?.to_string();
   }
 
+  info!("SoulFire Token: {}", token);
+
   integrated_server_state
     .child_process
     .lock()
