@@ -24,7 +24,7 @@
       "error": "Impossible de supprimer les proxys"
     },
     "checkToast": {
-      "loading": "",
+      "loading": "Vérification des proxies... {{checked}}/{{total}} (échec : {{success}} : {{failed}})",
       "success": "{{count}} proxys corrompus supprimés !",
       "error": "Impossible de vérifier les proxys"
     },
@@ -39,40 +39,40 @@
   "account": {
     "filterPlaceholder": "Filtrer les comptes...",
     "listImportToast": {
-      "loading": "",
+      "loading": "Importation des comptes... {{checked}}/{{total}} (Réussi : {{success}} Échoué : {{failed}})",
       "allFailed": "Impossible d'importer les comptes",
-      "someFailed": "",
-      "noneFailed": "",
-      "error": "",
-      "noAccounts": ""
+      "someFailed": "Comptes {{count}} importés, impossible d'importer les comptes {{failed}}",
+      "noneFailed": "Comptes {{count}} importés !",
+      "error": "Échec de l'importation des comptes",
+      "noAccounts": "Aucun compte à importer"
     },
-    "unknownError": "",
+    "unknownError": "Erreur inconnue",
     "deviceCodeImportToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Importation du compte...",
+      "success": "Compte importé !",
+      "error": "Impossible d'importer le compte"
     },
     "import": {
-      "javaEdition": "",
-      "bedrockEdition": "",
-      "offline": "",
-      "microsoftCredentials": "",
-      "microsoftDeviceCode": "",
-      "microsoftRefreshToken": "",
-      "theAltening": "",
+      "javaEdition": "Java Edition",
+      "bedrockEdition": "Bedrock Edition",
+      "offline": "Hors-ligne",
+      "microsoftCredentials": "Identifiants Microsoft",
+      "microsoftDeviceCode": "Code de l'appareil Microsoft",
+      "microsoftRefreshToken": "Token d'actualisation Microsoft",
+      "theAltening": "The Altening",
       "dialog": {
-        "title": "",
-        "description": ""
+        "title": "Importation des comptes {{type}}",
+        "description": "Collez vos comptes ici, un par ligne"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Suppression des comptes...",
+      "success": "{{count}} comptes supprimés !",
+      "error": "Échec de la suppression des comptes"
     },
     "table": {
       "type": "Type",
-      "profileId": "",
+      "profileId": "UUID",
       "lastKnownName": "Nom d´utilisateur"
     }
   }
