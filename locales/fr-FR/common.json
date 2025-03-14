@@ -5,16 +5,16 @@
     "noAddressOrToken": "Aucune adresse ou token de serveur trouvé",
     "page": {
       "title": "Erreur",
-      "description": "",
+      "description": "Une erreur s'est produite en essayant de charger la page. Plus d'informations peuvent être trouvées dans la console.",
       "logOut": "Déconnexion",
       "reloadPage": "Recharger la page"
     },
-    "connectionFailed": ""
+    "connectionFailed": "Échec de la connexion au serveur SoulFire.."
   },
   "notFound": {
     "page": {
-      "title": "",
-      "description": "",
+      "title": "Introuvable",
+      "description": "Impossible de trouver une page à cet emplacement",
       "logOut": "Déconnexion",
       "reloadPage": "Recharger la page"
     }
@@ -88,7 +88,7 @@
     }
   },
   "commandInput": {
-    "placeholder": ""
+    "placeholder": "Entrez une commande (tapez 'help' pour la liste)"
   },
   "controls": {
     "start": "Démarrer",
@@ -138,15 +138,15 @@
     "website": "Site Internet"
   },
   "settingsPage": {
-    "namespacesNotFound": "",
+    "namespacesNotFound": "Noms des paramètres introuvables",
     "stringList": {
       "placeholder": "Ajouter une nouvelle entrée...",
       "add": "Ajouter",
       "remove": "Retirer"
     },
     "invalidNumberToast": {
-      "title": "",
-      "description": ""
+      "title": "Nombre invalide !",
+      "description": "La valeur doit être comprise entre {{min}} et {{max}}"
     }
   },
   "terminal": {
@@ -186,7 +186,7 @@
     }
   },
   "instanceSidebar": {
-    "readDocumentation": "",
+    "readDocumentation": "Lire la documentation",
     "backToDashboard": "Retourner au tableau de bord",
     "deleteToast": {
       "loading": "Suppression de l'instance...",
@@ -207,18 +207,18 @@
     "deleteInstance": "Supprimer l'instance",
     "controlsGroup": "Contrôles",
     "console": "Console",
-    "audit-log": "",
+    "audit-log": "Logs du serveur",
     "settingsGroup": "Paramètres",
-    "pluginsGroup": "",
+    "pluginsGroup": "Plugins",
     "pluginSettings": "Configuration du plugin",
     "botSettings": "Configuration du bot",
     "accountSettings": "Paramètres de compte",
     "proxySettings": "Paramètres de proxy",
     "aiSettings": "Paramètres IA",
-    "discoverPlugins": ""
+    "discoverPlugins": "Liste des plugins"
   },
   "userSidebar": {
-    "readDocumentation": "",
+    "readDocumentation": "Lire la documentation",
     "userGroup": "Utilisateur",
     "instances": "Instances",
     "createInstance": "Créer une instance",
@@ -256,17 +256,17 @@
     "admin": "Administrateur",
     "settings": "Paramètres",
     "controls": "Contrôles",
-    "plugins": ""
+    "plugins": "Plugins"
   },
   "noInstancesFound": "Aucune instance n'a été trouvée",
   "pageName": {
     "console": "Console",
-    "audit-log": "",
+    "audit-log": "Logs du serveur",
     "instances": "Instances",
     "proxySettings": "Paramètres de proxy",
     "overview": "Aperçu",
     "accountSettings": "Paramètres de compte",
-    "discoverPlugins": ""
+    "discoverPlugins": "Liste des plugins"
   },
   "instanceState": {
     "starting": "Démarrage",
@@ -276,11 +276,11 @@
     "stopped": "Arrêté"
   },
   "auditLog": {
-    "noEntries": "",
-    "executedCommand": "",
-    "startedAttack": "",
-    "resumedAttack": "",
-    "pausedAttack": "",
-    "stoppedAttack": ""
+    "noEntries": "Aucune entrée dans les logs du serveur",
+    "executedCommand": "{{username}} a exécuté la commande : {{data}}",
+    "startedAttack": "{{username}} a lancé une attaque",
+    "resumedAttack": "{{username}} a repris une attaque",
+    "pausedAttack": "{{username}} a suspendu une attaque",
+    "stoppedAttack": "{{username}} a arrêté une attaque"
   }
 }
