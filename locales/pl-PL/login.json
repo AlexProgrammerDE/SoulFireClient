@@ -32,14 +32,14 @@
   "dedicated": {
     "description": "Umieść adres i token serwera SoulFire, z którym chcesz się połączyć.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Łączenie z serwerem...",
+      "success": "Połączono z serwerem",
+      "error": "Nie udało się połączyć z serwerem"
     },
     "form": {
       "address": {
         "title": "Adres",
-        "description": "",
+        "description": "Adres twojego serwera SoulFire.",
         "placeholder": "http://localhost:38765"
       },
       "token": {
@@ -48,22 +48,22 @@
         "description": "Token do uwierzytelniania z serwerem."
       },
       "email": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "E-mail",
+        "placeholder": "root@soulfiremc.com",
+        "description": "E-mail twojego konta SoulFire."
       },
       "back": "Wróć",
-      "useToken": "",
-      "useEmail": "",
-      "login": ""
+      "useToken": "Użyj tokena",
+      "useEmail": "Użyj e-maila",
+      "login": "Zaloguj się"
     }
   },
   "emailCode": {
-    "description": "",
+    "description": "Jeśli posiadasz konto, wysłaliśmy kod do <bold>{{email}}</bold>. Wprowadź go poniżej.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Sprawdzanie kodu...",
+      "success": "Zalogowano",
+      "error": "Kod jest nieprawidłowy"
     },
     "back": "Wróć"
   },
