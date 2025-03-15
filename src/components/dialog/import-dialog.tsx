@@ -148,7 +148,7 @@ function MainDialog(
         </CredenzaHeader>
         <CredenzaBody className="pb-4 md:pb-0">
           <div className="flex flex-col gap-4">
-            <div className="flex flex-col md:flex-row justify-between gap-4">
+            <div className="flex flex-wrap justify-between gap-4">
               {!isTauri() && (
                 <input
                   ref={fileInputRef}
@@ -180,7 +180,7 @@ function MainDialog(
               )}
               <Button
                 variant="secondary"
-                className="w-full"
+                className="flex-auto"
                 onClick={() => {
                   if (isTauri()) {
                     void (async () => {
@@ -219,7 +219,7 @@ function MainDialog(
               ) && (
                 <Button
                   variant="secondary"
-                  className="w-full"
+                  className="flex-auto"
                   onClick={props.openUrlDialog}
                 >
                   <GlobeIcon className="h-4" />
@@ -228,7 +228,7 @@ function MainDialog(
               )}
               <Button
                 variant="secondary"
-                className="w-full"
+                className="flex-auto"
                 onClick={() => {
                   void (async () => {
                     if (isTauri()) {
