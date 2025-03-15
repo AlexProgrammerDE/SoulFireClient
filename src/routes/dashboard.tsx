@@ -31,7 +31,7 @@ export const listQueryKey = ['instance-list'];
 export const Route = createFileRoute('/dashboard')({
   beforeLoad: async (props) => {
     if (isAuthenticated()) {
-      const listQueryOptions = queryOptions({
+      const instanceListQueryOptions = queryOptions({
         queryKey: listQueryKey,
         queryFn: async (
           props,
@@ -70,10 +70,10 @@ export const Route = createFileRoute('/dashboard')({
         refetchInterval: 3_000,
       });
       props.abortController.signal.addEventListener('abort', () => {
-        void queryClientInstance.cancelQueries(listQueryOptions);
+        void queryClientInstance.cancelQueries(instanceListQueryOptions);
       });
       return {
-        listQueryOptions,
+        instanceListQueryOptions,
       };
     } else {
       if (isTauri()) {
@@ -119,7 +119,9 @@ export const Route = createFileRoute('/dashboard')({
         },
       );
 
-      await queryClientInstance.prefetchQuery(props.context.listQueryOptions);
+      await queryClientInstance.prefetchQuery(
+        props.context.instanceListQueryOptions,
+      );
 
       // We need this as demo data
       // if (APP_ENVIRONMENT === 'development') {
@@ -171,8 +173,8 @@ function InstanceSwitchKeybinds() {
 function DashboardLayout() {
   const { t } = useTranslation('common');
   const loaderData = Route.useLoaderData();
-  const { listQueryOptions } = Route.useRouteContext();
-  const instanceList = useQuery(listQueryOptions);
+  const { instanceListQueryOptions } = Route.useRouteContext();
+  const instanceList = useQuery(instanceListQueryOptions);
   if (!loaderData.success) {
     return <ErrorComponent error={new Error(t('error.connectionFailed'))} />;
   }
