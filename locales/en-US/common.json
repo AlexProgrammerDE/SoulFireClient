@@ -278,11 +278,14 @@
     "stopped": "Stopped"
   },
   "auditLog": {
-    "noEntries": "No audit log entries found",
-    "executedCommand": "{{username}} executed command: {{data}}",
-    "startedAttack": "{{username}} started an attack",
-    "resumedAttack": "{{username}} resumed an attack",
-    "pausedAttack": "{{username}} paused an attack",
-    "stoppedAttack": "{{username}} stopped an attack"
+    "filterPlaceholder": "Filter audit logs...",
+    "user": "User",
+    "action": "Action",
+    "timestamp": "Timestamp",
+    "executedCommand": "Executed command: {{data}}",
+    "startedAttack": "Started an attack",
+    "resumedAttack": "Resumed an attack",
+    "pausedAttack": "Paused an attack",
+    "stoppedAttack": "Stopped an attack"
   }
 }

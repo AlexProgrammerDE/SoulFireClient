@@ -1,22 +1,23 @@
 import { createFileRoute } from '@tanstack/react-router';
-import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
-import { useTranslation } from 'react-i18next';
+import * as React from 'react';
+import { DataTable } from '@/components/data-table.tsx';
+import { ColumnDef } from '@tanstack/react-table';
+import { getEnumKeyByValue } from '@/lib/types.ts';
 import { queryOptions, useQuery } from '@tanstack/react-query';
-import {
-  InstanceAuditLogResponse,
-  InstanceAuditLogResponse_AuditLogEntryType,
-} from '@/generated/soulfire/instance.ts';
+import { Trans, useTranslation } from 'react-i18next';
 import { createTransport } from '@/lib/web-rpc.ts';
-import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { queryClientInstance } from '@/lib/query.ts';
 import { LoadingComponent } from '@/components/loading-component.tsx';
-import { SearchXIcon } from 'lucide-react';
-import * as React from 'react';
-import { Card, CardDescription } from '@/components/ui/card.tsx';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { getGravatarUrl, timestampToDate } from '@/lib/utils.tsx';
-import ReactTimeago from 'react-timeago';
 import { UserAvatar } from '@/components/user-avatar.tsx';
+import {
+  InstanceAuditLogResponse,
+  InstanceAuditLogResponse_AuditLogEntry,
+  InstanceAuditLogResponse_AuditLogEntryType,
+} from '@/generated/soulfire/instance.ts';
+import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
+import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
+import { timestampToDate } from '@/lib/utils.tsx';
+import ReactTimeago from 'react-timeago';
 
 export const Route = createFileRoute('/dashboard/instance/$instance/audit-log')(
   {
@@ -85,6 +86,46 @@ function toI18nKey(type: InstanceAuditLogResponse_AuditLogEntryType) {
   }
 }
 
+const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
+  {
+    accessorKey: 'user',
+    header: () => <Trans i18nKey="auditLog.user" />,
+    cell: ({ row }) => (
+      <div className="flex flex-row items-center justify-start gap-2">
+        <UserAvatar
+          username={row.original.user!.username}
+          email={row.original.user!.email}
+          className="size-8"
+        />
+        {row.original.user!.username}
+      </div>
+    ),
+  },
+  {
+    accessorFn: (row) =>
+      `${getEnumKeyByValue(InstanceAuditLogResponse_AuditLogEntryType, row.type)} ${row.data}`,
+    accessorKey: 'type',
+    header: () => <Trans i18nKey="auditLog.action" />,
+    cell: ({ row }) => (
+      <p>
+        <Trans
+          i18nKey={toI18nKey(row.original.type)}
+          values={{
+            data: row.original.data,
+          }}
+        />
+      </p>
+    ),
+  },
+  {
+    accessorKey: 'timestamp',
+    header: () => <Trans i18nKey="auditLog.timestamp" />,
+    cell: ({ row }) => (
+      <ReactTimeago date={timestampToDate(row.original.timestamp!)} />
+    ),
+  },
+];
+
 function AuditLog() {
   const { t } = useTranslation('common');
   const { auditLogQueryOptions } = Route.useRouteContext();
@@ -103,44 +144,13 @@ function AuditLog() {
       extraCrumbs={[t('breadcrumbs.controls')]}
       pageName={t('pageName.audit-log')}
     >
-      {auditLog.data.auditLog.entry.length === 0 ? (
-        <div className="flex flex-1 size-full">
-          <div className="m-auto flex flex-row gap-2">
-            <SearchXIcon className="size-7 m-auto" />
-            <h1 className="text-xl font-bold m-auto">
-              {t('auditLog.noEntries')}
-            </h1>
-          </div>
-        </div>
-      ) : (
-        <div className="grow flex flex-col h-full w-full gap-4">
-          {auditLog.data.auditLog.entry.map((entry) => {
-            const i18nKey = toI18nKey(entry.type);
-            return (
-              <Card
-                className="flex flex-row p-4 items-center h-20 gap-4"
-                key={entry.id}
-              >
-                <UserAvatar
-                  username={entry.user!.username}
-                  email={entry.user!.email}
-                />
-                <div className="flex flex-col justify-center">
-                  <p>
-                    {t(i18nKey, {
-                      username: entry.user!.username,
-                      data: entry.data,
-                    })}
-                  </p>
-                  <CardDescription>
-                    <ReactTimeago date={timestampToDate(entry.timestamp!)} />
-                  </CardDescription>
-                </div>
-              </Card>
-            );
-          })}
-        </div>
-      )}
+      <div className="grow flex h-full w-full flex-col gap-4 max-w-4xl">
+        <DataTable
+          filterPlaceholder={t('auditLog.filterPlaceholder')}
+          columns={columns}
+          data={auditLog.data.auditLog.entry}
+        />
+      </div>
     </InstancePageLayout>
   );
 }
