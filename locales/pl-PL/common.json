@@ -5,16 +5,16 @@
     "noAddressOrToken": "Nie znaleziono adresu serwera ani tokena",
     "page": {
       "title": "Błąd",
-      "description": "",
+      "description": "Wystąpił błąd podczas ładowania strony. Więcej informacji znajdziesz w konsoli.",
       "logOut": "Wyloguj się",
       "reloadPage": "Odśwież stronę"
     },
-    "connectionFailed": ""
+    "connectionFailed": "Połączenie do serwera SoulFire nieudane."
   },
   "notFound": {
     "page": {
-      "title": "",
-      "description": "",
+      "title": "Nie znaleziono",
+      "description": "Nie znaleziono strony w tej lokalizacji",
       "logOut": "Wyloguj się",
       "reloadPage": "Odśwież stronę"
     }
@@ -88,7 +88,7 @@
     }
   },
   "commandInput": {
-    "placeholder": ""
+    "placeholder": "Wpisz komendę (napisz 'help' dla listy)"
   },
   "controls": {
     "start": "Rozpocznij",
@@ -145,8 +145,8 @@
       "remove": "Usuń"
     },
     "invalidNumberToast": {
-      "title": "",
-      "description": ""
+      "title": "Nieprawidłowy numer!",
+      "description": "Wartość musi być pomiędzy {{min}} i {{max}}"
     }
   },
   "terminal": {
@@ -186,7 +186,7 @@
     }
   },
   "instanceSidebar": {
-    "readDocumentation": "",
+    "readDocumentation": "Przeczytaj dokumentację",
     "backToDashboard": "Wróć do pulpitu",
     "deleteToast": {
       "loading": "Usuwanie instancji...",
@@ -207,18 +207,18 @@
     "deleteInstance": "Usuń instancję",
     "controlsGroup": "Sterowanie",
     "console": "Konsola",
-    "audit-log": "",
+    "audit-log": "Dziennik zdarzeń",
     "settingsGroup": "Ustawienia",
-    "pluginsGroup": "",
+    "pluginsGroup": "Wtyczki",
     "pluginSettings": "Ustawienia wtyczek",
     "botSettings": "Ustawienia botów",
     "accountSettings": "Ustawienia konta",
     "proxySettings": "Ustawienia serwera proxy",
     "aiSettings": "Ustawienia SI",
-    "discoverPlugins": ""
+    "discoverPlugins": "Lista wtyczek"
   },
   "userSidebar": {
-    "readDocumentation": "",
+    "readDocumentation": "Przeczytaj dokumentację",
     "userGroup": "Użytkownik",
     "instances": "Instancje",
     "createInstance": "Utwórz instancję",
@@ -256,17 +256,17 @@
     "admin": "Administrator",
     "settings": "Ustawienia",
     "controls": "Sterowanie",
-    "plugins": ""
+    "plugins": "Wtyczki"
   },
   "noInstancesFound": "Nie znaleziono instancji",
   "pageName": {
     "console": "Konsola",
-    "audit-log": "",
+    "audit-log": "Dziennik zdarzeń",
     "instances": "Instancje",
     "proxySettings": "Ustawienia serwera proxy",
     "overview": "Przegląd",
     "accountSettings": "Ustawienia konta",
-    "discoverPlugins": ""
+    "discoverPlugins": "Lista wtyczek"
   },
   "instanceState": {
     "starting": "Uruchamianie",
@@ -276,11 +276,11 @@
     "stopped": "Zatrzymana"
   },
   "auditLog": {
-    "noEntries": "",
-    "executedCommand": "",
-    "startedAttack": "",
-    "resumedAttack": "",
-    "pausedAttack": "",
-    "stoppedAttack": ""
+    "noEntries": "Nie znaleziono wpisów dziennika zdarzeń",
+    "executedCommand": "{{username}} wykonał komendę: {{data}}",
+    "startedAttack": "{{username}} rozpoczął atak",
+    "resumedAttack": "{{username}} wznowił atak",
+    "pausedAttack": "{{username}} wstrzymał atak",
+    "stoppedAttack": "{{username}} zatrzymał atak"
   }
 }
