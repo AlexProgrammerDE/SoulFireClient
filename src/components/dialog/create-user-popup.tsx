@@ -90,12 +90,8 @@ export function CreateUserPopup({
         .then((r) => r.response);
       toast.promise(promise, {
         loading: t('users.addToast.loading'),
-        success: (r) => {
+        success: () => {
           setOpen(false);
-          void navigate({
-            to: '/dashboard/instance/$instance/console',
-            params: { instance: r.id },
-          });
           return t('users.addToast.success');
         },
         error: (e) => {
