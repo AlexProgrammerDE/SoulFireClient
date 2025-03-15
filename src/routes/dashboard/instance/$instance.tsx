@@ -22,7 +22,7 @@ import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 export const Route = createFileRoute('/dashboard/instance/$instance')({
   beforeLoad: (props) => {
     const { instance } = props.params;
-    const infoQueryOptions = queryOptions({
+    const instanceInfoQueryOptions = queryOptions({
       queryKey: ['instance-info', instance],
       queryFn: async (
         props,
@@ -91,22 +91,24 @@ export const Route = createFileRoute('/dashboard/instance/$instance')({
       refetchInterval: 3_000,
     });
     props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries(infoQueryOptions);
+      void queryClientInstance.cancelQueries(instanceInfoQueryOptions);
     });
     return {
-      infoQueryOptions,
+      instanceInfoQueryOptions,
     };
   },
   loader: async (props) => {
-    await queryClientInstance.prefetchQuery(props.context.infoQueryOptions);
+    await queryClientInstance.prefetchQuery(
+      props.context.instanceInfoQueryOptions,
+    );
   },
   component: InstanceLayout,
 });
 
 function InstanceLayout() {
   const { instance } = Route.useParams();
-  const { infoQueryOptions } = Route.useRouteContext();
-  const result = useQuery(infoQueryOptions);
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const result = useQuery(instanceInfoQueryOptions);
   const defaultOpen = localStorage.getItem('sidebar:state') === 'true';
 
   if (result.isError) {

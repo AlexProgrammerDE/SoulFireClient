@@ -62,7 +62,9 @@ export const Route = createFileRoute('/dashboard/instance/$instance/audit-log')(
       };
     },
     loader: async (props) => {
-      await queryClientInstance.prefetchQuery(props.context.infoQueryOptions);
+      await queryClientInstance.prefetchQuery(
+        props.context.auditLogQueryOptions,
+      );
     },
     component: AuditLog,
   },

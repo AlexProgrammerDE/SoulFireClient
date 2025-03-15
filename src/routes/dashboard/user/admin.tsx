@@ -14,7 +14,7 @@ import { ServerConfigContext } from '@/components/providers/server-config-contex
 
 export const Route = createFileRoute('/dashboard/user/admin')({
   beforeLoad: (props) => {
-    const infoQueryOptions = queryOptions({
+    const serverInfoQueryOptions = queryOptions({
       queryKey: ['server-info'],
       queryFn: async (
         props,
@@ -47,21 +47,23 @@ export const Route = createFileRoute('/dashboard/user/admin')({
       refetchInterval: 3_000,
     });
     props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries(infoQueryOptions);
+      void queryClientInstance.cancelQueries(serverInfoQueryOptions);
     });
     return {
-      infoQueryOptions,
+      serverInfoQueryOptions,
     };
   },
   loader: async (props) => {
-    await queryClientInstance.prefetchQuery(props.context.infoQueryOptions);
+    await queryClientInstance.prefetchQuery(
+      props.context.serverInfoQueryOptions,
+    );
   },
   component: AdminLayout,
 });
 
 function AdminLayout() {
-  const { infoQueryOptions } = Route.useRouteContext();
-  const result = useQuery(infoQueryOptions);
+  const { serverInfoQueryOptions } = Route.useRouteContext();
+  const result = useQuery(serverInfoQueryOptions);
 
   if (result.isError) {
     throw result.error;

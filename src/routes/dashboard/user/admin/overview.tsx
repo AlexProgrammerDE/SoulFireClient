@@ -28,7 +28,7 @@ import { ClientInfoContext } from '@/components/providers/client-info-context.ts
 
 export const Route = createFileRoute('/dashboard/user/admin/overview')({
   beforeLoad: (props) => {
-    const infoQueryOptions = queryOptions({
+    const overviewInfoQueryOptions = queryOptions({
       queryKey: ['overview-info'],
       queryFn: async (
         props,
@@ -72,14 +72,16 @@ export const Route = createFileRoute('/dashboard/user/admin/overview')({
       refetchInterval: 3_000,
     });
     props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries(infoQueryOptions);
+      void queryClientInstance.cancelQueries(overviewInfoQueryOptions);
     });
     return {
-      infoQueryOptions,
+      overviewInfoQueryOptions,
     };
   },
   loader: async (props) => {
-    await queryClientInstance.prefetchQuery(props.context.infoQueryOptions);
+    await queryClientInstance.prefetchQuery(
+      props.context.overviewInfoQueryOptions,
+    );
   },
   component: OverviewPage,
 });
@@ -292,8 +294,8 @@ export function InstancesChart(props: { instanceList: InstanceListResponse }) {
 
 function OverviewPage() {
   const { t } = useTranslation('common');
-  const { infoQueryOptions } = Route.useRouteContext();
-  const result = useQuery(infoQueryOptions);
+  const { overviewInfoQueryOptions } = Route.useRouteContext();
+  const result = useQuery(overviewInfoQueryOptions);
   const clientInfo = useContext(ClientInfoContext);
 
   if (result.isError) {
