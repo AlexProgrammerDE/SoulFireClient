@@ -223,8 +223,9 @@
     "instances": "Instances",
     "createInstance": "Create Instance",
     "adminGroup": "Admin",
-    "adminOverview": "Admin Overview",
-    "adminConsole": "Admin Console",
+    "adminOverview": "Overview",
+    "adminConsole": "Console",
+    "users": "Users",
     "serverSettings": "Server Settings",
     "devSettings": "Dev Settings",
     "theme": {
@@ -265,6 +266,7 @@
     "instances": "Instances",
     "proxySettings": "Proxy Settings",
     "overview": "Overview",
+    "users": "Users",
     "accountSettings": "Account Settings",
     "discoverPlugins": "Plugin List"
   },

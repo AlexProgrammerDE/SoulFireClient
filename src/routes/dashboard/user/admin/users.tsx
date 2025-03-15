@@ -1,0 +1,209 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { useContext, useState } from 'react';
+import { Button } from '@/components/ui/button.tsx';
+import { DataTable } from '@/components/data-table.tsx';
+import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
+import { getEnumKeyByValue } from '@/lib/types.ts';
+import { UserRole } from '@/generated/soulfire/common.ts';
+import { toast } from 'sonner';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu.tsx';
+import { PlusIcon, TrashIcon } from 'lucide-react';
+import { TransportContext } from '@/components/providers/transport-context.tsx';
+import {
+  queryOptions,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
+import { Trans, useTranslation } from 'react-i18next';
+import {
+  SelectAllHeader,
+  SelectRowHeader,
+} from '@/components/data-table-selects.tsx';
+import { createTransport } from '@/lib/web-rpc.ts';
+import { queryClientInstance } from '@/lib/query.ts';
+import {
+  UserListResponse,
+  UserListResponse_User,
+} from '@/generated/soulfire/user.ts';
+import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
+import { LoadingComponent } from '@/components/loading-component.tsx';
+import UserPageLayout from '@/components/nav/user-page-layout.tsx';
+import { UserAvatar } from '@/components/user-avatar.tsx';
+import { CreateUserPopup } from '@/components/dialog/create-user-popup.tsx';
+
+export const usersQueryKey = ['users'];
+export const Route = createFileRoute('/dashboard/user/admin/users')({
+  beforeLoad: async (props) => {
+    const usersQueryOptions = queryOptions({
+      queryKey: usersQueryKey,
+      queryFn: async (
+        props,
+      ): Promise<{
+        userList: UserListResponse;
+      }> => {
+        const transport = createTransport();
+        if (transport === null) {
+          return {
+            userList: {
+              users: [
+                {
+                  id: 'root',
+                  username: 'root',
+                  email: 'root@soulfiremc.com',
+                  role: UserRole.ADMIN,
+                },
+              ],
+            },
+          };
+        }
+
+        const userService = new UserServiceClient(transport);
+        const result = await userService.listUsers(
+          {},
+          {
+            abort: props.signal,
+          },
+        );
+
+        return {
+          userList: result.response,
+        };
+      },
+      refetchInterval: 3_000,
+    });
+    props.abortController.signal.addEventListener('abort', () => {
+      void queryClientInstance.cancelQueries(usersQueryOptions);
+    });
+    return {
+      usersQueryOptions,
+    };
+  },
+  loader: async (props) => {
+    await queryClientInstance.prefetchQuery(props.context.usersQueryOptions);
+  },
+  component: Users,
+});
+
+const columns: ColumnDef<UserListResponse_User>[] = [
+  {
+    id: 'select',
+    header: SelectAllHeader,
+    cell: SelectRowHeader,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: 'username',
+    header: () => <Trans i18nKey="admin:users.table.username" />,
+    cell: ({ row }) => (
+      <div className="flex flex-row items-center justify-start gap-2">
+        <UserAvatar
+          username={row.original.username}
+          email={row.original.email}
+          className="size-8"
+        />
+        {row.original.username}
+      </div>
+    ),
+  },
+  {
+    accessorKey: 'email',
+    header: () => <Trans i18nKey="admin:users.table.email" />,
+  },
+  {
+    accessorFn: (row) => getEnumKeyByValue(UserRole, row.role),
+    accessorKey: 'role',
+    header: () => <Trans i18nKey="admin:users.table.role" />,
+  },
+];
+
+function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
+  const { t } = useTranslation('admin');
+  const queryClient = useQueryClient();
+  const transport = useContext(TransportContext);
+  const [createOpen, setCreateOpen] = useState(false);
+  const { mutateAsync: deleteUsersMutation } = useMutation({
+    mutationFn: async (user: UserListResponse_User[]) => {
+      if (transport === null) {
+        return;
+      }
+
+      const userService = new UserServiceClient(transport);
+      for (const u of user) {
+        await userService.deleteUser({
+          id: u.id,
+        });
+      }
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({
+        queryKey: usersQueryKey,
+      });
+    },
+  });
+
+  return (
+    <>
+      <Button variant="outline" onClick={() => setCreateOpen(true)}>
+        <PlusIcon className="h-4 w-4" />
+      </Button>
+      <CreateUserPopup open={createOpen} setOpen={setCreateOpen} />
+      <Button
+        variant="outline"
+        disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
+        onClick={() => {
+          const selectedRows = props.table
+            .getFilteredSelectedRowModel()
+            .rows.map((r) => r.original);
+
+          toast.promise(deleteUsersMutation(selectedRows), {
+            loading: t('users.removeToast.loading'),
+            success: t('users.removeToast.success'),
+            error: (e) => {
+              console.error(e);
+              return t('users.removeToast.error');
+            },
+          });
+        }}
+      >
+        <TrashIcon className="h-4 w-4" />
+      </Button>
+    </>
+  );
+}
+
+function Users() {
+  const { t } = useTranslation('common');
+  const { usersQueryOptions } = Route.useRouteContext();
+  const userList = useQuery(usersQueryOptions);
+
+  if (userList.isError) {
+    throw userList.error;
+  }
+
+  if (userList.isLoading || !userList.data) {
+    return <LoadingComponent />;
+  }
+
+  return (
+    <UserPageLayout
+      showUserCrumb={false}
+      extraCrumbs={[t('breadcrumbs.settings')]}
+      pageName={t('pageName.users')}
+    >
+      <div className="grow flex h-full w-full flex-col gap-4 max-w-4xl">
+        <DataTable
+          filterPlaceholder={t('admin:users.filterPlaceholder')}
+          columns={columns}
+          data={userList.data.userList.users}
+          extraHeader={ExtraHeader}
+        />
+      </div>
+    </UserPageLayout>
+  );
+}

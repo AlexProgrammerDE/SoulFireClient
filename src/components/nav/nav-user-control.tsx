@@ -13,12 +13,6 @@ import {
   SunIcon,
   SunMoonIcon,
 } from 'lucide-react';
-
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from '@/components/ui/avatar.tsx';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -62,6 +56,7 @@ import { SystemInfoContext } from '@/components/providers/system-info-context.ts
 import { AboutPopup } from '@/components/dialog/about-popup.tsx';
 import { useTranslation } from 'react-i18next';
 import { logOut } from '@/lib/web-rpc.ts';
+import { UserAvatar } from '@/components/user-avatar.tsx';
 
 export function NavUserControl() {
   const { t, i18n } = useTranslation('common');
@@ -83,15 +78,11 @@ export function NavUserControl() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               tooltip={`${clientInfo.username} | ${clientInfo.email}`}
             >
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage
-                  src={clientInfo.gravatarUrl}
-                  alt={clientInfo.username}
-                />
-                <AvatarFallback className="rounded-lg">
-                  {clientInfo.username.slice(0, 2).toUpperCase()}
-                </AvatarFallback>
-              </Avatar>
+              <UserAvatar
+                username={clientInfo.username}
+                email={clientInfo.email}
+                className="size-8"
+              />
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
                   {clientInfo.username}
@@ -109,15 +100,11 @@ export function NavUserControl() {
           >
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage
-                    src={clientInfo.gravatarUrl}
-                    alt={clientInfo.username}
-                  />
-                  <AvatarFallback className="rounded-lg">
-                    {clientInfo.username.slice(0, 2).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
+                <UserAvatar
+                  username={clientInfo.username}
+                  email={clientInfo.email}
+                  className="size-8"
+                />
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
                     {clientInfo.username}

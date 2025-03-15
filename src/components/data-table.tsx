@@ -1,6 +1,6 @@
 import {
   ColumnDef,
-  ColumnFiltersState,
+  FilterFn,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
@@ -23,41 +23,69 @@ import React, { useState } from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { DataTablePagination } from '@/components/data-table-pagination.tsx';
 import { useTranslation } from 'react-i18next';
+import { RankingInfo, rankItem } from '@tanstack/match-sorter-utils';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filterPlaceholder: string;
-  filterKey: string;
   // Element with form param
   extraHeader?: (props: { table: ReactTable<TData> }) => React.ReactNode;
 }
+
+declare module '@tanstack/react-table' {
+  //add fuzzy filter to the filterFns
+  interface FilterFns {
+    fuzzy: FilterFn<unknown>;
+  }
+
+  interface FilterMeta {
+    itemRank: RankingInfo;
+  }
+}
+
+// Define a custom fuzzy filter function that will apply ranking info to rows (using match-sorter utils)
+const fuzzyFilter: FilterFn<unknown> = (row, columnId, value, addMeta) => {
+  // Rank the item
+  const itemRank = rankItem(row.getValue(columnId), value);
+
+  // Store the itemRank info
+  addMeta({
+    itemRank,
+  });
+
+  // Return if the item should be filtered in/out
+  return itemRank.passed;
+};
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   filterPlaceholder,
-  filterKey,
   extraHeader,
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation('common');
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [rowSelection, setRowSelection] = useState({});
+  const [globalFilter, setGlobalFilter] = React.useState('');
 
   const table = useReactTable({
     data,
     columns,
+    filterFns: {
+      fuzzy: fuzzyFilter,
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
+    globalFilterFn: 'fuzzy',
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
     state: {
       sorting,
-      columnFilters,
+      globalFilter,
       rowSelection,
     },
   });
@@ -67,10 +95,8 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center gap-2">
         <Input
           placeholder={filterPlaceholder}
-          value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn(filterKey)?.setFilterValue(event.target.value)
-          }
+          value={globalFilter}
+          onChange={(event) => setGlobalFilter(event.target.value)}
           className="max-w-sm"
         />
         {extraHeader && extraHeader({ table })}

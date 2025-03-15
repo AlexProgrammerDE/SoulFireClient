@@ -10,7 +10,7 @@ import { ClientInfoContext } from '@/components/providers/client-info-context.ts
 import { createTransport, isAuthenticated, logOut } from '@/lib/web-rpc.ts';
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 import { ClientDataResponse } from '@/generated/soulfire/config.ts';
-import { getGravatarUrl, isTauri } from '@/lib/utils.tsx';
+import { isTauri } from '@/lib/utils.tsx';
 import { emit } from '@tauri-apps/api/event';
 import { demoData } from '@/demo-data.ts';
 import {
@@ -95,7 +95,6 @@ export const Route = createFileRoute('/dashboard')({
         success: true;
         transport: GrpcWebFetchTransport | null;
         clientData: ClientDataResponse;
-        gravatarUrl: string;
       }
     | {
         success: false;
@@ -108,7 +107,6 @@ export const Route = createFileRoute('/dashboard')({
         success: true,
         transport,
         clientData: demoData,
-        gravatarUrl: getGravatarUrl(demoData.email),
       };
     }
 
@@ -132,7 +130,6 @@ export const Route = createFileRoute('/dashboard')({
         success: true,
         transport,
         clientData: configResult.response,
-        gravatarUrl: getGravatarUrl(configResult.response.email),
       };
     } catch (e) {
       return {
@@ -180,7 +177,7 @@ function DashboardLayout() {
     return <ErrorComponent error={new Error(t('error.connectionFailed'))} />;
   }
 
-  const { transport, clientData, gravatarUrl } = loaderData;
+  const { transport, clientData } = loaderData;
 
   if (instanceList.isError) {
     throw instanceList.error;
@@ -192,12 +189,7 @@ function DashboardLayout() {
 
   return (
     <TransportContext.Provider value={transport}>
-      <ClientInfoContext.Provider
-        value={{
-          ...clientData,
-          gravatarUrl,
-        }}
-      >
+      <ClientInfoContext.Provider value={clientData}>
         <InstanceListContext.Provider value={instanceList.data.instanceList}>
           <InstanceSwitchKeybinds />
           <Outlet />

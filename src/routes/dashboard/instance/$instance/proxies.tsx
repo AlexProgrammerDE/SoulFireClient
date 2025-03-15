@@ -121,9 +121,9 @@ const columns: ColumnDef<ProfileProxy>[] = [
     enableHiding: false,
   },
   {
+    accessorFn: (row) => getEnumKeyByValue(ProxyProto_Type, row.type),
     accessorKey: 'type',
     header: () => <Trans i18nKey="instance:proxy.table.type" />,
-    cell: ({ row }) => getEnumKeyByValue(ProxyProto_Type, row.original.type),
   },
   {
     accessorKey: 'address',
@@ -159,7 +159,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         config: convertToInstanceProto(profile),
       });
     },
-    onSuccess: () => {
+    onSettled: () => {
       void queryClient.invalidateQueries({
         queryKey: ['instance-info', instanceInfo.id],
       });
@@ -441,7 +441,6 @@ function ProxySettings() {
         </div>
         <DataTable
           filterPlaceholder={t('instance:proxy.filterPlaceholder')}
-          filterKey="address"
           columns={columns}
           data={profile.proxies}
           extraHeader={ExtraHeader}

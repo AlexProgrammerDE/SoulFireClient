@@ -16,6 +16,7 @@ import { Card, CardDescription } from '@/components/ui/card.tsx';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { getGravatarUrl, timestampToDate } from '@/lib/utils.tsx';
 import ReactTimeago from 'react-timeago';
+import { UserAvatar } from '@/components/user-avatar.tsx';
 
 export const Route = createFileRoute('/dashboard/instance/$instance/audit-log')(
   {
@@ -57,7 +58,7 @@ export const Route = createFileRoute('/dashboard/instance/$instance/audit-log')(
         void queryClientInstance.cancelQueries(auditLogQueryOptions);
       });
       return {
-        auditLogQueryOptions: auditLogQueryOptions,
+        auditLogQueryOptions,
       };
     },
     loader: async (props) => {
@@ -118,15 +119,10 @@ function AuditLog() {
                 className="flex flex-row p-4 items-center h-20 gap-4"
                 key={entry.id}
               >
-                <Avatar className="rounded-lg">
-                  <AvatarImage
-                    src={getGravatarUrl(entry.user!.email)}
-                    alt={entry.user!.username}
-                  />
-                  <AvatarFallback className="rounded-lg">
-                    {entry.user!.username.slice(0, 2).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
+                <UserAvatar
+                  username={entry.user!.username}
+                  email={entry.user!.email}
+                />
                 <div className="flex flex-col justify-center">
                   <p>
                     {t(i18nKey, {

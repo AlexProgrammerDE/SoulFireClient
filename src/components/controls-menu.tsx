@@ -46,7 +46,7 @@ export default function ControlsMenu() {
 
       return promise;
     },
-    onSuccess: () => {
+    onSettled: () => {
       void queryClient.invalidateQueries({
         queryKey: ['instance-info', instanceInfo.id],
       });
@@ -91,7 +91,7 @@ export default function ControlsMenu() {
 
       return promise;
     },
-    onSuccess: () => {
+    onSettled: () => {
       void queryClient.invalidateQueries({
         queryKey: ['instance-info', instanceInfo.id],
       });
@@ -121,7 +121,7 @@ export default function ControlsMenu() {
 
       return promise;
     },
-    onSuccess: () => {
+    onSettled: () => {
       void queryClient.invalidateQueries({
         queryKey: ['instance-info', instanceInfo.id],
       });

@@ -65,13 +65,10 @@ const columns: ColumnDef<ProfileAccount>[] = [
     enableHiding: false,
   },
   {
+    accessorFn: (row) =>
+      getEnumKeyByValue(MinecraftAccountProto_AccountTypeProto, row.type),
     accessorKey: 'type',
     header: () => <Trans i18nKey={'instance:account.table.type'} />,
-    cell: ({ row }) =>
-      getEnumKeyByValue(
-        MinecraftAccountProto_AccountTypeProto,
-        row.original.type,
-      ),
   },
   {
     accessorKey: 'profileId',
@@ -103,7 +100,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         config: convertToInstanceProto(profile),
       });
     },
-    onSuccess: () => {
+    onSettled: () => {
       void queryClient.invalidateQueries({
         queryKey: ['instance-info', instanceInfo.id],
       });
@@ -480,7 +477,6 @@ function AccountSettings() {
         </div>
         <DataTable
           filterPlaceholder={t('instance:account.filterPlaceholder')}
-          filterKey="lastKnownName"
           columns={columns}
           data={profile.accounts}
           extraHeader={ExtraHeader}

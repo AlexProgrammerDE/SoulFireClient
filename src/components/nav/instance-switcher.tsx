@@ -88,7 +88,7 @@ export function InstanceSwitcher() {
         config: convertToInstanceProto(profile),
       });
     },
-    onSuccess: () => {
+    onSettled: () => {
       void queryClient.invalidateQueries({
         queryKey: ['instance-info', instanceInfo.id],
       });
@@ -117,7 +117,7 @@ export function InstanceSwitcher() {
 
       return promise;
     },
-    onSuccess: () => {
+    onSettled: () => {
       void queryClient.invalidateQueries({
         queryKey: listQueryKey,
       });

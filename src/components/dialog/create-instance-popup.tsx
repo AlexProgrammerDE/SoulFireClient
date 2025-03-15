@@ -92,7 +92,7 @@ export function CreateInstancePopup({
 
       return promise;
     },
-    onSuccess: () => {
+    onSettled: () => {
       void queryClient.invalidateQueries({
         queryKey: listQueryKey,
       });

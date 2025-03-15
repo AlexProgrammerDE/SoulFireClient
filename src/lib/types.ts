@@ -30,6 +30,20 @@ export function getEnumKeyByValue<E extends object>(
   return Object.entries(enumObj).find(([, v]) => v === value)?.[0] as keyof E;
 }
 
+export function getEnumEntries<E extends object>(
+  enumObj: E,
+): {
+  key: keyof E;
+  value: E[keyof E];
+}[] {
+  return Object.entries(enumObj)
+    .filter(([key]) => isNaN(parseInt(key)))
+    .map(([key, value]) => ({
+      key: key as keyof E,
+      value: value,
+    }));
+}
+
 export function translateInstanceState(
   i18n: i18n,
   state: InstanceState,
