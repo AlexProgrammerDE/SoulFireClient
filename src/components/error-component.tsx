@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useRouter } from '@tanstack/react-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   BugIcon,
   LoaderCircleIcon,
@@ -25,6 +25,21 @@ export function ErrorComponent({ error }: { error: Error }) {
   const navigate = useNavigate();
   const router = useRouter();
   const [revalidating, setRevalidating] = useState(false);
+
+  function revalidate() {
+    setRevalidating(true);
+    router.invalidate().finally(() => {
+      setRevalidating(false);
+    });
+  }
+
+  useEffect(() => {
+    const interval = setInterval(revalidate, 1000 * 5);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <div className="flex grow size-full">
@@ -58,19 +73,7 @@ export function ErrorComponent({ error }: { error: Error }) {
             <LogOutIcon className="h-4" />
             {t('error.page.logOut')}
           </Button>
-          <Button
-            onClick={() => {
-              setRevalidating(true);
-              router
-                .invalidate()
-                .then(() => {
-                  setRevalidating(false);
-                })
-                .catch(() => {
-                  setRevalidating(false);
-                });
-            }}
-          >
+          <Button onClick={revalidate}>
             {revalidating ? (
               <LoaderCircleIcon className="h-4 animate-spin" />
             ) : (
