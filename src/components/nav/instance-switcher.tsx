@@ -127,7 +127,7 @@ export function InstanceSwitcher() {
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({
-        queryKey: instanceInfoQueryOptions.queryKey,
+        queryKey: instanceListQueryOptions.queryKey,
       });
     },
   });
