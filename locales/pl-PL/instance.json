@@ -1,34 +1,34 @@
 {
   "proxy": {
-    "filterPlaceholder": "Filtruj serwery pośredniczące...",
+    "filterPlaceholder": "Filtruj proxy...",
     "listImportToast": {
-      "loading": "Importowanie serwerów pośredniczących...",
-      "success": "Zaimportowano {{count}} serwerów pośredniczących!",
-      "error": "Nie udało się zaimportować serwerów pośredniczących",
-      "noProxies": "Brak serwerów pośredniczących do importu"
+      "loading": "Importowanie serwerów proxy...",
+      "success": "Zaimportowano {{count}} serwerów proxy!",
+      "error": "Nie udało się zaimportować serwerów proxy",
+      "noProxies": "Brak serwerów proxy do importu"
     },
     "import": {
-      "proxyType": "Typ serwera pośredniczącego",
+      "proxyType": "Typ serwera proxy",
       "http": "HTTP",
       "socks4": "SOCKS4",
       "socks5": "SOCKS5",
       "uri": "URI",
       "dialog": {
         "title": "Importuj serwer pośredniczący {{type}}",
-        "description": "Wklej tutaj swoje serwery pośredniczące, po jednym na linię"
+        "description": "Wklej tutaj swoje proxy po jednym na linię"
       }
     },
     "removeToast": {
-      "loading": "Usuwanie serwerów pośredniczących...",
-      "success": "Usunięto {{count}} serwerów pośredniczących!",
-      "error": "Nie udało się usunąć serwerów pośredniczących"
+      "loading": "Usuwanie proxy...",
+      "success": "Usunięto {{count}} serwerów proxy!",
+      "error": "Nie udało się usunąć serwerów proxy"
     },
     "checkToast": {
-      "loading": "",
-      "success": "Usunięto {{count}} uszkodzonych serwerów pośredniczących!",
-      "error": "Nie udało się sprawdzić serwerów pośredniczących"
+      "loading": "Sprawdzanie proxy... {{checked}}/{{total}} (Sukces: {{success}} Niepowodzenie: {{failed}})",
+      "success": "Usunięto {{count}} uszkodzonych serwerów proxy!",
+      "error": "Nie udało się sprawdzić serwerów proxy"
     },
-    "invalidFormat": "Nieprawidłowy format serwera pośredniczącego",
+    "invalidFormat": "Nieprawidłowy format proxy",
     "table": {
       "type": "Typ",
       "address": "Adres",
@@ -39,7 +39,7 @@
   "account": {
     "filterPlaceholder": "Filtruj konta...",
     "listImportToast": {
-      "loading": "",
+      "loading": "Importowanie kont... {{checked}}/{{total}} (Sukces: {{success}} Niepowodzenie: {{failed}})",
       "allFailed": "Nie udało się zaimportować żadnych kont",
       "someFailed": "Zaimportowano {{count}} kont, nie udało się zaimportować {{failed}} kont",
       "noneFailed": "Zaimportowano {{count}} kont!",

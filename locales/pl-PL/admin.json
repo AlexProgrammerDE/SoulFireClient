@@ -21,5 +21,50 @@
         "other": "Inne"
       }
     }
+  },
+  "users": {
+    "filterPlaceholder": "",
+    "addUserDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "username": {
+          "min": "",
+          "max": "",
+          "regex": "",
+          "label": "Nazwa użytkownika",
+          "placeholder": "",
+          "description": ""
+        },
+        "email": {
+          "label": "E-mail",
+          "placeholder": "",
+          "description": ""
+        },
+        "role": {
+          "label": "Role",
+          "description": "",
+          "user": "Użytkownik",
+          "admin": "Administrator"
+        },
+        "cancel": "Anuluj",
+        "add": ""
+      }
+    },
+    "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "username": "Nazwa użytkownika",
+      "email": "E-mail",
+      "role": "Role"
+    }
   }
 }

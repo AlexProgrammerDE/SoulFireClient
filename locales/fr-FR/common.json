@@ -223,8 +223,9 @@
     "instances": "Instances",
     "createInstance": "Créer une instance",
     "adminGroup": "Administrateur",
-    "adminOverview": "Aperçu admin",
-    "adminConsole": "Console admin",
+    "adminOverview": "Aperçu",
+    "adminConsole": "Console",
+    "users": "Utilisateur·rice·s",
     "serverSettings": "Paramètres du serveur",
     "devSettings": "Paramètres de développement",
     "theme": {
@@ -265,6 +266,7 @@
     "instances": "Instances",
     "proxySettings": "Paramètres de proxy",
     "overview": "Aperçu",
+    "users": "Utilisateur·rice·s",
     "accountSettings": "Paramètres de compte",
     "discoverPlugins": "Liste des plugins"
   },
@@ -276,11 +278,14 @@
     "stopped": "Arrêté"
   },
   "auditLog": {
-    "noEntries": "Aucune entrée dans les logs du serveur",
-    "executedCommand": "{{username}} a exécuté la commande : {{data}}",
-    "startedAttack": "{{username}} a lancé une attaque",
-    "resumedAttack": "{{username}} a repris une attaque",
-    "pausedAttack": "{{username}} a suspendu une attaque",
-    "stoppedAttack": "{{username}} a arrêté une attaque"
+    "filterPlaceholder": "",
+    "user": "Utilisateur",
+    "action": "",
+    "timestamp": "",
+    "executedCommand": "",
+    "startedAttack": "",
+    "resumedAttack": "",
+    "pausedAttack": "",
+    "stoppedAttack": ""
   }
 }

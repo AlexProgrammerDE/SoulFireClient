@@ -1,0 +1,75 @@
+{
+  "header": {
+    "image": {
+      "alt": "Soul Fire ikonu"
+    },
+    "title": "SoulFire"
+  },
+  "connect": {
+    "title": "SoulFire Sunucusuna Bağlan",
+    "description": "Hangi tür SoulFire sunucusuna bağlanmak istiyorsanız onu seçin.",
+    "integrated": {
+      "title": "Yerel Sunucu (ev)",
+      "description": "Bilgisayarınızda bir SoulFire sunucusu çalıştırır. Kurulum otomatiktir ve yapılandırma gerektirmez. (Masaüstü uygulaması gerektirir)"
+    },
+    "dedicated": {
+      "title": "Dedicated Sunucu (uzaktan bağlantı)",
+      "description": "SoulFire sunucusunun uzak bir örneğine bağlanır. Bağlanmak için sunucu adresini ve token bilgilerini sağlamanız gerekmektedir."
+    },
+    "demo": {
+      "title": "Örnek Sunucu",
+      "description": "Örnek verileriyle sanal bir sunucu simüle eder. Bu sunucu yalnızca okunabilir olup, üzerinde herhangi bir değişiklik yapamazsınız."
+    }
+  },
+  "integrated": {
+    "preparing": "Yerel sunucu başlatmaya hazırlanıyor...",
+    "toast": {
+      "loading": "Yerel sunucu başlatılıyor...",
+      "success": "Yerel sunucu başladı",
+      "error": "Yerel sunucu başlatılamadı"
+    }
+  },
+  "dedicated": {
+    "description": "\"Bağlanmak istediğiniz SoulFire sunucusunun adresini ve token bilgilerini girin.",
+    "toast": {
+      "loading": "Sunucuya bağlanılıyor...",
+      "success": "Sunucuya bağlanıldı",
+      "error": "Sunucuya bağlanılamadı"
+    },
+    "form": {
+      "address": {
+        "title": "Adres",
+        "description": "SoulFire sunucunuzun adresi.",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "Token",
+        "placeholder": "Gizli Token",
+        "description": "Sunucuyla kimlik doğrulamak için token."
+      },
+      "email": {
+        "title": "Mail Adresi",
+        "placeholder": "soulfiremc@tooble.xyz",
+        "description": "SoulFire hesabınızın e-posta adresi."
+      },
+      "back": "Geri Dön",
+      "useToken": "Tokeni Kullan",
+      "useEmail": "Mail Adresini Kullan",
+      "login": "Oturum Aç"
+    }
+  },
+  "emailCode": {
+    "description": "Bir hesabınız varsa, <bold>{{email}}</bold> adresine bir kod gönderdik. Lütfen aşağıya girin.",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "back": "Geri Dön"
+  },
+  "footer": {
+    "version": "SoulFireMc Client {{version}} - {{environment}}",
+    "preview": "Ön izleme mi arıyorsunuz?",
+    "production": "Prodüksiyon mu arıyorsunuz?"
+  }
+}

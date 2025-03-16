@@ -24,7 +24,7 @@
       "error": "删除代理失败"
     },
     "checkToast": {
-      "loading": "",
+      "loading": "检查代理中… {{checked}}/{{total}}（成功：{{success}} 失败：{{failed}}）",
       "success": "删除了 {{count}} 个无效的代理!",
       "error": "无法检查代理"
     },
@@ -39,7 +39,7 @@
   "account": {
     "filterPlaceholder": "筛选账户...",
     "listImportToast": {
-      "loading": "",
+      "loading": "导入账户中… {{checked}}/{{total}}（成功：{{success}} 失败：{{failed}}）",
       "allFailed": "导入账户失败",
       "someFailed": "成功导入 {{count}} 个账户,  {{failed}} 个账户导入失败",
       "noneFailed": "已导入 {{count}} 个账户",
@@ -53,13 +53,13 @@
       "error": "导入帐户失败"
     },
     "import": {
-      "javaEdition": "Java 游戏版本",
-      "bedrockEdition": "Bedrock 游戏版本",
+      "javaEdition": "Java 版",
+      "bedrockEdition": "基岩版",
       "offline": "离线",
       "microsoftCredentials": "Microsoft 账户",
       "microsoftDeviceCode": "Microsoft 设备代码",
-      "microsoftRefreshToken": "微软刷新令牌",
-      "theAltening": "",
+      "microsoftRefreshToken": "Microsoft 刷新令牌",
+      "theAltening": "交替",
       "dialog": {
         "title": "导入 {{type}} 个账户",
         "description": "在这里粘贴您的帐户，每行一个"

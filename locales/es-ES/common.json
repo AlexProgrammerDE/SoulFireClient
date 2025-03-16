@@ -225,6 +225,7 @@
     "adminGroup": "",
     "adminOverview": "",
     "adminConsole": "",
+    "users": "",
     "serverSettings": "",
     "devSettings": "",
     "theme": {
@@ -265,6 +266,7 @@
     "instances": "",
     "proxySettings": "",
     "overview": "",
+    "users": "",
     "accountSettings": "",
     "discoverPlugins": ""
   },
@@ -276,7 +278,10 @@
     "stopped": ""
   },
   "auditLog": {
-    "noEntries": "",
+    "filterPlaceholder": "",
+    "user": "",
+    "action": "",
+    "timestamp": "",
     "executedCommand": "",
     "startedAttack": "",
     "resumedAttack": "",
