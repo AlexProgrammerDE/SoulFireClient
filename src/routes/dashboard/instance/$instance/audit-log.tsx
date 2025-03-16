@@ -18,6 +18,7 @@ import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { timestampToDate } from '@/lib/utils.tsx';
 import ReactTimeago from 'react-timeago';
+import i18n from '@/lib/i18n.ts';
 
 export const Route = createFileRoute('/dashboard/instance/$instance/audit-log')(
   {
@@ -105,7 +106,9 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
   },
   {
     accessorFn: (row) =>
-      `${getEnumKeyByValue(InstanceAuditLogResponse_AuditLogEntryType, row.type)} ${row.data}`,
+      i18n.t(toI18nKey(row.type), {
+        data: row.data,
+      }),
     accessorKey: 'type',
     header: () => <Trans i18nKey="auditLog.action" />,
     cell: ({ row }) => (
