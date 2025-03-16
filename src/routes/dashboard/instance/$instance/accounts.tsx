@@ -32,7 +32,7 @@ import ImportDialog from '@/components/dialog/import-dialog.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { isTauri } from '@/lib/utils.tsx';
+import { isTauri, runAsync } from '@/lib/utils.tsx';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
@@ -161,69 +161,71 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           abort: abortController.signal,
         },
       ).responses;
-      responses.onMessage(async (r) => {
-        const data = r.data;
-        switch (data.oneofKind) {
-          case 'fullList': {
-            const accountsToAdd = data.fullList.account;
-            const newProfile = {
-              ...profile,
-              accounts: addAndDeduplicate(profile.accounts, accountsToAdd),
-            };
+      responses.onMessage((r) => {
+        runAsync(async () => {
+          const data = r.data;
+          switch (data.oneofKind) {
+            case 'fullList': {
+              const accountsToAdd = data.fullList.account;
+              const newProfile = {
+                ...profile,
+                accounts: addAndDeduplicate(profile.accounts, accountsToAdd),
+              };
 
-            await setProfileMutation(newProfile);
+              await setProfileMutation(newProfile);
 
-            if (accountsToAdd.length === 0) {
-              toast.success(t('account.listImportToast.allFailed'), {
+              if (accountsToAdd.length === 0) {
+                toast.success(t('account.listImportToast.allFailed'), {
+                  id: toastId,
+                });
+              } else if (accountsToAdd.length !== textSplit.length) {
+                toast.success(
+                  t('account.listImportToast.someFailed', {
+                    count: accountsToAdd.length,
+                    failed: textSplit.length - accountsToAdd.length,
+                  }),
+                  {
+                    id: toastId,
+                  },
+                );
+              } else {
+                toast.success(
+                  t('account.listImportToast.noneFailed', {
+                    count: accountsToAdd.length,
+                  }),
+                  {
+                    id: toastId,
+                  },
+                );
+              }
+              break;
+            }
+            case 'oneSuccess': {
+              if (abortController.signal.aborted) {
+                return;
+              }
+
+              success++;
+              toast.loading(loadingReport(), {
                 id: toastId,
+                ...loadingData,
               });
-            } else if (accountsToAdd.length !== textSplit.length) {
-              toast.success(
-                t('account.listImportToast.someFailed', {
-                  count: accountsToAdd.length,
-                  failed: textSplit.length - accountsToAdd.length,
-                }),
-                {
-                  id: toastId,
-                },
-              );
-            } else {
-              toast.success(
-                t('account.listImportToast.noneFailed', {
-                  count: accountsToAdd.length,
-                }),
-                {
-                  id: toastId,
-                },
-              );
+              break;
             }
-            break;
-          }
-          case 'oneSuccess': {
-            if (abortController.signal.aborted) {
-              return;
-            }
+            case 'oneFailure': {
+              if (abortController.signal.aborted) {
+                return;
+              }
 
-            success++;
-            toast.loading(loadingReport(), {
-              id: toastId,
-              ...loadingData,
-            });
-            break;
-          }
-          case 'oneFailure': {
-            if (abortController.signal.aborted) {
-              return;
+              failed++;
+              toast.loading(loadingReport(), {
+                id: toastId,
+                ...loadingData,
+              });
+              break;
             }
-
-            failed++;
-            toast.loading(loadingReport(), {
-              id: toastId,
-              ...loadingData,
-            });
-            break;
           }
-        }
+        });
       });
       responses.onError((e) => {
         console.error(e);

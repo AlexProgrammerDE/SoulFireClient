@@ -9,7 +9,7 @@ import {
 import { Button } from '@/components/ui/button.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
 import { useContext, useRef, useState } from 'react';
-import { hasInstancePermission, isTauri } from '@/lib/utils.tsx';
+import { hasInstancePermission, isTauri, runAsync } from '@/lib/utils.tsx';
 import { downloadDir } from '@tauri-apps/api/path';
 import { open } from '@tauri-apps/plugin-dialog';
 import { readTextFile } from '@tauri-apps/plugin-fs';
@@ -183,7 +183,7 @@ function MainDialog(
                 className="flex-auto"
                 onClick={() => {
                   if (isTauri()) {
-                    void (async () => {
+                    runAsync(async () => {
                       const downloadsDir = await downloadDir();
                       const input = await open({
                         title: props.title,
@@ -204,7 +204,7 @@ function MainDialog(
 
                         props.listener(data);
                       }
-                    })();
+                    });
                   } else {
                     fileInputRef.current?.click();
                   }
@@ -230,7 +230,7 @@ function MainDialog(
                 variant="secondary"
                 className="flex-auto"
                 onClick={() => {
-                  void (async () => {
+                  runAsync(async () => {
                     if (isTauri()) {
                       props.listener((await clipboard.readText()) ?? '');
                     } else {
@@ -260,7 +260,7 @@ function MainDialog(
                         props.listener(await blob.text());
                       }
                     }
-                  })();
+                  });
                 }}
               >
                 <ClipboardIcon className="h-4" />

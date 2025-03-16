@@ -80,6 +80,7 @@ export const Route = createFileRoute('/dashboard')({
         await emit('kill-integrated-server', {});
       }
       logOut();
+      // eslint-disable-next-line @typescript-eslint/only-throw-error
       throw redirect({
         to: '/',
         search: {

@@ -75,7 +75,7 @@ export function cancellablePromise<T>(
 ): () => void {
   let cancelled = false;
   let resolvedValue: T | null = null;
-  promise.then((value) => {
+  void promise.then((value) => {
     if (cancelled) {
       cancel(value);
     } else {
@@ -340,4 +340,8 @@ export function timestampToDate(timestamp: Timestamp): Date {
     parseInt(timestamp.seconds) * 1000 +
       Math.floor((timestamp.nanos || 0) / 1e6),
   );
+}
+
+export function runAsync(fn: () => Promise<void>) {
+  void fn().catch(console.error);
 }

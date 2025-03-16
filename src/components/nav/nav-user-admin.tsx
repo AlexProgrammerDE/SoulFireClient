@@ -1,11 +1,6 @@
 'use client';
 
-import {
-  ChartAreaIcon,
-  LayoutDashboardIcon,
-  TerminalIcon,
-  UsersIcon,
-} from 'lucide-react';
+import { ChartAreaIcon, TerminalIcon, UsersIcon } from 'lucide-react';
 import {
   SidebarGroup,
   SidebarGroupLabel,

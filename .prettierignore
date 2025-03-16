@@ -26,7 +26,7 @@ dist-ssr
 src/generated
 src/routeTree.gen.ts
 protobuf
-src-tauri/target
+src-tauri
 pnpm-lock.yaml
 shared-modules
 locales

@@ -257,7 +257,7 @@ function Index() {
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioGroup
                     value={i18n.resolvedLanguage ?? i18n.language}
-                    onValueChange={i18n.changeLanguage}
+                    onValueChange={(lang) => void i18n.changeLanguage(lang)}
                   >
                     {(i18n.options.supportedLngs
                       ? i18n.options.supportedLngs

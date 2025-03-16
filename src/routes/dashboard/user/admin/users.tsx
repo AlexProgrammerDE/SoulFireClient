@@ -6,11 +6,6 @@ import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
 import { getEnumKeyByValue } from '@/lib/types.ts';
 import { UserRole } from '@/generated/soulfire/common.ts';
 import { toast } from 'sonner';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu.tsx';
 import { PlusIcon, TrashIcon } from 'lucide-react';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import {
@@ -38,7 +33,7 @@ import { CreateUserPopup } from '@/components/dialog/create-user-popup.tsx';
 
 export const usersQueryKey = ['users'];
 export const Route = createFileRoute('/dashboard/user/admin/users')({
-  beforeLoad: async (props) => {
+  beforeLoad: (props) => {
     const usersQueryOptions = queryOptions({
       queryKey: usersQueryKey,
       queryFn: async (

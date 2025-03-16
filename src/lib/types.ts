@@ -40,7 +40,7 @@ export function getEnumEntries<E extends object>(
     .filter(([key]) => isNaN(parseInt(key)))
     .map(([key, value]) => ({
       key: key as keyof E,
-      value: value,
+      value: value as E[keyof E],
     }));
 }
 

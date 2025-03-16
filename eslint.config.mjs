@@ -7,7 +7,14 @@ import globals from 'globals';
 // noinspection JSCheckFunctionSignatures
 export default tseslint.config(
   {
-    ignores: ['src/generated', 'src/routeTree.gen.ts', '**/protobuf'],
+    ignores: [
+      'src/generated',
+      'src/routeTree.gen.ts',
+      '**/protobuf',
+      'node_modules',
+      'src-tauri',
+      'src/components/ui/chart.tsx',
+    ],
   },
   {
     languageOptions: {
@@ -17,7 +24,7 @@ export default tseslint.config(
     },
   },
   eslint.configs.recommended,
-  tseslint.configs.recommended,
+  tseslint.configs.recommendedTypeChecked,
   {
     plugins: {
       reactHooks,
@@ -25,6 +32,12 @@ export default tseslint.config(
     },
     rules: {
       '@typescript-eslint/no-empty-object-type': 'off',
+    },
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
   },
 );

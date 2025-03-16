@@ -40,6 +40,7 @@ import {
   getLanguageName,
   isTauri,
   languageEmoji,
+  runAsync,
   setTerminalTheme,
 } from '@/lib/utils.tsx';
 import { emit } from '@tauri-apps/api/event';
@@ -174,7 +175,7 @@ export function NavUserControl() {
                   <DropdownMenuSubContent>
                     <DropdownMenuRadioGroup
                       value={i18n.resolvedLanguage ?? i18n.language}
-                      onValueChange={i18n.changeLanguage}
+                      onValueChange={(lang) => void i18n.changeLanguage(lang)}
                     >
                       {(i18n.options.supportedLngs
                         ? i18n.options.supportedLngs
@@ -199,9 +200,9 @@ export function NavUserControl() {
                 <DropdownMenuGroup>
                   <DropdownMenuItem
                     onClick={() => {
-                      void (async () => {
+                      runAsync(async () => {
                         await shellOpen(await appConfigDir());
-                      })();
+                      });
                     }}
                   >
                     <FolderIcon />
@@ -209,9 +210,9 @@ export function NavUserControl() {
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={() => {
-                      void (async () => {
+                      runAsync(async () => {
                         await shellOpen(await appDataDir());
-                      })();
+                      });
                     }}
                   >
                     <FolderIcon />

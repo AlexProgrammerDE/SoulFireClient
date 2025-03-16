@@ -37,6 +37,7 @@ import {
   SelectRowHeader,
 } from '@/components/data-table-selects.tsx';
 import i18n from '@/lib/i18n.ts';
+import { runAsync } from '@/lib/utils.tsx';
 
 export const Route = createFileRoute('/dashboard/instance/$instance/proxies')({
   component: ProxySettings,
@@ -302,68 +303,70 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               abort: abortController.signal,
             },
           ).responses;
-          responses.onMessage(async (r) => {
-            const data = r.data;
-            switch (data.oneofKind) {
-              case 'fullList': {
-                const newProfile = {
-                  ...profile,
-                  proxies: profile.proxies.filter((a) => {
-                    const valid = data.fullList.response.find((r) =>
-                      deepEqual(r.proxy, a),
-                    );
+          responses.onMessage((r) => {
+            runAsync(async () => {
+              const data = r.data;
+              switch (data.oneofKind) {
+                case 'fullList': {
+                  const newProfile = {
+                    ...profile,
+                    proxies: profile.proxies.filter((a) => {
+                      const valid = data.fullList.response.find((r) =>
+                        deepEqual(r.proxy, a),
+                      );
 
-                    // This one was not supposed to be checked
-                    if (valid === undefined) {
-                      return true;
-                    }
+                      // This one was not supposed to be checked
+                      if (valid === undefined) {
+                        return true;
+                      }
 
-                    return valid.valid;
-                  }),
-                };
+                      return valid.valid;
+                    }),
+                  };
 
-                await setProfileMutation(newProfile);
+                  await setProfileMutation(newProfile);
 
-                toast.success(
-                  t('proxy.checkToast.success', {
-                    count: beforeSize - newProfile.proxies.length,
-                  }),
-                  {
+                  toast.success(
+                    t('proxy.checkToast.success', {
+                      count: beforeSize - newProfile.proxies.length,
+                    }),
+                    {
+                      id: toastId,
+                    },
+                  );
+                  break;
+                }
+                case 'oneSuccess': {
+                  if (abortController.signal.aborted) {
+                    return;
+                  }
+
+                  success++;
+                  toast.loading(loadingReport(), {
                     id: toastId,
-                  },
-                );
-                break;
-              }
-              case 'oneSuccess': {
-                if (abortController.signal.aborted) {
-                  return;
+                    ...loadingData,
+                  });
+                  break;
                 }
+                case 'oneFailure': {
+                  if (abortController.signal.aborted) {
+                    return;
+                  }
 
-                success++;
-                toast.loading(loadingReport(), {
-                  id: toastId,
-                  ...loadingData,
-                });
-                break;
-              }
-              case 'oneFailure': {
-                if (abortController.signal.aborted) {
-                  return;
+                  failed++;
+                  toast.loading(loadingReport(), {
+                    id: toastId,
+                    ...loadingData,
+                  });
+                  break;
                 }
-
-                failed++;
-                toast.loading(loadingReport(), {
-                  id: toastId,
-                  ...loadingData,
-                });
-                break;
               }
-            }
-          });
-          responses.onError((e) => {
-            console.error(e);
-            toast.error(t('proxy.checkToast.error'), {
-              id: toastId,
+            });
+            responses.onError((e) => {
+              console.error(e);
+              toast.error(t('proxy.checkToast.error'), {
+                id: toastId,
+              });
             });
           });
         }}

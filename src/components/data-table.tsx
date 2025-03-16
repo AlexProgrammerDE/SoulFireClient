@@ -62,7 +62,12 @@ declare module '@tanstack/react-table' {
 }
 
 // Define a custom fuzzy filter function that will apply ranking info to rows (using match-sorter utils)
-const fuzzyFilter: FilterFn<unknown> = (row, columnId, value, addMeta) => {
+const fuzzyFilter: FilterFn<unknown> = (
+  row,
+  columnId,
+  value: string,
+  addMeta,
+) => {
   // Rank the item
   const itemRank = rankItem(row.getValue(columnId), value);
 

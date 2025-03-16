@@ -42,6 +42,7 @@ import {
   hasGlobalPermission,
   hasInstancePermission,
   isTauri,
+  runAsync,
 } from '@/lib/utils.tsx';
 import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.tsx';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -301,7 +302,7 @@ export function InstanceSwitcher() {
                     <DropdownMenuItem
                       className="gap-2 p-2"
                       onClick={() => {
-                        void (async () => {
+                        runAsync(async () => {
                           const profileDir = await resolve(
                             await appConfigDir(),
                             'profile',
@@ -347,7 +348,7 @@ export function InstanceSwitcher() {
                               },
                             );
                           }
-                        })();
+                        });
                       }}
                     >
                       <div className="flex size-6 items-center justify-center rounded-md border bg-background">
@@ -380,7 +381,7 @@ export function InstanceSwitcher() {
               onClick={() => {
                 const data = JSON.stringify(profile, null, 2);
                 if (isTauri()) {
-                  void (async () => {
+                  runAsync(async () => {
                     const profileDir = await resolve(
                       await appConfigDir(),
                       'profile',
@@ -405,7 +406,7 @@ export function InstanceSwitcher() {
 
                       await writeTextFile(selected, data);
                     }
-                  })();
+                  });
                 } else {
                   saveAs(data2blob(data), 'profile.json');
                 }

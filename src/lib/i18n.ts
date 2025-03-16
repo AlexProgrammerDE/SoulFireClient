@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import z from 'zod';
+import { z } from 'zod';
 import { zodI18nMap } from 'zod-i18n-map';
 
 import resourcesToBackend from 'i18next-resources-to-backend';

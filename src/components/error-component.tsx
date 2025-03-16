@@ -8,7 +8,7 @@ import {
   RotateCwIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button.tsx';
-import { isTauri } from '@/lib/utils.tsx';
+import { isTauri, runAsync } from '@/lib/utils.tsx';
 import { emit } from '@tauri-apps/api/event';
 import { logOut } from '@/lib/web-rpc.ts';
 import {
@@ -28,7 +28,7 @@ export function ErrorComponent({ error }: { error: Error }) {
 
   function revalidate() {
     setRevalidating(true);
-    router.invalidate().finally(() => {
+    void router.invalidate().finally(() => {
       setRevalidating(false);
     });
   }
@@ -57,8 +57,8 @@ export function ErrorComponent({ error }: { error: Error }) {
         <CardFooter className="flex flex-row gap-2">
           <Button
             className="w-fit"
-            onClick={() => {
-              (async () => {
+            onClick={() =>
+              runAsync(async () => {
                 if (isTauri()) {
                   await emit('kill-integrated-server', {});
                 }
@@ -67,8 +67,8 @@ export function ErrorComponent({ error }: { error: Error }) {
                   to: '/',
                   replace: true,
                 });
-              })();
-            }}
+              })
+            }
           >
             <LogOutIcon className="h-4" />
             {t('error.page.logOut')}

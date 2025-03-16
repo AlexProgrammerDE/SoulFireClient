@@ -14,6 +14,7 @@ import {
   CommandRequest,
 } from '@/generated/soulfire/command.ts';
 import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
 
 type CompletionState = {
   lastWritten: string;
@@ -24,13 +25,17 @@ type CompletionState = {
 const SF_COMMAND_HISTORY_KEY = 'sf-command-history';
 const SF_COMMAND_HISTORY_LENGTH = 100;
 
+const historySchema = z.string().array();
+
 export default function CommandInput(props: {
   scope: CommandRequest['scope'] | CommandCompletionRequest['scope'];
 }) {
   const { t } = useTranslation('common');
   const transport = useContext(TransportContext);
   const [commandHistory, setCommandHistory] = useState<string[]>(
-    JSON.parse(localStorage.getItem(SF_COMMAND_HISTORY_KEY) ?? '[]'),
+    historySchema.parse(
+      JSON.parse(localStorage.getItem(SF_COMMAND_HISTORY_KEY) ?? '[]'),
+    ),
   );
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
   const [completionState, setCompletionState] = useState<CompletionState>({

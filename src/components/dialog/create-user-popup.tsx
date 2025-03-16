@@ -26,7 +26,6 @@ import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { listQueryKey } from '@/routes/dashboard.tsx';
-import { useNavigate } from '@tanstack/react-router';
 import { useContext } from 'react';
 import { TransportContext } from '../providers/transport-context.tsx';
 import { UserRole } from '@/generated/soulfire/common.ts';
@@ -53,7 +52,6 @@ export function CreateUserPopup({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) {
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
   const { t } = useTranslation('admin');
