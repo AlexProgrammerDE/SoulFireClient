@@ -176,6 +176,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
               if (accountsToAdd.length === 0) {
                 toast.success(t('account.listImportToast.allFailed'), {
                   id: toastId,
+                  cancel: undefined,
                 });
               } else if (accountsToAdd.length !== textSplit.length) {
                 toast.success(
@@ -185,6 +186,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
                   }),
                   {
                     id: toastId,
+                    cancel: undefined,
                   },
                 );
               } else {
@@ -194,6 +196,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
                   }),
                   {
                     id: toastId,
+                    cancel: undefined,
                   },
                 );
               }
@@ -230,6 +233,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         console.error(e);
         toast.error(t('account.listImportToast.error'), {
           id: toastId,
+          cancel: undefined,
         });
       });
     },

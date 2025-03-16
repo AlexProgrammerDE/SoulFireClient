@@ -331,6 +331,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
                     }),
                     {
                       id: toastId,
+                      cancel: undefined,
                     },
                   );
                   break;
@@ -365,6 +366,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               console.error(e);
               toast.error(t('proxy.checkToast.error'), {
                 id: toastId,
+                cancel: undefined,
               });
             });
           });
