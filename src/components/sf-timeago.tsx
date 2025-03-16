@@ -23,7 +23,7 @@ export const SFTimeAgo = React.memo((props: { date: Date }) => {
   );
   const formatted = useMemo(() => {
     return format(props.date, 'PPpp', { locale: dateFnsLocale });
-  }, [dateFnsLocale]);
+  }, [props.date, dateFnsLocale]);
 
   return (
     <Popover>

@@ -115,7 +115,6 @@ export const TerminalComponent = (props: {
   const terminalTheme = useContext(TerminalThemeContext);
   const paneRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
-  const [isConnected, setIsConnected] = useState(false);
   const selectedTheme = flavorEntries.find(
     (entry) => entry[0] === terminalTheme.value,
   )![1];
@@ -193,74 +192,76 @@ export const TerminalComponent = (props: {
   }, [gotPrevious, props.scope, t, transport]);
 
   useEffect(() => {
-    if (transport === null || isConnected) {
-      return;
-    }
-
-    setIsConnected(true);
-
     const abortController = new AbortController();
 
-    console.info('Connecting to logs service');
-    const logsService = new LogsServiceClient(transport);
-    const subscription = logsService.subscribe(
-      {
-        scope: props.scope,
-      },
-      {
-        abort: abortController.signal,
-      },
-    );
-
-    subscription.responses.onError((error) => {
-      if (abortController.signal.aborted) {
+    function connect() {
+      if (transport === null) {
         return;
       }
 
-      console.error(error);
-      setTimeout(() => {
+      console.info('Connecting to logs service');
+      const logsService = new LogsServiceClient(transport);
+      const subscription = logsService.subscribe(
+        {
+          scope: props.scope,
+        },
+        {
+          abort: abortController.signal,
+        },
+      );
+
+      subscription.responses.onError((error) => {
         if (abortController.signal.aborted) {
           return;
         }
 
-        setIsConnected(false);
-      }, 3_000);
-    });
-    subscription.responses.onComplete(() => {
-      if (abortController.signal.aborted) {
-        return;
-      }
+        console.error(error);
+        setTimeout(() => {
+          if (abortController.signal.aborted) {
+            return;
+          }
 
-      console.error('Stream completed');
-      setTimeout(() => {
-        if (abortController.signal.aborted) {
-          return;
-        }
-
-        setIsConnected(false);
-      }, 1000);
-    });
-    subscription.responses.onMessage((response) => {
-      const message = response.message;
-      if (message === undefined) {
-        return;
-      }
-
-      setEntries((prev) => {
-        return deduplicateConsecutive(
-          limitLength([
-            ...prev.filter((entry) => entry.id !== 'empty'),
-            convertLine(message),
-          ]),
-          (element) => element.hash,
-        );
+          connect();
+        }, 3_000);
       });
-    });
+      subscription.responses.onComplete(() => {
+        if (abortController.signal.aborted) {
+          return;
+        }
+
+        console.error('Stream completed');
+        setTimeout(() => {
+          if (abortController.signal.aborted) {
+            return;
+          }
+
+          connect();
+        }, 1000);
+      });
+      subscription.responses.onMessage((response) => {
+        const message = response.message;
+        if (message === undefined) {
+          return;
+        }
+
+        setEntries((prev) => {
+          return deduplicateConsecutive(
+            limitLength([
+              ...prev.filter((entry) => entry.id !== 'empty'),
+              convertLine(message),
+            ]),
+            (element) => element.hash,
+          );
+        });
+      });
+    }
+
+    connect();
 
     return () => {
       abortController.abort();
     };
-  }, [props.scope, transport, isConnected]);
+  }, [props.scope, transport]);
 
   return (
     <ScrollArea
