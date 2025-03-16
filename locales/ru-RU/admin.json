@@ -21,5 +21,50 @@
         "other": "Другое"
       }
     }
+  },
+  "users": {
+    "filterPlaceholder": "",
+    "addUserDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "username": {
+          "min": "",
+          "max": "",
+          "regex": "",
+          "label": "Имя пользователя",
+          "placeholder": "",
+          "description": ""
+        },
+        "email": {
+          "label": "E-mail",
+          "placeholder": "",
+          "description": ""
+        },
+        "role": {
+          "label": "Роли",
+          "description": "",
+          "user": "Пользователь",
+          "admin": "Администратор"
+        },
+        "cancel": "Отмена",
+        "add": ""
+      }
+    },
+    "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "username": "Имя пользователя",
+      "email": "E-mail",
+      "role": "Роли"
+    }
   }
 }

@@ -5,16 +5,16 @@
     "noAddressOrToken": "未找到服务器地址或令牌",
     "page": {
       "title": "出错",
-      "description": "",
+      "description": "尝试加载页面时发生错误。更多信息可在控制台中找到。",
       "logOut": "退出登录",
       "reloadPage": "重新载入页面"
     },
-    "connectionFailed": ""
+    "connectionFailed": "连接 SoulFire 服务器失败。"
   },
   "notFound": {
     "page": {
-      "title": "",
-      "description": "",
+      "title": "未找到",
+      "description": "无法在此位置找到页面",
       "logOut": "退出登录",
       "reloadPage": "重新载入页面"
     }
@@ -27,13 +27,13 @@
       "title": "关于 SoulFire",
       "description": "正在运行 {{version}} 版本的 SoulFire 客户端",
       "type": "类型",
-      "value": "数值",
+      "value": "值",
       "fields": {
         "operatingSystem": "操作系统",
-        "platform": "",
+        "platform": "平台",
         "locale": "语言",
-        "architecture": "",
-        "environment": "",
+        "architecture": "建筑",
+        "environment": "环境",
         "browser": "浏览器"
       },
       "close": "关闭"
@@ -44,7 +44,7 @@
       "form": {
         "friendlyName": {
           "label": "一个友好的名称",
-          "placeholder": "My Minecraft Bot",
+          "placeholder": "我的 Minecraft 机器人",
           "description": "您想要赋予此实例的名称",
           "min": "名称至少需要3个字符",
           "max": "名称最多允许50个字符",
@@ -88,7 +88,7 @@
     }
   },
   "commandInput": {
-    "placeholder": ""
+    "placeholder": "输入命令（输入“help”查看列表）"
   },
   "controls": {
     "start": "开始",
@@ -120,33 +120,33 @@
     "invalidName": "无效的图标名称: {{name}}"
   },
   "dataTable": {
-    "noResults": "无结果",
-    "rowsSelected": "",
+    "noResults": "无结果。",
+    "rowsSelected": "已选择 {{amount}} 行（共 {{total}} 行）",
     "rowsPerPage": "每页行数",
-    "currentPage": "",
+    "currentPage": "第 {{page}} 页，共 {{total}} 页",
     "goFirst": "转到第一页",
     "goPrevious": "转到上一页",
     "goNext": "转到下一页",
     "goLast": "转到最后一页",
     "selectAll": "全选",
-    "selectRow": ""
+    "selectRow": "选择行"
   },
   "pluginCard": {
     "version": "版本: {{version}}",
     "author": "作者: {{author}}",
-    "license": "License: {{license}}",
-    "website": "Website"
+    "license": "许可：{{license}}",
+    "website": "网站"
   },
   "settingsPage": {
-    "namespacesNotFound": "",
+    "namespacesNotFound": "未找到设置命名空间",
     "stringList": {
       "placeholder": "添加新条目...",
       "add": "添加",
       "remove": "删除"
     },
     "invalidNumberToast": {
-      "title": "",
-      "description": ""
+      "title": "无效数字！",
+      "description": "值必须介于 {{min}} 和 {{max}} 之间"
     }
   },
   "terminal": {
@@ -169,31 +169,31 @@
     "toggle": "切换侧边栏"
   },
   "castMenu": {
-    "title": "",
+    "title": "投放",
     "disconnected": "与 {{device}} 断开连接",
     "alreadyConnected": "已连接 {{device}}",
     "connectToast": {
       "loading": "正在连接到 {{device}} ...",
-      "success": "",
+      "success": "已连接至 {{device}}",
       "error": "无法连接到{{device}}"
     },
     "noDevices": "未找到设备",
-    "broadcastLabel": "",
+    "broadcastLabel": "广播测试",
     "broadcastToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "正在广播消息…",
+      "success": "消息已播报！",
+      "error": "广播消息失败"
     }
   },
   "instanceSidebar": {
-    "readDocumentation": "",
+    "readDocumentation": "阅读文档",
     "backToDashboard": "返回仪表板",
     "deleteToast": {
       "loading": "正在删除实例...",
       "success": "实例已删除",
       "error": "删除实例失败"
     },
-    "instancesGroup": "",
+    "instancesGroup": "实例",
     "createInstance": "创建实例",
     "loadProfileToast": {
       "loading": "正在加载配置文件...",
@@ -205,33 +205,34 @@
     "profileSaved": "配置文件已保存",
     "saveProfile": "保存配置文件",
     "deleteInstance": "删除实例",
-    "controlsGroup": "",
+    "controlsGroup": "控制",
     "console": "控制台",
-    "audit-log": "",
+    "audit-log": "审计日志",
     "settingsGroup": "设置",
-    "pluginsGroup": "",
+    "pluginsGroup": "插件",
     "pluginSettings": "插件设置",
     "botSettings": "机器人设置",
     "accountSettings": "帐户设置",
     "proxySettings": "代理设置",
     "aiSettings": "AI设置",
-    "discoverPlugins": ""
+    "discoverPlugins": "插件列表"
   },
   "userSidebar": {
-    "readDocumentation": "",
+    "readDocumentation": "阅读文档",
     "userGroup": "用户",
-    "instances": "",
+    "instances": "实例",
     "createInstance": "创建实例",
     "adminGroup": "管理员",
-    "adminOverview": "管理员概述",
-    "adminConsole": "管理员控制台",
+    "adminOverview": "概况",
+    "adminConsole": "控制台",
+    "users": "用户",
     "serverSettings": "服务器设置",
     "devSettings": "开发者设置",
     "theme": {
       "title": "主题",
       "system": "系统",
-      "light": "明亮",
-      "dark": "暗色"
+      "light": "浅色",
+      "dark": "深色"
     },
     "terminal": {
       "title": "终端"
@@ -241,9 +242,9 @@
     "about": "关于",
     "logOut": "退出登录",
     "logOutToast": {
-      "loading": "正在退出...",
-      "success": "已退出",
-      "error": "退出失败"
+      "loading": "正在登出…",
+      "success": "已登出",
+      "error": "登出失败"
     },
     "exit": "退出"
   },
@@ -255,28 +256,32 @@
   "breadcrumbs": {
     "admin": "管理员",
     "settings": "设置",
-    "controls": "",
-    "plugins": ""
+    "controls": "控制",
+    "plugins": "插件"
   },
   "noInstancesFound": "未找到实例",
   "pageName": {
     "console": "控制台",
-    "audit-log": "",
-    "instances": "",
+    "audit-log": "审计日志",
+    "instances": "实例",
     "proxySettings": "代理设置",
     "overview": "概况",
+    "users": "用户",
     "accountSettings": "帐户设置",
-    "discoverPlugins": ""
+    "discoverPlugins": "插件列表"
   },
   "instanceState": {
     "starting": "正在启动",
     "running": "正在运行",
     "paused": "已暂停",
     "stopping": "正在停止",
-    "stopped": ""
+    "stopped": "已停止"
   },
   "auditLog": {
-    "noEntries": "",
+    "filterPlaceholder": "",
+    "user": "用户",
+    "action": "",
+    "timestamp": "",
     "executedCommand": "",
     "startedAttack": "",
     "resumedAttack": "",

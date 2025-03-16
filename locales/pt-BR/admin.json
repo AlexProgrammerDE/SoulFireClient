@@ -21,5 +21,50 @@
         "other": "Outro"
       }
     }
+  },
+  "users": {
+    "filterPlaceholder": "",
+    "addUserDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "username": {
+          "min": "",
+          "max": "",
+          "regex": "",
+          "label": "",
+          "placeholder": "",
+          "description": ""
+        },
+        "email": {
+          "label": "",
+          "placeholder": "",
+          "description": ""
+        },
+        "role": {
+          "label": "Função",
+          "description": "",
+          "user": "Usuário",
+          "admin": "Administrador"
+        },
+        "cancel": "Cancelar",
+        "add": ""
+      }
+    },
+    "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "username": "",
+      "email": "",
+      "role": "Função"
+    }
   }
 }

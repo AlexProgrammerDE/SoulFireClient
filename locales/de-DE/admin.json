@@ -21,5 +21,50 @@
         "other": "Andere"
       }
     }
+  },
+  "users": {
+    "filterPlaceholder": "",
+    "addUserDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "username": {
+          "min": "",
+          "max": "",
+          "regex": "",
+          "label": "Benutzername",
+          "placeholder": "",
+          "description": ""
+        },
+        "email": {
+          "label": "",
+          "placeholder": "",
+          "description": ""
+        },
+        "role": {
+          "label": "Rolle",
+          "description": "",
+          "user": "Nutzer",
+          "admin": "Admin"
+        },
+        "cancel": "Abbrechen",
+        "add": ""
+      }
+    },
+    "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "username": "Benutzername",
+      "email": "",
+      "role": "Rolle"
+    }
   }
 }

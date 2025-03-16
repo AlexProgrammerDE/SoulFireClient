@@ -1,80 +1,80 @@
 {
-  "locale": "Locael",
-  "cancel": "cancel k?",
+  "locale": "Yerel",
+  "cancel": "",
   "error": {
-    "noAddressOrToken": "No servr addres or token findz",
+    "noAddressOrToken": "",
     "page": {
-      "title": "Ewwow",
-      "description": "",
-      "logOut": "Walk out",
-      "reloadPage": "Spin paeg"
+      "title": "Hata",
+      "description": "Sayfa yüklenirken bir hata oluştu. Daha fazla bilgi konsolda bulunabilir.",
+      "logOut": "Çıkış Yap",
+      "reloadPage": ""
     },
-    "connectionFailed": ""
+    "connectionFailed": "SoulFire sunucusuna bağlantı başarısız oldu."
   },
   "notFound": {
     "page": {
-      "title": "",
+      "title": "Bulunamadı",
       "description": "",
-      "logOut": "Walk out",
-      "reloadPage": "Spin paeg"
+      "logOut": "Çıkış Yap",
+      "reloadPage": ""
     }
   },
   "pending": {
-    "connecting": "Catwalking..."
+    "connecting": ""
   },
   "dialog": {
     "about": {
-      "title": "Who SoulFire",
-      "description": "I zee vawiant {{version}} of SoulFire cwient.",
-      "type": "Tyep",
-      "value": "Value",
+      "title": "",
+      "description": "SoulFire clientinin {{version}} sürümünü kullanıyorsunuz.",
+      "type": "Tip",
+      "value": "Değer",
       "fields": {
-        "operatingSystem": "Operatin Sistem",
+        "operatingSystem": "İşletim Sistemi",
         "platform": "Platform",
-        "locale": "Locael",
-        "architecture": "Architecchur",
-        "environment": "Environment",
-        "browser": "Browsr"
+        "locale": "Yerel",
+        "architecture": "Mimari",
+        "environment": "Ortam/çevre",
+        "browser": "Tarayıcı"
       },
-      "close": "Cloes"
+      "close": "Kapat"
     },
     "createInstance": {
-      "title": "Creaet nu instanec",
-      "description": "Instances ned friendly namez 4 u 2 distinguish dem. Srsly It can bees any naym u wantz, 4 exampel, \"mah Minecraft Bot\".",
+      "title": "Yeni bir örnek oluştur",
+      "description": "Örneklerinizi ayırt edebilmeniz için dostça isimlere ihtiyaç vardır. Bu, \" Benim Botum\" gibi istediğiniz herhangi bir isim olabilir.",
       "form": {
         "friendlyName": {
-          "label": "Friendly naym",
-          "placeholder": "Mah Minecraft Bot",
-          "description": "Teh naym u wantz 2 giv 2 dis instanec.",
-          "min": "Teh friendly naym must bees at least 3 characterz long.",
-          "max": "Teh friendly naym must bees at most 50 characterz long.",
-          "regex": "Friendly naym can only contaen letterz, numberz, an spacez"
+          "label": "\"Dostça ad",
+          "placeholder": "Benim Botum",
+          "description": "",
+          "min": "",
+          "max": "",
+          "regex": ""
         },
-        "cancel": "cancel k?",
-        "create": "Makee Makee"
+        "cancel": "",
+        "create": ""
       },
       "createToast": {
-        "loading": "Creatin instanec...",
-        "success": "Instanec creatd successfully",
-        "error": "Faild 2 creaet instanec"
+        "loading": "",
+        "success": "",
+        "error": ""
       }
     },
     "import": {
       "main": {
-        "fromFile": "Frum fiel",
-        "fromUrl": "Frum URL",
-        "firstClipboardItem": "U had multipel itemz in teh clipboard, only usin furst wan.",
-        "fromClipboard": "Frum clipboard",
+        "fromFile": "",
+        "fromUrl": "",
+        "firstClipboardItem": "",
+        "fromClipboard": "",
         "textarea": {
           "placeholder": "",
           "submit": ""
         }
       },
       "url": {
-        "description": "Loadin frum URL will mak teh SoulFire servr mak git request 2 teh target servr an ues teh respones as teh daat.",
+        "description": "",
         "form": {
           "url": {
-            "placeholder": "Put URL hah...",
+            "placeholder": "",
             "empty": ""
           }
         },
@@ -160,10 +160,10 @@
     "more": ""
   },
   "uiDialog": {
-    "close": "Cloes"
+    "close": "Kapat"
   },
   "uiSheet": {
-    "close": "Cloes"
+    "close": "Kapat"
   },
   "uiSidebar": {
     "toggle": ""
@@ -225,7 +225,7 @@
     "adminGroup": "",
     "adminOverview": "",
     "adminConsole": "",
-    "users": "",
+    "users": "Kullanıcılar",
     "serverSettings": "",
     "devSettings": "",
     "theme": {
@@ -240,7 +240,7 @@
     "configDir": "",
     "dataDir": "",
     "about": "",
-    "logOut": "Walk out",
+    "logOut": "Çıkış Yap",
     "logOutToast": {
       "loading": "",
       "success": "",
@@ -266,7 +266,7 @@
     "instances": "",
     "proxySettings": "",
     "overview": "",
-    "users": "",
+    "users": "Kullanıcılar",
     "accountSettings": "",
     "discoverPlugins": ""
   },

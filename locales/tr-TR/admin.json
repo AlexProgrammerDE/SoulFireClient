@@ -1,24 +1,24 @@
 {
   "overview": {
-    "welcome": "Bienvenue, {{name}}🧙",
+    "welcome": "Hoş geldiniz, {{name}} 🧙",
     "instancesChart": {
-      "title": "Nombre total d'instances sur ce serveur",
-      "instances": "Instances",
+      "title": "Bu sunucudaki toplam Olay sayısı",
+      "instances": "",
       "label": {
-        "state": "État",
-        "active": "Actif",
-        "stopped": "Arrêté",
-        "other": "Autre"
+        "state": "Durum",
+        "active": "Aktif",
+        "stopped": "",
+        "other": "Diğer"
       }
     },
     "usersChart": {
-      "title": "Nombre total d'utilisateurs sur ce serveur",
-      "users": "Utilisateur·rice·s",
+      "title": "Bu sunucudaki toplam kullanıcı sayısı",
+      "users": "Kullanıcılar",
       "label": {
-        "role": "Rôle",
-        "user": "Utilisateur",
-        "admin": "Administrateur",
-        "other": "Autre"
+        "role": "Rol",
+        "user": "",
+        "admin": "",
+        "other": "Diğer"
       }
     }
   },
@@ -32,22 +32,22 @@
           "min": "",
           "max": "",
           "regex": "",
-          "label": "Nom d´utilisateur",
+          "label": "",
           "placeholder": "",
           "description": ""
         },
         "email": {
-          "label": "Email",
+          "label": "Mail Adresi",
           "placeholder": "",
           "description": ""
         },
         "role": {
-          "label": "Rôle",
+          "label": "Rol",
           "description": "",
-          "user": "Utilisateur",
-          "admin": "Administrateur"
+          "user": "",
+          "admin": ""
         },
-        "cancel": "Annuler",
+        "cancel": "",
         "add": ""
       }
     },
@@ -62,9 +62,9 @@
       "error": ""
     },
     "table": {
-      "username": "Nom d´utilisateur",
-      "email": "Email",
-      "role": "Rôle"
+      "username": "",
+      "email": "Mail Adresi",
+      "role": "Rol"
     }
   }
 }

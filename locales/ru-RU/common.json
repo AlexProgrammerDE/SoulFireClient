@@ -223,8 +223,9 @@
     "instances": "Экземпляры",
     "createInstance": "Создать экземпляр",
     "adminGroup": "Администратор",
-    "adminOverview": "Обзор Администратора",
-    "adminConsole": "Консоль администратора",
+    "adminOverview": "Обзор",
+    "adminConsole": "Консоль",
+    "users": "Пользователи",
     "serverSettings": "Настройки сервера",
     "devSettings": "Настройки разработчика",
     "theme": {
@@ -265,6 +266,7 @@
     "instances": "Экземпляры",
     "proxySettings": "Настройки прокси",
     "overview": "Обзор",
+    "users": "Пользователи",
     "accountSettings": "Настройки аккаунтов",
     "discoverPlugins": "Список плагинов"
   },
@@ -276,11 +278,14 @@
     "stopped": "Остановлен"
   },
   "auditLog": {
-    "noEntries": "Записи в журнале аудита не найдены",
-    "executedCommand": "{{username}} выполнил команду: {{data}}",
-    "startedAttack": "{{username}} начал атаку",
-    "resumedAttack": "{{username}} возобновил атаку",
-    "pausedAttack": "{{username}} приостановил атаку",
-    "stoppedAttack": "{{username}} остановил атаку"
+    "filterPlaceholder": "",
+    "user": "Пользователь",
+    "action": "",
+    "timestamp": "",
+    "executedCommand": "",
+    "startedAttack": "",
+    "resumedAttack": "",
+    "pausedAttack": "",
+    "stoppedAttack": ""
   }
 }

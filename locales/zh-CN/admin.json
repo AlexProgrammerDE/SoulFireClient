@@ -3,12 +3,12 @@
     "welcome": "欢迎回来, {{name}} 🧙",
     "instancesChart": {
       "title": "服务器上的实例总数",
-      "instances": "",
+      "instances": "实例",
       "label": {
         "state": "状态",
-        "active": "",
-        "stopped": "",
-        "other": "其它"
+        "active": "活跃",
+        "stopped": "已停止",
+        "other": "其他"
       }
     },
     "usersChart": {
@@ -18,8 +18,53 @@
         "role": "用户类型",
         "user": "用户",
         "admin": "管理员",
-        "other": "其它"
+        "other": "其他"
       }
+    }
+  },
+  "users": {
+    "filterPlaceholder": "",
+    "addUserDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "username": {
+          "min": "",
+          "max": "",
+          "regex": "",
+          "label": "用户名",
+          "placeholder": "",
+          "description": ""
+        },
+        "email": {
+          "label": "电子邮箱",
+          "placeholder": "",
+          "description": ""
+        },
+        "role": {
+          "label": "用户类型",
+          "description": "",
+          "user": "用户",
+          "admin": "管理员"
+        },
+        "cancel": "取消",
+        "add": ""
+      }
+    },
+    "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "username": "用户名",
+      "email": "电子邮箱",
+      "role": "用户类型"
     }
   }
 }

@@ -223,8 +223,9 @@
     "instances": "Instanzen",
     "createInstance": "Instanz erstellen",
     "adminGroup": "Admin",
-    "adminOverview": "Admin Übersicht",
-    "adminConsole": "Admin Konsole",
+    "adminOverview": "Übersicht",
+    "adminConsole": "Konsole",
+    "users": "Nutzer",
     "serverSettings": "Server Einstellungen",
     "devSettings": "Entwickler Einstellungen",
     "theme": {
@@ -265,6 +266,7 @@
     "instances": "Instanzen",
     "proxySettings": "Proxy Einstellungen",
     "overview": "Übersicht",
+    "users": "Nutzer",
     "accountSettings": "Konto Einstellungen",
     "discoverPlugins": ""
   },
@@ -276,7 +278,10 @@
     "stopped": "Gestoppt"
   },
   "auditLog": {
-    "noEntries": "",
+    "filterPlaceholder": "",
+    "user": "Nutzer",
+    "action": "",
+    "timestamp": "",
     "executedCommand": "",
     "startedAttack": "",
     "resumedAttack": "",

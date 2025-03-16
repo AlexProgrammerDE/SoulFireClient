@@ -32,14 +32,14 @@
   "dedicated": {
     "description": "放入您要连接的 SoulFire 服务器的地址和令牌。",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "正在连接到服务器…",
+      "success": "已连接到服务器",
+      "error": "无法连接到服务器"
     },
     "form": {
       "address": {
         "title": "地址",
-        "description": "",
+        "description": "您的 SoulFire 服务器的地址。",
         "placeholder": "http://localhost:38765"
       },
       "token": {
@@ -48,28 +48,28 @@
         "description": "验证服务器的令牌"
       },
       "email": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "电子邮箱",
+        "placeholder": "root@soulfiremc.com",
+        "description": "您的 SoulFire 账户的电子邮箱。"
       },
       "back": "返回",
-      "useToken": "",
-      "useEmail": "",
-      "login": ""
+      "useToken": "使用令牌",
+      "useEmail": "使用电子邮箱",
+      "login": "登录"
     }
   },
   "emailCode": {
-    "description": "",
+    "description": "如果您有账户，我们已将代码发送至 <bold>{{email}}</bold>。请在下面输入。",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "检查代码中…",
+      "success": "已登录",
+      "error": "代码无效"
     },
     "back": "返回"
   },
   "footer": {
     "version": "SoulFire 客户端 {{version}} - {{environment}}",
     "preview": "正在寻找预览吗？",
-    "production": ""
+    "production": "正在寻找产品吗？"
   }
 }
