@@ -1,5 +1,6 @@
 import {
   ColumnDef,
+  ColumnFiltersState,
   FilterFn,
   flexRender,
   getCoreRowModel,
@@ -43,6 +44,7 @@ declare module '@tanstack/react-table' {
   //add fuzzy filter to the filterFns
   interface FilterFns {
     fuzzy: FilterFn<unknown>;
+    isWithinRange: FilterFn<Date>;
   }
 
   interface FilterMeta {
@@ -88,6 +90,36 @@ const fuzzySort: SortingFn<unknown> = (rowA, rowB, columnId) => {
   return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
 };
 
+export type DateRange = {
+  from: Date | undefined;
+  to?: Date | undefined;
+};
+
+const isPickedDay: FilterFn<Date> = (
+  row,
+  columnId,
+  value: DateRange | undefined,
+) => {
+  function resetTime(date: Date | undefined): Date | undefined {
+    if (!date) return undefined;
+
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0); // Reset to midnight
+    return d;
+  }
+
+  const date = resetTime(row.getValue(columnId));
+  const start = resetTime(value?.from);
+  const end = resetTime(value?.to);
+  if ((start || end) && !date) return false;
+
+  if (start && !end && date) {
+    return date.getTime() == start.getTime();
+  } else if (start && end && date) {
+    return date.getTime() >= start.getTime() && date.getTime() <= end.getTime();
+  } else return true;
+};
+
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -97,6 +129,7 @@ export function DataTable<TData, TValue>({
   const { t } = useTranslation('common');
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = React.useState('');
 
   const table = useReactTable({
@@ -104,6 +137,7 @@ export function DataTable<TData, TValue>({
     columns,
     filterFns: {
       fuzzy: fuzzyFilter,
+      isWithinRange: isPickedDay,
     },
     sortingFns: {
       fuzzySort: fuzzySort,
@@ -112,12 +146,14 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn: 'fuzzy',
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
     state: {
       sorting,
+      columnFilters,
       globalFilter,
       rowSelection,
     },

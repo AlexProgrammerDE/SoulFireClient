@@ -1,8 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import * as React from 'react';
-import { DataTable } from '@/components/data-table.tsx';
-import { ColumnDef } from '@tanstack/react-table';
-import { getEnumKeyByValue } from '@/lib/types.ts';
+import { DataTable, DateRange } from '@/components/data-table.tsx';
+import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
 import { queryOptions, useQuery } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { createTransport } from '@/lib/web-rpc.ts';
@@ -16,9 +15,19 @@ import {
 } from '@/generated/soulfire/instance.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
-import { timestampToDate } from '@/lib/utils.tsx';
-import ReactTimeago from 'react-timeago';
+import { cn, timestampToDate } from '@/lib/utils.tsx';
 import i18n from '@/lib/i18n.ts';
+import { Button } from '@/components/ui/button.tsx';
+import { CalendarIcon } from 'lucide-react';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
+import { Calendar } from '@/components/ui/calendar';
+import { format } from 'date-fns';
+import { useDateFnsLocale } from '@/hooks/use-date-fns-locale.ts';
+import { SFTimeAgo } from '@/components/sf-timeago.tsx';
 
 export const Route = createFileRoute('/dashboard/instance/$instance/audit-log')(
   {
@@ -128,11 +137,90 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     accessorKey: 'timestamp',
     header: () => <Trans i18nKey="auditLog.timestamp" />,
     cell: ({ row }) => (
-      <ReactTimeago date={timestampToDate(row.original.timestamp!)} />
+      <SFTimeAgo date={timestampToDate(row.original.timestamp!)} />
     ),
-    sortingFn: 'fuzzySort',
+    enableGlobalFilter: false,
+    sortingFn: 'datetime',
+    filterFn: 'isWithinRange',
   },
 ];
+
+function getPreviousMonthDate(date: Date | undefined): Date | undefined {
+  if (!date) {
+    return undefined;
+  }
+
+  const prevMonthDate = new Date(date);
+  prevMonthDate.setMonth(prevMonthDate.getMonth() - 1);
+  return prevMonthDate;
+}
+
+function ExtraHeader(props: {
+  table: ReactTable<InstanceAuditLogResponse_AuditLogEntry>;
+}) {
+  const { t } = useTranslation('common');
+  const dateFnsLocale = useDateFnsLocale();
+  const timestampColumn = props.table.getColumn('timestamp')!;
+  const range = timestampColumn.getFilterValue() as DateRange | undefined;
+
+  return (
+    <>
+      <div className="grid gap-2">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              id="date"
+              variant={'outline'}
+              className={cn(
+                'w-[300px] justify-start text-left font-normal',
+                !range && 'text-muted-foreground',
+              )}
+            >
+              <CalendarIcon />
+              {range?.from ? (
+                range.to ? (
+                  <>
+                    {format(range.from, 'PP', {
+                      locale: dateFnsLocale,
+                    })}{' '}
+                    -{' '}
+                    {format(range.to, 'PP', {
+                      locale: dateFnsLocale,
+                    })}
+                  </>
+                ) : (
+                  <>
+                    {format(range.from, 'PP', {
+                      locale: dateFnsLocale,
+                    })}
+                  </>
+                )
+              ) : (
+                <span>{t('pickADate')}</span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              initialFocus
+              locale={dateFnsLocale}
+              mode="range"
+              defaultMonth={getPreviousMonthDate(new Date())}
+              selected={range}
+              onSelect={timestampColumn.setFilterValue}
+              numberOfMonths={2}
+              fromDate={props.table
+                .getCoreRowModel()
+                .rows.map((row) => timestampToDate(row.original.timestamp!))
+                .reduce((a, b) => (a < b ? a : b))}
+              toDate={new Date()}
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
+    </>
+  );
+}
 
 function AuditLog() {
   const { t } = useTranslation('common');
@@ -157,6 +245,7 @@ function AuditLog() {
           filterPlaceholder={t('auditLog.filterPlaceholder')}
           columns={columns}
           data={auditLog.data.auditLog.entry}
+          extraHeader={ExtraHeader}
         />
       </div>
     </InstancePageLayout>

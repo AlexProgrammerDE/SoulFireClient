@@ -287,5 +287,6 @@
     "resumedAttack": "Resumed an attack",
     "pausedAttack": "Paused an attack",
     "stoppedAttack": "Stopped an attack"
-  }
+  },
+  "pickADate": "Pick a date"
 }
