@@ -7,7 +7,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover.tsx';
-import { Button } from '@/components/ui/button.tsx';
 
 export const SFTimeAgo = React.memo((props: { date: Date }) => {
   const dateFnsLocale = useDateFnsLocale();
@@ -27,10 +26,8 @@ export const SFTimeAgo = React.memo((props: { date: Date }) => {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="link">{baseText}</Button>
-      </PopoverTrigger>
-      <PopoverContent className="text-center w-fit">
+      <PopoverTrigger>{baseText}</PopoverTrigger>
+      <PopoverContent className="text-center w-fit p-3">
         <time dateTime={props.date.toISOString()}>{formatted}</time>
       </PopoverContent>
     </Popover>
