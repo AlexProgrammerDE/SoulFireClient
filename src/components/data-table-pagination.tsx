@@ -25,7 +25,7 @@ export function DataTablePagination<TData>({
   const { t } = useTranslation('common');
   return (
     <div className="flex flex-wrap w-full items-center justify-between px-2 gap-4">
-      {table.getColumn('select') && (
+      {table.getAllColumns().find((col) => col.id === 'select') && (
         <div className="flex-1 text-sm text-muted-foreground">
           {t('dataTable.rowsSelected', {
             amount: table.getFilteredSelectedRowModel().rows.length,
