@@ -27,7 +27,7 @@ export const SFTimeAgo = React.memo((props: { date: Date }) => {
   return (
     <Popover>
       <PopoverTrigger>{baseText}</PopoverTrigger>
-      <PopoverContent className="text-center w-fit p-3">
+      <PopoverContent className="text-center size-fit p-2 text-sm">
         <time dateTime={props.date.toISOString()}>{formatted}</time>
       </PopoverContent>
     </Popover>
