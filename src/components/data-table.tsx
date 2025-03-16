@@ -6,6 +6,8 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
+  SortingFn,
+  sortingFns,
   SortingState,
   Table as ReactTable,
   useReactTable,
@@ -23,7 +25,11 @@ import React, { useState } from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { DataTablePagination } from '@/components/data-table-pagination.tsx';
 import { useTranslation } from 'react-i18next';
-import { RankingInfo, rankItem } from '@tanstack/match-sorter-utils';
+import {
+  compareItems,
+  RankingInfo,
+  rankItem,
+} from '@tanstack/match-sorter-utils';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -42,6 +48,15 @@ declare module '@tanstack/react-table' {
   interface FilterMeta {
     itemRank: RankingInfo;
   }
+
+  //add fuzzySort to the sortingFns
+  interface SortingFns {
+    fuzzySort: SortingFn<unknown>;
+  }
+
+  interface ColumnFiltersMeta {
+    itemRank: RankingInfo;
+  }
 }
 
 // Define a custom fuzzy filter function that will apply ranking info to rows (using match-sorter utils)
@@ -56,6 +71,21 @@ const fuzzyFilter: FilterFn<unknown> = (row, columnId, value, addMeta) => {
 
   // Return if the item should be filtered in/out
   return itemRank.passed;
+};
+
+const fuzzySort: SortingFn<unknown> = (rowA, rowB, columnId) => {
+  let dir = 0;
+
+  // Only sort by rank if the column has ranking information
+  if (rowA.columnFiltersMeta[columnId]) {
+    dir = compareItems(
+      rowA.columnFiltersMeta[columnId]?.itemRank,
+      rowB.columnFiltersMeta[columnId]?.itemRank,
+    );
+  }
+
+  // Provide an alphanumeric fallback for when the item ranks are equal
+  return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir;
 };
 
 export function DataTable<TData, TValue>({
@@ -74,6 +104,9 @@ export function DataTable<TData, TValue>({
     columns,
     filterFns: {
       fuzzy: fuzzyFilter,
+    },
+    sortingFns: {
+      fuzzySort: fuzzySort,
     },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -96,7 +129,7 @@ export function DataTable<TData, TValue>({
         <Input
           placeholder={filterPlaceholder}
           value={globalFilter}
-          onChange={(event) => setGlobalFilter(event.target.value)}
+          onChange={(event) => table.setGlobalFilter(event.target.value)}
           className="max-w-sm"
         />
         {extraHeader && extraHeader({ table })}

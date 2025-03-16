@@ -69,14 +69,17 @@ const columns: ColumnDef<ProfileAccount>[] = [
       getEnumKeyByValue(MinecraftAccountProto_AccountTypeProto, row.type),
     accessorKey: 'type',
     header: () => <Trans i18nKey={'instance:account.table.type'} />,
+    sortingFn: 'fuzzySort',
   },
   {
     accessorKey: 'profileId',
     header: () => <Trans i18nKey={'instance:account.table.profileId'} />,
+    sortingFn: 'fuzzySort',
   },
   {
     accessorKey: 'lastKnownName',
     header: () => <Trans i18nKey={'instance:account.table.lastKnownName'} />,
+    sortingFn: 'fuzzySort',
   },
 ];
 

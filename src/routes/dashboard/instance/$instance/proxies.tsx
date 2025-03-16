@@ -124,18 +124,22 @@ const columns: ColumnDef<ProfileProxy>[] = [
     accessorFn: (row) => getEnumKeyByValue(ProxyProto_Type, row.type),
     accessorKey: 'type',
     header: () => <Trans i18nKey="instance:proxy.table.type" />,
+    sortingFn: 'fuzzySort',
   },
   {
     accessorKey: 'address',
     header: () => <Trans i18nKey="instance:proxy.table.address" />,
+    sortingFn: 'fuzzySort',
   },
   {
     accessorKey: 'username',
     header: () => <Trans i18nKey="instance:proxy.table.username" />,
+    sortingFn: 'fuzzySort',
   },
   {
     accessorKey: 'password',
     header: () => <Trans i18nKey="instance:proxy.table.password" />,
+    sortingFn: 'fuzzySort',
   },
 ];
 

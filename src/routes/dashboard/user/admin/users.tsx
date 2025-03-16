@@ -110,15 +110,18 @@ const columns: ColumnDef<UserListResponse_User>[] = [
         {row.original.username}
       </div>
     ),
+    sortingFn: 'fuzzySort',
   },
   {
     accessorKey: 'email',
     header: () => <Trans i18nKey="admin:users.table.email" />,
+    sortingFn: 'fuzzySort',
   },
   {
     accessorFn: (row) => getEnumKeyByValue(UserRole, row.role),
     accessorKey: 'role',
     header: () => <Trans i18nKey="admin:users.table.role" />,
+    sortingFn: 'fuzzySort',
   },
 ];
 

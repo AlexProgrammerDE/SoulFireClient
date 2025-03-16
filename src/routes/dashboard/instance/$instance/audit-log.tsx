@@ -100,6 +100,7 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
         {row.original.user!.username}
       </div>
     ),
+    sortingFn: 'fuzzySort',
   },
   {
     accessorFn: (row) =>
@@ -116,6 +117,7 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
         />
       </p>
     ),
+    sortingFn: 'fuzzySort',
   },
   {
     accessorKey: 'timestamp',
@@ -123,6 +125,7 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     cell: ({ row }) => (
       <ReactTimeago date={timestampToDate(row.original.timestamp!)} />
     ),
+    sortingFn: 'fuzzySort',
   },
 ];
 
