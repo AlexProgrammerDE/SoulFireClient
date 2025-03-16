@@ -88,6 +88,7 @@ function toI18nKey(type: InstanceAuditLogResponse_AuditLogEntryType) {
 
 const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
   {
+    accessorFn: (row) => `${row.user!.username} ${row.user!.email}`,
     accessorKey: 'user',
     header: () => <Trans i18nKey="auditLog.user" />,
     cell: ({ row }) => (
@@ -120,6 +121,7 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     sortingFn: 'fuzzySort',
   },
   {
+    accessorFn: (row) => timestampToDate(row.timestamp!),
     accessorKey: 'timestamp',
     header: () => <Trans i18nKey="auditLog.timestamp" />,
     cell: ({ row }) => (
