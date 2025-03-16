@@ -26,8 +26,7 @@ import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { toast } from 'sonner';
-import { listQueryKey } from '@/routes/dashboard.tsx';
-import { useNavigate } from '@tanstack/react-router';
+import { useNavigate, useRouteContext } from '@tanstack/react-router';
 import { useContext } from 'react';
 import { TransportContext } from '../providers/transport-context.tsx';
 
@@ -42,6 +41,10 @@ export function CreateInstancePopup({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) {
+  const instanceListQueryOptions = useRouteContext({
+    from: '/dashboard',
+    select: (context) => context.instanceListQueryOptions,
+  });
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
@@ -94,7 +97,7 @@ export function CreateInstancePopup({
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({
-        queryKey: listQueryKey,
+        queryKey: instanceListQueryOptions.queryKey,
       });
     },
   });

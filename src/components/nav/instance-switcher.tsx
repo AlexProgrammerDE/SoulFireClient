@@ -36,7 +36,7 @@ import {
   ProfileRoot,
   translateInstanceState,
 } from '@/lib/types.ts';
-import { Link, useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate, useRouteContext } from '@tanstack/react-router';
 import {
   data2blob,
   hasGlobalPermission,
@@ -48,7 +48,6 @@ import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.t
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { toast } from 'sonner';
-import { listQueryKey } from '@/routes/dashboard.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { mkdir, readTextFile, writeTextFile } from '@tauri-apps/plugin-fs';
 import { appConfigDir, resolve } from '@tauri-apps/api/path';
@@ -66,6 +65,14 @@ import { useTranslation } from 'react-i18next';
 
 export function InstanceSwitcher() {
   const { t, i18n } = useTranslation('common');
+  const instanceListQueryOptions = useRouteContext({
+    from: '/dashboard',
+    select: (context) => context.instanceListQueryOptions,
+  });
+  const instanceInfoQueryOptions = useRouteContext({
+    from: '/dashboard/instance/$instance',
+    select: (context) => context.instanceInfoQueryOptions,
+  });
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
@@ -91,7 +98,7 @@ export function InstanceSwitcher() {
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['instance-info', instanceInfo.id],
+        queryKey: instanceInfoQueryOptions.queryKey,
       });
     },
   });
@@ -120,7 +127,7 @@ export function InstanceSwitcher() {
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({
-        queryKey: listQueryKey,
+        queryKey: instanceInfoQueryOptions.queryKey,
       });
     },
   });

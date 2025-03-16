@@ -66,7 +66,9 @@ export const Route = createFileRoute('/dashboard/instance/$instance/audit-log')(
         refetchInterval: 3_000,
       });
       props.abortController.signal.addEventListener('abort', () => {
-        void queryClientInstance.cancelQueries(auditLogQueryOptions);
+        void queryClientInstance.cancelQueries({
+          queryKey: auditLogQueryOptions.queryKey,
+        });
       });
       return {
         auditLogQueryOptions,

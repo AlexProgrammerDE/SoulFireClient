@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { Switch } from '@/components/ui/switch.tsx';
 import {
   getEntryValueByType,
-  invalidateInstanceQuery,
   setInstanceConfig,
   updateEntry,
 } from '@/lib/utils.tsx';
@@ -21,7 +20,7 @@ import { JsonValue } from '@protobuf-ts/runtime';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import DynamicIcon from './dynamic-icon';
-import { Link } from '@tanstack/react-router';
+import { Link, useRouteContext } from '@tanstack/react-router';
 
 export function PluginInfoCard(props: {
   pluginInfo: ServerPlugin;
@@ -32,6 +31,10 @@ export function PluginInfoCard(props: {
   const instanceInfo = useContext(InstanceInfoContext);
   const transport = useContext(TransportContext);
   const queryClient = useQueryClient();
+  const instanceInfoQueryOptions = useRouteContext({
+    from: '/dashboard/instance/$instance',
+    select: (context) => context.instanceInfoQueryOptions,
+  });
   const enabledEntry = props.settingsEntry.entries.find(
     (entry) => entry.key === props.settingsEntry.enabledKey,
   )!;
@@ -56,10 +59,13 @@ export function PluginInfoCard(props: {
         instanceInfo,
         transport,
         queryClient,
+        instanceInfoQueryOptions.queryKey,
       );
     },
     onSettled: async () => {
-      await invalidateInstanceQuery(instanceInfo, queryClient);
+      await queryClient.invalidateQueries({
+        queryKey: instanceInfoQueryOptions.queryKey,
+      });
     },
   });
 

@@ -105,7 +105,9 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       });
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries(instanceInfoQueryOptions);
+      await queryClient.invalidateQueries({
+        queryKey: instanceInfoQueryOptions.queryKey,
+      });
     },
   });
 

@@ -166,7 +166,9 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
       });
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries(instanceInfoQueryOptions);
+      await queryClient.invalidateQueries({
+        queryKey: instanceInfoQueryOptions.queryKey,
+      });
     },
   });
 

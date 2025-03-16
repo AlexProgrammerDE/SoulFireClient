@@ -33,8 +33,6 @@ import {
 import {
   cn,
   getEntryValueByType,
-  invalidateInstanceQuery,
-  invalidateServerQuery,
   setInstanceConfig,
   setServerConfig,
   updateEntry,
@@ -57,6 +55,7 @@ import { useLocaleNumberFormat } from '@/hooks/use-locale-number-format.tsx';
 import { toast } from 'sonner';
 import { TFunction } from 'i18next';
 import { NumberFormatValues } from 'react-number-format/types/types';
+import { useRouteContext } from '@tanstack/react-router';
 
 function isAllowedValidator(
   t: TFunction,
@@ -709,6 +708,10 @@ export function InstanceSettingsPageComponent({
   const instanceInfo = useContext(InstanceInfoContext);
   const transport = useContext(TransportContext);
   const profile = useContext(ProfileContext);
+  const instanceInfoQueryOptions = useRouteContext({
+    from: '/dashboard/instance/$instance',
+    select: (context) => context.instanceInfoQueryOptions,
+  });
   return (
     <ClientSettingsPageComponent
       data={data}
@@ -718,11 +721,14 @@ export function InstanceSettingsPageComponent({
           instanceInfo,
           transport,
           queryClient,
+          instanceInfoQueryOptions.queryKey,
         )
       }
-      invalidateQuery={async () =>
-        await invalidateInstanceQuery(instanceInfo, queryClient)
-      }
+      invalidateQuery={async () => {
+        await queryClient.invalidateQueries({
+          queryKey: instanceInfoQueryOptions.queryKey,
+        });
+      }}
       config={profile}
     />
   );
@@ -732,13 +738,26 @@ export function AdminSettingsPageComponent({ data }: { data: SettingsPage }) {
   const queryClient = useQueryClient();
   const serverConfig = useContext(ServerConfigContext);
   const transport = useContext(TransportContext);
+  const serverInfoQueryOptions = useRouteContext({
+    from: '/dashboard/user/admin',
+    select: (context) => context.serverInfoQueryOptions,
+  });
   return (
     <ClientSettingsPageComponent
       data={data}
       setConfig={async (jsonProfile) =>
-        await setServerConfig(jsonProfile, transport, queryClient)
+        await setServerConfig(
+          jsonProfile,
+          transport,
+          queryClient,
+          serverInfoQueryOptions.queryKey,
+        )
       }
-      invalidateQuery={async () => await invalidateServerQuery(queryClient)}
+      invalidateQuery={async () => {
+        await queryClient.invalidateQueries({
+          queryKey: serverInfoQueryOptions.queryKey,
+        });
+      }}
       config={serverConfig}
     />
   );

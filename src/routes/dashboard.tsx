@@ -27,12 +27,11 @@ import { useTranslation } from 'react-i18next';
 import { ConnectingComponent } from '@/components/connecting-component.tsx';
 import { ErrorComponent } from '@/components/error-component.tsx';
 
-export const listQueryKey = ['instance-list'];
 export const Route = createFileRoute('/dashboard')({
   beforeLoad: async (props) => {
     if (isAuthenticated()) {
       const instanceListQueryOptions = queryOptions({
-        queryKey: listQueryKey,
+        queryKey: ['instance-list'],
         queryFn: async (
           props,
         ): Promise<{
@@ -70,7 +69,9 @@ export const Route = createFileRoute('/dashboard')({
         refetchInterval: 3_000,
       });
       props.abortController.signal.addEventListener('abort', () => {
-        void queryClientInstance.cancelQueries(instanceListQueryOptions);
+        void queryClientInstance.cancelQueries({
+          queryKey: instanceListQueryOptions.queryKey,
+        });
       });
       return {
         instanceListQueryOptions,

@@ -27,7 +27,7 @@ import { ServerInfoResponse } from '@/generated/soulfire/server.ts';
 import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { RpcTransport } from '@protobuf-ts/runtime-rpc';
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, QueryKey } from '@tanstack/react-query';
 import { Timestamp } from '@/generated/google/protobuf/timestamp.ts';
 
 const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
@@ -240,12 +240,6 @@ export function getEntryValueByType(
   }
 }
 
-export const instanceInfoQueryKey = (instanceInfo: { id: string }) => [
-  'instance-info',
-  instanceInfo.id,
-];
-export const serverInfoQueryKey = () => ['server-info'];
-
 export async function setInstanceConfig(
   jsonProfile: ProfileRoot,
   instanceInfo: {
@@ -253,6 +247,7 @@ export async function setInstanceConfig(
   },
   transport: RpcTransport | null,
   queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
 ) {
   if (transport === null) {
     return;
@@ -260,11 +255,11 @@ export async function setInstanceConfig(
 
   const targetProfile = convertToInstanceProto(jsonProfile);
   await queryClient.cancelQueries({
-    queryKey: instanceInfoQueryKey(instanceInfo),
+    queryKey: instanceInfoQueryKey,
   });
   queryClient.setQueryData<{
     instanceInfo: InstanceInfoResponse;
-  }>(instanceInfoQueryKey(instanceInfo), (old) => {
+  }>(instanceInfoQueryKey, (old) => {
     if (old === undefined) {
       return;
     }
@@ -284,21 +279,11 @@ export async function setInstanceConfig(
   });
 }
 
-export async function invalidateInstanceQuery(
-  instanceInfo: {
-    id: string;
-  },
-  queryClient: QueryClient,
-) {
-  await queryClient.invalidateQueries({
-    queryKey: instanceInfoQueryKey(instanceInfo),
-  });
-}
-
 export async function setServerConfig(
   jsonProfile: BaseSettings,
   transport: RpcTransport | null,
   queryClient: QueryClient,
+  serverInfoQueryKey: QueryKey,
 ) {
   if (transport === null) {
     return;
@@ -306,11 +291,11 @@ export async function setServerConfig(
 
   const targetProfile = convertToServerProto(jsonProfile);
   await queryClient.cancelQueries({
-    queryKey: serverInfoQueryKey(),
+    queryKey: serverInfoQueryKey,
   });
   queryClient.setQueryData<{
     serverInfo: ServerInfoResponse;
-  }>(serverInfoQueryKey(), (old) => {
+  }>(serverInfoQueryKey, (old) => {
     if (old === undefined) {
       return;
     }
@@ -326,12 +311,6 @@ export async function setServerConfig(
   const serverService = new ServerServiceClient(transport);
   await serverService.updateServerConfig({
     config: targetProfile,
-  });
-}
-
-export async function invalidateServerQuery(queryClient: QueryClient) {
-  await queryClient.invalidateQueries({
-    queryKey: serverInfoQueryKey(),
   });
 }
 

@@ -71,7 +71,9 @@ export const Route = createFileRoute('/dashboard/user/admin/users')({
       refetchInterval: 3_000,
     });
     props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries(usersQueryOptions);
+      void queryClientInstance.cancelQueries({
+        queryKey: usersQueryOptions.queryKey,
+      });
     });
     return {
       usersQueryOptions,
@@ -139,7 +141,9 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
       }
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries(usersQueryOptions);
+      await queryClient.invalidateQueries({
+        queryKey: usersQueryOptions.queryKey,
+      });
     },
   });
 

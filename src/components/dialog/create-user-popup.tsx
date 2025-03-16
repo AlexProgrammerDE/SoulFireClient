@@ -25,7 +25,6 @@ import { Input } from '@/components/ui/input.tsx';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { listQueryKey } from '@/routes/dashboard.tsx';
 import { useContext } from 'react';
 import { TransportContext } from '../providers/transport-context.tsx';
 import { UserRole } from '@/generated/soulfire/common.ts';
@@ -38,6 +37,7 @@ import {
   SelectValue,
 } from '@/components/ui/select.tsx';
 import { getEnumEntries } from '@/lib/types.ts';
+import { useRouteContext } from '@tanstack/react-router';
 
 export type CreateInstanceType = {
   username: string;
@@ -52,6 +52,10 @@ export function CreateUserPopup({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) {
+  const usersQueryOptions = useRouteContext({
+    from: '/dashboard/user/admin/users',
+    select: (context) => context.usersQueryOptions,
+  });
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
   const { t } = useTranslation('admin');
@@ -102,7 +106,7 @@ export function CreateUserPopup({
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({
-        queryKey: listQueryKey,
+        queryKey: usersQueryOptions.queryKey,
       });
     },
   });

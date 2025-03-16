@@ -10,9 +10,14 @@ import { InstanceInfoContext } from '@/components/providers/instance-info-contex
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PlayIcon, SquareIcon, TimerIcon, TimerOffIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useRouteContext } from '@tanstack/react-router';
 
 export default function ControlsMenu() {
   const { t } = useTranslation('common');
+  const instanceInfoQueryOptions = useRouteContext({
+    from: '/dashboard/instance/$instance',
+    select: (context) => context.instanceInfoQueryOptions,
+  });
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
   const profile = useContext(ProfileContext);
@@ -48,7 +53,7 @@ export default function ControlsMenu() {
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['instance-info', instanceInfo.id],
+        queryKey: instanceInfoQueryOptions.queryKey,
       });
     },
   });
@@ -93,7 +98,7 @@ export default function ControlsMenu() {
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['instance-info', instanceInfo.id],
+        queryKey: instanceInfoQueryOptions.queryKey,
       });
     },
   });
@@ -123,7 +128,7 @@ export default function ControlsMenu() {
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({
-        queryKey: ['instance-info', instanceInfo.id],
+        queryKey: instanceInfoQueryOptions.queryKey,
       });
     },
   });

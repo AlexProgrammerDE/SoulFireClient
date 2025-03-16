@@ -72,7 +72,9 @@ export const Route = createFileRoute('/dashboard/user/admin/overview')({
       refetchInterval: 3_000,
     });
     props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries(overviewInfoQueryOptions);
+      void queryClientInstance.cancelQueries({
+        queryKey: overviewInfoQueryOptions.queryKey,
+      });
     });
     return {
       overviewInfoQueryOptions,

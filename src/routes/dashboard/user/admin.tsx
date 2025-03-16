@@ -47,7 +47,9 @@ export const Route = createFileRoute('/dashboard/user/admin')({
       refetchInterval: 3_000,
     });
     props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries(serverInfoQueryOptions);
+      void queryClientInstance.cancelQueries({
+        queryKey: serverInfoQueryOptions.queryKey,
+      });
     });
     return {
       serverInfoQueryOptions,
