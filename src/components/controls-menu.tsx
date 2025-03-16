@@ -46,8 +46,8 @@ export default function ControlsMenu() {
 
       return promise;
     },
-    onSettled: () => {
-      void queryClient.invalidateQueries({
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
         queryKey: ['instance-info', instanceInfo.id],
       });
     },
@@ -91,8 +91,8 @@ export default function ControlsMenu() {
 
       return promise;
     },
-    onSettled: () => {
-      void queryClient.invalidateQueries({
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
         queryKey: ['instance-info', instanceInfo.id],
       });
     },
@@ -121,8 +121,8 @@ export default function ControlsMenu() {
 
       return promise;
     },
-    onSettled: () => {
-      void queryClient.invalidateQueries({
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
         queryKey: ['instance-info', instanceInfo.id],
       });
     },

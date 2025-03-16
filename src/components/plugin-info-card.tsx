@@ -58,8 +58,8 @@ export function PluginInfoCard(props: {
         queryClient,
       );
     },
-    onSettled: () => {
-      void invalidateInstanceQuery(instanceInfo, queryClient);
+    onSettled: async () => {
+      await invalidateInstanceQuery(instanceInfo, queryClient);
     },
   });
 

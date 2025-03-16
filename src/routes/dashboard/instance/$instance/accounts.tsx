@@ -91,6 +91,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   const instanceInfo = useContext(InstanceInfoContext);
   const [accountTypeCredentialsSelected, setAccountTypeCredentialsSelected] =
     useState<AccountTypeCredentials | null>(null);
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
       if (transport === null) {
@@ -103,10 +104,8 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         config: convertToInstanceProto(profile),
       });
     },
-    onSettled: () => {
-      void queryClient.invalidateQueries({
-        queryKey: ['instance-info', instanceInfo.id],
-      });
+    onSettled: async () => {
+      await queryClient.invalidateQueries(instanceInfoQueryOptions);
     },
   });
 

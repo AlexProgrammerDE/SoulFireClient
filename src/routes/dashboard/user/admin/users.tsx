@@ -31,11 +31,10 @@ import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { UserAvatar } from '@/components/user-avatar.tsx';
 import { CreateUserPopup } from '@/components/dialog/create-user-popup.tsx';
 
-export const usersQueryKey = ['users'];
 export const Route = createFileRoute('/dashboard/user/admin/users')({
   beforeLoad: (props) => {
     const usersQueryOptions = queryOptions({
-      queryKey: usersQueryKey,
+      queryKey: ['users'],
       queryFn: async (
         props,
       ): Promise<{
@@ -125,6 +124,7 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
   const [createOpen, setCreateOpen] = useState(false);
+  const { usersQueryOptions } = Route.useRouteContext();
   const { mutateAsync: deleteUsersMutation } = useMutation({
     mutationFn: async (user: UserListResponse_User[]) => {
       if (transport === null) {
@@ -138,10 +138,8 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
         });
       }
     },
-    onSettled: () => {
-      void queryClient.invalidateQueries({
-        queryKey: usersQueryKey,
-      });
+    onSettled: async () => {
+      await queryClient.invalidateQueries(usersQueryOptions);
     },
   });
 

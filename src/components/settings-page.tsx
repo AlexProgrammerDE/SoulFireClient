@@ -526,8 +526,8 @@ function EntryComponent<T extends BaseSettings>(props: {
         updateEntry(props.namespace, props.entry.key, value, props.config),
       );
     },
-    onSettled: () => {
-      void props.invalidateQuery();
+    onSettled: async () => {
+      await props.invalidateQuery();
     },
   });
 

@@ -152,6 +152,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   const instanceInfo = useContext(InstanceInfoContext);
   const [proxyTypeSelected, setProxyTypeSelected] =
     useState<UIProxyType | null>(null);
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
       if (transport === null) {
@@ -164,10 +165,8 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         config: convertToInstanceProto(profile),
       });
     },
-    onSettled: () => {
-      void queryClient.invalidateQueries({
-        queryKey: ['instance-info', instanceInfo.id],
-      });
+    onSettled: async () => {
+      await queryClient.invalidateQueries(instanceInfoQueryOptions);
     },
   });
 
