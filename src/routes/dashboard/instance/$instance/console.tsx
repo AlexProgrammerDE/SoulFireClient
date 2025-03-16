@@ -45,12 +45,14 @@ function Console() {
     >
       <div className="grow flex h-full w-full flex-col gap-2">
         <div className="flex flex-col gap-2">
-          <h2 className="text-xl font-semibold">
-            {instanceInfo.friendlyName}
-            <Badge className="m-auto ml-2 uppercase" variant="secondary">
+          <div className="flex flex-row gap-2 items-center">
+            <h2 className="text-xl font-semibold">
+              {instanceInfo.friendlyName}
+            </h2>
+            <Badge className="uppercase" variant="secondary">
               {translateInstanceState(i18n, instanceInfo.state)}
             </Badge>
-          </h2>
+          </div>
           {hasInstancePermission(
             instanceInfo,
             InstancePermission.INSTANCE_SUBSCRIBE_LOGS,
