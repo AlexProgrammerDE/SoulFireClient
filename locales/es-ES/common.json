@@ -287,5 +287,6 @@
     "resumedAttack": "",
     "pausedAttack": "",
     "stoppedAttack": ""
-  }
+  },
+  "pickADate": ""
 }
