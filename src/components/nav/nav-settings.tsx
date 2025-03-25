@@ -7,9 +7,9 @@ import {
 } from '@/components/ui/sidebar.tsx';
 import { Link, LinkProps } from '@tanstack/react-router';
 import { ReactNode, useContext } from 'react';
-import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { InstanceInfoContext } from '../providers/instance-info-context.tsx';
 import { useTranslation } from 'react-i18next';
+import { BotIcon, SparklesIcon, UsersIcon, WaypointsIcon } from 'lucide-react';
 
 type NavLinks = {
   title: string;
@@ -21,26 +21,10 @@ export function NavSettings() {
   const { t } = useTranslation('common');
   const instanceInfo = useContext(InstanceInfoContext);
 
-  const botSettings = instanceInfo.instanceSettings.find(
-    (settings) => settings.namespace === 'bot',
-  );
-  const accountSettings = instanceInfo.instanceSettings.find(
-    (settings) => settings.namespace === 'account',
-  );
-  const proxySettings = instanceInfo.instanceSettings.find(
-    (settings) => settings.namespace === 'proxy',
-  );
-  const aiSettings = instanceInfo.instanceSettings.find(
-    (settings) => settings.namespace === 'ai',
-  );
-  if (!botSettings || !accountSettings || !proxySettings || !aiSettings) {
-    throw new Error(t('settingsPage.namespacesNotFound'));
-  }
-
   const navLinks: NavLinks = [
     {
       title: t('instanceSidebar.botSettings'),
-      icon: (props) => <DynamicIcon {...props} name={botSettings.iconId} />,
+      icon: BotIcon,
       linkProps: {
         to: '/dashboard/instance/$instance/settings/$namespace',
         params: { instance: instanceInfo.id, namespace: 'bot' },
@@ -48,7 +32,7 @@ export function NavSettings() {
     },
     {
       title: t('instanceSidebar.accountSettings'),
-      icon: (props) => <DynamicIcon {...props} name={accountSettings.iconId} />,
+      icon: UsersIcon,
       linkProps: {
         to: '/dashboard/instance/$instance/accounts',
         params: { instance: instanceInfo.id },
@@ -56,7 +40,7 @@ export function NavSettings() {
     },
     {
       title: t('instanceSidebar.proxySettings'),
-      icon: (props) => <DynamicIcon {...props} name={proxySettings.iconId} />,
+      icon: WaypointsIcon,
       linkProps: {
         to: '/dashboard/instance/$instance/proxies',
         params: { instance: instanceInfo.id },
@@ -64,7 +48,7 @@ export function NavSettings() {
     },
     {
       title: t('instanceSidebar.aiSettings'),
-      icon: (props) => <DynamicIcon {...props} name={aiSettings.iconId} />,
+      icon: SparklesIcon,
       linkProps: {
         to: '/dashboard/instance/$instance/settings/$namespace',
         params: { instance: instanceInfo.id, namespace: 'ai' },

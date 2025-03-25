@@ -1,6 +1,12 @@
 'use client';
 
-import { ChartAreaIcon, TerminalIcon, UsersIcon } from 'lucide-react';
+import {
+  BugIcon,
+  ChartAreaIcon,
+  ServerIcon,
+  TerminalIcon,
+  UsersIcon,
+} from 'lucide-react';
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -10,10 +16,8 @@ import {
 } from '@/components/ui/sidebar.tsx';
 import { Link, LinkProps } from '@tanstack/react-router';
 import * as React from 'react';
-import { ReactNode, useContext } from 'react';
-import DynamicIcon from '@/components/dynamic-icon.tsx';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ServerInfoContext } from '@/components/providers/server-info-context.tsx';
 
 type NavLinks = {
   title: string;
@@ -23,17 +27,6 @@ type NavLinks = {
 
 export function NavUserAdmin() {
   const { t } = useTranslation('common');
-  const serverInfo = useContext(ServerInfoContext);
-
-  const serverSettings = serverInfo.serverSettings.find(
-    (settings) => settings.namespace === 'server',
-  );
-  const devSettings = serverInfo.serverSettings.find(
-    (settings) => settings.namespace === 'dev',
-  );
-  if (!serverSettings || !devSettings) {
-    throw new Error(t('settingsPage.namespacesNotFound'));
-  }
 
   const navLinks: NavLinks = [
     {
@@ -62,7 +55,7 @@ export function NavUserAdmin() {
     },
     {
       title: t('userSidebar.serverSettings'),
-      icon: (props) => <DynamicIcon {...props} name={serverSettings.iconId} />,
+      icon: ServerIcon,
       linkProps: {
         to: '/dashboard/user/admin/settings/$namespace',
         params: { namespace: 'server' },
@@ -70,7 +63,7 @@ export function NavUserAdmin() {
     },
     {
       title: t('userSidebar.devSettings'),
-      icon: (props) => <DynamicIcon {...props} name={devSettings.iconId} />,
+      icon: BugIcon,
       linkProps: {
         to: '/dashboard/user/admin/settings/$namespace',
         params: { namespace: 'dev' },
