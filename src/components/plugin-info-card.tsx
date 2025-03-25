@@ -78,7 +78,7 @@ export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
             }}
             search={{}}
           >
-            <CardTitle className="text-xl flex flex-row items-center gap-2">
+            <CardTitle className="flex flex-row items-center gap-2 text-xl">
               <DynamicIcon
                 className="size-6 shrink-0"
                 name={props.settingsEntry.iconId}
@@ -94,7 +94,7 @@ export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
         <CardDescription className="whitespace-pre-line">
           {props.settingsEntry.owningPlugin!.description}
         </CardDescription>
-        <div className="flex flex-wrap gap-2 mt-2">
+        <div className="mt-2 flex flex-wrap gap-2">
           <Badge variant="secondary">
             {t('pluginCard.version', {
               version: props.settingsEntry.owningPlugin!.version,

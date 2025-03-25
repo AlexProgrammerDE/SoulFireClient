@@ -11,8 +11,8 @@ export function ConnectingComponent() {
   const { t } = useTranslation('common');
 
   return (
-    <div className="flex grow size-full">
-      <Card className="m-auto text-center w-full max-w-[450px] border-none">
+    <div className="flex size-full grow">
+      <Card className="m-auto w-full max-w-[450px] border-none text-center">
         <CardHeader className="pb-0">
           <CardTitle>{t('pending.connecting')}</CardTitle>
         </CardHeader>

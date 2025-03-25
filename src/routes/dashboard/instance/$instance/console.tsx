@@ -43,9 +43,9 @@ function Console() {
       extraCrumbs={[t('breadcrumbs.controls')]}
       pageName={t('pageName.console')}
     >
-      <div className="grow flex h-full w-full flex-col gap-2">
+      <div className="flex h-full w-full grow flex-col gap-2">
         <div className="flex flex-col gap-2">
-          <div className="flex flex-row gap-2 items-center">
+          <div className="flex flex-row items-center gap-2">
             <h2 className="text-xl font-semibold">
               {instanceInfo.friendlyName}
             </h2>

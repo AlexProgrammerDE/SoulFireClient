@@ -172,10 +172,10 @@ function Index() {
   };
 
   return (
-    <ScrollArea className="h-dvh w-full px-4 bg-muted">
-      <main className="flex flex-col min-h-dvh w-full">
-        <div className="flex flex-col gap-6 m-auto w-full max-w-[450px]">
-          <div className="text-center flex flex-row items-center justify-center gap-2">
+    <ScrollArea className="bg-muted h-dvh w-full px-4">
+      <main className="flex min-h-dvh w-full flex-col">
+        <div className="m-auto flex w-full max-w-[450px] flex-col gap-6">
+          <div className="flex flex-row items-center justify-center gap-2 text-center">
             <img
               className="size-8"
               width={32}
@@ -210,7 +210,7 @@ function Index() {
             />
           )}
           <div>
-            <div className="text-balance text-xs text-muted-foreground text-center">
+            <div className="text-muted-foreground text-center text-xs text-balance">
               <p className="mb-1">
                 {t('footer.version', {
                   version: APP_VERSION,
@@ -242,7 +242,7 @@ function Index() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
-                    className="w-fit text-balance text-sm text-muted-foreground"
+                    className="text-muted-foreground w-fit text-sm text-balance"
                     variant="ghost"
                   >
                     {languageEmoji(i18n.resolvedLanguage ?? i18n.language)}{' '}
@@ -283,7 +283,7 @@ function Index() {
 function LoginCardTitle() {
   const { t } = useTranslation('login');
   return (
-    <CardTitle className="flex flex-row items-center gap-2 text-xl mx-auto">
+    <CardTitle className="mx-auto flex flex-row items-center gap-2 text-xl">
       <SatelliteDishIcon />
       {t('connect.title')}
     </CardTitle>
@@ -400,7 +400,7 @@ function IntegratedMenu({
     <Card>
       <CardHeader className="text-center">
         <LoginCardTitle />
-        <CardDescription className="whitespace-pre-wrap break-all truncate">
+        <CardDescription className="truncate break-all whitespace-pre-wrap">
           {latestLog}
         </CardDescription>
       </CardHeader>
@@ -756,7 +756,7 @@ function EmailCodeMenu(props: {
           />
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-col gap-4 items-center">
+      <CardContent className="flex flex-col items-center gap-4">
         <InputOTP
           disabled={inputDisabled}
           autoFocus={true}
@@ -788,7 +788,7 @@ function EmailCodeMenu(props: {
           {t('emailCode.back')}
         </Button>
         {inputDisabled && (
-          <LoaderCircleIcon className="h-10 w-10 animate-spin text-muted-foreground" />
+          <LoaderCircleIcon className="text-muted-foreground h-10 w-10 animate-spin" />
         )}
       </CardFooter>
     </Card>

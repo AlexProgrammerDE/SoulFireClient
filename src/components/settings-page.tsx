@@ -93,7 +93,7 @@ function ComponentTitle(props: {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex flex-row gap-2 w-fit items-center">
+    <div className="flex w-fit flex-row items-center gap-2">
       <p
         onClick={props.onClick}
         className={cn({
@@ -105,7 +105,7 @@ function ComponentTitle(props: {
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <InfoIcon
-            className="h-4 w-4 shrink-0 opacity-50 cursor-pointer"
+            className="h-4 w-4 shrink-0 cursor-pointer opacity-50"
             onClick={() => {
               setOpen(!open);
             }}
@@ -537,7 +537,7 @@ function EntryComponent<T extends BaseSettings>(props: {
   switch (props.entry.value.oneofKind) {
     case 'string': {
       return (
-        <div className="flex flex-col gap-1 max-w-xl">
+        <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
             title={props.entry.value.string.uiName}
             description={props.entry.value.string.description}
@@ -552,7 +552,7 @@ function EntryComponent<T extends BaseSettings>(props: {
     }
     case 'int': {
       return (
-        <div className="flex flex-col gap-1 max-w-xl">
+        <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
             title={props.entry.value.int.uiName}
             description={props.entry.value.int.description}
@@ -567,7 +567,7 @@ function EntryComponent<T extends BaseSettings>(props: {
     }
     case 'bool': {
       return (
-        <div className="flex flex-row gap-1 max-w-xl">
+        <div className="flex max-w-xl flex-row gap-1">
           <BoolComponent
             setting={props.entry.value.bool}
             value={value as boolean}
@@ -580,7 +580,7 @@ function EntryComponent<T extends BaseSettings>(props: {
     }
     case 'double': {
       return (
-        <div className="flex flex-col gap-1 max-w-xl">
+        <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
             title={props.entry.value.double.uiName}
             description={props.entry.value.double.description}
@@ -595,7 +595,7 @@ function EntryComponent<T extends BaseSettings>(props: {
     }
     case 'combo': {
       return (
-        <div className="flex flex-col gap-1 max-w-xl">
+        <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
             title={props.entry.value.combo.uiName}
             description={props.entry.value.combo.description}
@@ -610,7 +610,7 @@ function EntryComponent<T extends BaseSettings>(props: {
     }
     case 'stringList': {
       return (
-        <div className="flex flex-col gap-1 max-w-xl">
+        <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
             title={props.entry.value.stringList.uiName}
             description={props.entry.value.stringList.description}
@@ -630,7 +630,7 @@ function EntryComponent<T extends BaseSettings>(props: {
       };
       return (
         <>
-          <div className="flex flex-col gap-1 max-w-xl">
+          <div className="flex max-w-xl flex-col gap-1">
             <ComponentTitle
               title={props.entry.value.minMax.minEntry!.uiName}
               description={props.entry.value.minMax.minEntry!.description}
@@ -647,7 +647,7 @@ function EntryComponent<T extends BaseSettings>(props: {
               }}
             />
           </div>
-          <div className="flex flex-col gap-1 max-w-xl">
+          <div className="flex max-w-xl flex-col gap-1">
             <ComponentTitle
               title={props.entry.value.minMax.maxEntry!.uiName}
               description={props.entry.value.minMax.maxEntry!.description}

@@ -42,17 +42,17 @@ export function ErrorComponent({ error }: { error: Error }) {
   }, []);
 
   return (
-    <div className="flex grow size-full">
+    <div className="flex size-full grow">
       <Card className="m-auto flex flex-col">
         <CardHeader className="pb-4">
-          <CardTitle className="text-2xl font-bold gap-1 flex fle-row">
+          <CardTitle className="fle-row flex gap-1 text-2xl font-bold">
             <BugIcon className="h-8" />
             {t('error.page.title')}
           </CardTitle>
           <CardDescription>{t('error.page.description')}</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="text-red-500 max-w-2xl truncate">{error.message}</p>
+          <p className="max-w-2xl truncate text-red-500">{error.message}</p>
         </CardContent>
         <CardFooter className="flex flex-row gap-2">
           <Button

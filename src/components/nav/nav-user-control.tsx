@@ -128,15 +128,15 @@ export function NavUserControl() {
                       onValueChange={(e) => setTheme(e)}
                     >
                       <DropdownMenuRadioItem value="system">
-                        <SunMoonIcon className="h-4 mr-1" />
+                        <SunMoonIcon className="mr-1 h-4" />
                         {t('userSidebar.theme.system')}
                       </DropdownMenuRadioItem>
                       <DropdownMenuRadioItem value="dark">
-                        <MoonIcon className="h-4 mr-1" />
+                        <MoonIcon className="mr-1 h-4" />
                         {t('userSidebar.theme.dark')}
                       </DropdownMenuRadioItem>
                       <DropdownMenuRadioItem value="light">
-                        <SunIcon className="h-4 mr-1" />
+                        <SunIcon className="mr-1 h-4" />
                         {t('userSidebar.theme.light')}
                       </DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>

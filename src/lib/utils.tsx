@@ -141,7 +141,7 @@ export function languageEmoji(locale: string): ReactNode {
   const Flag = emojiMap[countryCode];
   if (!Flag) return '';
 
-  return <Flag className="size-4 mx-1 align-middle" />;
+  return <Flag className="mx-1 size-4 align-middle" />;
 }
 
 export function getLanguageName(languageCode: string, displayLanguage: string) {

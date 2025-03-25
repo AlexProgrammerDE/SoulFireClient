@@ -143,7 +143,7 @@ export function InstanceSwitcher() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               tooltip={`${instanceInfo.friendlyName} | ${capitalizedState}`}
             >
-              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
+              <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                 <DynamicIcon name={instanceInfo.icon} className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
@@ -161,7 +161,7 @@ export function InstanceSwitcher() {
             side={isMobile ? 'bottom' : 'right'}
             sideOffset={4}
           >
-            <DropdownMenuLabel className="text-xs text-muted-foreground">
+            <DropdownMenuLabel className="text-muted-foreground text-xs">
               {t('instanceSidebar.instancesGroup')}
             </DropdownMenuLabel>
             {instanceList.instances.map((instance, index) => {
@@ -190,10 +190,10 @@ export function InstanceSwitcher() {
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild className="gap-2 p-2">
               <Link to="/dashboard/user/instances">
-                <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                <div className="bg-background flex size-6 items-center justify-center rounded-md border">
                   <HomeIcon className="size-4" />
                 </div>
-                <div className="font-medium text-muted-foreground">
+                <div className="text-muted-foreground font-medium">
                   {t('instanceSidebar.backToDashboard')}
                 </div>
               </Link>
@@ -206,16 +206,16 @@ export function InstanceSwitcher() {
                 onClick={() => setCreateOpen(true)}
                 className="gap-2 p-2"
               >
-                <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                <div className="bg-background flex size-6 items-center justify-center rounded-md border">
                   <PlusIcon className="size-4" />
                 </div>
-                <div className="font-medium text-muted-foreground">
+                <div className="text-muted-foreground font-medium">
                   {t('instanceSidebar.createInstance')}
                 </div>
               </DropdownMenuItem>
             )}
             <DropdownMenuSeparator />
-            <DropdownMenuLabel className="text-xs text-muted-foreground">
+            <DropdownMenuLabel className="text-muted-foreground text-xs">
               {instanceInfo.friendlyName}
             </DropdownMenuLabel>
             <input
@@ -250,10 +250,10 @@ export function InstanceSwitcher() {
             {isTauri() && systemInfo ? (
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger className="gap-2 p-2">
-                  <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                  <div className="bg-background flex size-6 items-center justify-center rounded-md border">
                     <UploadIcon className="size-4" />
                   </div>
-                  <div className="font-medium text-muted-foreground">
+                  <div className="text-muted-foreground font-medium">
                     {t('instanceSidebar.loadProfile')}
                   </div>
                 </DropdownMenuSubTrigger>
@@ -297,7 +297,7 @@ export function InstanceSwitcher() {
                               });
                             }}
                           >
-                            <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                            <div className="bg-background flex size-6 items-center justify-center rounded-md border">
                               <FileIcon className="size-4" />
                             </div>
                             {file}
@@ -358,7 +358,7 @@ export function InstanceSwitcher() {
                         });
                       }}
                     >
-                      <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                      <div className="bg-background flex size-6 items-center justify-center rounded-md border">
                         <FolderIcon className="size-4" />
                       </div>
                       {t('instanceSidebar.loadFromFile')}
@@ -374,10 +374,10 @@ export function InstanceSwitcher() {
                     instanceProfileInputRef.current?.click();
                   }}
                 >
-                  <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                  <div className="bg-background flex size-6 items-center justify-center rounded-md border">
                     <UploadIcon className="size-4" />
                   </div>
-                  <div className="font-medium text-muted-foreground">
+                  <div className="text-muted-foreground font-medium">
                     {t('instanceSidebar.loadProfile')}
                   </div>
                 </DropdownMenuItem>
@@ -421,10 +421,10 @@ export function InstanceSwitcher() {
                 toast.success(t('instanceSidebar.profileSaved'));
               }}
             >
-              <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+              <div className="bg-background flex size-6 items-center justify-center rounded-md border">
                 <DownloadIcon className="size-4" />
               </div>
-              <div className="font-medium text-muted-foreground">
+              <div className="text-muted-foreground font-medium">
                 {t('instanceSidebar.saveProfile')}
               </div>
             </DropdownMenuItem>
@@ -442,10 +442,10 @@ export function InstanceSwitcher() {
                 }}
                 className="gap-2 p-2"
               >
-                <div className="flex size-6 items-center justify-center rounded-md border bg-background">
+                <div className="bg-background flex size-6 items-center justify-center rounded-md border">
                   <MinusIcon className="size-4" />
                 </div>
-                <div className="font-medium text-muted-foreground">
+                <div className="text-muted-foreground font-medium">
                   {t('instanceSidebar.deleteInstance')}
                 </div>
               </DropdownMenuItem>

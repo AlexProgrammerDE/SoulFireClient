@@ -266,7 +266,7 @@ export const TerminalComponent = (props: {
   return (
     <ScrollArea
       viewportRef={paneRef}
-      className="h-[calc(75vh-8rem)] pr-4 font-mono rounded-md text-xs"
+      className="h-[calc(75vh-8rem)] rounded-md pr-4 font-mono text-xs"
       style={
         {
           backgroundColor: selectedTheme.colors.base.hex,
@@ -295,7 +295,7 @@ export const TerminalComponent = (props: {
         } as CSSProperties
       }
     >
-      <p className="min-h-[calc(75vh-8rem)] whitespace-pre-wrap break-all py-0.5 pl-0.5 h-full select-text cursor-text">
+      <p className="h-full min-h-[calc(75vh-8rem)] cursor-text py-0.5 pl-0.5 break-all whitespace-pre-wrap select-text">
         {entries.map((entry) => {
           return <MemoAnsiHtml key={entry.id} text={entry.message} />;
         })}

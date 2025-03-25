@@ -77,7 +77,7 @@ export default function InstancePageLayout(props: {
         </div>
       </header>
       <ScrollArea className="h-[calc(100dvh-3rem)] w-full">
-        <div className="flex flex-col min-h-[calc(100dvh-3rem)] w-full p-4">
+        <div className="flex min-h-[calc(100dvh-3rem)] w-full flex-col p-4">
           <CatchBoundary
             getResetKey={() => 'instance-page-layout'}
             errorComponent={ErrorComponent}

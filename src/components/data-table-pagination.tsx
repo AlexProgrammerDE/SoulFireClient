@@ -24,16 +24,16 @@ export function DataTablePagination<TData>({
 }: DataTablePaginationProps<TData>) {
   const { t } = useTranslation('common');
   return (
-    <div className="flex flex-wrap w-full items-center justify-between px-2 gap-4">
+    <div className="flex w-full flex-wrap items-center justify-between gap-4 px-2">
       {table.getAllColumns().find((col) => col.id === 'select') && (
-        <div className="flex-1 text-sm text-muted-foreground">
+        <div className="text-muted-foreground flex-1 text-sm">
           {t('dataTable.rowsSelected', {
             amount: table.getFilteredSelectedRowModel().rows.length,
             total: table.getFilteredRowModel().rows.length,
           })}
         </div>
       )}
-      <div className="shrink-0 flex flex-row items-center gap-2">
+      <div className="flex shrink-0 flex-row items-center gap-2">
         <p className="text-sm font-medium">{t('dataTable.rowsPerPage')}</p>
         <Select
           value={`${table.getState().pagination.pageSize}`}
@@ -53,7 +53,7 @@ export function DataTablePagination<TData>({
           </SelectContent>
         </Select>
       </div>
-      <div className="flex-1 w-[100px] items-center justify-center text-center text-sm font-medium">
+      <div className="w-[100px] flex-1 items-center justify-center text-center text-sm font-medium">
         {t('dataTable.currentPage', {
           page: table.getState().pagination.pageIndex + 1,
           total: table.getPageCount() || 1,

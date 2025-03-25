@@ -26,10 +26,10 @@ export function NotFoundComponent() {
   const [revalidating, setRevalidating] = useState(false);
 
   return (
-    <div className="flex grow size-full">
+    <div className="flex size-full grow">
       <Card className="m-auto flex flex-col">
         <CardHeader className="pb-4">
-          <CardTitle className="text-2xl font-bold gap-1 flex fle-row">
+          <CardTitle className="fle-row flex gap-1 text-2xl font-bold">
             <SearchXIcon className="h-8" />
             {t('notFound.page.title')}
           </CardTitle>

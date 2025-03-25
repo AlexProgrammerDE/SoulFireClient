@@ -18,7 +18,7 @@ function Discover() {
       extraCrumbs={[t('breadcrumbs.plugins')]}
       pageName={t('pageName.discoverPlugins')}
     >
-      <div className="grow grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 h-full w-full gap-4">
+      <div className="grid h-full w-full grow grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {instanceInfo.instanceSettings
           .filter(
             (settings) =>

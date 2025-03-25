@@ -213,7 +213,7 @@
   }
 
   body {
-    @apply overflow-hidden antialiased cursor-default select-none;
+    @apply cursor-default overflow-hidden antialiased select-none;
   }
 
   * {

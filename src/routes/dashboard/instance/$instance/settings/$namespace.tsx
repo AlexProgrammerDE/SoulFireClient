@@ -33,8 +33,8 @@ function SettingsNamespace() {
       ]}
       pageName={settingsEntry.pageName}
     >
-      <div className="grow flex h-full w-full flex-row gap-2">
-        <div className="grow flex h-full flex-col gap-4">
+      <div className="flex h-full w-full grow flex-row gap-2">
+        <div className="flex h-full grow flex-col gap-4">
           {settingsEntry.owningPlugin && (
             <PluginInfoCard settingsEntry={settingsEntry} />
           )}
