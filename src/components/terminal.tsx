@@ -281,7 +281,9 @@ export const TerminalComponent = (props: {
           '--ansi-blue': selectedTheme.colors.blue.hex,
           '--ansi-magenta': selectedTheme.colors.pink.hex,
           '--ansi-cyan': selectedTheme.colors.teal.hex,
-          '--ansi-white': selectedTheme.colors.text.hex,
+          '--ansi-white': selectedTheme.dark
+            ? selectedTheme.colors.subtext0.hex
+            : selectedTheme.colors.surface2.hex,
           '--ansi-bright-black': selectedTheme.dark
             ? selectedTheme.colors.surface2.hex
             : selectedTheme.colors.subtext0.hex,
@@ -291,7 +293,9 @@ export const TerminalComponent = (props: {
           '--ansi-bright-blue': selectedTheme.colors.blue.hex,
           '--ansi-bright-magenta': selectedTheme.colors.pink.hex,
           '--ansi-bright-cyan': selectedTheme.colors.teal.hex,
-          '--ansi-bright-white': selectedTheme.colors.text.hex,
+          '--ansi-bright-white': selectedTheme.dark
+            ? selectedTheme.colors.subtext1.hex
+            : selectedTheme.colors.surface1.hex,
         } as CSSProperties
       }
     >
