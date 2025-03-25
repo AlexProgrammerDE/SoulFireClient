@@ -21,6 +21,7 @@ import { Route as DashboardUserAdminUsersImport } from './routes/dashboard/user/
 import { Route as DashboardUserAdminOverviewImport } from './routes/dashboard/user/admin/overview'
 import { Route as DashboardUserAdminConsoleImport } from './routes/dashboard/user/admin/console'
 import { Route as DashboardInstanceInstanceProxiesImport } from './routes/dashboard/instance/$instance/proxies'
+import { Route as DashboardInstanceInstanceMetaImport } from './routes/dashboard/instance/$instance/meta'
 import { Route as DashboardInstanceInstanceDiscoverImport } from './routes/dashboard/instance/$instance/discover'
 import { Route as DashboardInstanceInstanceConsoleImport } from './routes/dashboard/instance/$instance/console'
 import { Route as DashboardInstanceInstanceAuditLogImport } from './routes/dashboard/instance/$instance/audit-log'
@@ -90,6 +91,13 @@ const DashboardInstanceInstanceProxiesRoute =
   DashboardInstanceInstanceProxiesImport.update({
     id: '/proxies',
     path: '/proxies',
+    getParentRoute: () => DashboardInstanceInstanceRoute,
+  } as any)
+
+const DashboardInstanceInstanceMetaRoute =
+  DashboardInstanceInstanceMetaImport.update({
+    id: '/meta',
+    path: '/meta',
     getParentRoute: () => DashboardInstanceInstanceRoute,
   } as any)
 
@@ -209,6 +217,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardInstanceInstanceDiscoverImport
       parentRoute: typeof DashboardInstanceInstanceImport
     }
+    '/dashboard/instance/$instance/meta': {
+      id: '/dashboard/instance/$instance/meta'
+      path: '/meta'
+      fullPath: '/dashboard/instance/$instance/meta'
+      preLoaderRoute: typeof DashboardInstanceInstanceMetaImport
+      parentRoute: typeof DashboardInstanceInstanceImport
+    }
     '/dashboard/instance/$instance/proxies': {
       id: '/dashboard/instance/$instance/proxies'
       path: '/proxies'
@@ -293,6 +308,7 @@ interface DashboardInstanceInstanceRouteChildren {
   DashboardInstanceInstanceAuditLogRoute: typeof DashboardInstanceInstanceAuditLogRoute
   DashboardInstanceInstanceConsoleRoute: typeof DashboardInstanceInstanceConsoleRoute
   DashboardInstanceInstanceDiscoverRoute: typeof DashboardInstanceInstanceDiscoverRoute
+  DashboardInstanceInstanceMetaRoute: typeof DashboardInstanceInstanceMetaRoute
   DashboardInstanceInstanceProxiesRoute: typeof DashboardInstanceInstanceProxiesRoute
   DashboardInstanceInstanceSettingsNamespaceRoute: typeof DashboardInstanceInstanceSettingsNamespaceRoute
 }
@@ -307,6 +323,7 @@ const DashboardInstanceInstanceRouteChildren: DashboardInstanceInstanceRouteChil
       DashboardInstanceInstanceConsoleRoute,
     DashboardInstanceInstanceDiscoverRoute:
       DashboardInstanceInstanceDiscoverRoute,
+    DashboardInstanceInstanceMetaRoute: DashboardInstanceInstanceMetaRoute,
     DashboardInstanceInstanceProxiesRoute:
       DashboardInstanceInstanceProxiesRoute,
     DashboardInstanceInstanceSettingsNamespaceRoute:
@@ -343,6 +360,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
   '/dashboard/instance/$instance/console': typeof DashboardInstanceInstanceConsoleRoute
   '/dashboard/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
+  '/dashboard/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/dashboard/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
   '/dashboard/user/admin/console': typeof DashboardUserAdminConsoleRoute
   '/dashboard/user/admin/overview': typeof DashboardUserAdminOverviewRoute
@@ -362,6 +380,7 @@ export interface FileRoutesByTo {
   '/dashboard/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
   '/dashboard/instance/$instance/console': typeof DashboardInstanceInstanceConsoleRoute
   '/dashboard/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
+  '/dashboard/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/dashboard/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
   '/dashboard/user/admin/console': typeof DashboardUserAdminConsoleRoute
   '/dashboard/user/admin/overview': typeof DashboardUserAdminOverviewRoute
@@ -382,6 +401,7 @@ export interface FileRoutesById {
   '/dashboard/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
   '/dashboard/instance/$instance/console': typeof DashboardInstanceInstanceConsoleRoute
   '/dashboard/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
+  '/dashboard/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/dashboard/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
   '/dashboard/user/admin/console': typeof DashboardUserAdminConsoleRoute
   '/dashboard/user/admin/overview': typeof DashboardUserAdminOverviewRoute
@@ -403,6 +423,7 @@ export interface FileRouteTypes {
     | '/dashboard/instance/$instance/audit-log'
     | '/dashboard/instance/$instance/console'
     | '/dashboard/instance/$instance/discover'
+    | '/dashboard/instance/$instance/meta'
     | '/dashboard/instance/$instance/proxies'
     | '/dashboard/user/admin/console'
     | '/dashboard/user/admin/overview'
@@ -421,6 +442,7 @@ export interface FileRouteTypes {
     | '/dashboard/instance/$instance/audit-log'
     | '/dashboard/instance/$instance/console'
     | '/dashboard/instance/$instance/discover'
+    | '/dashboard/instance/$instance/meta'
     | '/dashboard/instance/$instance/proxies'
     | '/dashboard/user/admin/console'
     | '/dashboard/user/admin/overview'
@@ -439,6 +461,7 @@ export interface FileRouteTypes {
     | '/dashboard/instance/$instance/audit-log'
     | '/dashboard/instance/$instance/console'
     | '/dashboard/instance/$instance/discover'
+    | '/dashboard/instance/$instance/meta'
     | '/dashboard/instance/$instance/proxies'
     | '/dashboard/user/admin/console'
     | '/dashboard/user/admin/overview'
@@ -498,6 +521,7 @@ export const routeTree = rootRoute
         "/dashboard/instance/$instance/audit-log",
         "/dashboard/instance/$instance/console",
         "/dashboard/instance/$instance/discover",
+        "/dashboard/instance/$instance/meta",
         "/dashboard/instance/$instance/proxies",
         "/dashboard/instance/$instance/settings/$namespace"
       ]
@@ -530,6 +554,10 @@ export const routeTree = rootRoute
     },
     "/dashboard/instance/$instance/discover": {
       "filePath": "dashboard/instance/$instance/discover.tsx",
+      "parent": "/dashboard/instance/$instance"
+    },
+    "/dashboard/instance/$instance/meta": {
+      "filePath": "dashboard/instance/$instance/meta.tsx",
       "parent": "/dashboard/instance/$instance"
     },
     "/dashboard/instance/$instance/proxies": {

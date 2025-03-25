@@ -85,7 +85,7 @@ function isAllowedValidator(
   };
 }
 
-function ComponentTitle(props: {
+export function ComponentTitle(props: {
   title: string;
   description: string;
   onClick?: () => void;
@@ -119,7 +119,7 @@ function ComponentTitle(props: {
   );
 }
 
-function StringComponent(props: {
+export function StringComponent(props: {
   setting: StringSetting;
   value: string;
   changeCallback: (value: string) => void;
@@ -160,7 +160,7 @@ function StringComponent(props: {
   }
 }
 
-function IntComponent(props: {
+export function IntComponent(props: {
   setting: IntSetting;
   value: number;
   changeCallback: (value: number) => void;
@@ -215,7 +215,7 @@ function IntComponent(props: {
   );
 }
 
-function DoubleComponent(props: {
+export function DoubleComponent(props: {
   setting: DoubleSetting;
   value: number;
   changeCallback: (value: number) => void;
@@ -271,7 +271,7 @@ function DoubleComponent(props: {
   );
 }
 
-function BoolComponent(props: {
+export function BoolComponent(props: {
   setting: BoolSetting;
   value: boolean;
   changeCallback: (value: boolean) => void;
@@ -302,7 +302,7 @@ function BoolComponent(props: {
   );
 }
 
-function ComboComponent(props: {
+export function ComboComponent(props: {
   setting: ComboSetting;
   value: string;
   changeCallback: (value: string) => void;
@@ -367,7 +367,7 @@ function makeIdValueSingle<T>(value: T): IdValue<T> {
   return { id: randomId, value };
 }
 
-function StringListComponent(props: {
+export function StringListComponent(props: {
   setting: StringListSetting;
   value: string[];
   changeCallback: (value: string[]) => void;
@@ -452,7 +452,7 @@ function StringListComponent(props: {
   );
 }
 
-function MinMaxComponent(props: {
+export function MinMaxComponent(props: {
   setting: MinMaxSetting;
   entry: MinMaxSettingEntry;
   value: number;

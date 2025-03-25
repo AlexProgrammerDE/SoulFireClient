@@ -277,6 +277,88 @@ export async function setInstanceConfig(
   });
 }
 
+export async function setInstanceIcon(
+  icon: string,
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  queryClient.setQueryData<{
+    instanceInfo: InstanceInfoResponse;
+  }>(instanceInfoQueryKey, (old) => {
+    if (old === undefined) {
+      return;
+    }
+
+    return {
+      instanceInfo: {
+        ...old.instanceInfo,
+        icon: icon,
+      },
+    };
+  });
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.updateInstanceMeta({
+    id: instanceInfo.id,
+    meta: {
+      oneofKind: 'icon',
+      icon: icon,
+    },
+  });
+}
+
+export async function setInstanceFriendlyName(
+  friendlyName: string,
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  queryClient.setQueryData<{
+    instanceInfo: InstanceInfoResponse;
+  }>(instanceInfoQueryKey, (old) => {
+    if (old === undefined) {
+      return;
+    }
+
+    return {
+      instanceInfo: {
+        ...old.instanceInfo,
+        friendlyName: friendlyName,
+      },
+    };
+  });
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.updateInstanceMeta({
+    id: instanceInfo.id,
+    meta: {
+      oneofKind: 'friendlyName',
+      friendlyName: friendlyName,
+    },
+  });
+}
+
 export async function setServerConfig(
   jsonProfile: BaseSettings,
   transport: RpcTransport | null,

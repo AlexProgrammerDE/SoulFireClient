@@ -3,6 +3,10 @@ import { LucideProps } from 'lucide-react';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
 import i18n from '@/lib/i18n';
 
+export function getAllIconNames() {
+  return Object.keys(dynamicIconImports);
+}
+
 export type LucideIconName = keyof typeof dynamicIconImports;
 
 export interface IconProps extends Omit<LucideProps, 'ref'> {
