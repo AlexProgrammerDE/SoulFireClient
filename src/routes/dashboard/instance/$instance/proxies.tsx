@@ -432,7 +432,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
 
 function ProxySettings() {
   const { t } = useTranslation('common');
-  const clientInfo = useContext(ClientInfoContext);
+  const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
 
   return (
@@ -445,7 +445,9 @@ function ProxySettings() {
         <div className="flex flex-col gap-2">
           <InstanceSettingsPageComponent
             data={
-              clientInfo.instanceSettings.find((s) => s.namespace === 'proxy')!
+              instanceInfo.instanceSettings.find(
+                (s) => s.namespace === 'proxy',
+              )!
             }
           />
         </div>

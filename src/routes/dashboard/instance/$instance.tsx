@@ -69,6 +69,7 @@ export const Route = createFileRoute('/dashboard/instance/$instance')({
                   },
                 ],
               },
+              instanceSettings: [],
               state: InstanceState.RUNNING,
             },
           };

@@ -466,7 +466,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
 
 function AccountSettings() {
   const { t } = useTranslation('common');
-  const clientInfo = useContext(ClientInfoContext);
+  const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
 
   return (
@@ -479,7 +479,7 @@ function AccountSettings() {
         <div className="flex flex-col gap-2">
           <InstanceSettingsPageComponent
             data={
-              clientInfo.instanceSettings.find(
+              instanceInfo.instanceSettings.find(
                 (s) => s.namespace === 'account',
               )!
             }

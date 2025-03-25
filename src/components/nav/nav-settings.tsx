@@ -7,7 +7,6 @@ import {
 } from '@/components/ui/sidebar.tsx';
 import { Link, LinkProps } from '@tanstack/react-router';
 import { ReactNode, useContext } from 'react';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { InstanceInfoContext } from '../providers/instance-info-context.tsx';
 import { useTranslation } from 'react-i18next';
@@ -21,18 +20,17 @@ type NavLinks = {
 export function NavSettings() {
   const { t } = useTranslation('common');
   const instanceInfo = useContext(InstanceInfoContext);
-  const clientInfo = useContext(ClientInfoContext);
 
-  const botSettings = clientInfo.instanceSettings.find(
+  const botSettings = instanceInfo.instanceSettings.find(
     (settings) => settings.namespace === 'bot',
   );
-  const accountSettings = clientInfo.instanceSettings.find(
+  const accountSettings = instanceInfo.instanceSettings.find(
     (settings) => settings.namespace === 'account',
   );
-  const proxySettings = clientInfo.instanceSettings.find(
+  const proxySettings = instanceInfo.instanceSettings.find(
     (settings) => settings.namespace === 'proxy',
   );
-  const aiSettings = clientInfo.instanceSettings.find(
+  const aiSettings = instanceInfo.instanceSettings.find(
     (settings) => settings.namespace === 'ai',
   );
   if (!botSettings || !accountSettings || !proxySettings || !aiSettings) {

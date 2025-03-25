@@ -12,8 +12,8 @@ import { Link, LinkProps } from '@tanstack/react-router';
 import * as React from 'react';
 import { ReactNode, useContext } from 'react';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { useTranslation } from 'react-i18next';
+import { ServerInfoContext } from '@/components/providers/server-info-context.tsx';
 
 type NavLinks = {
   title: string;
@@ -23,12 +23,12 @@ type NavLinks = {
 
 export function NavUserAdmin() {
   const { t } = useTranslation('common');
-  const clientInfo = useContext(ClientInfoContext);
+  const serverInfo = useContext(ServerInfoContext);
 
-  const serverSettings = clientInfo.serverSettings.find(
+  const serverSettings = serverInfo.serverSettings.find(
     (settings) => settings.namespace === 'server',
   );
-  const devSettings = clientInfo.serverSettings.find(
+  const devSettings = serverInfo.serverSettings.find(
     (settings) => settings.namespace === 'dev',
   );
   if (!serverSettings || !devSettings) {

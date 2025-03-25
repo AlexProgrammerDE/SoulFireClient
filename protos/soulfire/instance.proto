@@ -73,6 +73,7 @@ message InstanceInfoResponse {
   InstanceConfig config = 2;
   InstanceState state = 3;
   repeated InstancePermissionState instance_permissions = 4;
+  repeated SettingsPage instance_settings = 6;
 }
 
 message InstanceUpdateMetaRequest {

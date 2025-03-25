@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/sidebar.tsx';
 import { Link, LinkProps, useParams } from '@tanstack/react-router';
 import { ReactNode, useContext, useState } from 'react';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { InstanceInfoContext } from '../providers/instance-info-context.tsx';
 import {
@@ -33,7 +32,6 @@ type NavLinks = {
 export function NavPlugins() {
   const { t } = useTranslation('common');
   const sidebar = useSidebar();
-  const clientInfo = useContext(ClientInfoContext);
   const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
   const namespace = useParams({
@@ -41,7 +39,7 @@ export function NavPlugins() {
     select: (params) => params.namespace,
     shouldThrow: false,
   });
-  const settingsEntry = clientInfo.instanceSettings.find(
+  const settingsEntry = instanceInfo.instanceSettings.find(
     (s) => s.namespace === namespace,
   );
   const [pluginCollapsibleOpen, setPluginCollapsibleOpen] = useState(
@@ -59,7 +57,7 @@ export function NavPlugins() {
     },
   ];
 
-  const pluginSettingLinks: NavLinks = clientInfo.instanceSettings
+  const pluginSettingLinks: NavLinks = instanceInfo.instanceSettings
     .filter(
       (setting) =>
         setting.owningPlugin !== undefined && setting.enabledKey !== undefined,

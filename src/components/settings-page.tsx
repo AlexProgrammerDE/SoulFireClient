@@ -9,7 +9,7 @@ import {
   SettingsPage,
   StringListSetting,
   StringSetting,
-} from '@/generated/soulfire/config.ts';
+} from '@/generated/soulfire/common.ts';
 import { Button } from '@/components/ui/button.tsx';
 import {
   Popover,

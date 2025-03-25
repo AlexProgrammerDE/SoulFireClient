@@ -28,6 +28,7 @@ export const Route = createFileRoute('/dashboard/user/admin')({
               config: {
                 settings: [],
               },
+              serverSettings: [],
             },
           };
         }

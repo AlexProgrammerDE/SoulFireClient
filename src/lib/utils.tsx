@@ -3,11 +3,9 @@ import { twMerge } from 'tailwind-merge';
 import {
   GlobalPermission,
   InstancePermission,
-} from '@/generated/soulfire/common.ts';
-import {
-  ClientDataResponse,
   SettingEntry,
-} from '@/generated/soulfire/config.ts';
+} from '@/generated/soulfire/common.ts';
+import { ClientDataResponse } from '@/generated/soulfire/config.ts';
 import {
   InstanceInfoResponse,
   InstanceListResponse_Instance,

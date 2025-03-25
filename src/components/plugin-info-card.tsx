@@ -5,7 +5,6 @@ import {
   CardTitle,
 } from '@/components/ui/card.tsx';
 import { Badge } from '@/components/ui/badge.tsx';
-import { ServerPlugin, SettingsPage } from '@/generated/soulfire/config.ts';
 import { useTranslation } from 'react-i18next';
 import { Switch } from '@/components/ui/switch.tsx';
 import {
@@ -21,11 +20,9 @@ import { InstanceInfoContext } from '@/components/providers/instance-info-contex
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import DynamicIcon from './dynamic-icon';
 import { Link, useRouteContext } from '@tanstack/react-router';
+import { SettingsPage } from '@/generated/soulfire/common.ts';
 
-export function PluginInfoCard(props: {
-  pluginInfo: ServerPlugin;
-  settingsEntry: SettingsPage;
-}) {
+export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
   const { t } = useTranslation('common');
   const profile = useContext(ProfileContext);
   const instanceInfo = useContext(InstanceInfoContext);
@@ -95,32 +92,32 @@ export function PluginInfoCard(props: {
           />
         </div>
         <CardDescription className="whitespace-pre-line">
-          {props.pluginInfo.description}
+          {props.settingsEntry.owningPlugin!.description}
         </CardDescription>
         <div className="flex flex-wrap gap-2 mt-2">
           <Badge variant="secondary">
             {t('pluginCard.version', {
-              version: props.pluginInfo.version,
+              version: props.settingsEntry.owningPlugin!.version,
             })}
           </Badge>
           <Badge variant="secondary">
             {t('pluginCard.author', {
-              author: props.pluginInfo.author,
+              author: props.settingsEntry.owningPlugin!.author,
             })}
           </Badge>
           <Badge variant="secondary">
             {t('pluginCard.license', {
-              license: props.pluginInfo.license,
+              license: props.settingsEntry.owningPlugin!.license,
             })}
           </Badge>
           <a
-            href={props.pluginInfo.website}
+            href={props.settingsEntry.owningPlugin!.website}
             className="inline-flex items-center"
             target="_blank"
           >
             <Badge variant="secondary">
               {t('pluginCard.website', {
-                website: props.pluginInfo.website,
+                website: props.settingsEntry.owningPlugin!.website,
               })}
             </Badge>
           </a>
