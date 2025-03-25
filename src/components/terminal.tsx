@@ -296,10 +296,11 @@ export const TerminalComponent = (props: {
           '--ansi-bright-white': selectedTheme.dark
             ? selectedTheme.colors.subtext1.hex
             : selectedTheme.colors.surface1.hex,
+          '--terminal-selection-bg': selectedTheme.colors.overlay2.hex,
         } as CSSProperties
       }
     >
-      <p className="h-full min-h-[calc(75vh-8rem)] cursor-text py-0.5 pl-0.5 break-all whitespace-pre-wrap select-text">
+      <p className="h-full min-h-[calc(75vh-8rem)] cursor-text py-0.5 pl-0.5 break-all whitespace-pre-wrap select-text selection:bg-(--terminal-selection-bg)/25">
         {entries.map((entry) => {
           return <MemoAnsiHtml key={entry.id} text={entry.message} />;
         })}
