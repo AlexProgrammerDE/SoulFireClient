@@ -25,6 +25,7 @@ export function SelectRowHeader<T>({ row }: CellContext<T, unknown>) {
     <div className="flex">
       <Checkbox
         className="my-auto"
+        disabled={!row.getCanSelect()}
         defaultChecked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label={t('dataTable.selectRow')}

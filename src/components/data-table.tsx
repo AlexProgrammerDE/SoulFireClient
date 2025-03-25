@@ -31,6 +31,7 @@ import {
   RankingInfo,
   rankItem,
 } from '@tanstack/match-sorter-utils';
+import { TableOptions } from '@tanstack/table-core';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -38,6 +39,7 @@ interface DataTableProps<TData, TValue> {
   filterPlaceholder: string;
   // Element with form param
   extraHeader?: (props: { table: ReactTable<TData> }) => React.ReactNode;
+  enableRowSelection?: TableOptions<TData>['enableRowSelection'];
 }
 
 declare module '@tanstack/react-table' {
@@ -130,6 +132,7 @@ export function DataTable<TData, TValue>({
   data,
   filterPlaceholder,
   extraHeader,
+  enableRowSelection,
 }: DataTableProps<TData, TValue>) {
   const { t } = useTranslation('common');
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -156,6 +159,7 @@ export function DataTable<TData, TValue>({
     globalFilterFn: 'fuzzy',
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
+    enableRowSelection,
     state: {
       sorting,
       columnFilters,

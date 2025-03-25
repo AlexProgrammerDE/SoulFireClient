@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+import * as React from 'react';
 import { useContext, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { DataTable } from '@/components/data-table.tsx';
@@ -30,6 +31,9 @@ import { LoadingComponent } from '@/components/loading-component.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { UserAvatar } from '@/components/user-avatar.tsx';
 import { CreateUserPopup } from '@/components/dialog/create-user-popup.tsx';
+import { timestampToDate } from '@/lib/utils.tsx';
+import { SFTimeAgo } from '@/components/sf-timeago.tsx';
+import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 
 export const Route = createFileRoute('/dashboard/user/admin/users')({
   beforeLoad: (props) => {
@@ -119,6 +123,28 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     header: () => <Trans i18nKey="admin:users.table.role" />,
     sortingFn: 'fuzzySort',
   },
+  {
+    accessorFn: (row) => timestampToDate(row.createdAt!),
+    accessorKey: 'createdAt',
+    header: () => <Trans i18nKey="admin:users.table.createdAt" />,
+    cell: ({ row }) => (
+      <SFTimeAgo date={timestampToDate(row.original.createdAt!)} />
+    ),
+    enableGlobalFilter: false,
+    sortingFn: 'datetime',
+    filterFn: 'isWithinRange',
+  },
+  {
+    accessorFn: (row) => timestampToDate(row.minIssuedAt!),
+    accessorKey: 'minIssuedAt',
+    header: () => <Trans i18nKey="admin:users.table.minIssuedAt" />,
+    cell: ({ row }) => (
+      <SFTimeAgo date={timestampToDate(row.original.minIssuedAt!)} />
+    ),
+    enableGlobalFilter: false,
+    sortingFn: 'datetime',
+    filterFn: 'isWithinRange',
+  },
 ];
 
 function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
@@ -180,6 +206,7 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
 function Users() {
   const { t } = useTranslation('common');
   const { usersQueryOptions } = Route.useRouteContext();
+  const clientInfo = useContext(ClientInfoContext);
   const userList = useQuery(usersQueryOptions);
 
   if (userList.isError) {
@@ -202,6 +229,10 @@ function Users() {
           columns={columns}
           data={userList.data.userList.users}
           extraHeader={ExtraHeader}
+          enableRowSelection={(row) =>
+            row.original.username !== 'root' &&
+            row.original.id !== clientInfo.id
+          }
         />
       </div>
     </UserPageLayout>

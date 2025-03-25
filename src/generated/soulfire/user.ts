@@ -3,6 +3,7 @@
 // tslint:disable
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { MessageType } from "@protobuf-ts/runtime";
+import { Timestamp } from "../google/protobuf/timestamp";
 import { UserRole } from "./common";
 /**
  * @generated from protobuf message soulfire.v1.UserCreateRequest
@@ -78,6 +79,22 @@ export interface UserListResponse_User {
      * @generated from protobuf field: string email = 4;
      */
     email: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 5;
+     */
+    createdAt?: Timestamp;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 6;
+     */
+    updatedAt?: Timestamp;
+    /**
+     * @generated from protobuf field: optional google.protobuf.Timestamp last_login_at = 7;
+     */
+    lastLoginAt?: Timestamp;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp min_issued_at = 8;
+     */
+    minIssuedAt?: Timestamp;
 }
 /**
  * @generated from protobuf message soulfire.v1.UserInfoRequest
@@ -104,6 +121,22 @@ export interface UserInfoResponse {
      * @generated from protobuf field: string email = 3;
      */
     email: string;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp created_at = 4;
+     */
+    createdAt?: Timestamp;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp updated_at = 5;
+     */
+    updatedAt?: Timestamp;
+    /**
+     * @generated from protobuf field: optional google.protobuf.Timestamp last_login_at = 6;
+     */
+    lastLoginAt?: Timestamp;
+    /**
+     * @generated from protobuf field: google.protobuf.Timestamp min_issued_at = 7;
+     */
+    minIssuedAt?: Timestamp;
 }
 /**
  * Invalidate all sessions for a user, effectively logging them out of all devices.
@@ -224,7 +257,11 @@ class UserListResponse_User$Type extends MessageType<UserListResponse_User> {
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "role", kind: "enum", T: () => ["soulfire.v1.UserRole", UserRole] },
-            { no: 4, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 6, name: "updated_at", kind: "message", T: () => Timestamp },
+            { no: 7, name: "last_login_at", kind: "message", T: () => Timestamp },
+            { no: 8, name: "min_issued_at", kind: "message", T: () => Timestamp }
         ]);
     }
 }
@@ -250,7 +287,11 @@ class UserInfoResponse$Type extends MessageType<UserInfoResponse> {
         super("soulfire.v1.UserInfoResponse", [
             { no: 1, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "role", kind: "enum", T: () => ["soulfire.v1.UserRole", UserRole] },
-            { no: 3, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "created_at", kind: "message", T: () => Timestamp },
+            { no: 5, name: "updated_at", kind: "message", T: () => Timestamp },
+            { no: 6, name: "last_login_at", kind: "message", T: () => Timestamp },
+            { no: 7, name: "min_issued_at", kind: "message", T: () => Timestamp }
         ]);
     }
 }

@@ -64,7 +64,9 @@
     "table": {
       "username": "Username",
       "email": "Email",
-      "role": "Role"
+      "role": "Role",
+      "createdAt": "Created",
+      "minIssuedAt": "Min Allowed Token"
     }
   }
 }
