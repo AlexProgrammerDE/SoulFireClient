@@ -233,17 +233,58 @@ export interface StringSetting {
      */
     def: string;
     /**
-     * @generated from protobuf field: bool secret = 4;
+     * @generated from protobuf field: soulfire.v1.StringSetting.InputType input_type = 10;
      */
-    secret: boolean;
-    /**
-     * @generated from protobuf field: bool textarea = 5;
-     */
-    textarea: boolean;
+    inputType: StringSetting_InputType;
     /**
      * @generated from protobuf field: string placeholder = 6;
      */
     placeholder: string;
+    /**
+     * @generated from protobuf field: int32 min_length = 7;
+     */
+    minLength: number;
+    /**
+     * @generated from protobuf field: int32 max_length = 8;
+     */
+    maxLength: number;
+    /**
+     * @generated from protobuf field: string pattern = 9;
+     */
+    pattern: string;
+}
+/**
+ * @generated from protobuf enum soulfire.v1.StringSetting.InputType
+ */
+export enum StringSetting_InputType {
+    /**
+     * @generated from protobuf enum value: TEXT = 0;
+     */
+    TEXT = 0,
+    /**
+     * @generated from protobuf enum value: PASSWORD = 1;
+     */
+    PASSWORD = 1,
+    /**
+     * @generated from protobuf enum value: EMAIL = 2;
+     */
+    EMAIL = 2,
+    /**
+     * @generated from protobuf enum value: SEARCH = 3;
+     */
+    SEARCH = 3,
+    /**
+     * @generated from protobuf enum value: TEL = 4;
+     */
+    TEL = 4,
+    /**
+     * @generated from protobuf enum value: URL = 5;
+     */
+    URL = 5,
+    /**
+     * @generated from protobuf enum value: TEXTAREA = 6;
+     */
+    TEXTAREA = 6
 }
 /**
  * @generated from protobuf message soulfire.v1.IntSetting
@@ -852,9 +893,11 @@ class StringSetting$Type extends MessageType<StringSetting> {
             { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "secret", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 5, name: "textarea", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 6, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 10, name: "input_type", kind: "enum", T: () => ["soulfire.v1.StringSetting.InputType", StringSetting_InputType] },
+            { no: 6, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 7, name: "min_length", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 8, name: "max_length", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 9, name: "pattern", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }

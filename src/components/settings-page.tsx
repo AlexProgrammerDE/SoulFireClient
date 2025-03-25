@@ -9,6 +9,7 @@ import {
   SettingsPage,
   StringListSetting,
   StringSetting,
+  StringSetting_InputType,
 } from '@/generated/soulfire/common.ts';
 import { Button } from '@/components/ui/button.tsx';
 import {
@@ -37,7 +38,13 @@ import {
   setServerConfig,
   updateEntry,
 } from '@/lib/utils.tsx';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import {
+  HTMLInputTypeAttribute,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
@@ -119,6 +126,27 @@ export function ComponentTitle(props: {
   );
 }
 
+function inputTypeToHtml(
+  inputType: StringSetting_InputType,
+): HTMLInputTypeAttribute {
+  switch (inputType) {
+    case StringSetting_InputType.TEXT:
+      return 'text';
+    case StringSetting_InputType.PASSWORD:
+      return 'password';
+    case StringSetting_InputType.TEXTAREA:
+      throw new Error('Cannot convert textarea to HTML input type');
+    case StringSetting_InputType.EMAIL:
+      return 'email';
+    case StringSetting_InputType.URL:
+      return 'url';
+    case StringSetting_InputType.SEARCH:
+      return 'search';
+    case StringSetting_InputType.TEL:
+      return 'tel';
+  }
+}
+
 export function StringComponent(props: {
   setting: StringSetting;
   value: string;
@@ -136,11 +164,13 @@ export function StringComponent(props: {
     });
   }, [props.value]);
 
-  if (props.setting.textarea) {
+  if (props.setting.inputType === StringSetting_InputType.TEXTAREA) {
     return (
       <Textarea
         value={inputValue}
         placeholder={props.setting.placeholder}
+        minLength={props.setting.minLength}
+        maxLength={props.setting.maxLength}
         onChange={(e) => {
           props.changeCallback(e.currentTarget.value);
         }}
@@ -150,8 +180,11 @@ export function StringComponent(props: {
     return (
       <Input
         value={inputValue}
+        type={inputTypeToHtml(props.setting.inputType)}
         placeholder={props.setting.placeholder}
-        type={props.setting.secret ? 'password' : 'text'}
+        minLength={props.setting.minLength}
+        maxLength={props.setting.maxLength}
+        pattern={props.setting.pattern}
         onChange={(e) => {
           props.changeCallback(e.currentTarget.value);
         }}
