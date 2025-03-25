@@ -295,7 +295,7 @@ export const TerminalComponent = (props: {
         } as CSSProperties
       }
     >
-      <p className="whitespace-pre-wrap break-all py-0.5 pl-0.5 h-full select-text cursor-text">
+      <p className="min-h-[calc(75vh-8rem)] whitespace-pre-wrap break-all py-0.5 pl-0.5 h-full select-text cursor-text">
         {entries.map((entry) => {
           return <MemoAnsiHtml key={entry.id} text={entry.message} />;
         })}
