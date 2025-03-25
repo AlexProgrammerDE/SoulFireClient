@@ -1,6 +1,5 @@
 import { createFileRoute, deepEqual } from '@tanstack/react-router';
 import { useCallback, useContext, useState } from 'react';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import { DataTable } from '@/components/data-table.tsx';
@@ -441,7 +440,7 @@ function ProxySettings() {
       pageName={t('pageName.proxySettings')}
       documentationLink="https://soulfiremc.com/docs/usage/proxies"
     >
-      <div className="grow flex h-full w-full flex-col gap-4 max-w-4xl">
+      <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
         <div className="flex flex-col gap-2">
           <InstanceSettingsPageComponent
             data={
