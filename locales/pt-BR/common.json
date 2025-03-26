@@ -213,6 +213,7 @@
     "pluginSettings": "Definições de Plugin",
     "botSettings": "Configurações do Bot",
     "accountSettings": "Configurações da Conta",
+    "metaSettings": "",
     "proxySettings": "Configurações de Proxy",
     "aiSettings": "Configurações de IA",
     "discoverPlugins": ""
@@ -268,6 +269,7 @@
     "overview": "Visão geral",
     "users": "Usuários",
     "accountSettings": "Configurações da Conta",
+    "metaSettings": "",
     "discoverPlugins": ""
   },
   "instanceState": {

@@ -64,7 +64,9 @@
     "table": {
       "username": "",
       "email": "Mail Adresi",
-      "role": "Rol"
+      "role": "Rol",
+      "createdAt": "",
+      "minIssuedAt": ""
     }
   }
 }

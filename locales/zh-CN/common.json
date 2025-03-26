@@ -213,6 +213,7 @@
     "pluginSettings": "插件设置",
     "botSettings": "机器人设置",
     "accountSettings": "帐户设置",
+    "metaSettings": "",
     "proxySettings": "代理设置",
     "aiSettings": "AI设置",
     "discoverPlugins": "插件列表"
@@ -268,6 +269,7 @@
     "overview": "概况",
     "users": "用户",
     "accountSettings": "帐户设置",
+    "metaSettings": "",
     "discoverPlugins": "插件列表"
   },
   "instanceState": {

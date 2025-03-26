@@ -64,7 +64,9 @@
     "table": {
       "username": "Nom d´utilisateur",
       "email": "Email",
-      "role": "Rôle"
+      "role": "Rôle",
+      "createdAt": "",
+      "minIssuedAt": ""
     }
   }
 }

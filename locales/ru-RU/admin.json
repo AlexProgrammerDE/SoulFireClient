@@ -64,7 +64,9 @@
     "table": {
       "username": "Имя пользователя",
       "email": "E-mail",
-      "role": "Роли"
+      "role": "Роли",
+      "createdAt": "",
+      "minIssuedAt": ""
     }
   }
 }
