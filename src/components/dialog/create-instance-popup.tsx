@@ -53,7 +53,7 @@ export function CreateInstancePopup({
     friendlyName: z
       .string()
       .min(3, t('dialog.createInstance.form.friendlyName.min'))
-      .max(50, t('dialog.createInstance.form.friendlyName.max'))
+      .max(32, t('dialog.createInstance.form.friendlyName.max'))
       .regex(
         /^[a-zA-Z0-9 ]+$/,
         t('dialog.createInstance.form.friendlyName.regex'),

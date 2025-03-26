@@ -12,6 +12,7 @@ import {
   StringComponent,
 } from '@/components/settings-page.tsx';
 import { getAllIconNames } from '@/components/dynamic-icon.tsx';
+import { StringSetting_InputType } from '@/generated/soulfire/common.ts';
 
 export const Route = createFileRoute('/dashboard/instance/$instance/meta')({
   component: MetaSettings,
@@ -73,9 +74,11 @@ function MetaSettings() {
                 uiName: '',
                 description: '',
                 def: '',
-                secret: false,
-                textarea: false,
+                inputType: StringSetting_InputType.TEXT,
                 placeholder: 'My Instance',
+                minLength: 3,
+                maxLength: 32,
+                pattern: '^[a-zA-Z0-9 ]+$',
               }}
               value={instanceInfo.friendlyName}
               changeCallback={setFriendlyNameMutation.mutate}
