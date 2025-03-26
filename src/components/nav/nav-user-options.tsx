@@ -5,6 +5,7 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar.tsx';
@@ -56,20 +57,25 @@ export function NavUserOptions() {
                 <span>{item.title}</span>
               </Link>
             </SidebarMenuButton>
+            {hasGlobalPermission(
+              clientInfo,
+              GlobalPermission.CREATE_INSTANCE,
+            ) && (
+              <>
+                <SidebarMenuAction
+                  onClick={() => setCreateOpen(true)}
+                  title={t('userSidebar.createInstance')}
+                >
+                  <PlusIcon />
+                </SidebarMenuAction>
+                <CreateInstancePopup
+                  open={createOpen}
+                  setOpen={setCreateOpen}
+                />
+              </>
+            )}
           </SidebarMenuItem>
         ))}
-        {hasGlobalPermission(clientInfo, GlobalPermission.CREATE_INSTANCE) && (
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              onClick={() => setCreateOpen(true)}
-              tooltip={t('userSidebar.createInstance')}
-            >
-              <PlusIcon />
-              <span>{t('userSidebar.createInstance')}</span>
-            </SidebarMenuButton>
-            <CreateInstancePopup open={createOpen} setOpen={setCreateOpen} />
-          </SidebarMenuItem>
-        )}
       </SidebarMenu>
     </SidebarGroup>
   );
