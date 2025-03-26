@@ -89,6 +89,7 @@ export function NavSettings() {
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild tooltip={item.title}>
               <Link
+                activeOptions={{ exact: true }}
                 activeProps={{
                   'data-active': true,
                 }}

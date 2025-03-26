@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { hasInstancePermission } from '@/lib/utils.tsx';
 import { InstancePermission } from '@/generated/soulfire/common.ts';
 
-export const Route = createFileRoute('/dashboard/instance/$instance/console')({
+export const Route = createFileRoute('/dashboard/instance/$instance/')({
   component: Console,
 });
 

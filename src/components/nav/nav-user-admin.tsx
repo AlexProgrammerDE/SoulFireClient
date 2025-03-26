@@ -33,7 +33,7 @@ export function NavUserAdmin() {
       title: t('userSidebar.adminOverview'),
       icon: ChartAreaIcon,
       linkProps: {
-        to: '/dashboard/user/admin/overview',
+        to: '/dashboard/user/admin',
         params: {},
       },
     },
@@ -79,6 +79,7 @@ export function NavUserAdmin() {
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild tooltip={item.title}>
               <Link
+                activeOptions={{ exact: true }}
                 activeProps={{
                   'data-active': true,
                 }}

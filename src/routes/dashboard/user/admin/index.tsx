@@ -26,7 +26,7 @@ import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { Trans, useTranslation } from 'react-i18next';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 
-export const Route = createFileRoute('/dashboard/user/admin/overview')({
+export const Route = createFileRoute('/dashboard/user/admin/')({
   beforeLoad: (props) => {
     const overviewInfoQueryOptions = queryOptions({
       queryKey: ['overview-info'],

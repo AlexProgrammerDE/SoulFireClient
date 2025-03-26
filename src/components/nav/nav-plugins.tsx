@@ -90,6 +90,7 @@ export function NavPlugins() {
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild tooltip={item.title}>
               <Link
+                activeOptions={{ exact: true }}
                 activeProps={{
                   'data-active': true,
                 }}
@@ -133,6 +134,7 @@ export function NavPlugins() {
                   <SidebarMenuSubItem key={subItem.title}>
                     <SidebarMenuSubButton asChild>
                       <Link
+                        activeOptions={{ exact: true }}
                         activeProps={{
                           'data-active': true,
                         }}

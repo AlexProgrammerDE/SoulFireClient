@@ -40,7 +40,7 @@ if (
   getServerType() === 'dedicated' &&
   window.location.hash === ''
 ) {
-  window.location.hash = '/dashboard/user/instances';
+  window.location.hash = '/dashboard/user';
 }
 
 // Render the app

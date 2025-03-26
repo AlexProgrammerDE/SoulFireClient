@@ -34,7 +34,7 @@ export function NavUserOptions() {
       title: t('userSidebar.instances'),
       icon: Grid2x2Icon,
       linkProps: {
-        to: '/dashboard/user/instances',
+        to: '/dashboard/user',
         params: {},
       },
     },
@@ -48,6 +48,7 @@ export function NavUserOptions() {
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild tooltip={item.title}>
               <Link
+                activeOptions={{ exact: true }}
                 activeProps={{
                   'data-active': true,
                 }}

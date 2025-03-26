@@ -1,4 +1,4 @@
-import { ClientDataResponse } from '@/generated/soulfire/config.ts';
+import { ClientDataResponse } from '@/generated/soulfire/client.ts';
 
 export const demoData: ClientDataResponse = {
   id: 'f8030fa8-3be6-45c8-93f9-476ca39d42d5',

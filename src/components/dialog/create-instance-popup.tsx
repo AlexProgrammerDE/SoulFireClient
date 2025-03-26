@@ -82,7 +82,7 @@ export function CreateInstancePopup({
         success: (r) => {
           setOpen(false);
           void navigate({
-            to: '/dashboard/instance/$instance/console',
+            to: '/dashboard/instance/$instance',
             params: { instance: r.id },
           });
           return t('dialog.createInstance.createToast.success');

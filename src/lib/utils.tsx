@@ -5,7 +5,7 @@ import {
   InstancePermission,
   SettingEntry,
 } from '@/generated/soulfire/common.ts';
-import { ClientDataResponse } from '@/generated/soulfire/config.ts';
+import { ClientDataResponse } from '@/generated/soulfire/client.ts';
 import {
   InstanceInfoResponse,
   InstanceListResponse_Instance,

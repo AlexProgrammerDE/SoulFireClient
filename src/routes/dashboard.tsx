@@ -5,11 +5,11 @@ import {
   redirect,
   useNavigate,
 } from '@tanstack/react-router';
-import { ConfigServiceClient } from '@/generated/soulfire/config.client.ts';
+import { ClientServiceClient } from '@/generated/soulfire/client.client.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { createTransport, isAuthenticated, logOut } from '@/lib/web-rpc.ts';
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
-import { ClientDataResponse } from '@/generated/soulfire/config.ts';
+import { ClientDataResponse } from '@/generated/soulfire/client.ts';
 import { isTauri } from '@/lib/utils.tsx';
 import { emit } from '@tauri-apps/api/event';
 import { demoData } from '@/demo-data.ts';
@@ -113,8 +113,8 @@ export const Route = createFileRoute('/dashboard')({
     }
 
     try {
-      const configService = new ConfigServiceClient(transport);
-      const configResult = await configService.getClientData(
+      const clientService = new ClientServiceClient(transport);
+      const configResult = await clientService.getClientData(
         {},
         {
           abort: props.abortController.signal,
@@ -159,7 +159,7 @@ function InstanceSwitchKeybinds() {
         if (numberKey > 0 && numberKey <= instanceList.instances.length) {
           e.preventDefault();
           void navigate({
-            to: '/dashboard/instance/$instance/console',
+            to: '/dashboard/instance/$instance',
             params: { instance: instanceList.instances[numberKey - 1].id },
           });
         }

@@ -28,7 +28,7 @@ export function NavControls() {
       title: t('instanceSidebar.console'),
       icon: TerminalIcon,
       linkProps: {
-        to: '/dashboard/instance/$instance/console',
+        to: '/dashboard/instance/$instance',
         params: { instance: instanceInfo.id },
       },
     },
@@ -52,6 +52,7 @@ export function NavControls() {
           <SidebarMenuItem key={item.title}>
             <SidebarMenuButton asChild tooltip={item.title}>
               <Link
+                activeOptions={{ exact: true }}
                 activeProps={{
                   'data-active': true,
                 }}
