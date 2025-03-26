@@ -213,6 +213,7 @@
     "pluginSettings": "Настройки плагинов",
     "botSettings": "Настройки ботов",
     "accountSettings": "Настройки аккаунтов",
+    "metaSettings": "",
     "proxySettings": "Настройки прокси",
     "aiSettings": "Настройки ИИ",
     "discoverPlugins": "Список плагинов"
@@ -268,6 +269,7 @@
     "overview": "Обзор",
     "users": "Пользователи",
     "accountSettings": "Настройки аккаунтов",
+    "metaSettings": "",
     "discoverPlugins": "Список плагинов"
   },
   "instanceState": {

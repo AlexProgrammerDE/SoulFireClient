@@ -56,7 +56,7 @@ export default function UserPageLayout(props: {
             <BreadcrumbList>
               {props.showUserCrumb && (
                 <>
-                  <BreadcrumbItem className="hidden md:block">
+                  <BreadcrumbItem className="hidden max-w-64 truncate md:block">
                     {clientInfo.username}
                   </BreadcrumbItem>
                   <BreadcrumbSeparator className="hidden md:block" />

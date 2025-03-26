@@ -46,7 +46,7 @@ function Console() {
       <div className="flex h-full w-full grow flex-col gap-2">
         <div className="flex flex-col gap-2">
           <div className="flex flex-row items-center gap-2">
-            <h2 className="text-xl font-semibold">
+            <h2 className="max-w-64 truncate text-xl font-semibold">
               {instanceInfo.friendlyName}
             </h2>
             <Badge className="uppercase" variant="secondary">

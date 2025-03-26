@@ -147,7 +147,7 @@ export function InstanceSwitcher() {
                 <DynamicIcon name={instanceInfo.icon} className="size-4" />
               </div>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">
+                <span className="max-w-64 truncate font-semibold">
                   {instanceInfo.friendlyName}
                 </span>
                 <span className="truncate text-xs">{capitalizedState}</span>
@@ -215,7 +215,7 @@ export function InstanceSwitcher() {
               </DropdownMenuItem>
             )}
             <DropdownMenuSeparator />
-            <DropdownMenuLabel className="text-muted-foreground text-xs">
+            <DropdownMenuLabel className="text-muted-foreground max-w-64 truncate text-xs">
               {instanceInfo.friendlyName}
             </DropdownMenuLabel>
             <input

@@ -53,7 +53,9 @@ function InstanceSelectPage() {
                   </div>
                 </CardHeader>
                 <CardHeader>
-                  <CardTitle>{instance.friendlyName}</CardTitle>
+                  <CardTitle className="max-w-64 truncate">
+                    {instance.friendlyName}
+                  </CardTitle>
                   <CardDescription className="font-semibold">
                     {translateInstanceState(i18n, instance.state)}
                   </CardDescription>

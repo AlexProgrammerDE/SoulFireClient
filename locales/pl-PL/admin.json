@@ -64,7 +64,9 @@
     "table": {
       "username": "Nazwa użytkownika",
       "email": "E-mail",
-      "role": "Role"
+      "role": "Role",
+      "createdAt": "",
+      "minIssuedAt": ""
     }
   }
 }
