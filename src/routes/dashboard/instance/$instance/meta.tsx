@@ -78,7 +78,7 @@ function MetaSettings() {
                 placeholder: 'My Instance',
                 minLength: 3,
                 maxLength: 32,
-                pattern: '^[a-zA-Z0-9 ]+$',
+                pattern: '[a-zA-Z0-9 ]+',
               }}
               value={instanceInfo.friendlyName}
               changeCallback={setFriendlyNameMutation.mutate}
