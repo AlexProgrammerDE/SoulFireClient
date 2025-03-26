@@ -5,9 +5,11 @@ import { useContext } from 'react';
 import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 
-export const Route = createFileRoute('/dashboard/instance/$instance/discover')({
-  component: Discover,
-});
+export const Route = createFileRoute('/_dashboard/instance/$instance/discover')(
+  {
+    component: Discover,
+  },
+);
 
 function Discover() {
   const { t } = useTranslation('common');

@@ -41,9 +41,11 @@ import {
   SelectRowHeader,
 } from '@/components/data-table-selects.tsx';
 
-export const Route = createFileRoute('/dashboard/instance/$instance/accounts')({
-  component: AccountSettings,
-});
+export const Route = createFileRoute('/_dashboard/instance/$instance/accounts')(
+  {
+    component: AccountSettings,
+  },
+);
 
 function addAndDeduplicate(
   accounts: ProfileAccount[],

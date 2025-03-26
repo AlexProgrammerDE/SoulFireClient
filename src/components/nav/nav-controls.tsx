@@ -28,7 +28,7 @@ export function NavControls() {
       title: t('instanceSidebar.console'),
       icon: TerminalIcon,
       linkProps: {
-        to: '/dashboard/instance/$instance',
+        to: '/instance/$instance',
         params: { instance: instanceInfo.id },
       },
     },
@@ -36,7 +36,7 @@ export function NavControls() {
       title: t('instanceSidebar.audit-log'),
       icon: TextSearchIcon,
       linkProps: {
-        to: '/dashboard/instance/$instance/audit-log',
+        to: '/instance/$instance/audit-log',
         params: { instance: instanceInfo.id },
       },
     },

@@ -27,7 +27,7 @@ import { useTranslation } from 'react-i18next';
 import { ConnectingComponent } from '@/components/connecting-component.tsx';
 import { ErrorComponent } from '@/components/error-component.tsx';
 
-export const Route = createFileRoute('/dashboard')({
+export const Route = createFileRoute('/_dashboard')({
   beforeLoad: async (props) => {
     if (isAuthenticated()) {
       const instanceListQueryOptions = queryOptions({
@@ -159,7 +159,7 @@ function InstanceSwitchKeybinds() {
         if (numberKey > 0 && numberKey <= instanceList.instances.length) {
           e.preventDefault();
           void navigate({
-            to: '/dashboard/instance/$instance',
+            to: '/instance/$instance',
             params: { instance: instanceList.instances[numberKey - 1].id },
           });
         }

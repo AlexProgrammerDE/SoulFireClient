@@ -13,7 +13,7 @@ import { hasGlobalPermission } from '@/lib/utils.tsx';
 import { GlobalPermission } from '@/generated/soulfire/common.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 
-export const Route = createFileRoute('/dashboard/user/admin/console')({
+export const Route = createFileRoute('/_dashboard/user/admin/console')({
   component: Console,
 });
 

@@ -38,7 +38,7 @@ import {
 import i18n from '@/lib/i18n.ts';
 import { runAsync } from '@/lib/utils.tsx';
 
-export const Route = createFileRoute('/dashboard/instance/$instance/proxies')({
+export const Route = createFileRoute('/_dashboard/instance/$instance/proxies')({
   component: ProxySettings,
 });
 

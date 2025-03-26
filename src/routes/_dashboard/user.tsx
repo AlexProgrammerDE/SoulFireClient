@@ -3,7 +3,7 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar.tsx';
 import { UserSidebar } from '@/components/nav/user-sidebar.tsx';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 
-export const Route = createFileRoute('/dashboard/user')({
+export const Route = createFileRoute('/_dashboard/user')({
   component: UserLayout,
 });
 

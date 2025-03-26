@@ -34,7 +34,7 @@ export function NavSettings() {
       title: t('instanceSidebar.botSettings'),
       icon: BotIcon,
       linkProps: {
-        to: '/dashboard/instance/$instance/settings/$namespace',
+        to: '/instance/$instance/settings/$namespace',
         params: { instance: instanceInfo.id, namespace: 'bot' },
       },
     },
@@ -42,7 +42,7 @@ export function NavSettings() {
       title: t('instanceSidebar.accountSettings'),
       icon: UsersIcon,
       linkProps: {
-        to: '/dashboard/instance/$instance/accounts',
+        to: '/instance/$instance/accounts',
         params: { instance: instanceInfo.id },
       },
     },
@@ -50,7 +50,7 @@ export function NavSettings() {
       title: t('instanceSidebar.proxySettings'),
       icon: WaypointsIcon,
       linkProps: {
-        to: '/dashboard/instance/$instance/proxies',
+        to: '/instance/$instance/proxies',
         params: { instance: instanceInfo.id },
       },
     },
@@ -58,7 +58,7 @@ export function NavSettings() {
       title: t('instanceSidebar.aiSettings'),
       icon: SparklesIcon,
       linkProps: {
-        to: '/dashboard/instance/$instance/settings/$namespace',
+        to: '/instance/$instance/settings/$namespace',
         params: { instance: instanceInfo.id, namespace: 'ai' },
       },
     },
@@ -71,7 +71,7 @@ export function NavSettings() {
             title: t('instanceSidebar.metaSettings'),
             icon: BoltIcon,
             linkProps: {
-              to: '/dashboard/instance/$instance/meta',
+              to: '/instance/$instance/meta',
               params: { instance: instanceInfo.id },
             },
           } satisfies NavLink,

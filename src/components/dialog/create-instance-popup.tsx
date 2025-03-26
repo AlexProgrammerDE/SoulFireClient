@@ -42,7 +42,7 @@ export function CreateInstancePopup({
   setOpen: (open: boolean) => void;
 }) {
   const instanceListQueryOptions = useRouteContext({
-    from: '/dashboard',
+    from: '/_dashboard',
     select: (context) => context.instanceListQueryOptions,
   });
   const navigate = useNavigate();
@@ -82,7 +82,7 @@ export function CreateInstancePopup({
         success: (r) => {
           setOpen(false);
           void navigate({
-            to: '/dashboard/instance/$instance',
+            to: '/instance/$instance',
             params: { instance: r.id },
           });
           return t('dialog.createInstance.createToast.success');

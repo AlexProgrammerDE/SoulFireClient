@@ -34,7 +34,7 @@ export function NavUserOptions() {
       title: t('userSidebar.instances'),
       icon: Grid2x2Icon,
       linkProps: {
-        to: '/dashboard/user',
+        to: '/user',
         params: {},
       },
     },

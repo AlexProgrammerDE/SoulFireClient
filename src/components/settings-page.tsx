@@ -754,7 +754,7 @@ export function InstanceSettingsPageComponent({
   const transport = useContext(TransportContext);
   const profile = useContext(ProfileContext);
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/dashboard/instance/$instance',
+    from: '/_dashboard/instance/$instance',
     select: (context) => context.instanceInfoQueryOptions,
   });
   return (
@@ -784,7 +784,7 @@ export function AdminSettingsPageComponent({ data }: { data: SettingsPage }) {
   const serverConfig = useContext(ServerConfigContext);
   const transport = useContext(TransportContext);
   const serverInfoQueryOptions = useRouteContext({
-    from: '/dashboard/user/admin',
+    from: '/_dashboard/user/admin',
     select: (context) => context.serverInfoQueryOptions,
   });
   return (

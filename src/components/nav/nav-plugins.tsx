@@ -35,7 +35,7 @@ export function NavPlugins() {
   const instanceInfo = useContext(InstanceInfoContext);
   const profile = useContext(ProfileContext);
   const namespace = useParams({
-    from: '/dashboard/instance/$instance/settings/$namespace',
+    from: '/_dashboard/instance/$instance/settings/$namespace',
     select: (params) => params.namespace,
     shouldThrow: false,
   });
@@ -51,7 +51,7 @@ export function NavPlugins() {
       title: t('instanceSidebar.discoverPlugins'),
       icon: TelescopeIcon,
       linkProps: {
-        to: '/dashboard/instance/$instance/discover',
+        to: '/instance/$instance/discover',
         params: { instance: instanceInfo.id },
       },
     },
@@ -74,7 +74,7 @@ export function NavPlugins() {
       title: setting.pageName,
       icon: (props) => <DynamicIcon {...props} name={setting.iconId} />,
       linkProps: {
-        to: '/dashboard/instance/$instance/settings/$namespace',
+        to: '/instance/$instance/settings/$namespace',
         params: {
           instance: instanceInfo.id,
           namespace: setting.namespace,

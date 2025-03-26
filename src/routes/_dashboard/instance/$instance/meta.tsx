@@ -18,7 +18,7 @@ import {
 import { getAllIconTags } from '@/components/dynamic-icon.tsx';
 import { StringSetting_InputType } from '@/generated/soulfire/common.ts';
 
-export const Route = createFileRoute('/dashboard/instance/$instance/meta')({
+export const Route = createFileRoute('/_dashboard/instance/$instance/meta')({
   component: MetaSettings,
 });
 

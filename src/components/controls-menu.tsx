@@ -15,7 +15,7 @@ import { useRouteContext } from '@tanstack/react-router';
 export default function ControlsMenu() {
   const { t } = useTranslation('common');
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/dashboard/instance/$instance',
+    from: '/_dashboard/instance/$instance',
     select: (context) => context.instanceInfoQueryOptions,
   });
   const queryClient = useQueryClient();

@@ -14,7 +14,7 @@ import { SearchXIcon } from 'lucide-react';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { useTranslation } from 'react-i18next';
 
-export const Route = createFileRoute('/dashboard/user/')({
+export const Route = createFileRoute('/_dashboard/user/')({
   component: InstanceSelectPage,
 });
 
@@ -38,7 +38,7 @@ function InstanceSelectPage() {
           {instanceList.instances.map((instance, index) => (
             <Link
               key={instance.id}
-              to="/dashboard/instance/$instance"
+              to="/instance/$instance"
               params={{ instance: instance.id }}
               search={{}}
               className="max-h-fit w-full"

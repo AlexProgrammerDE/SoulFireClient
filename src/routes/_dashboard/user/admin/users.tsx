@@ -35,7 +35,7 @@ import { timestampToDate } from '@/lib/utils.tsx';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 
-export const Route = createFileRoute('/dashboard/user/admin/users')({
+export const Route = createFileRoute('/_dashboard/user/admin/users')({
   beforeLoad: (props) => {
     const usersQueryOptions = queryOptions({
       queryKey: ['users'],

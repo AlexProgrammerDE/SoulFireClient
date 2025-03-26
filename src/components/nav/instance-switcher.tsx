@@ -66,11 +66,11 @@ import { useTranslation } from 'react-i18next';
 export function InstanceSwitcher() {
   const { t, i18n } = useTranslation('common');
   const instanceListQueryOptions = useRouteContext({
-    from: '/dashboard',
+    from: '/_dashboard',
     select: (context) => context.instanceListQueryOptions,
   });
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/dashboard/instance/$instance',
+    from: '/_dashboard/instance/$instance',
     select: (context) => context.instanceInfoQueryOptions,
   });
   const navigate = useNavigate();
@@ -172,7 +172,7 @@ export function InstanceSwitcher() {
                   className="gap-2 p-2"
                 >
                   <Link
-                    to="/dashboard/instance/$instance"
+                    to="/instance/$instance"
                     params={{ instance: instance.id }}
                   >
                     <div className="flex size-6 items-center justify-center rounded-sm border">
@@ -189,7 +189,7 @@ export function InstanceSwitcher() {
             })}
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild className="gap-2 p-2">
-              <Link to="/dashboard/user">
+              <Link to="/user">
                 <div className="bg-background flex size-6 items-center justify-center rounded-md border">
                   <HomeIcon className="size-4" />
                 </div>
@@ -437,7 +437,7 @@ export function InstanceSwitcher() {
                 onClick={() => {
                   deleteMutation.mutate(instanceInfo.id);
                   void navigate({
-                    to: '/dashboard/user',
+                    to: '/user',
                   });
                 }}
                 className="gap-2 p-2"

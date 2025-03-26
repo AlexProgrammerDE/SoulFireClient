@@ -33,7 +33,7 @@ export function NavUserAdmin() {
       title: t('userSidebar.adminOverview'),
       icon: ChartAreaIcon,
       linkProps: {
-        to: '/dashboard/user/admin',
+        to: '/user/admin',
         params: {},
       },
     },
@@ -41,7 +41,7 @@ export function NavUserAdmin() {
       title: t('userSidebar.adminConsole'),
       icon: TerminalIcon,
       linkProps: {
-        to: '/dashboard/user/admin/console',
+        to: '/user/admin/console',
         params: {},
       },
     },
@@ -49,7 +49,7 @@ export function NavUserAdmin() {
       title: t('userSidebar.users'),
       icon: UsersIcon,
       linkProps: {
-        to: '/dashboard/user/admin/users',
+        to: '/user/admin/users',
         params: {},
       },
     },
@@ -57,7 +57,7 @@ export function NavUserAdmin() {
       title: t('userSidebar.serverSettings'),
       icon: ServerIcon,
       linkProps: {
-        to: '/dashboard/user/admin/settings/$namespace',
+        to: '/user/admin/settings/$namespace',
         params: { namespace: 'server' },
       },
     },
@@ -65,7 +65,7 @@ export function NavUserAdmin() {
       title: t('userSidebar.devSettings'),
       icon: BugIcon,
       linkProps: {
-        to: '/dashboard/user/admin/settings/$namespace',
+        to: '/user/admin/settings/$namespace',
         params: { namespace: 'dev' },
       },
     },

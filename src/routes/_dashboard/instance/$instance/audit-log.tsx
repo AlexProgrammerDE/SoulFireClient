@@ -29,59 +29,57 @@ import { format } from 'date-fns';
 import { useDateFnsLocale } from '@/hooks/use-date-fns-locale.ts';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
 
-export const Route = createFileRoute('/dashboard/instance/$instance/audit-log')(
-  {
-    beforeLoad: (props) => {
-      const { instance } = props.params;
-      const auditLogQueryOptions = queryOptions({
-        queryKey: ['instance-audit-log', instance],
-        queryFn: async (
-          props,
-        ): Promise<{
-          auditLog: InstanceAuditLogResponse;
-        }> => {
-          const transport = createTransport();
-          if (transport === null) {
-            return {
-              auditLog: {
-                entry: [],
-              },
-            };
-          }
-
-          const instanceService = new InstanceServiceClient(transport);
-          const result = await instanceService.getAuditLog(
-            {
-              id: instance,
-            },
-            {
-              abort: props.signal,
-            },
-          );
-
+export const Route = createFileRoute(
+  '/_dashboard/instance/$instance/audit-log',
+)({
+  beforeLoad: (props) => {
+    const { instance } = props.params;
+    const auditLogQueryOptions = queryOptions({
+      queryKey: ['instance-audit-log', instance],
+      queryFn: async (
+        props,
+      ): Promise<{
+        auditLog: InstanceAuditLogResponse;
+      }> => {
+        const transport = createTransport();
+        if (transport === null) {
           return {
-            auditLog: result.response,
+            auditLog: {
+              entry: [],
+            },
           };
-        },
-        refetchInterval: 3_000,
+        }
+
+        const instanceService = new InstanceServiceClient(transport);
+        const result = await instanceService.getAuditLog(
+          {
+            id: instance,
+          },
+          {
+            abort: props.signal,
+          },
+        );
+
+        return {
+          auditLog: result.response,
+        };
+      },
+      refetchInterval: 3_000,
+    });
+    props.abortController.signal.addEventListener('abort', () => {
+      void queryClientInstance.cancelQueries({
+        queryKey: auditLogQueryOptions.queryKey,
       });
-      props.abortController.signal.addEventListener('abort', () => {
-        void queryClientInstance.cancelQueries({
-          queryKey: auditLogQueryOptions.queryKey,
-        });
-      });
-      return {
-        auditLogQueryOptions,
-      };
-    },
-    loader: async (props) => {
-      await queryClientInstance.prefetchQuery(
-        props.context.auditLogQueryOptions,
-      );
-    },
-    component: AuditLog,
+    });
+    return {
+      auditLogQueryOptions,
+    };
   },
-);
+  loader: async (props) => {
+    await queryClientInstance.prefetchQuery(props.context.auditLogQueryOptions);
+  },
+  component: AuditLog,
+});
 
 function toI18nKey(type: InstanceAuditLogResponse_AuditLogEntryType) {
   switch (type) {

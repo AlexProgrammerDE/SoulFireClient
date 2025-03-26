@@ -19,7 +19,7 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar.tsx';
 import { InstanceSidebar } from '@/components/nav/instance-sidebar.tsx';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 
-export const Route = createFileRoute('/dashboard/instance/$instance')({
+export const Route = createFileRoute('/_dashboard/instance/$instance')({
   beforeLoad: (props) => {
     const { instance } = props.params;
     const instanceInfoQueryOptions = queryOptions({

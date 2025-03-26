@@ -53,7 +53,7 @@ export function CreateUserPopup({
   setOpen: (open: boolean) => void;
 }) {
   const usersQueryOptions = useRouteContext({
-    from: '/dashboard/user/admin/users',
+    from: '/_dashboard/user/admin/users',
     select: (context) => context.usersQueryOptions,
   });
   const queryClient = useQueryClient();

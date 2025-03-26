@@ -135,7 +135,7 @@ function Index() {
 
   const targetRedirect: TargetRedirectFunction = useCallback(async () => {
     await navigate({
-      to: searchParams.redirect ?? '/dashboard/user',
+      to: searchParams.redirect ?? '/user',
       replace: true,
     });
   }, [navigate, searchParams.redirect]);

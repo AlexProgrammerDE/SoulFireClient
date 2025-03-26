@@ -29,7 +29,7 @@ export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
   const transport = useContext(TransportContext);
   const queryClient = useQueryClient();
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/dashboard/instance/$instance',
+    from: '/_dashboard/instance/$instance',
     select: (context) => context.instanceInfoQueryOptions,
   });
   const enabledEntry = props.settingsEntry.entries.find(
@@ -71,7 +71,7 @@ export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
       <CardHeader className="p-4">
         <div className="flex flex-row items-center justify-between gap-2">
           <Link
-            to="/dashboard/instance/$instance/settings/$namespace"
+            to="/instance/$instance/settings/$namespace"
             params={{
               instance: instanceInfo.id,
               namespace: props.settingsEntry.namespace,
