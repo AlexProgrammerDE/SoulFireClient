@@ -214,7 +214,7 @@ function ExtraHeader(props: {
               fromDate={props.table
                 .getCoreRowModel()
                 .rows.map((row) => timestampToDate(row.original.timestamp!))
-                .reduce((a, b) => (a < b ? a : b))}
+                .reduce((a, b) => (a < b ? a : b), new Date())}
               toDate={new Date()}
             />
           </PopoverContent>
