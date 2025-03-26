@@ -7,7 +7,7 @@ import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
 import { getEnumKeyByValue } from '@/lib/types.ts';
 import { UserRole } from '@/generated/soulfire/common.ts';
 import { toast } from 'sonner';
-import { PlusIcon, TrashIcon } from 'lucide-react';
+import { LogOutIcon, PlusIcon, TrashIcon } from 'lucide-react';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import {
   queryOptions,
@@ -172,6 +172,25 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
       });
     },
   });
+  const { mutateAsync: invalidateUsersMutation } = useMutation({
+    mutationFn: async (user: UserListResponse_User[]) => {
+      if (transport === null) {
+        return;
+      }
+
+      const userService = new UserServiceClient(transport);
+      for (const u of user) {
+        await userService.invalidateSessions({
+          id: u.id,
+        });
+      }
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: usersQueryOptions.queryKey,
+      });
+    },
+  });
 
   return (
     <>
@@ -198,6 +217,26 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
         }}
       >
         <TrashIcon className="h-4 w-4" />
+      </Button>
+      <Button
+        variant="outline"
+        disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
+        onClick={() => {
+          const selectedRows = props.table
+            .getFilteredSelectedRowModel()
+            .rows.map((r) => r.original);
+
+          toast.promise(invalidateUsersMutation(selectedRows), {
+            loading: t('users.invalidateToast.loading'),
+            success: t('users.invalidateToast.success'),
+            error: (e) => {
+              console.error(e);
+              return t('users.invalidateToast.error');
+            },
+          });
+        }}
+      >
+        <LogOutIcon className="h-4 w-4" />
       </Button>
     </>
   );
