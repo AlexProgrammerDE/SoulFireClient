@@ -213,6 +213,7 @@
     "pluginSettings": "Ustawienia wtyczek",
     "botSettings": "Ustawienia botów",
     "accountSettings": "Ustawienia konta",
+    "metaSettings": "",
     "proxySettings": "Ustawienia serwera proxy",
     "aiSettings": "Ustawienia SI",
     "discoverPlugins": "Lista wtyczek"
@@ -268,6 +269,7 @@
     "overview": "Przegląd",
     "users": "Użytkownicy",
     "accountSettings": "Ustawienia konta",
+    "metaSettings": "",
     "discoverPlugins": "Lista wtyczek"
   },
   "instanceState": {

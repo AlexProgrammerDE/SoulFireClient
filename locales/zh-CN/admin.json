@@ -64,7 +64,9 @@
     "table": {
       "username": "用户名",
       "email": "电子邮箱",
-      "role": "用户类型"
+      "role": "用户类型",
+      "createdAt": "",
+      "minIssuedAt": ""
     }
   }
 }
