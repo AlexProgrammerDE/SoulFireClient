@@ -377,6 +377,7 @@ export function ComboComponent(props: {
                 <CommandItem
                   key={option.id}
                   value={option.id}
+                  keywords={[option.displayName, ...option.keywords]}
                   onSelect={(currentValue) => {
                     props.changeCallback(currentValue);
                     setOpen(false);

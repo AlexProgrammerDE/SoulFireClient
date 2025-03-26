@@ -2,9 +2,10 @@ import React, { Suspense } from 'react';
 import { LucideProps } from 'lucide-react';
 import dynamicIconImports from 'lucide-react/dynamicIconImports';
 import i18n from '@/lib/i18n';
+import tags from 'lucide-static/tags.json';
 
-export function getAllIconNames() {
-  return Object.keys(dynamicIconImports);
+export function getAllIconTags() {
+  return Object.entries(tags);
 }
 
 export type LucideIconName = keyof typeof dynamicIconImports;

@@ -5,13 +5,17 @@ import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { setInstanceFriendlyName, setInstanceIcon } from '@/lib/utils.tsx';
+import {
+  formatIconName,
+  setInstanceFriendlyName,
+  setInstanceIcon,
+} from '@/lib/utils.tsx';
 import {
   ComboComponent,
   ComponentTitle,
   StringComponent,
 } from '@/components/settings-page.tsx';
-import { getAllIconNames } from '@/components/dynamic-icon.tsx';
+import { getAllIconTags } from '@/components/dynamic-icon.tsx';
 import { StringSetting_InputType } from '@/generated/soulfire/common.ts';
 
 export const Route = createFileRoute('/dashboard/instance/$instance/meta')({
@@ -93,10 +97,11 @@ function MetaSettings() {
               setting={{
                 uiName: '',
                 description: '',
-                options: getAllIconNames().map((iconName) => ({
-                  id: iconName,
-                  displayName: iconName,
-                  iconId: iconName,
+                options: getAllIconTags().map((iconName) => ({
+                  id: iconName[0],
+                  displayName: formatIconName(iconName[0]),
+                  iconId: iconName[0],
+                  keywords: iconName[1],
                 })),
                 def: '',
               }}

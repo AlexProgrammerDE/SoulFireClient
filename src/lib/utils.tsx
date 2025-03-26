@@ -404,3 +404,10 @@ export function timestampToDate(timestamp: Timestamp): Date {
 export function runAsync(fn: () => Promise<void>) {
   void fn().catch(console.error);
 }
+
+export function formatIconName(text: string): string {
+  return text
+    .split('-')
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}

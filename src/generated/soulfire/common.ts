@@ -407,6 +407,12 @@ export interface ComboOption {
      * @generated from protobuf field: optional string icon_id = 3;
      */
     iconId?: string;
+    /**
+     * keywords to also use for filtering
+     *
+     * @generated from protobuf field: repeated string keywords = 4;
+     */
+    keywords: string[];
 }
 /**
  * @generated from protobuf message soulfire.v1.ComboSetting
@@ -971,7 +977,8 @@ class ComboOption$Type extends MessageType<ComboOption> {
         super("soulfire.v1.ComboOption", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "icon_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "icon_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "keywords", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
