@@ -357,16 +357,18 @@ export function ComboComponent(props: {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-[200px] justify-between"
+          className="w-64 justify-between"
         >
-          {selectedOption.iconId && (
-            <DynamicIcon name={selectedOption.iconId} />
-          )}
-          {selectedOption.displayName}
+          <div className="inline-flex flex-row items-center justify-center gap-2">
+            {selectedOption.iconId && (
+              <DynamicIcon name={selectedOption.iconId} />
+            )}
+            <span className="truncate">{selectedOption.displayName}</span>
+          </div>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-64 p-0">
         <Command>
           <CommandInput placeholder="Search value..." />
           <CommandList>
