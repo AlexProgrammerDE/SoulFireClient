@@ -401,6 +401,12 @@ export interface ComboOption {
      * @generated from protobuf field: string display_name = 2;
      */
     displayName: string;
+    /**
+     * May be used for an icon for an option
+     *
+     * @generated from protobuf field: optional string icon_id = 3;
+     */
+    iconId?: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.ComboSetting
@@ -964,7 +970,8 @@ class ComboOption$Type extends MessageType<ComboOption> {
     constructor() {
         super("soulfire.v1.ComboOption", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "icon_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }

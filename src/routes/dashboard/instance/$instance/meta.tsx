@@ -96,6 +96,7 @@ function MetaSettings() {
                 options: getAllIconNames().map((iconName) => ({
                   id: iconName,
                   displayName: iconName,
+                  iconId: iconName,
                 })),
                 def: '',
               }}

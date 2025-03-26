@@ -63,6 +63,7 @@ import { toast } from 'sonner';
 import { TFunction } from 'i18next';
 import { NumberFormatValues } from 'react-number-format/types/types';
 import { useRouteContext } from '@tanstack/react-router';
+import DynamicIcon from '@/components/dynamic-icon.tsx';
 
 function isAllowedValidator(
   t: TFunction,
@@ -342,6 +343,13 @@ export function ComboComponent(props: {
 }) {
   const [open, setOpen] = useState(false);
 
+  const selectedOption = props.setting.options.find(
+    (option) => option.id === props.value,
+  );
+  if (!selectedOption) {
+    throw new Error('Selected option not found');
+  }
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -351,10 +359,10 @@ export function ComboComponent(props: {
           aria-expanded={open}
           className="w-[200px] justify-between"
         >
-          {
-            props.setting.options.find((option) => option.id === props.value)
-              ?.displayName
-          }
+          {selectedOption.iconId && (
+            <DynamicIcon name={selectedOption.iconId} />
+          )}
+          {selectedOption.displayName}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -378,6 +386,7 @@ export function ComboComponent(props: {
                       props.value === option.id ? 'opacity-100' : 'opacity-0',
                     )}
                   />
+                  {option.iconId && <DynamicIcon name={option.iconId} />}
                   {option.displayName}
                 </CommandItem>
               ))}
