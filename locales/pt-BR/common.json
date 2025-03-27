@@ -47,8 +47,8 @@
           "placeholder": "Meu Bot de Minecraft",
           "description": "O nome que quer dar para esta instância.",
           "min": "O nome amigável deve ter pelo menos 3 caracteres.",
-          "max": "O nome amigável deve ter no máximo 50 caracteres.",
-          "regex": "Nome amigável só pode conter letras, números e espaços"
+          "max": "",
+          "regex": ""
         },
         "cancel": "Cancelar",
         "create": "Criar"

@@ -61,6 +61,11 @@
       "success": "",
       "error": ""
     },
+    "invalidateToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "table": {
       "username": "Nazwa użytkownika",
       "email": "E-mail",

@@ -47,8 +47,8 @@
           "placeholder": "Mein Minecraft-Bot",
           "description": "Der Name, den Sie dieser Instanz geben möchten.",
           "min": "Der Name muss mindestens 3 Zeichen lang sein.",
-          "max": "Der Name darf höchstens 50 Zeichen lang sein.",
-          "regex": "Der Anzeigename kann nur Buchstaben, Zahlen und Leerzeichen enthalten"
+          "max": "",
+          "regex": ""
         },
         "cancel": "Abbrechen",
         "create": "Erstellen"

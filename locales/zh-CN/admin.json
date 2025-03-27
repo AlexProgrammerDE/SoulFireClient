@@ -61,6 +61,11 @@
       "success": "",
       "error": ""
     },
+    "invalidateToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "table": {
       "username": "用户名",
       "email": "电子邮箱",

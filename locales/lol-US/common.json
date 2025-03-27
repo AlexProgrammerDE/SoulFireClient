@@ -47,8 +47,8 @@
           "placeholder": "Mah Minecraft Bot",
           "description": "Teh naym u wantz 2 giv 2 dis instanec.",
           "min": "Teh friendly naym must bees at least 3 characterz long.",
-          "max": "Teh friendly naym must bees at most 50 characterz long.",
-          "regex": "Friendly naym can only contaen letterz, numberz, an spacez"
+          "max": "",
+          "regex": ""
         },
         "cancel": "cancel k?",
         "create": "Makee Makee"

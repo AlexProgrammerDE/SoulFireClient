@@ -47,8 +47,8 @@
           "placeholder": "Mój bot Minecraft",
           "description": "Nazwa, którą chcesz nadać tej instancji.",
           "min": "Przyjazna nazwa musi mieć co najmniej 3 znaki.",
-          "max": "Przyjazna nazwa musi mieć nie więcej niż 50 znaków.",
-          "regex": "Przyjazna nazwa może zawierać tylko litery, cyfry i spacje"
+          "max": "",
+          "regex": ""
         },
         "cancel": "Anuluj",
         "create": "Utwórz"

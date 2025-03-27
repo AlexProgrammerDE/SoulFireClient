@@ -47,8 +47,8 @@
           "placeholder": "我的 Minecraft 机器人",
           "description": "您想要赋予此实例的名称",
           "min": "名称至少需要3个字符",
-          "max": "名称最多允许50个字符",
-          "regex": "名称只能包含字母、数字和空格"
+          "max": "",
+          "regex": ""
         },
         "cancel": "取消",
         "create": "创建"
