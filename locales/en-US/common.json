@@ -281,7 +281,7 @@
       "publicAddress": "Public WebDAV Address",
       "personalToken": "Personal WebDAV Token",
       "securityWarning": "Your personal WebDAV Key is very important. Do not share it with anyone. It is used to authenticate you when accessing your files.",
-      "addressDescription": "This is the address you need to use to access your files."
+      "addressDescription": "This is the address you need to use to access your files. Sometimes you need to use dav:// or davs:// instead of http(s)://."
     },
     "api": {
       "title": "API Access",
