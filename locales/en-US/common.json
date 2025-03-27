@@ -304,7 +304,8 @@
       "copy": "Copy Address",
       "copied": "Address copied to clipboard"
     },
-    "documentation": "Documentation"
+    "documentation": "Documentation",
+    "howToConnect": "How to connect"
   },
   "instanceState": {
     "starting": "Starting",

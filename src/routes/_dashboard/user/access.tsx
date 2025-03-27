@@ -137,9 +137,9 @@ function AccessPage() {
               <span>{t('access.token.generate')}</span>
             </Button>
             <Button variant="secondary" asChild>
-              <ExternalLink href="https://soulfiremc.com/docs">
+              <ExternalLink href="https://soulfiremc.com/docs/guides/webdav">
                 <BookOpenTextIcon />
-                <span>{t('access.documentation')}</span>
+                <span>{t('access.howToConnect')}</span>
               </ExternalLink>
             </Button>
           </CardFooter>
