@@ -93,7 +93,7 @@ function isAllowedValidator(
   };
 }
 
-export function ComponentTitle(props: {
+function ComponentTitle(props: {
   title: string;
   description: string;
   onClick?: () => void;
@@ -148,7 +148,7 @@ function inputTypeToHtml(
   }
 }
 
-export function StringComponent(props: {
+function StringComponent(props: {
   setting: StringSetting;
   value: string;
   changeCallback: (value: string) => void;
@@ -194,7 +194,7 @@ export function StringComponent(props: {
   }
 }
 
-export function IntComponent(props: {
+function IntComponent(props: {
   setting: IntSetting;
   value: number;
   changeCallback: (value: number) => void;
@@ -249,7 +249,7 @@ export function IntComponent(props: {
   );
 }
 
-export function DoubleComponent(props: {
+function DoubleComponent(props: {
   setting: DoubleSetting;
   value: number;
   changeCallback: (value: number) => void;
@@ -305,7 +305,7 @@ export function DoubleComponent(props: {
   );
 }
 
-export function BoolComponent(props: {
+function BoolComponent(props: {
   setting: BoolSetting;
   value: boolean;
   changeCallback: (value: boolean) => void;
@@ -336,7 +336,7 @@ export function BoolComponent(props: {
   );
 }
 
-export function ComboComponent(props: {
+function ComboComponent(props: {
   setting: ComboSetting;
   value: string;
   changeCallback: (value: string) => void;
@@ -412,7 +412,7 @@ function makeIdValueSingle<T>(value: T): IdValue<T> {
   return { id: randomId, value };
 }
 
-export function StringListComponent(props: {
+function StringListComponent(props: {
   setting: StringListSetting;
   value: string[];
   changeCallback: (value: string[]) => void;
@@ -497,7 +497,7 @@ export function StringListComponent(props: {
   );
 }
 
-export function MinMaxComponent(props: {
+function MinMaxComponent(props: {
   setting: MinMaxSetting;
   entry: MinMaxSettingEntry;
   value: number;
@@ -575,22 +575,36 @@ function EntryComponent<T extends BaseSettings>(props: {
     },
   });
 
-  if (!props.entry || value === undefined) {
+  return (
+    <GenericEntryComponent
+      entry={props.entry.value}
+      value={value}
+      changeCallback={setValueMutation.mutate}
+    />
+  );
+}
+
+export function GenericEntryComponent(props: {
+  entry: SettingEntry['value'];
+  value: JsonValue;
+  changeCallback: (value: JsonValue) => void;
+}) {
+  if (!props.entry || props.value === undefined) {
     return null;
   }
 
-  switch (props.entry.value.oneofKind) {
+  switch (props.entry.oneofKind) {
     case 'string': {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.entry.value.string.uiName}
-            description={props.entry.value.string.description}
+            title={props.entry.string.uiName}
+            description={props.entry.string.description}
           />
           <StringComponent
-            setting={props.entry.value.string}
-            value={value as string}
-            changeCallback={setValueMutation.mutate}
+            setting={props.entry.string}
+            value={props.value as string}
+            changeCallback={props.changeCallback}
           />
         </div>
       );
@@ -599,13 +613,13 @@ function EntryComponent<T extends BaseSettings>(props: {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.entry.value.int.uiName}
-            description={props.entry.value.int.description}
+            title={props.entry.int.uiName}
+            description={props.entry.int.description}
           />
           <IntComponent
-            setting={props.entry.value.int}
-            value={value as number}
-            changeCallback={setValueMutation.mutate}
+            setting={props.entry.int}
+            value={props.value as number}
+            changeCallback={props.changeCallback}
           />
         </div>
       );
@@ -614,11 +628,11 @@ function EntryComponent<T extends BaseSettings>(props: {
       return (
         <div className="flex max-w-xl flex-row gap-1">
           <BoolComponent
-            setting={props.entry.value.bool}
-            value={value as boolean}
-            changeCallback={setValueMutation.mutate}
-            title={props.entry.value.bool.uiName}
-            description={props.entry.value.bool.description}
+            setting={props.entry.bool}
+            value={props.value as boolean}
+            changeCallback={props.changeCallback}
+            title={props.entry.bool.uiName}
+            description={props.entry.bool.description}
           />
         </div>
       );
@@ -627,13 +641,13 @@ function EntryComponent<T extends BaseSettings>(props: {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.entry.value.double.uiName}
-            description={props.entry.value.double.description}
+            title={props.entry.double.uiName}
+            description={props.entry.double.description}
           />
           <DoubleComponent
-            setting={props.entry.value.double}
-            value={value as number}
-            changeCallback={setValueMutation.mutate}
+            setting={props.entry.double}
+            value={props.value as number}
+            changeCallback={props.changeCallback}
           />
         </div>
       );
@@ -642,13 +656,13 @@ function EntryComponent<T extends BaseSettings>(props: {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.entry.value.combo.uiName}
-            description={props.entry.value.combo.description}
+            title={props.entry.combo.uiName}
+            description={props.entry.combo.description}
           />
           <ComboComponent
-            setting={props.entry.value.combo}
-            value={value as string}
-            changeCallback={setValueMutation.mutate}
+            setting={props.entry.combo}
+            value={props.value as string}
+            changeCallback={props.changeCallback}
           />
         </div>
       );
@@ -657,19 +671,19 @@ function EntryComponent<T extends BaseSettings>(props: {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.entry.value.stringList.uiName}
-            description={props.entry.value.stringList.description}
+            title={props.entry.stringList.uiName}
+            description={props.entry.stringList.description}
           />
           <StringListComponent
-            setting={props.entry.value.stringList}
-            value={value as string[]}
-            changeCallback={setValueMutation.mutate}
+            setting={props.entry.stringList}
+            value={props.value as string[]}
+            changeCallback={props.changeCallback}
           />
         </div>
       );
     }
     case 'minMax': {
-      const castValue = value as {
+      const castValue = props.value as {
         min: number;
         max: number;
       };
@@ -677,15 +691,15 @@ function EntryComponent<T extends BaseSettings>(props: {
         <>
           <div className="flex max-w-xl flex-col gap-1">
             <ComponentTitle
-              title={props.entry.value.minMax.minEntry!.uiName}
-              description={props.entry.value.minMax.minEntry!.description}
+              title={props.entry.minMax.minEntry!.uiName}
+              description={props.entry.minMax.minEntry!.description}
             />
             <MinMaxComponent
-              setting={props.entry.value.minMax}
-              entry={props.entry.value.minMax.minEntry!}
+              setting={props.entry.minMax}
+              entry={props.entry.minMax.minEntry!}
               value={castValue.min}
               changeCallback={(v) => {
-                setValueMutation.mutate({
+                props.changeCallback({
                   max: Math.max(castValue.max, v),
                   min: v,
                 });
@@ -694,15 +708,15 @@ function EntryComponent<T extends BaseSettings>(props: {
           </div>
           <div className="flex max-w-xl flex-col gap-1">
             <ComponentTitle
-              title={props.entry.value.minMax.maxEntry!.uiName}
-              description={props.entry.value.minMax.maxEntry!.description}
+              title={props.entry.minMax.maxEntry!.uiName}
+              description={props.entry.minMax.maxEntry!.description}
             />
             <MinMaxComponent
-              setting={props.entry.value.minMax}
-              entry={props.entry.value.minMax.maxEntry!}
+              setting={props.entry.minMax}
+              entry={props.entry.minMax.maxEntry!}
               value={castValue.max}
               changeCallback={(v) => {
-                setValueMutation.mutate({
+                props.changeCallback({
                   max: v,
                   min: Math.min(castValue.min, v),
                 });

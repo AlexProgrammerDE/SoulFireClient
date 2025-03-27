@@ -10,13 +10,10 @@ import {
   setInstanceFriendlyName,
   setInstanceIcon,
 } from '@/lib/utils.tsx';
-import {
-  ComboComponent,
-  ComponentTitle,
-  StringComponent,
-} from '@/components/settings-page.tsx';
+import { GenericEntryComponent } from '@/components/settings-page.tsx';
 import { getAllIconTags } from '@/components/dynamic-icon.tsx';
 import { StringSetting_InputType } from '@/generated/soulfire/common.ts';
+import { JsonValue } from '@protobuf-ts/runtime/build/types/json-typings';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance/meta')({
   component: MetaSettings,
@@ -29,9 +26,9 @@ function MetaSettings() {
   const transport = useContext(TransportContext);
   const instanceInfo = useContext(InstanceInfoContext);
   const setFriendlyNameMutation = useMutation({
-    mutationFn: async (value: string) => {
+    mutationFn: async (value: JsonValue) => {
       await setInstanceFriendlyName(
-        value,
+        value as string,
         instanceInfo,
         transport,
         queryClient,
@@ -45,9 +42,9 @@ function MetaSettings() {
     },
   });
   const setIconMutation = useMutation({
-    mutationFn: async (value: string) => {
+    mutationFn: async (value: JsonValue) => {
       await setInstanceIcon(
-        value,
+        value as string,
         instanceInfo,
         transport,
         queryClient,
@@ -68,35 +65,31 @@ function MetaSettings() {
     >
       <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
         <div className="flex flex-col gap-2">
-          <div className="flex max-w-xl flex-col gap-1">
-            <ComponentTitle
-              title="Friendly Name"
-              description="The name of the instance that will be displayed in the UI."
-            />
-            <StringComponent
-              setting={{
-                uiName: '',
-                description: '',
+          <GenericEntryComponent
+            entry={{
+              oneofKind: 'string',
+              string: {
+                uiName: 'Friendly Name',
+                description:
+                  'The name of the instance that will be displayed in the UI.',
                 def: '',
                 inputType: StringSetting_InputType.TEXT,
                 placeholder: 'My Instance',
                 minLength: 3,
                 maxLength: 32,
                 pattern: '[a-zA-Z0-9 ]+',
-              }}
-              value={instanceInfo.friendlyName}
-              changeCallback={setFriendlyNameMutation.mutate}
-            />
-          </div>
-          <div className="flex max-w-xl flex-col gap-1">
-            <ComponentTitle
-              title="Icon"
-              description="The icon of the instance that will be displayed in the UI."
-            />
-            <ComboComponent
-              setting={{
-                uiName: '',
-                description: '',
+              },
+            }}
+            value={instanceInfo.friendlyName}
+            changeCallback={setFriendlyNameMutation.mutate}
+          />
+          <GenericEntryComponent
+            entry={{
+              oneofKind: 'combo',
+              combo: {
+                uiName: 'Icon',
+                description:
+                  'The icon of the instance that will be displayed in the UI.',
                 options: getAllIconTags().map((iconName) => ({
                   id: iconName[0],
                   displayName: formatIconName(iconName[0]),
@@ -104,11 +97,11 @@ function MetaSettings() {
                   keywords: iconName[1],
                 })),
                 def: '',
-              }}
-              value={instanceInfo.icon}
-              changeCallback={setIconMutation.mutate}
-            />
-          </div>
+              },
+            }}
+            value={instanceInfo.icon}
+            changeCallback={setIconMutation.mutate}
+          />
         </div>
       </div>
     </InstancePageLayout>
