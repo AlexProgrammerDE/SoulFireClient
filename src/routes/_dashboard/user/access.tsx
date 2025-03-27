@@ -17,6 +17,7 @@ import {
   FoldersIcon,
   GlobeIcon,
   PlusIcon,
+  CopyIcon,
 } from 'lucide-react';
 import { ExternalLink } from '@/components/external-link.tsx';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
@@ -24,6 +25,8 @@ import { Input } from '@/components/ui/input.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { ClientServiceClient } from '@/generated/soulfire/client.client.ts';
 import { toast } from 'sonner';
+import { isTauri } from '@/lib/utils.tsx';
+import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
 
 export const Route = createFileRoute('/_dashboard/user/access')({
   component: AccessPage,
@@ -35,6 +38,14 @@ function AccessPage() {
   const transport = useContext(TransportContext);
   const [webDavToken, setWebDavToken] = useState('');
   const [apiToken, setApiToken] = useState('');
+
+  const handleCopy = (text: string) => {
+    if (isTauri()) {
+      void clipboard.writeText(text);
+    } else {
+      void navigator.clipboard.writeText(text);
+    }
+  };
 
   return (
     <UserPageLayout showUserCrumb={true} pageName={t('pageName.access')}>
@@ -51,21 +62,49 @@ function AccessPage() {
             <label className="block text-sm font-medium">
               {t('access.webdav.publicAddress')}
             </label>
-            <Input
-              className="select-all"
-              value={clientInfo.serverInfo?.publicWebdavAddress}
-              readOnly
-            />
+            <div className="flex items-center gap-2">
+              <Input
+                className="select-all"
+                value={clientInfo.serverInfo?.publicWebdavAddress}
+                readOnly
+              />
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  handleCopy(clientInfo.serverInfo?.publicWebdavAddress || '');
+                  toast.success(t('access.address.copied'));
+                }}
+              >
+                <CopyIcon />
+                <span>{t('access.address.copy')}</span>
+              </Button>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              {t('access.webdav.addressDescription')}
+            </p>
             <label className="block text-sm font-medium">
               {t('access.webdav.personalToken')}
             </label>
-            <Input
-              className="select-all"
-              disabled={webDavToken === ''}
-              value={webDavToken}
-              placeholder={t('access.token.placeholder')}
-              readOnly
-            />
+            <div className="flex items-center gap-2">
+              <Input
+                className="select-all"
+                disabled={webDavToken === ''}
+                value={webDavToken}
+                placeholder={t('access.token.placeholder')}
+                readOnly
+              />
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  handleCopy(webDavToken);
+                  toast.success(t('access.token.copied'));
+                }}
+                disabled={webDavToken === ''}
+              >
+                <CopyIcon />
+                <span>{t('access.token.copy')}</span>
+              </Button>
+            </div>
             <p className="text-muted-foreground text-sm">
               {t('access.webdav.securityWarning')}
             </p>
@@ -81,6 +120,7 @@ function AccessPage() {
                 toast.promise(
                   clientService.generateWebDAVToken({}).then((response) => {
                     setWebDavToken(response.response.token);
+                    handleCopy(response.response.token);
                   }),
                   {
                     loading: t('access.token.generating'),
@@ -116,21 +156,49 @@ function AccessPage() {
             <label className="block text-sm font-medium">
               {t('access.api.publicAddress')}
             </label>
-            <Input
-              className="select-all"
-              value={clientInfo.serverInfo?.publicApiAddress}
-              readOnly
-            />
+            <div className="flex items-center gap-2">
+              <Input
+                className="select-all"
+                value={clientInfo.serverInfo?.publicApiAddress}
+                readOnly
+              />
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  handleCopy(clientInfo.serverInfo?.publicApiAddress || '');
+                  toast.success(t('access.address.copied'));
+                }}
+              >
+                <CopyIcon />
+                <span>{t('access.address.copy')}</span>
+              </Button>
+            </div>
+            <p className="text-muted-foreground text-sm">
+              {t('access.api.addressDescription')}
+            </p>
             <label className="block text-sm font-medium">
               {t('access.api.personalToken')}
             </label>
-            <Input
-              className="select-all"
-              disabled={apiToken === ''}
-              value={apiToken}
-              placeholder={t('access.token.placeholder')}
-              readOnly
-            />
+            <div className="flex items-center gap-2">
+              <Input
+                className="select-all"
+                disabled={apiToken === ''}
+                value={apiToken}
+                placeholder={t('access.token.placeholder')}
+                readOnly
+              />
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  handleCopy(apiToken);
+                  toast.success(t('access.token.copied'));
+                }}
+                disabled={apiToken === ''}
+              >
+                <CopyIcon />
+                <span>{t('access.token.copy')}</span>
+              </Button>
+            </div>
             <p className="text-muted-foreground text-sm">
               {t('access.api.securityWarning')}
             </p>
@@ -146,6 +214,7 @@ function AccessPage() {
                 toast.promise(
                   clientService.generateAPIToken({}).then((response) => {
                     setApiToken(response.response.token);
+                    handleCopy(response.response.token);
                   }),
                   {
                     loading: t('access.token.generating'),

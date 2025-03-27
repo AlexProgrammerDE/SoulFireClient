@@ -280,21 +280,29 @@
       "description": "SoulFire allows you to access instance, script and other files using the WebDAV protocol.",
       "publicAddress": "Public WebDAV Address",
       "personalToken": "Personal WebDAV Token",
-      "securityWarning": "Your personal WebDAV Key is very important. Do not share it with anyone. It is used to authenticate you when accessing your files."
+      "securityWarning": "Your personal WebDAV Key is very important. Do not share it with anyone. It is used to authenticate you when accessing your files.",
+      "addressDescription": "This is the address you need to use to access your files."
     },
     "api": {
       "title": "API Access",
       "description": "SoulFire's gRPC HTTP API allows you to interact with your instances programmatically using web requests.",
       "publicAddress": "Public API Address",
       "personalToken": "Personal API Token",
-      "securityWarning": "Your personal API Key is very important. Do not share it with anyone. It is used to authenticate you when accessing the API."
+      "securityWarning": "Your personal API Key is very important. Do not share it with anyone. It is used to authenticate you when accessing the API.",
+      "addressDescription": "This is the address you need to use to access the API."
     },
     "token": {
       "generate": "Generate Token",
       "placeholder": "Click 'Generate Token' below",
       "generating": "Generating token...",
-      "success": "Token generated successfully",
-      "error": "Failed to generate token"
+      "success": "Token generated successfully and copied to clipboard",
+      "error": "Failed to generate token",
+      "copy": "Copy Token",
+      "copied": "Token copied to clipboard"
+    },
+    "address": {
+      "copy": "Copy Address",
+      "copied": "Address copied to clipboard"
     },
     "documentation": "Documentation"
   },
