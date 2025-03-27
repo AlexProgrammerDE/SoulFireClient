@@ -158,9 +158,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     cell: ({ row }) => (
       <div className="flex flex-row gap-2">
         <UpdateUserButton row={row} />
-        <Button disabled={!row.getCanSelect()} variant="secondary" size="sm">
-          <VenetianMaskIcon />
-        </Button>
+        <ImpersonateUserButton row={row} />
       </div>
     ),
     enableSorting: false,
@@ -186,6 +184,20 @@ function UpdateUserButton(props: { row: Row<UserListResponse_User> }) {
         open={open}
         setOpen={setOpen}
       />
+    </>
+  );
+}
+
+function ImpersonateUserButton(props: { row: Row<UserListResponse_User> }) {
+  return (
+    <>
+      <Button
+        disabled={!props.row.getCanSelect()}
+        variant="secondary"
+        size="sm"
+      >
+        <VenetianMaskIcon />
+      </Button>
     </>
   );
 }
