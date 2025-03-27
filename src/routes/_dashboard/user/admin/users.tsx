@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useContext, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { DataTable } from '@/components/data-table.tsx';
-import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
+import { ColumnDef, Row, Table as ReactTable } from '@tanstack/react-table';
 import { getEnumKeyByValue } from '@/lib/types.ts';
 import { UserRole } from '@/generated/soulfire/common.ts';
 import { toast } from 'sonner';
@@ -157,8 +157,8 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     header: () => <Trans i18nKey="admin:users.table.actions" />,
     cell: ({ row }) => (
       <div className="flex flex-row gap-2">
-        <UpdateUserButton user={row.original} />
-        <Button variant="secondary" size="sm">
+        <UpdateUserButton row={row} />
+        <Button disabled={!row.getCanSelect()} variant="secondary" size="sm">
           <VenetianMaskIcon />
         </Button>
       </div>
@@ -168,15 +168,24 @@ const columns: ColumnDef<UserListResponse_User>[] = [
   },
 ];
 
-function UpdateUserButton(props: { user: UserListResponse_User }) {
+function UpdateUserButton(props: { row: Row<UserListResponse_User> }) {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <Button variant="secondary" size="sm" onClick={() => setOpen(true)}>
+      <Button
+        disabled={!props.row.getCanSelect()}
+        variant="secondary"
+        size="sm"
+        onClick={() => setOpen(true)}
+      >
         <PencilIcon />
       </Button>
-      <UpdateUserPopup user={props.user} open={open} setOpen={setOpen} />
+      <UpdateUserPopup
+        user={props.row.original}
+        open={open}
+        setOpen={setOpen}
+      />
     </>
   );
 }
