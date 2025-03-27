@@ -47,8 +47,8 @@
           "placeholder": "Mon Bot Minecraft",
           "description": "Le nom que vous voulez donner a cette instance.",
           "min": "Le nom doit contenir d'au moins 3 caractères.",
-          "max": "Le nom doit contenir moins de 50 caractères.",
-          "regex": "Les noms peuvent aussi contenir des lettres, des nombres et des espaces"
+          "max": "",
+          "regex": ""
         },
         "cancel": "Annuler",
         "create": "Créer"
