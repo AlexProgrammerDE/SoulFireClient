@@ -43,16 +43,13 @@ function AccessPage() {
           <CardHeader>
             <CardTitle className="inline-flex items-center gap-2">
               <FoldersIcon />
-              <span>WebDAV Access</span>
+              <span>{t('access.webdav.title')}</span>
             </CardTitle>
-            <CardDescription>
-              SoulFire allows you to access instance, script and other files
-              using the WebDAV protocol.
-            </CardDescription>
+            <CardDescription>{t('access.webdav.description')}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             <label className="block text-sm font-medium">
-              Public WebDAV Address
+              {t('access.webdav.publicAddress')}
             </label>
             <Input
               className="select-all"
@@ -60,18 +57,17 @@ function AccessPage() {
               readOnly
             />
             <label className="block text-sm font-medium">
-              Personal WebDAV Token
+              {t('access.webdav.personalToken')}
             </label>
             <Input
               className="select-all"
               disabled={webDavToken === ''}
               value={webDavToken}
-              placeholder="Click 'Generate Token' below"
+              placeholder={t('access.token.placeholder')}
               readOnly
             />
             <p className="text-muted-foreground text-sm">
-              Your personal WebDAV Key is very important. Do not share it with
-              anyone. It is used to authenticate you when accessing your files.
+              {t('access.webdav.securityWarning')}
             </p>
           </CardContent>
           <CardFooter className="gap-2">
@@ -87,23 +83,23 @@ function AccessPage() {
                     setWebDavToken(response.response.token);
                   }),
                   {
-                    loading: 'Generating token...',
-                    success: 'Token generated successfully',
+                    loading: t('access.token.generating'),
+                    success: t('access.token.success'),
                     error: (error) => {
                       console.error(error);
-                      return 'Failed to generate token';
+                      return t('access.token.error');
                     },
                   },
                 );
               }}
             >
               <PlusIcon />
-              <span>Generate Token</span>
+              <span>{t('access.token.generate')}</span>
             </Button>
             <Button variant="secondary" asChild>
               <ExternalLink href="https://soulfiremc.com/docs">
                 <BookOpenTextIcon />
-                <span>Documentation</span>
+                <span>{t('access.documentation')}</span>
               </ExternalLink>
             </Button>
           </CardFooter>
@@ -112,16 +108,13 @@ function AccessPage() {
           <CardHeader>
             <CardTitle className="inline-flex items-center gap-2">
               <GlobeIcon />
-              <span>API Access</span>
+              <span>{t('access.api.title')}</span>
             </CardTitle>
-            <CardDescription>
-              SoulFire's gRPC HTTP API allows you to interact with your
-              instances programmatically using web requests.
-            </CardDescription>
+            <CardDescription>{t('access.api.description')}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-2">
             <label className="block text-sm font-medium">
-              Public API Address
+              {t('access.api.publicAddress')}
             </label>
             <Input
               className="select-all"
@@ -129,18 +122,17 @@ function AccessPage() {
               readOnly
             />
             <label className="block text-sm font-medium">
-              Personal API Token
+              {t('access.api.personalToken')}
             </label>
             <Input
               className="select-all"
               disabled={apiToken === ''}
               value={apiToken}
-              placeholder="Click 'Generate Token' below"
+              placeholder={t('access.token.placeholder')}
               readOnly
             />
             <p className="text-muted-foreground text-sm">
-              Your personal API Key is very important. Do not share it with
-              anyone. It is used to authenticate you when accessing the API.
+              {t('access.api.securityWarning')}
             </p>
           </CardContent>
           <CardFooter className="gap-2">
@@ -156,23 +148,23 @@ function AccessPage() {
                     setApiToken(response.response.token);
                   }),
                   {
-                    loading: 'Generating token...',
-                    success: 'Token generated successfully',
+                    loading: t('access.token.generating'),
+                    success: t('access.token.success'),
                     error: (error) => {
                       console.error(error);
-                      return 'Failed to generate token';
+                      return t('access.token.error');
                     },
                   },
                 );
               }}
             >
               <PlusIcon />
-              <span>Generate Token</span>
+              <span>{t('access.token.generate')}</span>
             </Button>
             <Button variant="secondary" asChild>
               <ExternalLink href={clientInfo.serverInfo?.publicDocsAddress}>
                 <BookOpenTextIcon />
-                <span>Documentation</span>
+                <span>{t('access.documentation')}</span>
               </ExternalLink>
             </Button>
           </CardFooter>
