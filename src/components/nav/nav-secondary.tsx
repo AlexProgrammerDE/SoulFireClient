@@ -14,6 +14,7 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar.tsx';
 import { useTranslation } from 'react-i18next';
+import { ExternalLink } from '@/components/external-link.tsx';
 
 type NavLinks = {
   title: string;
@@ -50,10 +51,10 @@ export function NavSecondary({
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton asChild size="sm" tooltip={item.title}>
-                <a href={item.url} target="_blank">
+                <ExternalLink href={item.url}>
                   <item.icon className="size-4" />
                   <span>{item.title}</span>
-                </a>
+                </ExternalLink>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

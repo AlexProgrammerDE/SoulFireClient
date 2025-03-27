@@ -724,6 +724,10 @@ export enum GlobalPermission {
      */
     GENERATE_SELF_WEBDAV_TOKEN = 12,
     /**
+     * @generated from protobuf enum value: GENERATE_SELF_API_TOKEN = 15;
+     */
+    GENERATE_SELF_API_TOKEN = 15,
+    /**
      * @generated from protobuf enum value: UPDATE_SELF_USERNAME = 13;
      */
     UPDATE_SELF_USERNAME = 13,

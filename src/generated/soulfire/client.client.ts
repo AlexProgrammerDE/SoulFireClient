@@ -10,6 +10,8 @@ import type { UpdateSelfEmailResponse } from "./client";
 import type { UpdateSelfEmailRequest } from "./client";
 import type { UpdateSelfUsernameResponse } from "./client";
 import type { UpdateSelfUsernameRequest } from "./client";
+import type { GenerateAPITokenResponse } from "./client";
+import type { GenerateAPITokenRequest } from "./client";
 import type { GenerateWebDAVTokenResponse } from "./client";
 import type { GenerateWebDAVTokenRequest } from "./client";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
@@ -29,6 +31,10 @@ export interface IClientServiceClient {
      * @generated from protobuf rpc: generateWebDAVToken(soulfire.v1.GenerateWebDAVTokenRequest) returns (soulfire.v1.GenerateWebDAVTokenResponse);
      */
     generateWebDAVToken(input: GenerateWebDAVTokenRequest, options?: RpcOptions): UnaryCall<GenerateWebDAVTokenRequest, GenerateWebDAVTokenResponse>;
+    /**
+     * @generated from protobuf rpc: generateAPIToken(soulfire.v1.GenerateAPITokenRequest) returns (soulfire.v1.GenerateAPITokenResponse);
+     */
+    generateAPIToken(input: GenerateAPITokenRequest, options?: RpcOptions): UnaryCall<GenerateAPITokenRequest, GenerateAPITokenResponse>;
     /**
      * @generated from protobuf rpc: updateSelfUsername(soulfire.v1.UpdateSelfUsernameRequest) returns (soulfire.v1.UpdateSelfUsernameResponse);
      */
@@ -62,17 +68,24 @@ export class ClientServiceClient implements IClientServiceClient, ServiceInfo {
         return stackIntercept<GenerateWebDAVTokenRequest, GenerateWebDAVTokenResponse>("unary", this._transport, method, opt, input);
     }
     /**
+     * @generated from protobuf rpc: generateAPIToken(soulfire.v1.GenerateAPITokenRequest) returns (soulfire.v1.GenerateAPITokenResponse);
+     */
+    generateAPIToken(input: GenerateAPITokenRequest, options?: RpcOptions): UnaryCall<GenerateAPITokenRequest, GenerateAPITokenResponse> {
+        const method = this.methods[2], opt = this._transport.mergeOptions(options);
+        return stackIntercept<GenerateAPITokenRequest, GenerateAPITokenResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
      * @generated from protobuf rpc: updateSelfUsername(soulfire.v1.UpdateSelfUsernameRequest) returns (soulfire.v1.UpdateSelfUsernameResponse);
      */
     updateSelfUsername(input: UpdateSelfUsernameRequest, options?: RpcOptions): UnaryCall<UpdateSelfUsernameRequest, UpdateSelfUsernameResponse> {
-        const method = this.methods[2], opt = this._transport.mergeOptions(options);
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
         return stackIntercept<UpdateSelfUsernameRequest, UpdateSelfUsernameResponse>("unary", this._transport, method, opt, input);
     }
     /**
      * @generated from protobuf rpc: updateSelfEmail(soulfire.v1.UpdateSelfEmailRequest) returns (soulfire.v1.UpdateSelfEmailResponse);
      */
     updateSelfEmail(input: UpdateSelfEmailRequest, options?: RpcOptions): UnaryCall<UpdateSelfEmailRequest, UpdateSelfEmailResponse> {
-        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<UpdateSelfEmailRequest, UpdateSelfEmailResponse>("unary", this._transport, method, opt, input);
     }
 }

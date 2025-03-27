@@ -21,6 +21,7 @@ import { TransportContext } from '@/components/providers/transport-context.tsx';
 import DynamicIcon from './dynamic-icon';
 import { Link, useRouteContext } from '@tanstack/react-router';
 import { SettingsPage } from '@/generated/soulfire/common.ts';
+import { ExternalLink } from '@/components/external-link.tsx';
 
 export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
   const { t } = useTranslation('common');
@@ -110,17 +111,16 @@ export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
               license: props.settingsEntry.owningPlugin!.license,
             })}
           </Badge>
-          <a
+          <ExternalLink
             href={props.settingsEntry.owningPlugin!.website}
             className="inline-flex items-center"
-            target="_blank"
           >
             <Badge variant="secondary">
               {t('pluginCard.website', {
                 website: props.settingsEntry.owningPlugin!.website,
               })}
             </Badge>
-          </a>
+          </ExternalLink>
         </div>
       </CardHeader>
     </Card>

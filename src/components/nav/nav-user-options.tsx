@@ -1,6 +1,6 @@
 'use client';
 
-import { FoldersIcon, Grid2x2Icon, PlusIcon } from 'lucide-react';
+import { FoldersIcon, Grid2x2Icon, PlusIcon, ZapIcon } from 'lucide-react';
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -41,10 +41,10 @@ export function NavUserOptions() {
       createInstance: true,
     },
     {
-      title: t('userSidebar.files'),
-      icon: FoldersIcon,
+      title: t('userSidebar.access'),
+      icon: ZapIcon,
       linkProps: {
-        to: '/user/files',
+        to: '/user/access',
         params: {},
       },
     },

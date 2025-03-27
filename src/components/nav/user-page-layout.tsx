@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button.tsx';
 import { useTranslation } from 'react-i18next';
 import { CatchBoundary } from '@tanstack/react-router';
 import { ErrorComponent } from '@/components/error-component.tsx';
+import { ExternalLink } from '@/components/external-link.tsx';
 
 export default function UserPageLayout(props: {
   children: ReactNode;
@@ -42,12 +43,12 @@ export default function UserPageLayout(props: {
             <>
               <Separator orientation="vertical" className="h-4" />
               <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
-                <a href={props.documentationLink} target="_blank">
+                <ExternalLink href={props.documentationLink}>
                   <BookOpenTextIcon />
                   <span className="sr-only">
                     {t('userSidebar.readDocumentation')}
                   </span>
-                </a>
+                </ExternalLink>
               </Button>
             </>
           )}

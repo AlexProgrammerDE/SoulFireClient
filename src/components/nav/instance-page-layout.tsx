@@ -15,6 +15,7 @@ import { BookOpenTextIcon, HomeIcon } from 'lucide-react';
 import { CatchBoundary, Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { ErrorComponent } from '@/components/error-component.tsx';
+import { ExternalLink } from '@/components/external-link.tsx';
 
 export default function InstancePageLayout(props: {
   children: ReactNode;
@@ -50,12 +51,12 @@ export default function InstancePageLayout(props: {
             <>
               <Separator orientation="vertical" className="h-4" />
               <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
-                <a href={props.documentationLink} target="_blank">
+                <ExternalLink href={props.documentationLink}>
                   <BookOpenTextIcon />
                   <span className="sr-only">
                     {t('instanceSidebar.readDocumentation')}
                   </span>
-                </a>
+                </ExternalLink>
               </Button>
             </>
           )}

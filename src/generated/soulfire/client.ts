@@ -42,13 +42,17 @@ export interface ServerInfo {
      */
     branchName: string;
     /**
-     * @generated from protobuf field: string public_address = 4;
+     * @generated from protobuf field: string public_api_address = 4;
      */
-    publicAddress: string;
+    publicApiAddress: string;
     /**
      * @generated from protobuf field: string public_webdav_address = 5;
      */
     publicWebdavAddress: string;
+    /**
+     * @generated from protobuf field: string public_docs_address = 6;
+     */
+    publicDocsAddress: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.ClientDataResponse
@@ -88,6 +92,20 @@ export interface GenerateWebDAVTokenRequest {
  * @generated from protobuf message soulfire.v1.GenerateWebDAVTokenResponse
  */
 export interface GenerateWebDAVTokenResponse {
+    /**
+     * @generated from protobuf field: string token = 1;
+     */
+    token: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.GenerateAPITokenRequest
+ */
+export interface GenerateAPITokenRequest {
+}
+/**
+ * @generated from protobuf message soulfire.v1.GenerateAPITokenResponse
+ */
+export interface GenerateAPITokenResponse {
     /**
      * @generated from protobuf field: string token = 1;
      */
@@ -151,8 +169,9 @@ class ServerInfo$Type extends MessageType<ServerInfo> {
             { no: 1, name: "version", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "commit_hash", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "branch_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "public_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "public_webdav_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "public_api_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "public_webdav_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "public_docs_address", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -199,6 +218,28 @@ class GenerateWebDAVTokenResponse$Type extends MessageType<GenerateWebDAVTokenRe
  * @generated MessageType for protobuf message soulfire.v1.GenerateWebDAVTokenResponse
  */
 export const GenerateWebDAVTokenResponse = new GenerateWebDAVTokenResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GenerateAPITokenRequest$Type extends MessageType<GenerateAPITokenRequest> {
+    constructor() {
+        super("soulfire.v1.GenerateAPITokenRequest", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GenerateAPITokenRequest
+ */
+export const GenerateAPITokenRequest = new GenerateAPITokenRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GenerateAPITokenResponse$Type extends MessageType<GenerateAPITokenResponse> {
+    constructor() {
+        super("soulfire.v1.GenerateAPITokenResponse", [
+            { no: 1, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GenerateAPITokenResponse
+ */
+export const GenerateAPITokenResponse = new GenerateAPITokenResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class UpdateSelfUsernameRequest$Type extends MessageType<UpdateSelfUsernameRequest> {
     constructor() {
@@ -249,6 +290,7 @@ export const UpdateSelfEmailResponse = new UpdateSelfEmailResponse$Type();
 export const ClientService = new ServiceType("soulfire.v1.ClientService", [
     { name: "getClientData", options: {}, I: ClientDataRequest, O: ClientDataResponse },
     { name: "generateWebDAVToken", options: {}, I: GenerateWebDAVTokenRequest, O: GenerateWebDAVTokenResponse },
+    { name: "generateAPIToken", options: {}, I: GenerateAPITokenRequest, O: GenerateAPITokenResponse },
     { name: "updateSelfUsername", options: {}, I: UpdateSelfUsernameRequest, O: UpdateSelfUsernameResponse },
     { name: "updateSelfEmail", options: {}, I: UpdateSelfEmailRequest, O: UpdateSelfEmailResponse }
 ]);
