@@ -24,14 +24,12 @@
   },
   "users": {
     "filterPlaceholder": "Filter users...",
-    "addUserDialog": {
-      "title": "Add User",
-      "description": "Add a new user to this server",
+    "baseUserDialog": {
       "form": {
         "username": {
-          "min": "Username must be at least 3 characters",
-          "max": "Username must be at most 32 characters",
-          "regex": "Username must only contain lowercase letters, numbers, dots and underscores",
+          "min": "Usernames must be at least 3 characters",
+          "max": "Usernames must be at most 32 characters",
+          "regex": "Usernames must be lowercase, begin with an alphanumeric character, followed by more alphanumeric characters or dashes, and end with an alphanumeric character.",
           "label": "Username",
           "placeholder": "Enter username",
           "description": "A unique username that identifies the user"
@@ -46,15 +44,34 @@
           "description": "The role of the user. Admins can manage users and all instances. Users can only manage their own instances.",
           "user": "User",
           "admin": "Admin"
-        },
+        }
+      }
+    },
+    "addUserDialog": {
+      "title": "Add User",
+      "description": "Add a new user to this server",
+      "form": {
         "cancel": "Cancel",
         "add": "Add User"
+      }
+    },
+    "updateUserDialog": {
+      "title": "Update User",
+      "description": "Update the user's information",
+      "form": {
+        "cancel": "Cancel",
+        "add": "Update User"
       }
     },
     "addToast": {
       "loading": "Adding user...",
       "success": "Added user!",
       "error": "Failed to add user"
+    },
+    "updateToast": {
+      "loading": "Updating user...",
+      "success": "Updated user!",
+      "error": "Failed to update user"
     },
     "removeToast": {
       "loading": "Removing users...",
@@ -71,7 +88,8 @@
       "email": "Email",
       "role": "Role",
       "createdAt": "Created",
-      "minIssuedAt": "Min Login"
+      "minIssuedAt": "Min Login",
+      "actions": "Actions"
     }
   }
 }

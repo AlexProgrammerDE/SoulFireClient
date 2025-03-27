@@ -38,6 +38,7 @@ import {
 } from '@/components/ui/select.tsx';
 import { getEnumEntries } from '@/lib/types.ts';
 import { useRouteContext } from '@tanstack/react-router';
+import { UserListResponse_User } from '@/generated/soulfire/user.ts';
 
 export type CreateInstanceType = {
   username: string;
@@ -45,10 +46,12 @@ export type CreateInstanceType = {
   role: UserRole;
 };
 
-export function CreateUserPopup({
+export function UpdateUserPopup({
+  user,
   open,
   setOpen,
 }: {
+  user: UserListResponse_User;
   open: boolean;
   setOpen: (open: boolean) => void;
 }) {
@@ -74,12 +77,12 @@ export function CreateUserPopup({
   const form = useForm<CreateInstanceType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
-      email: '',
-      role: UserRole.ADMIN,
+      username: user.username,
+      email: user.email,
+      role: user.role,
     },
   });
-  const addMutation = useMutation({
+  const updateMutation = useMutation({
     mutationFn: async (values: CreateInstanceType) => {
       if (transport === null) {
         return;
@@ -87,7 +90,8 @@ export function CreateUserPopup({
 
       const userService = new UserServiceClient(transport);
       const promise = userService
-        .createUser({
+        .updateUser({
+          id: user.id,
           username: values.username,
           email: values.email,
           role: values.role,
@@ -121,13 +125,13 @@ export function CreateUserPopup({
           <form
             className="flex flex-col gap-4"
             onSubmit={(e) =>
-              void form.handleSubmit((data) => addMutation.mutate(data))(e)
+              void form.handleSubmit((data) => updateMutation.mutate(data))(e)
             }
           >
             <CredenzaHeader>
-              <CredenzaTitle>{t('users.addUserDialog.title')}</CredenzaTitle>
+              <CredenzaTitle>{t('users.updateUserDialog.title')}</CredenzaTitle>
               <CredenzaDescription>
-                {t('users.addUserDialog.description')}
+                {t('users.updateUserDialog.description')}
               </CredenzaDescription>
             </CredenzaHeader>
             <CredenzaBody className="flex flex-col gap-4">
@@ -219,10 +223,12 @@ export function CreateUserPopup({
             <CredenzaFooter className="justify-between">
               <CredenzaClose asChild>
                 <Button variant="outline">
-                  {t('users.addUserDialog.form.cancel')}
+                  {t('users.updateUserDialog.form.cancel')}
                 </Button>
               </CredenzaClose>
-              <Button type="submit">{t('users.addUserDialog.form.add')}</Button>
+              <Button type="submit">
+                {t('users.updateUserDialog.form.add')}
+              </Button>
             </CredenzaFooter>
           </form>
         </CredenzaContent>

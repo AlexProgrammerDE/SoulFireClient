@@ -7,7 +7,13 @@ import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
 import { getEnumKeyByValue } from '@/lib/types.ts';
 import { UserRole } from '@/generated/soulfire/common.ts';
 import { toast } from 'sonner';
-import { LogOutIcon, PlusIcon, TrashIcon } from 'lucide-react';
+import {
+  LogOutIcon,
+  PencilIcon,
+  PlusIcon,
+  TrashIcon,
+  VenetianMaskIcon,
+} from 'lucide-react';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import {
   queryOptions,
@@ -34,6 +40,7 @@ import { CreateUserPopup } from '@/components/dialog/create-user-popup.tsx';
 import { timestampToDate } from '@/lib/utils.tsx';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
+import { UpdateUserPopup } from '@/components/dialog/update-user-popup.tsx';
 
 export const Route = createFileRoute('/_dashboard/user/admin/users')({
   beforeLoad: (props) => {
@@ -145,7 +152,34 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     sortingFn: 'datetime',
     filterFn: 'isWithinRange',
   },
+  {
+    id: 'actions',
+    header: () => <Trans i18nKey="admin:users.table.actions" />,
+    cell: ({ row }) => (
+      <div className="flex flex-row gap-2">
+        <UpdateUserButton user={row.original} />
+        <Button variant="secondary" size="sm">
+          <VenetianMaskIcon />
+        </Button>
+      </div>
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
 ];
+
+function UpdateUserButton(props: { user: UserListResponse_User }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <Button variant="secondary" size="sm" onClick={() => setOpen(true)}>
+        <PencilIcon />
+      </Button>
+      <UpdateUserPopup user={props.user} open={open} setOpen={setOpen} />
+    </>
+  );
+}
 
 function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
   const { t } = useTranslation('admin');
