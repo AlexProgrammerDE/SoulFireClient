@@ -69,6 +69,48 @@ export interface ClientDataResponse {
      */
     serverInfo?: ServerInfo;
 }
+/**
+ * @generated from protobuf message soulfire.v1.GenerateWebDAVTokenRequest
+ */
+export interface GenerateWebDAVTokenRequest {
+}
+/**
+ * @generated from protobuf message soulfire.v1.GenerateWebDAVTokenResponse
+ */
+export interface GenerateWebDAVTokenResponse {
+    /**
+     * @generated from protobuf field: string token = 1;
+     */
+    token: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.UpdateSelfUsernameRequest
+ */
+export interface UpdateSelfUsernameRequest {
+    /**
+     * @generated from protobuf field: string username = 1;
+     */
+    username: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.UpdateSelfUsernameResponse
+ */
+export interface UpdateSelfUsernameResponse {
+}
+/**
+ * @generated from protobuf message soulfire.v1.UpdateSelfEmailRequest
+ */
+export interface UpdateSelfEmailRequest {
+    /**
+     * @generated from protobuf field: string email = 1;
+     */
+    email: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.UpdateSelfEmailResponse
+ */
+export interface UpdateSelfEmailResponse {
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class ClientDataRequest$Type extends MessageType<ClientDataRequest> {
     constructor() {
@@ -123,9 +165,78 @@ class ClientDataResponse$Type extends MessageType<ClientDataResponse> {
  * @generated MessageType for protobuf message soulfire.v1.ClientDataResponse
  */
 export const ClientDataResponse = new ClientDataResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GenerateWebDAVTokenRequest$Type extends MessageType<GenerateWebDAVTokenRequest> {
+    constructor() {
+        super("soulfire.v1.GenerateWebDAVTokenRequest", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GenerateWebDAVTokenRequest
+ */
+export const GenerateWebDAVTokenRequest = new GenerateWebDAVTokenRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GenerateWebDAVTokenResponse$Type extends MessageType<GenerateWebDAVTokenResponse> {
+    constructor() {
+        super("soulfire.v1.GenerateWebDAVTokenResponse", [
+            { no: 1, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GenerateWebDAVTokenResponse
+ */
+export const GenerateWebDAVTokenResponse = new GenerateWebDAVTokenResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UpdateSelfUsernameRequest$Type extends MessageType<UpdateSelfUsernameRequest> {
+    constructor() {
+        super("soulfire.v1.UpdateSelfUsernameRequest", [
+            { no: 1, name: "username", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.UpdateSelfUsernameRequest
+ */
+export const UpdateSelfUsernameRequest = new UpdateSelfUsernameRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UpdateSelfUsernameResponse$Type extends MessageType<UpdateSelfUsernameResponse> {
+    constructor() {
+        super("soulfire.v1.UpdateSelfUsernameResponse", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.UpdateSelfUsernameResponse
+ */
+export const UpdateSelfUsernameResponse = new UpdateSelfUsernameResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UpdateSelfEmailRequest$Type extends MessageType<UpdateSelfEmailRequest> {
+    constructor() {
+        super("soulfire.v1.UpdateSelfEmailRequest", [
+            { no: 1, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.UpdateSelfEmailRequest
+ */
+export const UpdateSelfEmailRequest = new UpdateSelfEmailRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UpdateSelfEmailResponse$Type extends MessageType<UpdateSelfEmailResponse> {
+    constructor() {
+        super("soulfire.v1.UpdateSelfEmailResponse", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.UpdateSelfEmailResponse
+ */
+export const UpdateSelfEmailResponse = new UpdateSelfEmailResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.ClientService
  */
 export const ClientService = new ServiceType("soulfire.v1.ClientService", [
-    { name: "getClientData", options: {}, I: ClientDataRequest, O: ClientDataResponse }
+    { name: "getClientData", options: {}, I: ClientDataRequest, O: ClientDataResponse },
+    { name: "generateWebDAVToken", options: {}, I: GenerateWebDAVTokenRequest, O: GenerateWebDAVTokenResponse },
+    { name: "updateSelfUsername", options: {}, I: UpdateSelfUsernameRequest, O: UpdateSelfUsernameResponse },
+    { name: "updateSelfEmail", options: {}, I: UpdateSelfEmailRequest, O: UpdateSelfEmailResponse }
 ]);

@@ -4,6 +4,12 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { ClientService } from "./client";
+import type { UpdateSelfEmailResponse } from "./client";
+import type { UpdateSelfEmailRequest } from "./client";
+import type { UpdateSelfUsernameResponse } from "./client";
+import type { UpdateSelfUsernameRequest } from "./client";
+import type { GenerateWebDAVTokenResponse } from "./client";
+import type { GenerateWebDAVTokenRequest } from "./client";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { ClientDataResponse } from "./client";
 import type { ClientDataRequest } from "./client";
@@ -17,6 +23,18 @@ export interface IClientServiceClient {
      * @generated from protobuf rpc: getClientData(soulfire.v1.ClientDataRequest) returns (soulfire.v1.ClientDataResponse);
      */
     getClientData(input: ClientDataRequest, options?: RpcOptions): UnaryCall<ClientDataRequest, ClientDataResponse>;
+    /**
+     * @generated from protobuf rpc: generateWebDAVToken(soulfire.v1.GenerateWebDAVTokenRequest) returns (soulfire.v1.GenerateWebDAVTokenResponse);
+     */
+    generateWebDAVToken(input: GenerateWebDAVTokenRequest, options?: RpcOptions): UnaryCall<GenerateWebDAVTokenRequest, GenerateWebDAVTokenResponse>;
+    /**
+     * @generated from protobuf rpc: updateSelfUsername(soulfire.v1.UpdateSelfUsernameRequest) returns (soulfire.v1.UpdateSelfUsernameResponse);
+     */
+    updateSelfUsername(input: UpdateSelfUsernameRequest, options?: RpcOptions): UnaryCall<UpdateSelfUsernameRequest, UpdateSelfUsernameResponse>;
+    /**
+     * @generated from protobuf rpc: updateSelfEmail(soulfire.v1.UpdateSelfEmailRequest) returns (soulfire.v1.UpdateSelfEmailResponse);
+     */
+    updateSelfEmail(input: UpdateSelfEmailRequest, options?: RpcOptions): UnaryCall<UpdateSelfEmailRequest, UpdateSelfEmailResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.ClientService
@@ -33,5 +51,26 @@ export class ClientServiceClient implements IClientServiceClient, ServiceInfo {
     getClientData(input: ClientDataRequest, options?: RpcOptions): UnaryCall<ClientDataRequest, ClientDataResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
         return stackIntercept<ClientDataRequest, ClientDataResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: generateWebDAVToken(soulfire.v1.GenerateWebDAVTokenRequest) returns (soulfire.v1.GenerateWebDAVTokenResponse);
+     */
+    generateWebDAVToken(input: GenerateWebDAVTokenRequest, options?: RpcOptions): UnaryCall<GenerateWebDAVTokenRequest, GenerateWebDAVTokenResponse> {
+        const method = this.methods[1], opt = this._transport.mergeOptions(options);
+        return stackIntercept<GenerateWebDAVTokenRequest, GenerateWebDAVTokenResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: updateSelfUsername(soulfire.v1.UpdateSelfUsernameRequest) returns (soulfire.v1.UpdateSelfUsernameResponse);
+     */
+    updateSelfUsername(input: UpdateSelfUsernameRequest, options?: RpcOptions): UnaryCall<UpdateSelfUsernameRequest, UpdateSelfUsernameResponse> {
+        const method = this.methods[2], opt = this._transport.mergeOptions(options);
+        return stackIntercept<UpdateSelfUsernameRequest, UpdateSelfUsernameResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: updateSelfEmail(soulfire.v1.UpdateSelfEmailRequest) returns (soulfire.v1.UpdateSelfEmailResponse);
+     */
+    updateSelfEmail(input: UpdateSelfEmailRequest, options?: RpcOptions): UnaryCall<UpdateSelfEmailRequest, UpdateSelfEmailResponse> {
+        const method = this.methods[3], opt = this._transport.mergeOptions(options);
+        return stackIntercept<UpdateSelfEmailRequest, UpdateSelfEmailResponse>("unary", this._transport, method, opt, input);
     }
 }

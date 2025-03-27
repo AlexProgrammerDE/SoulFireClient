@@ -716,7 +716,19 @@ export enum GlobalPermission {
     /**
      * @generated from protobuf enum value: INVALIDATE_SESSIONS = 11;
      */
-    INVALIDATE_SESSIONS = 11
+    INVALIDATE_SESSIONS = 11,
+    /**
+     * @generated from protobuf enum value: GENERATE_SELF_WEBDAV_TOKEN = 12;
+     */
+    GENERATE_SELF_WEBDAV_TOKEN = 12,
+    /**
+     * @generated from protobuf enum value: UPDATE_SELF_USERNAME = 13;
+     */
+    UPDATE_SELF_USERNAME = 13,
+    /**
+     * @generated from protobuf enum value: UPDATE_SELF_EMAIL = 14;
+     */
+    UPDATE_SELF_EMAIL = 14
 }
 /**
  * @generated from protobuf enum soulfire.v1.InstancePermission
