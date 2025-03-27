@@ -2,10 +2,13 @@ import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 import { isDemo } from '@/lib/utils.tsx';
 import i18n from '@/lib/i18n.ts';
 import { SFServerType } from '@/lib/types.ts';
+import { AuthType, createClient, WebDAVClient } from 'webdav';
+import { ClientDataResponse } from '@/generated/soulfire/client.ts';
 
 const LOCAL_STORAGE_SERVER_TYPE_KEY = 'server-type';
 const LOCAL_STORAGE_SERVER_ADDRESS_KEY = 'server-address';
 const LOCAL_STORAGE_SERVER_TOKEN_KEY = 'server-token';
+const LOCAL_STORAGE_SERVER_WEBDAV_TOKEN_KEY = 'server-webdav-token';
 
 export const isAuthenticated = () => {
   if (isDemo()) return true;
@@ -33,10 +36,32 @@ export const getServerType = () => {
   ) as SFServerType | null;
 };
 
+export const getOrGenerateWebDAVToken = (generator: () => string): string => {
+  let token = localStorage.getItem(LOCAL_STORAGE_SERVER_WEBDAV_TOKEN_KEY);
+  if (!token) {
+    token = generator();
+    localStorage.setItem(LOCAL_STORAGE_SERVER_WEBDAV_TOKEN_KEY, token);
+  }
+  return token;
+};
+
+export function createWebDAVClient(
+  clientInfo: ClientDataResponse,
+  generator: () => string,
+): WebDAVClient {
+  const token = getOrGenerateWebDAVToken(generator);
+  return createClient(clientInfo.serverInfo!.publicWebdavAddress, {
+    authType: AuthType.Password,
+    username: 'ignored',
+    password: token,
+  });
+}
+
 export const logOut = () => {
   localStorage.removeItem(LOCAL_STORAGE_SERVER_TYPE_KEY);
   localStorage.removeItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY);
   localStorage.removeItem(LOCAL_STORAGE_SERVER_TOKEN_KEY);
+  localStorage.removeItem(LOCAL_STORAGE_SERVER_WEBDAV_TOKEN_KEY);
 };
 
 export const createTransport = () => {

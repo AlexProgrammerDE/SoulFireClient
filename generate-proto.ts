@@ -23,7 +23,7 @@ function compileProtos(): void {
     return;
   }
 
-  const command = `protoc --ts_out src/generated --ts_opt long_type_string --ts_opt optimize_code_size --proto_path protos ${protoFiles.join(' ')}`;
+  const command = `protoc --ts_out src/generated --ts_opt long_type_string --ts_opt optimize_code_size --ts_opt eslint_disable --ts_opt ts_nocheck --proto_path protos ${protoFiles.join(' ')}`;
   console.log(`Running: ${command}`);
   execSync(command, { stdio: 'inherit' });
 }
