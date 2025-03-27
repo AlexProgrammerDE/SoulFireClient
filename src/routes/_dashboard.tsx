@@ -73,8 +73,41 @@ export const Route = createFileRoute('/_dashboard')({
           queryKey: instanceListQueryOptions.queryKey,
         });
       });
+      const clientDataQueryOptions = queryOptions({
+        queryKey: ['client-data'],
+        queryFn: async (
+          props,
+        ): Promise<{
+          clientData: ClientDataResponse;
+        }> => {
+          const transport = createTransport();
+          if (transport === null) {
+            return {
+              clientData: demoData,
+            };
+          }
+
+          const clientService = new ClientServiceClient(transport);
+          const result = await clientService.getClientData(
+            {},
+            {
+              abort: props.signal,
+            },
+          );
+
+          return {
+            clientData: result.response,
+          };
+        },
+      });
+      props.abortController.signal.addEventListener('abort', () => {
+        void queryClientInstance.cancelQueries({
+          queryKey: clientDataQueryOptions.queryKey,
+        });
+      });
       return {
         instanceListQueryOptions,
+        clientDataQueryOptions,
       };
     } else {
       if (isTauri()) {
@@ -96,7 +129,6 @@ export const Route = createFileRoute('/_dashboard')({
     | {
         success: true;
         transport: GrpcWebFetchTransport | null;
-        clientData: ClientDataResponse;
       }
     | {
         success: false;
@@ -108,22 +140,16 @@ export const Route = createFileRoute('/_dashboard')({
       return {
         success: true,
         transport,
-        clientData: demoData,
       };
     }
 
     try {
-      const clientService = new ClientServiceClient(transport);
-      const configResult = await clientService.getClientData(
-        {},
-        {
-          abort: props.abortController.signal,
-        },
-      );
-
-      await queryClientInstance.prefetchQuery(
-        props.context.instanceListQueryOptions,
-      );
+      await Promise.all([
+        queryClientInstance.prefetchQuery(
+          props.context.instanceListQueryOptions,
+        ),
+        queryClientInstance.prefetchQuery(props.context.clientDataQueryOptions),
+      ]);
 
       // We need this as demo data
       // if (APP_ENVIRONMENT === 'development') {
@@ -133,7 +159,6 @@ export const Route = createFileRoute('/_dashboard')({
       return {
         success: true,
         transport,
-        clientData: configResult.response,
       };
     } catch (e) {
       return {
@@ -175,25 +200,34 @@ function InstanceSwitchKeybinds() {
 function DashboardLayout() {
   const { t } = useTranslation('common');
   const loaderData = Route.useLoaderData();
-  const { instanceListQueryOptions } = Route.useRouteContext();
+  const { instanceListQueryOptions, clientDataQueryOptions } =
+    Route.useRouteContext();
   const instanceList = useQuery(instanceListQueryOptions);
+  const clientData = useQuery(clientDataQueryOptions);
   if (!loaderData.success) {
     return <ErrorComponent error={new Error(t('error.connectionFailed'))} />;
   }
-
-  const { transport, clientData } = loaderData;
 
   if (instanceList.isError) {
     throw instanceList.error;
   }
 
-  if (instanceList.isLoading || !instanceList.data) {
+  if (clientData.isError) {
+    throw clientData.error;
+  }
+
+  if (
+    instanceList.isLoading ||
+    !instanceList.data ||
+    clientData.isLoading ||
+    !clientData.data
+  ) {
     return <LoadingComponent />;
   }
 
   return (
-    <TransportContext.Provider value={transport}>
-      <ClientInfoContext.Provider value={clientData}>
+    <TransportContext.Provider value={loaderData.transport}>
+      <ClientInfoContext.Provider value={clientData.data.clientData}>
         <InstanceListContext.Provider value={instanceList.data.instanceList}>
           <InstanceSwitchKeybinds />
           <Outlet />

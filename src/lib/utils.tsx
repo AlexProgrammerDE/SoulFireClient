@@ -28,6 +28,7 @@ import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { RpcTransport } from '@protobuf-ts/runtime-rpc';
 import { QueryClient, QueryKey } from '@tanstack/react-query';
 import { Timestamp } from '@/generated/google/protobuf/timestamp.ts';
+import { ClientServiceClient } from '@/generated/soulfire/client.client.ts';
 
 const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
 
@@ -448,6 +449,74 @@ export async function setServerConfig(
   const serverService = new ServerServiceClient(transport);
   await serverService.updateServerConfig({
     config: targetProfile,
+  });
+}
+
+export async function setSelfUsername(
+  username: string,
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  clientDataQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  await queryClient.cancelQueries({
+    queryKey: clientDataQueryKey,
+  });
+  queryClient.setQueryData<{
+    clientData: ClientDataResponse;
+  }>(clientDataQueryKey, (old) => {
+    if (old === undefined) {
+      return;
+    }
+
+    return {
+      clientData: {
+        ...old.clientData,
+        username: username,
+      },
+    };
+  });
+
+  const clientService = new ClientServiceClient(transport);
+  await clientService.updateSelfUsername({
+    username: username,
+  });
+}
+
+export async function setSelfEmail(
+  email: string,
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  clientDataQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  await queryClient.cancelQueries({
+    queryKey: clientDataQueryKey,
+  });
+  queryClient.setQueryData<{
+    clientData: ClientDataResponse;
+  }>(clientDataQueryKey, (old) => {
+    if (old === undefined) {
+      return;
+    }
+
+    return {
+      clientData: {
+        ...old.clientData,
+        email: email,
+      },
+    };
+  });
+
+  const clientService = new ClientServiceClient(transport);
+  await clientService.updateSelfEmail({
+    email: email,
   });
 }
 
