@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext } from 'react';
-import { NavUserControl } from '@/components/nav/nav-user-control.tsx';
+import { NavAccount } from '@/components/nav/nav-account.tsx';
 import {
   Sidebar,
   SidebarContent,
@@ -33,7 +33,7 @@ export function UserSidebar({
         </SidebarContent>
       </ScrollArea>
       <SidebarFooter className="h-16 justify-center">
-        <NavUserControl />
+        <NavAccount />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

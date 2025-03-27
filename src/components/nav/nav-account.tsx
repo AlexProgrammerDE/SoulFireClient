@@ -59,7 +59,7 @@ import { useTranslation } from 'react-i18next';
 import { logOut } from '@/lib/web-rpc.ts';
 import { UserAvatar } from '@/components/user-avatar.tsx';
 
-export function NavUserControl() {
+export function NavAccount() {
   const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
   const clientInfo = useContext(ClientInfoContext);

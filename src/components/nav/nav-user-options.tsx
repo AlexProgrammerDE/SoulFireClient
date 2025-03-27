@@ -1,6 +1,6 @@
 'use client';
 
-import { Grid2x2Icon, PlusIcon } from 'lucide-react';
+import { FoldersIcon, Grid2x2Icon, PlusIcon } from 'lucide-react';
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -22,6 +22,7 @@ type NavLinks = {
   title: string;
   icon: (props: { className: string }) => ReactNode;
   linkProps: LinkProps;
+  createInstance?: boolean;
 }[];
 
 export function NavUserOptions() {
@@ -35,6 +36,15 @@ export function NavUserOptions() {
       icon: Grid2x2Icon,
       linkProps: {
         to: '/user',
+        params: {},
+      },
+      createInstance: true,
+    },
+    {
+      title: t('userSidebar.files'),
+      icon: FoldersIcon,
+      linkProps: {
+        to: '/user/files',
         params: {},
       },
     },
@@ -58,23 +68,24 @@ export function NavUserOptions() {
                 <span>{item.title}</span>
               </Link>
             </SidebarMenuButton>
-            {hasGlobalPermission(
-              clientInfo,
-              GlobalPermission.CREATE_INSTANCE,
-            ) && (
-              <>
-                <SidebarMenuAction
-                  onClick={() => setCreateOpen(true)}
-                  title={t('userSidebar.createInstance')}
-                >
-                  <PlusIcon />
-                </SidebarMenuAction>
-                <CreateInstancePopup
-                  open={createOpen}
-                  setOpen={setCreateOpen}
-                />
-              </>
-            )}
+            {item.createInstance &&
+              hasGlobalPermission(
+                clientInfo,
+                GlobalPermission.CREATE_INSTANCE,
+              ) && (
+                <>
+                  <SidebarMenuAction
+                    onClick={() => setCreateOpen(true)}
+                    title={t('userSidebar.createInstance')}
+                  >
+                    <PlusIcon />
+                  </SidebarMenuAction>
+                  <CreateInstancePopup
+                    open={createOpen}
+                    setOpen={setCreateOpen}
+                  />
+                </>
+              )}
           </SidebarMenuItem>
         ))}
       </SidebarMenu>

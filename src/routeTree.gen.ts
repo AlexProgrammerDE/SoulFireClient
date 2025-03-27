@@ -15,6 +15,7 @@ import { Route as DashboardImport } from './routes/_dashboard'
 import { Route as IndexImport } from './routes/index'
 import { Route as DashboardUserImport } from './routes/_dashboard/user'
 import { Route as DashboardUserIndexImport } from './routes/_dashboard/user/index'
+import { Route as DashboardUserFilesImport } from './routes/_dashboard/user/files'
 import { Route as DashboardUserAdminImport } from './routes/_dashboard/user/admin'
 import { Route as DashboardInstanceInstanceImport } from './routes/_dashboard/instance/$instance'
 import { Route as DashboardUserAdminIndexImport } from './routes/_dashboard/user/admin/index'
@@ -51,6 +52,12 @@ const DashboardUserRoute = DashboardUserImport.update({
 const DashboardUserIndexRoute = DashboardUserIndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => DashboardUserRoute,
+} as any)
+
+const DashboardUserFilesRoute = DashboardUserFilesImport.update({
+  id: '/files',
+  path: '/files',
   getParentRoute: () => DashboardUserRoute,
 } as any)
 
@@ -179,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardUserAdminImport
       parentRoute: typeof DashboardUserImport
     }
+    '/_dashboard/user/files': {
+      id: '/_dashboard/user/files'
+      path: '/files'
+      fullPath: '/user/files'
+      preLoaderRoute: typeof DashboardUserFilesImport
+      parentRoute: typeof DashboardUserImport
+    }
     '/_dashboard/user/': {
       id: '/_dashboard/user/'
       path: '/'
@@ -288,11 +302,13 @@ const DashboardUserAdminRouteWithChildren =
 
 interface DashboardUserRouteChildren {
   DashboardUserAdminRoute: typeof DashboardUserAdminRouteWithChildren
+  DashboardUserFilesRoute: typeof DashboardUserFilesRoute
   DashboardUserIndexRoute: typeof DashboardUserIndexRoute
 }
 
 const DashboardUserRouteChildren: DashboardUserRouteChildren = {
   DashboardUserAdminRoute: DashboardUserAdminRouteWithChildren,
+  DashboardUserFilesRoute: DashboardUserFilesRoute,
   DashboardUserIndexRoute: DashboardUserIndexRoute,
 }
 
@@ -351,6 +367,7 @@ export interface FileRoutesByFullPath {
   '/user': typeof DashboardUserRouteWithChildren
   '/instance/$instance': typeof DashboardInstanceInstanceRouteWithChildren
   '/user/admin': typeof DashboardUserAdminRouteWithChildren
+  '/user/files': typeof DashboardUserFilesRoute
   '/user/': typeof DashboardUserIndexRoute
   '/instance/$instance/accounts': typeof DashboardInstanceInstanceAccountsRoute
   '/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
@@ -368,6 +385,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof DashboardRouteWithChildren
+  '/user/files': typeof DashboardUserFilesRoute
   '/user': typeof DashboardUserIndexRoute
   '/instance/$instance/accounts': typeof DashboardInstanceInstanceAccountsRoute
   '/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
@@ -389,6 +407,7 @@ export interface FileRoutesById {
   '/_dashboard/user': typeof DashboardUserRouteWithChildren
   '/_dashboard/instance/$instance': typeof DashboardInstanceInstanceRouteWithChildren
   '/_dashboard/user/admin': typeof DashboardUserAdminRouteWithChildren
+  '/_dashboard/user/files': typeof DashboardUserFilesRoute
   '/_dashboard/user/': typeof DashboardUserIndexRoute
   '/_dashboard/instance/$instance/accounts': typeof DashboardInstanceInstanceAccountsRoute
   '/_dashboard/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
@@ -411,6 +430,7 @@ export interface FileRouteTypes {
     | '/user'
     | '/instance/$instance'
     | '/user/admin'
+    | '/user/files'
     | '/user/'
     | '/instance/$instance/accounts'
     | '/instance/$instance/audit-log'
@@ -427,6 +447,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | ''
+    | '/user/files'
     | '/user'
     | '/instance/$instance/accounts'
     | '/instance/$instance/audit-log'
@@ -446,6 +467,7 @@ export interface FileRouteTypes {
     | '/_dashboard/user'
     | '/_dashboard/instance/$instance'
     | '/_dashboard/user/admin'
+    | '/_dashboard/user/files'
     | '/_dashboard/user/'
     | '/_dashboard/instance/$instance/accounts'
     | '/_dashboard/instance/$instance/audit-log'
@@ -500,6 +522,7 @@ export const routeTree = rootRoute
       "parent": "/_dashboard",
       "children": [
         "/_dashboard/user/admin",
+        "/_dashboard/user/files",
         "/_dashboard/user/"
       ]
     },
@@ -525,6 +548,10 @@ export const routeTree = rootRoute
         "/_dashboard/user/admin/",
         "/_dashboard/user/admin/settings/$namespace"
       ]
+    },
+    "/_dashboard/user/files": {
+      "filePath": "_dashboard/user/files.tsx",
+      "parent": "/_dashboard/user"
     },
     "/_dashboard/user/": {
       "filePath": "_dashboard/user/index.tsx",
