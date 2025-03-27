@@ -282,7 +282,7 @@
       "description": "SoulFire allows you to access instance, script and other files using the WebDAV protocol.",
       "publicAddress": "Public WebDAV Address",
       "personalToken": "Personal WebDAV Token",
-      "securityWarning": "Your personal WebDAV Key is very important. Do not share it with anyone. It is used to authenticate you when accessing your files.",
+      "securityWarning": "Your personal WebDAV Token is very important. Do not share it with anyone. It is used to authenticate you when accessing your files. Use it as your WebDAV password when connecting. Username is not required, if you are prompted for one, you can use any value you want. (e.g. 'soulfire')",
       "addressDescription": "This is the address you need to use to access your files. Sometimes you need to use dav:// or davs:// instead of http(s)://."
     },
     "api": {
@@ -290,7 +290,7 @@
       "description": "SoulFire's gRPC HTTP API allows you to interact with your instances programmatically using web requests.",
       "publicAddress": "Public API Address",
       "personalToken": "Personal API Token",
-      "securityWarning": "Your personal API Key is very important. Do not share it with anyone. It is used to authenticate you when accessing the API.",
+      "securityWarning": "Your personal API Token is very important. Do not share it with anyone. It is used to authenticate you when accessing the API.",
       "addressDescription": "This is the address you need to use to access the API."
     },
     "token": {
