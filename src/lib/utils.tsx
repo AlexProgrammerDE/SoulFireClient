@@ -8,6 +8,7 @@ import {
 import { ClientDataResponse } from '@/generated/soulfire/client.ts';
 import {
   InstanceInfoResponse,
+  InstanceListResponse,
   InstanceListResponse_Instance,
 } from '@/generated/soulfire/instance.ts';
 import { sha256 } from 'js-sha256';
@@ -285,14 +286,20 @@ export async function setInstanceIcon(
   transport: RpcTransport | null,
   queryClient: QueryClient,
   instanceInfoQueryKey: QueryKey,
+  instanceListQueryKey: QueryKey,
 ) {
   if (transport === null) {
     return;
   }
 
-  await queryClient.cancelQueries({
-    queryKey: instanceInfoQueryKey,
-  });
+  await Promise.all([
+    queryClient.invalidateQueries({
+      queryKey: instanceInfoQueryKey,
+    }),
+    queryClient.invalidateQueries({
+      queryKey: instanceListQueryKey,
+    }),
+  ]);
   queryClient.setQueryData<{
     instanceInfo: InstanceInfoResponse;
   }>(instanceInfoQueryKey, (old) => {
@@ -304,6 +311,28 @@ export async function setInstanceIcon(
       instanceInfo: {
         ...old.instanceInfo,
         icon: icon,
+      },
+    };
+  });
+  queryClient.setQueryData<{
+    instanceList: InstanceListResponse;
+  }>(instanceListQueryKey, (old) => {
+    if (old === undefined) {
+      return;
+    }
+
+    return {
+      instanceList: {
+        instances: old.instanceList.instances.map((item) => {
+          if (item.id === instanceInfo.id) {
+            return {
+              ...item,
+              icon: icon,
+            };
+          }
+
+          return item;
+        }),
       },
     };
   });
@@ -326,14 +355,20 @@ export async function setInstanceFriendlyName(
   transport: RpcTransport | null,
   queryClient: QueryClient,
   instanceInfoQueryKey: QueryKey,
+  instanceListQueryKey: QueryKey,
 ) {
   if (transport === null) {
     return;
   }
 
-  await queryClient.cancelQueries({
-    queryKey: instanceInfoQueryKey,
-  });
+  await Promise.all([
+    queryClient.invalidateQueries({
+      queryKey: instanceInfoQueryKey,
+    }),
+    queryClient.invalidateQueries({
+      queryKey: instanceListQueryKey,
+    }),
+  ]);
   queryClient.setQueryData<{
     instanceInfo: InstanceInfoResponse;
   }>(instanceInfoQueryKey, (old) => {
@@ -345,6 +380,28 @@ export async function setInstanceFriendlyName(
       instanceInfo: {
         ...old.instanceInfo,
         friendlyName: friendlyName,
+      },
+    };
+  });
+  queryClient.setQueryData<{
+    instanceList: InstanceListResponse;
+  }>(instanceListQueryKey, (old) => {
+    if (old === undefined) {
+      return;
+    }
+
+    return {
+      instanceList: {
+        instances: old.instanceList.instances.map((item) => {
+          if (item.id === instanceInfo.id) {
+            return {
+              ...item,
+              friendlyName: friendlyName,
+            };
+          }
+
+          return item;
+        }),
       },
     };
   });

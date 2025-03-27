@@ -21,7 +21,8 @@ export const Route = createFileRoute('/_dashboard/instance/$instance/meta')({
 
 function MetaSettings() {
   const { t } = useTranslation('common');
-  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { instanceInfoQueryOptions, instanceListQueryOptions } =
+    Route.useRouteContext();
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
   const instanceInfo = useContext(InstanceInfoContext);
@@ -33,12 +34,18 @@ function MetaSettings() {
         transport,
         queryClient,
         instanceInfoQueryOptions.queryKey,
+        instanceListQueryOptions.queryKey,
       );
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: instanceInfoQueryOptions.queryKey,
-      });
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: instanceInfoQueryOptions.queryKey,
+        }),
+        queryClient.invalidateQueries({
+          queryKey: instanceListQueryOptions.queryKey,
+        }),
+      ]);
     },
   });
   const setIconMutation = useMutation({
@@ -49,12 +56,18 @@ function MetaSettings() {
         transport,
         queryClient,
         instanceInfoQueryOptions.queryKey,
+        instanceListQueryOptions.queryKey,
       );
     },
     onSettled: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: instanceInfoQueryOptions.queryKey,
-      });
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: instanceInfoQueryOptions.queryKey,
+        }),
+        queryClient.invalidateQueries({
+          queryKey: instanceListQueryOptions.queryKey,
+        }),
+      ]);
     },
   });
 
