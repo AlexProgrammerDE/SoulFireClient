@@ -19,6 +19,7 @@ use tauri_plugin_updater;
 mod tray;
 #[cfg(desktop)]
 mod updater;
+mod sf_version_constant;
 mod cast;
 mod discord;
 mod sf_loader;

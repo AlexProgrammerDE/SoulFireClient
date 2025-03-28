@@ -9,6 +9,7 @@ use tauri::{AppHandle, Emitter, Manager};
 use tauri_plugin_shell::process::CommandChild;
 use tauri_plugin_shell::process::CommandEvent::Stdout;
 use tauri_plugin_shell::ShellExt;
+use crate::sf_version_constant::SOULFIRE_VERSION;
 
 pub struct IntegratedServerState {
   pub starting: Arc<AtomicBool>,
@@ -30,8 +31,6 @@ pub async fn run_integrated_server(
   integrated_server_state
     .starting
     .store(true, std::sync::atomic::Ordering::Relaxed);
-
-  let soul_fire_version = "1.19.0";
 
   fn send_log<S: Serialize + Clone>(app_handle: &AppHandle, payload: S) -> tauri::Result<()> {
     info!("{}", serde_json::to_string(&payload)?);
@@ -130,10 +129,10 @@ pub async fn run_integrated_server(
   }
 
   let soul_fire_version_file =
-    jars_dir.join(format!("SoulFireDedicated-{}.jar", soul_fire_version));
+    jars_dir.join(format!("SoulFireDedicated-{}.jar", SOULFIRE_VERSION));
   if !soul_fire_version_file.exists() {
     send_log(&app_handle, "Fetching SoulFire data...")?;
-    let soul_fire_url = format!("https://github.com/AlexProgrammerDE/SoulFire/releases/download/{}/SoulFireDedicated-{}.jar", soul_fire_version, soul_fire_version);
+    let soul_fire_url = format!("https://github.com/AlexProgrammerDE/SoulFire/releases/download/{}/SoulFireDedicated-{}.jar", SOULFIRE_VERSION, SOULFIRE_VERSION);
     info!("SoulFire URL: {}", soul_fire_url);
 
     let last_sent_progress = std::sync::atomic::AtomicU64::new(0);
