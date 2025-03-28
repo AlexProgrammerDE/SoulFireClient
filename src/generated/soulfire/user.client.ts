@@ -6,6 +6,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { UserService } from "./user";
+import type { GenerateUserAPITokenResponse } from "./user";
+import type { GenerateUserAPITokenRequest } from "./user";
 import type { UpdateUserResponse } from "./user";
 import type { UpdateUserRequest } from "./user";
 import type { InvalidateSessionsResponse } from "./user";
@@ -49,6 +51,10 @@ export interface IUserServiceClient {
      * @generated from protobuf rpc: updateUser(soulfire.v1.UpdateUserRequest) returns (soulfire.v1.UpdateUserResponse);
      */
     updateUser(input: UpdateUserRequest, options?: RpcOptions): UnaryCall<UpdateUserRequest, UpdateUserResponse>;
+    /**
+     * @generated from protobuf rpc: generateUserAPIToken(soulfire.v1.GenerateUserAPITokenRequest) returns (soulfire.v1.GenerateUserAPITokenResponse);
+     */
+    generateUserAPIToken(input: GenerateUserAPITokenRequest, options?: RpcOptions): UnaryCall<GenerateUserAPITokenRequest, GenerateUserAPITokenResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.UserService
@@ -100,5 +106,12 @@ export class UserServiceClient implements IUserServiceClient, ServiceInfo {
     updateUser(input: UpdateUserRequest, options?: RpcOptions): UnaryCall<UpdateUserRequest, UpdateUserResponse> {
         const method = this.methods[5], opt = this._transport.mergeOptions(options);
         return stackIntercept<UpdateUserRequest, UpdateUserResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: generateUserAPIToken(soulfire.v1.GenerateUserAPITokenRequest) returns (soulfire.v1.GenerateUserAPITokenResponse);
+     */
+    generateUserAPIToken(input: GenerateUserAPITokenRequest, options?: RpcOptions): UnaryCall<GenerateUserAPITokenRequest, GenerateUserAPITokenResponse> {
+        const method = this.methods[6], opt = this._transport.mergeOptions(options);
+        return stackIntercept<GenerateUserAPITokenRequest, GenerateUserAPITokenResponse>("unary", this._transport, method, opt, input);
     }
 }

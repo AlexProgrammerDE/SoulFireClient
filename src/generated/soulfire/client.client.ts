@@ -6,6 +6,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { ClientService } from "./client";
+import type { InvalidateSelfSessionsResponse } from "./client";
+import type { InvalidateSelfSessionsRequest } from "./client";
 import type { UpdateSelfEmailResponse } from "./client";
 import type { UpdateSelfEmailRequest } from "./client";
 import type { UpdateSelfUsernameResponse } from "./client";
@@ -43,6 +45,10 @@ export interface IClientServiceClient {
      * @generated from protobuf rpc: updateSelfEmail(soulfire.v1.UpdateSelfEmailRequest) returns (soulfire.v1.UpdateSelfEmailResponse);
      */
     updateSelfEmail(input: UpdateSelfEmailRequest, options?: RpcOptions): UnaryCall<UpdateSelfEmailRequest, UpdateSelfEmailResponse>;
+    /**
+     * @generated from protobuf rpc: invalidateSelfSessions(soulfire.v1.InvalidateSelfSessionsRequest) returns (soulfire.v1.InvalidateSelfSessionsResponse);
+     */
+    invalidateSelfSessions(input: InvalidateSelfSessionsRequest, options?: RpcOptions): UnaryCall<InvalidateSelfSessionsRequest, InvalidateSelfSessionsResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.ClientService
@@ -87,5 +93,12 @@ export class ClientServiceClient implements IClientServiceClient, ServiceInfo {
     updateSelfEmail(input: UpdateSelfEmailRequest, options?: RpcOptions): UnaryCall<UpdateSelfEmailRequest, UpdateSelfEmailResponse> {
         const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<UpdateSelfEmailRequest, UpdateSelfEmailResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: invalidateSelfSessions(soulfire.v1.InvalidateSelfSessionsRequest) returns (soulfire.v1.InvalidateSelfSessionsResponse);
+     */
+    invalidateSelfSessions(input: InvalidateSelfSessionsRequest, options?: RpcOptions): UnaryCall<InvalidateSelfSessionsRequest, InvalidateSelfSessionsResponse> {
+        const method = this.methods[5], opt = this._transport.mergeOptions(options);
+        return stackIntercept<InvalidateSelfSessionsRequest, InvalidateSelfSessionsResponse>("unary", this._transport, method, opt, input);
     }
 }

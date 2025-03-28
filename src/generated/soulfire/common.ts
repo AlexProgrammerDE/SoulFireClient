@@ -734,7 +734,15 @@ export enum GlobalPermission {
     /**
      * @generated from protobuf enum value: UPDATE_SELF_EMAIL = 14;
      */
-    UPDATE_SELF_EMAIL = 14
+    UPDATE_SELF_EMAIL = 14,
+    /**
+     * @generated from protobuf enum value: GENERATE_API_TOKEN = 16;
+     */
+    GENERATE_API_TOKEN = 16,
+    /**
+     * @generated from protobuf enum value: INVALIDATE_SELF_SESSIONS = 17;
+     */
+    INVALIDATE_SELF_SESSIONS = 17
 }
 /**
  * @generated from protobuf enum soulfire.v1.InstancePermission

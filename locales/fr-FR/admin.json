@@ -24,9 +24,7 @@
   },
   "users": {
     "filterPlaceholder": "",
-    "addUserDialog": {
-      "title": "",
-      "description": "",
+    "baseUserDialog": {
       "form": {
         "username": {
           "min": "",
@@ -46,12 +44,31 @@
           "description": "",
           "user": "Utilisateur",
           "admin": "Administrateur"
-        },
+        }
+      }
+    },
+    "addUserDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "Annuler",
+        "add": ""
+      }
+    },
+    "updateUserDialog": {
+      "title": "",
+      "description": "",
+      "form": {
         "cancel": "Annuler",
         "add": ""
       }
     },
     "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "updateToast": {
       "loading": "",
       "success": "",
       "error": ""
@@ -71,7 +88,8 @@
       "email": "Email",
       "role": "Rôle",
       "createdAt": "",
-      "minIssuedAt": ""
+      "minIssuedAt": "",
+      "actions": ""
     }
   }
 }

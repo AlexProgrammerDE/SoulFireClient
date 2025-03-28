@@ -182,6 +182,24 @@ export interface UpdateUserRequest {
  */
 export interface UpdateUserResponse {
 }
+/**
+ * @generated from protobuf message soulfire.v1.GenerateUserAPITokenRequest
+ */
+export interface GenerateUserAPITokenRequest {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.GenerateUserAPITokenResponse
+ */
+export interface GenerateUserAPITokenResponse {
+    /**
+     * @generated from protobuf field: string token = 1;
+     */
+    token: string;
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class UserCreateRequest$Type extends MessageType<UserCreateRequest> {
     constructor() {
@@ -348,6 +366,30 @@ class UpdateUserResponse$Type extends MessageType<UpdateUserResponse> {
  * @generated MessageType for protobuf message soulfire.v1.UpdateUserResponse
  */
 export const UpdateUserResponse = new UpdateUserResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GenerateUserAPITokenRequest$Type extends MessageType<GenerateUserAPITokenRequest> {
+    constructor() {
+        super("soulfire.v1.GenerateUserAPITokenRequest", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GenerateUserAPITokenRequest
+ */
+export const GenerateUserAPITokenRequest = new GenerateUserAPITokenRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GenerateUserAPITokenResponse$Type extends MessageType<GenerateUserAPITokenResponse> {
+    constructor() {
+        super("soulfire.v1.GenerateUserAPITokenResponse", [
+            { no: 1, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GenerateUserAPITokenResponse
+ */
+export const GenerateUserAPITokenResponse = new GenerateUserAPITokenResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.UserService
  */
@@ -357,5 +399,6 @@ export const UserService = new ServiceType("soulfire.v1.UserService", [
     { name: "listUsers", options: {}, I: UserListRequest, O: UserListResponse },
     { name: "getUserInfo", options: {}, I: UserInfoRequest, O: UserInfoResponse },
     { name: "invalidateSessions", options: {}, I: InvalidateSessionsRequest, O: InvalidateSessionsResponse },
-    { name: "updateUser", options: {}, I: UpdateUserRequest, O: UpdateUserResponse }
+    { name: "updateUser", options: {}, I: UpdateUserRequest, O: UpdateUserResponse },
+    { name: "generateUserAPIToken", options: {}, I: GenerateUserAPITokenRequest, O: GenerateUserAPITokenResponse }
 ]);

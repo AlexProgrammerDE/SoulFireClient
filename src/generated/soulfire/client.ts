@@ -139,6 +139,16 @@ export interface UpdateSelfEmailRequest {
  */
 export interface UpdateSelfEmailResponse {
 }
+/**
+ * @generated from protobuf message soulfire.v1.InvalidateSelfSessionsRequest
+ */
+export interface InvalidateSelfSessionsRequest {
+}
+/**
+ * @generated from protobuf message soulfire.v1.InvalidateSelfSessionsResponse
+ */
+export interface InvalidateSelfSessionsResponse {
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class ClientDataRequest$Type extends MessageType<ClientDataRequest> {
     constructor() {
@@ -284,6 +294,26 @@ class UpdateSelfEmailResponse$Type extends MessageType<UpdateSelfEmailResponse> 
  * @generated MessageType for protobuf message soulfire.v1.UpdateSelfEmailResponse
  */
 export const UpdateSelfEmailResponse = new UpdateSelfEmailResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InvalidateSelfSessionsRequest$Type extends MessageType<InvalidateSelfSessionsRequest> {
+    constructor() {
+        super("soulfire.v1.InvalidateSelfSessionsRequest", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InvalidateSelfSessionsRequest
+ */
+export const InvalidateSelfSessionsRequest = new InvalidateSelfSessionsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InvalidateSelfSessionsResponse$Type extends MessageType<InvalidateSelfSessionsResponse> {
+    constructor() {
+        super("soulfire.v1.InvalidateSelfSessionsResponse", []);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InvalidateSelfSessionsResponse
+ */
+export const InvalidateSelfSessionsResponse = new InvalidateSelfSessionsResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.ClientService
  */
@@ -292,5 +322,6 @@ export const ClientService = new ServiceType("soulfire.v1.ClientService", [
     { name: "generateWebDAVToken", options: {}, I: GenerateWebDAVTokenRequest, O: GenerateWebDAVTokenResponse },
     { name: "generateAPIToken", options: {}, I: GenerateAPITokenRequest, O: GenerateAPITokenResponse },
     { name: "updateSelfUsername", options: {}, I: UpdateSelfUsernameRequest, O: UpdateSelfUsernameResponse },
-    { name: "updateSelfEmail", options: {}, I: UpdateSelfEmailRequest, O: UpdateSelfEmailResponse }
+    { name: "updateSelfEmail", options: {}, I: UpdateSelfEmailRequest, O: UpdateSelfEmailResponse },
+    { name: "invalidateSelfSessions", options: {}, I: InvalidateSelfSessionsRequest, O: InvalidateSelfSessionsResponse }
 ]);

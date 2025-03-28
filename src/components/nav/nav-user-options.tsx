@@ -1,6 +1,6 @@
 'use client';
 
-import { FoldersIcon, Grid2x2Icon, PlusIcon, ZapIcon } from 'lucide-react';
+import { Grid2x2Icon, PlusIcon, SettingsIcon, ZapIcon } from 'lucide-react';
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -45,6 +45,14 @@ export function NavUserOptions() {
       icon: ZapIcon,
       linkProps: {
         to: '/user/access',
+        params: {},
+      },
+    },
+    {
+      title: t('userSidebar.settings'),
+      icon: SettingsIcon,
+      linkProps: {
+        to: '/user/settings',
         params: {},
       },
     },

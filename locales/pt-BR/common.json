@@ -222,7 +222,9 @@
     "readDocumentation": "",
     "userGroup": "Usuário",
     "instances": "Instâncias",
+    "access": "",
     "createInstance": "Criar Instância",
+    "settings": "Configurações",
     "adminGroup": "Administrador",
     "adminOverview": "Visão geral",
     "adminConsole": "Console",
@@ -265,12 +267,47 @@
     "console": "Console",
     "audit-log": "",
     "instances": "Instâncias",
+    "access": "",
+    "settings": "Configurações",
     "proxySettings": "Configurações de Proxy",
     "overview": "Visão geral",
     "users": "Usuários",
     "accountSettings": "Configurações da Conta",
     "metaSettings": "",
     "discoverPlugins": ""
+  },
+  "access": {
+    "webdav": {
+      "title": "",
+      "description": "",
+      "publicAddress": "",
+      "personalToken": "",
+      "securityWarning": "",
+      "addressDescription": ""
+    },
+    "api": {
+      "title": "",
+      "description": "",
+      "publicAddress": "",
+      "personalToken": "",
+      "securityWarning": "",
+      "addressDescription": ""
+    },
+    "token": {
+      "generate": "",
+      "placeholder": "",
+      "generating": "",
+      "success": "",
+      "error": "",
+      "copy": "",
+      "copied": ""
+    },
+    "address": {
+      "copy": "",
+      "copied": ""
+    },
+    "documentation": "Documentação",
+    "howToConnect": ""
   },
   "instanceState": {
     "starting": "A iniciar",
