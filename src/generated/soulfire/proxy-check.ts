@@ -172,5 +172,5 @@ export const ProxyCheckResponse = new ProxyCheckResponse$Type();
  * @generated ServiceType for protobuf service soulfire.v1.ProxyCheckService
  */
 export const ProxyCheckService = new ServiceType("soulfire.v1.ProxyCheckService", [
-    { name: "check", serverStreaming: true, options: {}, I: ProxyCheckRequest, O: ProxyCheckResponse }
+    { name: "Check", serverStreaming: true, options: {}, I: ProxyCheckRequest, O: ProxyCheckResponse }
 ]);

@@ -16,7 +16,7 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  */
 export interface IDownloadServiceClient {
     /**
-     * @generated from protobuf rpc: download(soulfire.v1.DownloadRequest) returns (soulfire.v1.DownloadResponse);
+     * @generated from protobuf rpc: Download(soulfire.v1.DownloadRequest) returns (soulfire.v1.DownloadResponse);
      */
     download(input: DownloadRequest, options?: RpcOptions): UnaryCall<DownloadRequest, DownloadResponse>;
 }
@@ -30,7 +30,7 @@ export class DownloadServiceClient implements IDownloadServiceClient, ServiceInf
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * @generated from protobuf rpc: download(soulfire.v1.DownloadRequest) returns (soulfire.v1.DownloadResponse);
+     * @generated from protobuf rpc: Download(soulfire.v1.DownloadRequest) returns (soulfire.v1.DownloadResponse);
      */
     download(input: DownloadRequest, options?: RpcOptions): UnaryCall<DownloadRequest, DownloadResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);

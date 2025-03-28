@@ -19,11 +19,11 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  */
 export interface ILogsServiceClient {
     /**
-     * @generated from protobuf rpc: getPrevious(soulfire.v1.PreviousLogRequest) returns (soulfire.v1.PreviousLogResponse);
+     * @generated from protobuf rpc: GetPrevious(soulfire.v1.PreviousLogRequest) returns (soulfire.v1.PreviousLogResponse);
      */
     getPrevious(input: PreviousLogRequest, options?: RpcOptions): UnaryCall<PreviousLogRequest, PreviousLogResponse>;
     /**
-     * @generated from protobuf rpc: subscribe(soulfire.v1.LogRequest) returns (stream soulfire.v1.LogResponse);
+     * @generated from protobuf rpc: Subscribe(soulfire.v1.LogRequest) returns (stream soulfire.v1.LogResponse);
      */
     subscribe(input: LogRequest, options?: RpcOptions): ServerStreamingCall<LogRequest, LogResponse>;
 }
@@ -37,14 +37,14 @@ export class LogsServiceClient implements ILogsServiceClient, ServiceInfo {
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * @generated from protobuf rpc: getPrevious(soulfire.v1.PreviousLogRequest) returns (soulfire.v1.PreviousLogResponse);
+     * @generated from protobuf rpc: GetPrevious(soulfire.v1.PreviousLogRequest) returns (soulfire.v1.PreviousLogResponse);
      */
     getPrevious(input: PreviousLogRequest, options?: RpcOptions): UnaryCall<PreviousLogRequest, PreviousLogResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
         return stackIntercept<PreviousLogRequest, PreviousLogResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: subscribe(soulfire.v1.LogRequest) returns (stream soulfire.v1.LogResponse);
+     * @generated from protobuf rpc: Subscribe(soulfire.v1.LogRequest) returns (stream soulfire.v1.LogResponse);
      */
     subscribe(input: LogRequest, options?: RpcOptions): ServerStreamingCall<LogRequest, LogResponse> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);

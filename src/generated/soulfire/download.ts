@@ -103,5 +103,5 @@ export const DownloadResponse = new DownloadResponse$Type();
  * @generated ServiceType for protobuf service soulfire.v1.DownloadService
  */
 export const DownloadService = new ServiceType("soulfire.v1.DownloadService", [
-    { name: "download", options: {}, I: DownloadRequest, O: DownloadResponse }
+    { name: "Download", options: {}, I: DownloadRequest, O: DownloadResponse }
 ]);

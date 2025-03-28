@@ -109,6 +109,6 @@ export const ServerUpdateConfigResponse = new ServerUpdateConfigResponse$Type();
  * @generated ServiceType for protobuf service soulfire.v1.ServerService
  */
 export const ServerService = new ServiceType("soulfire.v1.ServerService", [
-    { name: "getServerInfo", options: {}, I: ServerInfoRequest, O: ServerInfoResponse },
-    { name: "updateServerConfig", options: {}, I: ServerUpdateConfigRequest, O: ServerUpdateConfigResponse }
+    { name: "GetServerInfo", options: {}, I: ServerInfoRequest, O: ServerInfoResponse },
+    { name: "UpdateServerConfig", options: {}, I: ServerUpdateConfigRequest, O: ServerUpdateConfigResponse }
 ]);

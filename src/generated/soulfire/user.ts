@@ -394,11 +394,11 @@ export const GenerateUserAPITokenResponse = new GenerateUserAPITokenResponse$Typ
  * @generated ServiceType for protobuf service soulfire.v1.UserService
  */
 export const UserService = new ServiceType("soulfire.v1.UserService", [
-    { name: "createUser", options: {}, I: UserCreateRequest, O: UserCreateResponse },
-    { name: "deleteUser", options: {}, I: UserDeleteRequest, O: UserDeleteResponse },
-    { name: "listUsers", options: {}, I: UserListRequest, O: UserListResponse },
-    { name: "getUserInfo", options: {}, I: UserInfoRequest, O: UserInfoResponse },
-    { name: "invalidateSessions", options: {}, I: InvalidateSessionsRequest, O: InvalidateSessionsResponse },
-    { name: "updateUser", options: {}, I: UpdateUserRequest, O: UpdateUserResponse },
-    { name: "generateUserAPIToken", options: {}, I: GenerateUserAPITokenRequest, O: GenerateUserAPITokenResponse }
+    { name: "CreateUser", options: {}, I: UserCreateRequest, O: UserCreateResponse },
+    { name: "DeleteUser", options: {}, I: UserDeleteRequest, O: UserDeleteResponse },
+    { name: "ListUsers", options: {}, I: UserListRequest, O: UserListResponse },
+    { name: "GetUserInfo", options: {}, I: UserInfoRequest, O: UserInfoResponse },
+    { name: "InvalidateSessions", options: {}, I: InvalidateSessionsRequest, O: InvalidateSessionsResponse },
+    { name: "UpdateUser", options: {}, I: UpdateUserRequest, O: UpdateUserResponse },
+    { name: "GenerateUserAPIToken", options: {}, I: GenerateUserAPITokenRequest, O: GenerateUserAPITokenResponse }
 ]);

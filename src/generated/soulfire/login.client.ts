@@ -17,11 +17,11 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  */
 export interface ILoginServiceClient {
     /**
-     * @generated from protobuf rpc: login(soulfire.v1.LoginRequest) returns (soulfire.v1.NextAuthFlowResponse);
+     * @generated from protobuf rpc: Login(soulfire.v1.LoginRequest) returns (soulfire.v1.NextAuthFlowResponse);
      */
     login(input: LoginRequest, options?: RpcOptions): UnaryCall<LoginRequest, NextAuthFlowResponse>;
     /**
-     * @generated from protobuf rpc: emailCode(soulfire.v1.EmailCodeRequest) returns (soulfire.v1.NextAuthFlowResponse);
+     * @generated from protobuf rpc: EmailCode(soulfire.v1.EmailCodeRequest) returns (soulfire.v1.NextAuthFlowResponse);
      */
     emailCode(input: EmailCodeRequest, options?: RpcOptions): UnaryCall<EmailCodeRequest, NextAuthFlowResponse>;
 }
@@ -35,14 +35,14 @@ export class LoginServiceClient implements ILoginServiceClient, ServiceInfo {
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * @generated from protobuf rpc: login(soulfire.v1.LoginRequest) returns (soulfire.v1.NextAuthFlowResponse);
+     * @generated from protobuf rpc: Login(soulfire.v1.LoginRequest) returns (soulfire.v1.NextAuthFlowResponse);
      */
     login(input: LoginRequest, options?: RpcOptions): UnaryCall<LoginRequest, NextAuthFlowResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
         return stackIntercept<LoginRequest, NextAuthFlowResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: emailCode(soulfire.v1.EmailCodeRequest) returns (soulfire.v1.NextAuthFlowResponse);
+     * @generated from protobuf rpc: EmailCode(soulfire.v1.EmailCodeRequest) returns (soulfire.v1.NextAuthFlowResponse);
      */
     emailCode(input: EmailCodeRequest, options?: RpcOptions): UnaryCall<EmailCodeRequest, NextAuthFlowResponse> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);

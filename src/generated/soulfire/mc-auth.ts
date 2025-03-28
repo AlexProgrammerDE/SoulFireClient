@@ -288,7 +288,7 @@ export const RefreshResponse = new RefreshResponse$Type();
  * @generated ServiceType for protobuf service soulfire.v1.MCAuthService
  */
 export const MCAuthService = new ServiceType("soulfire.v1.MCAuthService", [
-    { name: "loginCredentials", serverStreaming: true, options: {}, I: CredentialsAuthRequest, O: CredentialsAuthResponse },
-    { name: "loginDeviceCode", serverStreaming: true, options: {}, I: DeviceCodeAuthRequest, O: DeviceCodeAuthResponse },
-    { name: "refresh", options: {}, I: RefreshRequest, O: RefreshResponse }
+    { name: "LoginCredentials", serverStreaming: true, options: {}, I: CredentialsAuthRequest, O: CredentialsAuthResponse },
+    { name: "LoginDeviceCode", serverStreaming: true, options: {}, I: DeviceCodeAuthRequest, O: DeviceCodeAuthResponse },
+    { name: "Refresh", options: {}, I: RefreshRequest, O: RefreshResponse }
 ]);

@@ -18,11 +18,11 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  */
 export interface ICommandServiceClient {
     /**
-     * @generated from protobuf rpc: executeCommand(soulfire.v1.CommandRequest) returns (soulfire.v1.CommandResponse);
+     * @generated from protobuf rpc: ExecuteCommand(soulfire.v1.CommandRequest) returns (soulfire.v1.CommandResponse);
      */
     executeCommand(input: CommandRequest, options?: RpcOptions): UnaryCall<CommandRequest, CommandResponse>;
     /**
-     * @generated from protobuf rpc: tabCompleteCommand(soulfire.v1.CommandCompletionRequest) returns (soulfire.v1.CommandCompletionResponse);
+     * @generated from protobuf rpc: TabCompleteCommand(soulfire.v1.CommandCompletionRequest) returns (soulfire.v1.CommandCompletionResponse);
      */
     tabCompleteCommand(input: CommandCompletionRequest, options?: RpcOptions): UnaryCall<CommandCompletionRequest, CommandCompletionResponse>;
 }
@@ -36,14 +36,14 @@ export class CommandServiceClient implements ICommandServiceClient, ServiceInfo 
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * @generated from protobuf rpc: executeCommand(soulfire.v1.CommandRequest) returns (soulfire.v1.CommandResponse);
+     * @generated from protobuf rpc: ExecuteCommand(soulfire.v1.CommandRequest) returns (soulfire.v1.CommandResponse);
      */
     executeCommand(input: CommandRequest, options?: RpcOptions): UnaryCall<CommandRequest, CommandResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
         return stackIntercept<CommandRequest, CommandResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: tabCompleteCommand(soulfire.v1.CommandCompletionRequest) returns (soulfire.v1.CommandCompletionResponse);
+     * @generated from protobuf rpc: TabCompleteCommand(soulfire.v1.CommandCompletionRequest) returns (soulfire.v1.CommandCompletionResponse);
      */
     tabCompleteCommand(input: CommandCompletionRequest, options?: RpcOptions): UnaryCall<CommandCompletionRequest, CommandCompletionResponse> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);

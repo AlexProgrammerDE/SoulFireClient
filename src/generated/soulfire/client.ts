@@ -318,10 +318,10 @@ export const InvalidateSelfSessionsResponse = new InvalidateSelfSessionsResponse
  * @generated ServiceType for protobuf service soulfire.v1.ClientService
  */
 export const ClientService = new ServiceType("soulfire.v1.ClientService", [
-    { name: "getClientData", options: {}, I: ClientDataRequest, O: ClientDataResponse },
-    { name: "generateWebDAVToken", options: {}, I: GenerateWebDAVTokenRequest, O: GenerateWebDAVTokenResponse },
-    { name: "generateAPIToken", options: {}, I: GenerateAPITokenRequest, O: GenerateAPITokenResponse },
-    { name: "updateSelfUsername", options: {}, I: UpdateSelfUsernameRequest, O: UpdateSelfUsernameResponse },
-    { name: "updateSelfEmail", options: {}, I: UpdateSelfEmailRequest, O: UpdateSelfEmailResponse },
-    { name: "invalidateSelfSessions", options: {}, I: InvalidateSelfSessionsRequest, O: InvalidateSelfSessionsResponse }
+    { name: "GetClientData", options: {}, I: ClientDataRequest, O: ClientDataResponse },
+    { name: "GenerateWebDAVToken", options: {}, I: GenerateWebDAVTokenRequest, O: GenerateWebDAVTokenResponse },
+    { name: "GenerateAPIToken", options: {}, I: GenerateAPITokenRequest, O: GenerateAPITokenResponse },
+    { name: "UpdateSelfUsername", options: {}, I: UpdateSelfUsernameRequest, O: UpdateSelfUsernameResponse },
+    { name: "UpdateSelfEmail", options: {}, I: UpdateSelfEmailRequest, O: UpdateSelfEmailResponse },
+    { name: "InvalidateSelfSessions", options: {}, I: InvalidateSelfSessionsRequest, O: InvalidateSelfSessionsResponse }
 ]);

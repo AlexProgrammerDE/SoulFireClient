@@ -200,6 +200,6 @@ export const LogResponse = new LogResponse$Type();
  * @generated ServiceType for protobuf service soulfire.v1.LogsService
  */
 export const LogsService = new ServiceType("soulfire.v1.LogsService", [
-    { name: "getPrevious", options: {}, I: PreviousLogRequest, O: PreviousLogResponse },
-    { name: "subscribe", serverStreaming: true, options: {}, I: LogRequest, O: LogResponse }
+    { name: "GetPrevious", options: {}, I: PreviousLogRequest, O: PreviousLogResponse },
+    { name: "Subscribe", serverStreaming: true, options: {}, I: LogRequest, O: LogResponse }
 ]);

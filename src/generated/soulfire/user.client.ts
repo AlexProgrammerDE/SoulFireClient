@@ -28,31 +28,31 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  */
 export interface IUserServiceClient {
     /**
-     * @generated from protobuf rpc: createUser(soulfire.v1.UserCreateRequest) returns (soulfire.v1.UserCreateResponse);
+     * @generated from protobuf rpc: CreateUser(soulfire.v1.UserCreateRequest) returns (soulfire.v1.UserCreateResponse);
      */
     createUser(input: UserCreateRequest, options?: RpcOptions): UnaryCall<UserCreateRequest, UserCreateResponse>;
     /**
-     * @generated from protobuf rpc: deleteUser(soulfire.v1.UserDeleteRequest) returns (soulfire.v1.UserDeleteResponse);
+     * @generated from protobuf rpc: DeleteUser(soulfire.v1.UserDeleteRequest) returns (soulfire.v1.UserDeleteResponse);
      */
     deleteUser(input: UserDeleteRequest, options?: RpcOptions): UnaryCall<UserDeleteRequest, UserDeleteResponse>;
     /**
-     * @generated from protobuf rpc: listUsers(soulfire.v1.UserListRequest) returns (soulfire.v1.UserListResponse);
+     * @generated from protobuf rpc: ListUsers(soulfire.v1.UserListRequest) returns (soulfire.v1.UserListResponse);
      */
     listUsers(input: UserListRequest, options?: RpcOptions): UnaryCall<UserListRequest, UserListResponse>;
     /**
-     * @generated from protobuf rpc: getUserInfo(soulfire.v1.UserInfoRequest) returns (soulfire.v1.UserInfoResponse);
+     * @generated from protobuf rpc: GetUserInfo(soulfire.v1.UserInfoRequest) returns (soulfire.v1.UserInfoResponse);
      */
     getUserInfo(input: UserInfoRequest, options?: RpcOptions): UnaryCall<UserInfoRequest, UserInfoResponse>;
     /**
-     * @generated from protobuf rpc: invalidateSessions(soulfire.v1.InvalidateSessionsRequest) returns (soulfire.v1.InvalidateSessionsResponse);
+     * @generated from protobuf rpc: InvalidateSessions(soulfire.v1.InvalidateSessionsRequest) returns (soulfire.v1.InvalidateSessionsResponse);
      */
     invalidateSessions(input: InvalidateSessionsRequest, options?: RpcOptions): UnaryCall<InvalidateSessionsRequest, InvalidateSessionsResponse>;
     /**
-     * @generated from protobuf rpc: updateUser(soulfire.v1.UpdateUserRequest) returns (soulfire.v1.UpdateUserResponse);
+     * @generated from protobuf rpc: UpdateUser(soulfire.v1.UpdateUserRequest) returns (soulfire.v1.UpdateUserResponse);
      */
     updateUser(input: UpdateUserRequest, options?: RpcOptions): UnaryCall<UpdateUserRequest, UpdateUserResponse>;
     /**
-     * @generated from protobuf rpc: generateUserAPIToken(soulfire.v1.GenerateUserAPITokenRequest) returns (soulfire.v1.GenerateUserAPITokenResponse);
+     * @generated from protobuf rpc: GenerateUserAPIToken(soulfire.v1.GenerateUserAPITokenRequest) returns (soulfire.v1.GenerateUserAPITokenResponse);
      */
     generateUserAPIToken(input: GenerateUserAPITokenRequest, options?: RpcOptions): UnaryCall<GenerateUserAPITokenRequest, GenerateUserAPITokenResponse>;
 }
@@ -66,49 +66,49 @@ export class UserServiceClient implements IUserServiceClient, ServiceInfo {
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * @generated from protobuf rpc: createUser(soulfire.v1.UserCreateRequest) returns (soulfire.v1.UserCreateResponse);
+     * @generated from protobuf rpc: CreateUser(soulfire.v1.UserCreateRequest) returns (soulfire.v1.UserCreateResponse);
      */
     createUser(input: UserCreateRequest, options?: RpcOptions): UnaryCall<UserCreateRequest, UserCreateResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
         return stackIntercept<UserCreateRequest, UserCreateResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: deleteUser(soulfire.v1.UserDeleteRequest) returns (soulfire.v1.UserDeleteResponse);
+     * @generated from protobuf rpc: DeleteUser(soulfire.v1.UserDeleteRequest) returns (soulfire.v1.UserDeleteResponse);
      */
     deleteUser(input: UserDeleteRequest, options?: RpcOptions): UnaryCall<UserDeleteRequest, UserDeleteResponse> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);
         return stackIntercept<UserDeleteRequest, UserDeleteResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: listUsers(soulfire.v1.UserListRequest) returns (soulfire.v1.UserListResponse);
+     * @generated from protobuf rpc: ListUsers(soulfire.v1.UserListRequest) returns (soulfire.v1.UserListResponse);
      */
     listUsers(input: UserListRequest, options?: RpcOptions): UnaryCall<UserListRequest, UserListResponse> {
         const method = this.methods[2], opt = this._transport.mergeOptions(options);
         return stackIntercept<UserListRequest, UserListResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: getUserInfo(soulfire.v1.UserInfoRequest) returns (soulfire.v1.UserInfoResponse);
+     * @generated from protobuf rpc: GetUserInfo(soulfire.v1.UserInfoRequest) returns (soulfire.v1.UserInfoResponse);
      */
     getUserInfo(input: UserInfoRequest, options?: RpcOptions): UnaryCall<UserInfoRequest, UserInfoResponse> {
         const method = this.methods[3], opt = this._transport.mergeOptions(options);
         return stackIntercept<UserInfoRequest, UserInfoResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: invalidateSessions(soulfire.v1.InvalidateSessionsRequest) returns (soulfire.v1.InvalidateSessionsResponse);
+     * @generated from protobuf rpc: InvalidateSessions(soulfire.v1.InvalidateSessionsRequest) returns (soulfire.v1.InvalidateSessionsResponse);
      */
     invalidateSessions(input: InvalidateSessionsRequest, options?: RpcOptions): UnaryCall<InvalidateSessionsRequest, InvalidateSessionsResponse> {
         const method = this.methods[4], opt = this._transport.mergeOptions(options);
         return stackIntercept<InvalidateSessionsRequest, InvalidateSessionsResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: updateUser(soulfire.v1.UpdateUserRequest) returns (soulfire.v1.UpdateUserResponse);
+     * @generated from protobuf rpc: UpdateUser(soulfire.v1.UpdateUserRequest) returns (soulfire.v1.UpdateUserResponse);
      */
     updateUser(input: UpdateUserRequest, options?: RpcOptions): UnaryCall<UpdateUserRequest, UpdateUserResponse> {
         const method = this.methods[5], opt = this._transport.mergeOptions(options);
         return stackIntercept<UpdateUserRequest, UpdateUserResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: generateUserAPIToken(soulfire.v1.GenerateUserAPITokenRequest) returns (soulfire.v1.GenerateUserAPITokenResponse);
+     * @generated from protobuf rpc: GenerateUserAPIToken(soulfire.v1.GenerateUserAPITokenRequest) returns (soulfire.v1.GenerateUserAPITokenResponse);
      */
     generateUserAPIToken(input: GenerateUserAPITokenRequest, options?: RpcOptions): UnaryCall<GenerateUserAPITokenRequest, GenerateUserAPITokenResponse> {
         const method = this.methods[6], opt = this._transport.mergeOptions(options);

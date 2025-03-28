@@ -16,7 +16,7 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  */
 export interface IProxyCheckServiceClient {
     /**
-     * @generated from protobuf rpc: check(soulfire.v1.ProxyCheckRequest) returns (stream soulfire.v1.ProxyCheckResponse);
+     * @generated from protobuf rpc: Check(soulfire.v1.ProxyCheckRequest) returns (stream soulfire.v1.ProxyCheckResponse);
      */
     check(input: ProxyCheckRequest, options?: RpcOptions): ServerStreamingCall<ProxyCheckRequest, ProxyCheckResponse>;
 }
@@ -30,7 +30,7 @@ export class ProxyCheckServiceClient implements IProxyCheckServiceClient, Servic
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * @generated from protobuf rpc: check(soulfire.v1.ProxyCheckRequest) returns (stream soulfire.v1.ProxyCheckResponse);
+     * @generated from protobuf rpc: Check(soulfire.v1.ProxyCheckRequest) returns (stream soulfire.v1.ProxyCheckResponse);
      */
     check(input: ProxyCheckRequest, options?: RpcOptions): ServerStreamingCall<ProxyCheckRequest, ProxyCheckResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);

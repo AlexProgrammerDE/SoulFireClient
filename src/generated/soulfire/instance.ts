@@ -596,12 +596,12 @@ export const InstanceAuditLogResponse_AuditLogEntry = new InstanceAuditLogRespon
  * @generated ServiceType for protobuf service soulfire.v1.InstanceService
  */
 export const InstanceService = new ServiceType("soulfire.v1.InstanceService", [
-    { name: "createInstance", options: {}, I: InstanceCreateRequest, O: InstanceCreateResponse },
-    { name: "deleteInstance", options: {}, I: InstanceDeleteRequest, O: InstanceDeleteResponse },
-    { name: "listInstances", options: {}, I: InstanceListRequest, O: InstanceListResponse },
-    { name: "getInstanceInfo", options: {}, I: InstanceInfoRequest, O: InstanceInfoResponse },
-    { name: "updateInstanceMeta", options: {}, I: InstanceUpdateMetaRequest, O: InstanceUpdateMetaResponse },
-    { name: "updateInstanceConfig", options: {}, I: InstanceUpdateConfigRequest, O: InstanceUpdateConfigResponse },
-    { name: "changeInstanceState", options: {}, I: InstanceStateChangeRequest, O: InstanceStateChangeResponse },
-    { name: "getAuditLog", options: {}, I: InstanceAuditLogRequest, O: InstanceAuditLogResponse }
+    { name: "CreateInstance", options: {}, I: InstanceCreateRequest, O: InstanceCreateResponse },
+    { name: "DeleteInstance", options: {}, I: InstanceDeleteRequest, O: InstanceDeleteResponse },
+    { name: "ListInstances", options: {}, I: InstanceListRequest, O: InstanceListResponse },
+    { name: "GetInstanceInfo", options: {}, I: InstanceInfoRequest, O: InstanceInfoResponse },
+    { name: "UpdateInstanceMeta", options: {}, I: InstanceUpdateMetaRequest, O: InstanceUpdateMetaResponse },
+    { name: "UpdateInstanceConfig", options: {}, I: InstanceUpdateConfigRequest, O: InstanceUpdateConfigResponse },
+    { name: "ChangeInstanceState", options: {}, I: InstanceStateChangeRequest, O: InstanceStateChangeResponse },
+    { name: "GetAuditLog", options: {}, I: InstanceAuditLogRequest, O: InstanceAuditLogResponse }
 ]);

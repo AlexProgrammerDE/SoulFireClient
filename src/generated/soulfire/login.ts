@@ -170,6 +170,6 @@ export const EmailCodeRequest = new EmailCodeRequest$Type();
  * @generated ServiceType for protobuf service soulfire.v1.LoginService
  */
 export const LoginService = new ServiceType("soulfire.v1.LoginService", [
-    { name: "login", options: {}, I: LoginRequest, O: NextAuthFlowResponse },
-    { name: "emailCode", options: {}, I: EmailCodeRequest, O: NextAuthFlowResponse }
+    { name: "Login", options: {}, I: LoginRequest, O: NextAuthFlowResponse },
+    { name: "EmailCode", options: {}, I: EmailCodeRequest, O: NextAuthFlowResponse }
 ]);

@@ -18,11 +18,11 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  */
 export interface IServerServiceClient {
     /**
-     * @generated from protobuf rpc: getServerInfo(soulfire.v1.ServerInfoRequest) returns (soulfire.v1.ServerInfoResponse);
+     * @generated from protobuf rpc: GetServerInfo(soulfire.v1.ServerInfoRequest) returns (soulfire.v1.ServerInfoResponse);
      */
     getServerInfo(input: ServerInfoRequest, options?: RpcOptions): UnaryCall<ServerInfoRequest, ServerInfoResponse>;
     /**
-     * @generated from protobuf rpc: updateServerConfig(soulfire.v1.ServerUpdateConfigRequest) returns (soulfire.v1.ServerUpdateConfigResponse);
+     * @generated from protobuf rpc: UpdateServerConfig(soulfire.v1.ServerUpdateConfigRequest) returns (soulfire.v1.ServerUpdateConfigResponse);
      */
     updateServerConfig(input: ServerUpdateConfigRequest, options?: RpcOptions): UnaryCall<ServerUpdateConfigRequest, ServerUpdateConfigResponse>;
 }
@@ -36,14 +36,14 @@ export class ServerServiceClient implements IServerServiceClient, ServiceInfo {
     constructor(private readonly _transport: RpcTransport) {
     }
     /**
-     * @generated from protobuf rpc: getServerInfo(soulfire.v1.ServerInfoRequest) returns (soulfire.v1.ServerInfoResponse);
+     * @generated from protobuf rpc: GetServerInfo(soulfire.v1.ServerInfoRequest) returns (soulfire.v1.ServerInfoResponse);
      */
     getServerInfo(input: ServerInfoRequest, options?: RpcOptions): UnaryCall<ServerInfoRequest, ServerInfoResponse> {
         const method = this.methods[0], opt = this._transport.mergeOptions(options);
         return stackIntercept<ServerInfoRequest, ServerInfoResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: updateServerConfig(soulfire.v1.ServerUpdateConfigRequest) returns (soulfire.v1.ServerUpdateConfigResponse);
+     * @generated from protobuf rpc: UpdateServerConfig(soulfire.v1.ServerUpdateConfigRequest) returns (soulfire.v1.ServerUpdateConfigResponse);
      */
     updateServerConfig(input: ServerUpdateConfigRequest, options?: RpcOptions): UnaryCall<ServerUpdateConfigRequest, ServerUpdateConfigResponse> {
         const method = this.methods[1], opt = this._transport.mergeOptions(options);

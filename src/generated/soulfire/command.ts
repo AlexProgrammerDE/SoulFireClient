@@ -200,6 +200,6 @@ export const CommandCompletionResponse = new CommandCompletionResponse$Type();
  * @generated ServiceType for protobuf service soulfire.v1.CommandService
  */
 export const CommandService = new ServiceType("soulfire.v1.CommandService", [
-    { name: "executeCommand", options: {}, I: CommandRequest, O: CommandResponse },
-    { name: "tabCompleteCommand", options: {}, I: CommandCompletionRequest, O: CommandCompletionResponse }
+    { name: "ExecuteCommand", options: {}, I: CommandRequest, O: CommandResponse },
+    { name: "TabCompleteCommand", options: {}, I: CommandCompletionRequest, O: CommandCompletionResponse }
 ]);
