@@ -37,7 +37,7 @@ import { LoadingComponent } from '@/components/loading-component.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { UserAvatar } from '@/components/user-avatar.tsx';
 import { CreateUserPopup } from '@/components/dialog/create-user-popup.tsx';
-import { timestampToDate } from '@/lib/utils.tsx';
+import { ROOT_USER_ID, timestampToDate } from '@/lib/utils.tsx';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { UpdateUserPopup } from '@/components/dialog/update-user-popup.tsx';
@@ -324,7 +324,7 @@ function Users() {
           data={userList.data.userList.users}
           extraHeader={ExtraHeader}
           enableRowSelection={(row) =>
-            row.original.username !== 'root' &&
+            row.original.id !== ROOT_USER_ID &&
             row.original.id !== clientInfo.id
           }
         />

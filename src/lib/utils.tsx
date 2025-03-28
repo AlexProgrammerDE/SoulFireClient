@@ -29,6 +29,7 @@ import { RpcTransport } from '@protobuf-ts/runtime-rpc';
 import { QueryClient, QueryKey } from '@tanstack/react-query';
 import { Timestamp } from '@/generated/google/protobuf/timestamp.ts';
 
+export const ROOT_USER_ID = '00000000-0000-0000-0000-000000000000';
 const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
 
 const emojiMap = APP_LOCALES.split(',').reduce<Record<string, FlagComponent>>(
