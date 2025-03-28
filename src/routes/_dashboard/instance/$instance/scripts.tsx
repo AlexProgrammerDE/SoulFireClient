@@ -6,13 +6,14 @@ import { ScriptListResponse } from '@/generated/soulfire/script.ts';
 import { ScriptServiceClient } from '@/generated/soulfire/script.client.ts';
 import { Scripts } from '@/components/generic-scripts-page.tsx';
 import { LoadingComponent } from '@/components/loading-component.tsx';
+import InstancePageLayout from '@/components/nav/instance-page-layout';
 import { useTranslation } from 'react-i18next';
-import UserPageLayout from '@/components/nav/user-page-layout';
 
-export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
+export const Route = createFileRoute('/_dashboard/instance/$instance/scripts')({
   beforeLoad: (props) => {
-    const globalScriptsQueryOptions = queryOptions({
-      queryKey: ['global-scripts'],
+    const { instance } = props.params;
+    const instanceScriptsQueryOptions = queryOptions({
+      queryKey: ['instance-scripts', instance],
       queryFn: async (
         props,
       ): Promise<{
@@ -32,8 +33,10 @@ export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
           {
             scope: {
               scope: {
-                oneofKind: 'globalScript',
-                globalScript: {},
+                oneofKind: 'instanceScript',
+                instanceScript: {
+                  id: instance,
+                },
               },
             },
           },
@@ -50,25 +53,26 @@ export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
     });
     props.abortController.signal.addEventListener('abort', () => {
       void queryClientInstance.cancelQueries({
-        queryKey: globalScriptsQueryOptions.queryKey,
+        queryKey: instanceScriptsQueryOptions.queryKey,
       });
     });
     return {
-      globalScriptsQueryOptions,
+      instanceScriptsQueryOptions,
     };
   },
   loader: async (props) => {
     await queryClientInstance.prefetchQuery(
-      props.context.globalScriptsQueryOptions,
+      props.context.instanceScriptsQueryOptions,
     );
   },
-  component: AdminScripts,
+  component: InstanceScripts,
 });
 
-function AdminScripts() {
+function InstanceScripts() {
   const { t } = useTranslation('common');
-  const { globalScriptsQueryOptions } = Route.useRouteContext();
-  const scriptList = useQuery(globalScriptsQueryOptions);
+  const { instanceScriptsQueryOptions } = Route.useRouteContext();
+  const { instance } = Route.useParams();
+  const scriptList = useQuery(instanceScriptsQueryOptions);
 
   if (scriptList.isError) {
     throw scriptList.error;
@@ -79,21 +83,22 @@ function AdminScripts() {
   }
 
   return (
-    <UserPageLayout
-      showUserCrumb={false}
+    <InstancePageLayout
       extraCrumbs={[t('breadcrumbs.settings')]}
-      pageName={t('pageName.adminScripts')}
+      pageName={t('pageName.instanceScripts')}
     >
       <Scripts
-        queryKey={globalScriptsQueryOptions.queryKey}
+        queryKey={instanceScriptsQueryOptions.queryKey}
         scope={{
           scope: {
-            oneofKind: 'globalScript',
-            globalScript: {},
+            oneofKind: 'instanceScript',
+            instanceScript: {
+              id: instance,
+            },
           },
         }}
         scriptList={scriptList.data.scriptList}
       />
-    </UserPageLayout>
+    </InstancePageLayout>
   );
 }

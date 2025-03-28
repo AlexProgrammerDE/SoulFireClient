@@ -217,7 +217,7 @@
     "proxySettings": "Proxy Settings",
     "aiSettings": "AI Settings",
     "discoverPlugins": "Plugins",
-    "instanceScripts": "Custom Scripts"
+    "instanceScripts": "Scripts"
   },
   "userSidebar": {
     "readDocumentation": "Read documentation",
@@ -279,7 +279,7 @@
     "metaSettings": "Instance Settings",
     "discoverPlugins": "Plugins",
     "adminScripts": "Scripts",
-    "instanceScripts": "Custom Scripts"
+    "instanceScripts": "Scripts"
   },
   "access": {
     "webdav": {

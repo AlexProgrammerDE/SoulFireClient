@@ -24,6 +24,7 @@ import { Route as DashboardInstanceInstanceIndexImport } from './routes/_dashboa
 import { Route as DashboardUserAdminUsersImport } from './routes/_dashboard/user/admin/users'
 import { Route as DashboardUserAdminScriptsImport } from './routes/_dashboard/user/admin/scripts'
 import { Route as DashboardUserAdminConsoleImport } from './routes/_dashboard/user/admin/console'
+import { Route as DashboardInstanceInstanceScriptsImport } from './routes/_dashboard/instance/$instance/scripts'
 import { Route as DashboardInstanceInstanceProxiesImport } from './routes/_dashboard/instance/$instance/proxies'
 import { Route as DashboardInstanceInstanceMetaImport } from './routes/_dashboard/instance/$instance/meta'
 import { Route as DashboardInstanceInstanceDiscoverImport } from './routes/_dashboard/instance/$instance/discover'
@@ -111,6 +112,13 @@ const DashboardUserAdminConsoleRoute = DashboardUserAdminConsoleImport.update({
   path: '/console',
   getParentRoute: () => DashboardUserAdminRoute,
 } as any)
+
+const DashboardInstanceInstanceScriptsRoute =
+  DashboardInstanceInstanceScriptsImport.update({
+    id: '/scripts',
+    path: '/scripts',
+    getParentRoute: () => DashboardInstanceInstanceRoute,
+  } as any)
 
 const DashboardInstanceInstanceProxiesRoute =
   DashboardInstanceInstanceProxiesImport.update({
@@ -256,6 +264,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardInstanceInstanceProxiesImport
       parentRoute: typeof DashboardInstanceInstanceImport
     }
+    '/_dashboard/instance/$instance/scripts': {
+      id: '/_dashboard/instance/$instance/scripts'
+      path: '/scripts'
+      fullPath: '/instance/$instance/scripts'
+      preLoaderRoute: typeof DashboardInstanceInstanceScriptsImport
+      parentRoute: typeof DashboardInstanceInstanceImport
+    }
     '/_dashboard/user/admin/console': {
       id: '/_dashboard/user/admin/console'
       path: '/console'
@@ -354,6 +369,7 @@ interface DashboardInstanceInstanceRouteChildren {
   DashboardInstanceInstanceDiscoverRoute: typeof DashboardInstanceInstanceDiscoverRoute
   DashboardInstanceInstanceMetaRoute: typeof DashboardInstanceInstanceMetaRoute
   DashboardInstanceInstanceProxiesRoute: typeof DashboardInstanceInstanceProxiesRoute
+  DashboardInstanceInstanceScriptsRoute: typeof DashboardInstanceInstanceScriptsRoute
   DashboardInstanceInstanceIndexRoute: typeof DashboardInstanceInstanceIndexRoute
   DashboardInstanceInstanceSettingsNamespaceRoute: typeof DashboardInstanceInstanceSettingsNamespaceRoute
 }
@@ -369,6 +385,8 @@ const DashboardInstanceInstanceRouteChildren: DashboardInstanceInstanceRouteChil
     DashboardInstanceInstanceMetaRoute: DashboardInstanceInstanceMetaRoute,
     DashboardInstanceInstanceProxiesRoute:
       DashboardInstanceInstanceProxiesRoute,
+    DashboardInstanceInstanceScriptsRoute:
+      DashboardInstanceInstanceScriptsRoute,
     DashboardInstanceInstanceIndexRoute: DashboardInstanceInstanceIndexRoute,
     DashboardInstanceInstanceSettingsNamespaceRoute:
       DashboardInstanceInstanceSettingsNamespaceRoute,
@@ -407,6 +425,7 @@ export interface FileRoutesByFullPath {
   '/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
   '/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
+  '/instance/$instance/scripts': typeof DashboardInstanceInstanceScriptsRoute
   '/user/admin/console': typeof DashboardUserAdminConsoleRoute
   '/user/admin/scripts': typeof DashboardUserAdminScriptsRoute
   '/user/admin/users': typeof DashboardUserAdminUsersRoute
@@ -427,6 +446,7 @@ export interface FileRoutesByTo {
   '/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
   '/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
+  '/instance/$instance/scripts': typeof DashboardInstanceInstanceScriptsRoute
   '/user/admin/console': typeof DashboardUserAdminConsoleRoute
   '/user/admin/scripts': typeof DashboardUserAdminScriptsRoute
   '/user/admin/users': typeof DashboardUserAdminUsersRoute
@@ -451,6 +471,7 @@ export interface FileRoutesById {
   '/_dashboard/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
   '/_dashboard/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/_dashboard/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
+  '/_dashboard/instance/$instance/scripts': typeof DashboardInstanceInstanceScriptsRoute
   '/_dashboard/user/admin/console': typeof DashboardUserAdminConsoleRoute
   '/_dashboard/user/admin/scripts': typeof DashboardUserAdminScriptsRoute
   '/_dashboard/user/admin/users': typeof DashboardUserAdminUsersRoute
@@ -476,6 +497,7 @@ export interface FileRouteTypes {
     | '/instance/$instance/discover'
     | '/instance/$instance/meta'
     | '/instance/$instance/proxies'
+    | '/instance/$instance/scripts'
     | '/user/admin/console'
     | '/user/admin/scripts'
     | '/user/admin/users'
@@ -495,6 +517,7 @@ export interface FileRouteTypes {
     | '/instance/$instance/discover'
     | '/instance/$instance/meta'
     | '/instance/$instance/proxies'
+    | '/instance/$instance/scripts'
     | '/user/admin/console'
     | '/user/admin/scripts'
     | '/user/admin/users'
@@ -517,6 +540,7 @@ export interface FileRouteTypes {
     | '/_dashboard/instance/$instance/discover'
     | '/_dashboard/instance/$instance/meta'
     | '/_dashboard/instance/$instance/proxies'
+    | '/_dashboard/instance/$instance/scripts'
     | '/_dashboard/user/admin/console'
     | '/_dashboard/user/admin/scripts'
     | '/_dashboard/user/admin/users'
@@ -580,6 +604,7 @@ export const routeTree = rootRoute
         "/_dashboard/instance/$instance/discover",
         "/_dashboard/instance/$instance/meta",
         "/_dashboard/instance/$instance/proxies",
+        "/_dashboard/instance/$instance/scripts",
         "/_dashboard/instance/$instance/",
         "/_dashboard/instance/$instance/settings/$namespace"
       ]
@@ -625,6 +650,10 @@ export const routeTree = rootRoute
     },
     "/_dashboard/instance/$instance/proxies": {
       "filePath": "_dashboard/instance/$instance/proxies.tsx",
+      "parent": "/_dashboard/instance/$instance"
+    },
+    "/_dashboard/instance/$instance/scripts": {
+      "filePath": "_dashboard/instance/$instance/scripts.tsx",
       "parent": "/_dashboard/instance/$instance"
     },
     "/_dashboard/user/admin/console": {

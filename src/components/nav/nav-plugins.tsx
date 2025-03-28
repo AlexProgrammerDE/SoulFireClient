@@ -18,7 +18,12 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible.tsx';
-import { BlocksIcon, ChevronRightIcon, TelescopeIcon } from 'lucide-react';
+import {
+  BlocksIcon,
+  ChevronRightIcon,
+  ScrollTextIcon,
+  TelescopeIcon,
+} from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { getEntryValueByType } from '@/lib/utils.tsx';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
@@ -52,6 +57,14 @@ export function NavPlugins() {
       icon: TelescopeIcon,
       linkProps: {
         to: '/instance/$instance/discover',
+        params: { instance: instanceInfo.id },
+      },
+    },
+    {
+      title: t('instanceSidebar.instanceScripts'),
+      icon: ScrollTextIcon,
+      linkProps: {
+        to: '/instance/$instance/scripts',
         params: { instance: instanceInfo.id },
       },
     },
