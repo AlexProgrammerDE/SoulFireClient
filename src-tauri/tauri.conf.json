@@ -87,7 +87,7 @@
         "installMode": "passive"
       },
       "endpoints": [
-        "https://gist.githubusercontent.com/AlexProgrammerDE/80f0942765848a4e5c368e404564e603/raw/soulfireclient_update_v2.json"
+        "https://github.com/AlexProgrammerDE/SoulfireClient/releases/latest/download/latest.json"
       ]
     },
     "deep-link": {
