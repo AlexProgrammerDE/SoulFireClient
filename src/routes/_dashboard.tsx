@@ -7,7 +7,12 @@ import {
 } from '@tanstack/react-router';
 import { ClientServiceClient } from '@/generated/soulfire/client.client.ts';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import { createTransport, isAuthenticated, logOut } from '@/lib/web-rpc.ts';
+import {
+  createTransport,
+  isAuthenticated,
+  isImpersonating,
+  logOut,
+} from '@/lib/web-rpc.ts';
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 import { ClientDataResponse } from '@/generated/soulfire/client.ts';
 import { isTauri } from '@/lib/utils.tsx';
@@ -230,6 +235,9 @@ function DashboardLayout() {
       <ClientInfoContext.Provider value={clientData.data.clientData}>
         <InstanceListContext.Provider value={instanceList.data.instanceList}>
           <InstanceSwitchKeybinds />
+          {isImpersonating() && (
+            <div className="border-sidebar-primary pointer-events-none absolute top-0 right-0 bottom-0 left-0 z-30 overflow-hidden border-4" />
+          )}
           <Outlet />
         </InstanceListContext.Provider>
       </ClientInfoContext.Provider>

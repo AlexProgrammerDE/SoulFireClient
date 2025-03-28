@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import * as React from 'react';
 import { useContext, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
@@ -26,7 +26,7 @@ import {
   SelectAllHeader,
   SelectRowHeader,
 } from '@/components/data-table-selects.tsx';
-import { createTransport } from '@/lib/web-rpc.ts';
+import { createTransport, startImpersonation } from '@/lib/web-rpc.ts';
 import { queryClientInstance } from '@/lib/query.ts';
 import {
   UserListResponse,
@@ -37,7 +37,7 @@ import { LoadingComponent } from '@/components/loading-component.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { UserAvatar } from '@/components/user-avatar.tsx';
 import { CreateUserPopup } from '@/components/dialog/create-user-popup.tsx';
-import { ROOT_USER_ID, timestampToDate } from '@/lib/utils.tsx';
+import { ROOT_USER_ID, runAsync, timestampToDate } from '@/lib/utils.tsx';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { UpdateUserPopup } from '@/components/dialog/update-user-popup.tsx';
@@ -189,12 +189,32 @@ function UpdateUserButton(props: { row: Row<UserListResponse_User> }) {
 }
 
 function ImpersonateUserButton(props: { row: Row<UserListResponse_User> }) {
+  const transport = useContext(TransportContext);
+  const navigate = useNavigate();
   return (
     <>
       <Button
         disabled={!props.row.getCanSelect()}
         variant="secondary"
         size="sm"
+        onClick={() => {
+          runAsync(async () => {
+            if (transport === null) {
+              return;
+            }
+
+            const userService = new UserServiceClient(transport);
+            const token = await userService.generateUserAPIToken({
+              id: props.row.original.id,
+            });
+            startImpersonation(token.response.token);
+            await navigate({
+              to: '/user',
+              replace: true,
+              reloadDocument: true,
+            });
+          });
+        }}
       >
         <VenetianMaskIcon />
       </Button>

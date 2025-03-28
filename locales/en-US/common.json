@@ -249,7 +249,8 @@
       "success": "Logged out",
       "error": "Failed to log out"
     },
-    "exit": "Exit"
+    "exit": "Exit",
+    "stopImpersonating": "Stop impersonating"
   },
   "sidebar": {
     "documentation": "Documentation",

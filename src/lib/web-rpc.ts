@@ -9,6 +9,8 @@ const LOCAL_STORAGE_SERVER_TYPE_KEY = 'server-type';
 const LOCAL_STORAGE_SERVER_ADDRESS_KEY = 'server-address';
 const LOCAL_STORAGE_SERVER_TOKEN_KEY = 'server-token';
 const LOCAL_STORAGE_SERVER_WEBDAV_TOKEN_KEY = 'server-webdav-token';
+const LOCAL_STORAGE_SERVER_IMPERSONATION_TOKEN_KEY =
+  'server-impersonation-token';
 
 export const isAuthenticated = () => {
   if (isDemo()) return true;
@@ -62,6 +64,21 @@ export const logOut = () => {
   localStorage.removeItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY);
   localStorage.removeItem(LOCAL_STORAGE_SERVER_TOKEN_KEY);
   localStorage.removeItem(LOCAL_STORAGE_SERVER_WEBDAV_TOKEN_KEY);
+  localStorage.removeItem(LOCAL_STORAGE_SERVER_IMPERSONATION_TOKEN_KEY);
+};
+
+export const startImpersonation = (token: string) => {
+  localStorage.setItem(LOCAL_STORAGE_SERVER_IMPERSONATION_TOKEN_KEY, token);
+};
+
+export const stopImpersonation = () => {
+  localStorage.removeItem(LOCAL_STORAGE_SERVER_IMPERSONATION_TOKEN_KEY);
+};
+
+export const isImpersonating = () => {
+  return (
+    localStorage.getItem(LOCAL_STORAGE_SERVER_IMPERSONATION_TOKEN_KEY) !== null
+  );
 };
 
 export const createTransport = () => {
@@ -70,10 +87,17 @@ export const createTransport = () => {
   }
 
   const address = localStorage.getItem(LOCAL_STORAGE_SERVER_ADDRESS_KEY);
-  const token = localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY);
+  let token = localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY);
 
   if (!address || !token) {
     throw new Error(i18n.t('common:error.noAddressOrToken'));
+  }
+
+  const impersonationToken = localStorage.getItem(
+    LOCAL_STORAGE_SERVER_IMPERSONATION_TOKEN_KEY,
+  );
+  if (impersonationToken !== null) {
+    token = impersonationToken;
   }
 
   return new GrpcWebFetchTransport({

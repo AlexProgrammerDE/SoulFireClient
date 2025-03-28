@@ -12,6 +12,7 @@ import {
   PowerIcon,
   SunIcon,
   SunMoonIcon,
+  VenetianMaskIcon,
 } from 'lucide-react';
 import {
   DropdownMenu,
@@ -56,7 +57,7 @@ import { appConfigDir, appDataDir } from '@tauri-apps/api/path';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { AboutPopup } from '@/components/dialog/about-popup.tsx';
 import { useTranslation } from 'react-i18next';
-import { logOut } from '@/lib/web-rpc.ts';
+import { isImpersonating, logOut, stopImpersonation } from '@/lib/web-rpc.ts';
 import { UserAvatar } from '@/components/user-avatar.tsx';
 
 export function NavAccount() {
@@ -234,33 +235,46 @@ export function NavAccount() {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              {clientInfo && (
+              {isImpersonating() && (
                 <DropdownMenuItem
                   onClick={() => {
-                    const disconnect = async () => {
-                      if (isTauri()) {
-                        await emit('kill-integrated-server', {});
-                      }
-                      logOut();
-                      await navigate({
-                        to: '/',
-                        replace: true,
-                      });
-                    };
-                    toast.promise(disconnect(), {
-                      loading: t('userSidebar.logOutToast.loading'),
-                      success: t('userSidebar.logOutToast.success'),
-                      error: (e) => {
-                        console.error(e);
-                        return t('userSidebar.logOutToast.error');
-                      },
+                    stopImpersonation();
+                    void navigate({
+                      to: '/user',
+                      replace: true,
+                      reloadDocument: true,
                     });
                   }}
                 >
-                  <LogOutIcon />
-                  {t('userSidebar.logOut')}
+                  <VenetianMaskIcon />
+                  {t('userSidebar.stopImpersonating')}
                 </DropdownMenuItem>
               )}
+              <DropdownMenuItem
+                onClick={() => {
+                  const disconnect = async () => {
+                    if (isTauri()) {
+                      await emit('kill-integrated-server', {});
+                    }
+                    logOut();
+                    await navigate({
+                      to: '/',
+                      replace: true,
+                    });
+                  };
+                  toast.promise(disconnect(), {
+                    loading: t('userSidebar.logOutToast.loading'),
+                    success: t('userSidebar.logOutToast.success'),
+                    error: (e) => {
+                      console.error(e);
+                      return t('userSidebar.logOutToast.error');
+                    },
+                  });
+                }}
+              >
+                <LogOutIcon />
+                {t('userSidebar.logOut')}
+              </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={() => {
                   if (isTauri()) {
