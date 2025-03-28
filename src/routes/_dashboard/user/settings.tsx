@@ -14,6 +14,7 @@ import { setSelfEmail, setSelfUsername } from '@/lib/utils.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { ExternalLink } from '@/components/external-link.tsx';
 import { UserAvatar } from '@/components/user-avatar.tsx';
+import { Card } from '@/components/ui/card.tsx';
 
 export const Route = createFileRoute('/_dashboard/user/settings')({
   component: UserSettings,
@@ -77,7 +78,7 @@ function UserSettings() {
                 </>
               }
             />
-            <div className="flex items-center gap-2 text-left text-base">
+            <Card className="flex w-fit items-center gap-2 p-3 text-left text-base">
               <UserAvatar
                 username={clientInfo.username}
                 email={clientInfo.email}
@@ -89,7 +90,7 @@ function UserSettings() {
                 </span>
                 <span className="truncate text-sm">{clientInfo.email}</span>
               </div>
-            </div>
+            </Card>
           </div>
           <GenericEntryComponent
             entry={{
