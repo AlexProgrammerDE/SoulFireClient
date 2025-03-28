@@ -22,6 +22,7 @@ import { Route as DashboardInstanceInstanceImport } from './routes/_dashboard/in
 import { Route as DashboardUserAdminIndexImport } from './routes/_dashboard/user/admin/index'
 import { Route as DashboardInstanceInstanceIndexImport } from './routes/_dashboard/instance/$instance/index'
 import { Route as DashboardUserAdminUsersImport } from './routes/_dashboard/user/admin/users'
+import { Route as DashboardUserAdminScriptsImport } from './routes/_dashboard/user/admin/scripts'
 import { Route as DashboardUserAdminConsoleImport } from './routes/_dashboard/user/admin/console'
 import { Route as DashboardInstanceInstanceProxiesImport } from './routes/_dashboard/instance/$instance/proxies'
 import { Route as DashboardInstanceInstanceMetaImport } from './routes/_dashboard/instance/$instance/meta'
@@ -96,6 +97,12 @@ const DashboardInstanceInstanceIndexRoute =
 const DashboardUserAdminUsersRoute = DashboardUserAdminUsersImport.update({
   id: '/users',
   path: '/users',
+  getParentRoute: () => DashboardUserAdminRoute,
+} as any)
+
+const DashboardUserAdminScriptsRoute = DashboardUserAdminScriptsImport.update({
+  id: '/scripts',
+  path: '/scripts',
   getParentRoute: () => DashboardUserAdminRoute,
 } as any)
 
@@ -256,6 +263,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardUserAdminConsoleImport
       parentRoute: typeof DashboardUserAdminImport
     }
+    '/_dashboard/user/admin/scripts': {
+      id: '/_dashboard/user/admin/scripts'
+      path: '/scripts'
+      fullPath: '/user/admin/scripts'
+      preLoaderRoute: typeof DashboardUserAdminScriptsImport
+      parentRoute: typeof DashboardUserAdminImport
+    }
     '/_dashboard/user/admin/users': {
       id: '/_dashboard/user/admin/users'
       path: '/users'
@@ -298,6 +312,7 @@ declare module '@tanstack/react-router' {
 
 interface DashboardUserAdminRouteChildren {
   DashboardUserAdminConsoleRoute: typeof DashboardUserAdminConsoleRoute
+  DashboardUserAdminScriptsRoute: typeof DashboardUserAdminScriptsRoute
   DashboardUserAdminUsersRoute: typeof DashboardUserAdminUsersRoute
   DashboardUserAdminIndexRoute: typeof DashboardUserAdminIndexRoute
   DashboardUserAdminSettingsNamespaceRoute: typeof DashboardUserAdminSettingsNamespaceRoute
@@ -305,6 +320,7 @@ interface DashboardUserAdminRouteChildren {
 
 const DashboardUserAdminRouteChildren: DashboardUserAdminRouteChildren = {
   DashboardUserAdminConsoleRoute: DashboardUserAdminConsoleRoute,
+  DashboardUserAdminScriptsRoute: DashboardUserAdminScriptsRoute,
   DashboardUserAdminUsersRoute: DashboardUserAdminUsersRoute,
   DashboardUserAdminIndexRoute: DashboardUserAdminIndexRoute,
   DashboardUserAdminSettingsNamespaceRoute:
@@ -392,6 +408,7 @@ export interface FileRoutesByFullPath {
   '/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
   '/user/admin/console': typeof DashboardUserAdminConsoleRoute
+  '/user/admin/scripts': typeof DashboardUserAdminScriptsRoute
   '/user/admin/users': typeof DashboardUserAdminUsersRoute
   '/instance/$instance/': typeof DashboardInstanceInstanceIndexRoute
   '/user/admin/': typeof DashboardUserAdminIndexRoute
@@ -411,6 +428,7 @@ export interface FileRoutesByTo {
   '/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
   '/user/admin/console': typeof DashboardUserAdminConsoleRoute
+  '/user/admin/scripts': typeof DashboardUserAdminScriptsRoute
   '/user/admin/users': typeof DashboardUserAdminUsersRoute
   '/instance/$instance': typeof DashboardInstanceInstanceIndexRoute
   '/user/admin': typeof DashboardUserAdminIndexRoute
@@ -434,6 +452,7 @@ export interface FileRoutesById {
   '/_dashboard/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/_dashboard/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
   '/_dashboard/user/admin/console': typeof DashboardUserAdminConsoleRoute
+  '/_dashboard/user/admin/scripts': typeof DashboardUserAdminScriptsRoute
   '/_dashboard/user/admin/users': typeof DashboardUserAdminUsersRoute
   '/_dashboard/instance/$instance/': typeof DashboardInstanceInstanceIndexRoute
   '/_dashboard/user/admin/': typeof DashboardUserAdminIndexRoute
@@ -458,6 +477,7 @@ export interface FileRouteTypes {
     | '/instance/$instance/meta'
     | '/instance/$instance/proxies'
     | '/user/admin/console'
+    | '/user/admin/scripts'
     | '/user/admin/users'
     | '/instance/$instance/'
     | '/user/admin/'
@@ -476,6 +496,7 @@ export interface FileRouteTypes {
     | '/instance/$instance/meta'
     | '/instance/$instance/proxies'
     | '/user/admin/console'
+    | '/user/admin/scripts'
     | '/user/admin/users'
     | '/instance/$instance'
     | '/user/admin'
@@ -497,6 +518,7 @@ export interface FileRouteTypes {
     | '/_dashboard/instance/$instance/meta'
     | '/_dashboard/instance/$instance/proxies'
     | '/_dashboard/user/admin/console'
+    | '/_dashboard/user/admin/scripts'
     | '/_dashboard/user/admin/users'
     | '/_dashboard/instance/$instance/'
     | '/_dashboard/user/admin/'
@@ -571,6 +593,7 @@ export const routeTree = rootRoute
       "parent": "/_dashboard/user",
       "children": [
         "/_dashboard/user/admin/console",
+        "/_dashboard/user/admin/scripts",
         "/_dashboard/user/admin/users",
         "/_dashboard/user/admin/",
         "/_dashboard/user/admin/settings/$namespace"
@@ -606,6 +629,10 @@ export const routeTree = rootRoute
     },
     "/_dashboard/user/admin/console": {
       "filePath": "_dashboard/user/admin/console.tsx",
+      "parent": "/_dashboard/user/admin"
+    },
+    "/_dashboard/user/admin/scripts": {
+      "filePath": "_dashboard/user/admin/scripts.tsx",
       "parent": "/_dashboard/user/admin"
     },
     "/_dashboard/user/admin/users": {

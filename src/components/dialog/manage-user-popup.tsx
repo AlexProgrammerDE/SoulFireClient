@@ -38,20 +38,22 @@ import {
 } from '@/components/ui/select.tsx';
 import { getEnumEntries } from '@/lib/types.ts';
 import { useRouteContext } from '@tanstack/react-router';
+import { UserListResponse_User } from '@/generated/soulfire/user.ts';
 
-export type CreateInstanceType = {
+export type FormType = {
   username: string;
   email: string;
   role: UserRole;
 };
 
-export function CreateUserPopup({
+export function ManageUserPopup({
   open,
   setOpen,
+  ...props
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
-}) {
+} & ({ mode: 'edit'; user: UserListResponse_User } | { mode: 'add' })) {
   const usersQueryOptions = useRouteContext({
     from: '/_dashboard/user/admin/users',
     select: (context) => context.usersQueryOptions,
@@ -71,37 +73,54 @@ export function CreateUserPopup({
     email: z.string().email(),
     role: z.nativeEnum(UserRole),
   });
-  const form = useForm<CreateInstanceType>({
+  const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
-      email: '',
-      role: UserRole.ADMIN,
+      username: props.mode === 'edit' ? props.user.username : '',
+      email: props.mode === 'edit' ? props.user.email : '',
+      role: props.mode === 'edit' ? props.user.role : UserRole.USER,
     },
   });
-  const addMutation = useMutation({
-    mutationFn: async (values: CreateInstanceType) => {
+  const submitMutation = useMutation({
+    mutationFn: async (values: FormType) => {
       if (transport === null) {
         return;
       }
 
       const userService = new UserServiceClient(transport);
-      const promise = userService
-        .createUser({
-          username: values.username,
-          email: values.email,
-          role: values.role,
-        })
-        .then((r) => r.response);
+      const promise =
+        props.mode === 'add'
+          ? userService
+              .createUser({
+                username: values.username,
+                email: values.email,
+                role: values.role,
+              })
+              .then((r) => r.response)
+          : userService
+              .updateUser({
+                id: props.user.id,
+                username: values.username,
+                email: values.email,
+                role: values.role,
+              })
+              .then((r) => r.response);
       toast.promise(promise, {
-        loading: t('users.updateToast.loading'),
+        loading:
+          props.mode === 'add'
+            ? t('users.addToast.loading')
+            : t('users.updateToast.loading'),
         success: () => {
           setOpen(false);
-          return t('users.updateToast.success');
+          return props.mode === 'add'
+            ? t('users.addToast.success')
+            : t('users.updateToast.success');
         },
         error: (e) => {
           console.error(e);
-          return t('users.updateToast.error');
+          return props.mode === 'add'
+            ? t('users.addToast.error')
+            : t('users.updateToast.error');
         },
       });
 
@@ -121,13 +140,19 @@ export function CreateUserPopup({
           <form
             className="flex flex-col gap-4"
             onSubmit={(e) =>
-              void form.handleSubmit((data) => addMutation.mutate(data))(e)
+              void form.handleSubmit((data) => submitMutation.mutate(data))(e)
             }
           >
             <CredenzaHeader>
-              <CredenzaTitle>{t('users.addUserDialog.title')}</CredenzaTitle>
+              <CredenzaTitle>
+                {props.mode === 'add'
+                  ? t('users.addUserDialog.title')
+                  : t('users.updateUserDialog.title')}
+              </CredenzaTitle>
               <CredenzaDescription>
-                {t('users.addUserDialog.description')}
+                {props.mode === 'add'
+                  ? t('users.addUserDialog.description')
+                  : t('users.updateUserDialog.description')}
               </CredenzaDescription>
             </CredenzaHeader>
             <CredenzaBody className="flex flex-col gap-4">
@@ -219,10 +244,16 @@ export function CreateUserPopup({
             <CredenzaFooter className="justify-between">
               <CredenzaClose asChild>
                 <Button variant="outline">
-                  {t('users.addUserDialog.form.cancel')}
+                  {props.mode === 'add'
+                    ? t('users.addUserDialog.form.cancel')
+                    : t('users.updateUserDialog.form.cancel')}
                 </Button>
               </CredenzaClose>
-              <Button type="submit">{t('users.addUserDialog.form.add')}</Button>
+              <Button type="submit">
+                {props.mode === 'add'
+                  ? t('users.addUserDialog.form.add')
+                  : t('users.updateUserDialog.form.update')}
+              </Button>
             </CredenzaFooter>
           </form>
         </CredenzaContent>

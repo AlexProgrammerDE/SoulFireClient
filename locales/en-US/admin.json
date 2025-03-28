@@ -48,7 +48,7 @@
       }
     },
     "addUserDialog": {
-      "title": "Add User",
+      "title": "Add a new user",
       "description": "Add a new user to this server",
       "form": {
         "cancel": "Cancel",
@@ -56,11 +56,11 @@
       }
     },
     "updateUserDialog": {
-      "title": "Update User",
+      "title": "Update user",
       "description": "Update the user's information",
       "form": {
         "cancel": "Cancel",
-        "add": "Update User"
+        "update": "Update User"
       }
     },
     "addToast": {

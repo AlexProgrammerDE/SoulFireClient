@@ -30,7 +30,7 @@ import { useNavigate, useRouteContext } from '@tanstack/react-router';
 import { useContext } from 'react';
 import { TransportContext } from '../providers/transport-context.tsx';
 
-export type CreateInstanceType = {
+export type FormType = {
   friendlyName: string;
 };
 
@@ -59,14 +59,14 @@ export function CreateInstancePopup({
         t('dialog.createInstance.form.friendlyName.regex'),
       ),
   });
-  const form = useForm<CreateInstanceType>({
+  const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       friendlyName: '',
     },
   });
   const addMutation = useMutation({
-    mutationFn: async (values: CreateInstanceType) => {
+    mutationFn: async (values: FormType) => {
       if (transport === null) {
         return;
       }

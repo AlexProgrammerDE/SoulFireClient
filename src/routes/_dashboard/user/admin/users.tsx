@@ -36,11 +36,10 @@ import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
 import { LoadingComponent } from '@/components/loading-component.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { UserAvatar } from '@/components/user-avatar.tsx';
-import { CreateUserPopup } from '@/components/dialog/create-user-popup.tsx';
+import { ManageUserPopup } from '@/components/dialog/manage-user-popup.tsx';
 import { ROOT_USER_ID, runAsync, timestampToDate } from '@/lib/utils.tsx';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import { UpdateUserPopup } from '@/components/dialog/update-user-popup.tsx';
 
 export const Route = createFileRoute('/_dashboard/user/admin/users')({
   beforeLoad: (props) => {
@@ -179,7 +178,8 @@ function UpdateUserButton(props: { row: Row<UserListResponse_User> }) {
       >
         <PencilIcon />
       </Button>
-      <UpdateUserPopup
+      <ManageUserPopup
+        mode="edit"
         user={props.row.original}
         open={open}
         setOpen={setOpen}
@@ -272,7 +272,7 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
       <Button variant="outline" onClick={() => setCreateOpen(true)}>
         <PlusIcon className="h-4 w-4" />
       </Button>
-      <CreateUserPopup open={createOpen} setOpen={setCreateOpen} />
+      <ManageUserPopup mode="add" open={createOpen} setOpen={setCreateOpen} />
       <Button
         variant="outline"
         disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}

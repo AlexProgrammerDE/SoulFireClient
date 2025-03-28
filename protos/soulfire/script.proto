@@ -6,6 +6,7 @@ option java_multiple_files = true;
 package soulfire.v1;
 
 import "soulfire/common.proto";
+import "google/protobuf/timestamp.proto";
 
 message GlobalScriptScope {
 }
@@ -14,13 +15,17 @@ message InstanceScriptScope {
   string id = 1;
 }
 
-message CreateScriptRequest {
+message ScriptScope {
   oneof scope {
     GlobalScriptScope global_script = 1;
     InstanceScriptScope instance_script = 2;
   }
-  string script_name = 3;
-  bool elevated_permissions = 4;
+}
+
+message CreateScriptRequest {
+  ScriptScope scope = 1;
+  string script_name = 2;
+  bool elevated_permissions = 3;
 }
 
 message CreateScriptResponse {
@@ -50,20 +55,26 @@ message UpdateScriptRequest {
 message UpdateScriptResponse {
 }
 
-message ListScriptsRequest {
-  oneof scope {
-    GlobalScriptScope global_script = 1;
-    InstanceScriptScope instance_script = 2;
+message ScriptListRequest {
+  ScriptScope scope = 1;
+}
+
+enum ScriptLanguage {
+  JAVASCRIPT = 0;
+  PYTHON = 1;
+}
+
+message ScriptListResponse {
+  message Script {
+    string id = 1;
+    string script_name = 2;
+    bool elevated_permissions = 3;
+    ScriptLanguage language = 4;
+    google.protobuf.Timestamp created_at = 5;
+    google.protobuf.Timestamp updated_at = 6;
+    ScriptScope script_scope = 7;
   }
-}
 
-message Script {
-  string id = 1;
-  string script_name = 2;
-  bool elevated_permissions = 3;
-}
-
-message ListScriptsResponse {
   repeated Script scripts = 1;
 }
 
@@ -72,5 +83,5 @@ service ScriptService {
   rpc DeleteScript (DeleteScriptRequest) returns (DeleteScriptResponse) {}
   rpc RestartScript (RestartScriptRequest) returns (RestartScriptResponse) {}
   rpc UpdateScript (UpdateScriptRequest) returns (UpdateScriptResponse) {}
-  rpc ListScripts (ListScriptsRequest) returns (ListScriptsResponse) {}
+  rpc ListScripts (ScriptListRequest) returns (ScriptListResponse) {}
 }

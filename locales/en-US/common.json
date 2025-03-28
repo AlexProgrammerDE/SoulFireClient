@@ -217,7 +217,7 @@
     "proxySettings": "Proxy Settings",
     "aiSettings": "AI Settings",
     "discoverPlugins": "Plugins",
-    "scripts": "Scripts"
+    "instanceScripts": "Custom Scripts"
   },
   "userSidebar": {
     "readDocumentation": "Read documentation",
@@ -230,7 +230,7 @@
     "adminOverview": "Overview",
     "adminConsole": "Console",
     "users": "Users",
-    "scripts": "Scripts",
+    "adminScripts": "Scripts",
     "serverSettings": "Server Settings",
     "devSettings": "Dev Settings",
     "theme": {
@@ -278,7 +278,8 @@
     "accountSettings": "Account Settings",
     "metaSettings": "Instance Settings",
     "discoverPlugins": "Plugins",
-    "scripts": "Scripts"
+    "adminScripts": "Scripts",
+    "instanceScripts": "Custom Scripts"
   },
   "access": {
     "webdav": {
@@ -331,5 +332,62 @@
     "pausedAttack": "Paused an attack",
     "stoppedAttack": "Stopped an attack"
   },
-  "pickADate": "Pick a date"
+  "pickADate": "Pick a date",
+  "scripts": {
+    "filterPlaceholder": "Filter scripts...",
+    "baseScriptDialog": {
+      "form": {
+        "scriptName": {
+          "min": "Script names must be at least 3 characters",
+          "max": "Script names must be at most 32 characters",
+          "regex": "Script names must be lowercase, begin with an alphanumeric character, followed by more alphanumeric characters or dashes, and end with an alphanumeric character.",
+          "label": "Name",
+          "placeholder": "My Script",
+          "description": "The name of the script."
+        },
+        "elevatedPermissions": {
+          "label": "Elevated Permissions",
+          "description": "Whether the script should run with elevated permissions. Only admins can enable this option."
+        }
+      }
+    },
+    "addScriptDialog": {
+      "title": "Add a new script",
+      "description": "Scripts are small programs that run on the SoulFire server. They can be used to automate tasks, create custom behaviour, and more.",
+      "form": {
+        "cancel": "Cancel",
+        "add": "Add"
+      }
+    },
+    "updateScriptDialog": {
+      "title": "Update script",
+      "description": "Update the script's information.",
+      "form": {
+        "cancel": "Cancel",
+        "update": "Update"
+      }
+    },
+    "removeToast": {
+      "loading": "Removing scripts...",
+      "success": "Removed scripts!",
+      "error": "Failed to remove scripts"
+    },
+    "addToast": {
+      "loading": "Adding script...",
+      "success": "Added script!",
+      "error": "Failed to add script"
+    },
+    "updateToast": {
+      "loading": "Updating script...",
+      "success": "Updated script!",
+      "error": "Failed to update script"
+    },
+    "table": {
+      "scriptName": "Name",
+      "language": "Language",
+      "elevatedPermissions": "Elevated Permissions",
+      "createdAt": "Created",
+      "actions": "Actions"
+    }
+  }
 }

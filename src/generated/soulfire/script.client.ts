@@ -6,8 +6,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { ScriptService } from "./script";
-import type { ListScriptsResponse } from "./script";
-import type { ListScriptsRequest } from "./script";
+import type { ScriptListResponse } from "./script";
+import type { ScriptListRequest } from "./script";
 import type { UpdateScriptResponse } from "./script";
 import type { UpdateScriptRequest } from "./script";
 import type { RestartScriptResponse } from "./script";
@@ -40,9 +40,9 @@ export interface IScriptServiceClient {
      */
     updateScript(input: UpdateScriptRequest, options?: RpcOptions): UnaryCall<UpdateScriptRequest, UpdateScriptResponse>;
     /**
-     * @generated from protobuf rpc: ListScripts(soulfire.v1.ListScriptsRequest) returns (soulfire.v1.ListScriptsResponse);
+     * @generated from protobuf rpc: ListScripts(soulfire.v1.ScriptListRequest) returns (soulfire.v1.ScriptListResponse);
      */
-    listScripts(input: ListScriptsRequest, options?: RpcOptions): UnaryCall<ListScriptsRequest, ListScriptsResponse>;
+    listScripts(input: ScriptListRequest, options?: RpcOptions): UnaryCall<ScriptListRequest, ScriptListResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.ScriptService
@@ -82,10 +82,10 @@ export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
         return stackIntercept<UpdateScriptRequest, UpdateScriptResponse>("unary", this._transport, method, opt, input);
     }
     /**
-     * @generated from protobuf rpc: ListScripts(soulfire.v1.ListScriptsRequest) returns (soulfire.v1.ListScriptsResponse);
+     * @generated from protobuf rpc: ListScripts(soulfire.v1.ScriptListRequest) returns (soulfire.v1.ScriptListResponse);
      */
-    listScripts(input: ListScriptsRequest, options?: RpcOptions): UnaryCall<ListScriptsRequest, ListScriptsResponse> {
+    listScripts(input: ScriptListRequest, options?: RpcOptions): UnaryCall<ScriptListRequest, ScriptListResponse> {
         const method = this.methods[4], opt = this._transport.mergeOptions(options);
-        return stackIntercept<ListScriptsRequest, ListScriptsResponse>("unary", this._transport, method, opt, input);
+        return stackIntercept<ScriptListRequest, ScriptListResponse>("unary", this._transport, method, opt, input);
     }
 }
