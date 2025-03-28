@@ -32,6 +32,7 @@ import {
 } from '@/generated/soulfire/script.ts';
 import { ScriptServiceClient } from '@/generated/soulfire/script.client.ts';
 import { ManageScriptPopup } from '@/components/dialog/manage-script-popup.tsx';
+import { CopyInfoButton } from '@/components/info-buttons.tsx';
 
 export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
   beforeLoad: (props) => {
@@ -100,6 +101,12 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
   {
     accessorKey: 'scriptName',
     header: () => <Trans i18nKey="common:scripts.table.scriptName" />,
+    cell: ({ row }) => (
+      <div className="flex flex-row items-center gap-2">
+        <span className="max-w-64 truncate">{row.original.scriptName}</span>
+        <CopyInfoButton value={row.original.id} />
+      </div>
+    ),
     sortingFn: 'fuzzySort',
   },
   {

@@ -24,13 +24,7 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command.tsx';
-import {
-  Check,
-  ChevronsUpDown,
-  InfoIcon,
-  PlusIcon,
-  TrashIcon,
-} from 'lucide-react';
+import { Check, ChevronsUpDown, PlusIcon, TrashIcon } from 'lucide-react';
 import {
   cn,
   getEntryValueByType,
@@ -65,6 +59,7 @@ import { TFunction } from 'i18next';
 import { NumberFormatValues } from 'react-number-format/types/types';
 import { useRouteContext } from '@tanstack/react-router';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
+import { TextInfoButton } from '@/components/info-buttons.tsx';
 
 function isAllowedValidator(
   t: TFunction,
@@ -99,8 +94,6 @@ export function ComponentTitle(props: {
   description: ReactNode;
   onClick?: () => void;
 }) {
-  const [open, setOpen] = useState(false);
-
   return (
     <div className="flex w-fit flex-row items-center gap-2">
       <p
@@ -111,19 +104,7 @@ export function ComponentTitle(props: {
       >
         {props.title}
       </p>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger asChild>
-          <InfoIcon
-            className="h-4 w-4 shrink-0 cursor-pointer opacity-50"
-            onClick={() => {
-              setOpen(!open);
-            }}
-          />
-        </PopoverTrigger>
-        <PopoverContent>
-          <p className="whitespace-pre-line">{props.description}</p>
-        </PopoverContent>
-      </Popover>
+      <TextInfoButton value={props.description} />
     </div>
   );
 }

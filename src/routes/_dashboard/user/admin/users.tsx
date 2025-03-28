@@ -40,6 +40,7 @@ import { ManageUserPopup } from '@/components/dialog/manage-user-popup.tsx';
 import { ROOT_USER_ID, runAsync, timestampToDate } from '@/lib/utils.tsx';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
+import { CopyInfoButton } from '@/components/info-buttons.tsx';
 
 export const Route = createFileRoute('/_dashboard/user/admin/users')({
   beforeLoad: (props) => {
@@ -113,7 +114,8 @@ const columns: ColumnDef<UserListResponse_User>[] = [
           email={row.original.email}
           className="size-8"
         />
-        {row.original.username}
+        <span className="max-w-64 truncate">{row.original.username}</span>
+        <CopyInfoButton value={row.original.id} />
       </div>
     ),
     sortingFn: 'fuzzySort',

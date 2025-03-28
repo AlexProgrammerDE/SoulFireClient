@@ -314,6 +314,7 @@
     "documentation": "Documentation",
     "howToConnect": "How to connect"
   },
+  "copiedToClipboard": "Copied to clipboard",
   "instanceState": {
     "starting": "Starting",
     "running": "Running",
