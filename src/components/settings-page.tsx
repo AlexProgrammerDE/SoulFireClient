@@ -40,6 +40,7 @@ import {
 } from '@/lib/utils.tsx';
 import {
   HTMLInputTypeAttribute,
+  ReactNode,
   useContext,
   useEffect,
   useMemo,
@@ -93,9 +94,9 @@ function isAllowedValidator(
   };
 }
 
-function ComponentTitle(props: {
-  title: string;
-  description: string;
+export function ComponentTitle(props: {
+  title: ReactNode;
+  description: ReactNode;
   onClick?: () => void;
 }) {
   const [open, setOpen] = useState(false);
