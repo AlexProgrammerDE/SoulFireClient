@@ -96,7 +96,7 @@ export function ManageScriptPopup({
           : scriptService
               .updateScript({
                 id: props.script.id,
-                scriptName: props.script.scriptName,
+                scriptName: values.scriptName,
                 elevatedPermissions: values.elevatedPermissions,
               })
               .then((r) => r.response);
