@@ -6,6 +6,8 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { ScriptService } from "./script";
+import type { ListScriptsResponse } from "./script";
+import type { ListScriptsRequest } from "./script";
 import type { UpdateScriptResponse } from "./script";
 import type { UpdateScriptRequest } from "./script";
 import type { RestartScriptResponse } from "./script";
@@ -37,6 +39,10 @@ export interface IScriptServiceClient {
      * @generated from protobuf rpc: UpdateScript(soulfire.v1.UpdateScriptRequest) returns (soulfire.v1.UpdateScriptResponse);
      */
     updateScript(input: UpdateScriptRequest, options?: RpcOptions): UnaryCall<UpdateScriptRequest, UpdateScriptResponse>;
+    /**
+     * @generated from protobuf rpc: ListScripts(soulfire.v1.ListScriptsRequest) returns (soulfire.v1.ListScriptsResponse);
+     */
+    listScripts(input: ListScriptsRequest, options?: RpcOptions): UnaryCall<ListScriptsRequest, ListScriptsResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.ScriptService
@@ -74,5 +80,12 @@ export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
     updateScript(input: UpdateScriptRequest, options?: RpcOptions): UnaryCall<UpdateScriptRequest, UpdateScriptResponse> {
         const method = this.methods[3], opt = this._transport.mergeOptions(options);
         return stackIntercept<UpdateScriptRequest, UpdateScriptResponse>("unary", this._transport, method, opt, input);
+    }
+    /**
+     * @generated from protobuf rpc: ListScripts(soulfire.v1.ListScriptsRequest) returns (soulfire.v1.ListScriptsResponse);
+     */
+    listScripts(input: ListScriptsRequest, options?: RpcOptions): UnaryCall<ListScriptsRequest, ListScriptsResponse> {
+        const method = this.methods[4], opt = this._transport.mergeOptions(options);
+        return stackIntercept<ListScriptsRequest, ListScriptsResponse>("unary", this._transport, method, opt, input);
     }
 }

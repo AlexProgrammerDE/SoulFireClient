@@ -742,7 +742,27 @@ export enum GlobalPermission {
     /**
      * @generated from protobuf enum value: INVALIDATE_SELF_SESSIONS = 17;
      */
-    INVALIDATE_SELF_SESSIONS = 17
+    INVALIDATE_SELF_SESSIONS = 17,
+    /**
+     * @generated from protobuf enum value: CREATE_GLOBAL_SCRIPT = 18;
+     */
+    CREATE_GLOBAL_SCRIPT = 18,
+    /**
+     * @generated from protobuf enum value: READ_GLOBAL_SCRIPT = 19;
+     */
+    READ_GLOBAL_SCRIPT = 19,
+    /**
+     * @generated from protobuf enum value: UPDATE_GLOBAL_SCRIPT = 20;
+     */
+    UPDATE_GLOBAL_SCRIPT = 20,
+    /**
+     * @generated from protobuf enum value: DELETE_GLOBAL_SCRIPT = 21;
+     */
+    DELETE_GLOBAL_SCRIPT = 21,
+    /**
+     * @generated from protobuf enum value: ELEVATE_SCRIPT_PERMISSIONS = 22;
+     */
+    ELEVATE_SCRIPT_PERMISSIONS = 22
 }
 /**
  * @generated from protobuf enum soulfire.v1.InstancePermission
@@ -789,13 +809,33 @@ export enum InstancePermission {
      */
     ACCESS_OBJECT_STORAGE = 9,
     /**
+     * @generated from protobuf enum value: ACCESS_SCRIPT_CODE_OBJECT_STORAGE = 20;
+     */
+    ACCESS_SCRIPT_CODE_OBJECT_STORAGE = 20,
+    /**
      * @generated from protobuf enum value: INSTANCE_SUBSCRIBE_LOGS = 13;
      */
     INSTANCE_SUBSCRIBE_LOGS = 13,
     /**
      * @generated from protobuf enum value: READ_INSTANCE_AUDIT_LOGS = 15;
      */
-    READ_INSTANCE_AUDIT_LOGS = 15
+    READ_INSTANCE_AUDIT_LOGS = 15,
+    /**
+     * @generated from protobuf enum value: CREATE_SCRIPT = 16;
+     */
+    CREATE_SCRIPT = 16,
+    /**
+     * @generated from protobuf enum value: READ_SCRIPT = 17;
+     */
+    READ_SCRIPT = 17,
+    /**
+     * @generated from protobuf enum value: UPDATE_SCRIPT = 18;
+     */
+    UPDATE_SCRIPT = 18,
+    /**
+     * @generated from protobuf enum value: DELETE_SCRIPT = 19;
+     */
+    DELETE_SCRIPT = 19
 }
 /**
  * @generated from protobuf enum soulfire.v1.UserRole

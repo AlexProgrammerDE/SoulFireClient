@@ -10,8 +10,7 @@ import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { CommandServiceClient } from '@/generated/soulfire/command.client.ts';
 import {
   CommandCompletion,
-  CommandCompletionRequest,
-  CommandRequest,
+  CommandScope,
 } from '@/generated/soulfire/command.ts';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
@@ -27,9 +26,7 @@ const SF_COMMAND_HISTORY_LENGTH = 100;
 
 const historySchema = z.string().array();
 
-export default function CommandInput(props: {
-  scope: CommandRequest['scope'] | CommandCompletionRequest['scope'];
-}) {
+export default function CommandInput(props: { scope: CommandScope }) {
   const { t } = useTranslation('common');
   const transport = useContext(TransportContext);
   const [commandHistory, setCommandHistory] = useState<string[]>(

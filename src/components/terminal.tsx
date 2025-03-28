@@ -12,7 +12,7 @@ import { TerminalThemeContext } from '@/components/providers/terminal-theme-cont
 import { flavorEntries } from '@catppuccin/palette';
 import { AnsiHtml } from 'fancy-ansi/react';
 import { isDemo } from '@/lib/utils.tsx';
-import { LogRequest, PreviousLogRequest } from '@/generated/soulfire/logs.ts';
+import { LogScope } from '@/generated/soulfire/logs.ts';
 import { stripAnsi } from 'fancy-ansi';
 import { useTranslation } from 'react-i18next';
 
@@ -84,9 +84,7 @@ type TerminalLine = TerminalLineBase & {
   hash: string;
 };
 
-export const TerminalComponent = (props: {
-  scope: PreviousLogRequest['scope'] | LogRequest['scope'];
-}) => {
+export const TerminalComponent = (props: { scope: LogScope }) => {
   const { t } = useTranslation('common');
   const [gotPrevious, setGotPrevious] = useState(false);
   const [entries, setEntries] = useState<TerminalLine[]>(

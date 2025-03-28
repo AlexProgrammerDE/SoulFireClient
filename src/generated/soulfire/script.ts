@@ -45,6 +45,10 @@ export interface CreateScriptRequest {
      * @generated from protobuf field: string script_name = 3;
      */
     scriptName: string;
+    /**
+     * @generated from protobuf field: bool elevated_permissions = 4;
+     */
+    elevatedPermissions: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.CreateScriptResponse
@@ -95,11 +99,64 @@ export interface UpdateScriptRequest {
      * @generated from protobuf field: string script_name = 2;
      */
     scriptName: string;
+    /**
+     * @generated from protobuf field: bool elevated_permissions = 3;
+     */
+    elevatedPermissions: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.UpdateScriptResponse
  */
 export interface UpdateScriptResponse {
+}
+/**
+ * @generated from protobuf message soulfire.v1.ListScriptsRequest
+ */
+export interface ListScriptsRequest {
+    /**
+     * @generated from protobuf oneof: scope
+     */
+    scope: {
+        oneofKind: "globalScript";
+        /**
+         * @generated from protobuf field: soulfire.v1.GlobalScriptScope global_script = 1;
+         */
+        globalScript: GlobalScriptScope;
+    } | {
+        oneofKind: "instanceScript";
+        /**
+         * @generated from protobuf field: soulfire.v1.InstanceScriptScope instance_script = 2;
+         */
+        instanceScript: InstanceScriptScope;
+    } | {
+        oneofKind: undefined;
+    };
+}
+/**
+ * @generated from protobuf message soulfire.v1.Script
+ */
+export interface Script {
+    /**
+     * @generated from protobuf field: string id = 1;
+     */
+    id: string;
+    /**
+     * @generated from protobuf field: string script_name = 2;
+     */
+    scriptName: string;
+    /**
+     * @generated from protobuf field: bool elevated_permissions = 3;
+     */
+    elevatedPermissions: boolean;
+}
+/**
+ * @generated from protobuf message soulfire.v1.ListScriptsResponse
+ */
+export interface ListScriptsResponse {
+    /**
+     * @generated from protobuf field: repeated soulfire.v1.Script scripts = 1;
+     */
+    scripts: Script[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class GlobalScriptScope$Type extends MessageType<GlobalScriptScope> {
@@ -129,7 +186,8 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
         super("soulfire.v1.CreateScriptRequest", [
             { no: 1, name: "global_script", kind: "message", oneof: "scope", T: () => GlobalScriptScope },
             { no: 2, name: "instance_script", kind: "message", oneof: "scope", T: () => InstanceScriptScope },
-            { no: 3, name: "script_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "script_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "elevated_permissions", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -198,7 +256,8 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
     constructor() {
         super("soulfire.v1.UpdateScriptRequest", [
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "script_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 2, name: "script_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "elevated_permissions", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -216,6 +275,45 @@ class UpdateScriptResponse$Type extends MessageType<UpdateScriptResponse> {
  * @generated MessageType for protobuf message soulfire.v1.UpdateScriptResponse
  */
 export const UpdateScriptResponse = new UpdateScriptResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ListScriptsRequest$Type extends MessageType<ListScriptsRequest> {
+    constructor() {
+        super("soulfire.v1.ListScriptsRequest", [
+            { no: 1, name: "global_script", kind: "message", oneof: "scope", T: () => GlobalScriptScope },
+            { no: 2, name: "instance_script", kind: "message", oneof: "scope", T: () => InstanceScriptScope }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ListScriptsRequest
+ */
+export const ListScriptsRequest = new ListScriptsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class Script$Type extends MessageType<Script> {
+    constructor() {
+        super("soulfire.v1.Script", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "script_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "elevated_permissions", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.Script
+ */
+export const Script = new Script$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ListScriptsResponse$Type extends MessageType<ListScriptsResponse> {
+    constructor() {
+        super("soulfire.v1.ListScriptsResponse", [
+            { no: 1, name: "scripts", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => Script }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ListScriptsResponse
+ */
+export const ListScriptsResponse = new ListScriptsResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.ScriptService
  */
@@ -223,5 +321,6 @@ export const ScriptService = new ServiceType("soulfire.v1.ScriptService", [
     { name: "CreateScript", options: {}, I: CreateScriptRequest, O: CreateScriptResponse },
     { name: "DeleteScript", options: {}, I: DeleteScriptRequest, O: DeleteScriptResponse },
     { name: "RestartScript", options: {}, I: RestartScriptRequest, O: RestartScriptResponse },
-    { name: "UpdateScript", options: {}, I: UpdateScriptRequest, O: UpdateScriptResponse }
+    { name: "UpdateScript", options: {}, I: UpdateScriptRequest, O: UpdateScriptResponse },
+    { name: "ListScripts", options: {}, I: ListScriptsRequest, O: ListScriptsResponse }
 ]);

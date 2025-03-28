@@ -25,6 +25,10 @@ export interface LogString {
      * @generated from protobuf field: optional string bot_id = 4;
      */
     botId?: string;
+    /**
+     * @generated from protobuf field: optional string script_id = 5;
+     */
+    scriptId?: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.GlobalLogScope
@@ -41,9 +45,44 @@ export interface InstanceLogScope {
     instanceId: string;
 }
 /**
- * @generated from protobuf message soulfire.v1.PreviousLogRequest
+ * @generated from protobuf message soulfire.v1.BotLogScope
  */
-export interface PreviousLogRequest {
+export interface BotLogScope {
+    /**
+     * @generated from protobuf field: string instance_id = 1;
+     */
+    instanceId: string;
+    /**
+     * @generated from protobuf field: string bot_id = 2;
+     */
+    botId: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.GlobalScriptLogScope
+ */
+export interface GlobalScriptLogScope {
+    /**
+     * @generated from protobuf field: string script_id = 1;
+     */
+    scriptId: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceScriptLogScope
+ */
+export interface InstanceScriptLogScope {
+    /**
+     * @generated from protobuf field: string instance_id = 1;
+     */
+    instanceId: string;
+    /**
+     * @generated from protobuf field: string script_id = 2;
+     */
+    scriptId: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.LogScope
+ */
+export interface LogScope {
     /**
      * @generated from protobuf oneof: scope
      */
@@ -60,8 +99,35 @@ export interface PreviousLogRequest {
          */
         instance: InstanceLogScope;
     } | {
+        oneofKind: "bot";
+        /**
+         * @generated from protobuf field: soulfire.v1.BotLogScope bot = 3;
+         */
+        bot: BotLogScope;
+    } | {
+        oneofKind: "globalScript";
+        /**
+         * @generated from protobuf field: soulfire.v1.GlobalScriptLogScope global_script = 4;
+         */
+        globalScript: GlobalScriptLogScope;
+    } | {
+        oneofKind: "instanceScript";
+        /**
+         * @generated from protobuf field: soulfire.v1.InstanceScriptLogScope instance_script = 5;
+         */
+        instanceScript: InstanceScriptLogScope;
+    } | {
         oneofKind: undefined;
     };
+}
+/**
+ * @generated from protobuf message soulfire.v1.PreviousLogRequest
+ */
+export interface PreviousLogRequest {
+    /**
+     * @generated from protobuf field: soulfire.v1.LogScope scope = 4;
+     */
+    scope?: LogScope;
     /**
      * @generated from protobuf field: int32 count = 3;
      */
@@ -81,23 +147,9 @@ export interface PreviousLogResponse {
  */
 export interface LogRequest {
     /**
-     * @generated from protobuf oneof: scope
+     * @generated from protobuf field: soulfire.v1.LogScope scope = 3;
      */
-    scope: {
-        oneofKind: "global";
-        /**
-         * @generated from protobuf field: soulfire.v1.GlobalLogScope global = 1;
-         */
-        global: GlobalLogScope;
-    } | {
-        oneofKind: "instance";
-        /**
-         * @generated from protobuf field: soulfire.v1.InstanceLogScope instance = 2;
-         */
-        instance: InstanceLogScope;
-    } | {
-        oneofKind: undefined;
-    };
+    scope?: LogScope;
 }
 /**
  * @generated from protobuf message soulfire.v1.LogResponse
@@ -115,7 +167,8 @@ class LogString$Type extends MessageType<LogString> {
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "instance_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "bot_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 4, name: "bot_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "script_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
         ]);
     }
 }
@@ -146,11 +199,64 @@ class InstanceLogScope$Type extends MessageType<InstanceLogScope> {
  */
 export const InstanceLogScope = new InstanceLogScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class BotLogScope$Type extends MessageType<BotLogScope> {
+    constructor() {
+        super("soulfire.v1.BotLogScope", [
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotLogScope
+ */
+export const BotLogScope = new BotLogScope$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GlobalScriptLogScope$Type extends MessageType<GlobalScriptLogScope> {
+    constructor() {
+        super("soulfire.v1.GlobalScriptLogScope", [
+            { no: 1, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GlobalScriptLogScope
+ */
+export const GlobalScriptLogScope = new GlobalScriptLogScope$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceScriptLogScope$Type extends MessageType<InstanceScriptLogScope> {
+    constructor() {
+        super("soulfire.v1.InstanceScriptLogScope", [
+            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceScriptLogScope
+ */
+export const InstanceScriptLogScope = new InstanceScriptLogScope$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class LogScope$Type extends MessageType<LogScope> {
+    constructor() {
+        super("soulfire.v1.LogScope", [
+            { no: 1, name: "global", kind: "message", oneof: "scope", T: () => GlobalLogScope },
+            { no: 2, name: "instance", kind: "message", oneof: "scope", T: () => InstanceLogScope },
+            { no: 3, name: "bot", kind: "message", oneof: "scope", T: () => BotLogScope },
+            { no: 4, name: "global_script", kind: "message", oneof: "scope", T: () => GlobalScriptLogScope },
+            { no: 5, name: "instance_script", kind: "message", oneof: "scope", T: () => InstanceScriptLogScope }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.LogScope
+ */
+export const LogScope = new LogScope$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class PreviousLogRequest$Type extends MessageType<PreviousLogRequest> {
     constructor() {
         super("soulfire.v1.PreviousLogRequest", [
-            { no: 1, name: "global", kind: "message", oneof: "scope", T: () => GlobalLogScope },
-            { no: 2, name: "instance", kind: "message", oneof: "scope", T: () => InstanceLogScope },
+            { no: 4, name: "scope", kind: "message", T: () => LogScope },
             { no: 3, name: "count", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
         ]);
     }
@@ -175,8 +281,7 @@ export const PreviousLogResponse = new PreviousLogResponse$Type();
 class LogRequest$Type extends MessageType<LogRequest> {
     constructor() {
         super("soulfire.v1.LogRequest", [
-            { no: 1, name: "global", kind: "message", oneof: "scope", T: () => GlobalLogScope },
-            { no: 2, name: "instance", kind: "message", oneof: "scope", T: () => InstanceLogScope }
+            { no: 3, name: "scope", kind: "message", T: () => LogScope }
         ]);
     }
 }

@@ -7,11 +7,8 @@ import { InstanceInfoContext } from '@/components/providers/instance-info-contex
 import { translateInstanceState } from '@/lib/types.ts';
 import { Badge } from '@/components/ui/badge';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
-import { LogRequest, PreviousLogRequest } from '@/generated/soulfire/logs.ts';
-import {
-  CommandCompletionRequest,
-  CommandRequest,
-} from '@/generated/soulfire/command.ts';
+import { LogScope } from '@/generated/soulfire/logs.ts';
+import { CommandScope } from '@/generated/soulfire/command.ts';
 import { useTranslation } from 'react-i18next';
 import { hasInstancePermission } from '@/lib/utils.tsx';
 import { InstancePermission } from '@/generated/soulfire/common.ts';
@@ -23,16 +20,24 @@ export const Route = createFileRoute('/_dashboard/instance/$instance/')({
 function Console() {
   const { t, i18n } = useTranslation('common');
   const instanceInfo = useContext(InstanceInfoContext);
-  const scope = useMemo<
-    | PreviousLogRequest['scope']
-    | LogRequest['scope']
-    | CommandRequest['scope']
-    | CommandCompletionRequest['scope']
-  >(
+  const logScope = useMemo<LogScope>(
     () => ({
-      oneofKind: 'instance',
-      instance: {
-        instanceId: instanceInfo.id,
+      scope: {
+        oneofKind: 'instance',
+        instance: {
+          instanceId: instanceInfo.id,
+        },
+      },
+    }),
+    [instanceInfo.id],
+  );
+  const commandScope = useMemo<CommandScope>(
+    () => ({
+      scope: {
+        oneofKind: 'instance',
+        instance: {
+          instanceId: instanceInfo.id,
+        },
       },
     }),
     [instanceInfo.id],
@@ -56,11 +61,11 @@ function Console() {
           {hasInstancePermission(
             instanceInfo,
             InstancePermission.INSTANCE_SUBSCRIBE_LOGS,
-          ) && <TerminalComponent scope={scope} />}
+          ) && <TerminalComponent scope={logScope} />}
           {hasInstancePermission(
             instanceInfo,
             InstancePermission.INSTANCE_COMMAND_EXECUTION,
-          ) && <CommandInput scope={scope} />}
+          ) && <CommandInput scope={commandScope} />}
         </div>
         <ControlsMenu />
       </div>

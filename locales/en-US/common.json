@@ -216,7 +216,8 @@
     "metaSettings": "Instance Settings",
     "proxySettings": "Proxy Settings",
     "aiSettings": "AI Settings",
-    "discoverPlugins": "Plugin List"
+    "discoverPlugins": "Plugins",
+    "scripts": "Scripts"
   },
   "userSidebar": {
     "readDocumentation": "Read documentation",
@@ -229,6 +230,7 @@
     "adminOverview": "Overview",
     "adminConsole": "Console",
     "users": "Users",
+    "scripts": "Scripts",
     "serverSettings": "Server Settings",
     "devSettings": "Dev Settings",
     "theme": {
@@ -275,7 +277,8 @@
     "users": "Users",
     "accountSettings": "Account Settings",
     "metaSettings": "Instance Settings",
-    "discoverPlugins": "Plugin List"
+    "discoverPlugins": "Plugins",
+    "scripts": "Scripts"
   },
   "access": {
     "webdav": {
