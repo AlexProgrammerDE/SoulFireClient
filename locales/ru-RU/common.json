@@ -222,7 +222,9 @@
     "readDocumentation": "Прочитать документацию",
     "userGroup": "Пользователь",
     "instances": "Экземпляры",
+    "access": "",
     "createInstance": "Создать экземпляр",
+    "settings": "Настройки",
     "adminGroup": "Администратор",
     "adminOverview": "Обзор",
     "adminConsole": "Консоль",
@@ -265,12 +267,47 @@
     "console": "Консоль",
     "audit-log": "Журнал аудита",
     "instances": "Экземпляры",
+    "access": "",
+    "settings": "Настройки",
     "proxySettings": "Настройки прокси",
     "overview": "Обзор",
     "users": "Пользователи",
     "accountSettings": "Настройки аккаунтов",
     "metaSettings": "",
     "discoverPlugins": "Список плагинов"
+  },
+  "access": {
+    "webdav": {
+      "title": "",
+      "description": "",
+      "publicAddress": "",
+      "personalToken": "",
+      "securityWarning": "",
+      "addressDescription": ""
+    },
+    "api": {
+      "title": "",
+      "description": "",
+      "publicAddress": "",
+      "personalToken": "",
+      "securityWarning": "",
+      "addressDescription": ""
+    },
+    "token": {
+      "generate": "",
+      "placeholder": "",
+      "generating": "",
+      "success": "",
+      "error": "",
+      "copy": "",
+      "copied": ""
+    },
+    "address": {
+      "copy": "",
+      "copied": ""
+    },
+    "documentation": "Документация",
+    "howToConnect": ""
   },
   "instanceState": {
     "starting": "Запуск",
