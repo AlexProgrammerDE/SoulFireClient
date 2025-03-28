@@ -103,6 +103,23 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     sortingFn: 'fuzzySort',
   },
   {
+    accessorFn: (row) => row.scriptScope?.scope.oneofKind ?? '',
+    accessorKey: 'scriptScope',
+    header: () => <Trans i18nKey="common:scripts.table.type" />,
+    cell: ({ row }) => {
+      return (
+        <span>
+          {row.original.scriptScope?.scope.oneofKind === 'globalScript' ? (
+            <Trans i18nKey="common:scripts.globalScript" />
+          ) : (
+            <Trans i18nKey="common:scripts.instanceScript" />
+          )}
+        </span>
+      );
+    },
+    sortingFn: 'fuzzySort',
+  },
+  {
     accessorFn: (row) => getEnumKeyByValue(ScriptLanguage, row.language),
     accessorKey: 'language',
     header: () => <Trans i18nKey="common:scripts.table.language" />,

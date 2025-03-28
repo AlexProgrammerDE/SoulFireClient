@@ -388,11 +388,14 @@
       "error": "Failed to restart script"
     },
     "table": {
+      "type": "Type",
       "scriptName": "Name",
       "language": "Language",
       "elevatedPermissions": "Elevated Permissions",
       "createdAt": "Created",
       "actions": "Actions"
-    }
+    },
+    "globalScript": "Global",
+    "instanceScript": "Instance"
   }
 }
