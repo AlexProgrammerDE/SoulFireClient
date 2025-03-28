@@ -382,6 +382,11 @@
       "success": "Updated script!",
       "error": "Failed to update script"
     },
+    "restartToast": {
+      "loading": "Restarting script...",
+      "success": "Restarted script!",
+      "error": "Failed to restart script"
+    },
     "table": {
       "scriptName": "Name",
       "language": "Language",

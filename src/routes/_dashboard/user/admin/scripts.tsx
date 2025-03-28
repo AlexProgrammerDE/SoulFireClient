@@ -6,7 +6,7 @@ import { DataTable } from '@/components/data-table.tsx';
 import { ColumnDef, Row, Table as ReactTable } from '@tanstack/react-table';
 import { getEnumKeyByValue } from '@/lib/types.ts';
 import { toast } from 'sonner';
-import { PencilIcon, PlusIcon, TrashIcon } from 'lucide-react';
+import { PencilIcon, PlusIcon, RotateCcwIcon, TrashIcon } from 'lucide-react';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import {
   queryOptions,
@@ -130,6 +130,7 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     cell: ({ row }) => (
       <div className="flex flex-row gap-2">
         <UpdateScriptButton row={row} />
+        <RestartScriptButton row={row} />
       </div>
     ),
     enableSorting: false,
@@ -164,6 +165,47 @@ function UpdateScriptButton(props: { row: Row<ScriptListResponse_Script> }) {
         }}
         scriptsQueryKey={globalScriptsQueryOptions.queryKey}
       />
+    </>
+  );
+}
+
+function RestartScriptButton(props: { row: Row<ScriptListResponse_Script> }) {
+  const { t } = useTranslation('common');
+
+  return (
+    <>
+      <Button
+        disabled={!props.row.getCanSelect()}
+        variant="secondary"
+        size="sm"
+        onClick={() => {
+          const transport = createTransport();
+          if (transport === null) {
+            return;
+          }
+
+          const scriptService = new ScriptServiceClient(transport);
+          toast.promise(
+            scriptService
+              .restartScript({
+                id: props.row.original.id,
+              })
+              .then((r) => r.response),
+            {
+              loading: t('scripts.restartToast.loading'),
+              success: () => {
+                return t('scripts.restartToast.success');
+              },
+              error: (e) => {
+                console.error(e);
+                return t('scripts.restartToast.error');
+              },
+            },
+          );
+        }}
+      >
+        <RotateCcwIcon />
+      </Button>
     </>
   );
 }
