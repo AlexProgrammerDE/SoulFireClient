@@ -24,9 +24,7 @@
   },
   "users": {
     "filterPlaceholder": "",
-    "addUserDialog": {
-      "title": "",
-      "description": "",
+    "baseUserDialog": {
       "form": {
         "username": {
           "min": "",
@@ -46,12 +44,31 @@
           "description": "",
           "user": "用户",
           "admin": "管理员"
-        },
+        }
+      }
+    },
+    "addUserDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "取消",
+        "add": ""
+      }
+    },
+    "updateUserDialog": {
+      "title": "",
+      "description": "",
+      "form": {
         "cancel": "取消",
         "add": ""
       }
     },
     "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "updateToast": {
       "loading": "",
       "success": "",
       "error": ""
@@ -71,7 +88,8 @@
       "email": "电子邮箱",
       "role": "用户类型",
       "createdAt": "",
-      "minIssuedAt": ""
+      "minIssuedAt": "",
+      "actions": ""
     }
   }
 }

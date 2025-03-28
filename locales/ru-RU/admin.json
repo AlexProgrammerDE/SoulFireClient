@@ -24,9 +24,7 @@
   },
   "users": {
     "filterPlaceholder": "",
-    "addUserDialog": {
-      "title": "",
-      "description": "",
+    "baseUserDialog": {
       "form": {
         "username": {
           "min": "",
@@ -46,12 +44,31 @@
           "description": "",
           "user": "Пользователь",
           "admin": "Администратор"
-        },
+        }
+      }
+    },
+    "addUserDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "Отмена",
+        "add": ""
+      }
+    },
+    "updateUserDialog": {
+      "title": "",
+      "description": "",
+      "form": {
         "cancel": "Отмена",
         "add": ""
       }
     },
     "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "updateToast": {
       "loading": "",
       "success": "",
       "error": ""
@@ -71,7 +88,8 @@
       "email": "E-mail",
       "role": "Роли",
       "createdAt": "",
-      "minIssuedAt": ""
+      "minIssuedAt": "",
+      "actions": ""
     }
   }
 }
