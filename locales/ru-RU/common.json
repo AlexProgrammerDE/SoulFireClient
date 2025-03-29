@@ -216,7 +216,8 @@
     "metaSettings": "",
     "proxySettings": "Настройки прокси",
     "aiSettings": "Настройки ИИ",
-    "discoverPlugins": "Список плагинов"
+    "discoverPlugins": "Плагины",
+    "instanceScripts": ""
   },
   "userSidebar": {
     "readDocumentation": "Прочитать документацию",
@@ -229,6 +230,7 @@
     "adminOverview": "Обзор",
     "adminConsole": "Консоль",
     "users": "Пользователи",
+    "adminScripts": "",
     "serverSettings": "Настройки сервера",
     "devSettings": "Настройки разработчика",
     "theme": {
@@ -249,7 +251,8 @@
       "success": "Вы вышли",
       "error": "Не удалось выйти из системы"
     },
-    "exit": "Выход"
+    "exit": "Выход",
+    "stopImpersonating": ""
   },
   "sidebar": {
     "documentation": "Документация",
@@ -274,7 +277,9 @@
     "users": "Пользователи",
     "accountSettings": "Настройки аккаунтов",
     "metaSettings": "",
-    "discoverPlugins": "Список плагинов"
+    "discoverPlugins": "Плагины",
+    "adminScripts": "",
+    "instanceScripts": ""
   },
   "access": {
     "webdav": {
@@ -309,6 +314,7 @@
     "documentation": "Документация",
     "howToConnect": ""
   },
+  "copiedToClipboard": "",
   "instanceState": {
     "starting": "Запуск",
     "running": "Запущен",
@@ -327,5 +333,70 @@
     "pausedAttack": "",
     "stoppedAttack": ""
   },
-  "pickADate": ""
+  "pickADate": "",
+  "scripts": {
+    "filterPlaceholder": "",
+    "baseScriptDialog": {
+      "form": {
+        "scriptName": {
+          "min": "",
+          "max": "",
+          "regex": "",
+          "label": "",
+          "placeholder": "",
+          "description": ""
+        },
+        "elevatedPermissions": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "addScriptDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "Отмена",
+        "add": "Добавить"
+      }
+    },
+    "updateScriptDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "Отмена",
+        "update": ""
+      }
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "updateToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "restartToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "type": "Тип",
+      "scriptName": "",
+      "language": "",
+      "elevatedPermissions": "",
+      "createdAt": "",
+      "actions": ""
+    },
+    "globalScript": "",
+    "instanceScript": ""
+  }
 }

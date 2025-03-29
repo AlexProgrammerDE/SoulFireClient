@@ -216,7 +216,8 @@
     "metaSettings": "",
     "proxySettings": "Configurações de Proxy",
     "aiSettings": "Configurações de IA",
-    "discoverPlugins": ""
+    "discoverPlugins": "",
+    "instanceScripts": ""
   },
   "userSidebar": {
     "readDocumentation": "",
@@ -229,6 +230,7 @@
     "adminOverview": "Visão geral",
     "adminConsole": "Console",
     "users": "Usuários",
+    "adminScripts": "",
     "serverSettings": "Configurações do servidor",
     "devSettings": "Configurações de Desenvolvedor",
     "theme": {
@@ -249,7 +251,8 @@
       "success": "Sessão terminada",
       "error": "Falha ao encerrar sessão"
     },
-    "exit": "Sair"
+    "exit": "Sair",
+    "stopImpersonating": ""
   },
   "sidebar": {
     "documentation": "Documentação",
@@ -274,7 +277,9 @@
     "users": "Usuários",
     "accountSettings": "Configurações da Conta",
     "metaSettings": "",
-    "discoverPlugins": ""
+    "discoverPlugins": "",
+    "adminScripts": "",
+    "instanceScripts": ""
   },
   "access": {
     "webdav": {
@@ -309,6 +314,7 @@
     "documentation": "Documentação",
     "howToConnect": ""
   },
+  "copiedToClipboard": "",
   "instanceState": {
     "starting": "A iniciar",
     "running": "Em execução",
@@ -327,5 +333,70 @@
     "pausedAttack": "",
     "stoppedAttack": ""
   },
-  "pickADate": ""
+  "pickADate": "",
+  "scripts": {
+    "filterPlaceholder": "",
+    "baseScriptDialog": {
+      "form": {
+        "scriptName": {
+          "min": "",
+          "max": "",
+          "regex": "",
+          "label": "",
+          "placeholder": "",
+          "description": ""
+        },
+        "elevatedPermissions": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "addScriptDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "Cancelar",
+        "add": "Adicionar"
+      }
+    },
+    "updateScriptDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "Cancelar",
+        "update": ""
+      }
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "updateToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "restartToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "type": "Tipo",
+      "scriptName": "",
+      "language": "",
+      "elevatedPermissions": "",
+      "createdAt": "",
+      "actions": ""
+    },
+    "globalScript": "",
+    "instanceScript": ""
+  }
 }
