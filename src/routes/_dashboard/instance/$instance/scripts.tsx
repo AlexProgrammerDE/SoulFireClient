@@ -4,7 +4,7 @@ import { createTransport } from '@/lib/web-rpc.ts';
 import { queryClientInstance } from '@/lib/query.ts';
 import { ScriptListResponse } from '@/generated/soulfire/script.ts';
 import { ScriptServiceClient } from '@/generated/soulfire/script.client.ts';
-import { Scripts } from '@/components/generic-scripts-page.tsx';
+import { GenericScripts } from '@/components/generic-scripts-page.tsx';
 import { LoadingComponent } from '@/components/loading-component.tsx';
 import InstancePageLayout from '@/components/nav/instance-page-layout';
 import { useTranslation } from 'react-i18next';
@@ -87,7 +87,7 @@ function InstanceScripts() {
       extraCrumbs={[t('breadcrumbs.settings')]}
       pageName={t('pageName.instanceScripts')}
     >
-      <Scripts
+      <GenericScripts
         queryKey={instanceScriptsQueryOptions.queryKey}
         scope={{
           scope: {

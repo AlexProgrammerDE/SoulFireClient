@@ -59,14 +59,17 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     accessorKey: 'scriptScope',
     header: () => <Trans i18nKey="common:scripts.table.type" />,
     cell: ({ row }) => {
-      return (
-        <span>
-          {row.original.scriptScope?.scope.oneofKind === 'globalScript' ? (
-            <Trans i18nKey="common:scripts.globalScript" />
-          ) : (
+      return row.original.scriptScope?.scope.oneofKind === 'instanceScript' ? (
+        <div className="flex flex-row items-center gap-2">
+          <span className="max-w-64 truncate">
             <Trans i18nKey="common:scripts.instanceScript" />
-          )}
-        </span>
+          </span>
+          <CopyInfoButton
+            value={row.original.scriptScope?.scope.instanceScript.id}
+          />
+        </div>
+      ) : (
+        <Trans i18nKey="common:scripts.globalScript" />
       );
     },
     sortingFn: 'fuzzySort',
@@ -236,7 +239,7 @@ function ExtraHeader(props: { table: ReactTable<ScriptListResponse_Script> }) {
   );
 }
 
-export function Scripts(props: ScriptsProps) {
+export function GenericScripts(props: ScriptsProps) {
   const { t } = useTranslation('common');
 
   return (
