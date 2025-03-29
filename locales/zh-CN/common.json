@@ -216,7 +216,8 @@
     "metaSettings": "",
     "proxySettings": "代理设置",
     "aiSettings": "AI设置",
-    "discoverPlugins": "插件列表"
+    "discoverPlugins": "插件",
+    "instanceScripts": ""
   },
   "userSidebar": {
     "readDocumentation": "阅读文档",
@@ -229,6 +230,7 @@
     "adminOverview": "概况",
     "adminConsole": "控制台",
     "users": "用户",
+    "adminScripts": "",
     "serverSettings": "服务器设置",
     "devSettings": "开发者设置",
     "theme": {
@@ -249,7 +251,8 @@
       "success": "已登出",
       "error": "登出失败"
     },
-    "exit": "退出"
+    "exit": "退出",
+    "stopImpersonating": ""
   },
   "sidebar": {
     "documentation": "文档",
@@ -274,7 +277,9 @@
     "users": "用户",
     "accountSettings": "帐户设置",
     "metaSettings": "",
-    "discoverPlugins": "插件列表"
+    "discoverPlugins": "插件",
+    "adminScripts": "",
+    "instanceScripts": ""
   },
   "access": {
     "webdav": {
@@ -309,6 +314,7 @@
     "documentation": "文档",
     "howToConnect": ""
   },
+  "copiedToClipboard": "",
   "instanceState": {
     "starting": "正在启动",
     "running": "正在运行",
@@ -327,5 +333,70 @@
     "pausedAttack": "",
     "stoppedAttack": ""
   },
-  "pickADate": ""
+  "pickADate": "",
+  "scripts": {
+    "filterPlaceholder": "",
+    "baseScriptDialog": {
+      "form": {
+        "scriptName": {
+          "min": "",
+          "max": "",
+          "regex": "",
+          "label": "",
+          "placeholder": "",
+          "description": ""
+        },
+        "elevatedPermissions": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "addScriptDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "取消",
+        "add": "添加"
+      }
+    },
+    "updateScriptDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "取消",
+        "update": ""
+      }
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "updateToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "restartToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "type": "类型",
+      "scriptName": "",
+      "language": "",
+      "elevatedPermissions": "",
+      "createdAt": "",
+      "actions": ""
+    },
+    "globalScript": "",
+    "instanceScript": ""
+  }
 }

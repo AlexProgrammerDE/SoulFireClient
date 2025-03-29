@@ -60,7 +60,7 @@
       "description": "",
       "form": {
         "cancel": "Отмена",
-        "add": ""
+        "update": ""
       }
     },
     "addToast": {

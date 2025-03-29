@@ -216,7 +216,8 @@
     "metaSettings": "",
     "proxySettings": "Ustawienia serwera proxy",
     "aiSettings": "Ustawienia SI",
-    "discoverPlugins": "Lista wtyczek"
+    "discoverPlugins": "Wtyczki",
+    "instanceScripts": ""
   },
   "userSidebar": {
     "readDocumentation": "Przeczytaj dokumentację",
@@ -229,6 +230,7 @@
     "adminOverview": "Przegląd",
     "adminConsole": "Konsola",
     "users": "Użytkownicy",
+    "adminScripts": "",
     "serverSettings": "Ustawienia serwera",
     "devSettings": "Ustawienia deweloperskie",
     "theme": {
@@ -249,7 +251,8 @@
       "success": "Wylogowano",
       "error": "Wylogowanie nie powiodło się"
     },
-    "exit": "Wyjdź"
+    "exit": "Wyjdź",
+    "stopImpersonating": ""
   },
   "sidebar": {
     "documentation": "Dokumentacja",
@@ -274,7 +277,9 @@
     "users": "Użytkownicy",
     "accountSettings": "Ustawienia konta",
     "metaSettings": "",
-    "discoverPlugins": "Lista wtyczek"
+    "discoverPlugins": "Wtyczki",
+    "adminScripts": "",
+    "instanceScripts": ""
   },
   "access": {
     "webdav": {
@@ -309,6 +314,7 @@
     "documentation": "Dokumentacja",
     "howToConnect": ""
   },
+  "copiedToClipboard": "",
   "instanceState": {
     "starting": "Uruchamianie",
     "running": "Uruchomiona",
@@ -327,5 +333,70 @@
     "pausedAttack": "",
     "stoppedAttack": ""
   },
-  "pickADate": ""
+  "pickADate": "",
+  "scripts": {
+    "filterPlaceholder": "",
+    "baseScriptDialog": {
+      "form": {
+        "scriptName": {
+          "min": "",
+          "max": "",
+          "regex": "",
+          "label": "",
+          "placeholder": "",
+          "description": ""
+        },
+        "elevatedPermissions": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "addScriptDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "Anuluj",
+        "add": "Dodaj"
+      }
+    },
+    "updateScriptDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "Anuluj",
+        "update": ""
+      }
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "updateToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "restartToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "type": "Typ",
+      "scriptName": "",
+      "language": "",
+      "elevatedPermissions": "",
+      "createdAt": "",
+      "actions": ""
+    },
+    "globalScript": "",
+    "instanceScript": ""
+  }
 }
