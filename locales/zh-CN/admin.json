@@ -60,7 +60,7 @@
       "description": "",
       "form": {
         "cancel": "取消",
-        "add": ""
+        "update": ""
       }
     },
     "addToast": {
