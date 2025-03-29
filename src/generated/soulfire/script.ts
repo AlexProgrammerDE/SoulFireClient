@@ -181,7 +181,11 @@ export enum ScriptLanguage {
     /**
      * @generated from protobuf enum value: PYTHON = 1;
      */
-    PYTHON = 1
+    PYTHON = 1,
+    /**
+     * @generated from protobuf enum value: TYPESCRIPT = 2;
+     */
+    TYPESCRIPT = 2
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class GlobalScriptScope$Type extends MessageType<GlobalScriptScope> {
