@@ -32,6 +32,7 @@ type NavLinks = {
   title: string;
   icon: (props: { className: string }) => ReactNode;
   linkProps: LinkProps;
+  pluginList?: boolean;
 }[];
 
 export function NavPlugins() {
@@ -59,6 +60,15 @@ export function NavPlugins() {
         to: '/instance/$instance/discover',
         params: { instance: instanceInfo.id },
       },
+    },
+    {
+      title: t('instanceSidebar.pluginSettings'),
+      icon: BlocksIcon,
+      linkProps: {
+        to: '/instance/$instance/discover',
+        params: { instance: instanceInfo.id },
+      },
+      pluginList: true,
     },
     {
       title: t('instanceSidebar.instanceScripts'),
@@ -99,70 +109,73 @@ export function NavPlugins() {
     <SidebarGroup>
       <SidebarGroupLabel>{t('instanceSidebar.pluginsGroup')}</SidebarGroupLabel>
       <SidebarMenu>
-        {navLinks.map((item) => (
-          <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton asChild tooltip={item.title}>
-              <Link
-                activeOptions={{ exact: true }}
-                activeProps={{
-                  'data-active': true,
-                }}
-                {...item.linkProps}
-              >
-                <item.icon className="size-4" />
-                <span>{item.title}</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        ))}
-        <Collapsible
-          asChild
-          open={pluginCollapsibleOpen}
-          onOpenChange={setPluginCollapsibleOpen}
-          className="group/collapsible"
-        >
-          <SidebarMenuItem>
-            <CollapsibleTrigger
-              onClick={(e) => {
-                // When sidebar closed, open sidebar and make sure collapsible is expanded
-                if (!sidebar.isMobile && !sidebar.open) {
-                  e.preventDefault();
-                  sidebar.setOpen(true);
-                  if (!pluginCollapsibleOpen) {
-                    setPluginCollapsibleOpen(true);
-                  }
-                }
-              }}
+        {navLinks.map((item) =>
+          item.pluginList ? (
+            <Collapsible
               asChild
+              open={pluginCollapsibleOpen}
+              onOpenChange={setPluginCollapsibleOpen}
+              className="group/collapsible"
             >
-              <SidebarMenuButton tooltip={t('instanceSidebar.pluginSettings')}>
-                <BlocksIcon />
-                <span>{t('instanceSidebar.pluginSettings')}</span>
-                <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+              <SidebarMenuItem>
+                <CollapsibleTrigger
+                  onClick={(e) => {
+                    // When sidebar closed, open sidebar and make sure collapsible is expanded
+                    if (!sidebar.isMobile && !sidebar.open) {
+                      e.preventDefault();
+                      sidebar.setOpen(true);
+                      if (!pluginCollapsibleOpen) {
+                        setPluginCollapsibleOpen(true);
+                      }
+                    }
+                  }}
+                  asChild
+                >
+                  <SidebarMenuButton tooltip={item.title}>
+                    <item.icon className="size-4" />
+                    <span>{item.title}</span>
+                    <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    {pluginSettingLinks.map((subItem) => (
+                      <SidebarMenuSubItem key={subItem.title}>
+                        <SidebarMenuSubButton asChild>
+                          <Link
+                            activeOptions={{ exact: true }}
+                            activeProps={{
+                              'data-active': true,
+                            }}
+                            {...subItem.linkProps}
+                          >
+                            <subItem.icon className="size-4" />
+                            <span>{subItem.title}</span>
+                          </Link>
+                        </SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    ))}
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
+          ) : (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton asChild tooltip={item.title}>
+                <Link
+                  activeOptions={{ exact: true }}
+                  activeProps={{
+                    'data-active': true,
+                  }}
+                  {...item.linkProps}
+                >
+                  <item.icon className="size-4" />
+                  <span>{item.title}</span>
+                </Link>
               </SidebarMenuButton>
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              <SidebarMenuSub>
-                {pluginSettingLinks.map((subItem) => (
-                  <SidebarMenuSubItem key={subItem.title}>
-                    <SidebarMenuSubButton asChild>
-                      <Link
-                        activeOptions={{ exact: true }}
-                        activeProps={{
-                          'data-active': true,
-                        }}
-                        {...subItem.linkProps}
-                      >
-                        <subItem.icon className="size-4" />
-                        <span>{subItem.title}</span>
-                      </Link>
-                    </SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                ))}
-              </SidebarMenuSub>
-            </CollapsibleContent>
-          </SidebarMenuItem>
-        </Collapsible>
+            </SidebarMenuItem>
+          ),
+        )}
       </SidebarMenu>
     </SidebarGroup>
   );
