@@ -153,7 +153,20 @@ function Index() {
     toast.promise(
       (async () => {
         await emit('kill-integrated-server', {});
-        const payload = await invoke('run_integrated_server');
+        const payload = await invoke('run_integrated_server', {
+          jvmArgs: [
+            '-XX:+EnableDynamicAgentLoading',
+            '-XX:+UnlockExperimentalVMOptions',
+            '-XX:+UseZGC',
+            '-XX:+ZGenerational',
+            '-XX:+AlwaysActAsServerClassMachine',
+            '-XX:+UseNUMA',
+            '-XX:+UseFastUnorderedTimeStamps',
+            '-XX:+UseVectorCmov',
+            '-XX:+UseCriticalJavaThreadPriority',
+            '-Dsf.flags.v1=true',
+          ],
+        });
         const payloadString = payload as string;
         const split = payloadString.split('\n');
 

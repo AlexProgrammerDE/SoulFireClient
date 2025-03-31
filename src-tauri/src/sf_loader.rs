@@ -18,6 +18,7 @@ pub struct IntegratedServerState {
 
 #[tauri::command]
 pub async fn run_integrated_server(
+  jvm_args: Vec<&str>,
   app_handle: AppHandle,
   integrated_server_state: tauri::State<'_, IntegratedServerState>,
 ) -> Result<String, SFAnyError> {
@@ -194,26 +195,21 @@ pub async fn run_integrated_server(
 
   let current_ld_library_path = std::env::var("LD_LIBRARY_PATH").unwrap_or("".to_string());
   let current_dyld_library_path = std::env::var("DYLD_LIBRARY_PATH").unwrap_or("".to_string());
+  let grpc_arg = format!("-Dsf.grpc.port={}", available_port);
+  let mut full_jvm_args: Vec<&str> = Vec::new();
+  full_jvm_args.extend(&jvm_args);
+  full_jvm_args.extend(&[
+    grpc_arg.as_str(),
+    "-jar",
+    soul_fire_version_file.to_str().ok_or(SFError::PathCouldNotBeConverted)?,
+  ]);
+
   let command = app_handle.shell().command(java_exec_path)
     .env("LD_LIBRARY_PATH", format!("{:?}:{:?}:{}", java_lib_dir, java_lib_server_dir, current_ld_library_path))
     .env("DYLD_LIBRARY_PATH", format!("{:?}:{:?}:{}", java_lib_dir, java_lib_server_dir, current_dyld_library_path))
     .env("JAVA_HOME", java_home_dir)
     .current_dir(soul_fire_rundir)
-    .args(&[
-      format!("-Dsf.grpc.port={}", available_port).as_str(),
-      "-XX:+EnableDynamicAgentLoading",
-      "-XX:+UnlockExperimentalVMOptions",
-      "-XX:+UseZGC",
-      "-XX:+ZGenerational",
-      "-XX:+AlwaysActAsServerClassMachine",
-      "-XX:+UseNUMA",
-      "-XX:+UseFastUnorderedTimeStamps",
-      "-XX:+UseVectorCmov",
-      "-XX:+UseCriticalJavaThreadPriority",
-      "-Dsf.flags.v1=true",
-      "-jar",
-      soul_fire_version_file.to_str().ok_or(SFError::PathCouldNotBeConverted)?,
-    ]);
+    .args(full_jvm_args);
 
   let (mut rx, mut child) = command.spawn()?;
 
