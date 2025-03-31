@@ -28,7 +28,7 @@
       "success": "Integrated server started",
       "error": "Failed to start integrated server"
     },
-    "description": "The integrated server runs locally on your PC. Configure the java startup arguments below if needed.",
+    "description": "The integrated server runs locally on your PC. Configure the Java startup arguments below if needed.",
     "form": {
       "jvmArgs": {
         "title": "JVM arguments",
