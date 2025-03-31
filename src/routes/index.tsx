@@ -27,6 +27,7 @@ import {
   InfoIcon,
   LaptopMinimalIcon,
   LoaderCircleIcon,
+  RotateCcwIcon,
   SatelliteDishIcon,
   ServerIcon,
 } from 'lucide-react';
@@ -75,6 +76,8 @@ import {
 const LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY = 'form-server-address';
 const LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY = 'form-server-token';
 const LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY = 'form-server-email';
+const LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS =
+  'form-integrated-server-jvm-args';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -110,6 +113,13 @@ const tokenFormSchema = z.object({
 type EmailFormSchemaType = z.infer<typeof emailFormSchema>;
 type TokenFormSchemaType = z.infer<typeof tokenFormSchema>;
 
+const integratedServerFormSchema = z.object({
+  jvmArgs: z.string(),
+});
+type IntegratedServerFormSchemaType = z.infer<
+  typeof integratedServerFormSchema
+>;
+
 type LoginType = 'INTEGRATED' | 'DEDICATED' | 'EMAIL_CODE' | null;
 
 type TargetRedirectFunction = () => Promise<void>;
@@ -124,6 +134,20 @@ type AuthFlowData = {
   flowToken: string;
   address: string;
 };
+
+const DEFAULT_JVM_ARGS = [
+  '-XX:+EnableDynamicAgentLoading',
+  '-XX:+UnlockExperimentalVMOptions',
+  '-XX:+UseZGC',
+  '-XX:+ZGenerational',
+  '-XX:+AlwaysActAsServerClassMachine',
+  '-XX:+UseNUMA',
+  '-XX:+UseFastUnorderedTimeStamps',
+  '-XX:+UseVectorCmov',
+  '-XX:+UseCriticalJavaThreadPriority',
+  '-Dsf.flags.v1=true',
+];
+const DEFAULT_JVM_ARGS_STRING = DEFAULT_JVM_ARGS.join(' ');
 
 function Index() {
   const { t, i18n } = useTranslation('login');
@@ -153,19 +177,14 @@ function Index() {
     toast.promise(
       (async () => {
         await emit('kill-integrated-server', {});
+        const args = localStorage.getItem(
+          LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
+        );
         const payload = await invoke('run_integrated_server', {
-          jvmArgs: [
-            '-XX:+EnableDynamicAgentLoading',
-            '-XX:+UnlockExperimentalVMOptions',
-            '-XX:+UseZGC',
-            '-XX:+ZGenerational',
-            '-XX:+AlwaysActAsServerClassMachine',
-            '-XX:+UseNUMA',
-            '-XX:+UseFastUnorderedTimeStamps',
-            '-XX:+UseVectorCmov',
-            '-XX:+UseCriticalJavaThreadPriority',
-            '-Dsf.flags.v1=true',
-          ],
+          jvmArgs:
+            args === null
+              ? DEFAULT_JVM_ARGS
+              : args.split(' ').filter((str) => str !== ''),
         });
         const payloadString = payload as string;
         const split = payloadString.split('\n');
@@ -202,11 +221,14 @@ function Index() {
             <DefaultMenu
               setLoginType={setLoginType}
               demoLogin={targetRedirect}
-              startIntegratedServer={startIntegratedServer}
             />
           )}
           {loginType === 'INTEGRATED' && (
-            <IntegratedMenu redirectWithCredentials={redirectWithCredentials} />
+            <IntegratedMenu
+              setLoginType={setLoginType}
+              redirectWithCredentials={redirectWithCredentials}
+              startIntegratedServer={startIntegratedServer}
+            />
           )}
           {loginType === 'DEDICATED' && (
             <DedicatedMenu
@@ -306,7 +328,6 @@ function LoginCardTitle() {
 function DefaultMenu(props: {
   setLoginType: (type: LoginType) => void;
   demoLogin: TargetRedirectFunction;
-  startIntegratedServer: () => void;
 }) {
   const { t } = useTranslation('login');
   const systemInfo = useContext(SystemInfoContext);
@@ -324,7 +345,6 @@ function DefaultMenu(props: {
             variant="outline"
             onClick={() => {
               props.setLoginType('INTEGRATED');
-              props.startIntegratedServer();
             }}
           >
             <LaptopMinimalIcon className="size-5" />
@@ -389,7 +409,139 @@ function DefaultMenu(props: {
   );
 }
 
+type IntegratedState = 'configure' | 'loading';
+
 function IntegratedMenu({
+  redirectWithCredentials,
+  setLoginType,
+  startIntegratedServer,
+}: {
+  redirectWithCredentials: LoginFunction;
+  setLoginType: (type: LoginType) => void;
+  startIntegratedServer: () => void;
+}) {
+  const [integratedState, setIntegratedState] =
+    useState<IntegratedState>('configure');
+
+  switch (integratedState) {
+    case 'configure':
+      return (
+        <IntegratedConfigureMenu
+          setLoginType={setLoginType}
+          setIntegratedState={setIntegratedState}
+          startIntegratedServer={startIntegratedServer}
+        />
+      );
+    case 'loading':
+      return (
+        <IntegratedLoadingMenu
+          redirectWithCredentials={redirectWithCredentials}
+        />
+      );
+  }
+}
+
+function IntegratedConfigureMenu({
+  setLoginType,
+  setIntegratedState,
+  startIntegratedServer,
+}: {
+  setLoginType: (type: LoginType) => void;
+  setIntegratedState: (state: IntegratedState) => void;
+  startIntegratedServer: () => void;
+}) {
+  const { t } = useTranslation('login');
+  const form = useForm<IntegratedServerFormSchemaType>({
+    resolver: zodResolver(integratedServerFormSchema),
+    defaultValues: {
+      jvmArgs:
+        localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS) ??
+        DEFAULT_JVM_ARGS_STRING,
+    },
+  });
+
+  function onSubmit(values: IntegratedServerFormSchemaType) {
+    const jvmArgs = values.jvmArgs.trim();
+    localStorage.setItem(
+      LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
+      jvmArgs,
+    );
+
+    setIntegratedState('loading');
+    startIntegratedServer();
+  }
+
+  return (
+    <Card>
+      <CardHeader className="text-center">
+        <LoginCardTitle />
+        <CardDescription>{t('integrated.description')}</CardDescription>
+      </CardHeader>
+      <Form {...form}>
+        <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
+          <CardContent className="flex flex-col gap-4">
+            <FormField
+              control={form.control}
+              name="jvmArgs"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('integrated.form.jvmArgs.title')}</FormLabel>
+                  <FormControl>
+                    <div className="flex flex-row gap-2">
+                      <Input
+                        type="text"
+                        inputMode="text"
+                        placeholder={t('integrated.form.jvmArgs.placeholder')}
+                        {...field}
+                      />
+                      <Button
+                        variant="secondary"
+                        disabled={
+                          form.getValues().jvmArgs === DEFAULT_JVM_ARGS_STRING
+                        }
+                        onClick={() => {
+                          form.setValue('jvmArgs', DEFAULT_JVM_ARGS_STRING);
+                          localStorage.setItem(
+                            LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
+                            DEFAULT_JVM_ARGS_STRING,
+                          );
+                        }}
+                      >
+                        <RotateCcwIcon />
+                      </Button>
+                    </div>
+                  </FormControl>
+                  <FormDescription>
+                    <Trans
+                      i18nKey="login:integrated.form.jvmArgs.description"
+                      components={{ bold: <strong className="text-nowrap" /> }}
+                    />
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button
+              variant="outline"
+              onClick={(e) => {
+                e.preventDefault();
+                setLoginType(null);
+              }}
+              type="button"
+            >
+              {t('integrated.form.back')}
+            </Button>
+            <Button type="submit">{t('integrated.form.start')}</Button>
+          </CardFooter>
+        </form>
+      </Form>
+    </Card>
+  );
+}
+
+function IntegratedLoadingMenu({
   redirectWithCredentials,
 }: {
   redirectWithCredentials: LoginFunction;

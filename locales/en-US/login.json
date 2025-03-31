@@ -27,6 +27,16 @@
       "loading": "Starting integrated server...",
       "success": "Integrated server started",
       "error": "Failed to start integrated server"
+    },
+    "description": "The integrated server runs locally on your PC. Configure the java startup arguments below if needed.",
+    "form": {
+      "jvmArgs": {
+        "title": "JVM arguments",
+        "description": "The SoulFire Java VM arguments. To use 4GB of RAM, use <bold>-Xmx4G</bold>. Default is 25% of your RAM.",
+        "placeholder": "Your JVM arguments here"
+      },
+      "back": "Back",
+      "start": "Start"
     }
   },
   "dedicated": {
