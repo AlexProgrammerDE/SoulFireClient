@@ -32,7 +32,7 @@
     "form": {
       "jvmArgs": {
         "title": "JVM arguments",
-        "description": "The SoulFire Java VM arguments. To use 4GB of RAM, use <bold>-Xmx4G</bold>. Default is 25% of your RAM.",
+        "description": "The SoulFire Java VM arguments. To use 4GB of RAM, add <bold>-Xmx4G</bold>. Default is 25% of your RAM.",
         "placeholder": "Your JVM arguments here"
       },
       "back": "Back",
