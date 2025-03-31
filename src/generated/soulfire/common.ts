@@ -254,6 +254,10 @@ export interface StringSetting {
      * @generated from protobuf field: string pattern = 9;
      */
     pattern: string;
+    /**
+     * @generated from protobuf field: bool disabled = 11;
+     */
+    disabled: boolean;
 }
 /**
  * @generated from protobuf enum soulfire.v1.StringSetting.InputType
@@ -324,6 +328,10 @@ export interface IntSetting {
      * @generated from protobuf field: bool thousand_separator = 8;
      */
     thousandSeparator: boolean;
+    /**
+     * @generated from protobuf field: bool disabled = 9;
+     */
+    disabled: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.DoubleSetting
@@ -369,6 +377,10 @@ export interface DoubleSetting {
      * @generated from protobuf field: bool fixed_decimal_scale = 10;
      */
     fixedDecimalScale: boolean;
+    /**
+     * @generated from protobuf field: bool disabled = 11;
+     */
+    disabled: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.BoolSetting
@@ -386,11 +398,42 @@ export interface BoolSetting {
      * @generated from protobuf field: bool def = 3;
      */
     def: boolean;
+    /**
+     * @generated from protobuf field: bool disabled = 4;
+     */
+    disabled: boolean;
 }
 /**
- * @generated from protobuf message soulfire.v1.ComboOption
+ * @generated from protobuf message soulfire.v1.ComboSetting
  */
-export interface ComboOption {
+export interface ComboSetting {
+    /**
+     * @generated from protobuf field: string ui_name = 1;
+     */
+    uiName: string;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+    /**
+     * List of options
+     *
+     * @generated from protobuf field: repeated soulfire.v1.ComboSetting.Option options = 3;
+     */
+    options: ComboSetting_Option[];
+    /**
+     * @generated from protobuf field: string def = 4;
+     */
+    def: string;
+    /**
+     * @generated from protobuf field: bool disabled = 5;
+     */
+    disabled: boolean;
+}
+/**
+ * @generated from protobuf message soulfire.v1.ComboSetting.Option
+ */
+export interface ComboSetting_Option {
     /**
      * Sent to server
      *
@@ -417,29 +460,6 @@ export interface ComboOption {
     keywords: string[];
 }
 /**
- * @generated from protobuf message soulfire.v1.ComboSetting
- */
-export interface ComboSetting {
-    /**
-     * @generated from protobuf field: string ui_name = 1;
-     */
-    uiName: string;
-    /**
-     * @generated from protobuf field: string description = 2;
-     */
-    description: string;
-    /**
-     * List of options
-     *
-     * @generated from protobuf field: repeated soulfire.v1.ComboOption options = 3;
-     */
-    options: ComboOption[];
-    /**
-     * @generated from protobuf field: string def = 4;
-     */
-    def: string;
-}
-/**
  * @generated from protobuf message soulfire.v1.StringListSetting
  */
 export interface StringListSetting {
@@ -455,27 +475,10 @@ export interface StringListSetting {
      * @generated from protobuf field: repeated string def = 3;
      */
     def: string[];
-}
-/**
- * @generated from protobuf message soulfire.v1.MinMaxSettingEntry
- */
-export interface MinMaxSettingEntry {
     /**
-     * @generated from protobuf field: string ui_name = 1;
+     * @generated from protobuf field: bool disabled = 4;
      */
-    uiName: string;
-    /**
-     * @generated from protobuf field: string description = 2;
-     */
-    description: string;
-    /**
-     * @generated from protobuf field: int32 def = 3;
-     */
-    def: number;
-    /**
-     * @generated from protobuf field: string placeholder = 4;
-     */
-    placeholder: string;
+    disabled: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.MinMaxSetting
@@ -498,13 +501,38 @@ export interface MinMaxSetting {
      */
     thousandSeparator: boolean;
     /**
-     * @generated from protobuf field: soulfire.v1.MinMaxSettingEntry minEntry = 5;
+     * @generated from protobuf field: soulfire.v1.MinMaxSetting.Entry minEntry = 5;
      */
-    minEntry?: MinMaxSettingEntry;
+    minEntry?: MinMaxSetting_Entry;
     /**
-     * @generated from protobuf field: soulfire.v1.MinMaxSettingEntry maxEntry = 6;
+     * @generated from protobuf field: soulfire.v1.MinMaxSetting.Entry maxEntry = 6;
      */
-    maxEntry?: MinMaxSettingEntry;
+    maxEntry?: MinMaxSetting_Entry;
+    /**
+     * @generated from protobuf field: bool disabled = 7;
+     */
+    disabled: boolean;
+}
+/**
+ * @generated from protobuf message soulfire.v1.MinMaxSetting.Entry
+ */
+export interface MinMaxSetting_Entry {
+    /**
+     * @generated from protobuf field: string ui_name = 1;
+     */
+    uiName: string;
+    /**
+     * @generated from protobuf field: string description = 2;
+     */
+    description: string;
+    /**
+     * @generated from protobuf field: int32 def = 3;
+     */
+    def: number;
+    /**
+     * @generated from protobuf field: string placeholder = 4;
+     */
+    placeholder: string;
 }
 /**
  * A entry in the settings page
@@ -975,7 +1003,8 @@ class StringSetting$Type extends MessageType<StringSetting> {
             { no: 6, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 7, name: "min_length", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 8, name: "max_length", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 9, name: "pattern", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 9, name: "pattern", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 11, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -994,7 +1023,8 @@ class IntSetting$Type extends MessageType<IntSetting> {
             { no: 5, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 6, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
             { no: 7, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "thousand_separator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 8, name: "thousand_separator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 9, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -1015,7 +1045,8 @@ class DoubleSetting$Type extends MessageType<DoubleSetting> {
             { no: 7, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 8, name: "thousand_separator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
             { no: 9, name: "decimal_scale", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 10, name: "fixed_decimal_scale", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 10, name: "fixed_decimal_scale", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 11, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -1029,7 +1060,8 @@ class BoolSetting$Type extends MessageType<BoolSetting> {
         super("soulfire.v1.BoolSetting", [
             { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "def", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+            { no: 3, name: "def", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 4, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -1038,28 +1070,14 @@ class BoolSetting$Type extends MessageType<BoolSetting> {
  */
 export const BoolSetting = new BoolSetting$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class ComboOption$Type extends MessageType<ComboOption> {
-    constructor() {
-        super("soulfire.v1.ComboOption", [
-            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "icon_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "keywords", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.ComboOption
- */
-export const ComboOption = new ComboOption$Type();
-// @generated message type with reflection information, may provide speed optimized methods
 class ComboSetting$Type extends MessageType<ComboSetting> {
     constructor() {
         super("soulfire.v1.ComboSetting", [
             { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ComboOption },
-            { no: 4, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "options", kind: "message", repeat: 1 /*RepeatType.PACKED*/, T: () => ComboSetting_Option },
+            { no: 4, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 5, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -1068,12 +1086,28 @@ class ComboSetting$Type extends MessageType<ComboSetting> {
  */
 export const ComboSetting = new ComboSetting$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class ComboSetting_Option$Type extends MessageType<ComboSetting_Option> {
+    constructor() {
+        super("soulfire.v1.ComboSetting.Option", [
+            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+            { no: 3, name: "icon_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "keywords", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ComboSetting.Option
+ */
+export const ComboSetting_Option = new ComboSetting_Option$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class StringListSetting$Type extends MessageType<StringListSetting> {
     constructor() {
         super("soulfire.v1.StringListSetting", [
             { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "def", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
+            { no: 3, name: "def", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
+            { no: 4, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
 }
@@ -1082,9 +1116,27 @@ class StringListSetting$Type extends MessageType<StringListSetting> {
  */
 export const StringListSetting = new StringListSetting$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class MinMaxSettingEntry$Type extends MessageType<MinMaxSettingEntry> {
+class MinMaxSetting$Type extends MessageType<MinMaxSetting> {
     constructor() {
-        super("soulfire.v1.MinMaxSettingEntry", [
+        super("soulfire.v1.MinMaxSetting", [
+            { no: 1, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 2, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 3, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+            { no: 4, name: "thousand_separator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+            { no: 5, name: "minEntry", kind: "message", T: () => MinMaxSetting_Entry },
+            { no: 6, name: "maxEntry", kind: "message", T: () => MinMaxSetting_Entry },
+            { no: 7, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+        ]);
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.MinMaxSetting
+ */
+export const MinMaxSetting = new MinMaxSetting$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MinMaxSetting_Entry$Type extends MessageType<MinMaxSetting_Entry> {
+    constructor() {
+        super("soulfire.v1.MinMaxSetting.Entry", [
             { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "def", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
@@ -1093,26 +1145,9 @@ class MinMaxSettingEntry$Type extends MessageType<MinMaxSettingEntry> {
     }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.MinMaxSettingEntry
+ * @generated MessageType for protobuf message soulfire.v1.MinMaxSetting.Entry
  */
-export const MinMaxSettingEntry = new MinMaxSettingEntry$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class MinMaxSetting$Type extends MessageType<MinMaxSetting> {
-    constructor() {
-        super("soulfire.v1.MinMaxSetting", [
-            { no: 1, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 2, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 3, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 4, name: "thousand_separator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 5, name: "minEntry", kind: "message", T: () => MinMaxSettingEntry },
-            { no: 6, name: "maxEntry", kind: "message", T: () => MinMaxSettingEntry }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.MinMaxSetting
- */
-export const MinMaxSetting = new MinMaxSetting$Type();
+export const MinMaxSetting_Entry = new MinMaxSetting_Entry$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SettingEntry$Type extends MessageType<SettingEntry> {
     constructor() {

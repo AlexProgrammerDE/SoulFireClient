@@ -7,12 +7,16 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import {
   formatIconName,
+  hasInstancePermission,
   setInstanceFriendlyName,
   setInstanceIcon,
 } from '@/lib/utils.tsx';
 import { GenericEntryComponent } from '@/components/settings-page.tsx';
 import { getAllIconTags } from '@/components/dynamic-icon.tsx';
-import { StringSetting_InputType } from '@/generated/soulfire/common.ts';
+import {
+  InstancePermission,
+  StringSetting_InputType,
+} from '@/generated/soulfire/common.ts';
 import { JsonValue } from '@protobuf-ts/runtime/build/types/json-typings';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance/meta')({
@@ -91,6 +95,10 @@ function MetaSettings() {
                 minLength: 3,
                 maxLength: 32,
                 pattern: '[a-zA-Z0-9 ]+',
+                disabled: !hasInstancePermission(
+                  instanceInfo,
+                  InstancePermission.UPDATE_INSTANCE_META,
+                ),
               },
             }}
             value={instanceInfo.friendlyName}
@@ -110,6 +118,10 @@ function MetaSettings() {
                   keywords: iconName[1],
                 })),
                 def: '',
+                disabled: !hasInstancePermission(
+                  instanceInfo,
+                  InstancePermission.UPDATE_INSTANCE_META,
+                ),
               },
             }}
             value={instanceInfo.icon}

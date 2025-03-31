@@ -7,10 +7,17 @@ import {
   ComponentTitle,
   GenericEntryComponent,
 } from '@/components/settings-page.tsx';
-import { StringSetting_InputType } from '@/generated/soulfire/common.ts';
+import {
+  GlobalPermission,
+  StringSetting_InputType,
+} from '@/generated/soulfire/common.ts';
 import { JsonValue } from '@protobuf-ts/runtime/build/types/json-typings';
 import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
-import { setSelfEmail, setSelfUsername } from '@/lib/utils.tsx';
+import {
+  hasGlobalPermission,
+  setSelfEmail,
+  setSelfUsername,
+} from '@/lib/utils.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { ExternalLink } from '@/components/external-link.tsx';
 import { UserAvatar } from '@/components/user-avatar.tsx';
@@ -105,6 +112,10 @@ function UserSettings() {
                 minLength: 3,
                 maxLength: 32,
                 pattern: '[a-z0-9](?:[a-z0-9-]*[a-z0-9])?',
+                disabled: !hasGlobalPermission(
+                  clientInfo,
+                  GlobalPermission.UPDATE_SELF_USERNAME,
+                ),
               },
             }}
             value={clientInfo.username}
@@ -122,6 +133,10 @@ function UserSettings() {
                 minLength: 3,
                 maxLength: 255,
                 pattern: '.*',
+                disabled: !hasGlobalPermission(
+                  clientInfo,
+                  GlobalPermission.UPDATE_SELF_EMAIL,
+                ),
               },
             }}
             value={clientInfo.email}

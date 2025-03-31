@@ -4,7 +4,7 @@ import {
   DoubleSetting,
   IntSetting,
   MinMaxSetting,
-  MinMaxSettingEntry,
+  MinMaxSetting_Entry,
   SettingEntry,
   SettingsPage,
   StringListSetting,
@@ -154,6 +154,7 @@ function StringComponent(props: {
         placeholder={props.setting.placeholder}
         minLength={props.setting.minLength}
         maxLength={props.setting.maxLength}
+        disabled={props.setting.disabled}
         onChange={(e) => {
           props.changeCallback(e.currentTarget.value);
         }}
@@ -168,6 +169,7 @@ function StringComponent(props: {
         minLength={props.setting.minLength}
         maxLength={props.setting.maxLength}
         pattern={props.setting.pattern}
+        disabled={props.setting.disabled}
         onChange={(e) => {
           props.changeCallback(e.currentTarget.value);
         }}
@@ -226,6 +228,7 @@ function IntComponent(props: {
       min={props.setting.min}
       max={props.setting.max}
       step={props.setting.step}
+      disabled={props.setting.disabled}
       customInput={Input}
     />
   );
@@ -282,6 +285,7 @@ function DoubleComponent(props: {
       min={props.setting.min}
       max={props.setting.max}
       step={props.setting.step}
+      disabled={props.setting.disabled}
       customInput={Input}
     />
   );
@@ -299,6 +303,7 @@ function BoolComponent(props: {
       <Checkbox
         className="my-auto"
         checked={props.value}
+        disabled={props.setting.disabled}
         onCheckedChange={(value) => {
           if (value === 'indeterminate') {
             return;
@@ -310,9 +315,13 @@ function BoolComponent(props: {
       <ComponentTitle
         title={props.title}
         description={props.description}
-        onClick={() => {
-          props.changeCallback(!props.value);
-        }}
+        onClick={
+          props.setting.disabled
+            ? undefined
+            : () => {
+                props.changeCallback(!props.value);
+              }
+        }
       />
     </>
   );
@@ -340,6 +349,7 @@ function ComboComponent(props: {
           role="combobox"
           aria-expanded={open}
           className="w-64 justify-between"
+          disabled={props.setting.disabled}
         >
           <div className="inline-flex flex-row items-center justify-center gap-2">
             {selectedOption.iconId && (
@@ -434,6 +444,7 @@ function StringListComponent(props: {
               setNewEntryInput(e.currentTarget.value);
             }}
             placeholder={t('settingsPage.stringList.placeholder')}
+            disabled={props.setting.disabled}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 insertValue(newEntryInput);
@@ -447,6 +458,7 @@ function StringListComponent(props: {
               insertValue(newEntryInput);
               setNewEntryInput('');
             }}
+            disabled={props.setting.disabled}
           >
             <PlusIcon className="h-4 w-4" />
             {t('settingsPage.stringList.add')}
@@ -462,12 +474,14 @@ function StringListComponent(props: {
               onChange={(e) => {
                 updateId(item.id, e.currentTarget.value);
               }}
+              disabled={props.setting.disabled}
             />
             <Button
               variant="outline"
               onClick={() => {
                 deleteId(item.id);
               }}
+              disabled={props.setting.disabled}
             >
               <TrashIcon className="h-4 w-4" />
               {t('settingsPage.stringList.remove')}
@@ -481,7 +495,7 @@ function StringListComponent(props: {
 
 function MinMaxComponent(props: {
   setting: MinMaxSetting;
-  entry: MinMaxSettingEntry;
+  entry: MinMaxSetting_Entry;
   value: number;
   changeCallback: (value: number) => void;
 }) {
@@ -526,6 +540,7 @@ function MinMaxComponent(props: {
         props.changeCallback(currentValue);
       }}
       placeholder={props.entry.placeholder}
+      disabled={props.setting.disabled}
       inputMode="numeric"
       min={props.setting.min}
       max={props.setting.max}
