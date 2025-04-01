@@ -27,6 +27,16 @@
       "loading": "Uruchamianie serwera zintegrowanego...",
       "success": "Zintegrowany serwer uruchomiony",
       "error": "Nie udało się uruchomić serwera zintegrowanego"
+    },
+    "description": "",
+    "form": {
+      "jvmArgs": {
+        "title": "",
+        "description": "",
+        "placeholder": ""
+      },
+      "back": "Wróć",
+      "start": "Rozpocznij"
     }
   },
   "dedicated": {

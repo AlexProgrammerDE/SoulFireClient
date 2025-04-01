@@ -27,6 +27,16 @@
       "loading": "Yerel sunucu başlatılıyor...",
       "success": "Yerel sunucu başladı",
       "error": "Yerel sunucu başlatılamadı"
+    },
+    "description": "",
+    "form": {
+      "jvmArgs": {
+        "title": "",
+        "description": "",
+        "placeholder": ""
+      },
+      "back": "Geri Dön",
+      "start": ""
     }
   },
   "dedicated": {

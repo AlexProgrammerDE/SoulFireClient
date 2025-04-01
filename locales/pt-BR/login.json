@@ -27,6 +27,16 @@
       "loading": "Iniciando servidor integrado...",
       "success": "Servidor integrado iniciado",
       "error": "Falha ao iniciar o servidor integrado"
+    },
+    "description": "",
+    "form": {
+      "jvmArgs": {
+        "title": "",
+        "description": "",
+        "placeholder": ""
+      },
+      "back": "Voltar",
+      "start": "Iniciar"
     }
   },
   "dedicated": {

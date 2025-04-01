@@ -27,6 +27,16 @@
       "loading": "Starte den integrierten Server...",
       "success": "Integrierter Server gestartet",
       "error": "Fehler beim Starten des integrierten Servers"
+    },
+    "description": "",
+    "form": {
+      "jvmArgs": {
+        "title": "",
+        "description": "",
+        "placeholder": ""
+      },
+      "back": "Zurück",
+      "start": "Start"
     }
   },
   "dedicated": {
