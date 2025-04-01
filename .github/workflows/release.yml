@@ -6,15 +6,15 @@ on:
       - release
 
 jobs:
-  create-release:
-    name: Create Release
+  prepare-release:
+    name: Prepare Release
 
     permissions:
       contents: write
 
     runs-on: ubuntu-24.04
     outputs:
-      release_id: ${{ steps.create-release.outputs.result }}
+      release_id: ${{ steps.init-release.outputs.result }}
       tag_name: ${{ steps.get-version.outputs.PACKAGE_VERSION }}
 
     steps:
@@ -32,28 +32,32 @@ jobs:
         id: get-version
         run: |
           packageVersion=$(node -p "require('./package.json').version")
-          echo "PACKAGE_VERSION=$packageVersion" >> $GITHUB_ENV
-          echo "PACKAGE_VERSION=$packageVersion" >> $GITHUB_OUTPUT
+          echo "package-version=$packageVersion" >> $GITHUB_OUTPUT
 
-      - name: 'Create Release'
-        id: create-release
-        uses: actions/github-script@v7
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v5
         with:
-          script: |
-            const { data } = await github.rest.repos.createRelease({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              tag_name: `${process.env.PACKAGE_VERSION}`,
-              name: `SoulFireClient ${process.env.PACKAGE_VERSION}`,
-              body: 'See the assets to download this version and install.',
-              draft: false,
-              prerelease: true
-            })
-            return data.id
+          mode: COMMIT
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release
+        id: init-release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: ${{ steps.github_release.outputs.changelog }}
+          tag_name: ${{ steps.get-version.outputs.package-version }}
+          generate_release_notes: false
+          draft: true
+          prerelease: false
+          target_commitish: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: SoulFireClient ${{ steps.get-version.outputs.package-version }}
 
   build-tauri:
-    needs: create-release
-    name: Publish ${{ matrix.name }}
+    needs: prepare-release
+    name: Build ${{ matrix.name }}
     permissions:
       contents: write
 
@@ -64,23 +68,27 @@ jobs:
           - platform: 'macos-15'
             args: '--target aarch64-apple-darwin'
             target-path: '/aarch64-apple-darwin'
-            name: 'macOS 15 (ARM64)'
+            name: 'macOS 15 (AARCH64)'
             rust-targets: 'aarch64-apple-darwin'
+            type: 'macos-aarch64'
           - platform: 'macos-13'
             args: '--target x86_64-apple-darwin'
             target-path: '/x86_64-apple-darwin'
             name: 'macOS 13 (AMD64)'
             rust-targets: 'x86_64-apple-darwin'
+            type: 'macos-amd64'
           - platform: 'ubuntu-22.04'
             args: ''
             target-path: ''
             name: 'Ubuntu 22.04'
             rust-targets: ''
+            type: 'linux'
           - platform: 'windows-2025'
             args: ''
             target-path: ''
             name: 'Windows Server 2025'
             rust-targets: ''
+            type: 'windows'
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -110,13 +118,13 @@ jobs:
       - name: 'Desktop: Cache dependencies'
         uses: Swatinem/rust-cache@v2
         with:
-          prefix-key: ${{ matrix.name }}
+          prefix-key: ${{ matrix.type }}
           workspaces: src-tauri
           cache-on-failure: true
           cache-all-crates: true
 
       - name: 'Ubuntu: Install dependencies'
-        if: matrix.name == 'Ubuntu 22.04'
+        if: matrix.type == 'linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf jq
@@ -131,16 +139,31 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
         with:
-          releaseId: ${{ needs.create-release.outputs.release_id }}
-          includeUpdaterJson: true
-          updaterJsonPreferNsis: true
           includeDebug: false
           includeRelease: true
           args: ${{ matrix.args }}
 
+      - name: 'Desktop: Upload artifacts (Ubuntu)'
+        uses: softprops/action-gh-release@v2
+        if: matrix.type == 'linux'
+        with:
+          tag_name: ${{ needs.prepare-release.outputs.tag_name }}
+          files: |
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/deb/*.deb
+
+      - name: 'Desktop: Upload artifacts (macOS)'
+        uses: softprops/action-gh-release@v2
+        if: matrix.type == 'macos-amd64' || matrix.type == 'macos-aarch64'
+        with:
+          tag_name: ${{ needs.prepare-release.outputs.tag_name }}
+          files: |
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/dmg/*.dmg
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app
+
       - name: 'Windows: Upload unsigned artifact'
         id: upload-unsigned-artifact
-        if: matrix.platform == 'windows-2025'
+        if: matrix.type == 'windows'
         uses: actions/upload-artifact@v4
         with:
           name: windows-unsigned
@@ -149,7 +172,7 @@ jobs:
           if-no-files-found: error
 
       - name: 'Windows: Submit signing request'
-        if: matrix.platform == 'windows-2025'
+        if: matrix.type == 'windows'
         uses: signpath/github-action-submit-signing-request@v1.1
         with:
           api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
@@ -160,25 +183,10 @@ jobs:
           wait-for-completion: true
           output-artifact-directory: '/signed'
 
-      - name: 'Windows: Prepare signed artifact'
-        if: matrix.platform == 'windows-2025'
-        shell: bash
-        run: |
-          fileName=$(ls signed/*.exe)
-          pnpm tauri signer sign -k "${{ secrets.TAURI_PRIVATE_KEY }}" -p "${{ secrets.TAURI_KEY_PASSWORD }}" $fileName
-
-          curl -L -o latest.json https://github.com/${{ github.repository }}/releases/download/${{ needs.create-release.outputs.tag_name }}/latest.json
-
-          jq ".platforms[\"windows-x86_64\"].signature = \"$(cat $fileName.sig)\"" latest.json > latest.json.tmp
-          mv latest.json.tmp latest.json
-
       - name: 'Windows: Upload signed artifact'
-        if: matrix.platform == 'windows-2025'
+        if: matrix.type == 'windows'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ needs.create-release.outputs.tag_name }}
-          prerelease: true
+          tag_name: ${{ needs.prepare-release.outputs.tag_name }}
           files: |
             ./signed/*.exe
-            ./signed/*.exe.sig
-            ./latest.json
