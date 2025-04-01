@@ -269,7 +269,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
         {
           backgroundColor: selectedTheme.colors.base.hex,
           color: selectedTheme.colors.text.hex,
-          '--border': hslToString(selectedTheme.colors.surface0.hsl),
+          '--color-border': selectedTheme.colors.surface2.hex + '80', // Add 50% opacity
           '--ansi-black': selectedTheme.dark
             ? selectedTheme.colors.surface1.hex
             : selectedTheme.colors.subtext1.hex,
