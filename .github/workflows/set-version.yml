@@ -35,9 +35,12 @@ jobs:
       - name: 'Shared: Install Rust toolchain'
         uses: dtolnay/rust-toolchain@nightly
 
-      - name: 'Set Version'
+      - name: 'Set JS Version'
         run: |
           pnpm version ${{ github.event.inputs.version }}
+
+      - name: 'Set Cargo Version'
+        run: |
           cargo set-version ${{ github.event.inputs.version }} --manifest-path src-tauri/Cargo.toml
 
       - name: 'Commit Version'
