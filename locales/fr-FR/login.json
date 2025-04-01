@@ -27,6 +27,16 @@
       "loading": "Démarrage du serveur intégré...",
       "success": "Serveur intégré démarré",
       "error": "Échec du démarrage du serveur intégré"
+    },
+    "description": "",
+    "form": {
+      "jvmArgs": {
+        "title": "",
+        "description": "",
+        "placeholder": ""
+      },
+      "back": "Retour",
+      "start": "Démarrer"
     }
   },
   "dedicated": {

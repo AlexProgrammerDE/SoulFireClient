@@ -27,6 +27,16 @@
       "loading": "正在启动集成服务器...",
       "success": "集成服务器已启动",
       "error": "启动集成服务器失败"
+    },
+    "description": "",
+    "form": {
+      "jvmArgs": {
+        "title": "",
+        "description": "",
+        "placeholder": ""
+      },
+      "back": "返回",
+      "start": "开始"
     }
   },
   "dedicated": {
