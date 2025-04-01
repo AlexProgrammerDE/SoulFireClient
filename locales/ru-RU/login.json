@@ -27,6 +27,16 @@
       "loading": "Запуск встроенного сервера...",
       "success": "Встроенный сервер запущен",
       "error": "Не удалось запустить встроенный сервер"
+    },
+    "description": "",
+    "form": {
+      "jvmArgs": {
+        "title": "",
+        "description": "",
+        "placeholder": ""
+      },
+      "back": "Назад",
+      "start": "Запуск"
     }
   },
   "dedicated": {

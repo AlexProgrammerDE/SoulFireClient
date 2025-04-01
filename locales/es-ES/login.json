@@ -27,6 +27,16 @@
       "loading": "",
       "success": "",
       "error": ""
+    },
+    "description": "",
+    "form": {
+      "jvmArgs": {
+        "title": "",
+        "description": "",
+        "placeholder": ""
+      },
+      "back": "Volver",
+      "start": ""
     }
   },
   "dedicated": {

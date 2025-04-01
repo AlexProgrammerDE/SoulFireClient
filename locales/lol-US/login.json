@@ -27,6 +27,16 @@
       "loading": "Startin integratd servr...",
       "success": "Integratd servr startd",
       "error": "Faild 2 start integratd servr"
+    },
+    "description": "",
+    "form": {
+      "jvmArgs": {
+        "title": "",
+        "description": "",
+        "placeholder": ""
+      },
+      "back": "Bak",
+      "start": ""
     }
   },
   "dedicated": {
