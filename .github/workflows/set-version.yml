@@ -1,4 +1,4 @@
-name: 'Set Version'
+name: set-version
 
 on:
   workflow_dispatch:

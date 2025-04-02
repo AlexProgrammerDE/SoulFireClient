@@ -1,0 +1,32 @@
+name: set-server-version
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Server version to set'
+        required: true
+        default: '0.0.0'
+
+jobs:
+  set-server-version:
+    name: Set Server Version
+
+    permissions:
+      contents: write
+
+    runs-on: ubuntu-24.04
+    steps:
+      - name: 'Shared: Checkout repository'
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: 'Set Server Version'
+        run: |
+          echo "pub const SOULFIRE_VERSION: &str = \"${{ github.event.inputs.version }}\";" > src-tauri/src/sf_version_constant.rs
+
+      - name: 'Commit Version'
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'Bump server version to ${{ github.event.inputs.version }}'
