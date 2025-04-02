@@ -37,7 +37,7 @@ jobs:
 
       - name: 'Set JS Version'
         run: |
-          pnpm version ${{ github.event.inputs.version }}
+          pnpm version --no-git-tag-version ${{ github.event.inputs.version }}
 
       - name: 'Set Cargo Version'
         run: |
