@@ -19,7 +19,6 @@ jobs:
       - name: 'Shared: Checkout repository'
         uses: actions/checkout@v4
         with:
-          persist-credentials: false
           ref: ${{ github.head_ref }}
 
       - name: 'Set Server Version'
