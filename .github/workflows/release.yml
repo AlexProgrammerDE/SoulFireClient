@@ -172,6 +172,7 @@ jobs:
         if: matrix.type == 'linux'
         with:
           tag_name: ${{ needs.prepare-release.outputs.tag_name }}
+          draft: true
           files: |
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/deb/*.deb
@@ -181,6 +182,7 @@ jobs:
         if: matrix.type == 'macos-amd64' || matrix.type == 'macos-aarch64'
         with:
           tag_name: ${{ needs.prepare-release.outputs.tag_name }}
+          draft: true
           files: |
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app
@@ -212,5 +214,32 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.prepare-release.outputs.tag_name }}
+          draft: true
           files: |
             ./signed/*.exe
+
+  publish-release:
+    needs: build-tauri
+    name: Publish Release
+
+    permissions:
+      contents: write
+
+    runs-on: ubuntu-24.04
+    steps:
+      - name: 'Publish Release'
+        id: publish-release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.prepare-release.outputs.tag_name }}
+          draft: false
+
+      - name: Discord Webhook Action
+        uses: tsickert/discord-webhook@v7.0.0
+        with:
+          webhook-url: ${{ secrets.WEBHOOK_URL }}
+          content: <@&850705047938793503> New SoulFireClient version released!
+          embed-title: SoulFireClient ${{ needs.prepare-release.outputs.tag_name }}
+          embed-description: SoulFireClient ${{ needs.prepare-release.outputs.tag_name }} has been released! Changelog and download can be found at https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/${{ needs.prepare-release.outputs.tag_name }}
+          embed-color: 3312063
+          embed-thumbnail-url: https://soulfiremc.com/logo.png
