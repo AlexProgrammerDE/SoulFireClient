@@ -1,12 +1,31 @@
 name: 'publish'
 
 on:
-  push:
-    branches:
-      - release
+  workflow_dispatch:
+    inputs:
+      app-version:
+        description: 'Version to release'
+        required: true
+      server-version:
+        description: 'Server version to use for release'
+        required: true
 
 jobs:
+  set-server-version:
+    uses: AlexProgrammerDE/SoulFireClient/.github/workflows/set-server-version.yml@main
+    with:
+      version: ${{ github.event.inputs.server-version }}
+    secrets: inherit
+
+  set-version:
+    needs: set-server-version
+    uses: AlexProgrammerDE/SoulFireClient/.github/workflows/set-version.yml@main
+    with:
+      version: ${{ github.event.inputs.app-version }}
+    secrets: inherit
+
   prepare-release:
+    needs: set-version
     name: Prepare Release
 
     permissions:
@@ -22,6 +41,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           persist-credentials: false
+
+      - name: 'Push to release branch'
+        uses: ad-m/github-push-action@master
+        with:
+          branch: 'release'
 
       - name: 'Setup Node'
         uses: actions/setup-node@v4
