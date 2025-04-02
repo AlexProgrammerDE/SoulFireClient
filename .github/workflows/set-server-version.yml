@@ -6,6 +6,11 @@ on:
       version:
         description: 'Server version to set'
         required: true
+  workflow_call:
+    inputs:
+      version:
+        required: true
+        type: string
 
 jobs:
   set-server-version:
