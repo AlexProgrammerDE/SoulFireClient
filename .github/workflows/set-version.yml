@@ -41,6 +41,7 @@ jobs:
 
       - name: 'Set Cargo Version'
         run: |
+          cargo install cargo-edit
           cargo set-version ${{ github.event.inputs.version }} --manifest-path src-tauri/Cargo.toml
 
       - name: 'Commit Version'
