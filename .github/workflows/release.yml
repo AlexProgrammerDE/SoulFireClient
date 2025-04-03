@@ -206,6 +206,13 @@ jobs:
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/nsis/*.exe
           if-no-files-found: error
 
+      - name: 'Windows: Notify Admin'
+        if: matrix.type == 'windows'
+        uses: tsickert/discord-webhook@v7.0.0
+        with:
+          webhook-url: ${{ secrets.ADMIN_WEBHOOK_URL }}
+          content: <@864603174899941376> Permit the signing request for SoulFireClient https://app.signpath.io/Web/e091b552-3623-4d9d-83d7-059d8f32978b/SigningRequests
+
       - name: 'Windows: Submit signing request'
         if: matrix.type == 'windows'
         uses: signpath/github-action-submit-signing-request@v1.1
