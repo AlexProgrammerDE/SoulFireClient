@@ -43,102 +43,8 @@ jobs:
         with:
           branch: 'release'
 
-  prepare-release:
-    needs: set-version
-    name: Prepare Release
-
-    permissions:
-      contents: write
-
-    runs-on: ubuntu-24.04
-    outputs:
-      release_id: ${{ steps.init-release.outputs.result }}
-      tag_name: ${{ steps.get-version.outputs.package-version }}
-
-    steps:
-      - name: 'Checkout Repository'
-        uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-
-      - name: 'Get Version'
-        id: get-version
-        run: |
-          packageVersion=$(node -p "require('./package.json').version")
-          echo "package-version=$packageVersion" >> $GITHUB_OUTPUT
-
-      - name: Build Changelog
-        id: github_release
-        uses: mikepenz/release-changelog-builder-action@v5
-        with:
-          mode: COMMIT
-          configurationJson: |
-            {
-              "template": "#{{CHANGELOG}}",
-              "categories": [
-                {
-                    "title": "## Feature",
-                    "labels": ["feat", "feature"]
-                },
-                {
-                    "title": "## Fix",
-                    "labels": ["fix", "bug"]
-                },
-                {
-                    "title": "## Performance",
-                    "labels": ["perf"]
-                },
-                {
-                    "title": "## Refactor",
-                    "labels": ["refactor"]
-                },
-                {
-                    "title": "## Documentation",
-                    "labels": ["docs"]
-                },
-                {
-                    "title": "## Build",
-                    "labels": ["build", "chore", "ci"]
-                },
-                {
-                    "title": "## Style",
-                    "labels": ["style"]
-                },
-                {
-                    "title": "## Test",
-                    "labels": ["test"]
-                },
-                {
-                    "title": "## Other",
-                    "labels": []
-                }
-              ],
-              "label_extractor": [
-                {
-                  "pattern": "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\\([\\w\\-\\.]+\\))?(!)?: ([\\w ])+([\\s\\S]*)",
-                  "on_property": "title",
-                  "target": "$1"
-                }
-              ]
-            }
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create Release
-        id: init-release
-        uses: softprops/action-gh-release@v2
-        with:
-          body: ${{ steps.github_release.outputs.changelog }}
-          tag_name: ${{ steps.get-version.outputs.package-version }}
-          generate_release_notes: false
-          draft: true
-          prerelease: false
-          target_commitish: main
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: SoulFireClient ${{ steps.get-version.outputs.package-version }}
-
   build-tauri:
-    needs: prepare-release
+    needs: set-version
     name: Build ${{ matrix.name }}
     permissions:
       contents: write
@@ -226,24 +132,34 @@ jobs:
           args: ${{ matrix.args }}
 
       - name: 'Desktop: Upload artifacts (Ubuntu)'
-        uses: softprops/action-gh-release@v2
         if: matrix.type == 'linux'
+        uses: actions/upload-artifact@v4
         with:
-          tag_name: ${{ needs.prepare-release.outputs.tag_name }}
-          draft: true
-          files: |
+          name: linux
+          path: |
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/deb/*.deb
+          if-no-files-found: error
 
-      - name: 'Desktop: Upload artifacts (macOS)'
-        uses: softprops/action-gh-release@v2
-        if: matrix.type == 'macos-amd64' || matrix.type == 'macos-aarch64'
+      - name: 'Desktop: Upload artifacts (macOS AMD64)'
+        if: matrix.type == 'macos-amd64'
+        uses: actions/upload-artifact@v4
         with:
-          tag_name: ${{ needs.prepare-release.outputs.tag_name }}
-          draft: true
-          files: |
+          name: macos-amd64
+          path: |
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app
+          if-no-files-found: error
+
+      - name: 'Desktop: Upload artifacts (macOS AARCH64)'
+        if: matrix.type == 'macos-aarch64'
+        uses: actions/upload-artifact@v4
+        with:
+          name: macos-aarch64
+          path: |
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/dmg/*.dmg
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app
+          if-no-files-found: error
 
       - name: 'Windows: Upload unsigned artifact'
         id: upload-unsigned-artifact
@@ -260,7 +176,7 @@ jobs:
         uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.ADMIN_WEBHOOK_URL }}
-          content: <@864603174899941376> Permit the signing request for SoulFireClient ${{ needs.prepare-release.outputs.tag_name }} https://app.signpath.io/Web/e091b552-3623-4d9d-83d7-059d8f32978b/SigningRequests
+          content: <@864603174899941376> Permit the signing request for SoulFireClient ${{ inputs.app-version }} https://app.signpath.io/Web/e091b552-3623-4d9d-83d7-059d8f32978b/SigningRequests
 
       - name: 'Windows: Submit signing request'
         if: matrix.type == 'windows'
@@ -276,15 +192,15 @@ jobs:
 
       - name: 'Windows: Upload signed artifact'
         if: matrix.type == 'windows'
-        uses: softprops/action-gh-release@v2
+        uses: actions/upload-artifact@v4
         with:
-          tag_name: ${{ needs.prepare-release.outputs.tag_name }}
-          draft: true
-          files: |
-            ./signed/*.exe
+          name: windows
+          path: |
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/nsis/*.exe
+          if-no-files-found: error
 
   publish-release:
-    needs: [build-tauri, prepare-release]
+    needs: build-tauri
     name: Publish Release
 
     permissions:
@@ -292,18 +208,82 @@ jobs:
 
     runs-on: ubuntu-24.04
     steps:
-      - name: 'Publish Release'
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v5
+        with:
+          mode: COMMIT
+          configurationJson: |
+            {
+              "template": "#{{CHANGELOG}}",
+              "categories": [
+                {
+                    "title": "## Feature",
+                    "labels": ["feat", "feature"]
+                },
+                {
+                    "title": "## Fix",
+                    "labels": ["fix", "bug"]
+                },
+                {
+                    "title": "## Performance",
+                    "labels": ["perf"]
+                },
+                {
+                    "title": "## Refactor",
+                    "labels": ["refactor"]
+                },
+                {
+                    "title": "## Documentation",
+                    "labels": ["docs"]
+                },
+                {
+                    "title": "## Build",
+                    "labels": ["build", "chore", "ci"]
+                },
+                {
+                    "title": "## Style",
+                    "labels": ["style"]
+                },
+                {
+                    "title": "## Test",
+                    "labels": ["test"]
+                },
+                {
+                    "title": "## Other",
+                    "labels": []
+                }
+              ],
+              "label_extractor": [
+                {
+                  "pattern": "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\\([\\w\\-\\.]+\\))?(!)?: ([\\w ])+([\\s\\S]*)",
+                  "on_property": "title",
+                  "target": "$1"
+                }
+              ]
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release
+        id: init-release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ needs.prepare-release.outputs.tag_name }}
-          draft: false
+          body: ${{ steps.github_release.outputs.changelog }}
+          tag_name: ${{ steps.get-version.outputs.package-version }}
+          generate_release_notes: false
+          draft: true
+          prerelease: false
+          target_commitish: main
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: SoulFireClient ${{ steps.get-version.outputs.package-version }}
 
       - name: Discord Webhook Action
         uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
           content: <@&850705047938793503> New SoulFireClient version released!
-          embed-title: SoulFireClient ${{ needs.prepare-release.outputs.tag_name }}
-          embed-description: SoulFireClient ${{ needs.prepare-release.outputs.tag_name }} has been released! Changelog and download can be found at https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/${{ needs.prepare-release.outputs.tag_name }}
+          embed-title: SoulFireClient ${{ inputs.app-version }}
+          embed-description: SoulFireClient ${{ inputs.app-version }} has been released! Changelog and download can be found at https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/${{ inputs.app-version }}
           embed-color: 3312063
           embed-thumbnail-url: https://soulfiremc.com/logo.png
