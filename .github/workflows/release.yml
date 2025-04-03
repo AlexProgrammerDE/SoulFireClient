@@ -106,7 +106,6 @@ jobs:
       - name: 'Desktop: Cache dependencies'
         uses: Swatinem/rust-cache@v2
         with:
-          prefix-key: ${{ matrix.type }}
           workspaces: src-tauri
           cache-on-failure: true
           cache-all-crates: true

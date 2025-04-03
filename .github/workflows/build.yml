@@ -70,7 +70,6 @@ jobs:
         if: matrix.type == 'desktop'
         uses: Swatinem/rust-cache@v2
         with:
-          prefix-key: ${{ matrix.name }}
           workspaces: src-tauri
           cache-on-failure: true
           cache-all-crates: true
