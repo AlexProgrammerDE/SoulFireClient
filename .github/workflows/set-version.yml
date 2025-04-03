@@ -48,6 +48,10 @@ jobs:
           cargo install cargo-edit
           cargo set-version ${{ inputs.version }} --manifest-path src-tauri/Cargo.toml
 
+      - name: 'Add to metainfo'
+        run: |
+          sed -i "/<releases>/a \ \ \ \ <release version=\"${{ inputs.version }}\" date=\"$(date +"%Y-%m-%d")\"/>" com.soulfiremc.soulfire.metainfo.xml
+
       - name: 'Commit Version'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
