@@ -131,35 +131,16 @@ jobs:
           includeRelease: true
           args: ${{ matrix.args }}
 
-      - name: 'Desktop: Upload artifacts (Ubuntu)'
-        if: matrix.type == 'linux'
-        uses: actions/upload-artifact@v4
-        with:
-          name: linux
-          path: |
-            ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage
-            ./src-tauri/target${{ matrix.target-path }}/release/bundle/deb/*.deb
-          if-no-files-found: error
-
-      - name: 'Desktop: Upload artifacts (macOS AMD64)'
-        if: matrix.type == 'macos-amd64'
-        uses: actions/upload-artifact@v4
-        with:
-          name: macos-amd64
-          path: |
-            ./src-tauri/target${{ matrix.target-path }}/release/bundle/dmg/*.dmg
-            ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app
-          if-no-files-found: error
-
-      - name: 'Desktop: Upload artifacts (macOS AARCH64)'
-        if: matrix.type == 'macos-aarch64'
-        uses: actions/upload-artifact@v4
-        with:
-          name: macos-aarch64
-          path: |
-            ./src-tauri/target${{ matrix.target-path }}/release/bundle/dmg/*.dmg
-            ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app
-          if-no-files-found: error
+      - name: 'Desktop: Prepare artifacts'
+        shell: bash
+        run: |
+          mkdir artifact-output
+          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage ./artifact-output/
+          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage.sig ./artifact-output/
+          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/deb/*.deb ./artifact-output/
+          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/dmg/*.dmg ./artifact-output/
+          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app.tar.gz ./artifact-output/
+          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app.tar.gz.sig ./artifact-output/
 
       - name: 'Windows: Upload unsigned artifact'
         id: upload-unsigned-artifact
@@ -188,15 +169,21 @@ jobs:
           signing-policy-slug: 'release-signing'
           github-artifact-id: '${{ steps.upload-unsigned-artifact.outputs.artifact-id }}'
           wait-for-completion: true
-          output-artifact-directory: '/signed'
+          output-artifact-directory: '/artifact-output'
 
-      - name: 'Windows: Upload signed artifact'
-        if: matrix.type == 'windows'
+      - name: 'Windows: Prepare signed artifact'
+        if: matrix.platform == 'windows-2025'
+        shell: bash
+        run: |
+          fileName=$(ls artifact-output/*.exe)
+          pnpm tauri signer sign -k "${{ secrets.TAURI_PRIVATE_KEY }}" -p "${{ secrets.TAURI_KEY_PASSWORD }}" $fileName
+
+      - name: 'Desktop: Upload artifacts'
         uses: actions/upload-artifact@v4
         with:
-          name: windows
+          name: ${{ matrix.type }}
           path: |
-            ./signed/*.exe
+            ./artifact-output/*
           if-no-files-found: error
 
   publish-release:
