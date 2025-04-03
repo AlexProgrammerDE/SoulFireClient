@@ -78,8 +78,8 @@ importers:
         specifier: ^5.69.0
         version: 5.71.5(react@19.1.0)
       '@tanstack/react-query-devtools':
-        specifier: 5.71.3
-        version: 5.71.3(@tanstack/react-query@5.71.5(react@19.1.0))(react@19.1.0)
+        specifier: 5.71.5
+        version: 5.71.5(@tanstack/react-query@5.71.5(react@19.1.0))(react@19.1.0)
       '@tanstack/react-table':
         specifier: ^8.21.2
         version: 8.21.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -187,7 +187,7 @@ importers:
         version: 5.4.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       recharts:
         specifier: ^2.15.1
-        version: 2.15.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 2.15.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       sonner:
         specifier: ^2.0.1
         version: 2.0.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1728,13 +1728,13 @@ packages:
   '@tanstack/query-core@5.71.5':
     resolution: {integrity: sha512-XOQ5SyjCdwhxyLksGKWSL5poqyEXYPDnsrZAzJm2LgrMm4Yh6VOrfC+IFosXreDw9HNqC11YAMY3HlfHjNzuaA==}
 
-  '@tanstack/query-devtools@5.71.3':
-    resolution: {integrity: sha512-+m706O9Rly+34z0JNkRiGMVKEF5vMvViGoj7DNkYMZ7AiGq6EHDfg7zdjPv3srixHYjkdHlcsO72oyh+GtyrlQ==}
+  '@tanstack/query-devtools@5.71.5':
+    resolution: {integrity: sha512-Fq1JeAp+I52Md/KnyeFxzG7G0RpdHgeOfDNhSPkZQs/JqqXuAfpUf+wFHDz+vP0GZbSnla2JmcLSQebOkIb1yA==}
 
-  '@tanstack/react-query-devtools@5.71.3':
-    resolution: {integrity: sha512-vA0h92TXbfKpk8p2mRbGt/bffJF7Fp8cJGArubge0Uyyh1FPzjgkFsWnkBz0IUThb9P8JU7eOftDwluv//zpAg==}
+  '@tanstack/react-query-devtools@5.71.5':
+    resolution: {integrity: sha512-VErQ29hgwmLrZjMmHp83iv+UdeCbqAyj/JR1mZjDbf+ghyJT+Hmh8jfbh6WYzKh8Fnej7uwl3nHbCsqd3VjoWw==}
     peerDependencies:
-      '@tanstack/react-query': ^5.71.3
+      '@tanstack/react-query': ^5.71.5
       react: ^18 || ^19
 
   '@tanstack/react-query@5.71.5':
@@ -3760,8 +3760,8 @@ packages:
   recharts-scale@0.4.5:
     resolution: {integrity: sha512-kivNFO+0OcUNu7jQquLXAxz1FIwZj8nrj+YkOKc5694NbjCvcT6aSZiIzNzd2Kul4o4rTto8QVR9lMNtxD4G1w==}
 
-  recharts@2.15.1:
-    resolution: {integrity: sha512-v8PUTUlyiDe56qUj82w/EDVuzEFXwEHp9/xOowGAZwfLjB9uAy3GllQVIYMWF6nU+qibx85WF75zD7AjqoT54Q==}
+  recharts@2.15.2:
+    resolution: {integrity: sha512-xv9lVztv3ingk7V3Jf05wfAZbM9Q2umJzu5t/cfnAK7LUslNrGT7LPBr74G+ok8kSCeFMaePmWMg0rcYOnczTw==}
     engines: {node: '>=14'}
     peerDependencies:
       react: ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -5605,11 +5605,11 @@ snapshots:
 
   '@tanstack/query-core@5.71.5': {}
 
-  '@tanstack/query-devtools@5.71.3': {}
+  '@tanstack/query-devtools@5.71.5': {}
 
-  '@tanstack/react-query-devtools@5.71.3(@tanstack/react-query@5.71.5(react@19.1.0))(react@19.1.0)':
+  '@tanstack/react-query-devtools@5.71.5(@tanstack/react-query@5.71.5(react@19.1.0))(react@19.1.0)':
     dependencies:
-      '@tanstack/query-devtools': 5.71.3
+      '@tanstack/query-devtools': 5.71.5
       '@tanstack/react-query': 5.71.5(react@19.1.0)
       react: 19.1.0
 
@@ -7788,7 +7788,7 @@ snapshots:
     dependencies:
       decimal.js-light: 2.5.1
 
-  recharts@2.15.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  recharts@2.15.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       clsx: 2.1.1
       eventemitter3: 4.0.7
