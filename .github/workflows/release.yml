@@ -53,7 +53,7 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       release_id: ${{ steps.init-release.outputs.result }}
-      tag_name: ${{ steps.get-version.outputs.PACKAGE_VERSION }}
+      tag_name: ${{ steps.get-version.outputs.package-version }}
 
     steps:
       - name: 'Checkout Repository'
@@ -293,7 +293,6 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: 'Publish Release'
-        id: publish-release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.prepare-release.outputs.tag_name }}
