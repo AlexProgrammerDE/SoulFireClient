@@ -14,14 +14,14 @@ jobs:
   set-server-version:
     uses: AlexProgrammerDE/SoulFireClient/.github/workflows/set-server-version.yml@main
     with:
-      version: ${{ github.event.inputs.server-version }}
+      version: ${{ inputs.server-version }}
     secrets: inherit
 
   set-version:
     needs: set-server-version
     uses: AlexProgrammerDE/SoulFireClient/.github/workflows/set-version.yml@main
     with:
-      version: ${{ github.event.inputs.app-version }}
+      version: ${{ inputs.app-version }}
     secrets: inherit
 
   prepare-release:

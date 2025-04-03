@@ -28,9 +28,9 @@ jobs:
 
       - name: 'Set Server Version'
         run: |
-          echo "pub const SOULFIRE_VERSION: &str = \"${{ github.event.inputs.version }}\";" > src-tauri/src/sf_version_constant.rs
+          echo "pub const SOULFIRE_VERSION: &str = \"${{ inputs.version }}\";" > src-tauri/src/sf_version_constant.rs
 
       - name: 'Commit Version'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'Bump server version to ${{ github.event.inputs.version }}'
+          commit_message: 'Bump server version to ${{ inputs.version }}'

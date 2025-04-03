@@ -41,14 +41,14 @@ jobs:
 
       - name: 'Set JS Version'
         run: |
-          pnpm version --no-git-tag-version ${{ github.event.inputs.version }}
+          pnpm version --no-git-tag-version ${{ inputs.version }}
 
       - name: 'Set Cargo Version'
         run: |
           cargo install cargo-edit
-          cargo set-version ${{ github.event.inputs.version }} --manifest-path src-tauri/Cargo.toml
+          cargo set-version ${{ inputs.version }} --manifest-path src-tauri/Cargo.toml
 
       - name: 'Commit Version'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'Bump version to ${{ github.event.inputs.version }}'
+          commit_message: 'Bump version to ${{ inputs.version }}'
