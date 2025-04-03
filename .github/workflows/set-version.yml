@@ -41,7 +41,7 @@ jobs:
 
       - name: 'Set JS Version'
         run: |
-          pnpm version --no-git-tag-version ${{ inputs.version }}
+          pnpm version --no-git-tag-version --allow-same-version ${{ inputs.version }}
 
       - name: 'Set Cargo Version'
         run: |
