@@ -240,23 +240,23 @@ jobs:
           {
             "version": "${{ inputs.app-version }}",
             "notes": "See the assets to download this version and install.",
-            "pub_date": "${currentDate}",
+            "pub_date": "$currentDate",
             "platforms": {
               "windows-x86_64": {
-                "signature": "$(cat $windowsSigFile)",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename $windowsFile)"
+                "signature": "$(cat "$windowsSigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$windowsFile")"
               },
               "darwin-aarch64": {
-                "signature": "$(cat $macosAarch64SigFile)",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename $macosAarch64File)"
+                "signature": "$(cat "$macosAarch64SigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$macosAarch64File")"
               },
               "darwin-x86_64": {
-                "signature": "$(cat macOSAmd64SigFile)",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(macOSAmd64File)"
+                "signature": "$(cat "$macOSAmd64SigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$macOSAmd64File")"
               },
               "linux-x86_64": {
-                "signature": "$(cat $linuxAppImageSigFile)",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(linuxAppImageFile)"
+                "signature": "$(cat "$linuxAppImageSigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$linuxAppImageFile")"
               }
             }
           }
