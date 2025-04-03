@@ -144,13 +144,25 @@ jobs:
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage.sig ./artifact-output/
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/deb/*.deb ./artifact-output/
 
-      - name: 'Desktop: Put macos files in artifact-output'
-        if: matrix.type == 'macos-amd64' || matrix.type == 'macos-aarch64'
+      - name: 'Desktop: Put macos amd64 files in artifact-output'
+        if: matrix.type == 'macos-amd64'
         shell: bash
         run: |
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/dmg/*.dmg ./artifact-output/
-          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app.tar.gz ./artifact-output/
-          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app.tar.gz.sig ./artifact-output/
+          appZipFile=$(ls ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app.tar.gz)
+          appZipSigFile=$(ls ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app.tar.gz.sig)
+          mv "$appZipFile" "./artifact-output/${appZipFile%.app.tar.gz}_x64.app.tar.gz"
+          mv "$appZipSigFile" "./artifact-output/${appZipSigFile%.app.tar.gz}_x64.app.tar.gz"
+
+      - name: 'Desktop: Put macos aarch64 files in artifact-output'
+        if: matrix.type == 'macos-aarch64'
+        shell: bash
+        run: |
+          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/dmg/*.dmg ./artifact-output/
+          appZipFile=$(ls ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app.tar.gz)
+          appZipSigFile=$(ls ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app.tar.gz.sig)
+          mv "$appZipFile" "./artifact-output/${appZipFile%.app.tar.gz}_aarch64.app.tar.gz"
+          mv "$appZipSigFile" "./artifact-output/${appZipSigFile%.app.tar.gz}_aarch64.app.tar.gz"
 
       - name: 'Windows: Upload unsigned artifact'
         id: upload-unsigned-artifact
