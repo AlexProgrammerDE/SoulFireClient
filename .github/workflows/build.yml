@@ -74,6 +74,7 @@ jobs:
           workspaces: src-tauri
           cache-on-failure: true
           cache-all-crates: true
+          cache-targets: false
 
       - name: 'Ubuntu: Install linux dependencies'
         if: matrix.name == 'Ubuntu 22.04'

@@ -110,6 +110,7 @@ jobs:
           workspaces: src-tauri
           cache-on-failure: true
           cache-all-crates: true
+          cache-targets: false
 
       - name: 'Ubuntu: Install dependencies'
         if: matrix.type == 'linux'
