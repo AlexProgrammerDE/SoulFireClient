@@ -131,13 +131,23 @@ jobs:
           includeRelease: true
           args: ${{ matrix.args }}
 
-      - name: 'Desktop: Prepare artifacts'
+      - name: 'Desktop: Create output dir'
         shell: bash
         run: |
           mkdir artifact-output
+
+      - name: 'Desktop: Put linux files in artifact-output'
+        if: matrix.type == 'linux'
+        shell: bash
+        run: |
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage ./artifact-output/
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage.sig ./artifact-output/
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/deb/*.deb ./artifact-output/
+
+      - name: 'Desktop: Put macos files in artifact-output'
+        if: matrix.type == 'macos-amd64' || matrix.type == 'macos-aarch64'
+        shell: bash
+        run: |
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/dmg/*.dmg ./artifact-output/
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app.tar.gz ./artifact-output/
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/macos/*.app.tar.gz.sig ./artifact-output/
