@@ -205,6 +205,63 @@ jobs:
 
     runs-on: ubuntu-24.04
     steps:
+      - name: Download linux artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: linux
+          path: release-artifacts/linux
+      - name: Download macos-aarch64 artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-aarch64
+          path: release-artifacts/macos-aarch64
+      - name: Download macos-amd64 artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: macos-amd64
+          path: release-artifacts/macos-amd64
+      - name: Download windows artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: windows
+          path: release-artifacts/windows
+      - name: Create latest.json
+        run: |
+          linuxAppImageFile=$(ls release-artifacts/linux/*.AppImage)
+          linuxAppImageSigFile=$(ls release-artifacts/linux/*.AppImage.sig)
+          macosAarch64File=$(ls release-artifacts/macos-aarch64/*.app.tar.gz)
+          macosAarch64SigFile=$(ls release-artifacts/macos-aarch64/*.app.tar.gz.sig)
+          macosAmd64File=$(ls release-artifacts/macos-amd64/*.app.tar.gz)
+          macosAmd64SigFile=$(ls release-artifacts/macos-amd64/*.app.tar.gz.sig)
+          windowsFile=$(ls release-artifacts/windows/*.exe)
+          windowsSigFile=$(ls release-artifacts/windows/*.exe.sig)
+          currentDate=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
+          cat << EOF > 'release-artifacts/latest.json'
+          {
+            "version": "${{ inputs.app-version }}",
+            "notes": "See the assets to download this version and install.",
+            "pub_date": "${currentDate}",
+            "platforms": {
+              "windows-x86_64": {
+                "signature": "$(cat $windowsSigFile)",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename $windowsFile)"
+              },
+              "darwin-aarch64": {
+                "signature": "$(cat $macosAarch64SigFile)",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename $macosAarch64File)"
+              },
+              "darwin-x86_64": {
+                "signature": "$(cat macOSAmd64SigFile)",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(macOSAmd64File)"
+              },
+              "linux-x86_64": {
+                "signature": "$(cat $linuxAppImageSigFile)",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(linuxAppImageFile)"
+              }
+            }
+          }
+          EOF
+
       - name: Build Changelog
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v5
@@ -272,6 +329,13 @@ jobs:
           target_commitish: main
           token: ${{ secrets.GITHUB_TOKEN }}
           name: SoulFireClient ${{ steps.get-version.outputs.package-version }}
+          files: |
+            release-artifacts/**/*.exe
+            release-artifacts/**/*.AppImage
+            release-artifacts/**/*.deb
+            release-artifacts/**/*.app.tar.gz
+            release-artifacts/**/*.dmg
+            release-artifacts/latest.json
 
       - name: Discord Webhook Action
         uses: tsickert/discord-webhook@v7.0.0
