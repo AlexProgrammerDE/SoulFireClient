@@ -251,8 +251,8 @@ jobs:
                 "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$macosAarch64File")"
               },
               "darwin-x86_64": {
-                "signature": "$(cat "$macOSAmd64SigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$macOSAmd64File")"
+                "signature": "$(cat "$macosAmd64SigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$macosAmd64File")"
               },
               "linux-x86_64": {
                 "signature": "$(cat "$linuxAppImageSigFile")",
