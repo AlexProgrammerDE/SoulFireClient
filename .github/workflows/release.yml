@@ -196,7 +196,7 @@ jobs:
         with:
           name: windows
           path: |
-            ./src-tauri/target${{ matrix.target-path }}/release/bundle/nsis/*.exe
+            ./signed/*.exe
           if-no-files-found: error
 
   publish-release:
