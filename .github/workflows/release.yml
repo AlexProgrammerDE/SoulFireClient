@@ -154,7 +154,7 @@ jobs:
           appZipFileBasename=$(basename "$appZipFile")
           appZipSigFileBasename=$(basename "$appZipSigFile")
           mv "$appZipFile" "./artifact-output/${appZipFileBasename%.app.tar.gz}_x64.app.tar.gz"
-          mv "$appZipSigFile" "./artifact-output/${appZipSigFileBasename%.app.tar.gz}_x64.app.tar.gz"
+          mv "$appZipSigFile" "./artifact-output/${appZipSigFileBasename%.app.tar.gz.sig}_x64.app.tar.gz.sig"
 
       - name: 'Desktop: Put macos aarch64 files in artifact-output'
         if: matrix.type == 'macos-aarch64'
@@ -166,7 +166,7 @@ jobs:
           appZipFileBasename=$(basename "$appZipFile")
           appZipSigFileBasename=$(basename "$appZipSigFile")
           mv "$appZipFile" "./artifact-output/${appZipFileBasename%.app.tar.gz}_aarch64.app.tar.gz"
-          mv "$appZipSigFile" "./artifact-output/${appZipSigFileBasename%.app.tar.gz}_aarch64.app.tar.gz"
+          mv "$appZipSigFile" "./artifact-output/${appZipSigFileBasename%.app.tar.gz.sig}_aarch64.app.tar.gz.sig"
 
       - name: 'Windows: Upload unsigned artifact'
         id: upload-unsigned-artifact
