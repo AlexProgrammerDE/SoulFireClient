@@ -227,7 +227,7 @@ pub async fn run_integrated_server(
     }
   }
 
-  child.write("generate-token\n".as_bytes())?;
+  child.write("generate-token api\n".as_bytes())?;
 
   let token: String = loop {
     if let Some(message) = rx.recv().await {
