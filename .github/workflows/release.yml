@@ -106,6 +106,7 @@ jobs:
       - name: 'Desktop: Cache dependencies'
         uses: Swatinem/rust-cache@v2
         with:
+          save-if: ${{ github.ref == 'refs/heads/main' }}
           workspaces: src-tauri
           cache-on-failure: true
           cache-all-crates: true
