@@ -50,7 +50,12 @@ jobs:
 
       - name: 'Add to metainfo'
         run: |
-          sed -i "/<releases>/a \ \ \ \ <release version=\"${{ inputs.version }}\" date=\"$(date +"%Y-%m-%d")\"/>" com.soulfiremc.soulfire.metainfo.xml
+          if ! grep -q "<release version=\"${{ inputs.version }}\"" com.soulfiremc.soulfire.metainfo.xml; then
+            sed -i "/<releases>/a \ \ \ \ <release version=\"${{ inputs.version }}\" date=\"$(date +"%Y-%m-%d")\"/>" com.soulfiremc.soulfire.metainfo.xml
+            echo "Added release ${{ inputs.version }} to metainfo file"
+          else
+            echo "Release version ${{ inputs.version }} already exists in metainfo file, skipping addition"
+          fi
 
       - name: 'Commit Version'
         uses: stefanzweifel/git-auto-commit-action@v5
