@@ -272,8 +272,6 @@ jobs:
           body: ${{ steps.github_release.outputs.changelog }}
           tag_name: ${{ steps.get-version.outputs.package-version }}
           generate_release_notes: false
-          draft: true
-          prerelease: false
           target_commitish: main
           token: ${{ secrets.GITHUB_TOKEN }}
           name: SoulFireClient ${{ steps.get-version.outputs.package-version }}
