@@ -36,6 +36,7 @@ jobs:
       - name: 'Checkout Repository'
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.ref }}
           fetch-depth: 0
 
       - name: 'Push to release branch'
@@ -83,6 +84,7 @@ jobs:
       - name: 'Shared: Checkout Repository'
         uses: actions/checkout@v4
         with:
+          ref: ${{ github.ref }}
           persist-credentials: false
 
       - name: 'Shared: Set up nasm'
