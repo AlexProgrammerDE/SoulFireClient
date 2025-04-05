@@ -24,7 +24,7 @@
       "error": "Fehler beim Entfernen der Proxies"
     },
     "checkToast": {
-      "loading": "",
+      "loading": "Prüfe Proxies... {{checked}}/{{total}} (Erfolg: {{success}} Fehlgeschlagen: {{failed}})",
       "success": "Entfernte {{count}} defekte Proxies!",
       "error": "Fehler beim Prüfen der Proxies"
     },
@@ -39,7 +39,7 @@
   "account": {
     "filterPlaceholder": "Konten filtern...",
     "listImportToast": {
-      "loading": "",
+      "loading": "Importiere Konten... {{checked}}/{{total}} (Erfolg: {{success}} Fehlgeschlagen: {{failed}})",
       "allFailed": "Fehler beim Importieren aller Konten",
       "someFailed": "Importierte {{count}} Konten, Fehler beim Importieren von {{failed}} Konten",
       "noneFailed": "{{count}} Konten importiert!",
