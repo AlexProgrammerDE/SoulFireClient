@@ -16,10 +16,6 @@ import { LogScope } from '@/generated/soulfire/logs.ts';
 import { stripAnsi } from 'fancy-ansi';
 import { useTranslation } from 'react-i18next';
 
-const hslToString = (rgb: { h: number; s: number; l: number }): string => {
-  return `${Math.round(rgb.h)}, ${Math.round(rgb.s * 100)}%, ${Math.round(rgb.l * 100)}%`;
-};
-
 const MAX_TERMINAL_LINES = 500;
 
 const MemoAnsiHtml = React.memo((props: { text: string }) => {
