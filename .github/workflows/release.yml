@@ -286,6 +286,7 @@ jobs:
         uses: mikepenz/release-changelog-builder-action@v5
         with:
           mode: COMMIT
+          toTag: ${{ github.ref }}
           configurationJson: |
             {
               "template": "#{{CHANGELOG}}",
