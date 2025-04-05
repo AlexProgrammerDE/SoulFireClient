@@ -1,8 +1,3 @@
-pull_request_title: 'chore(i18n): new crowdin translations'
-pull_request_labels:
-  - crowdin
-commit_message: 'chore(i18n): new translations %original_file_name% (%language%)'
-append_commit_message: false
 files:
   - source: /locales/en-US/*.json
     translation: /locales/%locale%/%original_file_name%
