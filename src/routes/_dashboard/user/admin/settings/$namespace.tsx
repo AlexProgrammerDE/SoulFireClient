@@ -1,11 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useContext } from 'react';
 import { AdminSettingsPageComponent } from '@/components/settings-page.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout';
 import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
 import { useTranslation } from 'react-i18next';
 import { NotFoundComponent } from '@/components/not-found-component.tsx';
-import { ServerInfoContext } from '@/components/providers/server-info-context.tsx';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute(
   '/_dashboard/user/admin/settings/$namespace',
@@ -16,7 +15,8 @@ export const Route = createFileRoute(
 function SettingsNamespace() {
   const { t } = useTranslation('common');
   const { namespace } = Route.useParams();
-  const serverInfo = useContext(ServerInfoContext);
+  const { serverInfoQueryOptions } = Route.useRouteContext();
+  const { data: serverInfo } = useSuspenseQuery(serverInfoQueryOptions);
   const settingsEntry = serverInfo.serverSettings.find(
     (s) => s.namespace === namespace,
   );

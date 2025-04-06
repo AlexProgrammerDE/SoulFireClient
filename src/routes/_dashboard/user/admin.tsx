@@ -1,29 +1,34 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router';
+import { createFileRoute } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
-import { convertFromServerProto } from '@/lib/types.ts';
 import { queryClientInstance } from '@/lib/query.ts';
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
-import {
-  ServerConfig,
-  ServerInfoResponse,
-} from '@/generated/soulfire/server.ts';
+import { queryOptions } from '@tanstack/react-query';
+import { ServerInfoResponse } from '@/generated/soulfire/server.ts';
 import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
-import { ServerInfoContext } from '@/components/providers/server-info-context.tsx';
-import { ServerConfigContext } from '@/components/providers/server-config-context.tsx';
 import { UserListResponse } from '@/generated/soulfire/user.ts';
 import { UserRole } from '@/generated/soulfire/common.ts';
 import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
+import { BaseSettings } from '@/lib/types';
+import { convertFromServerProto } from '@/lib/types.ts';
 
 export const Route = createFileRoute('/_dashboard/user/admin')({
   beforeLoad: (props) => {
     const serverInfoQueryOptions = queryOptions({
       queryKey: ['server-info'],
-      queryFn: async (props): Promise<ServerInfoResponse> => {
+      queryFn: async (
+        props,
+      ): Promise<
+        ServerInfoResponse & {
+          parsedConfig: BaseSettings;
+        }
+      > => {
         const transport = createTransport();
         if (transport === null) {
           return {
             config: {
               settings: [],
+            },
+            parsedConfig: {
+              settings: {},
             },
             serverSettings: [],
           };
@@ -37,7 +42,10 @@ export const Route = createFileRoute('/_dashboard/user/admin')({
           },
         );
 
-        return result.response;
+        return {
+          ...result.response,
+          parsedConfig: convertFromServerProto(result.response.config!),
+        };
       },
       refetchInterval: 3_000,
     });
@@ -91,20 +99,4 @@ export const Route = createFileRoute('/_dashboard/user/admin')({
     );
     void queryClientInstance.prefetchQuery(props.context.usersQueryOptions);
   },
-  component: AdminLayout,
 });
-
-function AdminLayout() {
-  const { serverInfoQueryOptions } = Route.useRouteContext();
-  const { data: serverInfo } = useSuspenseQuery(serverInfoQueryOptions);
-
-  return (
-    <ServerInfoContext.Provider value={serverInfo}>
-      <ServerConfigContext.Provider
-        value={convertFromServerProto(serverInfo.config as ServerConfig)}
-      >
-        <Outlet />
-      </ServerConfigContext.Provider>
-    </ServerInfoContext.Provider>
-  );
-}

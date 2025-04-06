@@ -52,7 +52,6 @@ import {
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
-import { ServerConfigContext } from '@/components/providers/server-config-context.tsx';
 import { useTranslation } from 'react-i18next';
 import { NumericFormat } from 'react-number-format';
 import { useLocaleNumberFormat } from '@/hooks/use-locale-number-format.tsx';
@@ -797,12 +796,15 @@ export function InstanceSettingsPageComponent({
 
 export function AdminSettingsPageComponent({ data }: { data: SettingsPage }) {
   const queryClient = useQueryClient();
-  const serverConfig = useContext(ServerConfigContext);
-  const transport = useContext(TransportContext);
   const serverInfoQueryOptions = useRouteContext({
     from: '/_dashboard/user/admin',
     select: (context) => context.serverInfoQueryOptions,
   });
+  const { data: serverConfig } = useSuspenseQuery({
+    ...serverInfoQueryOptions,
+    select: (info) => info.parsedConfig,
+  });
+  const transport = useContext(TransportContext);
   return (
     <ClientSettingsPageComponent
       data={data}
