@@ -1,7 +1,8 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router';
+import { CatchBoundary, createFileRoute, Outlet } from '@tanstack/react-router';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar.tsx';
 import { UserSidebar } from '@/components/nav/user-sidebar.tsx';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
+import { ErrorComponent } from '@/components/error-component.tsx';
 
 export const Route = createFileRoute('/_dashboard/user')({
   component: UserLayout,
@@ -15,7 +16,12 @@ function UserLayout() {
       <UserSidebar />
       <TooltipProvider delayDuration={500}>
         <SidebarInset>
-          <Outlet />
+          <CatchBoundary
+            getResetKey={() => 'user-layout'}
+            errorComponent={ErrorComponent}
+          >
+            <Outlet />
+          </CatchBoundary>
         </SidebarInset>
       </TooltipProvider>
     </SidebarProvider>

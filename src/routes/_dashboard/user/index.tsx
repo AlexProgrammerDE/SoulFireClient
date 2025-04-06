@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
+import { createFileRoute, Link } from '@tanstack/react-router';
 import * as React from 'react';
 import { translateInstanceState } from '@/lib/types.ts';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
@@ -19,10 +19,7 @@ export const Route = createFileRoute('/_dashboard/user/')({
 
 function InstanceSelectPage() {
   const { t, i18n } = useTranslation('common');
-  const instanceListQueryOptions = useRouteContext({
-    from: '/_dashboard',
-    select: (context) => context.instanceListQueryOptions,
-  });
+  const { instanceListQueryOptions } = Route.useRouteContext();
   const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
 
   return (

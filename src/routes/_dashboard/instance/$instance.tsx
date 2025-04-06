@@ -1,4 +1,4 @@
-import { createFileRoute, Outlet } from '@tanstack/react-router';
+import { CatchBoundary, createFileRoute, Outlet } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { ProfileContext } from '@/components/providers/profile-context.tsx';
@@ -17,6 +17,7 @@ import {
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar.tsx';
 import { InstanceSidebar } from '@/components/nav/instance-sidebar.tsx';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
+import { ErrorComponent } from '@/components/error-component.tsx';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance')({
   beforeLoad: (props) => {
@@ -120,7 +121,12 @@ function InstanceLayout() {
             <InstanceSidebar />
             <TooltipProvider delayDuration={500}>
               <SidebarInset>
-                <Outlet />
+                <CatchBoundary
+                  getResetKey={() => 'instance-layout'}
+                  errorComponent={ErrorComponent}
+                >
+                  <Outlet />
+                </CatchBoundary>
               </SidebarInset>
             </TooltipProvider>
           </SidebarProvider>

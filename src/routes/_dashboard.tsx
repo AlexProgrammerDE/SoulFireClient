@@ -4,7 +4,6 @@ import {
   Outlet,
   redirect,
   useNavigate,
-  useRouteContext,
 } from '@tanstack/react-router';
 import { ClientServiceClient } from '@/generated/soulfire/client.client.ts';
 import {
@@ -159,10 +158,7 @@ export const Route = createFileRoute('/_dashboard')({
 
 function InstanceSwitchKeybinds() {
   const navigate = useNavigate();
-  const instanceListQueryOptions = useRouteContext({
-    from: '/_dashboard',
-    select: (context) => context.instanceListQueryOptions,
-  });
+  const { instanceListQueryOptions } = Route.useRouteContext();
   const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
 
   useEffect(() => {
