@@ -9,7 +9,6 @@ import {
   ProfileAccount,
   ProfileRoot,
 } from '@/lib/types.ts';
-import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import {
   AccountTypeCredentials,
   AccountTypeDeviceCode,
@@ -28,9 +27,12 @@ import { ExternalToast, toast } from 'sonner';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { MCAuthServiceClient } from '@/generated/soulfire/mc-auth.client.ts';
 import ImportDialog from '@/components/dialog/import-dialog.tsx';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import { isTauri, runAsync } from '@/lib/utils.tsx';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
@@ -87,12 +89,15 @@ const columns: ColumnDef<ProfileAccount>[] = [
 function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   const { t } = useTranslation('instance');
   const queryClient = useQueryClient();
-  const profile = useContext(ProfileContext);
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
   const transport = useContext(TransportContext);
-  const instanceInfo = useContext(InstanceInfoContext);
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const [accountTypeCredentialsSelected, setAccountTypeCredentialsSelected] =
     useState<AccountTypeCredentials | null>(null);
-  const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
       if (transport === null) {
@@ -467,8 +472,12 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
 
 function AccountSettings() {
   const { t } = useTranslation('common');
-  const instanceInfo = useContext(InstanceInfoContext);
-  const profile = useContext(ProfileContext);
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
 
   return (
     <InstancePageLayout

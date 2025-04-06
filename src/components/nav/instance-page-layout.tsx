@@ -8,14 +8,14 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
-import { ReactNode, useContext } from 'react';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { ReactNode } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { BookOpenTextIcon, HomeIcon } from 'lucide-react';
-import { CatchBoundary, Link } from '@tanstack/react-router';
+import { CatchBoundary, Link, useRouteContext } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { ErrorComponent } from '@/components/error-component.tsx';
 import { ExternalLink } from '@/components/external-link.tsx';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export default function InstancePageLayout(props: {
   children: ReactNode;
@@ -24,7 +24,11 @@ export default function InstancePageLayout(props: {
   documentationLink?: string;
 }) {
   const { t } = useTranslation('common');
-  const instanceInfo = useContext(InstanceInfoContext);
+  const instanceInfoQueryOptions = useRouteContext({
+    from: '/_dashboard/instance/$instance',
+    select: (context) => context.instanceInfoQueryOptions,
+  });
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
 
   const CrumbComponent = (props: { crumb: string }) => (
     <>

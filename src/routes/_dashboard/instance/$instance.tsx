@@ -1,15 +1,12 @@
 import { CatchBoundary, createFileRoute, Outlet } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
-import { ProfileContext } from '@/components/providers/profile-context.tsx';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
-import { convertFromInstanceProto } from '@/lib/types.ts';
 import {
   InstanceInfoResponse,
   InstanceState,
 } from '@/generated/soulfire/instance.ts';
 import { queryClientInstance } from '@/lib/query.ts';
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
+import { queryOptions } from '@tanstack/react-query';
 import {
   MinecraftAccountProto_AccountTypeProto,
   ProxyProto_Type,
@@ -18,16 +15,30 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar.tsx';
 import { InstanceSidebar } from '@/components/nav/instance-sidebar.tsx';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 import { ErrorComponent } from '@/components/error-component.tsx';
+import { convertFromInstanceProto, ProfileRoot } from '@/lib/types.ts';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance')({
   beforeLoad: (props) => {
     const { instance } = props.params;
     const instanceInfoQueryOptions = queryOptions({
       queryKey: ['instance-info', instance],
-      queryFn: async (props): Promise<InstanceInfoResponse> => {
+      queryFn: async (
+        props,
+      ): Promise<
+        InstanceInfoResponse & {
+          id: string;
+          profile: ProfileRoot;
+        }
+      > => {
         const transport = createTransport();
         if (transport === null) {
           return {
+            id: instance,
+            profile: {
+              settings: {},
+              accounts: [],
+              proxies: [],
+            },
             friendlyName: 'Demo',
             icon: 'pickaxe',
             instancePermissions: [],
@@ -79,7 +90,11 @@ export const Route = createFileRoute('/_dashboard/instance/$instance')({
           },
         );
 
-        return result.response;
+        return {
+          id: instance,
+          profile: convertFromInstanceProto(result.response.config),
+          ...result.response,
+        };
       },
       refetchInterval: 3_000,
     });
@@ -101,37 +116,21 @@ export const Route = createFileRoute('/_dashboard/instance/$instance')({
 });
 
 function InstanceLayout() {
-  const { instance } = Route.useParams();
-  const { instanceInfoQueryOptions } = Route.useRouteContext();
-  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const defaultOpen = localStorage.getItem('sidebar:state') === 'true';
 
   return (
-    <>
-      <InstanceInfoContext.Provider
-        value={{
-          id: instance,
-          ...instanceInfo,
-        }}
-      >
-        <ProfileContext.Provider
-          value={convertFromInstanceProto(instanceInfo.config)}
-        >
-          <SidebarProvider defaultOpen={defaultOpen}>
-            <InstanceSidebar />
-            <TooltipProvider delayDuration={500}>
-              <SidebarInset>
-                <CatchBoundary
-                  getResetKey={() => 'instance-layout'}
-                  errorComponent={ErrorComponent}
-                >
-                  <Outlet />
-                </CatchBoundary>
-              </SidebarInset>
-            </TooltipProvider>
-          </SidebarProvider>
-        </ProfileContext.Provider>
-      </InstanceInfoContext.Provider>
-    </>
+    <SidebarProvider defaultOpen={defaultOpen}>
+      <InstanceSidebar />
+      <TooltipProvider delayDuration={500}>
+        <SidebarInset>
+          <CatchBoundary
+            getResetKey={() => 'instance-layout'}
+            errorComponent={ErrorComponent}
+          >
+            <Outlet />
+          </CatchBoundary>
+        </SidebarInset>
+      </TooltipProvider>
+    </SidebarProvider>
   );
 }

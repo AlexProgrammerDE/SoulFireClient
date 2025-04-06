@@ -2,8 +2,7 @@ import { createFileRoute } from '@tanstack/react-router';
 import { TerminalComponent } from '@/components/terminal.tsx';
 import ControlsMenu from '@/components/controls-menu.tsx';
 import CommandInput from '@/components/command-input.tsx';
-import { useContext, useMemo } from 'react';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { useMemo } from 'react';
 import { translateInstanceState } from '@/lib/types.ts';
 import { Badge } from '@/components/ui/badge';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
@@ -12,6 +11,7 @@ import { CommandScope } from '@/generated/soulfire/command.ts';
 import { useTranslation } from 'react-i18next';
 import { hasInstancePermission } from '@/lib/utils.tsx';
 import { InstancePermission } from '@/generated/soulfire/common.ts';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance/')({
   component: Console,
@@ -19,7 +19,8 @@ export const Route = createFileRoute('/_dashboard/instance/$instance/')({
 
 function Console() {
   const { t, i18n } = useTranslation('common');
-  const instanceInfo = useContext(InstanceInfoContext);
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const logScope = useMemo<LogScope>(
     () => ({
       scope: {

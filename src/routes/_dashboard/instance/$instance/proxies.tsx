@@ -3,7 +3,6 @@ import { useCallback, useContext, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import { DataTable } from '@/components/data-table.tsx';
-import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
 import {
   convertToInstanceProto,
@@ -24,10 +23,13 @@ import {
 import { PlusIcon, TrashIcon, Wand2Icon } from 'lucide-react';
 import ImportDialog from '@/components/dialog/import-dialog.tsx';
 import URI from 'urijs';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { ProxyCheckServiceClient } from '@/generated/soulfire/proxy-check.client.ts';
 import { Trans, useTranslation } from 'react-i18next';
@@ -146,12 +148,15 @@ const columns: ColumnDef<ProfileProxy>[] = [
 function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   const { t } = useTranslation('instance');
   const queryClient = useQueryClient();
-  const profile = useContext(ProfileContext);
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
   const transport = useContext(TransportContext);
-  const instanceInfo = useContext(InstanceInfoContext);
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const [proxyTypeSelected, setProxyTypeSelected] =
     useState<UIProxyType | null>(null);
-  const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
       if (transport === null) {
@@ -431,8 +436,12 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
 
 function ProxySettings() {
   const { t } = useTranslation('common');
-  const instanceInfo = useContext(InstanceInfoContext);
-  const profile = useContext(ProfileContext);
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
 
   return (
     <InstancePageLayout

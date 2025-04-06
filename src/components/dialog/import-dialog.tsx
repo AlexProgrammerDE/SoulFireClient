@@ -22,9 +22,10 @@ import MimeMatcher from 'mime-matcher';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { DownloadServiceClient } from '@/generated/soulfire/download.client.ts';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { InstancePermission } from '@/generated/soulfire/common.ts';
 import { useTranslation } from 'react-i18next';
+import { useRouteContext } from '@tanstack/react-router';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export type TextInput = {
   defaultValue: string;
@@ -60,7 +61,11 @@ export default function ImportDialog(props: ImportDialogProps) {
 function UrlDialog(props: ImportDialogProps) {
   const { t } = useTranslation('common');
   const transport = useContext(TransportContext);
-  const instanceInfo = useContext(InstanceInfoContext);
+  const instanceInfoQueryOptions = useRouteContext({
+    from: '/_dashboard/instance/$instance',
+    select: (context) => context.instanceInfoQueryOptions,
+  });
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const [inputText, setInputText] = useState('');
 
   return (
@@ -135,7 +140,11 @@ function MainDialog(
   },
 ) {
   const { t } = useTranslation('common');
-  const instanceInfo = useContext(InstanceInfoContext);
+  const instanceInfoQueryOptions = useRouteContext({
+    from: '/_dashboard/instance/$instance',
+    select: (context) => context.instanceInfoQueryOptions,
+  });
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const systemInfo = useContext(SystemInfoContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
 

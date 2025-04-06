@@ -1,9 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useContext } from 'react';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import {
   formatIconName,
@@ -29,7 +32,7 @@ function MetaSettings() {
     Route.useRouteContext();
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
-  const instanceInfo = useContext(InstanceInfoContext);
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const setFriendlyNameMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
       await setInstanceFriendlyName(

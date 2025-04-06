@@ -1,9 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { useTranslation } from 'react-i18next';
-import { useContext } from 'react';
 import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance/discover')(
   {
@@ -13,7 +12,8 @@ export const Route = createFileRoute('/_dashboard/instance/$instance/discover')(
 
 function Discover() {
   const { t } = useTranslation('common');
-  const instanceInfo = useContext(InstanceInfoContext);
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
 
   return (
     <InstancePageLayout

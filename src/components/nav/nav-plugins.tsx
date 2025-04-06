@@ -9,10 +9,14 @@ import {
   SidebarMenuSubItem,
   useSidebar,
 } from '@/components/ui/sidebar.tsx';
-import { Link, LinkProps, useParams } from '@tanstack/react-router';
-import { ReactNode, useContext, useState } from 'react';
+import {
+  Link,
+  LinkProps,
+  useParams,
+  useRouteContext,
+} from '@tanstack/react-router';
+import { ReactNode, useState } from 'react';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
-import { InstanceInfoContext } from '../providers/instance-info-context.tsx';
 import {
   Collapsible,
   CollapsibleContent,
@@ -26,7 +30,7 @@ import {
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { getEntryValueByType } from '@/lib/utils.tsx';
-import { ProfileContext } from '@/components/providers/profile-context.tsx';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 type NavLinks = {
   title: string;
@@ -38,8 +42,15 @@ type NavLinks = {
 export function NavPlugins() {
   const { t } = useTranslation('common');
   const sidebar = useSidebar();
-  const instanceInfo = useContext(InstanceInfoContext);
-  const profile = useContext(ProfileContext);
+  const instanceInfoQueryOptions = useRouteContext({
+    from: '/_dashboard/instance/$instance',
+    select: (context) => context.instanceInfoQueryOptions,
+  });
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
   const namespace = useParams({
     from: '/_dashboard/instance/$instance/settings/$namespace',
     select: (params) => params.namespace,

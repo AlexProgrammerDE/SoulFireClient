@@ -29,7 +29,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar.tsx';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import {
   convertToInstanceProto,
   ProfileRoot,
@@ -56,7 +55,6 @@ import { mkdir, readTextFile, writeTextFile } from '@tauri-apps/plugin-fs';
 import { appConfigDir, resolve } from '@tauri-apps/api/path';
 import { open, save } from '@tauri-apps/plugin-dialog';
 import { saveAs } from 'file-saver';
-import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import {
   GlobalPermission,
@@ -83,9 +81,12 @@ export function InstanceSwitcher() {
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
   const { isMobile } = useSidebar();
-  const instanceInfo = useContext(InstanceInfoContext);
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
-  const profile = useContext(ProfileContext);
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
   const systemInfo = useContext(SystemInfoContext);
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const instanceProfileInputRef = useRef<HTMLInputElement>(null);

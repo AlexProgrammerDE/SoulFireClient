@@ -1,13 +1,15 @@
 import { useContext } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { convertToInstanceProto } from '@/lib/types.ts';
 import { toast } from 'sonner';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import { PlayIcon, SquareIcon, TimerIcon, TimerOffIcon } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useRouteContext } from '@tanstack/react-router';
@@ -20,8 +22,11 @@ export default function ControlsMenu() {
   });
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
-  const profile = useContext(ProfileContext);
-  const instanceInfo = useContext(InstanceInfoContext);
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const startMutation = useMutation({
     mutationFn: () => {
       if (transport === null) {

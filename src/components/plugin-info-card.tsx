@@ -13,10 +13,12 @@ import {
   updateEntry,
 } from '@/lib/utils.tsx';
 import { useContext, useMemo } from 'react';
-import { ProfileContext } from '@/components/providers/profile-context.tsx';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import { JsonValue } from '@protobuf-ts/runtime';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import DynamicIcon from './dynamic-icon';
 import { Link, useRouteContext } from '@tanstack/react-router';
@@ -25,14 +27,17 @@ import { ExternalLink } from '@/components/external-link.tsx';
 
 export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
   const { t } = useTranslation('common');
-  const profile = useContext(ProfileContext);
-  const instanceInfo = useContext(InstanceInfoContext);
-  const transport = useContext(TransportContext);
-  const queryClient = useQueryClient();
   const instanceInfoQueryOptions = useRouteContext({
     from: '/_dashboard/instance/$instance',
     select: (context) => context.instanceInfoQueryOptions,
   });
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const transport = useContext(TransportContext);
+  const queryClient = useQueryClient();
   const enabledEntry = props.settingsEntry.entries.find(
     (entry) => entry.key === props.settingsEntry.enabledKey,
   )!;

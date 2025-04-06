@@ -1,11 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useContext } from 'react';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
 import { useTranslation } from 'react-i18next';
 import { NotFoundComponent } from '@/components/not-found-component.tsx';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute(
   '/_dashboard/instance/$instance/settings/$namespace',
@@ -16,7 +15,8 @@ export const Route = createFileRoute(
 function SettingsNamespace() {
   const { t } = useTranslation('common');
   const { namespace } = Route.useParams();
-  const instanceInfo = useContext(InstanceInfoContext);
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const settingsEntry = instanceInfo.instanceSettings.find(
     (s) => s.namespace === namespace,
   );

@@ -42,12 +42,14 @@ import {
 } from 'react';
 import { Input } from '@/components/ui/input.tsx';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
-import { ProfileContext } from '@/components/providers/profile-context.tsx';
 import { BaseSettings } from '@/lib/types.ts';
 import { JsonValue } from '@protobuf-ts/runtime';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
 import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
 import { ServerConfigContext } from '@/components/providers/server-config-context.tsx';
@@ -761,12 +763,15 @@ export function InstanceSettingsPageComponent({
   data: SettingsPage;
 }) {
   const queryClient = useQueryClient();
-  const instanceInfo = useContext(InstanceInfoContext);
-  const transport = useContext(TransportContext);
-  const profile = useContext(ProfileContext);
   const instanceInfoQueryOptions = useRouteContext({
     from: '/_dashboard/instance/$instance',
     select: (context) => context.instanceInfoQueryOptions,
+  });
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const transport = useContext(TransportContext);
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
   });
   return (
     <ClientSettingsPageComponent

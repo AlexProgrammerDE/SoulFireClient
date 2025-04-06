@@ -8,10 +8,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar.tsx';
-import { Link, LinkProps } from '@tanstack/react-router';
-import { ReactNode, useContext } from 'react';
-import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
+import { Link, LinkProps, useRouteContext } from '@tanstack/react-router';
+import { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 type NavLinks = {
   title: string;
@@ -21,7 +21,11 @@ type NavLinks = {
 
 export function NavControls() {
   const { t } = useTranslation('common');
-  const instanceInfo = useContext(InstanceInfoContext);
+  const instanceInfoQueryOptions = useRouteContext({
+    from: '/_dashboard/instance/$instance',
+    select: (context) => context.instanceInfoQueryOptions,
+  });
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
 
   const navLinks: NavLinks = [
     {

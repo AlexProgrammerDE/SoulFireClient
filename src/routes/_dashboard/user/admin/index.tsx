@@ -1,7 +1,4 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { createTransport } from '@/lib/web-rpc.ts';
-import { queryClientInstance } from '@/lib/query.ts';
-import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
 import { UserListResponse } from '@/generated/soulfire/user.ts';
 import * as React from 'react';
 import { useMemo } from 'react';
@@ -15,7 +12,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { UserRole } from '@/generated/soulfire/common.ts';
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import {
   InstanceListResponse,
   InstanceState,
