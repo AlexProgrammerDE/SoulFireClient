@@ -27,7 +27,6 @@ import { queryClientInstance } from '@/lib/query.ts';
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ConnectingComponent } from '@/components/connecting-component.tsx';
 import { ErrorComponent } from '@/components/error-component.tsx';
 
 export const Route = createFileRoute('/_dashboard')({
@@ -156,7 +155,6 @@ export const Route = createFileRoute('/_dashboard')({
   component: DashboardLayout,
   // Ensure we show the pending component when needed
   wrapInSuspense: true,
-  pendingComponent: ConnectingComponent,
 });
 
 function InstanceSwitchKeybinds() {

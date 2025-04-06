@@ -1,14 +1,30 @@
-import { LoaderCircleIcon } from 'lucide-react';
-import { Card, CardContent } from '@/components/ui/card.tsx';
+import { Skeleton } from '@/components/ui/skeleton.tsx';
+import * as React from 'react';
+
+function LoadingSkeleton() {
+  // Random width between 50 to 90%.
+  const width = React.useMemo(() => {
+    return `${Math.floor(Math.random() * 40) + 75}%`;
+  }, []);
+
+  return (
+    <Skeleton
+      className="h-6 max-w-(--skeleton-width)"
+      style={
+        {
+          '--skeleton-width': width,
+        } as React.CSSProperties
+      }
+    />
+  );
+}
 
 export function LoadingComponent() {
   return (
-    <div className="flex size-full grow">
-      <Card className="m-auto w-full max-w-[450px] border-none text-center">
-        <CardContent className="flex h-32 w-full">
-          <LoaderCircleIcon className="m-auto h-12 w-12 animate-spin" />
-        </CardContent>
-      </Card>
+    <div className="flex size-full grow flex-col gap-4 p-4">
+      {Array.from({ length: 10 }).map((_, index) => (
+        <LoadingSkeleton key={index} />
+      ))}
     </div>
   );
 }
