@@ -12,17 +12,11 @@ export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
   beforeLoad: (props) => {
     const globalScriptsQueryOptions = queryOptions({
       queryKey: ['global-scripts'],
-      queryFn: async (
-        props,
-      ): Promise<{
-        scriptList: ScriptListResponse;
-      }> => {
+      queryFn: async (props): Promise<ScriptListResponse> => {
         const transport = createTransport();
         if (transport === null) {
           return {
-            scriptList: {
-              scripts: [],
-            },
+            scripts: [],
           };
         }
 
@@ -41,9 +35,7 @@ export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
           },
         );
 
-        return {
-          scriptList: result.response,
-        };
+        return result.response;
       },
       refetchInterval: 3_000,
     });
@@ -83,7 +75,7 @@ function AdminScripts() {
             globalScript: {},
           },
         }}
-        scriptList={scriptList.scriptList}
+        scriptList={scriptList}
       />
     </UserPageLayout>
   );

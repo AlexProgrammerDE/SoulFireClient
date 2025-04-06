@@ -35,17 +35,11 @@ export const Route = createFileRoute(
     const { instance } = props.params;
     const auditLogQueryOptions = queryOptions({
       queryKey: ['instance-audit-log', instance],
-      queryFn: async (
-        props,
-      ): Promise<{
-        auditLog: InstanceAuditLogResponse;
-      }> => {
+      queryFn: async (props): Promise<InstanceAuditLogResponse> => {
         const transport = createTransport();
         if (transport === null) {
           return {
-            auditLog: {
-              entry: [],
-            },
+            entry: [],
           };
         }
 
@@ -59,9 +53,7 @@ export const Route = createFileRoute(
           },
         );
 
-        return {
-          auditLog: result.response,
-        };
+        return result.response;
       },
       refetchInterval: 3_000,
     });
@@ -235,7 +227,7 @@ function AuditLog() {
         <DataTable
           filterPlaceholder={t('auditLog.filterPlaceholder')}
           columns={columns}
-          data={auditLog.auditLog.entry}
+          data={auditLog.entry}
           extraHeader={ExtraHeader}
         />
       </div>

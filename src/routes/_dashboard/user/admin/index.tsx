@@ -16,7 +16,6 @@ import {
 } from '@/components/ui/chart';
 import { UserRole } from '@/generated/soulfire/common.ts';
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
-import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import {
   InstanceListResponse,
   InstanceState,
@@ -25,64 +24,6 @@ import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { Trans, useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/_dashboard/user/admin/')({
-  beforeLoad: (props) => {
-    const overviewInfoQueryOptions = queryOptions({
-      queryKey: ['overview-info'],
-      queryFn: async (
-        props,
-      ): Promise<{
-        userList: UserListResponse;
-        instanceList: InstanceListResponse;
-      }> => {
-        const transport = createTransport();
-        if (transport === null) {
-          return {
-            userList: {
-              users: [],
-            },
-            instanceList: {
-              instances: [],
-            },
-          };
-        }
-
-        const userService = new UserServiceClient(transport);
-        const userResult = await userService.listUsers(
-          {},
-          {
-            abort: props.signal,
-          },
-        );
-
-        const instanceService = new InstanceServiceClient(transport);
-        const instanceResult = await instanceService.listInstances(
-          {},
-          {
-            abort: props.signal,
-          },
-        );
-
-        return {
-          userList: userResult.response,
-          instanceList: instanceResult.response,
-        };
-      },
-      refetchInterval: 3_000,
-    });
-    props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries({
-        queryKey: overviewInfoQueryOptions.queryKey,
-      });
-    });
-    return {
-      overviewInfoQueryOptions,
-    };
-  },
-  loader: (props) => {
-    void queryClientInstance.prefetchQuery(
-      props.context.overviewInfoQueryOptions,
-    );
-  },
   component: OverviewPage,
 });
 
@@ -294,10 +235,14 @@ export function InstancesChart(props: { instanceList: InstanceListResponse }) {
 
 function OverviewPage() {
   const { t } = useTranslation('common');
-  const { overviewInfoQueryOptions, clientDataQueryOptions } =
-    Route.useRouteContext();
-  const { data: result } = useSuspenseQuery(overviewInfoQueryOptions);
+  const {
+    usersQueryOptions,
+    clientDataQueryOptions,
+    instanceListQueryOptions,
+  } = Route.useRouteContext();
+  const { data: userList } = useSuspenseQuery(usersQueryOptions);
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
+  const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
 
   return (
     <UserPageLayout
@@ -312,8 +257,8 @@ function OverviewPage() {
           })}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2">
-          <UsersChart userList={result.userList} />
-          <InstancesChart instanceList={result.instanceList} />
+          <UsersChart userList={userList} />
+          <InstancesChart instanceList={instanceList} />
         </div>
       </div>
     </UserPageLayout>

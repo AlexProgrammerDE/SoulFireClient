@@ -130,12 +130,12 @@ export const Route = createFileRoute('/_dashboard')({
     }
 
     try {
-      void Promise.all([
-        queryClientInstance.prefetchQuery(
-          props.context.instanceListQueryOptions,
-        ),
-        queryClientInstance.prefetchQuery(props.context.clientDataQueryOptions),
-      ]);
+      void queryClientInstance.prefetchQuery(
+        props.context.instanceListQueryOptions,
+      );
+      void queryClientInstance.prefetchQuery(
+        props.context.clientDataQueryOptions,
+      );
 
       // We need this as demo data
       // if (APP_ENVIRONMENT === 'development') {

@@ -16,22 +16,17 @@ import {
 } from 'lucide-react';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import {
-  queryOptions,
   useMutation,
-  useSuspenseQuery,
   useQueryClient,
+  useSuspenseQuery,
 } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   SelectAllHeader,
   SelectRowHeader,
 } from '@/components/data-table-selects.tsx';
-import { createTransport, startImpersonation } from '@/lib/web-rpc.ts';
-import { queryClientInstance } from '@/lib/query.ts';
-import {
-  UserListResponse,
-  UserListResponse_User,
-} from '@/generated/soulfire/user.ts';
+import { startImpersonation } from '@/lib/web-rpc.ts';
+import { UserListResponse_User } from '@/generated/soulfire/user.ts';
 import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { UserAvatar } from '@/components/user-avatar.tsx';
@@ -41,56 +36,6 @@ import { SFTimeAgo } from '@/components/sf-timeago.tsx';
 import { CopyInfoButton } from '@/components/info-buttons.tsx';
 
 export const Route = createFileRoute('/_dashboard/user/admin/users')({
-  beforeLoad: (props) => {
-    const usersQueryOptions = queryOptions({
-      queryKey: ['users'],
-      queryFn: async (
-        props,
-      ): Promise<{
-        userList: UserListResponse;
-      }> => {
-        const transport = createTransport();
-        if (transport === null) {
-          return {
-            userList: {
-              users: [
-                {
-                  id: 'root',
-                  username: 'root',
-                  email: 'root@soulfiremc.com',
-                  role: UserRole.ADMIN,
-                },
-              ],
-            },
-          };
-        }
-
-        const userService = new UserServiceClient(transport);
-        const result = await userService.listUsers(
-          {},
-          {
-            abort: props.signal,
-          },
-        );
-
-        return {
-          userList: result.response,
-        };
-      },
-      refetchInterval: 3_000,
-    });
-    props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries({
-        queryKey: usersQueryOptions.queryKey,
-      });
-    });
-    return {
-      usersQueryOptions,
-    };
-  },
-  loader: (props) => {
-    void queryClientInstance.prefetchQuery(props.context.usersQueryOptions);
-  },
   component: Users,
 });
 
@@ -333,7 +278,7 @@ function Users() {
         <DataTable
           filterPlaceholder={t('admin:users.filterPlaceholder')}
           columns={columns}
-          data={userList.userList.users}
+          data={userList.users}
           extraHeader={ExtraHeader}
           enableRowSelection={(row) =>
             row.original.id !== ROOT_USER_ID &&

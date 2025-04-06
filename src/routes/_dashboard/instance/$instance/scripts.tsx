@@ -13,17 +13,11 @@ export const Route = createFileRoute('/_dashboard/instance/$instance/scripts')({
     const { instance } = props.params;
     const instanceScriptsQueryOptions = queryOptions({
       queryKey: ['instance-scripts', instance],
-      queryFn: async (
-        props,
-      ): Promise<{
-        scriptList: ScriptListResponse;
-      }> => {
+      queryFn: async (props): Promise<ScriptListResponse> => {
         const transport = createTransport();
         if (transport === null) {
           return {
-            scriptList: {
-              scripts: [],
-            },
+            scripts: [],
           };
         }
 
@@ -44,9 +38,7 @@ export const Route = createFileRoute('/_dashboard/instance/$instance/scripts')({
           },
         );
 
-        return {
-          scriptList: result.response,
-        };
+        return result.response;
       },
       refetchInterval: 3_000,
     });
@@ -88,7 +80,7 @@ function InstanceScripts() {
             },
           },
         }}
-        scriptList={scriptList.scriptList}
+        scriptList={scriptList}
       />
     </InstancePageLayout>
   );

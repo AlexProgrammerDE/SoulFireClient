@@ -23,54 +23,48 @@ export const Route = createFileRoute('/_dashboard/instance/$instance')({
     const { instance } = props.params;
     const instanceInfoQueryOptions = queryOptions({
       queryKey: ['instance-info', instance],
-      queryFn: async (
-        props,
-      ): Promise<{
-        instanceInfo: InstanceInfoResponse;
-      }> => {
+      queryFn: async (props): Promise<InstanceInfoResponse> => {
         const transport = createTransport();
         if (transport === null) {
           return {
-            instanceInfo: {
-              friendlyName: 'Demo',
-              icon: 'pickaxe',
-              instancePermissions: [],
-              config: {
-                settings: [],
-                accounts: [
-                  {
-                    type: MinecraftAccountProto_AccountTypeProto.OFFLINE,
-                    profileId: '607d30e7-115b-3838-914a-e4229c2b985d',
-                    lastKnownName: 'Pistonmaster',
-                    accountData: {
-                      oneofKind: 'offlineJavaData',
-                      offlineJavaData: {},
-                    },
+            friendlyName: 'Demo',
+            icon: 'pickaxe',
+            instancePermissions: [],
+            config: {
+              settings: [],
+              accounts: [
+                {
+                  type: MinecraftAccountProto_AccountTypeProto.OFFLINE,
+                  profileId: '607d30e7-115b-3838-914a-e4229c2b985d',
+                  lastKnownName: 'Pistonmaster',
+                  accountData: {
+                    oneofKind: 'offlineJavaData',
+                    offlineJavaData: {},
                   },
-                ],
-                proxies: [
-                  {
-                    type: ProxyProto_Type.HTTP,
-                    address: '127.0.0.1:8080',
-                    username: 'admin',
-                    password: 'admin',
-                  },
-                  {
-                    type: ProxyProto_Type.SOCKS4,
-                    address: '127.0.0.1:8081',
-                    username: 'admin',
-                  },
-                  {
-                    type: ProxyProto_Type.SOCKS5,
-                    address: '127.0.0.1:8082',
-                    username: 'admin',
-                    password: 'admin',
-                  },
-                ],
-              },
-              instanceSettings: [],
-              state: InstanceState.RUNNING,
+                },
+              ],
+              proxies: [
+                {
+                  type: ProxyProto_Type.HTTP,
+                  address: '127.0.0.1:8080',
+                  username: 'admin',
+                  password: 'admin',
+                },
+                {
+                  type: ProxyProto_Type.SOCKS4,
+                  address: '127.0.0.1:8081',
+                  username: 'admin',
+                },
+                {
+                  type: ProxyProto_Type.SOCKS5,
+                  address: '127.0.0.1:8082',
+                  username: 'admin',
+                  password: 'admin',
+                },
+              ],
             },
+            instanceSettings: [],
+            state: InstanceState.RUNNING,
           };
         }
 
@@ -84,9 +78,7 @@ export const Route = createFileRoute('/_dashboard/instance/$instance')({
           },
         );
 
-        return {
-          instanceInfo: result.response,
-        };
+        return result.response;
       },
       refetchInterval: 3_000,
     });
@@ -110,7 +102,7 @@ export const Route = createFileRoute('/_dashboard/instance/$instance')({
 function InstanceLayout() {
   const { instance } = Route.useParams();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
-  const { data: result } = useSuspenseQuery(instanceInfoQueryOptions);
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const defaultOpen = localStorage.getItem('sidebar:state') === 'true';
 
   return (
@@ -118,11 +110,11 @@ function InstanceLayout() {
       <InstanceInfoContext.Provider
         value={{
           id: instance,
-          ...result.instanceInfo,
+          ...instanceInfo,
         }}
       >
         <ProfileContext.Provider
-          value={convertFromInstanceProto(result.instanceInfo.config)}
+          value={convertFromInstanceProto(instanceInfo.config)}
         >
           <SidebarProvider defaultOpen={defaultOpen}>
             <InstanceSidebar />
