@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useContext } from 'react';
 import { NavAccount } from '@/components/nav/nav-account.tsx';
 import {
   Sidebar,
@@ -12,13 +11,18 @@ import { ScrollArea } from '@/components/ui/scroll-area.tsx';
 import { NavUserOptions } from '@/components/nav/nav-user-options.tsx';
 import { hasGlobalPermission } from '@/lib/utils.tsx';
 import { GlobalPermission } from '@/generated/soulfire/common.ts';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { NavUserAdmin } from '@/components/nav/nav-user-admin.tsx';
+import { useRouteContext } from '@tanstack/react-router';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export function UserSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const clientInfo = useContext(ClientInfoContext);
+  const clientDataQueryOptions = useRouteContext({
+    from: '/_dashboard',
+    select: (context) => context.clientDataQueryOptions,
+  });
+  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
 
   return (
     <Sidebar collapsible="icon" {...props}>

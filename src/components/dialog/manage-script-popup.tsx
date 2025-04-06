@@ -23,7 +23,12 @@ import {
 } from '@/components/ui/form.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { useTranslation } from 'react-i18next';
-import { QueryKey, useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  QueryKey,
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useContext } from 'react';
 import { TransportContext } from '../providers/transport-context.tsx';
@@ -35,7 +40,7 @@ import {
 } from '@/generated/soulfire/script.ts';
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { hasGlobalPermission } from '@/lib/utils.tsx';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
+import { useRouteContext } from '@tanstack/react-router';
 
 export type FormType = {
   scriptName: string;
@@ -56,7 +61,11 @@ export function ManageScriptPopup({
 } & ({ mode: 'edit'; script: ScriptListResponse_Script } | { mode: 'add' })) {
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
-  const clientData = useContext(ClientInfoContext);
+  const clientDataQueryOptions = useRouteContext({
+    from: '/_dashboard',
+    select: (context) => context.clientDataQueryOptions,
+  });
+  const { data: clientData } = useSuspenseQuery(clientDataQueryOptions);
   const { t } = useTranslation('common');
   const formSchema = z.object({
     scriptName: z

@@ -1,8 +1,6 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
 import * as React from 'react';
-import { useContext } from 'react';
 import { translateInstanceState } from '@/lib/types.ts';
-import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import {
   Card,
@@ -13,6 +11,7 @@ import {
 import { SearchXIcon } from 'lucide-react';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { useTranslation } from 'react-i18next';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/_dashboard/user/')({
   component: InstanceSelectPage,
@@ -20,7 +19,11 @@ export const Route = createFileRoute('/_dashboard/user/')({
 
 function InstanceSelectPage() {
   const { t, i18n } = useTranslation('common');
-  const instanceList = useContext(InstanceListContext);
+  const instanceListQueryOptions = useRouteContext({
+    from: '/_dashboard',
+    select: (context) => context.instanceListQueryOptions,
+  });
+  const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
 
   return (
     <UserPageLayout showUserCrumb={true} pageName={t('pageName.instances')}>

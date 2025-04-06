@@ -36,7 +36,6 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar.tsx';
 import { useContext, useState } from 'react';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import {
   getLanguageName,
   isTauri,
@@ -47,7 +46,7 @@ import {
 import { emit } from '@tauri-apps/api/event';
 import { toast } from 'sonner';
 import { exit } from '@tauri-apps/plugin-process';
-import { useNavigate } from '@tanstack/react-router';
+import { useNavigate, useRouteContext } from '@tanstack/react-router';
 import { flavorEntries } from '@catppuccin/palette';
 import { useTheme } from 'next-themes';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
@@ -59,11 +58,16 @@ import { AboutPopup } from '@/components/dialog/about-popup.tsx';
 import { useTranslation } from 'react-i18next';
 import { isImpersonating, logOut, stopImpersonation } from '@/lib/web-rpc.ts';
 import { UserAvatar } from '@/components/user-avatar.tsx';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export function NavAccount() {
   const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
-  const clientInfo = useContext(ClientInfoContext);
+  const clientDataQueryOptions = useRouteContext({
+    from: '/_dashboard',
+    select: (context) => context.clientDataQueryOptions,
+  });
+  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const terminalTheme = useContext(TerminalThemeContext);
   const [aboutOpen, setAboutOpen] = useState(false);
   const systemInfo = useContext(SystemInfoContext);

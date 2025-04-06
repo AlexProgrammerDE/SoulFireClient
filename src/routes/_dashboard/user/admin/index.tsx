@@ -4,7 +4,7 @@ import { queryClientInstance } from '@/lib/query.ts';
 import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
 import { UserListResponse } from '@/generated/soulfire/user.ts';
 import * as React from 'react';
-import { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import { Label, Pie, PieChart } from 'recharts';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -15,8 +15,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart';
 import { UserRole } from '@/generated/soulfire/common.ts';
-import { queryOptions, useQuery } from '@tanstack/react-query';
-import { LoadingComponent } from '@/components/loading-component.tsx';
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import {
   InstanceListResponse,
@@ -24,7 +23,6 @@ import {
 } from '@/generated/soulfire/instance.ts';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { Trans, useTranslation } from 'react-i18next';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 
 export const Route = createFileRoute('/_dashboard/user/admin/')({
   beforeLoad: (props) => {
@@ -80,8 +78,8 @@ export const Route = createFileRoute('/_dashboard/user/admin/')({
       overviewInfoQueryOptions,
     };
   },
-  loader: async (props) => {
-    await queryClientInstance.prefetchQuery(
+  loader: (props) => {
+    void queryClientInstance.prefetchQuery(
       props.context.overviewInfoQueryOptions,
     );
   },
@@ -296,17 +294,10 @@ export function InstancesChart(props: { instanceList: InstanceListResponse }) {
 
 function OverviewPage() {
   const { t } = useTranslation('common');
-  const { overviewInfoQueryOptions } = Route.useRouteContext();
-  const result = useQuery(overviewInfoQueryOptions);
-  const clientInfo = useContext(ClientInfoContext);
-
-  if (result.isError) {
-    throw result.error;
-  }
-
-  if (result.isLoading || !result.data) {
-    return <LoadingComponent />;
-  }
+  const { overviewInfoQueryOptions, clientDataQueryOptions } =
+    Route.useRouteContext();
+  const { data: result } = useSuspenseQuery(overviewInfoQueryOptions);
+  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
 
   return (
     <UserPageLayout
@@ -321,8 +312,8 @@ function OverviewPage() {
           })}
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2">
-          <UsersChart userList={result.data.userList} />
-          <InstancesChart instanceList={result.data.instanceList} />
+          <UsersChart userList={result.userList} />
+          <InstancesChart instanceList={result.instanceList} />
         </div>
       </div>
     </UserPageLayout>

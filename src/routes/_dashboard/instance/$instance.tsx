@@ -9,8 +9,7 @@ import {
   InstanceState,
 } from '@/generated/soulfire/instance.ts';
 import { queryClientInstance } from '@/lib/query.ts';
-import { queryOptions, useQuery } from '@tanstack/react-query';
-import { LoadingComponent } from '@/components/loading-component.tsx';
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import {
   MinecraftAccountProto_AccountTypeProto,
   ProxyProto_Type,
@@ -100,8 +99,8 @@ export const Route = createFileRoute('/_dashboard/instance/$instance')({
       instanceInfoQueryOptions,
     };
   },
-  loader: async (props) => {
-    await queryClientInstance.prefetchQuery(
+  loader: (props) => {
+    void queryClientInstance.prefetchQuery(
       props.context.instanceInfoQueryOptions,
     );
   },
@@ -111,27 +110,19 @@ export const Route = createFileRoute('/_dashboard/instance/$instance')({
 function InstanceLayout() {
   const { instance } = Route.useParams();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
-  const result = useQuery(instanceInfoQueryOptions);
+  const { data: result } = useSuspenseQuery(instanceInfoQueryOptions);
   const defaultOpen = localStorage.getItem('sidebar:state') === 'true';
-
-  if (result.isError) {
-    throw result.error;
-  }
-
-  if (result.isLoading || !result.data) {
-    return <LoadingComponent />;
-  }
 
   return (
     <>
       <InstanceInfoContext.Provider
         value={{
           id: instance,
-          ...result.data.instanceInfo,
+          ...result.instanceInfo,
         }}
       >
         <ProfileContext.Provider
-          value={convertFromInstanceProto(result.data.instanceInfo.config)}
+          value={convertFromInstanceProto(result.instanceInfo.config)}
         >
           <SidebarProvider defaultOpen={defaultOpen}>
             <InstanceSidebar />

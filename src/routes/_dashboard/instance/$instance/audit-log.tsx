@@ -2,11 +2,10 @@ import { createFileRoute } from '@tanstack/react-router';
 import * as React from 'react';
 import { DataTable, DateRange } from '@/components/data-table.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
-import { queryOptions, useQuery } from '@tanstack/react-query';
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { queryClientInstance } from '@/lib/query.ts';
-import { LoadingComponent } from '@/components/loading-component.tsx';
 import { UserAvatar } from '@/components/user-avatar.tsx';
 import {
   InstanceAuditLogResponse,
@@ -75,8 +74,8 @@ export const Route = createFileRoute(
       auditLogQueryOptions,
     };
   },
-  loader: async (props) => {
-    await queryClientInstance.prefetchQuery(props.context.auditLogQueryOptions);
+  loader: (props) => {
+    void queryClientInstance.prefetchQuery(props.context.auditLogQueryOptions);
   },
   component: AuditLog,
 });
@@ -225,15 +224,7 @@ function ExtraHeader(props: {
 function AuditLog() {
   const { t } = useTranslation('common');
   const { auditLogQueryOptions } = Route.useRouteContext();
-  const auditLog = useQuery(auditLogQueryOptions);
-
-  if (auditLog.isError) {
-    throw auditLog.error;
-  }
-
-  if (auditLog.isLoading || !auditLog.data) {
-    return <LoadingComponent />;
-  }
+  const { data: auditLog } = useSuspenseQuery(auditLogQueryOptions);
 
   return (
     <InstancePageLayout
@@ -244,7 +235,7 @@ function AuditLog() {
         <DataTable
           filterPlaceholder={t('auditLog.filterPlaceholder')}
           columns={columns}
-          data={auditLog.data.auditLog.entry}
+          data={auditLog.auditLog.entry}
           extraHeader={ExtraHeader}
         />
       </div>

@@ -4,9 +4,9 @@ import {
   Outlet,
   redirect,
   useNavigate,
+  useRouteContext,
 } from '@tanstack/react-router';
 import { ClientServiceClient } from '@/generated/soulfire/client.client.ts';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import {
   createTransport,
   isAuthenticated,
@@ -24,10 +24,8 @@ import {
 } from '@/generated/soulfire/instance.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { queryClientInstance } from '@/lib/query.ts';
-import { queryOptions, useQuery } from '@tanstack/react-query';
-import { LoadingComponent } from '@/components/loading-component.tsx';
-import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
-import { useContext, useEffect } from 'react';
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
+import { Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConnectingComponent } from '@/components/connecting-component.tsx';
 import { ErrorComponent } from '@/components/error-component.tsx';
@@ -37,25 +35,19 @@ export const Route = createFileRoute('/_dashboard')({
     if (isAuthenticated()) {
       const instanceListQueryOptions = queryOptions({
         queryKey: ['instance-list'],
-        queryFn: async (
-          props,
-        ): Promise<{
-          instanceList: InstanceListResponse;
-        }> => {
+        queryFn: async (props): Promise<InstanceListResponse> => {
           const transport = createTransport();
           if (transport === null) {
             return {
-              instanceList: {
-                instances: [
-                  {
-                    id: 'demo',
-                    friendlyName: 'Demo',
-                    icon: 'pickaxe',
-                    state: InstanceState.RUNNING,
-                    instancePermissions: [],
-                  },
-                ],
-              },
+              instances: [
+                {
+                  id: 'demo',
+                  friendlyName: 'Demo',
+                  icon: 'pickaxe',
+                  state: InstanceState.RUNNING,
+                  instancePermissions: [],
+                },
+              ],
             };
           }
 
@@ -67,9 +59,7 @@ export const Route = createFileRoute('/_dashboard')({
             },
           );
 
-          return {
-            instanceList: result.response,
-          };
+          return result.response;
         },
         refetchInterval: 3_000,
       });
@@ -80,16 +70,10 @@ export const Route = createFileRoute('/_dashboard')({
       });
       const clientDataQueryOptions = queryOptions({
         queryKey: ['client-data'],
-        queryFn: async (
-          props,
-        ): Promise<{
-          clientData: ClientDataResponse;
-        }> => {
+        queryFn: async (props): Promise<ClientDataResponse> => {
           const transport = createTransport();
           if (transport === null) {
-            return {
-              clientData: demoData,
-            };
+            return demoData;
           }
 
           const clientService = new ClientServiceClient(transport);
@@ -100,9 +84,7 @@ export const Route = createFileRoute('/_dashboard')({
             },
           );
 
-          return {
-            clientData: result.response,
-          };
+          return result.response;
         },
       });
       props.abortController.signal.addEventListener('abort', () => {
@@ -128,9 +110,9 @@ export const Route = createFileRoute('/_dashboard')({
       });
     }
   },
-  loader: async (
+  loader: (
     props,
-  ): Promise<
+  ):
     | {
         success: true;
         transport: GrpcWebFetchTransport | null;
@@ -138,8 +120,7 @@ export const Route = createFileRoute('/_dashboard')({
     | {
         success: false;
         connectionError: object;
-      }
-  > => {
+      } => {
     const transport = createTransport();
     if (transport === null) {
       return {
@@ -149,7 +130,7 @@ export const Route = createFileRoute('/_dashboard')({
     }
 
     try {
-      await Promise.all([
+      void Promise.all([
         queryClientInstance.prefetchQuery(
           props.context.instanceListQueryOptions,
         ),
@@ -180,7 +161,11 @@ export const Route = createFileRoute('/_dashboard')({
 
 function InstanceSwitchKeybinds() {
   const navigate = useNavigate();
-  const instanceList = useContext(InstanceListContext);
+  const instanceListQueryOptions = useRouteContext({
+    from: '/_dashboard',
+    select: (context) => context.instanceListQueryOptions,
+  });
+  const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -205,42 +190,19 @@ function InstanceSwitchKeybinds() {
 function DashboardLayout() {
   const { t } = useTranslation('common');
   const loaderData = Route.useLoaderData();
-  const { instanceListQueryOptions, clientDataQueryOptions } =
-    Route.useRouteContext();
-  const instanceList = useQuery(instanceListQueryOptions);
-  const clientData = useQuery(clientDataQueryOptions);
   if (!loaderData.success) {
     return <ErrorComponent error={new Error(t('error.connectionFailed'))} />;
   }
 
-  if (instanceList.isError) {
-    throw instanceList.error;
-  }
-
-  if (clientData.isError) {
-    throw clientData.error;
-  }
-
-  if (
-    instanceList.isLoading ||
-    !instanceList.data ||
-    clientData.isLoading ||
-    !clientData.data
-  ) {
-    return <LoadingComponent />;
-  }
-
   return (
     <TransportContext.Provider value={loaderData.transport}>
-      <ClientInfoContext.Provider value={clientData.data.clientData}>
-        <InstanceListContext.Provider value={instanceList.data.instanceList}>
-          <InstanceSwitchKeybinds />
-          {isImpersonating() && (
-            <div className="border-sidebar-primary pointer-events-none absolute top-0 right-0 bottom-0 left-0 z-30 overflow-hidden border-4" />
-          )}
-          <Outlet />
-        </InstanceListContext.Provider>
-      </ClientInfoContext.Provider>
+      <Suspense>
+        <InstanceSwitchKeybinds />
+      </Suspense>
+      {isImpersonating() && (
+        <div className="border-sidebar-primary pointer-events-none absolute top-0 right-0 bottom-0 left-0 z-30 overflow-hidden border-4" />
+      )}
+      <Outlet />
     </TransportContext.Provider>
   );
 }

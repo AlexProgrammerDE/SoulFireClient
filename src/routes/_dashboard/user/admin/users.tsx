@@ -18,7 +18,7 @@ import { TransportContext } from '@/components/providers/transport-context.tsx';
 import {
   queryOptions,
   useMutation,
-  useQuery,
+  useSuspenseQuery,
   useQueryClient,
 } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
@@ -33,13 +33,11 @@ import {
   UserListResponse_User,
 } from '@/generated/soulfire/user.ts';
 import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
-import { LoadingComponent } from '@/components/loading-component.tsx';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { UserAvatar } from '@/components/user-avatar.tsx';
 import { ManageUserPopup } from '@/components/dialog/manage-user-popup.tsx';
 import { ROOT_USER_ID, runAsync, timestampToDate } from '@/lib/utils.tsx';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { CopyInfoButton } from '@/components/info-buttons.tsx';
 
 export const Route = createFileRoute('/_dashboard/user/admin/users')({
@@ -90,8 +88,8 @@ export const Route = createFileRoute('/_dashboard/user/admin/users')({
       usersQueryOptions,
     };
   },
-  loader: async (props) => {
-    await queryClientInstance.prefetchQuery(props.context.usersQueryOptions);
+  loader: (props) => {
+    void queryClientInstance.prefetchQuery(props.context.usersQueryOptions);
   },
   component: Users,
 });
@@ -321,17 +319,9 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
 
 function Users() {
   const { t } = useTranslation('common');
-  const { usersQueryOptions } = Route.useRouteContext();
-  const clientInfo = useContext(ClientInfoContext);
-  const userList = useQuery(usersQueryOptions);
-
-  if (userList.isError) {
-    throw userList.error;
-  }
-
-  if (userList.isLoading || !userList.data) {
-    return <LoadingComponent />;
-  }
+  const { usersQueryOptions, clientDataQueryOptions } = Route.useRouteContext();
+  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
+  const { data: userList } = useSuspenseQuery(usersQueryOptions);
 
   return (
     <UserPageLayout
@@ -343,7 +333,7 @@ function Users() {
         <DataTable
           filterPlaceholder={t('admin:users.filterPlaceholder')}
           columns={columns}
-          data={userList.data.userList.users}
+          data={userList.userList.users}
           extraHeader={ExtraHeader}
           enableRowSelection={(row) =>
             row.original.id !== ROOT_USER_ID &&

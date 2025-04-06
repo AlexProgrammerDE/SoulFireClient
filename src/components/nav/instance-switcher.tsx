@@ -30,7 +30,6 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar.tsx';
 import { InstanceInfoContext } from '@/components/providers/instance-info-context.tsx';
-import { InstanceListContext } from '@/components/providers/instance-list-context.tsx';
 import {
   convertToInstanceProto,
   ProfileRoot,
@@ -45,7 +44,11 @@ import {
   runAsync,
 } from '@/lib/utils.tsx';
 import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.tsx';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { toast } from 'sonner';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
@@ -59,7 +62,6 @@ import {
   GlobalPermission,
   InstancePermission,
 } from '@/generated/soulfire/common.ts';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { useTranslation } from 'react-i18next';
 
@@ -73,15 +75,19 @@ export function InstanceSwitcher() {
     from: '/_dashboard/instance/$instance',
     select: (context) => context.instanceInfoQueryOptions,
   });
+  const clientDataQueryOptions = useRouteContext({
+    from: '/_dashboard',
+    select: (context) => context.clientDataQueryOptions,
+  });
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
   const { isMobile } = useSidebar();
   const instanceInfo = useContext(InstanceInfoContext);
-  const instanceList = useContext(InstanceListContext);
+  const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
   const profile = useContext(ProfileContext);
   const systemInfo = useContext(SystemInfoContext);
-  const clientInfo = useContext(ClientInfoContext);
+  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const instanceProfileInputRef = useRef<HTMLInputElement>(null);
   const [createOpen, setCreateOpen] = useState(false);
   const setProfileMutation = useMutation({

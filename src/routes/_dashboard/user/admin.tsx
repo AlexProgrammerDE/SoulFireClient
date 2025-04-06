@@ -2,8 +2,7 @@ import { createFileRoute, Outlet } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { convertFromServerProto } from '@/lib/types.ts';
 import { queryClientInstance } from '@/lib/query.ts';
-import { queryOptions, useQuery } from '@tanstack/react-query';
-import { LoadingComponent } from '@/components/loading-component.tsx';
+import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import {
   ServerConfig,
   ServerInfoResponse,
@@ -56,8 +55,8 @@ export const Route = createFileRoute('/_dashboard/user/admin')({
       serverInfoQueryOptions,
     };
   },
-  loader: async (props) => {
-    await queryClientInstance.prefetchQuery(
+  loader: (props) => {
+    void queryClientInstance.prefetchQuery(
       props.context.serverInfoQueryOptions,
     );
   },
@@ -66,22 +65,12 @@ export const Route = createFileRoute('/_dashboard/user/admin')({
 
 function AdminLayout() {
   const { serverInfoQueryOptions } = Route.useRouteContext();
-  const result = useQuery(serverInfoQueryOptions);
-
-  if (result.isError) {
-    throw result.error;
-  }
-
-  if (result.isLoading || !result.data) {
-    return <LoadingComponent />;
-  }
+  const { data: result } = useSuspenseQuery(serverInfoQueryOptions);
 
   return (
-    <ServerInfoContext.Provider value={result.data.serverInfo}>
+    <ServerInfoContext.Provider value={result.serverInfo}>
       <ServerConfigContext.Provider
-        value={convertFromServerProto(
-          result.data.serverInfo.config as ServerConfig,
-        )}
+        value={convertFromServerProto(result.serverInfo.config as ServerConfig)}
       >
         <Outlet />
       </ServerConfigContext.Provider>

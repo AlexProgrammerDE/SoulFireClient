@@ -9,14 +9,14 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar.tsx';
-import { Link, LinkProps } from '@tanstack/react-router';
+import { Link, LinkProps, useRouteContext } from '@tanstack/react-router';
 import * as React from 'react';
-import { ReactNode, useContext, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { hasGlobalPermission } from '@/lib/utils.tsx';
 import { GlobalPermission } from '@/generated/soulfire/common.ts';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.tsx';
 import { useTranslation } from 'react-i18next';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 type NavLinks = {
   title: string;
@@ -27,7 +27,11 @@ type NavLinks = {
 
 export function NavUserOptions() {
   const { t } = useTranslation('common');
-  const clientInfo = useContext(ClientInfoContext);
+  const clientDataQueryOptions = useRouteContext({
+    from: '/_dashboard',
+    select: (context) => context.clientDataQueryOptions,
+  });
+  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const [createOpen, setCreateOpen] = useState(false);
 
   const navLinks: NavLinks = [

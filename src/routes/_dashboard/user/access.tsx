@@ -14,19 +14,19 @@ import {
 import { Button } from '@/components/ui/button.tsx';
 import {
   BookOpenTextIcon,
+  CopyIcon,
   FoldersIcon,
   GlobeIcon,
   PlusIcon,
-  CopyIcon,
 } from 'lucide-react';
 import { ExternalLink } from '@/components/external-link.tsx';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { ClientServiceClient } from '@/generated/soulfire/client.client.ts';
 import { toast } from 'sonner';
 import { isTauri } from '@/lib/utils.tsx';
 import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/_dashboard/user/access')({
   component: AccessPage,
@@ -34,7 +34,8 @@ export const Route = createFileRoute('/_dashboard/user/access')({
 
 function AccessPage() {
   const { t } = useTranslation('common');
-  const clientInfo = useContext(ClientInfoContext);
+  const { clientDataQueryOptions } = Route.useRouteContext();
+  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const transport = useContext(TransportContext);
   const [webDavToken, setWebDavToken] = useState('');
   const [apiToken, setApiToken] = useState('');

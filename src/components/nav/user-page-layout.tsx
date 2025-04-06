@@ -8,14 +8,14 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
-import { ReactNode, useContext } from 'react';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
+import { ReactNode } from 'react';
 import { BookOpenTextIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button.tsx';
 import { useTranslation } from 'react-i18next';
-import { CatchBoundary } from '@tanstack/react-router';
+import { CatchBoundary, useRouteContext } from '@tanstack/react-router';
 import { ErrorComponent } from '@/components/error-component.tsx';
 import { ExternalLink } from '@/components/external-link.tsx';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
 export default function UserPageLayout(props: {
   children: ReactNode;
@@ -25,7 +25,11 @@ export default function UserPageLayout(props: {
   documentationLink?: string;
 }) {
   const { t } = useTranslation('common');
-  const clientInfo = useContext(ClientInfoContext);
+  const clientDataQueryOptions = useRouteContext({
+    from: '/_dashboard',
+    select: (context) => context.clientDataQueryOptions,
+  });
+  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
 
   const CrumbComponent = (props: { crumb: string }) => (
     <>

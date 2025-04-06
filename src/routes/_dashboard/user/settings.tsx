@@ -1,7 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import {
   ComponentTitle,
@@ -12,7 +16,6 @@ import {
   StringSetting_InputType,
 } from '@/generated/soulfire/common.ts';
 import { JsonValue } from '@protobuf-ts/runtime/build/types/json-typings';
-import { ClientInfoContext } from '@/components/providers/client-info-context.tsx';
 import {
   hasGlobalPermission,
   setSelfEmail,
@@ -32,7 +35,7 @@ function UserSettings() {
   const { clientDataQueryOptions } = Route.useRouteContext();
   const queryClient = useQueryClient();
   const transport = useContext(TransportContext);
-  const clientInfo = useContext(ClientInfoContext);
+  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const setUsernameMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
       await setSelfUsername(
