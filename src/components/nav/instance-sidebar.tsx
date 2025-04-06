@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Suspense } from 'react';
 
 import { NavControls } from '@/components/nav/nav-controls.tsx';
 import { NavSettings } from '@/components/nav/nav-settings.tsx';
@@ -14,6 +15,7 @@ import {
 } from '@/components/ui/sidebar.tsx';
 import { NavSecondary } from '@/components/nav/nav-secondary.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
+import { NavDefaultSkeleton } from '@/components/nav/nav-default-skeleton.tsx';
 
 export function InstanceSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -23,9 +25,11 @@ export function InstanceSidebar(props: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <ScrollArea className="h-[calc(100svh-4rem-4rem)] w-full pr-2">
         <SidebarContent className="min-h-[calc(100svh-4rem-4rem)]">
-          <NavControls />
-          <NavSettings />
-          <NavPlugins />
+          <Suspense fallback={<NavDefaultSkeleton />}>
+            <NavControls />
+            <NavSettings />
+            <NavPlugins />
+          </Suspense>
           <NavSecondary className="mt-auto" />
         </SidebarContent>
       </ScrollArea>

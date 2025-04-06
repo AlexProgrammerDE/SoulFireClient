@@ -35,7 +35,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar.tsx';
-import { useContext, useState } from 'react';
+import { Suspense, useContext, useState } from 'react';
 import {
   getLanguageName,
   isTauri,
@@ -59,15 +59,92 @@ import { useTranslation } from 'react-i18next';
 import { isImpersonating, logOut, stopImpersonation } from '@/lib/web-rpc.ts';
 import { UserAvatar } from '@/components/user-avatar.tsx';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { Skeleton } from '@/components/ui/skeleton.tsx';
 
-export function NavAccount() {
-  const { t, i18n } = useTranslation('common');
-  const navigate = useNavigate();
+function SidebarAccountButton() {
   const clientDataQueryOptions = useRouteContext({
     from: '/_dashboard',
     select: (context) => context.clientDataQueryOptions,
   });
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
+
+  return (
+    <DropdownMenuTrigger asChild>
+      <SidebarMenuButton
+        size="lg"
+        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+        tooltip={`${clientInfo.username} | ${clientInfo.email}`}
+      >
+        <UserAvatar
+          username={clientInfo.username}
+          email={clientInfo.email}
+          className="size-8"
+        />
+        <div className="grid flex-1 text-left text-sm leading-tight">
+          <span className="truncate font-semibold">{clientInfo.username}</span>
+          <span className="truncate text-xs">{clientInfo.email}</span>
+        </div>
+        <ChevronsUpDown className="ml-auto size-4" />
+      </SidebarMenuButton>
+    </DropdownMenuTrigger>
+  );
+}
+
+function SidebarAccountButtonSkeleton() {
+  return (
+    <DropdownMenuTrigger asChild>
+      <SidebarMenuButton
+        size="lg"
+        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+      >
+        <Skeleton className="size-8 rounded-lg" />
+        <div className="grid flex-1 gap-2 text-left text-sm leading-tight">
+          <Skeleton className="h-3 w-32" />
+          <Skeleton className="h-3 w-24" />
+        </div>
+        <ChevronsUpDown className="ml-auto size-4" />
+      </SidebarMenuButton>
+    </DropdownMenuTrigger>
+  );
+}
+
+function DropdownAccountHeader() {
+  const clientDataQueryOptions = useRouteContext({
+    from: '/_dashboard',
+    select: (context) => context.clientDataQueryOptions,
+  });
+  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
+
+  return (
+    <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+      <UserAvatar
+        username={clientInfo.username}
+        email={clientInfo.email}
+        className="size-8"
+      />
+      <div className="grid flex-1 text-left text-sm leading-tight">
+        <span className="truncate font-semibold">{clientInfo.username}</span>
+        <span className="truncate text-xs">{clientInfo.email}</span>
+      </div>
+    </div>
+  );
+}
+
+function DropdownAccountHeaderSkeleton() {
+  return (
+    <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+      <Skeleton className="size-8 rounded-lg" />
+      <div className="grid flex-1 gap-2 text-left text-sm leading-tight">
+        <Skeleton className="h-3 w-32" />
+        <Skeleton className="h-3 w-24" />
+      </div>
+    </div>
+  );
+}
+
+export function NavAccount() {
+  const { t, i18n } = useTranslation('common');
+  const navigate = useNavigate();
   const terminalTheme = useContext(TerminalThemeContext);
   const [aboutOpen, setAboutOpen] = useState(false);
   const systemInfo = useContext(SystemInfoContext);
@@ -78,26 +155,9 @@ export function NavAccount() {
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-              tooltip={`${clientInfo.username} | ${clientInfo.email}`}
-            >
-              <UserAvatar
-                username={clientInfo.username}
-                email={clientInfo.email}
-                className="size-8"
-              />
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">
-                  {clientInfo.username}
-                </span>
-                <span className="truncate text-xs">{clientInfo.email}</span>
-              </div>
-              <ChevronsUpDown className="ml-auto size-4" />
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
+          <Suspense fallback={<SidebarAccountButtonSkeleton />}>
+            <SidebarAccountButton />
+          </Suspense>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
             side={isMobile ? 'bottom' : 'right'}
@@ -105,19 +165,9 @@ export function NavAccount() {
             sideOffset={4}
           >
             <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                <UserAvatar
-                  username={clientInfo.username}
-                  email={clientInfo.email}
-                  className="size-8"
-                />
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">
-                    {clientInfo.username}
-                  </span>
-                  <span className="truncate text-xs">{clientInfo.email}</span>
-                </div>
-              </div>
+              <Suspense fallback={<DropdownAccountHeaderSkeleton />}>
+                <DropdownAccountHeader />
+              </Suspense>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
