@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { use, useRef, useState } from 'react';
+import { Suspense, use, useRef, useState } from 'react';
 import {
   ChevronsUpDownIcon,
   DownloadIcon,
@@ -42,7 +42,6 @@ import {
   isTauri,
   runAsync,
 } from '@/lib/utils.tsx';
-import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.tsx';
 import {
   useMutation,
   useQueryClient,
@@ -62,6 +61,7 @@ import {
 } from '@/generated/soulfire/common.ts';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { useTranslation } from 'react-i18next';
+import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.tsx';
 
 export function InstanceSwitcher() {
   const { t, i18n } = useTranslation('common');
@@ -73,10 +73,6 @@ export function InstanceSwitcher() {
     from: '/_dashboard/instance/$instance',
     select: (context) => context.instanceInfoQueryOptions,
   });
-  const clientDataQueryOptions = useRouteContext({
-    from: '/_dashboard',
-    select: (context) => context.clientDataQueryOptions,
-  });
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
@@ -87,10 +83,8 @@ export function InstanceSwitcher() {
     ...instanceInfoQueryOptions,
     select: (info) => info.profile,
   });
-  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const systemInfo = use(SystemInfoContext);
   const instanceProfileInputRef = useRef<HTMLInputElement>(null);
-  const [createOpen, setCreateOpen] = useState(false);
   const setProfileMutation = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
       if (transport === null) {
@@ -205,22 +199,9 @@ export function InstanceSwitcher() {
                 </div>
               </Link>
             </DropdownMenuItem>
-            {hasGlobalPermission(
-              clientInfo,
-              GlobalPermission.CREATE_INSTANCE,
-            ) && (
-              <DropdownMenuItem
-                onClick={() => setCreateOpen(true)}
-                className="gap-2 p-2"
-              >
-                <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-                  <PlusIcon className="size-4" />
-                </div>
-                <div className="text-muted-foreground font-medium">
-                  {t('instanceSidebar.createInstance')}
-                </div>
-              </DropdownMenuItem>
-            )}
+            <Suspense>
+              <CreateInstanceButton />
+            </Suspense>
             <DropdownMenuSeparator />
             <DropdownMenuLabel className="text-muted-foreground max-w-64 truncate text-xs">
               {instanceInfo.friendlyName}
@@ -459,8 +440,38 @@ export function InstanceSwitcher() {
             )}
           </DropdownMenuContent>
         </DropdownMenu>
-        <CreateInstancePopup open={createOpen} setOpen={setCreateOpen} />
       </SidebarMenuItem>
     </SidebarMenu>
+  );
+}
+
+function CreateInstanceButton() {
+  const { t } = useTranslation('common');
+  const clientDataQueryOptions = useRouteContext({
+    from: '/_dashboard',
+    select: (context) => context.clientDataQueryOptions,
+  });
+  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
+  const [createOpen, setCreateOpen] = useState(false);
+
+  if (!hasGlobalPermission(clientInfo, GlobalPermission.CREATE_INSTANCE)) {
+    return null;
+  }
+
+  return (
+    <>
+      <DropdownMenuItem
+        onClick={() => setCreateOpen(true)}
+        className="gap-2 p-2"
+      >
+        <div className="bg-background flex size-6 items-center justify-center rounded-md border">
+          <PlusIcon className="size-4" />
+        </div>
+        <div className="text-muted-foreground font-medium">
+          {t('instanceSidebar.createInstance')}
+        </div>
+      </DropdownMenuItem>
+      <CreateInstancePopup open={createOpen} setOpen={setCreateOpen} />
+    </>
   );
 }
