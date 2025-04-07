@@ -18,12 +18,21 @@ export const Route = createFileRoute('/_dashboard/user/')({
 });
 
 function InstanceSelectPage() {
-  const { t, i18n } = useTranslation('common');
-  const { instanceListQueryOptions } = Route.useRouteContext();
-  const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
+  const { t } = useTranslation('common');
 
   return (
     <UserPageLayout showUserCrumb={true} pageName={t('pageName.instances')}>
+      <Content />
+    </UserPageLayout>
+  );
+}
+
+function Content() {
+  const { t, i18n } = useTranslation('common');
+  const { instanceListQueryOptions } = Route.useRouteContext();
+  const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
+  return (
+    <>
       {instanceList.instances.length == 0 ? (
         <div className="flex size-full flex-1">
           <div className="m-auto flex flex-row gap-2">
@@ -70,6 +79,6 @@ function InstanceSelectPage() {
           ))}
         </div>
       )}
-    </UserPageLayout>
+    </>
   );
 }

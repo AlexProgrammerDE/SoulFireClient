@@ -8,7 +8,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
-import { ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { BookOpenTextIcon, HomeIcon } from 'lucide-react';
 import { CatchBoundary, Link, useRouteContext } from '@tanstack/react-router';
@@ -16,6 +16,21 @@ import { useTranslation } from 'react-i18next';
 import { ErrorComponent } from '@/components/error-component.tsx';
 import { ExternalLink } from '@/components/external-link.tsx';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { LoadingComponent } from '@/components/loading-component.tsx';
+import { Skeleton } from '@/components/ui/skeleton.tsx';
+
+function InstanceCrumb() {
+  const instanceInfoQueryOptions = useRouteContext({
+    from: '/_dashboard/instance/$instance',
+    select: (context) => context.instanceInfoQueryOptions,
+  });
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  return <>{instanceInfo.friendlyName}</>;
+}
+
+function InstanceCrumbSkeleton() {
+  return <Skeleton className="h-4 w-24" />;
+}
 
 export default function InstancePageLayout(props: {
   children: ReactNode;
@@ -24,11 +39,6 @@ export default function InstancePageLayout(props: {
   documentationLink?: string;
 }) {
   const { t } = useTranslation('common');
-  const instanceInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/instance/$instance',
-    select: (context) => context.instanceInfoQueryOptions,
-  });
-  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
 
   const CrumbComponent = (props: { crumb: string }) => (
     <>
@@ -68,7 +78,9 @@ export default function InstancePageLayout(props: {
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem className="hidden max-w-64 truncate md:block">
-                {instanceInfo.friendlyName}
+                <Suspense fallback={<InstanceCrumbSkeleton />}>
+                  <InstanceCrumb />
+                </Suspense>
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               {(props.extraCrumbs || []).map((crumb) => (
@@ -87,7 +99,9 @@ export default function InstancePageLayout(props: {
             getResetKey={() => 'instance-page-layout'}
             errorComponent={ErrorComponent}
           >
-            {props.children}
+            <Suspense fallback={<LoadingComponent />}>
+              {props.children}
+            </Suspense>
           </CatchBoundary>
         </div>
       </ScrollArea>
