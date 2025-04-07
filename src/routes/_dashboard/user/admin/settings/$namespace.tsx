@@ -27,7 +27,16 @@ function SettingsNamespace() {
   return (
     <UserPageLayout
       showUserCrumb={false}
-      extraCrumbs={[t('breadcrumbs.admin'), t('breadcrumbs.settings')]}
+      extraCrumbs={[
+        {
+          id: 'admin',
+          content: t('breadcrumbs.admin'),
+        },
+        {
+          id: 'settings',
+          content: t('breadcrumbs.settings'),
+        },
+      ]}
       pageName={settingsEntry.pageName}
     >
       <div className="flex h-full w-full grow flex-row gap-2 pl-2">

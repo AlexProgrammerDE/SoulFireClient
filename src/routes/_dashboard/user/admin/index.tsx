@@ -236,7 +236,12 @@ function OverviewPage() {
   return (
     <UserPageLayout
       showUserCrumb={false}
-      extraCrumbs={[t('breadcrumbs.admin')]}
+      extraCrumbs={[
+        {
+          id: 'admin',
+          content: t('breadcrumbs.admin'),
+        },
+      ]}
       pageName={t('pageName.overview')}
     >
       <Content />

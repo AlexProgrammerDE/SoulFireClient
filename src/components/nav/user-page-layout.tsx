@@ -34,14 +34,14 @@ function UserCrumbSkeleton() {
 
 export default function UserPageLayout(props: {
   children: ReactNode;
-  extraCrumbs?: string[];
-  pageName: string;
+  extraCrumbs?: { id: string; content: ReactNode }[];
+  pageName: ReactNode;
   showUserCrumb: boolean;
   documentationLink?: string;
 }) {
   const { t } = useTranslation('common');
 
-  const CrumbComponent = (props: { crumb: string }) => (
+  const CrumbComponent = (props: { crumb: ReactNode }) => (
     <>
       <BreadcrumbItem className="hidden md:block">{props.crumb}</BreadcrumbItem>
       <BreadcrumbSeparator className="hidden md:block" />
@@ -80,7 +80,7 @@ export default function UserPageLayout(props: {
                 </>
               )}
               {(props.extraCrumbs || []).map((crumb) => (
-                <CrumbComponent crumb={crumb} key={crumb} />
+                <CrumbComponent crumb={crumb.content} key={crumb.id} />
               ))}
               <BreadcrumbItem>
                 <BreadcrumbPage>{props.pageName}</BreadcrumbPage>
