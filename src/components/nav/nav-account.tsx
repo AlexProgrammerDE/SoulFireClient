@@ -329,18 +329,16 @@ export function NavAccount() {
                 <LogOutIcon />
                 {t('userSidebar.logOut')}
               </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => {
-                  if (isTauri()) {
+              {isTauri() && (
+                <DropdownMenuItem
+                  onClick={() => {
                     void exit(0);
-                  } else {
-                    window.location.href = 'about:blank';
-                  }
-                }}
-              >
-                <PowerIcon />
-                {t('userSidebar.exit')}
-              </DropdownMenuItem>
+                  }}
+                >
+                  <PowerIcon />
+                  {t('userSidebar.exit')}
+                </DropdownMenuItem>
+              )}
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
