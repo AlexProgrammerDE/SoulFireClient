@@ -218,7 +218,12 @@ function AuditLog() {
 
   return (
     <InstancePageLayout
-      extraCrumbs={[t('breadcrumbs.controls')]}
+      extraCrumbs={[
+        {
+          id: 'controls',
+          content: t('breadcrumbs.controls'),
+        },
+      ]}
       pageName={t('pageName.audit-log')}
     >
       <Content />

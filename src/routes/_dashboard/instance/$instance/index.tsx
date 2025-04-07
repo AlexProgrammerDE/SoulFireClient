@@ -22,7 +22,12 @@ function Console() {
 
   return (
     <InstancePageLayout
-      extraCrumbs={[t('breadcrumbs.controls')]}
+      extraCrumbs={[
+        {
+          id: 'controls',
+          content: t('breadcrumbs.controls'),
+        },
+      ]}
       pageName={t('pageName.console')}
     >
       <Content />

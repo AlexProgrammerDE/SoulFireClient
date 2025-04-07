@@ -439,7 +439,12 @@ function ProxySettings() {
 
   return (
     <InstancePageLayout
-      extraCrumbs={[t('breadcrumbs.settings')]}
+      extraCrumbs={[
+        {
+          id: 'settings',
+          content: t('breadcrumbs.settings'),
+        },
+      ]}
       pageName={t('pageName.proxySettings')}
       documentationLink="https://soulfiremc.com/docs/usage/proxies"
     >

@@ -475,7 +475,12 @@ function AccountSettings() {
 
   return (
     <InstancePageLayout
-      extraCrumbs={[t('breadcrumbs.settings')]}
+      extraCrumbs={[
+        {
+          id: 'settings',
+          content: t('breadcrumbs.settings'),
+        },
+      ]}
       pageName={t('pageName.accountSettings')}
       documentationLink="https://soulfiremc.com/docs/usage/accounts"
     >
