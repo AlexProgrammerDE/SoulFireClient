@@ -232,6 +232,20 @@ export function InstancesChart(props: { instanceList: InstanceListResponse }) {
 
 function OverviewPage() {
   const { t } = useTranslation('common');
+
+  return (
+    <UserPageLayout
+      showUserCrumb={false}
+      extraCrumbs={[t('breadcrumbs.admin')]}
+      pageName={t('pageName.overview')}
+    >
+      <Content />
+    </UserPageLayout>
+  );
+}
+
+function Content() {
+  const { t } = useTranslation('common');
   const {
     usersQueryOptions,
     clientDataQueryOptions,
@@ -242,22 +256,16 @@ function OverviewPage() {
   const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
 
   return (
-    <UserPageLayout
-      showUserCrumb={false}
-      extraCrumbs={[t('breadcrumbs.admin')]}
-      pageName={t('pageName.overview')}
-    >
-      <div className="flex h-full w-full grow flex-col gap-2 pl-2">
-        <h2 className="text-xl font-semibold">
-          {t('admin:overview.welcome', {
-            name: clientInfo.username,
-          })}
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          <UsersChart userList={userList} />
-          <InstancesChart instanceList={instanceList} />
-        </div>
+    <div className="flex h-full w-full grow flex-col gap-2 pl-2">
+      <h2 className="text-xl font-semibold">
+        {t('admin:overview.welcome', {
+          name: clientInfo.username,
+        })}
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2">
+        <UsersChart userList={userList} />
+        <InstancesChart instanceList={instanceList} />
       </div>
-    </UserPageLayout>
+    </div>
   );
 }

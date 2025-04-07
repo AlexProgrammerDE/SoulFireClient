@@ -264,9 +264,6 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
 
 function Users() {
   const { t } = useTranslation('common');
-  const { usersQueryOptions, clientDataQueryOptions } = Route.useRouteContext();
-  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
-  const { data: userList } = useSuspenseQuery(usersQueryOptions);
 
   return (
     <UserPageLayout
@@ -274,18 +271,28 @@ function Users() {
       extraCrumbs={[t('breadcrumbs.settings')]}
       pageName={t('pageName.users')}
     >
-      <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
-        <DataTable
-          filterPlaceholder={t('admin:users.filterPlaceholder')}
-          columns={columns}
-          data={userList.users}
-          extraHeader={ExtraHeader}
-          enableRowSelection={(row) =>
-            row.original.id !== ROOT_USER_ID &&
-            row.original.id !== clientInfo.id
-          }
-        />
-      </div>
+      <Content />
     </UserPageLayout>
+  );
+}
+
+function Content() {
+  const { t } = useTranslation('common');
+  const { usersQueryOptions, clientDataQueryOptions } = Route.useRouteContext();
+  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
+  const { data: userList } = useSuspenseQuery(usersQueryOptions);
+
+  return (
+    <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
+      <DataTable
+        filterPlaceholder={t('admin:users.filterPlaceholder')}
+        columns={columns}
+        data={userList.users}
+        extraHeader={ExtraHeader}
+        enableRowSelection={(row) =>
+          row.original.id !== ROOT_USER_ID && row.original.id !== clientInfo.id
+        }
+      />
+    </div>
   );
 }

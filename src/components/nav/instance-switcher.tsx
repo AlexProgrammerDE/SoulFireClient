@@ -87,8 +87,8 @@ export function InstanceSwitcher() {
     ...instanceInfoQueryOptions,
     select: (info) => info.profile,
   });
-  const systemInfo = use(SystemInfoContext);
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
+  const systemInfo = use(SystemInfoContext);
   const instanceProfileInputRef = useRef<HTMLInputElement>(null);
   const [createOpen, setCreateOpen] = useState(false);
   const setProfileMutation = useMutation({

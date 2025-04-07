@@ -61,27 +61,34 @@ export const Route = createFileRoute('/_dashboard/instance/$instance/scripts')({
 
 function InstanceScripts() {
   const { t } = useTranslation('common');
-  const { instanceScriptsQueryOptions } = Route.useRouteContext();
-  const { instance } = Route.useParams();
-  const { data: scriptList } = useSuspenseQuery(instanceScriptsQueryOptions);
 
   return (
     <InstancePageLayout
       extraCrumbs={[t('breadcrumbs.settings')]}
       pageName={t('pageName.instanceScripts')}
     >
-      <GenericScripts
-        queryKey={instanceScriptsQueryOptions.queryKey}
-        scope={{
-          scope: {
-            oneofKind: 'instanceScript',
-            instanceScript: {
-              id: instance,
-            },
-          },
-        }}
-        scriptList={scriptList}
-      />
+      <Content />
     </InstancePageLayout>
+  );
+}
+
+function Content() {
+  const { instanceScriptsQueryOptions } = Route.useRouteContext();
+  const { instance } = Route.useParams();
+  const { data: scriptList } = useSuspenseQuery(instanceScriptsQueryOptions);
+
+  return (
+    <GenericScripts
+      queryKey={instanceScriptsQueryOptions.queryKey}
+      scope={{
+        scope: {
+          oneofKind: 'instanceScript',
+          instanceScript: {
+            id: instance,
+          },
+        },
+      }}
+      scriptList={scriptList}
+    />
   );
 }

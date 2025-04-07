@@ -16,6 +16,19 @@ export const Route = createFileRoute('/_dashboard/user/admin/console')({
 
 function Console() {
   const { t } = useTranslation('common');
+
+  return (
+    <UserPageLayout
+      showUserCrumb={false}
+      extraCrumbs={[t('breadcrumbs.admin')]}
+      pageName={t('pageName.console')}
+    >
+      <Content />
+    </UserPageLayout>
+  );
+}
+
+function Content() {
   const { clientDataQueryOptions } = Route.useRouteContext();
   const { data: clientData } = useSuspenseQuery(clientDataQueryOptions);
   const logScope = useMemo<LogScope>(
@@ -38,21 +51,15 @@ function Console() {
   );
 
   return (
-    <UserPageLayout
-      showUserCrumb={false}
-      extraCrumbs={[t('breadcrumbs.admin')]}
-      pageName={t('pageName.console')}
-    >
-      <div className="flex flex-col gap-2">
-        {hasGlobalPermission(
-          clientData,
-          GlobalPermission.GLOBAL_SUBSCRIBE_LOGS,
-        ) && <TerminalComponent scope={logScope} />}
-        {hasGlobalPermission(
-          clientData,
-          GlobalPermission.GLOBAL_COMMAND_EXECUTION,
-        ) && <CommandInput scope={commandScope} />}
-      </div>
-    </UserPageLayout>
+    <div className="flex flex-col gap-2">
+      {hasGlobalPermission(
+        clientData,
+        GlobalPermission.GLOBAL_SUBSCRIBE_LOGS,
+      ) && <TerminalComponent scope={logScope} />}
+      {hasGlobalPermission(
+        clientData,
+        GlobalPermission.GLOBAL_COMMAND_EXECUTION,
+      ) && <CommandInput scope={commandScope} />}
+    </div>
   );
 }

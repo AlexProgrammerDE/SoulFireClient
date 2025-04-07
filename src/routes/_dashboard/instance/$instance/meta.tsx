@@ -28,6 +28,18 @@ export const Route = createFileRoute('/_dashboard/instance/$instance/meta')({
 
 function MetaSettings() {
   const { t } = useTranslation('common');
+
+  return (
+    <InstancePageLayout
+      extraCrumbs={[t('breadcrumbs.settings')]}
+      pageName={t('pageName.metaSettings')}
+    >
+      <Content />
+    </InstancePageLayout>
+  );
+}
+
+function Content() {
   const { instanceInfoQueryOptions, instanceListQueryOptions } =
     Route.useRouteContext();
   const queryClient = useQueryClient();
@@ -79,59 +91,54 @@ function MetaSettings() {
   });
 
   return (
-    <InstancePageLayout
-      extraCrumbs={[t('breadcrumbs.settings')]}
-      pageName={t('pageName.metaSettings')}
-    >
-      <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <GenericEntryComponent
-            entry={{
-              oneofKind: 'string',
-              string: {
-                uiName: 'Friendly Name',
-                description:
-                  'The name of the instance that will be displayed in the UI.',
-                def: '',
-                inputType: StringSetting_InputType.TEXT,
-                placeholder: 'My Instance',
-                minLength: 3,
-                maxLength: 32,
-                pattern: '[a-zA-Z0-9 ]+',
-                disabled: !hasInstancePermission(
-                  instanceInfo,
-                  InstancePermission.UPDATE_INSTANCE_META,
-                ),
-              },
-            }}
-            value={instanceInfo.friendlyName}
-            changeCallback={setFriendlyNameMutation.mutate}
-          />
-          <GenericEntryComponent
-            entry={{
-              oneofKind: 'combo',
-              combo: {
-                uiName: 'Icon',
-                description:
-                  'The icon of the instance that will be displayed in the UI.',
-                options: getAllIconTags().map((iconName) => ({
-                  id: iconName[0],
-                  displayName: formatIconName(iconName[0]),
-                  iconId: iconName[0],
-                  keywords: iconName[1],
-                })),
-                def: '',
-                disabled: !hasInstancePermission(
-                  instanceInfo,
-                  InstancePermission.UPDATE_INSTANCE_META,
-                ),
-              },
-            }}
-            value={instanceInfo.icon}
-            changeCallback={setIconMutation.mutate}
-          />
-        </div>
+    <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
+      <div className="flex flex-col gap-2">
+        <GenericEntryComponent
+          entry={{
+            oneofKind: 'string',
+            string: {
+              uiName: 'Friendly Name',
+              description:
+                'The name of the instance that will be displayed in the UI.',
+              def: '',
+              inputType: StringSetting_InputType.TEXT,
+              placeholder: 'My Instance',
+              minLength: 3,
+              maxLength: 32,
+              pattern: '[a-zA-Z0-9 ]+',
+              disabled: !hasInstancePermission(
+                instanceInfo,
+                InstancePermission.UPDATE_INSTANCE_META,
+              ),
+            },
+          }}
+          value={instanceInfo.friendlyName}
+          changeCallback={setFriendlyNameMutation.mutate}
+        />
+        <GenericEntryComponent
+          entry={{
+            oneofKind: 'combo',
+            combo: {
+              uiName: 'Icon',
+              description:
+                'The icon of the instance that will be displayed in the UI.',
+              options: getAllIconTags().map((iconName) => ({
+                id: iconName[0],
+                displayName: formatIconName(iconName[0]),
+                iconId: iconName[0],
+                keywords: iconName[1],
+              })),
+              def: '',
+              disabled: !hasInstancePermission(
+                instanceInfo,
+                InstancePermission.UPDATE_INSTANCE_META,
+              ),
+            },
+          }}
+          value={instanceInfo.icon}
+          changeCallback={setIconMutation.mutate}
+        />
       </div>
-    </InstancePageLayout>
+    </div>
   );
 }

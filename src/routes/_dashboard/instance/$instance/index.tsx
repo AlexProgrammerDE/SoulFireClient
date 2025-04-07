@@ -18,7 +18,20 @@ export const Route = createFileRoute('/_dashboard/instance/$instance/')({
 });
 
 function Console() {
-  const { t, i18n } = useTranslation('common');
+  const { t } = useTranslation('common');
+
+  return (
+    <InstancePageLayout
+      extraCrumbs={[t('breadcrumbs.controls')]}
+      pageName={t('pageName.console')}
+    >
+      <Content />
+    </InstancePageLayout>
+  );
+}
+
+function Content() {
+  const { i18n } = useTranslation('common');
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const logScope = useMemo<LogScope>(
@@ -45,31 +58,26 @@ function Console() {
   );
 
   return (
-    <InstancePageLayout
-      extraCrumbs={[t('breadcrumbs.controls')]}
-      pageName={t('pageName.console')}
-    >
-      <div className="flex h-full w-full grow flex-col gap-2">
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-row items-center gap-2">
-            <h2 className="max-w-64 truncate text-xl font-semibold">
-              {instanceInfo.friendlyName}
-            </h2>
-            <Badge className="uppercase" variant="secondary">
-              {translateInstanceState(i18n, instanceInfo.state)}
-            </Badge>
-          </div>
-          {hasInstancePermission(
-            instanceInfo,
-            InstancePermission.INSTANCE_SUBSCRIBE_LOGS,
-          ) && <TerminalComponent scope={logScope} />}
-          {hasInstancePermission(
-            instanceInfo,
-            InstancePermission.INSTANCE_COMMAND_EXECUTION,
-          ) && <CommandInput scope={commandScope} />}
+    <div className="flex h-full w-full grow flex-col gap-2">
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-row items-center gap-2">
+          <h2 className="max-w-64 truncate text-xl font-semibold">
+            {instanceInfo.friendlyName}
+          </h2>
+          <Badge className="uppercase" variant="secondary">
+            {translateInstanceState(i18n, instanceInfo.state)}
+          </Badge>
         </div>
-        <ControlsMenu />
+        {hasInstancePermission(
+          instanceInfo,
+          InstancePermission.INSTANCE_SUBSCRIBE_LOGS,
+        ) && <TerminalComponent scope={logScope} />}
+        {hasInstancePermission(
+          instanceInfo,
+          InstancePermission.INSTANCE_COMMAND_EXECUTION,
+        ) && <CommandInput scope={commandScope} />}
       </div>
-    </InstancePageLayout>
+      <ControlsMenu />
+    </div>
   );
 }

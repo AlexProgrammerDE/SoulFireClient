@@ -436,6 +436,20 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
 
 function ProxySettings() {
   const { t } = useTranslation('common');
+
+  return (
+    <InstancePageLayout
+      extraCrumbs={[t('breadcrumbs.settings')]}
+      pageName={t('pageName.proxySettings')}
+      documentationLink="https://soulfiremc.com/docs/usage/proxies"
+    >
+      <Content />
+    </InstancePageLayout>
+  );
+}
+
+function Content() {
+  const { t } = useTranslation('common');
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { data: profile } = useSuspenseQuery({
@@ -444,28 +458,20 @@ function ProxySettings() {
   });
 
   return (
-    <InstancePageLayout
-      extraCrumbs={[t('breadcrumbs.settings')]}
-      pageName={t('pageName.proxySettings')}
-      documentationLink="https://soulfiremc.com/docs/usage/proxies"
-    >
-      <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <InstanceSettingsPageComponent
-            data={
-              instanceInfo.instanceSettings.find(
-                (s) => s.namespace === 'proxy',
-              )!
-            }
-          />
-        </div>
-        <DataTable
-          filterPlaceholder={t('instance:proxy.filterPlaceholder')}
-          columns={columns}
-          data={profile.proxies}
-          extraHeader={ExtraHeader}
+    <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
+      <div className="flex flex-col gap-2">
+        <InstanceSettingsPageComponent
+          data={
+            instanceInfo.instanceSettings.find((s) => s.namespace === 'proxy')!
+          }
         />
       </div>
-    </InstancePageLayout>
+      <DataTable
+        filterPlaceholder={t('instance:proxy.filterPlaceholder')}
+        columns={columns}
+        data={profile.proxies}
+        extraHeader={ExtraHeader}
+      />
+    </div>
   );
 }

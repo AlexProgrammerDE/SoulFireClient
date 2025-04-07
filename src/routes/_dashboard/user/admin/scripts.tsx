@@ -58,8 +58,6 @@ export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
 
 function AdminScripts() {
   const { t } = useTranslation('common');
-  const { globalScriptsQueryOptions } = Route.useRouteContext();
-  const { data: scriptList } = useSuspenseQuery(globalScriptsQueryOptions);
 
   return (
     <UserPageLayout
@@ -67,16 +65,24 @@ function AdminScripts() {
       extraCrumbs={[t('breadcrumbs.settings')]}
       pageName={t('pageName.adminScripts')}
     >
-      <GenericScripts
-        queryKey={globalScriptsQueryOptions.queryKey}
-        scope={{
-          scope: {
-            oneofKind: 'globalScript',
-            globalScript: {},
-          },
-        }}
-        scriptList={scriptList}
-      />
+      <Content />
     </UserPageLayout>
+  );
+}
+
+function Content() {
+  const { globalScriptsQueryOptions } = Route.useRouteContext();
+  const { data: scriptList } = useSuspenseQuery(globalScriptsQueryOptions);
+  return (
+    <GenericScripts
+      queryKey={globalScriptsQueryOptions.queryKey}
+      scope={{
+        scope: {
+          oneofKind: 'globalScript',
+          globalScript: {},
+        },
+      }}
+      scriptList={scriptList}
+    />
   );
 }

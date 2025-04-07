@@ -20,9 +20,11 @@ import { NavDefaultSkeleton } from '@/components/nav/nav-default-skeleton.tsx';
 export function InstanceSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader className="h-16">
-        <InstanceSwitcher />
-      </SidebarHeader>
+      <Suspense>
+        <SidebarHeader className="h-16">
+          <InstanceSwitcher />
+        </SidebarHeader>
+      </Suspense>
       <ScrollArea className="h-[calc(100svh-4rem-4rem)] w-full pr-2">
         <SidebarContent className="min-h-[calc(100svh-4rem-4rem)]">
           <Suspense fallback={<NavDefaultSkeleton />}>

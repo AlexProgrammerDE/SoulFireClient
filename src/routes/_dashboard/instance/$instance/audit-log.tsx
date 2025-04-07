@@ -215,22 +215,30 @@ function ExtraHeader(props: {
 
 function AuditLog() {
   const { t } = useTranslation('common');
-  const { auditLogQueryOptions } = Route.useRouteContext();
-  const { data: auditLog } = useSuspenseQuery(auditLogQueryOptions);
 
   return (
     <InstancePageLayout
       extraCrumbs={[t('breadcrumbs.controls')]}
       pageName={t('pageName.audit-log')}
     >
-      <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
-        <DataTable
-          filterPlaceholder={t('auditLog.filterPlaceholder')}
-          columns={columns}
-          data={auditLog.entry}
-          extraHeader={ExtraHeader}
-        />
-      </div>
+      <Content />
     </InstancePageLayout>
+  );
+}
+
+function Content() {
+  const { t } = useTranslation('common');
+  const { auditLogQueryOptions } = Route.useRouteContext();
+  const { data: auditLog } = useSuspenseQuery(auditLogQueryOptions);
+
+  return (
+    <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
+      <DataTable
+        filterPlaceholder={t('auditLog.filterPlaceholder')}
+        columns={columns}
+        data={auditLog.entry}
+        extraHeader={ExtraHeader}
+      />
+    </div>
   );
 }

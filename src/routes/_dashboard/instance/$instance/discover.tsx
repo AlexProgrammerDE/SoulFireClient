@@ -12,25 +12,31 @@ export const Route = createFileRoute('/_dashboard/instance/$instance/discover')(
 
 function Discover() {
   const { t } = useTranslation('common');
-  const { instanceInfoQueryOptions } = Route.useRouteContext();
-  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
 
   return (
     <InstancePageLayout
       extraCrumbs={[t('breadcrumbs.plugins')]}
       pageName={t('pageName.discoverPlugins')}
     >
-      <div className="grid h-full w-full grow grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {instanceInfo.instanceSettings
-          .filter(
-            (settings) =>
-              settings.owningPlugin !== undefined &&
-              settings.enabledKey !== null,
-          )
-          .map((settings) => (
-            <PluginInfoCard key={settings.namespace} settingsEntry={settings} />
-          ))}
-      </div>
+      <Content />
     </InstancePageLayout>
+  );
+}
+
+function Content() {
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+
+  return (
+    <div className="grid h-full w-full grow grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {instanceInfo.instanceSettings
+        .filter(
+          (settings) =>
+            settings.owningPlugin !== undefined && settings.enabledKey !== null,
+        )
+        .map((settings) => (
+          <PluginInfoCard key={settings.namespace} settingsEntry={settings} />
+        ))}
+    </div>
   );
 }

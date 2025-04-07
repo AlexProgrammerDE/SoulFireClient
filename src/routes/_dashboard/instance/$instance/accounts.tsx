@@ -472,6 +472,20 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
 
 function AccountSettings() {
   const { t } = useTranslation('common');
+
+  return (
+    <InstancePageLayout
+      extraCrumbs={[t('breadcrumbs.settings')]}
+      pageName={t('pageName.accountSettings')}
+      documentationLink="https://soulfiremc.com/docs/usage/accounts"
+    >
+      <Content />
+    </InstancePageLayout>
+  );
+}
+
+function Content() {
+  const { t } = useTranslation('common');
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { data: profile } = useSuspenseQuery({
@@ -480,28 +494,22 @@ function AccountSettings() {
   });
 
   return (
-    <InstancePageLayout
-      extraCrumbs={[t('breadcrumbs.settings')]}
-      pageName={t('pageName.accountSettings')}
-      documentationLink="https://soulfiremc.com/docs/usage/accounts"
-    >
-      <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
-        <div className="flex flex-col gap-2">
-          <InstanceSettingsPageComponent
-            data={
-              instanceInfo.instanceSettings.find(
-                (s) => s.namespace === 'account',
-              )!
-            }
-          />
-        </div>
-        <DataTable
-          filterPlaceholder={t('instance:account.filterPlaceholder')}
-          columns={columns}
-          data={profile.accounts}
-          extraHeader={ExtraHeader}
+    <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
+      <div className="flex flex-col gap-2">
+        <InstanceSettingsPageComponent
+          data={
+            instanceInfo.instanceSettings.find(
+              (s) => s.namespace === 'account',
+            )!
+          }
         />
       </div>
-    </InstancePageLayout>
+      <DataTable
+        filterPlaceholder={t('instance:account.filterPlaceholder')}
+        columns={columns}
+        data={profile.accounts}
+        extraHeader={ExtraHeader}
+      />
+    </div>
   );
 }
