@@ -176,35 +176,6 @@ export function InstanceSwitcher() {
             <DropdownMenuLabel className="text-muted-foreground max-w-64 truncate text-xs">
               {instanceInfo.friendlyName}
             </DropdownMenuLabel>
-            <input
-              ref={instanceProfileInputRef}
-              type="file"
-              accept=".json"
-              className="hidden"
-              onInput={(e) => {
-                const file = (e.target as HTMLInputElement).files?.item(0);
-                if (!file) return;
-
-                const reader = new FileReader();
-                reader.onload = () => {
-                  const data = reader.result as string;
-                  toast.promise(
-                    setProfileMutation.mutateAsync(
-                      JSON.parse(data) as ProfileRoot,
-                    ),
-                    {
-                      loading: t('instanceSidebar.loadProfileToast.loading'),
-                      success: t('instanceSidebar.loadProfileToast.success'),
-                      error: (e) => {
-                        console.error(e);
-                        return t('instanceSidebar.loadProfileToast.error');
-                      },
-                    },
-                  );
-                };
-                reader.readAsText(file);
-              }}
-            />
             {isTauri() && systemInfo ? (
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger className="gap-2 p-2">
@@ -326,6 +297,39 @@ export function InstanceSwitcher() {
               </DropdownMenuSub>
             ) : (
               <>
+                <input
+                  ref={instanceProfileInputRef}
+                  type="file"
+                  accept=".json"
+                  className="hidden"
+                  onInput={(e) => {
+                    const file = (e.target as HTMLInputElement).files?.item(0);
+                    if (!file) return;
+
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                      const data = reader.result as string;
+                      toast.promise(
+                        setProfileMutation.mutateAsync(
+                          JSON.parse(data) as ProfileRoot,
+                        ),
+                        {
+                          loading: t(
+                            'instanceSidebar.loadProfileToast.loading',
+                          ),
+                          success: t(
+                            'instanceSidebar.loadProfileToast.success',
+                          ),
+                          error: (e) => {
+                            console.error(e);
+                            return t('instanceSidebar.loadProfileToast.error');
+                          },
+                        },
+                      );
+                    };
+                    reader.readAsText(file);
+                  }}
+                />
                 <DropdownMenuItem
                   className="gap-2 p-2"
                   onClick={() => {
@@ -386,8 +390,8 @@ export function InstanceSwitcher() {
                 {t('instanceSidebar.saveProfile')}
               </div>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
             <Suspense>
+              <DropdownMenuSeparator />
               <DeleteInstanceButton />
             </Suspense>
           </DropdownMenuContent>
