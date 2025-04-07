@@ -69,31 +69,42 @@ function SidebarAccountButton() {
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
 
   return (
-    <>
-      <UserAvatar
-        username={clientInfo.username}
-        email={clientInfo.email}
-        className="size-8"
-      />
-      <div className="grid flex-1 text-left text-sm leading-tight">
-        <span className="truncate font-semibold">{clientInfo.username}</span>
-        <span className="truncate text-xs">{clientInfo.email}</span>
-      </div>
-      <ChevronsUpDown className="ml-auto size-4" />
-    </>
+    <DropdownMenuTrigger asChild>
+      <SidebarMenuButton
+        size="lg"
+        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+        tooltip={`${clientInfo.username} | ${clientInfo.email}`}
+      >
+        <UserAvatar
+          username={clientInfo.username}
+          email={clientInfo.email}
+          className="size-8"
+        />
+        <div className="grid flex-1 text-left text-sm leading-tight">
+          <span className="truncate font-semibold">{clientInfo.username}</span>
+          <span className="truncate text-xs">{clientInfo.email}</span>
+        </div>
+        <ChevronsUpDown className="ml-auto size-4" />
+      </SidebarMenuButton>
+    </DropdownMenuTrigger>
   );
 }
 
 function SidebarAccountButtonSkeleton() {
   return (
-    <>
-      <Skeleton className="relative flex size-8 h-10 w-10 shrink-0 overflow-hidden rounded-lg" />
-      <div className="grid flex-1 gap-2 text-left text-sm leading-tight">
-        <Skeleton className="h-3 w-32" />
-        <Skeleton className="h-3 w-24" />
-      </div>
-      <ChevronsUpDown className="ml-auto size-4" />
-    </>
+    <DropdownMenuTrigger asChild>
+      <SidebarMenuButton
+        size="lg"
+        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+      >
+        <Skeleton className="relative flex size-8 h-10 w-10 shrink-0 overflow-hidden rounded-lg" />
+        <div className="grid flex-1 gap-2 text-left text-sm leading-tight">
+          <Skeleton className="h-3 w-32" />
+          <Skeleton className="h-3 w-24" />
+        </div>
+        <ChevronsUpDown className="ml-auto size-4" />
+      </SidebarMenuButton>
+    </DropdownMenuTrigger>
   );
 }
 
@@ -105,13 +116,13 @@ function DropdownAccountHeader() {
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
 
   return (
-    <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+    <div className="flex items-center gap-2 px-1 py-1.5">
       <UserAvatar
         username={clientInfo.username}
         email={clientInfo.email}
         className="size-8"
       />
-      <div className="grid flex-1 text-left text-sm leading-tight">
+      <div className="grid flex-1">
         <span className="truncate font-semibold">{clientInfo.username}</span>
         <span className="truncate text-xs">{clientInfo.email}</span>
       </div>
@@ -144,16 +155,9 @@ export function NavAccount() {
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-            >
-              <Suspense fallback={<SidebarAccountButtonSkeleton />}>
-                <SidebarAccountButton />
-              </Suspense>
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
+          <Suspense fallback={<SidebarAccountButtonSkeleton />}>
+            <SidebarAccountButton />
+          </Suspense>
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
             side={isMobile ? 'bottom' : 'right'}

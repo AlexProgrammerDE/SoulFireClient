@@ -40,7 +40,7 @@ if (
   getServerType() === 'dedicated' &&
   window.location.hash === ''
 ) {
-  window.location.hash = '/user';
+  window.location.hash = '/instance/test/settings/test';
 }
 
 // Render the app
