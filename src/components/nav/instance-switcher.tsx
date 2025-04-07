@@ -73,7 +73,6 @@ export function InstanceSwitcher() {
     from: '/_dashboard/instance/$instance',
     select: (context) => context.instanceInfoQueryOptions,
   });
-  const navigate = useNavigate();
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
   const { isMobile } = useSidebar();
@@ -100,35 +99,6 @@ export function InstanceSwitcher() {
     onSettled: async () => {
       await queryClient.invalidateQueries({
         queryKey: instanceInfoQueryOptions.queryKey,
-      });
-    },
-  });
-  const deleteMutation = useMutation({
-    mutationFn: async (instanceId: string) => {
-      if (transport === null) {
-        return;
-      }
-
-      const instanceService = new InstanceServiceClient(transport);
-      const promise = instanceService
-        .deleteInstance({
-          id: instanceId,
-        })
-        .then((r) => r.response);
-      toast.promise(promise, {
-        loading: t('instanceSidebar.deleteToast.loading'),
-        success: t('instanceSidebar.deleteToast.success'),
-        error: (e) => {
-          console.error(e);
-          return t('instanceSidebar.deleteToast.error');
-        },
-      });
-
-      return promise;
-    },
-    onSettled: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: instanceListQueryOptions.queryKey,
       });
     },
   });
@@ -417,27 +387,9 @@ export function InstanceSwitcher() {
               </div>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            {hasInstancePermission(
-              instanceInfo,
-              InstancePermission.DELETE_INSTANCE,
-            ) && (
-              <DropdownMenuItem
-                onClick={() => {
-                  deleteMutation.mutate(instanceInfo.id);
-                  void navigate({
-                    to: '/user',
-                  });
-                }}
-                className="gap-2 p-2"
-              >
-                <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-                  <MinusIcon className="size-4" />
-                </div>
-                <div className="text-muted-foreground font-medium">
-                  {t('instanceSidebar.deleteInstance')}
-                </div>
-              </DropdownMenuItem>
-            )}
+            <Suspense>
+              <DeleteInstanceButton />
+            </Suspense>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>
@@ -473,5 +425,75 @@ function CreateInstanceButton() {
       </DropdownMenuItem>
       <CreateInstancePopup open={createOpen} setOpen={setCreateOpen} />
     </>
+  );
+}
+
+function DeleteInstanceButton() {
+  const { t } = useTranslation('common');
+  const instanceListQueryOptions = useRouteContext({
+    from: '/_dashboard',
+    select: (context) => context.instanceListQueryOptions,
+  });
+  const instanceInfoQueryOptions = useRouteContext({
+    from: '/_dashboard/instance/$instance',
+    select: (context) => context.instanceInfoQueryOptions,
+  });
+  const transport = use(TransportContext);
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const deleteMutation = useMutation({
+    mutationFn: async (instanceId: string) => {
+      if (transport === null) {
+        return;
+      }
+
+      const instanceService = new InstanceServiceClient(transport);
+      const promise = instanceService
+        .deleteInstance({
+          id: instanceId,
+        })
+        .then((r) => r.response);
+      toast.promise(promise, {
+        loading: t('instanceSidebar.deleteToast.loading'),
+        success: t('instanceSidebar.deleteToast.success'),
+        error: (e) => {
+          console.error(e);
+          return t('instanceSidebar.deleteToast.error');
+        },
+      });
+
+      return promise;
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: instanceListQueryOptions.queryKey,
+      });
+    },
+  });
+
+  if (
+    !hasInstancePermission(instanceInfo, InstancePermission.DELETE_INSTANCE)
+  ) {
+    return null;
+  }
+
+  return (
+    <DropdownMenuItem
+      onClick={() => {
+        deleteMutation.mutate(instanceInfo.id);
+        void navigate({
+          to: '/user',
+        });
+      }}
+      className="gap-2 p-2"
+    >
+      <div className="bg-background flex size-6 items-center justify-center rounded-md border">
+        <MinusIcon className="size-4" />
+      </div>
+      <div className="text-muted-foreground font-medium">
+        {t('instanceSidebar.deleteInstance')}
+      </div>
+    </DropdownMenuItem>
   );
 }
