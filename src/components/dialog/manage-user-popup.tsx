@@ -25,7 +25,7 @@ import { Input } from '@/components/ui/input.tsx';
 import { useTranslation } from 'react-i18next';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { useContext } from 'react';
+import { use } from 'react';
 import { TransportContext } from '../providers/transport-context.tsx';
 import { UserRole } from '@/generated/soulfire/common.ts';
 import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
@@ -59,7 +59,7 @@ export function ManageUserPopup({
     select: (context) => context.usersQueryOptions,
   });
   const queryClient = useQueryClient();
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const { t } = useTranslation('admin');
   const formSchema = z.object({
     username: z

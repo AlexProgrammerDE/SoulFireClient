@@ -35,7 +35,7 @@ import {
 import {
   HTMLInputTypeAttribute,
   ReactNode,
-  useContext,
+  use,
   useEffect,
   useMemo,
   useState,
@@ -767,7 +767,7 @@ export function InstanceSettingsPageComponent({
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const { data: profile } = useSuspenseQuery({
     ...instanceInfoQueryOptions,
     select: (info) => info.profile,
@@ -804,7 +804,7 @@ export function AdminSettingsPageComponent({ data }: { data: SettingsPage }) {
     ...serverInfoQueryOptions,
     select: (info) => info.parsedConfig,
   });
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   return (
     <ClientSettingsPageComponent
       data={data}

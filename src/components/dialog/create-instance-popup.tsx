@@ -27,7 +27,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { toast } from 'sonner';
 import { useNavigate, useRouteContext } from '@tanstack/react-router';
-import { useContext } from 'react';
+import { use } from 'react';
 import { TransportContext } from '../providers/transport-context.tsx';
 
 export type FormType = {
@@ -47,7 +47,7 @@ export function CreateInstancePopup({
   });
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const { t } = useTranslation('common');
   const formSchema = z.object({
     friendlyName: z

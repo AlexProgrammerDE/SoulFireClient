@@ -10,7 +10,7 @@ import {
 } from '../ui/credenza.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
-import { useContext } from 'react';
+import { use } from 'react';
 import {
   Table,
   TableBody,
@@ -29,7 +29,7 @@ export function AboutPopup({
   setOpen: (open: boolean) => void;
 }) {
   const { t } = useTranslation('common');
-  const systemInfo = useContext(SystemInfoContext);
+  const systemInfo = use(SystemInfoContext);
 
   return (
     <Credenza open={open} onOpenChange={setOpen}>

@@ -15,7 +15,7 @@ import { getEnumKeyByValue } from '@/lib/types.ts';
 import { timestampToDate } from '@/lib/utils.tsx';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
 import * as React from 'react';
-import { createContext, useContext, useState } from 'react';
+import { createContext, use, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { PencilIcon, PlusIcon, RotateCcwIcon, TrashIcon } from 'lucide-react';
 import { ManageScriptPopup } from '@/components/dialog/manage-script-popup.tsx';
@@ -112,7 +112,7 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
 
 function UpdateScriptButton(props: { row: Row<ScriptListResponse_Script> }) {
   const [open, setOpen] = useState(false);
-  const { queryKey, scope } = useContext(ScriptsContext);
+  const { queryKey, scope } = use(ScriptsContext);
 
   return (
     <>
@@ -180,9 +180,9 @@ function RestartScriptButton(props: { row: Row<ScriptListResponse_Script> }) {
 function ExtraHeader(props: { table: ReactTable<ScriptListResponse_Script> }) {
   const { t } = useTranslation('common');
   const queryClient = useQueryClient();
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const [createOpen, setCreateOpen] = useState(false);
-  const { queryKey, scope } = useContext(ScriptsContext);
+  const { queryKey, scope } = use(ScriptsContext);
   const { mutateAsync: deleteScriptsMutation } = useMutation({
     mutationFn: async (user: ScriptListResponse_Script[]) => {
       if (transport === null) {

@@ -1,5 +1,5 @@
 import { createFileRoute, deepEqual } from '@tanstack/react-router';
-import { useCallback, useContext, useState } from 'react';
+import { use, useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import { DataTable } from '@/components/data-table.tsx';
@@ -153,7 +153,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
     ...instanceInfoQueryOptions,
     select: (info) => info.profile,
   });
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const [proxyTypeSelected, setProxyTypeSelected] =
     useState<UIProxyType | null>(null);

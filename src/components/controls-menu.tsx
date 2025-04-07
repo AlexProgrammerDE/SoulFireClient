@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { use } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { convertToInstanceProto } from '@/lib/types.ts';
@@ -21,7 +21,7 @@ export default function ControlsMenu() {
     select: (context) => context.instanceInfoQueryOptions,
   });
   const queryClient = useQueryClient();
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const { data: profile } = useSuspenseQuery({
     ...instanceInfoQueryOptions,
     select: (info) => info.profile,

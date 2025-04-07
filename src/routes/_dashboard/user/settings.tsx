@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useContext } from 'react';
+import { use } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   useMutation,
@@ -34,7 +34,7 @@ function UserSettings() {
   const { t } = useTranslation('common');
   const { clientDataQueryOptions } = Route.useRouteContext();
   const queryClient = useQueryClient();
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const setUsernameMutation = useMutation({
     mutationFn: async (value: JsonValue) => {

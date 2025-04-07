@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import * as React from 'react';
-import { useContext, useState } from 'react';
+import { use, useState } from 'react';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { useTranslation } from 'react-i18next';
 import {
@@ -36,7 +36,7 @@ function AccessPage() {
   const { t } = useTranslation('common');
   const { clientDataQueryOptions } = Route.useRouteContext();
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const [webDavToken, setWebDavToken] = useState('');
   const [apiToken, setApiToken] = useState('');
 

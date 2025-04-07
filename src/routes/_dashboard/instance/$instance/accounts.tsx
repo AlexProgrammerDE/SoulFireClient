@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useCallback, useContext, useState } from 'react';
+import { use, useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { DataTable } from '@/components/data-table.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
@@ -94,7 +94,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
     ...instanceInfoQueryOptions,
     select: (info) => info.profile,
   });
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const [accountTypeCredentialsSelected, setAccountTypeCredentialsSelected] =
     useState<AccountTypeCredentials | null>(null);

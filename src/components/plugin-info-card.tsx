@@ -12,7 +12,7 @@ import {
   setInstanceConfig,
   updateEntry,
 } from '@/lib/utils.tsx';
-import { useContext, useMemo } from 'react';
+import { use, useMemo } from 'react';
 import {
   useMutation,
   useQueryClient,
@@ -36,7 +36,7 @@ export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
     select: (info) => info.profile,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const queryClient = useQueryClient();
   const enabledEntry = props.settingsEntry.entries.find(
     (entry) => entry.key === props.settingsEntry.enabledKey,

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, useRef, useState } from 'react';
+import { use, useRef, useState } from 'react';
 import {
   ChevronsUpDownIcon,
   DownloadIcon,
@@ -79,7 +79,7 @@ export function InstanceSwitcher() {
   });
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const { isMobile } = useSidebar();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
@@ -87,7 +87,7 @@ export function InstanceSwitcher() {
     ...instanceInfoQueryOptions,
     select: (info) => info.profile,
   });
-  const systemInfo = useContext(SystemInfoContext);
+  const systemInfo = use(SystemInfoContext);
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const instanceProfileInputRef = useRef<HTMLInputElement>(null);
   const [createOpen, setCreateOpen] = useState(false);

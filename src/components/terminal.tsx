@@ -1,10 +1,4 @@
-import React, {
-  CSSProperties,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { CSSProperties, use, useEffect, useRef, useState } from 'react';
 import { LogsServiceClient } from '@/generated/soulfire/logs.client.ts';
 import { TransportContext } from './providers/transport-context.tsx';
 import { ScrollArea } from './ui/scroll-area.tsx';
@@ -105,8 +99,8 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
         ]
       : [],
   );
-  const transport = useContext(TransportContext);
-  const terminalTheme = useContext(TerminalThemeContext);
+  const transport = use(TransportContext);
+  const terminalTheme = use(TerminalThemeContext);
   const paneRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const selectedTheme = flavorEntries.find(

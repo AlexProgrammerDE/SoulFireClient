@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import * as React from 'react';
-import { useContext, useState } from 'react';
+import { use, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { DataTable } from '@/components/data-table.tsx';
 import { ColumnDef, Row, Table as ReactTable } from '@tanstack/react-table';
@@ -134,7 +134,7 @@ function UpdateUserButton(props: { row: Row<UserListResponse_User> }) {
 }
 
 function ImpersonateUserButton(props: { row: Row<UserListResponse_User> }) {
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const navigate = useNavigate();
   return (
     <>
@@ -170,7 +170,7 @@ function ImpersonateUserButton(props: { row: Row<UserListResponse_User> }) {
 function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
   const { t } = useTranslation('admin');
   const queryClient = useQueryClient();
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const [createOpen, setCreateOpen] = useState(false);
   const { usersQueryOptions } = Route.useRouteContext();
   const { mutateAsync: deleteUsersMutation } = useMutation({

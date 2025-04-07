@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/form.tsx';
 import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { use, useCallback, useEffect, useState } from 'react';
 import {
   FlaskConicalIcon,
   InfoIcon,
@@ -155,7 +155,7 @@ function Index() {
   const searchParams: Record<string, string> = Route.useSearch();
   const [authFlowData, setAuthFlowData] = useState<AuthFlowData | null>(null);
   const [loginType, setLoginType] = useState<LoginType>(null);
-  const systemInfo = useContext(SystemInfoContext);
+  const systemInfo = use(SystemInfoContext);
 
   const targetRedirect: TargetRedirectFunction = useCallback(async () => {
     await navigate({
@@ -330,7 +330,7 @@ function DefaultMenu(props: {
   demoLogin: TargetRedirectFunction;
 }) {
   const { t } = useTranslation('login');
-  const systemInfo = useContext(SystemInfoContext);
+  const systemInfo = use(SystemInfoContext);
   return (
     <Card>
       <CardHeader className="text-center">

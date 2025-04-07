@@ -35,7 +35,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar.tsx';
-import { Suspense, useContext, useState } from 'react';
+import { Suspense, use, useState } from 'react';
 import {
   getLanguageName,
   isTauri,
@@ -134,9 +134,9 @@ function DropdownAccountHeaderSkeleton() {
 export function NavAccount() {
   const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
-  const terminalTheme = useContext(TerminalThemeContext);
+  const terminalTheme = use(TerminalThemeContext);
   const [aboutOpen, setAboutOpen] = useState(false);
-  const systemInfo = useContext(SystemInfoContext);
+  const systemInfo = use(SystemInfoContext);
   const { theme, setTheme } = useTheme();
   const { isMobile } = useSidebar();
 

@@ -44,7 +44,7 @@ const CredenzaContext = React.createContext<{ isDesktop: boolean }>({
 });
 
 const useCredenzaContext = () => {
-  const context = React.useContext(CredenzaContext);
+  const context = React.use(CredenzaContext);
   if (!context) {
     throw new Error(
       'Credenza components cannot be rendered outside the Credenza Context',

@@ -1,11 +1,5 @@
 import { Input } from '@/components/ui/input.tsx';
-import {
-  KeyboardEventHandler,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { KeyboardEventHandler, use, useEffect, useRef, useState } from 'react';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { CommandServiceClient } from '@/generated/soulfire/command.client.ts';
 import {
@@ -28,7 +22,7 @@ const historySchema = z.string().array();
 
 export default function CommandInput(props: { scope: CommandScope }) {
   const { t } = useTranslation('common');
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const [commandHistory, setCommandHistory] = useState<string[]>(
     historySchema.parse(
       JSON.parse(localStorage.getItem(SF_COMMAND_HISTORY_KEY) ?? '[]'),

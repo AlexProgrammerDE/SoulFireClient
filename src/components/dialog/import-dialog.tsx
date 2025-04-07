@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/credenza.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { Textarea } from '@/components/ui/textarea.tsx';
-import { useContext, useRef, useState } from 'react';
+import { use, useRef, useState } from 'react';
 import { hasInstancePermission, isTauri, runAsync } from '@/lib/utils.tsx';
 import { downloadDir } from '@tauri-apps/api/path';
 import { open } from '@tauri-apps/plugin-dialog';
@@ -60,7 +60,7 @@ export default function ImportDialog(props: ImportDialogProps) {
 
 function UrlDialog(props: ImportDialogProps) {
   const { t } = useTranslation('common');
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const instanceInfoQueryOptions = useRouteContext({
     from: '/_dashboard/instance/$instance',
     select: (context) => context.instanceInfoQueryOptions,
@@ -145,7 +145,7 @@ function MainDialog(
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const systemInfo = useContext(SystemInfoContext);
+  const systemInfo = use(SystemInfoContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (

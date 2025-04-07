@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useContext } from 'react';
+import { use } from 'react';
 import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
 import { useTranslation } from 'react-i18next';
 import {
@@ -31,7 +31,7 @@ function MetaSettings() {
   const { instanceInfoQueryOptions, instanceListQueryOptions } =
     Route.useRouteContext();
   const queryClient = useQueryClient();
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const setFriendlyNameMutation = useMutation({
     mutationFn: async (value: JsonValue) => {

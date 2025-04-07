@@ -30,7 +30,7 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { useContext } from 'react';
+import { use } from 'react';
 import { TransportContext } from '../providers/transport-context.tsx';
 import { GlobalPermission } from '@/generated/soulfire/common.ts';
 import { ScriptServiceClient } from '@/generated/soulfire/script.client.ts';
@@ -60,7 +60,7 @@ export function ManageScriptPopup({
   scriptsQueryKey: QueryKey;
 } & ({ mode: 'edit'; script: ScriptListResponse_Script } | { mode: 'add' })) {
   const queryClient = useQueryClient();
-  const transport = useContext(TransportContext);
+  const transport = use(TransportContext);
   const clientDataQueryOptions = useRouteContext({
     from: '/_dashboard',
     select: (context) => context.clientDataQueryOptions,
