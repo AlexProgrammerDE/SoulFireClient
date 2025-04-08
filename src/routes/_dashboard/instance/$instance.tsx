@@ -1,10 +1,7 @@
 import { CatchBoundary, createFileRoute, Outlet } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
-import {
-  InstanceInfoResponse,
-  InstanceState,
-} from '@/generated/soulfire/instance.ts';
+import { InstanceState } from '@/generated/soulfire/instance.ts';
 import { queryClientInstance } from '@/lib/query.ts';
 import { queryOptions } from '@tanstack/react-query';
 import {
@@ -15,21 +12,17 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar.tsx';
 import { InstanceSidebar } from '@/components/nav/instance-sidebar.tsx';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 import { ErrorComponent } from '@/components/error-component.tsx';
-import { convertFromInstanceProto, ProfileRoot } from '@/lib/types.ts';
+import {
+  convertFromInstanceProto,
+  InstanceInfoQueryData,
+} from '@/lib/types.ts';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance')({
   beforeLoad: (props) => {
     const { instance } = props.params;
     const instanceInfoQueryOptions = queryOptions({
       queryKey: ['instance-info', instance],
-      queryFn: async (
-        props,
-      ): Promise<
-        InstanceInfoResponse & {
-          id: string;
-          profile: ProfileRoot;
-        }
-      > => {
+      queryFn: async (props): Promise<InstanceInfoQueryData> => {
         const transport = createTransport();
         if (transport === null) {
           return {

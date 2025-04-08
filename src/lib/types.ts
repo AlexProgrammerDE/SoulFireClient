@@ -7,9 +7,13 @@ import { Value } from '@/generated/google/protobuf/struct.ts';
 import { JsonValue } from '@protobuf-ts/runtime/build/types/json-typings';
 import {
   InstanceConfig,
+  InstanceInfoResponse,
   InstanceState,
 } from '@/generated/soulfire/instance.ts';
-import { ServerConfig } from '@/generated/soulfire/server.ts';
+import {
+  ServerConfig,
+  ServerInfoResponse,
+} from '@/generated/soulfire/server.ts';
 import { i18n } from 'i18next';
 
 export type SFServerType = 'integrated' | 'dedicated';
@@ -21,6 +25,15 @@ export type BaseSettings = {
 export type ProfileRoot = BaseSettings & {
   accounts: ProfileAccount[];
   proxies: ProfileProxy[];
+};
+
+export type ServerInfoQueryData = ServerInfoResponse & {
+  profile: BaseSettings;
+};
+
+export type InstanceInfoQueryData = InstanceInfoResponse & {
+  id: string;
+  profile: ProfileRoot;
 };
 
 export function getEnumKeyByValue<E extends object>(

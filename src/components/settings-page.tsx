@@ -802,7 +802,7 @@ export function AdminSettingsPageComponent({ data }: { data: SettingsPage }) {
   });
   const { data: serverConfig } = useSuspenseQuery({
     ...serverInfoQueryOptions,
-    select: (info) => info.parsedConfig,
+    select: (info) => info.profile,
   });
   const transport = use(TransportContext);
   return (

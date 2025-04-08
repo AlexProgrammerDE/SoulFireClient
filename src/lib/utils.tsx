@@ -19,10 +19,11 @@ import {
   BaseSettings,
   convertToInstanceProto,
   convertToServerProto,
+  InstanceInfoQueryData,
   ProfileRoot,
+  ServerInfoQueryData,
 } from '@/lib/types.ts';
 import { JsonValue } from '@protobuf-ts/runtime';
-import { ServerInfoResponse } from '@/generated/soulfire/server.ts';
 import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { RpcTransport } from '@protobuf-ts/runtime-rpc';
@@ -258,20 +259,20 @@ export async function setInstanceConfig(
   await queryClient.cancelQueries({
     queryKey: instanceInfoQueryKey,
   });
-  queryClient.setQueryData<{
-    instanceInfo: InstanceInfoResponse;
-  }>(instanceInfoQueryKey, (old) => {
-    if (old === undefined) {
-      return;
-    }
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
 
-    return {
-      instanceInfo: {
-        ...old.instanceInfo,
+      return {
+        ...old,
         config: targetProfile,
-      },
-    };
-  });
+        profile: jsonProfile,
+      };
+    },
+  );
 
   const instanceService = new InstanceServiceClient(transport);
   await instanceService.updateInstanceConfig({
@@ -302,30 +303,28 @@ export async function setInstanceIcon(
       queryKey: instanceListQueryKey,
     }),
   ]);
-  queryClient.setQueryData<{
-    instanceInfo: InstanceInfoResponse;
-  }>(instanceInfoQueryKey, (old) => {
-    if (old === undefined) {
-      return;
-    }
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
 
-    return {
-      instanceInfo: {
-        ...old.instanceInfo,
+      return {
+        ...old,
         icon: icon,
-      },
-    };
-  });
-  queryClient.setQueryData<{
-    instanceList: InstanceListResponse;
-  }>(instanceListQueryKey, (old) => {
-    if (old === undefined) {
-      return;
-    }
+      };
+    },
+  );
+  queryClient.setQueryData<InstanceListResponse>(
+    instanceListQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
 
-    return {
-      instanceList: {
-        instances: old.instanceList.instances.map((item) => {
+      return {
+        instances: old.instances.map((item) => {
           if (item.id === instanceInfo.id) {
             return {
               ...item,
@@ -335,9 +334,9 @@ export async function setInstanceIcon(
 
           return item;
         }),
-      },
-    };
-  });
+      };
+    },
+  );
 
   const instanceService = new InstanceServiceClient(transport);
   await instanceService.updateInstanceMeta({
@@ -371,30 +370,28 @@ export async function setInstanceFriendlyName(
       queryKey: instanceListQueryKey,
     }),
   ]);
-  queryClient.setQueryData<{
-    instanceInfo: InstanceInfoResponse;
-  }>(instanceInfoQueryKey, (old) => {
-    if (old === undefined) {
-      return;
-    }
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
 
-    return {
-      instanceInfo: {
-        ...old.instanceInfo,
+      return {
+        ...old,
         friendlyName: friendlyName,
-      },
-    };
-  });
-  queryClient.setQueryData<{
-    instanceList: InstanceListResponse;
-  }>(instanceListQueryKey, (old) => {
-    if (old === undefined) {
-      return;
-    }
+      };
+    },
+  );
+  queryClient.setQueryData<InstanceListResponse>(
+    instanceListQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
 
-    return {
-      instanceList: {
-        instances: old.instanceList.instances.map((item) => {
+      return {
+        instances: old.instances.map((item) => {
           if (item.id === instanceInfo.id) {
             return {
               ...item,
@@ -404,9 +401,9 @@ export async function setInstanceFriendlyName(
 
           return item;
         }),
-      },
-    };
-  });
+      };
+    },
+  );
 
   const instanceService = new InstanceServiceClient(transport);
   await instanceService.updateInstanceMeta({
@@ -432,18 +429,15 @@ export async function setServerConfig(
   await queryClient.cancelQueries({
     queryKey: serverInfoQueryKey,
   });
-  queryClient.setQueryData<{
-    serverInfo: ServerInfoResponse;
-  }>(serverInfoQueryKey, (old) => {
+  queryClient.setQueryData<ServerInfoQueryData>(serverInfoQueryKey, (old) => {
     if (old === undefined) {
       return;
     }
 
     return {
-      serverInfo: {
-        ...old.serverInfo,
-        config: targetProfile,
-      },
+      ...old,
+      config: targetProfile,
+      profile: jsonProfile,
     };
   });
 
@@ -466,18 +460,14 @@ export async function setSelfUsername(
   await queryClient.cancelQueries({
     queryKey: clientDataQueryKey,
   });
-  queryClient.setQueryData<{
-    clientData: ClientDataResponse;
-  }>(clientDataQueryKey, (old) => {
+  queryClient.setQueryData<ClientDataResponse>(clientDataQueryKey, (old) => {
     if (old === undefined) {
       return;
     }
 
     return {
-      clientData: {
-        ...old.clientData,
-        username: username,
-      },
+      ...old,
+      username: username,
     };
   });
 
@@ -500,18 +490,14 @@ export async function setSelfEmail(
   await queryClient.cancelQueries({
     queryKey: clientDataQueryKey,
   });
-  queryClient.setQueryData<{
-    clientData: ClientDataResponse;
-  }>(clientDataQueryKey, (old) => {
+  queryClient.setQueryData<ClientDataResponse>(clientDataQueryKey, (old) => {
     if (old === undefined) {
       return;
     }
 
     return {
-      clientData: {
-        ...old.clientData,
-        email: email,
-      },
+      ...old,
+      email: email,
     };
   });
 
