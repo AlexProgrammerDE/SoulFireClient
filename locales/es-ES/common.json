@@ -229,7 +229,7 @@
     "adminGroup": "",
     "adminOverview": "",
     "adminConsole": "",
-    "users": "",
+    "users": "Usuarios",
     "adminScripts": "",
     "serverSettings": "",
     "devSettings": "",
@@ -274,7 +274,7 @@
     "settings": "",
     "proxySettings": "",
     "overview": "",
-    "users": "",
+    "users": "Usuarios",
     "accountSettings": "",
     "metaSettings": "",
     "discoverPlugins": "",
@@ -393,8 +393,8 @@
       "scriptName": "",
       "language": "",
       "elevatedPermissions": "",
-      "createdAt": "",
-      "actions": ""
+      "createdAt": "Creado",
+      "actions": "Acciones"
     },
     "globalScript": "",
     "instanceScript": ""

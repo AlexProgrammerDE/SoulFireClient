@@ -1,95 +1,95 @@
 {
   "overview": {
-    "welcome": "",
+    "welcome": "Bienvenido/a de nuevo, {{name}}🧙",
     "instancesChart": {
-      "title": "",
+      "title": "Instalaciones totales en este servidor",
       "instances": "",
       "label": {
-        "state": "",
-        "active": "",
+        "state": "Estado",
+        "active": "Activo",
         "stopped": "",
-        "other": ""
+        "other": "Otros"
       }
     },
     "usersChart": {
-      "title": "",
-      "users": "",
+      "title": "Usuarios totales en este servidor",
+      "users": "Usuarios",
       "label": {
-        "role": "",
+        "role": "Rol",
         "user": "",
         "admin": "",
-        "other": ""
+        "other": "Otros"
       }
     }
   },
   "users": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Filtrar usuarios...",
     "baseUserDialog": {
       "form": {
         "username": {
-          "min": "",
-          "max": "",
-          "regex": "",
+          "min": "El nombre de usuario debe tener al menos 3 caracteres",
+          "max": "Los nombres de usuario deben tener como máximo 32 caracteres",
+          "regex": "Los nombres de usuarios deben estar en minúscula, empezar con un carácter alfanumérico seguido de más de ellos o guiones, finalizando con un carácter alfanumérico.",
           "label": "",
-          "placeholder": "",
-          "description": ""
+          "placeholder": "Introduzca nombre de usuario",
+          "description": "Nombre de usuario único identificativo"
         },
         "email": {
           "label": "",
-          "placeholder": "",
-          "description": ""
+          "placeholder": "Introduce el correo electrónico",
+          "description": "Dirección de correo electrónico del usuario para notificaciones e inicio de sesión"
         },
         "role": {
-          "label": "",
-          "description": "",
+          "label": "Rol",
+          "description": "El rol del usuario; los administradores pueden administrar usuarios y todas las instancias, los usuarios solo pueden administrar sus propias instancias.",
           "user": "",
           "admin": ""
         }
       }
     },
     "addUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Agregar un nuevo usuario",
+      "description": "Agregar un nuevo usuario a este servidor",
       "form": {
         "cancel": "",
-        "add": ""
+        "add": "Añadir Usuario"
       }
     },
     "updateUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Actualizar Usuario",
+      "description": "Actualizar la información del usuario",
       "form": {
         "cancel": "",
-        "update": ""
+        "update": "Actualizar Usuario"
       }
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Añadiendo usuario...",
+      "success": "¡Usuario añadido!",
+      "error": "Error al añadir usuario"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Actualizando usuario...",
+      "success": "¡Usuario actualizado!",
+      "error": "Error al actualizar el usuario"
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Eliminando usuarios...",
+      "success": "¡Usuarios eliminados!",
+      "error": "Error al eliminar usuarios"
     },
     "invalidateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Cerrando sesión de usuarios...",
+      "success": "¡Sesiones de usuarios terminadas!",
+      "error": "Error al cerrar sesión de usuarios"
     },
     "table": {
       "username": "",
       "email": "",
-      "role": "",
-      "createdAt": "",
+      "role": "Rol",
+      "createdAt": "Creado",
       "minIssuedAt": "",
-      "actions": ""
+      "actions": "Acciones"
     }
   }
 }
