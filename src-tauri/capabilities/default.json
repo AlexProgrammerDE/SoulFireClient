@@ -2,7 +2,9 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Capability for the main window",
-  "windows": ["main"],
+  "windows": [
+    "main"
+  ],
   "permissions": [
     "core:default",
     "core:window:allow-create",
@@ -66,6 +68,7 @@
     "shell:default",
     "clipboard-manager:default",
     "log:default",
-    "deep-link:default"
+    "deep-link:default",
+    "opener:default"
   ]
 }

@@ -40,6 +40,7 @@ sha2 = "0.11.0-pre.4"
 thiserror = "2.0.0"
 hex = "0.4.3"
 tauri-plugin-deep-link = "2"
+tauri-plugin-opener = "2"
 
 [target."cfg(any(target_os = \"macos\", windows, target_os = \"linux\"))".dependencies]
 tauri-plugin-updater = "2.0.2"

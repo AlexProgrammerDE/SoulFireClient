@@ -51,7 +51,6 @@ import { flavorEntries } from '@catppuccin/palette';
 import { useTheme } from 'next-themes';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
 import CastMenuEntry from '@/components/nav/cast-menu-entry.tsx';
-import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { appConfigDir, appDataDir } from '@tauri-apps/api/path';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { AboutPopup } from '@/components/dialog/about-popup.tsx';
@@ -60,6 +59,7 @@ import { isImpersonating, logOut, stopImpersonation } from '@/lib/web-rpc.ts';
 import { UserAvatar } from '@/components/user-avatar.tsx';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Skeleton } from '@/components/ui/skeleton.tsx';
+import { openPath } from '@tauri-apps/plugin-opener';
 
 function SidebarAccountButton() {
   const clientDataQueryOptions = useRouteContext({
@@ -256,7 +256,7 @@ export function NavAccount() {
                   <DropdownMenuItem
                     onClick={() => {
                       runAsync(async () => {
-                        await shellOpen(await appConfigDir());
+                        await openPath(await appConfigDir());
                       });
                     }}
                   >
@@ -266,7 +266,7 @@ export function NavAccount() {
                   <DropdownMenuItem
                     onClick={() => {
                       runAsync(async () => {
-                        await shellOpen(await appDataDir());
+                        await openPath(await appDataDir());
                       });
                     }}
                   >
