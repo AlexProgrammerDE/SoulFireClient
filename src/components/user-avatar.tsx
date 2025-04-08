@@ -6,11 +6,44 @@ import {
 import { cn, getGravatarUrl } from '@/lib/utils.tsx';
 import * as React from 'react';
 
+const cache = new Map<string, true>();
+
+function markErrorCached(username: string) {
+  if (cache.has(username)) {
+    return;
+  }
+  cache.set(username, true);
+}
+
+function isErrorCached(username: string) {
+  return cache.has(username);
+}
+
+setInterval(
+  () => {
+    cache.clear();
+  },
+  1000 * 60 * 15,
+); // 15 minutes
+
 export const UserAvatar = React.memo(
   (props: { username: string; email: string; className?: string }) => {
+    const [isError, setIsError] = React.useState(isErrorCached(props.email));
+
     return (
       <Avatar className={cn('rounded-lg', props.className)}>
-        <AvatarImage src={getGravatarUrl(props.email)} alt={props.username} />
+        {!isError && (
+          <AvatarImage
+            onLoadingStatusChange={(e) => {
+              if (e === 'error') {
+                markErrorCached(props.email);
+                setIsError(true);
+              }
+            }}
+            src={getGravatarUrl(props.email)}
+            alt={props.username}
+          />
+        )}
         <AvatarFallback className="rounded-lg">
           {props.username.slice(0, 2).toUpperCase()}
         </AvatarFallback>
