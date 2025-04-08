@@ -77,7 +77,7 @@
           "path": "$APPCONFIG"
         },
         {
-          "path": "$APPDATA"
+          "path": "$APPLOCALDATA"
         }
       ]
     }

@@ -51,7 +51,7 @@ import { flavorEntries } from '@catppuccin/palette';
 import { useTheme } from 'next-themes';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
 import CastMenuEntry from '@/components/nav/cast-menu-entry.tsx';
-import { appConfigDir, appDataDir } from '@tauri-apps/api/path';
+import { appConfigDir, appLocalDataDir } from '@tauri-apps/api/path';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
 import { AboutPopup } from '@/components/dialog/about-popup.tsx';
 import { useTranslation } from 'react-i18next';
@@ -266,7 +266,7 @@ export function NavAccount() {
                   <DropdownMenuItem
                     onClick={() => {
                       runAsync(async () => {
-                        await openPath(await appDataDir());
+                        await openPath(await appLocalDataDir());
                       });
                     }}
                   >
