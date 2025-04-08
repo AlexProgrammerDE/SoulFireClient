@@ -27,7 +27,7 @@ import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ErrorComponent } from '@/components/error-component.tsx';
-import { CreateInstanceProvider } from '@/components/providers/create-instance-provider.tsx';
+import { CreateInstanceProvider } from '@/components/dialog/create-instance-dialog.tsx';
 
 export const Route = createFileRoute('/_dashboard')({
   beforeLoad: async (props) => {

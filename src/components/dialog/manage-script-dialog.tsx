@@ -47,7 +47,7 @@ export type FormType = {
   elevatedPermissions: boolean;
 };
 
-export function ManageScriptPopup({
+export function ManageScriptDialog({
   open,
   setOpen,
   scope,

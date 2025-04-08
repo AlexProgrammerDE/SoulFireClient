@@ -16,7 +16,7 @@ import { hasGlobalPermission } from '@/lib/utils.tsx';
 import { GlobalPermission } from '@/generated/soulfire/common.ts';
 import { useTranslation } from 'react-i18next';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { CreateInstanceContext } from '@/components/providers/create-instance-provider.tsx';
+import { CreateInstanceContext } from '@/components/dialog/create-instance-dialog.tsx';
 
 type NavLinks = {
   title: string;

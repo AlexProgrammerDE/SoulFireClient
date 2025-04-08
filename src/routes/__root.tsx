@@ -26,6 +26,7 @@ import { attachConsole } from '@tauri-apps/plugin-log';
 import { AptabaseProvider, useAptabase } from '@aptabase/react';
 import { emit } from '@tauri-apps/api/event';
 import { useTheme } from 'next-themes';
+import { AboutProvider } from '@/components/dialog/about-dialog.tsx';
 
 async function getAvailableProfiles() {
   const profileDir = await resolve(
@@ -220,7 +221,9 @@ function RootLayout() {
                     className="flex h-dvh w-dvw flex-col"
                   >
                     <PointerReset />
-                    <Outlet />
+                    <AboutProvider>
+                      <Outlet />
+                    </AboutProvider>
                   </div>
                 </TerminalThemeContext.Provider>
               </SystemInfoContext.Provider>

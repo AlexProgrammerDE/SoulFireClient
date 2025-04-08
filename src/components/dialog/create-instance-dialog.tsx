@@ -48,7 +48,7 @@ export function CreateInstanceProvider(props: { children: ReactNode }) {
       >
         {props.children}
       </CreateInstanceContext.Provider>
-      <CreateInstancePopup open={open} setOpen={setOpen} />
+      <CreateInstanceDialog open={open} setOpen={setOpen} />
     </>
   );
 }
@@ -57,7 +57,7 @@ export type FormType = {
   friendlyName: string;
 };
 
-function CreateInstancePopup({
+function CreateInstanceDialog({
   open,
   setOpen,
 }: {

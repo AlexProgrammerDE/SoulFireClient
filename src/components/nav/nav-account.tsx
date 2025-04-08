@@ -35,7 +35,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar.tsx';
-import { Suspense, use, useState } from 'react';
+import { Suspense, use } from 'react';
 import {
   getLanguageName,
   isTauri,
@@ -53,7 +53,7 @@ import { TerminalThemeContext } from '@/components/providers/terminal-theme-cont
 import CastMenuEntry from '@/components/nav/cast-menu-entry.tsx';
 import { appConfigDir, appLocalDataDir } from '@tauri-apps/api/path';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
-import { AboutPopup } from '@/components/dialog/about-popup.tsx';
+import { AboutContext } from '@/components/dialog/about-dialog.tsx';
 import { useTranslation } from 'react-i18next';
 import { isImpersonating, logOut, stopImpersonation } from '@/lib/web-rpc.ts';
 import { UserAvatar } from '@/components/user-avatar.tsx';
@@ -146,7 +146,7 @@ export function NavAccount() {
   const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
   const terminalTheme = use(TerminalThemeContext);
-  const [aboutOpen, setAboutOpen] = useState(false);
+  const { openAbout } = use(AboutContext);
   const systemInfo = use(SystemInfoContext);
   const { theme, setTheme } = useTheme();
   const { isMobile } = useSidebar();
@@ -278,11 +278,7 @@ export function NavAccount() {
             )}
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem
-                onClick={() => {
-                  setAboutOpen(true);
-                }}
-              >
+              <DropdownMenuItem onClick={openAbout}>
                 <CircleHelpIcon />
                 {t('userSidebar.about')}
               </DropdownMenuItem>
@@ -342,7 +338,6 @@ export function NavAccount() {
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
-        <AboutPopup open={aboutOpen} setOpen={setAboutOpen} />
       </SidebarMenuItem>
     </SidebarMenu>
   );

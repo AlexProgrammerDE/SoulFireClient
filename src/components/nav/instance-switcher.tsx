@@ -62,7 +62,7 @@ import {
 import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { useTranslation } from 'react-i18next';
 import { Skeleton } from '@/components/ui/skeleton.tsx';
-import { CreateInstanceContext } from '@/components/providers/create-instance-provider.tsx';
+import { CreateInstanceContext } from '@/components/dialog/create-instance-dialog.tsx';
 
 function SidebarInstanceButton() {
   const { i18n } = useTranslation('common');

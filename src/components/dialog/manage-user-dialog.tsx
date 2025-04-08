@@ -46,7 +46,7 @@ export type FormType = {
   role: UserRole;
 };
 
-export function ManageUserPopup({
+export function ManageUserDialog({
   open,
   setOpen,
   ...props

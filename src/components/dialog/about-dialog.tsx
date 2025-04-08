@@ -10,7 +10,7 @@ import {
 } from '../ui/credenza.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
-import { use } from 'react';
+import { createContext, ReactNode, use, useState } from 'react';
 import {
   Table,
   TableBody,
@@ -21,7 +21,30 @@ import {
 } from '../ui/table.tsx';
 import { useTranslation } from 'react-i18next';
 
-export function AboutPopup({
+export const AboutContext = createContext<{
+  openAbout: () => void;
+}>(null as never);
+
+export function AboutProvider(props: { children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <AboutContext.Provider
+        value={{
+          openAbout: () => {
+            setOpen(true);
+          },
+        }}
+      >
+        {props.children}
+      </AboutContext.Provider>
+      <AboutDialog open={open} setOpen={setOpen} />
+    </>
+  );
+}
+
+function AboutDialog({
   open,
   setOpen,
 }: {

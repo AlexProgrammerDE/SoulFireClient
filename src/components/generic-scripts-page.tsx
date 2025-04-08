@@ -18,7 +18,7 @@ import * as React from 'react';
 import { createContext, use, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { PencilIcon, PlusIcon, RotateCcwIcon, TrashIcon } from 'lucide-react';
-import { ManageScriptPopup } from '@/components/dialog/manage-script-popup.tsx';
+import { ManageScriptDialog } from '@/components/dialog/manage-script-dialog.tsx';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { ScriptServiceClient } from '@/generated/soulfire/script.client.ts';
 import { toast } from 'sonner';
@@ -124,7 +124,7 @@ function UpdateScriptButton(props: { row: Row<ScriptListResponse_Script> }) {
       >
         <PencilIcon />
       </Button>
-      <ManageScriptPopup
+      <ManageScriptDialog
         mode="edit"
         script={props.row.original}
         open={open}
@@ -228,7 +228,7 @@ function ExtraHeader(props: { table: ReactTable<ScriptListResponse_Script> }) {
       >
         <TrashIcon className="h-4 w-4" />
       </Button>
-      <ManageScriptPopup
+      <ManageScriptDialog
         mode="add"
         open={createOpen}
         setOpen={setCreateOpen}

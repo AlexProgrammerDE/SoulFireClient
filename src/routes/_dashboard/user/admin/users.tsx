@@ -30,7 +30,7 @@ import { UserListResponse_User } from '@/generated/soulfire/user.ts';
 import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
 import UserPageLayout from '@/components/nav/user-page-layout.tsx';
 import { UserAvatar } from '@/components/user-avatar.tsx';
-import { ManageUserPopup } from '@/components/dialog/manage-user-popup.tsx';
+import { ManageUserDialog } from '@/components/dialog/manage-user-dialog.tsx';
 import { ROOT_USER_ID, runAsync, timestampToDate } from '@/lib/utils.tsx';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
 import { CopyInfoButton } from '@/components/info-buttons.tsx';
@@ -123,7 +123,7 @@ function UpdateUserButton(props: { row: Row<UserListResponse_User> }) {
       >
         <PencilIcon />
       </Button>
-      <ManageUserPopup
+      <ManageUserDialog
         mode="edit"
         user={props.row.original}
         open={open}
@@ -217,7 +217,7 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
       <Button variant="outline" onClick={() => setCreateOpen(true)}>
         <PlusIcon className="h-4 w-4" />
       </Button>
-      <ManageUserPopup mode="add" open={createOpen} setOpen={setCreateOpen} />
+      <ManageUserDialog mode="add" open={createOpen} setOpen={setCreateOpen} />
       <Button
         variant="outline"
         disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
