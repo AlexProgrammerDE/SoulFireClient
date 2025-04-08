@@ -27,14 +27,37 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { toast } from 'sonner';
 import { useNavigate, useRouteContext } from '@tanstack/react-router';
-import { use } from 'react';
+import { createContext, ReactNode, use, useState } from 'react';
 import { TransportContext } from '../providers/transport-context.tsx';
+
+export const CreateInstanceContext = createContext<{
+  openCreateInstance: () => void;
+}>(null as never);
+
+export function CreateInstanceProvider(props: { children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <>
+      <CreateInstanceContext.Provider
+        value={{
+          openCreateInstance: () => {
+            setOpen(true);
+          },
+        }}
+      >
+        {props.children}
+      </CreateInstanceContext.Provider>
+      <CreateInstancePopup open={open} setOpen={setOpen} />
+    </>
+  );
+}
 
 export type FormType = {
   friendlyName: string;
 };
 
-export function CreateInstancePopup({
+function CreateInstancePopup({
   open,
   setOpen,
 }: {

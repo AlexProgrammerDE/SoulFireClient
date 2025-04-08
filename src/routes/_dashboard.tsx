@@ -27,6 +27,7 @@ import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ErrorComponent } from '@/components/error-component.tsx';
+import { CreateInstanceProvider } from '@/components/providers/create-instance-provider.tsx';
 
 export const Route = createFileRoute('/_dashboard')({
   beforeLoad: async (props) => {
@@ -196,7 +197,9 @@ function DashboardLayout() {
       {isImpersonating() && (
         <div className="border-sidebar-primary pointer-events-none absolute top-0 right-0 bottom-0 left-0 z-30 overflow-hidden border-4" />
       )}
-      <Outlet />
+      <CreateInstanceProvider>
+        <Outlet />
+      </CreateInstanceProvider>
     </TransportContext.Provider>
   );
 }

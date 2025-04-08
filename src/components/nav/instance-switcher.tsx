@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Suspense, use, useRef, useState } from 'react';
+import { Suspense, use, useRef } from 'react';
 import {
   ChevronsUpDownIcon,
   DownloadIcon,
@@ -61,8 +61,8 @@ import {
 } from '@/generated/soulfire/common.ts';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { useTranslation } from 'react-i18next';
-import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.tsx';
 import { Skeleton } from '@/components/ui/skeleton.tsx';
+import { CreateInstanceContext } from '@/components/providers/create-instance-provider.tsx';
 
 function SidebarInstanceButton() {
   const { i18n } = useTranslation('common');
@@ -470,27 +470,21 @@ function CreateInstanceButton() {
     select: (context) => context.clientDataQueryOptions,
   });
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
-  const [createOpen, setCreateOpen] = useState(false);
+  const { openCreateInstance } = use(CreateInstanceContext);
 
   if (!hasGlobalPermission(clientInfo, GlobalPermission.CREATE_INSTANCE)) {
     return null;
   }
 
   return (
-    <>
-      <DropdownMenuItem
-        onClick={() => setCreateOpen(true)}
-        className="gap-2 p-2"
-      >
-        <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-          <PlusIcon className="size-4" />
-        </div>
-        <div className="text-muted-foreground font-medium">
-          {t('instanceSidebar.createInstance')}
-        </div>
-      </DropdownMenuItem>
-      <CreateInstancePopup open={createOpen} setOpen={setCreateOpen} />
-    </>
+    <DropdownMenuItem onClick={openCreateInstance} className="gap-2 p-2">
+      <div className="bg-background flex size-6 items-center justify-center rounded-md border">
+        <PlusIcon className="size-4" />
+      </div>
+      <div className="text-muted-foreground font-medium">
+        {t('instanceSidebar.createInstance')}
+      </div>
+    </DropdownMenuItem>
   );
 }
 

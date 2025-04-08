@@ -11,12 +11,12 @@ import {
 } from '@/components/ui/sidebar.tsx';
 import { Link, LinkProps, useRouteContext } from '@tanstack/react-router';
 import * as React from 'react';
-import { ReactNode, useState } from 'react';
+import { ReactNode, use } from 'react';
 import { hasGlobalPermission } from '@/lib/utils.tsx';
 import { GlobalPermission } from '@/generated/soulfire/common.ts';
-import { CreateInstancePopup } from '@/components/dialog/create-instance-popup.tsx';
 import { useTranslation } from 'react-i18next';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { CreateInstanceContext } from '@/components/providers/create-instance-provider.tsx';
 
 type NavLinks = {
   title: string;
@@ -32,7 +32,7 @@ export function NavUserOptions() {
     select: (context) => context.clientDataQueryOptions,
   });
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
-  const [createOpen, setCreateOpen] = useState(false);
+  const { openCreateInstance } = use(CreateInstanceContext);
 
   const navLinks: NavLinks = [
     {
@@ -87,15 +87,11 @@ export function NavUserOptions() {
               ) && (
                 <>
                   <SidebarMenuAction
-                    onClick={() => setCreateOpen(true)}
+                    onClick={openCreateInstance}
                     title={t('userSidebar.createInstance')}
                   >
                     <PlusIcon />
                   </SidebarMenuAction>
-                  <CreateInstancePopup
-                    open={createOpen}
-                    setOpen={setCreateOpen}
-                  />
                 </>
               )}
           </SidebarMenuItem>
