@@ -1,10 +1,5 @@
 import * as React from 'react';
-import {
-  BookOpenTextIcon,
-  CoffeeIcon,
-  LifeBuoyIcon,
-  type LucideIcon,
-} from 'lucide-react';
+import { BookOpenTextIcon, CoffeeIcon, type LucideIcon } from 'lucide-react';
 
 import {
   SidebarGroup,
@@ -15,6 +10,7 @@ import {
 } from '@/components/ui/sidebar.tsx';
 import { useTranslation } from 'react-i18next';
 import { ExternalLink } from '@/components/external-link.tsx';
+import { SiDiscord } from '@icons-pack/react-simple-icons';
 
 type NavLinks = {
   title: string;
@@ -38,9 +34,9 @@ export function NavSecondary({
       icon: CoffeeIcon,
     },
     {
-      title: t('sidebar.support'),
+      title: t('sidebar.discord'),
       url: 'https://soulfiremc.com/discord',
-      icon: LifeBuoyIcon,
+      icon: SiDiscord,
     },
   ];
 
