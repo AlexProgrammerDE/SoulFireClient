@@ -39,6 +39,16 @@ jobs:
       - name: 'Shared: Install Rust toolchain'
         uses: dtolnay/rust-toolchain@nightly
 
+      - name: 'Desktop: Cache dependencies'
+        uses: Swatinem/rust-cache@v2
+        with:
+          prefix-key: set-version
+          save-if: ${{ github.ref == 'refs/heads/main' }}
+          workspaces: src-tauri
+          cache-on-failure: true
+          cache-all-crates: true
+          cache-targets: false
+
       - name: 'Set JS Version'
         run: |
           pnpm version --no-git-tag-version --allow-same-version ${{ inputs.version }}
