@@ -64,12 +64,6 @@ export interface MinecraftAccountProto {
      * @generated from protobuf oneof: account_data
      */
     accountData: {
-        oneofKind: "onlineSimpleJavaData";
-        /**
-         * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.OnlineSimpleJavaData online_simple_java_data = 4;
-         */
-        onlineSimpleJavaData: MinecraftAccountProto_OnlineSimpleJavaData;
-    } | {
         oneofKind: "onlineChainJavaData";
         /**
          * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.OnlineChainJavaData online_chain_java_data = 5;
@@ -90,19 +84,6 @@ export interface MinecraftAccountProto {
     } | {
         oneofKind: undefined;
     };
-}
-/**
- * @generated from protobuf message soulfire.v1.MinecraftAccountProto.OnlineSimpleJavaData
- */
-export interface MinecraftAccountProto_OnlineSimpleJavaData {
-    /**
-     * @generated from protobuf field: string auth_token = 1;
-     */
-    authToken: string;
-    /**
-     * @generated from protobuf field: int64 token_expire_at = 2;
-     */
-    tokenExpireAt: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.MinecraftAccountProto.OnlineChainJavaData
@@ -171,10 +152,6 @@ export enum MinecraftAccountProto_AccountTypeProto {
      * @generated from protobuf enum value: MICROSOFT_BEDROCK_CREDENTIALS = 1;
      */
     MICROSOFT_BEDROCK_CREDENTIALS = 1,
-    /**
-     * @generated from protobuf enum value: THE_ALTENING = 3;
-     */
-    THE_ALTENING = 3,
     /**
      * @generated from protobuf enum value: OFFLINE = 4;
      */
@@ -674,10 +651,6 @@ export enum AccountTypeCredentials {
      */
     MICROSOFT_BEDROCK_CREDENTIALS = 1,
     /**
-     * @generated from protobuf enum value: THE_ALTENING = 3;
-     */
-    THE_ALTENING = 3,
-    /**
      * @generated from protobuf enum value: OFFLINE = 4;
      */
     OFFLINE = 4,
@@ -900,7 +873,6 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
             { no: 1, name: "type", kind: "enum", T: () => ["soulfire.v1.MinecraftAccountProto.AccountTypeProto", MinecraftAccountProto_AccountTypeProto] },
             { no: 2, name: "profile_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "last_known_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "online_simple_java_data", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OnlineSimpleJavaData },
             { no: 5, name: "online_chain_java_data", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OnlineChainJavaData },
             { no: 6, name: "offline_java_data", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OfflineJavaData },
             { no: 7, name: "bedrock_data", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_BedrockData }
@@ -911,19 +883,6 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
  * @generated MessageType for protobuf message soulfire.v1.MinecraftAccountProto
  */
 export const MinecraftAccountProto = new MinecraftAccountProto$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class MinecraftAccountProto_OnlineSimpleJavaData$Type extends MessageType<MinecraftAccountProto_OnlineSimpleJavaData> {
-    constructor() {
-        super("soulfire.v1.MinecraftAccountProto.OnlineSimpleJavaData", [
-            { no: 1, name: "auth_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "token_expire_at", kind: "scalar", T: 3 /*ScalarType.INT64*/ }
-        ]);
-    }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.MinecraftAccountProto.OnlineSimpleJavaData
- */
-export const MinecraftAccountProto_OnlineSimpleJavaData = new MinecraftAccountProto_OnlineSimpleJavaData$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MinecraftAccountProto_OnlineChainJavaData$Type extends MessageType<MinecraftAccountProto_OnlineChainJavaData> {
     constructor() {

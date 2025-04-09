@@ -372,15 +372,6 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           >
             {t('account.import.microsoftRefreshToken')}
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() =>
-              setAccountTypeCredentialsSelected(
-                AccountTypeCredentials.THE_ALTENING,
-              )
-            }
-          >
-            {t('account.import.theAltening')}
-          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuLabel>
             {t('account.import.bedrockEdition')}
