@@ -4,6 +4,7 @@ import {
   ChevronsUpDown,
   CircleHelpIcon,
   FolderIcon,
+  HeartHandshakeIcon,
   LanguagesIcon,
   LaptopMinimalIcon,
   LogOutIcon,
@@ -60,6 +61,7 @@ import { UserAvatar } from '@/components/user-avatar.tsx';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { Skeleton } from '@/components/ui/skeleton.tsx';
 import { openPath } from '@tauri-apps/plugin-opener';
+import { ExternalLink } from '@/components/external-link.tsx';
 
 function SidebarAccountButton() {
   const clientDataQueryOptions = useRouteContext({
@@ -243,6 +245,15 @@ export function NavAccount() {
                           </DropdownMenuRadioItem>
                         ))}
                     </DropdownMenuRadioGroup>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem asChild>
+                        <ExternalLink href="https://translate.soulfiremc.com">
+                          <HeartHandshakeIcon />
+                          {t('userSidebar.helpTranslate')}
+                        </ExternalLink>
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>
               </DropdownMenuSub>

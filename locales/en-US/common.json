@@ -252,7 +252,8 @@
       "error": "Failed to log out"
     },
     "exit": "Exit",
-    "stopImpersonating": "Stop impersonating"
+    "stopImpersonating": "Stop impersonating",
+    "helpTranslate": "Translate SoulFire"
   },
   "sidebar": {
     "documentation": "Documentation",

@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/button.tsx';
 import { use, useCallback, useEffect, useState } from 'react';
 import {
   FlaskConicalIcon,
+  HeartHandshakeIcon,
   InfoIcon,
   LaptopMinimalIcon,
   LoaderCircleIcon,
@@ -53,6 +54,8 @@ import { Trans, useTranslation } from 'react-i18next';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
@@ -72,6 +75,7 @@ import {
   createAddressOnlyTransport,
   setAuthentication,
 } from '@/lib/web-rpc.ts';
+import { ExternalLink } from '@/components/external-link.tsx';
 
 const LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY = 'form-server-address';
 const LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY = 'form-server-token';
@@ -305,6 +309,15 @@ function Index() {
                         </DropdownMenuRadioItem>
                       ))}
                   </DropdownMenuRadioGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem asChild>
+                      <ExternalLink href="https://translate.soulfiremc.com">
+                        <HeartHandshakeIcon />
+                        {t('footer.helpTranslate')}
+                      </ExternalLink>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
