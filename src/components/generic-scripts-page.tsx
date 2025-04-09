@@ -244,14 +244,14 @@ export function GenericScripts(props: ScriptsProps) {
 
   return (
     <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
-      <ScriptsContext.Provider value={props}>
+      <ScriptsContext value={props}>
         <DataTable
           filterPlaceholder={t('common:scripts.filterPlaceholder')}
           columns={columns}
           data={props.scriptList.scripts}
           extraHeader={ExtraHeader}
         />
-      </ScriptsContext.Provider>
+      </ScriptsContext>
     </div>
   );
 }

@@ -39,7 +39,7 @@ export function CreateInstanceProvider(props: { children: ReactNode }) {
 
   return (
     <>
-      <CreateInstanceContext.Provider
+      <CreateInstanceContext
         value={{
           openCreateInstance: () => {
             setOpen(true);
@@ -47,7 +47,7 @@ export function CreateInstanceProvider(props: { children: ReactNode }) {
         }}
       >
         {props.children}
-      </CreateInstanceContext.Provider>
+      </CreateInstanceContext>
       <CreateInstanceDialog open={open} setOpen={setOpen} />
     </>
   );

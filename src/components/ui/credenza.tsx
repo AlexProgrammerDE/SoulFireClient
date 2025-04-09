@@ -58,11 +58,11 @@ const Credenza = ({ children, ...props }: RootCredenzaProps) => {
   const Credenza = isDesktop ? Dialog : Drawer;
 
   return (
-    <CredenzaContext.Provider value={{ isDesktop }}>
+    <CredenzaContext value={{ isDesktop }}>
       <Credenza {...props} {...(!isDesktop && { autoFocus: true })}>
         {children}
       </Credenza>
-    </CredenzaContext.Provider>
+    </CredenzaContext>
   );
 };
 

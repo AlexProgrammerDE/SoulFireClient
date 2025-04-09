@@ -30,7 +30,7 @@ export function AboutProvider(props: { children: ReactNode }) {
 
   return (
     <>
-      <AboutContext.Provider
+      <AboutContext
         value={{
           openAbout: () => {
             setOpen(true);
@@ -38,7 +38,7 @@ export function AboutProvider(props: { children: ReactNode }) {
         }}
       >
         {props.children}
-      </AboutContext.Provider>
+      </AboutContext>
       <AboutDialog open={open} setOpen={setOpen} />
     </>
   );

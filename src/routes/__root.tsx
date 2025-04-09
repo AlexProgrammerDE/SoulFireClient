@@ -209,8 +209,8 @@ function RootLayout() {
           >
             <WindowThemeSyncer />
             <TooltipProvider delayDuration={500}>
-              <SystemInfoContext.Provider value={systemInfoState}>
-                <TerminalThemeContext.Provider
+              <SystemInfoContext value={systemInfoState}>
+                <TerminalThemeContext
                   value={{
                     value: terminalTheme,
                     setter: setTerminalTheme,
@@ -225,8 +225,8 @@ function RootLayout() {
                       <Outlet />
                     </AboutProvider>
                   </div>
-                </TerminalThemeContext.Provider>
-              </SystemInfoContext.Provider>
+                </TerminalThemeContext>
+              </SystemInfoContext>
               <Toaster richColors />
             </TooltipProvider>
           </ThemeProvider>

@@ -190,7 +190,7 @@ function DashboardLayout() {
   }
 
   return (
-    <TransportContext.Provider value={loaderData.transport}>
+    <TransportContext value={loaderData.transport}>
       <Suspense>
         <InstanceSwitchKeybinds />
       </Suspense>
@@ -200,6 +200,6 @@ function DashboardLayout() {
       <CreateInstanceProvider>
         <Outlet />
       </CreateInstanceProvider>
-    </TransportContext.Provider>
+    </TransportContext>
   );
 }
