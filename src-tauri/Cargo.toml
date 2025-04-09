@@ -1,6 +1,6 @@
 [package]
 name = "soulfire"
-version = "1.10.2"
+version = "1.10.3"
 description = "Frontend client for SoulFire."
 authors = ["Pistonmaster"]
 license = "GPL-3.0"
