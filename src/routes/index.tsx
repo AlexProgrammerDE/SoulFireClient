@@ -291,12 +291,13 @@ function Index() {
                     )}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56">
+                <DropdownMenuContent>
                   <DropdownMenuLabel>{t('common:locale')}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioGroup
                     value={i18n.resolvedLanguage ?? i18n.language}
                     onValueChange={(lang) => void i18n.changeLanguage(lang)}
+                    className="grid grid-cols-1 md:grid-cols-2"
                   >
                     {(i18n.options.supportedLngs
                       ? i18n.options.supportedLngs
