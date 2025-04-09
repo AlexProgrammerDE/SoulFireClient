@@ -250,6 +250,7 @@ jobs:
           name: windows
           path: release-artifacts/windows
       - name: Create latest.json
+        id: create-latest-json
         run: |
           linuxAppImageFile=$(ls release-artifacts/linux/*.AppImage)
           linuxAppImageSigFile=$(ls release-artifacts/linux/*.AppImage.sig)
@@ -257,8 +258,8 @@ jobs:
           macosAarch64SigFile=$(ls release-artifacts/macos-aarch64/*.app.tar.gz.sig)
           macosAmd64File=$(ls release-artifacts/macos-amd64/*.app.tar.gz)
           macosAmd64SigFile=$(ls release-artifacts/macos-amd64/*.app.tar.gz.sig)
-          windowsFile=$(ls release-artifacts/windows/*.exe)
-          windowsSigFile=$(ls release-artifacts/windows/*.exe.sig)
+          windowsAmd64File=$(ls release-artifacts/windows/*.exe)
+          windowsAmd64SigFile=$(ls release-artifacts/windows/*.exe.sig)
           currentDate=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
           cat << EOF > 'release-artifacts/latest.json'
           {
@@ -267,8 +268,8 @@ jobs:
             "pub_date": "$currentDate",
             "platforms": {
               "windows-x86_64": {
-                "signature": "$(cat "$windowsSigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$windowsFile")"
+                "signature": "$(cat "$windowsAmd64SigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$windowsAmd64File")"
               },
               "darwin-aarch64": {
                 "signature": "$(cat "$macosAarch64SigFile")",
@@ -285,6 +286,9 @@ jobs:
             }
           }
           EOF
+          echo "macosAarch64File=$(basename "$macosAarch64File")" >> $GITHUB_OUTPUT
+          echo "macosAmd64File=$(basename "$macosAmd64File")" >> $GITHUB_OUTPUT
+          echo "windowsAmd64File=$(basename "$windowsAmd64File")" >> $GITHUB_OUTPUT
 
       - name: Build Changelog
         id: github_release
@@ -348,7 +352,17 @@ jobs:
         id: init-release
         uses: softprops/action-gh-release@v2
         with:
-          body: ${{ steps.github_release.outputs.changelog }}
+          body: |
+            ## Download Links
+
+            | Platform              | Download Link |
+            |-----------------------|---------------|
+            | Windows (x86_64)      | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.windowsAmd64File }}) |
+            | macOS (Intel)         | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAmd64File }}) |
+            | macOS (Apple Silicon) | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAarch64File }}) |
+            | Linux (x86_64)        | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
+
+            ${{ steps.github_release.outputs.changelog }}
           tag_name: ${{ inputs.app-version }}
           generate_release_notes: false
           target_commitish: main
