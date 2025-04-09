@@ -5066,7 +5066,7 @@ dependencies = [
 
 [[package]]
 name = "soulfire"
-version = "1.10.2"
+version = "1.10.3"
 dependencies = [
  "async-std",
  "discord-presence",
