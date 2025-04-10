@@ -252,7 +252,8 @@
       "error": "Wylogowanie nie powiodło się"
     },
     "exit": "Wyjdź",
-    "stopImpersonating": ""
+    "stopImpersonating": "",
+    "helpTranslate": ""
   },
   "sidebar": {
     "documentation": "Dokumentacja",

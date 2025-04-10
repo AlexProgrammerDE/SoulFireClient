@@ -80,6 +80,7 @@
   "footer": {
     "version": "SoulFire Client {{version}} - {{environment}}",
     "preview": "Lukingz 4 preview?",
-    "production": "Lukingz 4 producshun?"
+    "production": "Lukingz 4 producshun?",
+    "helpTranslate": ""
   }
 }

@@ -252,7 +252,8 @@
       "error": "登出失败"
     },
     "exit": "退出",
-    "stopImpersonating": ""
+    "stopImpersonating": "",
+    "helpTranslate": ""
   },
   "sidebar": {
     "documentation": "文档",
