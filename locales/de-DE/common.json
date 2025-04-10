@@ -252,7 +252,8 @@
       "error": "Ausloggen fehlgeschlagen"
     },
     "exit": "Beenden",
-    "stopImpersonating": ""
+    "stopImpersonating": "",
+    "helpTranslate": ""
   },
   "sidebar": {
     "documentation": "Dokumentation",

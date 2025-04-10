@@ -252,7 +252,8 @@
       "error": "Échec de la déconnexion"
     },
     "exit": "Quitter",
-    "stopImpersonating": ""
+    "stopImpersonating": "",
+    "helpTranslate": ""
   },
   "sidebar": {
     "documentation": "Documentation",

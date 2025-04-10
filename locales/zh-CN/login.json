@@ -80,6 +80,7 @@
   "footer": {
     "version": "SoulFire 客户端 {{version}} - {{environment}}",
     "preview": "正在寻找预览吗？",
-    "production": "正在寻找产品吗？"
+    "production": "正在寻找产品吗？",
+    "helpTranslate": ""
   }
 }

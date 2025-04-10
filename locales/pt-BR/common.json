@@ -252,7 +252,8 @@
       "error": "Falha ao encerrar sessão"
     },
     "exit": "Sair",
-    "stopImpersonating": ""
+    "stopImpersonating": "",
+    "helpTranslate": ""
   },
   "sidebar": {
     "documentation": "Documentação",

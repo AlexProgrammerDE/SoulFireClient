@@ -80,6 +80,7 @@
   "footer": {
     "version": "SoulFireMc Client {{version}} - {{environment}}",
     "preview": "Ön izleme mi arıyorsunuz?",
-    "production": "Prodüksiyon mu arıyorsunuz?"
+    "production": "Prodüksiyon mu arıyorsunuz?",
+    "helpTranslate": ""
   }
 }

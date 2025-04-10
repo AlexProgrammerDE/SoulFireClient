@@ -80,6 +80,7 @@
   "footer": {
     "version": "Klient SoulFire {{version}} - {{environment}}",
     "preview": "Szukasz podglądu?",
-    "production": "Szukasz wersji produkcyjnej?"
+    "production": "Szukasz wersji produkcyjnej?",
+    "helpTranslate": ""
   }
 }
