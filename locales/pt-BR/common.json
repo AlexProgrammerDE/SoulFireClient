@@ -5,16 +5,16 @@
     "noAddressOrToken": "Nenhum endereço de servidor ou token encontrado",
     "page": {
       "title": "Erro",
-      "description": "",
+      "description": "Ocorreu um erro ao tentar carregar a página. Mais informações podem ser encontradas no console.",
       "logOut": "Sair",
       "reloadPage": "Recarregar página"
     },
-    "connectionFailed": ""
+    "connectionFailed": "A conexão com o servidor SoulFire falhou."
   },
   "notFound": {
     "page": {
-      "title": "",
-      "description": "",
+      "title": "Não encontrado",
+      "description": "Não foi possível encontrar uma página neste local",
       "logOut": "Sair",
       "reloadPage": "Recarregar página"
     }
@@ -47,8 +47,8 @@
           "placeholder": "Meu Bot de Minecraft",
           "description": "O nome que quer dar para esta instância.",
           "min": "O nome amigável deve ter pelo menos 3 caracteres.",
-          "max": "",
-          "regex": ""
+          "max": "O nome amigável deve ter no máximo 32 caracteres.",
+          "regex": "Nome amigável só pode conter letras, números e espaços"
         },
         "cancel": "Cancelar",
         "create": "Criar"
@@ -88,7 +88,7 @@
     }
   },
   "commandInput": {
-    "placeholder": ""
+    "placeholder": "Digite o comando (digite 'help' para a lista)"
   },
   "controls": {
     "start": "Iniciar",
@@ -128,8 +128,8 @@
     "goPrevious": "Ir para a página anterior",
     "goNext": "Ir para a proxima página",
     "goLast": "Ir para a última página",
-    "selectAll": "",
-    "selectRow": ""
+    "selectAll": "Selecionar todos",
+    "selectRow": "Selecionar Linha"
   },
   "pluginCard": {
     "version": "Versão {{version}}",
@@ -145,8 +145,8 @@
       "remove": "Remover"
     },
     "invalidNumberToast": {
-      "title": "",
-      "description": ""
+      "title": "Número inválido!",
+      "description": "O valor deve estar entre {{min}} e {{max}}"
     }
   },
   "terminal": {
@@ -186,7 +186,7 @@
     }
   },
   "instanceSidebar": {
-    "readDocumentation": "",
+    "readDocumentation": "Ler a documentação",
     "backToDashboard": "Voltar ao painel de controle",
     "deleteToast": {
       "loading": "Excluindo instância...",
@@ -207,20 +207,20 @@
     "deleteInstance": "Deletar Instancia",
     "controlsGroup": "Controles",
     "console": "Console",
-    "audit-log": "",
+    "audit-log": "Registro de auditoria",
     "settingsGroup": "Configurações",
-    "pluginsGroup": "",
+    "pluginsGroup": "Plugins",
     "pluginSettings": "Definições de Plugin",
     "botSettings": "Configurações do Bot",
     "accountSettings": "Configurações da Conta",
-    "metaSettings": "",
+    "metaSettings": "Configurações da Instância",
     "proxySettings": "Configurações de Proxy",
     "aiSettings": "Configurações de IA",
-    "discoverPlugins": "",
-    "instanceScripts": ""
+    "discoverPlugins": "Plugins",
+    "instanceScripts": "Scripts"
   },
   "userSidebar": {
-    "readDocumentation": "",
+    "readDocumentation": "Ler a documentação",
     "userGroup": "Usuário",
     "instances": "Instâncias",
     "access": "",
@@ -230,7 +230,7 @@
     "adminOverview": "Visão geral",
     "adminConsole": "Console",
     "users": "Usuários",
-    "adminScripts": "",
+    "adminScripts": "Scripts",
     "serverSettings": "Configurações do servidor",
     "devSettings": "Configurações de Desenvolvedor",
     "theme": {
@@ -264,12 +264,12 @@
     "admin": "Administrador",
     "settings": "Configurações",
     "controls": "Controles",
-    "plugins": ""
+    "plugins": "Plugins"
   },
   "noInstancesFound": "Nenhuma instância encontrada",
   "pageName": {
     "console": "Console",
-    "audit-log": "",
+    "audit-log": "Registro de auditoria",
     "instances": "Instâncias",
     "access": "",
     "settings": "Configurações",
@@ -277,10 +277,10 @@
     "overview": "Visão geral",
     "users": "Usuários",
     "accountSettings": "Configurações da Conta",
-    "metaSettings": "",
-    "discoverPlugins": "",
-    "adminScripts": "",
-    "instanceScripts": ""
+    "metaSettings": "Configurações da Instância",
+    "discoverPlugins": "Plugins",
+    "adminScripts": "Scripts",
+    "instanceScripts": "Scripts"
   },
   "access": {
     "webdav": {
@@ -395,7 +395,7 @@
       "language": "",
       "elevatedPermissions": "",
       "createdAt": "",
-      "actions": ""
+      "actions": "Ações"
     },
     "globalScript": "",
     "instanceScript": ""
