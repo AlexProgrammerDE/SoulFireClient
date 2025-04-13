@@ -23,16 +23,16 @@
     }
   },
   "users": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Filtrar usuários...",
     "baseUserDialog": {
       "form": {
         "username": {
-          "min": "",
-          "max": "",
-          "regex": "",
+          "min": "O nome de usuário deve ter pelo menos 3 caracteres",
+          "max": "Nomes de usuário devem ter no máximo 32 caracteres",
+          "regex": "Nomes de usuário devem ter letras minúsculas, começar com um caractere alfanumérico, seguido de caracteres alfanuméricos ou hifens e terminar com um caractere alfanumérico.",
           "label": "",
-          "placeholder": "",
-          "description": ""
+          "placeholder": "Digite seu usuário",
+          "description": "Um nome de usuário exclusivo que identifica o usuário"
         },
         "email": {
           "label": "",
@@ -89,7 +89,7 @@
       "role": "Função",
       "createdAt": "",
       "minIssuedAt": "",
-      "actions": ""
+      "actions": "Ações"
     }
   }
 }
