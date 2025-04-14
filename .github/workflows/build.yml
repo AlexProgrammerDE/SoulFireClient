@@ -40,12 +40,6 @@ jobs:
             target-path: ''
             name: 'Windows Server 2025 (AMD64)'
             rust-targets: ''
-          - platform: 'windows-11-arm'
-            type: 'desktop'
-            args: ''
-            target-path: ''
-            name: 'Windows 11 (AArch64)'
-            rust-targets: ''
           - platform: 'ubuntu-22.04'
             type: 'android'
             args: ''
@@ -160,15 +154,6 @@ jobs:
         if: matrix.name == 'Windows Server 2025 (AMD64)'
         with:
           name: tauri-artifact-windows-2025-amd64
-          path: |
-            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/nsis/*.exe
-          if-no-files-found: error
-
-      - name: 'Desktop: Upload artifacts (Windows)'
-        uses: actions/upload-artifact@v4
-        if: matrix.name == 'Windows 11 (AArch64)'
-        with:
-          name: tauri-artifact-windows-11-arm64
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/nsis/*.exe
           if-no-files-found: error
