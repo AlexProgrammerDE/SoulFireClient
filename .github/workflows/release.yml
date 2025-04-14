@@ -150,7 +150,7 @@ jobs:
         run: |
           mkdir artifact-output
 
-      - name: 'Desktop: Put linux amd64 files in artifact-output'
+      - name: 'Desktop: Put linux AMD64 files in artifact-output'
         if: matrix.type == 'linux-amd64'
         shell: bash
         run: |
@@ -166,7 +166,7 @@ jobs:
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage.sig ./artifact-output/
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/deb/*.deb ./artifact-output/
 
-      - name: 'Desktop: Put macos amd64 files in artifact-output'
+      - name: 'Desktop: Put macOS AMD64 files in artifact-output'
         if: matrix.type == 'macos-amd64'
         shell: bash
         run: |
@@ -178,7 +178,7 @@ jobs:
           mv "$appZipFile" "./artifact-output/${appZipFileBasename%.app.tar.gz}_x64.app.tar.gz"
           mv "$appZipSigFile" "./artifact-output/${appZipSigFileBasename%.app.tar.gz.sig}_x64.app.tar.gz.sig"
 
-      - name: 'Desktop: Put macos aarch64 files in artifact-output'
+      - name: 'Desktop: Put macOS AArch64 files in artifact-output'
         if: matrix.type == 'macos-aarch64'
         shell: bash
         run: |
