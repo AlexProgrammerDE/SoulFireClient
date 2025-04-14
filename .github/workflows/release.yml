@@ -285,8 +285,8 @@ jobs:
           macosAarch64SigFile=$(ls release-artifacts/macos-aarch64/*.app.tar.gz.sig)
           macosAmd64File=$(ls release-artifacts/macos-amd64/*.app.tar.gz)
           macosAmd64SigFile=$(ls release-artifacts/macos-amd64/*.app.tar.gz.sig)
-          windowsAmd64File=$(ls release-artifacts/windows/*.exe)
-          windowsAmd64SigFile=$(ls release-artifacts/windows/*.exe.sig)
+          windowsAmd64File=$(ls release-artifacts/windows-amd64/*.exe)
+          windowsAmd64SigFile=$(ls release-artifacts/windows-amd64/*.exe.sig)
           currentDate=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
           cat << EOF > 'release-artifacts/latest.json'
           {
