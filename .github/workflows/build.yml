@@ -86,13 +86,13 @@ jobs:
         if: matrix.name == 'Ubuntu 22.04 (AMD64)'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf librust-atk-dev jq
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf librust-atk-dev jq xdg-utils
 
       - name: 'Ubuntu AArch64: Install linux dependencies'
         if: matrix.name == 'Ubuntu 22.04 (AArch64)'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf librust-atk-dev jq
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf librust-atk-dev jq xdg-utils
 
       - name: 'Shared: Install frontend dependencies'
         run: pnpm install
