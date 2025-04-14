@@ -62,7 +62,7 @@ jobs:
           - platform: 'macos-15'
             args: '--target aarch64-apple-darwin'
             target-path: '/aarch64-apple-darwin'
-            name: 'macOS 15 (AARCH64)'
+            name: 'macOS 15 (AArch64)'
             rust-targets: 'aarch64-apple-darwin'
             type: 'macos-aarch64'
           - platform: 'macos-13'
@@ -74,15 +74,27 @@ jobs:
           - platform: 'ubuntu-22.04'
             args: ''
             target-path: ''
-            name: 'Ubuntu 22.04'
+            name: 'Ubuntu 22.04 (AMD64)'
             rust-targets: ''
-            type: 'linux'
+            type: 'linux-amd64'
+          - platform: 'ubuntu-22.04-arm'
+            args: ''
+            target-path: ''
+            name: 'Ubuntu 22.04 (AArch64)'
+            rust-targets: ''
+            type: 'linux-aarch64'
           - platform: 'windows-2025'
             args: ''
             target-path: ''
-            name: 'Windows Server 2025'
+            name: 'Windows Server 2025 (AMD64)'
             rust-targets: ''
-            type: 'windows'
+            type: 'windows-amd64'
+          - platform: 'windows-11-arm'
+            args: ''
+            target-path: ''
+            name: 'Windows 11 (AArch64)'
+            rust-targets: ''
+            type: 'windows-aarch64'
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -144,8 +156,16 @@ jobs:
         run: |
           mkdir artifact-output
 
-      - name: 'Desktop: Put linux files in artifact-output'
-        if: matrix.type == 'linux'
+      - name: 'Desktop: Put linux amd64 files in artifact-output'
+        if: matrix.type == 'linux-amd64'
+        shell: bash
+        run: |
+          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage ./artifact-output/
+          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage.sig ./artifact-output/
+          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/deb/*.deb ./artifact-output/
+
+      - name: 'Desktop: Put linux AArch64 files in artifact-output'
+        if: matrix.type == 'linux-aarch64'
         shell: bash
         run: |
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage ./artifact-output/
@@ -176,9 +196,9 @@ jobs:
           mv "$appZipFile" "./artifact-output/${appZipFileBasename%.app.tar.gz}_aarch64.app.tar.gz"
           mv "$appZipSigFile" "./artifact-output/${appZipSigFileBasename%.app.tar.gz.sig}_aarch64.app.tar.gz.sig"
 
-      - name: 'Windows: Upload unsigned artifact'
+      - name: 'Windows AMD64: Upload unsigned artifact'
         id: upload-unsigned-artifact
-        if: matrix.type == 'windows'
+        if: matrix.type == 'windows-amd64'
         uses: actions/upload-artifact@v4
         with:
           name: windows-unsigned
@@ -186,15 +206,32 @@ jobs:
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/nsis/*.exe
           if-no-files-found: error
 
-      - name: 'Windows: Notify Admin'
-        if: matrix.type == 'windows'
+      - name: 'Windows AArch64: Upload unsigned artifact'
+        id: upload-unsigned-artifact
+        if: matrix.type == 'windows-AArch64'
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-unsigned
+          path: |
+            ./src-tauri/target${{ matrix.target-path }}/release/bundle/nsis/*.exe
+          if-no-files-found: error
+
+      - name: 'Windows AMD64: Notify Admin'
+        if: matrix.type == 'windows-amd64'
         uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.ADMIN_WEBHOOK_URL }}
           content: <@864603174899941376> Permit the signing request for SoulFireClient ${{ inputs.app-version }} https://app.signpath.io/Web/e091b552-3623-4d9d-83d7-059d8f32978b/SigningRequests
 
-      - name: 'Windows: Submit signing request'
-        if: matrix.type == 'windows'
+      - name: 'Windows AArch64: Notify Admin'
+        if: matrix.type == 'windows-aarch64'
+        uses: tsickert/discord-webhook@v7.0.0
+        with:
+          webhook-url: ${{ secrets.ADMIN_WEBHOOK_URL }}
+          content: <@864603174899941376> Permit the signing request for SoulFireClient ${{ inputs.app-version }} https://app.signpath.io/Web/e091b552-3623-4d9d-83d7-059d8f32978b/SigningRequests
+
+      - name: 'Windows AMD64: Submit signing request'
+        if: matrix.type == 'windows-amd64'
         uses: signpath/github-action-submit-signing-request@v1.1
         with:
           api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
@@ -205,8 +242,27 @@ jobs:
           wait-for-completion: true
           output-artifact-directory: '/artifact-output'
 
-      - name: 'Windows: Prepare signed artifact'
+      - name: 'Windows AArch64: Submit signing request'
+        if: matrix.type == 'windows-aarch64'
+        uses: signpath/github-action-submit-signing-request@v1.1
+        with:
+          api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
+          organization-id: 'e091b552-3623-4d9d-83d7-059d8f32978b'
+          project-slug: 'SoulFireClient'
+          signing-policy-slug: 'release-signing'
+          github-artifact-id: '${{ steps.upload-unsigned-artifact.outputs.artifact-id }}'
+          wait-for-completion: true
+          output-artifact-directory: '/artifact-output'
+
+      - name: 'Windows AMD64: Prepare signed artifact'
         if: matrix.platform == 'windows-2025'
+        shell: bash
+        run: |
+          fileName=$(ls artifact-output/*.exe)
+          pnpm tauri signer sign -k "${{ secrets.TAURI_PRIVATE_KEY }}" -p "${{ secrets.TAURI_KEY_PASSWORD }}" $fileName
+
+      - name: 'Windows AArch64: Prepare signed artifact'
+        if: matrix.platform == 'windows-11-arm'
         shell: bash
         run: |
           fileName=$(ls artifact-output/*.exe)
@@ -232,8 +288,13 @@ jobs:
       - name: Download linux artifacts
         uses: actions/download-artifact@v4
         with:
-          name: linux
-          path: release-artifacts/linux
+          name: linux-amd64
+          path: release-artifacts/linux-amd64
+      - name: Download linux artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-aarch64
+          path: release-artifacts/linux-aarch64
       - name: Download macos-aarch64 artifacts
         uses: actions/download-artifact@v4
         with:
@@ -247,19 +308,28 @@ jobs:
       - name: Download windows artifacts
         uses: actions/download-artifact@v4
         with:
-          name: windows
+          name: windows-amd64
           path: release-artifacts/windows
+      - name: Download windows artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-aarch64
+          path: release-artifacts/windows-aarch64
       - name: Create latest.json
         id: create-latest-json
         run: |
-          linuxAppImageFile=$(ls release-artifacts/linux/*.AppImage)
-          linuxAppImageSigFile=$(ls release-artifacts/linux/*.AppImage.sig)
+          linuxAmd64AppImageFile=$(ls release-artifacts/linux/*.AppImage)
+          linuxAmd64AppImageSigFile=$(ls release-artifacts/linux/*.AppImage.sig)
+          linuxAarch64AppImageFile=$(ls release-artifacts/linux/*.AppImage)
+          linuxAarch64AppImageSigFile=$(ls release-artifacts/linux/*.AppImage.sig)
           macosAarch64File=$(ls release-artifacts/macos-aarch64/*.app.tar.gz)
           macosAarch64SigFile=$(ls release-artifacts/macos-aarch64/*.app.tar.gz.sig)
           macosAmd64File=$(ls release-artifacts/macos-amd64/*.app.tar.gz)
           macosAmd64SigFile=$(ls release-artifacts/macos-amd64/*.app.tar.gz.sig)
           windowsAmd64File=$(ls release-artifacts/windows/*.exe)
           windowsAmd64SigFile=$(ls release-artifacts/windows/*.exe.sig)
+          windowsAarch64File=$(ls release-artifacts/windows/*.exe)
+          windowsAarch64SigFile=$(ls release-artifacts/windows/*.exe.sig)
           currentDate=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
           cat << EOF > 'release-artifacts/latest.json'
           {
@@ -269,6 +339,10 @@ jobs:
             "platforms": {
               "windows-x86_64": {
                 "signature": "$(cat "$windowsAmd64SigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$windowsAmd64File")"
+              },
+              "windows-aarch64": {
+                "signature": "$(cat "$windowsAarch64SigFile")",
                 "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$windowsAmd64File")"
               },
               "darwin-aarch64": {
@@ -282,6 +356,10 @@ jobs:
               "linux-x86_64": {
                 "signature": "$(cat "$linuxAppImageSigFile")",
                 "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$linuxAppImageFile")"
+              },
+              "linux-aarch64": {
+                "signature": "$(cat "$linuxAppImageSigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$linuxAppImageFile")"
               }
             }
           }
@@ -289,6 +367,7 @@ jobs:
           echo "macosAarch64File=$(basename "$macosAarch64File")" >> $GITHUB_OUTPUT
           echo "macosAmd64File=$(basename "$macosAmd64File")" >> $GITHUB_OUTPUT
           echo "windowsAmd64File=$(basename "$windowsAmd64File")" >> $GITHUB_OUTPUT
+          echo "windowsAarch64File=$(basename "$windowsAarch64File")" >> $GITHUB_OUTPUT
 
       - name: Build Changelog
         id: github_release
@@ -358,9 +437,11 @@ jobs:
             | Platform              | Download Link |
             |-----------------------|---------------|
             | Windows (x86_64)      | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.windowsAmd64File }}) |
+            | Windows (AArch64)      | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.windowsAmd64File }}) |
             | macOS (Intel)         | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAmd64File }}) |
             | macOS (Apple Silicon) | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAarch64File }}) |
             | Linux (x86_64)        | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
+            | Linux (AArch64)        | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
 
             ${{ steps.github_release.outputs.changelog }}
           tag_name: ${{ inputs.app-version }}

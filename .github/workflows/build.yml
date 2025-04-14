@@ -14,7 +14,7 @@ jobs:
             type: 'desktop'
             args: '--target aarch64-apple-darwin'
             target-path: '/aarch64-apple-darwin'
-            name: 'macOS 15 (ARM64)'
+            name: 'macOS 15 (AArch64)'
             rust-targets: 'aarch64-apple-darwin'
           - platform: 'macos-13'
             type: 'desktop'
@@ -26,13 +26,25 @@ jobs:
             type: 'desktop'
             args: ''
             target-path: ''
-            name: 'Ubuntu 22.04'
+            name: 'Ubuntu 22.04 (AMD64)'
+            rust-targets: ''
+          - platform: 'ubuntu-22.04-arm'
+            type: 'desktop'
+            args: ''
+            target-path: ''
+            name: 'Ubuntu 22.04 (AArch64)'
             rust-targets: ''
           - platform: 'windows-2025'
             type: 'desktop'
             args: ''
             target-path: ''
-            name: 'Windows Server 2025'
+            name: 'Windows Server 2025 (AMD64)'
+            rust-targets: ''
+          - platform: 'windows-11-arm'
+            type: 'desktop'
+            args: ''
+            target-path: ''
+            name: 'Windows 11 (AArch64)'
             rust-targets: ''
           - platform: 'ubuntu-22.04'
             type: 'android'
@@ -101,15 +113,25 @@ jobs:
         uses: actions/upload-artifact@v4
         if: matrix.name == 'Ubuntu 22.04'
         with:
-          name: tauri-artifact-ubuntu-2204
+          name: tauri-artifact-ubuntu-2204-amd64
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/appimage/*.AppImage
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/deb/*.deb
           if-no-files-found: error
 
-      - name: 'Desktop: Upload artifacts (macOS ARM64)'
+      - name: 'Desktop: Upload artifacts (Ubuntu)'
         uses: actions/upload-artifact@v4
-        if: matrix.name == 'macOS 15 (ARM64)'
+        if: matrix.name == 'Ubuntu 22.04 (AArch64)'
+        with:
+          name: tauri-artifact-ubuntu-2204-arm64
+          path: |
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/appimage/*.AppImage
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/deb/*.deb
+          if-no-files-found: error
+
+      - name: 'Desktop: Upload artifacts (macOS AArch64)'
+        uses: actions/upload-artifact@v4
+        if: matrix.name == 'macOS 15 (AArch64)'
         with:
           name: tauri-artifact-macos-15-arm64
           path: |
@@ -129,9 +151,18 @@ jobs:
 
       - name: 'Desktop: Upload artifacts (Windows)'
         uses: actions/upload-artifact@v4
-        if: matrix.name == 'Windows Server 2025'
+        if: matrix.name == 'Windows Server 2025 (AMD64)'
         with:
-          name: tauri-artifact-windows-2025
+          name: tauri-artifact-windows-2025-amd64
+          path: |
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/nsis/*.exe
+          if-no-files-found: error
+
+      - name: 'Desktop: Upload artifacts (Windows)'
+        uses: actions/upload-artifact@v4
+        if: matrix.name == 'Windows 11 (AArch64)'
+        with:
+          name: tauri-artifact-windows-11-arm64
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/nsis/*.exe
           if-no-files-found: error
