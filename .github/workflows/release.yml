@@ -125,11 +125,17 @@ jobs:
           cache-all-crates: true
           cache-targets: false
 
-      - name: 'Ubuntu: Install dependencies'
-        if: matrix.type == 'linux'
+      - name: 'Ubuntu AMD64: Install dependencies'
+        if: matrix.type == 'linux-amd64'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf jq
+          sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf jq xdg-utils
+
+      - name: 'Ubuntu AArch64: Install dependencies'
+        if: matrix.type == 'linux-aarch64'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf jq xdg-utils
 
       - name: 'Shared: Install frontend dependencies'
         run: pnpm install
@@ -271,10 +277,10 @@ jobs:
       - name: Create latest.json
         id: create-latest-json
         run: |
-          linuxAmd64AppImageFile=$(ls release-artifacts/linux/*.AppImage)
-          linuxAmd64AppImageSigFile=$(ls release-artifacts/linux/*.AppImage.sig)
-          linuxAarch64AppImageFile=$(ls release-artifacts/linux/*.AppImage)
-          linuxAarch64AppImageSigFile=$(ls release-artifacts/linux/*.AppImage.sig)
+          linuxAmd64AppImageFile=$(ls release-artifacts/linux-amd64/*.AppImage)
+          linuxAmd64AppImageSigFile=$(ls release-artifacts/linux-amd64/*.AppImage.sig)
+          linuxAarch64AppImageFile=$(ls release-artifacts/linux-aarch64/*.AppImage)
+          linuxAarch64AppImageSigFile=$(ls release-artifacts/linux-aarch64/*.AppImage.sig)
           macosAarch64File=$(ls release-artifacts/macos-aarch64/*.app.tar.gz)
           macosAarch64SigFile=$(ls release-artifacts/macos-aarch64/*.app.tar.gz.sig)
           macosAmd64File=$(ls release-artifacts/macos-amd64/*.app.tar.gz)
