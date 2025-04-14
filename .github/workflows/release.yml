@@ -301,12 +301,12 @@ jobs:
                 "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$macosAmd64File")"
               },
               "linux-x86_64": {
-                "signature": "$(cat "$linuxAppImageSigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$linuxAppImageFile")"
+                "signature": "$(cat "$linuxAmd64AppImageSigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$linuxAmd64AppImageFile")"
               },
               "linux-aarch64": {
-                "signature": "$(cat "$linuxAppImageSigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$linuxAppImageFile")"
+                "signature": "$(cat "$linuxAarch64AppImageSigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$linuxAarch64AppImageFile")"
               }
             }
           }
