@@ -283,8 +283,10 @@ jobs:
           linuxAarch64AppImageSigFile=$(ls release-artifacts/linux-aarch64/*.AppImage.sig)
           macosAarch64File=$(ls release-artifacts/macos-aarch64/*.app.tar.gz)
           macosAarch64SigFile=$(ls release-artifacts/macos-aarch64/*.app.tar.gz.sig)
+          macosAarch64DmgFile=$(ls release-artifacts/macos-aarch64/*.dmg)
           macosAmd64File=$(ls release-artifacts/macos-amd64/*.app.tar.gz)
           macosAmd64SigFile=$(ls release-artifacts/macos-amd64/*.app.tar.gz.sig)
+          macosAmd64DmgFile=$(ls release-artifacts/macos-amd64/*.dmg)
           windowsAmd64File=$(ls release-artifacts/windows-amd64/*.exe)
           windowsAmd64SigFile=$(ls release-artifacts/windows-amd64/*.exe.sig)
           currentDate=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
@@ -317,8 +319,8 @@ jobs:
             }
           }
           EOF
-          echo "macosAarch64File=$(basename "$macosAarch64File")" >> $GITHUB_OUTPUT
-          echo "macosAmd64File=$(basename "$macosAmd64File")" >> $GITHUB_OUTPUT
+          echo "macosAarch64DmgFile=$(basename "$macosAarch64DmgFile")" >> $GITHUB_OUTPUT
+          echo "macosAmd64DmgFile=$(basename "$macosAmd64DmgFile")" >> $GITHUB_OUTPUT
           echo "windowsAmd64File=$(basename "$windowsAmd64File")" >> $GITHUB_OUTPUT
 
       - name: Build Changelog
@@ -389,10 +391,10 @@ jobs:
             | Platform              | Download Link |
             |-----------------------|---------------|
             | Windows (x86_64)      | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.windowsAmd64File }}) |
-            | macOS (Intel)         | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAmd64File }}) |
-            | macOS (Apple Silicon) | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAarch64File }}) |
+            | macOS (Intel)         | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAmd64DmgFile }}) |
+            | macOS (Apple Silicon) | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAarch64DmgFile }}) |
             | Linux (x86_64)        | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
-            | Linux (AArch64)        | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
+            | Linux (AArch64)       | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
 
             ${{ steps.github_release.outputs.changelog }}
           tag_name: ${{ inputs.app-version }}
