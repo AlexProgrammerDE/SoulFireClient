@@ -77,7 +77,10 @@ jobs:
         if: matrix.type == 'windows-aarch64'
         run: |
           curl -sSf -o rustup-init.exe https://win.rustup.rs/aarch64
-          .\rustup-init.exe -y --default-toolchain stable --profile minimal
+          .\rustup-init.exe -y --default-toolchain none
+          $env:CARGO_HOME = "$env:USERPROFILE\.cargo"
+          echo "CARGO_HOME=$env:CARGO_HOME" >> $env:GITHUB_ENV
+          echo "$env:CARGO_HOME\bin" >> $env:GITHUB_PATH
 
       - name: 'Shared: Install Rust toolchain'
         uses: dtolnay/rust-toolchain@nightly
