@@ -92,7 +92,7 @@ jobs:
           - platform: 'windows-11-arm'
             args: '--target aarch64-pc-windows-msvc'
             target-path: '/aarch64-pc-windows-msvc'
-            name: 'Windows 11 ARM (AArch64)'
+            name: 'Windows 11 (AArch64)'
             rust-targets: 'aarch64-pc-windows-msvc'
             type: 'windows-aarch64'
 
