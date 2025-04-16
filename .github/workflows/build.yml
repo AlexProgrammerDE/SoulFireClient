@@ -77,7 +77,7 @@ jobs:
         if: matrix.type == 'windows-aarch64'
         run: |
           curl -sSf -o rustup-init.exe https://win.rustup.rs/aarch64
-          rustup-init.exe -y --default-toolchain stable --profile minimal
+          .\rustup-init.exe -y --default-toolchain stable --profile minimal
 
       - name: 'Shared: Install Rust toolchain'
         uses: dtolnay/rust-toolchain@nightly
