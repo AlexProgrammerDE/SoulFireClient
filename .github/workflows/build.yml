@@ -76,7 +76,8 @@ jobs:
       - name: 'Windows 11 ARM: Install rustup'
         if: matrix.type == 'windows-aarch64'
         run: |
-          Invoke-WebRequest https://win.rustup.rs -UseBasicParsing -OutFile rustup-init.exe; Start-Process .\rustup-init.exe -Wait
+          curl -sSf -o rustup-init.exe https://win.rustup.rs/aarch64
+          rustup-init.exe -y --default-toolchain stable --profile minimal
 
       - name: 'Shared: Install Rust toolchain'
         uses: dtolnay/rust-toolchain@nightly
