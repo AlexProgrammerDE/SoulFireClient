@@ -73,7 +73,7 @@ jobs:
         with:
           version: 9
 
-      - name: 'Windows 11 ARM: Install rustup'
+      - name: 'Windows AArch64: Install rustup'
         if: matrix.type == 'windows-aarch64'
         run: |
           curl -sSf -o rustup-init.exe https://win.rustup.rs/aarch64
