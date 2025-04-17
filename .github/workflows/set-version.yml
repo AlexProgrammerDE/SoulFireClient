@@ -62,9 +62,9 @@ jobs:
         run: |
           if ! grep -q "<release version=\"${{ inputs.version }}\"" com.soulfiremc.soulfire.metainfo.xml; then
             sed -i "/<releases>/a\\
-                <release version=\"${{ inputs.version }}\" date=\"$(date +"%Y-%m-%d")\">\\
-                    <url type=\"details\">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/${{ inputs.version }}</url>\\
-                </release>" com.soulfiremc.soulfire.metainfo.xml
+              <release version=\"${{ inputs.version }}\" date=\"$(date +"%Y-%m-%d")\">\\
+                <url type=\"details\">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/${{ inputs.version }}</url>\\
+              </release>" com.soulfiremc.soulfire.metainfo.xml
             echo "Added release ${{ inputs.version }} to metainfo file"
           else
             echo "Release version ${{ inputs.version }} already exists in metainfo file, skipping addition"
