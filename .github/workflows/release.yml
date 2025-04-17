@@ -216,7 +216,7 @@ jobs:
         if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
         uses: actions/upload-artifact@v4
         with:
-          name: windows-unsigned
+          name: ${{ matrix.type }}-unsigned
           path: |
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/nsis/*.exe
           if-no-files-found: error
