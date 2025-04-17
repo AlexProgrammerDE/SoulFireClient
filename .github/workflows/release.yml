@@ -424,6 +424,9 @@ jobs:
             | Linux (x86_64)        | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
             | Linux (AArch64)       | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
 
+            > [!TIP]
+            > x86_64 means Intel and AMD CPUs; AArch64 means ARM CPUs like Qualcomm Snapdragon, which are used in some laptops.
+
             ${{ steps.github_release.outputs.changelog }}
           tag_name: ${{ inputs.app-version }}
           generate_release_notes: false
