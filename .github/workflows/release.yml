@@ -89,6 +89,12 @@ jobs:
             name: 'Windows Server 2025 (AMD64)'
             rust-targets: ''
             type: 'windows-amd64'
+          - platform: 'windows-11-arm'
+            args: '--target aarch64-pc-windows-msvc'
+            target-path: '/aarch64-pc-windows-msvc'
+            name: 'Windows 11 (AArch64)'
+            rust-targets: 'aarch64-pc-windows-msvc'
+            type: 'windows-aarch64'
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -110,6 +116,15 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 9
+
+      - name: 'Windows AArch64: Install rustup'
+        if: matrix.type == 'windows-aarch64'
+        run: |
+          curl -sSf -o rustup-init.exe https://win.rustup.rs/aarch64
+          .\rustup-init.exe -y --default-toolchain none
+          $env:CARGO_HOME = "$env:USERPROFILE\.cargo"
+          echo "CARGO_HOME=$env:CARGO_HOME" >> $env:GITHUB_ENV
+          echo "$env:CARGO_HOME\bin" >> $env:GITHUB_PATH
 
       - name: 'Shared: Install Rust toolchain'
         uses: dtolnay/rust-toolchain@nightly
@@ -196,25 +211,25 @@ jobs:
           mv "$appZipFile" "./artifact-output/${appZipFileBasename%.app.tar.gz}_aarch64.app.tar.gz"
           mv "$appZipSigFile" "./artifact-output/${appZipSigFileBasename%.app.tar.gz.sig}_aarch64.app.tar.gz.sig"
 
-      - name: 'Windows AMD64: Upload unsigned artifact'
+      - name: 'Windows AMD64/AArch64: Upload unsigned artifact'
         id: upload-unsigned-artifact
-        if: matrix.type == 'windows-amd64'
+        if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
         uses: actions/upload-artifact@v4
         with:
-          name: windows-unsigned
+          name: ${{ matrix.type }}-unsigned
           path: |
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/nsis/*.exe
           if-no-files-found: error
 
-      - name: 'Windows AMD64: Notify Admin'
-        if: matrix.type == 'windows-amd64'
+      - name: 'Windows AMD64/AArch64: Notify Admin'
+        if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
         uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.ADMIN_WEBHOOK_URL }}
-          content: <@864603174899941376> Permit the signing request for SoulFireClient ${{ inputs.app-version }} https://app.signpath.io/Web/e091b552-3623-4d9d-83d7-059d8f32978b/SigningRequests
+          content: <@864603174899941376> Permit the signing request for SoulFireClient ${{ inputs.app-version }} on ${{ matrix.type }} https://app.signpath.io/Web/e091b552-3623-4d9d-83d7-059d8f32978b/SigningRequests
 
-      - name: 'Windows AMD64: Submit signing request'
-        if: matrix.type == 'windows-amd64'
+      - name: 'Windows AMD64/AArch64: Submit signing request'
+        if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
         uses: signpath/github-action-submit-signing-request@v1.1
         with:
           api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
@@ -225,8 +240,8 @@ jobs:
           wait-for-completion: true
           output-artifact-directory: '/artifact-output'
 
-      - name: 'Windows AMD64: Prepare signed artifact'
-        if: matrix.platform == 'windows-2025'
+      - name: 'Windows AMD64/AArch64: Prepare signed artifact'
+        if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
         shell: bash
         run: |
           fileName=$(ls artifact-output/*.exe)
@@ -249,12 +264,12 @@ jobs:
 
     runs-on: ubuntu-24.04
     steps:
-      - name: Download linux artifacts
+      - name: Download linux-amd64 artifacts
         uses: actions/download-artifact@v4
         with:
           name: linux-amd64
           path: release-artifacts/linux-amd64
-      - name: Download linux artifacts
+      - name: Download linux-aarch64 artifacts
         uses: actions/download-artifact@v4
         with:
           name: linux-aarch64
@@ -269,11 +284,16 @@ jobs:
         with:
           name: macos-amd64
           path: release-artifacts/macos-amd64
-      - name: Download windows artifacts
+      - name: Download windows-amd64 artifacts
         uses: actions/download-artifact@v4
         with:
           name: windows-amd64
           path: release-artifacts/windows-amd64
+      - name: Download windows-aarch64 artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-aarch64
+          path: release-artifacts/windows-aarch64
       - name: Create latest.json
         id: create-latest-json
         run: |
@@ -289,6 +309,8 @@ jobs:
           macosAmd64DmgFile=$(ls release-artifacts/macos-amd64/*.dmg)
           windowsAmd64File=$(ls release-artifacts/windows-amd64/*.exe)
           windowsAmd64SigFile=$(ls release-artifacts/windows-amd64/*.exe.sig)
+          windowsAarch64File=$(ls release-artifacts/windows-aarch64/*.exe)
+          windowsAarch64SigFile=$(ls release-artifacts/windows-aarch64/*.exe.sig)
           currentDate=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
           cat << EOF > 'release-artifacts/latest.json'
           {
@@ -299,6 +321,10 @@ jobs:
               "windows-x86_64": {
                 "signature": "$(cat "$windowsAmd64SigFile")",
                 "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$windowsAmd64File")"
+              },
+              "windows-aarch64": {
+                "signature": "$(cat "$windowsAarch64SigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$windowsAarch64File")"
               },
               "darwin-aarch64": {
                 "signature": "$(cat "$macosAarch64SigFile")",
@@ -322,6 +348,7 @@ jobs:
           echo "macosAarch64DmgFile=$(basename "$macosAarch64DmgFile")" >> $GITHUB_OUTPUT
           echo "macosAmd64DmgFile=$(basename "$macosAmd64DmgFile")" >> $GITHUB_OUTPUT
           echo "windowsAmd64File=$(basename "$windowsAmd64File")" >> $GITHUB_OUTPUT
+          echo "windowsAarch64File=$(basename "$windowsAarch64File")" >> $GITHUB_OUTPUT
 
       - name: Build Changelog
         id: github_release
@@ -391,10 +418,14 @@ jobs:
             | Platform              | Download Link |
             |-----------------------|---------------|
             | Windows (x86_64)      | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.windowsAmd64File }}) |
+            | Windows (AArch64)     | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.windowsAarch64File }}) |
             | macOS (Intel)         | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAmd64DmgFile }}) |
             | macOS (Apple Silicon) | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAarch64DmgFile }}) |
             | Linux (x86_64)        | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
             | Linux (AArch64)       | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
+
+            > [!TIP]
+            > x86_64 means Intel and AMD CPUs; AArch64 means ARM CPUs like Qualcomm Snapdragon, which are used in some laptops.
 
             ${{ steps.github_release.outputs.changelog }}
           tag_name: ${{ inputs.app-version }}

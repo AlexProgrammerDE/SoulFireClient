@@ -40,6 +40,12 @@ jobs:
             name: 'Windows Server 2025 (AMD64)'
             rust-targets: ''
             type: 'windows-amd64'
+          - platform: 'windows-11-arm'
+            args: '--target aarch64-pc-windows-msvc'
+            target-path: '/aarch64-pc-windows-msvc'
+            name: 'Windows 11 (AArch64)'
+            rust-targets: 'aarch64-pc-windows-msvc'
+            type: 'windows-aarch64'
           - platform: 'ubuntu-22.04'
             args: ''
             target-path: ''
@@ -66,6 +72,15 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 9
+
+      - name: 'Windows AArch64: Install rustup'
+        if: matrix.type == 'windows-aarch64'
+        run: |
+          curl -sSf -o rustup-init.exe https://win.rustup.rs/aarch64
+          .\rustup-init.exe -y --default-toolchain none
+          $env:CARGO_HOME = "$env:USERPROFILE\.cargo"
+          echo "CARGO_HOME=$env:CARGO_HOME" >> $env:GITHUB_ENV
+          echo "$env:CARGO_HOME\bin" >> $env:GITHUB_PATH
 
       - name: 'Shared: Install Rust toolchain'
         uses: dtolnay/rust-toolchain@nightly
@@ -113,7 +128,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: matrix.type == 'linux-amd64'
         with:
-          name: tauri-artifact-ubuntu-2204-amd64
+          name: tauri-artifact-linux-amd64
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/appimage/*.AppImage
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/deb/*.deb
@@ -123,7 +138,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: matrix.type == 'linux-aarch64'
         with:
-          name: tauri-artifact-ubuntu-2204-aarch64
+          name: tauri-artifact-linux-aarch64
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/appimage/*.AppImage
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/deb/*.deb
@@ -133,7 +148,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: matrix.type == 'macos-aarch64'
         with:
-          name: tauri-artifact-macos-15-aarch64
+          name: tauri-artifact-macos-aarch64
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/macos/*.app
@@ -143,7 +158,7 @@ jobs:
         uses: actions/upload-artifact@v4
         if: matrix.type == 'macos-amd64'
         with:
-          name: tauri-artifact-macos-13-amd64
+          name: tauri-artifact-macos-amd64
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/macos/*.app
@@ -153,7 +168,16 @@ jobs:
         uses: actions/upload-artifact@v4
         if: matrix.type == 'windows-amd64'
         with:
-          name: tauri-artifact-windows-2025-amd64
+          name: tauri-artifact-windows-amd64
+          path: |
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/nsis/*.exe
+          if-no-files-found: error
+
+      - name: 'Desktop: Upload artifacts (Windows AArch64)'
+        uses: actions/upload-artifact@v4
+        if: matrix.type == 'windows-aarch64'
+        with:
+          name: tauri-artifact-windows-aarch64
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/nsis/*.exe
           if-no-files-found: error

@@ -23,73 +23,73 @@
     }
   },
   "users": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Filtrer les utilisateurs...",
     "baseUserDialog": {
       "form": {
         "username": {
-          "min": "",
-          "max": "",
-          "regex": "",
+          "min": "Le nom d'utilisateur doit contenir au moins 3 caractères",
+          "max": "Les noms de scripts doivent comporter au maximum 32 caractères",
+          "regex": "Les noms d'utilisateurs doivent être en minuscule, commencer par un caractère alphanumérique, suivi de plus de caractères alphanumériques ou de tirets, et se terminer par un caractère alphanumérique.",
           "label": "Nom d´utilisateur",
-          "placeholder": "",
-          "description": ""
+          "placeholder": "Entrez un nom d'utilisateur",
+          "description": "Un nom d'utilisateur unique qui identifie l'utilisateur"
         },
         "email": {
           "label": "Email",
-          "placeholder": "",
-          "description": ""
+          "placeholder": "Entrez l'adresse e-mail",
+          "description": "L'adresse e-mail de l'utilisateur utilisé pour les notifications et la connexion"
         },
         "role": {
           "label": "Rôle",
-          "description": "",
+          "description": "Le rôle de l'utilisateur. Les administrateurs peuvent gérer les utilisateurs et toutes les instances. Les utilisateurs ne peuvent gérer que leurs propres instances.",
           "user": "Utilisateur",
           "admin": "Administrateur"
         }
       }
     },
     "addUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Ajouter un nouvel utilisateur",
+      "description": "Ajouter un nouvel utilisateur à ce serveur",
       "form": {
         "cancel": "Annuler",
-        "add": ""
+        "add": "Ajouter un utilisateur"
       }
     },
     "updateUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Mettre à jour l'utilisateur",
+      "description": "Mettre à jour les informations de l'utilisateur",
       "form": {
         "cancel": "Annuler",
-        "update": ""
+        "update": "Mettre à jour l'utilisateur"
       }
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Ajout de l'utilisateur...",
+      "success": "Utilisateur ajouté !",
+      "error": "Impossible d'ajouter l'utilisateur"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Mise à jour de l'utilisateur...",
+      "success": "Utilisateur mis à jour !",
+      "error": "Impossible de mettre à jour l'utilisateur"
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Suppression des utilisateurs...",
+      "success": "Utilisateurs supprimés !",
+      "error": "Impossible de supprimer les utilisateurs"
     },
     "invalidateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Déconnexion des utilisateurs...",
+      "success": "Utilisateurs déconnectés !",
+      "error": "Échec de la déconnexion des utilisateurs"
     },
     "table": {
       "username": "Nom d´utilisateur",
       "email": "Email",
       "role": "Rôle",
-      "createdAt": "",
-      "minIssuedAt": "",
-      "actions": ""
+      "createdAt": "Créé",
+      "minIssuedAt": "Connexion minimum",
+      "actions": "Actions"
     }
   }
 }
