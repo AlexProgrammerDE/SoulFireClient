@@ -264,12 +264,12 @@ jobs:
 
     runs-on: ubuntu-24.04
     steps:
-      - name: Download linux artifacts
+      - name: Download linux-amd64 artifacts
         uses: actions/download-artifact@v4
         with:
           name: linux-amd64
           path: release-artifacts/linux-amd64
-      - name: Download linux artifacts
+      - name: Download linux-aarch64 artifacts
         uses: actions/download-artifact@v4
         with:
           name: linux-aarch64
