@@ -5,16 +5,16 @@
     "noAddressOrToken": "No servr addres or token findz",
     "page": {
       "title": "Ewwow",
-      "description": "",
+      "description": "Error happen when i try give you page. You can see whay in the consol.",
       "logOut": "Walk out",
       "reloadPage": "Spin paeg"
     },
-    "connectionFailed": ""
+    "connectionFailed": "Cunnection unsuccessful."
   },
   "notFound": {
     "page": {
-      "title": "",
-      "description": "",
+      "title": "Nuh Found",
+      "description": "Ma can't find your page",
       "logOut": "Walk out",
       "reloadPage": "Spin paeg"
     }
@@ -47,7 +47,7 @@
           "placeholder": "Mah Minecraft Bot",
           "description": "Teh naym u wantz 2 giv 2 dis instanec.",
           "min": "Teh friendly naym must bees at least 3 characterz long.",
-          "max": "",
+          "max": "Teh friendly naym must bees at most 32 characterz long.",
           "regex": ""
         },
         "cancel": "cancel k?",
@@ -66,8 +66,8 @@
         "firstClipboardItem": "U had multipel itemz in teh clipboard, only usin furst wan.",
         "fromClipboard": "Frum clipboard",
         "textarea": {
-          "placeholder": "",
-          "submit": ""
+          "placeholder": "Give taxt here...",
+          "submit": "Load form taxt"
         }
       },
       "url": {
@@ -75,34 +75,34 @@
         "form": {
           "url": {
             "placeholder": "Put URL hah...",
-            "empty": ""
+            "empty": "Plez give valid URL"
           }
         },
-        "submit": "",
+        "submit": "Load form URL",
         "toast": {
-          "loading": "",
-          "success": "",
-          "error": ""
+          "loading": "Dawnloadin data...",
+          "success": "Data lodaded!",
+          "error": "Teh download failed"
         }
       }
     }
   },
   "commandInput": {
-    "placeholder": ""
+    "placeholder": "Entah teh command (type 'help' if yar confoosed)"
   },
   "controls": {
-    "start": "",
-    "resume": "",
-    "pause": "",
-    "stop": "",
+    "start": "Strat",
+    "resume": "Resoome",
+    "pause": "Pawse",
+    "stop": "Stawp",
     "startToast": {
       "loading": "",
-      "success": "",
-      "error": ""
+      "success": "Teh attack successfully strated",
+      "error": "Fialed to strat attacc"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
+      "loading": "Resooming attak...",
+      "success": "Teh attack resumed perfectly",
       "error": ""
     },
     "pauseToast": {
@@ -120,7 +120,7 @@
     "invalidName": ""
   },
   "dataTable": {
-    "noResults": "",
+    "noResults": "Nu results.",
     "rowsSelected": "",
     "rowsPerPage": "",
     "currentPage": "",
@@ -128,7 +128,7 @@
     "goPrevious": "",
     "goNext": "",
     "goLast": "",
-    "selectAll": "",
+    "selectAll": "Selecc all",
     "selectRow": ""
   },
   "pluginCard": {
@@ -141,11 +141,11 @@
     "namespacesNotFound": "",
     "stringList": {
       "placeholder": "",
-      "add": "",
-      "remove": ""
+      "add": "Put stuff",
+      "remove": "Exit stuff"
     },
     "invalidNumberToast": {
-      "title": "",
+      "title": "Dats Invalid Number!",
       "description": ""
     }
   },
@@ -358,7 +358,7 @@
       "description": "",
       "form": {
         "cancel": "cancel k?",
-        "add": ""
+        "add": "Put stuff"
       }
     },
     "updateScriptDialog": {
