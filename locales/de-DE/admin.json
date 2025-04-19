@@ -87,9 +87,9 @@
       "username": "Benutzername",
       "email": "",
       "role": "Rolle",
-      "createdAt": "",
-      "minIssuedAt": "",
-      "actions": ""
+      "createdAt": "Erstellt",
+      "minIssuedAt": "Min. Login",
+      "actions": "Aktionen"
     }
   }
 }
