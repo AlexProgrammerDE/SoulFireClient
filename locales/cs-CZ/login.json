@@ -1,0 +1,86 @@
+{
+  "header": {
+    "image": {
+      "alt": ""
+    },
+    "title": ""
+  },
+  "connect": {
+    "title": "",
+    "description": "",
+    "integrated": {
+      "title": "",
+      "description": ""
+    },
+    "dedicated": {
+      "title": "",
+      "description": ""
+    },
+    "demo": {
+      "title": "",
+      "description": ""
+    }
+  },
+  "integrated": {
+    "preparing": "",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "description": "",
+    "form": {
+      "jvmArgs": {
+        "title": "",
+        "description": "",
+        "placeholder": ""
+      },
+      "back": "",
+      "start": ""
+    }
+  },
+  "dedicated": {
+    "description": "",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "form": {
+      "address": {
+        "title": "",
+        "description": "",
+        "placeholder": ""
+      },
+      "token": {
+        "title": "",
+        "placeholder": "",
+        "description": ""
+      },
+      "email": {
+        "title": "",
+        "placeholder": "",
+        "description": ""
+      },
+      "back": "",
+      "useToken": "",
+      "useEmail": "",
+      "login": ""
+    }
+  },
+  "emailCode": {
+    "description": "",
+    "toast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "back": ""
+  },
+  "footer": {
+    "version": "",
+    "preview": "",
+    "production": "",
+    "helpTranslate": ""
+  }
+}

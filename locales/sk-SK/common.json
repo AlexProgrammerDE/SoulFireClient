@@ -1,0 +1,403 @@
+{
+  "locale": "",
+  "cancel": "",
+  "error": {
+    "noAddressOrToken": "",
+    "page": {
+      "title": "",
+      "description": "",
+      "logOut": "",
+      "reloadPage": ""
+    },
+    "connectionFailed": ""
+  },
+  "notFound": {
+    "page": {
+      "title": "",
+      "description": "",
+      "logOut": "",
+      "reloadPage": ""
+    }
+  },
+  "pending": {
+    "connecting": ""
+  },
+  "dialog": {
+    "about": {
+      "title": "",
+      "description": "",
+      "type": "",
+      "value": "",
+      "fields": {
+        "operatingSystem": "",
+        "platform": "",
+        "locale": "",
+        "architecture": "",
+        "environment": "",
+        "browser": ""
+      },
+      "close": ""
+    },
+    "createInstance": {
+      "title": "",
+      "description": "",
+      "form": {
+        "friendlyName": {
+          "label": "",
+          "placeholder": "",
+          "description": "",
+          "min": "",
+          "max": "",
+          "regex": ""
+        },
+        "cancel": "",
+        "create": ""
+      },
+      "createToast": {
+        "loading": "",
+        "success": "",
+        "error": ""
+      }
+    },
+    "import": {
+      "main": {
+        "fromFile": "",
+        "fromUrl": "",
+        "firstClipboardItem": "",
+        "fromClipboard": "",
+        "textarea": {
+          "placeholder": "",
+          "submit": ""
+        }
+      },
+      "url": {
+        "description": "",
+        "form": {
+          "url": {
+            "placeholder": "",
+            "empty": ""
+          }
+        },
+        "submit": "",
+        "toast": {
+          "loading": "",
+          "success": "",
+          "error": ""
+        }
+      }
+    }
+  },
+  "commandInput": {
+    "placeholder": ""
+  },
+  "controls": {
+    "start": "",
+    "resume": "",
+    "pause": "",
+    "stop": "",
+    "startToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "resumeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "pauseToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "stopToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
+  },
+  "icon": {
+    "invalidName": ""
+  },
+  "dataTable": {
+    "noResults": "",
+    "rowsSelected": "",
+    "rowsPerPage": "",
+    "currentPage": "",
+    "goFirst": "",
+    "goPrevious": "",
+    "goNext": "",
+    "goLast": "",
+    "selectAll": "",
+    "selectRow": ""
+  },
+  "pluginCard": {
+    "version": "",
+    "author": "",
+    "license": "",
+    "website": ""
+  },
+  "settingsPage": {
+    "namespacesNotFound": "",
+    "stringList": {
+      "placeholder": "",
+      "add": "",
+      "remove": ""
+    },
+    "invalidNumberToast": {
+      "title": "",
+      "description": ""
+    }
+  },
+  "terminal": {
+    "noLogs": "",
+    "demo-1": "",
+    "demo-2": "",
+    "demo-3": "",
+    "demo-4": ""
+  },
+  "uiBreadcrumb": {
+    "more": ""
+  },
+  "uiDialog": {
+    "close": ""
+  },
+  "uiSheet": {
+    "close": ""
+  },
+  "uiSidebar": {
+    "toggle": ""
+  },
+  "castMenu": {
+    "title": "",
+    "disconnected": "",
+    "alreadyConnected": "",
+    "connectToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "noDevices": "",
+    "broadcastLabel": "",
+    "broadcastToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    }
+  },
+  "instanceSidebar": {
+    "readDocumentation": "",
+    "backToDashboard": "",
+    "deleteToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "instancesGroup": "",
+    "createInstance": "",
+    "loadProfileToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "loadProfile": "",
+    "loadFromFile": "",
+    "profileSaved": "",
+    "saveProfile": "",
+    "deleteInstance": "",
+    "controlsGroup": "",
+    "console": "",
+    "audit-log": "",
+    "settingsGroup": "",
+    "pluginsGroup": "",
+    "pluginSettings": "",
+    "botSettings": "",
+    "accountSettings": "",
+    "metaSettings": "",
+    "proxySettings": "",
+    "aiSettings": "",
+    "discoverPlugins": "",
+    "instanceScripts": ""
+  },
+  "userSidebar": {
+    "readDocumentation": "",
+    "userGroup": "",
+    "instances": "",
+    "access": "",
+    "createInstance": "",
+    "settings": "",
+    "adminGroup": "",
+    "adminOverview": "",
+    "adminConsole": "",
+    "users": "",
+    "adminScripts": "",
+    "serverSettings": "",
+    "devSettings": "",
+    "theme": {
+      "title": "",
+      "system": "",
+      "light": "",
+      "dark": ""
+    },
+    "terminal": {
+      "title": ""
+    },
+    "configDir": "",
+    "dataDir": "",
+    "about": "",
+    "logOut": "",
+    "logOutToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "exit": "",
+    "stopImpersonating": "",
+    "helpTranslate": "Preložiť SoulFire"
+  },
+  "sidebar": {
+    "documentation": "",
+    "buyMeACoffee": "",
+    "discord": ""
+  },
+  "breadcrumbs": {
+    "admin": "",
+    "settings": "",
+    "controls": "",
+    "plugins": ""
+  },
+  "noInstancesFound": "",
+  "pageName": {
+    "console": "",
+    "audit-log": "",
+    "instances": "",
+    "access": "",
+    "settings": "",
+    "proxySettings": "",
+    "overview": "",
+    "users": "",
+    "accountSettings": "",
+    "metaSettings": "",
+    "discoverPlugins": "",
+    "adminScripts": "",
+    "instanceScripts": ""
+  },
+  "access": {
+    "webdav": {
+      "title": "",
+      "description": "",
+      "publicAddress": "",
+      "personalToken": "",
+      "securityWarning": "",
+      "addressDescription": ""
+    },
+    "api": {
+      "title": "",
+      "description": "",
+      "publicAddress": "",
+      "personalToken": "",
+      "securityWarning": "",
+      "addressDescription": ""
+    },
+    "token": {
+      "generate": "",
+      "placeholder": "",
+      "generating": "",
+      "success": "",
+      "error": "",
+      "copy": "",
+      "copied": ""
+    },
+    "address": {
+      "copy": "",
+      "copied": ""
+    },
+    "documentation": "",
+    "howToConnect": ""
+  },
+  "copiedToClipboard": "",
+  "instanceState": {
+    "starting": "",
+    "running": "",
+    "paused": "",
+    "stopping": "",
+    "stopped": ""
+  },
+  "auditLog": {
+    "filterPlaceholder": "",
+    "user": "",
+    "action": "",
+    "timestamp": "",
+    "executedCommand": "",
+    "startedAttack": "",
+    "resumedAttack": "",
+    "pausedAttack": "",
+    "stoppedAttack": ""
+  },
+  "pickADate": "",
+  "scripts": {
+    "filterPlaceholder": "",
+    "baseScriptDialog": {
+      "form": {
+        "scriptName": {
+          "min": "",
+          "max": "",
+          "regex": "",
+          "label": "",
+          "placeholder": "",
+          "description": ""
+        },
+        "elevatedPermissions": {
+          "label": "",
+          "description": ""
+        }
+      }
+    },
+    "addScriptDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "",
+        "add": ""
+      }
+    },
+    "updateScriptDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "",
+        "update": ""
+      }
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "updateToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "restartToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "type": "",
+      "scriptName": "",
+      "language": "",
+      "elevatedPermissions": "",
+      "createdAt": "",
+      "actions": ""
+    },
+    "globalScript": "",
+    "instanceScript": ""
+  }
+}
