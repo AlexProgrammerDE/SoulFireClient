@@ -19,7 +19,7 @@ importers:
         version: 5.0.1(react-hook-form@7.55.0(react@19.1.0))
       '@icons-pack/react-simple-icons':
         specifier: ^12.5.0
-        version: 12.6.0(react@19.1.0)
+        version: 12.7.0(react@19.1.0)
       '@protobuf-ts/grpcweb-transport':
         specifier: ^2.9.6
         version: 2.9.6
@@ -148,7 +148,7 @@ importers:
         version: 2.0.5
       i18next:
         specifier: ^25.0.0
-        version: 25.0.0(typescript@5.8.3)
+        version: 25.0.1(typescript@5.8.3)
       i18next-browser-languagedetector:
         specifier: ^8.0.4
         version: 8.0.5
@@ -187,7 +187,7 @@ importers:
         version: 7.55.0(react@19.1.0)
       react-i18next:
         specifier: ^15.4.1
-        version: 15.4.1(i18next@25.0.0(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+        version: 15.4.1(i18next@25.0.1(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-number-format:
         specifier: ^5.4.3
         version: 5.4.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -217,7 +217,7 @@ importers:
         version: 3.24.3
       zod-i18n-map:
         specifier: ^2.27.0
-        version: 2.27.0(i18next@25.0.0(typescript@5.8.3))(zod@3.24.3)
+        version: 2.27.0(i18next@25.0.1(typescript@5.8.3))(zod@3.24.3)
     devDependencies:
       '@eslint/js':
         specifier: ^9.23.0
@@ -813,8 +813,8 @@ packages:
     resolution: {integrity: sha512-xeO57FpIu4p1Ri3Jq/EXq4ClRm86dVF2z/+kvFnyqVYRavTZmaFaUBbWCOuuTh0o/g7DSsk6kc2vrS4Vl5oPOQ==}
     engines: {node: '>=18.18'}
 
-  '@icons-pack/react-simple-icons@12.6.0':
-    resolution: {integrity: sha512-CQJbCvJHn1GpnyJQrkXNVXSS5ct/MPzcmr2m8HUe7gCHUVG7Hl2PwrIIAvCcJ5hZ+3CAYi4WoWERoFj8DzGl/A==}
+  '@icons-pack/react-simple-icons@12.7.0':
+    resolution: {integrity: sha512-XpG7e8buAco8AbvCar+4LX5do0L98d/NaeHoTuW4awyUH33id7HQiiMomK+cS1MRxfLNMmhW2W0223/fMC0unw==}
     peerDependencies:
       react: ^16.13 || ^17 || ^18 || ^19
 
@@ -3111,8 +3111,8 @@ packages:
   i18next-resources-to-backend@1.2.1:
     resolution: {integrity: sha512-okHbVA+HZ7n1/76MsfhPqDou0fptl2dAlhRDu2ideXloRRduzHsqDOznJBef+R3DFZnbvWoBW+KxJ7fnFjd6Yw==}
 
-  i18next@25.0.0:
-    resolution: {integrity: sha512-POPvwjOPR1GQvRnbikTMPEhQD+ekd186MHE6NtVxl3Lby+gPp0iq60eCqGrY6wfRnp1lejjFNu0EKs1afA322w==}
+  i18next@25.0.1:
+    resolution: {integrity: sha512-8S8PyZbrymJZn3DaN70/34JYWNhsqrU6yA4MuzcygJBv+41dgNMocEA8h+kV1P7MCc1ll03lOTOIXE7mpNCicw==}
     peerDependencies:
       typescript: ^5
     peerDependenciesMeta:
@@ -4813,7 +4813,7 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.2': {}
 
-  '@icons-pack/react-simple-icons@12.6.0(react@19.1.0)':
+  '@icons-pack/react-simple-icons@12.7.0(react@19.1.0)':
     dependencies:
       react: 19.1.0
 
@@ -7327,7 +7327,7 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.27.0
 
-  i18next@25.0.0(typescript@5.8.3):
+  i18next@25.0.1(typescript@5.8.3):
     dependencies:
       '@babel/runtime': 7.27.0
     optionalDependencies:
@@ -7927,11 +7927,11 @@ snapshots:
 
   react-hooks@1.0.1: {}
 
-  react-i18next@15.4.1(i18next@25.0.0(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+  react-i18next@15.4.1(i18next@25.0.1(typescript@5.8.3))(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@babel/runtime': 7.27.0
       html-parse-stringify: 3.0.1
-      i18next: 25.0.0(typescript@5.8.3)
+      i18next: 25.0.1(typescript@5.8.3)
       react: 19.1.0
     optionalDependencies:
       react-dom: 19.1.0(react@19.1.0)
@@ -8700,9 +8700,9 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod-i18n-map@2.27.0(i18next@25.0.0(typescript@5.8.3))(zod@3.24.3):
+  zod-i18n-map@2.27.0(i18next@25.0.1(typescript@5.8.3))(zod@3.24.3):
     dependencies:
-      i18next: 25.0.0(typescript@5.8.3)
+      i18next: 25.0.1(typescript@5.8.3)
       zod: 3.24.3
 
   zod@3.24.3: {}
