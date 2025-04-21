@@ -162,11 +162,11 @@ importers:
         specifier: ^0.11.0
         version: 0.11.0
       lucide-react:
-        specifier: ^0.501.0
-        version: 0.501.0(react@19.1.0)
+        specifier: ^0.503.0
+        version: 0.503.0(react@19.1.0)
       lucide-static:
-        specifier: ^0.501.0
-        version: 0.501.0
+        specifier: ^0.503.0
+        version: 0.503.0
       mime-matcher:
         specifier: ^1.0.5
         version: 1.0.5
@@ -3454,13 +3454,13 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
-  lucide-react@0.501.0:
-    resolution: {integrity: sha512-E2KoyhW59fCb/yUbR3rbDer83fqn7a8NG91ZhIot2yWaPHjPyGzzsNKh40N//GezYShAuycf3TcQksRQznIsRw==}
+  lucide-react@0.503.0:
+    resolution: {integrity: sha512-HGGkdlPWQ0vTF8jJ5TdIqhQXZi6uh3LnNgfZ8MHiuxFfX3RZeA79r2MW2tHAZKlAVfoNE8esm3p+O6VkIvpj6w==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  lucide-static@0.501.0:
-    resolution: {integrity: sha512-iwOoSXoxTZHfipTgzsHXIA+8ycRCBMFtjPkI7CMLkoyJprPskIJFOPRlLc5xFSNx+APlftWEkuUMaULKHSfAjQ==}
+  lucide-static@0.503.0:
+    resolution: {integrity: sha512-uwuom0ibobQx1yxuCnuR9X1sai8WcyT+qdw4Na4NOMoCLbhuEAsWAlwKjr0fdMgWgNzh3Z6pMgVtSo1MwlDe9A==}
 
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
@@ -7662,11 +7662,11 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
-  lucide-react@0.501.0(react@19.1.0):
+  lucide-react@0.503.0(react@19.1.0):
     dependencies:
       react: 19.1.0
 
-  lucide-static@0.501.0: {}
+  lucide-static@0.503.0: {}
 
   math-intrinsics@1.1.0: {}
 
