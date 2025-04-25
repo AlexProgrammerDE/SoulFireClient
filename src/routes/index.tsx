@@ -23,14 +23,21 @@ import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { use, useCallback, useEffect, useState } from 'react';
 import {
+  ArrowLeftIcon,
   FlaskConicalIcon,
   HeartHandshakeIcon,
   InfoIcon,
+  KeyRoundIcon,
   LaptopMinimalIcon,
   LoaderCircleIcon,
+  LogInIcon,
+  MailIcon,
+  PlayIcon,
+  PlusIcon,
   RotateCcwIcon,
   SatelliteDishIcon,
   ServerIcon,
+  XIcon,
 } from 'lucide-react';
 import { emit, listen } from '@tauri-apps/api/event';
 import { getEnumKeyByValue, SFServerType } from '@/lib/types.ts';
@@ -545,9 +552,13 @@ function IntegratedConfigureMenu({
               }}
               type="button"
             >
+              <ArrowLeftIcon />
               {t('integrated.form.back')}
             </Button>
-            <Button type="submit">{t('integrated.form.start')}</Button>
+            <Button type="submit">
+              <PlayIcon />
+              {t('integrated.form.start')}
+            </Button>
           </CardFooter>
         </form>
       </Form>
@@ -735,6 +746,7 @@ function EmailForm({
             }}
             type="button"
           >
+            <ArrowLeftIcon />
             {t('dedicated.form.back')}
           </Button>
           <div className="flex flex-row gap-2">
@@ -745,9 +757,13 @@ function EmailForm({
               }}
               type="button"
             >
+              <KeyRoundIcon />
               {t('dedicated.form.useToken')}
             </Button>
-            <Button type="submit">{t('dedicated.form.login')}</Button>
+            <Button type="submit">
+              <LogInIcon />
+              {t('dedicated.form.login')}
+            </Button>
           </div>
         </CardFooter>
       </form>
@@ -838,6 +854,7 @@ function TokenForm({
             }}
             type="button"
           >
+            <ArrowLeftIcon />
             {t('dedicated.form.back')}
           </Button>
           <div className="flex flex-row gap-2">
@@ -848,9 +865,13 @@ function TokenForm({
               }}
               type="button"
             >
+              <MailIcon />
               {t('dedicated.form.useEmail')}
             </Button>
-            <Button type="submit">{t('dedicated.form.login')}</Button>
+            <Button type="submit">
+              <LogInIcon />
+              {t('dedicated.form.login')}
+            </Button>
           </div>
         </CardFooter>
       </form>
@@ -964,10 +985,11 @@ function EmailCodeMenu(props: {
             props.setLoginType('DEDICATED');
           }}
         >
+          <ArrowLeftIcon />
           {t('emailCode.back')}
         </Button>
         {inputDisabled && (
-          <LoaderCircleIcon className="text-muted-foreground animate-spin" />
+          <LoaderCircleIcon className="text-muted-foreground h-10 w-10 animate-spin" />
         )}
       </CardFooter>
     </Card>

@@ -39,6 +39,7 @@ import {
 import { getEnumEntries } from '@/lib/types.ts';
 import { useRouteContext } from '@tanstack/react-router';
 import { UserListResponse_User } from '@/generated/soulfire/user.ts';
+import { PencilIcon, PlusIcon, XIcon } from 'lucide-react';
 
 export type FormType = {
   username: string;
@@ -244,12 +245,14 @@ export function ManageUserDialog({
             <CredenzaFooter className="justify-between">
               <CredenzaClose asChild>
                 <Button variant="outline">
+                  <XIcon />
                   {props.mode === 'add'
                     ? t('users.addUserDialog.form.cancel')
                     : t('users.updateUserDialog.form.cancel')}
                 </Button>
               </CredenzaClose>
               <Button type="submit">
+                {props.mode === 'add' ? <PlusIcon /> : <PencilIcon />}
                 {props.mode === 'add'
                   ? t('users.addUserDialog.form.add')
                   : t('users.updateUserDialog.form.update')}
