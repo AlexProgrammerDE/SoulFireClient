@@ -2,7 +2,7 @@
 
 use crate::cast::{CastRunningState, connect_cast, discover_casts, get_casts};
 use crate::discord::load_discord_rpc;
-use crate::sf_loader::{IntegratedServerState, run_integrated_server};
+use crate::sf_loader::{IntegratedServerState, get_sf_server_version, run_integrated_server};
 use crate::utils::kill_child_process;
 use log::{error, info};
 use std::ops::Deref;
@@ -87,6 +87,7 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             run_integrated_server,
+            get_sf_server_version,
             discover_casts,
             connect_cast,
             get_casts

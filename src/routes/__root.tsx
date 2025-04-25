@@ -27,6 +27,7 @@ import { AptabaseProvider, useAptabase } from '@aptabase/react';
 import { emit } from '@tauri-apps/api/event';
 import { useTheme } from 'next-themes';
 import { AboutProvider } from '@/components/dialog/about-dialog.tsx';
+import { invoke } from '@tauri-apps/api/core';
 
 async function getAvailableProfiles() {
   const profileDir = await resolve(
@@ -48,9 +49,10 @@ function isMobile() {
 
 async function createSystemInfo() {
   const osType = type();
-  const [availableProfiles, osLocale] = await Promise.all([
+  const [availableProfiles, osLocale, sfServerVersion] = await Promise.all([
     getAvailableProfiles(),
     locale(),
+    invoke<string>('get_sf_server_version'),
   ]);
   return {
     availableProfiles,
@@ -60,6 +62,7 @@ async function createSystemInfo() {
     osLocale,
     archName: arch(),
     mobile: isMobile(),
+    sfServerVersion,
   };
 }
 

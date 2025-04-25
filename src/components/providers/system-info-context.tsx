@@ -8,6 +8,7 @@ export type SystemInfo = {
   osLocale: string | null;
   archName: string;
   mobile: boolean;
+  sfServerVersion: string;
 };
 
 export const SystemInfoContext = createContext<SystemInfo | null>(null);

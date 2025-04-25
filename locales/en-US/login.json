@@ -37,6 +37,22 @@
       },
       "back": "Back",
       "start": "Start"
+    },
+    "mobile": {
+      "description": "To run the integrated server on mobile, you need to complete a few manual steps.",
+      "form": {
+        "termuxCommand": {
+          "title": "Termux command",
+          "description": "Install the <a>Termux app</a>, then run this command in Termux to install the SoulFire server. You will then need to run the <copy>generate-token api</copy> command to generate a token. Then enter the token below."
+        },
+        "token": {
+          "title": "Token",
+          "description": "Token to authenticate with the local server.",
+          "placeholder": "Secret token"
+        },
+        "back": "Back",
+        "connect": "Connect"
+      }
     }
   },
   "dedicated": {

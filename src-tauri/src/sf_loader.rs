@@ -20,6 +20,11 @@ pub struct IntegratedServerState {
 }
 
 #[tauri::command]
+pub async fn get_sf_server_version() -> String {
+    SOULFIRE_VERSION.to_string()
+}
+
+#[tauri::command]
 pub async fn run_integrated_server(
     jvm_args: Vec<&str>,
     app_handle: AppHandle,

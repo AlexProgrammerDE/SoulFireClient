@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/button.tsx';
 import { use, useCallback, useEffect, useState } from 'react';
 import {
   ArrowLeftIcon,
+  ClipboardIcon,
   FlaskConicalIcon,
   HeartHandshakeIcon,
   InfoIcon,
@@ -33,11 +34,10 @@ import {
   LogInIcon,
   MailIcon,
   PlayIcon,
-  PlusIcon,
+  PlugZapIcon,
   RotateCcwIcon,
   SatelliteDishIcon,
   ServerIcon,
-  XIcon,
 } from 'lucide-react';
 import { emit, listen } from '@tauri-apps/api/event';
 import { getEnumKeyByValue, SFServerType } from '@/lib/types.ts';
@@ -47,6 +47,7 @@ import {
   cancellablePromiseDefault,
   getLanguageName,
   isDemo,
+  isTauri,
   languageEmoji,
 } from '@/lib/utils.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
@@ -83,12 +84,15 @@ import {
   setAuthentication,
 } from '@/lib/web-rpc.ts';
 import { ExternalLink } from '@/components/external-link.tsx';
+import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
 
 const LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY = 'form-server-address';
 const LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY = 'form-server-token';
 const LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY = 'form-server-email';
 const LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS =
   'form-integrated-server-jvm-args';
+const LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY =
+  'form-mobile-integrated-server-token';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -129,6 +133,19 @@ const integratedServerFormSchema = z.object({
 });
 type IntegratedServerFormSchemaType = z.infer<
   typeof integratedServerFormSchema
+>;
+const mobileIntegratedServerFormSchema = z.object({
+  token: z
+    .string()
+    .min(1, 'Token is required')
+    .max(255, 'Token is too long')
+    .regex(
+      /e[yw][A-Za-z0-9-_]+\.(?:e[yw][A-Za-z0-9-_]+)?\.[A-Za-z0-9-_]{2,}(?:(?:\.[A-Za-z0-9-_]{2,}){2})?/,
+      'Must be a valid JWT token',
+    ),
+});
+type MobileIntegratedServerFormSchemaType = z.infer<
+  typeof mobileIntegratedServerFormSchema
 >;
 
 type LoginType = 'INTEGRATED' | 'DEDICATED' | 'EMAIL_CODE' | null;
@@ -217,7 +234,7 @@ function Index() {
   return (
     <ScrollArea className="bg-muted h-dvh w-full px-4">
       <main className="flex min-h-dvh w-full flex-col">
-        <div className="m-auto flex w-full max-w-[450px] flex-col gap-6">
+        <div className="m-auto flex w-full max-w-lg flex-col gap-6">
           <div className="flex flex-row items-center justify-center gap-2 text-center">
             <img
               className="size-8"
@@ -430,7 +447,7 @@ function DefaultMenu(props: {
   );
 }
 
-type IntegratedState = 'configure' | 'loading';
+type IntegratedState = 'configure' | 'loading' | 'mobile';
 
 function IntegratedMenu({
   redirectWithCredentials,
@@ -459,6 +476,13 @@ function IntegratedMenu({
           redirectWithCredentials={redirectWithCredentials}
         />
       );
+    case 'mobile':
+      return (
+        <IntegratedMobileMenu
+          setIntegratedState={setIntegratedState}
+          redirectWithCredentials={redirectWithCredentials}
+        />
+      );
   }
 }
 
@@ -471,6 +495,7 @@ function IntegratedConfigureMenu({
   setIntegratedState: (state: IntegratedState) => void;
   startIntegratedServer: () => void;
 }) {
+  const systemInfo = use(SystemInfoContext);
   const { t } = useTranslation('login');
   const form = useForm<IntegratedServerFormSchemaType>({
     resolver: zodResolver(integratedServerFormSchema),
@@ -488,8 +513,12 @@ function IntegratedConfigureMenu({
       jvmArgs,
     );
 
-    setIntegratedState('loading');
-    startIntegratedServer();
+    if (systemInfo?.mobile) {
+      setIntegratedState('mobile');
+    } else {
+      setIntegratedState('loading');
+      startIntegratedServer();
+    }
   }
 
   return (
@@ -516,12 +545,11 @@ function IntegratedConfigureMenu({
                         {...field}
                       />
                       <Button
+                        type="button"
                         variant="secondary"
-                        disabled={
-                          form.getValues().jvmArgs === DEFAULT_JVM_ARGS_STRING
-                        }
+                        disabled={field.value === DEFAULT_JVM_ARGS_STRING}
                         onClick={() => {
-                          form.setValue('jvmArgs', DEFAULT_JVM_ARGS_STRING);
+                          field.onChange('jvmArgs', DEFAULT_JVM_ARGS_STRING);
                           localStorage.setItem(
                             LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
                             DEFAULT_JVM_ARGS_STRING,
@@ -597,6 +625,152 @@ function IntegratedLoadingMenu({
       <CardContent className="flex h-32 w-full">
         <LoaderCircleIcon className="m-auto h-12 w-12 animate-spin" />
       </CardContent>
+    </Card>
+  );
+}
+
+function IntegratedMobileMenu({
+  setIntegratedState,
+  redirectWithCredentials,
+}: {
+  setIntegratedState: (state: IntegratedState) => void;
+  redirectWithCredentials: LoginFunction;
+}) {
+  const systemInfo = use(SystemInfoContext);
+  const { t } = useTranslation('login');
+  const runCommand = `bash <(curl -s https://raw.githubusercontent.com/AlexProgrammerDE/SoulFireClient/refs/heads/main/scripts/termux_setup.sh) ${systemInfo?.sfServerVersion} "${localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS)}"`;
+  const form = useForm<MobileIntegratedServerFormSchemaType>({
+    resolver: zodResolver(mobileIntegratedServerFormSchema),
+    defaultValues: {
+      token:
+        localStorage.getItem(
+          LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY,
+        ) ?? '',
+    },
+  });
+
+  function onSubmit(values: MobileIntegratedServerFormSchemaType) {
+    const token = values.token.trim();
+    localStorage.setItem(
+      LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY,
+      token,
+    );
+    void redirectWithCredentials('integrated', 'http://localhost:38765', token);
+  }
+
+  return (
+    <Card>
+      <CardHeader className="text-center">
+        <LoginCardTitle />
+        <CardDescription>{t('integrated.mobile.description')}</CardDescription>
+      </CardHeader>
+      <Form {...form}>
+        <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
+          <CardContent className="flex flex-col gap-4">
+            <FormItem>
+              <FormLabel>
+                {t('integrated.mobile.form.termuxCommand.title')}
+              </FormLabel>
+              <div className="flex flex-row gap-2">
+                <Input
+                  type="text"
+                  inputMode="text"
+                  readOnly
+                  value={runCommand}
+                />
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => {
+                    if (isTauri()) {
+                      void clipboard.writeText(runCommand);
+                    } else {
+                      void navigator.clipboard.writeText(runCommand);
+                    }
+                    toast.success(t('common:copiedToClipboard'));
+                  }}
+                >
+                  <ClipboardIcon />
+                </Button>
+              </div>
+              <FormDescription>
+                <Trans
+                  i18nKey="login:integrated.mobile.form.termuxCommand.description"
+                  components={{
+                    a: (
+                      <ExternalLink
+                        href="https://wiki.termux.com/wiki/Installation"
+                        className="text-nowrap text-blue-500"
+                      />
+                    ),
+                    copy: (
+                      <button
+                        type="button"
+                        className="font-bold text-blue-500"
+                        onClick={() => {
+                          if (isTauri()) {
+                            void clipboard.writeText('generate-token api');
+                          } else {
+                            void navigator.clipboard.writeText(
+                              'generate-token api',
+                            );
+                          }
+                          toast.success(t('common:copiedToClipboard'));
+                        }}
+                      />
+                    ),
+                  }}
+                />
+              </FormDescription>
+            </FormItem>
+            <FormField
+              control={form.control}
+              name="token"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t('integrated.mobile.form.token.title')}
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      inputMode="text"
+                      placeholder={t(
+                        'integrated.mobile.form.token.placeholder',
+                      )}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    <Trans
+                      i18nKey="login:integrated.mobile.form.token.description"
+                      components={{ bold: <strong className="text-nowrap" /> }}
+                    />
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button
+              variant="outline"
+              onClick={(e) => {
+                e.preventDefault();
+                setIntegratedState('configure');
+              }}
+              type="button"
+            >
+              <ArrowLeftIcon />
+              {t('integrated.mobile.form.back')}
+            </Button>
+            <Button type="submit">
+              <PlugZapIcon />
+              {t('integrated.mobile.form.connect')}
+            </Button>
+          </CardFooter>
+        </form>
+      </Form>
     </Card>
   );
 }
