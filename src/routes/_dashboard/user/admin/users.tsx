@@ -215,7 +215,7 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
   return (
     <>
       <Button variant="outline" onClick={() => setCreateOpen(true)}>
-        <PlusIcon className="h-4 w-4" />
+        <PlusIcon />
       </Button>
       <ManageUserDialog mode="add" open={createOpen} setOpen={setCreateOpen} />
       <Button
@@ -236,7 +236,7 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
           });
         }}
       >
-        <TrashIcon className="h-4 w-4" />
+        <TrashIcon />
       </Button>
       <Button
         variant="outline"
@@ -256,7 +256,7 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
           });
         }}
       >
-        <LogOutIcon className="h-4 w-4" />
+        <LogOutIcon />
       </Button>
     </>
   );

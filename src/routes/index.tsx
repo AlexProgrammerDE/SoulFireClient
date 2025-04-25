@@ -361,13 +361,13 @@ function DefaultMenu(props: {
               props.setLoginType('INTEGRATED');
             }}
           >
-            <LaptopMinimalIcon className="size-5" />
+            <LaptopMinimalIcon />
             {t('connect.integrated.title')}
           </Button>
           <Popover>
             <PopoverTrigger asChild>
               <Button className="w-fit" variant="outline">
-                <InfoIcon className="size-5" />
+                <InfoIcon />
               </Button>
             </PopoverTrigger>
             <PopoverContent>
@@ -382,13 +382,13 @@ function DefaultMenu(props: {
             variant="outline"
             onClick={() => props.setLoginType('DEDICATED')}
           >
-            <ServerIcon className="size-5" />
+            <ServerIcon />
             {t('connect.dedicated.title')}
           </Button>
           <Popover>
             <PopoverTrigger asChild>
               <Button className="w-fit" variant="outline">
-                <InfoIcon className="size-5" />
+                <InfoIcon />
               </Button>
             </PopoverTrigger>
             <PopoverContent>
@@ -405,13 +405,13 @@ function DefaultMenu(props: {
                 void props.demoLogin();
               }}
             >
-              <FlaskConicalIcon className="size-5" />
+              <FlaskConicalIcon />
               {t('connect.demo.title')}
             </Button>
             <Popover>
               <PopoverTrigger asChild>
                 <Button className="w-fit" variant="outline">
-                  <InfoIcon className="size-5" />
+                  <InfoIcon />
                 </Button>
               </PopoverTrigger>
               <PopoverContent>{t('connect.demo.description')}</PopoverContent>
@@ -967,7 +967,7 @@ function EmailCodeMenu(props: {
           {t('emailCode.back')}
         </Button>
         {inputDisabled && (
-          <LoaderCircleIcon className="text-muted-foreground h-10 w-10 animate-spin" />
+          <LoaderCircleIcon className="text-muted-foreground animate-spin" />
         )}
       </CardFooter>
     </Card>

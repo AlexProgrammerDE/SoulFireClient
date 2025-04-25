@@ -330,7 +330,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">
-            <PlusIcon className="h-4 w-4" />
+            <PlusIcon />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -431,7 +431,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           });
         }}
       >
-        <TrashIcon className="h-4 w-4" />
+        <TrashIcon />
       </Button>
       {accountTypeCredentialsSelected !== null && (
         <ImportDialog

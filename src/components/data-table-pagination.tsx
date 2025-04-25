@@ -67,7 +67,7 @@ export function DataTablePagination<TData>({
           disabled={!table.getCanPreviousPage()}
         >
           <span className="sr-only">{t('dataTable.goFirst')}</span>
-          <ChevronsLeftIcon className="h-4 w-4" />
+          <ChevronsLeftIcon />
         </Button>
         <Button
           variant="outline"
@@ -76,7 +76,7 @@ export function DataTablePagination<TData>({
           disabled={!table.getCanPreviousPage()}
         >
           <span className="sr-only">{t('dataTable.goPrevious')}</span>
-          <ChevronLeftIcon className="h-4 w-4" />
+          <ChevronLeftIcon />
         </Button>
         <Button
           variant="outline"
@@ -85,7 +85,7 @@ export function DataTablePagination<TData>({
           disabled={!table.getCanNextPage()}
         >
           <span className="sr-only">{t('dataTable.goNext')}</span>
-          <ChevronRightIcon className="h-4 w-4" />
+          <ChevronRightIcon />
         </Button>
         <Button
           variant="outline"
@@ -94,7 +94,7 @@ export function DataTablePagination<TData>({
           disabled={!table.getCanNextPage()}
         >
           <span className="sr-only">{t('dataTable.goLast')}</span>
-          <ChevronsRightIcon className="h-4 w-4" />
+          <ChevronsRightIcon />
         </Button>
       </div>
     </div>

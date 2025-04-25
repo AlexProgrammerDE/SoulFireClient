@@ -145,7 +145,7 @@ export default function ControlsMenu() {
         onClick={() => startMutation.mutate()}
         disabled={instanceInfo.state !== InstanceState.STOPPED}
       >
-        <PlayIcon className="h-4" />
+        <PlayIcon />
         {t('controls.start')}
       </Button>
       <Button
@@ -157,9 +157,9 @@ export default function ControlsMenu() {
         }
       >
         {instanceInfo.state === InstanceState.PAUSED ? (
-          <TimerOffIcon className="h-4" />
+          <TimerOffIcon />
         ) : (
-          <TimerIcon className="h-4" />
+          <TimerIcon />
         )}
         {instanceInfo.state === InstanceState.PAUSED
           ? t('controls.resume')
@@ -173,7 +173,7 @@ export default function ControlsMenu() {
           instanceInfo.state === InstanceState.STOPPED
         }
       >
-        <SquareIcon className="h-4" />
+        <SquareIcon />
         {t('controls.stop')}
       </Button>
     </div>

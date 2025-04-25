@@ -40,7 +40,7 @@ export function CopyInfoButton(props: { value: string }) {
               toast.success(t('copiedToClipboard'));
             }}
           >
-            <ClipboardIcon className="h-4 w-4" />
+            <ClipboardIcon />
           </Button>
         </div>
       )}

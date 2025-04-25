@@ -34,7 +34,11 @@ export default defineConfig({
   plugins: [pluginReact(), pluginTypeCheck(), pluginSvgr()],
   tools: {
     rspack: {
-      plugins: [TanStackRouterRspack()],
+      plugins: [
+        TanStackRouterRspack({
+          autoCodeSplitting: true,
+        }),
+      ],
       output: {
         asyncChunks: false,
       },

@@ -123,7 +123,7 @@ function UrlDialog(props: ImportDialogProps) {
                   });
                 }}
               >
-                <GlobeIcon className="h-4" />
+                <GlobeIcon />
                 <span>{t('dialog.import.url.submit')}</span>
               </Button>
             </div>
@@ -219,7 +219,7 @@ function MainDialog(
                   }
                 }}
               >
-                <FileIcon className="h-4" />
+                <FileIcon />
                 <span>{t('dialog.import.main.fromFile')}</span>
               </Button>
               {hasInstancePermission(
@@ -231,7 +231,7 @@ function MainDialog(
                   className="flex-auto"
                   onClick={props.openUrlDialog}
                 >
-                  <GlobeIcon className="h-4" />
+                  <GlobeIcon />
                   <span>{t('dialog.import.main.fromUrl')}</span>
                 </Button>
               )}
@@ -272,7 +272,7 @@ function MainDialog(
                   });
                 }}
               >
-                <ClipboardIcon className="h-4" />
+                <ClipboardIcon />
                 <span>{t('dialog.import.main.fromClipboard')}</span>
               </Button>
             </div>
@@ -308,7 +308,7 @@ function TextInput(
           className="w-full"
           onClick={() => props.listener(inputText)}
         >
-          <TextIcon className="h-4" />
+          <TextIcon />
           <span>{t('dialog.import.main.textarea.submit')}</span>
         </Button>
       </div>

@@ -51,7 +51,7 @@ export function NotFoundComponent() {
               });
             }}
           >
-            <LogOutIcon className="h-4" />
+            <LogOutIcon />
             {t('notFound.page.logOut')}
           </Button>
           <Button
@@ -68,9 +68,9 @@ export function NotFoundComponent() {
             }}
           >
             {revalidating ? (
-              <LoaderCircleIcon className="h-4 animate-spin" />
+              <LoaderCircleIcon className="animate-spin" />
             ) : (
-              <RotateCwIcon className="h-4" />
+              <RotateCwIcon />
             )}
             {t('notFound.page.reloadPage')}
           </Button>

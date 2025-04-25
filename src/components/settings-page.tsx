@@ -461,7 +461,7 @@ function StringListComponent(props: {
             }}
             disabled={props.setting.disabled}
           >
-            <PlusIcon className="h-4 w-4" />
+            <PlusIcon />
             {t('settingsPage.stringList.add')}
           </Button>
         </div>
@@ -484,7 +484,7 @@ function StringListComponent(props: {
               }}
               disabled={props.setting.disabled}
             >
-              <TrashIcon className="h-4 w-4" />
+              <TrashIcon />
               {t('settingsPage.stringList.remove')}
             </Button>
           </div>
