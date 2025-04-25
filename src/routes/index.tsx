@@ -45,9 +45,9 @@ import { SystemInfoContext } from '@/components/providers/system-info-context.ts
 import { invoke } from '@tauri-apps/api/core';
 import {
   cancellablePromiseDefault,
+  copyToClipboard,
   getLanguageName,
   isDemo,
-  isTauri,
   languageEmoji,
 } from '@/lib/utils.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
@@ -84,7 +84,6 @@ import {
   setAuthentication,
 } from '@/lib/web-rpc.ts';
 import { ExternalLink } from '@/components/external-link.tsx';
-import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
 
 const LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY = 'form-server-address';
 const LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY = 'form-server-token';
@@ -682,11 +681,7 @@ function IntegratedMobileMenu({
                   type="button"
                   variant="secondary"
                   onClick={() => {
-                    if (isTauri()) {
-                      void clipboard.writeText(runCommand);
-                    } else {
-                      void navigator.clipboard.writeText(runCommand);
-                    }
+                    copyToClipboard(runCommand);
                     toast.success(t('common:copiedToClipboard'));
                   }}
                 >
@@ -708,13 +703,7 @@ function IntegratedMobileMenu({
                         type="button"
                         className="font-bold text-blue-500"
                         onClick={() => {
-                          if (isTauri()) {
-                            void clipboard.writeText('generate-token api');
-                          } else {
-                            void navigator.clipboard.writeText(
-                              'generate-token api',
-                            );
-                          }
+                          copyToClipboard('generate-token api');
                           toast.success(t('common:copiedToClipboard'));
                         }}
                       />

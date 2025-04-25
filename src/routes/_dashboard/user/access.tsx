@@ -24,8 +24,7 @@ import { Input } from '@/components/ui/input.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { ClientServiceClient } from '@/generated/soulfire/client.client.ts';
 import { toast } from 'sonner';
-import { isTauri } from '@/lib/utils.tsx';
-import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
+import { copyToClipboard } from '@/lib/utils.tsx';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 export const Route = createFileRoute('/_dashboard/user/access')({
@@ -50,14 +49,6 @@ function Content() {
   const [webDavToken, setWebDavToken] = useState('');
   const [apiToken, setApiToken] = useState('');
 
-  const handleCopy = (text: string) => {
-    if (isTauri()) {
-      void clipboard.writeText(text);
-    } else {
-      void navigator.clipboard.writeText(text);
-    }
-  };
-
   return (
     <div className="flex flex-col gap-4">
       <Card className="max-w-4xl">
@@ -81,7 +72,9 @@ function Content() {
             <Button
               variant="secondary"
               onClick={() => {
-                handleCopy(clientInfo.serverInfo?.publicWebdavAddress || '');
+                copyToClipboard(
+                  clientInfo.serverInfo?.publicWebdavAddress || '',
+                );
                 toast.success(t('access.address.copied'));
               }}
             >
@@ -106,7 +99,7 @@ function Content() {
             <Button
               variant="secondary"
               onClick={() => {
-                handleCopy(webDavToken);
+                copyToClipboard(webDavToken);
                 toast.success(t('access.token.copied'));
               }}
               disabled={webDavToken === ''}
@@ -130,7 +123,8 @@ function Content() {
               toast.promise(
                 clientService.generateWebDAVToken({}).then((response) => {
                   setWebDavToken(response.response.token);
-                  handleCopy(response.response.token);
+                  copyToClipboard(response.response.token);
+                  toast.success(t('access.token.copied'));
                 }),
                 {
                   loading: t('access.token.generating'),
@@ -175,7 +169,7 @@ function Content() {
             <Button
               variant="secondary"
               onClick={() => {
-                handleCopy(clientInfo.serverInfo?.publicApiAddress || '');
+                copyToClipboard(clientInfo.serverInfo?.publicApiAddress || '');
                 toast.success(t('access.address.copied'));
               }}
             >
@@ -200,7 +194,7 @@ function Content() {
             <Button
               variant="secondary"
               onClick={() => {
-                handleCopy(apiToken);
+                copyToClipboard(apiToken);
                 toast.success(t('access.token.copied'));
               }}
               disabled={apiToken === ''}
@@ -224,7 +218,8 @@ function Content() {
               toast.promise(
                 clientService.generateAPIToken({}).then((response) => {
                   setApiToken(response.response.token);
-                  handleCopy(response.response.token);
+                  copyToClipboard(response.response.token);
+                  toast.success(t('access.token.copied'));
                 }),
                 {
                   loading: t('access.token.generating'),
