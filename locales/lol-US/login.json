@@ -37,6 +37,22 @@
       },
       "back": "Bak",
       "start": "Strat"
+    },
+    "mobile": {
+      "description": "",
+      "form": {
+        "termuxCommand": {
+          "title": "",
+          "description": ""
+        },
+        "token": {
+          "title": "Token",
+          "description": "",
+          "placeholder": "Seekret token"
+        },
+        "back": "Bak",
+        "connect": ""
+      }
     }
   },
   "dedicated": {

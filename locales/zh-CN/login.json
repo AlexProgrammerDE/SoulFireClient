@@ -37,6 +37,22 @@
       },
       "back": "返回",
       "start": "开始"
+    },
+    "mobile": {
+      "description": "",
+      "form": {
+        "termuxCommand": {
+          "title": "",
+          "description": ""
+        },
+        "token": {
+          "title": "令牌",
+          "description": "",
+          "placeholder": "保密令牌"
+        },
+        "back": "返回",
+        "connect": ""
+      }
     }
   },
   "dedicated": {

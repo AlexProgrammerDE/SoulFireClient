@@ -37,6 +37,22 @@
       },
       "back": "Назад",
       "start": "Запуск"
+    },
+    "mobile": {
+      "description": "",
+      "form": {
+        "termuxCommand": {
+          "title": "",
+          "description": ""
+        },
+        "token": {
+          "title": "Токен",
+          "description": "",
+          "placeholder": "Секретный токен"
+        },
+        "back": "Назад",
+        "connect": ""
+      }
     }
   },
   "dedicated": {
