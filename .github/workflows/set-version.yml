@@ -70,6 +70,11 @@ jobs:
             echo "Release version ${{ inputs.version }} already exists in metainfo file, skipping addition"
           fi
 
+      - name: 'Bump android version code'
+        run: |
+          jq '.bundle.android.versionCode += 1' src-tauri/tauri.conf.json > tmp.json
+          mv tmp.json src-tauri/tauri.conf.json
+
       - name: 'Commit Version'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
