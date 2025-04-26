@@ -1,7 +1,0 @@
-{
-  "bundle": {
-    "android": {
-      "minSdkVersion": 34
-    }
-  }
-}
