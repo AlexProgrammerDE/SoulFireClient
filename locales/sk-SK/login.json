@@ -37,6 +37,22 @@
       },
       "back": "Späť",
       "start": ""
+    },
+    "mobile": {
+      "description": "",
+      "form": {
+        "termuxCommand": {
+          "title": "",
+          "description": ""
+        },
+        "token": {
+          "title": "Token",
+          "description": "",
+          "placeholder": "Tajný token"
+        },
+        "back": "Späť",
+        "connect": ""
+      }
     }
   },
   "dedicated": {

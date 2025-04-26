@@ -37,6 +37,22 @@
       },
       "back": "Volver",
       "start": ""
+    },
+    "mobile": {
+      "description": "",
+      "form": {
+        "termuxCommand": {
+          "title": "",
+          "description": ""
+        },
+        "token": {
+          "title": "",
+          "description": "",
+          "placeholder": "Token secreto"
+        },
+        "back": "Volver",
+        "connect": ""
+      }
     }
   },
   "dedicated": {

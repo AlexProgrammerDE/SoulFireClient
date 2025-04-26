@@ -37,6 +37,22 @@
       },
       "back": "Geri Dön",
       "start": ""
+    },
+    "mobile": {
+      "description": "",
+      "form": {
+        "termuxCommand": {
+          "title": "",
+          "description": ""
+        },
+        "token": {
+          "title": "Token",
+          "description": "",
+          "placeholder": "Gizli Token"
+        },
+        "back": "Geri Dön",
+        "connect": ""
+      }
     }
   },
   "dedicated": {
