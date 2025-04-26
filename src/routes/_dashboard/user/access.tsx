@@ -236,7 +236,7 @@ function Content() {
             <span>{t('access.token.generate')}</span>
           </Button>
           <Button variant="secondary" asChild>
-            <ExternalLink href={clientInfo.serverInfo?.publicDocsAddress}>
+            <ExternalLink href={clientInfo.serverInfo!.publicDocsAddress}>
               <BookOpenTextIcon />
               <span>{t('access.documentation')}</span>
             </ExternalLink>
