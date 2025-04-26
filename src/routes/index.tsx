@@ -175,6 +175,19 @@ const DEFAULT_JVM_ARGS = [
   '-Dsf.flags.v1=true',
 ];
 const DEFAULT_JVM_ARGS_STRING = DEFAULT_JVM_ARGS.join(' ');
+const DEFAULT_MOBILE_JVM_ARGS = [
+  '-XX:+EnableDynamicAgentLoading',
+  '-XX:+UnlockExperimentalVMOptions',
+  // '-XX:+UseZGC',
+  // '-XX:+ZGenerational',
+  '-XX:+AlwaysActAsServerClassMachine',
+  // '-XX:+UseNUMA',
+  '-XX:+UseFastUnorderedTimeStamps',
+  '-XX:+UseVectorCmov',
+  '-XX:+UseCriticalJavaThreadPriority',
+  '-Dsf.flags.v1=true',
+];
+const DEFAULT_MOBILE_JVM_ARGS_STRING = DEFAULT_MOBILE_JVM_ARGS.join(' ');
 
 function Index() {
   const { t, i18n } = useTranslation('login');
@@ -501,7 +514,9 @@ function IntegratedConfigureMenu({
     defaultValues: {
       jvmArgs:
         localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS) ??
-        DEFAULT_JVM_ARGS_STRING,
+        (systemInfo?.mobile
+          ? DEFAULT_MOBILE_JVM_ARGS_STRING
+          : DEFAULT_JVM_ARGS_STRING),
     },
   });
 
