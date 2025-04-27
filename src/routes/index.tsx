@@ -381,6 +381,7 @@ function DefaultMenu(props: {
 }) {
   const { t } = useTranslation('login');
   const systemInfo = use(SystemInfoContext);
+  const integratedDisabled = isDemo() || !systemInfo;
   return (
     <Card>
       <CardHeader className="text-center">
@@ -390,7 +391,8 @@ function DefaultMenu(props: {
       <CardContent className="flex flex-col gap-2">
         <div className="flex flex-row gap-2">
           <Button
-            disabled={isDemo() || !systemInfo}
+            autoFocus
+            disabled={integratedDisabled}
             className="w-full"
             variant="outline"
             onClick={() => {
@@ -413,6 +415,7 @@ function DefaultMenu(props: {
         </div>
         <div className="flex flex-row gap-2">
           <Button
+            autoFocus={integratedDisabled}
             disabled={isDemo()}
             className="w-full"
             variant="outline"
@@ -435,6 +438,7 @@ function DefaultMenu(props: {
         {isDemo() && (
           <div className="flex flex-row gap-2">
             <Button
+              autoFocus
               className="w-full"
               variant="outline"
               onClick={() => {
@@ -553,6 +557,7 @@ function IntegratedConfigureMenu({
                   <FormControl>
                     <div className="flex flex-row gap-2">
                       <Input
+                        autoFocus
                         type="text"
                         inputMode="text"
                         placeholder={t('integrated.form.jvmArgs.placeholder')}
@@ -687,6 +692,7 @@ function IntegratedMobileMenu({
               </FormLabel>
               <div className="flex flex-row gap-2">
                 <Input
+                  autoFocus
                   type="text"
                   inputMode="text"
                   readOnly
@@ -881,6 +887,7 @@ function EmailForm({
                 <FormLabel>{t('dedicated.form.address.title')}</FormLabel>
                 <FormControl>
                   <Input
+                    autoFocus
                     type="url"
                     inputMode="url"
                     placeholder={t('dedicated.form.address.placeholder')}
@@ -989,6 +996,7 @@ function TokenForm({
                 <FormLabel>{t('dedicated.form.address.title')}</FormLabel>
                 <FormControl>
                   <Input
+                    autoFocus
                     type="url"
                     inputMode="url"
                     placeholder={t('dedicated.form.address.placeholder')}
