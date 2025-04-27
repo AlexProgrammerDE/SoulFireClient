@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import {
   createHashHistory,
   createRouter,
+  deepEqual,
   RouterProvider,
 } from '@tanstack/react-router';
 import '@/lib/i18n';
@@ -11,25 +12,52 @@ import { getServerType, isAuthenticated } from '@/lib/web-rpc.ts';
 import { ErrorComponent } from '@/components/error-component.tsx';
 import { LoadingComponent } from '@/components/loading-component.tsx';
 import { NotFoundComponent } from '@/components/not-found-component.tsx';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { broadcastQueryClient } from '@tanstack/query-broadcast-client-experimental';
 
 const hashHistory = createHashHistory();
 
-// Create a new router instance
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // Retries on an initial load failure
+      retry: 5,
+      structuralSharing: (prev: unknown, next: unknown) =>
+        deepEqual(prev, next) ? prev : next,
+    },
+  },
+});
+
+broadcastQueryClient({
+  queryClient: queryClient,
+  broadcastChannel: 'soulfire',
+});
+
+// noinspection JSUnusedGlobalSymbols
 const router = createRouter({
   routeTree,
   history: hashHistory,
   defaultPreload: 'intent',
-  defaultPreloadStaleTime: 10_000,
+  // Since we're using React Query, we don't want loader calls to ever be stale
+  // This will ensure that the loader is always called when the route is preloaded or visited
+  defaultPreloadStaleTime: 0,
   scrollRestoration: true,
   scrollRestorationBehavior: 'auto',
   defaultErrorComponent: ErrorComponent,
   defaultPendingComponent: LoadingComponent,
   defaultNotFoundComponent: NotFoundComponent,
   defaultStructuralSharing: true,
+  context: { queryClient },
+  Wrap: ({ children }) => {
+    return (
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    );
+  },
 });
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {
+  // noinspection JSUnusedGlobalSymbols
   interface Register {
     router: typeof router;
   }

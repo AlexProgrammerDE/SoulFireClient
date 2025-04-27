@@ -1,5 +1,5 @@
 import {
-  createRootRoute,
+  createRootRouteWithContext,
   deepEqual,
   Outlet,
   useLocation,
@@ -8,8 +8,7 @@ import '../App.css';
 import { ThemeProvider } from '@/components/providers/theme-provider.tsx';
 import { Toaster } from '@/components/ui/sonner.tsx';
 import { TailwindIndicator } from '@/components/tailwind-indicator.tsx';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClientInstance } from '@/lib/query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { memo, useEffect, useState } from 'react';
 import {
   SystemInfo,
@@ -66,7 +65,9 @@ async function createSystemInfo() {
   };
 }
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+}>()({
   loader: async () => {
     let systemInfo: SystemInfo | null;
     if (isTauri()) {
@@ -149,6 +150,7 @@ function WindowThemeSyncer() {
 
 function RootLayout() {
   const { systemInfo } = Route.useLoaderData();
+  const { queryClient } = Route.useRouteContext();
   const [systemInfoState, setSystemInfoState] = useState<SystemInfo | null>(
     systemInfo,
   );
@@ -203,7 +205,7 @@ function RootLayout() {
         }}
       >
         <AppStartedEvent />
-        <QueryClientProvider client={queryClientInstance}>
+        <QueryClientProvider client={queryClient}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

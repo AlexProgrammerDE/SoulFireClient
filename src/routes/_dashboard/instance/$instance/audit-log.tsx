@@ -5,7 +5,6 @@ import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { createTransport } from '@/lib/web-rpc.ts';
-import { queryClientInstance } from '@/lib/query.ts';
 import { UserAvatar } from '@/components/user-avatar.tsx';
 import {
   InstanceAuditLogResponse,
@@ -58,7 +57,7 @@ export const Route = createFileRoute(
       refetchInterval: 3_000,
     });
     props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries({
+      void props.context.queryClient.cancelQueries({
         queryKey: auditLogQueryOptions.queryKey,
       });
     });
@@ -67,7 +66,9 @@ export const Route = createFileRoute(
     };
   },
   loader: (props) => {
-    void queryClientInstance.prefetchQuery(props.context.auditLogQueryOptions);
+    void props.context.queryClient.prefetchQuery(
+      props.context.auditLogQueryOptions,
+    );
   },
   component: AuditLog,
 });
