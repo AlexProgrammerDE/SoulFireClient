@@ -15,8 +15,6 @@ import { NotFoundComponent } from '@/components/not-found-component.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { broadcastQueryClient } from '@tanstack/query-broadcast-client-experimental';
 
-const hashHistory = createHashHistory();
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -36,7 +34,7 @@ broadcastQueryClient({
 // noinspection JSUnusedGlobalSymbols
 const router = createRouter({
   routeTree,
-  history: hashHistory,
+  history: createHashHistory(),
   defaultPreload: 'intent',
   // Since we're using React Query, we don't want loader calls to ever be stale
   // This will ensure that the loader is always called when the route is preloaded or visited
