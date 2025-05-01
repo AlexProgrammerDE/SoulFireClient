@@ -41,6 +41,20 @@ pub async fn run_integrated_server(
         .starting
         .store(true, std::sync::atomic::Ordering::Relaxed);
 
+    let result =
+        internal_load_integrated_server(jvm_args, app_handle, &integrated_server_state).await;
+    integrated_server_state
+        .starting
+        .store(false, std::sync::atomic::Ordering::Relaxed);
+
+    result
+}
+
+async fn internal_load_integrated_server(
+    jvm_args: Vec<&str>,
+    app_handle: AppHandle,
+    integrated_server_state: &tauri::State<'_, IntegratedServerState>,
+) -> Result<String, SFAnyError> {
     fn send_log<S: Serialize + Clone>(app_handle: &AppHandle, payload: S) -> tauri::Result<()> {
         info!("{}", serde_json::to_string(&payload)?);
         app_handle.emit("integrated-server-start-log", payload)
