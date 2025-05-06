@@ -28,30 +28,30 @@
       "success": "Встроенный сервер запущен",
       "error": "Не удалось запустить встроенный сервер"
     },
-    "description": "",
+    "description": "Интегрированный сервер работает локально на вашем компьютере. При необходимости настройте аргументы запуска Java.",
     "form": {
       "jvmArgs": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "JVM аргументы",
+        "description": "Аргументы SoulFire Java VM. Чтобы использовать 4GB RAM, добавьте <bold>-Xmx4G</bold>. По умолчанию 25% от всей оперативной памяти.",
+        "placeholder": "Ваши JVM аргументы"
       },
       "back": "Назад",
       "start": "Запуск"
     },
     "mobile": {
-      "description": "",
+      "description": "Для запуска интегрированного сервера на мобильном телефоне необходимо выполнить несколько шагов.",
       "form": {
         "termuxCommand": {
-          "title": "",
-          "description": ""
+          "title": "Команда Termux",
+          "description": "Установите приложение <a>Termux</a>, затем выполните эту команду в Termux, чтобы установить сервер SoulFire. Затем вам нужно выполнить команду <copy>generate-token api</copy> для генерации токена. Затем введите токен ниже."
         },
         "token": {
           "title": "Токен",
-          "description": "",
+          "description": "Токен для аутентификации на локальном сервере.",
           "placeholder": "Секретный токен"
         },
         "back": "Назад",
-        "connect": ""
+        "connect": "Подключиться"
       }
     }
   },
@@ -97,6 +97,6 @@
     "version": "SoulFire Client {{version}} - {{environment}}",
     "preview": "Ищете предпросмотр будущей версии?",
     "production": "Ищете релиз версию?",
-    "helpTranslate": ""
+    "helpTranslate": "Перевести SoulFire"
   }
 }
