@@ -334,7 +334,7 @@
     "pausedAttack": "",
     "stoppedAttack": ""
   },
-  "pickADate": "",
+  "pickADate": "选日期",
   "scripts": {
     "filterPlaceholder": "",
     "baseScriptDialog": {

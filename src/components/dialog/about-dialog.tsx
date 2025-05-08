@@ -20,6 +20,7 @@ import {
   TableRow,
 } from '../ui/table.tsx';
 import { useTranslation } from 'react-i18next';
+import { XIcon } from 'lucide-react';
 
 export const AboutContext = createContext<{
   openAbout: () => void;
@@ -134,7 +135,10 @@ function AboutDialog({
         </CredenzaBody>
         <CredenzaFooter>
           <CredenzaClose asChild>
-            <Button>{t('dialog.about.close')}</Button>
+            <Button>
+              <XIcon />
+              {t('dialog.about.close')}
+            </Button>
           </CredenzaClose>
         </CredenzaFooter>
       </CredenzaContent>

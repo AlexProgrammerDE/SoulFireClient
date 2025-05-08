@@ -41,6 +41,7 @@ import {
 import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { hasGlobalPermission } from '@/lib/utils.tsx';
 import { useRouteContext } from '@tanstack/react-router';
+import { PencilIcon, PlusIcon, XIcon } from 'lucide-react';
 
 export type FormType = {
   scriptName: string;
@@ -222,12 +223,14 @@ export function ManageScriptDialog({
             <CredenzaFooter className="justify-between">
               <CredenzaClose asChild>
                 <Button variant="outline">
+                  <XIcon />
                   {props.mode === 'add'
                     ? t('scripts.addScriptDialog.form.cancel')
                     : t('scripts.updateScriptDialog.form.cancel')}
                 </Button>
               </CredenzaClose>
               <Button type="submit">
+                {props.mode === 'add' ? <PlusIcon /> : <PencilIcon />}
                 {props.mode === 'add'
                   ? t('scripts.addScriptDialog.form.add')
                   : t('scripts.updateScriptDialog.form.update')}

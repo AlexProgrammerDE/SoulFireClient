@@ -1,0 +1,102 @@
+{
+  "header": {
+    "image": {
+      "alt": "Logo SoulFire"
+    },
+    "title": "SoulFire"
+  },
+  "connect": {
+    "title": "Pripojte sa k serveru SoulFire",
+    "description": "Vyberte typ servera SoulFire, ku ktorému sa chcete pripojiť.",
+    "integrated": {
+      "title": "Integrovaný server (lokálny)",
+      "description": "Spustí server SoulFire na vašom počítači. Nastavenie je automatické a nevyžaduje žiadnu konfiguráciu. (Vyžaduje počítačovú aplikáciu)"
+    },
+    "dedicated": {
+      "title": "Dedikovaný server (vzdialený)",
+      "description": "Pripája sa k vzdialenej inštancii servera SoulFire. Budete musieť zadať adresu a token servera."
+    },
+    "demo": {
+      "title": "Demo server",
+      "description": "Simuluje virtuálny server s demo dátami. Tento server je len na čítanie a nemôžete na ňom robiť žiadne zmeny."
+    }
+  },
+  "integrated": {
+    "preparing": "Nepodarilo sa spustiť integrovaný server…...",
+    "toast": {
+      "loading": "...Spustenie integrovaného servera…...",
+      "success": "Spustený integrovaný server",
+      "error": "Nepodarilo sa spustiť integrovaný server"
+    },
+    "description": "Integrovaný server beží lokálne na vašom PC. V prípade potreby nakonfigurujte nižšie uvedené spúšťacie argumenty Java.",
+    "form": {
+      "jvmArgs": {
+        "title": "Argumenty JVM",
+        "description": "Argumenty SoulFire Java VM. Ak chcete použiť 4GB pamäte RAM, pridajte <bold>-Xmx4G</bold>. Predvolená hodnota je 25 % vašej RAM.",
+        "placeholder": "Tu sú vaše argumenty JVM"
+      },
+      "back": "Späť",
+      "start": ""
+    },
+    "mobile": {
+      "description": "",
+      "form": {
+        "termuxCommand": {
+          "title": "",
+          "description": ""
+        },
+        "token": {
+          "title": "Token",
+          "description": "",
+          "placeholder": "Tajný token"
+        },
+        "back": "Späť",
+        "connect": ""
+      }
+    }
+  },
+  "dedicated": {
+    "description": "Zadajte adresu a token servera SoulFire, ku ktorému sa chcete pripojiť.",
+    "toast": {
+      "loading": "Pripája sa k serveru…",
+      "success": "Pripojené k serveru",
+      "error": "Spojenie so serverom sa nepodarilo"
+    },
+    "form": {
+      "address": {
+        "title": "Adresa",
+        "description": "Adresa vášho servera SoulFire.",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "Token",
+        "placeholder": "Tajný token",
+        "description": "Token na autentifikáciu so serverom."
+      },
+      "email": {
+        "title": "E-mail",
+        "placeholder": "root@soulfiremc.com",
+        "description": "E-mail vášho účtu SoulFire."
+      },
+      "back": "Späť",
+      "useToken": "Použite token",
+      "useEmail": "Použite e-mail",
+      "login": "Prihlásiť sa"
+    }
+  },
+  "emailCode": {
+    "description": "Ak máte účet, poslali sme kód na adresu <bold>{{email}}</bold>. Zadajte ho nižšie.",
+    "toast": {
+      "loading": "Kontroluje sa kód…",
+      "success": "Prihlásený",
+      "error": "Kód je neplatný"
+    },
+    "back": "Späť"
+  },
+  "footer": {
+    "version": "SoulFire Klient {{version}} - {{environment}}",
+    "preview": "Hľadáte ukážku?",
+    "production": "Hľadáte výrobu?",
+    "helpTranslate": "Preložiť SoulFire"
+  }
+}

@@ -11,35 +11,47 @@ jobs:
       matrix:
         include:
           - platform: 'macos-15'
-            type: 'desktop'
             args: '--target aarch64-apple-darwin'
             target-path: '/aarch64-apple-darwin'
-            name: 'macOS 15 (ARM64)'
+            name: 'macOS 15 (AArch64)'
             rust-targets: 'aarch64-apple-darwin'
+            type: 'macos-aarch64'
           - platform: 'macos-13'
-            type: 'desktop'
             args: '--target x86_64-apple-darwin'
             target-path: '/x86_64-apple-darwin'
             name: 'macOS 13 (AMD64)'
             rust-targets: 'x86_64-apple-darwin'
+            type: 'macos-amd64'
           - platform: 'ubuntu-22.04'
-            type: 'desktop'
             args: ''
             target-path: ''
-            name: 'Ubuntu 22.04'
+            name: 'Ubuntu 22.04 (AMD64)'
             rust-targets: ''
+            type: 'linux-amd64'
+          - platform: 'ubuntu-22.04-arm'
+            args: ''
+            target-path: ''
+            name: 'Ubuntu 22.04 (AArch64)'
+            rust-targets: ''
+            type: 'linux-aarch64'
           - platform: 'windows-2025'
-            type: 'desktop'
             args: ''
             target-path: ''
-            name: 'Windows Server 2025'
+            name: 'Windows Server 2025 (AMD64)'
             rust-targets: ''
+            type: 'windows-amd64'
+          - platform: 'windows-11-arm'
+            args: '--target aarch64-pc-windows-msvc'
+            target-path: '/aarch64-pc-windows-msvc'
+            name: 'Windows 11 (AArch64)'
+            rust-targets: 'aarch64-pc-windows-msvc'
+            type: 'windows-aarch64'
           - platform: 'ubuntu-22.04'
-            type: 'android'
             args: ''
             target-path: ''
             name: 'Android'
             rust-targets: 'aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android'
+            type: 'android'
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -61,13 +73,22 @@ jobs:
         with:
           version: 9
 
+      - name: 'Windows AArch64: Install rustup'
+        if: matrix.type == 'windows-aarch64'
+        run: |
+          curl -sSf -o rustup-init.exe https://win.rustup.rs/aarch64
+          .\rustup-init.exe -y --default-toolchain none
+          $env:CARGO_HOME = "$env:USERPROFILE\.cargo"
+          echo "CARGO_HOME=$env:CARGO_HOME" >> $env:GITHUB_ENV
+          echo "$env:CARGO_HOME\bin" >> $env:GITHUB_PATH
+
       - name: 'Shared: Install Rust toolchain'
         uses: dtolnay/rust-toolchain@nightly
         with:
           targets: ${{ matrix.rust-targets }}
 
       - name: 'Desktop: Cache dependencies'
-        if: matrix.type == 'desktop'
+        if: matrix.type != 'android'
         uses: Swatinem/rust-cache@v2
         with:
           save-if: ${{ github.ref == 'refs/heads/main' }}
@@ -76,17 +97,23 @@ jobs:
           cache-all-crates: true
           cache-targets: false
 
-      - name: 'Ubuntu: Install linux dependencies'
-        if: matrix.name == 'Ubuntu 22.04'
+      - name: 'Ubuntu AMD64: Install linux dependencies'
+        if: matrix.type == 'linux-amd64'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf librust-atk-dev jq
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf librust-atk-dev jq xdg-utils
+
+      - name: 'Ubuntu AArch64: Install linux dependencies'
+        if: matrix.type == 'linux-aarch64'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf librust-atk-dev jq xdg-utils
 
       - name: 'Shared: Install frontend dependencies'
         run: pnpm install
 
       - name: 'Desktop: Build Tauri project'
-        if: matrix.type == 'desktop'
+        if: matrix.type != 'android'
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -97,21 +124,31 @@ jobs:
           includeRelease: false
           args: ${{ matrix.args }}
 
-      - name: 'Desktop: Upload artifacts (Ubuntu)'
+      - name: 'Desktop: Upload artifacts (Ubuntu AMD64)'
         uses: actions/upload-artifact@v4
-        if: matrix.name == 'Ubuntu 22.04'
+        if: matrix.type == 'linux-amd64'
         with:
-          name: tauri-artifact-ubuntu-2204
+          name: tauri-artifact-linux-amd64
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/appimage/*.AppImage
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/deb/*.deb
           if-no-files-found: error
 
-      - name: 'Desktop: Upload artifacts (macOS ARM64)'
+      - name: 'Desktop: Upload artifacts (Ubuntu AArch64)'
         uses: actions/upload-artifact@v4
-        if: matrix.name == 'macOS 15 (ARM64)'
+        if: matrix.type == 'linux-aarch64'
         with:
-          name: tauri-artifact-macos-15-arm64
+          name: tauri-artifact-linux-aarch64
+          path: |
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/appimage/*.AppImage
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/deb/*.deb
+          if-no-files-found: error
+
+      - name: 'Desktop: Upload artifacts (macOS AArch64)'
+        uses: actions/upload-artifact@v4
+        if: matrix.type == 'macos-aarch64'
+        with:
+          name: tauri-artifact-macos-aarch64
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/macos/*.app
@@ -119,19 +156,28 @@ jobs:
 
       - name: 'Desktop: Upload artifacts (macOS AMD64)'
         uses: actions/upload-artifact@v4
-        if: matrix.name == 'macOS 13 (AMD64)'
+        if: matrix.type == 'macos-amd64'
         with:
-          name: tauri-artifact-macos-13-amd64
+          name: tauri-artifact-macos-amd64
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/dmg/*.dmg
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/macos/*.app
           if-no-files-found: error
 
-      - name: 'Desktop: Upload artifacts (Windows)'
+      - name: 'Desktop: Upload artifacts (Windows AMD64)'
         uses: actions/upload-artifact@v4
-        if: matrix.name == 'Windows Server 2025'
+        if: matrix.type == 'windows-amd64'
         with:
-          name: tauri-artifact-windows-2025
+          name: tauri-artifact-windows-amd64
+          path: |
+            ./src-tauri/target${{ matrix.target-path }}/debug/bundle/nsis/*.exe
+          if-no-files-found: error
+
+      - name: 'Desktop: Upload artifacts (Windows AArch64)'
+        uses: actions/upload-artifact@v4
+        if: matrix.type == 'windows-aarch64'
+        with:
+          name: tauri-artifact-windows-aarch64
           path: |
             ./src-tauri/target${{ matrix.target-path }}/debug/bundle/nsis/*.exe
           if-no-files-found: error
@@ -140,13 +186,13 @@ jobs:
       # Android #
       ###########
       - name: 'Android: Install dependencies'
-        if: matrix.type == 'Android'
+        if: matrix.type == 'android'
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential cmake golang-go libunwind-dev
 
       - name: 'Android: Set up JDK 21'
-        if: matrix.type == 'Android'
+        if: matrix.type == 'android'
         uses: actions/setup-java@v4
         with:
           java-version: '21'
@@ -154,11 +200,11 @@ jobs:
           check-latest: true
 
       - name: 'Android: Setup Android SDK'
-        if: matrix.type == 'Android'
+        if: matrix.type == 'android'
         uses: android-actions/setup-android@v3
 
       - name: 'Android: Set up NDK'
-        if: matrix.type == 'Android'
+        if: matrix.type == 'android'
         id: setup-ndk
         uses: nttld/setup-ndk@v1
         with:
@@ -167,17 +213,17 @@ jobs:
           add-to-path: false
 
       - name: 'Android: Install Tauri CLI'
-        if: matrix.type == 'Android'
+        if: matrix.type == 'android'
         run: |
           cargo install --debug --force --locked tauri-cli
 
       - name: 'Android: Decode JKS file'
-        if: matrix.type == 'Android'
+        if: matrix.type == 'android'
         run: |
           echo "${{ secrets.TAURI_ANDROID_KEYSTORE_FILE }}" | base64 --decode > /tmp/keystore.jks
 
       - name: 'Android: Configure Android build'
-        if: matrix.type == 'Android'
+        if: matrix.type == 'android'
         run: |
           cat <<EOF > src-tauri/gen/android/keystore.properties
           password=${{ secrets.TAURI_ANDROID_KEYSTORE_PASSWORD }}
@@ -186,7 +232,7 @@ jobs:
           EOF
 
       - name: 'Android: Build Android project'
-        if: matrix.type == 'Android'
+        if: matrix.type == 'android'
         run: |
           export ANDROID_SDK_HOME=$ANDROID_HOME
           export PATH=$PATH:$ANDROID_HOME/tools
@@ -201,7 +247,7 @@ jobs:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
       - name: 'Android: Upload artifacts'
-        if: matrix.name == 'Android'
+        if: matrix.type == 'android'
         uses: actions/upload-artifact@v4
         with:
           name: tauri-artifact-android

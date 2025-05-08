@@ -62,7 +62,7 @@ jobs:
           - platform: 'macos-15'
             args: '--target aarch64-apple-darwin'
             target-path: '/aarch64-apple-darwin'
-            name: 'macOS 15 (AARCH64)'
+            name: 'macOS 15 (AArch64)'
             rust-targets: 'aarch64-apple-darwin'
             type: 'macos-aarch64'
           - platform: 'macos-13'
@@ -74,15 +74,27 @@ jobs:
           - platform: 'ubuntu-22.04'
             args: ''
             target-path: ''
-            name: 'Ubuntu 22.04'
+            name: 'Ubuntu 22.04 (AMD64)'
             rust-targets: ''
-            type: 'linux'
+            type: 'linux-amd64'
+          - platform: 'ubuntu-22.04-arm'
+            args: ''
+            target-path: ''
+            name: 'Ubuntu 22.04 (AArch64)'
+            rust-targets: ''
+            type: 'linux-aarch64'
           - platform: 'windows-2025'
             args: ''
             target-path: ''
-            name: 'Windows Server 2025'
+            name: 'Windows Server 2025 (AMD64)'
             rust-targets: ''
-            type: 'windows'
+            type: 'windows-amd64'
+          - platform: 'windows-11-arm'
+            args: '--target aarch64-pc-windows-msvc'
+            target-path: '/aarch64-pc-windows-msvc'
+            name: 'Windows 11 (AArch64)'
+            rust-targets: 'aarch64-pc-windows-msvc'
+            type: 'windows-aarch64'
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -105,6 +117,15 @@ jobs:
         with:
           version: 9
 
+      - name: 'Windows AArch64: Install rustup'
+        if: matrix.type == 'windows-aarch64'
+        run: |
+          curl -sSf -o rustup-init.exe https://win.rustup.rs/aarch64
+          .\rustup-init.exe -y --default-toolchain none
+          $env:CARGO_HOME = "$env:USERPROFILE\.cargo"
+          echo "CARGO_HOME=$env:CARGO_HOME" >> $env:GITHUB_ENV
+          echo "$env:CARGO_HOME\bin" >> $env:GITHUB_PATH
+
       - name: 'Shared: Install Rust toolchain'
         uses: dtolnay/rust-toolchain@nightly
         with:
@@ -119,11 +140,17 @@ jobs:
           cache-all-crates: true
           cache-targets: false
 
-      - name: 'Ubuntu: Install dependencies'
-        if: matrix.type == 'linux'
+      - name: 'Ubuntu AMD64: Install dependencies'
+        if: matrix.type == 'linux-amd64'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf jq
+          sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf jq xdg-utils
+
+      - name: 'Ubuntu AArch64: Install dependencies'
+        if: matrix.type == 'linux-aarch64'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.0-dev libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf jq xdg-utils
 
       - name: 'Shared: Install frontend dependencies'
         run: pnpm install
@@ -144,15 +171,23 @@ jobs:
         run: |
           mkdir artifact-output
 
-      - name: 'Desktop: Put linux files in artifact-output'
-        if: matrix.type == 'linux'
+      - name: 'Desktop: Put linux AMD64 files in artifact-output'
+        if: matrix.type == 'linux-amd64'
         shell: bash
         run: |
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage ./artifact-output/
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage.sig ./artifact-output/
           mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/deb/*.deb ./artifact-output/
 
-      - name: 'Desktop: Put macos amd64 files in artifact-output'
+      - name: 'Desktop: Put linux AArch64 files in artifact-output'
+        if: matrix.type == 'linux-aarch64'
+        shell: bash
+        run: |
+          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage ./artifact-output/
+          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/appimage/*.AppImage.sig ./artifact-output/
+          mv ./src-tauri/target${{ matrix.target-path }}/release/bundle/deb/*.deb ./artifact-output/
+
+      - name: 'Desktop: Put macOS AMD64 files in artifact-output'
         if: matrix.type == 'macos-amd64'
         shell: bash
         run: |
@@ -164,7 +199,7 @@ jobs:
           mv "$appZipFile" "./artifact-output/${appZipFileBasename%.app.tar.gz}_x64.app.tar.gz"
           mv "$appZipSigFile" "./artifact-output/${appZipSigFileBasename%.app.tar.gz.sig}_x64.app.tar.gz.sig"
 
-      - name: 'Desktop: Put macos aarch64 files in artifact-output'
+      - name: 'Desktop: Put macOS AArch64 files in artifact-output'
         if: matrix.type == 'macos-aarch64'
         shell: bash
         run: |
@@ -176,26 +211,26 @@ jobs:
           mv "$appZipFile" "./artifact-output/${appZipFileBasename%.app.tar.gz}_aarch64.app.tar.gz"
           mv "$appZipSigFile" "./artifact-output/${appZipSigFileBasename%.app.tar.gz.sig}_aarch64.app.tar.gz.sig"
 
-      - name: 'Windows: Upload unsigned artifact'
+      - name: 'Windows AMD64/AArch64: Upload unsigned artifact'
         id: upload-unsigned-artifact
-        if: matrix.type == 'windows'
+        if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
         uses: actions/upload-artifact@v4
         with:
-          name: windows-unsigned
+          name: ${{ matrix.type }}-unsigned
           path: |
             ./src-tauri/target${{ matrix.target-path }}/release/bundle/nsis/*.exe
           if-no-files-found: error
 
-      - name: 'Windows: Notify Admin'
-        if: matrix.type == 'windows'
+      - name: 'Windows AMD64/AArch64: Notify Admin'
+        if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
         uses: tsickert/discord-webhook@v7.0.0
         with:
           webhook-url: ${{ secrets.ADMIN_WEBHOOK_URL }}
-          content: <@864603174899941376> Permit the signing request for SoulFireClient ${{ inputs.app-version }} https://app.signpath.io/Web/e091b552-3623-4d9d-83d7-059d8f32978b/SigningRequests
+          content: <@864603174899941376> Permit the signing request for SoulFireClient ${{ inputs.app-version }} on ${{ matrix.type }} https://app.signpath.io/Web/e091b552-3623-4d9d-83d7-059d8f32978b/SigningRequests
 
-      - name: 'Windows: Submit signing request'
-        if: matrix.type == 'windows'
-        uses: signpath/github-action-submit-signing-request@v1.1
+      - name: 'Windows AMD64/AArch64: Submit signing request'
+        if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
+        uses: signpath/github-action-submit-signing-request@v1.2
         with:
           api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
           organization-id: 'e091b552-3623-4d9d-83d7-059d8f32978b'
@@ -205,8 +240,8 @@ jobs:
           wait-for-completion: true
           output-artifact-directory: '/artifact-output'
 
-      - name: 'Windows: Prepare signed artifact'
-        if: matrix.platform == 'windows-2025'
+      - name: 'Windows AMD64/AArch64: Prepare signed artifact'
+        if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
         shell: bash
         run: |
           fileName=$(ls artifact-output/*.exe)
@@ -229,11 +264,16 @@ jobs:
 
     runs-on: ubuntu-24.04
     steps:
-      - name: Download linux artifacts
+      - name: Download linux-amd64 artifacts
         uses: actions/download-artifact@v4
         with:
-          name: linux
-          path: release-artifacts/linux
+          name: linux-amd64
+          path: release-artifacts/linux-amd64
+      - name: Download linux-aarch64 artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-aarch64
+          path: release-artifacts/linux-aarch64
       - name: Download macos-aarch64 artifacts
         uses: actions/download-artifact@v4
         with:
@@ -244,22 +284,33 @@ jobs:
         with:
           name: macos-amd64
           path: release-artifacts/macos-amd64
-      - name: Download windows artifacts
+      - name: Download windows-amd64 artifacts
         uses: actions/download-artifact@v4
         with:
-          name: windows
-          path: release-artifacts/windows
+          name: windows-amd64
+          path: release-artifacts/windows-amd64
+      - name: Download windows-aarch64 artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-aarch64
+          path: release-artifacts/windows-aarch64
       - name: Create latest.json
         id: create-latest-json
         run: |
-          linuxAppImageFile=$(ls release-artifacts/linux/*.AppImage)
-          linuxAppImageSigFile=$(ls release-artifacts/linux/*.AppImage.sig)
+          linuxAmd64AppImageFile=$(ls release-artifacts/linux-amd64/*.AppImage)
+          linuxAmd64AppImageSigFile=$(ls release-artifacts/linux-amd64/*.AppImage.sig)
+          linuxAarch64AppImageFile=$(ls release-artifacts/linux-aarch64/*.AppImage)
+          linuxAarch64AppImageSigFile=$(ls release-artifacts/linux-aarch64/*.AppImage.sig)
           macosAarch64File=$(ls release-artifacts/macos-aarch64/*.app.tar.gz)
           macosAarch64SigFile=$(ls release-artifacts/macos-aarch64/*.app.tar.gz.sig)
+          macosAarch64DmgFile=$(ls release-artifacts/macos-aarch64/*.dmg)
           macosAmd64File=$(ls release-artifacts/macos-amd64/*.app.tar.gz)
           macosAmd64SigFile=$(ls release-artifacts/macos-amd64/*.app.tar.gz.sig)
-          windowsAmd64File=$(ls release-artifacts/windows/*.exe)
-          windowsAmd64SigFile=$(ls release-artifacts/windows/*.exe.sig)
+          macosAmd64DmgFile=$(ls release-artifacts/macos-amd64/*.dmg)
+          windowsAmd64File=$(ls release-artifacts/windows-amd64/*.exe)
+          windowsAmd64SigFile=$(ls release-artifacts/windows-amd64/*.exe.sig)
+          windowsAarch64File=$(ls release-artifacts/windows-aarch64/*.exe)
+          windowsAarch64SigFile=$(ls release-artifacts/windows-aarch64/*.exe.sig)
           currentDate=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
           cat << EOF > 'release-artifacts/latest.json'
           {
@@ -271,6 +322,10 @@ jobs:
                 "signature": "$(cat "$windowsAmd64SigFile")",
                 "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$windowsAmd64File")"
               },
+              "windows-aarch64": {
+                "signature": "$(cat "$windowsAarch64SigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$windowsAarch64File")"
+              },
               "darwin-aarch64": {
                 "signature": "$(cat "$macosAarch64SigFile")",
                 "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$macosAarch64File")"
@@ -280,15 +335,20 @@ jobs:
                 "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$macosAmd64File")"
               },
               "linux-x86_64": {
-                "signature": "$(cat "$linuxAppImageSigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$linuxAppImageFile")"
+                "signature": "$(cat "$linuxAmd64AppImageSigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$linuxAmd64AppImageFile")"
+              },
+              "linux-aarch64": {
+                "signature": "$(cat "$linuxAarch64AppImageSigFile")",
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$linuxAarch64AppImageFile")"
               }
             }
           }
           EOF
-          echo "macosAarch64File=$(basename "$macosAarch64File")" >> $GITHUB_OUTPUT
-          echo "macosAmd64File=$(basename "$macosAmd64File")" >> $GITHUB_OUTPUT
+          echo "macosAarch64DmgFile=$(basename "$macosAarch64DmgFile")" >> $GITHUB_OUTPUT
+          echo "macosAmd64DmgFile=$(basename "$macosAmd64DmgFile")" >> $GITHUB_OUTPUT
           echo "windowsAmd64File=$(basename "$windowsAmd64File")" >> $GITHUB_OUTPUT
+          echo "windowsAarch64File=$(basename "$windowsAarch64File")" >> $GITHUB_OUTPUT
 
       - name: Build Changelog
         id: github_release
@@ -299,42 +359,47 @@ jobs:
           configurationJson: |
             {
               "template": "#{{CHANGELOG}}",
+              "commit_template": "- [`#{{SHORT_MERGE_SHA}}`](https://github.com/AlexProgrammerDE/SoulFireClient/commit/#{{MERGE_SHA}}) #{{TITLE}}",
               "categories": [
                 {
-                    "title": "## Feature",
+                    "title": "## 🚀 Features",
                     "labels": ["feat", "feature"]
                 },
                 {
-                    "title": "## Fix",
+                    "title": "## 🐛 Fixes",
                     "labels": ["fix", "bug"]
                 },
                 {
-                    "title": "## Performance",
+                    "title": "## 🏎️ Performance",
                     "labels": ["perf"]
                 },
                 {
-                    "title": "## Refactor",
+                    "title": "## 🏗 Refactor",
                     "labels": ["refactor"]
                 },
                 {
-                    "title": "## Documentation",
+                    "title": "## 📝 Documentation",
                     "labels": ["docs"]
                 },
                 {
-                    "title": "## Build",
+                    "title": "## 🔨 Build",
                     "labels": ["build", "chore", "ci"]
                 },
                 {
-                    "title": "## Style",
+                    "title": "## 💅 Style",
                     "labels": ["style"]
                 },
                 {
-                    "title": "## Test",
+                    "title": "## 🧪 Tests",
                     "labels": ["test"]
                 },
                 {
-                    "title": "## Other",
+                    "title": "## 💬 Other",
                     "labels": []
+                },
+                {
+                  "title": "## 📦 Dependencies",
+                  "labels": ["dependencies"]
                 }
               ],
               "label_extractor": [
@@ -342,6 +407,16 @@ jobs:
                   "pattern": "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test){1}(\\([\\w\\-\\.]+\\))?(!)?: ([\\w ])+([\\s\\S]*)",
                   "on_property": "title",
                   "target": "$1"
+                }
+              ],
+              "custom_placeholders": [
+                {
+                  "name": "SHORT_MERGE_SHA",
+                  "source": "MERGE_SHA",
+                  "transformer": {
+                    "pattern": "^([0-9a-f]{7})[0-9a-f]*$",
+                    "target": "$1"
+                  }
                 }
               ]
             }
@@ -358,9 +433,14 @@ jobs:
             | Platform              | Download Link |
             |-----------------------|---------------|
             | Windows (x86_64)      | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.windowsAmd64File }}) |
-            | macOS (Intel)         | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAmd64File }}) |
-            | macOS (Apple Silicon) | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAarch64File }}) |
+            | Windows (AArch64)     | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.windowsAarch64File }}) |
+            | macOS (Intel)         | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAmd64DmgFile }}) |
+            | macOS (Apple Silicon) | [Download](https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/${{ steps.create-latest-json.outputs.macosAarch64DmgFile }}) |
             | Linux (x86_64)        | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
+            | Linux (AArch64)       | [Download](https://flathub.org/apps/com.soulfiremc.soulfire) |
+
+            > [!TIP]
+            > x86_64 means Intel and AMD CPUs; AArch64 means ARM CPUs like Qualcomm Snapdragon, which are used in some laptops.
 
             ${{ steps.github_release.outputs.changelog }}
           tag_name: ${{ inputs.app-version }}

@@ -61,11 +61,19 @@ jobs:
       - name: 'Add to metainfo'
         run: |
           if ! grep -q "<release version=\"${{ inputs.version }}\"" com.soulfiremc.soulfire.metainfo.xml; then
-            sed -i "/<releases>/a \ \ \ \ <release version=\"${{ inputs.version }}\" date=\"$(date +"%Y-%m-%d")\"/>" com.soulfiremc.soulfire.metainfo.xml
+            sed -i "/<releases>/a\\
+              <release version=\"${{ inputs.version }}\" date=\"$(date +"%Y-%m-%d")\">\\
+                <url type=\"details\">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/${{ inputs.version }}</url>\\
+              </release>" com.soulfiremc.soulfire.metainfo.xml
             echo "Added release ${{ inputs.version }} to metainfo file"
           else
             echo "Release version ${{ inputs.version }} already exists in metainfo file, skipping addition"
           fi
+
+      - name: 'Bump android version code'
+        run: |
+          jq '.bundle.android.versionCode += 1' src-tauri/tauri.conf.json > tmp.json
+          mv tmp.json src-tauri/tauri.conf.json
 
       - name: 'Commit Version'
         uses: stefanzweifel/git-auto-commit-action@v5

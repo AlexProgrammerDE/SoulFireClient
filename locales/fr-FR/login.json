@@ -6,7 +6,7 @@
     "title": "SoulFire"
   },
   "connect": {
-    "title": "Se connecter à un serveur SoulFire",
+    "title": "Connexion à un serveur SoulFire",
     "description": "Sélectionnez le type de serveur SoulFire auquel se connecter.",
     "integrated": {
       "title": "Serveur intégré (local)",
@@ -28,15 +28,31 @@
       "success": "Serveur intégré démarré",
       "error": "Échec du démarrage du serveur intégré"
     },
-    "description": "",
+    "description": "Le serveur intégré s'exécute localement sur votre PC. Configurez les arguments de démarrage Java ci-dessous si nécessaire.",
     "form": {
       "jvmArgs": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "Arguments de la JVM",
+        "description": "Les arguments de la VM SoulFire Java. Pour utiliser 4Go de RAM, ajoutez <bold>-Xmx4G</bold>. La valeur par défaut est 25% de votre RAM.",
+        "placeholder": "Vos arguments JVM ici"
       },
       "back": "Retour",
       "start": "Démarrer"
+    },
+    "mobile": {
+      "description": "",
+      "form": {
+        "termuxCommand": {
+          "title": "",
+          "description": ""
+        },
+        "token": {
+          "title": "Token",
+          "description": "",
+          "placeholder": "Token secret"
+        },
+        "back": "Retour",
+        "connect": ""
+      }
     }
   },
   "dedicated": {
@@ -81,6 +97,6 @@
     "version": "Client SoulFire {{version}} - {{environment}}",
     "preview": "Vous cherchez la démonstration ?",
     "production": "Vous cherchez la production ?",
-    "helpTranslate": ""
+    "helpTranslate": "Traduire SoulFire"
   }
 }

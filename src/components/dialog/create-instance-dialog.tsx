@@ -29,6 +29,7 @@ import { toast } from 'sonner';
 import { useNavigate, useRouteContext } from '@tanstack/react-router';
 import { createContext, ReactNode, use, useState } from 'react';
 import { TransportContext } from '../providers/transport-context.tsx';
+import { PlusIcon, XIcon } from 'lucide-react';
 
 export const CreateInstanceContext = createContext<{
   openCreateInstance: () => void;
@@ -170,10 +171,12 @@ function CreateInstanceDialog({
             <CredenzaFooter className="justify-between">
               <CredenzaClose asChild>
                 <Button variant="outline">
+                  <XIcon />
                   {t('dialog.createInstance.form.cancel')}
                 </Button>
               </CredenzaClose>
               <Button type="submit">
+                <PlusIcon />
                 {t('dialog.createInstance.form.create')}
               </Button>
             </CredenzaFooter>

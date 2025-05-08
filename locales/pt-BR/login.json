@@ -37,6 +37,22 @@
       },
       "back": "Voltar",
       "start": "Iniciar"
+    },
+    "mobile": {
+      "description": "",
+      "form": {
+        "termuxCommand": {
+          "title": "",
+          "description": ""
+        },
+        "token": {
+          "title": "Token",
+          "description": "",
+          "placeholder": "Token Secreto"
+        },
+        "back": "Voltar",
+        "connect": ""
+      }
     }
   },
   "dedicated": {

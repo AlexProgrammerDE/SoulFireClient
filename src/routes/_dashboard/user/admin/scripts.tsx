@@ -1,7 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { createTransport } from '@/lib/web-rpc.ts';
-import { queryClientInstance } from '@/lib/query.ts';
 import { ScriptListResponse } from '@/generated/soulfire/script.ts';
 import { ScriptServiceClient } from '@/generated/soulfire/script.client.ts';
 import { GenericScripts } from '@/components/generic-scripts-page.tsx';
@@ -40,7 +39,7 @@ export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
       refetchInterval: 3_000,
     });
     props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries({
+      void props.context.queryClient.cancelQueries({
         queryKey: globalScriptsQueryOptions.queryKey,
       });
     });
@@ -49,7 +48,7 @@ export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
     };
   },
   loader: (props) => {
-    void queryClientInstance.prefetchQuery(
+    void props.context.queryClient.prefetchQuery(
       props.context.globalScriptsQueryOptions,
     );
   },

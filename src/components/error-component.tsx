@@ -70,14 +70,14 @@ export function ErrorComponent({ error }: { error: Error }) {
               })
             }
           >
-            <LogOutIcon className="h-4" />
+            <LogOutIcon />
             {t('error.page.logOut')}
           </Button>
           <Button onClick={revalidate}>
             {revalidating ? (
-              <LoaderCircleIcon className="h-4 animate-spin" />
+              <LoaderCircleIcon className="animate-spin" />
             ) : (
-              <RotateCwIcon className="h-4" />
+              <RotateCwIcon />
             )}
             {t('error.page.reloadPage')}
           </Button>

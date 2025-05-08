@@ -47,8 +47,8 @@
           "placeholder": "Mon Bot Minecraft",
           "description": "Le nom que vous voulez donner a cette instance.",
           "min": "Le nom doit contenir d'au moins 3 caractères.",
-          "max": "",
-          "regex": ""
+          "max": "Le nom convivial doit comporter au maximum 32 caractères.",
+          "regex": "Le nom ne doit contenir que des lettres, des chiffres et des espaces"
         },
         "cancel": "Annuler",
         "create": "Créer"
@@ -213,24 +213,24 @@
     "pluginSettings": "Configuration du plugin",
     "botSettings": "Configuration du bot",
     "accountSettings": "Paramètres de compte",
-    "metaSettings": "",
+    "metaSettings": "Paramètres de l'instance",
     "proxySettings": "Paramètres de proxy",
     "aiSettings": "Paramètres IA",
     "discoverPlugins": "Plugins",
-    "instanceScripts": ""
+    "instanceScripts": "Scripts"
   },
   "userSidebar": {
     "readDocumentation": "Lire la documentation",
     "userGroup": "Utilisateur",
     "instances": "Instances",
-    "access": "",
+    "access": "Accès",
     "createInstance": "Créer une instance",
     "settings": "Paramètres",
     "adminGroup": "Administrateur",
     "adminOverview": "Aperçu",
     "adminConsole": "Console",
     "users": "Utilisateur·rice·s",
-    "adminScripts": "",
+    "adminScripts": "Scripts",
     "serverSettings": "Paramètres du serveur",
     "devSettings": "Paramètres de développement",
     "theme": {
@@ -252,13 +252,13 @@
       "error": "Échec de la déconnexion"
     },
     "exit": "Quitter",
-    "stopImpersonating": "",
-    "helpTranslate": ""
+    "stopImpersonating": "Arrêter d'usurper l'identité",
+    "helpTranslate": "Traduire SoulFire"
   },
   "sidebar": {
     "documentation": "Documentation",
     "buyMeACoffee": "Offrez-moi un café",
-    "discord": ""
+    "discord": "Discord"
   },
   "breadcrumbs": {
     "admin": "Administrateur",
@@ -271,51 +271,51 @@
     "console": "Console",
     "audit-log": "Logs du serveur",
     "instances": "Instances",
-    "access": "",
+    "access": "Accès",
     "settings": "Paramètres",
     "proxySettings": "Paramètres de proxy",
     "overview": "Aperçu",
     "users": "Utilisateur·rice·s",
     "accountSettings": "Paramètres de compte",
-    "metaSettings": "",
+    "metaSettings": "Paramètres de l'instance",
     "discoverPlugins": "Plugins",
-    "adminScripts": "",
-    "instanceScripts": ""
+    "adminScripts": "Scripts",
+    "instanceScripts": "Scripts"
   },
   "access": {
     "webdav": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "Accès WebDAV",
+      "description": "SoulFire vous permet d'accéder à des instances, des scripts et d'autres fichiers en utilisant le protocole WebDAV.",
+      "publicAddress": "Adresse WebDAV publique",
+      "personalToken": "Token WebDAV personnel",
+      "securityWarning": "Votre jeton WebDAV personnel est très important. Ne le partagez avec personne. Il est utilisé pour vous authentifier lorsque vous accédez à vos fichiers. Utilisez-le comme mot de passe WebDAV lors de la connexion. Le nom d'utilisateur n'est pas obligatoire, si vous y êtes invité, vous pouvez utiliser n'importe quelle valeur que vous voulez. (par exemple 'soulfire')",
+      "addressDescription": "Il s'agit de l'adresse que vous devez utiliser pour accéder a vos fichiers. Parfois vous devez utiliser dav:// ou davs:// a la place de http(s)://."
     },
     "api": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "Accès à l'API",
+      "description": "L'API HTTP gRPC de SoulFire vous permet d'interagir avec vos instances par programmation en utilisant des requêtes web.",
+      "publicAddress": "Adresse API publique",
+      "personalToken": "Token d'API personnel",
+      "securityWarning": "Votre token d'API personnel est très important. Ne le partagez avec personne. Il est utilisé pour vous authentifier lors de l'accès à l'API.",
+      "addressDescription": "Ceci est l'adresse que vous devez utiliser pour accéder à l'API."
     },
     "token": {
-      "generate": "",
-      "placeholder": "",
-      "generating": "",
-      "success": "",
-      "error": "",
-      "copy": "",
-      "copied": ""
+      "generate": "Générer le token",
+      "placeholder": "Cliquez sur \"Générer un token\" ci-dessous",
+      "generating": "Génération du token...",
+      "success": "Token généré avec succès et copié dans le presse-papiers",
+      "error": "Impossible de générer le token",
+      "copy": "Copier le token",
+      "copied": "Token copié dans le presse-papiers"
     },
     "address": {
-      "copy": "",
-      "copied": ""
+      "copy": "Copier l'adresse",
+      "copied": "Adresse copiée dans le presse-papiers"
     },
     "documentation": "Documentation",
-    "howToConnect": ""
+    "howToConnect": "Comment se connecter"
   },
-  "copiedToClipboard": "",
+  "copiedToClipboard": "Copié dans le presse-papier",
   "instanceState": {
     "starting": "Démarrage",
     "running": "En cours d'exécution",
@@ -324,80 +324,80 @@
     "stopped": "Arrêté"
   },
   "auditLog": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Filtrer les journaux d'audit...",
     "user": "Utilisateur",
-    "action": "",
-    "timestamp": "",
-    "executedCommand": "",
-    "startedAttack": "",
-    "resumedAttack": "",
-    "pausedAttack": "",
-    "stoppedAttack": ""
+    "action": "Action",
+    "timestamp": "Horodatage",
+    "executedCommand": "Commande exécutée : {{data}}",
+    "startedAttack": "Attaque démarrée",
+    "resumedAttack": "Attaque reprise",
+    "pausedAttack": "Attaque suspendue",
+    "stoppedAttack": "Attaque arrêtée"
   },
-  "pickADate": "",
+  "pickADate": "Choisir une date",
   "scripts": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Filtrer les scripts...",
     "baseScriptDialog": {
       "form": {
         "scriptName": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "Les noms de script doivent contenir au moins 3 caractères",
+          "max": "Les noms de scripts doivent comporter au maximum 32 caractères",
+          "regex": "Les noms de scripts doivent être en minuscule, commencer par un caractère alphanumérique, suivi de plus de caractères alphanumériques ou de tirets, et se terminer par un caractère alphanumérique.",
+          "label": "Nom",
+          "placeholder": "Mon Script",
+          "description": "Le nom du script."
         },
         "elevatedPermissions": {
-          "label": "",
-          "description": ""
+          "label": "Autorisations élevées",
+          "description": "Si le script doit s'exécuter avec des permissions élevées. Seuls les administrateurs peuvent activer cette option."
         }
       }
     },
     "addScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Ajouter un nouveau script",
+      "description": "Les scripts sont de petits programmes qui s'exécutent sur le serveur SoulFire. Ils peuvent être utilisés pour automatiser les tâches, créer des comportements personnalisés, et plus encore.",
       "form": {
         "cancel": "Annuler",
         "add": "Ajouter"
       }
     },
     "updateScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Mettre à jour le script",
+      "description": "Mettre à jour l'information du script.",
       "form": {
         "cancel": "Annuler",
-        "update": ""
+        "update": "Mettre à jour"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Suppression des scripts...",
+      "success": "Scripts supprimés !",
+      "error": "Échec de la suppression des scripts"
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Ajout du script...",
+      "success": "Script ajouté !",
+      "error": "Échec de l'ajout du script"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Mise à jour du script...",
+      "success": "Script mis à jour !",
+      "error": "Échec de la mise à jour du script"
     },
     "restartToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Redémarrage du script...",
+      "success": "Script redémarré !",
+      "error": "Échec du redémarrage du script"
     },
     "table": {
       "type": "Type",
-      "scriptName": "",
-      "language": "",
-      "elevatedPermissions": "",
-      "createdAt": "",
-      "actions": ""
+      "scriptName": "Nom",
+      "language": "Langue",
+      "elevatedPermissions": "Autorisations élevées",
+      "createdAt": "Créé",
+      "actions": "Actions"
     },
-    "globalScript": "",
-    "instanceScript": ""
+    "globalScript": "Global",
+    "instanceScript": "Instance"
   }
 }

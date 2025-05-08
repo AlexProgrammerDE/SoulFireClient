@@ -23,11 +23,18 @@ import { Input } from '@/components/ui/input.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import { use, useCallback, useEffect, useState } from 'react';
 import {
+  ArrowLeftIcon,
+  ClipboardIcon,
   FlaskConicalIcon,
   HeartHandshakeIcon,
   InfoIcon,
+  KeyRoundIcon,
   LaptopMinimalIcon,
   LoaderCircleIcon,
+  LogInIcon,
+  MailIcon,
+  PlayIcon,
+  PlugZapIcon,
   RotateCcwIcon,
   SatelliteDishIcon,
   ServerIcon,
@@ -38,6 +45,7 @@ import { SystemInfoContext } from '@/components/providers/system-info-context.ts
 import { invoke } from '@tauri-apps/api/core';
 import {
   cancellablePromiseDefault,
+  copyToClipboard,
   getLanguageName,
   isDemo,
   languageEmoji,
@@ -82,6 +90,8 @@ const LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY = 'form-server-token';
 const LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY = 'form-server-email';
 const LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS =
   'form-integrated-server-jvm-args';
+const LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY =
+  'form-mobile-integrated-server-token';
 
 export const Route = createFileRoute('/')({
   component: Index,
@@ -123,6 +133,19 @@ const integratedServerFormSchema = z.object({
 type IntegratedServerFormSchemaType = z.infer<
   typeof integratedServerFormSchema
 >;
+const mobileIntegratedServerFormSchema = z.object({
+  token: z
+    .string()
+    .min(1, 'Token is required')
+    .max(255, 'Token is too long')
+    .regex(
+      /e[yw][A-Za-z0-9-_]+\.(?:e[yw][A-Za-z0-9-_]+)?\.[A-Za-z0-9-_]{2,}(?:(?:\.[A-Za-z0-9-_]{2,}){2})?/,
+      'Must be a valid JWT token',
+    ),
+});
+type MobileIntegratedServerFormSchemaType = z.infer<
+  typeof mobileIntegratedServerFormSchema
+>;
 
 type LoginType = 'INTEGRATED' | 'DEDICATED' | 'EMAIL_CODE' | null;
 
@@ -152,6 +175,19 @@ const DEFAULT_JVM_ARGS = [
   '-Dsf.flags.v1=true',
 ];
 const DEFAULT_JVM_ARGS_STRING = DEFAULT_JVM_ARGS.join(' ');
+const DEFAULT_MOBILE_JVM_ARGS = [
+  '-XX:+EnableDynamicAgentLoading',
+  '-XX:+UnlockExperimentalVMOptions',
+  // '-XX:+UseZGC',
+  // '-XX:+ZGenerational',
+  '-XX:+AlwaysActAsServerClassMachine',
+  // '-XX:+UseNUMA',
+  '-XX:+UseFastUnorderedTimeStamps',
+  '-XX:+UseVectorCmov',
+  '-XX:+UseCriticalJavaThreadPriority',
+  '-Dsf.flags.v1=true',
+];
+const DEFAULT_MOBILE_JVM_ARGS_STRING = DEFAULT_MOBILE_JVM_ARGS.join(' ');
 
 function Index() {
   const { t, i18n } = useTranslation('login');
@@ -210,7 +246,7 @@ function Index() {
   return (
     <ScrollArea className="bg-muted h-dvh w-full px-4">
       <main className="flex min-h-dvh w-full flex-col">
-        <div className="m-auto flex w-full max-w-[450px] flex-col gap-6">
+        <div className="m-auto flex w-full max-w-lg flex-col gap-6">
           <div className="flex flex-row items-center justify-center gap-2 text-center">
             <img
               className="size-8"
@@ -345,6 +381,7 @@ function DefaultMenu(props: {
 }) {
   const { t } = useTranslation('login');
   const systemInfo = use(SystemInfoContext);
+  const integratedDisabled = isDemo() || !systemInfo;
   return (
     <Card>
       <CardHeader className="text-center">
@@ -354,20 +391,21 @@ function DefaultMenu(props: {
       <CardContent className="flex flex-col gap-2">
         <div className="flex flex-row gap-2">
           <Button
-            disabled={isDemo() || !systemInfo}
+            autoFocus
+            disabled={integratedDisabled}
             className="w-full"
             variant="outline"
             onClick={() => {
               props.setLoginType('INTEGRATED');
             }}
           >
-            <LaptopMinimalIcon className="size-5" />
+            <LaptopMinimalIcon />
             {t('connect.integrated.title')}
           </Button>
           <Popover>
             <PopoverTrigger asChild>
               <Button className="w-fit" variant="outline">
-                <InfoIcon className="size-5" />
+                <InfoIcon />
               </Button>
             </PopoverTrigger>
             <PopoverContent>
@@ -377,18 +415,19 @@ function DefaultMenu(props: {
         </div>
         <div className="flex flex-row gap-2">
           <Button
+            autoFocus={integratedDisabled}
             disabled={isDemo()}
             className="w-full"
             variant="outline"
             onClick={() => props.setLoginType('DEDICATED')}
           >
-            <ServerIcon className="size-5" />
+            <ServerIcon />
             {t('connect.dedicated.title')}
           </Button>
           <Popover>
             <PopoverTrigger asChild>
               <Button className="w-fit" variant="outline">
-                <InfoIcon className="size-5" />
+                <InfoIcon />
               </Button>
             </PopoverTrigger>
             <PopoverContent>
@@ -399,19 +438,20 @@ function DefaultMenu(props: {
         {isDemo() && (
           <div className="flex flex-row gap-2">
             <Button
+              autoFocus
               className="w-full"
               variant="outline"
               onClick={() => {
                 void props.demoLogin();
               }}
             >
-              <FlaskConicalIcon className="size-5" />
+              <FlaskConicalIcon />
               {t('connect.demo.title')}
             </Button>
             <Popover>
               <PopoverTrigger asChild>
                 <Button className="w-fit" variant="outline">
-                  <InfoIcon className="size-5" />
+                  <InfoIcon />
                 </Button>
               </PopoverTrigger>
               <PopoverContent>{t('connect.demo.description')}</PopoverContent>
@@ -423,7 +463,7 @@ function DefaultMenu(props: {
   );
 }
 
-type IntegratedState = 'configure' | 'loading';
+type IntegratedState = 'configure' | 'loading' | 'mobile';
 
 function IntegratedMenu({
   redirectWithCredentials,
@@ -452,6 +492,13 @@ function IntegratedMenu({
           redirectWithCredentials={redirectWithCredentials}
         />
       );
+    case 'mobile':
+      return (
+        <IntegratedMobileMenu
+          setIntegratedState={setIntegratedState}
+          redirectWithCredentials={redirectWithCredentials}
+        />
+      );
   }
 }
 
@@ -464,13 +511,16 @@ function IntegratedConfigureMenu({
   setIntegratedState: (state: IntegratedState) => void;
   startIntegratedServer: () => void;
 }) {
+  const systemInfo = use(SystemInfoContext);
   const { t } = useTranslation('login');
   const form = useForm<IntegratedServerFormSchemaType>({
     resolver: zodResolver(integratedServerFormSchema),
     defaultValues: {
       jvmArgs:
         localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS) ??
-        DEFAULT_JVM_ARGS_STRING,
+        (systemInfo?.mobile
+          ? DEFAULT_MOBILE_JVM_ARGS_STRING
+          : DEFAULT_JVM_ARGS_STRING),
     },
   });
 
@@ -481,8 +531,12 @@ function IntegratedConfigureMenu({
       jvmArgs,
     );
 
-    setIntegratedState('loading');
-    startIntegratedServer();
+    if (systemInfo?.mobile) {
+      setIntegratedState('mobile');
+    } else {
+      setIntegratedState('loading');
+      startIntegratedServer();
+    }
   }
 
   return (
@@ -503,18 +557,18 @@ function IntegratedConfigureMenu({
                   <FormControl>
                     <div className="flex flex-row gap-2">
                       <Input
+                        autoFocus
                         type="text"
                         inputMode="text"
                         placeholder={t('integrated.form.jvmArgs.placeholder')}
                         {...field}
                       />
                       <Button
+                        type="button"
                         variant="secondary"
-                        disabled={
-                          form.getValues().jvmArgs === DEFAULT_JVM_ARGS_STRING
-                        }
+                        disabled={field.value === DEFAULT_JVM_ARGS_STRING}
                         onClick={() => {
-                          form.setValue('jvmArgs', DEFAULT_JVM_ARGS_STRING);
+                          field.onChange('jvmArgs', DEFAULT_JVM_ARGS_STRING);
                           localStorage.setItem(
                             LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
                             DEFAULT_JVM_ARGS_STRING,
@@ -545,9 +599,13 @@ function IntegratedConfigureMenu({
               }}
               type="button"
             >
+              <ArrowLeftIcon />
               {t('integrated.form.back')}
             </Button>
-            <Button type="submit">{t('integrated.form.start')}</Button>
+            <Button type="submit">
+              <PlayIcon />
+              {t('integrated.form.start')}
+            </Button>
           </CardFooter>
         </form>
       </Form>
@@ -586,6 +644,143 @@ function IntegratedLoadingMenu({
       <CardContent className="flex h-32 w-full">
         <LoaderCircleIcon className="m-auto h-12 w-12 animate-spin" />
       </CardContent>
+    </Card>
+  );
+}
+
+function IntegratedMobileMenu({
+  setIntegratedState,
+  redirectWithCredentials,
+}: {
+  setIntegratedState: (state: IntegratedState) => void;
+  redirectWithCredentials: LoginFunction;
+}) {
+  const systemInfo = use(SystemInfoContext);
+  const { t } = useTranslation('login');
+  const runCommand = `bash <(curl -s https://raw.githubusercontent.com/AlexProgrammerDE/SoulFireClient/refs/heads/main/scripts/termux_setup.sh) ${systemInfo?.sfServerVersion} "${localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS)}"`;
+  const form = useForm<MobileIntegratedServerFormSchemaType>({
+    resolver: zodResolver(mobileIntegratedServerFormSchema),
+    defaultValues: {
+      token:
+        localStorage.getItem(
+          LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY,
+        ) ?? '',
+    },
+  });
+
+  function onSubmit(values: MobileIntegratedServerFormSchemaType) {
+    const token = values.token.trim();
+    localStorage.setItem(
+      LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY,
+      token,
+    );
+    void redirectWithCredentials('integrated', 'http://localhost:38765', token);
+  }
+
+  return (
+    <Card>
+      <CardHeader className="text-center">
+        <LoginCardTitle />
+        <CardDescription>{t('integrated.mobile.description')}</CardDescription>
+      </CardHeader>
+      <Form {...form}>
+        <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
+          <CardContent className="flex flex-col gap-4">
+            <FormItem>
+              <FormLabel>
+                {t('integrated.mobile.form.termuxCommand.title')}
+              </FormLabel>
+              <div className="flex flex-row gap-2">
+                <Input
+                  autoFocus
+                  type="text"
+                  inputMode="text"
+                  readOnly
+                  value={runCommand}
+                />
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => {
+                    copyToClipboard(runCommand);
+                    toast.success(t('common:copiedToClipboard'));
+                  }}
+                >
+                  <ClipboardIcon />
+                </Button>
+              </div>
+              <FormDescription>
+                <Trans
+                  i18nKey="login:integrated.mobile.form.termuxCommand.description"
+                  components={{
+                    a: (
+                      <ExternalLink
+                        href="https://wiki.termux.com/wiki/Installation"
+                        className="text-nowrap text-blue-500"
+                      />
+                    ),
+                    copy: (
+                      <button
+                        type="button"
+                        className="font-bold text-blue-500"
+                        onClick={() => {
+                          copyToClipboard('generate-token api');
+                          toast.success(t('common:copiedToClipboard'));
+                        }}
+                      />
+                    ),
+                  }}
+                />
+              </FormDescription>
+            </FormItem>
+            <FormField
+              control={form.control}
+              name="token"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    {t('integrated.mobile.form.token.title')}
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      inputMode="text"
+                      placeholder={t(
+                        'integrated.mobile.form.token.placeholder',
+                      )}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    <Trans
+                      i18nKey="login:integrated.mobile.form.token.description"
+                      components={{ bold: <strong className="text-nowrap" /> }}
+                    />
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button
+              variant="outline"
+              onClick={(e) => {
+                e.preventDefault();
+                setIntegratedState('configure');
+              }}
+              type="button"
+            >
+              <ArrowLeftIcon />
+              {t('integrated.mobile.form.back')}
+            </Button>
+            <Button type="submit">
+              <PlugZapIcon />
+              {t('integrated.mobile.form.connect')}
+            </Button>
+          </CardFooter>
+        </form>
+      </Form>
     </Card>
   );
 }
@@ -692,6 +887,7 @@ function EmailForm({
                 <FormLabel>{t('dedicated.form.address.title')}</FormLabel>
                 <FormControl>
                   <Input
+                    autoFocus
                     type="url"
                     inputMode="url"
                     placeholder={t('dedicated.form.address.placeholder')}
@@ -735,6 +931,7 @@ function EmailForm({
             }}
             type="button"
           >
+            <ArrowLeftIcon />
             {t('dedicated.form.back')}
           </Button>
           <div className="flex flex-row gap-2">
@@ -745,9 +942,13 @@ function EmailForm({
               }}
               type="button"
             >
+              <KeyRoundIcon />
               {t('dedicated.form.useToken')}
             </Button>
-            <Button type="submit">{t('dedicated.form.login')}</Button>
+            <Button type="submit">
+              <LogInIcon />
+              {t('dedicated.form.login')}
+            </Button>
           </div>
         </CardFooter>
       </form>
@@ -795,6 +996,7 @@ function TokenForm({
                 <FormLabel>{t('dedicated.form.address.title')}</FormLabel>
                 <FormControl>
                   <Input
+                    autoFocus
                     type="url"
                     inputMode="url"
                     placeholder={t('dedicated.form.address.placeholder')}
@@ -838,6 +1040,7 @@ function TokenForm({
             }}
             type="button"
           >
+            <ArrowLeftIcon />
             {t('dedicated.form.back')}
           </Button>
           <div className="flex flex-row gap-2">
@@ -848,9 +1051,13 @@ function TokenForm({
               }}
               type="button"
             >
+              <MailIcon />
               {t('dedicated.form.useEmail')}
             </Button>
-            <Button type="submit">{t('dedicated.form.login')}</Button>
+            <Button type="submit">
+              <LogInIcon />
+              {t('dedicated.form.login')}
+            </Button>
           </div>
         </CardFooter>
       </form>
@@ -964,6 +1171,7 @@ function EmailCodeMenu(props: {
             props.setLoginType('DEDICATED');
           }}
         >
+          <ArrowLeftIcon />
           {t('emailCode.back')}
         </Button>
         {inputDisabled && (

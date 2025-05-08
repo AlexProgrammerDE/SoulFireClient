@@ -2,7 +2,6 @@ import { CatchBoundary, createFileRoute, Outlet } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
-import { queryClientInstance } from '@/lib/query.ts';
 import { queryOptions } from '@tanstack/react-query';
 import {
   MinecraftAccountProto_AccountTypeProto,
@@ -92,7 +91,7 @@ export const Route = createFileRoute('/_dashboard/instance/$instance')({
       refetchInterval: 3_000,
     });
     props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries({
+      void props.context.queryClient.cancelQueries({
         queryKey: instanceInfoQueryOptions.queryKey,
       });
     });
@@ -101,7 +100,7 @@ export const Route = createFileRoute('/_dashboard/instance/$instance')({
     };
   },
   loader: (props) => {
-    void queryClientInstance.prefetchQuery(
+    void props.context.queryClient.prefetchQuery(
       props.context.instanceInfoQueryOptions,
     );
   },

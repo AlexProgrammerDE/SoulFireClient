@@ -206,7 +206,7 @@ function ExtraHeader(props: { table: ReactTable<ScriptListResponse_Script> }) {
   return (
     <>
       <Button variant="outline" onClick={() => setCreateOpen(true)}>
-        <PlusIcon className="h-4 w-4" />
+        <PlusIcon />
       </Button>
       <Button
         variant="outline"
@@ -226,7 +226,7 @@ function ExtraHeader(props: { table: ReactTable<ScriptListResponse_Script> }) {
           });
         }}
       >
-        <TrashIcon className="h-4 w-4" />
+        <TrashIcon />
       </Button>
       <ManageScriptDialog
         mode="add"

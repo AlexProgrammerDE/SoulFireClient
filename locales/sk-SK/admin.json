@@ -1,24 +1,24 @@
 {
   "overview": {
-    "welcome": "Willkommen zurück, {{name}} 🧙",
+    "welcome": "",
     "instancesChart": {
-      "title": "Gesamte Instanzen auf diesem Server",
-      "instances": "Instanzen",
+      "title": "",
+      "instances": "",
       "label": {
-        "state": "Zustand",
-        "active": "Aktiv",
-        "stopped": "Gestoppt",
-        "other": "Andere"
+        "state": "",
+        "active": "",
+        "stopped": "",
+        "other": ""
       }
     },
     "usersChart": {
-      "title": "Gesamte Nutzer auf diesem Server",
-      "users": "Nutzer",
+      "title": "",
+      "users": "",
       "label": {
-        "role": "Rolle",
-        "user": "Nutzer",
-        "admin": "Admin",
-        "other": "Andere"
+        "role": "",
+        "user": "",
+        "admin": "",
+        "other": ""
       }
     }
   },
@@ -30,20 +30,20 @@
           "min": "",
           "max": "",
           "regex": "",
-          "label": "Benutzername",
-          "placeholder": "",
-          "description": ""
-        },
-        "email": {
           "label": "",
           "placeholder": "",
           "description": ""
         },
+        "email": {
+          "label": "E-mail",
+          "placeholder": "",
+          "description": ""
+        },
         "role": {
-          "label": "Rolle",
+          "label": "",
           "description": "",
-          "user": "Nutzer",
-          "admin": "Admin"
+          "user": "",
+          "admin": ""
         }
       }
     },
@@ -51,7 +51,7 @@
       "title": "",
       "description": "",
       "form": {
-        "cancel": "Abbrechen",
+        "cancel": "",
         "add": ""
       }
     },
@@ -59,7 +59,7 @@
       "title": "",
       "description": "",
       "form": {
-        "cancel": "Abbrechen",
+        "cancel": "",
         "update": ""
       }
     },
@@ -84,12 +84,12 @@
       "error": ""
     },
     "table": {
-      "username": "Benutzername",
-      "email": "",
-      "role": "Rolle",
-      "createdAt": "Erstellt",
-      "minIssuedAt": "Min. Login",
-      "actions": "Aktionen"
+      "username": "",
+      "email": "E-mail",
+      "role": "",
+      "createdAt": "",
+      "minIssuedAt": "",
+      "actions": ""
     }
   }
 }

@@ -30,6 +30,7 @@ import { RpcTransport } from '@protobuf-ts/runtime-rpc';
 import { QueryClient, QueryKey } from '@tanstack/react-query';
 import { Timestamp } from '@/generated/google/protobuf/timestamp.ts';
 import { ClientServiceClient } from '@/generated/soulfire/client.client.ts';
+import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
 
 export const ROOT_USER_ID = '00000000-0000-0000-0000-000000000000';
 const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
@@ -523,4 +524,12 @@ export function formatIconName(text: string): string {
     .split('-')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
+}
+
+export function copyToClipboard(text: string) {
+  if (isTauri()) {
+    void clipboard.writeText(text);
+  } else {
+    void navigator.clipboard.writeText(text);
+  }
 }

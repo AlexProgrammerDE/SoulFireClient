@@ -1,7 +1,6 @@
 import { use } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { convertToInstanceProto } from '@/lib/types.ts';
 import { toast } from 'sonner';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import { InstanceState } from '@/generated/soulfire/instance.ts';
@@ -22,10 +21,6 @@ export default function ControlsMenu() {
   });
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const startMutation = useMutation({
     mutationFn: () => {
@@ -35,16 +30,11 @@ export default function ControlsMenu() {
 
       const client = new InstanceServiceClient(transport);
       const promise = client
-        .updateInstanceConfig({
+        .changeInstanceState({
           id: instanceInfo.id,
-          config: convertToInstanceProto(profile),
+          state: InstanceState.RUNNING,
         })
-        .then(() => {
-          return client.changeInstanceState({
-            id: instanceInfo.id,
-            state: InstanceState.RUNNING,
-          });
-        });
+        .then();
       toast.promise(promise, {
         loading: t('controls.startToast.loading'),
         success: t('controls.startToast.success'),
@@ -145,7 +135,7 @@ export default function ControlsMenu() {
         onClick={() => startMutation.mutate()}
         disabled={instanceInfo.state !== InstanceState.STOPPED}
       >
-        <PlayIcon className="h-4" />
+        <PlayIcon />
         {t('controls.start')}
       </Button>
       <Button
@@ -157,9 +147,9 @@ export default function ControlsMenu() {
         }
       >
         {instanceInfo.state === InstanceState.PAUSED ? (
-          <TimerOffIcon className="h-4" />
+          <TimerOffIcon />
         ) : (
-          <TimerIcon className="h-4" />
+          <TimerIcon />
         )}
         {instanceInfo.state === InstanceState.PAUSED
           ? t('controls.resume')
@@ -173,7 +163,7 @@ export default function ControlsMenu() {
           instanceInfo.state === InstanceState.STOPPED
         }
       >
-        <SquareIcon className="h-4" />
+        <SquareIcon />
         {t('controls.stop')}
       </Button>
     </div>

@@ -1,5 +1,5 @@
 import {
-  createRootRoute,
+  createRootRouteWithContext,
   deepEqual,
   Outlet,
   useLocation,
@@ -8,8 +8,7 @@ import '../App.css';
 import { ThemeProvider } from '@/components/providers/theme-provider.tsx';
 import { Toaster } from '@/components/ui/sonner.tsx';
 import { TailwindIndicator } from '@/components/tailwind-indicator.tsx';
-import { QueryClientProvider } from '@tanstack/react-query';
-import { queryClientInstance } from '@/lib/query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { memo, useEffect, useState } from 'react';
 import {
   SystemInfo,
@@ -27,6 +26,7 @@ import { AptabaseProvider, useAptabase } from '@aptabase/react';
 import { emit } from '@tauri-apps/api/event';
 import { useTheme } from 'next-themes';
 import { AboutProvider } from '@/components/dialog/about-dialog.tsx';
+import { invoke } from '@tauri-apps/api/core';
 
 async function getAvailableProfiles() {
   const profileDir = await resolve(
@@ -48,9 +48,10 @@ function isMobile() {
 
 async function createSystemInfo() {
   const osType = type();
-  const [availableProfiles, osLocale] = await Promise.all([
+  const [availableProfiles, osLocale, sfServerVersion] = await Promise.all([
     getAvailableProfiles(),
     locale(),
+    invoke<string>('get_sf_server_version'),
   ]);
   return {
     availableProfiles,
@@ -60,10 +61,13 @@ async function createSystemInfo() {
     osLocale,
     archName: arch(),
     mobile: isMobile(),
+    sfServerVersion,
   };
 }
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+}>()({
   loader: async () => {
     let systemInfo: SystemInfo | null;
     if (isTauri()) {
@@ -146,6 +150,7 @@ function WindowThemeSyncer() {
 
 function RootLayout() {
   const { systemInfo } = Route.useLoaderData();
+  const { queryClient } = Route.useRouteContext();
   const [systemInfoState, setSystemInfoState] = useState<SystemInfo | null>(
     systemInfo,
   );
@@ -200,7 +205,7 @@ function RootLayout() {
         }}
       >
         <AppStartedEvent />
-        <QueryClientProvider client={queryClientInstance}>
+        <QueryClientProvider client={queryClient}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

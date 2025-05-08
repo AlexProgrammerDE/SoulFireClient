@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
-import { queryClientInstance } from '@/lib/query.ts';
 import { queryOptions } from '@tanstack/react-query';
 import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
 import { UserListResponse } from '@/generated/soulfire/user.ts';
@@ -71,12 +70,12 @@ export const Route = createFileRoute('/_dashboard/user/admin')({
       refetchInterval: 3_000,
     });
     props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries({
+      void props.context.queryClient.cancelQueries({
         queryKey: serverInfoQueryOptions.queryKey,
       });
     });
     props.abortController.signal.addEventListener('abort', () => {
-      void queryClientInstance.cancelQueries({
+      void props.context.queryClient.cancelQueries({
         queryKey: usersQueryOptions.queryKey,
       });
     });
@@ -86,9 +85,11 @@ export const Route = createFileRoute('/_dashboard/user/admin')({
     };
   },
   loader: (props) => {
-    void queryClientInstance.prefetchQuery(
+    void props.context.queryClient.prefetchQuery(
       props.context.serverInfoQueryOptions,
     );
-    void queryClientInstance.prefetchQuery(props.context.usersQueryOptions);
+    void props.context.queryClient.prefetchQuery(
+      props.context.usersQueryOptions,
+    );
   },
 });

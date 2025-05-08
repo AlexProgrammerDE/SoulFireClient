@@ -237,7 +237,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline">
-            <PlusIcon className="h-4 w-4" />
+            <PlusIcon />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -378,7 +378,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           });
         }}
       >
-        <Wand2Icon className="h-4 w-4" />
+        <Wand2Icon />
       </Button>
       <Button
         variant="outline"
@@ -407,7 +407,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           });
         }}
       >
-        <TrashIcon className="h-4 w-4" />
+        <TrashIcon />
       </Button>
       {proxyTypeSelected !== null && (
         <ImportDialog

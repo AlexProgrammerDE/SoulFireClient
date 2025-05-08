@@ -1,108 +1,108 @@
 {
-  "locale": "Locael",
-  "cancel": "cancel k?",
+  "locale": "",
+  "cancel": "",
   "error": {
-    "noAddressOrToken": "No servr addres or token findz",
+    "noAddressOrToken": "",
     "page": {
-      "title": "Ewwow",
-      "description": "Error happen when i try give you page. You can see whay in the consol.",
-      "logOut": "Walk out",
-      "reloadPage": "Spin paeg"
+      "title": "",
+      "description": "",
+      "logOut": "",
+      "reloadPage": ""
     },
-    "connectionFailed": "Cunnection unsuccessful."
+    "connectionFailed": ""
   },
   "notFound": {
     "page": {
-      "title": "Nuh Found",
-      "description": "Ma can't find your page",
-      "logOut": "Walk out",
-      "reloadPage": "Spin paeg"
+      "title": "",
+      "description": "",
+      "logOut": "",
+      "reloadPage": ""
     }
   },
   "pending": {
-    "connecting": "Catwalking..."
+    "connecting": ""
   },
   "dialog": {
     "about": {
-      "title": "Who SoulFire",
-      "description": "I zee vawiant {{version}} of SoulFire cwient.",
-      "type": "Tyep",
-      "value": "Value",
+      "title": "",
+      "description": "",
+      "type": "",
+      "value": "",
       "fields": {
-        "operatingSystem": "Operatin Sistem",
-        "platform": "Platform",
-        "locale": "Locael",
-        "architecture": "Architecchur",
-        "environment": "Environment",
-        "browser": "Browsr"
+        "operatingSystem": "",
+        "platform": "",
+        "locale": "",
+        "architecture": "",
+        "environment": "",
+        "browser": ""
       },
-      "close": "Cloes"
+      "close": ""
     },
     "createInstance": {
-      "title": "Creaet nu instanec",
-      "description": "Instances ned friendly namez 4 u 2 distinguish dem. Srsly It can bees any naym u wantz, 4 exampel, \"mah Minecraft Bot\".",
+      "title": "",
+      "description": "",
       "form": {
         "friendlyName": {
-          "label": "Friendly naym",
-          "placeholder": "Mah Minecraft Bot",
-          "description": "Teh naym u wantz 2 giv 2 dis instanec.",
-          "min": "Teh friendly naym must bees at least 3 characterz long.",
-          "max": "Teh friendly naym must bees at most 32 characterz long.",
+          "label": "",
+          "placeholder": "",
+          "description": "",
+          "min": "",
+          "max": "",
           "regex": ""
         },
-        "cancel": "cancel k?",
-        "create": "Makee Makee"
+        "cancel": "",
+        "create": ""
       },
       "createToast": {
-        "loading": "Creatin instanec...",
-        "success": "Instanec creatd successfully",
-        "error": "Faild 2 creaet instanec"
+        "loading": "",
+        "success": "",
+        "error": ""
       }
     },
     "import": {
       "main": {
-        "fromFile": "Frum fiel",
-        "fromUrl": "Frum URL",
-        "firstClipboardItem": "U had multipel itemz in teh clipboard, only usin furst wan.",
-        "fromClipboard": "Frum clipboard",
+        "fromFile": "",
+        "fromUrl": "",
+        "firstClipboardItem": "",
+        "fromClipboard": "",
         "textarea": {
-          "placeholder": "Give taxt here...",
-          "submit": "Load form taxt"
+          "placeholder": "",
+          "submit": ""
         }
       },
       "url": {
-        "description": "Loadin frum URL will mak teh SoulFire servr mak git request 2 teh target servr an ues teh respones as teh daat.",
+        "description": "",
         "form": {
           "url": {
-            "placeholder": "Put URL hah...",
-            "empty": "Plez give valid URL"
+            "placeholder": "",
+            "empty": ""
           }
         },
-        "submit": "Load form URL",
+        "submit": "",
         "toast": {
-          "loading": "Dawnloadin data...",
-          "success": "Data lodaded!",
-          "error": "Teh download failed"
+          "loading": "",
+          "success": "",
+          "error": ""
         }
       }
     }
   },
   "commandInput": {
-    "placeholder": "Entah teh command (type 'help' if yar confoosed)"
+    "placeholder": ""
   },
   "controls": {
-    "start": "Strat",
-    "resume": "Resoome",
-    "pause": "Pawse",
-    "stop": "Stawp",
+    "start": "",
+    "resume": "",
+    "pause": "",
+    "stop": "",
     "startToast": {
       "loading": "",
-      "success": "Teh attack successfully strated",
-      "error": "Fialed to strat attacc"
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Resooming attak...",
-      "success": "Teh attack resumed perfectly",
+      "loading": "",
+      "success": "",
       "error": ""
     },
     "pauseToast": {
@@ -120,7 +120,7 @@
     "invalidName": ""
   },
   "dataTable": {
-    "noResults": "Nu results.",
+    "noResults": "",
     "rowsSelected": "",
     "rowsPerPage": "",
     "currentPage": "",
@@ -128,7 +128,7 @@
     "goPrevious": "",
     "goNext": "",
     "goLast": "",
-    "selectAll": "Selecc all",
+    "selectAll": "",
     "selectRow": ""
   },
   "pluginCard": {
@@ -141,11 +141,11 @@
     "namespacesNotFound": "",
     "stringList": {
       "placeholder": "",
-      "add": "Put stuff",
-      "remove": "Exit stuff"
+      "add": "",
+      "remove": ""
     },
     "invalidNumberToast": {
-      "title": "Dats Invalid Number!",
+      "title": "",
       "description": ""
     }
   },
@@ -160,10 +160,10 @@
     "more": ""
   },
   "uiDialog": {
-    "close": "Cloes"
+    "close": ""
   },
   "uiSheet": {
-    "close": "Cloes"
+    "close": ""
   },
   "uiSidebar": {
     "toggle": ""
@@ -245,7 +245,7 @@
     "configDir": "",
     "dataDir": "",
     "about": "",
-    "logOut": "Walk out",
+    "logOut": "",
     "logOutToast": {
       "loading": "",
       "success": "",
@@ -253,7 +253,7 @@
     },
     "exit": "",
     "stopImpersonating": "",
-    "helpTranslate": ""
+    "helpTranslate": "Preložiť SoulFire"
   },
   "sidebar": {
     "documentation": "",
@@ -357,15 +357,15 @@
       "title": "",
       "description": "",
       "form": {
-        "cancel": "cancel k?",
-        "add": "Put stuff"
+        "cancel": "",
+        "add": ""
       }
     },
     "updateScriptDialog": {
       "title": "",
       "description": "",
       "form": {
-        "cancel": "cancel k?",
+        "cancel": "",
         "update": ""
       }
     },
@@ -390,7 +390,7 @@
       "error": ""
     },
     "table": {
-      "type": "Tyep",
+      "type": "",
       "scriptName": "",
       "language": "",
       "elevatedPermissions": "",
