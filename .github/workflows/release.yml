@@ -238,7 +238,7 @@ jobs:
           signing-policy-slug: 'release-signing'
           github-artifact-id: '${{ steps.upload-unsigned-artifact.outputs.artifact-id }}'
           wait-for-completion: true
-          output-artifact-directory: '/artifact-output'
+          output-artifact-directory: './artifact-output'
 
       - name: 'Windows AMD64/AArch64: Prepare signed artifact'
         if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
