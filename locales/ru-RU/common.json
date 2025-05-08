@@ -47,8 +47,8 @@
           "placeholder": "My Minecraft Bot",
           "description": "Имя, которое вы хотите дать этому экземпляру.",
           "min": "Дружелюбное имя должно содержать не менее 3 символов.",
-          "max": "",
-          "regex": ""
+          "max": "Дружелюбное имя должно содержать не более 32 символов.",
+          "regex": "Дружелюбное имя может содержать только буквы, цифры и пробелы"
         },
         "cancel": "Отмена",
         "create": "Создать"
@@ -88,7 +88,7 @@
     }
   },
   "commandInput": {
-    "placeholder": ""
+    "placeholder": "Введите команду (введите 'help' для списка)"
   },
   "controls": {
     "start": "Запуск",
@@ -213,24 +213,24 @@
     "pluginSettings": "Настройки плагинов",
     "botSettings": "Настройки ботов",
     "accountSettings": "Настройки аккаунтов",
-    "metaSettings": "",
+    "metaSettings": "Настройки экземпляра",
     "proxySettings": "Настройки прокси",
     "aiSettings": "Настройки ИИ",
     "discoverPlugins": "Плагины",
-    "instanceScripts": ""
+    "instanceScripts": "Скрипты"
   },
   "userSidebar": {
     "readDocumentation": "Прочитать документацию",
     "userGroup": "Пользователь",
     "instances": "Экземпляры",
-    "access": "",
+    "access": "Доступ",
     "createInstance": "Создать экземпляр",
     "settings": "Настройки",
     "adminGroup": "Администратор",
     "adminOverview": "Обзор",
     "adminConsole": "Консоль",
     "users": "Пользователи",
-    "adminScripts": "",
+    "adminScripts": "Скрипты",
     "serverSettings": "Настройки сервера",
     "devSettings": "Настройки разработчика",
     "theme": {
@@ -252,13 +252,13 @@
       "error": "Не удалось выйти из системы"
     },
     "exit": "Выход",
-    "stopImpersonating": "",
-    "helpTranslate": ""
+    "stopImpersonating": "Прекратить притворяться",
+    "helpTranslate": "Перевести SoulFire"
   },
   "sidebar": {
     "documentation": "Документация",
     "buyMeACoffee": "Купите мне чашечку кофе",
-    "discord": ""
+    "discord": "Discord"
   },
   "breadcrumbs": {
     "admin": "Администратор",
@@ -271,51 +271,51 @@
     "console": "Консоль",
     "audit-log": "Журнал аудита",
     "instances": "Экземпляры",
-    "access": "",
+    "access": "Доступ",
     "settings": "Настройки",
     "proxySettings": "Настройки прокси",
     "overview": "Обзор",
     "users": "Пользователи",
     "accountSettings": "Настройки аккаунтов",
-    "metaSettings": "",
+    "metaSettings": "Настройки экземпляра",
     "discoverPlugins": "Плагины",
-    "adminScripts": "",
-    "instanceScripts": ""
+    "adminScripts": "Скрипты",
+    "instanceScripts": "Скрипты"
   },
   "access": {
     "webdav": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "Доступ через WebDAV",
+      "description": "SoulFire позволяет вам получить доступ к экземпляру, скриптам и другим файлам с помощью протокола WebDAV.",
+      "publicAddress": "Публичный WebDAV адрес",
+      "personalToken": "Персональный токен WebDAV",
+      "securityWarning": "Ваш персональный WebDAV токен очень важен. Не передавайте его никому. Он используется для аутентификации при доступе к вашим файлам. Используйте его в качестве пароля для WebDAV при подключении. Имя пользователя не обязательно, если у вас есть запрос на его использование, вы можете использовать любое значение, которое вы хотите. (например 'Soulfire')",
+      "addressDescription": "Это адрес, который вам необходимо использовать для доступа к файлам. Иногда вам нужно использовать dav:// или davs:// вместо http(s)://."
     },
     "api": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "Доступ через API",
+      "description": "SoulFire's gRPC HTTP API позволяет вам взаимодействовать с вашими экземплярами программно с помощью веб-запросов.",
+      "publicAddress": "Публичный API адрес",
+      "personalToken": "Персональный токен API",
+      "securityWarning": "Ваш персональный API токен очень важен. Не передавайте его никому. Он используется для аутентификации при доступе к API.",
+      "addressDescription": "Это адрес, который вам необходимо использовать для доступа к API."
     },
     "token": {
-      "generate": "",
-      "placeholder": "",
-      "generating": "",
-      "success": "",
-      "error": "",
-      "copy": "",
-      "copied": ""
+      "generate": "Сгенерировать токен",
+      "placeholder": "Нажмите 'Сгенерировать токен' ниже",
+      "generating": "Генерация токена...",
+      "success": "Токен успешно создан и скопирован в буфер обмена",
+      "error": "Не удалось сгенерировать токен",
+      "copy": "Копировать токен",
+      "copied": "Токен скопирован в буфер обмена"
     },
     "address": {
-      "copy": "",
-      "copied": ""
+      "copy": "Скопировать адрес",
+      "copied": "Адрес скопирован в буфер обмена"
     },
     "documentation": "Документация",
-    "howToConnect": ""
+    "howToConnect": "Как подключиться"
   },
-  "copiedToClipboard": "",
+  "copiedToClipboard": "Скопировано в буфер обмена",
   "instanceState": {
     "starting": "Запуск",
     "running": "Запущен",
@@ -324,80 +324,80 @@
     "stopped": "Остановлен"
   },
   "auditLog": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Фильтровать журнал аудита...",
     "user": "Пользователь",
-    "action": "",
-    "timestamp": "",
-    "executedCommand": "",
-    "startedAttack": "",
-    "resumedAttack": "",
-    "pausedAttack": "",
-    "stoppedAttack": ""
+    "action": "Действие",
+    "timestamp": "Временная метка",
+    "executedCommand": "Выполнена команда: {{data}}",
+    "startedAttack": "Начал атаку",
+    "resumedAttack": "Возобновил атаку",
+    "pausedAttack": "Приостановил атаку",
+    "stoppedAttack": "Остановил атаку"
   },
-  "pickADate": "",
+  "pickADate": "Выберите дату",
   "scripts": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Фильтровать скрипты...",
     "baseScriptDialog": {
       "form": {
         "scriptName": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "Имя скрипта должно содержать не менее 3 символов",
+          "max": "Имя скрипта должно содержать не более 32 символов",
+          "regex": "Имя скрипта может содержать строчные буквы, цифры и тире. Но тире не может быть в начале или конце.",
+          "label": "Имя",
+          "placeholder": "Мой скрипт",
+          "description": "Название скрипта."
         },
         "elevatedPermissions": {
-          "label": "",
-          "description": ""
+          "label": "Повышенные права доступа",
+          "description": "Должен ли скрипт запускаться с повышенными правами. Только администраторы могут включить эту опцию."
         }
       }
     },
     "addScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Добавить новый скрипт",
+      "description": "Скрипты - это небольшие программы, которые работают на сервере SoulFire. Они могут быть использованы для автоматизации задач, создания пользовательского поведения и многое другое.",
       "form": {
         "cancel": "Отмена",
         "add": "Добавить"
       }
     },
     "updateScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Обновить скрипт",
+      "description": "Обновить информацию о скрипте.",
       "form": {
         "cancel": "Отмена",
-        "update": ""
+        "update": "Обновить"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Удаление скрипта...",
+      "success": "Скрипты удален!",
+      "error": "Не удалось удалить скрипт"
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Добавление скрипта...",
+      "success": "Скрипт добавлен!",
+      "error": "Не удалось добавить скрипт"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Обновление скрипта...",
+      "success": "Скрипт обновлен!",
+      "error": "Не удалось обновить скрипт"
     },
     "restartToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Перезапуск скрипта...",
+      "success": "Скрипт перезапущен!",
+      "error": "Не удалось перезапустить скрипт"
     },
     "table": {
       "type": "Тип",
-      "scriptName": "",
-      "language": "",
-      "elevatedPermissions": "",
-      "createdAt": "",
-      "actions": ""
+      "scriptName": "Имя",
+      "language": "Язык",
+      "elevatedPermissions": "Повышенные права доступа",
+      "createdAt": "Дата создания",
+      "actions": "Действия"
     },
-    "globalScript": "",
-    "instanceScript": ""
+    "globalScript": "Глобальный",
+    "instanceScript": "Экземпляр"
   }
 }
