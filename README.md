@@ -1,15 +1,8 @@
-# SoulFireClient
+<img align="right" src="https://github.com/AlexProgrammerDE/SoulFire/blob/main/server/src/main/resources/icons/icon.png?raw=true" height="150" width="150">
 
-<!--suppress HtmlDeprecatedAttribute -->
-<p align="center">
-<a href="https://github.com/AlexProgrammerDE/SoulFireClient/actions/workflows/build.yml"><img src="https://github.com/AlexProgrammerDE/SoulFireClient/actions/workflows/build.yml/badge.svg?branch=main" alt="Test"></a>
-<a href="https://github.com/AlexProgrammerDE/SoulFireClient/graphs/contributors"><img src="https://img.shields.io/github/contributors/AlexProgrammerDE/SoulFireClient.svg" alt="Contributors"></a>
-<a href="https://github.com/AlexProgrammerDE/SoulFireClient/blob/main/LICENSE"><img src="https://img.shields.io/github/license/AlexProgrammerDE/SoulFireClient.svg" alt="License"></a>
-<a href="https://github.com/AlexProgrammerDE/SoulFireClient/releases/latest"><img alt="GitHub all releases downloads" src="https://img.shields.io/github/downloads/AlexProgrammerDE/SoulFireClient/total"></a>
-<a href="https://github.com/AlexProgrammerDE/SoulFireClient/releases/latest"><img alt="GitHub latest release downloads" src="https://img.shields.io/github/downloads/AlexProgrammerDE/SoulFireClient/latest/total"></a>
-<a href="https://github.com/AlexProgrammerDE/SoulFireClient/releases/latest"><img src="https://img.shields.io/github/release/AlexProgrammerDE/SoulFireClient.svg" alt="Current Release"></a>
-</p>
-<p align="center"><a href="https://discord.gg/vHgRd6YZmH"><img src="https://discordapp.com/api/guilds/739784741124833301/embed.png" alt="Discord embed"></a></p>
+[![discord](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/social/discord-singular_vector.svg)](https://discord.gg/vHgRd6YZmH) [![kofi](https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/donate/kofi-singular_vector.svg)](https://ko-fi.com/alexprogrammerde)
+
+# SoulFireClient
 
 This is a frontend for the [SoulFire server](https://github.com/AlexProgrammerDE/SoulFire).
 It mainly targets the web, but uses native APIs using Tauri.
