@@ -71,7 +71,7 @@ export default function UserPageLayout(props: {
             <BreadcrumbList>
               {props.showUserCrumb && (
                 <>
-                  <BreadcrumbItem className="hidden max-w-64 animate-pulse truncate md:block">
+                  <BreadcrumbItem className="hidden max-w-64 truncate md:block">
                     <Suspense fallback={<UserCrumbSkeleton />}>
                       <UserCrumb />
                     </Suspense>
