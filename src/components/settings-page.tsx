@@ -349,7 +349,7 @@ function ComboComponent(props: {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-64 justify-between"
+          className="w-72 justify-between"
           disabled={props.setting.disabled}
         >
           <div className="inline-flex flex-row items-center justify-center gap-2">
@@ -361,7 +361,7 @@ function ComboComponent(props: {
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-64 p-0">
+      <PopoverContent className="w-72 p-0">
         <Command>
           <CommandInput placeholder="Search value..." />
           <CommandList>
