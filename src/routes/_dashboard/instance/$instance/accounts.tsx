@@ -182,12 +182,12 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
               await setProfileMutation(newProfile);
 
               if (accountsToAdd.length === 0) {
-                toast.success(t('account.listImportToast.allFailed'), {
+                toast.error(t('account.listImportToast.allFailed'), {
                   id: toastId,
                   cancel: undefined,
                 });
               } else if (accountsToAdd.length !== textSplit.length) {
-                toast.success(
+                toast.warning(
                   t('account.listImportToast.someFailed', {
                     count: accountsToAdd.length,
                     failed: textSplit.length - accountsToAdd.length,
