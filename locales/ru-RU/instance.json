@@ -56,8 +56,8 @@
       "javaEdition": "Java Edition",
       "bedrockEdition": "Bedrock Edition",
       "offline": "Offline",
-      "microsoftCredentials": "Microsoft Credentials",
-      "microsoftDeviceCode": "Microsoft Device Code",
+      "microsoftCredentials": "Учетные данные Microsoft",
+      "microsoftDeviceCode": "Код устройства Microsoft",
       "microsoftRefreshToken": "Microsoft Refresh Token",
       "theAltening": "The Altening",
       "dialog": {
