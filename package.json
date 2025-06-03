@@ -23,7 +23,7 @@
     "@aptabase/react": "^0.4.0",
     "@catppuccin/palette": "^1.7.1",
     "@hookform/resolvers": "^5.0.0",
-    "@icons-pack/react-simple-icons": "^12.5.0",
+    "@icons-pack/react-simple-icons": "^13.0.0",
     "@protobuf-ts/grpcweb-transport": "^2.9.6",
     "@protobuf-ts/runtime": "^2.9.6",
     "@protobuf-ts/runtime-rpc": "^2.9.6",
