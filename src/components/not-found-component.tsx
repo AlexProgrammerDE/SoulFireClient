@@ -28,7 +28,7 @@ export function NotFoundComponent() {
   return (
     <div className="flex size-full grow">
       <Card className="m-auto flex flex-col">
-        <CardHeader className="pb-4">
+        <CardHeader>
           <CardTitle className="fle-row flex gap-1 text-2xl font-bold">
             <SearchXIcon className="h-8" />
             {t('notFound.page.title')}

@@ -393,7 +393,7 @@ function DefaultMenu(props: {
           <Button
             autoFocus
             disabled={integratedDisabled}
-            className="w-full"
+            className="grow"
             variant="outline"
             onClick={() => {
               props.setLoginType('INTEGRATED');
@@ -417,7 +417,7 @@ function DefaultMenu(props: {
           <Button
             autoFocus={integratedDisabled}
             disabled={isDemo()}
-            className="w-full"
+            className="grow"
             variant="outline"
             onClick={() => props.setLoginType('DEDICATED')}
           >
@@ -439,7 +439,7 @@ function DefaultMenu(props: {
           <div className="flex flex-row gap-2">
             <Button
               autoFocus
-              className="w-full"
+              className="grow"
               variant="outline"
               onClick={() => {
                 void props.demoLogin();
@@ -540,13 +540,13 @@ function IntegratedConfigureMenu({
   }
 
   return (
-    <Card>
-      <CardHeader className="text-center">
-        <LoginCardTitle />
-        <CardDescription>{t('integrated.description')}</CardDescription>
-      </CardHeader>
-      <Form {...form}>
-        <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
+    <Form {...form}>
+      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
+        <Card>
+          <CardHeader className="text-center">
+            <LoginCardTitle />
+            <CardDescription>{t('integrated.description')}</CardDescription>
+          </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <FormField
               control={form.control}
@@ -607,9 +607,9 @@ function IntegratedConfigureMenu({
               {t('integrated.form.start')}
             </Button>
           </CardFooter>
-        </form>
-      </Form>
-    </Card>
+        </Card>
+      </form>
+    </Form>
   );
 }
 
@@ -678,13 +678,15 @@ function IntegratedMobileMenu({
   }
 
   return (
-    <Card>
-      <CardHeader className="text-center">
-        <LoginCardTitle />
-        <CardDescription>{t('integrated.mobile.description')}</CardDescription>
-      </CardHeader>
-      <Form {...form}>
-        <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
+    <Form {...form}>
+      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
+        <Card>
+          <CardHeader className="text-center">
+            <LoginCardTitle />
+            <CardDescription>
+              {t('integrated.mobile.description')}
+            </CardDescription>
+          </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <FormItem>
               <FormLabel>
@@ -779,9 +781,9 @@ function IntegratedMobileMenu({
               {t('integrated.mobile.form.connect')}
             </Button>
           </CardFooter>
-        </form>
-      </Form>
-    </Card>
+        </Card>
+      </form>
+    </Form>
   );
 }
 
@@ -796,15 +798,10 @@ function DedicatedMenu({
   setLoginType: (type: LoginType) => void;
   setAuthFlowData: (data: AuthFlowData) => void;
 }) {
-  const { t } = useTranslation('login');
   const [dedicatedType, setDedicatedType] = useState<DedicatedType>('email');
 
   return (
-    <Card>
-      <CardHeader className="text-center">
-        <LoginCardTitle />
-        <CardDescription>{t('dedicated.description')}</CardDescription>
-      </CardHeader>
+    <>
       {dedicatedType === 'email' && (
         <EmailForm
           setDedicatedType={setDedicatedType}
@@ -819,7 +816,7 @@ function DedicatedMenu({
           setLoginType={setLoginType}
         />
       )}
-    </Card>
+    </>
   );
 }
 
@@ -878,79 +875,85 @@ function EmailForm({
   return (
     <Form {...form}>
       <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
-        <CardContent className="flex flex-col gap-4">
-          <FormField
-            control={form.control}
-            name="address"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('dedicated.form.address.title')}</FormLabel>
-                <FormControl>
-                  <Input
-                    autoFocus
-                    type="url"
-                    inputMode="url"
-                    placeholder={t('dedicated.form.address.placeholder')}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  {t('dedicated.form.address.description')}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('dedicated.form.email.title')}</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder={t('dedicated.form.email.placeholder')}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  {t('dedicated.form.email.description')}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button
-            variant="outline"
-            onClick={(e) => {
-              e.preventDefault();
-              setLoginType(null);
-            }}
-            type="button"
-          >
-            <ArrowLeftIcon />
-            {t('dedicated.form.back')}
-          </Button>
-          <div className="flex flex-row gap-2">
+        <Card>
+          <CardHeader className="text-center">
+            <LoginCardTitle />
+            <CardDescription>{t('dedicated.description')}</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-4">
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('dedicated.form.address.title')}</FormLabel>
+                  <FormControl>
+                    <Input
+                      autoFocus
+                      type="url"
+                      inputMode="url"
+                      placeholder={t('dedicated.form.address.placeholder')}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    {t('dedicated.form.address.description')}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('dedicated.form.email.title')}</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="email"
+                      placeholder={t('dedicated.form.email.placeholder')}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    {t('dedicated.form.email.description')}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+          <CardFooter className="flex justify-between">
             <Button
               variant="outline"
-              onClick={() => {
-                setDedicatedType('token');
+              onClick={(e) => {
+                e.preventDefault();
+                setLoginType(null);
               }}
               type="button"
             >
-              <KeyRoundIcon />
-              {t('dedicated.form.useToken')}
+              <ArrowLeftIcon />
+              {t('dedicated.form.back')}
             </Button>
-            <Button type="submit">
-              <LogInIcon />
-              {t('dedicated.form.login')}
-            </Button>
-          </div>
-        </CardFooter>
+            <div className="flex flex-row gap-2">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setDedicatedType('token');
+                }}
+                type="button"
+              >
+                <KeyRoundIcon />
+                {t('dedicated.form.useToken')}
+              </Button>
+              <Button type="submit">
+                <LogInIcon />
+                {t('dedicated.form.login')}
+              </Button>
+            </div>
+          </CardFooter>
+        </Card>
       </form>
     </Form>
   );
@@ -987,79 +990,85 @@ function TokenForm({
   return (
     <Form {...form}>
       <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
-        <CardContent className="flex flex-col gap-4">
-          <FormField
-            control={form.control}
-            name="address"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('dedicated.form.address.title')}</FormLabel>
-                <FormControl>
-                  <Input
-                    autoFocus
-                    type="url"
-                    inputMode="url"
-                    placeholder={t('dedicated.form.address.placeholder')}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  {t('dedicated.form.address.description')}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="token"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('dedicated.form.token.title')}</FormLabel>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder={t('dedicated.form.token.placeholder')}
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  {t('dedicated.form.token.description')}
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button
-            variant="outline"
-            onClick={(e) => {
-              e.preventDefault();
-              setLoginType(null);
-            }}
-            type="button"
-          >
-            <ArrowLeftIcon />
-            {t('dedicated.form.back')}
-          </Button>
-          <div className="flex flex-row gap-2">
+        <Card>
+          <CardHeader className="text-center">
+            <LoginCardTitle />
+            <CardDescription>{t('dedicated.description')}</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-4">
+            <FormField
+              control={form.control}
+              name="address"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('dedicated.form.address.title')}</FormLabel>
+                  <FormControl>
+                    <Input
+                      autoFocus
+                      type="url"
+                      inputMode="url"
+                      placeholder={t('dedicated.form.address.placeholder')}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    {t('dedicated.form.address.description')}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="token"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('dedicated.form.token.title')}</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder={t('dedicated.form.token.placeholder')}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    {t('dedicated.form.token.description')}
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </CardContent>
+          <CardFooter className="flex justify-between">
             <Button
               variant="outline"
-              onClick={() => {
-                setDedicatedType('email');
+              onClick={(e) => {
+                e.preventDefault();
+                setLoginType(null);
               }}
               type="button"
             >
-              <MailIcon />
-              {t('dedicated.form.useEmail')}
+              <ArrowLeftIcon />
+              {t('dedicated.form.back')}
             </Button>
-            <Button type="submit">
-              <LogInIcon />
-              {t('dedicated.form.login')}
-            </Button>
-          </div>
-        </CardFooter>
+            <div className="flex flex-row gap-2">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setDedicatedType('email');
+                }}
+                type="button"
+              >
+                <MailIcon />
+                {t('dedicated.form.useEmail')}
+              </Button>
+              <Button type="submit">
+                <LogInIcon />
+                {t('dedicated.form.login')}
+              </Button>
+            </div>
+          </CardFooter>
+        </Card>
       </form>
     </Form>
   );

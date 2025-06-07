@@ -30,15 +30,15 @@ const usersChartConfig = {
   },
   user: {
     label: <Trans i18nKey="admin:overview.usersChart.label.user" />,
-    color: 'hsl(var(--chart-2))',
+    color: 'var(--chart-2)',
   },
   admin: {
     label: <Trans i18nKey="admin:overview.usersChart.label.admin" />,
-    color: 'hsl(var(--chart-1))',
+    color: 'var(--chart-1)',
   },
   other: {
     label: <Trans i18nKey="admin:overview.usersChart.label.other" />,
-    color: 'hsl(var(--chart-3))',
+    color: 'var(--chart-3)',
   },
 } satisfies ChartConfig;
 
@@ -70,10 +70,10 @@ export function UsersChart(props: { userList: UserListResponse }) {
 
   return (
     <Card className="flex flex-col border-0">
-      <CardHeader className="items-center pb-0">
+      <CardHeader className="items-center">
         <CardTitle>{t('overview.usersChart.title')}</CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="flex-1">
         <ChartContainer
           config={usersChartConfig}
           className="mx-auto aspect-square max-h-[250px]"
@@ -133,15 +133,15 @@ const instancesChartConfig = {
   },
   active: {
     label: <Trans i18nKey="admin:overview.instancesChart.label.active" />,
-    color: 'hsl(var(--chart-2))',
+    color: 'var(--chart-2)',
   },
   stopped: {
     label: <Trans i18nKey="admin:overview.instancesChart.label.stopped" />,
-    color: 'hsl(var(--chart-1))',
+    color: 'var(--chart-1)',
   },
   other: {
     label: <Trans i18nKey="admin:overview.instancesChart.label.other" />,
-    color: 'hsl(var(--chart-3))',
+    color: 'var(--chart-3)',
   },
 } satisfies ChartConfig;
 

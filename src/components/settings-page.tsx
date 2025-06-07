@@ -436,7 +436,7 @@ function StringListComponent(props: {
 
   return (
     <Card>
-      <CardHeader className="p-4">
+      <CardHeader>
         <div className="flex flex-row gap-1">
           <Input
             type="text"

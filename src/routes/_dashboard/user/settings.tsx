@@ -96,7 +96,7 @@ function Content() {
               </>
             }
           />
-          <Card className="flex w-fit items-center gap-2 p-3 text-left text-base">
+          <Card className="flex w-fit flex-row items-center gap-2 p-3 text-left text-base">
             <UserAvatar
               username={clientInfo.username}
               email={clientInfo.email}

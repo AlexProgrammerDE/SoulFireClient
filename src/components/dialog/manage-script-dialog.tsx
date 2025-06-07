@@ -191,7 +191,7 @@ export function ManageScriptDialog({
                 control={form.control}
                 name="elevatedPermissions"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-y-0 space-x-3 rounded-md border p-4">
+                  <FormItem className="flex flex-row items-start gap-x-3 gap-y-0 rounded-md border p-4">
                     <FormControl>
                       <Checkbox
                         disabled={
@@ -204,7 +204,7 @@ export function ManageScriptDialog({
                         onCheckedChange={field.onChange}
                       />
                     </FormControl>
-                    <div className="space-y-1 leading-none">
+                    <div className="flex flex-col gap-y-1 leading-none">
                       <FormLabel>
                         {t(
                           'scripts.baseScriptDialog.form.elevatedPermissions.label',

@@ -52,28 +52,28 @@ function Content() {
               search={{}}
               className="max-h-fit w-full"
             >
-              <Card className="flex w-full flex-row">
-                <CardHeader className="pr-0">
+              <Card className="flex w-full flex-row items-center gap-4 px-6">
+                <div className="shrink-0 pr-0">
                   <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-12 items-center justify-center rounded-lg">
                     <DynamicIcon
                       name={instance.icon}
                       className="size-8 shrink-0"
                     />
                   </div>
-                </CardHeader>
-                <CardHeader>
+                </div>
+                <div className="grow">
                   <CardTitle className="max-w-64 truncate">
                     {instance.friendlyName}
                   </CardTitle>
                   <CardDescription className="font-semibold">
                     {translateInstanceState(i18n, instance.state)}
                   </CardDescription>
-                </CardHeader>
-                <CardHeader className="ml-auto">
+                </div>
+                <div className="ml-auto shrink-0">
                   <p className="mb-auo m-auto text-2xl tracking-widest opacity-60">
                     ⌘{index + 1}
                   </p>
-                </CardHeader>
+                </div>
               </Card>
             </Link>
           ))}

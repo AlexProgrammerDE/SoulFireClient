@@ -44,7 +44,7 @@ export function ErrorComponent({ error }: { error: Error }) {
   return (
     <div className="flex size-full grow">
       <Card className="m-auto flex flex-col">
-        <CardHeader className="pb-4">
+        <CardHeader>
           <CardTitle className="fle-row flex gap-1 text-2xl font-bold">
             <BugIcon className="h-8" />
             {t('error.page.title')}
