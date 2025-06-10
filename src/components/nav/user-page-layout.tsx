@@ -55,7 +55,10 @@ export default function UserPageLayout(props: {
           <SidebarTrigger className="-ml-1" />
           {props.documentationLink && (
             <>
-              <Separator orientation="vertical" className="h-4" />
+              <Separator
+                orientation="vertical"
+                className="data-[orientation=vertical]:h-4"
+              />
               <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
                 <ExternalLink href={props.documentationLink}>
                   <BookOpenTextIcon />
@@ -66,7 +69,10 @@ export default function UserPageLayout(props: {
               </Button>
             </>
           )}
-          <Separator orientation="vertical" className="mr-2 h-4" />
+          <Separator
+            orientation="vertical"
+            className="mr-2 data-[orientation=vertical]:h-4"
+          />
           <Breadcrumb>
             <BreadcrumbList>
               {props.showUserCrumb && (

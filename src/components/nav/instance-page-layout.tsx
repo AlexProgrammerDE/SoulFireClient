@@ -52,7 +52,10 @@ export default function InstancePageLayout(props: {
       <header className="flex h-12 shrink-0 items-center gap-2 border-b">
         <div className="flex items-center gap-2 px-4">
           <SidebarTrigger className="-ml-1" />
-          <Separator orientation="vertical" className="h-4" />
+          <Separator
+            orientation="vertical"
+            className="data-[orientation=vertical]:h-4"
+          />
           <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
             <Link to="/user">
               <HomeIcon />
@@ -63,7 +66,10 @@ export default function InstancePageLayout(props: {
           </Button>
           {props.documentationLink && (
             <>
-              <Separator orientation="vertical" className="h-4" />
+              <Separator
+                orientation="vertical"
+                className="data-[orientation=vertical]:h-4"
+              />
               <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
                 <ExternalLink href={props.documentationLink}>
                   <BookOpenTextIcon />
@@ -74,7 +80,10 @@ export default function InstancePageLayout(props: {
               </Button>
             </>
           )}
-          <Separator orientation="vertical" className="mr-2 h-4" />
+          <Separator
+            orientation="vertical"
+            className="mr-2 data-[orientation=vertical]:h-4"
+          />
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem className="hidden max-w-64 truncate md:block">
