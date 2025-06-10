@@ -6,8 +6,8 @@ import {
   FileIcon,
   FolderIcon,
   HomeIcon,
-  MinusIcon,
   PlusIcon,
+  TrashIcon,
   UploadIcon,
 } from 'lucide-react';
 import {
@@ -124,11 +124,9 @@ function InstanceList() {
     <>
       {instanceList.instances.map((instance, index) => {
         return (
-          <DropdownMenuItem key={instance.id} asChild className="gap-2 p-2">
+          <DropdownMenuItem key={instance.id} asChild>
             <Link to="/instance/$instance" params={{ instance: instance.id }}>
-              <div className="flex size-6 items-center justify-center rounded-sm border">
-                <DynamicIcon name={instance.icon} className="size-4 shrink-0" />
-              </div>
+              <DynamicIcon name={instance.icon} className="size-4 shrink-0" />
               {instance.friendlyName}
               <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
             </Link>
@@ -142,10 +140,8 @@ function InstanceList() {
 function InstanceListSkeleton() {
   return (
     <>
-      <DropdownMenuItem className="gap-2 p-2">
-        <div className="flex size-6 items-center justify-center rounded-sm border">
-          <Skeleton className="h-4 w-4" />
-        </div>
+      <DropdownMenuItem>
+        <Skeleton className="h-4 w-4" />
         <Skeleton className="h-3 w-32" />
       </DropdownMenuItem>
     </>
@@ -193,13 +189,9 @@ function InstanceActionButtons() {
       </DropdownMenuLabel>
       {isTauri() && systemInfo ? (
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger className="gap-2 p-2">
-            <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-              <UploadIcon className="size-4" />
-            </div>
-            <div className="text-muted-foreground font-medium">
-              {t('instanceSidebar.loadProfile')}
-            </div>
+          <DropdownMenuSubTrigger>
+            <UploadIcon className="size-4" />
+            {t('instanceSidebar.loadProfile')}
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
@@ -207,7 +199,6 @@ function InstanceActionButtons() {
                 <>
                   {systemInfo.availableProfiles.map((file) => (
                     <DropdownMenuItem
-                      className="gap-2 p-2"
                       key={file}
                       onClick={() => {
                         const loadProfile = async () => {
@@ -236,9 +227,7 @@ function InstanceActionButtons() {
                         });
                       }}
                     >
-                      <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-                        <FileIcon className="size-4" />
-                      </div>
+                      <FileIcon className="size-4" />
                       {file}
                     </DropdownMenuItem>
                   ))}
@@ -246,7 +235,6 @@ function InstanceActionButtons() {
                 </>
               )}
               <DropdownMenuItem
-                className="gap-2 p-2"
                 onClick={() => {
                   runAsync(async () => {
                     const profileDir = await resolve(
@@ -295,9 +283,7 @@ function InstanceActionButtons() {
                   });
                 }}
               >
-                <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-                  <FolderIcon className="size-4" />
-                </div>
+                <FolderIcon className="size-4" />
                 {t('instanceSidebar.loadFromFile')}
               </DropdownMenuItem>
             </DropdownMenuSubContent>
@@ -335,22 +321,16 @@ function InstanceActionButtons() {
             }}
           />
           <DropdownMenuItem
-            className="gap-2 p-2"
             onClick={() => {
               instanceProfileInputRef.current?.click();
             }}
           >
-            <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-              <UploadIcon className="size-4" />
-            </div>
-            <div className="text-muted-foreground font-medium">
-              {t('instanceSidebar.loadProfile')}
-            </div>
+            <UploadIcon className="size-4" />
+            {t('instanceSidebar.loadProfile')}
           </DropdownMenuItem>
         </>
       )}
       <DropdownMenuItem
-        className="gap-2 p-2"
         onClick={() => {
           const data = JSON.stringify(profile, null, 2);
           if (isTauri()) {
@@ -384,12 +364,8 @@ function InstanceActionButtons() {
           toast.success(t('instanceSidebar.profileSaved'));
         }}
       >
-        <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-          <DownloadIcon className="size-4" />
-        </div>
-        <div className="text-muted-foreground font-medium">
-          {t('instanceSidebar.saveProfile')}
-        </div>
+        <DownloadIcon className="size-4" />
+        {t('instanceSidebar.saveProfile')}
       </DropdownMenuItem>
       <DropdownMenuSeparator />
     </>
@@ -402,10 +378,9 @@ function InstanceActionButtonsSkeleton() {
       <DropdownMenuLabel className="text-muted-foreground max-w-64 truncate text-xs">
         <Skeleton className="h-3 w-32" />
       </DropdownMenuLabel>
-      <DropdownMenuItem className="gap-2 p-2">
-        <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-          <Skeleton className="h-4 w-4" />
-        </div>
+      <DropdownMenuItem>
+        <Skeleton className="h-4 w-4" />
+
         <Skeleton className="h-3 w-32" />
       </DropdownMenuItem>
     </>
@@ -436,14 +411,10 @@ export function InstanceSwitcher() {
               <InstanceList />
             </Suspense>
             <DropdownMenuSeparator />
-            <DropdownMenuItem asChild className="gap-2 p-2">
+            <DropdownMenuItem asChild>
               <Link to="/user">
-                <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-                  <HomeIcon className="size-4" />
-                </div>
-                <div className="text-muted-foreground font-medium">
-                  {t('instanceSidebar.backToDashboard')}
-                </div>
+                <HomeIcon className="size-4" />
+                {t('instanceSidebar.backToDashboard')}
               </Link>
             </DropdownMenuItem>
             <Suspense>
@@ -477,13 +448,9 @@ function CreateInstanceButton() {
   }
 
   return (
-    <DropdownMenuItem onClick={openCreateInstance} className="gap-2 p-2">
-      <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-        <PlusIcon className="size-4" />
-      </div>
-      <div className="text-muted-foreground font-medium">
-        {t('instanceSidebar.createInstance')}
-      </div>
+    <DropdownMenuItem onClick={openCreateInstance}>
+      <PlusIcon className="size-4" />
+      {t('instanceSidebar.createInstance')}
     </DropdownMenuItem>
   );
 }
@@ -546,14 +513,9 @@ function DeleteInstanceButton() {
           to: '/user',
         });
       }}
-      className="gap-2 p-2"
     >
-      <div className="bg-background flex size-6 items-center justify-center rounded-md border">
-        <MinusIcon className="size-4" />
-      </div>
-      <div className="text-muted-foreground font-medium">
-        {t('instanceSidebar.deleteInstance')}
-      </div>
+      <TrashIcon className="size-4" />
+      {t('instanceSidebar.deleteInstance')}
     </DropdownMenuItem>
   );
 }
