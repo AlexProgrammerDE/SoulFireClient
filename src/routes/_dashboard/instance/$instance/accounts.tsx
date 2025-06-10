@@ -490,7 +490,7 @@ function Content() {
   });
 
   return (
-    <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
+    <div className="container flex h-full w-full grow flex-col gap-4">
       <div className="flex flex-col gap-2">
         <InstanceSettingsPageComponent
           data={

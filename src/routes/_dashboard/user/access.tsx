@@ -51,7 +51,7 @@ function Content() {
 
   return (
     <div className="flex flex-col gap-4">
-      <Card className="max-w-4xl">
+      <Card className="container">
         <CardHeader>
           <CardTitle className="inline-flex items-center gap-2">
             <FoldersIcon />
@@ -148,7 +148,7 @@ function Content() {
           </Button>
         </CardFooter>
       </Card>
-      <Card className="max-w-4xl">
+      <Card className="container">
         <CardHeader>
           <CardTitle className="inline-flex items-center gap-2">
             <GlobeIcon />

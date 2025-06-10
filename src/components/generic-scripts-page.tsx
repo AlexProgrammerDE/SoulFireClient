@@ -243,7 +243,7 @@ export function GenericScripts(props: ScriptsProps) {
   const { t } = useTranslation('common');
 
   return (
-    <div className="flex h-full w-full max-w-4xl grow flex-col gap-4">
+    <div className="container flex h-full w-full grow flex-col gap-4">
       <ScriptsContext value={props}>
         <DataTable
           filterPlaceholder={t('common:scripts.filterPlaceholder')}

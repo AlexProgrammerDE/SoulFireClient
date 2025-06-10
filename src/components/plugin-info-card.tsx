@@ -73,7 +73,7 @@ export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
   });
 
   return (
-    <Card className="max-w-4xl">
+    <Card className="container">
       <CardHeader>
         <div className="flex flex-row items-center justify-between gap-2">
           <Link
