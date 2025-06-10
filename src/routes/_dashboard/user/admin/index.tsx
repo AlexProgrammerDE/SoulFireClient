@@ -267,7 +267,7 @@ function Content() {
           name: clientInfo.username,
         })}
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <UsersChart userList={userList} />
         <InstancesChart instanceList={instanceList} />
       </div>
