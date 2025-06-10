@@ -1,6 +1,6 @@
 {
   "name": "soulfire",
-  "version": "1.10.7",
+  "version": "1.10.8",
   "type": "module",
   "private": true,
   "scripts": {
