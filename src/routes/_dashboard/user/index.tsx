@@ -1,17 +1,17 @@
-import { createFileRoute, Link } from '@tanstack/react-router';
+import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
 import * as React from 'react';
+import { use } from 'react';
 import { translateInstanceState } from '@/lib/types.ts';
 import UserPageLayout from '@/components/nav/user/user-page-layout.tsx';
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card.tsx';
-import { SearchXIcon } from 'lucide-react';
+import { Card, CardDescription, CardTitle } from '@/components/ui/card.tsx';
+import { PlusIcon, SearchXIcon } from 'lucide-react';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { useTranslation } from 'react-i18next';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { CreateInstanceContext } from '@/components/dialog/create-instance-dialog.tsx';
+import { hasGlobalPermission } from '@/lib/utils.tsx';
+import { GlobalPermission } from '@/generated/soulfire/common.ts';
+import { Button } from '@/components/ui/button.tsx';
 
 export const Route = createFileRoute('/_dashboard/user/')({
   component: InstanceSelectPage,
@@ -35,11 +35,14 @@ function Content() {
     <>
       {instanceList.instances.length == 0 ? (
         <div className="flex size-full flex-1">
-          <div className="m-auto flex flex-row gap-2">
-            <SearchXIcon className="m-auto size-7" />
-            <h1 className="m-auto text-xl font-bold">
-              {t('noInstancesFound')}
-            </h1>
+          <div className="m-auto flex flex-col items-center gap-4">
+            <div className="flex flex-row gap-2">
+              <SearchXIcon className="m-auto size-7" />
+              <h1 className="m-auto text-xl font-bold">
+                {t('noInstancesFound')}
+              </h1>
+            </div>
+            <CreateInstanceButton />
           </div>
         </div>
       ) : (
@@ -80,5 +83,26 @@ function Content() {
         </div>
       )}
     </>
+  );
+}
+
+function CreateInstanceButton() {
+  const { t } = useTranslation('common');
+  const clientDataQueryOptions = useRouteContext({
+    from: '/_dashboard',
+    select: (context) => context.clientDataQueryOptions,
+  });
+  const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
+  const { openCreateInstance } = use(CreateInstanceContext);
+
+  if (!hasGlobalPermission(clientInfo, GlobalPermission.CREATE_INSTANCE)) {
+    return null;
+  }
+
+  return (
+    <Button onClick={openCreateInstance} variant="outline" className="w-fit">
+      <PlusIcon className="size-4" />
+      {t('instanceSidebar.createInstance')}
+    </Button>
   );
 }
