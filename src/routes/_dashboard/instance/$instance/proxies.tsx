@@ -30,7 +30,7 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from '@tanstack/react-query';
-import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
+import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
 import { ProxyCheckServiceClient } from '@/generated/soulfire/proxy-check.client.ts';
 import { Trans, useTranslation } from 'react-i18next';
 import {

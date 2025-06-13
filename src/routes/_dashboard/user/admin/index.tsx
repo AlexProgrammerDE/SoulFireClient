@@ -17,7 +17,7 @@ import {
   InstanceListResponse,
   InstanceState,
 } from '@/generated/soulfire/instance.ts';
-import UserPageLayout from '@/components/nav/user-page-layout.tsx';
+import UserPageLayout from '@/components/nav/user/user-page-layout.tsx';
 import { Trans, useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/_dashboard/user/admin/')({

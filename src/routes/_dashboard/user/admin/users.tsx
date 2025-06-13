@@ -28,7 +28,7 @@ import {
 import { startImpersonation } from '@/lib/web-rpc.ts';
 import { UserListResponse_User } from '@/generated/soulfire/user.ts';
 import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
-import UserPageLayout from '@/components/nav/user-page-layout.tsx';
+import UserPageLayout from '@/components/nav/user/user-page-layout.tsx';
 import { UserAvatar } from '@/components/user-avatar.tsx';
 import { ManageUserDialog } from '@/components/dialog/manage-user-dialog.tsx';
 import { ROOT_USER_ID, runAsync, timestampToDate } from '@/lib/utils.tsx';

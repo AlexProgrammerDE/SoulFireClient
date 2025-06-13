@@ -8,7 +8,7 @@ import {
   ProxyProto_Type,
 } from '@/generated/soulfire/common.ts';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar.tsx';
-import { InstanceSidebar } from '@/components/nav/instance-sidebar.tsx';
+import { InstanceSidebar } from '@/components/nav/instance/instance-sidebar.tsx';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 import { ErrorComponent } from '@/components/error-component.tsx';
 import {

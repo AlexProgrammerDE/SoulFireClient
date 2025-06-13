@@ -12,7 +12,7 @@ import {
   InstanceAuditLogResponse_AuditLogEntryType,
 } from '@/generated/soulfire/instance.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
-import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
+import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
 import { cn, timestampToDate } from '@/lib/utils.tsx';
 import i18n from '@/lib/i18n.ts';
 import { Button } from '@/components/ui/button.tsx';

@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { TerminalComponent } from '@/components/terminal.tsx';
 import CommandInput from '@/components/command-input.tsx';
-import UserPageLayout from '@/components/nav/user-page-layout';
+import UserPageLayout from '@/components/nav/user/user-page-layout';
 import { useMemo } from 'react';
 import { CommandScope } from '@/generated/soulfire/command.ts';
 import { LogScope } from '@/generated/soulfire/logs.ts';

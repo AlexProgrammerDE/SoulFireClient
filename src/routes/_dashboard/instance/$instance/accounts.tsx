@@ -36,7 +36,7 @@ import {
 import { isTauri, runAsync } from '@/lib/utils.tsx';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
-import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
+import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
 import { Trans, useTranslation } from 'react-i18next';
 import {
   SelectAllHeader,

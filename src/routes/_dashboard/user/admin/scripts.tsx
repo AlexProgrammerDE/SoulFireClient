@@ -5,7 +5,7 @@ import { ScriptListResponse } from '@/generated/soulfire/script.ts';
 import { ScriptServiceClient } from '@/generated/soulfire/script.client.ts';
 import { GenericScripts } from '@/components/generic-scripts-page.tsx';
 import { useTranslation } from 'react-i18next';
-import UserPageLayout from '@/components/nav/user-page-layout';
+import UserPageLayout from '@/components/nav/user/user-page-layout';
 
 export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
   beforeLoad: (props) => {

@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { use } from 'react';
-import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
+import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
 import { useTranslation } from 'react-i18next';
 import {
   useMutation,

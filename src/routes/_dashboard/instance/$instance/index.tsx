@@ -5,7 +5,7 @@ import CommandInput from '@/components/command-input.tsx';
 import { useMemo } from 'react';
 import { translateInstanceState } from '@/lib/types.ts';
 import { Badge } from '@/components/ui/badge';
-import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
+import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
 import { LogScope } from '@/generated/soulfire/logs.ts';
 import { CommandScope } from '@/generated/soulfire/command.ts';
 import { useTranslation } from 'react-i18next';

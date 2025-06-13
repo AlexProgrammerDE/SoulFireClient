@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import * as React from 'react';
 import { use, useState } from 'react';
-import UserPageLayout from '@/components/nav/user-page-layout.tsx';
+import UserPageLayout from '@/components/nav/user/user-page-layout.tsx';
 import { useTranslation } from 'react-i18next';
 import {
   Card,

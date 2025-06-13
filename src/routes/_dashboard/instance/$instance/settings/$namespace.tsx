@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
-import InstancePageLayout from '@/components/nav/instance-page-layout.tsx';
+import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
 import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
 import { useTranslation } from 'react-i18next';
 import { NotFoundComponent } from '@/components/not-found-component.tsx';

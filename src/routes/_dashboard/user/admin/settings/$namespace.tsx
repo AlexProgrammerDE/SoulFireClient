@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { AdminSettingsPageComponent } from '@/components/settings-page.tsx';
-import UserPageLayout from '@/components/nav/user-page-layout';
+import UserPageLayout from '@/components/nav/user/user-page-layout';
 import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
 import { useTranslation } from 'react-i18next';
 import { NotFoundComponent } from '@/components/not-found-component.tsx';

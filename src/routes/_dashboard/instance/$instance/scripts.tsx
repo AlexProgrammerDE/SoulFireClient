@@ -4,7 +4,7 @@ import { createTransport } from '@/lib/web-rpc.ts';
 import { ScriptListResponse } from '@/generated/soulfire/script.ts';
 import { ScriptServiceClient } from '@/generated/soulfire/script.client.ts';
 import { GenericScripts } from '@/components/generic-scripts-page.tsx';
-import InstancePageLayout from '@/components/nav/instance-page-layout';
+import InstancePageLayout from '@/components/nav/instance/instance-page-layout';
 import { useTranslation } from 'react-i18next';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance/scripts')({

@@ -21,7 +21,7 @@ import {
   setSelfEmail,
   setSelfUsername,
 } from '@/lib/utils.tsx';
-import UserPageLayout from '@/components/nav/user-page-layout.tsx';
+import UserPageLayout from '@/components/nav/user/user-page-layout.tsx';
 import { ExternalLink } from '@/components/external-link.tsx';
 import { UserAvatar } from '@/components/user-avatar.tsx';
 import { Card } from '@/components/ui/card.tsx';

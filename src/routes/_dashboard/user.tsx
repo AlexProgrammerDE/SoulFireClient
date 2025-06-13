@@ -1,6 +1,6 @@
 import { CatchBoundary, createFileRoute, Outlet } from '@tanstack/react-router';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar.tsx';
-import { UserSidebar } from '@/components/nav/user-sidebar.tsx';
+import { UserSidebar } from '@/components/nav/user/user-sidebar.tsx';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 import { ErrorComponent } from '@/components/error-component.tsx';
 

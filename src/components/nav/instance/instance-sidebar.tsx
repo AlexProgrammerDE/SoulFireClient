@@ -1,28 +1,34 @@
 import * as React from 'react';
 import { Suspense } from 'react';
+
+import { NavControls } from '@/components/nav/instance/nav-controls.tsx';
+import { NavSettings } from '@/components/nav/instance/nav-settings.tsx';
 import { NavAccount } from '@/components/nav/nav-account.tsx';
+import { NavPlugins } from '@/components/nav/instance/nav-plugins';
+import { InstanceSwitcher } from '@/components/nav/instance/instance-switcher.tsx';
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
+  SidebarHeader,
   SidebarRail,
 } from '@/components/ui/sidebar.tsx';
 import { NavSecondary } from '@/components/nav/nav-secondary.tsx';
 import { ScrollArea } from '@/components/ui/scroll-area.tsx';
-import { NavUserOptions } from '@/components/nav/nav-user-options.tsx';
-import { NavUserAdmin } from '@/components/nav/nav-user-admin.tsx';
 import { NavDefaultSkeleton } from '@/components/nav/nav-default-skeleton.tsx';
 
-export function UserSidebar({
-  ...props
-}: React.ComponentProps<typeof Sidebar>) {
+export function InstanceSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <ScrollArea className="h-[calc(100svh-4rem)] w-full pr-2">
-        <SidebarContent className="min-h-[calc(100svh-4rem)]">
+      <SidebarHeader className="h-16">
+        <InstanceSwitcher />
+      </SidebarHeader>
+      <ScrollArea className="h-[calc(100svh-4rem-4rem)] w-full pr-2">
+        <SidebarContent className="min-h-[calc(100svh-4rem-4rem)]">
           <Suspense fallback={<NavDefaultSkeleton />}>
-            <NavUserOptions />
-            <NavUserAdmin />
+            <NavControls />
+            <NavSettings />
+            <NavPlugins />
           </Suspense>
           <NavSecondary className="mt-auto" />
         </SidebarContent>
