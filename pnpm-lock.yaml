@@ -201,11 +201,11 @@ importers:
         specifier: ^0.11.0
         version: 0.11.1
       lucide-react:
-        specifier: ^0.522.0
-        version: 0.522.0(react@19.1.0)
+        specifier: ^0.517.0
+        version: 0.517.0(react@19.1.0)
       lucide-static:
-        specifier: ^0.522.0
-        version: 0.522.0
+        specifier: ^0.517.0
+        version: 0.517.0
       mime-matcher:
         specifier: ^1.0.5
         version: 1.0.5
