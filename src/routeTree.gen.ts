@@ -150,7 +150,6 @@ const DashboardInstanceInstanceSettingsNamespaceRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof DashboardRouteWithChildren
   '/user': typeof DashboardUserRouteWithChildren
   '/instance/$instance': typeof DashboardInstanceInstanceRouteWithChildren
   '/user/access': typeof DashboardUserAccessRoute
@@ -173,7 +172,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof DashboardRouteWithChildren
   '/user/access': typeof DashboardUserAccessRoute
   '/user/settings': typeof DashboardUserSettingsRoute
   '/user': typeof DashboardUserIndexRoute
@@ -219,7 +217,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | ''
     | '/user'
     | '/instance/$instance'
     | '/user/access'
@@ -242,7 +239,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | ''
     | '/user/access'
     | '/user/settings'
     | '/user'
