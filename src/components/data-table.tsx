@@ -170,14 +170,16 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex items-center gap-2">
+      <div className="flex flex-col gap-2 md:flex-row">
         <Input
           placeholder={filterPlaceholder}
           value={globalFilter}
           onChange={(event) => table.setGlobalFilter(event.target.value)}
           className="max-w-sm"
         />
-        {extraHeader && extraHeader({ table })}
+        <div className="flex flex-row items-center gap-2">
+          {extraHeader && extraHeader({ table })}
+        </div>
       </div>
       <div className="rounded-md border">
         <Table>

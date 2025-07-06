@@ -10,7 +10,7 @@
     "description": "Select which type of SoulFire server to connect to.",
     "integrated": {
       "title": "Integrated server (local)",
-      "description": "Runs a SoulFire server on your computer. The setup is automatic and requires no configuration. (Requires the desktop app)"
+      "description": "Runs a SoulFire server on your computer. The setup is automatic and requires no configuration. (Requires the Desktop/Android app)"
     },
     "dedicated": {
       "title": "Dedicated server (remote)",

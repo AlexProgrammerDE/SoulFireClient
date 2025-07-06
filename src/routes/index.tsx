@@ -945,19 +945,19 @@ function EmailForm({
               )}
             />
           </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button
-              variant="outline"
-              onClick={(e) => {
-                e.preventDefault();
-                setLoginType(null);
-              }}
-              type="button"
-            >
-              <ArrowLeftIcon />
-              {t('dedicated.form.back')}
-            </Button>
-            <div className="flex flex-row gap-2">
+          <CardFooter className="flex flex-col gap-2 max-md:items-stretch md:flex-row">
+            <div className="flex grow flex-col justify-between gap-2 max-md:items-stretch md:flex-row">
+              <Button
+                variant="outline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setLoginType(null);
+                }}
+                type="button"
+              >
+                <ArrowLeftIcon />
+                {t('dedicated.form.back')}
+              </Button>
               <Button
                 variant="outline"
                 onClick={() => {
@@ -968,11 +968,11 @@ function EmailForm({
                 <KeyRoundIcon />
                 {t('dedicated.form.useToken')}
               </Button>
-              <Button type="submit">
-                <LogInIcon />
-                {t('dedicated.form.login')}
-              </Button>
             </div>
+            <Button type="submit">
+              <LogInIcon />
+              {t('dedicated.form.login')}
+            </Button>
           </CardFooter>
         </Card>
       </form>
@@ -1060,19 +1060,19 @@ function TokenForm({
               )}
             />
           </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button
-              variant="outline"
-              onClick={(e) => {
-                e.preventDefault();
-                setLoginType(null);
-              }}
-              type="button"
-            >
-              <ArrowLeftIcon />
-              {t('dedicated.form.back')}
-            </Button>
-            <div className="flex flex-row gap-2">
+          <CardFooter className="flex flex-col gap-2 max-md:items-stretch md:flex-row">
+            <div className="flex grow flex-col justify-between gap-2 max-md:items-stretch md:flex-row">
+              <Button
+                variant="outline"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setLoginType(null);
+                }}
+                type="button"
+              >
+                <ArrowLeftIcon />
+                {t('dedicated.form.back')}
+              </Button>
               <Button
                 variant="outline"
                 onClick={() => {
@@ -1083,11 +1083,11 @@ function TokenForm({
                 <MailIcon />
                 {t('dedicated.form.useEmail')}
               </Button>
-              <Button type="submit">
-                <LogInIcon />
-                {t('dedicated.form.login')}
-              </Button>
             </div>
+            <Button type="submit">
+              <LogInIcon />
+              {t('dedicated.form.login')}
+            </Button>
           </CardFooter>
         </Card>
       </form>

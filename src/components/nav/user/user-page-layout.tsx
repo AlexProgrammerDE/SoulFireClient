@@ -95,8 +95,8 @@ export default function UserPageLayout(props: {
           </Breadcrumb>
         </div>
       </header>
-      <ScrollArea className="h-[calc(100dvh-3rem)] w-full">
-        <div className="flex min-h-[calc(100dvh-3rem)] w-full flex-col p-4">
+      <ScrollArea className="h-[calc(100dvh-3rem)] w-full max-w-dvw">
+        <div className="flex min-h-[calc(100dvh-3rem)] w-full max-w-dvw flex-col p-4">
           <CatchBoundary
             getResetKey={() => 'user-page-layout'}
             errorComponent={ErrorComponent}
