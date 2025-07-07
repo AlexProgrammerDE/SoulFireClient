@@ -10,7 +10,7 @@
     "description": "Seleccione el tipo de servidor de SoulFire al que conectar.",
     "integrated": {
       "title": "Servidor integrado (local)",
-      "description": "Ejecuta un servidor de SoulFire en tu equipo. La initialización es automática y no requiere configuración. (Requiere la aplicación de escritorio)"
+      "description": ""
     },
     "dedicated": {
       "title": "Servidor dedicado (remoto)",

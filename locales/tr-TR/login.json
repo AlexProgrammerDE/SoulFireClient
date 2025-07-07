@@ -10,7 +10,7 @@
     "description": "Hangi tür SoulFire sunucusuna bağlanmak istiyorsanız onu seçin.",
     "integrated": {
       "title": "Yerel Sunucu (ev)",
-      "description": "Bilgisayarınızda bir SoulFire sunucusu çalıştırır. Kurulum otomatiktir ve yapılandırma gerektirmez. (Masaüstü uygulaması gerektirir)"
+      "description": ""
     },
     "dedicated": {
       "title": "Dedicated Sunucu (uzaktan bağlantı)",

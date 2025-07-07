@@ -10,7 +10,7 @@
     "description": "选择连接到哪种类型的 SoulFire 服务器",
     "integrated": {
       "title": "内置集成服务器 (本地)",
-      "description": "在您的计算机上运行一个 SoulFire 服务器。设置过程是自动的无需手动配置。(需要桌面应用)"
+      "description": ""
     },
     "dedicated": {
       "title": "专用服务器 (远程)",

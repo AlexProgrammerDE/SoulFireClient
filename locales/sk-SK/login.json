@@ -10,7 +10,7 @@
     "description": "Vyberte typ servera SoulFire, ku ktorému sa chcete pripojiť.",
     "integrated": {
       "title": "Integrovaný server (lokálny)",
-      "description": "Spustí server SoulFire na vašom počítači. Nastavenie je automatické a nevyžaduje žiadnu konfiguráciu. (Vyžaduje počítačovú aplikáciu)"
+      "description": ""
     },
     "dedicated": {
       "title": "Dedikovaný server (vzdialený)",
