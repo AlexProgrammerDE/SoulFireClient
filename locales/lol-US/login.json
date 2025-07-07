@@ -10,7 +10,7 @@
     "description": "Select which tyep ov SoulFier servr 2 connect 2.",
     "integrated": {
       "title": "Integratd servr (local)",
-      "description": "Runz SoulFier servr on ur computr. Srsly teh setup iz automatic an requirez no configurashun, Srsly. (requirez teh desktop app)"
+      "description": ""
     },
     "dedicated": {
       "title": "Dedicatd servr (remoet)",

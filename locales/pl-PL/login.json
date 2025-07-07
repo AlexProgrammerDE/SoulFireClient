@@ -10,7 +10,7 @@
     "description": "Wybierz typ serwera SoulFire, z którym chcesz się połączyć.",
     "integrated": {
       "title": "Serwer zintegrowany (lokalny)",
-      "description": "Uruchamia serwer SoulFire na twoim komputerze. Konfiguracja jest automatyczna i nie wymaga ingerencji użytkownika. (Wymaga aplikacji)"
+      "description": ""
     },
     "dedicated": {
       "title": "Serwer dedykowany (zdalny)",
