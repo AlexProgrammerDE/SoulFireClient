@@ -27,6 +27,7 @@ import { useTheme } from 'next-themes';
 import { AboutProvider } from '@/components/dialog/about-dialog.tsx';
 import { invoke } from '@tauri-apps/api/core';
 import { setTheme } from '@tauri-apps/api/app';
+import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
 
 async function getAvailableProfiles() {
   const profileDir = await resolve(
@@ -139,10 +140,13 @@ function WindowThemeSyncer() {
     if (isTauri()) {
       if (theme === 'dark') {
         void setTheme('dark');
+        void getCurrentWebviewWindow().setTheme('dark');
       } else if (theme === 'light') {
         void setTheme('light');
+        void getCurrentWebviewWindow().setTheme('light');
       } else if (theme === 'system') {
         void setTheme(null);
+        void getCurrentWebviewWindow().setTheme(null);
       }
     }
   }, [theme]);
