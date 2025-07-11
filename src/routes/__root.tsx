@@ -18,7 +18,6 @@ import { getTerminalTheme, isTauri } from '@/lib/utils.tsx';
 import { appConfigDir, BaseDirectory, resolve } from '@tauri-apps/api/path';
 import { mkdir, readDir, watch } from '@tauri-apps/plugin-fs';
 import { arch, locale, platform, type, version } from '@tauri-apps/plugin-os';
-import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { TerminalThemeContext } from '@/components/providers/terminal-theme-context';
 import { attachConsole } from '@tauri-apps/plugin-log';
@@ -27,6 +26,7 @@ import { emit } from '@tauri-apps/api/event';
 import { useTheme } from 'next-themes';
 import { AboutProvider } from '@/components/dialog/about-dialog.tsx';
 import { invoke } from '@tauri-apps/api/core';
+import { setTheme } from '@tauri-apps/api/app';
 
 async function getAvailableProfiles() {
   const profileDir = await resolve(
@@ -133,17 +133,19 @@ const AppStartedEvent = memo(() => {
 });
 
 function WindowThemeSyncer() {
-  const { resolvedTheme } = useTheme();
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (isTauri()) {
-      if (resolvedTheme === 'dark') {
-        void getCurrentWebviewWindow().setTheme('dark');
-      } else if (resolvedTheme === 'light') {
-        void getCurrentWebviewWindow().setTheme('light');
+      if (theme === 'dark') {
+        void setTheme('dark');
+      } else if (theme === 'light') {
+        void setTheme('light');
+      } else if (theme === 'system') {
+        void setTheme(null);
       }
     }
-  }, [resolvedTheme]);
+  }, [theme]);
 
   return null;
 }
