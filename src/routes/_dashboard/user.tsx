@@ -3,13 +3,17 @@ import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar.tsx';
 import { UserSidebar } from '@/components/nav/user/user-sidebar.tsx';
 import { TooltipProvider } from '@/components/ui/tooltip.tsx';
 import { ErrorComponent } from '@/components/error-component.tsx';
+import { useIsMobile } from '@/hooks/use-mobile.ts';
 
 export const Route = createFileRoute('/_dashboard/user')({
   component: UserLayout,
 });
 
 function UserLayout() {
-  const defaultOpen = localStorage.getItem('sidebar:state') === 'true';
+  const isMobile = useIsMobile();
+  const sidebarState = localStorage.getItem('sidebar:state');
+  const defaultOpen =
+    sidebarState === null ? !isMobile : sidebarState === 'true';
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>

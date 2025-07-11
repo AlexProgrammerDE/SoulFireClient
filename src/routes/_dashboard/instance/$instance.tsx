@@ -15,6 +15,7 @@ import {
   convertFromInstanceProto,
   InstanceInfoQueryData,
 } from '@/lib/types.ts';
+import { useIsMobile } from '@/hooks/use-mobile.ts';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance')({
   beforeLoad: (props) => {
@@ -108,7 +109,10 @@ export const Route = createFileRoute('/_dashboard/instance/$instance')({
 });
 
 function InstanceLayout() {
-  const defaultOpen = localStorage.getItem('sidebar:state') === 'true';
+  const isMobile = useIsMobile();
+  const sidebarState = localStorage.getItem('sidebar:state');
+  const defaultOpen =
+    sidebarState === null ? !isMobile : sidebarState === 'true';
 
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
