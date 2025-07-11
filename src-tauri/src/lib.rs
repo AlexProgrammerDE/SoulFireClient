@@ -112,7 +112,7 @@ pub fn run() {
 
             #[cfg(desktop)]
             {
-                if env::var("SOULFIRE_DISABLE_UPDATER").is_err() {
+                if env::var("SOULFIRE_DISABLE_UPDATER").is_err() && !cfg!(dev) {
                     app.handle()
                         .plugin(tauri_plugin_updater::Builder::new().build())?;
                     let handle = app.handle().clone();
