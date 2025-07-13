@@ -19,7 +19,7 @@ importers:
         version: 5.1.1(react-hook-form@7.60.0(react@19.1.0))
       '@icons-pack/react-simple-icons':
         specifier: ^13.0.0
-        version: 13.4.0(react@19.1.0)
+        version: 13.5.0(react@19.1.0)
       '@protobuf-ts/grpcweb-transport':
         specifier: ^2.9.6
         version: 2.11.1
@@ -936,8 +936,8 @@ packages:
     resolution: {integrity: sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ==}
     engines: {node: '>=18.18'}
 
-  '@icons-pack/react-simple-icons@13.4.0':
-    resolution: {integrity: sha512-SBBR2Jq88IEhr5NEg22MtF5WxlC6B5uRgXCL8tFHS/CBr5WBepEIFIcHG8ijNjfjIQa8YuO73Q2UvVHoM148fA==}
+  '@icons-pack/react-simple-icons@13.5.0':
+    resolution: {integrity: sha512-00/E53YOt967SomgPWyH4eTtHdUDLAeaowl0CAU7UnEuBOrHznrKhFQHccdN0wShR5CVXxYh41qeYl6ZGJ/OSg==}
     peerDependencies:
       react: ^16.13 || ^17 || ^18 || ^19
 
@@ -5293,7 +5293,7 @@ snapshots:
 
   '@humanwhocodes/retry@0.4.3': {}
 
-  '@icons-pack/react-simple-icons@13.4.0(react@19.1.0)':
+  '@icons-pack/react-simple-icons@13.5.0(react@19.1.0)':
     dependencies:
       react: 19.1.0
 
