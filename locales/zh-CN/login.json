@@ -39,7 +39,7 @@
       "start": "开始"
     },
     "mobile": {
-      "description": "",
+      "description": "要在手机上运行集成服务器，您需要手动完成几个步骤。",
       "form": {
         "termuxCommand": {
           "title": "",

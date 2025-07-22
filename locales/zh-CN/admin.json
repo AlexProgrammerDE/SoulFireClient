@@ -56,7 +56,7 @@
       }
     },
     "updateUserDialog": {
-      "title": "",
+      "title": "更新用户",
       "description": "",
       "form": {
         "cancel": "取消",

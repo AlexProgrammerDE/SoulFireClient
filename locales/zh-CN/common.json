@@ -362,7 +362,7 @@
       }
     },
     "updateScriptDialog": {
-      "title": "",
+      "title": "更新脚本",
       "description": "",
       "form": {
         "cancel": "取消",
