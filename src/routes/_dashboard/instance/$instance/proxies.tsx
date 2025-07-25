@@ -4,12 +4,7 @@ import { Button } from '@/components/ui/button.tsx';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import { DataTable } from '@/components/data-table.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
-import {
-  convertToInstanceProto,
-  getEnumKeyByValue,
-  ProfileProxy,
-  ProfileRoot,
-} from '@/lib/types.ts';
+import { getEnumKeyByValue, ProfileProxy, ProfileRoot } from '@/lib/types.ts';
 import { ProxyProto_Type } from '@/generated/soulfire/common.ts';
 import { ExternalToast, toast } from 'sonner';
 import {
@@ -24,7 +19,6 @@ import { PlusIcon, TrashIcon, Wand2Icon } from 'lucide-react';
 import ImportDialog from '@/components/dialog/import-dialog.tsx';
 import URI from 'urijs';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import {
   useMutation,
   useQueryClient,
@@ -38,7 +32,7 @@ import {
   SelectRowHeader,
 } from '@/components/data-table-selects.tsx';
 import i18n from '@/lib/i18n.ts';
-import { runAsync } from '@/lib/utils.tsx';
+import { runAsync, setInstanceConfig } from '@/lib/utils.tsx';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance/proxies')({
   component: ProxySettings,
@@ -158,16 +152,16 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   const [proxyTypeSelected, setProxyTypeSelected] =
     useState<UIProxyType | null>(null);
   const { mutateAsync: setProfileMutation } = useMutation({
-    mutationFn: async (profile: ProfileRoot) => {
-      if (transport === null) {
-        return;
-      }
-
-      const instanceService = new InstanceServiceClient(transport);
-      await instanceService.updateInstanceConfig({
-        id: instanceInfo.id,
-        config: convertToInstanceProto(profile),
-      });
+    mutationFn: async (
+      profileTransformer: (prev: ProfileRoot) => ProfileRoot,
+    ) => {
+      await setInstanceConfig(
+        profileTransformer(profile),
+        instanceInfo,
+        transport,
+        queryClient,
+        instanceInfoQueryOptions.queryKey,
+      );
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({
@@ -213,10 +207,10 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             proxiesToAdd.push(proxy);
           }
 
-          await setProfileMutation({
-            ...profile,
-            proxies: [...profile.proxies, ...proxiesToAdd],
-          });
+          await setProfileMutation((prev) => ({
+            ...prev,
+            proxies: [...prev.proxies, ...proxiesToAdd],
+          }));
           return proxiesToAdd.length;
         })(),
         {
@@ -273,7 +267,6 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             return;
           }
 
-          const beforeSize = profile.proxies.length;
           const selectedRows = props.table
             .getFilteredSelectedRowModel()
             .rows.map((r) => r.original);
@@ -312,28 +305,10 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             runAsync(async () => {
               const data = r.data;
               switch (data.oneofKind) {
-                case 'fullList': {
-                  const newProfile = {
-                    ...profile,
-                    proxies: profile.proxies.filter((a) => {
-                      const valid = data.fullList.response.find((r) =>
-                        deepEqual(r.proxy, a),
-                      );
-
-                      // This one was not supposed to be checked
-                      if (valid === undefined) {
-                        return true;
-                      }
-
-                      return valid.valid;
-                    }),
-                  };
-
-                  await setProfileMutation(newProfile);
-
+                case 'end': {
                   toast.success(
                     t('proxy.checkToast.success', {
-                      count: beforeSize - newProfile.proxies.length,
+                      count: failed,
                     }),
                     {
                       id: toastId,
@@ -342,24 +317,23 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
                   );
                   break;
                 }
-                case 'oneSuccess': {
+                case 'single': {
                   if (abortController.signal.aborted) {
                     return;
                   }
 
-                  success++;
-                  toast.loading(loadingReport(), {
-                    id: toastId,
-                    ...loadingData,
-                  });
-                  break;
-                }
-                case 'oneFailure': {
-                  if (abortController.signal.aborted) {
-                    return;
+                  if (data.single.valid) {
+                    success++;
+                  } else {
+                    failed++;
+                    await setProfileMutation((prev) => ({
+                      ...prev,
+                      proxies: prev.proxies.filter(
+                        (a) => !deepEqual(data.single.proxy, a),
+                      ),
+                    }));
                   }
 
-                  failed++;
                   toast.loading(loadingReport(), {
                     id: toastId,
                     ...loadingData,
@@ -384,27 +358,28 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         variant="outline"
         disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
         onClick={() => {
-          const beforeSize = profile.proxies.length;
           const selectedRows = props.table
             .getFilteredSelectedRowModel()
             .rows.map((r) => r.original);
-          const newProfile = {
-            ...profile,
-            proxies: profile.proxies.filter(
-              (a) => !selectedRows.some((r) => r.address === a.address),
-            ),
-          };
 
-          toast.promise(setProfileMutation(newProfile), {
-            loading: t('proxy.removeToast.loading'),
-            success: t('proxy.removeToast.success', {
-              count: beforeSize - newProfile.proxies.length,
-            }),
-            error: (e) => {
-              console.error(e);
-              return t('proxy.removeToast.error');
+          toast.promise(
+            setProfileMutation((prev) => ({
+              ...prev,
+              proxies: prev.proxies.filter(
+                (a) => !selectedRows.some((r) => r.address === a.address),
+              ),
+            })),
+            {
+              loading: t('proxy.removeToast.loading'),
+              success: t('proxy.removeToast.success', {
+                count: selectedRows.length,
+              }),
+              error: (e) => {
+                console.error(e);
+                return t('proxy.removeToast.error');
+              },
             },
-          });
+          );
         }}
       >
         <TrashIcon />

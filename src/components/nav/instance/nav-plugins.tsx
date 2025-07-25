@@ -127,6 +127,7 @@ export function NavPlugins() {
               open={pluginCollapsibleOpen}
               onOpenChange={setPluginCollapsibleOpen}
               className="group/collapsible"
+              key={item.title}
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger

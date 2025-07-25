@@ -3,12 +3,7 @@ import { use, useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { DataTable } from '@/components/data-table.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
-import {
-  convertToInstanceProto,
-  getEnumKeyByValue,
-  ProfileAccount,
-  ProfileRoot,
-} from '@/lib/types.ts';
+import { getEnumKeyByValue, ProfileAccount, ProfileRoot } from '@/lib/types.ts';
 import {
   AccountTypeCredentials,
   AccountTypeDeviceCode,
@@ -27,13 +22,12 @@ import { ExternalToast, toast } from 'sonner';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { MCAuthServiceClient } from '@/generated/soulfire/mc-auth.client.ts';
 import ImportDialog from '@/components/dialog/import-dialog.tsx';
-import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import {
   useMutation,
   useQueryClient,
   useSuspenseQuery,
 } from '@tanstack/react-query';
-import { isTauri, runAsync } from '@/lib/utils.tsx';
+import { isTauri, runAsync, setInstanceConfig } from '@/lib/utils.tsx';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
@@ -99,16 +93,16 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   const [accountTypeCredentialsSelected, setAccountTypeCredentialsSelected] =
     useState<AccountTypeCredentials | null>(null);
   const { mutateAsync: setProfileMutation } = useMutation({
-    mutationFn: async (profile: ProfileRoot) => {
-      if (transport === null) {
-        return;
-      }
-
-      const instanceService = new InstanceServiceClient(transport);
-      await instanceService.updateInstanceConfig({
-        id: instanceInfo.id,
-        config: convertToInstanceProto(profile),
-      });
+    mutationFn: async (
+      profileTransformer: (prev: ProfileRoot) => ProfileRoot,
+    ) => {
+      await setInstanceConfig(
+        profileTransformer(profile),
+        instanceInfo,
+        transport,
+        queryClient,
+        instanceInfoQueryOptions.queryKey,
+      );
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({
@@ -174,12 +168,11 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           switch (data.oneofKind) {
             case 'fullList': {
               const accountsToAdd = data.fullList.account;
-              const newProfile = {
-                ...profile,
-                accounts: addAndDeduplicate(profile.accounts, accountsToAdd),
-              };
 
-              await setProfileMutation(newProfile);
+              await setProfileMutation((prev) => ({
+                ...prev,
+                accounts: addAndDeduplicate(prev.accounts, accountsToAdd),
+              }));
 
               if (accountsToAdd.length === 0) {
                 toast.error(t('account.listImportToast.allFailed'), {
@@ -301,10 +294,11 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
             }
           });
 
-          await setProfileMutation({
-            ...profile,
-            accounts: addAndDeduplicate(profile.accounts, [await promise]),
-          });
+          const promiseResult = await promise;
+          await setProfileMutation((prev) => ({
+            ...prev,
+            accounts: addAndDeduplicate(prev.accounts, [promiseResult]),
+          }));
         })(),
         {
           loading: t('account.deviceCodeImportToast.loading'),
@@ -408,27 +402,28 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         variant="outline"
         disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
         onClick={() => {
-          const beforeSize = profile.accounts.length;
           const selectedRows = props.table
             .getFilteredSelectedRowModel()
             .rows.map((r) => r.original);
-          const newProfile = {
-            ...profile,
-            accounts: profile.accounts.filter(
-              (a) => !selectedRows.some((r) => r.profileId === a.profileId),
-            ),
-          };
 
-          toast.promise(setProfileMutation(newProfile), {
-            loading: t('account.removeToast.loading'),
-            success: t('account.removeToast.success', {
-              count: beforeSize - newProfile.accounts.length,
-            }),
-            error: (e) => {
-              console.error(e);
-              return t('account.removeToast.error');
+          toast.promise(
+            setProfileMutation((prev) => ({
+              ...prev,
+              accounts: prev.accounts.filter(
+                (a) => !selectedRows.some((r) => r.profileId === a.profileId),
+              ),
+            })),
+            {
+              loading: t('account.removeToast.loading'),
+              success: t('account.removeToast.success', {
+                count: selectedRows.length,
+              }),
+              error: (e) => {
+                console.error(e);
+                return t('account.removeToast.error');
+              },
             },
-          });
+          );
         }}
       >
         <TrashIcon />

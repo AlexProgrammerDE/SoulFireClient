@@ -41,6 +41,7 @@ import {
   hasInstancePermission,
   isTauri,
   runAsync,
+  setInstanceConfig,
 } from '@/lib/utils.tsx';
 import {
   useMutation,
@@ -165,15 +166,13 @@ function InstanceActionButtons() {
   const instanceProfileInputRef = useRef<HTMLInputElement>(null);
   const setProfileMutation = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
-      if (transport === null) {
-        return;
-      }
-
-      const instanceService = new InstanceServiceClient(transport);
-      await instanceService.updateInstanceConfig({
-        id: instanceInfo.id,
-        config: convertToInstanceProto(profile),
-      });
+      await setInstanceConfig(
+        profile,
+        instanceInfo,
+        transport,
+        queryClient,
+        instanceInfoQueryOptions.queryKey,
+      );
     },
     onSettled: async () => {
       await queryClient.invalidateQueries({
