@@ -103,8 +103,7 @@
     "urijs": "^1.19.11",
     "vaul": "^1.1.2",
     "webdav": "^5.8.0",
-    "zod": "^4.0.0",
-    "zod-i18n-map": "^2.27.0"
+    "zod": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.23.0",
