@@ -98,23 +98,11 @@ export const Route = createFileRoute('/')({
 });
 
 const emailFormSchema = z.object({
-  address: z
-    .string()
-    .min(1, 'Address is required')
-    .max(255, 'Address is too long')
-    .url('Address must be a valid URL'),
-  email: z
-    .string()
-    .min(1, 'Email is required')
-    .max(255, 'Email is too long')
-    .email('Email must be a valid'),
+  address: z.url(),
+  email: z.email(),
 });
 const tokenFormSchema = z.object({
-  address: z
-    .string()
-    .min(1, 'Address is required')
-    .max(255, 'Address is too long')
-    .url('Address must be a valid URL'),
+  address: z.url(),
   token: z
     .string()
     .min(1, 'Token is required')

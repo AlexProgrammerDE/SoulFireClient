@@ -71,8 +71,8 @@ export function ManageUserDialog({
         /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
         t('users.baseUserDialog.form.username.regex'),
       ),
-    email: z.string().email(),
-    role: z.nativeEnum(UserRole),
+    email: z.email(),
+    role: z.enum(UserRole),
   });
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
