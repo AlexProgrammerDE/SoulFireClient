@@ -103,14 +103,7 @@ const emailFormSchema = z.object({
 });
 const tokenFormSchema = z.object({
   address: z.url(),
-  token: z
-    .string()
-    .min(1, 'Token is required')
-    .max(255, 'Token is too long')
-    .regex(
-      /e[yw][A-Za-z0-9-_]+\.(?:e[yw][A-Za-z0-9-_]+)?\.[A-Za-z0-9-_]{2,}(?:(?:\.[A-Za-z0-9-_]{2,}){2})?/,
-      'Must be a valid JWT token',
-    ),
+  token: z.jwt(),
 });
 type EmailFormSchemaType = z.infer<typeof emailFormSchema>;
 type TokenFormSchemaType = z.infer<typeof tokenFormSchema>;
@@ -122,14 +115,7 @@ type IntegratedServerFormSchemaType = z.infer<
   typeof integratedServerFormSchema
 >;
 const mobileIntegratedServerFormSchema = z.object({
-  token: z
-    .string()
-    .min(1, 'Token is required')
-    .max(255, 'Token is too long')
-    .regex(
-      /e[yw][A-Za-z0-9-_]+\.(?:e[yw][A-Za-z0-9-_]+)?\.[A-Za-z0-9-_]{2,}(?:(?:\.[A-Za-z0-9-_]{2,}){2})?/,
-      'Must be a valid JWT token',
-    ),
+  token: z.jwt(),
 });
 type MobileIntegratedServerFormSchemaType = z.infer<
   typeof mobileIntegratedServerFormSchema
