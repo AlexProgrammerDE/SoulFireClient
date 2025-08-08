@@ -10,6 +10,7 @@ import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
+  CustomTooltipProps,
 } from '@/components/ui/chart';
 import { UserRole } from '@/generated/soulfire/common.ts';
 import { useSuspenseQuery } from '@tanstack/react-query';
@@ -81,7 +82,9 @@ export function UsersChart(props: { userList: UserListResponse }) {
           <PieChart>
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              content={(props: CustomTooltipProps) => (
+                <ChartTooltipContent {...props} hideLabel />
+              )}
             />
             <Pie
               data={chartData}
@@ -184,7 +187,9 @@ export function InstancesChart(props: { instanceList: InstanceListResponse }) {
           <PieChart>
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              content={(props: CustomTooltipProps) => (
+                <ChartTooltipContent {...props} hideLabel />
+              )}
             />
             <Pie
               data={chartData}
