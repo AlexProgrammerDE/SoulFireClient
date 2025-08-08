@@ -265,32 +265,32 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Download linux-amd64 artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: linux-amd64
           path: release-artifacts/linux-amd64
       - name: Download linux-aarch64 artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: linux-aarch64
           path: release-artifacts/linux-aarch64
       - name: Download macos-aarch64 artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: macos-aarch64
           path: release-artifacts/macos-aarch64
       - name: Download macos-amd64 artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: macos-amd64
           path: release-artifacts/macos-amd64
       - name: Download windows-amd64 artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: windows-amd64
           path: release-artifacts/windows-amd64
       - name: Download windows-aarch64 artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: windows-aarch64
           path: release-artifacts/windows-aarch64
