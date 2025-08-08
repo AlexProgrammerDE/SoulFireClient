@@ -204,8 +204,8 @@ importers:
         specifier: ^0.539.0
         version: 0.539.0(react@19.1.1)
       lucide-static:
-        specifier: ^0.538.0
-        version: 0.538.0
+        specifier: ^0.539.0
+        version: 0.539.0
       mime-matcher:
         specifier: ^1.0.5
         version: 1.0.5
@@ -3823,8 +3823,8 @@ packages:
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  lucide-static@0.538.0:
-    resolution: {integrity: sha512-kjCbN5Q8XxMtPmxDYFgG2sSZYjXZ37wQP6GsIMLh+LE//5t7hM+Razkbsw4nRbFIvlnxPIYt7EfRgpHoa9RqjQ==}
+  lucide-static@0.539.0:
+    resolution: {integrity: sha512-ybhtBJOeIgY1d1WV3vxJkSOoWi1EaYOkA15WYtct9/kX3+HSTCdbkeM0fQ4i5JxsKmp874J8dsNI92r4t5qCzg==}
 
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
@@ -8471,7 +8471,7 @@ snapshots:
     dependencies:
       react: 19.1.1
 
-  lucide-static@0.538.0: {}
+  lucide-static@0.539.0: {}
 
   magic-string@0.30.17:
     dependencies:
