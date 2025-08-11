@@ -56,7 +56,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - name: 'Shared: Checkout repository'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           persist-credentials: false
 
