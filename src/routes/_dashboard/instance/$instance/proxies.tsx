@@ -292,7 +292,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             });
           const toastId = toast.loading(loadingReport(), loadingData);
           const service = new ProxyCheckServiceClient(transport);
-          const responses = service.check(
+          const { responses } = service.check(
             {
               instanceId: instanceInfo.id,
               proxy: selectedRows,
@@ -300,7 +300,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             {
               abort: abortController.signal,
             },
-          ).responses;
+          );
           responses.onMessage((r) => {
             runAsync(async () => {
               const data = r.data;

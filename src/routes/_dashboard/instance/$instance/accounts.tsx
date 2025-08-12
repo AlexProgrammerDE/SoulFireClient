@@ -152,7 +152,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           failed,
         });
       const toastId = toast.loading(loadingReport(), loadingData);
-      const responses = service.loginCredentials(
+      const { responses } = service.loginCredentials(
         {
           instanceId: instanceInfo.id,
           service: accountTypeCredentialsSelected,
@@ -161,7 +161,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         {
           abort: abortController.signal,
         },
-      ).responses;
+      );
       responses.onMessage((r) => {
         runAsync(async () => {
           const data = r.data;
@@ -260,31 +260,32 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         (async () => {
           const promise = new Promise<ProfileAccount>((resolve, reject) => {
             try {
-              service
-                .loginDeviceCode(
-                  {
-                    instanceId: instanceInfo.id,
-                    service: type,
-                  },
-                  {
-                    abort: abortController.signal,
-                  },
-                )
-                .responses.onMessage((message) => {
-                  if (message.data.oneofKind === 'account') {
-                    resolve(message.data.account);
-                  } else if (message.data.oneofKind === 'deviceCode') {
-                    if (isTauri()) {
-                      void shellOpen(
-                        message.data.deviceCode.directVerificationUri,
-                      );
-                    } else {
-                      window.open(
-                        message.data.deviceCode.directVerificationUri,
-                      );
-                    }
+              const { responses } = service.loginDeviceCode(
+                {
+                  instanceId: instanceInfo.id,
+                  service: type,
+                },
+                {
+                  abort: abortController.signal,
+                },
+              );
+              responses.onMessage((message) => {
+                if (message.data.oneofKind === 'account') {
+                  resolve(message.data.account);
+                } else if (message.data.oneofKind === 'deviceCode') {
+                  if (isTauri()) {
+                    void shellOpen(
+                      message.data.deviceCode.directVerificationUri,
+                    );
+                  } else {
+                    window.open(message.data.deviceCode.directVerificationUri);
                   }
-                });
+                }
+              });
+              responses.onError((e) => {
+                console.error(e);
+                reject(new Error(t('account.unknownError')));
+              });
             } catch (e) {
               if (e instanceof Error) {
                 reject(e);

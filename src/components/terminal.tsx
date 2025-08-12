@@ -189,7 +189,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
 
       console.info('Connecting to logs service');
       const logsService = new LogsServiceClient(transport);
-      const subscription = logsService.subscribe(
+      const { responses } = logsService.subscribe(
         {
           scope: props.scope,
         },
@@ -198,7 +198,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
         },
       );
 
-      subscription.responses.onError((error) => {
+      responses.onError((error) => {
         if (abortController.signal.aborted) {
           return;
         }
@@ -212,7 +212,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
           connect();
         }, 3_000);
       });
-      subscription.responses.onComplete(() => {
+      responses.onComplete(() => {
         if (abortController.signal.aborted) {
           return;
         }
@@ -226,7 +226,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
           connect();
         }, 1000);
       });
-      subscription.responses.onMessage((response) => {
+      responses.onMessage((response) => {
         const message = response.message;
         if (message === undefined) {
           return;
