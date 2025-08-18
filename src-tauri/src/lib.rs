@@ -1,5 +1,3 @@
-#![feature(let_chains)]
-
 use crate::cast::{CastRunningState, connect_cast, discover_casts, get_casts};
 use crate::discord::load_discord_rpc;
 use crate::sf_loader::{IntegratedServerState, get_sf_server_version, run_integrated_server};
