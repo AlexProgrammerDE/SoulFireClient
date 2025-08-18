@@ -6,6 +6,8 @@ import { UserListResponse } from '@/generated/soulfire/user.ts';
 import { UserRole } from '@/generated/soulfire/common.ts';
 import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
 import { convertFromServerProto, ServerInfoQueryData } from '@/lib/types.ts';
+import { ServerConfig } from '@/generated/soulfire/server.ts';
+import { demoServerSettings } from '@/demo-data.ts';
 
 export const Route = createFileRoute('/_dashboard/user/admin')({
   beforeLoad: (props) => {
@@ -14,14 +16,13 @@ export const Route = createFileRoute('/_dashboard/user/admin')({
       queryFn: async (props): Promise<ServerInfoQueryData> => {
         const transport = createTransport();
         if (transport === null) {
+          const serverConfig: ServerConfig = {
+            settings: [],
+          };
           return {
-            config: {
-              settings: [],
-            },
-            profile: {
-              settings: {},
-            },
-            serverSettings: [],
+            config: serverConfig,
+            profile: convertFromServerProto(serverConfig),
+            serverSettings: demoServerSettings,
           };
         }
 
@@ -33,6 +34,7 @@ export const Route = createFileRoute('/_dashboard/user/admin')({
           },
         );
 
+        // console.log(JSON.stringify(result.response.serverSettings))
         return {
           ...result.response,
           profile: convertFromServerProto(result.response.config!),

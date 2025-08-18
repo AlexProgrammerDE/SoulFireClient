@@ -533,3 +533,11 @@ export function copyToClipboard(text: string) {
     void navigator.clipboard.writeText(text);
   }
 }
+export function smartEntries<T extends object>(
+  obj: T,
+): [keyof T, T[keyof T]][] {
+  return Object.entries(obj).map(([key, value]) => [
+    key as keyof T,
+    value as T[keyof T],
+  ]);
+}

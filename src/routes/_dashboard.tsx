@@ -14,9 +14,9 @@ import {
 } from '@/lib/web-rpc.ts';
 import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
 import { ClientDataResponse } from '@/generated/soulfire/client.ts';
-import { isTauri } from '@/lib/utils.tsx';
+import { isTauri, smartEntries } from '@/lib/utils.tsx';
 import { emit } from '@tauri-apps/api/event';
-import { demoData } from '@/demo-data.ts';
+import { demoClientData } from '@/demo-data.ts';
 import {
   InstanceListResponse,
   InstanceState,
@@ -27,6 +27,7 @@ import { Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ErrorComponent } from '@/components/error-component.tsx';
 import { CreateInstanceProvider } from '@/components/dialog/create-instance-dialog.tsx';
+import { InstancePermission } from '@/generated/soulfire/common.ts';
 
 export const Route = createFileRoute('/_dashboard')({
   beforeLoad: async (props) => {
@@ -43,7 +44,12 @@ export const Route = createFileRoute('/_dashboard')({
                   friendlyName: 'Demo',
                   icon: 'pickaxe',
                   state: InstanceState.RUNNING,
-                  instancePermissions: [],
+                  instancePermissions: smartEntries(InstancePermission).map(
+                    (permission) => ({
+                      instancePermission: permission[1],
+                      granted: true,
+                    }),
+                  ),
                 },
               ],
             };
@@ -71,7 +77,7 @@ export const Route = createFileRoute('/_dashboard')({
         queryFn: async (props): Promise<ClientDataResponse> => {
           const transport = createTransport();
           if (transport === null) {
-            return demoData;
+            return demoClientData;
           }
 
           const clientService = new ClientServiceClient(transport);
@@ -82,6 +88,7 @@ export const Route = createFileRoute('/_dashboard')({
             },
           );
 
+          // console.log(JSON.stringify(result.response))
           return result.response;
         },
       });

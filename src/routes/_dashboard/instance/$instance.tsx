@@ -1,9 +1,13 @@
 import { CatchBoundary, createFileRoute, Outlet } from '@tanstack/react-router';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
-import { InstanceState } from '@/generated/soulfire/instance.ts';
+import {
+  InstanceConfig,
+  InstanceState,
+} from '@/generated/soulfire/instance.ts';
 import { queryOptions } from '@tanstack/react-query';
 import {
+  InstancePermission,
   MinecraftAccountProto_AccountTypeProto,
   ProxyProto_Type,
 } from '@/generated/soulfire/common.ts';
@@ -16,6 +20,8 @@ import {
   InstanceInfoQueryData,
 } from '@/lib/types.ts';
 import { useIsMobile } from '@/hooks/use-mobile.ts';
+import { smartEntries } from '@/lib/utils.tsx';
+import { demoInstanceSettings } from '@/demo-data.ts';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance')({
   beforeLoad: (props) => {
@@ -25,50 +31,52 @@ export const Route = createFileRoute('/_dashboard/instance/$instance')({
       queryFn: async (props): Promise<InstanceInfoQueryData> => {
         const transport = createTransport();
         if (transport === null) {
+          const instanceConfig: InstanceConfig = {
+            settings: [],
+            accounts: [
+              {
+                type: MinecraftAccountProto_AccountTypeProto.OFFLINE,
+                profileId: '607d30e7-115b-3838-914a-e4229c2b985d',
+                lastKnownName: 'Pistonmaster',
+                accountData: {
+                  oneofKind: 'offlineJavaData',
+                  offlineJavaData: {},
+                },
+              },
+            ],
+            proxies: [
+              {
+                type: ProxyProto_Type.HTTP,
+                address: '127.0.0.1:8080',
+                username: 'admin',
+                password: 'admin',
+              },
+              {
+                type: ProxyProto_Type.SOCKS4,
+                address: '127.0.0.1:8081',
+                username: 'admin',
+              },
+              {
+                type: ProxyProto_Type.SOCKS5,
+                address: '127.0.0.1:8082',
+                username: 'admin',
+                password: 'admin',
+              },
+            ],
+          };
           return {
             id: instance,
-            profile: {
-              settings: {},
-              accounts: [],
-              proxies: [],
-            },
+            profile: convertFromInstanceProto(instanceConfig),
             friendlyName: 'Demo',
             icon: 'pickaxe',
-            instancePermissions: [],
-            config: {
-              settings: [],
-              accounts: [
-                {
-                  type: MinecraftAccountProto_AccountTypeProto.OFFLINE,
-                  profileId: '607d30e7-115b-3838-914a-e4229c2b985d',
-                  lastKnownName: 'Pistonmaster',
-                  accountData: {
-                    oneofKind: 'offlineJavaData',
-                    offlineJavaData: {},
-                  },
-                },
-              ],
-              proxies: [
-                {
-                  type: ProxyProto_Type.HTTP,
-                  address: '127.0.0.1:8080',
-                  username: 'admin',
-                  password: 'admin',
-                },
-                {
-                  type: ProxyProto_Type.SOCKS4,
-                  address: '127.0.0.1:8081',
-                  username: 'admin',
-                },
-                {
-                  type: ProxyProto_Type.SOCKS5,
-                  address: '127.0.0.1:8082',
-                  username: 'admin',
-                  password: 'admin',
-                },
-              ],
-            },
-            instanceSettings: [],
+            instancePermissions: smartEntries(InstancePermission).map(
+              (permission) => ({
+                instancePermission: permission[1],
+                granted: true,
+              }),
+            ),
+            config: instanceConfig,
+            instanceSettings: demoInstanceSettings,
             state: InstanceState.RUNNING,
           };
         }
@@ -83,6 +91,7 @@ export const Route = createFileRoute('/_dashboard/instance/$instance')({
           },
         );
 
+        // console.log(JSON.stringify(result.response.instanceSettings))
         return {
           id: instance,
           profile: convertFromInstanceProto(result.response.config),
