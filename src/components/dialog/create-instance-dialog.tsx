@@ -30,6 +30,7 @@ import { useNavigate, useRouteContext } from '@tanstack/react-router';
 import { createContext, ReactNode, use, useState } from 'react';
 import { TransportContext } from '../providers/transport-context.tsx';
 import { PlusIcon, XIcon } from 'lucide-react';
+import { useAptabase } from '@aptabase/react';
 
 export const CreateInstanceContext = createContext<{
   openCreateInstance: () => void;
@@ -72,6 +73,7 @@ function CreateInstanceDialog({
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
+  const { trackEvent } = useAptabase();
   const { t } = useTranslation('common');
   const formSchema = z.object({
     friendlyName: z
@@ -94,6 +96,8 @@ function CreateInstanceDialog({
       if (transport === null) {
         return;
       }
+
+      void trackEvent('create_instance');
 
       const instanceService = new InstanceServiceClient(transport);
       const promise = instanceService

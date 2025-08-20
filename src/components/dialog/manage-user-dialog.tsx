@@ -40,6 +40,7 @@ import { getEnumEntries } from '@/lib/types.ts';
 import { useRouteContext } from '@tanstack/react-router';
 import { UserListResponse_User } from '@/generated/soulfire/user.ts';
 import { PencilIcon, PlusIcon, XIcon } from 'lucide-react';
+import { useAptabase } from '@aptabase/react';
 
 export type FormType = {
   username: string;
@@ -62,6 +63,7 @@ export function ManageUserDialog({
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
   const { t } = useTranslation('admin');
+  const { trackEvent } = useAptabase();
   const formSchema = z.object({
     username: z
       .string()
@@ -87,6 +89,10 @@ export function ManageUserDialog({
       if (transport === null) {
         return;
       }
+
+      void trackEvent(props.mode === 'add' ? 'create_user' : 'update_user', {
+        role: values.role,
+      });
 
       const userService = new UserServiceClient(transport);
       const promise =

@@ -133,6 +133,17 @@ const AppStartedEvent = memo(() => {
   return null;
 });
 
+const PageChangedEvent = memo(() => {
+  const { trackEvent } = useAptabase();
+  const location = useLocation();
+
+  useEffect(() => {
+    void trackEvent('page_changed', { path: location.pathname });
+  }, [location.pathname, trackEvent]);
+
+  return null;
+});
+
 function WindowThemeSyncer() {
   const { theme } = useTheme();
 
@@ -211,6 +222,7 @@ function RootLayout() {
         }}
       >
         <AppStartedEvent />
+        <PageChangedEvent />
         <QueryClientProvider client={queryClient}>
           <ThemeProvider
             attribute="class"

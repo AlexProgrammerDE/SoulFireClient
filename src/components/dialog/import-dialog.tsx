@@ -26,6 +26,7 @@ import { InstancePermission } from '@/generated/soulfire/common.ts';
 import { useTranslation } from 'react-i18next';
 import { useRouteContext } from '@tanstack/react-router';
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { useAptabase } from '@aptabase/react';
 
 export type TextInput = {
   defaultValue: string;
@@ -67,6 +68,7 @@ function UrlDialog(props: ImportDialogProps) {
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const [inputText, setInputText] = useState('');
+  const { trackEvent } = useAptabase();
 
   return (
     <Credenza open={true} onOpenChange={props.closer}>
@@ -96,6 +98,8 @@ function UrlDialog(props: ImportDialogProps) {
                     toast.error(t('dialog.import.url.form.url.empty'));
                     return;
                   }
+
+                  void trackEvent('import_from_url');
 
                   const download = async () => {
                     if (transport === null) {
@@ -147,6 +151,7 @@ function MainDialog(
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const systemInfo = use(SystemInfoContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { trackEvent } = useAptabase();
 
   return (
     <Credenza open={true} onOpenChange={props.closer}>
@@ -191,6 +196,7 @@ function MainDialog(
                 variant="secondary"
                 className="flex-auto"
                 onClick={() => {
+                  void trackEvent('import_from_file');
                   if (isTauri()) {
                     runAsync(async () => {
                       const downloadsDir = await downloadDir();
@@ -239,6 +245,7 @@ function MainDialog(
                 variant="secondary"
                 className="flex-auto"
                 onClick={() => {
+                  void trackEvent('import_from_clipboard');
                   runAsync(async () => {
                     if (isTauri()) {
                       props.listener((await clipboard.readText()) ?? '');
@@ -293,6 +300,7 @@ function TextInput(
 ) {
   const { t } = useTranslation('common');
   const [inputText, setInputText] = useState(props.textInput.defaultValue);
+  const { trackEvent } = useAptabase();
   return (
     <>
       <Separator orientation="horizontal" />
@@ -306,7 +314,10 @@ function TextInput(
         <Button
           variant="secondary"
           className="w-full"
-          onClick={() => props.listener(inputText)}
+          onClick={() => {
+            void trackEvent('import_from_text_input');
+            props.listener(inputText);
+          }}
         >
           <TextIcon />
           <span>{t('dialog.import.main.textarea.submit')}</span>

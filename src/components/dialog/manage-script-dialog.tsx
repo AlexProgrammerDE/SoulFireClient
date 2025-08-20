@@ -42,6 +42,8 @@ import { Checkbox } from '@/components/ui/checkbox.tsx';
 import { hasGlobalPermission } from '@/lib/utils.tsx';
 import { useRouteContext } from '@tanstack/react-router';
 import { PencilIcon, PlusIcon, XIcon } from 'lucide-react';
+import { useAptabase } from '@aptabase/react';
+import { getEnumKeyByValue } from '@/lib/types.ts';
 
 export type FormType = {
   scriptName: string;
@@ -68,6 +70,7 @@ export function ManageScriptDialog({
   });
   const { data: clientData } = useSuspenseQuery(clientDataQueryOptions);
   const { t } = useTranslation('common');
+  const { trackEvent } = useAptabase();
   const formSchema = z.object({
     scriptName: z
       .string()
@@ -92,6 +95,14 @@ export function ManageScriptDialog({
       if (transport === null) {
         return;
       }
+
+      void trackEvent(
+        props.mode === 'add' ? 'create_script' : 'update_script',
+        {
+          scope: getEnumKeyByValue(ScriptScope, scope),
+          elevatedPermissions: values.elevatedPermissions,
+        },
+      );
 
       const scriptService = new ScriptServiceClient(transport);
       const promise =

@@ -33,6 +33,7 @@ import {
 } from '@/components/data-table-selects.tsx';
 import i18n from '@/lib/i18n.ts';
 import { runAsync, setInstanceConfig } from '@/lib/utils.tsx';
+import { useAptabase } from '@aptabase/react';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance/proxies')({
   component: ProxySettings,
@@ -151,6 +152,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const [proxyTypeSelected, setProxyTypeSelected] =
     useState<UIProxyType | null>(null);
+  const { trackEvent } = useAptabase();
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (
       profileTransformer: (prev: ProfileRoot) => ProfileRoot,
@@ -238,22 +240,34 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           <DropdownMenuLabel>{t('proxy.import.proxyType')}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            onClick={() => setProxyTypeSelected(UIProxyType.HTTP)}
+            onClick={() => {
+              void trackEvent('import_proxies_http');
+              setProxyTypeSelected(UIProxyType.HTTP);
+            }}
           >
             {t('proxy.import.http')}
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => setProxyTypeSelected(UIProxyType.SOCKS4)}
+            onClick={() => {
+              void trackEvent('import_proxies_socks4');
+              setProxyTypeSelected(UIProxyType.SOCKS4);
+            }}
           >
             {t('proxy.import.socks4')}
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => setProxyTypeSelected(UIProxyType.SOCKS5)}
+            onClick={() => {
+              void trackEvent('import_proxies_socks5');
+              setProxyTypeSelected(UIProxyType.SOCKS5);
+            }}
           >
             {t('proxy.import.socks5')}
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() => setProxyTypeSelected(UIProxyType.URI)}
+            onClick={() => {
+              void trackEvent('import_proxies_uri');
+              setProxyTypeSelected(UIProxyType.URI);
+            }}
           >
             {t('proxy.import.uri')}
           </DropdownMenuItem>
@@ -266,6 +280,10 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           if (transport === null) {
             return;
           }
+
+          void trackEvent('check_proxies', {
+            count: props.table.getFilteredSelectedRowModel().rows.length,
+          });
 
           const selectedRows = props.table
             .getFilteredSelectedRowModel()
@@ -358,6 +376,9 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         variant="outline"
         disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
         onClick={() => {
+          void trackEvent('remove_proxies', {
+            count: props.table.getFilteredSelectedRowModel().rows.length,
+          });
           const selectedRows = props.table
             .getFilteredSelectedRowModel()
             .rows.map((r) => r.original);

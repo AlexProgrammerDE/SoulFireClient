@@ -36,6 +36,7 @@ import {
   SelectAllHeader,
   SelectRowHeader,
 } from '@/components/data-table-selects.tsx';
+import { useAptabase } from '@aptabase/react';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance/accounts')(
   {
@@ -92,6 +93,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const [accountTypeCredentialsSelected, setAccountTypeCredentialsSelected] =
     useState<AccountTypeCredentials | null>(null);
+  const { trackEvent } = useAptabase();
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (
       profileTransformer: (prev: ProfileRoot) => ProfileRoot,
@@ -334,36 +336,40 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            onClick={() =>
-              setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE)
-            }
+            onClick={() => {
+              void trackEvent('import_account_java_offline');
+              setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE);
+            }}
           >
             {t('account.import.offline')}
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() =>
+            onClick={() => {
+              void trackEvent('import_account_microsoft_java_credentials');
               setAccountTypeCredentialsSelected(
                 AccountTypeCredentials.MICROSOFT_JAVA_CREDENTIALS,
-              )
-            }
+              );
+            }}
           >
             {t('account.import.microsoftCredentials')}
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() =>
+            onClick={() => {
+              void trackEvent('import_account_microsoft_java_device_code');
               deviceCodeSelected(
                 AccountTypeDeviceCode.MICROSOFT_JAVA_DEVICE_CODE,
-              )
-            }
+              );
+            }}
           >
             {t('account.import.microsoftDeviceCode')}
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() =>
+            onClick={() => {
+              void trackEvent('import_account_microsoft_java_refresh_token');
               setAccountTypeCredentialsSelected(
                 AccountTypeCredentials.MICROSOFT_JAVA_REFRESH_TOKEN,
-              )
-            }
+              );
+            }}
           >
             {t('account.import.microsoftRefreshToken')}
           </DropdownMenuItem>
@@ -373,27 +379,30 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            onClick={() =>
-              setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE)
-            }
+            onClick={() => {
+              void trackEvent('import_account_bedrock_offline');
+              setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE);
+            }}
           >
             {t('account.import.offline')}
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() =>
+            onClick={() => {
+              void trackEvent('import_account_microsoft_bedrock_credentials');
               setAccountTypeCredentialsSelected(
                 AccountTypeCredentials.MICROSOFT_BEDROCK_CREDENTIALS,
-              )
-            }
+              );
+            }}
           >
             {t('account.import.microsoftCredentials')}
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() =>
+            onClick={() => {
+              void trackEvent('import_account_microsoft_bedrock_device_code');
               deviceCodeSelected(
                 AccountTypeDeviceCode.MICROSOFT_BEDROCK_DEVICE_CODE,
-              )
-            }
+              );
+            }}
           >
             {t('account.import.microsoftDeviceCode')}
           </DropdownMenuItem>
@@ -403,6 +412,9 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         variant="outline"
         disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
         onClick={() => {
+          void trackEvent('remove_accounts', {
+            count: props.table.getFilteredSelectedRowModel().rows.length,
+          });
           const selectedRows = props.table
             .getFilteredSelectedRowModel()
             .rows.map((r) => r.original);
