@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import * as React from 'react';
 import { DataTable } from '@/components/data-table/data-table.tsx';
-import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
+import { ColumnDef } from '@tanstack/react-table';
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
 import { createTransport } from '@/lib/web-rpc.ts';
@@ -13,26 +13,26 @@ import {
 } from '@/generated/soulfire/instance.ts';
 import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
 import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
-import { cn, timestampToDate } from '@/lib/utils.tsx';
-import i18n from '@/lib/i18n.ts';
-import { Button } from '@/components/ui/button.tsx';
-import { CalendarIcon } from 'lucide-react';
+import { timestampToDate } from '@/lib/utils.tsx';
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { Calendar } from '@/components/ui/calendar';
-import { format } from 'date-fns';
-import { useDateFnsLocale } from '@/hooks/use-date-fns-locale.ts';
+  PlayIcon,
+  SquareIcon,
+  SquareTerminalIcon,
+  TextIcon,
+  TimerIcon,
+  TimerOffIcon,
+} from 'lucide-react';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
-import { DataTableActionBar } from '@/components/data-table/data-table-action-bar.tsx';
 import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar.tsx';
 import { DataTableFilterMenu } from '@/components/data-table/data-table-filter-menu.tsx';
 import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
 import { useDataTable } from '@/hooks/use-data-table.ts';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
-import { DateRange } from 'react-day-picker';
+import {
+  getEnumEntries,
+  getEnumKeyByValue,
+  mapUnionToValue,
+} from '@/lib/types.ts';
 
 export const Route = createFileRoute(
   '/_dashboard/instance/$instance/audit-log',
@@ -113,16 +113,21 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
         {row.original.user!.username}
       </div>
     ),
+    meta: {
+      label: 'User',
+      placeholder: 'Search users...',
+      variant: 'text',
+      icon: TextIcon,
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'type',
     accessorFn: (row) =>
-      i18n.t(toI18nKey(row.type), {
-        data: row.data,
-      }),
+      getEnumKeyByValue(InstanceAuditLogResponse_AuditLogEntryType, row.type),
     accessorKey: 'type',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Action" />
+      <DataTableColumnHeader column={column} title="Type" />
     ),
     cell: ({ row }) => (
       <p>
@@ -134,6 +139,33 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
         />
       </p>
     ),
+    meta: {
+      label: 'Type',
+      variant: 'multiSelect',
+      options: getEnumEntries(InstanceAuditLogResponse_AuditLogEntryType).map(
+        (type) => {
+          return {
+            label: type.key,
+            value: type.key,
+            icon: mapUnionToValue(type.key, (key) => {
+              switch (key) {
+                case 'EXECUTE_COMMAND':
+                  return SquareTerminalIcon;
+                case 'START_ATTACK':
+                  return PlayIcon;
+                case 'PAUSE_ATTACK':
+                  return TimerIcon;
+                case 'RESUME_ATTACK':
+                  return TimerOffIcon;
+                case 'STOP_ATTACK':
+                  return SquareIcon;
+              }
+            }),
+          };
+        },
+      ),
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'timestamp',
@@ -147,85 +179,14 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     ),
     enableGlobalFilter: false,
     sortingFn: 'datetime',
+    meta: {
+      label: 'Timestamp',
+      placeholder: 'Search timestamps...',
+      variant: 'dateRange',
+    },
+    enableColumnFilter: true,
   },
 ];
-
-function getPreviousMonthDate(date: Date | undefined): Date | undefined {
-  if (!date) {
-    return undefined;
-  }
-
-  const prevMonthDate = new Date(date);
-  prevMonthDate.setMonth(prevMonthDate.getMonth() - 1);
-  return prevMonthDate;
-}
-
-function ExtraHeader(props: {
-  table: ReactTable<InstanceAuditLogResponse_AuditLogEntry>;
-}) {
-  const { t } = useTranslation('common');
-  const dateFnsLocale = useDateFnsLocale();
-  const timestampColumn = props.table.getColumn('timestamp')!;
-  const range = timestampColumn.getFilterValue() as DateRange | undefined;
-
-  return (
-    <>
-      <div className="grid gap-2">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              id="date"
-              variant={'outline'}
-              className={cn(
-                'w-[300px] justify-start text-left font-normal',
-                !range && 'text-muted-foreground',
-              )}
-            >
-              <CalendarIcon />
-              {range?.from ? (
-                range.to ? (
-                  <>
-                    {format(range.from, 'PP', {
-                      locale: dateFnsLocale,
-                    })}{' '}
-                    -{' '}
-                    {format(range.to, 'PP', {
-                      locale: dateFnsLocale,
-                    })}
-                  </>
-                ) : (
-                  <>
-                    {format(range.from, 'PP', {
-                      locale: dateFnsLocale,
-                    })}
-                  </>
-                )
-              ) : (
-                <span>{t('pickADate')}</span>
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              initialFocus
-              locale={dateFnsLocale}
-              mode="range"
-              defaultMonth={getPreviousMonthDate(new Date())}
-              selected={range}
-              onSelect={timestampColumn.setFilterValue}
-              numberOfMonths={2}
-              fromDate={props.table
-                .getCoreRowModel()
-                .rows.map((row) => timestampToDate(row.original.timestamp!))
-                .reduce((a, b) => (a < b ? a : b), new Date())}
-              toDate={new Date()}
-            />
-          </PopoverContent>
-        </Popover>
-      </div>
-    </>
-  );
-}
 
 function AuditLog() {
   const { t } = useTranslation('common');
@@ -257,14 +218,7 @@ function Content() {
 
   return (
     <div className="container flex h-full w-full grow flex-col gap-4">
-      <DataTable
-        table={table}
-        actionBar={
-          <DataTableActionBar table={table}>
-            <ExtraHeader table={table} />
-          </DataTableActionBar>
-        }
-      >
+      <DataTable table={table}>
         <DataTableAdvancedToolbar table={table}>
           <DataTableFilterMenu table={table} />
           <DataTableSortList table={table} />

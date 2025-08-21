@@ -3,14 +3,21 @@ import * as React from 'react';
 import { use, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { ColumnDef, Row, Table as ReactTable } from '@tanstack/react-table';
-import { getEnumKeyByValue } from '@/lib/types.ts';
+import {
+  getEnumEntries,
+  getEnumKeyByValue,
+  mapUnionToValue,
+} from '@/lib/types.ts';
 import { UserRole } from '@/generated/soulfire/common.ts';
 import { toast } from 'sonner';
 import {
   LogOutIcon,
   PencilIcon,
   PlusIcon,
+  ShieldUserIcon,
+  TextIcon,
   TrashIcon,
+  UserIcon,
   VenetianMaskIcon,
 } from 'lucide-react';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
@@ -71,6 +78,13 @@ const columns: ColumnDef<UserListResponse_User>[] = [
         <CopyInfoButton value={row.original.id} />
       </div>
     ),
+    meta: {
+      label: 'Username',
+      placeholder: 'Search usernames...',
+      variant: 'text',
+      icon: TextIcon,
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'email',
@@ -78,6 +92,13 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Email" />
     ),
+    meta: {
+      label: 'Email',
+      placeholder: 'Search emails...',
+      variant: 'text',
+      icon: TextIcon,
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'role',
@@ -86,6 +107,24 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Role" />
     ),
+    meta: {
+      label: 'Role',
+      variant: 'multiSelect',
+      options: getEnumEntries(UserRole).map((type) => {
+        return {
+          label: type.key,
+          value: type.key,
+          icon: mapUnionToValue(type.key, (key) => {
+            switch (key) {
+              case 'USER':
+                return UserIcon;
+              case 'ADMIN':
+                return ShieldUserIcon;
+            }
+          }),
+        };
+      }),
+    },
   },
   {
     id: 'createdAt',
@@ -99,6 +138,11 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     ),
     enableGlobalFilter: false,
     sortingFn: 'datetime',
+    meta: {
+      label: 'Created at',
+      placeholder: 'Search created ats...',
+      variant: 'dateRange',
+    },
   },
   {
     id: 'minIssuedAt',
@@ -112,6 +156,11 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     ),
     enableGlobalFilter: false,
     sortingFn: 'datetime',
+    meta: {
+      label: 'Min issued at',
+      placeholder: 'Search min issued ats...',
+      variant: 'dateRange',
+    },
   },
   {
     id: 'actions',

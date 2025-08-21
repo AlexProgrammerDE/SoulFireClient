@@ -11,13 +11,24 @@ import {
 } from '@/components/data-table/data-table-selects.tsx';
 import { Trans, useTranslation } from 'react-i18next';
 import { CopyInfoButton } from '@/components/info-buttons.tsx';
-import { getEnumKeyByValue } from '@/lib/types.ts';
+import {
+  getEnumEntries,
+  getEnumKeyByValue,
+  mapUnionToValue,
+} from '@/lib/types.ts';
 import { timestampToDate } from '@/lib/utils.tsx';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
 import * as React from 'react';
 import { createContext, use, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
-import { PencilIcon, PlusIcon, RotateCcwIcon, TrashIcon } from 'lucide-react';
+import {
+  PencilIcon,
+  PlusIcon,
+  RotateCcwIcon,
+  SquareCodeIcon,
+  TextIcon,
+  TrashIcon,
+} from 'lucide-react';
 import { ManageScriptDialog } from '@/components/dialog/manage-script-dialog.tsx';
 import { createTransport } from '@/lib/web-rpc.ts';
 import { ScriptServiceClient } from '@/generated/soulfire/script.client.ts';
@@ -62,6 +73,13 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
         <CopyInfoButton value={row.original.id} />
       </div>
     ),
+    meta: {
+      label: 'Name',
+      placeholder: 'Search names...',
+      variant: 'text',
+      icon: TextIcon,
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'scriptScope',
@@ -84,6 +102,13 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
         <Trans i18nKey="common:scripts.globalScript" />
       );
     },
+    meta: {
+      label: 'Scope',
+      placeholder: 'Search scopes...',
+      variant: 'text',
+      icon: TextIcon,
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'language',
@@ -92,6 +117,25 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Language" />
     ),
+    meta: {
+      label: 'Language',
+      variant: 'multiSelect',
+      options: getEnumEntries(ScriptLanguage).map((type) => {
+        return {
+          label: type.key,
+          value: type.key,
+          icon: mapUnionToValue(type.key, (key) => {
+            switch (key) {
+              case 'JAVASCRIPT':
+              case 'TYPESCRIPT':
+              case 'PYTHON':
+                return SquareCodeIcon;
+            }
+          }),
+        };
+      }),
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'elevatedPermissions',
@@ -99,6 +143,12 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Elevated permissions" />
     ),
+    meta: {
+      label: 'Elevated permissions',
+      placeholder: 'Search elevated permissions...',
+      variant: 'boolean',
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'createdAt',
@@ -112,6 +162,12 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     ),
     enableGlobalFilter: false,
     sortingFn: 'datetime',
+    meta: {
+      label: 'Created at',
+      placeholder: 'Search created ats...',
+      variant: 'dateRange',
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'actions',

@@ -57,6 +57,13 @@ export function getEnumEntries<E extends object>(
     }));
 }
 
+export function mapUnionToValue<U, V>(
+  union: U,
+  map: (u: U) => Exclude<V, void>,
+): V {
+  return map(union);
+}
+
 export function translateInstanceState(
   i18n: i18n,
   state: InstanceState,

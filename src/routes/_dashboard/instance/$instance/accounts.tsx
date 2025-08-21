@@ -4,13 +4,27 @@ import { use, useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { DataTable } from '@/components/data-table/data-table.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
-import { getEnumKeyByValue, ProfileAccount, ProfileRoot } from '@/lib/types.ts';
+import {
+  getEnumEntries,
+  getEnumKeyByValue,
+  mapUnionToValue,
+  ProfileAccount,
+  ProfileRoot,
+} from '@/lib/types.ts';
 import {
   AccountTypeCredentials,
   AccountTypeDeviceCode,
   MinecraftAccountProto_AccountTypeProto,
 } from '@/generated/soulfire/common.ts';
-import { PlusIcon, TrashIcon } from 'lucide-react';
+import {
+  KeyRoundIcon,
+  MonitorSmartphoneIcon,
+  PlusIcon,
+  RotateCcwKeyIcon,
+  TextIcon,
+  TrashIcon,
+  WifiOffIcon,
+} from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -78,6 +92,35 @@ const columns: ColumnDef<ProfileAccount>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Type" />
     ),
+    meta: {
+      label: 'Type',
+      variant: 'multiSelect',
+      options: getEnumEntries(MinecraftAccountProto_AccountTypeProto).map(
+        (type) => {
+          return {
+            label: type.key,
+            value: type.key,
+            icon: mapUnionToValue(type.key, (key) => {
+              switch (key) {
+                case 'OFFLINE':
+                  return WifiOffIcon;
+                case 'MICROSOFT_JAVA_CREDENTIALS':
+                  return KeyRoundIcon;
+                case 'MICROSOFT_JAVA_DEVICE_CODE':
+                  return MonitorSmartphoneIcon;
+                case 'MICROSOFT_JAVA_REFRESH_TOKEN':
+                  return RotateCcwKeyIcon;
+                case 'MICROSOFT_BEDROCK_CREDENTIALS':
+                  return KeyRoundIcon;
+                case 'MICROSOFT_BEDROCK_DEVICE_CODE':
+                  return MonitorSmartphoneIcon;
+              }
+            }),
+          };
+        },
+      ),
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'profileId',
@@ -85,6 +128,13 @@ const columns: ColumnDef<ProfileAccount>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Profile ID" />
     ),
+    meta: {
+      label: 'Profile ID',
+      placeholder: 'Search profile IDs...',
+      variant: 'text',
+      icon: TextIcon,
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'lastKnownName',
@@ -92,6 +142,13 @@ const columns: ColumnDef<ProfileAccount>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Last known name" />
     ),
+    meta: {
+      label: 'Last known name',
+      placeholder: 'Search last known names...',
+      variant: 'text',
+      icon: TextIcon,
+    },
+    enableColumnFilter: true,
   },
 ];
 

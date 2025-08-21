@@ -4,7 +4,13 @@ import { use, useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
-import { getEnumKeyByValue, ProfileProxy, ProfileRoot } from '@/lib/types.ts';
+import {
+  getEnumEntries,
+  getEnumKeyByValue,
+  mapUnionToValue,
+  ProfileProxy,
+  ProfileRoot,
+} from '@/lib/types.ts';
 import { ProxyProto_Type } from '@/generated/soulfire/common.ts';
 import { ExternalToast, toast } from 'sonner';
 import {
@@ -15,7 +21,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu.tsx';
-import { PlusIcon, TrashIcon, Wand2Icon } from 'lucide-react';
+import {
+  Dice4Icon,
+  Dice5Icon,
+  GlobeIcon,
+  PlusIcon,
+  TextIcon,
+  TrashIcon,
+  Wand2Icon,
+} from 'lucide-react';
 import ImportDialog from '@/components/dialog/import-dialog.tsx';
 import URI from 'urijs';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
@@ -132,6 +146,27 @@ const columns: ColumnDef<ProfileProxy>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Type" />
     ),
+    meta: {
+      label: 'Type',
+      variant: 'multiSelect',
+      options: getEnumEntries(ProxyProto_Type).map((type) => {
+        return {
+          label: type.key,
+          value: type.key,
+          icon: mapUnionToValue(type.key, (key) => {
+            switch (key) {
+              case 'HTTP':
+                return GlobeIcon;
+              case 'SOCKS4':
+                return Dice4Icon;
+              case 'SOCKS5':
+                return Dice5Icon;
+            }
+          }),
+        };
+      }),
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'address',
@@ -139,6 +174,13 @@ const columns: ColumnDef<ProfileProxy>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Address" />
     ),
+    meta: {
+      label: 'Address',
+      placeholder: 'Search addresses...',
+      variant: 'text',
+      icon: TextIcon,
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'username',
@@ -146,6 +188,13 @@ const columns: ColumnDef<ProfileProxy>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Username" />
     ),
+    meta: {
+      label: 'Username',
+      placeholder: 'Search usernames...',
+      variant: 'text',
+      icon: TextIcon,
+    },
+    enableColumnFilter: true,
   },
   {
     id: 'password',
@@ -153,6 +202,13 @@ const columns: ColumnDef<ProfileProxy>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Password" />
     ),
+    meta: {
+      label: 'Password',
+      placeholder: 'Search passwords...',
+      variant: 'text',
+      icon: TextIcon,
+    },
+    enableColumnFilter: true,
   },
 ];
 
