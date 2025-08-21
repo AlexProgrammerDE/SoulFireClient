@@ -50,10 +50,21 @@ import {
 import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
 import { DataTableToolbar } from '@/components/data-table/data-table-toolbar.tsx';
+import { Badge } from '@/components/ui/badge.tsx';
 
 export const Route = createFileRoute('/_dashboard/user/admin/users')({
   component: Users,
 });
+
+const roleToIcon = (type: keyof typeof UserRole) =>
+  mapUnionToValue(type, (key) => {
+    switch (key) {
+      case 'USER':
+        return UserIcon;
+      case 'ADMIN':
+        return ShieldUserIcon;
+    }
+  });
 
 const columns: ColumnDef<UserListResponse_User>[] = [
   {
@@ -110,6 +121,17 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Role" />
     ),
+    cell: ({ cell }) => {
+      const type = cell.getValue<keyof typeof UserRole>();
+      const Icon = roleToIcon(type);
+
+      return (
+        <Badge variant="outline" className="capitalize">
+          <Icon />
+          {type}
+        </Badge>
+      );
+    },
     meta: {
       label: 'Role',
       variant: 'multiSelect',
@@ -117,14 +139,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
         return {
           label: type.key,
           value: type.key,
-          icon: mapUnionToValue(type.key, (key) => {
-            switch (key) {
-              case 'USER':
-                return UserIcon;
-              case 'ADMIN':
-                return ShieldUserIcon;
-            }
-          }),
+          icon: roleToIcon(type.key),
         };
       }),
     },

@@ -61,6 +61,7 @@ import { DataTableSortList } from '@/components/data-table/data-table-sort-list.
 import { useDataTable } from '@/hooks/use-data-table.ts';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
 import { DataTableToolbar } from '@/components/data-table/data-table-toolbar.tsx';
+import { Badge } from '@/components/ui/badge.tsx';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance/accounts')(
   {
@@ -77,6 +78,26 @@ function addAndDeduplicate(
     .filter((a) => !newAccountsSet.has(a.profileId))
     .concat(newAccounts);
 }
+
+const accountTypeToIcon = (
+  type: keyof typeof MinecraftAccountProto_AccountTypeProto,
+) =>
+  mapUnionToValue(type, (key) => {
+    switch (key) {
+      case 'OFFLINE':
+        return WifiOffIcon;
+      case 'MICROSOFT_JAVA_CREDENTIALS':
+        return KeyRoundIcon;
+      case 'MICROSOFT_JAVA_DEVICE_CODE':
+        return MonitorSmartphoneIcon;
+      case 'MICROSOFT_JAVA_REFRESH_TOKEN':
+        return RotateCcwKeyIcon;
+      case 'MICROSOFT_BEDROCK_CREDENTIALS':
+        return KeyRoundIcon;
+      case 'MICROSOFT_BEDROCK_DEVICE_CODE':
+        return MonitorSmartphoneIcon;
+    }
+  });
 
 const columns: ColumnDef<ProfileAccount>[] = [
   {
@@ -95,6 +116,18 @@ const columns: ColumnDef<ProfileAccount>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Type" />
     ),
+    cell: ({ cell }) => {
+      const type =
+        cell.getValue<keyof typeof MinecraftAccountProto_AccountTypeProto>();
+      const Icon = accountTypeToIcon(type);
+
+      return (
+        <Badge variant="outline" className="capitalize">
+          <Icon />
+          {type}
+        </Badge>
+      );
+    },
     meta: {
       label: 'Type',
       variant: 'multiSelect',
@@ -103,22 +136,7 @@ const columns: ColumnDef<ProfileAccount>[] = [
           return {
             label: type.key,
             value: type.key,
-            icon: mapUnionToValue(type.key, (key) => {
-              switch (key) {
-                case 'OFFLINE':
-                  return WifiOffIcon;
-                case 'MICROSOFT_JAVA_CREDENTIALS':
-                  return KeyRoundIcon;
-                case 'MICROSOFT_JAVA_DEVICE_CODE':
-                  return MonitorSmartphoneIcon;
-                case 'MICROSOFT_JAVA_REFRESH_TOKEN':
-                  return RotateCcwKeyIcon;
-                case 'MICROSOFT_BEDROCK_CREDENTIALS':
-                  return KeyRoundIcon;
-                case 'MICROSOFT_BEDROCK_DEVICE_CODE':
-                  return MonitorSmartphoneIcon;
-              }
-            }),
+            icon: accountTypeToIcon(type.key),
           };
         },
       ),

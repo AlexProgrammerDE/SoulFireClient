@@ -58,6 +58,7 @@ import { DataTableSortList } from '@/components/data-table/data-table-sort-list.
 import { useDataTable } from '@/hooks/use-data-table.ts';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
 import { DataTableToolbar } from '@/components/data-table/data-table-toolbar.tsx';
+import { Badge } from '@/components/ui/badge.tsx';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance/proxies')({
   component: ProxySettings,
@@ -139,6 +140,18 @@ function getProxyKey(proxy: ProfileProxy): string {
   }`;
 }
 
+const proxyTypeToIcon = (type: keyof typeof ProxyProto_Type) =>
+  mapUnionToValue(type, (key) => {
+    switch (key) {
+      case 'HTTP':
+        return GlobeIcon;
+      case 'SOCKS4':
+        return Dice4Icon;
+      case 'SOCKS5':
+        return Dice5Icon;
+    }
+  });
+
 const columns: ColumnDef<ProfileProxy>[] = [
   {
     id: 'select',
@@ -155,6 +168,17 @@ const columns: ColumnDef<ProfileProxy>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Type" />
     ),
+    cell: ({ cell }) => {
+      const type = cell.getValue<keyof typeof ProxyProto_Type>();
+      const Icon = proxyTypeToIcon(type);
+
+      return (
+        <Badge variant="outline" className="capitalize">
+          <Icon />
+          {type}
+        </Badge>
+      );
+    },
     meta: {
       label: 'Type',
       variant: 'multiSelect',
@@ -162,16 +186,7 @@ const columns: ColumnDef<ProfileProxy>[] = [
         return {
           label: type.key,
           value: type.key,
-          icon: mapUnionToValue(type.key, (key) => {
-            switch (key) {
-              case 'HTTP':
-                return GlobeIcon;
-              case 'SOCKS4':
-                return Dice4Icon;
-              case 'SOCKS5':
-                return Dice5Icon;
-            }
-          }),
+          icon: proxyTypeToIcon(type.key),
         };
       }),
     },

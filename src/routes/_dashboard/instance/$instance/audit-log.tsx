@@ -32,6 +32,7 @@ import {
   mapUnionToValue,
 } from '@/lib/types.ts';
 import { DataTableToolbar } from '@/components/data-table/data-table-toolbar.tsx';
+import { Badge } from '@/components/ui/badge.tsx';
 
 export const Route = createFileRoute(
   '/_dashboard/instance/$instance/audit-log',
@@ -94,6 +95,24 @@ function toI18nKey(type: InstanceAuditLogResponse_AuditLogEntryType) {
   }
 }
 
+const logTypeToIcon = (
+  type: keyof typeof InstanceAuditLogResponse_AuditLogEntryType,
+) =>
+  mapUnionToValue(type, (key) => {
+    switch (key) {
+      case 'EXECUTE_COMMAND':
+        return SquareTerminalIcon;
+      case 'START_ATTACK':
+        return PlayIcon;
+      case 'PAUSE_ATTACK':
+        return TimerIcon;
+      case 'RESUME_ATTACK':
+        return TimerOffIcon;
+      case 'STOP_ATTACK':
+        return SquareIcon;
+    }
+  });
+
 const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
   {
     id: 'user',
@@ -128,16 +147,26 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Type" />
     ),
-    cell: ({ row }) => (
-      <p>
-        <Trans
-          i18nKey={toI18nKey(row.original.type)}
-          values={{
-            data: row.original.data,
-          }}
-        />
-      </p>
-    ),
+    cell: ({ row }) => {
+      const Icon = logTypeToIcon(
+        getEnumKeyByValue(
+          InstanceAuditLogResponse_AuditLogEntryType,
+          row.original.type,
+        ),
+      );
+
+      return (
+        <Badge variant="outline" className="capitalize">
+          <Icon />
+          <Trans
+            i18nKey={toI18nKey(row.original.type)}
+            values={{
+              data: row.original.data,
+            }}
+          />
+        </Badge>
+      );
+    },
     meta: {
       label: 'Type',
       variant: 'multiSelect',
@@ -146,20 +175,7 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
           return {
             label: type.key,
             value: type.key,
-            icon: mapUnionToValue(type.key, (key) => {
-              switch (key) {
-                case 'EXECUTE_COMMAND':
-                  return SquareTerminalIcon;
-                case 'START_ATTACK':
-                  return PlayIcon;
-                case 'PAUSE_ATTACK':
-                  return TimerIcon;
-                case 'RESUME_ATTACK':
-                  return TimerOffIcon;
-                case 'STOP_ATTACK':
-                  return SquareIcon;
-              }
-            }),
+            icon: logTypeToIcon(type.key),
           };
         },
       ),

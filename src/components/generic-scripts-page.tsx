@@ -22,6 +22,8 @@ import * as React from 'react';
 import { createContext, use, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import {
+  GlobeIcon,
+  Grid2x2Icon,
   PencilIcon,
   PlusIcon,
   RotateCcwIcon,
@@ -46,6 +48,7 @@ import {
 } from '@/components/data-table/data-table-action-bar.tsx';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
 import { DataTableToolbar } from '@/components/data-table/data-table-toolbar.tsx';
+import { Badge } from '@/components/ui/badge.tsx';
 
 export type ScriptsProps = {
   queryKey: QueryKey;
@@ -54,6 +57,16 @@ export type ScriptsProps = {
 };
 
 const ScriptsContext = createContext<ScriptsProps>(null as never);
+
+const scriptLanguageToIcon = (type: keyof typeof ScriptLanguage) =>
+  mapUnionToValue(type, (key) => {
+    switch (key) {
+      case 'JAVASCRIPT':
+      case 'TYPESCRIPT':
+      case 'PYTHON':
+        return SquareCodeIcon;
+    }
+  });
 
 const columns: ColumnDef<ScriptListResponse_Script>[] = [
   {
@@ -94,22 +107,36 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     cell: ({ row }) => {
       return row.original.scriptScope?.scope.oneofKind === 'instanceScript' ? (
         <div className="flex flex-row items-center gap-2">
-          <span className="max-w-64 truncate">
+          <Badge variant="outline" className="capitalize">
+            <Grid2x2Icon />
             <Trans i18nKey="common:scripts.instanceScript" />
-          </span>
+          </Badge>
           <CopyInfoButton
             value={row.original.scriptScope?.scope.instanceScript.id}
           />
         </div>
       ) : (
-        <Trans i18nKey="common:scripts.globalScript" />
+        <Badge variant="outline" className="capitalize">
+          <GlobeIcon />
+          <Trans i18nKey="common:scripts.globalScript" />
+        </Badge>
       );
     },
     meta: {
       label: 'Scope',
-      placeholder: 'Search scopes...',
-      variant: 'text',
-      icon: TextIcon,
+      variant: 'multiSelect',
+      options: [
+        {
+          label: 'Global',
+          value: 'globalScript',
+          icon: GlobeIcon,
+        },
+        {
+          label: 'Instance',
+          value: 'instanceScript',
+          icon: Grid2x2Icon,
+        },
+      ],
     },
     enableColumnFilter: true,
   },
@@ -120,6 +147,17 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Language" />
     ),
+    cell: ({ cell }) => {
+      const type = cell.getValue<keyof typeof ScriptLanguage>();
+      const Icon = scriptLanguageToIcon(type);
+
+      return (
+        <Badge variant="outline" className="capitalize">
+          <Icon />
+          {type}
+        </Badge>
+      );
+    },
     meta: {
       label: 'Language',
       variant: 'multiSelect',
@@ -127,14 +165,7 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
         return {
           label: type.key,
           value: type.key,
-          icon: mapUnionToValue(type.key, (key) => {
-            switch (key) {
-              case 'JAVASCRIPT':
-              case 'TYPESCRIPT':
-              case 'PYTHON':
-                return SquareCodeIcon;
-            }
-          }),
+          icon: scriptLanguageToIcon(type.key),
         };
       }),
     },
