@@ -134,6 +134,12 @@ function parseURIProxy(line: string): ProfileProxy | null {
   };
 }
 
+function getProxyKey(proxy: ProfileProxy): string {
+  return `${proxy.type}-${proxy.address}-${proxy.username ?? ''}-${
+    proxy.password ?? ''
+  }`;
+}
+
 const columns: ColumnDef<ProfileProxy>[] = [
   {
     id: 'select',
@@ -570,8 +576,7 @@ function Content() {
   const { table } = useDataTable({
     data: profile.proxies,
     columns,
-    // TODO: Enforce uniqueness
-    // getRowId: (row) => row.id,
+    getRowId: (row) => getProxyKey(row),
   });
 
   return (

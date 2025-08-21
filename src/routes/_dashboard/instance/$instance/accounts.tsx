@@ -609,8 +609,7 @@ function Content() {
   const { table } = useDataTable({
     data: profile.accounts,
     columns,
-    // TODO: Enforce uniqueness
-    // getRowId: (row) => row.id,
+    getRowId: (row) => row.profileId,
   });
 
   return (
