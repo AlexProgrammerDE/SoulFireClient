@@ -49,7 +49,11 @@ import {
   SelectRowHeader,
 } from '@/components/data-table/data-table-selects.tsx';
 import { DataTable } from '@/components/data-table/data-table.tsx';
-import { DataTableActionBar } from '@/components/data-table/data-table-action-bar.tsx';
+import {
+  DataTableActionBar,
+  DataTableActionBarAction,
+  DataTableActionBarSelection,
+} from '@/components/data-table/data-table-action-bar.tsx';
 import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar.tsx';
 import { DataTableFilterMenu } from '@/components/data-table/data-table-filter-menu.tsx';
 import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
@@ -212,7 +216,7 @@ const columns: ColumnDef<ProfileProxy>[] = [
   },
 ];
 
-function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
+function AddButton() {
   const { t } = useTranslation('instance');
   const queryClient = useQueryClient();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
@@ -304,7 +308,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline">
+          <Button variant="outline" size="sm">
             <PlusIcon />
           </Button>
         </DropdownMenuTrigger>
@@ -345,9 +349,65 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <Button
-        variant="outline"
-        disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
+      {proxyTypeSelected !== null && (
+        <ImportDialog
+          title={t('proxy.import.dialog.title', {
+            type: getEnumKeyByValue(UIProxyType, proxyTypeSelected),
+          })}
+          description={t('proxy.import.dialog.description')}
+          closer={() => setProxyTypeSelected(null)}
+          listener={textSelectedCallback}
+          filters={[
+            {
+              name: 'Text File',
+              mimeType: 'text/plain',
+              extensions: ['txt'],
+            },
+          ]}
+          allowMultiple={true}
+          textInput={{
+            defaultValue: '',
+          }}
+        />
+      )}
+    </>
+  );
+}
+
+function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
+  const { t } = useTranslation('instance');
+  const queryClient = useQueryClient();
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
+  const transport = use(TransportContext);
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const { trackEvent } = useAptabase();
+  const { mutateAsync: setProfileMutation } = useMutation({
+    mutationFn: async (
+      profileTransformer: (prev: ProfileRoot) => ProfileRoot,
+    ) => {
+      await setInstanceConfig(
+        profileTransformer(profile),
+        instanceInfo,
+        transport,
+        queryClient,
+        instanceInfoQueryOptions.queryKey,
+      );
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: instanceInfoQueryOptions.queryKey,
+      });
+    },
+  });
+
+  return (
+    <>
+      <DataTableActionBarAction
+        tooltip="Check selected proxies"
         onClick={() => {
           if (transport === null) {
             return;
@@ -443,10 +503,9 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         }}
       >
         <Wand2Icon />
-      </Button>
-      <Button
-        variant="outline"
-        disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
+      </DataTableActionBarAction>
+      <DataTableActionBarAction
+        tooltip="Remove selected proxies"
         onClick={() => {
           void trackEvent('remove_proxies', {
             count: props.table.getFilteredSelectedRowModel().rows.length,
@@ -476,28 +535,8 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         }}
       >
         <TrashIcon />
-      </Button>
-      {proxyTypeSelected !== null && (
-        <ImportDialog
-          title={t('proxy.import.dialog.title', {
-            type: getEnumKeyByValue(UIProxyType, proxyTypeSelected),
-          })}
-          description={t('proxy.import.dialog.description')}
-          closer={() => setProxyTypeSelected(null)}
-          listener={textSelectedCallback}
-          filters={[
-            {
-              name: 'Text File',
-              mimeType: 'text/plain',
-              extensions: ['txt'],
-            },
-          ]}
-          allowMultiple={true}
-          textInput={{
-            defaultValue: '',
-          }}
-        />
-      )}
+      </DataTableActionBarAction>
+      <DataTableActionBarSelection table={props.table} />
     </>
   );
 }
@@ -556,6 +595,7 @@ function Content() {
         <DataTableAdvancedToolbar table={table}>
           <DataTableFilterMenu table={table} />
           <DataTableSortList table={table} />
+          <AddButton />
         </DataTableAdvancedToolbar>
       </DataTable>
     </div>

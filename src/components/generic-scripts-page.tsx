@@ -39,7 +39,11 @@ import { TransportContext } from '@/components/providers/transport-context.tsx';
 import { DataTable } from '@/components/data-table/data-table.tsx';
 import { useDataTable } from '@/hooks/use-data-table.ts';
 import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
-import { DataTableActionBar } from '@/components/data-table/data-table-action-bar.tsx';
+import {
+  DataTableActionBar,
+  DataTableActionBarAction,
+  DataTableActionBarSelection,
+} from '@/components/data-table/data-table-action-bar.tsx';
 import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar.tsx';
 import { DataTableFilterMenu } from '@/components/data-table/data-table-filter-menu.tsx';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
@@ -251,12 +255,31 @@ function RestartScriptButton(props: { row: Row<ScriptListResponse_Script> }) {
   );
 }
 
+function AddButton() {
+  const [createOpen, setCreateOpen] = useState(false);
+  const { queryKey, scope } = use(ScriptsContext);
+
+  return (
+    <>
+      <Button variant="outline" size="sm" onClick={() => setCreateOpen(true)}>
+        <PlusIcon />
+      </Button>
+      <ManageScriptDialog
+        mode="add"
+        open={createOpen}
+        setOpen={setCreateOpen}
+        scope={scope}
+        scriptsQueryKey={queryKey}
+      />
+    </>
+  );
+}
+
 function ExtraHeader(props: { table: ReactTable<ScriptListResponse_Script> }) {
   const { t } = useTranslation('common');
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
-  const [createOpen, setCreateOpen] = useState(false);
-  const { queryKey, scope } = use(ScriptsContext);
+  const { queryKey } = use(ScriptsContext);
   const { mutateAsync: deleteScriptsMutation } = useMutation({
     mutationFn: async (user: ScriptListResponse_Script[]) => {
       if (transport === null) {
@@ -279,12 +302,8 @@ function ExtraHeader(props: { table: ReactTable<ScriptListResponse_Script> }) {
 
   return (
     <>
-      <Button variant="outline" onClick={() => setCreateOpen(true)}>
-        <PlusIcon />
-      </Button>
-      <Button
-        variant="outline"
-        disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
+      <DataTableActionBarAction
+        tooltip="Remove selected scripts"
         onClick={() => {
           const selectedRows = props.table
             .getFilteredSelectedRowModel()
@@ -301,14 +320,8 @@ function ExtraHeader(props: { table: ReactTable<ScriptListResponse_Script> }) {
         }}
       >
         <TrashIcon />
-      </Button>
-      <ManageScriptDialog
-        mode="add"
-        open={createOpen}
-        setOpen={setCreateOpen}
-        scope={scope}
-        scriptsQueryKey={queryKey}
-      />
+      </DataTableActionBarAction>
+      <DataTableActionBarSelection table={props.table} />
     </>
   );
 }
@@ -335,6 +348,7 @@ export function GenericScripts(props: ScriptsProps) {
           <DataTableAdvancedToolbar table={table}>
             <DataTableFilterMenu table={table} />
             <DataTableSortList table={table} />
+            <AddButton />
           </DataTableAdvancedToolbar>
         </DataTable>
       </ScriptsContext>

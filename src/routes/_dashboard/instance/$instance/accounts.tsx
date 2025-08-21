@@ -52,7 +52,11 @@ import {
   SelectRowHeader,
 } from '@/components/data-table/data-table-selects.tsx';
 import { useAptabase } from '@aptabase/react';
-import { DataTableActionBar } from '@/components/data-table/data-table-action-bar.tsx';
+import {
+  DataTableActionBar,
+  DataTableActionBarAction,
+  DataTableActionBarSelection,
+} from '@/components/data-table/data-table-action-bar.tsx';
 import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar.tsx';
 import { DataTableFilterMenu } from '@/components/data-table/data-table-filter-menu.tsx';
 import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
@@ -152,7 +156,7 @@ const columns: ColumnDef<ProfileAccount>[] = [
   },
 ];
 
-function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
+function AddButton() {
   const { t } = useTranslation('instance');
   const queryClient = useQueryClient();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
@@ -162,8 +166,6 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   });
   const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const [accountTypeCredentialsSelected, setAccountTypeCredentialsSelected] =
-    useState<AccountTypeCredentials | null>(null);
   const { trackEvent } = useAptabase();
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (
@@ -183,6 +185,8 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       });
     },
   });
+  const [accountTypeCredentialsSelected, setAccountTypeCredentialsSelected] =
+    useState<AccountTypeCredentials | null>(null);
 
   const textSelectedCallback = useCallback(
     (text: string) => {
@@ -397,7 +401,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline">
+          <Button variant="outline" size="sm">
             <PlusIcon />
           </Button>
         </DropdownMenuTrigger>
@@ -479,9 +483,68 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <Button
-        variant="outline"
-        disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
+      {accountTypeCredentialsSelected !== null && (
+        <ImportDialog
+          title={t('account.import.dialog.title', {
+            type: getEnumKeyByValue(
+              AccountTypeCredentials,
+              accountTypeCredentialsSelected,
+            ),
+          })}
+          description={t('account.import.dialog.description')}
+          closer={() => setAccountTypeCredentialsSelected(null)}
+          listener={textSelectedCallback}
+          filters={[
+            {
+              name: 'Text File',
+              mimeType: 'text/plain',
+              extensions: ['txt'],
+            },
+          ]}
+          allowMultiple={true}
+          textInput={{
+            defaultValue: '',
+          }}
+        />
+      )}
+    </>
+  );
+}
+
+function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
+  const { t } = useTranslation('instance');
+  const queryClient = useQueryClient();
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
+  const transport = use(TransportContext);
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const { trackEvent } = useAptabase();
+  const { mutateAsync: setProfileMutation } = useMutation({
+    mutationFn: async (
+      profileTransformer: (prev: ProfileRoot) => ProfileRoot,
+    ) => {
+      await setInstanceConfig(
+        profileTransformer(profile),
+        instanceInfo,
+        transport,
+        queryClient,
+        instanceInfoQueryOptions.queryKey,
+      );
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: instanceInfoQueryOptions.queryKey,
+      });
+    },
+  });
+
+  return (
+    <>
+      <DataTableActionBarAction
+        tooltip="Remove selected accounts"
         onClick={() => {
           void trackEvent('remove_accounts', {
             count: props.table.getFilteredSelectedRowModel().rows.length,
@@ -511,31 +574,8 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
         }}
       >
         <TrashIcon />
-      </Button>
-      {accountTypeCredentialsSelected !== null && (
-        <ImportDialog
-          title={t('account.import.dialog.title', {
-            type: getEnumKeyByValue(
-              AccountTypeCredentials,
-              accountTypeCredentialsSelected,
-            ),
-          })}
-          description={t('account.import.dialog.description')}
-          closer={() => setAccountTypeCredentialsSelected(null)}
-          listener={textSelectedCallback}
-          filters={[
-            {
-              name: 'Text File',
-              mimeType: 'text/plain',
-              extensions: ['txt'],
-            },
-          ]}
-          allowMultiple={true}
-          textInput={{
-            defaultValue: '',
-          }}
-        />
-      )}
+      </DataTableActionBarAction>
+      <DataTableActionBarSelection table={props.table} />
     </>
   );
 }
@@ -596,6 +636,7 @@ function Content() {
         <DataTableAdvancedToolbar table={table}>
           <DataTableFilterMenu table={table} />
           <DataTableSortList table={table} />
+          <AddButton />
         </DataTableAdvancedToolbar>
       </DataTable>
     </div>

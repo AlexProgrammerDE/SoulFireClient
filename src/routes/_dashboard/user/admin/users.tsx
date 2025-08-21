@@ -42,7 +42,11 @@ import {
 } from '@/components/data-table/data-table-selects.tsx';
 import { DataTable } from '@/components/data-table/data-table.tsx';
 import { useDataTable } from '@/hooks/use-data-table.ts';
-import { DataTableActionBar } from '@/components/data-table/data-table-action-bar.tsx';
+import {
+  DataTableActionBar,
+  DataTableActionBarAction,
+  DataTableActionBarSelection,
+} from '@/components/data-table/data-table-action-bar.tsx';
 import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar.tsx';
 import { DataTableFilterMenu } from '@/components/data-table/data-table-filter-menu.tsx';
 import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
@@ -234,11 +238,23 @@ function ImpersonateUserButton(props: { row: Row<UserListResponse_User> }) {
   );
 }
 
+function AddButton() {
+  const [createOpen, setCreateOpen] = useState(false);
+
+  return (
+    <>
+      <Button variant="outline" size="sm" onClick={() => setCreateOpen(true)}>
+        <PlusIcon />
+      </Button>
+      <ManageUserDialog mode="add" open={createOpen} setOpen={setCreateOpen} />
+    </>
+  );
+}
+
 function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
   const { t } = useTranslation('admin');
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
-  const [createOpen, setCreateOpen] = useState(false);
   const { usersQueryOptions } = Route.useRouteContext();
   const { mutateAsync: deleteUsersMutation } = useMutation({
     mutationFn: async (user: UserListResponse_User[]) => {
@@ -281,13 +297,8 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
 
   return (
     <>
-      <Button variant="outline" onClick={() => setCreateOpen(true)}>
-        <PlusIcon />
-      </Button>
-      <ManageUserDialog mode="add" open={createOpen} setOpen={setCreateOpen} />
-      <Button
-        variant="outline"
-        disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
+      <DataTableActionBarAction
+        tooltip="Remove selected users"
         onClick={() => {
           const selectedRows = props.table
             .getFilteredSelectedRowModel()
@@ -304,10 +315,9 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
         }}
       >
         <TrashIcon />
-      </Button>
-      <Button
-        variant="outline"
-        disabled={props.table.getFilteredSelectedRowModel().rows.length === 0}
+      </DataTableActionBarAction>
+      <DataTableActionBarAction
+        tooltip="Log out selected users"
         onClick={() => {
           const selectedRows = props.table
             .getFilteredSelectedRowModel()
@@ -324,7 +334,8 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
         }}
       >
         <LogOutIcon />
-      </Button>
+      </DataTableActionBarAction>
+      <DataTableActionBarSelection table={props.table} />
     </>
   );
 }
@@ -374,6 +385,7 @@ function Content() {
         <DataTableAdvancedToolbar table={table}>
           <DataTableFilterMenu table={table} />
           <DataTableSortList table={table} />
+          <AddButton />
         </DataTableAdvancedToolbar>
       </DataTable>
     </div>
