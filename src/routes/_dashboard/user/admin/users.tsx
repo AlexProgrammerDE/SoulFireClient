@@ -129,6 +129,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
         };
       }),
     },
+    enableColumnFilter: true,
   },
   {
     id: 'createdAt',
@@ -147,6 +148,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
       placeholder: 'Search created ats...',
       variant: 'dateRange',
     },
+    enableColumnFilter: true,
   },
   {
     id: 'minIssuedAt',
@@ -165,6 +167,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
       placeholder: 'Search min issued ats...',
       variant: 'dateRange',
     },
+    enableColumnFilter: true,
   },
   {
     id: 'actions',
