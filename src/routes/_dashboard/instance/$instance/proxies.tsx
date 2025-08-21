@@ -1,8 +1,8 @@
 import { createFileRoute, deepEqual } from '@tanstack/react-router';
+import * as React from 'react';
 import { use, useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
-import { DataTable } from '@/components/data-table.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
 import { getEnumKeyByValue, ProfileProxy, ProfileRoot } from '@/lib/types.ts';
 import { ProxyProto_Type } from '@/generated/soulfire/common.ts';
@@ -26,14 +26,21 @@ import {
 } from '@tanstack/react-query';
 import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
 import { ProxyCheckServiceClient } from '@/generated/soulfire/proxy-check.client.ts';
-import { Trans, useTranslation } from 'react-i18next';
-import {
-  SelectAllHeader,
-  SelectRowHeader,
-} from '@/components/data-table-selects.tsx';
+import { useTranslation } from 'react-i18next';
 import i18n from '@/lib/i18n.ts';
 import { runAsync, setInstanceConfig } from '@/lib/utils.tsx';
 import { useAptabase } from '@aptabase/react';
+import {
+  SelectAllHeader,
+  SelectRowHeader,
+} from '@/components/data-table/data-table-selects.tsx';
+import { DataTable } from '@/components/data-table/data-table.tsx';
+import { DataTableActionBar } from '@/components/data-table/data-table-action-bar.tsx';
+import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar.tsx';
+import { DataTableFilterMenu } from '@/components/data-table/data-table-filter-menu.tsx';
+import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
+import { useDataTable } from '@/hooks/use-data-table.ts';
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance/proxies')({
   component: ProxySettings,
@@ -114,29 +121,38 @@ const columns: ColumnDef<ProfileProxy>[] = [
     id: 'select',
     header: SelectAllHeader,
     cell: SelectRowHeader,
+    size: 32,
     enableSorting: false,
     enableHiding: false,
   },
   {
+    id: 'type',
     accessorFn: (row) => getEnumKeyByValue(ProxyProto_Type, row.type),
     accessorKey: 'type',
-    header: () => <Trans i18nKey="instance:proxy.table.type" />,
-    sortingFn: 'fuzzySort',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Type" />
+    ),
   },
   {
+    id: 'address',
     accessorKey: 'address',
-    header: () => <Trans i18nKey="instance:proxy.table.address" />,
-    sortingFn: 'fuzzySort',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Address" />
+    ),
   },
   {
+    id: 'username',
     accessorKey: 'username',
-    header: () => <Trans i18nKey="instance:proxy.table.username" />,
-    sortingFn: 'fuzzySort',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Username" />
+    ),
   },
   {
+    id: 'password',
     accessorKey: 'password',
-    header: () => <Trans i18nKey="instance:proxy.table.password" />,
-    sortingFn: 'fuzzySort',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Password" />
+    ),
   },
 ];
 
@@ -450,12 +466,18 @@ function ProxySettings() {
 }
 
 function Content() {
-  const { t } = useTranslation('common');
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { data: profile } = useSuspenseQuery({
     ...instanceInfoQueryOptions,
     select: (info) => info.profile,
+  });
+  const { table } = useDataTable({
+    data: profile.proxies,
+    columns,
+    pageCount: -1,
+    // TODO: Enforce uniqueness
+    // getRowId: (row) => row.id,
   });
 
   return (
@@ -468,11 +490,18 @@ function Content() {
         />
       </div>
       <DataTable
-        filterPlaceholder={t('instance:proxy.filterPlaceholder')}
-        columns={columns}
-        data={profile.proxies}
-        extraHeader={ExtraHeader}
-      />
+        table={table}
+        actionBar={
+          <DataTableActionBar table={table}>
+            <ExtraHeader table={table} />
+          </DataTableActionBar>
+        }
+      >
+        <DataTableAdvancedToolbar table={table}>
+          <DataTableFilterMenu table={table} />
+          <DataTableSortList table={table} />
+        </DataTableAdvancedToolbar>
+      </DataTable>
     </div>
   );
 }

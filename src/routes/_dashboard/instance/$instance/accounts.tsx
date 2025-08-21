@@ -1,7 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
+import * as React from 'react';
 import { use, useCallback, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
-import { DataTable } from '@/components/data-table.tsx';
+import { DataTable } from '@/components/data-table/data-table.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
 import { getEnumKeyByValue, ProfileAccount, ProfileRoot } from '@/lib/types.ts';
 import {
@@ -31,12 +32,18 @@ import { isTauri, runAsync, setInstanceConfig } from '@/lib/utils.tsx';
 import { open as shellOpen } from '@tauri-apps/plugin-shell';
 import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
 import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import {
   SelectAllHeader,
   SelectRowHeader,
-} from '@/components/data-table-selects.tsx';
+} from '@/components/data-table/data-table-selects.tsx';
 import { useAptabase } from '@aptabase/react';
+import { DataTableActionBar } from '@/components/data-table/data-table-action-bar.tsx';
+import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar.tsx';
+import { DataTableFilterMenu } from '@/components/data-table/data-table-filter-menu.tsx';
+import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
+import { useDataTable } from '@/hooks/use-data-table.ts';
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
 
 export const Route = createFileRoute('/_dashboard/instance/$instance/accounts')(
   {
@@ -59,25 +66,32 @@ const columns: ColumnDef<ProfileAccount>[] = [
     id: 'select',
     header: SelectAllHeader,
     cell: SelectRowHeader,
+    size: 32,
     enableSorting: false,
     enableHiding: false,
   },
   {
+    id: 'type',
     accessorFn: (row) =>
       getEnumKeyByValue(MinecraftAccountProto_AccountTypeProto, row.type),
     accessorKey: 'type',
-    header: () => <Trans i18nKey={'instance:account.table.type'} />,
-    sortingFn: 'fuzzySort',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Type" />
+    ),
   },
   {
+    id: 'profileId',
     accessorKey: 'profileId',
-    header: () => <Trans i18nKey={'instance:account.table.profileId'} />,
-    sortingFn: 'fuzzySort',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Profile ID" />
+    ),
   },
   {
+    id: 'lastKnownName',
     accessorKey: 'lastKnownName',
-    header: () => <Trans i18nKey={'instance:account.table.lastKnownName'} />,
-    sortingFn: 'fuzzySort',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Last known name" />
+    ),
   },
 ];
 
@@ -489,12 +503,18 @@ function AccountSettings() {
 }
 
 function Content() {
-  const { t } = useTranslation('common');
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { data: profile } = useSuspenseQuery({
     ...instanceInfoQueryOptions,
     select: (info) => info.profile,
+  });
+  const { table } = useDataTable({
+    data: profile.accounts,
+    columns,
+    pageCount: -1,
+    // TODO: Enforce uniqueness
+    // getRowId: (row) => row.id,
   });
 
   return (
@@ -509,11 +529,18 @@ function Content() {
         />
       </div>
       <DataTable
-        filterPlaceholder={t('instance:account.filterPlaceholder')}
-        columns={columns}
-        data={profile.accounts}
-        extraHeader={ExtraHeader}
-      />
+        table={table}
+        actionBar={
+          <DataTableActionBar table={table}>
+            <ExtraHeader table={table} />
+          </DataTableActionBar>
+        }
+      >
+        <DataTableAdvancedToolbar table={table}>
+          <DataTableFilterMenu table={table} />
+          <DataTableSortList table={table} />
+        </DataTableAdvancedToolbar>
+      </DataTable>
     </div>
   );
 }

@@ -28,6 +28,7 @@ import { AboutProvider } from '@/components/dialog/about-dialog.tsx';
 import { invoke } from '@tauri-apps/api/core';
 import { setTheme } from '@tauri-apps/api/app';
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
+import { NuqsAdapter } from 'nuqs/adapters/tanstack-router';
 
 async function getAvailableProfiles() {
   const profileDir = await resolve(
@@ -232,25 +233,27 @@ function RootLayout() {
           >
             <WindowThemeSyncer />
             <TooltipProvider delayDuration={500}>
-              <SystemInfoContext value={systemInfoState}>
-                <TerminalThemeContext
-                  value={{
-                    value: terminalTheme,
-                    setter: setTerminalTheme,
-                  }}
-                >
-                  <div
-                    vaul-drawer-wrapper=""
-                    className="flex h-dvh w-dvw flex-col"
+              <NuqsAdapter>
+                <SystemInfoContext value={systemInfoState}>
+                  <TerminalThemeContext
+                    value={{
+                      value: terminalTheme,
+                      setter: setTerminalTheme,
+                    }}
                   >
-                    <PointerReset />
-                    <AboutProvider>
-                      <Outlet />
-                    </AboutProvider>
-                  </div>
-                </TerminalThemeContext>
-              </SystemInfoContext>
-              <Toaster richColors />
+                    <div
+                      vaul-drawer-wrapper=""
+                      className="flex h-dvh w-dvw flex-col"
+                    >
+                      <PointerReset />
+                      <AboutProvider>
+                        <Outlet />
+                      </AboutProvider>
+                    </div>
+                  </TerminalThemeContext>
+                </SystemInfoContext>
+                <Toaster richColors />
+              </NuqsAdapter>
             </TooltipProvider>
           </ThemeProvider>
           <TailwindIndicator />

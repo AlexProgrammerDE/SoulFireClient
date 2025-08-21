@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import * as React from 'react';
-import { DataTable, DateRange } from '@/components/data-table.tsx';
+import { DataTable } from '@/components/data-table/data-table.tsx';
 import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
@@ -26,6 +26,13 @@ import { Calendar } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import { useDateFnsLocale } from '@/hooks/use-date-fns-locale.ts';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
+import { DataTableActionBar } from '@/components/data-table/data-table-action-bar.tsx';
+import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar.tsx';
+import { DataTableFilterMenu } from '@/components/data-table/data-table-filter-menu.tsx';
+import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
+import { useDataTable } from '@/hooks/use-data-table.ts';
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
+import { DateRange } from 'react-day-picker';
 
 export const Route = createFileRoute(
   '/_dashboard/instance/$instance/audit-log',
@@ -90,9 +97,12 @@ function toI18nKey(type: InstanceAuditLogResponse_AuditLogEntryType) {
 
 const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
   {
+    id: 'user',
     accessorFn: (row) => `${row.user!.username} ${row.user!.email}`,
     accessorKey: 'user',
-    header: () => <Trans i18nKey="auditLog.user" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="User" />
+    ),
     cell: ({ row }) => (
       <div className="flex flex-row items-center justify-start gap-2">
         <UserAvatar
@@ -103,15 +113,17 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
         {row.original.user!.username}
       </div>
     ),
-    sortingFn: 'fuzzySort',
   },
   {
+    id: 'type',
     accessorFn: (row) =>
       i18n.t(toI18nKey(row.type), {
         data: row.data,
       }),
     accessorKey: 'type',
-    header: () => <Trans i18nKey="auditLog.action" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Action" />
+    ),
     cell: ({ row }) => (
       <p>
         <Trans
@@ -122,18 +134,19 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
         />
       </p>
     ),
-    sortingFn: 'fuzzySort',
   },
   {
+    id: 'timestamp',
     accessorFn: (row) => timestampToDate(row.timestamp!),
     accessorKey: 'timestamp',
-    header: () => <Trans i18nKey="auditLog.timestamp" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Timestamp" />
+    ),
     cell: ({ row }) => (
       <SFTimeAgo date={timestampToDate(row.original.timestamp!)} />
     ),
     enableGlobalFilter: false,
     sortingFn: 'datetime',
-    filterFn: 'isWithinRange',
   },
 ];
 
@@ -233,18 +246,30 @@ function AuditLog() {
 }
 
 function Content() {
-  const { t } = useTranslation('common');
   const { auditLogQueryOptions } = Route.useRouteContext();
   const { data: auditLog } = useSuspenseQuery(auditLogQueryOptions);
+  const { table } = useDataTable({
+    data: auditLog.entry,
+    columns,
+    pageCount: -1,
+    getRowId: (row) => row.id,
+  });
 
   return (
     <div className="container flex h-full w-full grow flex-col gap-4">
       <DataTable
-        filterPlaceholder={t('auditLog.filterPlaceholder')}
-        columns={columns}
-        data={auditLog.entry}
-        extraHeader={ExtraHeader}
-      />
+        table={table}
+        actionBar={
+          <DataTableActionBar table={table}>
+            <ExtraHeader table={table} />
+          </DataTableActionBar>
+        }
+      >
+        <DataTableAdvancedToolbar table={table}>
+          <DataTableFilterMenu table={table} />
+          <DataTableSortList table={table} />
+        </DataTableAdvancedToolbar>
+      </DataTable>
     </div>
   );
 }

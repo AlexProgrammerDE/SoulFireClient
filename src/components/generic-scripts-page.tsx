@@ -8,7 +8,7 @@ import {
 import {
   SelectAllHeader,
   SelectRowHeader,
-} from '@/components/data-table-selects.tsx';
+} from '@/components/data-table/data-table-selects.tsx';
 import { Trans, useTranslation } from 'react-i18next';
 import { CopyInfoButton } from '@/components/info-buttons.tsx';
 import { getEnumKeyByValue } from '@/lib/types.ts';
@@ -25,7 +25,13 @@ import { toast } from 'sonner';
 import { Table as ReactTable } from '@tanstack/table-core';
 import { QueryKey, useMutation, useQueryClient } from '@tanstack/react-query';
 import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { DataTable } from '@/components/data-table.tsx';
+import { DataTable } from '@/components/data-table/data-table.tsx';
+import { useDataTable } from '@/hooks/use-data-table.ts';
+import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
+import { DataTableActionBar } from '@/components/data-table/data-table-action-bar.tsx';
+import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar.tsx';
+import { DataTableFilterMenu } from '@/components/data-table/data-table-filter-menu.tsx';
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
 
 export type ScriptsProps = {
   queryKey: QueryKey;
@@ -40,24 +46,30 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     id: 'select',
     header: SelectAllHeader,
     cell: SelectRowHeader,
+    size: 32,
     enableSorting: false,
     enableHiding: false,
   },
   {
+    id: 'scriptName',
     accessorKey: 'scriptName',
-    header: () => <Trans i18nKey="common:scripts.table.scriptName" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Name" />
+    ),
     cell: ({ row }) => (
       <div className="flex flex-row items-center gap-2">
         <span className="max-w-64 truncate">{row.original.scriptName}</span>
         <CopyInfoButton value={row.original.id} />
       </div>
     ),
-    sortingFn: 'fuzzySort',
   },
   {
+    id: 'scriptScope',
     accessorFn: (row) => row.scriptScope?.scope.oneofKind ?? '',
     accessorKey: 'scriptScope',
-    header: () => <Trans i18nKey="common:scripts.table.type" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Scope" />
+    ),
     cell: ({ row }) => {
       return row.original.scriptScope?.scope.oneofKind === 'instanceScript' ? (
         <div className="flex flex-row items-center gap-2">
@@ -72,29 +84,34 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
         <Trans i18nKey="common:scripts.globalScript" />
       );
     },
-    sortingFn: 'fuzzySort',
   },
   {
+    id: 'language',
     accessorFn: (row) => getEnumKeyByValue(ScriptLanguage, row.language),
     accessorKey: 'language',
-    header: () => <Trans i18nKey="common:scripts.table.language" />,
-    sortingFn: 'fuzzySort',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Language" />
+    ),
   },
   {
+    id: 'elevatedPermissions',
     accessorKey: 'elevatedPermissions',
-    header: () => <Trans i18nKey="common:scripts.table.elevatedPermissions" />,
-    sortingFn: 'fuzzySort',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Elevated permissions" />
+    ),
   },
   {
+    id: 'createdAt',
     accessorFn: (row) => timestampToDate(row.createdAt!),
     accessorKey: 'createdAt',
-    header: () => <Trans i18nKey="common:scripts.table.createdAt" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Created at" />
+    ),
     cell: ({ row }) => (
       <SFTimeAgo date={timestampToDate(row.original.createdAt!)} />
     ),
     enableGlobalFilter: false,
     sortingFn: 'datetime',
-    filterFn: 'isWithinRange',
   },
   {
     id: 'actions',
@@ -105,6 +122,7 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
         <RestartScriptButton row={row} />
       </div>
     ),
+    size: 64,
     enableSorting: false,
     enableHiding: false,
   },
@@ -240,17 +258,29 @@ function ExtraHeader(props: { table: ReactTable<ScriptListResponse_Script> }) {
 }
 
 export function GenericScripts(props: ScriptsProps) {
-  const { t } = useTranslation('common');
+  const { table } = useDataTable({
+    data: props.scriptList.scripts,
+    columns,
+    pageCount: -1,
+    getRowId: (row) => row.id,
+  });
 
   return (
     <div className="container flex h-full w-full grow flex-col gap-4">
       <ScriptsContext value={props}>
         <DataTable
-          filterPlaceholder={t('common:scripts.filterPlaceholder')}
-          columns={columns}
-          data={props.scriptList.scripts}
-          extraHeader={ExtraHeader}
-        />
+          table={table}
+          actionBar={
+            <DataTableActionBar table={table}>
+              <ExtraHeader table={table} />
+            </DataTableActionBar>
+          }
+        >
+          <DataTableAdvancedToolbar table={table}>
+            <DataTableFilterMenu table={table} />
+            <DataTableSortList table={table} />
+          </DataTableAdvancedToolbar>
+        </DataTable>
       </ScriptsContext>
     </div>
   );

@@ -2,7 +2,6 @@ import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import * as React from 'react';
 import { use, useState } from 'react';
 import { Button } from '@/components/ui/button.tsx';
-import { DataTable } from '@/components/data-table.tsx';
 import { ColumnDef, Row, Table as ReactTable } from '@tanstack/react-table';
 import { getEnumKeyByValue } from '@/lib/types.ts';
 import { UserRole } from '@/generated/soulfire/common.ts';
@@ -21,10 +20,6 @@ import {
   useSuspenseQuery,
 } from '@tanstack/react-query';
 import { Trans, useTranslation } from 'react-i18next';
-import {
-  SelectAllHeader,
-  SelectRowHeader,
-} from '@/components/data-table-selects.tsx';
 import { startImpersonation } from '@/lib/web-rpc.ts';
 import { UserListResponse_User } from '@/generated/soulfire/user.ts';
 import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
@@ -34,6 +29,17 @@ import { ManageUserDialog } from '@/components/dialog/manage-user-dialog.tsx';
 import { ROOT_USER_ID, runAsync, timestampToDate } from '@/lib/utils.tsx';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
 import { CopyInfoButton } from '@/components/info-buttons.tsx';
+import {
+  SelectAllHeader,
+  SelectRowHeader,
+} from '@/components/data-table/data-table-selects.tsx';
+import { DataTable } from '@/components/data-table/data-table.tsx';
+import { useDataTable } from '@/hooks/use-data-table.ts';
+import { DataTableActionBar } from '@/components/data-table/data-table-action-bar.tsx';
+import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar.tsx';
+import { DataTableFilterMenu } from '@/components/data-table/data-table-filter-menu.tsx';
+import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
+import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
 
 export const Route = createFileRoute('/_dashboard/user/admin/users')({
   component: Users,
@@ -44,12 +50,16 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     id: 'select',
     header: SelectAllHeader,
     cell: SelectRowHeader,
+    size: 32,
     enableSorting: false,
     enableHiding: false,
   },
   {
+    id: 'username',
     accessorKey: 'username',
-    header: () => <Trans i18nKey="admin:users.table.username" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Username" />
+    ),
     cell: ({ row }) => (
       <div className="flex flex-row items-center justify-start gap-2">
         <UserAvatar
@@ -61,40 +71,47 @@ const columns: ColumnDef<UserListResponse_User>[] = [
         <CopyInfoButton value={row.original.id} />
       </div>
     ),
-    sortingFn: 'fuzzySort',
   },
   {
+    id: 'email',
     accessorKey: 'email',
-    header: () => <Trans i18nKey="admin:users.table.email" />,
-    sortingFn: 'fuzzySort',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Email" />
+    ),
   },
   {
+    id: 'role',
     accessorFn: (row) => getEnumKeyByValue(UserRole, row.role),
     accessorKey: 'role',
-    header: () => <Trans i18nKey="admin:users.table.role" />,
-    sortingFn: 'fuzzySort',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Role" />
+    ),
   },
   {
+    id: 'createdAt',
     accessorFn: (row) => timestampToDate(row.createdAt!),
     accessorKey: 'createdAt',
-    header: () => <Trans i18nKey="admin:users.table.createdAt" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Created at" />
+    ),
     cell: ({ row }) => (
       <SFTimeAgo date={timestampToDate(row.original.createdAt!)} />
     ),
     enableGlobalFilter: false,
     sortingFn: 'datetime',
-    filterFn: 'isWithinRange',
   },
   {
+    id: 'minIssuedAt',
     accessorFn: (row) => timestampToDate(row.minIssuedAt!),
     accessorKey: 'minIssuedAt',
-    header: () => <Trans i18nKey="admin:users.table.minIssuedAt" />,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Min issued at" />
+    ),
     cell: ({ row }) => (
       <SFTimeAgo date={timestampToDate(row.original.minIssuedAt!)} />
     ),
     enableGlobalFilter: false,
     sortingFn: 'datetime',
-    filterFn: 'isWithinRange',
   },
   {
     id: 'actions',
@@ -105,6 +122,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
         <ImpersonateUserButton row={row} />
       </div>
     ),
+    size: 64,
     enableSorting: false,
     enableHiding: false,
   },
@@ -282,22 +300,33 @@ function Users() {
 }
 
 function Content() {
-  const { t } = useTranslation('common');
   const { usersQueryOptions, clientDataQueryOptions } = Route.useRouteContext();
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const { data: userList } = useSuspenseQuery(usersQueryOptions);
+  const { table } = useDataTable({
+    data: userList.users,
+    columns,
+    pageCount: -1,
+    enableRowSelection: (row) =>
+      row.original.id !== ROOT_USER_ID && row.original.id !== clientInfo.id,
+    getRowId: (row) => row.id,
+  });
 
   return (
     <div className="container flex h-full w-full grow flex-col gap-4">
       <DataTable
-        filterPlaceholder={t('admin:users.filterPlaceholder')}
-        columns={columns}
-        data={userList.users}
-        extraHeader={ExtraHeader}
-        enableRowSelection={(row) =>
-          row.original.id !== ROOT_USER_ID && row.original.id !== clientInfo.id
+        table={table}
+        actionBar={
+          <DataTableActionBar table={table}>
+            <ExtraHeader table={table} />
+          </DataTableActionBar>
         }
-      />
+      >
+        <DataTableAdvancedToolbar table={table}>
+          <DataTableFilterMenu table={table} />
+          <DataTableSortList table={table} />
+        </DataTableAdvancedToolbar>
+      </DataTable>
     </div>
   );
 }
