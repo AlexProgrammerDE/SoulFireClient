@@ -330,7 +330,6 @@ export function GenericScripts(props: ScriptsProps) {
   const { table } = useDataTable({
     data: props.scriptList.scripts,
     columns,
-    pageCount: -1,
     getRowId: (row) => row.id,
   });
 

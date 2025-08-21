@@ -609,7 +609,6 @@ function Content() {
   const { table } = useDataTable({
     data: profile.accounts,
     columns,
-    pageCount: -1,
     // TODO: Enforce uniqueness
     // getRowId: (row) => row.id,
   });

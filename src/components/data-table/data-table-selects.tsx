@@ -8,7 +8,7 @@ export function SelectAllHeader<T>({ table }: HeaderContext<T, unknown>) {
     <div className="flex">
       <Checkbox
         className="my-auto"
-        defaultChecked={
+        checked={
           table.getIsAllRowsSelected() ||
           (table.getIsSomeRowsSelected() && 'indeterminate')
         }
@@ -26,7 +26,7 @@ export function SelectRowHeader<T>({ row }: CellContext<T, unknown>) {
       <Checkbox
         className="my-auto"
         disabled={!row.getCanSelect()}
-        defaultChecked={row.getIsSelected()}
+        checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label={t('dataTable.selectRow')}
       />

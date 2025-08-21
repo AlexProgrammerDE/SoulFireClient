@@ -570,7 +570,6 @@ function Content() {
   const { table } = useDataTable({
     data: profile.proxies,
     columns,
-    pageCount: -1,
     // TODO: Enforce uniqueness
     // getRowId: (row) => row.id,
   });

@@ -19,12 +19,12 @@ import {
   type VisibilityState,
 } from '@tanstack/react-table';
 import {
-  type Parser,
   parseAsArrayOf,
   parseAsInteger,
   parseAsString,
-  type UseQueryStateOptions,
+  type Parser,
   useQueryState,
+  type UseQueryStateOptions,
   useQueryStates,
 } from 'nuqs';
 import * as React from 'react';
@@ -50,7 +50,7 @@ interface UseDataTableProps<TData>
       | 'manualPagination'
       | 'manualSorting'
     >,
-    Required<Pick<TableOptions<TData>, 'pageCount'>> {
+    Pick<TableOptions<TData>, 'pageCount'> {
   initialState?: Omit<Partial<TableState>, 'sorting'> & {
     sorting?: ExtendedColumnSort<TData>[];
   };
@@ -67,7 +67,7 @@ interface UseDataTableProps<TData>
 export function useDataTable<TData>(props: UseDataTableProps<TData>) {
   const {
     columns,
-    pageCount = -1,
+    pageCount,
     initialState,
     history = 'replace',
     debounceMs = DEBOUNCE_MS,
@@ -274,7 +274,7 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
       ...tableProps.defaultColumn,
       enableColumnFilter: false,
     },
-    enableRowSelection: true,
+    enableRowSelection: tableProps.enableRowSelection || true,
     onRowSelectionChange: setRowSelection,
     onPaginationChange,
     onSortingChange,
@@ -287,9 +287,6 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
-    manualPagination: true,
-    manualSorting: true,
-    manualFiltering: true,
   });
 
   return { table, shallow, debounceMs, throttleMs };

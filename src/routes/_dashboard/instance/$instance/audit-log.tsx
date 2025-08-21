@@ -212,7 +212,6 @@ function Content() {
   const { table } = useDataTable({
     data: auditLog.entry,
     columns,
-    pageCount: -1,
     getRowId: (row) => row.id,
   });
 

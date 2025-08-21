@@ -369,7 +369,6 @@ function Content() {
   const { table } = useDataTable({
     data: userList.users,
     columns,
-    pageCount: -1,
     enableRowSelection: (row) =>
       row.original.id !== ROOT_USER_ID && row.original.id !== clientInfo.id,
     getRowId: (row) => row.id,

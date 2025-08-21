@@ -28,7 +28,7 @@ import { AboutProvider } from '@/components/dialog/about-dialog.tsx';
 import { invoke } from '@tauri-apps/api/core';
 import { setTheme } from '@tauri-apps/api/app';
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
-import { NuqsAdapter } from 'nuqs/adapters/tanstack-router';
+import { NuqsAdapter } from 'nuqs/adapters/react';
 
 async function getAvailableProfiles() {
   const profileDir = await resolve(
@@ -215,25 +215,25 @@ function RootLayout() {
 
   return (
     <>
-      <AptabaseProvider
-        appKey="A-SH-6467566517"
-        options={{
-          apiUrl: 'https://aptabase.pistonmaster.net/api/v0/event',
-          appVersion: APP_VERSION,
-        }}
-      >
-        <AppStartedEvent />
-        <PageChangedEvent />
-        <QueryClientProvider client={queryClient}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <WindowThemeSyncer />
-            <TooltipProvider delayDuration={500}>
-              <NuqsAdapter>
+      <NuqsAdapter>
+        <AptabaseProvider
+          appKey="A-SH-6467566517"
+          options={{
+            apiUrl: 'https://aptabase.pistonmaster.net/api/v0/event',
+            appVersion: APP_VERSION,
+          }}
+        >
+          <AppStartedEvent />
+          <PageChangedEvent />
+          <QueryClientProvider client={queryClient}>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <WindowThemeSyncer />
+              <TooltipProvider delayDuration={500}>
                 <SystemInfoContext value={systemInfoState}>
                   <TerminalThemeContext
                     value={{
@@ -253,12 +253,12 @@ function RootLayout() {
                   </TerminalThemeContext>
                 </SystemInfoContext>
                 <Toaster richColors />
-              </NuqsAdapter>
-            </TooltipProvider>
-          </ThemeProvider>
-          <TailwindIndicator />
-        </QueryClientProvider>
-      </AptabaseProvider>
+              </TooltipProvider>
+            </ThemeProvider>
+            <TailwindIndicator />
+          </QueryClientProvider>
+        </AptabaseProvider>
+      </NuqsAdapter>
     </>
   );
 }
