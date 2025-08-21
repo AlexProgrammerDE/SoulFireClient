@@ -47,10 +47,9 @@ import {
   DataTableActionBarAction,
   DataTableActionBarSelection,
 } from '@/components/data-table/data-table-action-bar.tsx';
-import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar.tsx';
-import { DataTableFilterMenu } from '@/components/data-table/data-table-filter-menu.tsx';
 import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
+import { DataTableToolbar } from '@/components/data-table/data-table-toolbar.tsx';
 
 export const Route = createFileRoute('/_dashboard/user/admin/users')({
   component: Users,
@@ -148,6 +147,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
       placeholder: 'Search created ats...',
       variant: 'dateRange',
     },
+    filterFn: 'inNumberRange',
     enableColumnFilter: true,
   },
   {
@@ -167,6 +167,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
       placeholder: 'Search min issued ats...',
       variant: 'dateRange',
     },
+    filterFn: 'inNumberRange',
     enableColumnFilter: true,
   },
   {
@@ -384,11 +385,10 @@ function Content() {
           </DataTableActionBar>
         }
       >
-        <DataTableAdvancedToolbar table={table}>
-          <DataTableFilterMenu table={table} />
+        <DataTableToolbar table={table}>
           <DataTableSortList table={table} />
           <AddButton />
-        </DataTableAdvancedToolbar>
+        </DataTableToolbar>
       </DataTable>
     </div>
   );

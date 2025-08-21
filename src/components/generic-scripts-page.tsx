@@ -44,9 +44,8 @@ import {
   DataTableActionBarAction,
   DataTableActionBarSelection,
 } from '@/components/data-table/data-table-action-bar.tsx';
-import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar.tsx';
-import { DataTableFilterMenu } from '@/components/data-table/data-table-filter-menu.tsx';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
+import { DataTableToolbar } from '@/components/data-table/data-table-toolbar.tsx';
 
 export type ScriptsProps = {
   queryKey: QueryKey;
@@ -171,6 +170,7 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
       placeholder: 'Search created ats...',
       variant: 'dateRange',
     },
+    filterFn: 'inNumberRange',
     enableColumnFilter: true,
   },
   {
@@ -344,11 +344,10 @@ export function GenericScripts(props: ScriptsProps) {
             </DataTableActionBar>
           }
         >
-          <DataTableAdvancedToolbar table={table}>
-            <DataTableFilterMenu table={table} />
+          <DataTableToolbar table={table}>
             <DataTableSortList table={table} />
             <AddButton />
-          </DataTableAdvancedToolbar>
+          </DataTableToolbar>
         </DataTable>
       </ScriptsContext>
     </div>

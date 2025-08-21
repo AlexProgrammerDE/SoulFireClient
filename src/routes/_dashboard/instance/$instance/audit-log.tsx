@@ -23,8 +23,6 @@ import {
   TimerOffIcon,
 } from 'lucide-react';
 import { SFTimeAgo } from '@/components/sf-timeago.tsx';
-import { DataTableAdvancedToolbar } from '@/components/data-table/data-table-advanced-toolbar.tsx';
-import { DataTableFilterMenu } from '@/components/data-table/data-table-filter-menu.tsx';
 import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
 import { useDataTable } from '@/hooks/use-data-table.ts';
 import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
@@ -33,6 +31,7 @@ import {
   getEnumKeyByValue,
   mapUnionToValue,
 } from '@/lib/types.ts';
+import { DataTableToolbar } from '@/components/data-table/data-table-toolbar.tsx';
 
 export const Route = createFileRoute(
   '/_dashboard/instance/$instance/audit-log',
@@ -184,6 +183,7 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
       placeholder: 'Search timestamps...',
       variant: 'dateRange',
     },
+    filterFn: 'inNumberRange',
     enableColumnFilter: true,
   },
 ];
@@ -218,10 +218,9 @@ function Content() {
   return (
     <div className="container flex h-full w-full grow flex-col gap-4">
       <DataTable table={table}>
-        <DataTableAdvancedToolbar table={table}>
-          <DataTableFilterMenu table={table} />
+        <DataTableToolbar table={table}>
           <DataTableSortList table={table} />
-        </DataTableAdvancedToolbar>
+        </DataTableToolbar>
       </DataTable>
     </div>
   );
