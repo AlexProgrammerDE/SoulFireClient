@@ -1,20 +1,18 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { TerminalComponent } from '@/components/terminal.tsx';
-import CommandInput from '@/components/command-input.tsx';
 import UserPageLayout from '@/components/nav/user/user-page-layout';
 import { useMemo } from 'react';
-import { CommandScope } from '@/generated/soulfire/command.ts';
 import { LogScope } from '@/generated/soulfire/logs.ts';
 import { useTranslation } from 'react-i18next';
 import { hasGlobalPermission } from '@/lib/utils.tsx';
 import { GlobalPermission } from '@/generated/soulfire/common.ts';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
-export const Route = createFileRoute('/_dashboard/user/admin/console')({
-  component: Console,
+export const Route = createFileRoute('/_dashboard/user/admin/logs')({
+  component: Logs,
 });
 
-function Console() {
+function Logs() {
   const { t } = useTranslation('common');
 
   return (
@@ -26,7 +24,7 @@ function Console() {
           content: t('breadcrumbs.admin'),
         },
       ]}
-      pageName={t('pageName.console')}
+      pageName={t('pageName.logs')}
     >
       <Content />
     </UserPageLayout>
@@ -45,15 +43,6 @@ function Content() {
     }),
     [],
   );
-  const commandScope = useMemo<CommandScope>(
-    () => ({
-      scope: {
-        oneofKind: 'global',
-        global: {},
-      },
-    }),
-    [],
-  );
 
   return (
     <div className="flex flex-col gap-2">
@@ -61,10 +50,6 @@ function Content() {
         clientData,
         GlobalPermission.GLOBAL_SUBSCRIBE_LOGS,
       ) && <TerminalComponent scope={logScope} />}
-      {hasGlobalPermission(
-        clientData,
-        GlobalPermission.GLOBAL_COMMAND_EXECUTION,
-      ) && <CommandInput scope={commandScope} />}
     </div>
   );
 }

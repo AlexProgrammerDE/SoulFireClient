@@ -3,9 +3,10 @@
 import {
   BugIcon,
   ChartAreaIcon,
+  LogsIcon,
   ScrollTextIcon,
   ServerIcon,
-  TerminalIcon,
+  SquareTerminalIcon,
   UsersIcon,
 } from 'lucide-react';
 import {
@@ -51,10 +52,18 @@ export function NavUserAdmin() {
       },
     },
     {
-      title: t('userSidebar.adminConsole'),
-      icon: TerminalIcon,
+      title: t('userSidebar.adminLogs'),
+      icon: LogsIcon,
       linkProps: {
-        to: '/user/admin/console',
+        to: '/user/admin/logs',
+        params: {},
+      },
+    },
+    {
+      title: t('userSidebar.adminTerminal'),
+      icon: SquareTerminalIcon,
+      linkProps: {
+        to: '/user/admin/terminal',
         params: {},
       },
     },

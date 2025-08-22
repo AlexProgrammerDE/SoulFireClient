@@ -1,6 +1,6 @@
 'use client';
 
-import { TerminalIcon, TextSearchIcon } from 'lucide-react';
+import { HouseIcon, SquareTerminalIcon, TextSearchIcon } from 'lucide-react';
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -29,10 +29,18 @@ export function NavControls() {
 
   const navLinks: NavLinks = [
     {
-      title: t('instanceSidebar.console'),
-      icon: TerminalIcon,
+      title: t('instanceSidebar.overview'),
+      icon: HouseIcon,
       linkProps: {
         to: '/instance/$instance',
+        params: { instance: instanceInfo.id },
+      },
+    },
+    {
+      title: t('instanceSidebar.terminal'),
+      icon: SquareTerminalIcon,
+      linkProps: {
+        to: '/instance/$instance/terminal',
         params: { instance: instanceInfo.id },
       },
     },

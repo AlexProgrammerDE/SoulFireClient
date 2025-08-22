@@ -3,16 +3,16 @@
 // @generated from protobuf file "soulfire/logs.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
-import { ServiceType } from "@protobuf-ts/runtime-rpc";
-import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
-import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
-import type { BinaryReadOptions } from "@protobuf-ts/runtime";
-import type { IBinaryReader } from "@protobuf-ts/runtime";
-import { UnknownFieldHandler } from "@protobuf-ts/runtime";
-import type { PartialMessage } from "@protobuf-ts/runtime";
-import { reflectionMergePartial } from "@protobuf-ts/runtime";
-import { MessageType } from "@protobuf-ts/runtime";
+import { ServiceType } from '@protobuf-ts/runtime-rpc';
+import type {
+  BinaryReadOptions,
+  BinaryWriteOptions,
+  IBinaryReader,
+  IBinaryWriter,
+  PartialMessage
+} from '@protobuf-ts/runtime';
+import { MessageType, reflectionMergePartial, UnknownFieldHandler, WireType } from '@protobuf-ts/runtime';
+
 /**
  * @generated from protobuf message soulfire.v1.LogString
  */
@@ -37,6 +37,10 @@ export interface LogString {
      * @generated from protobuf field: optional string script_id = 5
      */
     scriptId?: string;
+    /**
+     * @generated from protobuf field: bool personal = 6
+     */
+    personal: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.GlobalLogScope
@@ -88,6 +92,11 @@ export interface InstanceScriptLogScope {
     scriptId: string;
 }
 /**
+ * @generated from protobuf message soulfire.v1.PersonalLogScope
+ */
+export interface PersonalLogScope {
+}
+/**
  * @generated from protobuf message soulfire.v1.LogScope
  */
 export interface LogScope {
@@ -124,6 +133,12 @@ export interface LogScope {
          * @generated from protobuf field: soulfire.v1.InstanceScriptLogScope instance_script = 5
          */
         instanceScript: InstanceScriptLogScope;
+    } | {
+        oneofKind: "personal";
+        /**
+         * @generated from protobuf field: soulfire.v1.PersonalLogScope personal = 6
+         */
+        personal: PersonalLogScope;
     } | {
         oneofKind: undefined;
     };
@@ -176,13 +191,15 @@ class LogString$Type extends MessageType<LogString> {
             { no: 2, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "instance_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
             { no: 4, name: "bot_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "script_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
+            { no: 5, name: "script_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+            { no: 6, name: "personal", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
         ]);
     }
     create(value?: PartialMessage<LogString>): LogString {
         const message = globalThis.Object.create((this.messagePrototype!));
         message.id = "";
         message.message = "";
+        message.personal = false;
         if (value !== undefined)
             reflectionMergePartial<LogString>(this, message, value);
         return message;
@@ -206,6 +223,9 @@ class LogString$Type extends MessageType<LogString> {
                     break;
                 case /* optional string script_id */ 5:
                     message.scriptId = reader.string();
+                    break;
+                case /* bool personal */ 6:
+                    message.personal = reader.bool();
                     break;
                 default:
                     let u = options.readUnknownField;
@@ -234,6 +254,9 @@ class LogString$Type extends MessageType<LogString> {
         /* optional string script_id = 5; */
         if (message.scriptId !== undefined)
             writer.tag(5, WireType.LengthDelimited).string(message.scriptId);
+        /* bool personal = 6; */
+        if (message.personal !== false)
+            writer.tag(6, WireType.Varint).bool(message.personal);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
@@ -487,6 +510,44 @@ class InstanceScriptLogScope$Type extends MessageType<InstanceScriptLogScope> {
  */
 export const InstanceScriptLogScope = new InstanceScriptLogScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class PersonalLogScope$Type extends MessageType<PersonalLogScope> {
+    constructor() {
+        super("soulfire.v1.PersonalLogScope", []);
+    }
+    create(value?: PartialMessage<PersonalLogScope>): PersonalLogScope {
+        const message = globalThis.Object.create((this.messagePrototype!));
+        if (value !== undefined)
+            reflectionMergePartial<PersonalLogScope>(this, message, value);
+        return message;
+    }
+    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PersonalLogScope): PersonalLogScope {
+        let message = target ?? this.create(), end = reader.pos + length;
+        while (reader.pos < end) {
+            let [fieldNo, wireType] = reader.tag();
+            switch (fieldNo) {
+                default:
+                    let u = options.readUnknownField;
+                    if (u === "throw")
+                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
+                    let d = reader.skip(wireType);
+                    if (u !== false)
+                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
+            }
+        }
+        return message;
+    }
+    internalBinaryWrite(message: PersonalLogScope, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
+        let u = options.writeUnknownFields;
+        if (u !== false)
+            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+        return writer;
+    }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.PersonalLogScope
+ */
+export const PersonalLogScope = new PersonalLogScope$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class LogScope$Type extends MessageType<LogScope> {
     constructor() {
         super("soulfire.v1.LogScope", [
@@ -494,7 +555,8 @@ class LogScope$Type extends MessageType<LogScope> {
             { no: 2, name: "instance", kind: "message", oneof: "scope", T: () => InstanceLogScope },
             { no: 3, name: "bot", kind: "message", oneof: "scope", T: () => BotLogScope },
             { no: 4, name: "global_script", kind: "message", oneof: "scope", T: () => GlobalScriptLogScope },
-            { no: 5, name: "instance_script", kind: "message", oneof: "scope", T: () => InstanceScriptLogScope }
+            { no: 5, name: "instance_script", kind: "message", oneof: "scope", T: () => InstanceScriptLogScope },
+            { no: 6, name: "personal", kind: "message", oneof: "scope", T: () => PersonalLogScope }
         ]);
     }
     create(value?: PartialMessage<LogScope>): LogScope {
@@ -539,6 +601,12 @@ class LogScope$Type extends MessageType<LogScope> {
                         instanceScript: InstanceScriptLogScope.internalBinaryRead(reader, reader.uint32(), options, (message.scope as any).instanceScript)
                     };
                     break;
+                case /* soulfire.v1.PersonalLogScope personal */ 6:
+                    message.scope = {
+                        oneofKind: "personal",
+                        personal: PersonalLogScope.internalBinaryRead(reader, reader.uint32(), options, (message.scope as any).personal)
+                    };
+                    break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -566,6 +634,9 @@ class LogScope$Type extends MessageType<LogScope> {
         /* soulfire.v1.InstanceScriptLogScope instance_script = 5; */
         if (message.scope.oneofKind === "instanceScript")
             InstanceScriptLogScope.internalBinaryWrite(message.scope.instanceScript, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
+        /* soulfire.v1.PersonalLogScope personal = 6; */
+        if (message.scope.oneofKind === "personal")
+            PersonalLogScope.internalBinaryWrite(message.scope.personal, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
