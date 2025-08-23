@@ -260,6 +260,7 @@ export async function setInstanceConfig(
   await queryClient.cancelQueries({
     queryKey: instanceInfoQueryKey,
   });
+  // Update optimistically
   queryClient.setQueryData<InstanceInfoQueryData>(
     instanceInfoQueryKey,
     (old) => {
@@ -304,6 +305,7 @@ export async function setInstanceIcon(
       queryKey: instanceListQueryKey,
     }),
   ]);
+  // Update optimistically
   queryClient.setQueryData<InstanceInfoQueryData>(
     instanceInfoQueryKey,
     (old) => {
@@ -317,6 +319,7 @@ export async function setInstanceIcon(
       };
     },
   );
+  // Update optimistically
   queryClient.setQueryData<InstanceListResponse>(
     instanceListQueryKey,
     (old) => {
@@ -371,6 +374,7 @@ export async function setInstanceFriendlyName(
       queryKey: instanceListQueryKey,
     }),
   ]);
+  // Update optimistically
   queryClient.setQueryData<InstanceInfoQueryData>(
     instanceInfoQueryKey,
     (old) => {
@@ -384,6 +388,7 @@ export async function setInstanceFriendlyName(
       };
     },
   );
+  // Update optimistically
   queryClient.setQueryData<InstanceListResponse>(
     instanceListQueryKey,
     (old) => {
@@ -430,6 +435,7 @@ export async function setServerConfig(
   await queryClient.cancelQueries({
     queryKey: serverInfoQueryKey,
   });
+  // Update optimistically
   queryClient.setQueryData<ServerInfoQueryData>(serverInfoQueryKey, (old) => {
     if (old === undefined) {
       return;
@@ -461,6 +467,7 @@ export async function setSelfUsername(
   await queryClient.cancelQueries({
     queryKey: clientDataQueryKey,
   });
+  // Update optimistically
   queryClient.setQueryData<ClientDataResponse>(clientDataQueryKey, (old) => {
     if (old === undefined) {
       return;
@@ -491,6 +498,7 @@ export async function setSelfEmail(
   await queryClient.cancelQueries({
     queryKey: clientDataQueryKey,
   });
+  // Update optimistically
   queryClient.setQueryData<ClientDataResponse>(clientDataQueryKey, (old) => {
     if (old === undefined) {
       return;

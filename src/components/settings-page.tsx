@@ -111,15 +111,13 @@ export function ComponentTitle(props: {
 }
 
 function inputTypeToHtml(
-  inputType: StringSetting_InputType,
+  inputType: Exclude<StringSetting_InputType, StringSetting_InputType.TEXTAREA>,
 ): HTMLInputTypeAttribute {
   switch (inputType) {
     case StringSetting_InputType.TEXT:
       return 'text';
     case StringSetting_InputType.PASSWORD:
       return 'password';
-    case StringSetting_InputType.TEXTAREA:
-      throw new Error('Cannot convert textarea to HTML input type');
     case StringSetting_InputType.EMAIL:
       return 'email';
     case StringSetting_InputType.URL:
@@ -136,22 +134,10 @@ function StringComponent(props: {
   value: string;
   changeCallback: (value: string) => void;
 }) {
-  const [inputValue, setInputValue] = useState(props.value);
-
-  useEffect(() => {
-    setInputValue((old) => {
-      if (old !== props.value) {
-        return props.value;
-      }
-
-      return old;
-    });
-  }, [props.value]);
-
   if (props.setting.inputType === StringSetting_InputType.TEXTAREA) {
     return (
       <Textarea
-        value={inputValue}
+        value={props.value}
         placeholder={props.setting.placeholder}
         minLength={props.setting.minLength}
         maxLength={props.setting.maxLength}
@@ -164,7 +150,7 @@ function StringComponent(props: {
   } else {
     return (
       <Input
-        value={inputValue}
+        value={props.value}
         type={inputTypeToHtml(props.setting.inputType)}
         placeholder={props.setting.placeholder}
         minLength={props.setting.minLength}
@@ -186,21 +172,10 @@ function IntComponent(props: {
 }) {
   const { t } = useTranslation('common');
   const localeNumberFormat = useLocaleNumberFormat();
-  const [inputValue, setInputValue] = useState(props.value);
-
-  useEffect(() => {
-    setInputValue((old) => {
-      if (old !== props.value) {
-        return props.value;
-      }
-
-      return old;
-    });
-  }, [props.value]);
 
   return (
     <NumericFormat
-      value={inputValue}
+      value={props.value}
       thousandSeparator={
         props.setting.thousandSeparator
           ? localeNumberFormat.thousandSeparator
@@ -242,21 +217,10 @@ function DoubleComponent(props: {
 }) {
   const { t } = useTranslation('common');
   const localeNumberFormat = useLocaleNumberFormat();
-  const [inputValue, setInputValue] = useState(props.value);
-
-  useEffect(() => {
-    setInputValue((old) => {
-      if (old !== props.value) {
-        return props.value;
-      }
-
-      return old;
-    });
-  }, [props.value]);
 
   return (
     <NumericFormat
-      value={inputValue}
+      value={props.value}
       thousandSeparator={
         props.setting.thousandSeparator
           ? localeNumberFormat.thousandSeparator
