@@ -38,7 +38,6 @@ import {
   use,
   useEffect,
   useMemo,
-  useRef,
   useState,
 } from 'react';
 import { Input } from '@/components/ui/input.tsx';
@@ -135,24 +134,10 @@ function StringComponent(props: {
   value: string;
   changeCallback: (value: string) => void;
 }) {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    if (inputRef && inputRef.current) {
-      inputRef.current.value = props.value;
-    }
-
-    if (textareaRef && textareaRef.current) {
-      textareaRef.current.value = props.value;
-    }
-  }, [props.value]);
-
   if (props.setting.inputType === StringSetting_InputType.TEXTAREA) {
     return (
       <Textarea
-        ref={textareaRef}
-        defaultValue={props.value}
+        value={props.value}
         placeholder={props.setting.placeholder}
         minLength={props.setting.minLength}
         maxLength={props.setting.maxLength}
@@ -165,8 +150,7 @@ function StringComponent(props: {
   } else {
     return (
       <Input
-        ref={inputRef}
-        defaultValue={props.value}
+        value={props.value}
         type={inputTypeToHtml(props.setting.inputType)}
         placeholder={props.setting.placeholder}
         minLength={props.setting.minLength}
