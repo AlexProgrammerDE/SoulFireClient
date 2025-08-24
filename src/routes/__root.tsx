@@ -28,7 +28,7 @@ import { AboutProvider } from '@/components/dialog/about-dialog.tsx';
 import { invoke } from '@tauri-apps/api/core';
 import { setTheme } from '@tauri-apps/api/app';
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
-import { NuqsAdapter } from 'nuqs/adapters/react';
+import { NuqsAdapter } from 'nuqs/adapters/tanstack-router';
 
 async function getAvailableProfiles() {
   const profileDir = await resolve(
