@@ -33,6 +33,7 @@ import {
   updateEntry,
 } from '@/lib/utils.tsx';
 import {
+  ChangeEvent,
   HTMLInputTypeAttribute,
   ReactNode,
   use,
@@ -61,6 +62,7 @@ import { NumberFormatValues } from 'react-number-format/types/types';
 import { useRouteContext } from '@tanstack/react-router';
 import DynamicIcon from '@/components/dynamic-icon.tsx';
 import { TextInfoButton } from '@/components/info-buttons.tsx';
+import { useCachedState } from '@/hooks/use-cached-state.ts';
 
 function isAllowedValidator(
   t: TFunction,
@@ -134,32 +136,38 @@ function StringComponent(props: {
   value: string;
   changeCallback: (value: string) => void;
 }) {
+  const [inputValue, setInputValue] = useCachedState(props.value);
+
+  const onChangeHandler = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const newValue = e.currentTarget.value;
+    setInputValue(newValue);
+    props.changeCallback(newValue);
+  };
+
   if (props.setting.inputType === StringSetting_InputType.TEXTAREA) {
     return (
       <Textarea
-        value={props.value}
+        value={inputValue}
         placeholder={props.setting.placeholder}
         minLength={props.setting.minLength}
         maxLength={props.setting.maxLength}
         disabled={props.setting.disabled}
-        onChange={(e) => {
-          props.changeCallback(e.currentTarget.value);
-        }}
+        onChange={onChangeHandler}
       />
     );
   } else {
     return (
       <Input
-        value={props.value}
+        value={inputValue}
         type={inputTypeToHtml(props.setting.inputType)}
         placeholder={props.setting.placeholder}
         minLength={props.setting.minLength}
         maxLength={props.setting.maxLength}
         pattern={props.setting.pattern}
         disabled={props.setting.disabled}
-        onChange={(e) => {
-          props.changeCallback(e.currentTarget.value);
-        }}
+        onChange={onChangeHandler}
       />
     );
   }
@@ -172,10 +180,11 @@ function IntComponent(props: {
 }) {
   const { t } = useTranslation('common');
   const localeNumberFormat = useLocaleNumberFormat();
+  const [inputValue, setInputValue] = useCachedState(props.value);
 
   return (
     <NumericFormat
-      value={props.value}
+      value={inputValue}
       thousandSeparator={
         props.setting.thousandSeparator
           ? localeNumberFormat.thousandSeparator
@@ -197,6 +206,7 @@ function IntComponent(props: {
           return;
         }
 
+        setInputValue(currentValue);
         props.changeCallback(currentValue);
       }}
       placeholder={props.setting.placeholder}
@@ -217,10 +227,11 @@ function DoubleComponent(props: {
 }) {
   const { t } = useTranslation('common');
   const localeNumberFormat = useLocaleNumberFormat();
+  const [inputValue, setInputValue] = useCachedState(props.value);
 
   return (
     <NumericFormat
-      value={props.value}
+      value={inputValue}
       thousandSeparator={
         props.setting.thousandSeparator
           ? localeNumberFormat.thousandSeparator
@@ -243,6 +254,7 @@ function DoubleComponent(props: {
           return;
         }
 
+        setInputValue(currentValue);
         props.changeCallback(currentValue);
       }}
       placeholder={props.setting.placeholder}
