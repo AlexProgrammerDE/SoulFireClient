@@ -75,16 +75,38 @@
     <release version="1.10.6" date="2025-04-17">
       <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/1.10.6</url>
     </release>
-    <release version="1.10.5" date="2025-04-16"/>
-    <release version="1.10.4" date="2025-04-15"/>
-    <release version="1.10.3" date="2025-04-09"/>
-    <release version="1.10.2" date="2025-04-08"/>
-    <release version="1.10.1" date="2025-04-03"/>
-    <release version="1.10.0" date="2025-04-03"/>
-    <release version="1.9.0" date="2025-03-14"/>
-    <release version="1.8.2" date="2025-02-16"/>
-    <release version="1.8.1" date="2025-02-05"/>
-    <release version="1.8.0" date="2025-01-31"/>
-    <release version="1.7.1" date="2025-01-17"/>
+    <release version="1.10.5" date="2025-04-16">
+      <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/1.10.5</url>
+    </release>
+    <release version="1.10.4" date="2025-04-15">
+      <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/1.10.4</url>
+    </release>
+    <release version="1.10.3" date="2025-04-09">
+      <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/1.10.3</url>
+    </release>
+    <release version="1.10.2" date="2025-04-08">
+      <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/1.10.2</url>
+    </release>
+    <release version="1.10.1" date="2025-04-03">
+      <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/1.10.1</url>
+    </release>
+    <release version="1.10.0" date="2025-04-03">
+      <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/1.10.0</url>
+    </release>
+    <release version="1.9.0" date="2025-03-14">
+      <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/1.9.0</url>
+    </release>
+    <release version="1.8.2" date="2025-02-16">
+      <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/1.8.2</url>
+    </release>
+    <release version="1.8.1" date="2025-02-05">
+      <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/1.8.1</url>
+    </release>
+    <release version="1.8.0" date="2025-01-31">
+      <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/1.8.0</url>
+    </release>
+    <release version="1.7.1" date="2025-01-17">
+      <url type="details">https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/1.7.1</url>
+    </release>
   </releases>
 </component>
