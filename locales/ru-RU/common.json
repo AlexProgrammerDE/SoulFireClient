@@ -229,7 +229,7 @@
     "settings": "Настройки",
     "adminGroup": "Администратор",
     "adminOverview": "Обзор",
-    "adminLogs": "",
+    "adminLogs": "Логи",
     "adminTerminal": "Терминал",
     "users": "Пользователи",
     "adminScripts": "Скрипты",
@@ -271,7 +271,7 @@
   "noInstancesFound": "Экземпляры не найдены",
   "pageName": {
     "terminal": "Терминал",
-    "logs": "",
+    "logs": "Логи",
     "audit-log": "Журнал аудита",
     "instances": "Экземпляры",
     "access": "Доступ",

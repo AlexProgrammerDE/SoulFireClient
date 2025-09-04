@@ -1,7 +1,7 @@
 {
   "header": {
     "image": {
-      "alt": "SoulFire logo"
+      "alt": "Логотип SoulFire"
     },
     "title": "SoulFire"
   },
@@ -10,7 +10,7 @@
     "description": "Выберите тип подключения к SoulFire серверу.",
     "integrated": {
       "title": "Встроенный сервер (локально)",
-      "description": ""
+      "description": "Запустите сервер SoulFire на своем компьютере. Это автоматически и не требует конфигурации. (Требует Desktop/Android приложение)"
     },
     "dedicated": {
       "title": "Выделенный сервер (удаленный)",

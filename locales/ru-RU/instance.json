@@ -55,7 +55,7 @@
     "import": {
       "javaEdition": "Java Edition",
       "bedrockEdition": "Bedrock Edition",
-      "offline": "Offline",
+      "offline": "Офлайн",
       "microsoftCredentials": "Учетные данные Microsoft",
       "microsoftDeviceCode": "Код устройства Microsoft",
       "microsoftRefreshToken": "Microsoft Refresh Token",
