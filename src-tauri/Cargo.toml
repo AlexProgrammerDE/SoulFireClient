@@ -23,7 +23,7 @@ reqwest = { version = "0.12.23", features = ["json"] }
 tar = "0.4.44"
 flate2 = "1.1.2"
 strip-ansi-escapes = "0.2.1"
-zip = "4.5.0"
+zip = "5.0.0"
 rust_cast = "0.19.0"
 mdns-sd = "0.15.0"
 log = "0.4.27"
