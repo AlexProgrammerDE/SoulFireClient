@@ -1,18 +1,18 @@
 use crate::sf_version_constant::SOULFIRE_VERSION;
 use crate::utils::{
-    SFAnyError, SFError, detect_architecture, detect_os, extract_tar_gz, extract_zip,
-    find_random_available_port, get_java_exec_name, get_java_home_dir,
+  detect_architecture, detect_os, extract_tar_gz, extract_zip, find_random_available_port, get_java_exec_name,
+  get_java_home_dir, SFAnyError, SFError,
 };
 use log::info;
 use serde::Serialize;
 use sha2::Digest;
-use std::sync::Arc;
 use std::sync::atomic::AtomicBool;
+use std::sync::Arc;
 use tauri::async_runtime::Mutex;
 use tauri::{AppHandle, Emitter, Manager};
-use tauri_plugin_shell::ShellExt;
 use tauri_plugin_shell::process::CommandChild;
 use tauri_plugin_shell::process::CommandEvent::Stdout;
+use tauri_plugin_shell::ShellExt;
 
 pub struct IntegratedServerState {
     pub starting: Arc<AtomicBool>,
@@ -61,14 +61,14 @@ async fn internal_load_integrated_server(
     }
 
     let app_local_data_dir = app_handle.path().app_local_data_dir()?;
-    let jvm_dir = app_local_data_dir.join("jvm-21");
+  let jvm_dir = app_local_data_dir.join("jvm-25");
     if jvm_dir.exists() {
         send_log(&app_handle, "JVM detected")?;
     } else {
         let adoptium_os = detect_os();
         let adoptium_arch = detect_architecture();
         let jvm_url = format!(
-            "https://api.adoptium.net/v3/assets/latest/21/hotspot?architecture={}&image_type=jre&os={}&vendor=eclipse",
+          "https://api.adoptium.net/v3/assets/latest/25/hotspot?architecture={}&image_type=jre&os={}&vendor=eclipse",
             adoptium_arch, adoptium_os
         );
         info!("JVM URL: {}", jvm_url);
@@ -88,22 +88,13 @@ async fn internal_load_integrated_server(
         let download_url = jvm_json[0]["binary"]["package"]["link"]
             .as_str()
             .ok_or(SFError::JsonFieldInvalid("binary.package.link".to_string()))?;
-        let major_version = jvm_json[0]["version"]["major"]
-            .as_u64()
-            .ok_or(SFError::JsonFieldInvalid("version.major".to_string()))?;
-        let minor_version = jvm_json[0]["version"]["minor"]
-            .as_u64()
-            .ok_or(SFError::JsonFieldInvalid("version.minor".to_string()))?;
-        let security_version = jvm_json[0]["version"]["security"]
-            .as_u64()
-            .ok_or(SFError::JsonFieldInvalid("version.security".to_string()))?;
-        let build_version = jvm_json[0]["version"]["build"]
-            .as_u64()
-            .ok_or(SFError::JsonFieldInvalid("version.build".to_string()))?;
+      let release_name = jvm_json[0]["release_name"]
+        .as_str()
+        .ok_or(SFError::JsonFieldInvalid("release_name".to_string()))?;
         info!("Download URL: {}", download_url);
         let jvm_archive_dir_name = format!(
-            "jdk-{}.{}.{}+{}-jre",
-            major_version, minor_version, security_version, build_version
+          "{}-jre",
+          release_name
         );
 
         let last_sent_progress = std::sync::atomic::AtomicU64::new(0);
