@@ -1,16 +1,16 @@
-import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
-import { isDemo } from '@/lib/utils.tsx';
-import i18n from '@/lib/i18n.ts';
-import { SFServerType } from '@/lib/types.ts';
-import { AuthType, createClient, WebDAVClient } from 'webdav';
-import { ClientDataResponse } from '@/generated/soulfire/client.ts';
+import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
+import { AuthType, createClient, type WebDAVClient } from "webdav";
+import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
+import i18n from "@/lib/i18n.ts";
+import type { SFServerType } from "@/lib/types.ts";
+import { isDemo } from "@/lib/utils.tsx";
 
-const LOCAL_STORAGE_SERVER_TYPE_KEY = 'server-type';
-const LOCAL_STORAGE_SERVER_ADDRESS_KEY = 'server-address';
-const LOCAL_STORAGE_SERVER_TOKEN_KEY = 'server-token';
-const LOCAL_STORAGE_SERVER_WEBDAV_TOKEN_KEY = 'server-webdav-token';
+const LOCAL_STORAGE_SERVER_TYPE_KEY = "server-type";
+const LOCAL_STORAGE_SERVER_ADDRESS_KEY = "server-address";
+const LOCAL_STORAGE_SERVER_TOKEN_KEY = "server-token";
+const LOCAL_STORAGE_SERVER_WEBDAV_TOKEN_KEY = "server-webdav-token";
 const LOCAL_STORAGE_SERVER_IMPERSONATION_TOKEN_KEY =
-  'server-impersonation-token';
+  "server-impersonation-token";
 
 export const isAuthenticated = () => {
   if (isDemo()) return true;
@@ -54,7 +54,7 @@ export function createWebDAVClient(
   const token = getOrGenerateWebDAVToken(generator);
   return createClient(clientInfo.serverInfo!.publicWebdavAddress, {
     authType: AuthType.Password,
-    username: 'ignored',
+    username: "ignored",
     password: token,
   });
 }
@@ -90,7 +90,7 @@ export const createTransport = () => {
   let token = localStorage.getItem(LOCAL_STORAGE_SERVER_TOKEN_KEY);
 
   if (!address || !token) {
-    throw new Error(i18n.t('common:error.noAddressOrToken'));
+    throw new Error(i18n.t("common:error.noAddressOrToken"));
   }
 
   const impersonationToken = localStorage.getItem(

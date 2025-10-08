@@ -1,22 +1,22 @@
-import {
+import type { JsonValue } from "@protobuf-ts/runtime/build/types/json-typings";
+import type { i18n } from "i18next";
+import { Value } from "@/generated/google/protobuf/struct.ts";
+import type {
   MinecraftAccountProto,
   MinecraftAccountProto_AccountTypeProto,
   ProxyProto_Type,
-} from '@/generated/soulfire/common.ts';
-import { Value } from '@/generated/google/protobuf/struct.ts';
-import { JsonValue } from '@protobuf-ts/runtime/build/types/json-typings';
+} from "@/generated/soulfire/common.ts";
 import {
-  InstanceConfig,
-  InstanceInfoResponse,
+  type InstanceConfig,
+  type InstanceInfoResponse,
   InstanceState,
-} from '@/generated/soulfire/instance.ts';
-import {
+} from "@/generated/soulfire/instance.ts";
+import type {
   ServerConfig,
   ServerInfoResponse,
-} from '@/generated/soulfire/server.ts';
-import { i18n } from 'i18next';
+} from "@/generated/soulfire/server.ts";
 
-export type SFServerType = 'integrated' | 'dedicated';
+export type SFServerType = "integrated" | "dedicated";
 
 export type BaseSettings = {
   settings: Record<string, Record<string, JsonValue>>;
@@ -77,7 +77,7 @@ export type ProfileAccount = {
   type: MinecraftAccountProto_AccountTypeProto;
   profileId: string;
   lastKnownName: string;
-  accountData: MinecraftAccountProto['accountData'];
+  accountData: MinecraftAccountProto["accountData"];
 };
 
 export type ProfileProxy = {

@@ -1,3 +1,36 @@
+import { useAptabase } from "@aptabase/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useRouteContext } from "@tanstack/react-router";
+import { PencilIcon, PlusIcon, XIcon } from "lucide-react";
+import { use } from "react";
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import { z } from "zod";
+import { Button } from "@/components/ui/button.tsx";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select.tsx";
+import { UserRole } from "@/generated/soulfire/common.ts";
+import { UserServiceClient } from "@/generated/soulfire/user.client.ts";
+import type { UserListResponse_User } from "@/generated/soulfire/user.ts";
+import { getEnumEntries } from "@/lib/types.ts";
+import { TransportContext } from "../providers/transport-context.tsx";
 import {
   Credenza,
   CredenzaBody,
@@ -7,40 +40,7 @@ import {
   CredenzaFooter,
   CredenzaHeader,
   CredenzaTitle,
-} from '../ui/credenza.tsx';
-import { Button } from '@/components/ui/button.tsx';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form.tsx';
-import { Input } from '@/components/ui/input.tsx';
-import { useTranslation } from 'react-i18next';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import { use } from 'react';
-import { TransportContext } from '../providers/transport-context.tsx';
-import { UserRole } from '@/generated/soulfire/common.ts';
-import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select.tsx';
-import { getEnumEntries } from '@/lib/types.ts';
-import { useRouteContext } from '@tanstack/react-router';
-import { UserListResponse_User } from '@/generated/soulfire/user.ts';
-import { PencilIcon, PlusIcon, XIcon } from 'lucide-react';
-import { useAptabase } from '@aptabase/react';
+} from "../ui/credenza.tsx";
 
 export type FormType = {
   username: string;
@@ -55,23 +55,23 @@ export function ManageUserDialog({
 }: {
   open: boolean;
   setOpen: (open: boolean) => void;
-} & ({ mode: 'edit'; user: UserListResponse_User } | { mode: 'add' })) {
+} & ({ mode: "edit"; user: UserListResponse_User } | { mode: "add" })) {
   const usersQueryOptions = useRouteContext({
-    from: '/_dashboard/user/admin/users',
+    from: "/_dashboard/user/admin/users",
     select: (context) => context.usersQueryOptions,
   });
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation("admin");
   const { trackEvent } = useAptabase();
   const formSchema = z.object({
     username: z
       .string()
-      .min(3, t('users.baseUserDialog.form.username.min'))
-      .max(32, t('users.baseUserDialog.form.username.max'))
+      .min(3, t("users.baseUserDialog.form.username.min"))
+      .max(32, t("users.baseUserDialog.form.username.max"))
       .regex(
         /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-        t('users.baseUserDialog.form.username.regex'),
+        t("users.baseUserDialog.form.username.regex"),
       ),
     email: z.email(),
     role: z.enum(UserRole),
@@ -79,9 +79,9 @@ export function ManageUserDialog({
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: props.mode === 'edit' ? props.user.username : '',
-      email: props.mode === 'edit' ? props.user.email : '',
-      role: props.mode === 'edit' ? props.user.role : UserRole.USER,
+      username: props.mode === "edit" ? props.user.username : "",
+      email: props.mode === "edit" ? props.user.email : "",
+      role: props.mode === "edit" ? props.user.role : UserRole.USER,
     },
   });
   const submitMutation = useMutation({
@@ -90,13 +90,13 @@ export function ManageUserDialog({
         return;
       }
 
-      void trackEvent(props.mode === 'add' ? 'create_user' : 'update_user', {
+      void trackEvent(props.mode === "add" ? "create_user" : "update_user", {
         role: values.role,
       });
 
       const userService = new UserServiceClient(transport);
       const promise =
-        props.mode === 'add'
+        props.mode === "add"
           ? userService
               .createUser({
                 username: values.username,
@@ -114,20 +114,20 @@ export function ManageUserDialog({
               .then((r) => r.response);
       toast.promise(promise, {
         loading:
-          props.mode === 'add'
-            ? t('users.addToast.loading')
-            : t('users.updateToast.loading'),
+          props.mode === "add"
+            ? t("users.addToast.loading")
+            : t("users.updateToast.loading"),
         success: () => {
           setOpen(false);
-          return props.mode === 'add'
-            ? t('users.addToast.success')
-            : t('users.updateToast.success');
+          return props.mode === "add"
+            ? t("users.addToast.success")
+            : t("users.updateToast.success");
         },
         error: (e) => {
           console.error(e);
-          return props.mode === 'add'
-            ? t('users.addToast.error')
-            : t('users.updateToast.error');
+          return props.mode === "add"
+            ? t("users.addToast.error")
+            : t("users.updateToast.error");
         },
       });
 
@@ -152,14 +152,14 @@ export function ManageUserDialog({
           >
             <CredenzaHeader>
               <CredenzaTitle>
-                {props.mode === 'add'
-                  ? t('users.addUserDialog.title')
-                  : t('users.updateUserDialog.title')}
+                {props.mode === "add"
+                  ? t("users.addUserDialog.title")
+                  : t("users.updateUserDialog.title")}
               </CredenzaTitle>
               <CredenzaDescription>
-                {props.mode === 'add'
-                  ? t('users.addUserDialog.description')
-                  : t('users.updateUserDialog.description')}
+                {props.mode === "add"
+                  ? t("users.addUserDialog.description")
+                  : t("users.updateUserDialog.description")}
               </CredenzaDescription>
             </CredenzaHeader>
             <CredenzaBody className="flex flex-col gap-4">
@@ -169,19 +169,19 @@ export function ManageUserDialog({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      {t('users.baseUserDialog.form.username.label')}
+                      {t("users.baseUserDialog.form.username.label")}
                     </FormLabel>
                     <FormControl>
                       <Input
                         autoFocus
                         placeholder={t(
-                          'users.baseUserDialog.form.username.placeholder',
+                          "users.baseUserDialog.form.username.placeholder",
                         )}
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      {t('users.baseUserDialog.form.username.description')}
+                      {t("users.baseUserDialog.form.username.description")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -193,18 +193,18 @@ export function ManageUserDialog({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      {t('users.baseUserDialog.form.email.label')}
+                      {t("users.baseUserDialog.form.email.label")}
                     </FormLabel>
                     <FormControl>
                       <Input
                         placeholder={t(
-                          'users.baseUserDialog.form.email.placeholder',
+                          "users.baseUserDialog.form.email.placeholder",
                         )}
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      {t('users.baseUserDialog.form.email.description')}
+                      {t("users.baseUserDialog.form.email.description")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -216,7 +216,7 @@ export function ManageUserDialog({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      {t('users.baseUserDialog.form.role.label')}
+                      {t("users.baseUserDialog.form.role.label")}
                     </FormLabel>
                     <Select
                       onValueChange={(value) => field.onChange(Number(value))}
@@ -241,7 +241,7 @@ export function ManageUserDialog({
                       </SelectContent>
                     </Select>
                     <FormDescription>
-                      {t('users.baseUserDialog.form.role.description')}
+                      {t("users.baseUserDialog.form.role.description")}
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -252,16 +252,16 @@ export function ManageUserDialog({
               <CredenzaClose asChild>
                 <Button variant="outline">
                   <XIcon />
-                  {props.mode === 'add'
-                    ? t('users.addUserDialog.form.cancel')
-                    : t('users.updateUserDialog.form.cancel')}
+                  {props.mode === "add"
+                    ? t("users.addUserDialog.form.cancel")
+                    : t("users.updateUserDialog.form.cancel")}
                 </Button>
               </CredenzaClose>
               <Button type="submit">
-                {props.mode === 'add' ? <PlusIcon /> : <PencilIcon />}
-                {props.mode === 'add'
-                  ? t('users.addUserDialog.form.add')
-                  : t('users.updateUserDialog.form.update')}
+                {props.mode === "add" ? <PlusIcon /> : <PencilIcon />}
+                {props.mode === "add"
+                  ? t("users.addUserDialog.form.add")
+                  : t("users.updateUserDialog.form.update")}
               </Button>
             </CredenzaFooter>
           </form>

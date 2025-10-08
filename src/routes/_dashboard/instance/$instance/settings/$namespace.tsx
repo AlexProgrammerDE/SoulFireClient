@@ -1,16 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
-import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
-import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
-import { useTranslation } from 'react-i18next';
-import { NotFoundComponent } from '@/components/not-found-component.tsx';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { Skeleton } from '@/components/ui/skeleton.tsx';
-import { LoadingComponent } from '@/components/loading-component.tsx';
-import { Suspense } from 'react';
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { Suspense } from "react";
+import { useTranslation } from "react-i18next";
+import { LoadingComponent } from "@/components/loading-component.tsx";
+import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
+import { NotFoundComponent } from "@/components/not-found-component.tsx";
+import { PluginInfoCard } from "@/components/plugin-info-card.tsx";
+import { InstanceSettingsPageComponent } from "@/components/settings-page.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 
 export const Route = createFileRoute(
-  '/_dashboard/instance/$instance/settings/$namespace',
+  "/_dashboard/instance/$instance/settings/$namespace",
 )({
   component: SettingsNamespace,
 });
@@ -28,7 +28,7 @@ function ContentSkeleton() {
     <InstancePageLayout
       extraCrumbs={[
         {
-          id: 'loading',
+          id: "loading",
           content: <Skeleton className="h-4 w-24" />,
         },
       ]}
@@ -40,7 +40,7 @@ function ContentSkeleton() {
 }
 
 function Content() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const { namespace } = Route.useParams();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
@@ -56,12 +56,12 @@ function Content() {
       extraCrumbs={[
         settingsEntry.owningPlugin
           ? {
-              id: 'plugin',
-              content: t('breadcrumbs.plugins'),
+              id: "plugin",
+              content: t("breadcrumbs.plugins"),
             }
           : {
-              id: 'settings',
-              content: t('breadcrumbs.settings'),
+              id: "settings",
+              content: t("breadcrumbs.settings"),
             },
       ]}
       pageName={settingsEntry.pageName}

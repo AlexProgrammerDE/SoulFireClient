@@ -1,21 +1,21 @@
-import { Input } from '@/components/ui/input.tsx';
 import {
-  KeyboardEventHandler,
+  type KeyboardEventHandler,
   use,
   useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
   useState,
-} from 'react';
-import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { CommandServiceClient } from '@/generated/soulfire/command.client.ts';
-import {
+} from "react";
+import { useTranslation } from "react-i18next";
+import { z } from "zod";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import { CommandServiceClient } from "@/generated/soulfire/command.client.ts";
+import type {
   CommandCompletion,
   CommandScope,
-} from '@/generated/soulfire/command.ts';
-import { useTranslation } from 'react-i18next';
-import { z } from 'zod';
+} from "@/generated/soulfire/command.ts";
 
 type CompletionState = {
   baseText: string;
@@ -27,7 +27,7 @@ type CompletionState = {
 
 const COMPLETION_DEBOUNCE_MS = 120;
 
-const SF_COMMAND_HISTORY_KEY = 'sf-command-history';
+const SF_COMMAND_HISTORY_KEY = "sf-command-history";
 const SF_COMMAND_HISTORY_LENGTH = 100;
 
 const historySchema = z.string().array();
@@ -39,12 +39,12 @@ function getTokenRange(
   cursor: number,
 ): { start: number; end: number } {
   let start = cursor;
-  while (start > 0 && !WHITESPACE_REGEX.test(text[start - 1] ?? '')) {
+  while (start > 0 && !WHITESPACE_REGEX.test(text[start - 1] ?? "")) {
     start -= 1;
   }
 
   let end = cursor;
-  while (end < text.length && !WHITESPACE_REGEX.test(text[end] ?? '')) {
+  while (end < text.length && !WHITESPACE_REGEX.test(text[end] ?? "")) {
     end += 1;
   }
 
@@ -52,18 +52,18 @@ function getTokenRange(
 }
 
 export default function CommandInput(props: { scope: CommandScope }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const transport = use(TransportContext);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [cursorPosition, setCursorPosition] = useState(0);
   const [commandHistory, setCommandHistory] = useState<string[]>(
     historySchema.parse(
-      JSON.parse(localStorage.getItem(SF_COMMAND_HISTORY_KEY) ?? '[]'),
+      JSON.parse(localStorage.getItem(SF_COMMAND_HISTORY_KEY) ?? "[]"),
     ),
   );
   const [historyIndex, setHistoryIndex] = useState<number>(-1);
   const [completionState, setCompletionState] = useState<CompletionState>({
-    baseText: '',
+    baseText: "",
     cursor: 0,
     receivedCompletions: null,
     index: null,
@@ -93,17 +93,17 @@ export default function CommandInput(props: { scope: CommandScope }) {
         event.key.length === 1 &&
         /[a-zA-Z0-9!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~ ]/.test(event.key) &&
         (activeEl === null ||
-          (activeEl.tagName !== 'INPUT' &&
-            activeEl.tagName !== 'TEXTAREA' &&
+          (activeEl.tagName !== "INPUT" &&
+            activeEl.tagName !== "TEXTAREA" &&
             !activeEl.isContentEditable))
       ) {
         inputRef.current.focus();
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -209,7 +209,7 @@ export default function CommandInput(props: { scope: CommandScope }) {
       const range =
         completionStateNew.replacementRange ??
         getTokenRange(completionStateNew.baseText, completionStateNew.cursor);
-      const suggestion = suggestionsList[activeIndex]?.suggestion ?? '';
+      const suggestion = suggestionsList[activeIndex]?.suggestion ?? "";
 
       const before = completionStateNew.baseText.slice(0, range.start);
       const after = completionStateNew.baseText.slice(
@@ -266,8 +266,8 @@ export default function CommandInput(props: { scope: CommandScope }) {
     const rect = input.getBoundingClientRect();
     const styles = window.getComputedStyle(input);
     const font = `${styles.fontStyle} ${styles.fontVariant} ${styles.fontWeight} ${styles.fontSize} ${styles.fontFamily}`;
-    const measureCanvas = document.createElement('canvas');
-    const context = measureCanvas.getContext('2d');
+    const measureCanvas = document.createElement("canvas");
+    const context = measureCanvas.getContext("2d");
     if (!context) {
       return;
     }
@@ -320,12 +320,12 @@ export default function CommandInput(props: { scope: CommandScope }) {
       updateCaretPosition();
     };
 
-    window.addEventListener('resize', handleWindowEvent);
-    window.addEventListener('scroll', handleWindowEvent, true);
+    window.addEventListener("resize", handleWindowEvent);
+    window.addEventListener("scroll", handleWindowEvent, true);
 
     return () => {
-      window.removeEventListener('resize', handleWindowEvent);
-      window.removeEventListener('scroll', handleWindowEvent, true);
+      window.removeEventListener("resize", handleWindowEvent);
+      window.removeEventListener("scroll", handleWindowEvent, true);
     };
   }, [isFocused, updateCaretPosition]);
 
@@ -334,7 +334,7 @@ export default function CommandInput(props: { scope: CommandScope }) {
   const highlightedIndex = completionState.index ?? 0;
   const showSuggestions =
     isFocused &&
-    (inputValue === '' || completionState.receivedCompletions !== null);
+    (inputValue === "" || completionState.receivedCompletions !== null);
 
   useEffect(() => {
     if (!showSuggestions || !hasSuggestions) {
@@ -344,7 +344,7 @@ export default function CommandInput(props: { scope: CommandScope }) {
 
     const node = activeSuggestionRef.current;
     if (node) {
-      node.scrollIntoView({ block: 'nearest' });
+      node.scrollIntoView({ block: "nearest" });
     }
   }, [
     showSuggestions,
@@ -423,13 +423,13 @@ export default function CommandInput(props: { scope: CommandScope }) {
       !e.metaKey &&
       !e.altKey;
 
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
 
       const currentVal = currentTarget.value.trim();
-      setInputValue('');
+      setInputValue("");
       setCompletionState({
-        baseText: '',
+        baseText: "",
         cursor: 0,
         receivedCompletions: null,
         index: null,
@@ -438,10 +438,10 @@ export default function CommandInput(props: { scope: CommandScope }) {
       requestAnimationFrame(() => {
         currentTarget.selectionStart = currentTarget.selectionEnd = 0;
         setCursorPosition(0);
-        scheduleCompletionFetch('', 0);
+        scheduleCompletionFetch("", 0);
       });
 
-      if (transport === null || currentVal === '') {
+      if (transport === null || currentVal === "") {
         return;
       }
 
@@ -471,7 +471,7 @@ export default function CommandInput(props: { scope: CommandScope }) {
       return;
     }
 
-    if (e.key === 'Tab') {
+    if (e.key === "Tab") {
       e.preventDefault();
       const direction: 1 | -1 = e.shiftKey ? -1 : 1;
       void handleTabPress(
@@ -485,14 +485,14 @@ export default function CommandInput(props: { scope: CommandScope }) {
 
     if (
       hasCyclableSuggestions &&
-      (e.key === 'ArrowDown' || e.key === 'ArrowUp')
+      (e.key === "ArrowDown" || e.key === "ArrowUp")
     ) {
       e.preventDefault();
-      cycleSuggestion(e.key === 'ArrowDown' ? 1 : -1);
+      cycleSuggestion(e.key === "ArrowDown" ? 1 : -1);
       return;
     }
 
-    if (e.key === 'ArrowUp') {
+    if (e.key === "ArrowUp") {
       e.preventDefault();
 
       if (commandHistory.length === 0) {
@@ -537,7 +537,7 @@ export default function CommandInput(props: { scope: CommandScope }) {
       return;
     }
 
-    if (e.key === 'ArrowDown') {
+    if (e.key === "ArrowDown") {
       e.preventDefault();
 
       if (commandHistory.length === 0) {
@@ -546,9 +546,9 @@ export default function CommandInput(props: { scope: CommandScope }) {
 
       if (historyIndex === commandHistory.length - 1) {
         setHistoryIndex(-1);
-        setInputValue('');
+        setInputValue("");
         setCompletionState({
-          baseText: '',
+          baseText: "",
           cursor: 0,
           receivedCompletions: null,
           index: null,
@@ -557,7 +557,7 @@ export default function CommandInput(props: { scope: CommandScope }) {
         requestAnimationFrame(() => {
           currentTarget.selectionStart = currentTarget.selectionEnd = 0;
           setCursorPosition(0);
-          scheduleCompletionFetch('', 0);
+          scheduleCompletionFetch("", 0);
         });
       } else if (historyIndex >= 0) {
         setHistoryIndex(historyIndex + 1);
@@ -585,7 +585,7 @@ export default function CommandInput(props: { scope: CommandScope }) {
       <Input
         ref={inputRef}
         autoFocus
-        placeholder={t('commandInput.placeholder')}
+        placeholder={t("commandInput.placeholder")}
         value={inputValue}
         onKeyDown={handleKeyDown}
         onChange={(e) => {
@@ -619,7 +619,7 @@ export default function CommandInput(props: { scope: CommandScope }) {
           const position = event.currentTarget.selectionStart ?? value.length;
           setCursorPosition(position);
           setIsFocused(true);
-          if (value === '') {
+          if (value === "") {
             resetCompletionFetchDebounce();
             void fetchCompletions(value, position);
           } else {
@@ -651,8 +651,8 @@ export default function CommandInput(props: { scope: CommandScope }) {
                     key={`${suggestion.suggestion}-${index}`}
                     className={`cursor-pointer px-3 py-2 transition-colors ${
                       isActive
-                        ? 'bg-accent text-accent-foreground'
-                        : 'hover:bg-muted'
+                        ? "bg-accent text-accent-foreground"
+                        : "hover:bg-muted"
                     }`}
                     ref={isActive ? setActiveSuggestionNode : undefined}
                     onMouseEnter={() => {
@@ -686,12 +686,12 @@ export default function CommandInput(props: { scope: CommandScope }) {
             </ul>
           ) : (
             <div className="text-muted-foreground px-3 py-2 text-sm">
-              {inputValue === ''
-                ? t('commandInput.emptySuggestions', {
-                    defaultValue: 'Type to request suggestions or press Tab.',
+              {inputValue === ""
+                ? t("commandInput.emptySuggestions", {
+                    defaultValue: "Type to request suggestions or press Tab.",
                   })
-                : t('commandInput.noSuggestions', {
-                    defaultValue: 'No suggestions available.',
+                : t("commandInput.noSuggestions", {
+                    defaultValue: "No suggestions available.",
                   })}
             </div>
           )}

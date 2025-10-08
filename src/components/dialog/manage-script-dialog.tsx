@@ -1,3 +1,39 @@
+import { useAptabase } from "@aptabase/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  type QueryKey,
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { useRouteContext } from "@tanstack/react-router";
+import { PencilIcon, PlusIcon, XIcon } from "lucide-react";
+import { use } from "react";
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import { z } from "zod";
+import { Button } from "@/components/ui/button.tsx";
+import { Checkbox } from "@/components/ui/checkbox.tsx";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import { GlobalPermission } from "@/generated/soulfire/common.ts";
+import { ScriptServiceClient } from "@/generated/soulfire/script.client.ts";
+import {
+  type ScriptListResponse_Script,
+  ScriptScope,
+} from "@/generated/soulfire/script.ts";
+import { getEnumKeyByValue } from "@/lib/types.ts";
+import { hasGlobalPermission } from "@/lib/utils.tsx";
+import { TransportContext } from "../providers/transport-context.tsx";
 import {
   Credenza,
   CredenzaBody,
@@ -7,43 +43,7 @@ import {
   CredenzaFooter,
   CredenzaHeader,
   CredenzaTitle,
-} from '../ui/credenza.tsx';
-import { Button } from '@/components/ui/button.tsx';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form.tsx';
-import { Input } from '@/components/ui/input.tsx';
-import { useTranslation } from 'react-i18next';
-import {
-  QueryKey,
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
-import { toast } from 'sonner';
-import { use } from 'react';
-import { TransportContext } from '../providers/transport-context.tsx';
-import { GlobalPermission } from '@/generated/soulfire/common.ts';
-import { ScriptServiceClient } from '@/generated/soulfire/script.client.ts';
-import {
-  ScriptListResponse_Script,
-  ScriptScope,
-} from '@/generated/soulfire/script.ts';
-import { Checkbox } from '@/components/ui/checkbox.tsx';
-import { hasGlobalPermission } from '@/lib/utils.tsx';
-import { useRouteContext } from '@tanstack/react-router';
-import { PencilIcon, PlusIcon, XIcon } from 'lucide-react';
-import { useAptabase } from '@aptabase/react';
-import { getEnumKeyByValue } from '@/lib/types.ts';
+} from "../ui/credenza.tsx";
 
 export type FormType = {
   scriptName: string;
@@ -61,33 +61,33 @@ export function ManageScriptDialog({
   setOpen: (open: boolean) => void;
   scope: ScriptScope;
   scriptsQueryKey: QueryKey;
-} & ({ mode: 'edit'; script: ScriptListResponse_Script } | { mode: 'add' })) {
+} & ({ mode: "edit"; script: ScriptListResponse_Script } | { mode: "add" })) {
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
   const clientDataQueryOptions = useRouteContext({
-    from: '/_dashboard',
+    from: "/_dashboard",
     select: (context) => context.clientDataQueryOptions,
   });
   const { data: clientData } = useSuspenseQuery(clientDataQueryOptions);
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const { trackEvent } = useAptabase();
   const formSchema = z.object({
     scriptName: z
       .string()
-      .min(3, t('scripts.baseScriptDialog.form.scriptName.min'))
-      .max(32, t('scripts.baseScriptDialog.form.scriptName.max'))
+      .min(3, t("scripts.baseScriptDialog.form.scriptName.min"))
+      .max(32, t("scripts.baseScriptDialog.form.scriptName.max"))
       .regex(
         /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-        t('scripts.baseScriptDialog.form.scriptName.regex'),
+        t("scripts.baseScriptDialog.form.scriptName.regex"),
       ),
     elevatedPermissions: z.boolean(),
   });
   const form = useForm<FormType>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      scriptName: props.mode === 'edit' ? props.script.scriptName : '',
+      scriptName: props.mode === "edit" ? props.script.scriptName : "",
       elevatedPermissions:
-        props.mode === 'edit' ? props.script.elevatedPermissions : false,
+        props.mode === "edit" ? props.script.elevatedPermissions : false,
     },
   });
   const addMutation = useMutation({
@@ -97,7 +97,7 @@ export function ManageScriptDialog({
       }
 
       void trackEvent(
-        props.mode === 'add' ? 'create_script' : 'update_script',
+        props.mode === "add" ? "create_script" : "update_script",
         {
           scope: getEnumKeyByValue(ScriptScope, scope),
           elevatedPermissions: values.elevatedPermissions,
@@ -106,7 +106,7 @@ export function ManageScriptDialog({
 
       const scriptService = new ScriptServiceClient(transport);
       const promise =
-        props.mode === 'add'
+        props.mode === "add"
           ? scriptService
               .createScript({
                 scope,
@@ -123,20 +123,20 @@ export function ManageScriptDialog({
               .then((r) => r.response);
       toast.promise(promise, {
         loading:
-          props.mode === 'add'
-            ? t('scripts.addToast.loading')
-            : t('scripts.updateToast.loading'),
+          props.mode === "add"
+            ? t("scripts.addToast.loading")
+            : t("scripts.updateToast.loading"),
         success: () => {
           setOpen(false);
-          return props.mode === 'add'
-            ? t('scripts.addToast.success')
-            : t('scripts.updateToast.success');
+          return props.mode === "add"
+            ? t("scripts.addToast.success")
+            : t("scripts.updateToast.success");
         },
         error: (e) => {
           console.error(e);
-          return props.mode === 'add'
-            ? t('scripts.addToast.error')
-            : t('scripts.updateToast.error');
+          return props.mode === "add"
+            ? t("scripts.addToast.error")
+            : t("scripts.updateToast.error");
         },
       });
 
@@ -161,14 +161,14 @@ export function ManageScriptDialog({
           >
             <CredenzaHeader>
               <CredenzaTitle>
-                {props.mode === 'add'
-                  ? t('scripts.addScriptDialog.title')
-                  : t('scripts.updateScriptDialog.title')}
+                {props.mode === "add"
+                  ? t("scripts.addScriptDialog.title")
+                  : t("scripts.updateScriptDialog.title")}
               </CredenzaTitle>
               <CredenzaDescription>
-                {props.mode === 'add'
-                  ? t('scripts.addScriptDialog.description')
-                  : t('scripts.updateScriptDialog.description')}
+                {props.mode === "add"
+                  ? t("scripts.addScriptDialog.description")
+                  : t("scripts.updateScriptDialog.description")}
               </CredenzaDescription>
             </CredenzaHeader>
             <CredenzaBody className="flex flex-col gap-4">
@@ -178,20 +178,20 @@ export function ManageScriptDialog({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      {t('scripts.baseScriptDialog.form.scriptName.label')}
+                      {t("scripts.baseScriptDialog.form.scriptName.label")}
                     </FormLabel>
                     <FormControl>
                       <Input
                         autoFocus
                         placeholder={t(
-                          'scripts.baseScriptDialog.form.scriptName.placeholder',
+                          "scripts.baseScriptDialog.form.scriptName.placeholder",
                         )}
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
                       {t(
-                        'scripts.baseScriptDialog.form.scriptName.description',
+                        "scripts.baseScriptDialog.form.scriptName.description",
                       )}
                     </FormDescription>
                     <FormMessage />
@@ -218,12 +218,12 @@ export function ManageScriptDialog({
                     <div className="flex flex-col gap-y-1 leading-none">
                       <FormLabel>
                         {t(
-                          'scripts.baseScriptDialog.form.elevatedPermissions.label',
+                          "scripts.baseScriptDialog.form.elevatedPermissions.label",
                         )}
                       </FormLabel>
                       <FormDescription>
                         {t(
-                          'scripts.baseScriptDialog.form.elevatedPermissions.description',
+                          "scripts.baseScriptDialog.form.elevatedPermissions.description",
                         )}
                       </FormDescription>
                     </div>
@@ -235,16 +235,16 @@ export function ManageScriptDialog({
               <CredenzaClose asChild>
                 <Button variant="outline">
                   <XIcon />
-                  {props.mode === 'add'
-                    ? t('scripts.addScriptDialog.form.cancel')
-                    : t('scripts.updateScriptDialog.form.cancel')}
+                  {props.mode === "add"
+                    ? t("scripts.addScriptDialog.form.cancel")
+                    : t("scripts.updateScriptDialog.form.cancel")}
                 </Button>
               </CredenzaClose>
               <Button type="submit">
-                {props.mode === 'add' ? <PlusIcon /> : <PencilIcon />}
-                {props.mode === 'add'
-                  ? t('scripts.addScriptDialog.form.add')
-                  : t('scripts.updateScriptDialog.form.update')}
+                {props.mode === "add" ? <PlusIcon /> : <PencilIcon />}
+                {props.mode === "add"
+                  ? t("scripts.addScriptDialog.form.add")
+                  : t("scripts.updateScriptDialog.form.update")}
               </Button>
             </CredenzaFooter>
           </form>

@@ -1,5 +1,5 @@
-import { useTranslation } from 'react-i18next';
-import { useMemo } from 'react';
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 export type LocaleNumberFormat = {
   thousandSeparator: string;
@@ -12,13 +12,13 @@ export function useLocaleNumberFormat(): LocaleNumberFormat {
     const formatter = new Intl.NumberFormat(i18n.language);
     const parts = formatter.formatToParts(1234567.89);
 
-    let thousandSeparator = ',';
-    let decimalSeparator = '.';
+    let thousandSeparator = ",";
+    let decimalSeparator = ".";
     parts.forEach((part) => {
-      if (part.type === 'group') {
+      if (part.type === "group") {
         thousandSeparator = part.value;
       }
-      if (part.type === 'decimal') {
+      if (part.type === "decimal") {
         decimalSeparator = part.value;
       }
     });

@@ -1,18 +1,21 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { createTransport } from '@/lib/web-rpc.ts';
-import { queryOptions } from '@tanstack/react-query';
-import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
-import { UserListResponse } from '@/generated/soulfire/user.ts';
-import { UserRole } from '@/generated/soulfire/common.ts';
-import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
-import { convertFromServerProto, ServerInfoQueryData } from '@/lib/types.ts';
-import { ServerConfig } from '@/generated/soulfire/server.ts';
-import { demoServerSettings } from '@/demo-data.ts';
+import { queryOptions } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { demoServerSettings } from "@/demo-data.ts";
+import { UserRole } from "@/generated/soulfire/common.ts";
+import { ServerServiceClient } from "@/generated/soulfire/server.client.ts";
+import type { ServerConfig } from "@/generated/soulfire/server.ts";
+import { UserServiceClient } from "@/generated/soulfire/user.client.ts";
+import type { UserListResponse } from "@/generated/soulfire/user.ts";
+import {
+  convertFromServerProto,
+  type ServerInfoQueryData,
+} from "@/lib/types.ts";
+import { createTransport } from "@/lib/web-rpc.ts";
 
-export const Route = createFileRoute('/_dashboard/user/admin')({
+export const Route = createFileRoute("/_dashboard/user/admin")({
   beforeLoad: (props) => {
     const serverInfoQueryOptions = queryOptions({
-      queryKey: ['server-info'],
+      queryKey: ["server-info"],
       queryFn: async (props): Promise<ServerInfoQueryData> => {
         const transport = createTransport();
         if (transport === null) {
@@ -43,16 +46,16 @@ export const Route = createFileRoute('/_dashboard/user/admin')({
       refetchInterval: 3_000,
     });
     const usersQueryOptions = queryOptions({
-      queryKey: ['users'],
+      queryKey: ["users"],
       queryFn: async (props): Promise<UserListResponse> => {
         const transport = createTransport();
         if (transport === null) {
           return {
             users: [
               {
-                id: 'root',
-                username: 'root',
-                email: 'root@soulfiremc.com',
+                id: "root",
+                username: "root",
+                email: "root@soulfiremc.com",
                 role: UserRole.ADMIN,
               },
             ],
@@ -71,12 +74,12 @@ export const Route = createFileRoute('/_dashboard/user/admin')({
       },
       refetchInterval: 3_000,
     });
-    props.abortController.signal.addEventListener('abort', () => {
+    props.abortController.signal.addEventListener("abort", () => {
       void props.context.queryClient.cancelQueries({
         queryKey: serverInfoQueryOptions.queryKey,
       });
     });
-    props.abortController.signal.addEventListener('abort', () => {
+    props.abortController.signal.addEventListener("abort", () => {
       void props.context.queryClient.cancelQueries({
         queryKey: usersQueryOptions.queryKey,
       });

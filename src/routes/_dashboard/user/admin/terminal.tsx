@@ -1,32 +1,32 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { TerminalComponent } from '@/components/terminal.tsx';
-import CommandInput from '@/components/command-input.tsx';
-import UserPageLayout from '@/components/nav/user/user-page-layout';
-import { useMemo } from 'react';
-import { CommandScope } from '@/generated/soulfire/command.ts';
-import { LogScope } from '@/generated/soulfire/logs.ts';
-import { useTranslation } from 'react-i18next';
-import { hasGlobalPermission } from '@/lib/utils.tsx';
-import { GlobalPermission } from '@/generated/soulfire/common.ts';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import CommandInput from "@/components/command-input.tsx";
+import UserPageLayout from "@/components/nav/user/user-page-layout";
+import { TerminalComponent } from "@/components/terminal.tsx";
+import type { CommandScope } from "@/generated/soulfire/command.ts";
+import { GlobalPermission } from "@/generated/soulfire/common.ts";
+import type { LogScope } from "@/generated/soulfire/logs.ts";
+import { hasGlobalPermission } from "@/lib/utils.tsx";
 
-export const Route = createFileRoute('/_dashboard/user/admin/terminal')({
+export const Route = createFileRoute("/_dashboard/user/admin/terminal")({
   component: Terminal,
 });
 
 function Terminal() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
     <UserPageLayout
       showUserCrumb={false}
       extraCrumbs={[
         {
-          id: 'admin',
-          content: t('breadcrumbs.admin'),
+          id: "admin",
+          content: t("breadcrumbs.admin"),
         },
       ]}
-      pageName={t('pageName.terminal')}
+      pageName={t("pageName.terminal")}
     >
       <Content />
     </UserPageLayout>
@@ -39,7 +39,7 @@ function Content() {
   const logScope = useMemo<LogScope>(
     () => ({
       scope: {
-        oneofKind: 'personal',
+        oneofKind: "personal",
         personal: {},
       },
     }),
@@ -48,7 +48,7 @@ function Content() {
   const commandScope = useMemo<CommandScope>(
     () => ({
       scope: {
-        oneofKind: 'global',
+        oneofKind: "global",
         global: {},
       },
     }),

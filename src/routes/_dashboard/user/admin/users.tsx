@@ -1,15 +1,14 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import * as React from 'react';
-import { use, useState } from 'react';
-import { Button } from '@/components/ui/button.tsx';
-import { ColumnDef, Row, Table as ReactTable } from '@tanstack/react-table';
 import {
-  getEnumEntries,
-  getEnumKeyByValue,
-  mapUnionToValue,
-} from '@/lib/types.ts';
-import { UserRole } from '@/generated/soulfire/common.ts';
-import { toast } from 'sonner';
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import type {
+  ColumnDef,
+  Table as ReactTable,
+  Row,
+} from "@tanstack/react-table";
 import {
   LogOutIcon,
   PencilIcon,
@@ -19,56 +18,61 @@ import {
   TrashIcon,
   UserIcon,
   VenetianMaskIcon,
-} from 'lucide-react';
-import { TransportContext } from '@/components/providers/transport-context.tsx';
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
-import { Trans, useTranslation } from 'react-i18next';
-import { startImpersonation } from '@/lib/web-rpc.ts';
-import { UserListResponse_User } from '@/generated/soulfire/user.ts';
-import { UserServiceClient } from '@/generated/soulfire/user.client.ts';
-import UserPageLayout from '@/components/nav/user/user-page-layout.tsx';
-import { UserAvatar } from '@/components/user-avatar.tsx';
-import { ManageUserDialog } from '@/components/dialog/manage-user-dialog.tsx';
-import { ROOT_USER_ID, runAsync, timestampToDate } from '@/lib/utils.tsx';
-import { SFTimeAgo } from '@/components/sf-timeago.tsx';
-import { CopyInfoButton } from '@/components/info-buttons.tsx';
-import {
-  SelectAllHeader,
-  SelectRowHeader,
-} from '@/components/data-table/data-table-selects.tsx';
-import { DataTable } from '@/components/data-table/data-table.tsx';
-import { useDataTable } from '@/hooks/use-data-table.ts';
+} from "lucide-react";
+import * as React from "react";
+import { use, useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import { DataTable } from "@/components/data-table/data-table.tsx";
 import {
   DataTableActionBar,
   DataTableActionBarAction,
   DataTableActionBarSelection,
-} from '@/components/data-table/data-table-action-bar.tsx';
-import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
-import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
-import { DataTableToolbar } from '@/components/data-table/data-table-toolbar.tsx';
-import { Badge } from '@/components/ui/badge.tsx';
+} from "@/components/data-table/data-table-action-bar.tsx";
+import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header.tsx";
+import {
+  SelectAllHeader,
+  SelectRowHeader,
+} from "@/components/data-table/data-table-selects.tsx";
+import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
+import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
+import { ManageUserDialog } from "@/components/dialog/manage-user-dialog.tsx";
+import { CopyInfoButton } from "@/components/info-buttons.tsx";
+import UserPageLayout from "@/components/nav/user/user-page-layout.tsx";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
+import { SFTimeAgo } from "@/components/sf-timeago.tsx";
+import { Badge } from "@/components/ui/badge.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { UserAvatar } from "@/components/user-avatar.tsx";
+import { UserRole } from "@/generated/soulfire/common.ts";
+import { UserServiceClient } from "@/generated/soulfire/user.client.ts";
+import type { UserListResponse_User } from "@/generated/soulfire/user.ts";
+import { useDataTable } from "@/hooks/use-data-table.ts";
+import {
+  getEnumEntries,
+  getEnumKeyByValue,
+  mapUnionToValue,
+} from "@/lib/types.ts";
+import { ROOT_USER_ID, runAsync, timestampToDate } from "@/lib/utils.tsx";
+import { startImpersonation } from "@/lib/web-rpc.ts";
 
-export const Route = createFileRoute('/_dashboard/user/admin/users')({
+export const Route = createFileRoute("/_dashboard/user/admin/users")({
   component: Users,
 });
 
 const roleToIcon = (type: keyof typeof UserRole) =>
   mapUnionToValue(type, (key) => {
     switch (key) {
-      case 'USER':
+      case "USER":
         return UserIcon;
-      case 'ADMIN':
+      case "ADMIN":
         return ShieldUserIcon;
     }
   });
 
 const columns: ColumnDef<UserListResponse_User>[] = [
   {
-    id: 'select',
+    id: "select",
     header: SelectAllHeader,
     cell: SelectRowHeader,
     size: 32,
@@ -76,8 +80,8 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     enableHiding: false,
   },
   {
-    id: 'username',
-    accessorKey: 'username',
+    id: "username",
+    accessorKey: "username",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Username" />
     ),
@@ -93,31 +97,31 @@ const columns: ColumnDef<UserListResponse_User>[] = [
       </div>
     ),
     meta: {
-      label: 'Username',
-      placeholder: 'Search usernames...',
-      variant: 'text',
+      label: "Username",
+      placeholder: "Search usernames...",
+      variant: "text",
       icon: TextIcon,
     },
     enableColumnFilter: true,
   },
   {
-    id: 'email',
-    accessorKey: 'email',
+    id: "email",
+    accessorKey: "email",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Email" />
     ),
     meta: {
-      label: 'Email',
-      placeholder: 'Search emails...',
-      variant: 'text',
+      label: "Email",
+      placeholder: "Search emails...",
+      variant: "text",
       icon: TextIcon,
     },
     enableColumnFilter: true,
   },
   {
-    id: 'role',
+    id: "role",
     accessorFn: (row) => getEnumKeyByValue(UserRole, row.role),
-    accessorKey: 'role',
+    accessorKey: "role",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Role" />
     ),
@@ -133,8 +137,8 @@ const columns: ColumnDef<UserListResponse_User>[] = [
       );
     },
     meta: {
-      label: 'Role',
-      variant: 'multiSelect',
+      label: "Role",
+      variant: "multiSelect",
       options: getEnumEntries(UserRole).map((type) => {
         return {
           label: type.key,
@@ -146,9 +150,9 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     enableColumnFilter: true,
   },
   {
-    id: 'createdAt',
+    id: "createdAt",
     accessorFn: (row) => timestampToDate(row.createdAt!),
-    accessorKey: 'createdAt',
+    accessorKey: "createdAt",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Created at" />
     ),
@@ -156,19 +160,19 @@ const columns: ColumnDef<UserListResponse_User>[] = [
       <SFTimeAgo date={timestampToDate(row.original.createdAt!)} />
     ),
     enableGlobalFilter: false,
-    sortingFn: 'datetime',
+    sortingFn: "datetime",
     meta: {
-      label: 'Created at',
-      placeholder: 'Search created ats...',
-      variant: 'dateRange',
+      label: "Created at",
+      placeholder: "Search created ats...",
+      variant: "dateRange",
     },
-    filterFn: 'inNumberRange',
+    filterFn: "inNumberRange",
     enableColumnFilter: true,
   },
   {
-    id: 'minIssuedAt',
+    id: "minIssuedAt",
     accessorFn: (row) => timestampToDate(row.minIssuedAt!),
-    accessorKey: 'minIssuedAt',
+    accessorKey: "minIssuedAt",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Min issued at" />
     ),
@@ -176,17 +180,17 @@ const columns: ColumnDef<UserListResponse_User>[] = [
       <SFTimeAgo date={timestampToDate(row.original.minIssuedAt!)} />
     ),
     enableGlobalFilter: false,
-    sortingFn: 'datetime',
+    sortingFn: "datetime",
     meta: {
-      label: 'Min issued at',
-      placeholder: 'Search min issued ats...',
-      variant: 'dateRange',
+      label: "Min issued at",
+      placeholder: "Search min issued ats...",
+      variant: "dateRange",
     },
-    filterFn: 'inNumberRange',
+    filterFn: "inNumberRange",
     enableColumnFilter: true,
   },
   {
-    id: 'actions',
+    id: "actions",
     header: () => <Trans i18nKey="admin:users.table.actions" />,
     cell: ({ row }) => (
       <div className="flex flex-row gap-2">
@@ -244,7 +248,7 @@ function ImpersonateUserButton(props: { row: Row<UserListResponse_User> }) {
             });
             startImpersonation(token.response.token);
             await navigate({
-              to: '/user',
+              to: "/user",
               replace: true,
               reloadDocument: true,
             });
@@ -271,7 +275,7 @@ function AddButton() {
 }
 
 function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
-  const { t } = useTranslation('admin');
+  const { t } = useTranslation("admin");
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
   const { usersQueryOptions } = Route.useRouteContext();
@@ -324,11 +328,11 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
             .rows.map((r) => r.original);
 
           toast.promise(deleteUsersMutation(selectedRows), {
-            loading: t('users.removeToast.loading'),
-            success: t('users.removeToast.success'),
+            loading: t("users.removeToast.loading"),
+            success: t("users.removeToast.success"),
             error: (e) => {
               console.error(e);
-              return t('users.removeToast.error');
+              return t("users.removeToast.error");
             },
           });
         }}
@@ -343,11 +347,11 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
             .rows.map((r) => r.original);
 
           toast.promise(invalidateUsersMutation(selectedRows), {
-            loading: t('users.invalidateToast.loading'),
-            success: t('users.invalidateToast.success'),
+            loading: t("users.invalidateToast.loading"),
+            success: t("users.invalidateToast.success"),
             error: (e) => {
               console.error(e);
-              return t('users.invalidateToast.error');
+              return t("users.invalidateToast.error");
             },
           });
         }}
@@ -360,18 +364,18 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
 }
 
 function Users() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
     <UserPageLayout
       showUserCrumb={false}
       extraCrumbs={[
         {
-          id: 'settings',
-          content: t('breadcrumbs.settings'),
+          id: "settings",
+          content: t("breadcrumbs.settings"),
         },
       ]}
-      pageName={t('pageName.users')}
+      pageName={t("pageName.users")}
     >
       <Content />
     </UserPageLayout>

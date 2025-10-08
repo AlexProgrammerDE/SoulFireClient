@@ -3,36 +3,36 @@ import {
   deepEqual,
   Outlet,
   useLocation,
-} from '@tanstack/react-router';
-import '../App.css';
-import { ThemeProvider } from '@/components/providers/theme-provider.tsx';
-import { Toaster } from '@/components/ui/sonner.tsx';
-import { TailwindIndicator } from '@/components/tailwind-indicator.tsx';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { memo, useEffect, useState } from 'react';
+} from "@tanstack/react-router";
+import "../App.css";
+import { AptabaseProvider, useAptabase } from "@aptabase/react";
+import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { setTheme } from "@tauri-apps/api/app";
+import { invoke } from "@tauri-apps/api/core";
+import { emit } from "@tauri-apps/api/event";
+import { appConfigDir, BaseDirectory, resolve } from "@tauri-apps/api/path";
+import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
+import { mkdir, readDir, watch } from "@tauri-apps/plugin-fs";
+import { attachConsole } from "@tauri-apps/plugin-log";
+import { arch, locale, platform, type, version } from "@tauri-apps/plugin-os";
+import { useTheme } from "next-themes";
+import { NuqsAdapter } from "nuqs/adapters/tanstack-router";
+import { memo, useEffect, useState } from "react";
+import { AboutProvider } from "@/components/dialog/about-dialog.tsx";
 import {
-  SystemInfo,
+  type SystemInfo,
   SystemInfoContext,
-} from '@/components/providers/system-info-context.tsx';
-import { getTerminalTheme, isTauri } from '@/lib/utils.tsx';
-import { appConfigDir, BaseDirectory, resolve } from '@tauri-apps/api/path';
-import { mkdir, readDir, watch } from '@tauri-apps/plugin-fs';
-import { arch, locale, platform, type, version } from '@tauri-apps/plugin-os';
-import { TooltipProvider } from '@/components/ui/tooltip';
-import { TerminalThemeContext } from '@/components/providers/terminal-theme-context';
-import { attachConsole } from '@tauri-apps/plugin-log';
-import { AptabaseProvider, useAptabase } from '@aptabase/react';
-import { emit } from '@tauri-apps/api/event';
-import { useTheme } from 'next-themes';
-import { AboutProvider } from '@/components/dialog/about-dialog.tsx';
-import { invoke } from '@tauri-apps/api/core';
-import { setTheme } from '@tauri-apps/api/app';
-import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
-import { NuqsAdapter } from 'nuqs/adapters/tanstack-router';
+} from "@/components/providers/system-info-context.tsx";
+import { TerminalThemeContext } from "@/components/providers/terminal-theme-context";
+import { ThemeProvider } from "@/components/providers/theme-provider.tsx";
+import { TailwindIndicator } from "@/components/tailwind-indicator.tsx";
+import { Toaster } from "@/components/ui/sonner.tsx";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { getTerminalTheme, isTauri } from "@/lib/utils.tsx";
 
 async function getAvailableProfiles() {
   const profileDir = await resolve(
-    await resolve(await appConfigDir(), 'profile'),
+    await resolve(await appConfigDir(), "profile"),
   );
   await mkdir(profileDir, { recursive: true });
 
@@ -40,12 +40,12 @@ async function getAvailableProfiles() {
     .filter((file) => file.isFile)
     .filter((file) => file.name)
     .map((file) => file.name)
-    .filter((file) => file.endsWith('.json'));
+    .filter((file) => file.endsWith(".json"));
 }
 
 function isMobile() {
   const osType = type();
-  return osType === 'android' || osType === 'ios';
+  return osType === "android" || osType === "ios";
 }
 
 async function createSystemInfo() {
@@ -53,7 +53,7 @@ async function createSystemInfo() {
   const [availableProfiles, osLocale, sfServerVersion] = await Promise.all([
     getAvailableProfiles(),
     locale(),
-    invoke<string>('get_sf_server_version'),
+    invoke<string>("get_sf_server_version"),
   ]);
   return {
     availableProfiles,
@@ -110,7 +110,7 @@ function PointerReset() {
   // When dropdowns were open when page is switched, sometimes the body still has pointer-events: none
   // This will reset it to auto
   useEffect(() => {
-    document.body.style.pointerEvents = 'auto';
+    document.body.style.pointerEvents = "auto";
   }, [location.pathname]);
 
   return null;
@@ -122,11 +122,11 @@ const AppStartedEvent = memo(() => {
 
   useEffect(() => {
     if (!appLoaded) {
-      void trackEvent('app_loaded');
+      void trackEvent("app_loaded");
       setAppLoaded(true);
 
       if (isTauri()) {
-        void emit('app-loaded', {});
+        void emit("app-loaded", {});
       }
     }
   }, [appLoaded, trackEvent]);
@@ -139,7 +139,7 @@ const PageChangedEvent = memo(() => {
   const location = useLocation();
 
   useEffect(() => {
-    void trackEvent('page_changed', { path: location.pathname });
+    void trackEvent("page_changed", { path: location.pathname });
   }, [location.pathname, trackEvent]);
 
   return null;
@@ -150,13 +150,13 @@ function WindowThemeSyncer() {
 
   useEffect(() => {
     if (isTauri()) {
-      if (theme === 'dark') {
-        void setTheme('dark');
-        void getCurrentWebviewWindow().setTheme('dark');
-      } else if (theme === 'light') {
-        void setTheme('light');
-        void getCurrentWebviewWindow().setTheme('light');
-      } else if (theme === 'system') {
+      if (theme === "dark") {
+        void setTheme("dark");
+        void getCurrentWebviewWindow().setTheme("dark");
+      } else if (theme === "light") {
+        void setTheme("light");
+        void getCurrentWebviewWindow().setTheme("light");
+      } else if (theme === "system") {
         void setTheme(null);
         void getCurrentWebviewWindow().setTheme(null);
       }
@@ -179,7 +179,7 @@ function RootLayout() {
       let didUnmount = false;
       let unwatch: null | (() => void) = null;
       void watch(
-        'profile',
+        "profile",
         () => {
           void createSystemInfo().then((newSystemInfo) => {
             setSystemInfoState((oldSystemInfo) => {
@@ -219,7 +219,7 @@ function RootLayout() {
         <AptabaseProvider
           appKey="A-SH-6467566517"
           options={{
-            apiUrl: 'https://aptabase.pistonmaster.net/api/v0/event',
+            apiUrl: "https://aptabase.pistonmaster.net/api/v0/event",
             appVersion: APP_VERSION,
           }}
         >

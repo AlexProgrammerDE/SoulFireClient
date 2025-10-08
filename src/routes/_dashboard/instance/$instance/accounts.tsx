@@ -1,21 +1,12 @@
-import { createFileRoute } from '@tanstack/react-router';
-import * as React from 'react';
-import { use, useCallback, useState } from 'react';
-import { Button } from '@/components/ui/button.tsx';
-import { DataTable } from '@/components/data-table/data-table.tsx';
-import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
+import { useAptabase } from "@aptabase/react";
 import {
-  getEnumEntries,
-  getEnumKeyByValue,
-  mapUnionToValue,
-  ProfileAccount,
-  ProfileRoot,
-} from '@/lib/types.ts';
-import {
-  AccountTypeCredentials,
-  AccountTypeDeviceCode,
-  MinecraftAccountProto_AccountTypeProto,
-} from '@/generated/soulfire/common.ts';
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import type { ColumnDef, Table as ReactTable } from "@tanstack/react-table";
+import { open as shellOpen } from "@tauri-apps/plugin-shell";
 import {
   KeyRoundIcon,
   MonitorSmartphoneIcon,
@@ -24,7 +15,30 @@ import {
   TextIcon,
   TrashIcon,
   WifiOffIcon,
-} from 'lucide-react';
+} from "lucide-react";
+import * as React from "react";
+import { use, useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { type ExternalToast, toast } from "sonner";
+import { DataTable } from "@/components/data-table/data-table.tsx";
+import {
+  DataTableActionBar,
+  DataTableActionBarAction,
+  DataTableActionBarSelection,
+} from "@/components/data-table/data-table-action-bar.tsx";
+import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header.tsx";
+import {
+  SelectAllHeader,
+  SelectRowHeader,
+} from "@/components/data-table/data-table-selects.tsx";
+import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
+import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
+import ImportDialog from "@/components/dialog/import-dialog.tsx";
+import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
+import { InstanceSettingsPageComponent } from "@/components/settings-page.tsx";
+import { Badge } from "@/components/ui/badge.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,38 +46,24 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu.tsx';
-import { ExternalToast, toast } from 'sonner';
-import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { MCAuthServiceClient } from '@/generated/soulfire/mc-auth.client.ts';
-import ImportDialog from '@/components/dialog/import-dialog.tsx';
+} from "@/components/ui/dropdown-menu.tsx";
 import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
-import { isTauri, runAsync, setInstanceConfig } from '@/lib/utils.tsx';
-import { open as shellOpen } from '@tauri-apps/plugin-shell';
-import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
-import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
-import { useTranslation } from 'react-i18next';
+  AccountTypeCredentials,
+  AccountTypeDeviceCode,
+  MinecraftAccountProto_AccountTypeProto,
+} from "@/generated/soulfire/common.ts";
+import { MCAuthServiceClient } from "@/generated/soulfire/mc-auth.client.ts";
+import { useDataTable } from "@/hooks/use-data-table.ts";
 import {
-  SelectAllHeader,
-  SelectRowHeader,
-} from '@/components/data-table/data-table-selects.tsx';
-import { useAptabase } from '@aptabase/react';
-import {
-  DataTableActionBar,
-  DataTableActionBarAction,
-  DataTableActionBarSelection,
-} from '@/components/data-table/data-table-action-bar.tsx';
-import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
-import { useDataTable } from '@/hooks/use-data-table.ts';
-import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
-import { DataTableToolbar } from '@/components/data-table/data-table-toolbar.tsx';
-import { Badge } from '@/components/ui/badge.tsx';
+  getEnumEntries,
+  getEnumKeyByValue,
+  mapUnionToValue,
+  type ProfileAccount,
+  type ProfileRoot,
+} from "@/lib/types.ts";
+import { isTauri, runAsync, setInstanceConfig } from "@/lib/utils.tsx";
 
-export const Route = createFileRoute('/_dashboard/instance/$instance/accounts')(
+export const Route = createFileRoute("/_dashboard/instance/$instance/accounts")(
   {
     component: AccountSettings,
   },
@@ -84,24 +84,24 @@ const accountTypeToIcon = (
 ) =>
   mapUnionToValue(type, (key) => {
     switch (key) {
-      case 'OFFLINE':
+      case "OFFLINE":
         return WifiOffIcon;
-      case 'MICROSOFT_JAVA_CREDENTIALS':
+      case "MICROSOFT_JAVA_CREDENTIALS":
         return KeyRoundIcon;
-      case 'MICROSOFT_JAVA_DEVICE_CODE':
+      case "MICROSOFT_JAVA_DEVICE_CODE":
         return MonitorSmartphoneIcon;
-      case 'MICROSOFT_JAVA_REFRESH_TOKEN':
+      case "MICROSOFT_JAVA_REFRESH_TOKEN":
         return RotateCcwKeyIcon;
-      case 'MICROSOFT_BEDROCK_CREDENTIALS':
+      case "MICROSOFT_BEDROCK_CREDENTIALS":
         return KeyRoundIcon;
-      case 'MICROSOFT_BEDROCK_DEVICE_CODE':
+      case "MICROSOFT_BEDROCK_DEVICE_CODE":
         return MonitorSmartphoneIcon;
     }
   });
 
 const columns: ColumnDef<ProfileAccount>[] = [
   {
-    id: 'select',
+    id: "select",
     header: SelectAllHeader,
     cell: SelectRowHeader,
     size: 32,
@@ -109,10 +109,10 @@ const columns: ColumnDef<ProfileAccount>[] = [
     enableHiding: false,
   },
   {
-    id: 'type',
+    id: "type",
     accessorFn: (row) =>
       getEnumKeyByValue(MinecraftAccountProto_AccountTypeProto, row.type),
-    accessorKey: 'type',
+    accessorKey: "type",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Type" />
     ),
@@ -129,8 +129,8 @@ const columns: ColumnDef<ProfileAccount>[] = [
       );
     },
     meta: {
-      label: 'Type',
-      variant: 'multiSelect',
+      label: "Type",
+      variant: "multiSelect",
       options: getEnumEntries(MinecraftAccountProto_AccountTypeProto).map(
         (type) => {
           return {
@@ -144,29 +144,29 @@ const columns: ColumnDef<ProfileAccount>[] = [
     enableColumnFilter: true,
   },
   {
-    id: 'profileId',
-    accessorKey: 'profileId',
+    id: "profileId",
+    accessorKey: "profileId",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Profile ID" />
     ),
     meta: {
-      label: 'Profile ID',
-      placeholder: 'Search profile IDs...',
-      variant: 'text',
+      label: "Profile ID",
+      placeholder: "Search profile IDs...",
+      variant: "text",
       icon: TextIcon,
     },
     enableColumnFilter: true,
   },
   {
-    id: 'lastKnownName',
-    accessorKey: 'lastKnownName',
+    id: "lastKnownName",
+    accessorKey: "lastKnownName",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Last known name" />
     ),
     meta: {
-      label: 'Last known name',
-      placeholder: 'Search last known names...',
-      variant: 'text',
+      label: "Last known name",
+      placeholder: "Search last known names...",
+      variant: "text",
       icon: TextIcon,
     },
     enableColumnFilter: true,
@@ -174,7 +174,7 @@ const columns: ColumnDef<ProfileAccount>[] = [
 ];
 
 function AddButton() {
-  const { t } = useTranslation('instance');
+  const { t } = useTranslation("instance");
   const queryClient = useQueryClient();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: profile } = useSuspenseQuery({
@@ -210,7 +210,7 @@ function AddButton() {
       if (accountTypeCredentialsSelected === null) return;
 
       if (text.length === 0) {
-        toast.error(t('account.listImportToast.noAccounts'));
+        toast.error(t("account.listImportToast.noAccounts"));
         return;
       }
 
@@ -221,7 +221,7 @@ function AddButton() {
       }
 
       const textSplit = text
-        .split('\n')
+        .split("\n")
         .map((t) => t.trim())
         .filter((t) => t.length > 0);
       const service = new MCAuthServiceClient(transport);
@@ -229,7 +229,7 @@ function AddButton() {
       const abortController = new AbortController();
       const loadingData: ExternalToast = {
         cancel: {
-          label: t('common:cancel'),
+          label: t("common:cancel"),
           onClick: () => {
             abortController.abort();
           },
@@ -239,7 +239,7 @@ function AddButton() {
       let failed = 0;
       let success = 0;
       const loadingReport = () =>
-        t('account.listImportToast.loading', {
+        t("account.listImportToast.loading", {
           checked: success + failed,
           total,
           success,
@@ -260,7 +260,7 @@ function AddButton() {
         runAsync(async () => {
           const data = r.data;
           switch (data.oneofKind) {
-            case 'fullList': {
+            case "fullList": {
               const accountsToAdd = data.fullList.account;
 
               await setProfileMutation((prev) => ({
@@ -269,13 +269,13 @@ function AddButton() {
               }));
 
               if (accountsToAdd.length === 0) {
-                toast.error(t('account.listImportToast.allFailed'), {
+                toast.error(t("account.listImportToast.allFailed"), {
                   id: toastId,
                   cancel: undefined,
                 });
               } else if (accountsToAdd.length !== textSplit.length) {
                 toast.warning(
-                  t('account.listImportToast.someFailed', {
+                  t("account.listImportToast.someFailed", {
                     count: accountsToAdd.length,
                     failed: textSplit.length - accountsToAdd.length,
                   }),
@@ -286,7 +286,7 @@ function AddButton() {
                 );
               } else {
                 toast.success(
-                  t('account.listImportToast.noneFailed', {
+                  t("account.listImportToast.noneFailed", {
                     count: accountsToAdd.length,
                   }),
                   {
@@ -297,7 +297,7 @@ function AddButton() {
               }
               break;
             }
-            case 'oneSuccess': {
+            case "oneSuccess": {
               if (abortController.signal.aborted) {
                 return;
               }
@@ -309,7 +309,7 @@ function AddButton() {
               });
               break;
             }
-            case 'oneFailure': {
+            case "oneFailure": {
               if (abortController.signal.aborted) {
                 return;
               }
@@ -326,7 +326,7 @@ function AddButton() {
       });
       responses.onError((e) => {
         console.error(e);
-        toast.error(t('account.listImportToast.error'), {
+        toast.error(t("account.listImportToast.error"), {
           id: toastId,
           cancel: undefined,
         });
@@ -364,9 +364,9 @@ function AddButton() {
                 },
               );
               responses.onMessage((message) => {
-                if (message.data.oneofKind === 'account') {
+                if (message.data.oneofKind === "account") {
                   resolve(message.data.account);
-                } else if (message.data.oneofKind === 'deviceCode') {
+                } else if (message.data.oneofKind === "deviceCode") {
                   if (isTauri()) {
                     void shellOpen(
                       message.data.deviceCode.directVerificationUri,
@@ -378,13 +378,13 @@ function AddButton() {
               });
               responses.onError((e) => {
                 console.error(e);
-                reject(new Error(t('account.unknownError')));
+                reject(new Error(t("account.unknownError")));
               });
             } catch (e) {
               if (e instanceof Error) {
                 reject(e);
               } else {
-                reject(new Error(t('account.unknownError')));
+                reject(new Error(t("account.unknownError")));
               }
             }
           });
@@ -396,14 +396,14 @@ function AddButton() {
           }));
         })(),
         {
-          loading: t('account.deviceCodeImportToast.loading'),
-          success: t('account.deviceCodeImportToast.success'),
+          loading: t("account.deviceCodeImportToast.loading"),
+          success: t("account.deviceCodeImportToast.success"),
           error: (e) => {
             console.error(e);
-            return t('account.deviceCodeImportToast.error');
+            return t("account.deviceCodeImportToast.error");
           },
           cancel: {
-            label: t('common:cancel'),
+            label: t("common:cancel"),
             onClick: () => {
               abortController.abort();
             },
@@ -424,103 +424,103 @@ function AddButton() {
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>
-            {t('account.import.javaEdition')}
+            {t("account.import.javaEdition")}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
-              void trackEvent('import_account_java_offline');
+              void trackEvent("import_account_java_offline");
               setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE);
             }}
           >
-            {t('account.import.offline')}
+            {t("account.import.offline")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              void trackEvent('import_account_microsoft_java_credentials');
+              void trackEvent("import_account_microsoft_java_credentials");
               setAccountTypeCredentialsSelected(
                 AccountTypeCredentials.MICROSOFT_JAVA_CREDENTIALS,
               );
             }}
           >
-            {t('account.import.microsoftCredentials')}
+            {t("account.import.microsoftCredentials")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              void trackEvent('import_account_microsoft_java_device_code');
+              void trackEvent("import_account_microsoft_java_device_code");
               deviceCodeSelected(
                 AccountTypeDeviceCode.MICROSOFT_JAVA_DEVICE_CODE,
               );
             }}
           >
-            {t('account.import.microsoftDeviceCode')}
+            {t("account.import.microsoftDeviceCode")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              void trackEvent('import_account_microsoft_java_refresh_token');
+              void trackEvent("import_account_microsoft_java_refresh_token");
               setAccountTypeCredentialsSelected(
                 AccountTypeCredentials.MICROSOFT_JAVA_REFRESH_TOKEN,
               );
             }}
           >
-            {t('account.import.microsoftRefreshToken')}
+            {t("account.import.microsoftRefreshToken")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuLabel>
-            {t('account.import.bedrockEdition')}
+            {t("account.import.bedrockEdition")}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
-              void trackEvent('import_account_bedrock_offline');
+              void trackEvent("import_account_bedrock_offline");
               setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE);
             }}
           >
-            {t('account.import.offline')}
+            {t("account.import.offline")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              void trackEvent('import_account_microsoft_bedrock_credentials');
+              void trackEvent("import_account_microsoft_bedrock_credentials");
               setAccountTypeCredentialsSelected(
                 AccountTypeCredentials.MICROSOFT_BEDROCK_CREDENTIALS,
               );
             }}
           >
-            {t('account.import.microsoftCredentials')}
+            {t("account.import.microsoftCredentials")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              void trackEvent('import_account_microsoft_bedrock_device_code');
+              void trackEvent("import_account_microsoft_bedrock_device_code");
               deviceCodeSelected(
                 AccountTypeDeviceCode.MICROSOFT_BEDROCK_DEVICE_CODE,
               );
             }}
           >
-            {t('account.import.microsoftDeviceCode')}
+            {t("account.import.microsoftDeviceCode")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       {accountTypeCredentialsSelected !== null && (
         <ImportDialog
-          title={t('account.import.dialog.title', {
+          title={t("account.import.dialog.title", {
             type: getEnumKeyByValue(
               AccountTypeCredentials,
               accountTypeCredentialsSelected,
             ),
           })}
-          description={t('account.import.dialog.description')}
+          description={t("account.import.dialog.description")}
           closer={() => setAccountTypeCredentialsSelected(null)}
           listener={textSelectedCallback}
           filters={[
             {
-              name: 'Text File',
-              mimeType: 'text/plain',
-              extensions: ['txt'],
+              name: "Text File",
+              mimeType: "text/plain",
+              extensions: ["txt"],
             },
           ]}
           allowMultiple={true}
           textInput={{
-            defaultValue: '',
+            defaultValue: "",
           }}
         />
       )}
@@ -529,7 +529,7 @@ function AddButton() {
 }
 
 function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
-  const { t } = useTranslation('instance');
+  const { t } = useTranslation("instance");
   const queryClient = useQueryClient();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: profile } = useSuspenseQuery({
@@ -563,7 +563,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
       <DataTableActionBarAction
         tooltip="Remove selected accounts"
         onClick={() => {
-          void trackEvent('remove_accounts', {
+          void trackEvent("remove_accounts", {
             count: props.table.getFilteredSelectedRowModel().rows.length,
           });
           const selectedRows = props.table
@@ -578,13 +578,13 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
               ),
             })),
             {
-              loading: t('account.removeToast.loading'),
-              success: t('account.removeToast.success', {
+              loading: t("account.removeToast.loading"),
+              success: t("account.removeToast.success", {
                 count: selectedRows.length,
               }),
               error: (e) => {
                 console.error(e);
-                return t('account.removeToast.error');
+                return t("account.removeToast.error");
               },
             },
           );
@@ -598,17 +598,17 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
 }
 
 function AccountSettings() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
     <InstancePageLayout
       extraCrumbs={[
         {
-          id: 'settings',
-          content: t('breadcrumbs.settings'),
+          id: "settings",
+          content: t("breadcrumbs.settings"),
         },
       ]}
-      pageName={t('pageName.accountSettings')}
+      pageName={t("pageName.accountSettings")}
       documentationLink="https://soulfiremc.com/docs/usage/accounts"
     >
       <Content />
@@ -635,7 +635,7 @@ function Content() {
         <InstanceSettingsPageComponent
           data={
             instanceInfo.instanceSettings.find(
-              (s) => s.namespace === 'account',
+              (s) => s.namespace === "account",
             )!
           }
         />

@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { HouseIcon, SquareTerminalIcon, TextSearchIcon } from 'lucide-react';
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Link, type LinkProps, useRouteContext } from "@tanstack/react-router";
+import { HouseIcon, SquareTerminalIcon, TextSearchIcon } from "lucide-react";
+import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@/components/ui/sidebar.tsx';
-import { Link, LinkProps, useRouteContext } from '@tanstack/react-router';
-import { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useSuspenseQuery } from '@tanstack/react-query';
+} from "@/components/ui/sidebar.tsx";
 
 type NavLinks = {
   title: string;
@@ -20,35 +20,35 @@ type NavLinks = {
 }[];
 
 export function NavControls() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/instance/$instance',
+    from: "/_dashboard/instance/$instance",
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
 
   const navLinks: NavLinks = [
     {
-      title: t('instanceSidebar.overview'),
+      title: t("instanceSidebar.overview"),
       icon: HouseIcon,
       linkProps: {
-        to: '/instance/$instance',
+        to: "/instance/$instance",
         params: { instance: instanceInfo.id },
       },
     },
     {
-      title: t('instanceSidebar.terminal'),
+      title: t("instanceSidebar.terminal"),
       icon: SquareTerminalIcon,
       linkProps: {
-        to: '/instance/$instance/terminal',
+        to: "/instance/$instance/terminal",
         params: { instance: instanceInfo.id },
       },
     },
     {
-      title: t('instanceSidebar.audit-log'),
+      title: t("instanceSidebar.audit-log"),
       icon: TextSearchIcon,
       linkProps: {
-        to: '/instance/$instance/audit-log',
+        to: "/instance/$instance/audit-log",
         params: { instance: instanceInfo.id },
       },
     },
@@ -57,7 +57,7 @@ export function NavControls() {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>
-        {t('instanceSidebar.controlsGroup')}
+        {t("instanceSidebar.controlsGroup")}
       </SidebarGroupLabel>
       <SidebarMenu>
         {navLinks.map((item) => (
@@ -66,7 +66,7 @@ export function NavControls() {
               <Link
                 activeOptions={{ exact: true }}
                 activeProps={{
-                  'data-active': true,
+                  "data-active": true,
                 }}
                 {...item.linkProps}
               >

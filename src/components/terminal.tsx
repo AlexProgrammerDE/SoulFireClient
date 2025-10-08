@@ -1,14 +1,20 @@
-import React, { CSSProperties, use, useEffect, useRef, useState } from 'react';
-import { LogsServiceClient } from '@/generated/soulfire/logs.client.ts';
-import { TransportContext } from './providers/transport-context.tsx';
-import { ScrollArea } from './ui/scroll-area.tsx';
-import { TerminalThemeContext } from '@/components/providers/terminal-theme-context.tsx';
-import { flavorEntries } from '@catppuccin/palette';
-import { AnsiHtml } from 'fancy-ansi/react';
-import { isDemo } from '@/lib/utils.tsx';
-import { LogScope } from '@/generated/soulfire/logs.ts';
-import { stripAnsi } from 'fancy-ansi';
-import { useTranslation } from 'react-i18next';
+import { flavorEntries } from "@catppuccin/palette";
+import { stripAnsi } from "fancy-ansi";
+import { AnsiHtml } from "fancy-ansi/react";
+import React, {
+  type CSSProperties,
+  use,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useTranslation } from "react-i18next";
+import { TerminalThemeContext } from "@/components/providers/terminal-theme-context.tsx";
+import { LogsServiceClient } from "@/generated/soulfire/logs.client.ts";
+import type { LogScope } from "@/generated/soulfire/logs.ts";
+import { isDemo } from "@/lib/utils.tsx";
+import { TransportContext } from "./providers/transport-context.tsx";
+import { ScrollArea } from "./ui/scroll-area.tsx";
 
 const MAX_TERMINAL_LINES = 500;
 
@@ -16,7 +22,7 @@ const MemoAnsiHtml = React.memo((props: { text: string }) => {
   return (
     <AnsiHtml
       text={
-        stripAnsi(props.text).endsWith('\n') ? props.text : props.text + '\n'
+        stripAnsi(props.text).endsWith("\n") ? props.text : props.text + "\n"
       }
     />
   );
@@ -36,7 +42,7 @@ function convertLine(message: TerminalLineBase): TerminalLine {
   return {
     id: message.id,
     message: message.message,
-    lines: message.message.split('\n').length,
+    lines: message.message.split("\n").length,
     hash: fnv1aHash(message.message),
   };
 }
@@ -75,26 +81,26 @@ type TerminalLine = TerminalLineBase & {
 };
 
 export const TerminalComponent = (props: { scope: LogScope }) => {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const [gotPrevious, setGotPrevious] = useState(false);
   const [entries, setEntries] = useState<TerminalLine[]>(
     isDemo()
       ? [
           convertLine({
-            id: 'demo-1',
-            message: t('terminal.demo-1'),
+            id: "demo-1",
+            message: t("terminal.demo-1"),
           }),
           convertLine({
-            id: 'demo-2',
-            message: t('terminal.demo-2'),
+            id: "demo-2",
+            message: t("terminal.demo-2"),
           }),
           convertLine({
-            id: 'demo-3',
-            message: t('terminal.demo-3'),
+            id: "demo-3",
+            message: t("terminal.demo-3"),
           }),
           convertLine({
-            id: 'demo-4',
-            message: t('terminal.demo-4'),
+            id: "demo-4",
+            message: t("terminal.demo-4"),
           }),
         ]
       : [],
@@ -117,9 +123,9 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
   useEffect(() => {
     const pane = paneRef.current;
     if (pane) {
-      pane.addEventListener('scroll', handleScroll);
+      pane.addEventListener("scroll", handleScroll);
       return () => {
-        pane.removeEventListener('scroll', handleScroll);
+        pane.removeEventListener("scroll", handleScroll);
       };
     }
   }, []);
@@ -157,8 +163,8 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
           setEntries((prev) => [
             ...prev,
             convertLine({
-              id: 'empty',
-              message: t('terminal.noLogs'),
+              id: "empty",
+              message: t("terminal.noLogs"),
             }),
           ]);
         }
@@ -187,7 +193,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
         return;
       }
 
-      console.info('Connecting to logs service');
+      console.info("Connecting to logs service");
       const logsService = new LogsServiceClient(transport);
       const { responses } = logsService.subscribe(
         {
@@ -217,7 +223,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
           return;
         }
 
-        console.error('Stream completed');
+        console.error("Stream completed");
         setTimeout(() => {
           if (abortController.signal.aborted) {
             return;
@@ -235,7 +241,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
         setEntries((prev) => {
           return deduplicateConsecutive(
             limitLength([
-              ...prev.filter((entry) => entry.id !== 'empty'),
+              ...prev.filter((entry) => entry.id !== "empty"),
               convertLine(message),
             ]),
             (element) => element.hash,
@@ -259,32 +265,32 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
         {
           backgroundColor: selectedTheme.colors.base.hex,
           color: selectedTheme.colors.text.hex,
-          '--color-border': selectedTheme.colors.surface2.hex + '80', // Add 50% opacity
-          '--ansi-black': selectedTheme.dark
+          "--color-border": selectedTheme.colors.surface2.hex + "80", // Add 50% opacity
+          "--ansi-black": selectedTheme.dark
             ? selectedTheme.colors.surface1.hex
             : selectedTheme.colors.subtext1.hex,
-          '--ansi-red': selectedTheme.colors.red.hex,
-          '--ansi-green': selectedTheme.colors.green.hex,
-          '--ansi-yellow': selectedTheme.colors.yellow.hex,
-          '--ansi-blue': selectedTheme.colors.blue.hex,
-          '--ansi-magenta': selectedTheme.colors.pink.hex,
-          '--ansi-cyan': selectedTheme.colors.teal.hex,
-          '--ansi-white': selectedTheme.dark
+          "--ansi-red": selectedTheme.colors.red.hex,
+          "--ansi-green": selectedTheme.colors.green.hex,
+          "--ansi-yellow": selectedTheme.colors.yellow.hex,
+          "--ansi-blue": selectedTheme.colors.blue.hex,
+          "--ansi-magenta": selectedTheme.colors.pink.hex,
+          "--ansi-cyan": selectedTheme.colors.teal.hex,
+          "--ansi-white": selectedTheme.dark
             ? selectedTheme.colors.subtext0.hex
             : selectedTheme.colors.surface2.hex,
-          '--ansi-bright-black': selectedTheme.dark
+          "--ansi-bright-black": selectedTheme.dark
             ? selectedTheme.colors.surface2.hex
             : selectedTheme.colors.subtext0.hex,
-          '--ansi-bright-red': selectedTheme.colors.red.hex,
-          '--ansi-bright-green': selectedTheme.colors.green.hex,
-          '--ansi-bright-yellow': selectedTheme.colors.yellow.hex,
-          '--ansi-bright-blue': selectedTheme.colors.blue.hex,
-          '--ansi-bright-magenta': selectedTheme.colors.pink.hex,
-          '--ansi-bright-cyan': selectedTheme.colors.teal.hex,
-          '--ansi-bright-white': selectedTheme.dark
+          "--ansi-bright-red": selectedTheme.colors.red.hex,
+          "--ansi-bright-green": selectedTheme.colors.green.hex,
+          "--ansi-bright-yellow": selectedTheme.colors.yellow.hex,
+          "--ansi-bright-blue": selectedTheme.colors.blue.hex,
+          "--ansi-bright-magenta": selectedTheme.colors.pink.hex,
+          "--ansi-bright-cyan": selectedTheme.colors.teal.hex,
+          "--ansi-bright-white": selectedTheme.dark
             ? selectedTheme.colors.subtext1.hex
             : selectedTheme.colors.surface1.hex,
-          '--terminal-selection-bg': selectedTheme.colors.overlay2.hex,
+          "--terminal-selection-bg": selectedTheme.colors.overlay2.hex,
         } as CSSProperties
       }
     >

@@ -1,3 +1,24 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import {
+  Link,
+  type LinkProps,
+  useParams,
+  useRouteContext,
+} from "@tanstack/react-router";
+import {
+  BlocksIcon,
+  ChevronRightIcon,
+  ScrollTextIcon,
+  TelescopeIcon,
+} from "lucide-react";
+import { type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
+import DynamicIcon from "@/components/dynamic-icon.tsx";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible.tsx";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -8,29 +29,8 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   useSidebar,
-} from '@/components/ui/sidebar.tsx';
-import {
-  Link,
-  LinkProps,
-  useParams,
-  useRouteContext,
-} from '@tanstack/react-router';
-import { ReactNode, useState } from 'react';
-import DynamicIcon from '@/components/dynamic-icon.tsx';
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from '@/components/ui/collapsible.tsx';
-import {
-  BlocksIcon,
-  ChevronRightIcon,
-  ScrollTextIcon,
-  TelescopeIcon,
-} from 'lucide-react';
-import { useTranslation } from 'react-i18next';
-import { getEntryValueByType } from '@/lib/utils.tsx';
-import { useSuspenseQuery } from '@tanstack/react-query';
+} from "@/components/ui/sidebar.tsx";
+import { getEntryValueByType } from "@/lib/utils.tsx";
 
 type NavLinks = {
   title: string;
@@ -40,10 +40,10 @@ type NavLinks = {
 }[];
 
 export function NavPlugins() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const sidebar = useSidebar();
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/instance/$instance',
+    from: "/_dashboard/instance/$instance",
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
@@ -52,7 +52,7 @@ export function NavPlugins() {
     select: (info) => info.profile,
   });
   const namespace = useParams({
-    from: '/_dashboard/instance/$instance/settings/$namespace',
+    from: "/_dashboard/instance/$instance/settings/$namespace",
     select: (params) => params.namespace,
     shouldThrow: false,
   });
@@ -65,27 +65,27 @@ export function NavPlugins() {
 
   const navLinks: NavLinks = [
     {
-      title: t('instanceSidebar.discoverPlugins'),
+      title: t("instanceSidebar.discoverPlugins"),
       icon: TelescopeIcon,
       linkProps: {
-        to: '/instance/$instance/discover',
+        to: "/instance/$instance/discover",
         params: { instance: instanceInfo.id },
       },
     },
     {
-      title: t('instanceSidebar.pluginSettings'),
+      title: t("instanceSidebar.pluginSettings"),
       icon: BlocksIcon,
       linkProps: {
-        to: '/instance/$instance/discover',
+        to: "/instance/$instance/discover",
         params: { instance: instanceInfo.id },
       },
       pluginList: true,
     },
     {
-      title: t('instanceSidebar.instanceScripts'),
+      title: t("instanceSidebar.instanceScripts"),
       icon: ScrollTextIcon,
       linkProps: {
-        to: '/instance/$instance/scripts',
+        to: "/instance/$instance/scripts",
         params: { instance: instanceInfo.id },
       },
     },
@@ -108,7 +108,7 @@ export function NavPlugins() {
       title: setting.pageName,
       icon: (props) => <DynamicIcon {...props} name={setting.iconId} />,
       linkProps: {
-        to: '/instance/$instance/settings/$namespace',
+        to: "/instance/$instance/settings/$namespace",
         params: {
           instance: instanceInfo.id,
           namespace: setting.namespace,
@@ -118,7 +118,7 @@ export function NavPlugins() {
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>{t('instanceSidebar.pluginsGroup')}</SidebarGroupLabel>
+      <SidebarGroupLabel>{t("instanceSidebar.pluginsGroup")}</SidebarGroupLabel>
       <SidebarMenu>
         {navLinks.map((item) =>
           item.pluginList ? (
@@ -157,7 +157,7 @@ export function NavPlugins() {
                           <Link
                             activeOptions={{ exact: true }}
                             activeProps={{
-                              'data-active': true,
+                              "data-active": true,
                             }}
                             {...subItem.linkProps}
                           >
@@ -177,7 +177,7 @@ export function NavPlugins() {
                 <Link
                   activeOptions={{ exact: true }}
                   activeProps={{
-                    'data-active': true,
+                    "data-active": true,
                   }}
                   {...item.linkProps}
                 >

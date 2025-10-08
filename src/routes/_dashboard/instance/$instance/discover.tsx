@@ -1,27 +1,27 @@
-import { createFileRoute } from '@tanstack/react-router';
-import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
-import { useTranslation } from 'react-i18next';
-import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
+import { PluginInfoCard } from "@/components/plugin-info-card.tsx";
 
-export const Route = createFileRoute('/_dashboard/instance/$instance/discover')(
+export const Route = createFileRoute("/_dashboard/instance/$instance/discover")(
   {
     component: Discover,
   },
 );
 
 function Discover() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
     <InstancePageLayout
       extraCrumbs={[
         {
-          id: 'plugins',
-          content: t('breadcrumbs.plugins'),
+          id: "plugins",
+          content: t("breadcrumbs.plugins"),
         },
       ]}
-      pageName={t('pageName.discoverPlugins')}
+      pageName={t("pageName.discoverPlugins")}
     >
       <Content />
     </InstancePageLayout>

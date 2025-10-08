@@ -1,40 +1,40 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { use } from 'react';
-import { useTranslation } from 'react-i18next';
+import type { JsonValue } from "@protobuf-ts/runtime/build/types/json-typings";
 import {
   useMutation,
   useQueryClient,
   useSuspenseQuery,
-} from '@tanstack/react-query';
-import { TransportContext } from '@/components/providers/transport-context.tsx';
+} from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { use } from "react";
+import { useTranslation } from "react-i18next";
+import { ExternalLink } from "@/components/external-link.tsx";
+import UserPageLayout from "@/components/nav/user/user-page-layout.tsx";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
 import {
   ComponentTitle,
   GenericEntryComponent,
-} from '@/components/settings-page.tsx';
+} from "@/components/settings-page.tsx";
+import { Card } from "@/components/ui/card.tsx";
+import { UserAvatar } from "@/components/user-avatar.tsx";
 import {
   GlobalPermission,
   StringSetting_InputType,
-} from '@/generated/soulfire/common.ts';
-import { JsonValue } from '@protobuf-ts/runtime/build/types/json-typings';
+} from "@/generated/soulfire/common.ts";
 import {
   hasGlobalPermission,
   setSelfEmail,
   setSelfUsername,
-} from '@/lib/utils.tsx';
-import UserPageLayout from '@/components/nav/user/user-page-layout.tsx';
-import { ExternalLink } from '@/components/external-link.tsx';
-import { UserAvatar } from '@/components/user-avatar.tsx';
-import { Card } from '@/components/ui/card.tsx';
+} from "@/lib/utils.tsx";
 
-export const Route = createFileRoute('/_dashboard/user/settings')({
+export const Route = createFileRoute("/_dashboard/user/settings")({
   component: UserSettings,
 });
 
 function UserSettings() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
-    <UserPageLayout showUserCrumb={true} pageName={t('pageName.settings')}>
+    <UserPageLayout showUserCrumb={true} pageName={t("pageName.settings")}>
       <Content />
     </UserPageLayout>
   );
@@ -85,7 +85,7 @@ function Content() {
             description={
               <>
                 Your user avatar is based on your account email address. You can
-                change the avatar for your email address at{' '}
+                change the avatar for your email address at{" "}
                 <ExternalLink
                   className="font-semibold underline-offset-4 hover:underline"
                   href="https://gravatar.com"
@@ -112,17 +112,17 @@ function Content() {
         </div>
         <GenericEntryComponent
           entry={{
-            oneofKind: 'string',
+            oneofKind: "string",
             string: {
-              uiName: 'Username',
+              uiName: "Username",
               description:
-                'Your username is used to identify you in the UI and in logs.',
-              def: '',
+                "Your username is used to identify you in the UI and in logs.",
+              def: "",
               inputType: StringSetting_InputType.TEXT,
-              placeholder: 'username',
+              placeholder: "username",
               minLength: 3,
               maxLength: 32,
-              pattern: '[a-z0-9](?:[a-z0-9-]*[a-z0-9])?',
+              pattern: "[a-z0-9](?:[a-z0-9-]*[a-z0-9])?",
               disabled: !hasGlobalPermission(
                 clientInfo,
                 GlobalPermission.UPDATE_SELF_USERNAME,
@@ -134,16 +134,16 @@ function Content() {
         />
         <GenericEntryComponent
           entry={{
-            oneofKind: 'string',
+            oneofKind: "string",
             string: {
-              uiName: 'Email',
-              description: 'Your email is used for login and notifications.',
-              def: '',
+              uiName: "Email",
+              description: "Your email is used for login and notifications.",
+              def: "",
               inputType: StringSetting_InputType.EMAIL,
-              placeholder: 'root@soulfiremc.com',
+              placeholder: "root@soulfiremc.com",
               minLength: 3,
               maxLength: 255,
-              pattern: '.*',
+              pattern: ".*",
               disabled: !hasGlobalPermission(
                 clientInfo,
                 GlobalPermission.UPDATE_SELF_EMAIL,

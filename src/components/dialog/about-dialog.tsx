@@ -1,3 +1,8 @@
+import { XIcon } from "lucide-react";
+import { createContext, type ReactNode, use, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { SystemInfoContext } from "@/components/providers/system-info-context.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import {
   Credenza,
   CredenzaBody,
@@ -7,10 +12,7 @@ import {
   CredenzaFooter,
   CredenzaHeader,
   CredenzaTitle,
-} from '../ui/credenza.tsx';
-import { Button } from '@/components/ui/button.tsx';
-import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
-import { createContext, ReactNode, use, useState } from 'react';
+} from "../ui/credenza.tsx";
 import {
   Table,
   TableBody,
@@ -18,9 +20,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../ui/table.tsx';
-import { useTranslation } from 'react-i18next';
-import { XIcon } from 'lucide-react';
+} from "../ui/table.tsx";
 
 export const AboutContext = createContext<{
   openAbout: () => void;
@@ -52,16 +52,16 @@ function AboutDialog({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const systemInfo = use(SystemInfoContext);
 
   return (
     <Credenza open={open} onOpenChange={setOpen}>
       <CredenzaContent>
         <CredenzaHeader>
-          <CredenzaTitle>{t('dialog.about.title')}</CredenzaTitle>
+          <CredenzaTitle>{t("dialog.about.title")}</CredenzaTitle>
           <CredenzaDescription>
-            {t('dialog.about.description', {
+            {t("dialog.about.description", {
               version: APP_VERSION,
             })}
           </CredenzaDescription>
@@ -70,8 +70,8 @@ function AboutDialog({
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>{t('dialog.about.type')}</TableHead>
-                <TableHead>{t('dialog.about.value')}</TableHead>
+                <TableHead>{t("dialog.about.type")}</TableHead>
+                <TableHead>{t("dialog.about.value")}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -79,7 +79,7 @@ function AboutDialog({
                 <>
                   <TableRow>
                     <TableCell>
-                      {t('dialog.about.fields.operatingSystem')}
+                      {t("dialog.about.fields.operatingSystem")}
                     </TableCell>
                     <TableCell>
                       {systemInfo.osType} {systemInfo.osVersion}
@@ -87,25 +87,25 @@ function AboutDialog({
                   </TableRow>
 
                   <TableRow>
-                    <TableCell>{t('dialog.about.fields.platform')}</TableCell>
+                    <TableCell>{t("dialog.about.fields.platform")}</TableCell>
                     <TableCell>{systemInfo.platformName}</TableCell>
                   </TableRow>
 
                   <TableRow>
-                    <TableCell>{t('dialog.about.fields.locale')}</TableCell>
-                    <TableCell>{systemInfo.osLocale ?? 'Unknown'}</TableCell>
+                    <TableCell>{t("dialog.about.fields.locale")}</TableCell>
+                    <TableCell>{systemInfo.osLocale ?? "Unknown"}</TableCell>
                   </TableRow>
 
                   <TableRow>
                     <TableCell>
-                      {t('dialog.about.fields.architecture')}
+                      {t("dialog.about.fields.architecture")}
                     </TableCell>
                     <TableCell>{systemInfo.archName}</TableCell>
                   </TableRow>
 
                   <TableRow>
                     <TableCell>
-                      {t('dialog.about.fields.environment')}
+                      {t("dialog.about.fields.environment")}
                     </TableCell>
                     <TableCell>{APP_ENVIRONMENT}</TableCell>
                   </TableRow>
@@ -113,18 +113,18 @@ function AboutDialog({
               ) : (
                 <>
                   <TableRow>
-                    <TableCell>{t('dialog.about.fields.browser')}</TableCell>
+                    <TableCell>{t("dialog.about.fields.browser")}</TableCell>
                     <TableCell>{navigator.userAgent}</TableCell>
                   </TableRow>
 
                   <TableRow>
-                    <TableCell>{t('dialog.about.fields.locale')}</TableCell>
+                    <TableCell>{t("dialog.about.fields.locale")}</TableCell>
                     <TableCell>{navigator.language}</TableCell>
                   </TableRow>
 
                   <TableRow>
                     <TableCell>
-                      {t('dialog.about.fields.environment')}
+                      {t("dialog.about.fields.environment")}
                     </TableCell>
                     <TableCell>{APP_ENVIRONMENT}</TableCell>
                   </TableRow>
@@ -137,7 +137,7 @@ function AboutDialog({
           <CredenzaClose asChild>
             <Button>
               <XIcon />
-              {t('dialog.about.close')}
+              {t("dialog.about.close")}
             </Button>
           </CredenzaClose>
         </CredenzaFooter>

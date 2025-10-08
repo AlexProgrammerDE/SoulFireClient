@@ -1,27 +1,8 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { z } from 'zod';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card.tsx';
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form.tsx';
-import { Input } from '@/components/ui/input.tsx';
-import { Button } from '@/components/ui/button.tsx';
-import { use, useCallback, useEffect, useState } from 'react';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { invoke } from "@tauri-apps/api/core";
+import { emit, listen } from "@tauri-apps/api/event";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 import {
   ArrowLeftIcon,
   ClipboardIcon,
@@ -38,27 +19,24 @@ import {
   RotateCcwIcon,
   SatelliteDishIcon,
   ServerIcon,
-} from 'lucide-react';
-import { emit, listen } from '@tauri-apps/api/event';
-import { getEnumKeyByValue, SFServerType } from '@/lib/types.ts';
-import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
-import { invoke } from '@tauri-apps/api/core';
+} from "lucide-react";
+import Logo from "public/logo.png";
+import { use, useCallback, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { Trans, useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import { z } from "zod";
+import { ExternalLink } from "@/components/external-link.tsx";
+import { SystemInfoContext } from "@/components/providers/system-info-context.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import {
-  cancellablePromiseDefault,
-  copyToClipboard,
-  getLanguageName,
-  isDemo,
-  languageEmoji,
-} from '@/lib/utils.tsx';
-import { ScrollArea } from '@/components/ui/scroll-area.tsx';
-import { toast } from 'sonner';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import Logo from 'public/logo.png';
-import { Trans, useTranslation } from 'react-i18next';
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card.tsx";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -69,31 +47,53 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form.tsx";
+import { Input } from "@/components/ui/input.tsx";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from '@/components/ui/input-otp';
-import { REGEXP_ONLY_DIGITS } from 'input-otp';
-import { NextAuthFlowResponse_Failure_Reason } from '@/generated/soulfire/login.ts';
-import { LoginServiceClient } from '@/generated/soulfire/login.client.ts';
+} from "@/components/ui/input-otp";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area.tsx";
+import { LoginServiceClient } from "@/generated/soulfire/login.client.ts";
+import { NextAuthFlowResponse_Failure_Reason } from "@/generated/soulfire/login.ts";
+import { getEnumKeyByValue, type SFServerType } from "@/lib/types.ts";
+import {
+  cancellablePromiseDefault,
+  copyToClipboard,
+  getLanguageName,
+  isDemo,
+  languageEmoji,
+} from "@/lib/utils.tsx";
 import {
   createAddressOnlyTransport,
   setAuthentication,
-} from '@/lib/web-rpc.ts';
-import { ExternalLink } from '@/components/external-link.tsx';
+} from "@/lib/web-rpc.ts";
 
-const LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY = 'form-server-address';
-const LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY = 'form-server-token';
-const LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY = 'form-server-email';
+const LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY = "form-server-address";
+const LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY = "form-server-token";
+const LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY = "form-server-email";
 const LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS =
-  'form-integrated-server-jvm-args';
+  "form-integrated-server-jvm-args";
 const LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY =
-  'form-mobile-integrated-server-token';
+  "form-mobile-integrated-server-token";
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   component: Index,
 });
 
@@ -121,7 +121,7 @@ type MobileIntegratedServerFormSchemaType = z.infer<
   typeof mobileIntegratedServerFormSchema
 >;
 
-type LoginType = 'INTEGRATED' | 'DEDICATED' | 'EMAIL_CODE' | null;
+type LoginType = "INTEGRATED" | "DEDICATED" | "EMAIL_CODE" | null;
 
 type TargetRedirectFunction = () => Promise<void>;
 type LoginFunction = (
@@ -137,34 +137,34 @@ type AuthFlowData = {
 };
 
 const DEFAULT_JVM_ARGS = [
-  '-XX:+EnableDynamicAgentLoading',
-  '-XX:+UnlockExperimentalVMOptions',
-  '-XX:+UseZGC',
-  '-XX:+ZGenerational',
-  '-XX:+AlwaysActAsServerClassMachine',
-  '-XX:+UseNUMA',
-  '-XX:+UseFastUnorderedTimeStamps',
-  '-XX:+UseVectorCmov',
-  '-XX:+UseCriticalJavaThreadPriority',
-  '-Dsf.flags.v1=true',
+  "-XX:+EnableDynamicAgentLoading",
+  "-XX:+UnlockExperimentalVMOptions",
+  "-XX:+UseZGC",
+  "-XX:+ZGenerational",
+  "-XX:+AlwaysActAsServerClassMachine",
+  "-XX:+UseNUMA",
+  "-XX:+UseFastUnorderedTimeStamps",
+  "-XX:+UseVectorCmov",
+  "-XX:+UseCriticalJavaThreadPriority",
+  "-Dsf.flags.v1=true",
 ];
-const DEFAULT_JVM_ARGS_STRING = DEFAULT_JVM_ARGS.join(' ');
+const DEFAULT_JVM_ARGS_STRING = DEFAULT_JVM_ARGS.join(" ");
 const DEFAULT_MOBILE_JVM_ARGS = [
-  '-XX:+EnableDynamicAgentLoading',
-  '-XX:+UnlockExperimentalVMOptions',
+  "-XX:+EnableDynamicAgentLoading",
+  "-XX:+UnlockExperimentalVMOptions",
   // '-XX:+UseZGC',
   // '-XX:+ZGenerational',
-  '-XX:+AlwaysActAsServerClassMachine',
+  "-XX:+AlwaysActAsServerClassMachine",
   // '-XX:+UseNUMA',
-  '-XX:+UseFastUnorderedTimeStamps',
-  '-XX:+UseVectorCmov',
-  '-XX:+UseCriticalJavaThreadPriority',
-  '-Dsf.flags.v1=true',
+  "-XX:+UseFastUnorderedTimeStamps",
+  "-XX:+UseVectorCmov",
+  "-XX:+UseCriticalJavaThreadPriority",
+  "-Dsf.flags.v1=true",
 ];
-const DEFAULT_MOBILE_JVM_ARGS_STRING = DEFAULT_MOBILE_JVM_ARGS.join(' ');
+const DEFAULT_MOBILE_JVM_ARGS_STRING = DEFAULT_MOBILE_JVM_ARGS.join(" ");
 
 function Index() {
-  const { t, i18n } = useTranslation('login');
+  const { t, i18n } = useTranslation("login");
   const navigate = useNavigate();
   const searchParams: Record<string, string> = Route.useSearch();
   const [authFlowData, setAuthFlowData] = useState<AuthFlowData | null>(null);
@@ -173,7 +173,7 @@ function Index() {
 
   const targetRedirect: TargetRedirectFunction = useCallback(async () => {
     await navigate({
-      to: searchParams.redirect ?? '/user',
+      to: searchParams.redirect ?? "/user",
       replace: true,
     });
   }, [navigate, searchParams.redirect]);
@@ -190,28 +190,28 @@ function Index() {
   const startIntegratedServer = () => {
     toast.promise(
       (async () => {
-        await emit('kill-integrated-server', {});
+        await emit("kill-integrated-server", {});
         const args = localStorage.getItem(
           LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
         );
-        const payload = await invoke('run_integrated_server', {
+        const payload = await invoke("run_integrated_server", {
           jvmArgs:
             args === null
               ? DEFAULT_JVM_ARGS
-              : args.split(' ').filter((str) => str !== ''),
+              : args.split(" ").filter((str) => str !== ""),
         });
         const payloadString = payload as string;
-        const split = payloadString.split('\n');
+        const split = payloadString.split("\n");
 
-        await redirectWithCredentials('integrated', split[0], split[1]);
+        await redirectWithCredentials("integrated", split[0], split[1]);
       })(),
       {
-        loading: t('integrated.toast.loading'),
-        success: t('integrated.toast.success'),
+        loading: t("integrated.toast.loading"),
+        success: t("integrated.toast.success"),
         error: (e) => {
           setLoginType(null);
           console.error(e);
-          return t('integrated.toast.error');
+          return t("integrated.toast.error");
         },
       },
     );
@@ -248,9 +248,9 @@ function Index() {
               width={32}
               height={32}
               src={Logo}
-              alt={t('header.image.alt')}
+              alt={t("header.image.alt")}
             />
-            <p className="font-medium tracking-wide">{t('header.title')}</p>
+            <p className="font-medium tracking-wide">{t("header.title")}</p>
           </div>
           {loginType === null && (
             <DefaultMenu
@@ -258,21 +258,21 @@ function Index() {
               demoLogin={targetRedirect}
             />
           )}
-          {loginType === 'INTEGRATED' && (
+          {loginType === "INTEGRATED" && (
             <IntegratedMenu
               setLoginType={setLoginType}
               redirectWithCredentials={redirectWithCredentials}
               startIntegratedServer={startIntegratedServer}
             />
           )}
-          {loginType === 'DEDICATED' && (
+          {loginType === "DEDICATED" && (
             <DedicatedMenu
               setAuthFlowData={setAuthFlowData}
               setLoginType={setLoginType}
               redirectWithCredentials={redirectWithCredentials}
             />
           )}
-          {loginType === 'EMAIL_CODE' && authFlowData !== null && (
+          {loginType === "EMAIL_CODE" && authFlowData !== null && (
             <EmailCodeMenu
               authFlowData={authFlowData}
               setLoginType={setLoginType}
@@ -282,27 +282,27 @@ function Index() {
           <div>
             <div className="text-muted-foreground text-center text-xs text-balance">
               <p className="mb-1">
-                {t('footer.version', {
+                {t("footer.version", {
                   version: APP_VERSION,
                   environment: APP_ENVIRONMENT,
                 })}
               </p>
               {!systemInfo && (
                 <>
-                  {APP_ENVIRONMENT === 'production' && (
+                  {APP_ENVIRONMENT === "production" && (
                     <a
                       className="text-blue-500"
                       href="https://preview.soulfiremc.com"
                     >
-                      {t('footer.preview')}
+                      {t("footer.preview")}
                     </a>
                   )}
-                  {APP_ENVIRONMENT === 'preview' && (
+                  {APP_ENVIRONMENT === "preview" && (
                     <a
                       className="text-blue-500"
                       href="https://app.soulfiremc.com"
                     >
-                      {t('footer.production')}
+                      {t("footer.production")}
                     </a>
                   )}
                 </>
@@ -315,7 +315,7 @@ function Index() {
                     className="text-muted-foreground w-fit text-sm text-balance"
                     variant="ghost"
                   >
-                    {languageEmoji(i18n.resolvedLanguage ?? i18n.language)}{' '}
+                    {languageEmoji(i18n.resolvedLanguage ?? i18n.language)}{" "}
                     {getLanguageName(
                       i18n.resolvedLanguage ?? i18n.language,
                       i18n.resolvedLanguage ?? i18n.language,
@@ -323,7 +323,7 @@ function Index() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuLabel>{t('common:locale')}</DropdownMenuLabel>
+                  <DropdownMenuLabel>{t("common:locale")}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioGroup
                     value={i18n.resolvedLanguage ?? i18n.language}
@@ -334,7 +334,7 @@ function Index() {
                       ? i18n.options.supportedLngs
                       : []
                     )
-                      .filter((lang) => lang !== 'cimode')
+                      .filter((lang) => lang !== "cimode")
                       .map((lang) => (
                         <DropdownMenuRadioItem key={lang} value={lang}>
                           {languageEmoji(lang)} {getLanguageName(lang, lang)}
@@ -346,7 +346,7 @@ function Index() {
                     <DropdownMenuItem asChild>
                       <ExternalLink href="https://translate.soulfiremc.com">
                         <HeartHandshakeIcon />
-                        {t('footer.helpTranslate')}
+                        {t("footer.helpTranslate")}
                       </ExternalLink>
                     </DropdownMenuItem>
                   </DropdownMenuGroup>
@@ -361,11 +361,11 @@ function Index() {
 }
 
 function LoginCardTitle() {
-  const { t } = useTranslation('login');
+  const { t } = useTranslation("login");
   return (
     <CardTitle className="mx-auto flex flex-row items-center gap-2 text-xl">
       <SatelliteDishIcon />
-      {t('connect.title')}
+      {t("connect.title")}
     </CardTitle>
   );
 }
@@ -374,14 +374,14 @@ function DefaultMenu(props: {
   setLoginType: (type: LoginType) => void;
   demoLogin: TargetRedirectFunction;
 }) {
-  const { t } = useTranslation('login');
+  const { t } = useTranslation("login");
   const systemInfo = use(SystemInfoContext);
   const integratedDisabled = isDemo() || !systemInfo;
   return (
     <Card>
       <CardHeader className="text-center">
         <LoginCardTitle />
-        <CardDescription>{t('connect.description')}</CardDescription>
+        <CardDescription>{t("connect.description")}</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         <div className="flex flex-row gap-2">
@@ -391,11 +391,11 @@ function DefaultMenu(props: {
             className="grow"
             variant="outline"
             onClick={() => {
-              props.setLoginType('INTEGRATED');
+              props.setLoginType("INTEGRATED");
             }}
           >
             <LaptopMinimalIcon />
-            {t('connect.integrated.title')}
+            {t("connect.integrated.title")}
           </Button>
           <Popover>
             <PopoverTrigger asChild>
@@ -404,7 +404,7 @@ function DefaultMenu(props: {
               </Button>
             </PopoverTrigger>
             <PopoverContent>
-              {t('connect.integrated.description')}
+              {t("connect.integrated.description")}
             </PopoverContent>
           </Popover>
         </div>
@@ -414,10 +414,10 @@ function DefaultMenu(props: {
             disabled={isDemo()}
             className="grow"
             variant="outline"
-            onClick={() => props.setLoginType('DEDICATED')}
+            onClick={() => props.setLoginType("DEDICATED")}
           >
             <ServerIcon />
-            {t('connect.dedicated.title')}
+            {t("connect.dedicated.title")}
           </Button>
           <Popover>
             <PopoverTrigger asChild>
@@ -426,7 +426,7 @@ function DefaultMenu(props: {
               </Button>
             </PopoverTrigger>
             <PopoverContent>
-              {t('connect.dedicated.description')}
+              {t("connect.dedicated.description")}
             </PopoverContent>
           </Popover>
         </div>
@@ -441,7 +441,7 @@ function DefaultMenu(props: {
               }}
             >
               <FlaskConicalIcon />
-              {t('connect.demo.title')}
+              {t("connect.demo.title")}
             </Button>
             <Popover>
               <PopoverTrigger asChild>
@@ -449,7 +449,7 @@ function DefaultMenu(props: {
                   <InfoIcon />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent>{t('connect.demo.description')}</PopoverContent>
+              <PopoverContent>{t("connect.demo.description")}</PopoverContent>
             </Popover>
           </div>
         )}
@@ -458,7 +458,7 @@ function DefaultMenu(props: {
   );
 }
 
-type IntegratedState = 'configure' | 'loading' | 'mobile';
+type IntegratedState = "configure" | "loading" | "mobile";
 
 function IntegratedMenu({
   redirectWithCredentials,
@@ -470,10 +470,10 @@ function IntegratedMenu({
   startIntegratedServer: () => void;
 }) {
   const [integratedState, setIntegratedState] =
-    useState<IntegratedState>('configure');
+    useState<IntegratedState>("configure");
 
   switch (integratedState) {
-    case 'configure':
+    case "configure":
       return (
         <IntegratedConfigureMenu
           setLoginType={setLoginType}
@@ -481,13 +481,13 @@ function IntegratedMenu({
           startIntegratedServer={startIntegratedServer}
         />
       );
-    case 'loading':
+    case "loading":
       return (
         <IntegratedLoadingMenu
           redirectWithCredentials={redirectWithCredentials}
         />
       );
-    case 'mobile':
+    case "mobile":
       return (
         <IntegratedMobileMenu
           setIntegratedState={setIntegratedState}
@@ -507,7 +507,7 @@ function IntegratedConfigureMenu({
   startIntegratedServer: () => void;
 }) {
   const systemInfo = use(SystemInfoContext);
-  const { t } = useTranslation('login');
+  const { t } = useTranslation("login");
   const form = useForm<IntegratedServerFormSchemaType>({
     resolver: zodResolver(integratedServerFormSchema),
     defaultValues: {
@@ -527,9 +527,9 @@ function IntegratedConfigureMenu({
     );
 
     if (systemInfo?.mobile) {
-      setIntegratedState('mobile');
+      setIntegratedState("mobile");
     } else {
-      setIntegratedState('loading');
+      setIntegratedState("loading");
       startIntegratedServer();
     }
   }
@@ -540,7 +540,7 @@ function IntegratedConfigureMenu({
         <Card>
           <CardHeader className="text-center">
             <LoginCardTitle />
-            <CardDescription>{t('integrated.description')}</CardDescription>
+            <CardDescription>{t("integrated.description")}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <FormField
@@ -548,14 +548,14 @@ function IntegratedConfigureMenu({
               name="jvmArgs"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('integrated.form.jvmArgs.title')}</FormLabel>
+                  <FormLabel>{t("integrated.form.jvmArgs.title")}</FormLabel>
                   <FormControl>
                     <div className="flex flex-row gap-2">
                       <Input
                         autoFocus
                         type="text"
                         inputMode="text"
-                        placeholder={t('integrated.form.jvmArgs.placeholder')}
+                        placeholder={t("integrated.form.jvmArgs.placeholder")}
                         {...field}
                       />
                       <Button
@@ -563,7 +563,7 @@ function IntegratedConfigureMenu({
                         variant="secondary"
                         disabled={field.value === DEFAULT_JVM_ARGS_STRING}
                         onClick={() => {
-                          field.onChange('jvmArgs', DEFAULT_JVM_ARGS_STRING);
+                          field.onChange("jvmArgs", DEFAULT_JVM_ARGS_STRING);
                           localStorage.setItem(
                             LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
                             DEFAULT_JVM_ARGS_STRING,
@@ -595,11 +595,11 @@ function IntegratedConfigureMenu({
               type="button"
             >
               <ArrowLeftIcon />
-              {t('integrated.form.back')}
+              {t("integrated.form.back")}
             </Button>
             <Button type="submit">
               <PlayIcon />
-              {t('integrated.form.start')}
+              {t("integrated.form.start")}
             </Button>
           </CardFooter>
         </Card>
@@ -613,13 +613,13 @@ function IntegratedLoadingMenu({
 }: {
   redirectWithCredentials: LoginFunction;
 }) {
-  const { t } = useTranslation('login');
-  const [latestLog, setLatestLog] = useState<string>(t('integrated.preparing'));
+  const { t } = useTranslation("login");
+  const [latestLog, setLatestLog] = useState<string>(t("integrated.preparing"));
 
   // Hook for loading the integrated server
   useEffect(() => {
     const cancel = cancellablePromiseDefault(
-      listen('integrated-server-start-log', (event) => {
+      listen("integrated-server-start-log", (event) => {
         setLatestLog(event.payload as string);
       }),
     );
@@ -651,7 +651,7 @@ function IntegratedMobileMenu({
   redirectWithCredentials: LoginFunction;
 }) {
   const systemInfo = use(SystemInfoContext);
-  const { t } = useTranslation('login');
+  const { t } = useTranslation("login");
   const runCommand = `bash <(curl -s https://raw.githubusercontent.com/AlexProgrammerDE/SoulFireClient/refs/heads/main/scripts/termux_setup.sh) ${systemInfo?.sfServerVersion} "${localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS)}"`;
   const form = useForm<MobileIntegratedServerFormSchemaType>({
     resolver: zodResolver(mobileIntegratedServerFormSchema),
@@ -659,7 +659,7 @@ function IntegratedMobileMenu({
       token:
         localStorage.getItem(
           LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY,
-        ) ?? '',
+        ) ?? "",
     },
   });
 
@@ -669,7 +669,7 @@ function IntegratedMobileMenu({
       LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY,
       token,
     );
-    void redirectWithCredentials('integrated', 'http://localhost:38765', token);
+    void redirectWithCredentials("integrated", "http://localhost:38765", token);
   }
 
   return (
@@ -679,13 +679,13 @@ function IntegratedMobileMenu({
           <CardHeader className="text-center">
             <LoginCardTitle />
             <CardDescription>
-              {t('integrated.mobile.description')}
+              {t("integrated.mobile.description")}
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <FormItem>
               <FormLabel>
-                {t('integrated.mobile.form.termuxCommand.title')}
+                {t("integrated.mobile.form.termuxCommand.title")}
               </FormLabel>
               <div className="flex flex-row gap-2">
                 <Input
@@ -700,7 +700,7 @@ function IntegratedMobileMenu({
                   variant="secondary"
                   onClick={() => {
                     copyToClipboard(runCommand);
-                    toast.success(t('common:copiedToClipboard'));
+                    toast.success(t("common:copiedToClipboard"));
                   }}
                 >
                   <ClipboardIcon />
@@ -721,8 +721,8 @@ function IntegratedMobileMenu({
                         type="button"
                         className="font-bold text-blue-500"
                         onClick={() => {
-                          copyToClipboard('generate-token api');
-                          toast.success(t('common:copiedToClipboard'));
+                          copyToClipboard("generate-token api");
+                          toast.success(t("common:copiedToClipboard"));
                         }}
                       />
                     ),
@@ -736,14 +736,14 @@ function IntegratedMobileMenu({
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>
-                    {t('integrated.mobile.form.token.title')}
+                    {t("integrated.mobile.form.token.title")}
                   </FormLabel>
                   <FormControl>
                     <Input
                       type="text"
                       inputMode="text"
                       placeholder={t(
-                        'integrated.mobile.form.token.placeholder',
+                        "integrated.mobile.form.token.placeholder",
                       )}
                       {...field}
                     />
@@ -764,16 +764,16 @@ function IntegratedMobileMenu({
               variant="outline"
               onClick={(e) => {
                 e.preventDefault();
-                setIntegratedState('configure');
+                setIntegratedState("configure");
               }}
               type="button"
             >
               <ArrowLeftIcon />
-              {t('integrated.mobile.form.back')}
+              {t("integrated.mobile.form.back")}
             </Button>
             <Button type="submit">
               <PlugZapIcon />
-              {t('integrated.mobile.form.connect')}
+              {t("integrated.mobile.form.connect")}
             </Button>
           </CardFooter>
         </Card>
@@ -782,7 +782,7 @@ function IntegratedMobileMenu({
   );
 }
 
-type DedicatedType = 'email' | 'token';
+type DedicatedType = "email" | "token";
 
 function DedicatedMenu({
   redirectWithCredentials,
@@ -793,18 +793,18 @@ function DedicatedMenu({
   setLoginType: (type: LoginType) => void;
   setAuthFlowData: (data: AuthFlowData) => void;
 }) {
-  const [dedicatedType, setDedicatedType] = useState<DedicatedType>('email');
+  const [dedicatedType, setDedicatedType] = useState<DedicatedType>("email");
 
   return (
     <>
-      {dedicatedType === 'email' && (
+      {dedicatedType === "email" && (
         <EmailForm
           setDedicatedType={setDedicatedType}
           setLoginType={setLoginType}
           setAuthFlowData={setAuthFlowData}
         />
       )}
-      {dedicatedType === 'token' && (
+      {dedicatedType === "token" && (
         <TokenForm
           redirectWithCredentials={redirectWithCredentials}
           setDedicatedType={setDedicatedType}
@@ -824,13 +824,13 @@ function EmailForm({
   setAuthFlowData: (data: AuthFlowData) => void;
   setDedicatedType: (type: DedicatedType) => void;
 }) {
-  const { t } = useTranslation('login');
+  const { t } = useTranslation("login");
   const form = useForm<EmailFormSchemaType>({
     resolver: zodResolver(emailFormSchema),
     defaultValues: {
       address:
-        localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY) ?? '',
-      email: localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY) ?? '',
+        localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY) ?? "",
+      email: localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY) ?? "",
     },
   });
 
@@ -854,14 +854,14 @@ function EmailForm({
             flowToken: response.response.authFlowToken,
             address: address,
           });
-          setLoginType('EMAIL_CODE');
+          setLoginType("EMAIL_CODE");
         }),
       {
-        loading: t('dedicated.toast.loading'),
-        success: t('dedicated.toast.success'),
+        loading: t("dedicated.toast.loading"),
+        success: t("dedicated.toast.success"),
         error: (e) => {
           console.error(e);
-          return t('dedicated.toast.error');
+          return t("dedicated.toast.error");
         },
       },
     );
@@ -873,7 +873,7 @@ function EmailForm({
         <Card>
           <CardHeader className="text-center">
             <LoginCardTitle />
-            <CardDescription>{t('dedicated.description')}</CardDescription>
+            <CardDescription>{t("dedicated.description")}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <FormField
@@ -881,18 +881,18 @@ function EmailForm({
               name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('dedicated.form.address.title')}</FormLabel>
+                  <FormLabel>{t("dedicated.form.address.title")}</FormLabel>
                   <FormControl>
                     <Input
                       autoFocus
                       type="url"
                       inputMode="url"
-                      placeholder={t('dedicated.form.address.placeholder')}
+                      placeholder={t("dedicated.form.address.placeholder")}
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    {t('dedicated.form.address.description')}
+                    {t("dedicated.form.address.description")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -903,16 +903,16 @@ function EmailForm({
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('dedicated.form.email.title')}</FormLabel>
+                  <FormLabel>{t("dedicated.form.email.title")}</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder={t('dedicated.form.email.placeholder')}
+                      placeholder={t("dedicated.form.email.placeholder")}
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    {t('dedicated.form.email.description')}
+                    {t("dedicated.form.email.description")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -930,22 +930,22 @@ function EmailForm({
                 type="button"
               >
                 <ArrowLeftIcon />
-                {t('dedicated.form.back')}
+                {t("dedicated.form.back")}
               </Button>
               <Button
                 variant="outline"
                 onClick={() => {
-                  setDedicatedType('token');
+                  setDedicatedType("token");
                 }}
                 type="button"
               >
                 <KeyRoundIcon />
-                {t('dedicated.form.useToken')}
+                {t("dedicated.form.useToken")}
               </Button>
             </div>
             <Button type="submit">
               <LogInIcon />
-              {t('dedicated.form.login')}
+              {t("dedicated.form.login")}
             </Button>
           </CardFooter>
         </Card>
@@ -963,13 +963,13 @@ function TokenForm({
   setLoginType: (type: LoginType) => void;
   setDedicatedType: (type: DedicatedType) => void;
 }) {
-  const { t } = useTranslation('login');
+  const { t } = useTranslation("login");
   const form = useForm<TokenFormSchemaType>({
     resolver: zodResolver(tokenFormSchema),
     defaultValues: {
       address:
-        localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY) ?? '',
-      token: localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY) ?? '',
+        localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY) ?? "",
+      token: localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY) ?? "",
     },
   });
 
@@ -979,7 +979,7 @@ function TokenForm({
 
     const token = values.token.trim();
     localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY, token);
-    void redirectWithCredentials('dedicated', address, token);
+    void redirectWithCredentials("dedicated", address, token);
   }
 
   return (
@@ -988,7 +988,7 @@ function TokenForm({
         <Card>
           <CardHeader className="text-center">
             <LoginCardTitle />
-            <CardDescription>{t('dedicated.description')}</CardDescription>
+            <CardDescription>{t("dedicated.description")}</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
             <FormField
@@ -996,18 +996,18 @@ function TokenForm({
               name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('dedicated.form.address.title')}</FormLabel>
+                  <FormLabel>{t("dedicated.form.address.title")}</FormLabel>
                   <FormControl>
                     <Input
                       autoFocus
                       type="url"
                       inputMode="url"
-                      placeholder={t('dedicated.form.address.placeholder')}
+                      placeholder={t("dedicated.form.address.placeholder")}
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    {t('dedicated.form.address.description')}
+                    {t("dedicated.form.address.description")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -1018,16 +1018,16 @@ function TokenForm({
               name="token"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>{t('dedicated.form.token.title')}</FormLabel>
+                  <FormLabel>{t("dedicated.form.token.title")}</FormLabel>
                   <FormControl>
                     <Input
                       type="password"
-                      placeholder={t('dedicated.form.token.placeholder')}
+                      placeholder={t("dedicated.form.token.placeholder")}
                       {...field}
                     />
                   </FormControl>
                   <FormDescription>
-                    {t('dedicated.form.token.description')}
+                    {t("dedicated.form.token.description")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -1045,22 +1045,22 @@ function TokenForm({
                 type="button"
               >
                 <ArrowLeftIcon />
-                {t('dedicated.form.back')}
+                {t("dedicated.form.back")}
               </Button>
               <Button
                 variant="outline"
                 onClick={() => {
-                  setDedicatedType('email');
+                  setDedicatedType("email");
                 }}
                 type="button"
               >
                 <MailIcon />
-                {t('dedicated.form.useEmail')}
+                {t("dedicated.form.useEmail")}
               </Button>
             </div>
             <Button type="submit">
               <LogInIcon />
-              {t('dedicated.form.login')}
+              {t("dedicated.form.login")}
             </Button>
           </CardFooter>
         </Card>
@@ -1074,8 +1074,8 @@ function EmailCodeMenu(props: {
   setLoginType: (type: LoginType) => void;
   redirectWithCredentials: LoginFunction;
 }) {
-  const { t } = useTranslation('login');
-  const [codeValue, setCodeValue] = useState<string>('');
+  const { t } = useTranslation("login");
+  const [codeValue, setCodeValue] = useState<string>("");
   const [inputDisabled, setInputDisabled] = useState<boolean>(false);
 
   function setEmailCode(code: string) {
@@ -1095,15 +1095,15 @@ function EmailCodeMenu(props: {
           authFlowToken: props.authFlowData.flowToken,
         })
         .then(({ response }) => {
-          if (response.next.oneofKind === 'success') {
+          if (response.next.oneofKind === "success") {
             void props.redirectWithCredentials(
-              'dedicated',
+              "dedicated",
               props.authFlowData.address,
               response.next.success.token,
             );
-          } else if (response.next.oneofKind === 'failure') {
+          } else if (response.next.oneofKind === "failure") {
             setInputDisabled(false);
-            setCodeValue('');
+            setCodeValue("");
             throw new Error(
               getEnumKeyByValue(
                 NextAuthFlowResponse_Failure_Reason,
@@ -1112,18 +1112,18 @@ function EmailCodeMenu(props: {
             );
           } else {
             setInputDisabled(false);
-            setCodeValue('');
-            throw new Error('Unknown response type');
+            setCodeValue("");
+            throw new Error("Unknown response type");
           }
         }),
       {
-        loading: t('emailCode.toast.loading'),
-        success: t('emailCode.toast.success'),
+        loading: t("emailCode.toast.loading"),
+        success: t("emailCode.toast.success"),
         error: (e) => {
           setInputDisabled(false);
-          setCodeValue('');
+          setCodeValue("");
           console.error(e);
-          return t('emailCode.toast.error');
+          return t("emailCode.toast.error");
         },
       },
     );
@@ -1136,7 +1136,7 @@ function EmailCodeMenu(props: {
         <CardDescription>
           <Trans
             t={t}
-            i18nKey={'emailCode.description'}
+            i18nKey={"emailCode.description"}
             values={{
               email: props.authFlowData.email,
             }}
@@ -1172,11 +1172,11 @@ function EmailCodeMenu(props: {
         <Button
           variant="outline"
           onClick={() => {
-            props.setLoginType('DEDICATED');
+            props.setLoginType("DEDICATED");
           }}
         >
           <ArrowLeftIcon />
-          {t('emailCode.back')}
+          {t("emailCode.back")}
         </Button>
         {inputDisabled && (
           <LoaderCircleIcon className="text-muted-foreground h-10 w-10 animate-spin" />

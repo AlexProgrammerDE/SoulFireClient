@@ -1,34 +1,34 @@
+import type { JsonValue } from "@protobuf-ts/runtime";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { Link, useRouteContext } from "@tanstack/react-router";
+import { use, useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { ExternalLink } from "@/components/external-link.tsx";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
+import { Badge } from "@/components/ui/badge.tsx";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card.tsx';
-import { Badge } from '@/components/ui/badge.tsx';
-import { useTranslation } from 'react-i18next';
-import { Switch } from '@/components/ui/switch.tsx';
+} from "@/components/ui/card.tsx";
+import { Switch } from "@/components/ui/switch.tsx";
+import type { SettingsPage } from "@/generated/soulfire/common.ts";
 import {
   getEntryValueByType,
   setInstanceConfig,
   updateEntry,
-} from '@/lib/utils.tsx';
-import { use, useMemo } from 'react';
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
-import { JsonValue } from '@protobuf-ts/runtime';
-import { TransportContext } from '@/components/providers/transport-context.tsx';
-import DynamicIcon from './dynamic-icon';
-import { Link, useRouteContext } from '@tanstack/react-router';
-import { SettingsPage } from '@/generated/soulfire/common.ts';
-import { ExternalLink } from '@/components/external-link.tsx';
+} from "@/lib/utils.tsx";
+import DynamicIcon from "./dynamic-icon";
 
 export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/instance/$instance',
+    from: "/_dashboard/instance/$instance",
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: profile } = useSuspenseQuery({
@@ -102,17 +102,17 @@ export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
         </CardDescription>
         <div className="mt-2 flex flex-wrap gap-2">
           <Badge variant="secondary">
-            {t('pluginCard.version', {
+            {t("pluginCard.version", {
               version: props.settingsEntry.owningPlugin!.version,
             })}
           </Badge>
           <Badge variant="secondary">
-            {t('pluginCard.author', {
+            {t("pluginCard.author", {
               author: props.settingsEntry.owningPlugin!.author,
             })}
           </Badge>
           <Badge variant="secondary">
-            {t('pluginCard.license', {
+            {t("pluginCard.license", {
               license: props.settingsEntry.owningPlugin!.license,
             })}
           </Badge>
@@ -121,7 +121,7 @@ export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
             className="inline-flex items-center"
           >
             <Badge variant="secondary">
-              {t('pluginCard.website', {
+              {t("pluginCard.website", {
                 website: props.settingsEntry.owningPlugin!.website,
               })}
             </Badge>

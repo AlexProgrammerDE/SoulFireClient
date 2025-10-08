@@ -1,32 +1,32 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { TerminalComponent } from '@/components/terminal.tsx';
-import ControlsMenu from '@/components/controls-menu.tsx';
-import { useMemo } from 'react';
-import { translateInstanceState } from '@/lib/types.ts';
-import { Badge } from '@/components/ui/badge';
-import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
-import { LogScope } from '@/generated/soulfire/logs.ts';
-import { useTranslation } from 'react-i18next';
-import { hasInstancePermission } from '@/lib/utils.tsx';
-import { InstancePermission } from '@/generated/soulfire/common.ts';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import ControlsMenu from "@/components/controls-menu.tsx";
+import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
+import { TerminalComponent } from "@/components/terminal.tsx";
+import { Badge } from "@/components/ui/badge";
+import { InstancePermission } from "@/generated/soulfire/common.ts";
+import type { LogScope } from "@/generated/soulfire/logs.ts";
+import { translateInstanceState } from "@/lib/types.ts";
+import { hasInstancePermission } from "@/lib/utils.tsx";
 
-export const Route = createFileRoute('/_dashboard/instance/$instance/')({
+export const Route = createFileRoute("/_dashboard/instance/$instance/")({
   component: Overview,
 });
 
 function Overview() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
     <InstancePageLayout
       extraCrumbs={[
         {
-          id: 'controls',
-          content: t('breadcrumbs.controls'),
+          id: "controls",
+          content: t("breadcrumbs.controls"),
         },
       ]}
-      pageName={t('pageName.overview')}
+      pageName={t("pageName.overview")}
     >
       <Content />
     </InstancePageLayout>
@@ -34,13 +34,13 @@ function Overview() {
 }
 
 function Content() {
-  const { i18n } = useTranslation('common');
+  const { i18n } = useTranslation("common");
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const logScope = useMemo<LogScope>(
     () => ({
       scope: {
-        oneofKind: 'instance',
+        oneofKind: "instance",
         instance: {
           instanceId: instanceInfo.id,
         },

@@ -1,16 +1,14 @@
-import { useTranslation } from 'react-i18next';
-import { useNavigate, useRouter } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
+import { useNavigate, useRouter } from "@tanstack/react-router";
+import { emit } from "@tauri-apps/api/event";
 import {
   BugIcon,
   LoaderCircleIcon,
   LogOutIcon,
   RotateCwIcon,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button.tsx';
-import { isTauri, runAsync } from '@/lib/utils.tsx';
-import { emit } from '@tauri-apps/api/event';
-import { logOut } from '@/lib/web-rpc.ts';
+} from "lucide-react";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Button } from "@/components/ui/button.tsx";
 import {
   Card,
   CardContent,
@@ -18,10 +16,12 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card.tsx';
+} from "@/components/ui/card.tsx";
+import { isTauri, runAsync } from "@/lib/utils.tsx";
+import { logOut } from "@/lib/web-rpc.ts";
 
 export function ErrorComponent({ error }: { error: Error }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const navigate = useNavigate();
   const router = useRouter();
   const [revalidating, setRevalidating] = useState(false);
@@ -47,9 +47,9 @@ export function ErrorComponent({ error }: { error: Error }) {
         <CardHeader>
           <CardTitle className="fle-row flex gap-1 text-2xl font-bold">
             <BugIcon className="h-8" />
-            {t('error.page.title')}
+            {t("error.page.title")}
           </CardTitle>
-          <CardDescription>{t('error.page.description')}</CardDescription>
+          <CardDescription>{t("error.page.description")}</CardDescription>
         </CardHeader>
         <CardContent>
           <p className="max-w-2xl truncate text-red-500">{error.message}</p>
@@ -60,18 +60,18 @@ export function ErrorComponent({ error }: { error: Error }) {
             onClick={() =>
               runAsync(async () => {
                 if (isTauri()) {
-                  await emit('kill-integrated-server', {});
+                  await emit("kill-integrated-server", {});
                 }
                 logOut();
                 await navigate({
-                  to: '/',
+                  to: "/",
                   replace: true,
                 });
               })
             }
           >
             <LogOutIcon />
-            {t('error.page.logOut')}
+            {t("error.page.logOut")}
           </Button>
           <Button onClick={revalidate}>
             {revalidating ? (
@@ -79,7 +79,7 @@ export function ErrorComponent({ error }: { error: Error }) {
             ) : (
               <RotateCwIcon />
             )}
-            {t('error.page.reloadPage')}
+            {t("error.page.reloadPage")}
           </Button>
         </CardFooter>
       </Card>

@@ -1,5 +1,5 @@
-import { Skeleton } from '@/components/ui/skeleton.tsx';
-import * as React from 'react';
+import * as React from "react";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 
 function LoadingSkeleton() {
   // Random width between 50 to 90%.
@@ -12,7 +12,7 @@ function LoadingSkeleton() {
       className="h-6 max-w-(--skeleton-width)"
       style={
         {
-          '--skeleton-width': width,
+          "--skeleton-width": width,
         } as React.CSSProperties
       }
     />

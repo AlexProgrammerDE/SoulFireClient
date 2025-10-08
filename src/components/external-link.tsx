@@ -1,6 +1,6 @@
-import { AnchorHTMLAttributes, DetailedHTMLProps } from 'react';
-import { isTauri, runAsync } from '@/lib/utils.tsx';
-import { openUrl } from '@tauri-apps/plugin-opener';
+import { openUrl } from "@tauri-apps/plugin-opener";
+import type { AnchorHTMLAttributes, DetailedHTMLProps } from "react";
+import { isTauri, runAsync } from "@/lib/utils.tsx";
 
 export function ExternalLink(
   props: Omit<
@@ -8,7 +8,7 @@ export function ExternalLink(
       AnchorHTMLAttributes<HTMLAnchorElement>,
       HTMLAnchorElement
     >,
-    'target'
+    "target"
   > & {
     href: string;
   },
@@ -24,7 +24,7 @@ export function ExternalLink(
             await openUrl(props.href);
           });
         } else {
-          window.open(props.href, '_blank');
+          window.open(props.href, "_blank");
         }
       }}
       target="_blank"

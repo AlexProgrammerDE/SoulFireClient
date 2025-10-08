@@ -1,15 +1,15 @@
-import { ReactNode, useState } from 'react';
+import * as clipboard from "@tauri-apps/plugin-clipboard-manager";
+import { ClipboardIcon, InfoIcon } from "lucide-react";
+import { type ReactNode, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button.tsx";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover.tsx';
-import { ClipboardIcon, InfoIcon } from 'lucide-react';
-import { copyToClipboard, isTauri } from '@/lib/utils.tsx';
-import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
-import { useTranslation } from 'react-i18next';
-import { toast } from 'sonner';
-import { Button } from '@/components/ui/button.tsx';
+} from "@/components/ui/popover.tsx";
+import { copyToClipboard, isTauri } from "@/lib/utils.tsx";
 
 export function TextInfoButton(props: { value: ReactNode }) {
   return (
@@ -20,7 +20,7 @@ export function TextInfoButton(props: { value: ReactNode }) {
 }
 
 export function CopyInfoButton(props: { value: string }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   return (
     <GenericInfoButton
       value={(close) => (
@@ -32,7 +32,7 @@ export function CopyInfoButton(props: { value: string }) {
             className="shrink-0"
             onClick={() => {
               copyToClipboard(props.value);
-              toast.success(t('copiedToClipboard'));
+              toast.success(t("copiedToClipboard"));
               close();
             }}
           >

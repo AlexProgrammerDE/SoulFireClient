@@ -1,43 +1,43 @@
-import { type ClassValue, clsx } from 'clsx';
-import { twMerge } from 'tailwind-merge';
-import {
+import type { JsonValue } from "@protobuf-ts/runtime";
+import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
+import type { QueryClient, QueryKey } from "@tanstack/react-query";
+import * as clipboard from "@tauri-apps/plugin-clipboard-manager";
+import { type ClassValue, clsx } from "clsx";
+import type { FlagComponent } from "country-flag-icons/react/1x1";
+import * as Flags from "country-flag-icons/react/3x2";
+import { sha256 } from "js-sha256";
+import type { ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
+import type { Timestamp } from "@/generated/google/protobuf/timestamp.ts";
+import { ClientServiceClient } from "@/generated/soulfire/client.client.ts";
+import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
+import type {
   GlobalPermission,
   InstancePermission,
   SettingEntry,
-} from '@/generated/soulfire/common.ts';
-import { ClientDataResponse } from '@/generated/soulfire/client.ts';
-import {
+} from "@/generated/soulfire/common.ts";
+import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
+import type {
   InstanceInfoResponse,
   InstanceListResponse,
   InstanceListResponse_Instance,
-} from '@/generated/soulfire/instance.ts';
-import { sha256 } from 'js-sha256';
-import * as Flags from 'country-flag-icons/react/3x2';
-import { type FlagComponent } from 'country-flag-icons/react/1x1';
-import { ReactNode } from 'react';
+} from "@/generated/soulfire/instance.ts";
+import { ServerServiceClient } from "@/generated/soulfire/server.client.ts";
 import {
-  BaseSettings,
+  type BaseSettings,
   convertToInstanceProto,
   convertToServerProto,
-  InstanceInfoQueryData,
-  ProfileRoot,
-  ServerInfoQueryData,
-} from '@/lib/types.ts';
-import { JsonValue } from '@protobuf-ts/runtime';
-import { ServerServiceClient } from '@/generated/soulfire/server.client.ts';
-import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
-import { RpcTransport } from '@protobuf-ts/runtime-rpc';
-import { QueryClient, QueryKey } from '@tanstack/react-query';
-import { Timestamp } from '@/generated/google/protobuf/timestamp.ts';
-import { ClientServiceClient } from '@/generated/soulfire/client.client.ts';
-import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
+  type InstanceInfoQueryData,
+  type ProfileRoot,
+  type ServerInfoQueryData,
+} from "@/lib/types.ts";
 
-export const ROOT_USER_ID = '00000000-0000-0000-0000-000000000000';
-const LOCAL_STORAGE_TERMINAL_THEME_KEY = 'terminal-theme';
+export const ROOT_USER_ID = "00000000-0000-0000-0000-000000000000";
+const LOCAL_STORAGE_TERMINAL_THEME_KEY = "terminal-theme";
 
-const emojiMap = APP_LOCALES.split(',').reduce<Record<string, FlagComponent>>(
+const emojiMap = APP_LOCALES.split(",").reduce<Record<string, FlagComponent>>(
   (acc, locale) => {
-    const countryCode = locale.split('-')[1];
+    const countryCode = locale.split("-")[1];
     if (!countryCode) return acc;
 
     acc[countryCode] = Flags[countryCode as keyof typeof Flags];
@@ -51,7 +51,7 @@ export function setTerminalTheme(theme: string) {
 }
 
 export function getTerminalTheme() {
-  return localStorage.getItem(LOCAL_STORAGE_TERMINAL_THEME_KEY) ?? 'mocha';
+  return localStorage.getItem(LOCAL_STORAGE_TERMINAL_THEME_KEY) ?? "mocha";
 }
 
 export function cn(...inputs: ClassValue[]) {
@@ -59,11 +59,11 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function isTauri() {
-  return (window as never)['__TAURI__'] !== undefined;
+  return (window as never)["__TAURI__"] !== undefined;
 }
 
 export function isDemo() {
-  return document.location.host === 'demo.soulfiremc.com';
+  return document.location.host === "demo.soulfiremc.com";
 }
 
 export function cancellablePromiseDefault<T extends () => void>(
@@ -136,26 +136,26 @@ export function data2blob(data: string) {
 }
 
 export function languageEmoji(locale: string): ReactNode {
-  if (locale === 'lol-US') {
-    return '🐱';
+  if (locale === "lol-US") {
+    return "🐱";
   }
 
-  const countryCode = locale.split('-')[1];
-  if (!countryCode) return '';
+  const countryCode = locale.split("-")[1];
+  if (!countryCode) return "";
 
   const Flag = emojiMap[countryCode];
-  if (!Flag) return '';
+  if (!Flag) return "";
 
   return <Flag className="mx-1 size-4 align-middle" />;
 }
 
 export function getLanguageName(languageCode: string, displayLanguage: string) {
-  if (languageCode === 'lol-US') {
-    return 'LOLCAT';
+  if (languageCode === "lol-US") {
+    return "LOLCAT";
   }
 
   const displayNames = new Intl.DisplayNames([displayLanguage], {
-    type: 'language',
+    type: "language",
   });
   return displayNames.of(languageCode) ?? languageCode;
 }
@@ -198,7 +198,7 @@ export function getEntryValueByType(
   entry: SettingEntry | undefined,
 ): JsonValue {
   switch (entry?.value.oneofKind) {
-    case 'string': {
+    case "string": {
       return getEntryValue(
         namespace,
         entry.key,
@@ -206,13 +206,13 @@ export function getEntryValueByType(
         entry.value.string.def,
       );
     }
-    case 'int': {
+    case "int": {
       return getEntryValue(namespace, entry.key, config, entry.value.int.def);
     }
-    case 'bool': {
+    case "bool": {
       return getEntryValue(namespace, entry.key, config, entry.value.bool.def);
     }
-    case 'double': {
+    case "double": {
       return getEntryValue(
         namespace,
         entry.key,
@@ -220,10 +220,10 @@ export function getEntryValueByType(
         entry.value.double.def,
       );
     }
-    case 'combo': {
+    case "combo": {
       return getEntryValue(namespace, entry.key, config, entry.value.combo.def);
     }
-    case 'stringList': {
+    case "stringList": {
       return getEntryValue(
         namespace,
         entry.key,
@@ -231,7 +231,7 @@ export function getEntryValueByType(
         entry.value.stringList.def,
       );
     }
-    case 'minMax': {
+    case "minMax": {
       return getEntryValue(namespace, entry.key, config, {
         min: entry.value.minMax.minEntry!.def,
         max: entry.value.minMax.maxEntry!.def,
@@ -346,7 +346,7 @@ export async function setInstanceIcon(
   await instanceService.updateInstanceMeta({
     id: instanceInfo.id,
     meta: {
-      oneofKind: 'icon',
+      oneofKind: "icon",
       icon: icon,
     },
   });
@@ -415,7 +415,7 @@ export async function setInstanceFriendlyName(
   await instanceService.updateInstanceMeta({
     id: instanceInfo.id,
     meta: {
-      oneofKind: 'friendlyName',
+      oneofKind: "friendlyName",
       friendlyName: friendlyName,
     },
   });
@@ -529,9 +529,9 @@ export function runAsync(fn: () => Promise<void>) {
 
 export function formatIconName(text: string): string {
   return text
-    .split('-')
+    .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .join(" ");
 }
 
 export function copyToClipboard(text: string) {

@@ -1,5 +1,7 @@
-'use client';
+"use client";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Link, type LinkProps, useRouteContext } from "@tanstack/react-router";
 import {
   BugIcon,
   ChartAreaIcon,
@@ -8,21 +10,19 @@ import {
   ServerIcon,
   SquareTerminalIcon,
   UsersIcon,
-} from 'lucide-react';
+} from "lucide-react";
+import type { ReactNode } from "react";
+import * as React from "react";
+import { useTranslation } from "react-i18next";
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@/components/ui/sidebar.tsx';
-import { Link, LinkProps, useRouteContext } from '@tanstack/react-router';
-import * as React from 'react';
-import { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { hasGlobalPermission } from '@/lib/utils.tsx';
-import { GlobalPermission } from '@/generated/soulfire/common.ts';
+} from "@/components/ui/sidebar.tsx";
+import { GlobalPermission } from "@/generated/soulfire/common.ts";
+import { hasGlobalPermission } from "@/lib/utils.tsx";
 
 type NavLinks = {
   title: string;
@@ -31,9 +31,9 @@ type NavLinks = {
 }[];
 
 export function NavUserAdmin() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const clientDataQueryOptions = useRouteContext({
-    from: '/_dashboard',
+    from: "/_dashboard",
     select: (context) => context.clientDataQueryOptions,
   });
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
@@ -44,66 +44,66 @@ export function NavUserAdmin() {
 
   const navLinks: NavLinks = [
     {
-      title: t('userSidebar.adminOverview'),
+      title: t("userSidebar.adminOverview"),
       icon: ChartAreaIcon,
       linkProps: {
-        to: '/user/admin',
+        to: "/user/admin",
         params: {},
       },
     },
     {
-      title: t('userSidebar.adminLogs'),
+      title: t("userSidebar.adminLogs"),
       icon: LogsIcon,
       linkProps: {
-        to: '/user/admin/logs',
+        to: "/user/admin/logs",
         params: {},
       },
     },
     {
-      title: t('userSidebar.adminTerminal'),
+      title: t("userSidebar.adminTerminal"),
       icon: SquareTerminalIcon,
       linkProps: {
-        to: '/user/admin/terminal',
+        to: "/user/admin/terminal",
         params: {},
       },
     },
     {
-      title: t('userSidebar.users'),
+      title: t("userSidebar.users"),
       icon: UsersIcon,
       linkProps: {
-        to: '/user/admin/users',
+        to: "/user/admin/users",
         params: {},
       },
     },
     {
-      title: t('userSidebar.adminScripts'),
+      title: t("userSidebar.adminScripts"),
       icon: ScrollTextIcon,
       linkProps: {
-        to: '/user/admin/scripts',
+        to: "/user/admin/scripts",
         params: {},
       },
     },
     {
-      title: t('userSidebar.serverSettings'),
+      title: t("userSidebar.serverSettings"),
       icon: ServerIcon,
       linkProps: {
-        to: '/user/admin/settings/$namespace',
-        params: { namespace: 'server' },
+        to: "/user/admin/settings/$namespace",
+        params: { namespace: "server" },
       },
     },
     {
-      title: t('userSidebar.devSettings'),
+      title: t("userSidebar.devSettings"),
       icon: BugIcon,
       linkProps: {
-        to: '/user/admin/settings/$namespace',
-        params: { namespace: 'dev' },
+        to: "/user/admin/settings/$namespace",
+        params: { namespace: "dev" },
       },
     },
   ];
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>{t('userSidebar.adminGroup')}</SidebarGroupLabel>
+      <SidebarGroupLabel>{t("userSidebar.adminGroup")}</SidebarGroupLabel>
       <SidebarMenu>
         {navLinks.map((item) => (
           <SidebarMenuItem key={item.title}>
@@ -111,7 +111,7 @@ export function NavUserAdmin() {
               <Link
                 activeOptions={{ exact: true }}
                 activeProps={{
-                  'data-active': true,
+                  "data-active": true,
                 }}
                 {...item.linkProps}
               >

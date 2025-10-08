@@ -1,16 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
-import { createTransport } from '@/lib/web-rpc.ts';
-import { ScriptListResponse } from '@/generated/soulfire/script.ts';
-import { ScriptServiceClient } from '@/generated/soulfire/script.client.ts';
-import { GenericScripts } from '@/components/generic-scripts-page.tsx';
-import { useTranslation } from 'react-i18next';
-import UserPageLayout from '@/components/nav/user/user-page-layout';
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import { GenericScripts } from "@/components/generic-scripts-page.tsx";
+import UserPageLayout from "@/components/nav/user/user-page-layout";
+import { ScriptServiceClient } from "@/generated/soulfire/script.client.ts";
+import type { ScriptListResponse } from "@/generated/soulfire/script.ts";
+import { createTransport } from "@/lib/web-rpc.ts";
 
-export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
+export const Route = createFileRoute("/_dashboard/user/admin/scripts")({
   beforeLoad: (props) => {
     const globalScriptsQueryOptions = queryOptions({
-      queryKey: ['global-scripts'],
+      queryKey: ["global-scripts"],
       queryFn: async (props): Promise<ScriptListResponse> => {
         const transport = createTransport();
         if (transport === null) {
@@ -24,7 +24,7 @@ export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
           {
             scope: {
               scope: {
-                oneofKind: 'globalScript',
+                oneofKind: "globalScript",
                 globalScript: {},
               },
             },
@@ -38,7 +38,7 @@ export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
       },
       refetchInterval: 3_000,
     });
-    props.abortController.signal.addEventListener('abort', () => {
+    props.abortController.signal.addEventListener("abort", () => {
       void props.context.queryClient.cancelQueries({
         queryKey: globalScriptsQueryOptions.queryKey,
       });
@@ -56,18 +56,18 @@ export const Route = createFileRoute('/_dashboard/user/admin/scripts')({
 });
 
 function AdminScripts() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
     <UserPageLayout
       showUserCrumb={false}
       extraCrumbs={[
         {
-          id: 'settings',
-          content: t('breadcrumbs.settings'),
+          id: "settings",
+          content: t("breadcrumbs.settings"),
         },
       ]}
-      pageName={t('pageName.adminScripts')}
+      pageName={t("pageName.adminScripts")}
     >
       <Content />
     </UserPageLayout>
@@ -82,7 +82,7 @@ function Content() {
       queryKey={globalScriptsQueryOptions.queryKey}
       scope={{
         scope: {
-          oneofKind: 'globalScript',
+          oneofKind: "globalScript",
           globalScript: {},
         },
       }}

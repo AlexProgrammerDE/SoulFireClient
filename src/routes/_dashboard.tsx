@@ -1,48 +1,48 @@
-import { TransportContext } from '@/components/providers/transport-context.tsx';
+import type { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import {
   createFileRoute,
   Outlet,
   redirect,
   useNavigate,
-} from '@tanstack/react-router';
-import { ClientServiceClient } from '@/generated/soulfire/client.client.ts';
+} from "@tanstack/react-router";
+import { emit } from "@tauri-apps/api/event";
+import { Suspense, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { CreateInstanceProvider } from "@/components/dialog/create-instance-dialog.tsx";
+import { ErrorComponent } from "@/components/error-component.tsx";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
+import { demoClientData } from "@/demo-data.ts";
+import { ClientServiceClient } from "@/generated/soulfire/client.client.ts";
+import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
+import { InstancePermission } from "@/generated/soulfire/common.ts";
+import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
+import {
+  type InstanceListResponse,
+  InstanceState,
+} from "@/generated/soulfire/instance.ts";
+import { isTauri, smartEntries } from "@/lib/utils.tsx";
 import {
   createTransport,
   isAuthenticated,
   isImpersonating,
   logOut,
-} from '@/lib/web-rpc.ts';
-import { GrpcWebFetchTransport } from '@protobuf-ts/grpcweb-transport';
-import { ClientDataResponse } from '@/generated/soulfire/client.ts';
-import { isTauri, smartEntries } from '@/lib/utils.tsx';
-import { emit } from '@tauri-apps/api/event';
-import { demoClientData } from '@/demo-data.ts';
-import {
-  InstanceListResponse,
-  InstanceState,
-} from '@/generated/soulfire/instance.ts';
-import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
-import { Suspense, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ErrorComponent } from '@/components/error-component.tsx';
-import { CreateInstanceProvider } from '@/components/dialog/create-instance-dialog.tsx';
-import { InstancePermission } from '@/generated/soulfire/common.ts';
+} from "@/lib/web-rpc.ts";
 
-export const Route = createFileRoute('/_dashboard')({
+export const Route = createFileRoute("/_dashboard")({
   beforeLoad: async (props) => {
     if (isAuthenticated()) {
       const instanceListQueryOptions = queryOptions({
-        queryKey: ['instance-list'],
+        queryKey: ["instance-list"],
         queryFn: async (props): Promise<InstanceListResponse> => {
           const transport = createTransport();
           if (transport === null) {
             return {
               instances: [
                 {
-                  id: 'demo',
-                  friendlyName: 'Demo',
-                  icon: 'pickaxe',
+                  id: "demo",
+                  friendlyName: "Demo",
+                  icon: "pickaxe",
                   state: InstanceState.RUNNING,
                   instancePermissions: smartEntries(InstancePermission).map(
                     (permission) => ({
@@ -67,13 +67,13 @@ export const Route = createFileRoute('/_dashboard')({
         },
         refetchInterval: 3_000,
       });
-      props.abortController.signal.addEventListener('abort', () => {
+      props.abortController.signal.addEventListener("abort", () => {
         void props.context.queryClient.cancelQueries({
           queryKey: instanceListQueryOptions.queryKey,
         });
       });
       const clientDataQueryOptions = queryOptions({
-        queryKey: ['client-data'],
+        queryKey: ["client-data"],
         queryFn: async (props): Promise<ClientDataResponse> => {
           const transport = createTransport();
           if (transport === null) {
@@ -92,7 +92,7 @@ export const Route = createFileRoute('/_dashboard')({
           return result.response;
         },
       });
-      props.abortController.signal.addEventListener('abort', () => {
+      props.abortController.signal.addEventListener("abort", () => {
         void props.context.queryClient.cancelQueries({
           queryKey: clientDataQueryOptions.queryKey,
         });
@@ -103,12 +103,12 @@ export const Route = createFileRoute('/_dashboard')({
       };
     } else {
       if (isTauri()) {
-        await emit('kill-integrated-server', {});
+        await emit("kill-integrated-server", {});
       }
       logOut();
       // eslint-disable-next-line @typescript-eslint/only-throw-error
       throw redirect({
-        to: '/',
+        to: "/",
         search: {
           redirect: props.location.href,
         },
@@ -175,24 +175,24 @@ function InstanceSwitchKeybinds() {
         if (numberKey > 0 && numberKey <= instanceList.instances.length) {
           e.preventDefault();
           void navigate({
-            to: '/instance/$instance',
+            to: "/instance/$instance",
             params: { instance: instanceList.instances[numberKey - 1].id },
           });
         }
       }
     };
-    document.addEventListener('keydown', down);
-    return () => document.removeEventListener('keydown', down);
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
   }, [instanceList.instances, navigate]);
 
   return null;
 }
 
 function DashboardLayout() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const loaderData = Route.useLoaderData();
   if (!loaderData.success) {
-    return <ErrorComponent error={new Error(t('error.connectionFailed'))} />;
+    return <ErrorComponent error={new Error(t("error.connectionFailed"))} />;
   }
 
   return (

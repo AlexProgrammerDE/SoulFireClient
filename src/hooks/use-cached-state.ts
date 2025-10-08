@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export function useCachedState<T>(propValue: T): [T, (value: T) => void] {
   const [lastValue, setLastValue] = useState(propValue);

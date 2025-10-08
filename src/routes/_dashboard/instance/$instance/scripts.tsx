@@ -1,17 +1,17 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
-import { createTransport } from '@/lib/web-rpc.ts';
-import { ScriptListResponse } from '@/generated/soulfire/script.ts';
-import { ScriptServiceClient } from '@/generated/soulfire/script.client.ts';
-import { GenericScripts } from '@/components/generic-scripts-page.tsx';
-import InstancePageLayout from '@/components/nav/instance/instance-page-layout';
-import { useTranslation } from 'react-i18next';
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { useTranslation } from "react-i18next";
+import { GenericScripts } from "@/components/generic-scripts-page.tsx";
+import InstancePageLayout from "@/components/nav/instance/instance-page-layout";
+import { ScriptServiceClient } from "@/generated/soulfire/script.client.ts";
+import type { ScriptListResponse } from "@/generated/soulfire/script.ts";
+import { createTransport } from "@/lib/web-rpc.ts";
 
-export const Route = createFileRoute('/_dashboard/instance/$instance/scripts')({
+export const Route = createFileRoute("/_dashboard/instance/$instance/scripts")({
   beforeLoad: (props) => {
     const { instance } = props.params;
     const instanceScriptsQueryOptions = queryOptions({
-      queryKey: ['instance-scripts', instance],
+      queryKey: ["instance-scripts", instance],
       queryFn: async (props): Promise<ScriptListResponse> => {
         const transport = createTransport();
         if (transport === null) {
@@ -25,7 +25,7 @@ export const Route = createFileRoute('/_dashboard/instance/$instance/scripts')({
           {
             scope: {
               scope: {
-                oneofKind: 'instanceScript',
+                oneofKind: "instanceScript",
                 instanceScript: {
                   id: instance,
                 },
@@ -41,7 +41,7 @@ export const Route = createFileRoute('/_dashboard/instance/$instance/scripts')({
       },
       refetchInterval: 3_000,
     });
-    props.abortController.signal.addEventListener('abort', () => {
+    props.abortController.signal.addEventListener("abort", () => {
       void props.context.queryClient.cancelQueries({
         queryKey: instanceScriptsQueryOptions.queryKey,
       });
@@ -59,17 +59,17 @@ export const Route = createFileRoute('/_dashboard/instance/$instance/scripts')({
 });
 
 function InstanceScripts() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
     <InstancePageLayout
       extraCrumbs={[
         {
-          id: 'settings',
-          content: t('breadcrumbs.settings'),
+          id: "settings",
+          content: t("breadcrumbs.settings"),
         },
       ]}
-      pageName={t('pageName.instanceScripts')}
+      pageName={t("pageName.instanceScripts")}
     >
       <Content />
     </InstancePageLayout>
@@ -86,7 +86,7 @@ function Content() {
       queryKey={instanceScriptsQueryOptions.queryKey}
       scope={{
         scope: {
-          oneofKind: 'instanceScript',
+          oneofKind: "instanceScript",
           instanceScript: {
             id: instance,
           },

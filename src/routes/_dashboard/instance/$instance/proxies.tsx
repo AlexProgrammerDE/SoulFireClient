@@ -1,26 +1,11 @@
-import { createFileRoute, deepEqual } from '@tanstack/react-router';
-import * as React from 'react';
-import { use, useCallback, useState } from 'react';
-import { Button } from '@/components/ui/button.tsx';
-import { InstanceSettingsPageComponent } from '@/components/settings-page.tsx';
-import { ColumnDef, Table as ReactTable } from '@tanstack/react-table';
+import { useAptabase } from "@aptabase/react";
 import {
-  getEnumEntries,
-  getEnumKeyByValue,
-  mapUnionToValue,
-  ProfileProxy,
-  ProfileRoot,
-} from '@/lib/types.ts';
-import { ProxyProto_Type } from '@/generated/soulfire/common.ts';
-import { ExternalToast, toast } from 'sonner';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu.tsx';
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { createFileRoute, deepEqual } from "@tanstack/react-router";
+import type { ColumnDef, Table as ReactTable } from "@tanstack/react-table";
 import {
   Dice4Icon,
   Dice5Icon,
@@ -29,38 +14,53 @@ import {
   TextIcon,
   TrashIcon,
   Wand2Icon,
-} from 'lucide-react';
-import ImportDialog from '@/components/dialog/import-dialog.tsx';
-import URI from 'urijs';
-import { TransportContext } from '@/components/providers/transport-context.tsx';
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
-import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
-import { ProxyCheckServiceClient } from '@/generated/soulfire/proxy-check.client.ts';
-import { useTranslation } from 'react-i18next';
-import i18n from '@/lib/i18n.ts';
-import { runAsync, setInstanceConfig } from '@/lib/utils.tsx';
-import { useAptabase } from '@aptabase/react';
-import {
-  SelectAllHeader,
-  SelectRowHeader,
-} from '@/components/data-table/data-table-selects.tsx';
-import { DataTable } from '@/components/data-table/data-table.tsx';
+} from "lucide-react";
+import * as React from "react";
+import { use, useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { type ExternalToast, toast } from "sonner";
+import URI from "urijs";
+import { DataTable } from "@/components/data-table/data-table.tsx";
 import {
   DataTableActionBar,
   DataTableActionBarAction,
   DataTableActionBarSelection,
-} from '@/components/data-table/data-table-action-bar.tsx';
-import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
-import { useDataTable } from '@/hooks/use-data-table.ts';
-import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
-import { DataTableToolbar } from '@/components/data-table/data-table-toolbar.tsx';
-import { Badge } from '@/components/ui/badge.tsx';
+} from "@/components/data-table/data-table-action-bar.tsx";
+import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header.tsx";
+import {
+  SelectAllHeader,
+  SelectRowHeader,
+} from "@/components/data-table/data-table-selects.tsx";
+import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
+import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
+import ImportDialog from "@/components/dialog/import-dialog.tsx";
+import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
+import { InstanceSettingsPageComponent } from "@/components/settings-page.tsx";
+import { Badge } from "@/components/ui/badge.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu.tsx";
+import { ProxyProto_Type } from "@/generated/soulfire/common.ts";
+import { ProxyCheckServiceClient } from "@/generated/soulfire/proxy-check.client.ts";
+import { useDataTable } from "@/hooks/use-data-table.ts";
+import i18n from "@/lib/i18n.ts";
+import {
+  getEnumEntries,
+  getEnumKeyByValue,
+  mapUnionToValue,
+  type ProfileProxy,
+  type ProfileRoot,
+} from "@/lib/types.ts";
+import { runAsync, setInstanceConfig } from "@/lib/utils.tsx";
 
-export const Route = createFileRoute('/_dashboard/instance/$instance/proxies')({
+export const Route = createFileRoute("/_dashboard/instance/$instance/proxies")({
   component: ProxySettings,
 });
 
@@ -88,18 +88,18 @@ function uiProxyTypeToProto(type: SimpleProxyType): ProxyProto_Type {
 }
 
 function parseNormalProxy(line: string, type: SimpleProxyType): ProfileProxy {
-  const parts = line.split(':');
+  const parts = line.split(":");
   if (parts.length < 2) {
-    throw new Error(i18n.t('instance:proxy.invalidFormat'));
+    throw new Error(i18n.t("instance:proxy.invalidFormat"));
   }
 
   // Fill username and password with undefined if not present
   parts.length = 4;
 
-  const host = parts[0] + ':' + parts[1];
+  const host = parts[0] + ":" + parts[1];
   return {
     type: uiProxyTypeToProto(type),
-    address: host.startsWith('/') ? `unix://${host}` : `inet://${host}`,
+    address: host.startsWith("/") ? `unix://${host}` : `inet://${host}`,
     username: parts[2],
     password: parts[3],
   };
@@ -107,11 +107,11 @@ function parseNormalProxy(line: string, type: SimpleProxyType): ProfileProxy {
 
 function parseRawTypeToProto(rawType: string): ProxyProto_Type | null {
   switch (rawType) {
-    case 'http':
+    case "http":
       return ProxyProto_Type.HTTP;
-    case 'socks4':
+    case "socks4":
       return ProxyProto_Type.SOCKS4;
-    case 'socks5':
+    case "socks5":
       return ProxyProto_Type.SOCKS5;
     default:
       return null;
@@ -128,33 +128,33 @@ function parseURIProxy(line: string): ProfileProxy | null {
 
   return {
     type,
-    address: host.startsWith('/') ? `unix://${host}` : `inet://${host}`,
-    username: uri.username() === '' ? undefined : uri.username(),
-    password: uri.password() === '' ? undefined : uri.password(),
+    address: host.startsWith("/") ? `unix://${host}` : `inet://${host}`,
+    username: uri.username() === "" ? undefined : uri.username(),
+    password: uri.password() === "" ? undefined : uri.password(),
   };
 }
 
 function getProxyKey(proxy: ProfileProxy): string {
-  return `${proxy.type}-${proxy.address}-${proxy.username ?? ''}-${
-    proxy.password ?? ''
+  return `${proxy.type}-${proxy.address}-${proxy.username ?? ""}-${
+    proxy.password ?? ""
   }`;
 }
 
 const proxyTypeToIcon = (type: keyof typeof ProxyProto_Type) =>
   mapUnionToValue(type, (key) => {
     switch (key) {
-      case 'HTTP':
+      case "HTTP":
         return GlobeIcon;
-      case 'SOCKS4':
+      case "SOCKS4":
         return Dice4Icon;
-      case 'SOCKS5':
+      case "SOCKS5":
         return Dice5Icon;
     }
   });
 
 const columns: ColumnDef<ProfileProxy>[] = [
   {
-    id: 'select',
+    id: "select",
     header: SelectAllHeader,
     cell: SelectRowHeader,
     size: 32,
@@ -162,9 +162,9 @@ const columns: ColumnDef<ProfileProxy>[] = [
     enableHiding: false,
   },
   {
-    id: 'type',
+    id: "type",
     accessorFn: (row) => getEnumKeyByValue(ProxyProto_Type, row.type),
-    accessorKey: 'type',
+    accessorKey: "type",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Type" />
     ),
@@ -180,8 +180,8 @@ const columns: ColumnDef<ProfileProxy>[] = [
       );
     },
     meta: {
-      label: 'Type',
-      variant: 'multiSelect',
+      label: "Type",
+      variant: "multiSelect",
       options: getEnumEntries(ProxyProto_Type).map((type) => {
         return {
           label: type.key,
@@ -193,43 +193,43 @@ const columns: ColumnDef<ProfileProxy>[] = [
     enableColumnFilter: true,
   },
   {
-    id: 'address',
-    accessorKey: 'address',
+    id: "address",
+    accessorKey: "address",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Address" />
     ),
     meta: {
-      label: 'Address',
-      placeholder: 'Search addresses...',
-      variant: 'text',
+      label: "Address",
+      placeholder: "Search addresses...",
+      variant: "text",
       icon: TextIcon,
     },
     enableColumnFilter: true,
   },
   {
-    id: 'username',
-    accessorKey: 'username',
+    id: "username",
+    accessorKey: "username",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Username" />
     ),
     meta: {
-      label: 'Username',
-      placeholder: 'Search usernames...',
-      variant: 'text',
+      label: "Username",
+      placeholder: "Search usernames...",
+      variant: "text",
       icon: TextIcon,
     },
     enableColumnFilter: true,
   },
   {
-    id: 'password',
-    accessorKey: 'password',
+    id: "password",
+    accessorKey: "password",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Password" />
     ),
     meta: {
-      label: 'Password',
-      placeholder: 'Search passwords...',
-      variant: 'text',
+      label: "Password",
+      placeholder: "Search passwords...",
+      variant: "text",
       icon: TextIcon,
     },
     enableColumnFilter: true,
@@ -237,7 +237,7 @@ const columns: ColumnDef<ProfileProxy>[] = [
 ];
 
 function AddButton() {
-  const { t } = useTranslation('instance');
+  const { t } = useTranslation("instance");
   const queryClient = useQueryClient();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: profile } = useSuspenseQuery({
@@ -273,13 +273,13 @@ function AddButton() {
       if (proxyTypeSelected === null) return;
 
       if (text.length === 0) {
-        toast.error(t('proxy.listImportToast.noProxies'));
+        toast.error(t("proxy.listImportToast.noProxies"));
         return;
       }
 
       setProxyTypeSelected(null);
       const textSplit = text
-        .split('\n')
+        .split("\n")
         .map((t) => t.trim())
         .filter((t) => t.length > 0);
       toast.promise(
@@ -312,11 +312,11 @@ function AddButton() {
           return proxiesToAdd.length;
         })(),
         {
-          loading: t('proxy.listImportToast.loading'),
-          success: (r) => t('proxy.listImportToast.success', { count: r }),
+          loading: t("proxy.listImportToast.loading"),
+          success: (r) => t("proxy.listImportToast.success", { count: r }),
           error: (e) => {
             console.error(e);
-            return t('proxy.listImportToast.error');
+            return t("proxy.listImportToast.error");
           },
         },
       );
@@ -333,60 +333,60 @@ function AddButton() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <DropdownMenuLabel>{t('proxy.import.proxyType')}</DropdownMenuLabel>
+          <DropdownMenuLabel>{t("proxy.import.proxyType")}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             onClick={() => {
-              void trackEvent('import_proxies_http');
+              void trackEvent("import_proxies_http");
               setProxyTypeSelected(UIProxyType.HTTP);
             }}
           >
-            {t('proxy.import.http')}
+            {t("proxy.import.http")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              void trackEvent('import_proxies_socks4');
+              void trackEvent("import_proxies_socks4");
               setProxyTypeSelected(UIProxyType.SOCKS4);
             }}
           >
-            {t('proxy.import.socks4')}
+            {t("proxy.import.socks4")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              void trackEvent('import_proxies_socks5');
+              void trackEvent("import_proxies_socks5");
               setProxyTypeSelected(UIProxyType.SOCKS5);
             }}
           >
-            {t('proxy.import.socks5')}
+            {t("proxy.import.socks5")}
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() => {
-              void trackEvent('import_proxies_uri');
+              void trackEvent("import_proxies_uri");
               setProxyTypeSelected(UIProxyType.URI);
             }}
           >
-            {t('proxy.import.uri')}
+            {t("proxy.import.uri")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
       {proxyTypeSelected !== null && (
         <ImportDialog
-          title={t('proxy.import.dialog.title', {
+          title={t("proxy.import.dialog.title", {
             type: getEnumKeyByValue(UIProxyType, proxyTypeSelected),
           })}
-          description={t('proxy.import.dialog.description')}
+          description={t("proxy.import.dialog.description")}
           closer={() => setProxyTypeSelected(null)}
           listener={textSelectedCallback}
           filters={[
             {
-              name: 'Text File',
-              mimeType: 'text/plain',
-              extensions: ['txt'],
+              name: "Text File",
+              mimeType: "text/plain",
+              extensions: ["txt"],
             },
           ]}
           allowMultiple={true}
           textInput={{
-            defaultValue: '',
+            defaultValue: "",
           }}
         />
       )}
@@ -395,7 +395,7 @@ function AddButton() {
 }
 
 function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
-  const { t } = useTranslation('instance');
+  const { t } = useTranslation("instance");
   const queryClient = useQueryClient();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: profile } = useSuspenseQuery({
@@ -433,7 +433,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             return;
           }
 
-          void trackEvent('check_proxies', {
+          void trackEvent("check_proxies", {
             count: props.table.getFilteredSelectedRowModel().rows.length,
           });
 
@@ -444,7 +444,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           const abortController = new AbortController();
           const loadingData: ExternalToast = {
             cancel: {
-              label: t('common:cancel'),
+              label: t("common:cancel"),
               onClick: () => {
                 abortController.abort();
               },
@@ -454,7 +454,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           let failed = 0;
           let success = 0;
           const loadingReport = () =>
-            t('proxy.checkToast.loading', {
+            t("proxy.checkToast.loading", {
               checked: success + failed,
               total,
               success,
@@ -475,9 +475,9 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             runAsync(async () => {
               const data = r.data;
               switch (data.oneofKind) {
-                case 'end': {
+                case "end": {
                   toast.success(
-                    t('proxy.checkToast.success', {
+                    t("proxy.checkToast.success", {
                       count: failed,
                     }),
                     {
@@ -487,7 +487,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
                   );
                   break;
                 }
-                case 'single': {
+                case "single": {
                   if (abortController.signal.aborted) {
                     return;
                   }
@@ -514,7 +514,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             });
             responses.onError((e) => {
               console.error(e);
-              toast.error(t('proxy.checkToast.error'), {
+              toast.error(t("proxy.checkToast.error"), {
                 id: toastId,
                 cancel: undefined,
               });
@@ -527,7 +527,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
       <DataTableActionBarAction
         tooltip="Remove selected proxies"
         onClick={() => {
-          void trackEvent('remove_proxies', {
+          void trackEvent("remove_proxies", {
             count: props.table.getFilteredSelectedRowModel().rows.length,
           });
           const selectedRows = props.table
@@ -542,13 +542,13 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               ),
             })),
             {
-              loading: t('proxy.removeToast.loading'),
-              success: t('proxy.removeToast.success', {
+              loading: t("proxy.removeToast.loading"),
+              success: t("proxy.removeToast.success", {
                 count: selectedRows.length,
               }),
               error: (e) => {
                 console.error(e);
-                return t('proxy.removeToast.error');
+                return t("proxy.removeToast.error");
               },
             },
           );
@@ -562,17 +562,17 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
 }
 
 function ProxySettings() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
     <InstancePageLayout
       extraCrumbs={[
         {
-          id: 'settings',
-          content: t('breadcrumbs.settings'),
+          id: "settings",
+          content: t("breadcrumbs.settings"),
         },
       ]}
-      pageName={t('pageName.proxySettings')}
+      pageName={t("pageName.proxySettings")}
       documentationLink="https://soulfiremc.com/docs/usage/proxies"
     >
       <Content />
@@ -598,7 +598,7 @@ function Content() {
       <div className="flex flex-col gap-2">
         <InstanceSettingsPageComponent
           data={
-            instanceInfo.instanceSettings.find((s) => s.namespace === 'proxy')!
+            instanceInfo.instanceSettings.find((s) => s.namespace === "proxy")!
           }
         />
       </div>

@@ -1,5 +1,13 @@
-import * as React from 'react';
-import { Suspense, use, useRef } from 'react';
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { Link, useNavigate, useRouteContext } from "@tanstack/react-router";
+import { appConfigDir, resolve } from "@tauri-apps/api/path";
+import { open, save } from "@tauri-apps/plugin-dialog";
+import { mkdir, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
+import { saveAs } from "file-saver";
 import {
   ChevronsUpDownIcon,
   DownloadIcon,
@@ -9,7 +17,15 @@ import {
   PlusIcon,
   TrashIcon,
   UploadIcon,
-} from 'lucide-react';
+} from "lucide-react";
+import * as React from "react";
+import { Suspense, use, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import { CreateInstanceContext } from "@/components/dialog/create-instance-dialog.tsx";
+import DynamicIcon from "@/components/dynamic-icon.tsx";
+import { SystemInfoContext } from "@/components/providers/system-info-context.tsx";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,19 +38,24 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu.tsx';
+} from "@/components/ui/dropdown-menu.tsx";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@/components/ui/sidebar.tsx';
+} from "@/components/ui/sidebar.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
+import {
+  GlobalPermission,
+  InstancePermission,
+} from "@/generated/soulfire/common.ts";
+import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
 import {
   convertToInstanceProto,
-  ProfileRoot,
+  type ProfileRoot,
   translateInstanceState,
-} from '@/lib/types.ts';
-import { Link, useNavigate, useRouteContext } from '@tanstack/react-router';
+} from "@/lib/types.ts";
 import {
   data2blob,
   hasGlobalPermission,
@@ -42,33 +63,12 @@ import {
   isTauri,
   runAsync,
   setInstanceConfig,
-} from '@/lib/utils.tsx';
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
-import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
-import { toast } from 'sonner';
-import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { mkdir, readTextFile, writeTextFile } from '@tauri-apps/plugin-fs';
-import { appConfigDir, resolve } from '@tauri-apps/api/path';
-import { open, save } from '@tauri-apps/plugin-dialog';
-import { saveAs } from 'file-saver';
-import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
-import {
-  GlobalPermission,
-  InstancePermission,
-} from '@/generated/soulfire/common.ts';
-import DynamicIcon from '@/components/dynamic-icon.tsx';
-import { useTranslation } from 'react-i18next';
-import { Skeleton } from '@/components/ui/skeleton.tsx';
-import { CreateInstanceContext } from '@/components/dialog/create-instance-dialog.tsx';
+} from "@/lib/utils.tsx";
 
 function SidebarInstanceButton() {
-  const { i18n } = useTranslation('common');
+  const { i18n } = useTranslation("common");
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/instance/$instance',
+    from: "/_dashboard/instance/$instance",
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
@@ -116,7 +116,7 @@ function SidebarInstanceButtonSkeleton() {
 
 function InstanceList() {
   const instanceListQueryOptions = useRouteContext({
-    from: '/_dashboard',
+    from: "/_dashboard",
     select: (context) => context.instanceListQueryOptions,
   });
   const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
@@ -150,11 +150,11 @@ function InstanceListSkeleton() {
 }
 
 function InstanceActionButtons() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/instance/$instance',
+    from: "/_dashboard/instance/$instance",
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
@@ -190,7 +190,7 @@ function InstanceActionButtons() {
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <UploadIcon className="size-4" />
-            {t('instanceSidebar.loadProfile')}
+            {t("instanceSidebar.loadProfile")}
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
@@ -203,7 +203,7 @@ function InstanceActionButtons() {
                         const loadProfile = async () => {
                           const data = await readTextFile(
                             await resolve(
-                              await resolve(await appConfigDir(), 'profile'),
+                              await resolve(await appConfigDir(), "profile"),
                               file,
                             ),
                           );
@@ -214,14 +214,14 @@ function InstanceActionButtons() {
                         };
                         toast.promise(loadProfile(), {
                           loading: t(
-                            'instanceSidebar.loadProfileToast.loading',
+                            "instanceSidebar.loadProfileToast.loading",
                           ),
                           success: t(
-                            'instanceSidebar.loadProfileToast.success',
+                            "instanceSidebar.loadProfileToast.success",
                           ),
                           error: (e) => {
                             console.error(e);
-                            return t('instanceSidebar.loadProfileToast.error');
+                            return t("instanceSidebar.loadProfileToast.error");
                           },
                         });
                       }}
@@ -238,18 +238,18 @@ function InstanceActionButtons() {
                   runAsync(async () => {
                     const profileDir = await resolve(
                       await appConfigDir(),
-                      'profile',
+                      "profile",
                     );
                     await mkdir(profileDir, { recursive: true });
 
                     const selected = await open({
-                      title: t('instanceSidebar.loadProfile'),
+                      title: t("instanceSidebar.loadProfile"),
                       filters: systemInfo.mobile
                         ? undefined
                         : [
                             {
-                              name: 'SoulFire JSON Profile',
-                              extensions: ['json'],
+                              name: "SoulFire JSON Profile",
+                              extensions: ["json"],
                             },
                           ],
                       defaultPath: profileDir,
@@ -267,14 +267,14 @@ function InstanceActionButtons() {
                         })(),
                         {
                           loading: t(
-                            'instanceSidebar.loadProfileToast.loading',
+                            "instanceSidebar.loadProfileToast.loading",
                           ),
                           success: t(
-                            'instanceSidebar.loadProfileToast.success',
+                            "instanceSidebar.loadProfileToast.success",
                           ),
                           error: (e) => {
                             console.error(e);
-                            return t('instanceSidebar.loadProfileToast.error');
+                            return t("instanceSidebar.loadProfileToast.error");
                           },
                         },
                       );
@@ -283,7 +283,7 @@ function InstanceActionButtons() {
                 }}
               >
                 <FolderIcon className="size-4" />
-                {t('instanceSidebar.loadFromFile')}
+                {t("instanceSidebar.loadFromFile")}
               </DropdownMenuItem>
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
@@ -307,11 +307,11 @@ function InstanceActionButtons() {
                     JSON.parse(data) as ProfileRoot,
                   ),
                   {
-                    loading: t('instanceSidebar.loadProfileToast.loading'),
-                    success: t('instanceSidebar.loadProfileToast.success'),
+                    loading: t("instanceSidebar.loadProfileToast.loading"),
+                    success: t("instanceSidebar.loadProfileToast.success"),
                     error: (e) => {
                       console.error(e);
-                      return t('instanceSidebar.loadProfileToast.error');
+                      return t("instanceSidebar.loadProfileToast.error");
                     },
                   },
                 );
@@ -325,7 +325,7 @@ function InstanceActionButtons() {
             }}
           >
             <UploadIcon className="size-4" />
-            {t('instanceSidebar.loadProfile')}
+            {t("instanceSidebar.loadProfile")}
           </DropdownMenuItem>
         </>
       )}
@@ -334,37 +334,37 @@ function InstanceActionButtons() {
           const data = JSON.stringify(profile, null, 2);
           if (isTauri()) {
             runAsync(async () => {
-              const profileDir = await resolve(await appConfigDir(), 'profile');
+              const profileDir = await resolve(await appConfigDir(), "profile");
               await mkdir(profileDir, { recursive: true });
 
               let selected = await save({
-                title: t('instanceSidebar.saveProfile'),
+                title: t("instanceSidebar.saveProfile"),
                 filters: [
                   {
-                    name: 'SoulFire JSON Profile',
-                    extensions: ['json'],
+                    name: "SoulFire JSON Profile",
+                    extensions: ["json"],
                   },
                 ],
                 defaultPath: profileDir,
               });
 
               if (selected) {
-                if (!selected.endsWith('.json')) {
-                  selected += '.json';
+                if (!selected.endsWith(".json")) {
+                  selected += ".json";
                 }
 
                 await writeTextFile(selected, data);
               }
             });
           } else {
-            saveAs(data2blob(data), 'profile.json');
+            saveAs(data2blob(data), "profile.json");
           }
 
-          toast.success(t('instanceSidebar.profileSaved'));
+          toast.success(t("instanceSidebar.profileSaved"));
         }}
       >
         <DownloadIcon className="size-4" />
-        {t('instanceSidebar.saveProfile')}
+        {t("instanceSidebar.saveProfile")}
       </DropdownMenuItem>
       <DropdownMenuSeparator />
     </>
@@ -387,7 +387,7 @@ function InstanceActionButtonsSkeleton() {
 }
 
 export function InstanceSwitcher() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const { isMobile } = useSidebar();
 
   return (
@@ -400,11 +400,11 @@ export function InstanceSwitcher() {
           <DropdownMenuContent
             className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
             align="start"
-            side={isMobile ? 'bottom' : 'right'}
+            side={isMobile ? "bottom" : "right"}
             sideOffset={4}
           >
             <DropdownMenuLabel className="text-muted-foreground text-xs">
-              {t('instanceSidebar.instancesGroup')}
+              {t("instanceSidebar.instancesGroup")}
             </DropdownMenuLabel>
             <Suspense fallback={<InstanceListSkeleton />}>
               <InstanceList />
@@ -413,7 +413,7 @@ export function InstanceSwitcher() {
             <DropdownMenuItem asChild>
               <Link to="/user">
                 <HomeIcon className="size-4" />
-                {t('instanceSidebar.backToDashboard')}
+                {t("instanceSidebar.backToDashboard")}
               </Link>
             </DropdownMenuItem>
             <Suspense>
@@ -434,9 +434,9 @@ export function InstanceSwitcher() {
 }
 
 function CreateInstanceButton() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const clientDataQueryOptions = useRouteContext({
-    from: '/_dashboard',
+    from: "/_dashboard",
     select: (context) => context.clientDataQueryOptions,
   });
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
@@ -449,19 +449,19 @@ function CreateInstanceButton() {
   return (
     <DropdownMenuItem onClick={openCreateInstance}>
       <PlusIcon className="size-4" />
-      {t('instanceSidebar.createInstance')}
+      {t("instanceSidebar.createInstance")}
     </DropdownMenuItem>
   );
 }
 
 function DeleteInstanceButton() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const instanceListQueryOptions = useRouteContext({
-    from: '/_dashboard',
+    from: "/_dashboard",
     select: (context) => context.instanceListQueryOptions,
   });
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/instance/$instance',
+    from: "/_dashboard/instance/$instance",
     select: (context) => context.instanceInfoQueryOptions,
   });
   const transport = use(TransportContext);
@@ -481,11 +481,11 @@ function DeleteInstanceButton() {
         })
         .then((r) => r.response);
       toast.promise(promise, {
-        loading: t('instanceSidebar.deleteToast.loading'),
-        success: t('instanceSidebar.deleteToast.success'),
+        loading: t("instanceSidebar.deleteToast.loading"),
+        success: t("instanceSidebar.deleteToast.success"),
         error: (e) => {
           console.error(e);
-          return t('instanceSidebar.deleteToast.error');
+          return t("instanceSidebar.deleteToast.error");
         },
       });
 
@@ -509,12 +509,12 @@ function DeleteInstanceButton() {
       onClick={() => {
         deleteMutation.mutate(instanceInfo.id);
         void navigate({
-          to: '/user',
+          to: "/user",
         });
       }}
     >
       <TrashIcon className="size-4" />
-      {t('instanceSidebar.deleteInstance')}
+      {t("instanceSidebar.deleteInstance")}
     </DropdownMenuItem>
   );
 }

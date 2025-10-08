@@ -1,22 +1,22 @@
-import { use } from 'react';
-import { Button } from '@/components/ui/button.tsx';
-import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { toast } from 'sonner';
-import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
-import { InstanceState } from '@/generated/soulfire/instance.ts';
 import {
   useMutation,
   useQueryClient,
   useSuspenseQuery,
-} from '@tanstack/react-query';
-import { PlayIcon, SquareIcon, TimerIcon, TimerOffIcon } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
-import { useRouteContext } from '@tanstack/react-router';
+} from "@tanstack/react-query";
+import { useRouteContext } from "@tanstack/react-router";
+import { PlayIcon, SquareIcon, TimerIcon, TimerOffIcon } from "lucide-react";
+import { use } from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
+import { InstanceState } from "@/generated/soulfire/instance.ts";
 
 export default function ControlsMenu() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/instance/$instance',
+    from: "/_dashboard/instance/$instance",
     select: (context) => context.instanceInfoQueryOptions,
   });
   const queryClient = useQueryClient();
@@ -36,11 +36,11 @@ export default function ControlsMenu() {
         })
         .then();
       toast.promise(promise, {
-        loading: t('controls.startToast.loading'),
-        success: t('controls.startToast.success'),
+        loading: t("controls.startToast.loading"),
+        success: t("controls.startToast.success"),
         error: (e) => {
           console.error(e);
-          return t('controls.startToast.error');
+          return t("controls.startToast.error");
         },
       });
 
@@ -71,20 +71,20 @@ export default function ControlsMenu() {
         .then();
       if (current === InstanceState.PAUSED) {
         toast.promise(promise, {
-          loading: t('controls.resumeToast.loading'),
-          success: t('controls.resumeToast.success'),
+          loading: t("controls.resumeToast.loading"),
+          success: t("controls.resumeToast.success"),
           error: (e) => {
             console.error(e);
-            return t('controls.resumeToast.error');
+            return t("controls.resumeToast.error");
           },
         });
       } else {
         toast.promise(promise, {
-          loading: t('controls.pauseToast.loading'),
-          success: t('controls.pauseToast.success'),
+          loading: t("controls.pauseToast.loading"),
+          success: t("controls.pauseToast.success"),
           error: (e) => {
             console.error(e);
-            return t('controls.pauseToast.error');
+            return t("controls.pauseToast.error");
           },
         });
       }
@@ -111,11 +111,11 @@ export default function ControlsMenu() {
         })
         .then();
       toast.promise(promise, {
-        loading: t('controls.stopToast.loading'),
-        success: t('controls.stopToast.success'),
+        loading: t("controls.stopToast.loading"),
+        success: t("controls.stopToast.success"),
         error: (e) => {
           console.error(e);
-          return t('controls.stopToast.error');
+          return t("controls.stopToast.error");
         },
       });
 
@@ -136,7 +136,7 @@ export default function ControlsMenu() {
         disabled={instanceInfo.state !== InstanceState.STOPPED}
       >
         <PlayIcon />
-        {t('controls.start')}
+        {t("controls.start")}
       </Button>
       <Button
         variant="secondary"
@@ -152,8 +152,8 @@ export default function ControlsMenu() {
           <TimerIcon />
         )}
         {instanceInfo.state === InstanceState.PAUSED
-          ? t('controls.resume')
-          : t('controls.pause')}
+          ? t("controls.resume")
+          : t("controls.pause")}
       </Button>
       <Button
         variant="secondary"
@@ -164,7 +164,7 @@ export default function ControlsMenu() {
         }
       >
         <SquareIcon />
-        {t('controls.stop')}
+        {t("controls.stop")}
       </Button>
     </div>
   );

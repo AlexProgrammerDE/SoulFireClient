@@ -1,26 +1,26 @@
-import { useTranslation } from 'react-i18next';
-import { useNavigate, useRouter } from '@tanstack/react-router';
-import { useState } from 'react';
+import { useNavigate, useRouter } from "@tanstack/react-router";
+import { emit } from "@tauri-apps/api/event";
 import {
   LoaderCircleIcon,
   LogOutIcon,
   RotateCwIcon,
   SearchXIcon,
-} from 'lucide-react';
-import { Button } from '@/components/ui/button.tsx';
-import { isTauri, runAsync } from '@/lib/utils.tsx';
-import { emit } from '@tauri-apps/api/event';
-import { logOut } from '@/lib/web-rpc.ts';
+} from "lucide-react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Button } from "@/components/ui/button.tsx";
 import {
   Card,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card.tsx';
+} from "@/components/ui/card.tsx";
+import { isTauri, runAsync } from "@/lib/utils.tsx";
+import { logOut } from "@/lib/web-rpc.ts";
 
 export function NotFoundComponent() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const navigate = useNavigate();
   const router = useRouter();
   const [revalidating, setRevalidating] = useState(false);
@@ -31,9 +31,9 @@ export function NotFoundComponent() {
         <CardHeader>
           <CardTitle className="fle-row flex gap-1 text-2xl font-bold">
             <SearchXIcon className="h-8" />
-            {t('notFound.page.title')}
+            {t("notFound.page.title")}
           </CardTitle>
-          <CardDescription>{t('notFound.page.description')}</CardDescription>
+          <CardDescription>{t("notFound.page.description")}</CardDescription>
         </CardHeader>
         <CardFooter className="flex flex-row gap-2">
           <Button
@@ -41,18 +41,18 @@ export function NotFoundComponent() {
             onClick={() => {
               runAsync(async () => {
                 if (isTauri()) {
-                  await emit('kill-integrated-server', {});
+                  await emit("kill-integrated-server", {});
                 }
                 logOut();
                 await navigate({
-                  to: '/',
+                  to: "/",
                   replace: true,
                 });
               });
             }}
           >
             <LogOutIcon />
-            {t('notFound.page.logOut')}
+            {t("notFound.page.logOut")}
           </Button>
           <Button
             onClick={() => {
@@ -72,7 +72,7 @@ export function NotFoundComponent() {
             ) : (
               <RotateCwIcon />
             )}
-            {t('notFound.page.reloadPage')}
+            {t("notFound.page.reloadPage")}
           </Button>
         </CardFooter>
       </Card>

@@ -1,27 +1,27 @@
-import { SidebarTrigger } from '@/components/ui/sidebar.tsx';
-import { Separator } from '@/components/ui/separator.tsx';
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { CatchBoundary, Link, useRouteContext } from "@tanstack/react-router";
+import { BookOpenTextIcon, HomeIcon } from "lucide-react";
+import { type ReactNode, Suspense } from "react";
+import { useTranslation } from "react-i18next";
+import { ErrorComponent } from "@/components/error-component.tsx";
+import { ExternalLink } from "@/components/external-link.tsx";
+import { LoadingComponent } from "@/components/loading-component.tsx";
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb.tsx';
-import { ScrollArea } from '@/components/ui/scroll-area.tsx';
-import { ReactNode, Suspense } from 'react';
-import { Button } from '@/components/ui/button.tsx';
-import { BookOpenTextIcon, HomeIcon } from 'lucide-react';
-import { CatchBoundary, Link, useRouteContext } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
-import { ErrorComponent } from '@/components/error-component.tsx';
-import { ExternalLink } from '@/components/external-link.tsx';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { LoadingComponent } from '@/components/loading-component.tsx';
-import { Skeleton } from '@/components/ui/skeleton.tsx';
+} from "@/components/ui/breadcrumb.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { ScrollArea } from "@/components/ui/scroll-area.tsx";
+import { Separator } from "@/components/ui/separator.tsx";
+import { SidebarTrigger } from "@/components/ui/sidebar.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 
 function InstanceCrumb() {
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/instance/$instance',
+    from: "/_dashboard/instance/$instance",
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
@@ -38,7 +38,7 @@ export default function InstancePageLayout(props: {
   pageName: ReactNode;
   documentationLink?: string;
 }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   const CrumbComponent = (props: { crumb: ReactNode }) => (
     <>
@@ -60,7 +60,7 @@ export default function InstancePageLayout(props: {
             <Link to="/user">
               <HomeIcon />
               <span className="sr-only">
-                {t('instanceSidebar.backToDashboard')}
+                {t("instanceSidebar.backToDashboard")}
               </span>
             </Link>
           </Button>
@@ -74,7 +74,7 @@ export default function InstancePageLayout(props: {
                 <ExternalLink href={props.documentationLink}>
                   <BookOpenTextIcon />
                   <span className="sr-only">
-                    {t('instanceSidebar.readDocumentation')}
+                    {t("instanceSidebar.readDocumentation")}
                   </span>
                 </ExternalLink>
               </Button>
@@ -105,7 +105,7 @@ export default function InstancePageLayout(props: {
       <ScrollArea className="h-[calc(100dvh-3rem)] w-full max-w-dvw">
         <div className="flex min-h-[calc(100dvh-3rem)] w-full max-w-dvw flex-col p-4">
           <CatchBoundary
-            getResetKey={() => 'instance-page-layout'}
+            getResetKey={() => "instance-page-layout"}
             errorComponent={ErrorComponent}
           >
             <Suspense fallback={<LoadingComponent />}>

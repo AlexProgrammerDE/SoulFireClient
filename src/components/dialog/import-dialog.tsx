@@ -1,3 +1,18 @@
+import { useAptabase } from "@aptabase/react";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { useRouteContext } from "@tanstack/react-router";
+import { downloadDir } from "@tauri-apps/api/path";
+import * as clipboard from "@tauri-apps/plugin-clipboard-manager";
+import { open } from "@tauri-apps/plugin-dialog";
+import { readTextFile } from "@tauri-apps/plugin-fs";
+import { ClipboardIcon, FileIcon, GlobeIcon, TextIcon } from "lucide-react";
+import MimeMatcher from "mime-matcher";
+import { use, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import { SystemInfoContext } from "@/components/providers/system-info-context.tsx";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import {
   Credenza,
   CredenzaBody,
@@ -5,28 +20,13 @@ import {
   CredenzaDescription,
   CredenzaHeader,
   CredenzaTitle,
-} from '@/components/ui/credenza.tsx';
-import { Button } from '@/components/ui/button.tsx';
-import { Textarea } from '@/components/ui/textarea.tsx';
-import { use, useRef, useState } from 'react';
-import { hasInstancePermission, isTauri, runAsync } from '@/lib/utils.tsx';
-import { downloadDir } from '@tauri-apps/api/path';
-import { open } from '@tauri-apps/plugin-dialog';
-import { readTextFile } from '@tauri-apps/plugin-fs';
-import * as clipboard from '@tauri-apps/plugin-clipboard-manager';
-import { ClipboardIcon, FileIcon, GlobeIcon, TextIcon } from 'lucide-react';
-import { Separator } from '@/components/ui/separator.tsx';
-import { Input } from '@/components/ui/input.tsx';
-import { toast } from 'sonner';
-import MimeMatcher from 'mime-matcher';
-import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { DownloadServiceClient } from '@/generated/soulfire/download.client.ts';
-import { SystemInfoContext } from '@/components/providers/system-info-context.tsx';
-import { InstancePermission } from '@/generated/soulfire/common.ts';
-import { useTranslation } from 'react-i18next';
-import { useRouteContext } from '@tanstack/react-router';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { useAptabase } from '@aptabase/react';
+} from "@/components/ui/credenza.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import { Separator } from "@/components/ui/separator.tsx";
+import { Textarea } from "@/components/ui/textarea.tsx";
+import { InstancePermission } from "@/generated/soulfire/common.ts";
+import { DownloadServiceClient } from "@/generated/soulfire/download.client.ts";
+import { hasInstancePermission, isTauri, runAsync } from "@/lib/utils.tsx";
 
 export type TextInput = {
   defaultValue: string;
@@ -47,27 +47,27 @@ export type ImportDialogProps = {
 };
 
 export default function ImportDialog(props: ImportDialogProps) {
-  const [menuState, setMenuState] = useState<'main' | 'url'>('main');
+  const [menuState, setMenuState] = useState<"main" | "url">("main");
 
   switch (menuState) {
-    case 'url':
+    case "url":
       return <UrlDialog {...props} />;
-    case 'main':
+    case "main":
       return (
-        <MainDialog {...props} openUrlDialog={() => setMenuState('url')} />
+        <MainDialog {...props} openUrlDialog={() => setMenuState("url")} />
       );
   }
 }
 
 function UrlDialog(props: ImportDialogProps) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const transport = use(TransportContext);
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/instance/$instance',
+    from: "/_dashboard/instance/$instance",
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const [inputText, setInputText] = useState('');
+  const [inputText, setInputText] = useState("");
   const { trackEvent } = useAptabase();
 
   return (
@@ -76,7 +76,7 @@ function UrlDialog(props: ImportDialogProps) {
         <CredenzaHeader>
           <CredenzaTitle>{props.title}</CredenzaTitle>
           <CredenzaDescription>
-            {t('dialog.import.url.description')}
+            {t("dialog.import.url.description")}
           </CredenzaDescription>
         </CredenzaHeader>
         <CredenzaBody className="pb-4 md:pb-0">
@@ -84,7 +84,7 @@ function UrlDialog(props: ImportDialogProps) {
             <div className="flex flex-col gap-4">
               <Input
                 autoFocus
-                placeholder={t('dialog.import.url.form.url.placeholder')}
+                placeholder={t("dialog.import.url.form.url.placeholder")}
                 defaultValue={inputText}
                 type="url"
                 inputMode="url"
@@ -94,12 +94,12 @@ function UrlDialog(props: ImportDialogProps) {
                 variant="secondary"
                 className="w-full"
                 onClick={() => {
-                  if (inputText === '') {
-                    toast.error(t('dialog.import.url.form.url.empty'));
+                  if (inputText === "") {
+                    toast.error(t("dialog.import.url.form.url.empty"));
                     return;
                   }
 
-                  void trackEvent('import_from_url');
+                  void trackEvent("import_from_url");
 
                   const download = async () => {
                     if (transport === null) {
@@ -118,17 +118,17 @@ function UrlDialog(props: ImportDialogProps) {
                   };
 
                   toast.promise(download(), {
-                    loading: t('dialog.import.url.toast.loading'),
-                    success: t('dialog.import.url.toast.success'),
+                    loading: t("dialog.import.url.toast.loading"),
+                    success: t("dialog.import.url.toast.success"),
                     error: (e) => {
                       console.error(e);
-                      return t('dialog.import.url.toast.error');
+                      return t("dialog.import.url.toast.error");
                     },
                   });
                 }}
               >
                 <GlobeIcon />
-                <span>{t('dialog.import.url.submit')}</span>
+                <span>{t("dialog.import.url.submit")}</span>
               </Button>
             </div>
           </div>
@@ -143,9 +143,9 @@ function MainDialog(
     openUrlDialog: () => void;
   },
 ) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/instance/$instance',
+    from: "/_dashboard/instance/$instance",
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
@@ -167,7 +167,7 @@ function MainDialog(
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept={props.filters.map((f) => f.mimeType).join(',')}
+                  accept={props.filters.map((f) => f.mimeType).join(",")}
                   multiple={props.allowMultiple}
                   className="hidden"
                   onChange={(e) => {
@@ -196,7 +196,7 @@ function MainDialog(
                 variant="secondary"
                 className="flex-auto"
                 onClick={() => {
-                  void trackEvent('import_from_file');
+                  void trackEvent("import_from_file");
                   if (isTauri()) {
                     runAsync(async () => {
                       const downloadsDir = await downloadDir();
@@ -226,7 +226,7 @@ function MainDialog(
                 }}
               >
                 <FileIcon />
-                <span>{t('dialog.import.main.fromFile')}</span>
+                <span>{t("dialog.import.main.fromFile")}</span>
               </Button>
               {hasInstancePermission(
                 instanceInfo,
@@ -238,17 +238,17 @@ function MainDialog(
                   onClick={props.openUrlDialog}
                 >
                   <GlobeIcon />
-                  <span>{t('dialog.import.main.fromUrl')}</span>
+                  <span>{t("dialog.import.main.fromUrl")}</span>
                 </Button>
               )}
               <Button
                 variant="secondary"
                 className="flex-auto"
                 onClick={() => {
-                  void trackEvent('import_from_clipboard');
+                  void trackEvent("import_from_clipboard");
                   runAsync(async () => {
                     if (isTauri()) {
-                      props.listener((await clipboard.readText()) ?? '');
+                      props.listener((await clipboard.readText()) ?? "");
                     } else {
                       const mimeTypes = props.filters.map((f) => f.mimeType);
                       const matcher = new MimeMatcher(...mimeTypes);
@@ -264,7 +264,7 @@ function MainDialog(
                         });
                       if (!props.allowMultiple && clipboardEntries.length > 1) {
                         toast.warning(
-                          t('dialog.import.main.firstClipboardItem'),
+                          t("dialog.import.main.firstClipboardItem"),
                         );
                         clipboardEntries = [clipboardEntries[0]];
                       }
@@ -280,7 +280,7 @@ function MainDialog(
                 }}
               >
                 <ClipboardIcon />
-                <span>{t('dialog.import.main.fromClipboard')}</span>
+                <span>{t("dialog.import.main.fromClipboard")}</span>
               </Button>
             </div>
             {props.textInput !== null && (
@@ -294,11 +294,11 @@ function MainDialog(
 }
 
 function TextInput(
-  props: Omit<ImportDialogProps, 'textInput'> & {
+  props: Omit<ImportDialogProps, "textInput"> & {
     textInput: TextInput;
   },
 ) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const [inputText, setInputText] = useState(props.textInput.defaultValue);
   const { trackEvent } = useAptabase();
   return (
@@ -307,7 +307,7 @@ function TextInput(
       <div className="flex flex-col gap-4">
         <Textarea
           autoFocus
-          placeholder={t('dialog.import.main.textarea.placeholder')}
+          placeholder={t("dialog.import.main.textarea.placeholder")}
           defaultValue={inputText}
           onChange={(e) => setInputText(e.currentTarget.value)}
         />
@@ -315,12 +315,12 @@ function TextInput(
           variant="secondary"
           className="w-full"
           onClick={() => {
-            void trackEvent('import_from_text_input');
+            void trackEvent("import_from_text_input");
             props.listener(inputText);
           }}
         >
           <TextIcon />
-          <span>{t('dialog.import.main.textarea.submit')}</span>
+          <span>{t("dialog.import.main.textarea.submit")}</span>
         </Button>
       </div>
     </>

@@ -1,10 +1,10 @@
+import * as React from "react";
 import {
   SidebarGroup,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuSkeleton,
-} from '../ui/sidebar';
-import * as React from 'react';
+} from "../ui/sidebar";
 
 export function NavDefaultSkeleton() {
   return (

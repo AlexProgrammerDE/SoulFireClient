@@ -1,34 +1,34 @@
-import { createFileRoute, Link, useRouteContext } from '@tanstack/react-router';
-import * as React from 'react';
-import { use } from 'react';
-import { translateInstanceState } from '@/lib/types.ts';
-import UserPageLayout from '@/components/nav/user/user-page-layout.tsx';
-import { Card, CardDescription, CardTitle } from '@/components/ui/card.tsx';
-import { PlusIcon, SearchXIcon } from 'lucide-react';
-import DynamicIcon from '@/components/dynamic-icon.tsx';
-import { useTranslation } from 'react-i18next';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { CreateInstanceContext } from '@/components/dialog/create-instance-dialog.tsx';
-import { hasGlobalPermission } from '@/lib/utils.tsx';
-import { GlobalPermission } from '@/generated/soulfire/common.ts';
-import { Button } from '@/components/ui/button.tsx';
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute, Link, useRouteContext } from "@tanstack/react-router";
+import { PlusIcon, SearchXIcon } from "lucide-react";
+import * as React from "react";
+import { use } from "react";
+import { useTranslation } from "react-i18next";
+import { CreateInstanceContext } from "@/components/dialog/create-instance-dialog.tsx";
+import DynamicIcon from "@/components/dynamic-icon.tsx";
+import UserPageLayout from "@/components/nav/user/user-page-layout.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { Card, CardDescription, CardTitle } from "@/components/ui/card.tsx";
+import { GlobalPermission } from "@/generated/soulfire/common.ts";
+import { translateInstanceState } from "@/lib/types.ts";
+import { hasGlobalPermission } from "@/lib/utils.tsx";
 
-export const Route = createFileRoute('/_dashboard/user/')({
+export const Route = createFileRoute("/_dashboard/user/")({
   component: InstanceSelectPage,
 });
 
 function InstanceSelectPage() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
-    <UserPageLayout showUserCrumb={true} pageName={t('pageName.instances')}>
+    <UserPageLayout showUserCrumb={true} pageName={t("pageName.instances")}>
       <Content />
     </UserPageLayout>
   );
 }
 
 function Content() {
-  const { t, i18n } = useTranslation('common');
+  const { t, i18n } = useTranslation("common");
   const { instanceListQueryOptions } = Route.useRouteContext();
   const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
   return (
@@ -39,7 +39,7 @@ function Content() {
             <div className="flex flex-row gap-2">
               <SearchXIcon className="m-auto size-7" />
               <h1 className="m-auto text-xl font-bold">
-                {t('noInstancesFound')}
+                {t("noInstancesFound")}
               </h1>
             </div>
             <CreateInstanceButton />
@@ -87,9 +87,9 @@ function Content() {
 }
 
 function CreateInstanceButton() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const clientDataQueryOptions = useRouteContext({
-    from: '/_dashboard',
+    from: "/_dashboard",
     select: (context) => context.clientDataQueryOptions,
   });
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
@@ -102,7 +102,7 @@ function CreateInstanceButton() {
   return (
     <Button onClick={openCreateInstance} variant="outline" className="w-fit">
       <PlusIcon className="size-4" />
-      {t('instanceSidebar.createInstance')}
+      {t("instanceSidebar.createInstance")}
     </Button>
   );
 }

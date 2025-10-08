@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { deepEqual } from '@tanstack/react-router';
+import { deepEqual } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 export function useChangingData<T>(
   produce: () => T,

@@ -1,23 +1,23 @@
-import {
-  SidebarGroup,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-} from '@/components/ui/sidebar.tsx';
-import { Link, LinkProps, useRouteContext } from '@tanstack/react-router';
-import { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { Link, type LinkProps, useRouteContext } from "@tanstack/react-router";
 import {
   BoltIcon,
   BotIcon,
   SparklesIcon,
   UsersIcon,
   WaypointsIcon,
-} from 'lucide-react';
-import { hasInstancePermission } from '@/lib/utils.tsx';
-import { InstancePermission } from '@/generated/soulfire/common.ts';
-import { useSuspenseQuery } from '@tanstack/react-query';
+} from "lucide-react";
+import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
+import {
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar.tsx";
+import { InstancePermission } from "@/generated/soulfire/common.ts";
+import { hasInstancePermission } from "@/lib/utils.tsx";
 
 type NavLink = {
   title: string;
@@ -26,44 +26,44 @@ type NavLink = {
 };
 
 export function NavSettings() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/instance/$instance',
+    from: "/_dashboard/instance/$instance",
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
 
   const navLinks: NavLink[] = [
     {
-      title: t('instanceSidebar.botSettings'),
+      title: t("instanceSidebar.botSettings"),
       icon: BotIcon,
       linkProps: {
-        to: '/instance/$instance/settings/$namespace',
-        params: { instance: instanceInfo.id, namespace: 'bot' },
+        to: "/instance/$instance/settings/$namespace",
+        params: { instance: instanceInfo.id, namespace: "bot" },
       },
     },
     {
-      title: t('instanceSidebar.accountSettings'),
+      title: t("instanceSidebar.accountSettings"),
       icon: UsersIcon,
       linkProps: {
-        to: '/instance/$instance/accounts',
+        to: "/instance/$instance/accounts",
         params: { instance: instanceInfo.id },
       },
     },
     {
-      title: t('instanceSidebar.proxySettings'),
+      title: t("instanceSidebar.proxySettings"),
       icon: WaypointsIcon,
       linkProps: {
-        to: '/instance/$instance/proxies',
+        to: "/instance/$instance/proxies",
         params: { instance: instanceInfo.id },
       },
     },
     {
-      title: t('instanceSidebar.aiSettings'),
+      title: t("instanceSidebar.aiSettings"),
       icon: SparklesIcon,
       linkProps: {
-        to: '/instance/$instance/settings/$namespace',
-        params: { instance: instanceInfo.id, namespace: 'ai' },
+        to: "/instance/$instance/settings/$namespace",
+        params: { instance: instanceInfo.id, namespace: "ai" },
       },
     },
     ...(hasInstancePermission(
@@ -72,10 +72,10 @@ export function NavSettings() {
     )
       ? [
           {
-            title: t('instanceSidebar.metaSettings'),
+            title: t("instanceSidebar.metaSettings"),
             icon: BoltIcon,
             linkProps: {
-              to: '/instance/$instance/meta',
+              to: "/instance/$instance/meta",
               params: { instance: instanceInfo.id },
             },
           } satisfies NavLink,
@@ -86,7 +86,7 @@ export function NavSettings() {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>
-        {t('instanceSidebar.settingsGroup')}
+        {t("instanceSidebar.settingsGroup")}
       </SidebarGroupLabel>
       <SidebarMenu>
         {navLinks.map((item) => (
@@ -95,7 +95,7 @@ export function NavSettings() {
               <Link
                 activeOptions={{ exact: true }}
                 activeProps={{
-                  'data-active': true,
+                  "data-active": true,
                 }}
                 {...item.linkProps}
               >

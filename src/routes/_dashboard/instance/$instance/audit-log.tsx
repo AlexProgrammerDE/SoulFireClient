@@ -1,19 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router';
-import * as React from 'react';
-import { DataTable } from '@/components/data-table/data-table.tsx';
-import { ColumnDef } from '@tanstack/react-table';
-import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
-import { Trans, useTranslation } from 'react-i18next';
-import { createTransport } from '@/lib/web-rpc.ts';
-import { UserAvatar } from '@/components/user-avatar.tsx';
-import {
-  InstanceAuditLogResponse,
-  InstanceAuditLogResponse_AuditLogEntry,
-  InstanceAuditLogResponse_AuditLogEntryType,
-} from '@/generated/soulfire/instance.ts';
-import { InstanceServiceClient } from '@/generated/soulfire/instance.client.ts';
-import InstancePageLayout from '@/components/nav/instance/instance-page-layout.tsx';
-import { timestampToDate } from '@/lib/utils.tsx';
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import type { ColumnDef } from "@tanstack/react-table";
 import {
   PlayIcon,
   SquareIcon,
@@ -21,26 +8,39 @@ import {
   TextIcon,
   TimerIcon,
   TimerOffIcon,
-} from 'lucide-react';
-import { SFTimeAgo } from '@/components/sf-timeago.tsx';
-import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
-import { useDataTable } from '@/hooks/use-data-table.ts';
-import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
+} from "lucide-react";
+import * as React from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { DataTable } from "@/components/data-table/data-table.tsx";
+import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header.tsx";
+import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
+import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
+import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
+import { SFTimeAgo } from "@/components/sf-timeago.tsx";
+import { Badge } from "@/components/ui/badge.tsx";
+import { UserAvatar } from "@/components/user-avatar.tsx";
+import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
+import {
+  type InstanceAuditLogResponse,
+  type InstanceAuditLogResponse_AuditLogEntry,
+  InstanceAuditLogResponse_AuditLogEntryType,
+} from "@/generated/soulfire/instance.ts";
+import { useDataTable } from "@/hooks/use-data-table.ts";
 import {
   getEnumEntries,
   getEnumKeyByValue,
   mapUnionToValue,
-} from '@/lib/types.ts';
-import { DataTableToolbar } from '@/components/data-table/data-table-toolbar.tsx';
-import { Badge } from '@/components/ui/badge.tsx';
+} from "@/lib/types.ts";
+import { timestampToDate } from "@/lib/utils.tsx";
+import { createTransport } from "@/lib/web-rpc.ts";
 
 export const Route = createFileRoute(
-  '/_dashboard/instance/$instance/audit-log',
+  "/_dashboard/instance/$instance/audit-log",
 )({
   beforeLoad: (props) => {
     const { instance } = props.params;
     const auditLogQueryOptions = queryOptions({
-      queryKey: ['instance-audit-log', instance],
+      queryKey: ["instance-audit-log", instance],
       queryFn: async (props): Promise<InstanceAuditLogResponse> => {
         const transport = createTransport();
         if (transport === null) {
@@ -63,7 +63,7 @@ export const Route = createFileRoute(
       },
       refetchInterval: 3_000,
     });
-    props.abortController.signal.addEventListener('abort', () => {
+    props.abortController.signal.addEventListener("abort", () => {
       void props.context.queryClient.cancelQueries({
         queryKey: auditLogQueryOptions.queryKey,
       });
@@ -83,15 +83,15 @@ export const Route = createFileRoute(
 function toI18nKey(type: InstanceAuditLogResponse_AuditLogEntryType) {
   switch (type) {
     case InstanceAuditLogResponse_AuditLogEntryType.START_ATTACK:
-      return 'auditLog.startedAttack';
+      return "auditLog.startedAttack";
     case InstanceAuditLogResponse_AuditLogEntryType.STOP_ATTACK:
-      return 'auditLog.stoppedAttack';
+      return "auditLog.stoppedAttack";
     case InstanceAuditLogResponse_AuditLogEntryType.RESUME_ATTACK:
-      return 'auditLog.resumedAttack';
+      return "auditLog.resumedAttack";
     case InstanceAuditLogResponse_AuditLogEntryType.PAUSE_ATTACK:
-      return 'auditLog.pausedAttack';
+      return "auditLog.pausedAttack";
     case InstanceAuditLogResponse_AuditLogEntryType.EXECUTE_COMMAND:
-      return 'auditLog.executedCommand';
+      return "auditLog.executedCommand";
   }
 }
 
@@ -100,24 +100,24 @@ const logTypeToIcon = (
 ) =>
   mapUnionToValue(type, (key) => {
     switch (key) {
-      case 'EXECUTE_COMMAND':
+      case "EXECUTE_COMMAND":
         return SquareTerminalIcon;
-      case 'START_ATTACK':
+      case "START_ATTACK":
         return PlayIcon;
-      case 'PAUSE_ATTACK':
+      case "PAUSE_ATTACK":
         return TimerIcon;
-      case 'RESUME_ATTACK':
+      case "RESUME_ATTACK":
         return TimerOffIcon;
-      case 'STOP_ATTACK':
+      case "STOP_ATTACK":
         return SquareIcon;
     }
   });
 
 const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
   {
-    id: 'user',
+    id: "user",
     accessorFn: (row) => `${row.user!.username} ${row.user!.email}`,
-    accessorKey: 'user',
+    accessorKey: "user",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="User" />
     ),
@@ -132,18 +132,18 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
       </div>
     ),
     meta: {
-      label: 'User',
-      placeholder: 'Search users...',
-      variant: 'text',
+      label: "User",
+      placeholder: "Search users...",
+      variant: "text",
       icon: TextIcon,
     },
     enableColumnFilter: true,
   },
   {
-    id: 'type',
+    id: "type",
     accessorFn: (row) =>
       getEnumKeyByValue(InstanceAuditLogResponse_AuditLogEntryType, row.type),
-    accessorKey: 'type',
+    accessorKey: "type",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Type" />
     ),
@@ -168,8 +168,8 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
       );
     },
     meta: {
-      label: 'Type',
-      variant: 'multiSelect',
+      label: "Type",
+      variant: "multiSelect",
       options: getEnumEntries(InstanceAuditLogResponse_AuditLogEntryType).map(
         (type) => {
           return {
@@ -183,9 +183,9 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     enableColumnFilter: true,
   },
   {
-    id: 'timestamp',
+    id: "timestamp",
     accessorFn: (row) => timestampToDate(row.timestamp!),
-    accessorKey: 'timestamp',
+    accessorKey: "timestamp",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Timestamp" />
     ),
@@ -193,29 +193,29 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
       <SFTimeAgo date={timestampToDate(row.original.timestamp!)} />
     ),
     enableGlobalFilter: false,
-    sortingFn: 'datetime',
+    sortingFn: "datetime",
     meta: {
-      label: 'Timestamp',
-      placeholder: 'Search timestamps...',
-      variant: 'dateRange',
+      label: "Timestamp",
+      placeholder: "Search timestamps...",
+      variant: "dateRange",
     },
-    filterFn: 'inNumberRange',
+    filterFn: "inNumberRange",
     enableColumnFilter: true,
   },
 ];
 
 function AuditLog() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
     <InstancePageLayout
       extraCrumbs={[
         {
-          id: 'controls',
-          content: t('breadcrumbs.controls'),
+          id: "controls",
+          content: t("breadcrumbs.controls"),
         },
       ]}
-      pageName={t('pageName.audit-log')}
+      pageName={t("pageName.audit-log")}
     >
       <Content />
     </InstancePageLayout>

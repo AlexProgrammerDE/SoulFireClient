@@ -1,68 +1,68 @@
+import type { JsonValue } from "@protobuf-ts/runtime";
 import {
-  BoolSetting,
-  ComboSetting,
-  DoubleSetting,
-  IntSetting,
-  MinMaxSetting,
-  MinMaxSetting_Entry,
-  SettingEntry,
-  SettingsPage,
-  StringListSetting,
-  StringSetting,
-  StringSetting_InputType,
-} from '@/generated/soulfire/common.ts';
-import { Button } from '@/components/ui/button.tsx';
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { useRouteContext } from "@tanstack/react-router";
+import type { TFunction } from "i18next";
+import { Check, ChevronsUpDown, PlusIcon, TrashIcon } from "lucide-react";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover.tsx';
+  type ChangeEvent,
+  type HTMLInputTypeAttribute,
+  type ReactNode,
+  use,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import { useTranslation } from "react-i18next";
+import { NumericFormat } from "react-number-format";
+import type { NumberFormatValues } from "react-number-format/types/types";
+import { toast } from "sonner";
+import DynamicIcon from "@/components/dynamic-icon.tsx";
+import { TextInfoButton } from "@/components/info-buttons.tsx";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
+import { Checkbox } from "@/components/ui/checkbox.tsx";
 import {
   Command,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command.tsx';
-import { Check, ChevronsUpDown, PlusIcon, TrashIcon } from 'lucide-react';
+} from "@/components/ui/command.tsx";
+import { Input } from "@/components/ui/input.tsx";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover.tsx";
+import { Textarea } from "@/components/ui/textarea.tsx";
+import {
+  type BoolSetting,
+  type ComboSetting,
+  type DoubleSetting,
+  type IntSetting,
+  type MinMaxSetting,
+  type MinMaxSetting_Entry,
+  type SettingEntry,
+  type SettingsPage,
+  type StringListSetting,
+  type StringSetting,
+  StringSetting_InputType,
+} from "@/generated/soulfire/common.ts";
+import { useCachedState } from "@/hooks/use-cached-state.ts";
+import { useLocaleNumberFormat } from "@/hooks/use-locale-number-format.tsx";
+import type { BaseSettings } from "@/lib/types.ts";
 import {
   cn,
   getEntryValueByType,
   setInstanceConfig,
   setServerConfig,
   updateEntry,
-} from '@/lib/utils.tsx';
-import {
-  ChangeEvent,
-  HTMLInputTypeAttribute,
-  ReactNode,
-  use,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { Input } from '@/components/ui/input.tsx';
-import { Checkbox } from '@/components/ui/checkbox.tsx';
-import { BaseSettings } from '@/lib/types.ts';
-import { JsonValue } from '@protobuf-ts/runtime';
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
-import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { Card, CardContent, CardHeader } from '@/components/ui/card.tsx';
-import { Textarea } from '@/components/ui/textarea.tsx';
-import { useTranslation } from 'react-i18next';
-import { NumericFormat } from 'react-number-format';
-import { useLocaleNumberFormat } from '@/hooks/use-locale-number-format.tsx';
-import { toast } from 'sonner';
-import { TFunction } from 'i18next';
-import { NumberFormatValues } from 'react-number-format/types/types';
-import { useRouteContext } from '@tanstack/react-router';
-import DynamicIcon from '@/components/dynamic-icon.tsx';
-import { TextInfoButton } from '@/components/info-buttons.tsx';
-import { useCachedState } from '@/hooks/use-cached-state.ts';
+} from "@/lib/utils.tsx";
 
 function isAllowedValidator(
   t: TFunction,
@@ -80,9 +80,9 @@ function isAllowedValidator(
     if (currentValue >= min && currentValue <= max) {
       return true;
     } else {
-      toast.warning(t('settingsPage.invalidNumberToast.title'), {
-        id: 'invalid-number',
-        description: t('settingsPage.invalidNumberToast.title', {
+      toast.warning(t("settingsPage.invalidNumberToast.title"), {
+        id: "invalid-number",
+        description: t("settingsPage.invalidNumberToast.title", {
           min,
           max,
         }),
@@ -102,7 +102,7 @@ export function ComponentTitle(props: {
       <p
         onClick={props.onClick}
         className={cn({
-          'cursor-pointer': props.onClick !== undefined,
+          "cursor-pointer": props.onClick !== undefined,
         })}
       >
         {props.title}
@@ -117,17 +117,17 @@ function inputTypeToHtml(
 ): HTMLInputTypeAttribute {
   switch (inputType) {
     case StringSetting_InputType.TEXT:
-      return 'text';
+      return "text";
     case StringSetting_InputType.PASSWORD:
-      return 'password';
+      return "password";
     case StringSetting_InputType.EMAIL:
-      return 'email';
+      return "email";
     case StringSetting_InputType.URL:
-      return 'url';
+      return "url";
     case StringSetting_InputType.SEARCH:
-      return 'search';
+      return "search";
     case StringSetting_InputType.TEL:
-      return 'tel';
+      return "tel";
   }
 }
 
@@ -178,7 +178,7 @@ function IntComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const localeNumberFormat = useLocaleNumberFormat();
   const [inputValue, setInputValue] = useCachedState(props.value);
 
@@ -225,7 +225,7 @@ function DoubleComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const localeNumberFormat = useLocaleNumberFormat();
   const [inputValue, setInputValue] = useCachedState(props.value);
 
@@ -282,7 +282,7 @@ function BoolComponent(props: {
         checked={props.value}
         disabled={props.setting.disabled}
         onCheckedChange={(value) => {
-          if (value === 'indeterminate') {
+          if (value === "indeterminate") {
             return;
           }
 
@@ -315,7 +315,7 @@ function ComboComponent(props: {
     (option) => option.id === props.value,
   );
   if (!selectedOption) {
-    throw new Error('Selected option not found');
+    throw new Error("Selected option not found");
   }
 
   return (
@@ -354,8 +354,8 @@ function ComboComponent(props: {
                 >
                   <Check
                     className={cn(
-                      'mr-2 h-4 w-4',
-                      props.value === option.id ? 'opacity-100' : 'opacity-0',
+                      "mr-2 h-4 w-4",
+                      props.value === option.id ? "opacity-100" : "opacity-0",
                     )}
                   />
                   {option.iconId && <DynamicIcon name={option.iconId} />}
@@ -386,12 +386,12 @@ function StringListComponent(props: {
   value: string[];
   changeCallback: (value: string[]) => void;
 }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const idValueArray = useMemo(
     () => makeIdValueArray(props.value),
     [props.value],
   );
-  const [newEntryInput, setNewEntryInput] = useState('');
+  const [newEntryInput, setNewEntryInput] = useState("");
 
   const insertValue = (newValue: string) => {
     const resultArray = [...idValueArray, makeIdValueSingle(newValue)];
@@ -420,12 +420,12 @@ function StringListComponent(props: {
             onChange={(e) => {
               setNewEntryInput(e.currentTarget.value);
             }}
-            placeholder={t('settingsPage.stringList.placeholder')}
+            placeholder={t("settingsPage.stringList.placeholder")}
             disabled={props.setting.disabled}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === "Enter") {
                 insertValue(newEntryInput);
-                setNewEntryInput('');
+                setNewEntryInput("");
               }
             }}
           />
@@ -433,12 +433,12 @@ function StringListComponent(props: {
             variant="outline"
             onClick={() => {
               insertValue(newEntryInput);
-              setNewEntryInput('');
+              setNewEntryInput("");
             }}
             disabled={props.setting.disabled}
           >
             <PlusIcon />
-            {t('settingsPage.stringList.add')}
+            {t("settingsPage.stringList.add")}
           </Button>
         </div>
       </CardHeader>
@@ -461,7 +461,7 @@ function StringListComponent(props: {
               disabled={props.setting.disabled}
             >
               <TrashIcon />
-              {t('settingsPage.stringList.remove')}
+              {t("settingsPage.stringList.remove")}
             </Button>
           </div>
         ))}
@@ -476,7 +476,7 @@ function MinMaxComponent(props: {
   value: number;
   changeCallback: (value: number) => void;
 }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const localeNumberFormat = useLocaleNumberFormat();
   const [inputValue, setInputValue] = useState(props.value);
 
@@ -559,7 +559,7 @@ function EntryComponent<T extends BaseSettings>(props: {
 }
 
 export function GenericEntryComponent(props: {
-  entry: SettingEntry['value'];
+  entry: SettingEntry["value"];
   value: JsonValue;
   changeCallback: (value: JsonValue) => void;
 }) {
@@ -568,7 +568,7 @@ export function GenericEntryComponent(props: {
   }
 
   switch (props.entry.oneofKind) {
-    case 'string': {
+    case "string": {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
@@ -583,7 +583,7 @@ export function GenericEntryComponent(props: {
         </div>
       );
     }
-    case 'int': {
+    case "int": {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
@@ -598,7 +598,7 @@ export function GenericEntryComponent(props: {
         </div>
       );
     }
-    case 'bool': {
+    case "bool": {
       return (
         <div className="flex max-w-xl flex-row gap-1">
           <BoolComponent
@@ -611,7 +611,7 @@ export function GenericEntryComponent(props: {
         </div>
       );
     }
-    case 'double': {
+    case "double": {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
@@ -626,7 +626,7 @@ export function GenericEntryComponent(props: {
         </div>
       );
     }
-    case 'combo': {
+    case "combo": {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
@@ -641,7 +641,7 @@ export function GenericEntryComponent(props: {
         </div>
       );
     }
-    case 'stringList': {
+    case "stringList": {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
@@ -656,7 +656,7 @@ export function GenericEntryComponent(props: {
         </div>
       );
     }
-    case 'minMax': {
+    case "minMax": {
       const castValue = props.value as {
         min: number;
         max: number;
@@ -739,7 +739,7 @@ export function InstanceSettingsPageComponent({
 }) {
   const queryClient = useQueryClient();
   const instanceInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/instance/$instance',
+    from: "/_dashboard/instance/$instance",
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
@@ -773,7 +773,7 @@ export function InstanceSettingsPageComponent({
 export function AdminSettingsPageComponent({ data }: { data: SettingsPage }) {
   const queryClient = useQueryClient();
   const serverInfoQueryOptions = useRouteContext({
-    from: '/_dashboard/user/admin',
+    from: "/_dashboard/user/admin",
     select: (context) => context.serverInfoQueryOptions,
   });
   const { data: serverConfig } = useSuspenseQuery({

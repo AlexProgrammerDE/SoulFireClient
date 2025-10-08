@@ -1,26 +1,10 @@
-import { ColumnDef, Row } from '@tanstack/react-table';
 import {
-  ScriptLanguage,
-  ScriptListResponse,
-  ScriptListResponse_Script,
-  ScriptScope,
-} from '@/generated/soulfire/script.ts';
-import {
-  SelectAllHeader,
-  SelectRowHeader,
-} from '@/components/data-table/data-table-selects.tsx';
-import { Trans, useTranslation } from 'react-i18next';
-import { CopyInfoButton } from '@/components/info-buttons.tsx';
-import {
-  getEnumEntries,
-  getEnumKeyByValue,
-  mapUnionToValue,
-} from '@/lib/types.ts';
-import { timestampToDate } from '@/lib/utils.tsx';
-import { SFTimeAgo } from '@/components/sf-timeago.tsx';
-import * as React from 'react';
-import { createContext, use, useState } from 'react';
-import { Button } from '@/components/ui/button.tsx';
+  type QueryKey,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import type { ColumnDef, Row } from "@tanstack/react-table";
+import type { Table as ReactTable } from "@tanstack/table-core";
 import {
   GlobeIcon,
   Grid2x2Icon,
@@ -30,25 +14,45 @@ import {
   SquareCodeIcon,
   TextIcon,
   TrashIcon,
-} from 'lucide-react';
-import { ManageScriptDialog } from '@/components/dialog/manage-script-dialog.tsx';
-import { createTransport } from '@/lib/web-rpc.ts';
-import { ScriptServiceClient } from '@/generated/soulfire/script.client.ts';
-import { toast } from 'sonner';
-import { Table as ReactTable } from '@tanstack/table-core';
-import { QueryKey, useMutation, useQueryClient } from '@tanstack/react-query';
-import { TransportContext } from '@/components/providers/transport-context.tsx';
-import { DataTable } from '@/components/data-table/data-table.tsx';
-import { useDataTable } from '@/hooks/use-data-table.ts';
-import { DataTableSortList } from '@/components/data-table/data-table-sort-list.tsx';
+} from "lucide-react";
+import * as React from "react";
+import { createContext, use, useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import { DataTable } from "@/components/data-table/data-table.tsx";
 import {
   DataTableActionBar,
   DataTableActionBarAction,
   DataTableActionBarSelection,
-} from '@/components/data-table/data-table-action-bar.tsx';
-import { DataTableColumnHeader } from '@/components/data-table/data-table-column-header.tsx';
-import { DataTableToolbar } from '@/components/data-table/data-table-toolbar.tsx';
-import { Badge } from '@/components/ui/badge.tsx';
+} from "@/components/data-table/data-table-action-bar.tsx";
+import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header.tsx";
+import {
+  SelectAllHeader,
+  SelectRowHeader,
+} from "@/components/data-table/data-table-selects.tsx";
+import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
+import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
+import { ManageScriptDialog } from "@/components/dialog/manage-script-dialog.tsx";
+import { CopyInfoButton } from "@/components/info-buttons.tsx";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
+import { SFTimeAgo } from "@/components/sf-timeago.tsx";
+import { Badge } from "@/components/ui/badge.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import { ScriptServiceClient } from "@/generated/soulfire/script.client.ts";
+import {
+  ScriptLanguage,
+  type ScriptListResponse,
+  type ScriptListResponse_Script,
+  type ScriptScope,
+} from "@/generated/soulfire/script.ts";
+import { useDataTable } from "@/hooks/use-data-table.ts";
+import {
+  getEnumEntries,
+  getEnumKeyByValue,
+  mapUnionToValue,
+} from "@/lib/types.ts";
+import { timestampToDate } from "@/lib/utils.tsx";
+import { createTransport } from "@/lib/web-rpc.ts";
 
 export type ScriptsProps = {
   queryKey: QueryKey;
@@ -61,16 +65,16 @@ const ScriptsContext = createContext<ScriptsProps>(null as never);
 const scriptLanguageToIcon = (type: keyof typeof ScriptLanguage) =>
   mapUnionToValue(type, (key) => {
     switch (key) {
-      case 'JAVASCRIPT':
-      case 'TYPESCRIPT':
-      case 'PYTHON':
+      case "JAVASCRIPT":
+      case "TYPESCRIPT":
+      case "PYTHON":
         return SquareCodeIcon;
     }
   });
 
 const columns: ColumnDef<ScriptListResponse_Script>[] = [
   {
-    id: 'select',
+    id: "select",
     header: SelectAllHeader,
     cell: SelectRowHeader,
     size: 32,
@@ -78,8 +82,8 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     enableHiding: false,
   },
   {
-    id: 'scriptName',
-    accessorKey: 'scriptName',
+    id: "scriptName",
+    accessorKey: "scriptName",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
@@ -90,22 +94,22 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
       </div>
     ),
     meta: {
-      label: 'Name',
-      placeholder: 'Search names...',
-      variant: 'text',
+      label: "Name",
+      placeholder: "Search names...",
+      variant: "text",
       icon: TextIcon,
     },
     enableColumnFilter: true,
   },
   {
-    id: 'scriptScope',
-    accessorFn: (row) => row.scriptScope?.scope.oneofKind ?? '',
-    accessorKey: 'scriptScope',
+    id: "scriptScope",
+    accessorFn: (row) => row.scriptScope?.scope.oneofKind ?? "",
+    accessorKey: "scriptScope",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Scope" />
     ),
     cell: ({ row }) => {
-      return row.original.scriptScope?.scope.oneofKind === 'instanceScript' ? (
+      return row.original.scriptScope?.scope.oneofKind === "instanceScript" ? (
         <div className="flex flex-row items-center gap-2">
           <Badge variant="outline" className="capitalize">
             <Grid2x2Icon />
@@ -123,17 +127,17 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
       );
     },
     meta: {
-      label: 'Scope',
-      variant: 'multiSelect',
+      label: "Scope",
+      variant: "multiSelect",
       options: [
         {
-          label: 'Global',
-          value: 'globalScript',
+          label: "Global",
+          value: "globalScript",
           icon: GlobeIcon,
         },
         {
-          label: 'Instance',
-          value: 'instanceScript',
+          label: "Instance",
+          value: "instanceScript",
           icon: Grid2x2Icon,
         },
       ],
@@ -141,9 +145,9 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     enableColumnFilter: true,
   },
   {
-    id: 'language',
+    id: "language",
     accessorFn: (row) => getEnumKeyByValue(ScriptLanguage, row.language),
-    accessorKey: 'language',
+    accessorKey: "language",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Language" />
     ),
@@ -159,8 +163,8 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
       );
     },
     meta: {
-      label: 'Language',
-      variant: 'multiSelect',
+      label: "Language",
+      variant: "multiSelect",
       options: getEnumEntries(ScriptLanguage).map((type) => {
         return {
           label: type.key,
@@ -172,22 +176,22 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     enableColumnFilter: true,
   },
   {
-    id: 'elevatedPermissions',
-    accessorKey: 'elevatedPermissions',
+    id: "elevatedPermissions",
+    accessorKey: "elevatedPermissions",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Elevated permissions" />
     ),
     meta: {
-      label: 'Elevated permissions',
-      placeholder: 'Search elevated permissions...',
-      variant: 'boolean',
+      label: "Elevated permissions",
+      placeholder: "Search elevated permissions...",
+      variant: "boolean",
     },
     enableColumnFilter: true,
   },
   {
-    id: 'createdAt',
+    id: "createdAt",
     accessorFn: (row) => timestampToDate(row.createdAt!),
-    accessorKey: 'createdAt',
+    accessorKey: "createdAt",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Created at" />
     ),
@@ -195,17 +199,17 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
       <SFTimeAgo date={timestampToDate(row.original.createdAt!)} />
     ),
     enableGlobalFilter: false,
-    sortingFn: 'datetime',
+    sortingFn: "datetime",
     meta: {
-      label: 'Created at',
-      placeholder: 'Search created ats...',
-      variant: 'dateRange',
+      label: "Created at",
+      placeholder: "Search created ats...",
+      variant: "dateRange",
     },
-    filterFn: 'inNumberRange',
+    filterFn: "inNumberRange",
     enableColumnFilter: true,
   },
   {
-    id: 'actions',
+    id: "actions",
     header: () => <Trans i18nKey="common:scripts.table.actions" />,
     cell: ({ row }) => (
       <div className="flex flex-row gap-2">
@@ -246,7 +250,7 @@ function UpdateScriptButton(props: { row: Row<ScriptListResponse_Script> }) {
 }
 
 function RestartScriptButton(props: { row: Row<ScriptListResponse_Script> }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
     <>
@@ -268,13 +272,13 @@ function RestartScriptButton(props: { row: Row<ScriptListResponse_Script> }) {
               })
               .then((r) => r.response),
             {
-              loading: t('scripts.restartToast.loading'),
+              loading: t("scripts.restartToast.loading"),
               success: () => {
-                return t('scripts.restartToast.success');
+                return t("scripts.restartToast.success");
               },
               error: (e) => {
                 console.error(e);
-                return t('scripts.restartToast.error');
+                return t("scripts.restartToast.error");
               },
             },
           );
@@ -307,7 +311,7 @@ function AddButton() {
 }
 
 function ExtraHeader(props: { table: ReactTable<ScriptListResponse_Script> }) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
   const { queryKey } = use(ScriptsContext);
@@ -341,11 +345,11 @@ function ExtraHeader(props: { table: ReactTable<ScriptListResponse_Script> }) {
             .rows.map((r) => r.original);
 
           toast.promise(deleteScriptsMutation(selectedRows), {
-            loading: t('scripts.removeToast.loading'),
-            success: t('scripts.removeToast.success'),
+            loading: t("scripts.removeToast.loading"),
+            success: t("scripts.removeToast.success"),
             error: (e) => {
               console.error(e);
-              return t('scripts.removeToast.error');
+              return t("scripts.removeToast.error");
             },
           });
         }}

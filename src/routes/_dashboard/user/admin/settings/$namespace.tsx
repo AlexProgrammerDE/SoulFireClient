@@ -1,16 +1,16 @@
-import { createFileRoute } from '@tanstack/react-router';
-import { AdminSettingsPageComponent } from '@/components/settings-page.tsx';
-import UserPageLayout from '@/components/nav/user/user-page-layout';
-import { PluginInfoCard } from '@/components/plugin-info-card.tsx';
-import { useTranslation } from 'react-i18next';
-import { NotFoundComponent } from '@/components/not-found-component.tsx';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import { Suspense } from 'react';
-import { LoadingComponent } from '@/components/loading-component.tsx';
-import { Skeleton } from '@/components/ui/skeleton.tsx';
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { Suspense } from "react";
+import { useTranslation } from "react-i18next";
+import { LoadingComponent } from "@/components/loading-component.tsx";
+import UserPageLayout from "@/components/nav/user/user-page-layout";
+import { NotFoundComponent } from "@/components/not-found-component.tsx";
+import { PluginInfoCard } from "@/components/plugin-info-card.tsx";
+import { AdminSettingsPageComponent } from "@/components/settings-page.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 
 export const Route = createFileRoute(
-  '/_dashboard/user/admin/settings/$namespace',
+  "/_dashboard/user/admin/settings/$namespace",
 )({
   component: SettingsNamespace,
 });
@@ -24,19 +24,19 @@ function SettingsNamespace() {
 }
 
 function ContentSkeleton() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
 
   return (
     <UserPageLayout
       showUserCrumb={false}
       extraCrumbs={[
         {
-          id: 'admin',
-          content: t('breadcrumbs.admin'),
+          id: "admin",
+          content: t("breadcrumbs.admin"),
         },
         {
-          id: 'settings',
-          content: t('breadcrumbs.settings'),
+          id: "settings",
+          content: t("breadcrumbs.settings"),
         },
       ]}
       pageName={<Skeleton className="h-4 w-24" />}
@@ -47,7 +47,7 @@ function ContentSkeleton() {
 }
 
 function Content() {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   const { namespace } = Route.useParams();
   const { serverInfoQueryOptions } = Route.useRouteContext();
   const { data: serverInfo } = useSuspenseQuery(serverInfoQueryOptions);
@@ -63,12 +63,12 @@ function Content() {
       showUserCrumb={false}
       extraCrumbs={[
         {
-          id: 'admin',
-          content: t('breadcrumbs.admin'),
+          id: "admin",
+          content: t("breadcrumbs.admin"),
         },
         {
-          id: 'settings',
-          content: t('breadcrumbs.settings'),
+          id: "settings",
+          content: t("breadcrumbs.settings"),
         },
       ]}
       pageName={settingsEntry.pageName}
