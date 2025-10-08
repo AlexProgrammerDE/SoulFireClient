@@ -46,6 +46,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
+import type { SettingsPage } from "@/generated/soulfire/common";
 import { ProxyProto_Type } from "@/generated/soulfire/common.ts";
 import { ProxyCheckServiceClient } from "@/generated/soulfire/proxy-check.client.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
@@ -597,7 +598,9 @@ function Content() {
       <div className="flex flex-col gap-2">
         <InstanceSettingsPageComponent
           data={
-            instanceInfo.instanceSettings.find((s) => s.namespace === "proxy")!
+            instanceInfo.instanceSettings.find(
+              (s) => s.namespace === "proxy",
+            ) as SettingsPage
           }
         />
       </div>

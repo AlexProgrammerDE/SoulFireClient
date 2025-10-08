@@ -110,9 +110,9 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
   const terminalTheme = use(TerminalThemeContext);
   const paneRef = useRef<HTMLDivElement>(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
-  const selectedTheme = flavorEntries.find(
-    (entry) => entry[0] === terminalTheme.value,
-  )?.[1];
+  const selectedTheme =
+    flavorEntries.find((entry) => entry[0] === terminalTheme.value)?.[1] ||
+    flavorEntries[0][1];
 
   const handleScroll = useCallback(() => {
     if (paneRef.current) {

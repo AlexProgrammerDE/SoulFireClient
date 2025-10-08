@@ -46,6 +46,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
+import type { SettingsPage } from "@/generated/soulfire/common";
 import {
   AccountTypeCredentials,
   AccountTypeDeviceCode,
@@ -634,7 +635,7 @@ function Content() {
           data={
             instanceInfo.instanceSettings.find(
               (s) => s.namespace === "account",
-            )!
+            ) as SettingsPage
           }
         />
       </div>

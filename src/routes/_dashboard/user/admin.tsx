@@ -40,7 +40,9 @@ export const Route = createFileRoute("/_dashboard/user/admin")({
         // console.log(JSON.stringify(result.response.serverSettings))
         return {
           ...result.response,
-          profile: convertFromServerProto(result.response.config!),
+          profile: convertFromServerProto(
+            result.response.config as ServerConfig,
+          ),
         };
       },
       refetchInterval: 3_000,

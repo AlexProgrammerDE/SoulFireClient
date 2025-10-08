@@ -677,7 +677,7 @@ export function GenericEntryComponent(props: {
             />
             <MinMaxComponent
               setting={props.entry.minMax}
-              entry={props.entry.minMax.minEntry!}
+              entry={props.entry.minMax.minEntry as MinMaxSetting_Entry}
               value={castValue.min}
               changeCallback={(v) => {
                 props.changeCallback({
@@ -694,7 +694,7 @@ export function GenericEntryComponent(props: {
             />
             <MinMaxComponent
               setting={props.entry.minMax}
-              entry={props.entry.minMax.maxEntry!}
+              entry={props.entry.minMax.maxEntry as MinMaxSetting_Entry}
               value={castValue.max}
               changeCallback={(v) => {
                 props.changeCallback({

@@ -17,6 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card.tsx";
 import { Switch } from "@/components/ui/switch.tsx";
+import type { SettingEntry } from "@/generated/soulfire/common";
 import type { SettingsPage } from "@/generated/soulfire/common.ts";
 import {
   getEntryValueByType,
@@ -40,7 +41,7 @@ export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
   const queryClient = useQueryClient();
   const enabledEntry = props.settingsEntry.entries.find(
     (entry) => entry.key === props.settingsEntry.enabledKey,
-  )!;
+  ) as SettingEntry;
   const enabledValue = useMemo(
     () =>
       getEntryValueByType(
@@ -55,7 +56,7 @@ export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
       await setInstanceConfig(
         updateEntry(
           props.settingsEntry.namespace,
-          props.settingsEntry.enabledKey!,
+          props.settingsEntry.enabledKey as string,
           value,
           profile,
         ),
@@ -116,16 +117,18 @@ export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
               license: props.settingsEntry.owningPlugin?.license,
             })}
           </Badge>
-          <ExternalLink
-            href={props.settingsEntry.owningPlugin?.website}
-            className="inline-flex items-center"
-          >
-            <Badge variant="secondary">
-              {t("pluginCard.website", {
-                website: props.settingsEntry.owningPlugin?.website,
-              })}
-            </Badge>
-          </ExternalLink>
+          {props.settingsEntry.owningPlugin?.website && (
+            <ExternalLink
+              href={props.settingsEntry.owningPlugin.website}
+              className="inline-flex items-center"
+            >
+              <Badge variant="secondary">
+                {t("pluginCard.website", {
+                  website: props.settingsEntry.owningPlugin.website,
+                })}
+              </Badge>
+            </ExternalLink>
+          )}
         </div>
       </CardHeader>
     </Card>

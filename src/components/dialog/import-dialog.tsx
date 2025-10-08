@@ -259,9 +259,13 @@ function MainDialog(
                             matcher.match(t),
                           ),
                         }))
-                        .filter((e) => {
-                          return e.firstSupportedType !== undefined;
-                        });
+                        .filter(
+                          (
+                            e,
+                          ): e is typeof e & { firstSupportedType: string } => {
+                            return e.firstSupportedType !== undefined;
+                          },
+                        );
                       if (!props.allowMultiple && clipboardEntries.length > 1) {
                         toast.warning(
                           t("dialog.import.main.firstClipboardItem"),
@@ -271,7 +275,7 @@ function MainDialog(
 
                       for (const entry of clipboardEntries) {
                         const blob = await entry.item.getType(
-                          entry.firstSupportedType!,
+                          entry.firstSupportedType,
                         );
                         props.listener(await blob.text());
                       }

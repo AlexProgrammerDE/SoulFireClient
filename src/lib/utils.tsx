@@ -40,6 +40,7 @@ const emojiMap = APP_LOCALES.split(",").reduce<Record<string, FlagComponent>>(
     const countryCode = locale.split("-")[1];
     if (!countryCode) return acc;
 
+    // biome-ignore lint/performance/noDynamicNamespaceImportAccess: we need dynamic access here
     acc[countryCode] = Flags[countryCode as keyof typeof Flags];
     return acc;
   },
@@ -59,7 +60,13 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function isTauri() {
-  return (window as never).__TAURI__ !== undefined;
+  return (
+    (
+      window as unknown as {
+        __TAURI__?: unknown;
+      }
+    ).__TAURI__ !== undefined
+  );
 }
 
 export function isDemo() {
@@ -233,8 +240,8 @@ export function getEntryValueByType(
     }
     case "minMax": {
       return getEntryValue(namespace, entry.key, config, {
-        min: entry.value.minMax.minEntry?.def,
-        max: entry.value.minMax.maxEntry?.def,
+        min: entry.value.minMax.minEntry?.def ?? null,
+        max: entry.value.minMax.maxEntry?.def ?? null,
       });
     }
     case undefined: {

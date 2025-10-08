@@ -43,6 +43,7 @@ import { SFTimeAgo } from "@/components/sf-timeago.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { UserAvatar } from "@/components/user-avatar.tsx";
+import type { Timestamp } from "@/generated/google/protobuf/timestamp";
 import { UserRole } from "@/generated/soulfire/common.ts";
 import { UserServiceClient } from "@/generated/soulfire/user.client.ts";
 import type { UserListResponse_User } from "@/generated/soulfire/user.ts";
@@ -150,13 +151,13 @@ const columns: ColumnDef<UserListResponse_User>[] = [
   },
   {
     id: "createdAt",
-    accessorFn: (row) => timestampToDate(row.createdAt!),
+    accessorFn: (row) => timestampToDate(row.createdAt as Timestamp),
     accessorKey: "createdAt",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Created at" />
     ),
     cell: ({ row }) => (
-      <SFTimeAgo date={timestampToDate(row.original.createdAt!)} />
+      <SFTimeAgo date={timestampToDate(row.original.createdAt as Timestamp)} />
     ),
     enableGlobalFilter: false,
     sortingFn: "datetime",
@@ -170,13 +171,15 @@ const columns: ColumnDef<UserListResponse_User>[] = [
   },
   {
     id: "minIssuedAt",
-    accessorFn: (row) => timestampToDate(row.minIssuedAt!),
+    accessorFn: (row) => timestampToDate(row.minIssuedAt as Timestamp),
     accessorKey: "minIssuedAt",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Min issued at" />
     ),
     cell: ({ row }) => (
-      <SFTimeAgo date={timestampToDate(row.original.minIssuedAt!)} />
+      <SFTimeAgo
+        date={timestampToDate(row.original.minIssuedAt as Timestamp)}
+      />
     ),
     enableGlobalFilter: false,
     sortingFn: "datetime",

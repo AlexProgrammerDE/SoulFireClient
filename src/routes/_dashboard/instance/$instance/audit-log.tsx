@@ -18,6 +18,7 @@ import InstancePageLayout from "@/components/nav/instance/instance-page-layout.t
 import { SFTimeAgo } from "@/components/sf-timeago.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { UserAvatar } from "@/components/user-avatar.tsx";
+import type { Timestamp } from "@/generated/google/protobuf/timestamp";
 import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
 import {
   type InstanceAuditLogResponse,
@@ -123,8 +124,8 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     cell: ({ row }) => (
       <div className="flex flex-row items-center justify-start gap-2">
         <UserAvatar
-          username={row.original.user?.username}
-          email={row.original.user?.email}
+          username={row.original.user?.username || "Unknown"}
+          email={row.original.user?.email || ""}
           className="size-8"
         />
         {row.original.user?.username}
@@ -183,13 +184,13 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
   },
   {
     id: "timestamp",
-    accessorFn: (row) => timestampToDate(row.timestamp!),
+    accessorFn: (row) => timestampToDate(row.timestamp as Timestamp),
     accessorKey: "timestamp",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Timestamp" />
     ),
     cell: ({ row }) => (
-      <SFTimeAgo date={timestampToDate(row.original.timestamp!)} />
+      <SFTimeAgo date={timestampToDate(row.original.timestamp as Timestamp)} />
     ),
     enableGlobalFilter: false,
     sortingFn: "datetime",

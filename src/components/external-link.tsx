@@ -10,23 +10,26 @@ export function ExternalLink(
     >,
     "target"
   > & {
-    href: string;
+    href?: string;
   },
 ) {
   return (
-    // biome-ignore lint/a11y/noStaticElementInteractions lint/a11y/useValidAnchor: This is an external link with custom open behavior
+    // biome-ignore lint/a11y/noStaticElementInteractions: This is an external link with custom open behavior
     <a
       // biome-ignore lint/a11y/useValidAnchor: This is an external link with custom open behavior
       onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();
 
-        if (isTauri()) {
-          runAsync(async () => {
-            await openUrl(props.href);
-          });
-        } else {
-          window.open(props.href, "_blank");
+        const href = props.href;
+        if (href) {
+          if (isTauri()) {
+            runAsync(async () => {
+              await openUrl(href);
+            });
+          } else {
+            window.open(href, "_blank");
+          }
         }
       }}
       target="_blank"

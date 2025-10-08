@@ -37,6 +37,7 @@ import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { SFTimeAgo } from "@/components/sf-timeago.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import type { Timestamp } from "@/generated/google/protobuf/timestamp";
 import { ScriptServiceClient } from "@/generated/soulfire/script.client.ts";
 import {
   ScriptLanguage,
@@ -189,13 +190,13 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
   },
   {
     id: "createdAt",
-    accessorFn: (row) => timestampToDate(row.createdAt!),
+    accessorFn: (row) => timestampToDate(row.createdAt as Timestamp),
     accessorKey: "createdAt",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Created at" />
     ),
     cell: ({ row }) => (
-      <SFTimeAgo date={timestampToDate(row.original.createdAt!)} />
+      <SFTimeAgo date={timestampToDate(row.original.createdAt as Timestamp)} />
     ),
     enableGlobalFilter: false,
     sortingFn: "datetime",
