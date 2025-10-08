@@ -19,7 +19,9 @@
       "!src/generated",
       "!src/routeTree.gen.ts",
       "!src-tauri",
-      "!protos"
+      "!protos",
+      "!shared-modules",
+      "!locales"
     ]
   },
   "formatter": {
