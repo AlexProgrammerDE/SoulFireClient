@@ -10,8 +10,8 @@
     "dev": "rsbuild dev",
     "build": "rsbuild build",
     "preview": "rsbuild preview",
-    "lint": "eslint src/",
-    "fix": "prettier --write .",
+    "lint": "biome lint .",
+    "fix": "biome check --write .",
     "generate-icons": "tauri icon -v public/logo.png",
     "dev-tauri": "cross-env RUST_LOG=info tauri dev",
     "build-tauri": "tauri build",
@@ -113,20 +113,17 @@
     "zod": "^4.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.23.0",
+    "@biomejs/biome": "2.2.5",
     "@protobuf-ts/plugin": "^2.9.6",
     "@rsbuild/core": "^1.2.19",
-    "@rsbuild/plugin-eslint": "^1.1.1",
     "@rsbuild/plugin-react": "^1.1.1",
     "@rsbuild/plugin-svgr": "^1.0.7",
     "@rsbuild/plugin-type-check": "^1.2.1",
     "@tailwindcss/postcss": "^4.0.15",
-    "@tanstack/eslint-plugin-query": "^5.68.0",
     "@tanstack/react-router": "^1.114.27",
     "@tanstack/router-cli": "^1.114.27",
     "@tanstack/router-plugin": "^1.114.27",
     "@tauri-apps/cli": "2.8.4",
-    "@types/eslint-config-prettier": "^6.11.3",
     "@types/file-saver": "^2.0.7",
     "@types/loadable__component": "^5.13.9",
     "@types/node": "^22.13.13",
@@ -134,32 +131,23 @@
     "@types/react-dom": "^19.0.4",
     "@types/react-timeago": "^8.0.0",
     "@types/urijs": "^1.19.25",
-    "@typescript-eslint/eslint-plugin": "^8.28.0",
-    "@typescript-eslint/parser": "^8.28.0",
     "autoprefixer": "^10.4.21",
     "cross-env": "^10.0.0",
-    "eslint": "^9.23.0",
-    "eslint-config-prettier": "^10.1.1",
-    "eslint-plugin-prettier": "^5.2.5",
-    "eslint-plugin-react": "^7.37.4",
-    "eslint-plugin-react-hooks": "^6.0.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^16.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.0.0",
     "postcss": "^8.5.3",
-    "prettier": "^3.5.3",
-    "prettier-plugin-tailwindcss": "^0.6.11",
     "react-hooks": "^1.0.1",
     "tailwindcss": "^4.0.15",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.28.0"
+    "typescript": "^5.8.2"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "*": [
+      "biome check --write --unsafe --no-errors-on-unmatched --files-ignore-unknown=true"
+    ]
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "@biomejs/biome",
       "@tailwindcss/oxide",
       "core-js",
       "esbuild"
