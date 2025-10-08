@@ -171,7 +171,7 @@ function InstanceSwitchKeybinds() {
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
       if (e.metaKey || e.ctrlKey) {
-        const numberKey = parseInt(e.key);
+        const numberKey = parseInt(e.key, 10);
         if (numberKey > 0 && numberKey <= instanceList.instances.length) {
           e.preventDefault();
           void navigate({

@@ -59,7 +59,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function isTauri() {
-  return (window as never)["__TAURI__"] !== undefined;
+  return (window as never).__TAURI__ !== undefined;
 }
 
 export function isDemo() {
@@ -233,8 +233,8 @@ export function getEntryValueByType(
     }
     case "minMax": {
       return getEntryValue(namespace, entry.key, config, {
-        min: entry.value.minMax.minEntry!.def,
-        max: entry.value.minMax.maxEntry!.def,
+        min: entry.value.minMax.minEntry?.def,
+        max: entry.value.minMax.maxEntry?.def,
       });
     }
     case undefined: {
@@ -518,7 +518,7 @@ export async function setSelfEmail(
 
 export function timestampToDate(timestamp: Timestamp): Date {
   return new Date(
-    parseInt(timestamp.seconds) * 1000 +
+    parseInt(timestamp.seconds, 10) * 1000 +
       Math.floor((timestamp.nanos || 0) / 1e6),
   );
 }

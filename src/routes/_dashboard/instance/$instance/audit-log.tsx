@@ -9,7 +9,6 @@ import {
   TimerIcon,
   TimerOffIcon,
 } from "lucide-react";
-import * as React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { DataTable } from "@/components/data-table/data-table.tsx";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header.tsx";
@@ -116,7 +115,7 @@ const logTypeToIcon = (
 const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
   {
     id: "user",
-    accessorFn: (row) => `${row.user!.username} ${row.user!.email}`,
+    accessorFn: (row) => `${row.user?.username} ${row.user?.email}`,
     accessorKey: "user",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="User" />
@@ -124,11 +123,11 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     cell: ({ row }) => (
       <div className="flex flex-row items-center justify-start gap-2">
         <UserAvatar
-          username={row.original.user!.username}
-          email={row.original.user!.email}
+          username={row.original.user?.username}
+          email={row.original.user?.email}
           className="size-8"
         />
-        {row.original.user!.username}
+        {row.original.user?.username}
       </div>
     ),
     meta: {

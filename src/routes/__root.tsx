@@ -110,6 +110,7 @@ function PointerReset() {
   // When dropdowns were open when page is switched, sometimes the body still has pointer-events: none
   // This will reset it to auto
   useEffect(() => {
+    console.debug("Resetting pointers because switched to ", location.pathname);
     document.body.style.pointerEvents = "auto";
   }, [location.pathname]);
 
@@ -214,51 +215,49 @@ function RootLayout() {
   }, []);
 
   return (
-    <>
-      <NuqsAdapter>
-        <AptabaseProvider
-          appKey="A-SH-6467566517"
-          options={{
-            apiUrl: "https://aptabase.pistonmaster.net/api/v0/event",
-            appVersion: APP_VERSION,
-          }}
-        >
-          <AppStartedEvent />
-          <PageChangedEvent />
-          <QueryClientProvider client={queryClient}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <WindowThemeSyncer />
-              <TooltipProvider delayDuration={500}>
-                <SystemInfoContext value={systemInfoState}>
-                  <TerminalThemeContext
-                    value={{
-                      value: terminalTheme,
-                      setter: setTerminalTheme,
-                    }}
+    <NuqsAdapter>
+      <AptabaseProvider
+        appKey="A-SH-6467566517"
+        options={{
+          apiUrl: "https://aptabase.pistonmaster.net/api/v0/event",
+          appVersion: APP_VERSION,
+        }}
+      >
+        <AppStartedEvent />
+        <PageChangedEvent />
+        <QueryClientProvider client={queryClient}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <WindowThemeSyncer />
+            <TooltipProvider delayDuration={500}>
+              <SystemInfoContext value={systemInfoState}>
+                <TerminalThemeContext
+                  value={{
+                    value: terminalTheme,
+                    setter: setTerminalTheme,
+                  }}
+                >
+                  <div
+                    vaul-drawer-wrapper=""
+                    className="flex h-dvh w-dvw flex-col"
                   >
-                    <div
-                      vaul-drawer-wrapper=""
-                      className="flex h-dvh w-dvw flex-col"
-                    >
-                      <PointerReset />
-                      <AboutProvider>
-                        <Outlet />
-                      </AboutProvider>
-                    </div>
-                  </TerminalThemeContext>
-                </SystemInfoContext>
-                <Toaster richColors />
-              </TooltipProvider>
-            </ThemeProvider>
-            <TailwindIndicator />
-          </QueryClientProvider>
-        </AptabaseProvider>
-      </NuqsAdapter>
-    </>
+                    <PointerReset />
+                    <AboutProvider>
+                      <Outlet />
+                    </AboutProvider>
+                  </div>
+                </TerminalThemeContext>
+              </SystemInfoContext>
+              <Toaster richColors />
+            </TooltipProvider>
+          </ThemeProvider>
+          <TailwindIndicator />
+        </QueryClientProvider>
+      </AptabaseProvider>
+    </NuqsAdapter>
   );
 }

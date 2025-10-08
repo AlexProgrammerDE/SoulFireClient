@@ -19,7 +19,6 @@ import {
   UserIcon,
   VenetianMaskIcon,
 } from "lucide-react";
-import * as React from "react";
 import { use, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -231,33 +230,31 @@ function ImpersonateUserButton(props: { row: Row<UserListResponse_User> }) {
   const transport = use(TransportContext);
   const navigate = useNavigate();
   return (
-    <>
-      <Button
-        disabled={!props.row.getCanSelect()}
-        variant="secondary"
-        size="sm"
-        onClick={() => {
-          runAsync(async () => {
-            if (transport === null) {
-              return;
-            }
+    <Button
+      disabled={!props.row.getCanSelect()}
+      variant="secondary"
+      size="sm"
+      onClick={() => {
+        runAsync(async () => {
+          if (transport === null) {
+            return;
+          }
 
-            const userService = new UserServiceClient(transport);
-            const token = await userService.generateUserAPIToken({
-              id: props.row.original.id,
-            });
-            startImpersonation(token.response.token);
-            await navigate({
-              to: "/user",
-              replace: true,
-              reloadDocument: true,
-            });
+          const userService = new UserServiceClient(transport);
+          const token = await userService.generateUserAPIToken({
+            id: props.row.original.id,
           });
-        }}
-      >
-        <VenetianMaskIcon />
-      </Button>
-    </>
+          startImpersonation(token.response.token);
+          await navigate({
+            to: "/user",
+            replace: true,
+            reloadDocument: true,
+          });
+        });
+      }}
+    >
+      <VenetianMaskIcon />
+    </Button>
   );
 }
 

@@ -18,7 +18,6 @@ import {
   TrashIcon,
   UploadIcon,
 } from "lucide-react";
-import * as React from "react";
 import { Suspense, use, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -51,11 +50,7 @@ import {
   InstancePermission,
 } from "@/generated/soulfire/common.ts";
 import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
-import {
-  convertToInstanceProto,
-  type ProfileRoot,
-  translateInstanceState,
-} from "@/lib/types.ts";
+import { type ProfileRoot, translateInstanceState } from "@/lib/types.ts";
 import {
   data2blob,
   hasGlobalPermission,
@@ -140,12 +135,10 @@ function InstanceList() {
 
 function InstanceListSkeleton() {
   return (
-    <>
-      <DropdownMenuItem>
-        <Skeleton className="h-4 w-4" />
-        <Skeleton className="h-3 w-32" />
-      </DropdownMenuItem>
-    </>
+    <DropdownMenuItem>
+      <Skeleton className="h-4 w-4" />
+      <Skeleton className="h-3 w-32" />
+    </DropdownMenuItem>
   );
 }
 

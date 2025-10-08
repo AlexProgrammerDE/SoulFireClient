@@ -44,7 +44,7 @@ function Content() {
         personal: {},
       },
     }),
-    [instanceInfo.id],
+    [],
   );
   const commandScope = useMemo<CommandScope>(
     () => ({

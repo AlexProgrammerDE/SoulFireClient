@@ -16,7 +16,6 @@ import {
   TrashIcon,
   WifiOffIcon,
 } from "lucide-react";
-import * as React from "react";
 import { use, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { type ExternalToast, toast } from "sonner";
@@ -335,7 +334,6 @@ function AddButton() {
     [
       accountTypeCredentialsSelected,
       instanceInfo.id,
-      profile,
       setProfileMutation,
       t,
       transport,
@@ -411,7 +409,7 @@ function AddButton() {
         },
       );
     },
-    [instanceInfo.id, profile, setProfileMutation, t, transport],
+    [instanceInfo.id, setProfileMutation, t, transport],
   );
 
   return (

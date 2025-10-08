@@ -1,7 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useRouteContext } from "@tanstack/react-router";
 import { PlusIcon, SearchXIcon } from "lucide-react";
-import * as React from "react";
 import { use } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateInstanceContext } from "@/components/dialog/create-instance-dialog.tsx";
@@ -33,7 +32,7 @@ function Content() {
   const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
   return (
     <>
-      {instanceList.instances.length == 0 ? (
+      {instanceList.instances.length === 0 ? (
         <div className="flex size-full flex-1">
           <div className="m-auto flex flex-col items-center gap-4">
             <div className="flex flex-row gap-2">

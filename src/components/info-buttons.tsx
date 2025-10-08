@@ -1,4 +1,3 @@
-import * as clipboard from "@tauri-apps/plugin-clipboard-manager";
 import { ClipboardIcon, InfoIcon } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -9,7 +8,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover.tsx";
-import { copyToClipboard, isTauri } from "@/lib/utils.tsx";
+import { copyToClipboard } from "@/lib/utils.tsx";
 
 export function TextInfoButton(props: { value: ReactNode }) {
   return (

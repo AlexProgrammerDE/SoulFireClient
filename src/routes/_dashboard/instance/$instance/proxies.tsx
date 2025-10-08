@@ -15,7 +15,6 @@ import {
   TrashIcon,
   Wand2Icon,
 } from "lucide-react";
-import * as React from "react";
 import { use, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { type ExternalToast, toast } from "sonner";
@@ -96,7 +95,7 @@ function parseNormalProxy(line: string, type: SimpleProxyType): ProfileProxy {
   // Fill username and password with undefined if not present
   parts.length = 4;
 
-  const host = parts[0] + ":" + parts[1];
+  const host = `${parts[0]}:${parts[1]}`;
   return {
     type: uiProxyTypeToProto(type),
     address: host.startsWith("/") ? `unix://${host}` : `inet://${host}`,
@@ -321,7 +320,7 @@ function AddButton() {
         },
       );
     },
-    [profile, proxyTypeSelected, setProfileMutation, t],
+    [proxyTypeSelected, setProfileMutation, t],
   );
 
   return (

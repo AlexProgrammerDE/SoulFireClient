@@ -98,31 +98,31 @@ export function PluginInfoCard(props: { settingsEntry: SettingsPage }) {
           />
         </div>
         <CardDescription className="whitespace-pre-line">
-          {props.settingsEntry.owningPlugin!.description}
+          {props.settingsEntry.owningPlugin?.description}
         </CardDescription>
         <div className="mt-2 flex flex-wrap gap-2">
           <Badge variant="secondary">
             {t("pluginCard.version", {
-              version: props.settingsEntry.owningPlugin!.version,
+              version: props.settingsEntry.owningPlugin?.version,
             })}
           </Badge>
           <Badge variant="secondary">
             {t("pluginCard.author", {
-              author: props.settingsEntry.owningPlugin!.author,
+              author: props.settingsEntry.owningPlugin?.author,
             })}
           </Badge>
           <Badge variant="secondary">
             {t("pluginCard.license", {
-              license: props.settingsEntry.owningPlugin!.license,
+              license: props.settingsEntry.owningPlugin?.license,
             })}
           </Badge>
           <ExternalLink
-            href={props.settingsEntry.owningPlugin!.website}
+            href={props.settingsEntry.owningPlugin?.website}
             className="inline-flex items-center"
           >
             <Badge variant="secondary">
               {t("pluginCard.website", {
-                website: props.settingsEntry.owningPlugin!.website,
+                website: props.settingsEntry.owningPlugin?.website,
               })}
             </Badge>
           </ExternalLink>

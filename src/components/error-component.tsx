@@ -6,7 +6,7 @@ import {
   LogOutIcon,
   RotateCwIcon,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button.tsx";
 import {
@@ -26,12 +26,12 @@ export function ErrorComponent({ error }: { error: Error }) {
   const router = useRouter();
   const [revalidating, setRevalidating] = useState(false);
 
-  function revalidate() {
+  const revalidate = useCallback(() => {
     setRevalidating(true);
     void router.invalidate().finally(() => {
       setRevalidating(false);
     });
-  }
+  }, [router]);
 
   useEffect(() => {
     const interval = setInterval(revalidate, 1000 * 5);
@@ -39,7 +39,7 @@ export function ErrorComponent({ error }: { error: Error }) {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [revalidate]);
 
   return (
     <div className="flex size-full grow">

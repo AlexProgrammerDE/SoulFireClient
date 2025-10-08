@@ -4,6 +4,7 @@ import { AnsiHtml } from "fancy-ansi/react";
 import React, {
   type CSSProperties,
   use,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -22,7 +23,7 @@ const MemoAnsiHtml = React.memo((props: { text: string }) => {
   return (
     <AnsiHtml
       text={
-        stripAnsi(props.text).endsWith("\n") ? props.text : props.text + "\n"
+        stripAnsi(props.text).endsWith("\n") ? props.text : `${props.text}\n`
       }
     />
   );
@@ -111,14 +112,14 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
   const [isAtBottom, setIsAtBottom] = useState(true);
   const selectedTheme = flavorEntries.find(
     (entry) => entry[0] === terminalTheme.value,
-  )![1];
+  )?.[1];
 
-  const handleScroll = () => {
+  const handleScroll = useCallback(() => {
     if (paneRef.current) {
       const { scrollTop, scrollHeight, clientHeight } = paneRef.current;
       setIsAtBottom(scrollTop + clientHeight >= scrollHeight - 1);
     }
-  };
+  }, []);
 
   useEffect(() => {
     const pane = paneRef.current;
@@ -128,13 +129,13 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
         pane.removeEventListener("scroll", handleScroll);
       };
     }
-  }, []);
+  }, [handleScroll]);
 
   useEffect(() => {
     if (isAtBottom && paneRef.current) {
       paneRef.current.scrollTop = paneRef.current.scrollHeight;
     }
-  }, [entries, isAtBottom]);
+  }, [isAtBottom]);
 
   useEffect(() => {
     if (gotPrevious) {
@@ -265,7 +266,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
         {
           backgroundColor: selectedTheme.colors.base.hex,
           color: selectedTheme.colors.text.hex,
-          "--color-border": selectedTheme.colors.surface2.hex + "80", // Add 50% opacity
+          "--color-border": `${selectedTheme.colors.surface2.hex}80`, // Add 50% opacity
           "--ansi-black": selectedTheme.dark
             ? selectedTheme.colors.surface1.hex
             : selectedTheme.colors.subtext1.hex,

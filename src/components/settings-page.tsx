@@ -101,6 +101,13 @@ export function ComponentTitle(props: {
     <div className="flex w-fit flex-row items-center gap-2">
       <p
         onClick={props.onClick}
+        onKeyDown={(e) => {
+          if ((e.key === "Enter" || e.key === " ") && props.onClick) {
+            e.preventDefault();
+            props.onClick();
+          }
+        }}
+        tabIndex={props.onClick ? 0 : undefined}
         className={cn({
           "cursor-pointer": props.onClick !== undefined,
         })}
@@ -200,7 +207,7 @@ function IntComponent(props: {
         parseInt,
       )}
       onValueChange={(values) => {
-        const currentValue = parseInt(values.value);
+        const currentValue = parseInt(values.value, 10);
 
         if (!Number.isFinite(currentValue)) {
           return;
@@ -508,7 +515,7 @@ function MinMaxComponent(props: {
         parseInt,
       )}
       onValueChange={(values) => {
-        const currentValue = parseInt(values.value);
+        const currentValue = parseInt(values.value, 10);
 
         if (!Number.isFinite(currentValue)) {
           return;
@@ -665,8 +672,8 @@ export function GenericEntryComponent(props: {
         <>
           <div className="flex max-w-xl flex-col gap-1">
             <ComponentTitle
-              title={props.entry.minMax.minEntry!.uiName}
-              description={props.entry.minMax.minEntry!.description}
+              title={props.entry.minMax.minEntry?.uiName}
+              description={props.entry.minMax.minEntry?.description}
             />
             <MinMaxComponent
               setting={props.entry.minMax}
@@ -682,8 +689,8 @@ export function GenericEntryComponent(props: {
           </div>
           <div className="flex max-w-xl flex-col gap-1">
             <ComponentTitle
-              title={props.entry.minMax.maxEntry!.uiName}
-              description={props.entry.minMax.maxEntry!.description}
+              title={props.entry.minMax.maxEntry?.uiName}
+              description={props.entry.minMax.maxEntry?.description}
             />
             <MinMaxComponent
               setting={props.entry.minMax}

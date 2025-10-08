@@ -7,7 +7,6 @@ import {
   GlobeIcon,
   PlusIcon,
 } from "lucide-react";
-import * as React from "react";
 import { use, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -60,11 +59,12 @@ function Content() {
           <CardDescription>{t("access.webdav.description")}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <label className="block text-sm font-medium">
+          <label htmlFor="webdav-address" className="block text-sm font-medium">
             {t("access.webdav.publicAddress")}
           </label>
           <div className="flex items-center gap-2">
             <Input
+              id="webdav-address"
               className="select-all"
               value={clientInfo.serverInfo?.publicWebdavAddress}
               readOnly
@@ -85,11 +85,12 @@ function Content() {
           <p className="text-muted-foreground text-sm">
             {t("access.webdav.addressDescription")}
           </p>
-          <label className="block text-sm font-medium">
+          <label htmlFor="webdav-token" className="block text-sm font-medium">
             {t("access.webdav.personalToken")}
           </label>
           <div className="flex items-center gap-2">
             <Input
+              id="webdav-token"
               className="select-all"
               disabled={webDavToken === ""}
               value={webDavToken}
@@ -157,11 +158,12 @@ function Content() {
           <CardDescription>{t("access.api.description")}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <label className="block text-sm font-medium">
+          <label htmlFor="api-address" className="block text-sm font-medium">
             {t("access.api.publicAddress")}
           </label>
           <div className="flex items-center gap-2">
             <Input
+              id="api-address"
               className="select-all"
               value={clientInfo.serverInfo?.publicApiAddress}
               readOnly
@@ -180,11 +182,12 @@ function Content() {
           <p className="text-muted-foreground text-sm">
             {t("access.api.addressDescription")}
           </p>
-          <label className="block text-sm font-medium">
+          <label htmlFor="api-token" className="block text-sm font-medium">
             {t("access.api.personalToken")}
           </label>
           <div className="flex items-center gap-2">
             <Input
+              id="api-token"
               className="select-all"
               disabled={apiToken === ""}
               value={apiToken}
@@ -236,7 +239,7 @@ function Content() {
             <span>{t("access.token.generate")}</span>
           </Button>
           <Button variant="secondary" asChild>
-            <ExternalLink href={clientInfo.serverInfo!.publicDocsAddress}>
+            <ExternalLink href={clientInfo.serverInfo?.publicDocsAddress}>
               <BookOpenTextIcon />
               <span>{t("access.documentation")}</span>
             </ExternalLink>

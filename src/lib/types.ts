@@ -50,7 +50,7 @@ export function getEnumEntries<E extends object>(
   value: E[keyof E];
 }[] {
   return Object.entries(enumObj)
-    .filter(([key]) => isNaN(parseInt(key)))
+    .filter(([key]) => Number.isNaN(parseInt(key, 10)))
     .map(([key, value]) => ({
       key: key as keyof E,
       value: value as E[keyof E],

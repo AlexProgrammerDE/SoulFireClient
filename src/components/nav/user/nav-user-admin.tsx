@@ -12,7 +12,6 @@ import {
   UsersIcon,
 } from "lucide-react";
 import type { ReactNode } from "react";
-import * as React from "react";
 import { useTranslation } from "react-i18next";
 import {
   SidebarGroup,

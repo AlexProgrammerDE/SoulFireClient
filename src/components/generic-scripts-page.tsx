@@ -15,7 +15,6 @@ import {
   TextIcon,
   TrashIcon,
 } from "lucide-react";
-import * as React from "react";
 import { createContext, use, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -253,40 +252,38 @@ function RestartScriptButton(props: { row: Row<ScriptListResponse_Script> }) {
   const { t } = useTranslation("common");
 
   return (
-    <>
-      <Button
-        disabled={!props.row.getCanSelect()}
-        variant="secondary"
-        size="sm"
-        onClick={() => {
-          const transport = createTransport();
-          if (transport === null) {
-            return;
-          }
+    <Button
+      disabled={!props.row.getCanSelect()}
+      variant="secondary"
+      size="sm"
+      onClick={() => {
+        const transport = createTransport();
+        if (transport === null) {
+          return;
+        }
 
-          const scriptService = new ScriptServiceClient(transport);
-          toast.promise(
-            scriptService
-              .restartScript({
-                id: props.row.original.id,
-              })
-              .then((r) => r.response),
-            {
-              loading: t("scripts.restartToast.loading"),
-              success: () => {
-                return t("scripts.restartToast.success");
-              },
-              error: (e) => {
-                console.error(e);
-                return t("scripts.restartToast.error");
-              },
+        const scriptService = new ScriptServiceClient(transport);
+        toast.promise(
+          scriptService
+            .restartScript({
+              id: props.row.original.id,
+            })
+            .then((r) => r.response),
+          {
+            loading: t("scripts.restartToast.loading"),
+            success: () => {
+              return t("scripts.restartToast.success");
             },
-          );
-        }}
-      >
-        <RotateCcwIcon />
-      </Button>
-    </>
+            error: (e) => {
+              console.error(e);
+              return t("scripts.restartToast.error");
+            },
+          },
+        );
+      }}
+    >
+      <RotateCcwIcon />
+    </Button>
   );
 }
 

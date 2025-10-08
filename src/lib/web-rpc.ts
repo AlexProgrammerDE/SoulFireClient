@@ -52,7 +52,7 @@ export function createWebDAVClient(
   generator: () => string,
 ): WebDAVClient {
   const token = getOrGenerateWebDAVToken(generator);
-  return createClient(clientInfo.serverInfo!.publicWebdavAddress, {
+  return createClient(clientInfo.serverInfo?.publicWebdavAddress, {
     authType: AuthType.Password,
     username: "ignored",
     password: token,

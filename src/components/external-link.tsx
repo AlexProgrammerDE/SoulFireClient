@@ -14,7 +14,9 @@ export function ExternalLink(
   },
 ) {
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions lint/a11y/useValidAnchor: This is an external link with custom open behavior
     <a
+      // biome-ignore lint/a11y/useValidAnchor: This is an external link with custom open behavior
       onClick={(e) => {
         e.stopPropagation();
         e.preventDefault();

@@ -220,6 +220,7 @@ function Index() {
   return (
     <ScrollArea className="relative h-dvh w-full px-4">
       <svg className="fill-muted-foreground/5 absolute top-0 right-0 bottom-0 left-0 z-[-1] h-dvh w-dvw">
+        <title>Decorative background pattern</title>
         <defs>
           <pattern
             id="circuitPattern"
@@ -482,11 +483,7 @@ function IntegratedMenu({
         />
       );
     case "loading":
-      return (
-        <IntegratedLoadingMenu
-          redirectWithCredentials={redirectWithCredentials}
-        />
-      );
+      return <IntegratedLoadingMenu />;
     case "mobile":
       return (
         <IntegratedMobileMenu
@@ -608,11 +605,7 @@ function IntegratedConfigureMenu({
   );
 }
 
-function IntegratedLoadingMenu({
-  redirectWithCredentials,
-}: {
-  redirectWithCredentials: LoginFunction;
-}) {
+function IntegratedLoadingMenu() {
   const { t } = useTranslation("login");
   const [latestLog, setLatestLog] = useState<string>(t("integrated.preparing"));
 
@@ -626,7 +619,7 @@ function IntegratedLoadingMenu({
     return () => {
       cancel();
     };
-  }, [redirectWithCredentials, t]);
+  }, []);
 
   return (
     <Card>

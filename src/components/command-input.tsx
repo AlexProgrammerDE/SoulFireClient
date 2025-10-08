@@ -309,7 +309,7 @@ export default function CommandInput(props: { scope: CommandScope }) {
     }
 
     updateCaretPosition();
-  }, [cursorPosition, inputValue, isFocused, updateCaretPosition]);
+  }, [isFocused, updateCaretPosition]);
 
   useEffect(() => {
     if (!isFocused) {
@@ -346,12 +346,7 @@ export default function CommandInput(props: { scope: CommandScope }) {
     if (node) {
       node.scrollIntoView({ block: "nearest" });
     }
-  }, [
-    showSuggestions,
-    hasSuggestions,
-    highlightedIndex,
-    completionState.receivedCompletions,
-  ]);
+  }, [showSuggestions, hasSuggestions]);
 
   const acceptCompletion = useCallback((index: number) => {
     const element = inputRef.current;
@@ -637,6 +632,7 @@ export default function CommandInput(props: { scope: CommandScope }) {
             left: caretPositionStyle.left,
             top: caretPositionStyle.inputBottom + 8,
           }}
+          role="listbox"
           onMouseDown={(event) => {
             event.preventDefault();
             inputRef.current?.focus();

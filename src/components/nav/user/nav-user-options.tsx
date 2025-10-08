@@ -3,7 +3,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, type LinkProps, useRouteContext } from "@tanstack/react-router";
 import { Grid2x2Icon, PlusIcon, SettingsIcon, ZapIcon } from "lucide-react";
-import * as React from "react";
 import { type ReactNode, use } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateInstanceContext } from "@/components/dialog/create-instance-dialog.tsx";
@@ -85,14 +84,12 @@ export function NavUserOptions() {
                 clientInfo,
                 GlobalPermission.CREATE_INSTANCE,
               ) && (
-                <>
-                  <SidebarMenuAction
-                    onClick={openCreateInstance}
-                    title={t("userSidebar.createInstance")}
-                  >
-                    <PlusIcon />
-                  </SidebarMenuAction>
-                </>
+                <SidebarMenuAction
+                  onClick={openCreateInstance}
+                  title={t("userSidebar.createInstance")}
+                >
+                  <PlusIcon />
+                </SidebarMenuAction>
               )}
           </SidebarMenuItem>
         ))}
