@@ -1,0 +1,43 @@
+name: 'Build and Test'
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    name: Build and Test
+
+    runs-on: ubuntu-24.04
+    steps:
+      - name: 'Checkout repository'
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: latest
+          run_install: false
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Run typecheck
+        run: |
+          pnpm typecheck
+
+      - name: Run check
+        run: |
+          pnpm exec biome ci
+
+      - name: Run build
+        run: |
+          pnpm build
