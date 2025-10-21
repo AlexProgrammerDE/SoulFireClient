@@ -108,7 +108,7 @@ jobs:
         uses: ilammy/setup-nasm@v1
 
       - name: 'Shared: Setup node'
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: lts/*
 
