@@ -64,7 +64,7 @@
     "@tanstack/react-table": "^8.21.2",
     "@tanstack/router-devtools": "^1.114.27",
     "@tauri-apps/api": "2.9.0",
-    "@tauri-apps/plugin-clipboard-manager": "2.3.0",
+    "@tauri-apps/plugin-clipboard-manager": "2.3.1",
     "@tauri-apps/plugin-deep-link": "~2.4.0",
     "@tauri-apps/plugin-dialog": "^2.2.0",
     "@tauri-apps/plugin-fs": "^2.2.0",
@@ -113,7 +113,7 @@
     "zod": "^4.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.0",
+    "@biomejs/biome": "2.3.1",
     "@protobuf-ts/plugin": "^2.9.6",
     "@rsbuild/core": "^1.2.19",
     "@rsbuild/plugin-react": "^1.1.1",
