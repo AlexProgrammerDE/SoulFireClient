@@ -12,35 +12,92 @@ import React, {
 } from "react";
 import { useTranslation } from "react-i18next";
 import { TerminalThemeContext } from "@/components/providers/terminal-theme-context.tsx";
+import { SFTimeAgo } from "@/components/sf-timeago.tsx";
 import { LogsServiceClient } from "@/generated/soulfire/logs.client.ts";
-import type { LogScope } from "@/generated/soulfire/logs.ts";
+import type { LogScope, LogString } from "@/generated/soulfire/logs.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
-import { isDemo } from "@/lib/utils.tsx";
+import { cn, isDemo, timestampToDate } from "@/lib/utils.tsx";
 import { TransportContext } from "./providers/transport-context.tsx";
 import { ScrollArea } from "./ui/scroll-area.tsx";
 
 const MAX_TERMINAL_LINES = 500;
 
-const MemoAnsiHtml = React.memo((props: { text: string }) => {
-  const copyToClipboard = useCopyToClipboard();
+// Use full logger name unless if
+// prefixed with com.soulfiremc then use only the last part
+function formatLoggerName(name: string | undefined): string | undefined {
+  if (name?.startsWith("com.soulfiremc.")) {
+    const parts = name.split(".");
+    return parts[parts.length - 1];
+  } else {
+    return name;
+  }
+}
 
-  return (
-    <span className="flex flex-row gap-1">
-      <AnsiHtml
-        className="hover:underline"
-        text={
-          stripAnsi(props.text).endsWith("\n") ? props.text : `${props.text}\n`
-        }
-      />
-      <ClipboardIcon
-        className="cursor-pointer size-3"
-        onClick={() => {
-          copyToClipboard(stripAnsi(props.text));
-        }}
-      />
-    </span>
-  );
-});
+function isImportantLog(level: string | undefined): boolean {
+  if (level === undefined) {
+    return false;
+  }
+
+  const importantLevels = ["ERROR", "WARN", "FATAL"];
+  return importantLevels.includes(level.toUpperCase());
+}
+
+const MemoAnsiHtml = React.memo(
+  ({
+    content,
+  }: {
+    content: Pick<
+      TerminalLine,
+      "message" | "level" | "timestamp" | "loggerName"
+    >;
+  }) => {
+    const copyToClipboard = useCopyToClipboard();
+
+    return (
+      <div
+        className={cn("w-full hover:bg-(--terminal-selection-bg)/25", {
+          "text-(--ansi-yellow)": content.level === "WARN",
+          "text-(--ansi-red)":
+            content.level === "ERROR" || content.level === "FATAL",
+        })}
+      >
+        <span className="inline-flex align-middle">{content.level}</span>
+        {content.timestamp && (
+          <>
+            <span className="inline-flex align-middle">{"\u202F"}</span>
+            <span className="inline-flex align-middle">
+              <SFTimeAgo date={timestampToDate(content.timestamp)} />
+            </span>
+          </>
+        )}
+        <span className="inline-flex align-middle">{"\u202F"}</span>
+        <span className="inline-flex align-middle">
+          {formatLoggerName(content.loggerName)}
+        </span>
+        <span className="inline-flex align-middle">{"\u202F"}</span>
+        <AnsiHtml
+          className="inline-flex align-middle"
+          text={
+            stripAnsi(content.message).endsWith("\n")
+              ? content.message
+              : `${content.message}\n`
+          }
+        />
+        {isImportantLog(content.level) && (
+          <>
+            <span className="inline-flex select-none">{"\u202F"}</span>
+            <ClipboardIcon
+              className="cursor-pointer size-3 select-none inline-flex align-middle"
+              onClick={() => {
+                copyToClipboard(stripAnsi(content.message));
+              }}
+            />
+          </>
+        )}
+      </div>
+    );
+  },
+);
 
 function fnv1aHash(str: string): string {
   let hash = 0x811c9dc5; // FNV offset basis
@@ -52,10 +109,9 @@ function fnv1aHash(str: string): string {
   return (hash >>> 0).toString(16);
 }
 
-function convertLine(message: TerminalLineBase): TerminalLine {
+function convertLine(message: LogString): TerminalLine {
   return {
-    id: message.id,
-    message: message.message,
+    ...message,
     lines: message.message.split("\n").length,
     hash: fnv1aHash(message.message),
   };
@@ -84,12 +140,7 @@ function deduplicateConsecutive<T>(
   }, []);
 }
 
-type TerminalLineBase = {
-  id: string;
-  message: string;
-};
-
-type TerminalLine = TerminalLineBase & {
+type TerminalLine = LogString & {
   lines: number;
   hash: string;
 };
@@ -103,18 +154,22 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
           convertLine({
             id: "demo-1",
             message: t("terminal.demo-1"),
+            personal: false,
           }),
           convertLine({
             id: "demo-2",
             message: t("terminal.demo-2"),
+            personal: false,
           }),
           convertLine({
             id: "demo-3",
             message: t("terminal.demo-3"),
+            personal: false,
           }),
           convertLine({
             id: "demo-4",
             message: t("terminal.demo-4"),
+            personal: false,
           }),
         ]
       : [],
@@ -179,6 +234,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
             convertLine({
               id: "empty",
               message: t("terminal.noLogs"),
+              personal: false,
             }),
           ]);
         }
@@ -310,7 +366,17 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
     >
       <p className="h-full min-h-[calc(75vh-8rem)] cursor-text py-0.5 pl-0.5 break-all whitespace-pre-wrap select-text selection:bg-(--terminal-selection-bg)/25">
         {entries.map((entry) => {
-          return <MemoAnsiHtml key={entry.id} text={entry.message} />;
+          return (
+            <MemoAnsiHtml
+              key={entry.id}
+              content={{
+                message: entry.message,
+                level: entry.level,
+                timestamp: entry.timestamp,
+                loggerName: entry.loggerName,
+              }}
+            />
+          );
         })}
       </p>
     </ScrollArea>
