@@ -316,9 +316,16 @@
     "documentation": "Documentation",
     "howToConnect": "How to connect"
   },
+  "uploadToMcLogs": "Upload to mclo.gs",
+  "mcLogsUpload": {
+    "loading": "Uploading to mclo.gs...",
+    "success": "Uploaded to mclo.gs! View it here: {{url}}",
+    "error": "Failed to upload to mclo.gs"
+  },
+  "copyToClipboard": "Copy to clipboard",
   "clipboardCopy": {
     "loading": "Copying to clipboard...",
-    "success": "Copied to clipboard",
+    "success": "Copied \"{{content}}\" to clipboard",
     "error": "Failed to copy to clipboard"
   },
   "instanceState": {

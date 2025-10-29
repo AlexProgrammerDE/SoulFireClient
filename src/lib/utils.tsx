@@ -547,3 +547,27 @@ export function smartEntries<T extends object>(
     value as T[keyof T],
   ]);
 }
+
+export type McLogsResponse =
+  | {
+      success: true;
+      id: string;
+      url: string;
+      raw: string;
+    }
+  | {
+      success: false;
+      error: string;
+    };
+
+export async function uploadToMcLogs(content: string): Promise<McLogsResponse> {
+  const response = await fetch("https://api.mclo.gs/1/log", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({ content }),
+  });
+
+  return await response.json();
+}

@@ -1,7 +1,7 @@
 import { flavorEntries } from "@catppuccin/palette";
 import { stripAnsi } from "fancy-ansi";
 import { AnsiHtml } from "fancy-ansi/react";
-import { ClipboardIcon } from "lucide-react";
+import { ClipboardIcon, CloudUploadIcon } from "lucide-react";
 import React, {
   type CSSProperties,
   use,
@@ -11,12 +11,14 @@ import React, {
   useState,
 } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import { TerminalThemeContext } from "@/components/providers/terminal-theme-context.tsx";
 import { SFTimeAgo } from "@/components/sf-timeago.tsx";
+import { Button } from "@/components/ui/button.tsx";
 import { LogsServiceClient } from "@/generated/soulfire/logs.client.ts";
 import type { LogScope, LogString } from "@/generated/soulfire/logs.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
-import { cn, isDemo, timestampToDate } from "@/lib/utils.tsx";
+import { cn, isDemo, timestampToDate, uploadToMcLogs } from "@/lib/utils.tsx";
 import { TransportContext } from "./providers/transport-context.tsx";
 import { ScrollArea } from "./ui/scroll-area.tsx";
 
@@ -52,29 +54,32 @@ const MemoAnsiHtml = React.memo(
     >;
   }) => {
     const copyToClipboard = useCopyToClipboard();
+    const { t } = useTranslation();
 
     return (
-      <div
-        className={cn("w-full hover:bg-(--terminal-selection-bg)/25", {
-          "text-(--ansi-yellow)": content.level === "WARN",
-          "text-(--ansi-red)":
-            content.level === "ERROR" || content.level === "FATAL",
-        })}
-      >
-        <span className="inline-flex align-middle">{content.level}</span>
-        {content.timestamp && (
-          <>
-            <span className="inline-flex align-middle">{"\u202F"}</span>
-            <span className="inline-flex align-middle">
-              <SFTimeAgo date={timestampToDate(content.timestamp)} />
-            </span>
-          </>
-        )}
-        <span className="inline-flex align-middle">{"\u202F"}</span>
-        <span className="inline-flex align-middle">
-          {formatLoggerName(content.loggerName)}
+      <div className={"w-full hover:bg-(--terminal-selection-bg)/25"}>
+        <span
+          className={cn({
+            "text-(--ansi-yellow)": content.level === "WARN",
+            "text-(--ansi-red)":
+              content.level === "ERROR" || content.level === "FATAL",
+          })}
+        >
+          <span className="inline-flex align-middle">{content.level}</span>
+          {content.timestamp && (
+            <>
+              <span className="inline-flex align-middle">{"\u202F"}</span>
+              <span className="inline-flex align-middle">
+                <SFTimeAgo date={timestampToDate(content.timestamp)} />
+              </span>
+            </>
+          )}
+          <span className="inline-flex align-middle">{"\u202F"}</span>
+          <span className="inline-flex align-middle">
+            {formatLoggerName(content.loggerName)}
+          </span>
+          <span className="inline-flex align-middle">{"\u202F"}</span>
         </span>
-        <span className="inline-flex align-middle">{"\u202F"}</span>
         <AnsiHtml
           className="inline-flex align-middle"
           text={
@@ -86,12 +91,45 @@ const MemoAnsiHtml = React.memo(
         {isImportantLog(content.level) && (
           <>
             <span className="inline-flex select-none">{"\u202F"}</span>
-            <ClipboardIcon
-              className="cursor-pointer size-3 select-none inline-flex align-middle"
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-fit px-0 inline-flex align-middle select-none size-3"
               onClick={() => {
                 copyToClipboard(stripAnsi(content.message));
               }}
-            />
+              title={t("copyToClipboard")}
+            >
+              <ClipboardIcon />
+            </Button>
+            <span className="inline-flex select-none">{"\u202F"}</span>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-fit px-0 inline-flex align-middle select-none size-3"
+              onClick={() => {
+                toast.promise(
+                  uploadToMcLogs(stripAnsi(content.message)).then(
+                    (response) => {
+                      if (response.success) {
+                        copyToClipboard(response.url);
+                        return response.url;
+                      } else {
+                        throw new Error(`Upload failed: ${response.error}`);
+                      }
+                    },
+                  ),
+                  {
+                    loading: t("mcLogsUpload.loading"),
+                    success: (url) => t("mcLogsUpload.success", { url }),
+                    error: t("mcLogsUpload.error"),
+                  },
+                );
+              }}
+              title={t("uploadToMcLogs")}
+            >
+              <CloudUploadIcon />
+            </Button>
           </>
         )}
       </div>

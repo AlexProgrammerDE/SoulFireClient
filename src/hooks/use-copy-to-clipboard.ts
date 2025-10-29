@@ -12,6 +12,14 @@ function copyToClipboard(text: string): Promise<void> {
   }
 }
 
+function truncate(text: string, maxLength: number): string {
+  if (text.length <= maxLength) {
+    return text;
+  } else {
+    return `${text.slice(0, maxLength - 3)}...`;
+  }
+}
+
 export function useCopyToClipboard() {
   const { t } = useTranslation("common");
 
@@ -19,7 +27,7 @@ export function useCopyToClipboard() {
     (text) => {
       toast.promise(copyToClipboard(text), {
         loading: t("clipboardCopy.loading"),
-        success: t("clipboardCopy.success"),
+        success: t("clipboardCopy.success", { content: truncate(text, 50) }),
         error: t("clipboardCopy.error"),
       });
     },

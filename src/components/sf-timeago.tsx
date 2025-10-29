@@ -1,6 +1,7 @@
 import { format, formatDistanceToNow } from "date-fns";
 import { ClipboardIcon } from "lucide-react";
 import React, { useMemo } from "react";
+import { Button } from "@/components/ui/button.tsx";
 import {
   Popover,
   PopoverContent,
@@ -33,17 +34,18 @@ export const SFTimeAgo = React.memo((props: { date: Date }) => {
       <PopoverTrigger asChild>
         <span>{baseText}</span>
       </PopoverTrigger>
-      <PopoverContent className="size-fit p-2 text-center text-sm select-text items-center">
-        <time className="inline-flex align-middle" dateTime={isoString}>
+      <PopoverContent className="flex flex-row gap-1 size-fit p-2 items-center">
+        <time className="select-text text-center text-sm" dateTime={isoString}>
           {formatted}
         </time>
-        <span className="inline-flex select-none">{"\u202F"}</span>
-        <ClipboardIcon
-          className="cursor-pointer size-3 select-none inline-flex align-middle"
-          onClick={() => {
-            copyToClipboard(isoString);
-          }}
-        />
+        <Button variant="outline" size="icon">
+          <ClipboardIcon
+            className="cursor-pointer select-none"
+            onClick={() => {
+              copyToClipboard(isoString);
+            }}
+          />
+        </Button>
       </PopoverContent>
     </Popover>
   );
