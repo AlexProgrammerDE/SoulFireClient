@@ -9,9 +9,10 @@ import type {
   BinaryWriteOptions,
   IBinaryReader,
   IBinaryWriter,
-  PartialMessage
+  PartialMessage,
 } from '@protobuf-ts/runtime';
 import { MessageType, reflectionMergePartial, UnknownFieldHandler, WireType } from '@protobuf-ts/runtime';
+import { Timestamp } from '../google/protobuf/timestamp';
 
 /**
  * @generated from protobuf message soulfire.v1.LogString
@@ -30,9 +31,9 @@ export interface LogString {
      */
     instanceId?: string;
     /**
-     * @generated from protobuf field: optional string bot_id = 4
+     * @generated from protobuf field: optional string bot_account_id = 4
      */
-    botId?: string;
+    botAccountId?: string;
     /**
      * @generated from protobuf field: optional string script_id = 5
      */
@@ -41,6 +42,26 @@ export interface LogString {
      * @generated from protobuf field: bool personal = 6
      */
     personal: boolean;
+  /**
+   * @generated from protobuf field: optional string instance_name = 7
+   */
+  instanceName?: string;
+  /**
+   * @generated from protobuf field: optional string bot_account_name = 8
+   */
+  botAccountName?: string;
+  /**
+   * @generated from protobuf field: google.protobuf.Timestamp timestamp = 9
+   */
+  timestamp?: Timestamp;
+  /**
+   * @generated from protobuf field: optional string logger_name = 10
+   */
+  loggerName?: string;
+  /**
+   * @generated from protobuf field: optional string level = 11
+   */
+  level?: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.GlobalLogScope
@@ -190,9 +211,14 @@ class LogString$Type extends MessageType<LogString> {
             { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 2, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
             { no: 3, name: "instance_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "bot_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
+          { no: 4, name: 'bot_account_id', kind: 'scalar', opt: true, T: 9 /*ScalarType.STRING*/ },
             { no: 5, name: "script_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "personal", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
+          { no: 6, name: 'personal', kind: 'scalar', T: 8 /*ScalarType.BOOL*/ },
+          { no: 7, name: 'instance_name', kind: 'scalar', opt: true, T: 9 /*ScalarType.STRING*/ },
+          { no: 8, name: 'bot_account_name', kind: 'scalar', opt: true, T: 9 /*ScalarType.STRING*/ },
+          { no: 9, name: 'timestamp', kind: 'message', T: () => Timestamp },
+          { no: 10, name: 'logger_name', kind: 'scalar', opt: true, T: 9 /*ScalarType.STRING*/ },
+          { no: 11, name: 'level', kind: 'scalar', opt: true, T: 9 /*ScalarType.STRING*/ },
         ]);
     }
     create(value?: PartialMessage<LogString>): LogString {
@@ -218,8 +244,9 @@ class LogString$Type extends MessageType<LogString> {
                 case /* optional string instance_id */ 3:
                     message.instanceId = reader.string();
                     break;
-                case /* optional string bot_id */ 4:
-                    message.botId = reader.string();
+              case /* optional string bot_account_id */
+              4:
+                message.botAccountId = reader.string();
                     break;
                 case /* optional string script_id */ 5:
                     message.scriptId = reader.string();
@@ -227,6 +254,26 @@ class LogString$Type extends MessageType<LogString> {
                 case /* bool personal */ 6:
                     message.personal = reader.bool();
                     break;
+              case /* optional string instance_name */
+              7:
+                message.instanceName = reader.string();
+                break;
+              case /* optional string bot_account_name */
+              8:
+                message.botAccountName = reader.string();
+                break;
+              case /* google.protobuf.Timestamp timestamp */
+              9:
+                message.timestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.timestamp);
+                break;
+              case /* optional string logger_name */
+              10:
+                message.loggerName = reader.string();
+                break;
+              case /* optional string level */
+              11:
+                message.level = reader.string();
+                break;
                 default:
                     let u = options.readUnknownField;
                     if (u === "throw")
@@ -248,15 +295,30 @@ class LogString$Type extends MessageType<LogString> {
         /* optional string instance_id = 3; */
         if (message.instanceId !== undefined)
             writer.tag(3, WireType.LengthDelimited).string(message.instanceId);
-        /* optional string bot_id = 4; */
-        if (message.botId !== undefined)
-            writer.tag(4, WireType.LengthDelimited).string(message.botId);
+      /* optional string bot_account_id = 4; */
+      if (message.botAccountId !== undefined)
+        writer.tag(4, WireType.LengthDelimited).string(message.botAccountId);
         /* optional string script_id = 5; */
         if (message.scriptId !== undefined)
             writer.tag(5, WireType.LengthDelimited).string(message.scriptId);
         /* bool personal = 6; */
         if (message.personal !== false)
             writer.tag(6, WireType.Varint).bool(message.personal);
+      /* optional string instance_name = 7; */
+      if (message.instanceName !== undefined)
+        writer.tag(7, WireType.LengthDelimited).string(message.instanceName);
+      /* optional string bot_account_name = 8; */
+      if (message.botAccountName !== undefined)
+        writer.tag(8, WireType.LengthDelimited).string(message.botAccountName);
+      /* google.protobuf.Timestamp timestamp = 9; */
+      if (message.timestamp)
+        Timestamp.internalBinaryWrite(message.timestamp, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
+      /* optional string logger_name = 10; */
+      if (message.loggerName !== undefined)
+        writer.tag(10, WireType.LengthDelimited).string(message.loggerName);
+      /* optional string level = 11; */
+      if (message.level !== undefined)
+        writer.tag(11, WireType.LengthDelimited).string(message.level);
         let u = options.writeUnknownFields;
         if (u !== false)
             (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
