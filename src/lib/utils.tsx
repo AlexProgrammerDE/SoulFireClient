@@ -1,7 +1,6 @@
 import type { JsonValue } from "@protobuf-ts/runtime";
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
-import * as clipboard from "@tauri-apps/plugin-clipboard-manager";
 import { type ClassValue, clsx } from "clsx";
 import type { FlagComponent } from "country-flag-icons/react/1x1";
 import * as Flags from "country-flag-icons/react/3x2";
@@ -539,14 +538,6 @@ export function formatIconName(text: string): string {
     .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
-}
-
-export function copyToClipboard(text: string) {
-  if (isTauri()) {
-    void clipboard.writeText(text);
-  } else {
-    void navigator.clipboard.writeText(text);
-  }
 }
 export function smartEntries<T extends object>(
   obj: T,

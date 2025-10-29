@@ -72,10 +72,10 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { LoginServiceClient } from "@/generated/soulfire/login.client.ts";
 import { NextAuthFlowResponse_Failure_Reason } from "@/generated/soulfire/login.ts";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { getEnumKeyByValue, type SFServerType } from "@/lib/types.ts";
 import {
   cancellablePromiseDefault,
-  copyToClipboard,
   getLanguageName,
   isDemo,
   languageEmoji,
@@ -643,6 +643,7 @@ function IntegratedMobileMenu({
   setIntegratedState: (state: IntegratedState) => void;
   redirectWithCredentials: LoginFunction;
 }) {
+  const copyToClipboard = useCopyToClipboard();
   const systemInfo = use(SystemInfoContext);
   const { t } = useTranslation("login");
   const runCommand = `bash <(curl -s https://raw.githubusercontent.com/AlexProgrammerDE/SoulFireClient/refs/heads/main/scripts/termux_setup.sh) ${systemInfo?.sfServerVersion} "${localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS)}"`;
@@ -693,7 +694,6 @@ function IntegratedMobileMenu({
                   variant="secondary"
                   onClick={() => {
                     copyToClipboard(runCommand);
-                    toast.success(t("common:copiedToClipboard"));
                   }}
                 >
                   <ClipboardIcon />
@@ -715,7 +715,6 @@ function IntegratedMobileMenu({
                         className="font-bold text-blue-500"
                         onClick={() => {
                           copyToClipboard("generate-token api");
-                          toast.success(t("common:copiedToClipboard"));
                         }}
                       />
                     ),

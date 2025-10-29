@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/card.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { ClientServiceClient } from "@/generated/soulfire/client.client.ts";
-import { copyToClipboard } from "@/lib/utils.tsx";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 
 export const Route = createFileRoute("/_dashboard/user/access")({
   component: AccessPage,
@@ -42,6 +42,7 @@ function AccessPage() {
 
 function Content() {
   const { t } = useTranslation("common");
+  const copyToClipboard = useCopyToClipboard();
   const { clientDataQueryOptions } = Route.useRouteContext();
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const transport = use(TransportContext);
@@ -75,7 +76,6 @@ function Content() {
                 copyToClipboard(
                   clientInfo.serverInfo?.publicWebdavAddress || "",
                 );
-                toast.success(t("access.address.copied"));
               }}
             >
               <CopyIcon />
@@ -101,7 +101,6 @@ function Content() {
               variant="secondary"
               onClick={() => {
                 copyToClipboard(webDavToken);
-                toast.success(t("access.token.copied"));
               }}
               disabled={webDavToken === ""}
             >
@@ -125,7 +124,6 @@ function Content() {
                 clientService.generateWebDAVToken({}).then((response) => {
                   setWebDavToken(response.response.token);
                   copyToClipboard(response.response.token);
-                  toast.success(t("access.token.copied"));
                 }),
                 {
                   loading: t("access.token.generating"),
@@ -172,7 +170,6 @@ function Content() {
               variant="secondary"
               onClick={() => {
                 copyToClipboard(clientInfo.serverInfo?.publicApiAddress || "");
-                toast.success(t("access.address.copied"));
               }}
             >
               <CopyIcon />
@@ -198,7 +195,6 @@ function Content() {
               variant="secondary"
               onClick={() => {
                 copyToClipboard(apiToken);
-                toast.success(t("access.token.copied"));
               }}
               disabled={apiToken === ""}
             >
@@ -222,7 +218,6 @@ function Content() {
                 clientService.generateAPIToken({}).then((response) => {
                   setApiToken(response.response.token);
                   copyToClipboard(response.response.token);
-                  toast.success(t("access.token.copied"));
                 }),
                 {
                   loading: t("access.token.generating"),

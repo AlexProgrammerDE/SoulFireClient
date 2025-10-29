@@ -1,6 +1,7 @@
 import { flavorEntries } from "@catppuccin/palette";
 import { stripAnsi } from "fancy-ansi";
 import { AnsiHtml } from "fancy-ansi/react";
+import { ClipboardIcon } from "lucide-react";
 import React, {
   type CSSProperties,
   use,
@@ -13,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { TerminalThemeContext } from "@/components/providers/terminal-theme-context.tsx";
 import { LogsServiceClient } from "@/generated/soulfire/logs.client.ts";
 import type { LogScope } from "@/generated/soulfire/logs.ts";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { isDemo } from "@/lib/utils.tsx";
 import { TransportContext } from "./providers/transport-context.tsx";
 import { ScrollArea } from "./ui/scroll-area.tsx";
@@ -20,12 +22,23 @@ import { ScrollArea } from "./ui/scroll-area.tsx";
 const MAX_TERMINAL_LINES = 500;
 
 const MemoAnsiHtml = React.memo((props: { text: string }) => {
+  const copyToClipboard = useCopyToClipboard();
+
   return (
-    <AnsiHtml
-      text={
-        stripAnsi(props.text).endsWith("\n") ? props.text : `${props.text}\n`
-      }
-    />
+    <span className="flex flex-row gap-1">
+      <AnsiHtml
+        className="hover:underline"
+        text={
+          stripAnsi(props.text).endsWith("\n") ? props.text : `${props.text}\n`
+        }
+      />
+      <ClipboardIcon
+        className="cursor-pointer size-3"
+        onClick={() => {
+          copyToClipboard(stripAnsi(props.text));
+        }}
+      />
+    </span>
   );
 });
 

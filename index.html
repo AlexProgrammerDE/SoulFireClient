@@ -61,7 +61,7 @@
         const isSystem = themeName === 'system';
         const theme = isSystem ? getSystemTheme() : themeName;
         updateDOM(theme);
-      } catch (e) {
+      } catch (_e) {
         //
       }
     </script>

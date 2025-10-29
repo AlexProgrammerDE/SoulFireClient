@@ -306,19 +306,21 @@
       "generate": "Generate Token",
       "placeholder": "Click 'Generate Token' below",
       "generating": "Generating token...",
-      "success": "Token generated successfully and copied to clipboard",
+      "success": "Token generated successfully",
       "error": "Failed to generate token",
-      "copy": "Copy Token",
-      "copied": "Token copied to clipboard"
+      "copy": "Copy Token"
     },
     "address": {
-      "copy": "Copy Address",
-      "copied": "Address copied to clipboard"
+      "copy": "Copy Address"
     },
     "documentation": "Documentation",
     "howToConnect": "How to connect"
   },
-  "copiedToClipboard": "Copied to clipboard",
+  "clipboardCopy": {
+    "loading": "Copying to clipboard...",
+    "success": "Copied to clipboard",
+    "error": "Failed to copy to clipboard"
+  },
   "instanceState": {
     "starting": "Starting",
     "running": "Running",

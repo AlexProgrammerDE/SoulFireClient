@@ -1,14 +1,12 @@
 import { ClipboardIcon, InfoIcon } from "lucide-react";
 import { type ReactNode, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button.tsx";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover.tsx";
-import { copyToClipboard } from "@/lib/utils.tsx";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 
 export function TextInfoButton(props: { value: ReactNode }) {
   return (
@@ -19,7 +17,8 @@ export function TextInfoButton(props: { value: ReactNode }) {
 }
 
 export function CopyInfoButton(props: { value: string }) {
-  const { t } = useTranslation("common");
+  const copyToClipboard = useCopyToClipboard();
+
   return (
     <GenericInfoButton
       value={(close) => (
@@ -31,7 +30,6 @@ export function CopyInfoButton(props: { value: string }) {
             className="shrink-0"
             onClick={() => {
               copyToClipboard(props.value);
-              toast.success(t("copiedToClipboard"));
               close();
             }}
           >
