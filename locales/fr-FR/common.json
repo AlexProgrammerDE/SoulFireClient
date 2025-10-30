@@ -306,19 +306,28 @@
       "generate": "Générer le token",
       "placeholder": "Cliquez sur \"Générer un token\" ci-dessous",
       "generating": "Génération du token...",
-      "success": "Token généré avec succès et copié dans le presse-papiers",
+      "success": "",
       "error": "Impossible de générer le token",
-      "copy": "Copier le token",
-      "copied": "Token copié dans le presse-papiers"
+      "copy": "Copier le token"
     },
     "address": {
-      "copy": "Copier l'adresse",
-      "copied": "Adresse copiée dans le presse-papiers"
+      "copy": "Copier l'adresse"
     },
     "documentation": "Documentation",
     "howToConnect": "Comment se connecter"
   },
-  "copiedToClipboard": "Copié dans le presse-papier",
+  "uploadToMcLogs": "",
+  "mcLogsUpload": {
+    "loading": "",
+    "success": "",
+    "error": ""
+  },
+  "copyToClipboard": "",
+  "clipboardCopy": {
+    "loading": "",
+    "success": "",
+    "error": ""
+  },
   "instanceState": {
     "starting": "Démarrage",
     "running": "En cours d'exécution",

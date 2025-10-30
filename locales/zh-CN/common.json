@@ -308,17 +308,26 @@
       "generating": "",
       "success": "",
       "error": "",
-      "copy": "",
-      "copied": ""
+      "copy": ""
     },
     "address": {
-      "copy": "",
-      "copied": ""
+      "copy": ""
     },
     "documentation": "文档",
     "howToConnect": ""
   },
-  "copiedToClipboard": "",
+  "uploadToMcLogs": "",
+  "mcLogsUpload": {
+    "loading": "",
+    "success": "",
+    "error": ""
+  },
+  "copyToClipboard": "",
+  "clipboardCopy": {
+    "loading": "",
+    "success": "",
+    "error": ""
+  },
   "instanceState": {
     "starting": "正在启动",
     "running": "正在运行",

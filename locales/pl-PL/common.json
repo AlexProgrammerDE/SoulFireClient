@@ -308,17 +308,26 @@
       "generating": "",
       "success": "",
       "error": "",
-      "copy": "",
-      "copied": ""
+      "copy": ""
     },
     "address": {
-      "copy": "",
-      "copied": ""
+      "copy": ""
     },
     "documentation": "Dokumentacja",
     "howToConnect": ""
   },
-  "copiedToClipboard": "",
+  "uploadToMcLogs": "",
+  "mcLogsUpload": {
+    "loading": "",
+    "success": "",
+    "error": ""
+  },
+  "copyToClipboard": "",
+  "clipboardCopy": {
+    "loading": "",
+    "success": "",
+    "error": ""
+  },
   "instanceState": {
     "starting": "Uruchamianie",
     "running": "Uruchomiona",
