@@ -306,19 +306,28 @@
       "generate": "Сгенерировать токен",
       "placeholder": "Нажмите 'Сгенерировать токен' ниже",
       "generating": "Генерация токена...",
-      "success": "Токен успешно создан и скопирован в буфер обмена",
+      "success": "",
       "error": "Не удалось сгенерировать токен",
-      "copy": "Копировать токен",
-      "copied": "Токен скопирован в буфер обмена"
+      "copy": "Копировать токен"
     },
     "address": {
-      "copy": "Скопировать адрес",
-      "copied": "Адрес скопирован в буфер обмена"
+      "copy": "Скопировать адрес"
     },
     "documentation": "Документация",
     "howToConnect": "Как подключиться"
   },
-  "copiedToClipboard": "Скопировано в буфер обмена",
+  "uploadToMcLogs": "",
+  "mcLogsUpload": {
+    "loading": "",
+    "success": "",
+    "error": ""
+  },
+  "copyToClipboard": "",
+  "clipboardCopy": {
+    "loading": "",
+    "success": "",
+    "error": ""
+  },
   "instanceState": {
     "starting": "Запуск",
     "running": "Запущен",

@@ -308,17 +308,26 @@
       "generating": "",
       "success": "",
       "error": "",
-      "copy": "",
-      "copied": ""
+      "copy": ""
     },
     "address": {
-      "copy": "",
-      "copied": ""
+      "copy": ""
     },
     "documentation": "Documentação",
     "howToConnect": ""
   },
-  "copiedToClipboard": "",
+  "uploadToMcLogs": "",
+  "mcLogsUpload": {
+    "loading": "",
+    "success": "",
+    "error": ""
+  },
+  "copyToClipboard": "",
+  "clipboardCopy": {
+    "loading": "",
+    "success": "",
+    "error": ""
+  },
   "instanceState": {
     "starting": "A iniciar",
     "running": "Em execução",
