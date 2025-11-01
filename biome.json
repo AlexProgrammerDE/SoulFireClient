@@ -32,7 +32,13 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
+      "recommended": true,
+      "correctness": {
+        "useImportExtensions": "off"
+      },
+      "style": {
+        "useComponentExportOnlyModules": "off"
+      }
     },
     "domains": {
       "react": "all",
