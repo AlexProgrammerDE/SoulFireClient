@@ -1,6 +1,6 @@
 import type { LucideProps } from "lucide-react";
 import dynamicIconImports from "lucide-react/dynamicIconImports";
-import tags from "lucide-static/tags.json";
+import tags from "lucide-static/tags.json" with { type: "json" };
 import React, { Suspense } from "react";
 import i18n from "@/lib/i18n";
 

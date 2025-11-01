@@ -7,7 +7,7 @@ import {
   GlobeIcon,
   PlusIcon,
 } from "lucide-react";
-import { use, useState } from "react";
+import { use, useId, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { ExternalLink } from "@/components/external-link.tsx";
@@ -48,6 +48,10 @@ function Content() {
   const transport = use(TransportContext);
   const [webDavToken, setWebDavToken] = useState("");
   const [apiToken, setApiToken] = useState("");
+  const webdavAddressId = useId();
+  const webdavTokenId = useId();
+  const apiAddressId = useId();
+  const apiTokenId = useId();
 
   return (
     <div className="flex flex-col gap-4">
@@ -60,12 +64,15 @@ function Content() {
           <CardDescription>{t("access.webdav.description")}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <label htmlFor="webdav-address" className="block text-sm font-medium">
+          <label
+            htmlFor={webdavAddressId}
+            className="block text-sm font-medium"
+          >
             {t("access.webdav.publicAddress")}
           </label>
           <div className="flex items-center gap-2">
             <Input
-              id="webdav-address"
+              id={webdavAddressId}
               className="select-all"
               value={clientInfo.serverInfo?.publicWebdavAddress}
               readOnly
@@ -85,12 +92,12 @@ function Content() {
           <p className="text-muted-foreground text-sm">
             {t("access.webdav.addressDescription")}
           </p>
-          <label htmlFor="webdav-token" className="block text-sm font-medium">
+          <label htmlFor={webdavTokenId} className="block text-sm font-medium">
             {t("access.webdav.personalToken")}
           </label>
           <div className="flex items-center gap-2">
             <Input
-              id="webdav-token"
+              id={webdavTokenId}
               className="select-all"
               disabled={webDavToken === ""}
               value={webDavToken}
@@ -156,12 +163,12 @@ function Content() {
           <CardDescription>{t("access.api.description")}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <label htmlFor="api-address" className="block text-sm font-medium">
+          <label htmlFor={apiAddressId} className="block text-sm font-medium">
             {t("access.api.publicAddress")}
           </label>
           <div className="flex items-center gap-2">
             <Input
-              id="api-address"
+              id={apiAddressId}
               className="select-all"
               value={clientInfo.serverInfo?.publicApiAddress}
               readOnly
@@ -179,12 +186,12 @@ function Content() {
           <p className="text-muted-foreground text-sm">
             {t("access.api.addressDescription")}
           </p>
-          <label htmlFor="api-token" className="block text-sm font-medium">
+          <label htmlFor={apiTokenId} className="block text-sm font-medium">
             {t("access.api.personalToken")}
           </label>
           <div className="flex items-center gap-2">
             <Input
-              id="api-token"
+              id={apiTokenId}
               className="select-all"
               disabled={apiToken === ""}
               value={apiToken}

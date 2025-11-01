@@ -4,7 +4,7 @@ import { pluginReact } from "@rsbuild/plugin-react";
 import { pluginSvgr } from "@rsbuild/plugin-svgr";
 import { pluginTypeCheck } from "@rsbuild/plugin-type-check";
 import { TanStackRouterRspack } from "@tanstack/router-plugin/rspack";
-import tauriConf from "./src-tauri/tauri.conf.json";
+import tauriConf from "./src-tauri/tauri.conf.json" with { type: "json" };
 
 const dev = process.env.NODE_ENV !== "production";
 

@@ -32,6 +32,15 @@ function InstanceCrumbSkeleton() {
   return <Skeleton className="h-4 w-24" />;
 }
 
+function CrumbComponent(props: { crumb: ReactNode }) {
+  return (
+    <>
+      <BreadcrumbItem className="hidden md:block">{props.crumb}</BreadcrumbItem>
+      <BreadcrumbSeparator className="hidden md:block" />
+    </>
+  );
+}
+
 export default function InstancePageLayout(props: {
   children: ReactNode;
   extraCrumbs?: { id: string; content: ReactNode }[];
@@ -39,13 +48,6 @@ export default function InstancePageLayout(props: {
   documentationLink?: string;
 }) {
   const { t } = useTranslation("common");
-
-  const CrumbComponent = (props: { crumb: ReactNode }) => (
-    <>
-      <BreadcrumbItem className="hidden md:block">{props.crumb}</BreadcrumbItem>
-      <BreadcrumbSeparator className="hidden md:block" />
-    </>
-  );
 
   return (
     <>

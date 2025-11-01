@@ -20,8 +20,7 @@ import {
   SatelliteDishIcon,
   ServerIcon,
 } from "lucide-react";
-import Logo from "public/logo.png";
-import { use, useCallback, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useId, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Trans, useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -84,6 +83,7 @@ import {
   createAddressOnlyTransport,
   setAuthentication,
 } from "@/lib/web-rpc.ts";
+import Logo from "../../public/logo.png";
 
 const LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY = "form-server-address";
 const LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY = "form-server-token";
@@ -170,6 +170,7 @@ function Index() {
   const [authFlowData, setAuthFlowData] = useState<AuthFlowData | null>(null);
   const [loginType, setLoginType] = useState<LoginType>(null);
   const systemInfo = use(SystemInfoContext);
+  const circuitPatternId = useId();
 
   const targetRedirect: TargetRedirectFunction = useCallback(async () => {
     await navigate({
@@ -223,7 +224,7 @@ function Index() {
         <title>Decorative background pattern</title>
         <defs>
           <pattern
-            id="circuitPattern"
+            id={circuitPatternId}
             x="0"
             y="0"
             width="600"
@@ -238,7 +239,7 @@ function Index() {
           y="0"
           width="100%"
           height="100%"
-          fill="url(#circuitPattern)"
+          fill={`url(#${circuitPatternId})`}
         />
       </svg>
       <main className="flex min-h-dvh w-full flex-col">
