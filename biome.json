@@ -35,8 +35,8 @@
       "recommended": true
     },
     "domains": {
-      "react": "recommended",
-      "project": "recommended"
+      "react": "all",
+      "project": "all"
     }
   },
   "css": {
