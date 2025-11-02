@@ -59,7 +59,6 @@
       "microsoftCredentials": "Microsoft Credentials",
       "microsoftDeviceCode": "Microsoft Device Code",
       "microsoftRefreshToken": "Microsoft Refresh Token",
-      "theAltening": "The Altening",
       "dialog": {
         "title": "Import {{type}} accounts",
         "description": "Paste your accounts here, one per line"
