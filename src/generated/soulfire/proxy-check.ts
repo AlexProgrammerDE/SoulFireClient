@@ -3,131 +3,177 @@
 // @generated from protobuf file "soulfire/proxy-check.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
+
+import type {
+  BinaryReadOptions,
+  BinaryWriteOptions,
+  IBinaryReader,
+  IBinaryWriter,
+  PartialMessage,
+} from "@protobuf-ts/runtime";
+import {
+  MessageType,
+  reflectionMergePartial,
+  UnknownFieldHandler,
+  WireType,
+} from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
-import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
-import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
-import type { BinaryReadOptions } from "@protobuf-ts/runtime";
-import type { IBinaryReader } from "@protobuf-ts/runtime";
-import { UnknownFieldHandler } from "@protobuf-ts/runtime";
-import type { PartialMessage } from "@protobuf-ts/runtime";
-import { reflectionMergePartial } from "@protobuf-ts/runtime";
-import { MessageType } from "@protobuf-ts/runtime";
 import { ProxyProto } from "./common";
 /**
  * @generated from protobuf message soulfire.v1.ProxyCheckRequest
  */
 export interface ProxyCheckRequest {
-    /**
-     * @generated from protobuf field: string instance_id = 1
-     */
-    instanceId: string;
-    /**
-     * @generated from protobuf field: repeated soulfire.v1.ProxyProto proxy = 2
-     */
-    proxy: ProxyProto[];
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.ProxyProto proxy = 2
+   */
+  proxy: ProxyProto[];
 }
 /**
  * @generated from protobuf message soulfire.v1.ProxyCheckResponseSingle
  */
 export interface ProxyCheckResponseSingle {
-    /**
-     * @generated from protobuf field: soulfire.v1.ProxyProto proxy = 1
-     */
-    proxy?: ProxyProto;
-    /**
-     * @generated from protobuf field: bool valid = 2
-     */
-    valid: boolean;
-    /**
-     * @generated from protobuf field: int32 latency = 3
-     */
-    latency: number;
-    /**
-     * @generated from protobuf field: string real_ip = 4
-     */
-    realIp: string;
+  /**
+   * @generated from protobuf field: soulfire.v1.ProxyProto proxy = 1
+   */
+  proxy?: ProxyProto;
+  /**
+   * @generated from protobuf field: bool valid = 2
+   */
+  valid: boolean;
+  /**
+   * @generated from protobuf field: int32 latency = 3
+   */
+  latency: number;
+  /**
+   * @generated from protobuf field: string real_ip = 4
+   */
+  realIp: string;
 }
 /**
  * Marks the end of a proxy check stream
  *
  * @generated from protobuf message soulfire.v1.ProxyCheckEnd
  */
-export interface ProxyCheckEnd {
-}
+export interface ProxyCheckEnd {}
 /**
  * @generated from protobuf message soulfire.v1.ProxyCheckResponse
  */
 export interface ProxyCheckResponse {
-    /**
-     * @generated from protobuf oneof: data
-     */
-    data: {
+  /**
+   * @generated from protobuf oneof: data
+   */
+  data:
+    | {
         oneofKind: "single";
         /**
          * @generated from protobuf field: soulfire.v1.ProxyCheckResponseSingle single = 4
          */
         single: ProxyCheckResponseSingle;
-    } | {
+      }
+    | {
         oneofKind: "end";
         /**
          * @generated from protobuf field: soulfire.v1.ProxyCheckEnd end = 5
          */
         end: ProxyCheckEnd;
-    } | {
+      }
+    | {
         oneofKind: undefined;
-    };
+      };
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ProxyCheckRequest$Type extends MessageType<ProxyCheckRequest> {
-    constructor() {
-        super("soulfire.v1.ProxyCheckRequest", [
-            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "proxy", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ProxyProto }
-        ]);
+  constructor() {
+    super("soulfire.v1.ProxyCheckRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 2,
+        name: "proxy",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ProxyProto,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ProxyCheckRequest>): ProxyCheckRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.proxy = [];
+    if (value !== undefined)
+      reflectionMergePartial<ProxyCheckRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ProxyCheckRequest,
+  ): ProxyCheckRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* repeated soulfire.v1.ProxyProto proxy */ 2:
+          message.proxy.push(
+            ProxyProto.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ProxyCheckRequest>): ProxyCheckRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.instanceId = "";
-        message.proxy = [];
-        if (value !== undefined)
-            reflectionMergePartial<ProxyCheckRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProxyCheckRequest): ProxyCheckRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string instance_id */ 1:
-                    message.instanceId = reader.string();
-                    break;
-                case /* repeated soulfire.v1.ProxyProto proxy */ 2:
-                    message.proxy.push(ProxyProto.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ProxyCheckRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string instance_id = 1; */
-        if (message.instanceId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
-        /* repeated soulfire.v1.ProxyProto proxy = 2; */
-        for (let i = 0; i < message.proxy.length; i++)
-            ProxyProto.internalBinaryWrite(message.proxy[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ProxyCheckRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* repeated soulfire.v1.ProxyProto proxy = 2; */
+    for (let i = 0; i < message.proxy.length; i++)
+      ProxyProto.internalBinaryWrite(
+        message.proxy[i],
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.ProxyCheckRequest
@@ -135,69 +181,102 @@ class ProxyCheckRequest$Type extends MessageType<ProxyCheckRequest> {
 export const ProxyCheckRequest = new ProxyCheckRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ProxyCheckResponseSingle$Type extends MessageType<ProxyCheckResponseSingle> {
-    constructor() {
-        super("soulfire.v1.ProxyCheckResponseSingle", [
-            { no: 1, name: "proxy", kind: "message", T: () => ProxyProto },
-            { no: 2, name: "valid", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 3, name: "latency", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 4, name: "real_ip", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.ProxyCheckResponseSingle", [
+      { no: 1, name: "proxy", kind: "message", T: () => ProxyProto },
+      { no: 2, name: "valid", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 3, name: "latency", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 4, name: "real_ip", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<ProxyCheckResponseSingle>,
+  ): ProxyCheckResponseSingle {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.valid = false;
+    message.latency = 0;
+    message.realIp = "";
+    if (value !== undefined)
+      reflectionMergePartial<ProxyCheckResponseSingle>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ProxyCheckResponseSingle,
+  ): ProxyCheckResponseSingle {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.ProxyProto proxy */ 1:
+          message.proxy = ProxyProto.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.proxy,
+          );
+          break;
+        case /* bool valid */ 2:
+          message.valid = reader.bool();
+          break;
+        case /* int32 latency */ 3:
+          message.latency = reader.int32();
+          break;
+        case /* string real_ip */ 4:
+          message.realIp = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ProxyCheckResponseSingle>): ProxyCheckResponseSingle {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.valid = false;
-        message.latency = 0;
-        message.realIp = "";
-        if (value !== undefined)
-            reflectionMergePartial<ProxyCheckResponseSingle>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProxyCheckResponseSingle): ProxyCheckResponseSingle {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.ProxyProto proxy */ 1:
-                    message.proxy = ProxyProto.internalBinaryRead(reader, reader.uint32(), options, message.proxy);
-                    break;
-                case /* bool valid */ 2:
-                    message.valid = reader.bool();
-                    break;
-                case /* int32 latency */ 3:
-                    message.latency = reader.int32();
-                    break;
-                case /* string real_ip */ 4:
-                    message.realIp = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ProxyCheckResponseSingle, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* soulfire.v1.ProxyProto proxy = 1; */
-        if (message.proxy)
-            ProxyProto.internalBinaryWrite(message.proxy, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* bool valid = 2; */
-        if (message.valid !== false)
-            writer.tag(2, WireType.Varint).bool(message.valid);
-        /* int32 latency = 3; */
-        if (message.latency !== 0)
-            writer.tag(3, WireType.Varint).int32(message.latency);
-        /* string real_ip = 4; */
-        if (message.realIp !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.realIp);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ProxyCheckResponseSingle,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.ProxyProto proxy = 1; */
+    if (message.proxy)
+      ProxyProto.internalBinaryWrite(
+        message.proxy,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* bool valid = 2; */
+    if (message.valid !== false)
+      writer.tag(2, WireType.Varint).bool(message.valid);
+    /* int32 latency = 3; */
+    if (message.latency !== 0)
+      writer.tag(3, WireType.Varint).int32(message.latency);
+    /* string real_ip = 4; */
+    if (message.realIp !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.realIp);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.ProxyCheckResponseSingle
@@ -205,37 +284,59 @@ class ProxyCheckResponseSingle$Type extends MessageType<ProxyCheckResponseSingle
 export const ProxyCheckResponseSingle = new ProxyCheckResponseSingle$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ProxyCheckEnd$Type extends MessageType<ProxyCheckEnd> {
-    constructor() {
-        super("soulfire.v1.ProxyCheckEnd", []);
+  constructor() {
+    super("soulfire.v1.ProxyCheckEnd", []);
+  }
+  create(value?: PartialMessage<ProxyCheckEnd>): ProxyCheckEnd {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<ProxyCheckEnd>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ProxyCheckEnd,
+  ): ProxyCheckEnd {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ProxyCheckEnd>): ProxyCheckEnd {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<ProxyCheckEnd>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProxyCheckEnd): ProxyCheckEnd {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ProxyCheckEnd, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ProxyCheckEnd,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.ProxyCheckEnd
@@ -243,59 +344,111 @@ class ProxyCheckEnd$Type extends MessageType<ProxyCheckEnd> {
 export const ProxyCheckEnd = new ProxyCheckEnd$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ProxyCheckResponse$Type extends MessageType<ProxyCheckResponse> {
-    constructor() {
-        super("soulfire.v1.ProxyCheckResponse", [
-            { no: 4, name: "single", kind: "message", oneof: "data", T: () => ProxyCheckResponseSingle },
-            { no: 5, name: "end", kind: "message", oneof: "data", T: () => ProxyCheckEnd }
-        ]);
+  constructor() {
+    super("soulfire.v1.ProxyCheckResponse", [
+      {
+        no: 4,
+        name: "single",
+        kind: "message",
+        oneof: "data",
+        T: () => ProxyCheckResponseSingle,
+      },
+      {
+        no: 5,
+        name: "end",
+        kind: "message",
+        oneof: "data",
+        T: () => ProxyCheckEnd,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ProxyCheckResponse>): ProxyCheckResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.data = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<ProxyCheckResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ProxyCheckResponse,
+  ): ProxyCheckResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.ProxyCheckResponseSingle single */ 4:
+          message.data = {
+            oneofKind: "single",
+            single: ProxyCheckResponseSingle.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.data as any).single,
+            ),
+          };
+          break;
+        case /* soulfire.v1.ProxyCheckEnd end */ 5:
+          message.data = {
+            oneofKind: "end",
+            end: ProxyCheckEnd.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.data as any).end,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ProxyCheckResponse>): ProxyCheckResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.data = { oneofKind: undefined };
-        if (value !== undefined)
-            reflectionMergePartial<ProxyCheckResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProxyCheckResponse): ProxyCheckResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.ProxyCheckResponseSingle single */ 4:
-                    message.data = {
-                        oneofKind: "single",
-                        single: ProxyCheckResponseSingle.internalBinaryRead(reader, reader.uint32(), options, (message.data as any).single)
-                    };
-                    break;
-                case /* soulfire.v1.ProxyCheckEnd end */ 5:
-                    message.data = {
-                        oneofKind: "end",
-                        end: ProxyCheckEnd.internalBinaryRead(reader, reader.uint32(), options, (message.data as any).end)
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ProxyCheckResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* soulfire.v1.ProxyCheckResponseSingle single = 4; */
-        if (message.data.oneofKind === "single")
-            ProxyCheckResponseSingle.internalBinaryWrite(message.data.single, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.ProxyCheckEnd end = 5; */
-        if (message.data.oneofKind === "end")
-            ProxyCheckEnd.internalBinaryWrite(message.data.end, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ProxyCheckResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.ProxyCheckResponseSingle single = 4; */
+    if (message.data.oneofKind === "single")
+      ProxyCheckResponseSingle.internalBinaryWrite(
+        message.data.single,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.ProxyCheckEnd end = 5; */
+    if (message.data.oneofKind === "end")
+      ProxyCheckEnd.internalBinaryWrite(
+        message.data.end,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.ProxyCheckResponse
@@ -304,6 +457,15 @@ export const ProxyCheckResponse = new ProxyCheckResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.ProxyCheckService
  */
-export const ProxyCheckService = new ServiceType("soulfire.v1.ProxyCheckService", [
-    { name: "Check", serverStreaming: true, options: {}, I: ProxyCheckRequest, O: ProxyCheckResponse }
-]);
+export const ProxyCheckService = new ServiceType(
+  "soulfire.v1.ProxyCheckService",
+  [
+    {
+      name: "Check",
+      serverStreaming: true,
+      options: {},
+      I: ProxyCheckRequest,
+      O: ProxyCheckResponse,
+    },
+  ],
+);

@@ -3,145 +3,175 @@
 // @generated from protobuf file "soulfire/login.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
+
+import type {
+  BinaryReadOptions,
+  BinaryWriteOptions,
+  IBinaryReader,
+  IBinaryWriter,
+  PartialMessage,
+} from "@protobuf-ts/runtime";
+import {
+  MessageType,
+  reflectionMergePartial,
+  UnknownFieldHandler,
+  WireType,
+} from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
-import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
-import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
-import type { BinaryReadOptions } from "@protobuf-ts/runtime";
-import type { IBinaryReader } from "@protobuf-ts/runtime";
-import { UnknownFieldHandler } from "@protobuf-ts/runtime";
-import type { PartialMessage } from "@protobuf-ts/runtime";
-import { reflectionMergePartial } from "@protobuf-ts/runtime";
-import { MessageType } from "@protobuf-ts/runtime";
 /**
  * @generated from protobuf message soulfire.v1.LoginRequest
  */
 export interface LoginRequest {
-    /**
-     * @generated from protobuf field: string email = 1
-     */
-    email: string;
+  /**
+   * @generated from protobuf field: string email = 1
+   */
+  email: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.NextAuthFlowResponse
  */
 export interface NextAuthFlowResponse {
-    /**
-     * @generated from protobuf field: string auth_flow_token = 1
-     */
-    authFlowToken: string;
-    /**
-     * @generated from protobuf oneof: next
-     */
-    next: {
+  /**
+   * @generated from protobuf field: string auth_flow_token = 1
+   */
+  authFlowToken: string;
+  /**
+   * @generated from protobuf oneof: next
+   */
+  next:
+    | {
         oneofKind: "emailCode";
         /**
          * @generated from protobuf field: soulfire.v1.NextAuthFlowResponse.EmailCode email_code = 2
          */
         emailCode: NextAuthFlowResponse_EmailCode;
-    } | {
+      }
+    | {
         oneofKind: "success";
         /**
          * @generated from protobuf field: soulfire.v1.NextAuthFlowResponse.Success success = 3
          */
         success: NextAuthFlowResponse_Success;
-    } | {
+      }
+    | {
         oneofKind: "failure";
         /**
          * @generated from protobuf field: soulfire.v1.NextAuthFlowResponse.Failure failure = 4
          */
         failure: NextAuthFlowResponse_Failure;
-    } | {
+      }
+    | {
         oneofKind: undefined;
-    };
+      };
 }
 /**
  * @generated from protobuf message soulfire.v1.NextAuthFlowResponse.EmailCode
  */
-export interface NextAuthFlowResponse_EmailCode {
-}
+export interface NextAuthFlowResponse_EmailCode {}
 /**
  * @generated from protobuf message soulfire.v1.NextAuthFlowResponse.Success
  */
 export interface NextAuthFlowResponse_Success {
-    /**
-     * @generated from protobuf field: string token = 1
-     */
-    token: string;
+  /**
+   * @generated from protobuf field: string token = 1
+   */
+  token: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.NextAuthFlowResponse.Failure
  */
 export interface NextAuthFlowResponse_Failure {
-    /**
-     * @generated from protobuf field: soulfire.v1.NextAuthFlowResponse.Failure.Reason reason = 1
-     */
-    reason: NextAuthFlowResponse_Failure_Reason;
+  /**
+   * @generated from protobuf field: soulfire.v1.NextAuthFlowResponse.Failure.Reason reason = 1
+   */
+  reason: NextAuthFlowResponse_Failure_Reason;
 }
 /**
  * @generated from protobuf enum soulfire.v1.NextAuthFlowResponse.Failure.Reason
  */
 export enum NextAuthFlowResponse_Failure_Reason {
-    /**
-     * @generated from protobuf enum value: INVALID_CODE = 0;
-     */
-    INVALID_CODE = 0
+  /**
+   * @generated from protobuf enum value: INVALID_CODE = 0;
+   */
+  INVALID_CODE = 0,
 }
 /**
  * @generated from protobuf message soulfire.v1.EmailCodeRequest
  */
 export interface EmailCodeRequest {
-    /**
-     * @generated from protobuf field: string auth_flow_token = 1
-     */
-    authFlowToken: string;
-    /**
-     * @generated from protobuf field: string code = 2
-     */
-    code: string;
+  /**
+   * @generated from protobuf field: string auth_flow_token = 1
+   */
+  authFlowToken: string;
+  /**
+   * @generated from protobuf field: string code = 2
+   */
+  code: string;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class LoginRequest$Type extends MessageType<LoginRequest> {
-    constructor() {
-        super("soulfire.v1.LoginRequest", [
-            { no: 1, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.LoginRequest", [
+      { no: 1, name: "email", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<LoginRequest>): LoginRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.email = "";
+    if (value !== undefined)
+      reflectionMergePartial<LoginRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: LoginRequest,
+  ): LoginRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string email */ 1:
+          message.email = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<LoginRequest>): LoginRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.email = "";
-        if (value !== undefined)
-            reflectionMergePartial<LoginRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LoginRequest): LoginRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string email */ 1:
-                    message.email = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: LoginRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string email = 1; */
-        if (message.email !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.email);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: LoginRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string email = 1; */
+    if (message.email !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.email);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.LoginRequest
@@ -149,77 +179,149 @@ class LoginRequest$Type extends MessageType<LoginRequest> {
 export const LoginRequest = new LoginRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class NextAuthFlowResponse$Type extends MessageType<NextAuthFlowResponse> {
-    constructor() {
-        super("soulfire.v1.NextAuthFlowResponse", [
-            { no: 1, name: "auth_flow_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "email_code", kind: "message", oneof: "next", T: () => NextAuthFlowResponse_EmailCode },
-            { no: 3, name: "success", kind: "message", oneof: "next", T: () => NextAuthFlowResponse_Success },
-            { no: 4, name: "failure", kind: "message", oneof: "next", T: () => NextAuthFlowResponse_Failure }
-        ]);
+  constructor() {
+    super("soulfire.v1.NextAuthFlowResponse", [
+      {
+        no: 1,
+        name: "auth_flow_token",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 2,
+        name: "email_code",
+        kind: "message",
+        oneof: "next",
+        T: () => NextAuthFlowResponse_EmailCode,
+      },
+      {
+        no: 3,
+        name: "success",
+        kind: "message",
+        oneof: "next",
+        T: () => NextAuthFlowResponse_Success,
+      },
+      {
+        no: 4,
+        name: "failure",
+        kind: "message",
+        oneof: "next",
+        T: () => NextAuthFlowResponse_Failure,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<NextAuthFlowResponse>): NextAuthFlowResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.authFlowToken = "";
+    message.next = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<NextAuthFlowResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: NextAuthFlowResponse,
+  ): NextAuthFlowResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string auth_flow_token */ 1:
+          message.authFlowToken = reader.string();
+          break;
+        case /* soulfire.v1.NextAuthFlowResponse.EmailCode email_code */ 2:
+          message.next = {
+            oneofKind: "emailCode",
+            emailCode: NextAuthFlowResponse_EmailCode.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.next as any).emailCode,
+            ),
+          };
+          break;
+        case /* soulfire.v1.NextAuthFlowResponse.Success success */ 3:
+          message.next = {
+            oneofKind: "success",
+            success: NextAuthFlowResponse_Success.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.next as any).success,
+            ),
+          };
+          break;
+        case /* soulfire.v1.NextAuthFlowResponse.Failure failure */ 4:
+          message.next = {
+            oneofKind: "failure",
+            failure: NextAuthFlowResponse_Failure.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.next as any).failure,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<NextAuthFlowResponse>): NextAuthFlowResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.authFlowToken = "";
-        message.next = { oneofKind: undefined };
-        if (value !== undefined)
-            reflectionMergePartial<NextAuthFlowResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: NextAuthFlowResponse): NextAuthFlowResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string auth_flow_token */ 1:
-                    message.authFlowToken = reader.string();
-                    break;
-                case /* soulfire.v1.NextAuthFlowResponse.EmailCode email_code */ 2:
-                    message.next = {
-                        oneofKind: "emailCode",
-                        emailCode: NextAuthFlowResponse_EmailCode.internalBinaryRead(reader, reader.uint32(), options, (message.next as any).emailCode)
-                    };
-                    break;
-                case /* soulfire.v1.NextAuthFlowResponse.Success success */ 3:
-                    message.next = {
-                        oneofKind: "success",
-                        success: NextAuthFlowResponse_Success.internalBinaryRead(reader, reader.uint32(), options, (message.next as any).success)
-                    };
-                    break;
-                case /* soulfire.v1.NextAuthFlowResponse.Failure failure */ 4:
-                    message.next = {
-                        oneofKind: "failure",
-                        failure: NextAuthFlowResponse_Failure.internalBinaryRead(reader, reader.uint32(), options, (message.next as any).failure)
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: NextAuthFlowResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string auth_flow_token = 1; */
-        if (message.authFlowToken !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.authFlowToken);
-        /* soulfire.v1.NextAuthFlowResponse.EmailCode email_code = 2; */
-        if (message.next.oneofKind === "emailCode")
-            NextAuthFlowResponse_EmailCode.internalBinaryWrite(message.next.emailCode, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.NextAuthFlowResponse.Success success = 3; */
-        if (message.next.oneofKind === "success")
-            NextAuthFlowResponse_Success.internalBinaryWrite(message.next.success, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.NextAuthFlowResponse.Failure failure = 4; */
-        if (message.next.oneofKind === "failure")
-            NextAuthFlowResponse_Failure.internalBinaryWrite(message.next.failure, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: NextAuthFlowResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string auth_flow_token = 1; */
+    if (message.authFlowToken !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.authFlowToken);
+    /* soulfire.v1.NextAuthFlowResponse.EmailCode email_code = 2; */
+    if (message.next.oneofKind === "emailCode")
+      NextAuthFlowResponse_EmailCode.internalBinaryWrite(
+        message.next.emailCode,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.NextAuthFlowResponse.Success success = 3; */
+    if (message.next.oneofKind === "success")
+      NextAuthFlowResponse_Success.internalBinaryWrite(
+        message.next.success,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.NextAuthFlowResponse.Failure failure = 4; */
+    if (message.next.oneofKind === "failure")
+      NextAuthFlowResponse_Failure.internalBinaryWrite(
+        message.next.failure,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.NextAuthFlowResponse
@@ -227,186 +329,308 @@ class NextAuthFlowResponse$Type extends MessageType<NextAuthFlowResponse> {
 export const NextAuthFlowResponse = new NextAuthFlowResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class NextAuthFlowResponse_EmailCode$Type extends MessageType<NextAuthFlowResponse_EmailCode> {
-    constructor() {
-        super("soulfire.v1.NextAuthFlowResponse.EmailCode", []);
+  constructor() {
+    super("soulfire.v1.NextAuthFlowResponse.EmailCode", []);
+  }
+  create(
+    value?: PartialMessage<NextAuthFlowResponse_EmailCode>,
+  ): NextAuthFlowResponse_EmailCode {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<NextAuthFlowResponse_EmailCode>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: NextAuthFlowResponse_EmailCode,
+  ): NextAuthFlowResponse_EmailCode {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<NextAuthFlowResponse_EmailCode>): NextAuthFlowResponse_EmailCode {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<NextAuthFlowResponse_EmailCode>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: NextAuthFlowResponse_EmailCode): NextAuthFlowResponse_EmailCode {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: NextAuthFlowResponse_EmailCode, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: NextAuthFlowResponse_EmailCode,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.NextAuthFlowResponse.EmailCode
  */
-export const NextAuthFlowResponse_EmailCode = new NextAuthFlowResponse_EmailCode$Type();
+export const NextAuthFlowResponse_EmailCode =
+  new NextAuthFlowResponse_EmailCode$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class NextAuthFlowResponse_Success$Type extends MessageType<NextAuthFlowResponse_Success> {
-    constructor() {
-        super("soulfire.v1.NextAuthFlowResponse.Success", [
-            { no: 1, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.NextAuthFlowResponse.Success", [
+      { no: 1, name: "token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<NextAuthFlowResponse_Success>,
+  ): NextAuthFlowResponse_Success {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.token = "";
+    if (value !== undefined)
+      reflectionMergePartial<NextAuthFlowResponse_Success>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: NextAuthFlowResponse_Success,
+  ): NextAuthFlowResponse_Success {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string token */ 1:
+          message.token = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<NextAuthFlowResponse_Success>): NextAuthFlowResponse_Success {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.token = "";
-        if (value !== undefined)
-            reflectionMergePartial<NextAuthFlowResponse_Success>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: NextAuthFlowResponse_Success): NextAuthFlowResponse_Success {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string token */ 1:
-                    message.token = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: NextAuthFlowResponse_Success, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string token = 1; */
-        if (message.token !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.token);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: NextAuthFlowResponse_Success,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string token = 1; */
+    if (message.token !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.token);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.NextAuthFlowResponse.Success
  */
-export const NextAuthFlowResponse_Success = new NextAuthFlowResponse_Success$Type();
+export const NextAuthFlowResponse_Success =
+  new NextAuthFlowResponse_Success$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class NextAuthFlowResponse_Failure$Type extends MessageType<NextAuthFlowResponse_Failure> {
-    constructor() {
-        super("soulfire.v1.NextAuthFlowResponse.Failure", [
-            { no: 1, name: "reason", kind: "enum", T: () => ["soulfire.v1.NextAuthFlowResponse.Failure.Reason", NextAuthFlowResponse_Failure_Reason] }
-        ]);
+  constructor() {
+    super("soulfire.v1.NextAuthFlowResponse.Failure", [
+      {
+        no: 1,
+        name: "reason",
+        kind: "enum",
+        T: () => [
+          "soulfire.v1.NextAuthFlowResponse.Failure.Reason",
+          NextAuthFlowResponse_Failure_Reason,
+        ],
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<NextAuthFlowResponse_Failure>,
+  ): NextAuthFlowResponse_Failure {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.reason = 0;
+    if (value !== undefined)
+      reflectionMergePartial<NextAuthFlowResponse_Failure>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: NextAuthFlowResponse_Failure,
+  ): NextAuthFlowResponse_Failure {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.NextAuthFlowResponse.Failure.Reason reason */ 1:
+          message.reason = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<NextAuthFlowResponse_Failure>): NextAuthFlowResponse_Failure {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.reason = 0;
-        if (value !== undefined)
-            reflectionMergePartial<NextAuthFlowResponse_Failure>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: NextAuthFlowResponse_Failure): NextAuthFlowResponse_Failure {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.NextAuthFlowResponse.Failure.Reason reason */ 1:
-                    message.reason = reader.int32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: NextAuthFlowResponse_Failure, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* soulfire.v1.NextAuthFlowResponse.Failure.Reason reason = 1; */
-        if (message.reason !== 0)
-            writer.tag(1, WireType.Varint).int32(message.reason);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: NextAuthFlowResponse_Failure,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.NextAuthFlowResponse.Failure.Reason reason = 1; */
+    if (message.reason !== 0)
+      writer.tag(1, WireType.Varint).int32(message.reason);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.NextAuthFlowResponse.Failure
  */
-export const NextAuthFlowResponse_Failure = new NextAuthFlowResponse_Failure$Type();
+export const NextAuthFlowResponse_Failure =
+  new NextAuthFlowResponse_Failure$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class EmailCodeRequest$Type extends MessageType<EmailCodeRequest> {
-    constructor() {
-        super("soulfire.v1.EmailCodeRequest", [
-            { no: 1, name: "auth_flow_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "code", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.EmailCodeRequest", [
+      {
+        no: 1,
+        name: "auth_flow_token",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "code", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<EmailCodeRequest>): EmailCodeRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.authFlowToken = "";
+    message.code = "";
+    if (value !== undefined)
+      reflectionMergePartial<EmailCodeRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: EmailCodeRequest,
+  ): EmailCodeRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string auth_flow_token */ 1:
+          message.authFlowToken = reader.string();
+          break;
+        case /* string code */ 2:
+          message.code = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<EmailCodeRequest>): EmailCodeRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.authFlowToken = "";
-        message.code = "";
-        if (value !== undefined)
-            reflectionMergePartial<EmailCodeRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: EmailCodeRequest): EmailCodeRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string auth_flow_token */ 1:
-                    message.authFlowToken = reader.string();
-                    break;
-                case /* string code */ 2:
-                    message.code = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: EmailCodeRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string auth_flow_token = 1; */
-        if (message.authFlowToken !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.authFlowToken);
-        /* string code = 2; */
-        if (message.code !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.code);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: EmailCodeRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string auth_flow_token = 1; */
+    if (message.authFlowToken !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.authFlowToken);
+    /* string code = 2; */
+    if (message.code !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.code);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.EmailCodeRequest
@@ -416,6 +640,11 @@ export const EmailCodeRequest = new EmailCodeRequest$Type();
  * @generated ServiceType for protobuf service soulfire.v1.LoginService
  */
 export const LoginService = new ServiceType("soulfire.v1.LoginService", [
-    { name: "Login", options: {}, I: LoginRequest, O: NextAuthFlowResponse },
-    { name: "EmailCode", options: {}, I: EmailCodeRequest, O: NextAuthFlowResponse }
+  { name: "Login", options: {}, I: LoginRequest, O: NextAuthFlowResponse },
+  {
+    name: "EmailCode",
+    options: {},
+    I: EmailCodeRequest,
+    O: NextAuthFlowResponse,
+  },
 ]);

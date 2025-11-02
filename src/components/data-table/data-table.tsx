@@ -1,7 +1,7 @@
-import { flexRender, type Table as TanstackTable } from '@tanstack/react-table';
-import type * as React from 'react';
+import { flexRender, type Table as TanstackTable } from "@tanstack/react-table";
+import type * as React from "react";
 
-import { DataTablePagination } from '@/components/data-table/data-table-pagination';
+import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import {
   Table,
   TableBody,
@@ -9,11 +9,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { getCommonPinningStyles } from '@/lib/data-table';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/table";
+import { getCommonPinningStyles } from "@/lib/data-table";
+import { cn } from "@/lib/utils";
 
-interface DataTableProps<TData> extends React.ComponentProps<'div'> {
+interface DataTableProps<TData> extends React.ComponentProps<"div"> {
   table: TanstackTable<TData>;
   actionBar?: React.ReactNode;
 }
@@ -27,7 +27,7 @@ export function DataTable<TData>({
 }: DataTableProps<TData>) {
   return (
     <div
-      className={cn('flex w-full flex-col gap-2.5 overflow-auto', className)}
+      className={cn("flex w-full flex-col gap-2.5 overflow-auto", className)}
       {...props}
     >
       {children}
@@ -60,7 +60,7 @@ export function DataTable<TData>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && 'selected'}
+                  data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell

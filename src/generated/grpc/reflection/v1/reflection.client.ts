@@ -26,43 +26,58 @@
 // The canonical version of this proto can be found at
 // https://github.com/grpc/grpc-proto/blob/master/grpc/reflection/v1/reflection.proto
 //
-import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
-import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
-import { ServerReflection } from "./reflection";
+import type {
+  DuplexStreamingCall,
+  RpcOptions,
+  RpcTransport,
+  ServiceInfo,
+} from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type { ServerReflectionResponse } from "./reflection";
-import type { ServerReflectionRequest } from "./reflection";
-import type { DuplexStreamingCall } from "@protobuf-ts/runtime-rpc";
-import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
+import type {
+  ServerReflectionRequest,
+  ServerReflectionResponse,
+} from "./reflection";
+import { ServerReflection } from "./reflection";
 /**
  * @generated from protobuf service grpc.reflection.v1.ServerReflection
  */
 export interface IServerReflectionClient {
-    /**
-     * The reflection service is structured as a bidirectional stream, ensuring
-     * all related requests go to a single server.
-     *
-     * @generated from protobuf rpc: ServerReflectionInfo
-     */
-    serverReflectionInfo(options?: RpcOptions): DuplexStreamingCall<ServerReflectionRequest, ServerReflectionResponse>;
+  /**
+   * The reflection service is structured as a bidirectional stream, ensuring
+   * all related requests go to a single server.
+   *
+   * @generated from protobuf rpc: ServerReflectionInfo
+   */
+  serverReflectionInfo(
+    options?: RpcOptions,
+  ): DuplexStreamingCall<ServerReflectionRequest, ServerReflectionResponse>;
 }
 /**
  * @generated from protobuf service grpc.reflection.v1.ServerReflection
  */
-export class ServerReflectionClient implements IServerReflectionClient, ServiceInfo {
-    typeName = ServerReflection.typeName;
-    methods = ServerReflection.methods;
-    options = ServerReflection.options;
-    constructor(private readonly _transport: RpcTransport) {
-    }
-    /**
-     * The reflection service is structured as a bidirectional stream, ensuring
-     * all related requests go to a single server.
-     *
-     * @generated from protobuf rpc: ServerReflectionInfo
-     */
-    serverReflectionInfo(options?: RpcOptions): DuplexStreamingCall<ServerReflectionRequest, ServerReflectionResponse> {
-        const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return stackIntercept<ServerReflectionRequest, ServerReflectionResponse>("duplex", this._transport, method, opt);
-    }
+export class ServerReflectionClient
+  implements IServerReflectionClient, ServiceInfo
+{
+  typeName = ServerReflection.typeName;
+  methods = ServerReflection.methods;
+  options = ServerReflection.options;
+  constructor(private readonly _transport: RpcTransport) {}
+  /**
+   * The reflection service is structured as a bidirectional stream, ensuring
+   * all related requests go to a single server.
+   *
+   * @generated from protobuf rpc: ServerReflectionInfo
+   */
+  serverReflectionInfo(
+    options?: RpcOptions,
+  ): DuplexStreamingCall<ServerReflectionRequest, ServerReflectionResponse> {
+    const method = this.methods[0],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<ServerReflectionRequest, ServerReflectionResponse>(
+      "duplex",
+      this._transport,
+      method,
+      opt,
+    );
+  }
 }

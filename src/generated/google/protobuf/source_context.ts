@@ -34,15 +34,19 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
-import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
-import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
-import type { BinaryReadOptions } from "@protobuf-ts/runtime";
-import type { IBinaryReader } from "@protobuf-ts/runtime";
-import { UnknownFieldHandler } from "@protobuf-ts/runtime";
-import type { PartialMessage } from "@protobuf-ts/runtime";
-import { reflectionMergePartial } from "@protobuf-ts/runtime";
-import { MessageType } from "@protobuf-ts/runtime";
+import type {
+  BinaryReadOptions,
+  BinaryWriteOptions,
+  IBinaryReader,
+  IBinaryWriter,
+  PartialMessage,
+} from "@protobuf-ts/runtime";
+import {
+  MessageType,
+  reflectionMergePartial,
+  UnknownFieldHandler,
+  WireType,
+} from "@protobuf-ts/runtime";
 /**
  * `SourceContext` represents information about the source of a
  * protobuf element, like the file in which it is defined.
@@ -50,56 +54,78 @@ import { MessageType } from "@protobuf-ts/runtime";
  * @generated from protobuf message google.protobuf.SourceContext
  */
 export interface SourceContext {
-    /**
-     * The path-qualified name of the .proto file that contained the associated
-     * protobuf element.  For example: `"google/protobuf/source_context.proto"`.
-     *
-     * @generated from protobuf field: string file_name = 1
-     */
-    fileName: string;
+  /**
+   * The path-qualified name of the .proto file that contained the associated
+   * protobuf element.  For example: `"google/protobuf/source_context.proto"`.
+   *
+   * @generated from protobuf field: string file_name = 1
+   */
+  fileName: string;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class SourceContext$Type extends MessageType<SourceContext> {
-    constructor() {
-        super("google.protobuf.SourceContext", [
-            { no: 1, name: "file_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("google.protobuf.SourceContext", [
+      { no: 1, name: "file_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<SourceContext>): SourceContext {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.fileName = "";
+    if (value !== undefined)
+      reflectionMergePartial<SourceContext>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SourceContext,
+  ): SourceContext {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string file_name */ 1:
+          message.fileName = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<SourceContext>): SourceContext {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.fileName = "";
-        if (value !== undefined)
-            reflectionMergePartial<SourceContext>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SourceContext): SourceContext {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string file_name */ 1:
-                    message.fileName = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SourceContext, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string file_name = 1; */
-        if (message.fileName !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.fileName);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SourceContext,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string file_name = 1; */
+    if (message.fileName !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.fileName);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message google.protobuf.SourceContext

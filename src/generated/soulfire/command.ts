@@ -3,147 +3,176 @@
 // @generated from protobuf file "soulfire/command.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
+
+import type {
+  BinaryReadOptions,
+  BinaryWriteOptions,
+  IBinaryReader,
+  IBinaryWriter,
+  PartialMessage,
+} from "@protobuf-ts/runtime";
+import {
+  MessageType,
+  reflectionMergePartial,
+  UnknownFieldHandler,
+  WireType,
+} from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
-import { WireType } from "@protobuf-ts/runtime";
-import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
-import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import type { BinaryReadOptions } from "@protobuf-ts/runtime";
-import type { IBinaryReader } from "@protobuf-ts/runtime";
-import { UnknownFieldHandler } from "@protobuf-ts/runtime";
-import type { PartialMessage } from "@protobuf-ts/runtime";
-import { reflectionMergePartial } from "@protobuf-ts/runtime";
-import { MessageType } from "@protobuf-ts/runtime";
 /**
  * @generated from protobuf message soulfire.v1.GlobalCommandScope
  */
-export interface GlobalCommandScope {
-}
+export interface GlobalCommandScope {}
 /**
  * @generated from protobuf message soulfire.v1.InstanceCommandScope
  */
 export interface InstanceCommandScope {
-    /**
-     * @generated from protobuf field: string instance_id = 1
-     */
-    instanceId: string;
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.CommandScope
  */
 export interface CommandScope {
-    /**
-     * @generated from protobuf oneof: scope
-     */
-    scope: {
+  /**
+   * @generated from protobuf oneof: scope
+   */
+  scope:
+    | {
         oneofKind: "global";
         /**
          * @generated from protobuf field: soulfire.v1.GlobalCommandScope global = 1
          */
         global: GlobalCommandScope;
-    } | {
+      }
+    | {
         oneofKind: "instance";
         /**
          * @generated from protobuf field: soulfire.v1.InstanceCommandScope instance = 2
          */
         instance: InstanceCommandScope;
-    } | {
+      }
+    | {
         oneofKind: undefined;
-    };
+      };
 }
 /**
  * @generated from protobuf message soulfire.v1.CommandRequest
  */
 export interface CommandRequest {
-    /**
-     * @generated from protobuf field: soulfire.v1.CommandScope scope = 4
-     */
-    scope?: CommandScope;
-    /**
-     * @generated from protobuf field: string command = 3
-     */
-    command: string;
+  /**
+   * @generated from protobuf field: soulfire.v1.CommandScope scope = 4
+   */
+  scope?: CommandScope;
+  /**
+   * @generated from protobuf field: string command = 3
+   */
+  command: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.CommandResponse
  */
 export interface CommandResponse {
-    /**
-     * @generated from protobuf field: int32 code = 1
-     */
-    code: number;
+  /**
+   * @generated from protobuf field: int32 code = 1
+   */
+  code: number;
 }
 /**
  * @generated from protobuf message soulfire.v1.CommandCompletionRequest
  */
 export interface CommandCompletionRequest {
-    /**
-     * @generated from protobuf field: soulfire.v1.CommandScope scope = 5
-     */
-    scope?: CommandScope;
-    /**
-     * @generated from protobuf field: string command = 3
-     */
-    command: string;
-    /**
-     * @generated from protobuf field: int32 cursor = 4
-     */
-    cursor: number;
+  /**
+   * @generated from protobuf field: soulfire.v1.CommandScope scope = 5
+   */
+  scope?: CommandScope;
+  /**
+   * @generated from protobuf field: string command = 3
+   */
+  command: string;
+  /**
+   * @generated from protobuf field: int32 cursor = 4
+   */
+  cursor: number;
 }
 /**
  * @generated from protobuf message soulfire.v1.CommandCompletion
  */
 export interface CommandCompletion {
-    /**
-     * @generated from protobuf field: string suggestion = 1
-     */
-    suggestion: string;
-    /**
-     * @generated from protobuf field: optional string tooltip = 2
-     */
-    tooltip?: string;
+  /**
+   * @generated from protobuf field: string suggestion = 1
+   */
+  suggestion: string;
+  /**
+   * @generated from protobuf field: optional string tooltip = 2
+   */
+  tooltip?: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.CommandCompletionResponse
  */
 export interface CommandCompletionResponse {
-    /**
-     * @generated from protobuf field: repeated soulfire.v1.CommandCompletion suggestions = 1
-     */
-    suggestions: CommandCompletion[];
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.CommandCompletion suggestions = 1
+   */
+  suggestions: CommandCompletion[];
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class GlobalCommandScope$Type extends MessageType<GlobalCommandScope> {
-    constructor() {
-        super("soulfire.v1.GlobalCommandScope", []);
+  constructor() {
+    super("soulfire.v1.GlobalCommandScope", []);
+  }
+  create(value?: PartialMessage<GlobalCommandScope>): GlobalCommandScope {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<GlobalCommandScope>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GlobalCommandScope,
+  ): GlobalCommandScope {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GlobalCommandScope>): GlobalCommandScope {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<GlobalCommandScope>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GlobalCommandScope): GlobalCommandScope {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GlobalCommandScope, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GlobalCommandScope,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.GlobalCommandScope
@@ -151,46 +180,73 @@ class GlobalCommandScope$Type extends MessageType<GlobalCommandScope> {
 export const GlobalCommandScope = new GlobalCommandScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class InstanceCommandScope$Type extends MessageType<InstanceCommandScope> {
-    constructor() {
-        super("soulfire.v1.InstanceCommandScope", [
-            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.InstanceCommandScope", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<InstanceCommandScope>): InstanceCommandScope {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    if (value !== undefined)
+      reflectionMergePartial<InstanceCommandScope>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceCommandScope,
+  ): InstanceCommandScope {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<InstanceCommandScope>): InstanceCommandScope {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.instanceId = "";
-        if (value !== undefined)
-            reflectionMergePartial<InstanceCommandScope>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: InstanceCommandScope): InstanceCommandScope {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string instance_id */ 1:
-                    message.instanceId = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: InstanceCommandScope, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string instance_id = 1; */
-        if (message.instanceId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceCommandScope,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.InstanceCommandScope
@@ -198,59 +254,111 @@ class InstanceCommandScope$Type extends MessageType<InstanceCommandScope> {
 export const InstanceCommandScope = new InstanceCommandScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class CommandScope$Type extends MessageType<CommandScope> {
-    constructor() {
-        super("soulfire.v1.CommandScope", [
-            { no: 1, name: "global", kind: "message", oneof: "scope", T: () => GlobalCommandScope },
-            { no: 2, name: "instance", kind: "message", oneof: "scope", T: () => InstanceCommandScope }
-        ]);
+  constructor() {
+    super("soulfire.v1.CommandScope", [
+      {
+        no: 1,
+        name: "global",
+        kind: "message",
+        oneof: "scope",
+        T: () => GlobalCommandScope,
+      },
+      {
+        no: 2,
+        name: "instance",
+        kind: "message",
+        oneof: "scope",
+        T: () => InstanceCommandScope,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<CommandScope>): CommandScope {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.scope = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<CommandScope>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: CommandScope,
+  ): CommandScope {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.GlobalCommandScope global */ 1:
+          message.scope = {
+            oneofKind: "global",
+            global: GlobalCommandScope.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.scope as any).global,
+            ),
+          };
+          break;
+        case /* soulfire.v1.InstanceCommandScope instance */ 2:
+          message.scope = {
+            oneofKind: "instance",
+            instance: InstanceCommandScope.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.scope as any).instance,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<CommandScope>): CommandScope {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.scope = { oneofKind: undefined };
-        if (value !== undefined)
-            reflectionMergePartial<CommandScope>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CommandScope): CommandScope {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.GlobalCommandScope global */ 1:
-                    message.scope = {
-                        oneofKind: "global",
-                        global: GlobalCommandScope.internalBinaryRead(reader, reader.uint32(), options, (message.scope as any).global)
-                    };
-                    break;
-                case /* soulfire.v1.InstanceCommandScope instance */ 2:
-                    message.scope = {
-                        oneofKind: "instance",
-                        instance: InstanceCommandScope.internalBinaryRead(reader, reader.uint32(), options, (message.scope as any).instance)
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: CommandScope, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* soulfire.v1.GlobalCommandScope global = 1; */
-        if (message.scope.oneofKind === "global")
-            GlobalCommandScope.internalBinaryWrite(message.scope.global, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.InstanceCommandScope instance = 2; */
-        if (message.scope.oneofKind === "instance")
-            InstanceCommandScope.internalBinaryWrite(message.scope.instance, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: CommandScope,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.GlobalCommandScope global = 1; */
+    if (message.scope.oneofKind === "global")
+      GlobalCommandScope.internalBinaryWrite(
+        message.scope.global,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.InstanceCommandScope instance = 2; */
+    if (message.scope.oneofKind === "instance")
+      InstanceCommandScope.internalBinaryWrite(
+        message.scope.instance,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.CommandScope
@@ -258,53 +366,84 @@ class CommandScope$Type extends MessageType<CommandScope> {
 export const CommandScope = new CommandScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class CommandRequest$Type extends MessageType<CommandRequest> {
-    constructor() {
-        super("soulfire.v1.CommandRequest", [
-            { no: 4, name: "scope", kind: "message", T: () => CommandScope },
-            { no: 3, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.CommandRequest", [
+      { no: 4, name: "scope", kind: "message", T: () => CommandScope },
+      { no: 3, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<CommandRequest>): CommandRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.command = "";
+    if (value !== undefined)
+      reflectionMergePartial<CommandRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: CommandRequest,
+  ): CommandRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.CommandScope scope */ 4:
+          message.scope = CommandScope.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.scope,
+          );
+          break;
+        case /* string command */ 3:
+          message.command = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<CommandRequest>): CommandRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.command = "";
-        if (value !== undefined)
-            reflectionMergePartial<CommandRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CommandRequest): CommandRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.CommandScope scope */ 4:
-                    message.scope = CommandScope.internalBinaryRead(reader, reader.uint32(), options, message.scope);
-                    break;
-                case /* string command */ 3:
-                    message.command = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: CommandRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string command = 3; */
-        if (message.command !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.command);
-        /* soulfire.v1.CommandScope scope = 4; */
-        if (message.scope)
-            CommandScope.internalBinaryWrite(message.scope, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: CommandRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string command = 3; */
+    if (message.command !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.command);
+    /* soulfire.v1.CommandScope scope = 4; */
+    if (message.scope)
+      CommandScope.internalBinaryWrite(
+        message.scope,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.CommandRequest
@@ -312,46 +451,67 @@ class CommandRequest$Type extends MessageType<CommandRequest> {
 export const CommandRequest = new CommandRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class CommandResponse$Type extends MessageType<CommandResponse> {
-    constructor() {
-        super("soulfire.v1.CommandResponse", [
-            { no: 1, name: "code", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.CommandResponse", [
+      { no: 1, name: "code", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  create(value?: PartialMessage<CommandResponse>): CommandResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.code = 0;
+    if (value !== undefined)
+      reflectionMergePartial<CommandResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: CommandResponse,
+  ): CommandResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int32 code */ 1:
+          message.code = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<CommandResponse>): CommandResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.code = 0;
-        if (value !== undefined)
-            reflectionMergePartial<CommandResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CommandResponse): CommandResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int32 code */ 1:
-                    message.code = reader.int32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: CommandResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int32 code = 1; */
-        if (message.code !== 0)
-            writer.tag(1, WireType.Varint).int32(message.code);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: CommandResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int32 code = 1; */
+    if (message.code !== 0) writer.tag(1, WireType.Varint).int32(message.code);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.CommandResponse
@@ -359,61 +519,94 @@ class CommandResponse$Type extends MessageType<CommandResponse> {
 export const CommandResponse = new CommandResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class CommandCompletionRequest$Type extends MessageType<CommandCompletionRequest> {
-    constructor() {
-        super("soulfire.v1.CommandCompletionRequest", [
-            { no: 5, name: "scope", kind: "message", T: () => CommandScope },
-            { no: 3, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "cursor", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.CommandCompletionRequest", [
+      { no: 5, name: "scope", kind: "message", T: () => CommandScope },
+      { no: 3, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 4, name: "cursor", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<CommandCompletionRequest>,
+  ): CommandCompletionRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.command = "";
+    message.cursor = 0;
+    if (value !== undefined)
+      reflectionMergePartial<CommandCompletionRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: CommandCompletionRequest,
+  ): CommandCompletionRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.CommandScope scope */ 5:
+          message.scope = CommandScope.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.scope,
+          );
+          break;
+        case /* string command */ 3:
+          message.command = reader.string();
+          break;
+        case /* int32 cursor */ 4:
+          message.cursor = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<CommandCompletionRequest>): CommandCompletionRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.command = "";
-        message.cursor = 0;
-        if (value !== undefined)
-            reflectionMergePartial<CommandCompletionRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CommandCompletionRequest): CommandCompletionRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.CommandScope scope */ 5:
-                    message.scope = CommandScope.internalBinaryRead(reader, reader.uint32(), options, message.scope);
-                    break;
-                case /* string command */ 3:
-                    message.command = reader.string();
-                    break;
-                case /* int32 cursor */ 4:
-                    message.cursor = reader.int32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: CommandCompletionRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string command = 3; */
-        if (message.command !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.command);
-        /* int32 cursor = 4; */
-        if (message.cursor !== 0)
-            writer.tag(4, WireType.Varint).int32(message.cursor);
-        /* soulfire.v1.CommandScope scope = 5; */
-        if (message.scope)
-            CommandScope.internalBinaryWrite(message.scope, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: CommandCompletionRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string command = 3; */
+    if (message.command !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.command);
+    /* int32 cursor = 4; */
+    if (message.cursor !== 0)
+      writer.tag(4, WireType.Varint).int32(message.cursor);
+    /* soulfire.v1.CommandScope scope = 5; */
+    if (message.scope)
+      CommandScope.internalBinaryWrite(
+        message.scope,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.CommandCompletionRequest
@@ -421,53 +614,81 @@ class CommandCompletionRequest$Type extends MessageType<CommandCompletionRequest
 export const CommandCompletionRequest = new CommandCompletionRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class CommandCompletion$Type extends MessageType<CommandCompletion> {
-    constructor() {
-        super("soulfire.v1.CommandCompletion", [
-            { no: 1, name: "suggestion", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "tooltip", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.CommandCompletion", [
+      { no: 1, name: "suggestion", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "tooltip",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<CommandCompletion>): CommandCompletion {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.suggestion = "";
+    if (value !== undefined)
+      reflectionMergePartial<CommandCompletion>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: CommandCompletion,
+  ): CommandCompletion {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string suggestion */ 1:
+          message.suggestion = reader.string();
+          break;
+        case /* optional string tooltip */ 2:
+          message.tooltip = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<CommandCompletion>): CommandCompletion {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.suggestion = "";
-        if (value !== undefined)
-            reflectionMergePartial<CommandCompletion>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CommandCompletion): CommandCompletion {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string suggestion */ 1:
-                    message.suggestion = reader.string();
-                    break;
-                case /* optional string tooltip */ 2:
-                    message.tooltip = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: CommandCompletion, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string suggestion = 1; */
-        if (message.suggestion !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.suggestion);
-        /* optional string tooltip = 2; */
-        if (message.tooltip !== undefined)
-            writer.tag(2, WireType.LengthDelimited).string(message.tooltip);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: CommandCompletion,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string suggestion = 1; */
+    if (message.suggestion !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.suggestion);
+    /* optional string tooltip = 2; */
+    if (message.tooltip !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.tooltip);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.CommandCompletion
@@ -475,46 +696,86 @@ class CommandCompletion$Type extends MessageType<CommandCompletion> {
 export const CommandCompletion = new CommandCompletion$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class CommandCompletionResponse$Type extends MessageType<CommandCompletionResponse> {
-    constructor() {
-        super("soulfire.v1.CommandCompletionResponse", [
-            { no: 1, name: "suggestions", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => CommandCompletion }
-        ]);
+  constructor() {
+    super("soulfire.v1.CommandCompletionResponse", [
+      {
+        no: 1,
+        name: "suggestions",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => CommandCompletion,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<CommandCompletionResponse>,
+  ): CommandCompletionResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.suggestions = [];
+    if (value !== undefined)
+      reflectionMergePartial<CommandCompletionResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: CommandCompletionResponse,
+  ): CommandCompletionResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* repeated soulfire.v1.CommandCompletion suggestions */ 1:
+          message.suggestions.push(
+            CommandCompletion.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<CommandCompletionResponse>): CommandCompletionResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.suggestions = [];
-        if (value !== undefined)
-            reflectionMergePartial<CommandCompletionResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: CommandCompletionResponse): CommandCompletionResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated soulfire.v1.CommandCompletion suggestions */ 1:
-                    message.suggestions.push(CommandCompletion.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: CommandCompletionResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated soulfire.v1.CommandCompletion suggestions = 1; */
-        for (let i = 0; i < message.suggestions.length; i++)
-            CommandCompletion.internalBinaryWrite(message.suggestions[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: CommandCompletionResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* repeated soulfire.v1.CommandCompletion suggestions = 1; */
+    for (let i = 0; i < message.suggestions.length; i++)
+      CommandCompletion.internalBinaryWrite(
+        message.suggestions[i],
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.CommandCompletionResponse
@@ -524,6 +785,16 @@ export const CommandCompletionResponse = new CommandCompletionResponse$Type();
  * @generated ServiceType for protobuf service soulfire.v1.CommandService
  */
 export const CommandService = new ServiceType("soulfire.v1.CommandService", [
-    { name: "ExecuteCommand", options: {}, I: CommandRequest, O: CommandResponse },
-    { name: "TabCompleteCommand", options: {}, I: CommandCompletionRequest, O: CommandCompletionResponse }
+  {
+    name: "ExecuteCommand",
+    options: {},
+    I: CommandRequest,
+    O: CommandResponse,
+  },
+  {
+    name: "TabCompleteCommand",
+    options: {},
+    I: CommandCompletionRequest,
+    O: CommandCompletionResponse,
+  },
 ]);

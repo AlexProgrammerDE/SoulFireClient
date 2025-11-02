@@ -3,102 +3,174 @@
 // @generated from protobuf file "soulfire/client.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
-import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
-import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
-import { ClientService } from "./client";
-import type { InvalidateSelfSessionsResponse } from "./client";
-import type { InvalidateSelfSessionsRequest } from "./client";
-import type { UpdateSelfEmailResponse } from "./client";
-import type { UpdateSelfEmailRequest } from "./client";
-import type { UpdateSelfUsernameResponse } from "./client";
-import type { UpdateSelfUsernameRequest } from "./client";
-import type { GenerateAPITokenResponse } from "./client";
-import type { GenerateAPITokenRequest } from "./client";
-import type { GenerateWebDAVTokenResponse } from "./client";
-import type { GenerateWebDAVTokenRequest } from "./client";
+import type {
+  RpcOptions,
+  RpcTransport,
+  ServiceInfo,
+  UnaryCall,
+} from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type { ClientDataResponse } from "./client";
-import type { ClientDataRequest } from "./client";
-import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
-import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
+import type {
+  ClientDataRequest,
+  ClientDataResponse,
+  GenerateAPITokenRequest,
+  GenerateAPITokenResponse,
+  GenerateWebDAVTokenRequest,
+  GenerateWebDAVTokenResponse,
+  InvalidateSelfSessionsRequest,
+  InvalidateSelfSessionsResponse,
+  UpdateSelfEmailRequest,
+  UpdateSelfEmailResponse,
+  UpdateSelfUsernameRequest,
+  UpdateSelfUsernameResponse,
+} from "./client";
+import { ClientService } from "./client";
 /**
  * @generated from protobuf service soulfire.v1.ClientService
  */
 export interface IClientServiceClient {
-    /**
-     * @generated from protobuf rpc: GetClientData
-     */
-    getClientData(input: ClientDataRequest, options?: RpcOptions): UnaryCall<ClientDataRequest, ClientDataResponse>;
-    /**
-     * @generated from protobuf rpc: GenerateWebDAVToken
-     */
-    generateWebDAVToken(input: GenerateWebDAVTokenRequest, options?: RpcOptions): UnaryCall<GenerateWebDAVTokenRequest, GenerateWebDAVTokenResponse>;
-    /**
-     * @generated from protobuf rpc: GenerateAPIToken
-     */
-    generateAPIToken(input: GenerateAPITokenRequest, options?: RpcOptions): UnaryCall<GenerateAPITokenRequest, GenerateAPITokenResponse>;
-    /**
-     * @generated from protobuf rpc: UpdateSelfUsername
-     */
-    updateSelfUsername(input: UpdateSelfUsernameRequest, options?: RpcOptions): UnaryCall<UpdateSelfUsernameRequest, UpdateSelfUsernameResponse>;
-    /**
-     * @generated from protobuf rpc: UpdateSelfEmail
-     */
-    updateSelfEmail(input: UpdateSelfEmailRequest, options?: RpcOptions): UnaryCall<UpdateSelfEmailRequest, UpdateSelfEmailResponse>;
-    /**
-     * @generated from protobuf rpc: InvalidateSelfSessions
-     */
-    invalidateSelfSessions(input: InvalidateSelfSessionsRequest, options?: RpcOptions): UnaryCall<InvalidateSelfSessionsRequest, InvalidateSelfSessionsResponse>;
+  /**
+   * @generated from protobuf rpc: GetClientData
+   */
+  getClientData(
+    input: ClientDataRequest,
+    options?: RpcOptions,
+  ): UnaryCall<ClientDataRequest, ClientDataResponse>;
+  /**
+   * @generated from protobuf rpc: GenerateWebDAVToken
+   */
+  generateWebDAVToken(
+    input: GenerateWebDAVTokenRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GenerateWebDAVTokenRequest, GenerateWebDAVTokenResponse>;
+  /**
+   * @generated from protobuf rpc: GenerateAPIToken
+   */
+  generateAPIToken(
+    input: GenerateAPITokenRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GenerateAPITokenRequest, GenerateAPITokenResponse>;
+  /**
+   * @generated from protobuf rpc: UpdateSelfUsername
+   */
+  updateSelfUsername(
+    input: UpdateSelfUsernameRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UpdateSelfUsernameRequest, UpdateSelfUsernameResponse>;
+  /**
+   * @generated from protobuf rpc: UpdateSelfEmail
+   */
+  updateSelfEmail(
+    input: UpdateSelfEmailRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UpdateSelfEmailRequest, UpdateSelfEmailResponse>;
+  /**
+   * @generated from protobuf rpc: InvalidateSelfSessions
+   */
+  invalidateSelfSessions(
+    input: InvalidateSelfSessionsRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InvalidateSelfSessionsRequest, InvalidateSelfSessionsResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.ClientService
  */
 export class ClientServiceClient implements IClientServiceClient, ServiceInfo {
-    typeName = ClientService.typeName;
-    methods = ClientService.methods;
-    options = ClientService.options;
-    constructor(private readonly _transport: RpcTransport) {
-    }
-    /**
-     * @generated from protobuf rpc: GetClientData
-     */
-    getClientData(input: ClientDataRequest, options?: RpcOptions): UnaryCall<ClientDataRequest, ClientDataResponse> {
-        const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return stackIntercept<ClientDataRequest, ClientDataResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: GenerateWebDAVToken
-     */
-    generateWebDAVToken(input: GenerateWebDAVTokenRequest, options?: RpcOptions): UnaryCall<GenerateWebDAVTokenRequest, GenerateWebDAVTokenResponse> {
-        const method = this.methods[1], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GenerateWebDAVTokenRequest, GenerateWebDAVTokenResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: GenerateAPIToken
-     */
-    generateAPIToken(input: GenerateAPITokenRequest, options?: RpcOptions): UnaryCall<GenerateAPITokenRequest, GenerateAPITokenResponse> {
-        const method = this.methods[2], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GenerateAPITokenRequest, GenerateAPITokenResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: UpdateSelfUsername
-     */
-    updateSelfUsername(input: UpdateSelfUsernameRequest, options?: RpcOptions): UnaryCall<UpdateSelfUsernameRequest, UpdateSelfUsernameResponse> {
-        const method = this.methods[3], opt = this._transport.mergeOptions(options);
-        return stackIntercept<UpdateSelfUsernameRequest, UpdateSelfUsernameResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: UpdateSelfEmail
-     */
-    updateSelfEmail(input: UpdateSelfEmailRequest, options?: RpcOptions): UnaryCall<UpdateSelfEmailRequest, UpdateSelfEmailResponse> {
-        const method = this.methods[4], opt = this._transport.mergeOptions(options);
-        return stackIntercept<UpdateSelfEmailRequest, UpdateSelfEmailResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: InvalidateSelfSessions
-     */
-    invalidateSelfSessions(input: InvalidateSelfSessionsRequest, options?: RpcOptions): UnaryCall<InvalidateSelfSessionsRequest, InvalidateSelfSessionsResponse> {
-        const method = this.methods[5], opt = this._transport.mergeOptions(options);
-        return stackIntercept<InvalidateSelfSessionsRequest, InvalidateSelfSessionsResponse>("unary", this._transport, method, opt, input);
-    }
+  typeName = ClientService.typeName;
+  methods = ClientService.methods;
+  options = ClientService.options;
+  constructor(private readonly _transport: RpcTransport) {}
+  /**
+   * @generated from protobuf rpc: GetClientData
+   */
+  getClientData(
+    input: ClientDataRequest,
+    options?: RpcOptions,
+  ): UnaryCall<ClientDataRequest, ClientDataResponse> {
+    const method = this.methods[0],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<ClientDataRequest, ClientDataResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: GenerateWebDAVToken
+   */
+  generateWebDAVToken(
+    input: GenerateWebDAVTokenRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GenerateWebDAVTokenRequest, GenerateWebDAVTokenResponse> {
+    const method = this.methods[1],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      GenerateWebDAVTokenRequest,
+      GenerateWebDAVTokenResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: GenerateAPIToken
+   */
+  generateAPIToken(
+    input: GenerateAPITokenRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GenerateAPITokenRequest, GenerateAPITokenResponse> {
+    const method = this.methods[2],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<GenerateAPITokenRequest, GenerateAPITokenResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: UpdateSelfUsername
+   */
+  updateSelfUsername(
+    input: UpdateSelfUsernameRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UpdateSelfUsernameRequest, UpdateSelfUsernameResponse> {
+    const method = this.methods[3],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      UpdateSelfUsernameRequest,
+      UpdateSelfUsernameResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: UpdateSelfEmail
+   */
+  updateSelfEmail(
+    input: UpdateSelfEmailRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UpdateSelfEmailRequest, UpdateSelfEmailResponse> {
+    const method = this.methods[4],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<UpdateSelfEmailRequest, UpdateSelfEmailResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: InvalidateSelfSessions
+   */
+  invalidateSelfSessions(
+    input: InvalidateSelfSessionsRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InvalidateSelfSessionsRequest, InvalidateSelfSessionsResponse> {
+    const method = this.methods[5],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InvalidateSelfSessionsRequest,
+      InvalidateSelfSessionsResponse
+    >("unary", this._transport, method, opt, input);
+  }
 }

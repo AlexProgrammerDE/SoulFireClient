@@ -26,26 +26,30 @@
 // The canonical version of this proto can be found at
 // https://github.com/grpc/grpc-proto/blob/master/grpc/channelz/v1/channelz.proto
 //
-import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
-import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
-import { Channelz } from "./channelz";
-import type { GetSocketResponse } from "./channelz";
-import type { GetSocketRequest } from "./channelz";
-import type { GetSubchannelResponse } from "./channelz";
-import type { GetSubchannelRequest } from "./channelz";
-import type { GetChannelResponse } from "./channelz";
-import type { GetChannelRequest } from "./channelz";
-import type { GetServerSocketsResponse } from "./channelz";
-import type { GetServerSocketsRequest } from "./channelz";
-import type { GetServerResponse } from "./channelz";
-import type { GetServerRequest } from "./channelz";
-import type { GetServersResponse } from "./channelz";
-import type { GetServersRequest } from "./channelz";
+import type {
+  RpcOptions,
+  RpcTransport,
+  ServiceInfo,
+  UnaryCall,
+} from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type { GetTopChannelsResponse } from "./channelz";
-import type { GetTopChannelsRequest } from "./channelz";
-import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
-import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
+import type {
+  GetChannelRequest,
+  GetChannelResponse,
+  GetServerRequest,
+  GetServerResponse,
+  GetServerSocketsRequest,
+  GetServerSocketsResponse,
+  GetServersRequest,
+  GetServersResponse,
+  GetSocketRequest,
+  GetSocketResponse,
+  GetSubchannelRequest,
+  GetSubchannelResponse,
+  GetTopChannelsRequest,
+  GetTopChannelsResponse,
+} from "./channelz";
+import { Channelz } from "./channelz";
 /**
  * Channelz is a service exposed by gRPC servers that provides detailed debug
  * information.
@@ -53,49 +57,70 @@ import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
  * @generated from protobuf service grpc.channelz.v1.Channelz
  */
 export interface IChannelzClient {
-    /**
-     * Gets all root channels (i.e. channels the application has directly
-     * created). This does not include subchannels nor non-top level channels.
-     *
-     * @generated from protobuf rpc: GetTopChannels
-     */
-    getTopChannels(input: GetTopChannelsRequest, options?: RpcOptions): UnaryCall<GetTopChannelsRequest, GetTopChannelsResponse>;
-    /**
-     * Gets all servers that exist in the process.
-     *
-     * @generated from protobuf rpc: GetServers
-     */
-    getServers(input: GetServersRequest, options?: RpcOptions): UnaryCall<GetServersRequest, GetServersResponse>;
-    /**
-     * Returns a single Server, or else a NOT_FOUND code.
-     *
-     * @generated from protobuf rpc: GetServer
-     */
-    getServer(input: GetServerRequest, options?: RpcOptions): UnaryCall<GetServerRequest, GetServerResponse>;
-    /**
-     * Gets all server sockets that exist in the process.
-     *
-     * @generated from protobuf rpc: GetServerSockets
-     */
-    getServerSockets(input: GetServerSocketsRequest, options?: RpcOptions): UnaryCall<GetServerSocketsRequest, GetServerSocketsResponse>;
-    /**
-     * Returns a single Channel, or else a NOT_FOUND code.
-     *
-     * @generated from protobuf rpc: GetChannel
-     */
-    getChannel$(input: GetChannelRequest, options?: RpcOptions): UnaryCall<GetChannelRequest, GetChannelResponse>;
-    /**
-     * Returns a single Subchannel, or else a NOT_FOUND code.
-     *
-     * @generated from protobuf rpc: GetSubchannel
-     */
-    getSubchannel(input: GetSubchannelRequest, options?: RpcOptions): UnaryCall<GetSubchannelRequest, GetSubchannelResponse>;
-    /**
-     * Returns a single Socket or else a NOT_FOUND code.
-     *
-     * @generated from protobuf rpc: GetSocket
-     */
-    getSocket(input: GetSocketRequest, options?: RpcOptions): UnaryCall<GetSocketRequest, GetSocketResponse>;
+  /**
+   * Gets all root channels (i.e. channels the application has directly
+   * created). This does not include subchannels nor non-top level channels.
+   *
+   * @generated from protobuf rpc: GetTopChannels
+   */
+  getTopChannels(
+    input: GetTopChannelsRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetTopChannelsRequest, GetTopChannelsResponse>;
+  /**
+   * Gets all servers that exist in the process.
+   *
+   * @generated from protobuf rpc: GetServers
+   */
+  getServers(
+    input: GetServersRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetServersRequest, GetServersResponse>;
+  /**
+   * Returns a single Server, or else a NOT_FOUND code.
+   *
+   * @generated from protobuf rpc: GetServer
+   */
+  getServer(
+    input: GetServerRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetServerRequest, GetServerResponse>;
+  /**
+   * Gets all server sockets that exist in the process.
+   *
+   * @generated from protobuf rpc: GetServerSockets
+   */
+  getServerSockets(
+    input: GetServerSocketsRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetServerSocketsRequest, GetServerSocketsResponse>;
+  /**
+   * Returns a single Channel, or else a NOT_FOUND code.
+   *
+   * @generated from protobuf rpc: GetChannel
+   */
+  getChannel$(
+    input: GetChannelRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetChannelRequest, GetChannelResponse>;
+  /**
+   * Returns a single Subchannel, or else a NOT_FOUND code.
+   *
+   * @generated from protobuf rpc: GetSubchannel
+   */
+  getSubchannel(
+    input: GetSubchannelRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetSubchannelRequest, GetSubchannelResponse>;
+  /**
+   * Returns a single Socket or else a NOT_FOUND code.
+   *
+   * @generated from protobuf rpc: GetSocket
+   */
+  getSocket(
+    input: GetSocketRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetSocketRequest, GetSocketResponse>;
 }
 /**
  * Channelz is a service exposed by gRPC servers that provides detailed debug
@@ -104,73 +129,142 @@ export interface IChannelzClient {
  * @generated from protobuf service grpc.channelz.v1.Channelz
  */
 export class ChannelzClient implements IChannelzClient, ServiceInfo {
-    typeName = Channelz.typeName;
-    methods = Channelz.methods;
-    options = Channelz.options;
-    constructor(private readonly _transport: RpcTransport) {
-    }
-    /**
-     * Gets all root channels (i.e. channels the application has directly
-     * created). This does not include subchannels nor non-top level channels.
-     *
-     * @generated from protobuf rpc: GetTopChannels
-     */
-    getTopChannels(input: GetTopChannelsRequest, options?: RpcOptions): UnaryCall<GetTopChannelsRequest, GetTopChannelsResponse> {
-        const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GetTopChannelsRequest, GetTopChannelsResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * Gets all servers that exist in the process.
-     *
-     * @generated from protobuf rpc: GetServers
-     */
-    getServers(input: GetServersRequest, options?: RpcOptions): UnaryCall<GetServersRequest, GetServersResponse> {
-        const method = this.methods[1], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GetServersRequest, GetServersResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * Returns a single Server, or else a NOT_FOUND code.
-     *
-     * @generated from protobuf rpc: GetServer
-     */
-    getServer(input: GetServerRequest, options?: RpcOptions): UnaryCall<GetServerRequest, GetServerResponse> {
-        const method = this.methods[2], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GetServerRequest, GetServerResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * Gets all server sockets that exist in the process.
-     *
-     * @generated from protobuf rpc: GetServerSockets
-     */
-    getServerSockets(input: GetServerSocketsRequest, options?: RpcOptions): UnaryCall<GetServerSocketsRequest, GetServerSocketsResponse> {
-        const method = this.methods[3], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GetServerSocketsRequest, GetServerSocketsResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * Returns a single Channel, or else a NOT_FOUND code.
-     *
-     * @generated from protobuf rpc: GetChannel
-     */
-    getChannel$(input: GetChannelRequest, options?: RpcOptions): UnaryCall<GetChannelRequest, GetChannelResponse> {
-        const method = this.methods[4], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GetChannelRequest, GetChannelResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * Returns a single Subchannel, or else a NOT_FOUND code.
-     *
-     * @generated from protobuf rpc: GetSubchannel
-     */
-    getSubchannel(input: GetSubchannelRequest, options?: RpcOptions): UnaryCall<GetSubchannelRequest, GetSubchannelResponse> {
-        const method = this.methods[5], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GetSubchannelRequest, GetSubchannelResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * Returns a single Socket or else a NOT_FOUND code.
-     *
-     * @generated from protobuf rpc: GetSocket
-     */
-    getSocket(input: GetSocketRequest, options?: RpcOptions): UnaryCall<GetSocketRequest, GetSocketResponse> {
-        const method = this.methods[6], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GetSocketRequest, GetSocketResponse>("unary", this._transport, method, opt, input);
-    }
+  typeName = Channelz.typeName;
+  methods = Channelz.methods;
+  options = Channelz.options;
+  constructor(private readonly _transport: RpcTransport) {}
+  /**
+   * Gets all root channels (i.e. channels the application has directly
+   * created). This does not include subchannels nor non-top level channels.
+   *
+   * @generated from protobuf rpc: GetTopChannels
+   */
+  getTopChannels(
+    input: GetTopChannelsRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetTopChannelsRequest, GetTopChannelsResponse> {
+    const method = this.methods[0],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<GetTopChannelsRequest, GetTopChannelsResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Gets all servers that exist in the process.
+   *
+   * @generated from protobuf rpc: GetServers
+   */
+  getServers(
+    input: GetServersRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetServersRequest, GetServersResponse> {
+    const method = this.methods[1],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<GetServersRequest, GetServersResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Returns a single Server, or else a NOT_FOUND code.
+   *
+   * @generated from protobuf rpc: GetServer
+   */
+  getServer(
+    input: GetServerRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetServerRequest, GetServerResponse> {
+    const method = this.methods[2],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<GetServerRequest, GetServerResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Gets all server sockets that exist in the process.
+   *
+   * @generated from protobuf rpc: GetServerSockets
+   */
+  getServerSockets(
+    input: GetServerSocketsRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetServerSocketsRequest, GetServerSocketsResponse> {
+    const method = this.methods[3],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<GetServerSocketsRequest, GetServerSocketsResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Returns a single Channel, or else a NOT_FOUND code.
+   *
+   * @generated from protobuf rpc: GetChannel
+   */
+  getChannel$(
+    input: GetChannelRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetChannelRequest, GetChannelResponse> {
+    const method = this.methods[4],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<GetChannelRequest, GetChannelResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Returns a single Subchannel, or else a NOT_FOUND code.
+   *
+   * @generated from protobuf rpc: GetSubchannel
+   */
+  getSubchannel(
+    input: GetSubchannelRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetSubchannelRequest, GetSubchannelResponse> {
+    const method = this.methods[5],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<GetSubchannelRequest, GetSubchannelResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Returns a single Socket or else a NOT_FOUND code.
+   *
+   * @generated from protobuf rpc: GetSocket
+   */
+  getSocket(
+    input: GetSocketRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetSocketRequest, GetSocketResponse> {
+    const method = this.methods[6],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<GetSocketRequest, GetSocketResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
 }

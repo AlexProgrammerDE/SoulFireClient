@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import type { Table } from '@tanstack/react-table';
-import { Check, ChevronsUpDown, Settings2 } from 'lucide-react';
-import * as React from 'react';
-import { Button } from '@/components/ui/button';
+import type { Table } from "@tanstack/react-table";
+import { Check, ChevronsUpDown, Settings2 } from "lucide-react";
+import * as React from "react";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -11,13 +11,13 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
@@ -32,7 +32,7 @@ export function DataTableViewOptions<TData>({
         .getAllColumns()
         .filter(
           (column) =>
-            typeof column.accessorFn !== 'undefined' && column.getCanHide(),
+            typeof column.accessorFn !== "undefined" && column.getCanHide(),
         ),
     [table],
   );
@@ -70,8 +70,8 @@ export function DataTableViewOptions<TData>({
                   </span>
                   <Check
                     className={cn(
-                      'ml-auto size-4 shrink-0',
-                      column.getIsVisible() ? 'opacity-100' : 'opacity-0',
+                      "ml-auto size-4 shrink-0",
+                      column.getIsVisible() ? "opacity-100" : "opacity-0",
                     )}
                   />
                 </CommandItem>

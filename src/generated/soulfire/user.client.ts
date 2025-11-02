@@ -3,115 +3,203 @@
 // @generated from protobuf file "soulfire/user.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
-import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
-import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
-import { UserService } from "./user";
-import type { GenerateUserAPITokenResponse } from "./user";
-import type { GenerateUserAPITokenRequest } from "./user";
-import type { UpdateUserResponse } from "./user";
-import type { UpdateUserRequest } from "./user";
-import type { InvalidateSessionsResponse } from "./user";
-import type { InvalidateSessionsRequest } from "./user";
-import type { UserInfoResponse } from "./user";
-import type { UserInfoRequest } from "./user";
-import type { UserListResponse } from "./user";
-import type { UserListRequest } from "./user";
-import type { UserDeleteResponse } from "./user";
-import type { UserDeleteRequest } from "./user";
+import type {
+  RpcOptions,
+  RpcTransport,
+  ServiceInfo,
+  UnaryCall,
+} from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type { UserCreateResponse } from "./user";
-import type { UserCreateRequest } from "./user";
-import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
-import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
+import type {
+  GenerateUserAPITokenRequest,
+  GenerateUserAPITokenResponse,
+  InvalidateSessionsRequest,
+  InvalidateSessionsResponse,
+  UpdateUserRequest,
+  UpdateUserResponse,
+  UserCreateRequest,
+  UserCreateResponse,
+  UserDeleteRequest,
+  UserDeleteResponse,
+  UserInfoRequest,
+  UserInfoResponse,
+  UserListRequest,
+  UserListResponse,
+} from "./user";
+import { UserService } from "./user";
 /**
  * @generated from protobuf service soulfire.v1.UserService
  */
 export interface IUserServiceClient {
-    /**
-     * @generated from protobuf rpc: CreateUser
-     */
-    createUser(input: UserCreateRequest, options?: RpcOptions): UnaryCall<UserCreateRequest, UserCreateResponse>;
-    /**
-     * @generated from protobuf rpc: DeleteUser
-     */
-    deleteUser(input: UserDeleteRequest, options?: RpcOptions): UnaryCall<UserDeleteRequest, UserDeleteResponse>;
-    /**
-     * @generated from protobuf rpc: ListUsers
-     */
-    listUsers(input: UserListRequest, options?: RpcOptions): UnaryCall<UserListRequest, UserListResponse>;
-    /**
-     * @generated from protobuf rpc: GetUserInfo
-     */
-    getUserInfo(input: UserInfoRequest, options?: RpcOptions): UnaryCall<UserInfoRequest, UserInfoResponse>;
-    /**
-     * @generated from protobuf rpc: InvalidateSessions
-     */
-    invalidateSessions(input: InvalidateSessionsRequest, options?: RpcOptions): UnaryCall<InvalidateSessionsRequest, InvalidateSessionsResponse>;
-    /**
-     * @generated from protobuf rpc: UpdateUser
-     */
-    updateUser(input: UpdateUserRequest, options?: RpcOptions): UnaryCall<UpdateUserRequest, UpdateUserResponse>;
-    /**
-     * @generated from protobuf rpc: GenerateUserAPIToken
-     */
-    generateUserAPIToken(input: GenerateUserAPITokenRequest, options?: RpcOptions): UnaryCall<GenerateUserAPITokenRequest, GenerateUserAPITokenResponse>;
+  /**
+   * @generated from protobuf rpc: CreateUser
+   */
+  createUser(
+    input: UserCreateRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UserCreateRequest, UserCreateResponse>;
+  /**
+   * @generated from protobuf rpc: DeleteUser
+   */
+  deleteUser(
+    input: UserDeleteRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UserDeleteRequest, UserDeleteResponse>;
+  /**
+   * @generated from protobuf rpc: ListUsers
+   */
+  listUsers(
+    input: UserListRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UserListRequest, UserListResponse>;
+  /**
+   * @generated from protobuf rpc: GetUserInfo
+   */
+  getUserInfo(
+    input: UserInfoRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UserInfoRequest, UserInfoResponse>;
+  /**
+   * @generated from protobuf rpc: InvalidateSessions
+   */
+  invalidateSessions(
+    input: InvalidateSessionsRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InvalidateSessionsRequest, InvalidateSessionsResponse>;
+  /**
+   * @generated from protobuf rpc: UpdateUser
+   */
+  updateUser(
+    input: UpdateUserRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UpdateUserRequest, UpdateUserResponse>;
+  /**
+   * @generated from protobuf rpc: GenerateUserAPIToken
+   */
+  generateUserAPIToken(
+    input: GenerateUserAPITokenRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GenerateUserAPITokenRequest, GenerateUserAPITokenResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.UserService
  */
 export class UserServiceClient implements IUserServiceClient, ServiceInfo {
-    typeName = UserService.typeName;
-    methods = UserService.methods;
-    options = UserService.options;
-    constructor(private readonly _transport: RpcTransport) {
-    }
-    /**
-     * @generated from protobuf rpc: CreateUser
-     */
-    createUser(input: UserCreateRequest, options?: RpcOptions): UnaryCall<UserCreateRequest, UserCreateResponse> {
-        const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return stackIntercept<UserCreateRequest, UserCreateResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: DeleteUser
-     */
-    deleteUser(input: UserDeleteRequest, options?: RpcOptions): UnaryCall<UserDeleteRequest, UserDeleteResponse> {
-        const method = this.methods[1], opt = this._transport.mergeOptions(options);
-        return stackIntercept<UserDeleteRequest, UserDeleteResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: ListUsers
-     */
-    listUsers(input: UserListRequest, options?: RpcOptions): UnaryCall<UserListRequest, UserListResponse> {
-        const method = this.methods[2], opt = this._transport.mergeOptions(options);
-        return stackIntercept<UserListRequest, UserListResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: GetUserInfo
-     */
-    getUserInfo(input: UserInfoRequest, options?: RpcOptions): UnaryCall<UserInfoRequest, UserInfoResponse> {
-        const method = this.methods[3], opt = this._transport.mergeOptions(options);
-        return stackIntercept<UserInfoRequest, UserInfoResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: InvalidateSessions
-     */
-    invalidateSessions(input: InvalidateSessionsRequest, options?: RpcOptions): UnaryCall<InvalidateSessionsRequest, InvalidateSessionsResponse> {
-        const method = this.methods[4], opt = this._transport.mergeOptions(options);
-        return stackIntercept<InvalidateSessionsRequest, InvalidateSessionsResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: UpdateUser
-     */
-    updateUser(input: UpdateUserRequest, options?: RpcOptions): UnaryCall<UpdateUserRequest, UpdateUserResponse> {
-        const method = this.methods[5], opt = this._transport.mergeOptions(options);
-        return stackIntercept<UpdateUserRequest, UpdateUserResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: GenerateUserAPIToken
-     */
-    generateUserAPIToken(input: GenerateUserAPITokenRequest, options?: RpcOptions): UnaryCall<GenerateUserAPITokenRequest, GenerateUserAPITokenResponse> {
-        const method = this.methods[6], opt = this._transport.mergeOptions(options);
-        return stackIntercept<GenerateUserAPITokenRequest, GenerateUserAPITokenResponse>("unary", this._transport, method, opt, input);
-    }
+  typeName = UserService.typeName;
+  methods = UserService.methods;
+  options = UserService.options;
+  constructor(private readonly _transport: RpcTransport) {}
+  /**
+   * @generated from protobuf rpc: CreateUser
+   */
+  createUser(
+    input: UserCreateRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UserCreateRequest, UserCreateResponse> {
+    const method = this.methods[0],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<UserCreateRequest, UserCreateResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: DeleteUser
+   */
+  deleteUser(
+    input: UserDeleteRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UserDeleteRequest, UserDeleteResponse> {
+    const method = this.methods[1],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<UserDeleteRequest, UserDeleteResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: ListUsers
+   */
+  listUsers(
+    input: UserListRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UserListRequest, UserListResponse> {
+    const method = this.methods[2],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<UserListRequest, UserListResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: GetUserInfo
+   */
+  getUserInfo(
+    input: UserInfoRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UserInfoRequest, UserInfoResponse> {
+    const method = this.methods[3],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<UserInfoRequest, UserInfoResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: InvalidateSessions
+   */
+  invalidateSessions(
+    input: InvalidateSessionsRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InvalidateSessionsRequest, InvalidateSessionsResponse> {
+    const method = this.methods[4],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InvalidateSessionsRequest,
+      InvalidateSessionsResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: UpdateUser
+   */
+  updateUser(
+    input: UpdateUserRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UpdateUserRequest, UpdateUserResponse> {
+    const method = this.methods[5],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<UpdateUserRequest, UpdateUserResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: GenerateUserAPIToken
+   */
+  generateUserAPIToken(
+    input: GenerateUserAPITokenRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GenerateUserAPITokenRequest, GenerateUserAPITokenResponse> {
+    const method = this.methods[6],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      GenerateUserAPITokenRequest,
+      GenerateUserAPITokenResponse
+    >("unary", this._transport, method, opt, input);
+  }
 }

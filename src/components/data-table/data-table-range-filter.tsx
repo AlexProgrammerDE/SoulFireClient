@@ -1,19 +1,19 @@
-'use client';
+"use client";
 
-import type { Column } from '@tanstack/react-table';
-import * as React from 'react';
+import type { Column } from "@tanstack/react-table";
+import * as React from "react";
 
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
-import type { ExtendedColumnFilter } from '@/types/data-table';
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+import type { ExtendedColumnFilter } from "@/types/data-table";
 
-interface DataTableRangeFilterProps<TData> extends React.ComponentProps<'div'> {
+interface DataTableRangeFilterProps<TData> extends React.ComponentProps<"div"> {
   filter: ExtendedColumnFilter<TData>;
   column: Column<TData>;
   inputId: string;
   onFilterUpdate: (
     filterId: string,
-    updates: Partial<Omit<ExtendedColumnFilter<TData>, 'filterId'>>,
+    updates: Partial<Omit<ExtendedColumnFilter<TData>, "filterId">>,
   ) => void;
 }
 
@@ -39,10 +39,10 @@ export function DataTableRangeFilter<TData>({
 
   const formatValue = React.useCallback(
     (value: string | number | undefined) => {
-      if (value === undefined || value === '') return '';
+      if (value === undefined || value === "") return "";
       const numValue = Number(value);
       return Number.isNaN(numValue)
-        ? ''
+        ? ""
         : numValue.toLocaleString(undefined, {
             maximumFractionDigits: 0,
           });
@@ -52,7 +52,7 @@ export function DataTableRangeFilter<TData>({
 
   const value = React.useMemo(() => {
     if (Array.isArray(filter.value)) return filter.value.map(formatValue);
-    return [formatValue(filter.value), ''];
+    return [formatValue(filter.value), ""];
   }, [filter.value, formatValue]);
 
   const onRangeValueChange = React.useCallback(
@@ -60,13 +60,13 @@ export function DataTableRangeFilter<TData>({
       const numValue = Number(value);
       const currentValues = Array.isArray(filter.value)
         ? filter.value
-        : ['', ''];
+        : ["", ""];
       const otherValue = isMin
-        ? (currentValues[1] ?? '')
-        : (currentValues[0] ?? '');
+        ? (currentValues[1] ?? "")
+        : (currentValues[0] ?? "");
 
       if (
-        value === '' ||
+        value === "" ||
         (!Number.isNaN(numValue) &&
           (isMin
             ? numValue >= min && numValue <= (Number(otherValue) || max)
@@ -83,7 +83,7 @@ export function DataTableRangeFilter<TData>({
   return (
     <div
       data-slot="range"
-      className={cn('flex w-full items-center gap-2', className)}
+      className={cn("flex w-full items-center gap-2", className)}
       {...props}
     >
       <Input

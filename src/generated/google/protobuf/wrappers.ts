@@ -44,20 +44,25 @@
 // These wrappers have no meaningful use within a map or a oneof since
 // individual entries of a map or fields of a oneof can already detect presence.
 //
-import { ScalarType } from "@protobuf-ts/runtime";
-import { LongType } from "@protobuf-ts/runtime";
-import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
-import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
-import type { BinaryReadOptions } from "@protobuf-ts/runtime";
-import type { IBinaryReader } from "@protobuf-ts/runtime";
-import { UnknownFieldHandler } from "@protobuf-ts/runtime";
-import type { PartialMessage } from "@protobuf-ts/runtime";
-import { reflectionMergePartial } from "@protobuf-ts/runtime";
-import type { JsonValue } from "@protobuf-ts/runtime";
-import type { JsonReadOptions } from "@protobuf-ts/runtime";
-import type { JsonWriteOptions } from "@protobuf-ts/runtime";
-import { MessageType } from "@protobuf-ts/runtime";
+
+import type {
+  BinaryReadOptions,
+  BinaryWriteOptions,
+  IBinaryReader,
+  IBinaryWriter,
+  JsonReadOptions,
+  JsonValue,
+  JsonWriteOptions,
+  PartialMessage,
+} from "@protobuf-ts/runtime";
+import {
+  LongType,
+  MessageType,
+  reflectionMergePartial,
+  ScalarType,
+  UnknownFieldHandler,
+  WireType,
+} from "@protobuf-ts/runtime";
 /**
  * Wrapper message for `double`.
  *
@@ -66,12 +71,12 @@ import { MessageType } from "@protobuf-ts/runtime";
  * @generated from protobuf message google.protobuf.DoubleValue
  */
 export interface DoubleValue {
-    /**
-     * The double value.
-     *
-     * @generated from protobuf field: double value = 1
-     */
-    value: number;
+  /**
+   * The double value.
+   *
+   * @generated from protobuf field: double value = 1
+   */
+  value: number;
 }
 /**
  * Wrapper message for `float`.
@@ -81,12 +86,12 @@ export interface DoubleValue {
  * @generated from protobuf message google.protobuf.FloatValue
  */
 export interface FloatValue {
-    /**
-     * The float value.
-     *
-     * @generated from protobuf field: float value = 1
-     */
-    value: number;
+  /**
+   * The float value.
+   *
+   * @generated from protobuf field: float value = 1
+   */
+  value: number;
 }
 /**
  * Wrapper message for `int64`.
@@ -96,12 +101,12 @@ export interface FloatValue {
  * @generated from protobuf message google.protobuf.Int64Value
  */
 export interface Int64Value {
-    /**
-     * The int64 value.
-     *
-     * @generated from protobuf field: int64 value = 1
-     */
-    value: string;
+  /**
+   * The int64 value.
+   *
+   * @generated from protobuf field: int64 value = 1
+   */
+  value: string;
 }
 /**
  * Wrapper message for `uint64`.
@@ -111,12 +116,12 @@ export interface Int64Value {
  * @generated from protobuf message google.protobuf.UInt64Value
  */
 export interface UInt64Value {
-    /**
-     * The uint64 value.
-     *
-     * @generated from protobuf field: uint64 value = 1
-     */
-    value: string;
+  /**
+   * The uint64 value.
+   *
+   * @generated from protobuf field: uint64 value = 1
+   */
+  value: string;
 }
 /**
  * Wrapper message for `int32`.
@@ -126,12 +131,12 @@ export interface UInt64Value {
  * @generated from protobuf message google.protobuf.Int32Value
  */
 export interface Int32Value {
-    /**
-     * The int32 value.
-     *
-     * @generated from protobuf field: int32 value = 1
-     */
-    value: number;
+  /**
+   * The int32 value.
+   *
+   * @generated from protobuf field: int32 value = 1
+   */
+  value: number;
 }
 /**
  * Wrapper message for `uint32`.
@@ -141,12 +146,12 @@ export interface Int32Value {
  * @generated from protobuf message google.protobuf.UInt32Value
  */
 export interface UInt32Value {
-    /**
-     * The uint32 value.
-     *
-     * @generated from protobuf field: uint32 value = 1
-     */
-    value: number;
+  /**
+   * The uint32 value.
+   *
+   * @generated from protobuf field: uint32 value = 1
+   */
+  value: number;
 }
 /**
  * Wrapper message for `bool`.
@@ -156,12 +161,12 @@ export interface UInt32Value {
  * @generated from protobuf message google.protobuf.BoolValue
  */
 export interface BoolValue {
-    /**
-     * The bool value.
-     *
-     * @generated from protobuf field: bool value = 1
-     */
-    value: boolean;
+  /**
+   * The bool value.
+   *
+   * @generated from protobuf field: bool value = 1
+   */
+  value: boolean;
 }
 /**
  * Wrapper message for `string`.
@@ -171,12 +176,12 @@ export interface BoolValue {
  * @generated from protobuf message google.protobuf.StringValue
  */
 export interface StringValue {
-    /**
-     * The string value.
-     *
-     * @generated from protobuf field: string value = 1
-     */
-    value: string;
+  /**
+   * The string value.
+   *
+   * @generated from protobuf field: string value = 1
+   */
+  value: string;
 }
 /**
  * Wrapper message for `bytes`.
@@ -186,70 +191,103 @@ export interface StringValue {
  * @generated from protobuf message google.protobuf.BytesValue
  */
 export interface BytesValue {
-    /**
-     * The bytes value.
-     *
-     * @generated from protobuf field: bytes value = 1
-     */
-    value: Uint8Array;
+  /**
+   * The bytes value.
+   *
+   * @generated from protobuf field: bytes value = 1
+   */
+  value: Uint8Array;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class DoubleValue$Type extends MessageType<DoubleValue> {
-    constructor() {
-        super("google.protobuf.DoubleValue", [
-            { no: 1, name: "value", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ }
-        ]);
+  constructor() {
+    super("google.protobuf.DoubleValue", [
+      { no: 1, name: "value", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+    ]);
+  }
+  /**
+   * Encode `DoubleValue` to JSON number.
+   */
+  internalJsonWrite(
+    message: DoubleValue,
+    options: JsonWriteOptions,
+  ): JsonValue {
+    return this.refJsonWriter.scalar(2, message.value, "value", false, true);
+  }
+  /**
+   * Decode `DoubleValue` from JSON number.
+   */
+  internalJsonRead(
+    json: JsonValue,
+    options: JsonReadOptions,
+    target?: DoubleValue,
+  ): DoubleValue {
+    if (!target) target = this.create();
+    target.value = this.refJsonReader.scalar(
+      json,
+      1,
+      undefined,
+      "value",
+    ) as number;
+    return target;
+  }
+  create(value?: PartialMessage<DoubleValue>): DoubleValue {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.value = 0;
+    if (value !== undefined)
+      reflectionMergePartial<DoubleValue>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DoubleValue,
+  ): DoubleValue {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* double value */ 1:
+          message.value = reader.double();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    /**
-     * Encode `DoubleValue` to JSON number.
-     */
-    internalJsonWrite(message: DoubleValue, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(2, message.value, "value", false, true);
-    }
-    /**
-     * Decode `DoubleValue` from JSON number.
-     */
-    internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: DoubleValue): DoubleValue {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 1, undefined, "value") as number;
-        return target;
-    }
-    create(value?: PartialMessage<DoubleValue>): DoubleValue {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.value = 0;
-        if (value !== undefined)
-            reflectionMergePartial<DoubleValue>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DoubleValue): DoubleValue {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* double value */ 1:
-                    message.value = reader.double();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: DoubleValue, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* double value = 1; */
-        if (message.value !== 0)
-            writer.tag(1, WireType.Bit64).double(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DoubleValue,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* double value = 1; */
+    if (message.value !== 0)
+      writer.tag(1, WireType.Bit64).double(message.value);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message google.protobuf.DoubleValue
@@ -257,61 +295,90 @@ class DoubleValue$Type extends MessageType<DoubleValue> {
 export const DoubleValue = new DoubleValue$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class FloatValue$Type extends MessageType<FloatValue> {
-    constructor() {
-        super("google.protobuf.FloatValue", [
-            { no: 1, name: "value", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ }
-        ]);
+  constructor() {
+    super("google.protobuf.FloatValue", [
+      { no: 1, name: "value", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+    ]);
+  }
+  /**
+   * Encode `FloatValue` to JSON number.
+   */
+  internalJsonWrite(message: FloatValue, options: JsonWriteOptions): JsonValue {
+    return this.refJsonWriter.scalar(1, message.value, "value", false, true);
+  }
+  /**
+   * Decode `FloatValue` from JSON number.
+   */
+  internalJsonRead(
+    json: JsonValue,
+    options: JsonReadOptions,
+    target?: FloatValue,
+  ): FloatValue {
+    if (!target) target = this.create();
+    target.value = this.refJsonReader.scalar(
+      json,
+      1,
+      undefined,
+      "value",
+    ) as number;
+    return target;
+  }
+  create(value?: PartialMessage<FloatValue>): FloatValue {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.value = 0;
+    if (value !== undefined)
+      reflectionMergePartial<FloatValue>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: FloatValue,
+  ): FloatValue {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* float value */ 1:
+          message.value = reader.float();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    /**
-     * Encode `FloatValue` to JSON number.
-     */
-    internalJsonWrite(message: FloatValue, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(1, message.value, "value", false, true);
-    }
-    /**
-     * Decode `FloatValue` from JSON number.
-     */
-    internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: FloatValue): FloatValue {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 1, undefined, "value") as number;
-        return target;
-    }
-    create(value?: PartialMessage<FloatValue>): FloatValue {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.value = 0;
-        if (value !== undefined)
-            reflectionMergePartial<FloatValue>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: FloatValue): FloatValue {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* float value */ 1:
-                    message.value = reader.float();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: FloatValue, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* float value = 1; */
-        if (message.value !== 0)
-            writer.tag(1, WireType.Bit32).float(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: FloatValue,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* float value = 1; */
+    if (message.value !== 0) writer.tag(1, WireType.Bit32).float(message.value);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message google.protobuf.FloatValue
@@ -319,61 +386,97 @@ class FloatValue$Type extends MessageType<FloatValue> {
 export const FloatValue = new FloatValue$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Int64Value$Type extends MessageType<Int64Value> {
-    constructor() {
-        super("google.protobuf.Int64Value", [
-            { no: 1, name: "value", kind: "scalar", T: 3 /*ScalarType.INT64*/ }
-        ]);
+  constructor() {
+    super("google.protobuf.Int64Value", [
+      { no: 1, name: "value", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+    ]);
+  }
+  /**
+   * Encode `Int64Value` to JSON string.
+   */
+  internalJsonWrite(message: Int64Value, options: JsonWriteOptions): JsonValue {
+    return this.refJsonWriter.scalar(
+      ScalarType.INT64,
+      message.value,
+      "value",
+      false,
+      true,
+    );
+  }
+  /**
+   * Decode `Int64Value` from JSON string.
+   */
+  internalJsonRead(
+    json: JsonValue,
+    options: JsonReadOptions,
+    target?: Int64Value,
+  ): Int64Value {
+    if (!target) target = this.create();
+    target.value = this.refJsonReader.scalar(
+      json,
+      ScalarType.INT64,
+      LongType.STRING,
+      "value",
+    ) as any;
+    return target;
+  }
+  create(value?: PartialMessage<Int64Value>): Int64Value {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.value = "0";
+    if (value !== undefined)
+      reflectionMergePartial<Int64Value>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Int64Value,
+  ): Int64Value {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 value */ 1:
+          message.value = reader.int64().toString();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    /**
-     * Encode `Int64Value` to JSON string.
-     */
-    internalJsonWrite(message: Int64Value, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(ScalarType.INT64, message.value, "value", false, true);
-    }
-    /**
-     * Decode `Int64Value` from JSON string.
-     */
-    internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: Int64Value): Int64Value {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, ScalarType.INT64, LongType.STRING, "value") as any;
-        return target;
-    }
-    create(value?: PartialMessage<Int64Value>): Int64Value {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.value = "0";
-        if (value !== undefined)
-            reflectionMergePartial<Int64Value>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Int64Value): Int64Value {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 value */ 1:
-                    message.value = reader.int64().toString();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Int64Value, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 value = 1; */
-        if (message.value !== "0")
-            writer.tag(1, WireType.Varint).int64(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Int64Value,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 value = 1; */
+    if (message.value !== "0")
+      writer.tag(1, WireType.Varint).int64(message.value);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message google.protobuf.Int64Value
@@ -381,61 +484,100 @@ class Int64Value$Type extends MessageType<Int64Value> {
 export const Int64Value = new Int64Value$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class UInt64Value$Type extends MessageType<UInt64Value> {
-    constructor() {
-        super("google.protobuf.UInt64Value", [
-            { no: 1, name: "value", kind: "scalar", T: 4 /*ScalarType.UINT64*/ }
-        ]);
+  constructor() {
+    super("google.protobuf.UInt64Value", [
+      { no: 1, name: "value", kind: "scalar", T: 4 /*ScalarType.UINT64*/ },
+    ]);
+  }
+  /**
+   * Encode `UInt64Value` to JSON string.
+   */
+  internalJsonWrite(
+    message: UInt64Value,
+    options: JsonWriteOptions,
+  ): JsonValue {
+    return this.refJsonWriter.scalar(
+      ScalarType.UINT64,
+      message.value,
+      "value",
+      false,
+      true,
+    );
+  }
+  /**
+   * Decode `UInt64Value` from JSON string.
+   */
+  internalJsonRead(
+    json: JsonValue,
+    options: JsonReadOptions,
+    target?: UInt64Value,
+  ): UInt64Value {
+    if (!target) target = this.create();
+    target.value = this.refJsonReader.scalar(
+      json,
+      ScalarType.UINT64,
+      LongType.STRING,
+      "value",
+    ) as any;
+    return target;
+  }
+  create(value?: PartialMessage<UInt64Value>): UInt64Value {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.value = "0";
+    if (value !== undefined)
+      reflectionMergePartial<UInt64Value>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: UInt64Value,
+  ): UInt64Value {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* uint64 value */ 1:
+          message.value = reader.uint64().toString();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    /**
-     * Encode `UInt64Value` to JSON string.
-     */
-    internalJsonWrite(message: UInt64Value, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(ScalarType.UINT64, message.value, "value", false, true);
-    }
-    /**
-     * Decode `UInt64Value` from JSON string.
-     */
-    internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: UInt64Value): UInt64Value {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, ScalarType.UINT64, LongType.STRING, "value") as any;
-        return target;
-    }
-    create(value?: PartialMessage<UInt64Value>): UInt64Value {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.value = "0";
-        if (value !== undefined)
-            reflectionMergePartial<UInt64Value>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UInt64Value): UInt64Value {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* uint64 value */ 1:
-                    message.value = reader.uint64().toString();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: UInt64Value, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint64 value = 1; */
-        if (message.value !== "0")
-            writer.tag(1, WireType.Varint).uint64(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: UInt64Value,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* uint64 value = 1; */
+    if (message.value !== "0")
+      writer.tag(1, WireType.Varint).uint64(message.value);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message google.protobuf.UInt64Value
@@ -443,61 +585,91 @@ class UInt64Value$Type extends MessageType<UInt64Value> {
 export const UInt64Value = new UInt64Value$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Int32Value$Type extends MessageType<Int32Value> {
-    constructor() {
-        super("google.protobuf.Int32Value", [
-            { no: 1, name: "value", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
-        ]);
+  constructor() {
+    super("google.protobuf.Int32Value", [
+      { no: 1, name: "value", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  /**
+   * Encode `Int32Value` to JSON string.
+   */
+  internalJsonWrite(message: Int32Value, options: JsonWriteOptions): JsonValue {
+    return this.refJsonWriter.scalar(5, message.value, "value", false, true);
+  }
+  /**
+   * Decode `Int32Value` from JSON string.
+   */
+  internalJsonRead(
+    json: JsonValue,
+    options: JsonReadOptions,
+    target?: Int32Value,
+  ): Int32Value {
+    if (!target) target = this.create();
+    target.value = this.refJsonReader.scalar(
+      json,
+      5,
+      undefined,
+      "value",
+    ) as number;
+    return target;
+  }
+  create(value?: PartialMessage<Int32Value>): Int32Value {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.value = 0;
+    if (value !== undefined)
+      reflectionMergePartial<Int32Value>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Int32Value,
+  ): Int32Value {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int32 value */ 1:
+          message.value = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    /**
-     * Encode `Int32Value` to JSON string.
-     */
-    internalJsonWrite(message: Int32Value, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(5, message.value, "value", false, true);
-    }
-    /**
-     * Decode `Int32Value` from JSON string.
-     */
-    internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: Int32Value): Int32Value {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 5, undefined, "value") as number;
-        return target;
-    }
-    create(value?: PartialMessage<Int32Value>): Int32Value {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.value = 0;
-        if (value !== undefined)
-            reflectionMergePartial<Int32Value>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Int32Value): Int32Value {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int32 value */ 1:
-                    message.value = reader.int32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Int32Value, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int32 value = 1; */
-        if (message.value !== 0)
-            writer.tag(1, WireType.Varint).int32(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Int32Value,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int32 value = 1; */
+    if (message.value !== 0)
+      writer.tag(1, WireType.Varint).int32(message.value);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message google.protobuf.Int32Value
@@ -505,61 +677,94 @@ class Int32Value$Type extends MessageType<Int32Value> {
 export const Int32Value = new Int32Value$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class UInt32Value$Type extends MessageType<UInt32Value> {
-    constructor() {
-        super("google.protobuf.UInt32Value", [
-            { no: 1, name: "value", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
-        ]);
+  constructor() {
+    super("google.protobuf.UInt32Value", [
+      { no: 1, name: "value", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+    ]);
+  }
+  /**
+   * Encode `UInt32Value` to JSON string.
+   */
+  internalJsonWrite(
+    message: UInt32Value,
+    options: JsonWriteOptions,
+  ): JsonValue {
+    return this.refJsonWriter.scalar(13, message.value, "value", false, true);
+  }
+  /**
+   * Decode `UInt32Value` from JSON string.
+   */
+  internalJsonRead(
+    json: JsonValue,
+    options: JsonReadOptions,
+    target?: UInt32Value,
+  ): UInt32Value {
+    if (!target) target = this.create();
+    target.value = this.refJsonReader.scalar(
+      json,
+      13,
+      undefined,
+      "value",
+    ) as number;
+    return target;
+  }
+  create(value?: PartialMessage<UInt32Value>): UInt32Value {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.value = 0;
+    if (value !== undefined)
+      reflectionMergePartial<UInt32Value>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: UInt32Value,
+  ): UInt32Value {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* uint32 value */ 1:
+          message.value = reader.uint32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    /**
-     * Encode `UInt32Value` to JSON string.
-     */
-    internalJsonWrite(message: UInt32Value, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(13, message.value, "value", false, true);
-    }
-    /**
-     * Decode `UInt32Value` from JSON string.
-     */
-    internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: UInt32Value): UInt32Value {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 13, undefined, "value") as number;
-        return target;
-    }
-    create(value?: PartialMessage<UInt32Value>): UInt32Value {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.value = 0;
-        if (value !== undefined)
-            reflectionMergePartial<UInt32Value>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: UInt32Value): UInt32Value {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* uint32 value */ 1:
-                    message.value = reader.uint32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: UInt32Value, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint32 value = 1; */
-        if (message.value !== 0)
-            writer.tag(1, WireType.Varint).uint32(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: UInt32Value,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* uint32 value = 1; */
+    if (message.value !== 0)
+      writer.tag(1, WireType.Varint).uint32(message.value);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message google.protobuf.UInt32Value
@@ -567,61 +772,91 @@ class UInt32Value$Type extends MessageType<UInt32Value> {
 export const UInt32Value = new UInt32Value$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class BoolValue$Type extends MessageType<BoolValue> {
-    constructor() {
-        super("google.protobuf.BoolValue", [
-            { no: 1, name: "value", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
+  constructor() {
+    super("google.protobuf.BoolValue", [
+      { no: 1, name: "value", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  /**
+   * Encode `BoolValue` to JSON bool.
+   */
+  internalJsonWrite(message: BoolValue, options: JsonWriteOptions): JsonValue {
+    return message.value;
+  }
+  /**
+   * Decode `BoolValue` from JSON bool.
+   */
+  internalJsonRead(
+    json: JsonValue,
+    options: JsonReadOptions,
+    target?: BoolValue,
+  ): BoolValue {
+    if (!target) target = this.create();
+    target.value = this.refJsonReader.scalar(
+      json,
+      8,
+      undefined,
+      "value",
+    ) as boolean;
+    return target;
+  }
+  create(value?: PartialMessage<BoolValue>): BoolValue {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.value = false;
+    if (value !== undefined)
+      reflectionMergePartial<BoolValue>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BoolValue,
+  ): BoolValue {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool value */ 1:
+          message.value = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    /**
-     * Encode `BoolValue` to JSON bool.
-     */
-    internalJsonWrite(message: BoolValue, options: JsonWriteOptions): JsonValue {
-        return message.value;
-    }
-    /**
-     * Decode `BoolValue` from JSON bool.
-     */
-    internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: BoolValue): BoolValue {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 8, undefined, "value") as boolean;
-        return target;
-    }
-    create(value?: PartialMessage<BoolValue>): BoolValue {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.value = false;
-        if (value !== undefined)
-            reflectionMergePartial<BoolValue>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BoolValue): BoolValue {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bool value */ 1:
-                    message.value = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: BoolValue, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool value = 1; */
-        if (message.value !== false)
-            writer.tag(1, WireType.Varint).bool(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BoolValue,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool value = 1; */
+    if (message.value !== false)
+      writer.tag(1, WireType.Varint).bool(message.value);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message google.protobuf.BoolValue
@@ -629,61 +864,94 @@ class BoolValue$Type extends MessageType<BoolValue> {
 export const BoolValue = new BoolValue$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StringValue$Type extends MessageType<StringValue> {
-    constructor() {
-        super("google.protobuf.StringValue", [
-            { no: 1, name: "value", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("google.protobuf.StringValue", [
+      { no: 1, name: "value", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  /**
+   * Encode `StringValue` to JSON string.
+   */
+  internalJsonWrite(
+    message: StringValue,
+    options: JsonWriteOptions,
+  ): JsonValue {
+    return message.value;
+  }
+  /**
+   * Decode `StringValue` from JSON string.
+   */
+  internalJsonRead(
+    json: JsonValue,
+    options: JsonReadOptions,
+    target?: StringValue,
+  ): StringValue {
+    if (!target) target = this.create();
+    target.value = this.refJsonReader.scalar(
+      json,
+      9,
+      undefined,
+      "value",
+    ) as string;
+    return target;
+  }
+  create(value?: PartialMessage<StringValue>): StringValue {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.value = "";
+    if (value !== undefined)
+      reflectionMergePartial<StringValue>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: StringValue,
+  ): StringValue {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string value */ 1:
+          message.value = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    /**
-     * Encode `StringValue` to JSON string.
-     */
-    internalJsonWrite(message: StringValue, options: JsonWriteOptions): JsonValue {
-        return message.value;
-    }
-    /**
-     * Decode `StringValue` from JSON string.
-     */
-    internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: StringValue): StringValue {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 9, undefined, "value") as string;
-        return target;
-    }
-    create(value?: PartialMessage<StringValue>): StringValue {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.value = "";
-        if (value !== undefined)
-            reflectionMergePartial<StringValue>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StringValue): StringValue {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string value */ 1:
-                    message.value = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: StringValue, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string value = 1; */
-        if (message.value !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: StringValue,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string value = 1; */
+    if (message.value !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.value);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message google.protobuf.StringValue
@@ -691,61 +959,91 @@ class StringValue$Type extends MessageType<StringValue> {
 export const StringValue = new StringValue$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class BytesValue$Type extends MessageType<BytesValue> {
-    constructor() {
-        super("google.protobuf.BytesValue", [
-            { no: 1, name: "value", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
-        ]);
+  constructor() {
+    super("google.protobuf.BytesValue", [
+      { no: 1, name: "value", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+    ]);
+  }
+  /**
+   * Encode `BytesValue` to JSON string.
+   */
+  internalJsonWrite(message: BytesValue, options: JsonWriteOptions): JsonValue {
+    return this.refJsonWriter.scalar(12, message.value, "value", false, true);
+  }
+  /**
+   * Decode `BytesValue` from JSON string.
+   */
+  internalJsonRead(
+    json: JsonValue,
+    options: JsonReadOptions,
+    target?: BytesValue,
+  ): BytesValue {
+    if (!target) target = this.create();
+    target.value = this.refJsonReader.scalar(
+      json,
+      12,
+      undefined,
+      "value",
+    ) as Uint8Array;
+    return target;
+  }
+  create(value?: PartialMessage<BytesValue>): BytesValue {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.value = new Uint8Array(0);
+    if (value !== undefined)
+      reflectionMergePartial<BytesValue>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BytesValue,
+  ): BytesValue {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bytes value */ 1:
+          message.value = reader.bytes();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    /**
-     * Encode `BytesValue` to JSON string.
-     */
-    internalJsonWrite(message: BytesValue, options: JsonWriteOptions): JsonValue {
-        return this.refJsonWriter.scalar(12, message.value, "value", false, true);
-    }
-    /**
-     * Decode `BytesValue` from JSON string.
-     */
-    internalJsonRead(json: JsonValue, options: JsonReadOptions, target?: BytesValue): BytesValue {
-        if (!target)
-            target = this.create();
-        target.value = this.refJsonReader.scalar(json, 12, undefined, "value") as Uint8Array;
-        return target;
-    }
-    create(value?: PartialMessage<BytesValue>): BytesValue {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.value = new Uint8Array(0);
-        if (value !== undefined)
-            reflectionMergePartial<BytesValue>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BytesValue): BytesValue {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bytes value */ 1:
-                    message.value = reader.bytes();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: BytesValue, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bytes value = 1; */
-        if (message.value.length)
-            writer.tag(1, WireType.LengthDelimited).bytes(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BytesValue,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bytes value = 1; */
+    if (message.value.length)
+      writer.tag(1, WireType.LengthDelimited).bytes(message.value);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message google.protobuf.BytesValue

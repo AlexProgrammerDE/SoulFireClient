@@ -26,61 +26,66 @@
 // The canonical version of this proto can be found at
 // https://github.com/grpc/grpc-proto/blob/master/grpc/channelz/v1/channelz.proto
 //
+
+import type {
+  BinaryReadOptions,
+  BinaryWriteOptions,
+  IBinaryReader,
+  IBinaryWriter,
+  PartialMessage,
+} from "@protobuf-ts/runtime";
+import {
+  MessageType,
+  reflectionMergePartial,
+  UnknownFieldHandler,
+  WireType,
+} from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
-import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
-import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
-import type { BinaryReadOptions } from "@protobuf-ts/runtime";
-import type { IBinaryReader } from "@protobuf-ts/runtime";
-import { UnknownFieldHandler } from "@protobuf-ts/runtime";
-import type { PartialMessage } from "@protobuf-ts/runtime";
-import { reflectionMergePartial } from "@protobuf-ts/runtime";
-import { MessageType } from "@protobuf-ts/runtime";
-import { Duration } from "../../../google/protobuf/duration";
 import { Any } from "../../../google/protobuf/any";
-import { Int64Value } from "../../../google/protobuf/wrappers";
+import { Duration } from "../../../google/protobuf/duration";
 import { Timestamp } from "../../../google/protobuf/timestamp";
+import { Int64Value } from "../../../google/protobuf/wrappers";
 /**
  * Channel is a logical grouping of channels, subchannels, and sockets.
  *
  * @generated from protobuf message grpc.channelz.v1.Channel
  */
 export interface Channel {
-    /**
-     * The identifier for this channel. This should be set.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.ChannelRef ref = 1
-     */
-    ref?: ChannelRef;
-    /**
-     * Data specific to this channel.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.ChannelData data = 2
-     */
-    data?: ChannelData; // At most one of 'channel_ref+subchannel_ref' and 'socket' is set.
-    /**
-     * There are no ordering guarantees on the order of channel refs.
-     * There may not be cycles in the ref graph.
-     * A channel ref may be present in more than one channel or subchannel.
-     *
-     * @generated from protobuf field: repeated grpc.channelz.v1.ChannelRef channel_ref = 3
-     */
-    channelRef: ChannelRef[];
-    /**
-     * At most one of 'channel_ref+subchannel_ref' and 'socket' is set.
-     * There are no ordering guarantees on the order of subchannel refs.
-     * There may not be cycles in the ref graph.
-     * A sub channel ref may be present in more than one channel or subchannel.
-     *
-     * @generated from protobuf field: repeated grpc.channelz.v1.SubchannelRef subchannel_ref = 4
-     */
-    subchannelRef: SubchannelRef[];
-    /**
-     * There are no ordering guarantees on the order of sockets.
-     *
-     * @generated from protobuf field: repeated grpc.channelz.v1.SocketRef socket_ref = 5
-     */
-    socketRef: SocketRef[];
+  /**
+   * The identifier for this channel. This should be set.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.ChannelRef ref = 1
+   */
+  ref?: ChannelRef;
+  /**
+   * Data specific to this channel.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.ChannelData data = 2
+   */
+  data?: ChannelData; // At most one of 'channel_ref+subchannel_ref' and 'socket' is set.
+  /**
+   * There are no ordering guarantees on the order of channel refs.
+   * There may not be cycles in the ref graph.
+   * A channel ref may be present in more than one channel or subchannel.
+   *
+   * @generated from protobuf field: repeated grpc.channelz.v1.ChannelRef channel_ref = 3
+   */
+  channelRef: ChannelRef[];
+  /**
+   * At most one of 'channel_ref+subchannel_ref' and 'socket' is set.
+   * There are no ordering guarantees on the order of subchannel refs.
+   * There may not be cycles in the ref graph.
+   * A sub channel ref may be present in more than one channel or subchannel.
+   *
+   * @generated from protobuf field: repeated grpc.channelz.v1.SubchannelRef subchannel_ref = 4
+   */
+  subchannelRef: SubchannelRef[];
+  /**
+   * There are no ordering guarantees on the order of sockets.
+   *
+   * @generated from protobuf field: repeated grpc.channelz.v1.SocketRef socket_ref = 5
+   */
+  socketRef: SocketRef[];
 }
 /**
  * Subchannel is a logical grouping of channels, subchannels, and sockets.
@@ -89,41 +94,41 @@ export interface Channel {
  * @generated from protobuf message grpc.channelz.v1.Subchannel
  */
 export interface Subchannel {
-    /**
-     * The identifier for this channel.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.SubchannelRef ref = 1
-     */
-    ref?: SubchannelRef;
-    /**
-     * Data specific to this channel.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.ChannelData data = 2
-     */
-    data?: ChannelData; // At most one of 'channel_ref+subchannel_ref' and 'socket' is set.
-    /**
-     * There are no ordering guarantees on the order of channel refs.
-     * There may not be cycles in the ref graph.
-     * A channel ref may be present in more than one channel or subchannel.
-     *
-     * @generated from protobuf field: repeated grpc.channelz.v1.ChannelRef channel_ref = 3
-     */
-    channelRef: ChannelRef[];
-    /**
-     * At most one of 'channel_ref+subchannel_ref' and 'socket' is set.
-     * There are no ordering guarantees on the order of subchannel refs.
-     * There may not be cycles in the ref graph.
-     * A sub channel ref may be present in more than one channel or subchannel.
-     *
-     * @generated from protobuf field: repeated grpc.channelz.v1.SubchannelRef subchannel_ref = 4
-     */
-    subchannelRef: SubchannelRef[];
-    /**
-     * There are no ordering guarantees on the order of sockets.
-     *
-     * @generated from protobuf field: repeated grpc.channelz.v1.SocketRef socket_ref = 5
-     */
-    socketRef: SocketRef[];
+  /**
+   * The identifier for this channel.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.SubchannelRef ref = 1
+   */
+  ref?: SubchannelRef;
+  /**
+   * Data specific to this channel.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.ChannelData data = 2
+   */
+  data?: ChannelData; // At most one of 'channel_ref+subchannel_ref' and 'socket' is set.
+  /**
+   * There are no ordering guarantees on the order of channel refs.
+   * There may not be cycles in the ref graph.
+   * A channel ref may be present in more than one channel or subchannel.
+   *
+   * @generated from protobuf field: repeated grpc.channelz.v1.ChannelRef channel_ref = 3
+   */
+  channelRef: ChannelRef[];
+  /**
+   * At most one of 'channel_ref+subchannel_ref' and 'socket' is set.
+   * There are no ordering guarantees on the order of subchannel refs.
+   * There may not be cycles in the ref graph.
+   * A sub channel ref may be present in more than one channel or subchannel.
+   *
+   * @generated from protobuf field: repeated grpc.channelz.v1.SubchannelRef subchannel_ref = 4
+   */
+  subchannelRef: SubchannelRef[];
+  /**
+   * There are no ordering guarantees on the order of sockets.
+   *
+   * @generated from protobuf field: repeated grpc.channelz.v1.SocketRef socket_ref = 5
+   */
+  socketRef: SocketRef[];
 }
 /**
  * These come from the specified states in this document:
@@ -132,39 +137,39 @@ export interface Subchannel {
  * @generated from protobuf message grpc.channelz.v1.ChannelConnectivityState
  */
 export interface ChannelConnectivityState {
-    /**
-     * @generated from protobuf field: grpc.channelz.v1.ChannelConnectivityState.State state = 1
-     */
-    state: ChannelConnectivityState_State;
+  /**
+   * @generated from protobuf field: grpc.channelz.v1.ChannelConnectivityState.State state = 1
+   */
+  state: ChannelConnectivityState_State;
 }
 /**
  * @generated from protobuf enum grpc.channelz.v1.ChannelConnectivityState.State
  */
 export enum ChannelConnectivityState_State {
-    /**
-     * @generated from protobuf enum value: UNKNOWN = 0;
-     */
-    UNKNOWN = 0,
-    /**
-     * @generated from protobuf enum value: IDLE = 1;
-     */
-    IDLE = 1,
-    /**
-     * @generated from protobuf enum value: CONNECTING = 2;
-     */
-    CONNECTING = 2,
-    /**
-     * @generated from protobuf enum value: READY = 3;
-     */
-    READY = 3,
-    /**
-     * @generated from protobuf enum value: TRANSIENT_FAILURE = 4;
-     */
-    TRANSIENT_FAILURE = 4,
-    /**
-     * @generated from protobuf enum value: SHUTDOWN = 5;
-     */
-    SHUTDOWN = 5
+  /**
+   * @generated from protobuf enum value: UNKNOWN = 0;
+   */
+  UNKNOWN = 0,
+  /**
+   * @generated from protobuf enum value: IDLE = 1;
+   */
+  IDLE = 1,
+  /**
+   * @generated from protobuf enum value: CONNECTING = 2;
+   */
+  CONNECTING = 2,
+  /**
+   * @generated from protobuf enum value: READY = 3;
+   */
+  READY = 3,
+  /**
+   * @generated from protobuf enum value: TRANSIENT_FAILURE = 4;
+   */
+  TRANSIENT_FAILURE = 4,
+  /**
+   * @generated from protobuf enum value: SHUTDOWN = 5;
+   */
+  SHUTDOWN = 5,
 }
 /**
  * Channel data is data related to a specific Channel or Subchannel.
@@ -172,49 +177,49 @@ export enum ChannelConnectivityState_State {
  * @generated from protobuf message grpc.channelz.v1.ChannelData
  */
 export interface ChannelData {
-    /**
-     * The connectivity state of the channel or subchannel.  Implementations
-     * should always set this.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.ChannelConnectivityState state = 1
-     */
-    state?: ChannelConnectivityState;
-    /**
-     * The target this channel originally tried to connect to.  May be absent
-     *
-     * @generated from protobuf field: string target = 2
-     */
-    target: string;
-    /**
-     * A trace of recent events on the channel.  May be absent.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.ChannelTrace trace = 3
-     */
-    trace?: ChannelTrace;
-    /**
-     * The number of calls started on the channel
-     *
-     * @generated from protobuf field: int64 calls_started = 4
-     */
-    callsStarted: string;
-    /**
-     * The number of calls that have completed with an OK status
-     *
-     * @generated from protobuf field: int64 calls_succeeded = 5
-     */
-    callsSucceeded: string;
-    /**
-     * The number of calls that have completed with a non-OK status
-     *
-     * @generated from protobuf field: int64 calls_failed = 6
-     */
-    callsFailed: string;
-    /**
-     * The last time a call was started on the channel.
-     *
-     * @generated from protobuf field: google.protobuf.Timestamp last_call_started_timestamp = 7
-     */
-    lastCallStartedTimestamp?: Timestamp;
+  /**
+   * The connectivity state of the channel or subchannel.  Implementations
+   * should always set this.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.ChannelConnectivityState state = 1
+   */
+  state?: ChannelConnectivityState;
+  /**
+   * The target this channel originally tried to connect to.  May be absent
+   *
+   * @generated from protobuf field: string target = 2
+   */
+  target: string;
+  /**
+   * A trace of recent events on the channel.  May be absent.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.ChannelTrace trace = 3
+   */
+  trace?: ChannelTrace;
+  /**
+   * The number of calls started on the channel
+   *
+   * @generated from protobuf field: int64 calls_started = 4
+   */
+  callsStarted: string;
+  /**
+   * The number of calls that have completed with an OK status
+   *
+   * @generated from protobuf field: int64 calls_succeeded = 5
+   */
+  callsSucceeded: string;
+  /**
+   * The number of calls that have completed with a non-OK status
+   *
+   * @generated from protobuf field: int64 calls_failed = 6
+   */
+  callsFailed: string;
+  /**
+   * The last time a call was started on the channel.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp last_call_started_timestamp = 7
+   */
+  lastCallStartedTimestamp?: Timestamp;
 }
 /**
  * A trace event is an interesting thing that happened to a channel or
@@ -223,47 +228,50 @@ export interface ChannelData {
  * @generated from protobuf message grpc.channelz.v1.ChannelTraceEvent
  */
 export interface ChannelTraceEvent {
-    /**
-     * High level description of the event.
-     *
-     * @generated from protobuf field: string description = 1
-     */
-    description: string;
-    /**
-     * the severity of the trace event
-     *
-     * @generated from protobuf field: grpc.channelz.v1.ChannelTraceEvent.Severity severity = 2
-     */
-    severity: ChannelTraceEvent_Severity;
-    /**
-     * When this event occurred.
-     *
-     * @generated from protobuf field: google.protobuf.Timestamp timestamp = 3
-     */
-    timestamp?: Timestamp;
-    /**
-     * ref of referenced channel or subchannel.
-     * Optional, only present if this event refers to a child object. For example,
-     * this field would be filled if this trace event was for a subchannel being
-     * created.
-     *
-     * @generated from protobuf oneof: child_ref
-     */
-    childRef: {
+  /**
+   * High level description of the event.
+   *
+   * @generated from protobuf field: string description = 1
+   */
+  description: string;
+  /**
+   * the severity of the trace event
+   *
+   * @generated from protobuf field: grpc.channelz.v1.ChannelTraceEvent.Severity severity = 2
+   */
+  severity: ChannelTraceEvent_Severity;
+  /**
+   * When this event occurred.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp timestamp = 3
+   */
+  timestamp?: Timestamp;
+  /**
+   * ref of referenced channel or subchannel.
+   * Optional, only present if this event refers to a child object. For example,
+   * this field would be filled if this trace event was for a subchannel being
+   * created.
+   *
+   * @generated from protobuf oneof: child_ref
+   */
+  childRef:
+    | {
         oneofKind: "channelRef";
         /**
          * @generated from protobuf field: grpc.channelz.v1.ChannelRef channel_ref = 4
          */
         channelRef: ChannelRef;
-    } | {
+      }
+    | {
         oneofKind: "subchannelRef";
         /**
          * @generated from protobuf field: grpc.channelz.v1.SubchannelRef subchannel_ref = 5
          */
         subchannelRef: SubchannelRef;
-    } | {
+      }
+    | {
         oneofKind: undefined;
-    };
+      };
 }
 /**
  * The supported severity levels of trace events.
@@ -271,22 +279,22 @@ export interface ChannelTraceEvent {
  * @generated from protobuf enum grpc.channelz.v1.ChannelTraceEvent.Severity
  */
 export enum ChannelTraceEvent_Severity {
-    /**
-     * @generated from protobuf enum value: CT_UNKNOWN = 0;
-     */
-    CT_UNKNOWN = 0,
-    /**
-     * @generated from protobuf enum value: CT_INFO = 1;
-     */
-    CT_INFO = 1,
-    /**
-     * @generated from protobuf enum value: CT_WARNING = 2;
-     */
-    CT_WARNING = 2,
-    /**
-     * @generated from protobuf enum value: CT_ERROR = 3;
-     */
-    CT_ERROR = 3
+  /**
+   * @generated from protobuf enum value: CT_UNKNOWN = 0;
+   */
+  CT_UNKNOWN = 0,
+  /**
+   * @generated from protobuf enum value: CT_INFO = 1;
+   */
+  CT_INFO = 1,
+  /**
+   * @generated from protobuf enum value: CT_WARNING = 2;
+   */
+  CT_WARNING = 2,
+  /**
+   * @generated from protobuf enum value: CT_ERROR = 3;
+   */
+  CT_ERROR = 3,
 }
 /**
  * ChannelTrace represents the recent events that have occurred on the channel.
@@ -294,26 +302,26 @@ export enum ChannelTraceEvent_Severity {
  * @generated from protobuf message grpc.channelz.v1.ChannelTrace
  */
 export interface ChannelTrace {
-    /**
-     * Number of events ever logged in this tracing object. This can differ from
-     * events.size() because events can be overwritten or garbage collected by
-     * implementations.
-     *
-     * @generated from protobuf field: int64 num_events_logged = 1
-     */
-    numEventsLogged: string;
-    /**
-     * Time that this channel was created.
-     *
-     * @generated from protobuf field: google.protobuf.Timestamp creation_timestamp = 2
-     */
-    creationTimestamp?: Timestamp;
-    /**
-     * List of events that have occurred on this channel.
-     *
-     * @generated from protobuf field: repeated grpc.channelz.v1.ChannelTraceEvent events = 3
-     */
-    events: ChannelTraceEvent[];
+  /**
+   * Number of events ever logged in this tracing object. This can differ from
+   * events.size() because events can be overwritten or garbage collected by
+   * implementations.
+   *
+   * @generated from protobuf field: int64 num_events_logged = 1
+   */
+  numEventsLogged: string;
+  /**
+   * Time that this channel was created.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp creation_timestamp = 2
+   */
+  creationTimestamp?: Timestamp;
+  /**
+   * List of events that have occurred on this channel.
+   *
+   * @generated from protobuf field: repeated grpc.channelz.v1.ChannelTraceEvent events = 3
+   */
+  events: ChannelTraceEvent[];
 }
 /**
  * ChannelRef is a reference to a Channel.
@@ -321,18 +329,18 @@ export interface ChannelTrace {
  * @generated from protobuf message grpc.channelz.v1.ChannelRef
  */
 export interface ChannelRef {
-    /**
-     * The globally unique id for this channel.  Must be a positive number.
-     *
-     * @generated from protobuf field: int64 channel_id = 1
-     */
-    channelId: string;
-    /**
-     * An optional name associated with the channel.
-     *
-     * @generated from protobuf field: string name = 2
-     */
-    name: string;
+  /**
+   * The globally unique id for this channel.  Must be a positive number.
+   *
+   * @generated from protobuf field: int64 channel_id = 1
+   */
+  channelId: string;
+  /**
+   * An optional name associated with the channel.
+   *
+   * @generated from protobuf field: string name = 2
+   */
+  name: string;
 }
 /**
  * SubchannelRef is a reference to a Subchannel.
@@ -340,18 +348,18 @@ export interface ChannelRef {
  * @generated from protobuf message grpc.channelz.v1.SubchannelRef
  */
 export interface SubchannelRef {
-    /**
-     * The globally unique id for this subchannel.  Must be a positive number.
-     *
-     * @generated from protobuf field: int64 subchannel_id = 7
-     */
-    subchannelId: string;
-    /**
-     * An optional name associated with the subchannel.
-     *
-     * @generated from protobuf field: string name = 8
-     */
-    name: string;
+  /**
+   * The globally unique id for this subchannel.  Must be a positive number.
+   *
+   * @generated from protobuf field: int64 subchannel_id = 7
+   */
+  subchannelId: string;
+  /**
+   * An optional name associated with the subchannel.
+   *
+   * @generated from protobuf field: string name = 8
+   */
+  name: string;
 }
 /**
  * SocketRef is a reference to a Socket.
@@ -359,18 +367,18 @@ export interface SubchannelRef {
  * @generated from protobuf message grpc.channelz.v1.SocketRef
  */
 export interface SocketRef {
-    /**
-     * The globally unique id for this socket.  Must be a positive number.
-     *
-     * @generated from protobuf field: int64 socket_id = 3
-     */
-    socketId: string;
-    /**
-     * An optional name associated with the socket.
-     *
-     * @generated from protobuf field: string name = 4
-     */
-    name: string;
+  /**
+   * The globally unique id for this socket.  Must be a positive number.
+   *
+   * @generated from protobuf field: int64 socket_id = 3
+   */
+  socketId: string;
+  /**
+   * An optional name associated with the socket.
+   *
+   * @generated from protobuf field: string name = 4
+   */
+  name: string;
 }
 /**
  * ServerRef is a reference to a Server.
@@ -378,18 +386,18 @@ export interface SocketRef {
  * @generated from protobuf message grpc.channelz.v1.ServerRef
  */
 export interface ServerRef {
-    /**
-     * A globally unique identifier for this server.  Must be a positive number.
-     *
-     * @generated from protobuf field: int64 server_id = 5
-     */
-    serverId: string;
-    /**
-     * An optional name associated with the server.
-     *
-     * @generated from protobuf field: string name = 6
-     */
-    name: string;
+  /**
+   * A globally unique identifier for this server.  Must be a positive number.
+   *
+   * @generated from protobuf field: int64 server_id = 5
+   */
+  serverId: string;
+  /**
+   * An optional name associated with the server.
+   *
+   * @generated from protobuf field: string name = 6
+   */
+  name: string;
 }
 /**
  * Server represents a single server.  There may be multiple servers in a single
@@ -398,25 +406,25 @@ export interface ServerRef {
  * @generated from protobuf message grpc.channelz.v1.Server
  */
 export interface Server {
-    /**
-     * The identifier for a Server.  This should be set.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.ServerRef ref = 1
-     */
-    ref?: ServerRef;
-    /**
-     * The associated data of the Server.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.ServerData data = 2
-     */
-    data?: ServerData;
-    /**
-     * The sockets that the server is listening on.  There are no ordering
-     * guarantees.  This may be absent.
-     *
-     * @generated from protobuf field: repeated grpc.channelz.v1.SocketRef listen_socket = 3
-     */
-    listenSocket: SocketRef[];
+  /**
+   * The identifier for a Server.  This should be set.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.ServerRef ref = 1
+   */
+  ref?: ServerRef;
+  /**
+   * The associated data of the Server.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.ServerData data = 2
+   */
+  data?: ServerData;
+  /**
+   * The sockets that the server is listening on.  There are no ordering
+   * guarantees.  This may be absent.
+   *
+   * @generated from protobuf field: repeated grpc.channelz.v1.SocketRef listen_socket = 3
+   */
+  listenSocket: SocketRef[];
 }
 /**
  * ServerData is data for a specific Server.
@@ -424,36 +432,36 @@ export interface Server {
  * @generated from protobuf message grpc.channelz.v1.ServerData
  */
 export interface ServerData {
-    /**
-     * A trace of recent events on the server.  May be absent.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.ChannelTrace trace = 1
-     */
-    trace?: ChannelTrace;
-    /**
-     * The number of incoming calls started on the server
-     *
-     * @generated from protobuf field: int64 calls_started = 2
-     */
-    callsStarted: string;
-    /**
-     * The number of incoming calls that have completed with an OK status
-     *
-     * @generated from protobuf field: int64 calls_succeeded = 3
-     */
-    callsSucceeded: string;
-    /**
-     * The number of incoming calls that have a completed with a non-OK status
-     *
-     * @generated from protobuf field: int64 calls_failed = 4
-     */
-    callsFailed: string;
-    /**
-     * The last time a call was started on the server.
-     *
-     * @generated from protobuf field: google.protobuf.Timestamp last_call_started_timestamp = 5
-     */
-    lastCallStartedTimestamp?: Timestamp;
+  /**
+   * A trace of recent events on the server.  May be absent.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.ChannelTrace trace = 1
+   */
+  trace?: ChannelTrace;
+  /**
+   * The number of incoming calls started on the server
+   *
+   * @generated from protobuf field: int64 calls_started = 2
+   */
+  callsStarted: string;
+  /**
+   * The number of incoming calls that have completed with an OK status
+   *
+   * @generated from protobuf field: int64 calls_succeeded = 3
+   */
+  callsSucceeded: string;
+  /**
+   * The number of incoming calls that have a completed with a non-OK status
+   *
+   * @generated from protobuf field: int64 calls_failed = 4
+   */
+  callsFailed: string;
+  /**
+   * The last time a call was started on the server.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp last_call_started_timestamp = 5
+   */
+  lastCallStartedTimestamp?: Timestamp;
 }
 /**
  * Information about an actual connection.  Pronounced "sock-ay".
@@ -461,44 +469,44 @@ export interface ServerData {
  * @generated from protobuf message grpc.channelz.v1.Socket
  */
 export interface Socket {
-    /**
-     * The identifier for the Socket.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.SocketRef ref = 1
-     */
-    ref?: SocketRef;
-    /**
-     * Data specific to this Socket.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.SocketData data = 2
-     */
-    data?: SocketData;
-    /**
-     * The locally bound address.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.Address local = 3
-     */
-    local?: Address;
-    /**
-     * The remote bound address.  May be absent.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.Address remote = 4
-     */
-    remote?: Address;
-    /**
-     * Security details for this socket.  May be absent if not available, or
-     * there is no security on the socket.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.Security security = 5
-     */
-    security?: Security;
-    /**
-     * Optional, represents the name of the remote endpoint, if different than
-     * the original target name.
-     *
-     * @generated from protobuf field: string remote_name = 6
-     */
-    remoteName: string;
+  /**
+   * The identifier for the Socket.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.SocketRef ref = 1
+   */
+  ref?: SocketRef;
+  /**
+   * Data specific to this Socket.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.SocketData data = 2
+   */
+  data?: SocketData;
+  /**
+   * The locally bound address.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.Address local = 3
+   */
+  local?: Address;
+  /**
+   * The remote bound address.  May be absent.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.Address remote = 4
+   */
+  remote?: Address;
+  /**
+   * Security details for this socket.  May be absent if not available, or
+   * there is no security on the socket.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.Security security = 5
+   */
+  security?: Security;
+  /**
+   * Optional, represents the name of the remote endpoint, if different than
+   * the original target name.
+   *
+   * @generated from protobuf field: string remote_name = 6
+   */
+  remoteName: string;
 }
 /**
  * SocketData is data associated for a specific Socket.  The fields present
@@ -508,96 +516,96 @@ export interface Socket {
  * @generated from protobuf message grpc.channelz.v1.SocketData
  */
 export interface SocketData {
-    /**
-     * The number of streams that have been started.
-     *
-     * @generated from protobuf field: int64 streams_started = 1
-     */
-    streamsStarted: string;
-    /**
-     * The number of streams that have ended successfully:
-     * On client side, received frame with eos bit set;
-     * On server side, sent frame with eos bit set.
-     *
-     * @generated from protobuf field: int64 streams_succeeded = 2
-     */
-    streamsSucceeded: string;
-    /**
-     * The number of streams that have ended unsuccessfully:
-     * On client side, ended without receiving frame with eos bit set;
-     * On server side, ended without sending frame with eos bit set.
-     *
-     * @generated from protobuf field: int64 streams_failed = 3
-     */
-    streamsFailed: string;
-    /**
-     * The number of grpc messages successfully sent on this socket.
-     *
-     * @generated from protobuf field: int64 messages_sent = 4
-     */
-    messagesSent: string;
-    /**
-     * The number of grpc messages received on this socket.
-     *
-     * @generated from protobuf field: int64 messages_received = 5
-     */
-    messagesReceived: string;
-    /**
-     * The number of keep alives sent.  This is typically implemented with HTTP/2
-     * ping messages.
-     *
-     * @generated from protobuf field: int64 keep_alives_sent = 6
-     */
-    keepAlivesSent: string;
-    /**
-     * The last time a stream was created by this endpoint.  Usually unset for
-     * servers.
-     *
-     * @generated from protobuf field: google.protobuf.Timestamp last_local_stream_created_timestamp = 7
-     */
-    lastLocalStreamCreatedTimestamp?: Timestamp;
-    /**
-     * The last time a stream was created by the remote endpoint.  Usually unset
-     * for clients.
-     *
-     * @generated from protobuf field: google.protobuf.Timestamp last_remote_stream_created_timestamp = 8
-     */
-    lastRemoteStreamCreatedTimestamp?: Timestamp;
-    /**
-     * The last time a message was sent by this endpoint.
-     *
-     * @generated from protobuf field: google.protobuf.Timestamp last_message_sent_timestamp = 9
-     */
-    lastMessageSentTimestamp?: Timestamp;
-    /**
-     * The last time a message was received by this endpoint.
-     *
-     * @generated from protobuf field: google.protobuf.Timestamp last_message_received_timestamp = 10
-     */
-    lastMessageReceivedTimestamp?: Timestamp;
-    /**
-     * The amount of window, granted to the local endpoint by the remote endpoint.
-     * This may be slightly out of date due to network latency.  This does NOT
-     * include stream level or TCP level flow control info.
-     *
-     * @generated from protobuf field: google.protobuf.Int64Value local_flow_control_window = 11
-     */
-    localFlowControlWindow?: Int64Value;
-    /**
-     * The amount of window, granted to the remote endpoint by the local endpoint.
-     * This may be slightly out of date due to network latency.  This does NOT
-     * include stream level or TCP level flow control info.
-     *
-     * @generated from protobuf field: google.protobuf.Int64Value remote_flow_control_window = 12
-     */
-    remoteFlowControlWindow?: Int64Value;
-    /**
-     * Socket options set on this socket.  May be absent if 'summary' is set
-     * on GetSocketRequest.
-     *
-     * @generated from protobuf field: repeated grpc.channelz.v1.SocketOption option = 13
-     */
-    option: SocketOption[];
+  /**
+   * The number of streams that have been started.
+   *
+   * @generated from protobuf field: int64 streams_started = 1
+   */
+  streamsStarted: string;
+  /**
+   * The number of streams that have ended successfully:
+   * On client side, received frame with eos bit set;
+   * On server side, sent frame with eos bit set.
+   *
+   * @generated from protobuf field: int64 streams_succeeded = 2
+   */
+  streamsSucceeded: string;
+  /**
+   * The number of streams that have ended unsuccessfully:
+   * On client side, ended without receiving frame with eos bit set;
+   * On server side, ended without sending frame with eos bit set.
+   *
+   * @generated from protobuf field: int64 streams_failed = 3
+   */
+  streamsFailed: string;
+  /**
+   * The number of grpc messages successfully sent on this socket.
+   *
+   * @generated from protobuf field: int64 messages_sent = 4
+   */
+  messagesSent: string;
+  /**
+   * The number of grpc messages received on this socket.
+   *
+   * @generated from protobuf field: int64 messages_received = 5
+   */
+  messagesReceived: string;
+  /**
+   * The number of keep alives sent.  This is typically implemented with HTTP/2
+   * ping messages.
+   *
+   * @generated from protobuf field: int64 keep_alives_sent = 6
+   */
+  keepAlivesSent: string;
+  /**
+   * The last time a stream was created by this endpoint.  Usually unset for
+   * servers.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp last_local_stream_created_timestamp = 7
+   */
+  lastLocalStreamCreatedTimestamp?: Timestamp;
+  /**
+   * The last time a stream was created by the remote endpoint.  Usually unset
+   * for clients.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp last_remote_stream_created_timestamp = 8
+   */
+  lastRemoteStreamCreatedTimestamp?: Timestamp;
+  /**
+   * The last time a message was sent by this endpoint.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp last_message_sent_timestamp = 9
+   */
+  lastMessageSentTimestamp?: Timestamp;
+  /**
+   * The last time a message was received by this endpoint.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp last_message_received_timestamp = 10
+   */
+  lastMessageReceivedTimestamp?: Timestamp;
+  /**
+   * The amount of window, granted to the local endpoint by the remote endpoint.
+   * This may be slightly out of date due to network latency.  This does NOT
+   * include stream level or TCP level flow control info.
+   *
+   * @generated from protobuf field: google.protobuf.Int64Value local_flow_control_window = 11
+   */
+  localFlowControlWindow?: Int64Value;
+  /**
+   * The amount of window, granted to the remote endpoint by the local endpoint.
+   * This may be slightly out of date due to network latency.  This does NOT
+   * include stream level or TCP level flow control info.
+   *
+   * @generated from protobuf field: google.protobuf.Int64Value remote_flow_control_window = 12
+   */
+  remoteFlowControlWindow?: Int64Value;
+  /**
+   * Socket options set on this socket.  May be absent if 'summary' is set
+   * on GetSocketRequest.
+   *
+   * @generated from protobuf field: repeated grpc.channelz.v1.SocketOption option = 13
+   */
+  option: SocketOption[];
 }
 /**
  * Address represents the address used to create the socket.
@@ -605,48 +613,52 @@ export interface SocketData {
  * @generated from protobuf message grpc.channelz.v1.Address
  */
 export interface Address {
-    /**
-     * @generated from protobuf oneof: address
-     */
-    address: {
+  /**
+   * @generated from protobuf oneof: address
+   */
+  address:
+    | {
         oneofKind: "tcpipAddress";
         /**
          * @generated from protobuf field: grpc.channelz.v1.Address.TcpIpAddress tcpip_address = 1
          */
         tcpipAddress: Address_TcpIpAddress;
-    } | {
+      }
+    | {
         oneofKind: "udsAddress";
         /**
          * @generated from protobuf field: grpc.channelz.v1.Address.UdsAddress uds_address = 2
          */
         udsAddress: Address_UdsAddress;
-    } | {
+      }
+    | {
         oneofKind: "otherAddress";
         /**
          * @generated from protobuf field: grpc.channelz.v1.Address.OtherAddress other_address = 3
          */
         otherAddress: Address_OtherAddress;
-    } | {
+      }
+    | {
         oneofKind: undefined;
-    };
+      };
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.Address.TcpIpAddress
  */
 export interface Address_TcpIpAddress {
-    /**
-     * Either the IPv4 or IPv6 address in bytes.  Will be either 4 bytes or 16
-     * bytes in length.
-     *
-     * @generated from protobuf field: bytes ip_address = 1
-     */
-    ipAddress: Uint8Array;
-    /**
-     * 0-64k, or -1 if not appropriate.
-     *
-     * @generated from protobuf field: int32 port = 2
-     */
-    port: number;
+  /**
+   * Either the IPv4 or IPv6 address in bytes.  Will be either 4 bytes or 16
+   * bytes in length.
+   *
+   * @generated from protobuf field: bytes ip_address = 1
+   */
+  ipAddress: Uint8Array;
+  /**
+   * 0-64k, or -1 if not appropriate.
+   *
+   * @generated from protobuf field: int32 port = 2
+   */
+  port: number;
 }
 /**
  * A Unix Domain Socket address.
@@ -654,10 +666,10 @@ export interface Address_TcpIpAddress {
  * @generated from protobuf message grpc.channelz.v1.Address.UdsAddress
  */
 export interface Address_UdsAddress {
-    /**
-     * @generated from protobuf field: string filename = 1
-     */
-    filename: string;
+  /**
+   * @generated from protobuf field: string filename = 1
+   */
+  filename: string;
 }
 /**
  * An address type not included above.
@@ -665,18 +677,18 @@ export interface Address_UdsAddress {
  * @generated from protobuf message grpc.channelz.v1.Address.OtherAddress
  */
 export interface Address_OtherAddress {
-    /**
-     * The human readable version of the value.  This value should be set.
-     *
-     * @generated from protobuf field: string name = 1
-     */
-    name: string;
-    /**
-     * The actual address message.
-     *
-     * @generated from protobuf field: google.protobuf.Any value = 2
-     */
-    value?: Any;
+  /**
+   * The human readable version of the value.  This value should be set.
+   *
+   * @generated from protobuf field: string name = 1
+   */
+  name: string;
+  /**
+   * The actual address message.
+   *
+   * @generated from protobuf field: google.protobuf.Any value = 2
+   */
+  value?: Any;
 }
 /**
  * Security represents details about how secure the socket is.
@@ -684,33 +696,37 @@ export interface Address_OtherAddress {
  * @generated from protobuf message grpc.channelz.v1.Security
  */
 export interface Security {
-    /**
-     * @generated from protobuf oneof: model
-     */
-    model: {
+  /**
+   * @generated from protobuf oneof: model
+   */
+  model:
+    | {
         oneofKind: "tls";
         /**
          * @generated from protobuf field: grpc.channelz.v1.Security.Tls tls = 1
          */
         tls: Security_Tls;
-    } | {
+      }
+    | {
         oneofKind: "other";
         /**
          * @generated from protobuf field: grpc.channelz.v1.Security.OtherSecurity other = 2
          */
         other: Security_OtherSecurity;
-    } | {
+      }
+    | {
         oneofKind: undefined;
-    };
+      };
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.Security.Tls
  */
 export interface Security_Tls {
-    /**
-     * @generated from protobuf oneof: cipher_suite
-     */
-    cipherSuite: {
+  /**
+   * @generated from protobuf oneof: cipher_suite
+   */
+  cipherSuite:
+    | {
         oneofKind: "standardName";
         /**
          * The cipher suite name in the RFC 4346 format:
@@ -719,7 +735,8 @@ export interface Security_Tls {
          * @generated from protobuf field: string standard_name = 1
          */
         standardName: string;
-    } | {
+      }
+    | {
         oneofKind: "otherName";
         /**
          * Some other way to describe the cipher suite if
@@ -728,38 +745,39 @@ export interface Security_Tls {
          * @generated from protobuf field: string other_name = 2
          */
         otherName: string;
-    } | {
+      }
+    | {
         oneofKind: undefined;
-    };
-    /**
-     * the certificate used by this endpoint.
-     *
-     * @generated from protobuf field: bytes local_certificate = 3
-     */
-    localCertificate: Uint8Array;
-    /**
-     * the certificate used by the remote endpoint.
-     *
-     * @generated from protobuf field: bytes remote_certificate = 4
-     */
-    remoteCertificate: Uint8Array;
+      };
+  /**
+   * the certificate used by this endpoint.
+   *
+   * @generated from protobuf field: bytes local_certificate = 3
+   */
+  localCertificate: Uint8Array;
+  /**
+   * the certificate used by the remote endpoint.
+   *
+   * @generated from protobuf field: bytes remote_certificate = 4
+   */
+  remoteCertificate: Uint8Array;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.Security.OtherSecurity
  */
 export interface Security_OtherSecurity {
-    /**
-     * The human readable version of the value.
-     *
-     * @generated from protobuf field: string name = 1
-     */
-    name: string;
-    /**
-     * The actual security details message.
-     *
-     * @generated from protobuf field: google.protobuf.Any value = 2
-     */
-    value?: Any;
+  /**
+   * The human readable version of the value.
+   *
+   * @generated from protobuf field: string name = 1
+   */
+  name: string;
+  /**
+   * The actual security details message.
+   *
+   * @generated from protobuf field: google.protobuf.Any value = 2
+   */
+  value?: Any;
 }
 /**
  * SocketOption represents socket options for a socket.  Specifically, these
@@ -768,27 +786,27 @@ export interface Security_OtherSecurity {
  * @generated from protobuf message grpc.channelz.v1.SocketOption
  */
 export interface SocketOption {
-    /**
-     * The full name of the socket option.  Typically this will be the upper case
-     * name, such as "SO_REUSEPORT".
-     *
-     * @generated from protobuf field: string name = 1
-     */
-    name: string;
-    /**
-     * The human readable value of this socket option.  At least one of value or
-     * additional will be set.
-     *
-     * @generated from protobuf field: string value = 2
-     */
-    value: string;
-    /**
-     * Additional data associated with the socket option.  At least one of value
-     * or additional will be set.
-     *
-     * @generated from protobuf field: google.protobuf.Any additional = 3
-     */
-    additional?: Any;
+  /**
+   * The full name of the socket option.  Typically this will be the upper case
+   * name, such as "SO_REUSEPORT".
+   *
+   * @generated from protobuf field: string name = 1
+   */
+  name: string;
+  /**
+   * The human readable value of this socket option.  At least one of value or
+   * additional will be set.
+   *
+   * @generated from protobuf field: string value = 2
+   */
+  value: string;
+  /**
+   * Additional data associated with the socket option.  At least one of value
+   * or additional will be set.
+   *
+   * @generated from protobuf field: google.protobuf.Any additional = 3
+   */
+  additional?: Any;
 }
 /**
  * For use with SocketOption's additional field.  This is primarily used for
@@ -797,10 +815,10 @@ export interface SocketOption {
  * @generated from protobuf message grpc.channelz.v1.SocketOptionTimeout
  */
 export interface SocketOptionTimeout {
-    /**
-     * @generated from protobuf field: google.protobuf.Duration duration = 1
-     */
-    duration?: Duration;
+  /**
+   * @generated from protobuf field: google.protobuf.Duration duration = 1
+   */
+  duration?: Duration;
 }
 /**
  * For use with SocketOption's additional field.  This is primarily used for
@@ -809,18 +827,18 @@ export interface SocketOptionTimeout {
  * @generated from protobuf message grpc.channelz.v1.SocketOptionLinger
  */
 export interface SocketOptionLinger {
-    /**
-     * active maps to `struct linger.l_onoff`
-     *
-     * @generated from protobuf field: bool active = 1
-     */
-    active: boolean;
-    /**
-     * duration maps to `struct linger.l_linger`
-     *
-     * @generated from protobuf field: google.protobuf.Duration duration = 2
-     */
-    duration?: Duration;
+  /**
+   * active maps to `struct linger.l_onoff`
+   *
+   * @generated from protobuf field: bool active = 1
+   */
+  active: boolean;
+  /**
+   * duration maps to `struct linger.l_linger`
+   *
+   * @generated from protobuf field: google.protobuf.Duration duration = 2
+   */
+  duration?: Duration;
 }
 /**
  * For use with SocketOption's additional field.  Tcp info for
@@ -829,431 +847,507 @@ export interface SocketOptionLinger {
  * @generated from protobuf message grpc.channelz.v1.SocketOptionTcpInfo
  */
 export interface SocketOptionTcpInfo {
-    /**
-     * @generated from protobuf field: uint32 tcpi_state = 1
-     */
-    tcpiState: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_ca_state = 2
-     */
-    tcpiCaState: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_retransmits = 3
-     */
-    tcpiRetransmits: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_probes = 4
-     */
-    tcpiProbes: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_backoff = 5
-     */
-    tcpiBackoff: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_options = 6
-     */
-    tcpiOptions: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_snd_wscale = 7
-     */
-    tcpiSndWscale: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_rcv_wscale = 8
-     */
-    tcpiRcvWscale: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_rto = 9
-     */
-    tcpiRto: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_ato = 10
-     */
-    tcpiAto: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_snd_mss = 11
-     */
-    tcpiSndMss: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_rcv_mss = 12
-     */
-    tcpiRcvMss: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_unacked = 13
-     */
-    tcpiUnacked: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_sacked = 14
-     */
-    tcpiSacked: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_lost = 15
-     */
-    tcpiLost: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_retrans = 16
-     */
-    tcpiRetrans: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_fackets = 17
-     */
-    tcpiFackets: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_last_data_sent = 18
-     */
-    tcpiLastDataSent: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_last_ack_sent = 19
-     */
-    tcpiLastAckSent: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_last_data_recv = 20
-     */
-    tcpiLastDataRecv: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_last_ack_recv = 21
-     */
-    tcpiLastAckRecv: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_pmtu = 22
-     */
-    tcpiPmtu: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_rcv_ssthresh = 23
-     */
-    tcpiRcvSsthresh: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_rtt = 24
-     */
-    tcpiRtt: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_rttvar = 25
-     */
-    tcpiRttvar: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_snd_ssthresh = 26
-     */
-    tcpiSndSsthresh: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_snd_cwnd = 27
-     */
-    tcpiSndCwnd: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_advmss = 28
-     */
-    tcpiAdvmss: number;
-    /**
-     * @generated from protobuf field: uint32 tcpi_reordering = 29
-     */
-    tcpiReordering: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_state = 1
+   */
+  tcpiState: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_ca_state = 2
+   */
+  tcpiCaState: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_retransmits = 3
+   */
+  tcpiRetransmits: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_probes = 4
+   */
+  tcpiProbes: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_backoff = 5
+   */
+  tcpiBackoff: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_options = 6
+   */
+  tcpiOptions: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_snd_wscale = 7
+   */
+  tcpiSndWscale: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_rcv_wscale = 8
+   */
+  tcpiRcvWscale: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_rto = 9
+   */
+  tcpiRto: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_ato = 10
+   */
+  tcpiAto: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_snd_mss = 11
+   */
+  tcpiSndMss: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_rcv_mss = 12
+   */
+  tcpiRcvMss: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_unacked = 13
+   */
+  tcpiUnacked: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_sacked = 14
+   */
+  tcpiSacked: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_lost = 15
+   */
+  tcpiLost: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_retrans = 16
+   */
+  tcpiRetrans: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_fackets = 17
+   */
+  tcpiFackets: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_last_data_sent = 18
+   */
+  tcpiLastDataSent: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_last_ack_sent = 19
+   */
+  tcpiLastAckSent: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_last_data_recv = 20
+   */
+  tcpiLastDataRecv: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_last_ack_recv = 21
+   */
+  tcpiLastAckRecv: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_pmtu = 22
+   */
+  tcpiPmtu: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_rcv_ssthresh = 23
+   */
+  tcpiRcvSsthresh: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_rtt = 24
+   */
+  tcpiRtt: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_rttvar = 25
+   */
+  tcpiRttvar: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_snd_ssthresh = 26
+   */
+  tcpiSndSsthresh: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_snd_cwnd = 27
+   */
+  tcpiSndCwnd: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_advmss = 28
+   */
+  tcpiAdvmss: number;
+  /**
+   * @generated from protobuf field: uint32 tcpi_reordering = 29
+   */
+  tcpiReordering: number;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetTopChannelsRequest
  */
 export interface GetTopChannelsRequest {
-    /**
-     * start_channel_id indicates that only channels at or above this id should be
-     * included in the results.
-     * To request the first page, this should be set to 0. To request
-     * subsequent pages, the client generates this value by adding 1 to
-     * the highest seen result ID.
-     *
-     * @generated from protobuf field: int64 start_channel_id = 1
-     */
-    startChannelId: string;
-    /**
-     * If non-zero, the server will return a page of results containing
-     * at most this many items. If zero, the server will choose a
-     * reasonable page size.  Must never be negative.
-     *
-     * @generated from protobuf field: int64 max_results = 2
-     */
-    maxResults: string;
+  /**
+   * start_channel_id indicates that only channels at or above this id should be
+   * included in the results.
+   * To request the first page, this should be set to 0. To request
+   * subsequent pages, the client generates this value by adding 1 to
+   * the highest seen result ID.
+   *
+   * @generated from protobuf field: int64 start_channel_id = 1
+   */
+  startChannelId: string;
+  /**
+   * If non-zero, the server will return a page of results containing
+   * at most this many items. If zero, the server will choose a
+   * reasonable page size.  Must never be negative.
+   *
+   * @generated from protobuf field: int64 max_results = 2
+   */
+  maxResults: string;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetTopChannelsResponse
  */
 export interface GetTopChannelsResponse {
-    /**
-     * list of channels that the connection detail service knows about.  Sorted in
-     * ascending channel_id order.
-     * Must contain at least 1 result, otherwise 'end' must be true.
-     *
-     * @generated from protobuf field: repeated grpc.channelz.v1.Channel channel = 1
-     */
-    channel: Channel[];
-    /**
-     * If set, indicates that the list of channels is the final list.  Requesting
-     * more channels can only return more if they are created after this RPC
-     * completes.
-     *
-     * @generated from protobuf field: bool end = 2
-     */
-    end: boolean;
+  /**
+   * list of channels that the connection detail service knows about.  Sorted in
+   * ascending channel_id order.
+   * Must contain at least 1 result, otherwise 'end' must be true.
+   *
+   * @generated from protobuf field: repeated grpc.channelz.v1.Channel channel = 1
+   */
+  channel: Channel[];
+  /**
+   * If set, indicates that the list of channels is the final list.  Requesting
+   * more channels can only return more if they are created after this RPC
+   * completes.
+   *
+   * @generated from protobuf field: bool end = 2
+   */
+  end: boolean;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetServersRequest
  */
 export interface GetServersRequest {
-    /**
-     * start_server_id indicates that only servers at or above this id should be
-     * included in the results.
-     * To request the first page, this must be set to 0. To request
-     * subsequent pages, the client generates this value by adding 1 to
-     * the highest seen result ID.
-     *
-     * @generated from protobuf field: int64 start_server_id = 1
-     */
-    startServerId: string;
-    /**
-     * If non-zero, the server will return a page of results containing
-     * at most this many items. If zero, the server will choose a
-     * reasonable page size.  Must never be negative.
-     *
-     * @generated from protobuf field: int64 max_results = 2
-     */
-    maxResults: string;
+  /**
+   * start_server_id indicates that only servers at or above this id should be
+   * included in the results.
+   * To request the first page, this must be set to 0. To request
+   * subsequent pages, the client generates this value by adding 1 to
+   * the highest seen result ID.
+   *
+   * @generated from protobuf field: int64 start_server_id = 1
+   */
+  startServerId: string;
+  /**
+   * If non-zero, the server will return a page of results containing
+   * at most this many items. If zero, the server will choose a
+   * reasonable page size.  Must never be negative.
+   *
+   * @generated from protobuf field: int64 max_results = 2
+   */
+  maxResults: string;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetServersResponse
  */
 export interface GetServersResponse {
-    /**
-     * list of servers that the connection detail service knows about.  Sorted in
-     * ascending server_id order.
-     * Must contain at least 1 result, otherwise 'end' must be true.
-     *
-     * @generated from protobuf field: repeated grpc.channelz.v1.Server server = 1
-     */
-    server: Server[];
-    /**
-     * If set, indicates that the list of servers is the final list.  Requesting
-     * more servers will only return more if they are created after this RPC
-     * completes.
-     *
-     * @generated from protobuf field: bool end = 2
-     */
-    end: boolean;
+  /**
+   * list of servers that the connection detail service knows about.  Sorted in
+   * ascending server_id order.
+   * Must contain at least 1 result, otherwise 'end' must be true.
+   *
+   * @generated from protobuf field: repeated grpc.channelz.v1.Server server = 1
+   */
+  server: Server[];
+  /**
+   * If set, indicates that the list of servers is the final list.  Requesting
+   * more servers will only return more if they are created after this RPC
+   * completes.
+   *
+   * @generated from protobuf field: bool end = 2
+   */
+  end: boolean;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetServerRequest
  */
 export interface GetServerRequest {
-    /**
-     * server_id is the identifier of the specific server to get.
-     *
-     * @generated from protobuf field: int64 server_id = 1
-     */
-    serverId: string;
+  /**
+   * server_id is the identifier of the specific server to get.
+   *
+   * @generated from protobuf field: int64 server_id = 1
+   */
+  serverId: string;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetServerResponse
  */
 export interface GetServerResponse {
-    /**
-     * The Server that corresponds to the requested server_id.  This field
-     * should be set.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.Server server = 1
-     */
-    server?: Server;
+  /**
+   * The Server that corresponds to the requested server_id.  This field
+   * should be set.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.Server server = 1
+   */
+  server?: Server;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetServerSocketsRequest
  */
 export interface GetServerSocketsRequest {
-    /**
-     * @generated from protobuf field: int64 server_id = 1
-     */
-    serverId: string;
-    /**
-     * start_socket_id indicates that only sockets at or above this id should be
-     * included in the results.
-     * To request the first page, this must be set to 0. To request
-     * subsequent pages, the client generates this value by adding 1 to
-     * the highest seen result ID.
-     *
-     * @generated from protobuf field: int64 start_socket_id = 2
-     */
-    startSocketId: string;
-    /**
-     * If non-zero, the server will return a page of results containing
-     * at most this many items. If zero, the server will choose a
-     * reasonable page size.  Must never be negative.
-     *
-     * @generated from protobuf field: int64 max_results = 3
-     */
-    maxResults: string;
+  /**
+   * @generated from protobuf field: int64 server_id = 1
+   */
+  serverId: string;
+  /**
+   * start_socket_id indicates that only sockets at or above this id should be
+   * included in the results.
+   * To request the first page, this must be set to 0. To request
+   * subsequent pages, the client generates this value by adding 1 to
+   * the highest seen result ID.
+   *
+   * @generated from protobuf field: int64 start_socket_id = 2
+   */
+  startSocketId: string;
+  /**
+   * If non-zero, the server will return a page of results containing
+   * at most this many items. If zero, the server will choose a
+   * reasonable page size.  Must never be negative.
+   *
+   * @generated from protobuf field: int64 max_results = 3
+   */
+  maxResults: string;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetServerSocketsResponse
  */
 export interface GetServerSocketsResponse {
-    /**
-     * list of socket refs that the connection detail service knows about.  Sorted in
-     * ascending socket_id order.
-     * Must contain at least 1 result, otherwise 'end' must be true.
-     *
-     * @generated from protobuf field: repeated grpc.channelz.v1.SocketRef socket_ref = 1
-     */
-    socketRef: SocketRef[];
-    /**
-     * If set, indicates that the list of sockets is the final list.  Requesting
-     * more sockets will only return more if they are created after this RPC
-     * completes.
-     *
-     * @generated from protobuf field: bool end = 2
-     */
-    end: boolean;
+  /**
+   * list of socket refs that the connection detail service knows about.  Sorted in
+   * ascending socket_id order.
+   * Must contain at least 1 result, otherwise 'end' must be true.
+   *
+   * @generated from protobuf field: repeated grpc.channelz.v1.SocketRef socket_ref = 1
+   */
+  socketRef: SocketRef[];
+  /**
+   * If set, indicates that the list of sockets is the final list.  Requesting
+   * more sockets will only return more if they are created after this RPC
+   * completes.
+   *
+   * @generated from protobuf field: bool end = 2
+   */
+  end: boolean;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetChannelRequest
  */
 export interface GetChannelRequest {
-    /**
-     * channel_id is the identifier of the specific channel to get.
-     *
-     * @generated from protobuf field: int64 channel_id = 1
-     */
-    channelId: string;
+  /**
+   * channel_id is the identifier of the specific channel to get.
+   *
+   * @generated from protobuf field: int64 channel_id = 1
+   */
+  channelId: string;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetChannelResponse
  */
 export interface GetChannelResponse {
-    /**
-     * The Channel that corresponds to the requested channel_id.  This field
-     * should be set.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.Channel channel = 1
-     */
-    channel?: Channel;
+  /**
+   * The Channel that corresponds to the requested channel_id.  This field
+   * should be set.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.Channel channel = 1
+   */
+  channel?: Channel;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetSubchannelRequest
  */
 export interface GetSubchannelRequest {
-    /**
-     * subchannel_id is the identifier of the specific subchannel to get.
-     *
-     * @generated from protobuf field: int64 subchannel_id = 1
-     */
-    subchannelId: string;
+  /**
+   * subchannel_id is the identifier of the specific subchannel to get.
+   *
+   * @generated from protobuf field: int64 subchannel_id = 1
+   */
+  subchannelId: string;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetSubchannelResponse
  */
 export interface GetSubchannelResponse {
-    /**
-     * The Subchannel that corresponds to the requested subchannel_id.  This
-     * field should be set.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.Subchannel subchannel = 1
-     */
-    subchannel?: Subchannel;
+  /**
+   * The Subchannel that corresponds to the requested subchannel_id.  This
+   * field should be set.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.Subchannel subchannel = 1
+   */
+  subchannel?: Subchannel;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetSocketRequest
  */
 export interface GetSocketRequest {
-    /**
-     * socket_id is the identifier of the specific socket to get.
-     *
-     * @generated from protobuf field: int64 socket_id = 1
-     */
-    socketId: string;
-    /**
-     * If true, the response will contain only high level information
-     * that is inexpensive to obtain. Fields thay may be omitted are
-     * documented.
-     *
-     * @generated from protobuf field: bool summary = 2
-     */
-    summary: boolean;
+  /**
+   * socket_id is the identifier of the specific socket to get.
+   *
+   * @generated from protobuf field: int64 socket_id = 1
+   */
+  socketId: string;
+  /**
+   * If true, the response will contain only high level information
+   * that is inexpensive to obtain. Fields thay may be omitted are
+   * documented.
+   *
+   * @generated from protobuf field: bool summary = 2
+   */
+  summary: boolean;
 }
 /**
  * @generated from protobuf message grpc.channelz.v1.GetSocketResponse
  */
 export interface GetSocketResponse {
-    /**
-     * The Socket that corresponds to the requested socket_id.  This field
-     * should be set.
-     *
-     * @generated from protobuf field: grpc.channelz.v1.Socket socket = 1
-     */
-    socket?: Socket;
+  /**
+   * The Socket that corresponds to the requested socket_id.  This field
+   * should be set.
+   *
+   * @generated from protobuf field: grpc.channelz.v1.Socket socket = 1
+   */
+  socket?: Socket;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class Channel$Type extends MessageType<Channel> {
-    constructor() {
-        super("grpc.channelz.v1.Channel", [
-            { no: 1, name: "ref", kind: "message", T: () => ChannelRef },
-            { no: 2, name: "data", kind: "message", T: () => ChannelData },
-            { no: 3, name: "channel_ref", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ChannelRef },
-            { no: 4, name: "subchannel_ref", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => SubchannelRef },
-            { no: 5, name: "socket_ref", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => SocketRef }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.Channel", [
+      { no: 1, name: "ref", kind: "message", T: () => ChannelRef },
+      { no: 2, name: "data", kind: "message", T: () => ChannelData },
+      {
+        no: 3,
+        name: "channel_ref",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ChannelRef,
+      },
+      {
+        no: 4,
+        name: "subchannel_ref",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SubchannelRef,
+      },
+      {
+        no: 5,
+        name: "socket_ref",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SocketRef,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<Channel>): Channel {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.channelRef = [];
+    message.subchannelRef = [];
+    message.socketRef = [];
+    if (value !== undefined)
+      reflectionMergePartial<Channel>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Channel,
+  ): Channel {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.channelz.v1.ChannelRef ref */ 1:
+          message.ref = ChannelRef.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.ref,
+          );
+          break;
+        case /* grpc.channelz.v1.ChannelData data */ 2:
+          message.data = ChannelData.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.data,
+          );
+          break;
+        case /* repeated grpc.channelz.v1.ChannelRef channel_ref */ 3:
+          message.channelRef.push(
+            ChannelRef.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* repeated grpc.channelz.v1.SubchannelRef subchannel_ref */ 4:
+          message.subchannelRef.push(
+            SubchannelRef.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* repeated grpc.channelz.v1.SocketRef socket_ref */ 5:
+          message.socketRef.push(
+            SocketRef.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Channel>): Channel {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.channelRef = [];
-        message.subchannelRef = [];
-        message.socketRef = [];
-        if (value !== undefined)
-            reflectionMergePartial<Channel>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Channel): Channel {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.channelz.v1.ChannelRef ref */ 1:
-                    message.ref = ChannelRef.internalBinaryRead(reader, reader.uint32(), options, message.ref);
-                    break;
-                case /* grpc.channelz.v1.ChannelData data */ 2:
-                    message.data = ChannelData.internalBinaryRead(reader, reader.uint32(), options, message.data);
-                    break;
-                case /* repeated grpc.channelz.v1.ChannelRef channel_ref */ 3:
-                    message.channelRef.push(ChannelRef.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* repeated grpc.channelz.v1.SubchannelRef subchannel_ref */ 4:
-                    message.subchannelRef.push(SubchannelRef.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* repeated grpc.channelz.v1.SocketRef socket_ref */ 5:
-                    message.socketRef.push(SocketRef.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Channel, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.channelz.v1.ChannelRef ref = 1; */
-        if (message.ref)
-            ChannelRef.internalBinaryWrite(message.ref, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.channelz.v1.ChannelData data = 2; */
-        if (message.data)
-            ChannelData.internalBinaryWrite(message.data, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* repeated grpc.channelz.v1.ChannelRef channel_ref = 3; */
-        for (let i = 0; i < message.channelRef.length; i++)
-            ChannelRef.internalBinaryWrite(message.channelRef[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* repeated grpc.channelz.v1.SubchannelRef subchannel_ref = 4; */
-        for (let i = 0; i < message.subchannelRef.length; i++)
-            SubchannelRef.internalBinaryWrite(message.subchannelRef[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* repeated grpc.channelz.v1.SocketRef socket_ref = 5; */
-        for (let i = 0; i < message.socketRef.length; i++)
-            SocketRef.internalBinaryWrite(message.socketRef[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Channel,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.channelz.v1.ChannelRef ref = 1; */
+    if (message.ref)
+      ChannelRef.internalBinaryWrite(
+        message.ref,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.channelz.v1.ChannelData data = 2; */
+    if (message.data)
+      ChannelData.internalBinaryWrite(
+        message.data,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated grpc.channelz.v1.ChannelRef channel_ref = 3; */
+    for (let i = 0; i < message.channelRef.length; i++)
+      ChannelRef.internalBinaryWrite(
+        message.channelRef[i],
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated grpc.channelz.v1.SubchannelRef subchannel_ref = 4; */
+    for (let i = 0; i < message.subchannelRef.length; i++)
+      SubchannelRef.internalBinaryWrite(
+        message.subchannelRef[i],
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated grpc.channelz.v1.SocketRef socket_ref = 5; */
+    for (let i = 0; i < message.socketRef.length; i++)
+      SocketRef.internalBinaryWrite(
+        message.socketRef[i],
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.Channel
@@ -1261,76 +1355,152 @@ class Channel$Type extends MessageType<Channel> {
 export const Channel = new Channel$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Subchannel$Type extends MessageType<Subchannel> {
-    constructor() {
-        super("grpc.channelz.v1.Subchannel", [
-            { no: 1, name: "ref", kind: "message", T: () => SubchannelRef },
-            { no: 2, name: "data", kind: "message", T: () => ChannelData },
-            { no: 3, name: "channel_ref", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ChannelRef },
-            { no: 4, name: "subchannel_ref", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => SubchannelRef },
-            { no: 5, name: "socket_ref", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => SocketRef }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.Subchannel", [
+      { no: 1, name: "ref", kind: "message", T: () => SubchannelRef },
+      { no: 2, name: "data", kind: "message", T: () => ChannelData },
+      {
+        no: 3,
+        name: "channel_ref",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ChannelRef,
+      },
+      {
+        no: 4,
+        name: "subchannel_ref",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SubchannelRef,
+      },
+      {
+        no: 5,
+        name: "socket_ref",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SocketRef,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<Subchannel>): Subchannel {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.channelRef = [];
+    message.subchannelRef = [];
+    message.socketRef = [];
+    if (value !== undefined)
+      reflectionMergePartial<Subchannel>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Subchannel,
+  ): Subchannel {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.channelz.v1.SubchannelRef ref */ 1:
+          message.ref = SubchannelRef.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.ref,
+          );
+          break;
+        case /* grpc.channelz.v1.ChannelData data */ 2:
+          message.data = ChannelData.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.data,
+          );
+          break;
+        case /* repeated grpc.channelz.v1.ChannelRef channel_ref */ 3:
+          message.channelRef.push(
+            ChannelRef.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* repeated grpc.channelz.v1.SubchannelRef subchannel_ref */ 4:
+          message.subchannelRef.push(
+            SubchannelRef.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* repeated grpc.channelz.v1.SocketRef socket_ref */ 5:
+          message.socketRef.push(
+            SocketRef.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Subchannel>): Subchannel {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.channelRef = [];
-        message.subchannelRef = [];
-        message.socketRef = [];
-        if (value !== undefined)
-            reflectionMergePartial<Subchannel>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Subchannel): Subchannel {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.channelz.v1.SubchannelRef ref */ 1:
-                    message.ref = SubchannelRef.internalBinaryRead(reader, reader.uint32(), options, message.ref);
-                    break;
-                case /* grpc.channelz.v1.ChannelData data */ 2:
-                    message.data = ChannelData.internalBinaryRead(reader, reader.uint32(), options, message.data);
-                    break;
-                case /* repeated grpc.channelz.v1.ChannelRef channel_ref */ 3:
-                    message.channelRef.push(ChannelRef.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* repeated grpc.channelz.v1.SubchannelRef subchannel_ref */ 4:
-                    message.subchannelRef.push(SubchannelRef.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* repeated grpc.channelz.v1.SocketRef socket_ref */ 5:
-                    message.socketRef.push(SocketRef.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Subchannel, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.channelz.v1.SubchannelRef ref = 1; */
-        if (message.ref)
-            SubchannelRef.internalBinaryWrite(message.ref, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.channelz.v1.ChannelData data = 2; */
-        if (message.data)
-            ChannelData.internalBinaryWrite(message.data, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* repeated grpc.channelz.v1.ChannelRef channel_ref = 3; */
-        for (let i = 0; i < message.channelRef.length; i++)
-            ChannelRef.internalBinaryWrite(message.channelRef[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* repeated grpc.channelz.v1.SubchannelRef subchannel_ref = 4; */
-        for (let i = 0; i < message.subchannelRef.length; i++)
-            SubchannelRef.internalBinaryWrite(message.subchannelRef[i], writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* repeated grpc.channelz.v1.SocketRef socket_ref = 5; */
-        for (let i = 0; i < message.socketRef.length; i++)
-            SocketRef.internalBinaryWrite(message.socketRef[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Subchannel,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.channelz.v1.SubchannelRef ref = 1; */
+    if (message.ref)
+      SubchannelRef.internalBinaryWrite(
+        message.ref,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.channelz.v1.ChannelData data = 2; */
+    if (message.data)
+      ChannelData.internalBinaryWrite(
+        message.data,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated grpc.channelz.v1.ChannelRef channel_ref = 3; */
+    for (let i = 0; i < message.channelRef.length; i++)
+      ChannelRef.internalBinaryWrite(
+        message.channelRef[i],
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated grpc.channelz.v1.SubchannelRef subchannel_ref = 4; */
+    for (let i = 0; i < message.subchannelRef.length; i++)
+      SubchannelRef.internalBinaryWrite(
+        message.subchannelRef[i],
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated grpc.channelz.v1.SocketRef socket_ref = 5; */
+    for (let i = 0; i < message.socketRef.length; i++)
+      SocketRef.internalBinaryWrite(
+        message.socketRef[i],
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.Subchannel
@@ -1338,46 +1508,78 @@ class Subchannel$Type extends MessageType<Subchannel> {
 export const Subchannel = new Subchannel$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ChannelConnectivityState$Type extends MessageType<ChannelConnectivityState> {
-    constructor() {
-        super("grpc.channelz.v1.ChannelConnectivityState", [
-            { no: 1, name: "state", kind: "enum", T: () => ["grpc.channelz.v1.ChannelConnectivityState.State", ChannelConnectivityState_State] }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.ChannelConnectivityState", [
+      {
+        no: 1,
+        name: "state",
+        kind: "enum",
+        T: () => [
+          "grpc.channelz.v1.ChannelConnectivityState.State",
+          ChannelConnectivityState_State,
+        ],
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<ChannelConnectivityState>,
+  ): ChannelConnectivityState {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.state = 0;
+    if (value !== undefined)
+      reflectionMergePartial<ChannelConnectivityState>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ChannelConnectivityState,
+  ): ChannelConnectivityState {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.channelz.v1.ChannelConnectivityState.State state */ 1:
+          message.state = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ChannelConnectivityState>): ChannelConnectivityState {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.state = 0;
-        if (value !== undefined)
-            reflectionMergePartial<ChannelConnectivityState>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChannelConnectivityState): ChannelConnectivityState {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.channelz.v1.ChannelConnectivityState.State state */ 1:
-                    message.state = reader.int32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChannelConnectivityState, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.channelz.v1.ChannelConnectivityState.State state = 1; */
-        if (message.state !== 0)
-            writer.tag(1, WireType.Varint).int32(message.state);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ChannelConnectivityState,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.channelz.v1.ChannelConnectivityState.State state = 1; */
+    if (message.state !== 0)
+      writer.tag(1, WireType.Varint).int32(message.state);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.ChannelConnectivityState
@@ -1385,91 +1587,165 @@ class ChannelConnectivityState$Type extends MessageType<ChannelConnectivityState
 export const ChannelConnectivityState = new ChannelConnectivityState$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ChannelData$Type extends MessageType<ChannelData> {
-    constructor() {
-        super("grpc.channelz.v1.ChannelData", [
-            { no: 1, name: "state", kind: "message", T: () => ChannelConnectivityState },
-            { no: 2, name: "target", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "trace", kind: "message", T: () => ChannelTrace },
-            { no: 4, name: "calls_started", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 5, name: "calls_succeeded", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 6, name: "calls_failed", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 7, name: "last_call_started_timestamp", kind: "message", T: () => Timestamp }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.ChannelData", [
+      {
+        no: 1,
+        name: "state",
+        kind: "message",
+        T: () => ChannelConnectivityState,
+      },
+      { no: 2, name: "target", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "trace", kind: "message", T: () => ChannelTrace },
+      {
+        no: 4,
+        name: "calls_started",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 5,
+        name: "calls_succeeded",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 6,
+        name: "calls_failed",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 7,
+        name: "last_call_started_timestamp",
+        kind: "message",
+        T: () => Timestamp,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ChannelData>): ChannelData {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.target = "";
+    message.callsStarted = "0";
+    message.callsSucceeded = "0";
+    message.callsFailed = "0";
+    if (value !== undefined)
+      reflectionMergePartial<ChannelData>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ChannelData,
+  ): ChannelData {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.channelz.v1.ChannelConnectivityState state */ 1:
+          message.state = ChannelConnectivityState.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.state,
+          );
+          break;
+        case /* string target */ 2:
+          message.target = reader.string();
+          break;
+        case /* grpc.channelz.v1.ChannelTrace trace */ 3:
+          message.trace = ChannelTrace.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.trace,
+          );
+          break;
+        case /* int64 calls_started */ 4:
+          message.callsStarted = reader.int64().toString();
+          break;
+        case /* int64 calls_succeeded */ 5:
+          message.callsSucceeded = reader.int64().toString();
+          break;
+        case /* int64 calls_failed */ 6:
+          message.callsFailed = reader.int64().toString();
+          break;
+        case /* google.protobuf.Timestamp last_call_started_timestamp */ 7:
+          message.lastCallStartedTimestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.lastCallStartedTimestamp,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ChannelData>): ChannelData {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.target = "";
-        message.callsStarted = "0";
-        message.callsSucceeded = "0";
-        message.callsFailed = "0";
-        if (value !== undefined)
-            reflectionMergePartial<ChannelData>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChannelData): ChannelData {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.channelz.v1.ChannelConnectivityState state */ 1:
-                    message.state = ChannelConnectivityState.internalBinaryRead(reader, reader.uint32(), options, message.state);
-                    break;
-                case /* string target */ 2:
-                    message.target = reader.string();
-                    break;
-                case /* grpc.channelz.v1.ChannelTrace trace */ 3:
-                    message.trace = ChannelTrace.internalBinaryRead(reader, reader.uint32(), options, message.trace);
-                    break;
-                case /* int64 calls_started */ 4:
-                    message.callsStarted = reader.int64().toString();
-                    break;
-                case /* int64 calls_succeeded */ 5:
-                    message.callsSucceeded = reader.int64().toString();
-                    break;
-                case /* int64 calls_failed */ 6:
-                    message.callsFailed = reader.int64().toString();
-                    break;
-                case /* google.protobuf.Timestamp last_call_started_timestamp */ 7:
-                    message.lastCallStartedTimestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastCallStartedTimestamp);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChannelData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.channelz.v1.ChannelConnectivityState state = 1; */
-        if (message.state)
-            ChannelConnectivityState.internalBinaryWrite(message.state, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* string target = 2; */
-        if (message.target !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.target);
-        /* grpc.channelz.v1.ChannelTrace trace = 3; */
-        if (message.trace)
-            ChannelTrace.internalBinaryWrite(message.trace, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* int64 calls_started = 4; */
-        if (message.callsStarted !== "0")
-            writer.tag(4, WireType.Varint).int64(message.callsStarted);
-        /* int64 calls_succeeded = 5; */
-        if (message.callsSucceeded !== "0")
-            writer.tag(5, WireType.Varint).int64(message.callsSucceeded);
-        /* int64 calls_failed = 6; */
-        if (message.callsFailed !== "0")
-            writer.tag(6, WireType.Varint).int64(message.callsFailed);
-        /* google.protobuf.Timestamp last_call_started_timestamp = 7; */
-        if (message.lastCallStartedTimestamp)
-            Timestamp.internalBinaryWrite(message.lastCallStartedTimestamp, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ChannelData,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.channelz.v1.ChannelConnectivityState state = 1; */
+    if (message.state)
+      ChannelConnectivityState.internalBinaryWrite(
+        message.state,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* string target = 2; */
+    if (message.target !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.target);
+    /* grpc.channelz.v1.ChannelTrace trace = 3; */
+    if (message.trace)
+      ChannelTrace.internalBinaryWrite(
+        message.trace,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* int64 calls_started = 4; */
+    if (message.callsStarted !== "0")
+      writer.tag(4, WireType.Varint).int64(message.callsStarted);
+    /* int64 calls_succeeded = 5; */
+    if (message.callsSucceeded !== "0")
+      writer.tag(5, WireType.Varint).int64(message.callsSucceeded);
+    /* int64 calls_failed = 6; */
+    if (message.callsFailed !== "0")
+      writer.tag(6, WireType.Varint).int64(message.callsFailed);
+    /* google.protobuf.Timestamp last_call_started_timestamp = 7; */
+    if (message.lastCallStartedTimestamp)
+      Timestamp.internalBinaryWrite(
+        message.lastCallStartedTimestamp,
+        writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.ChannelData
@@ -1477,82 +1753,156 @@ class ChannelData$Type extends MessageType<ChannelData> {
 export const ChannelData = new ChannelData$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ChannelTraceEvent$Type extends MessageType<ChannelTraceEvent> {
-    constructor() {
-        super("grpc.channelz.v1.ChannelTraceEvent", [
-            { no: 1, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "severity", kind: "enum", T: () => ["grpc.channelz.v1.ChannelTraceEvent.Severity", ChannelTraceEvent_Severity] },
-            { no: 3, name: "timestamp", kind: "message", T: () => Timestamp },
-            { no: 4, name: "channel_ref", kind: "message", oneof: "childRef", T: () => ChannelRef },
-            { no: 5, name: "subchannel_ref", kind: "message", oneof: "childRef", T: () => SubchannelRef }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.ChannelTraceEvent", [
+      {
+        no: 1,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 2,
+        name: "severity",
+        kind: "enum",
+        T: () => [
+          "grpc.channelz.v1.ChannelTraceEvent.Severity",
+          ChannelTraceEvent_Severity,
+        ],
+      },
+      { no: 3, name: "timestamp", kind: "message", T: () => Timestamp },
+      {
+        no: 4,
+        name: "channel_ref",
+        kind: "message",
+        oneof: "childRef",
+        T: () => ChannelRef,
+      },
+      {
+        no: 5,
+        name: "subchannel_ref",
+        kind: "message",
+        oneof: "childRef",
+        T: () => SubchannelRef,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ChannelTraceEvent>): ChannelTraceEvent {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.description = "";
+    message.severity = 0;
+    message.childRef = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<ChannelTraceEvent>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ChannelTraceEvent,
+  ): ChannelTraceEvent {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string description */ 1:
+          message.description = reader.string();
+          break;
+        case /* grpc.channelz.v1.ChannelTraceEvent.Severity severity */ 2:
+          message.severity = reader.int32();
+          break;
+        case /* google.protobuf.Timestamp timestamp */ 3:
+          message.timestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.timestamp,
+          );
+          break;
+        case /* grpc.channelz.v1.ChannelRef channel_ref */ 4:
+          message.childRef = {
+            oneofKind: "channelRef",
+            channelRef: ChannelRef.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.childRef as any).channelRef,
+            ),
+          };
+          break;
+        case /* grpc.channelz.v1.SubchannelRef subchannel_ref */ 5:
+          message.childRef = {
+            oneofKind: "subchannelRef",
+            subchannelRef: SubchannelRef.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.childRef as any).subchannelRef,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ChannelTraceEvent>): ChannelTraceEvent {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.description = "";
-        message.severity = 0;
-        message.childRef = { oneofKind: undefined };
-        if (value !== undefined)
-            reflectionMergePartial<ChannelTraceEvent>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChannelTraceEvent): ChannelTraceEvent {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string description */ 1:
-                    message.description = reader.string();
-                    break;
-                case /* grpc.channelz.v1.ChannelTraceEvent.Severity severity */ 2:
-                    message.severity = reader.int32();
-                    break;
-                case /* google.protobuf.Timestamp timestamp */ 3:
-                    message.timestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.timestamp);
-                    break;
-                case /* grpc.channelz.v1.ChannelRef channel_ref */ 4:
-                    message.childRef = {
-                        oneofKind: "channelRef",
-                        channelRef: ChannelRef.internalBinaryRead(reader, reader.uint32(), options, (message.childRef as any).channelRef)
-                    };
-                    break;
-                case /* grpc.channelz.v1.SubchannelRef subchannel_ref */ 5:
-                    message.childRef = {
-                        oneofKind: "subchannelRef",
-                        subchannelRef: SubchannelRef.internalBinaryRead(reader, reader.uint32(), options, (message.childRef as any).subchannelRef)
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChannelTraceEvent, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string description = 1; */
-        if (message.description !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.description);
-        /* grpc.channelz.v1.ChannelTraceEvent.Severity severity = 2; */
-        if (message.severity !== 0)
-            writer.tag(2, WireType.Varint).int32(message.severity);
-        /* google.protobuf.Timestamp timestamp = 3; */
-        if (message.timestamp)
-            Timestamp.internalBinaryWrite(message.timestamp, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.channelz.v1.ChannelRef channel_ref = 4; */
-        if (message.childRef.oneofKind === "channelRef")
-            ChannelRef.internalBinaryWrite(message.childRef.channelRef, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.channelz.v1.SubchannelRef subchannel_ref = 5; */
-        if (message.childRef.oneofKind === "subchannelRef")
-            SubchannelRef.internalBinaryWrite(message.childRef.subchannelRef, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ChannelTraceEvent,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string description = 1; */
+    if (message.description !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.description);
+    /* grpc.channelz.v1.ChannelTraceEvent.Severity severity = 2; */
+    if (message.severity !== 0)
+      writer.tag(2, WireType.Varint).int32(message.severity);
+    /* google.protobuf.Timestamp timestamp = 3; */
+    if (message.timestamp)
+      Timestamp.internalBinaryWrite(
+        message.timestamp,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.channelz.v1.ChannelRef channel_ref = 4; */
+    if (message.childRef.oneofKind === "channelRef")
+      ChannelRef.internalBinaryWrite(
+        message.childRef.channelRef,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.channelz.v1.SubchannelRef subchannel_ref = 5; */
+    if (message.childRef.oneofKind === "subchannelRef")
+      SubchannelRef.internalBinaryWrite(
+        message.childRef.subchannelRef,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.ChannelTraceEvent
@@ -1560,61 +1910,118 @@ class ChannelTraceEvent$Type extends MessageType<ChannelTraceEvent> {
 export const ChannelTraceEvent = new ChannelTraceEvent$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ChannelTrace$Type extends MessageType<ChannelTrace> {
-    constructor() {
-        super("grpc.channelz.v1.ChannelTrace", [
-            { no: 1, name: "num_events_logged", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 2, name: "creation_timestamp", kind: "message", T: () => Timestamp },
-            { no: 3, name: "events", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ChannelTraceEvent }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.ChannelTrace", [
+      {
+        no: 1,
+        name: "num_events_logged",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 2,
+        name: "creation_timestamp",
+        kind: "message",
+        T: () => Timestamp,
+      },
+      {
+        no: 3,
+        name: "events",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ChannelTraceEvent,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ChannelTrace>): ChannelTrace {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.numEventsLogged = "0";
+    message.events = [];
+    if (value !== undefined)
+      reflectionMergePartial<ChannelTrace>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ChannelTrace,
+  ): ChannelTrace {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 num_events_logged */ 1:
+          message.numEventsLogged = reader.int64().toString();
+          break;
+        case /* google.protobuf.Timestamp creation_timestamp */ 2:
+          message.creationTimestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.creationTimestamp,
+          );
+          break;
+        case /* repeated grpc.channelz.v1.ChannelTraceEvent events */ 3:
+          message.events.push(
+            ChannelTraceEvent.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ChannelTrace>): ChannelTrace {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.numEventsLogged = "0";
-        message.events = [];
-        if (value !== undefined)
-            reflectionMergePartial<ChannelTrace>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChannelTrace): ChannelTrace {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 num_events_logged */ 1:
-                    message.numEventsLogged = reader.int64().toString();
-                    break;
-                case /* google.protobuf.Timestamp creation_timestamp */ 2:
-                    message.creationTimestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.creationTimestamp);
-                    break;
-                case /* repeated grpc.channelz.v1.ChannelTraceEvent events */ 3:
-                    message.events.push(ChannelTraceEvent.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChannelTrace, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 num_events_logged = 1; */
-        if (message.numEventsLogged !== "0")
-            writer.tag(1, WireType.Varint).int64(message.numEventsLogged);
-        /* google.protobuf.Timestamp creation_timestamp = 2; */
-        if (message.creationTimestamp)
-            Timestamp.internalBinaryWrite(message.creationTimestamp, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* repeated grpc.channelz.v1.ChannelTraceEvent events = 3; */
-        for (let i = 0; i < message.events.length; i++)
-            ChannelTraceEvent.internalBinaryWrite(message.events[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ChannelTrace,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 num_events_logged = 1; */
+    if (message.numEventsLogged !== "0")
+      writer.tag(1, WireType.Varint).int64(message.numEventsLogged);
+    /* google.protobuf.Timestamp creation_timestamp = 2; */
+    if (message.creationTimestamp)
+      Timestamp.internalBinaryWrite(
+        message.creationTimestamp,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated grpc.channelz.v1.ChannelTraceEvent events = 3; */
+    for (let i = 0; i < message.events.length; i++)
+      ChannelTraceEvent.internalBinaryWrite(
+        message.events[i],
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.ChannelTrace
@@ -1622,54 +2029,76 @@ class ChannelTrace$Type extends MessageType<ChannelTrace> {
 export const ChannelTrace = new ChannelTrace$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ChannelRef$Type extends MessageType<ChannelRef> {
-    constructor() {
-        super("grpc.channelz.v1.ChannelRef", [
-            { no: 1, name: "channel_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.ChannelRef", [
+      { no: 1, name: "channel_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+      { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<ChannelRef>): ChannelRef {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.channelId = "0";
+    message.name = "";
+    if (value !== undefined)
+      reflectionMergePartial<ChannelRef>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ChannelRef,
+  ): ChannelRef {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 channel_id */ 1:
+          message.channelId = reader.int64().toString();
+          break;
+        case /* string name */ 2:
+          message.name = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ChannelRef>): ChannelRef {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.channelId = "0";
-        message.name = "";
-        if (value !== undefined)
-            reflectionMergePartial<ChannelRef>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ChannelRef): ChannelRef {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 channel_id */ 1:
-                    message.channelId = reader.int64().toString();
-                    break;
-                case /* string name */ 2:
-                    message.name = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ChannelRef, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 channel_id = 1; */
-        if (message.channelId !== "0")
-            writer.tag(1, WireType.Varint).int64(message.channelId);
-        /* string name = 2; */
-        if (message.name !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.name);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ChannelRef,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 channel_id = 1; */
+    if (message.channelId !== "0")
+      writer.tag(1, WireType.Varint).int64(message.channelId);
+    /* string name = 2; */
+    if (message.name !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.name);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.ChannelRef
@@ -1677,54 +2106,81 @@ class ChannelRef$Type extends MessageType<ChannelRef> {
 export const ChannelRef = new ChannelRef$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SubchannelRef$Type extends MessageType<SubchannelRef> {
-    constructor() {
-        super("grpc.channelz.v1.SubchannelRef", [
-            { no: 7, name: "subchannel_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 8, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.SubchannelRef", [
+      {
+        no: 7,
+        name: "subchannel_id",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      { no: 8, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<SubchannelRef>): SubchannelRef {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.subchannelId = "0";
+    message.name = "";
+    if (value !== undefined)
+      reflectionMergePartial<SubchannelRef>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SubchannelRef,
+  ): SubchannelRef {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 subchannel_id */ 7:
+          message.subchannelId = reader.int64().toString();
+          break;
+        case /* string name */ 8:
+          message.name = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<SubchannelRef>): SubchannelRef {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.subchannelId = "0";
-        message.name = "";
-        if (value !== undefined)
-            reflectionMergePartial<SubchannelRef>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SubchannelRef): SubchannelRef {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 subchannel_id */ 7:
-                    message.subchannelId = reader.int64().toString();
-                    break;
-                case /* string name */ 8:
-                    message.name = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SubchannelRef, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 subchannel_id = 7; */
-        if (message.subchannelId !== "0")
-            writer.tag(7, WireType.Varint).int64(message.subchannelId);
-        /* string name = 8; */
-        if (message.name !== "")
-            writer.tag(8, WireType.LengthDelimited).string(message.name);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SubchannelRef,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 subchannel_id = 7; */
+    if (message.subchannelId !== "0")
+      writer.tag(7, WireType.Varint).int64(message.subchannelId);
+    /* string name = 8; */
+    if (message.name !== "")
+      writer.tag(8, WireType.LengthDelimited).string(message.name);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.SubchannelRef
@@ -1732,54 +2188,76 @@ class SubchannelRef$Type extends MessageType<SubchannelRef> {
 export const SubchannelRef = new SubchannelRef$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SocketRef$Type extends MessageType<SocketRef> {
-    constructor() {
-        super("grpc.channelz.v1.SocketRef", [
-            { no: 3, name: "socket_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 4, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.SocketRef", [
+      { no: 3, name: "socket_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+      { no: 4, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<SocketRef>): SocketRef {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.socketId = "0";
+    message.name = "";
+    if (value !== undefined)
+      reflectionMergePartial<SocketRef>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SocketRef,
+  ): SocketRef {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 socket_id */ 3:
+          message.socketId = reader.int64().toString();
+          break;
+        case /* string name */ 4:
+          message.name = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<SocketRef>): SocketRef {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.socketId = "0";
-        message.name = "";
-        if (value !== undefined)
-            reflectionMergePartial<SocketRef>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SocketRef): SocketRef {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 socket_id */ 3:
-                    message.socketId = reader.int64().toString();
-                    break;
-                case /* string name */ 4:
-                    message.name = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SocketRef, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 socket_id = 3; */
-        if (message.socketId !== "0")
-            writer.tag(3, WireType.Varint).int64(message.socketId);
-        /* string name = 4; */
-        if (message.name !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.name);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SocketRef,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 socket_id = 3; */
+    if (message.socketId !== "0")
+      writer.tag(3, WireType.Varint).int64(message.socketId);
+    /* string name = 4; */
+    if (message.name !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.name);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.SocketRef
@@ -1787,54 +2265,76 @@ class SocketRef$Type extends MessageType<SocketRef> {
 export const SocketRef = new SocketRef$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ServerRef$Type extends MessageType<ServerRef> {
-    constructor() {
-        super("grpc.channelz.v1.ServerRef", [
-            { no: 5, name: "server_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 6, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.ServerRef", [
+      { no: 5, name: "server_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+      { no: 6, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<ServerRef>): ServerRef {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.serverId = "0";
+    message.name = "";
+    if (value !== undefined)
+      reflectionMergePartial<ServerRef>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ServerRef,
+  ): ServerRef {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 server_id */ 5:
+          message.serverId = reader.int64().toString();
+          break;
+        case /* string name */ 6:
+          message.name = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ServerRef>): ServerRef {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.serverId = "0";
-        message.name = "";
-        if (value !== undefined)
-            reflectionMergePartial<ServerRef>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ServerRef): ServerRef {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 server_id */ 5:
-                    message.serverId = reader.int64().toString();
-                    break;
-                case /* string name */ 6:
-                    message.name = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ServerRef, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 server_id = 5; */
-        if (message.serverId !== "0")
-            writer.tag(5, WireType.Varint).int64(message.serverId);
-        /* string name = 6; */
-        if (message.name !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.name);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ServerRef,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 server_id = 5; */
+    if (message.serverId !== "0")
+      writer.tag(5, WireType.Varint).int64(message.serverId);
+    /* string name = 6; */
+    if (message.name !== "")
+      writer.tag(6, WireType.LengthDelimited).string(message.name);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.ServerRef
@@ -1842,60 +2342,112 @@ class ServerRef$Type extends MessageType<ServerRef> {
 export const ServerRef = new ServerRef$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Server$Type extends MessageType<Server> {
-    constructor() {
-        super("grpc.channelz.v1.Server", [
-            { no: 1, name: "ref", kind: "message", T: () => ServerRef },
-            { no: 2, name: "data", kind: "message", T: () => ServerData },
-            { no: 3, name: "listen_socket", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => SocketRef }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.Server", [
+      { no: 1, name: "ref", kind: "message", T: () => ServerRef },
+      { no: 2, name: "data", kind: "message", T: () => ServerData },
+      {
+        no: 3,
+        name: "listen_socket",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SocketRef,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<Server>): Server {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.listenSocket = [];
+    if (value !== undefined)
+      reflectionMergePartial<Server>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Server,
+  ): Server {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.channelz.v1.ServerRef ref */ 1:
+          message.ref = ServerRef.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.ref,
+          );
+          break;
+        case /* grpc.channelz.v1.ServerData data */ 2:
+          message.data = ServerData.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.data,
+          );
+          break;
+        case /* repeated grpc.channelz.v1.SocketRef listen_socket */ 3:
+          message.listenSocket.push(
+            SocketRef.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Server>): Server {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.listenSocket = [];
-        if (value !== undefined)
-            reflectionMergePartial<Server>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Server): Server {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.channelz.v1.ServerRef ref */ 1:
-                    message.ref = ServerRef.internalBinaryRead(reader, reader.uint32(), options, message.ref);
-                    break;
-                case /* grpc.channelz.v1.ServerData data */ 2:
-                    message.data = ServerData.internalBinaryRead(reader, reader.uint32(), options, message.data);
-                    break;
-                case /* repeated grpc.channelz.v1.SocketRef listen_socket */ 3:
-                    message.listenSocket.push(SocketRef.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Server, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.channelz.v1.ServerRef ref = 1; */
-        if (message.ref)
-            ServerRef.internalBinaryWrite(message.ref, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.channelz.v1.ServerData data = 2; */
-        if (message.data)
-            ServerData.internalBinaryWrite(message.data, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* repeated grpc.channelz.v1.SocketRef listen_socket = 3; */
-        for (let i = 0; i < message.listenSocket.length; i++)
-            SocketRef.internalBinaryWrite(message.listenSocket[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Server,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.channelz.v1.ServerRef ref = 1; */
+    if (message.ref)
+      ServerRef.internalBinaryWrite(
+        message.ref,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.channelz.v1.ServerData data = 2; */
+    if (message.data)
+      ServerData.internalBinaryWrite(
+        message.data,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated grpc.channelz.v1.SocketRef listen_socket = 3; */
+    for (let i = 0; i < message.listenSocket.length; i++)
+      SocketRef.internalBinaryWrite(
+        message.listenSocket[i],
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.Server
@@ -1903,76 +2455,136 @@ class Server$Type extends MessageType<Server> {
 export const Server = new Server$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ServerData$Type extends MessageType<ServerData> {
-    constructor() {
-        super("grpc.channelz.v1.ServerData", [
-            { no: 1, name: "trace", kind: "message", T: () => ChannelTrace },
-            { no: 2, name: "calls_started", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 3, name: "calls_succeeded", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 4, name: "calls_failed", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 5, name: "last_call_started_timestamp", kind: "message", T: () => Timestamp }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.ServerData", [
+      { no: 1, name: "trace", kind: "message", T: () => ChannelTrace },
+      {
+        no: 2,
+        name: "calls_started",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 3,
+        name: "calls_succeeded",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 4,
+        name: "calls_failed",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 5,
+        name: "last_call_started_timestamp",
+        kind: "message",
+        T: () => Timestamp,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ServerData>): ServerData {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.callsStarted = "0";
+    message.callsSucceeded = "0";
+    message.callsFailed = "0";
+    if (value !== undefined)
+      reflectionMergePartial<ServerData>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ServerData,
+  ): ServerData {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.channelz.v1.ChannelTrace trace */ 1:
+          message.trace = ChannelTrace.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.trace,
+          );
+          break;
+        case /* int64 calls_started */ 2:
+          message.callsStarted = reader.int64().toString();
+          break;
+        case /* int64 calls_succeeded */ 3:
+          message.callsSucceeded = reader.int64().toString();
+          break;
+        case /* int64 calls_failed */ 4:
+          message.callsFailed = reader.int64().toString();
+          break;
+        case /* google.protobuf.Timestamp last_call_started_timestamp */ 5:
+          message.lastCallStartedTimestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.lastCallStartedTimestamp,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ServerData>): ServerData {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.callsStarted = "0";
-        message.callsSucceeded = "0";
-        message.callsFailed = "0";
-        if (value !== undefined)
-            reflectionMergePartial<ServerData>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ServerData): ServerData {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.channelz.v1.ChannelTrace trace */ 1:
-                    message.trace = ChannelTrace.internalBinaryRead(reader, reader.uint32(), options, message.trace);
-                    break;
-                case /* int64 calls_started */ 2:
-                    message.callsStarted = reader.int64().toString();
-                    break;
-                case /* int64 calls_succeeded */ 3:
-                    message.callsSucceeded = reader.int64().toString();
-                    break;
-                case /* int64 calls_failed */ 4:
-                    message.callsFailed = reader.int64().toString();
-                    break;
-                case /* google.protobuf.Timestamp last_call_started_timestamp */ 5:
-                    message.lastCallStartedTimestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastCallStartedTimestamp);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ServerData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.channelz.v1.ChannelTrace trace = 1; */
-        if (message.trace)
-            ChannelTrace.internalBinaryWrite(message.trace, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* int64 calls_started = 2; */
-        if (message.callsStarted !== "0")
-            writer.tag(2, WireType.Varint).int64(message.callsStarted);
-        /* int64 calls_succeeded = 3; */
-        if (message.callsSucceeded !== "0")
-            writer.tag(3, WireType.Varint).int64(message.callsSucceeded);
-        /* int64 calls_failed = 4; */
-        if (message.callsFailed !== "0")
-            writer.tag(4, WireType.Varint).int64(message.callsFailed);
-        /* google.protobuf.Timestamp last_call_started_timestamp = 5; */
-        if (message.lastCallStartedTimestamp)
-            Timestamp.internalBinaryWrite(message.lastCallStartedTimestamp, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ServerData,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.channelz.v1.ChannelTrace trace = 1; */
+    if (message.trace)
+      ChannelTrace.internalBinaryWrite(
+        message.trace,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* int64 calls_started = 2; */
+    if (message.callsStarted !== "0")
+      writer.tag(2, WireType.Varint).int64(message.callsStarted);
+    /* int64 calls_succeeded = 3; */
+    if (message.callsSucceeded !== "0")
+      writer.tag(3, WireType.Varint).int64(message.callsSucceeded);
+    /* int64 calls_failed = 4; */
+    if (message.callsFailed !== "0")
+      writer.tag(4, WireType.Varint).int64(message.callsFailed);
+    /* google.protobuf.Timestamp last_call_started_timestamp = 5; */
+    if (message.lastCallStartedTimestamp)
+      Timestamp.internalBinaryWrite(
+        message.lastCallStartedTimestamp,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.ServerData
@@ -1980,81 +2592,153 @@ class ServerData$Type extends MessageType<ServerData> {
 export const ServerData = new ServerData$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Socket$Type extends MessageType<Socket> {
-    constructor() {
-        super("grpc.channelz.v1.Socket", [
-            { no: 1, name: "ref", kind: "message", T: () => SocketRef },
-            { no: 2, name: "data", kind: "message", T: () => SocketData },
-            { no: 3, name: "local", kind: "message", T: () => Address },
-            { no: 4, name: "remote", kind: "message", T: () => Address },
-            { no: 5, name: "security", kind: "message", T: () => Security },
-            { no: 6, name: "remote_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.Socket", [
+      { no: 1, name: "ref", kind: "message", T: () => SocketRef },
+      { no: 2, name: "data", kind: "message", T: () => SocketData },
+      { no: 3, name: "local", kind: "message", T: () => Address },
+      { no: 4, name: "remote", kind: "message", T: () => Address },
+      { no: 5, name: "security", kind: "message", T: () => Security },
+      {
+        no: 6,
+        name: "remote_name",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<Socket>): Socket {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.remoteName = "";
+    if (value !== undefined)
+      reflectionMergePartial<Socket>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Socket,
+  ): Socket {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.channelz.v1.SocketRef ref */ 1:
+          message.ref = SocketRef.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.ref,
+          );
+          break;
+        case /* grpc.channelz.v1.SocketData data */ 2:
+          message.data = SocketData.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.data,
+          );
+          break;
+        case /* grpc.channelz.v1.Address local */ 3:
+          message.local = Address.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.local,
+          );
+          break;
+        case /* grpc.channelz.v1.Address remote */ 4:
+          message.remote = Address.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.remote,
+          );
+          break;
+        case /* grpc.channelz.v1.Security security */ 5:
+          message.security = Security.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.security,
+          );
+          break;
+        case /* string remote_name */ 6:
+          message.remoteName = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Socket>): Socket {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.remoteName = "";
-        if (value !== undefined)
-            reflectionMergePartial<Socket>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Socket): Socket {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.channelz.v1.SocketRef ref */ 1:
-                    message.ref = SocketRef.internalBinaryRead(reader, reader.uint32(), options, message.ref);
-                    break;
-                case /* grpc.channelz.v1.SocketData data */ 2:
-                    message.data = SocketData.internalBinaryRead(reader, reader.uint32(), options, message.data);
-                    break;
-                case /* grpc.channelz.v1.Address local */ 3:
-                    message.local = Address.internalBinaryRead(reader, reader.uint32(), options, message.local);
-                    break;
-                case /* grpc.channelz.v1.Address remote */ 4:
-                    message.remote = Address.internalBinaryRead(reader, reader.uint32(), options, message.remote);
-                    break;
-                case /* grpc.channelz.v1.Security security */ 5:
-                    message.security = Security.internalBinaryRead(reader, reader.uint32(), options, message.security);
-                    break;
-                case /* string remote_name */ 6:
-                    message.remoteName = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Socket, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.channelz.v1.SocketRef ref = 1; */
-        if (message.ref)
-            SocketRef.internalBinaryWrite(message.ref, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.channelz.v1.SocketData data = 2; */
-        if (message.data)
-            SocketData.internalBinaryWrite(message.data, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.channelz.v1.Address local = 3; */
-        if (message.local)
-            Address.internalBinaryWrite(message.local, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.channelz.v1.Address remote = 4; */
-        if (message.remote)
-            Address.internalBinaryWrite(message.remote, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.channelz.v1.Security security = 5; */
-        if (message.security)
-            Security.internalBinaryWrite(message.security, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* string remote_name = 6; */
-        if (message.remoteName !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.remoteName);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Socket,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.channelz.v1.SocketRef ref = 1; */
+    if (message.ref)
+      SocketRef.internalBinaryWrite(
+        message.ref,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.channelz.v1.SocketData data = 2; */
+    if (message.data)
+      SocketData.internalBinaryWrite(
+        message.data,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.channelz.v1.Address local = 3; */
+    if (message.local)
+      Address.internalBinaryWrite(
+        message.local,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.channelz.v1.Address remote = 4; */
+    if (message.remote)
+      Address.internalBinaryWrite(
+        message.remote,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.channelz.v1.Security security = 5; */
+    if (message.security)
+      Security.internalBinaryWrite(
+        message.security,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* string remote_name = 6; */
+    if (message.remoteName !== "")
+      writer.tag(6, WireType.LengthDelimited).string(message.remoteName);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.Socket
@@ -2062,136 +2746,286 @@ class Socket$Type extends MessageType<Socket> {
 export const Socket = new Socket$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SocketData$Type extends MessageType<SocketData> {
-    constructor() {
-        super("grpc.channelz.v1.SocketData", [
-            { no: 1, name: "streams_started", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 2, name: "streams_succeeded", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 3, name: "streams_failed", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 4, name: "messages_sent", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 5, name: "messages_received", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 6, name: "keep_alives_sent", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 7, name: "last_local_stream_created_timestamp", kind: "message", T: () => Timestamp },
-            { no: 8, name: "last_remote_stream_created_timestamp", kind: "message", T: () => Timestamp },
-            { no: 9, name: "last_message_sent_timestamp", kind: "message", T: () => Timestamp },
-            { no: 10, name: "last_message_received_timestamp", kind: "message", T: () => Timestamp },
-            { no: 11, name: "local_flow_control_window", kind: "message", T: () => Int64Value },
-            { no: 12, name: "remote_flow_control_window", kind: "message", T: () => Int64Value },
-            { no: 13, name: "option", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => SocketOption }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.SocketData", [
+      {
+        no: 1,
+        name: "streams_started",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 2,
+        name: "streams_succeeded",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 3,
+        name: "streams_failed",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 4,
+        name: "messages_sent",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 5,
+        name: "messages_received",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 6,
+        name: "keep_alives_sent",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 7,
+        name: "last_local_stream_created_timestamp",
+        kind: "message",
+        T: () => Timestamp,
+      },
+      {
+        no: 8,
+        name: "last_remote_stream_created_timestamp",
+        kind: "message",
+        T: () => Timestamp,
+      },
+      {
+        no: 9,
+        name: "last_message_sent_timestamp",
+        kind: "message",
+        T: () => Timestamp,
+      },
+      {
+        no: 10,
+        name: "last_message_received_timestamp",
+        kind: "message",
+        T: () => Timestamp,
+      },
+      {
+        no: 11,
+        name: "local_flow_control_window",
+        kind: "message",
+        T: () => Int64Value,
+      },
+      {
+        no: 12,
+        name: "remote_flow_control_window",
+        kind: "message",
+        T: () => Int64Value,
+      },
+      {
+        no: 13,
+        name: "option",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SocketOption,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<SocketData>): SocketData {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.streamsStarted = "0";
+    message.streamsSucceeded = "0";
+    message.streamsFailed = "0";
+    message.messagesSent = "0";
+    message.messagesReceived = "0";
+    message.keepAlivesSent = "0";
+    message.option = [];
+    if (value !== undefined)
+      reflectionMergePartial<SocketData>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SocketData,
+  ): SocketData {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 streams_started */ 1:
+          message.streamsStarted = reader.int64().toString();
+          break;
+        case /* int64 streams_succeeded */ 2:
+          message.streamsSucceeded = reader.int64().toString();
+          break;
+        case /* int64 streams_failed */ 3:
+          message.streamsFailed = reader.int64().toString();
+          break;
+        case /* int64 messages_sent */ 4:
+          message.messagesSent = reader.int64().toString();
+          break;
+        case /* int64 messages_received */ 5:
+          message.messagesReceived = reader.int64().toString();
+          break;
+        case /* int64 keep_alives_sent */ 6:
+          message.keepAlivesSent = reader.int64().toString();
+          break;
+        case /* google.protobuf.Timestamp last_local_stream_created_timestamp */ 7:
+          message.lastLocalStreamCreatedTimestamp =
+            Timestamp.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              message.lastLocalStreamCreatedTimestamp,
+            );
+          break;
+        case /* google.protobuf.Timestamp last_remote_stream_created_timestamp */ 8:
+          message.lastRemoteStreamCreatedTimestamp =
+            Timestamp.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              message.lastRemoteStreamCreatedTimestamp,
+            );
+          break;
+        case /* google.protobuf.Timestamp last_message_sent_timestamp */ 9:
+          message.lastMessageSentTimestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.lastMessageSentTimestamp,
+          );
+          break;
+        case /* google.protobuf.Timestamp last_message_received_timestamp */ 10:
+          message.lastMessageReceivedTimestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.lastMessageReceivedTimestamp,
+          );
+          break;
+        case /* google.protobuf.Int64Value local_flow_control_window */ 11:
+          message.localFlowControlWindow = Int64Value.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.localFlowControlWindow,
+          );
+          break;
+        case /* google.protobuf.Int64Value remote_flow_control_window */ 12:
+          message.remoteFlowControlWindow = Int64Value.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.remoteFlowControlWindow,
+          );
+          break;
+        case /* repeated grpc.channelz.v1.SocketOption option */ 13:
+          message.option.push(
+            SocketOption.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<SocketData>): SocketData {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.streamsStarted = "0";
-        message.streamsSucceeded = "0";
-        message.streamsFailed = "0";
-        message.messagesSent = "0";
-        message.messagesReceived = "0";
-        message.keepAlivesSent = "0";
-        message.option = [];
-        if (value !== undefined)
-            reflectionMergePartial<SocketData>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SocketData): SocketData {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 streams_started */ 1:
-                    message.streamsStarted = reader.int64().toString();
-                    break;
-                case /* int64 streams_succeeded */ 2:
-                    message.streamsSucceeded = reader.int64().toString();
-                    break;
-                case /* int64 streams_failed */ 3:
-                    message.streamsFailed = reader.int64().toString();
-                    break;
-                case /* int64 messages_sent */ 4:
-                    message.messagesSent = reader.int64().toString();
-                    break;
-                case /* int64 messages_received */ 5:
-                    message.messagesReceived = reader.int64().toString();
-                    break;
-                case /* int64 keep_alives_sent */ 6:
-                    message.keepAlivesSent = reader.int64().toString();
-                    break;
-                case /* google.protobuf.Timestamp last_local_stream_created_timestamp */ 7:
-                    message.lastLocalStreamCreatedTimestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastLocalStreamCreatedTimestamp);
-                    break;
-                case /* google.protobuf.Timestamp last_remote_stream_created_timestamp */ 8:
-                    message.lastRemoteStreamCreatedTimestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastRemoteStreamCreatedTimestamp);
-                    break;
-                case /* google.protobuf.Timestamp last_message_sent_timestamp */ 9:
-                    message.lastMessageSentTimestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastMessageSentTimestamp);
-                    break;
-                case /* google.protobuf.Timestamp last_message_received_timestamp */ 10:
-                    message.lastMessageReceivedTimestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.lastMessageReceivedTimestamp);
-                    break;
-                case /* google.protobuf.Int64Value local_flow_control_window */ 11:
-                    message.localFlowControlWindow = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.localFlowControlWindow);
-                    break;
-                case /* google.protobuf.Int64Value remote_flow_control_window */ 12:
-                    message.remoteFlowControlWindow = Int64Value.internalBinaryRead(reader, reader.uint32(), options, message.remoteFlowControlWindow);
-                    break;
-                case /* repeated grpc.channelz.v1.SocketOption option */ 13:
-                    message.option.push(SocketOption.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SocketData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 streams_started = 1; */
-        if (message.streamsStarted !== "0")
-            writer.tag(1, WireType.Varint).int64(message.streamsStarted);
-        /* int64 streams_succeeded = 2; */
-        if (message.streamsSucceeded !== "0")
-            writer.tag(2, WireType.Varint).int64(message.streamsSucceeded);
-        /* int64 streams_failed = 3; */
-        if (message.streamsFailed !== "0")
-            writer.tag(3, WireType.Varint).int64(message.streamsFailed);
-        /* int64 messages_sent = 4; */
-        if (message.messagesSent !== "0")
-            writer.tag(4, WireType.Varint).int64(message.messagesSent);
-        /* int64 messages_received = 5; */
-        if (message.messagesReceived !== "0")
-            writer.tag(5, WireType.Varint).int64(message.messagesReceived);
-        /* int64 keep_alives_sent = 6; */
-        if (message.keepAlivesSent !== "0")
-            writer.tag(6, WireType.Varint).int64(message.keepAlivesSent);
-        /* google.protobuf.Timestamp last_local_stream_created_timestamp = 7; */
-        if (message.lastLocalStreamCreatedTimestamp)
-            Timestamp.internalBinaryWrite(message.lastLocalStreamCreatedTimestamp, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Timestamp last_remote_stream_created_timestamp = 8; */
-        if (message.lastRemoteStreamCreatedTimestamp)
-            Timestamp.internalBinaryWrite(message.lastRemoteStreamCreatedTimestamp, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Timestamp last_message_sent_timestamp = 9; */
-        if (message.lastMessageSentTimestamp)
-            Timestamp.internalBinaryWrite(message.lastMessageSentTimestamp, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Timestamp last_message_received_timestamp = 10; */
-        if (message.lastMessageReceivedTimestamp)
-            Timestamp.internalBinaryWrite(message.lastMessageReceivedTimestamp, writer.tag(10, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Int64Value local_flow_control_window = 11; */
-        if (message.localFlowControlWindow)
-            Int64Value.internalBinaryWrite(message.localFlowControlWindow, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
-        /* google.protobuf.Int64Value remote_flow_control_window = 12; */
-        if (message.remoteFlowControlWindow)
-            Int64Value.internalBinaryWrite(message.remoteFlowControlWindow, writer.tag(12, WireType.LengthDelimited).fork(), options).join();
-        /* repeated grpc.channelz.v1.SocketOption option = 13; */
-        for (let i = 0; i < message.option.length; i++)
-            SocketOption.internalBinaryWrite(message.option[i], writer.tag(13, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SocketData,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 streams_started = 1; */
+    if (message.streamsStarted !== "0")
+      writer.tag(1, WireType.Varint).int64(message.streamsStarted);
+    /* int64 streams_succeeded = 2; */
+    if (message.streamsSucceeded !== "0")
+      writer.tag(2, WireType.Varint).int64(message.streamsSucceeded);
+    /* int64 streams_failed = 3; */
+    if (message.streamsFailed !== "0")
+      writer.tag(3, WireType.Varint).int64(message.streamsFailed);
+    /* int64 messages_sent = 4; */
+    if (message.messagesSent !== "0")
+      writer.tag(4, WireType.Varint).int64(message.messagesSent);
+    /* int64 messages_received = 5; */
+    if (message.messagesReceived !== "0")
+      writer.tag(5, WireType.Varint).int64(message.messagesReceived);
+    /* int64 keep_alives_sent = 6; */
+    if (message.keepAlivesSent !== "0")
+      writer.tag(6, WireType.Varint).int64(message.keepAlivesSent);
+    /* google.protobuf.Timestamp last_local_stream_created_timestamp = 7; */
+    if (message.lastLocalStreamCreatedTimestamp)
+      Timestamp.internalBinaryWrite(
+        message.lastLocalStreamCreatedTimestamp,
+        writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* google.protobuf.Timestamp last_remote_stream_created_timestamp = 8; */
+    if (message.lastRemoteStreamCreatedTimestamp)
+      Timestamp.internalBinaryWrite(
+        message.lastRemoteStreamCreatedTimestamp,
+        writer.tag(8, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* google.protobuf.Timestamp last_message_sent_timestamp = 9; */
+    if (message.lastMessageSentTimestamp)
+      Timestamp.internalBinaryWrite(
+        message.lastMessageSentTimestamp,
+        writer.tag(9, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* google.protobuf.Timestamp last_message_received_timestamp = 10; */
+    if (message.lastMessageReceivedTimestamp)
+      Timestamp.internalBinaryWrite(
+        message.lastMessageReceivedTimestamp,
+        writer.tag(10, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* google.protobuf.Int64Value local_flow_control_window = 11; */
+    if (message.localFlowControlWindow)
+      Int64Value.internalBinaryWrite(
+        message.localFlowControlWindow,
+        writer.tag(11, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* google.protobuf.Int64Value remote_flow_control_window = 12; */
+    if (message.remoteFlowControlWindow)
+      Int64Value.internalBinaryWrite(
+        message.remoteFlowControlWindow,
+        writer.tag(12, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated grpc.channelz.v1.SocketOption option = 13; */
+    for (let i = 0; i < message.option.length; i++)
+      SocketOption.internalBinaryWrite(
+        message.option[i],
+        writer.tag(13, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.SocketData
@@ -2199,69 +3033,136 @@ class SocketData$Type extends MessageType<SocketData> {
 export const SocketData = new SocketData$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Address$Type extends MessageType<Address> {
-    constructor() {
-        super("grpc.channelz.v1.Address", [
-            { no: 1, name: "tcpip_address", kind: "message", oneof: "address", T: () => Address_TcpIpAddress },
-            { no: 2, name: "uds_address", kind: "message", oneof: "address", T: () => Address_UdsAddress },
-            { no: 3, name: "other_address", kind: "message", oneof: "address", T: () => Address_OtherAddress }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.Address", [
+      {
+        no: 1,
+        name: "tcpip_address",
+        kind: "message",
+        oneof: "address",
+        T: () => Address_TcpIpAddress,
+      },
+      {
+        no: 2,
+        name: "uds_address",
+        kind: "message",
+        oneof: "address",
+        T: () => Address_UdsAddress,
+      },
+      {
+        no: 3,
+        name: "other_address",
+        kind: "message",
+        oneof: "address",
+        T: () => Address_OtherAddress,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<Address>): Address {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.address = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<Address>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Address,
+  ): Address {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.channelz.v1.Address.TcpIpAddress tcpip_address */ 1:
+          message.address = {
+            oneofKind: "tcpipAddress",
+            tcpipAddress: Address_TcpIpAddress.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.address as any).tcpipAddress,
+            ),
+          };
+          break;
+        case /* grpc.channelz.v1.Address.UdsAddress uds_address */ 2:
+          message.address = {
+            oneofKind: "udsAddress",
+            udsAddress: Address_UdsAddress.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.address as any).udsAddress,
+            ),
+          };
+          break;
+        case /* grpc.channelz.v1.Address.OtherAddress other_address */ 3:
+          message.address = {
+            oneofKind: "otherAddress",
+            otherAddress: Address_OtherAddress.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.address as any).otherAddress,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Address>): Address {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.address = { oneofKind: undefined };
-        if (value !== undefined)
-            reflectionMergePartial<Address>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Address): Address {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.channelz.v1.Address.TcpIpAddress tcpip_address */ 1:
-                    message.address = {
-                        oneofKind: "tcpipAddress",
-                        tcpipAddress: Address_TcpIpAddress.internalBinaryRead(reader, reader.uint32(), options, (message.address as any).tcpipAddress)
-                    };
-                    break;
-                case /* grpc.channelz.v1.Address.UdsAddress uds_address */ 2:
-                    message.address = {
-                        oneofKind: "udsAddress",
-                        udsAddress: Address_UdsAddress.internalBinaryRead(reader, reader.uint32(), options, (message.address as any).udsAddress)
-                    };
-                    break;
-                case /* grpc.channelz.v1.Address.OtherAddress other_address */ 3:
-                    message.address = {
-                        oneofKind: "otherAddress",
-                        otherAddress: Address_OtherAddress.internalBinaryRead(reader, reader.uint32(), options, (message.address as any).otherAddress)
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Address, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.channelz.v1.Address.TcpIpAddress tcpip_address = 1; */
-        if (message.address.oneofKind === "tcpipAddress")
-            Address_TcpIpAddress.internalBinaryWrite(message.address.tcpipAddress, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.channelz.v1.Address.UdsAddress uds_address = 2; */
-        if (message.address.oneofKind === "udsAddress")
-            Address_UdsAddress.internalBinaryWrite(message.address.udsAddress, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.channelz.v1.Address.OtherAddress other_address = 3; */
-        if (message.address.oneofKind === "otherAddress")
-            Address_OtherAddress.internalBinaryWrite(message.address.otherAddress, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Address,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.channelz.v1.Address.TcpIpAddress tcpip_address = 1; */
+    if (message.address.oneofKind === "tcpipAddress")
+      Address_TcpIpAddress.internalBinaryWrite(
+        message.address.tcpipAddress,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.channelz.v1.Address.UdsAddress uds_address = 2; */
+    if (message.address.oneofKind === "udsAddress")
+      Address_UdsAddress.internalBinaryWrite(
+        message.address.udsAddress,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.channelz.v1.Address.OtherAddress other_address = 3; */
+    if (message.address.oneofKind === "otherAddress")
+      Address_OtherAddress.internalBinaryWrite(
+        message.address.otherAddress,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.Address
@@ -2269,54 +3170,75 @@ class Address$Type extends MessageType<Address> {
 export const Address = new Address$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Address_TcpIpAddress$Type extends MessageType<Address_TcpIpAddress> {
-    constructor() {
-        super("grpc.channelz.v1.Address.TcpIpAddress", [
-            { no: 1, name: "ip_address", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 2, name: "port", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.Address.TcpIpAddress", [
+      { no: 1, name: "ip_address", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+      { no: 2, name: "port", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  create(value?: PartialMessage<Address_TcpIpAddress>): Address_TcpIpAddress {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.ipAddress = new Uint8Array(0);
+    message.port = 0;
+    if (value !== undefined)
+      reflectionMergePartial<Address_TcpIpAddress>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Address_TcpIpAddress,
+  ): Address_TcpIpAddress {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bytes ip_address */ 1:
+          message.ipAddress = reader.bytes();
+          break;
+        case /* int32 port */ 2:
+          message.port = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Address_TcpIpAddress>): Address_TcpIpAddress {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.ipAddress = new Uint8Array(0);
-        message.port = 0;
-        if (value !== undefined)
-            reflectionMergePartial<Address_TcpIpAddress>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Address_TcpIpAddress): Address_TcpIpAddress {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bytes ip_address */ 1:
-                    message.ipAddress = reader.bytes();
-                    break;
-                case /* int32 port */ 2:
-                    message.port = reader.int32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Address_TcpIpAddress, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bytes ip_address = 1; */
-        if (message.ipAddress.length)
-            writer.tag(1, WireType.LengthDelimited).bytes(message.ipAddress);
-        /* int32 port = 2; */
-        if (message.port !== 0)
-            writer.tag(2, WireType.Varint).int32(message.port);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Address_TcpIpAddress,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bytes ip_address = 1; */
+    if (message.ipAddress.length)
+      writer.tag(1, WireType.LengthDelimited).bytes(message.ipAddress);
+    /* int32 port = 2; */
+    if (message.port !== 0) writer.tag(2, WireType.Varint).int32(message.port);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.Address.TcpIpAddress
@@ -2324,46 +3246,68 @@ class Address_TcpIpAddress$Type extends MessageType<Address_TcpIpAddress> {
 export const Address_TcpIpAddress = new Address_TcpIpAddress$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Address_UdsAddress$Type extends MessageType<Address_UdsAddress> {
-    constructor() {
-        super("grpc.channelz.v1.Address.UdsAddress", [
-            { no: 1, name: "filename", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.Address.UdsAddress", [
+      { no: 1, name: "filename", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<Address_UdsAddress>): Address_UdsAddress {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.filename = "";
+    if (value !== undefined)
+      reflectionMergePartial<Address_UdsAddress>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Address_UdsAddress,
+  ): Address_UdsAddress {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string filename */ 1:
+          message.filename = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Address_UdsAddress>): Address_UdsAddress {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.filename = "";
-        if (value !== undefined)
-            reflectionMergePartial<Address_UdsAddress>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Address_UdsAddress): Address_UdsAddress {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string filename */ 1:
-                    message.filename = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Address_UdsAddress, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string filename = 1; */
-        if (message.filename !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.filename);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Address_UdsAddress,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string filename = 1; */
+    if (message.filename !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.filename);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.Address.UdsAddress
@@ -2371,53 +3315,84 @@ class Address_UdsAddress$Type extends MessageType<Address_UdsAddress> {
 export const Address_UdsAddress = new Address_UdsAddress$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Address_OtherAddress$Type extends MessageType<Address_OtherAddress> {
-    constructor() {
-        super("grpc.channelz.v1.Address.OtherAddress", [
-            { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "value", kind: "message", T: () => Any }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.Address.OtherAddress", [
+      { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "value", kind: "message", T: () => Any },
+    ]);
+  }
+  create(value?: PartialMessage<Address_OtherAddress>): Address_OtherAddress {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.name = "";
+    if (value !== undefined)
+      reflectionMergePartial<Address_OtherAddress>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Address_OtherAddress,
+  ): Address_OtherAddress {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string name */ 1:
+          message.name = reader.string();
+          break;
+        case /* google.protobuf.Any value */ 2:
+          message.value = Any.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.value,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Address_OtherAddress>): Address_OtherAddress {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.name = "";
-        if (value !== undefined)
-            reflectionMergePartial<Address_OtherAddress>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Address_OtherAddress): Address_OtherAddress {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string name */ 1:
-                    message.name = reader.string();
-                    break;
-                case /* google.protobuf.Any value */ 2:
-                    message.value = Any.internalBinaryRead(reader, reader.uint32(), options, message.value);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Address_OtherAddress, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string name = 1; */
-        if (message.name !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.name);
-        /* google.protobuf.Any value = 2; */
-        if (message.value)
-            Any.internalBinaryWrite(message.value, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Address_OtherAddress,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string name = 1; */
+    if (message.name !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.name);
+    /* google.protobuf.Any value = 2; */
+    if (message.value)
+      Any.internalBinaryWrite(
+        message.value,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.Address.OtherAddress
@@ -2425,59 +3400,111 @@ class Address_OtherAddress$Type extends MessageType<Address_OtherAddress> {
 export const Address_OtherAddress = new Address_OtherAddress$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Security$Type extends MessageType<Security> {
-    constructor() {
-        super("grpc.channelz.v1.Security", [
-            { no: 1, name: "tls", kind: "message", oneof: "model", T: () => Security_Tls },
-            { no: 2, name: "other", kind: "message", oneof: "model", T: () => Security_OtherSecurity }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.Security", [
+      {
+        no: 1,
+        name: "tls",
+        kind: "message",
+        oneof: "model",
+        T: () => Security_Tls,
+      },
+      {
+        no: 2,
+        name: "other",
+        kind: "message",
+        oneof: "model",
+        T: () => Security_OtherSecurity,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<Security>): Security {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.model = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<Security>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Security,
+  ): Security {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.channelz.v1.Security.Tls tls */ 1:
+          message.model = {
+            oneofKind: "tls",
+            tls: Security_Tls.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.model as any).tls,
+            ),
+          };
+          break;
+        case /* grpc.channelz.v1.Security.OtherSecurity other */ 2:
+          message.model = {
+            oneofKind: "other",
+            other: Security_OtherSecurity.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.model as any).other,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Security>): Security {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.model = { oneofKind: undefined };
-        if (value !== undefined)
-            reflectionMergePartial<Security>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Security): Security {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.channelz.v1.Security.Tls tls */ 1:
-                    message.model = {
-                        oneofKind: "tls",
-                        tls: Security_Tls.internalBinaryRead(reader, reader.uint32(), options, (message.model as any).tls)
-                    };
-                    break;
-                case /* grpc.channelz.v1.Security.OtherSecurity other */ 2:
-                    message.model = {
-                        oneofKind: "other",
-                        other: Security_OtherSecurity.internalBinaryRead(reader, reader.uint32(), options, (message.model as any).other)
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Security, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.channelz.v1.Security.Tls tls = 1; */
-        if (message.model.oneofKind === "tls")
-            Security_Tls.internalBinaryWrite(message.model.tls, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.channelz.v1.Security.OtherSecurity other = 2; */
-        if (message.model.oneofKind === "other")
-            Security_OtherSecurity.internalBinaryWrite(message.model.other, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Security,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.channelz.v1.Security.Tls tls = 1; */
+    if (message.model.oneofKind === "tls")
+      Security_Tls.internalBinaryWrite(
+        message.model.tls,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.channelz.v1.Security.OtherSecurity other = 2; */
+    if (message.model.oneofKind === "other")
+      Security_OtherSecurity.internalBinaryWrite(
+        message.model.other,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.Security
@@ -2485,75 +3512,123 @@ class Security$Type extends MessageType<Security> {
 export const Security = new Security$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Security_Tls$Type extends MessageType<Security_Tls> {
-    constructor() {
-        super("grpc.channelz.v1.Security.Tls", [
-            { no: 1, name: "standard_name", kind: "scalar", oneof: "cipherSuite", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "other_name", kind: "scalar", oneof: "cipherSuite", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "local_certificate", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
-            { no: 4, name: "remote_certificate", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.Security.Tls", [
+      {
+        no: 1,
+        name: "standard_name",
+        kind: "scalar",
+        oneof: "cipherSuite",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 2,
+        name: "other_name",
+        kind: "scalar",
+        oneof: "cipherSuite",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 3,
+        name: "local_certificate",
+        kind: "scalar",
+        T: 12 /*ScalarType.BYTES*/,
+      },
+      {
+        no: 4,
+        name: "remote_certificate",
+        kind: "scalar",
+        T: 12 /*ScalarType.BYTES*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<Security_Tls>): Security_Tls {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.cipherSuite = { oneofKind: undefined };
+    message.localCertificate = new Uint8Array(0);
+    message.remoteCertificate = new Uint8Array(0);
+    if (value !== undefined)
+      reflectionMergePartial<Security_Tls>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Security_Tls,
+  ): Security_Tls {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string standard_name */ 1:
+          message.cipherSuite = {
+            oneofKind: "standardName",
+            standardName: reader.string(),
+          };
+          break;
+        case /* string other_name */ 2:
+          message.cipherSuite = {
+            oneofKind: "otherName",
+            otherName: reader.string(),
+          };
+          break;
+        case /* bytes local_certificate */ 3:
+          message.localCertificate = reader.bytes();
+          break;
+        case /* bytes remote_certificate */ 4:
+          message.remoteCertificate = reader.bytes();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Security_Tls>): Security_Tls {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.cipherSuite = { oneofKind: undefined };
-        message.localCertificate = new Uint8Array(0);
-        message.remoteCertificate = new Uint8Array(0);
-        if (value !== undefined)
-            reflectionMergePartial<Security_Tls>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Security_Tls): Security_Tls {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string standard_name */ 1:
-                    message.cipherSuite = {
-                        oneofKind: "standardName",
-                        standardName: reader.string()
-                    };
-                    break;
-                case /* string other_name */ 2:
-                    message.cipherSuite = {
-                        oneofKind: "otherName",
-                        otherName: reader.string()
-                    };
-                    break;
-                case /* bytes local_certificate */ 3:
-                    message.localCertificate = reader.bytes();
-                    break;
-                case /* bytes remote_certificate */ 4:
-                    message.remoteCertificate = reader.bytes();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Security_Tls, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string standard_name = 1; */
-        if (message.cipherSuite.oneofKind === "standardName")
-            writer.tag(1, WireType.LengthDelimited).string(message.cipherSuite.standardName);
-        /* string other_name = 2; */
-        if (message.cipherSuite.oneofKind === "otherName")
-            writer.tag(2, WireType.LengthDelimited).string(message.cipherSuite.otherName);
-        /* bytes local_certificate = 3; */
-        if (message.localCertificate.length)
-            writer.tag(3, WireType.LengthDelimited).bytes(message.localCertificate);
-        /* bytes remote_certificate = 4; */
-        if (message.remoteCertificate.length)
-            writer.tag(4, WireType.LengthDelimited).bytes(message.remoteCertificate);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Security_Tls,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string standard_name = 1; */
+    if (message.cipherSuite.oneofKind === "standardName")
+      writer
+        .tag(1, WireType.LengthDelimited)
+        .string(message.cipherSuite.standardName);
+    /* string other_name = 2; */
+    if (message.cipherSuite.oneofKind === "otherName")
+      writer
+        .tag(2, WireType.LengthDelimited)
+        .string(message.cipherSuite.otherName);
+    /* bytes local_certificate = 3; */
+    if (message.localCertificate.length)
+      writer.tag(3, WireType.LengthDelimited).bytes(message.localCertificate);
+    /* bytes remote_certificate = 4; */
+    if (message.remoteCertificate.length)
+      writer.tag(4, WireType.LengthDelimited).bytes(message.remoteCertificate);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.Security.Tls
@@ -2561,53 +3636,86 @@ class Security_Tls$Type extends MessageType<Security_Tls> {
 export const Security_Tls = new Security_Tls$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Security_OtherSecurity$Type extends MessageType<Security_OtherSecurity> {
-    constructor() {
-        super("grpc.channelz.v1.Security.OtherSecurity", [
-            { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "value", kind: "message", T: () => Any }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.Security.OtherSecurity", [
+      { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "value", kind: "message", T: () => Any },
+    ]);
+  }
+  create(
+    value?: PartialMessage<Security_OtherSecurity>,
+  ): Security_OtherSecurity {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.name = "";
+    if (value !== undefined)
+      reflectionMergePartial<Security_OtherSecurity>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Security_OtherSecurity,
+  ): Security_OtherSecurity {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string name */ 1:
+          message.name = reader.string();
+          break;
+        case /* google.protobuf.Any value */ 2:
+          message.value = Any.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.value,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Security_OtherSecurity>): Security_OtherSecurity {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.name = "";
-        if (value !== undefined)
-            reflectionMergePartial<Security_OtherSecurity>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Security_OtherSecurity): Security_OtherSecurity {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string name */ 1:
-                    message.name = reader.string();
-                    break;
-                case /* google.protobuf.Any value */ 2:
-                    message.value = Any.internalBinaryRead(reader, reader.uint32(), options, message.value);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Security_OtherSecurity, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string name = 1; */
-        if (message.name !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.name);
-        /* google.protobuf.Any value = 2; */
-        if (message.value)
-            Any.internalBinaryWrite(message.value, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Security_OtherSecurity,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string name = 1; */
+    if (message.name !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.name);
+    /* google.protobuf.Any value = 2; */
+    if (message.value)
+      Any.internalBinaryWrite(
+        message.value,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.Security.OtherSecurity
@@ -2615,61 +3723,92 @@ class Security_OtherSecurity$Type extends MessageType<Security_OtherSecurity> {
 export const Security_OtherSecurity = new Security_OtherSecurity$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SocketOption$Type extends MessageType<SocketOption> {
-    constructor() {
-        super("grpc.channelz.v1.SocketOption", [
-            { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "value", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "additional", kind: "message", T: () => Any }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.SocketOption", [
+      { no: 1, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "value", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "additional", kind: "message", T: () => Any },
+    ]);
+  }
+  create(value?: PartialMessage<SocketOption>): SocketOption {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.name = "";
+    message.value = "";
+    if (value !== undefined)
+      reflectionMergePartial<SocketOption>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SocketOption,
+  ): SocketOption {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string name */ 1:
+          message.name = reader.string();
+          break;
+        case /* string value */ 2:
+          message.value = reader.string();
+          break;
+        case /* google.protobuf.Any additional */ 3:
+          message.additional = Any.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.additional,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<SocketOption>): SocketOption {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.name = "";
-        message.value = "";
-        if (value !== undefined)
-            reflectionMergePartial<SocketOption>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SocketOption): SocketOption {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string name */ 1:
-                    message.name = reader.string();
-                    break;
-                case /* string value */ 2:
-                    message.value = reader.string();
-                    break;
-                case /* google.protobuf.Any additional */ 3:
-                    message.additional = Any.internalBinaryRead(reader, reader.uint32(), options, message.additional);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SocketOption, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string name = 1; */
-        if (message.name !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.name);
-        /* string value = 2; */
-        if (message.value !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.value);
-        /* google.protobuf.Any additional = 3; */
-        if (message.additional)
-            Any.internalBinaryWrite(message.additional, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SocketOption,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string name = 1; */
+    if (message.name !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.name);
+    /* string value = 2; */
+    if (message.value !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.value);
+    /* google.protobuf.Any additional = 3; */
+    if (message.additional)
+      Any.internalBinaryWrite(
+        message.additional,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.SocketOption
@@ -2677,45 +3816,76 @@ class SocketOption$Type extends MessageType<SocketOption> {
 export const SocketOption = new SocketOption$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SocketOptionTimeout$Type extends MessageType<SocketOptionTimeout> {
-    constructor() {
-        super("grpc.channelz.v1.SocketOptionTimeout", [
-            { no: 1, name: "duration", kind: "message", T: () => Duration }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.SocketOptionTimeout", [
+      { no: 1, name: "duration", kind: "message", T: () => Duration },
+    ]);
+  }
+  create(value?: PartialMessage<SocketOptionTimeout>): SocketOptionTimeout {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<SocketOptionTimeout>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SocketOptionTimeout,
+  ): SocketOptionTimeout {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* google.protobuf.Duration duration */ 1:
+          message.duration = Duration.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.duration,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<SocketOptionTimeout>): SocketOptionTimeout {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<SocketOptionTimeout>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SocketOptionTimeout): SocketOptionTimeout {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* google.protobuf.Duration duration */ 1:
-                    message.duration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.duration);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SocketOptionTimeout, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* google.protobuf.Duration duration = 1; */
-        if (message.duration)
-            Duration.internalBinaryWrite(message.duration, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SocketOptionTimeout,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* google.protobuf.Duration duration = 1; */
+    if (message.duration)
+      Duration.internalBinaryWrite(
+        message.duration,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.SocketOptionTimeout
@@ -2723,53 +3893,84 @@ class SocketOptionTimeout$Type extends MessageType<SocketOptionTimeout> {
 export const SocketOptionTimeout = new SocketOptionTimeout$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SocketOptionLinger$Type extends MessageType<SocketOptionLinger> {
-    constructor() {
-        super("grpc.channelz.v1.SocketOptionLinger", [
-            { no: 1, name: "active", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 2, name: "duration", kind: "message", T: () => Duration }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.SocketOptionLinger", [
+      { no: 1, name: "active", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 2, name: "duration", kind: "message", T: () => Duration },
+    ]);
+  }
+  create(value?: PartialMessage<SocketOptionLinger>): SocketOptionLinger {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.active = false;
+    if (value !== undefined)
+      reflectionMergePartial<SocketOptionLinger>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SocketOptionLinger,
+  ): SocketOptionLinger {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool active */ 1:
+          message.active = reader.bool();
+          break;
+        case /* google.protobuf.Duration duration */ 2:
+          message.duration = Duration.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.duration,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<SocketOptionLinger>): SocketOptionLinger {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.active = false;
-        if (value !== undefined)
-            reflectionMergePartial<SocketOptionLinger>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SocketOptionLinger): SocketOptionLinger {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* bool active */ 1:
-                    message.active = reader.bool();
-                    break;
-                case /* google.protobuf.Duration duration */ 2:
-                    message.duration = Duration.internalBinaryRead(reader, reader.uint32(), options, message.duration);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SocketOptionLinger, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* bool active = 1; */
-        if (message.active !== false)
-            writer.tag(1, WireType.Varint).bool(message.active);
-        /* google.protobuf.Duration duration = 2; */
-        if (message.duration)
-            Duration.internalBinaryWrite(message.duration, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SocketOptionLinger,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool active = 1; */
+    if (message.active !== false)
+      writer.tag(1, WireType.Varint).bool(message.active);
+    /* google.protobuf.Duration duration = 2; */
+    if (message.duration)
+      Duration.internalBinaryWrite(
+        message.duration,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.SocketOptionLinger
@@ -2777,270 +3978,422 @@ class SocketOptionLinger$Type extends MessageType<SocketOptionLinger> {
 export const SocketOptionLinger = new SocketOptionLinger$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SocketOptionTcpInfo$Type extends MessageType<SocketOptionTcpInfo> {
-    constructor() {
-        super("grpc.channelz.v1.SocketOptionTcpInfo", [
-            { no: 1, name: "tcpi_state", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 2, name: "tcpi_ca_state", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 3, name: "tcpi_retransmits", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 4, name: "tcpi_probes", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 5, name: "tcpi_backoff", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 6, name: "tcpi_options", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 7, name: "tcpi_snd_wscale", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 8, name: "tcpi_rcv_wscale", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 9, name: "tcpi_rto", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 10, name: "tcpi_ato", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 11, name: "tcpi_snd_mss", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 12, name: "tcpi_rcv_mss", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 13, name: "tcpi_unacked", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 14, name: "tcpi_sacked", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 15, name: "tcpi_lost", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 16, name: "tcpi_retrans", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 17, name: "tcpi_fackets", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 18, name: "tcpi_last_data_sent", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 19, name: "tcpi_last_ack_sent", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 20, name: "tcpi_last_data_recv", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 21, name: "tcpi_last_ack_recv", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 22, name: "tcpi_pmtu", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 23, name: "tcpi_rcv_ssthresh", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 24, name: "tcpi_rtt", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 25, name: "tcpi_rttvar", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 26, name: "tcpi_snd_ssthresh", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 27, name: "tcpi_snd_cwnd", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 28, name: "tcpi_advmss", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 29, name: "tcpi_reordering", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.SocketOptionTcpInfo", [
+      {
+        no: 1,
+        name: "tcpi_state",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 2,
+        name: "tcpi_ca_state",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 3,
+        name: "tcpi_retransmits",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 4,
+        name: "tcpi_probes",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 5,
+        name: "tcpi_backoff",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 6,
+        name: "tcpi_options",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 7,
+        name: "tcpi_snd_wscale",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 8,
+        name: "tcpi_rcv_wscale",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      { no: 9, name: "tcpi_rto", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+      { no: 10, name: "tcpi_ato", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+      {
+        no: 11,
+        name: "tcpi_snd_mss",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 12,
+        name: "tcpi_rcv_mss",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 13,
+        name: "tcpi_unacked",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 14,
+        name: "tcpi_sacked",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 15,
+        name: "tcpi_lost",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 16,
+        name: "tcpi_retrans",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 17,
+        name: "tcpi_fackets",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 18,
+        name: "tcpi_last_data_sent",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 19,
+        name: "tcpi_last_ack_sent",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 20,
+        name: "tcpi_last_data_recv",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 21,
+        name: "tcpi_last_ack_recv",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 22,
+        name: "tcpi_pmtu",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 23,
+        name: "tcpi_rcv_ssthresh",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      { no: 24, name: "tcpi_rtt", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+      {
+        no: 25,
+        name: "tcpi_rttvar",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 26,
+        name: "tcpi_snd_ssthresh",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 27,
+        name: "tcpi_snd_cwnd",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 28,
+        name: "tcpi_advmss",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 29,
+        name: "tcpi_reordering",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<SocketOptionTcpInfo>): SocketOptionTcpInfo {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.tcpiState = 0;
+    message.tcpiCaState = 0;
+    message.tcpiRetransmits = 0;
+    message.tcpiProbes = 0;
+    message.tcpiBackoff = 0;
+    message.tcpiOptions = 0;
+    message.tcpiSndWscale = 0;
+    message.tcpiRcvWscale = 0;
+    message.tcpiRto = 0;
+    message.tcpiAto = 0;
+    message.tcpiSndMss = 0;
+    message.tcpiRcvMss = 0;
+    message.tcpiUnacked = 0;
+    message.tcpiSacked = 0;
+    message.tcpiLost = 0;
+    message.tcpiRetrans = 0;
+    message.tcpiFackets = 0;
+    message.tcpiLastDataSent = 0;
+    message.tcpiLastAckSent = 0;
+    message.tcpiLastDataRecv = 0;
+    message.tcpiLastAckRecv = 0;
+    message.tcpiPmtu = 0;
+    message.tcpiRcvSsthresh = 0;
+    message.tcpiRtt = 0;
+    message.tcpiRttvar = 0;
+    message.tcpiSndSsthresh = 0;
+    message.tcpiSndCwnd = 0;
+    message.tcpiAdvmss = 0;
+    message.tcpiReordering = 0;
+    if (value !== undefined)
+      reflectionMergePartial<SocketOptionTcpInfo>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SocketOptionTcpInfo,
+  ): SocketOptionTcpInfo {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* uint32 tcpi_state */ 1:
+          message.tcpiState = reader.uint32();
+          break;
+        case /* uint32 tcpi_ca_state */ 2:
+          message.tcpiCaState = reader.uint32();
+          break;
+        case /* uint32 tcpi_retransmits */ 3:
+          message.tcpiRetransmits = reader.uint32();
+          break;
+        case /* uint32 tcpi_probes */ 4:
+          message.tcpiProbes = reader.uint32();
+          break;
+        case /* uint32 tcpi_backoff */ 5:
+          message.tcpiBackoff = reader.uint32();
+          break;
+        case /* uint32 tcpi_options */ 6:
+          message.tcpiOptions = reader.uint32();
+          break;
+        case /* uint32 tcpi_snd_wscale */ 7:
+          message.tcpiSndWscale = reader.uint32();
+          break;
+        case /* uint32 tcpi_rcv_wscale */ 8:
+          message.tcpiRcvWscale = reader.uint32();
+          break;
+        case /* uint32 tcpi_rto */ 9:
+          message.tcpiRto = reader.uint32();
+          break;
+        case /* uint32 tcpi_ato */ 10:
+          message.tcpiAto = reader.uint32();
+          break;
+        case /* uint32 tcpi_snd_mss */ 11:
+          message.tcpiSndMss = reader.uint32();
+          break;
+        case /* uint32 tcpi_rcv_mss */ 12:
+          message.tcpiRcvMss = reader.uint32();
+          break;
+        case /* uint32 tcpi_unacked */ 13:
+          message.tcpiUnacked = reader.uint32();
+          break;
+        case /* uint32 tcpi_sacked */ 14:
+          message.tcpiSacked = reader.uint32();
+          break;
+        case /* uint32 tcpi_lost */ 15:
+          message.tcpiLost = reader.uint32();
+          break;
+        case /* uint32 tcpi_retrans */ 16:
+          message.tcpiRetrans = reader.uint32();
+          break;
+        case /* uint32 tcpi_fackets */ 17:
+          message.tcpiFackets = reader.uint32();
+          break;
+        case /* uint32 tcpi_last_data_sent */ 18:
+          message.tcpiLastDataSent = reader.uint32();
+          break;
+        case /* uint32 tcpi_last_ack_sent */ 19:
+          message.tcpiLastAckSent = reader.uint32();
+          break;
+        case /* uint32 tcpi_last_data_recv */ 20:
+          message.tcpiLastDataRecv = reader.uint32();
+          break;
+        case /* uint32 tcpi_last_ack_recv */ 21:
+          message.tcpiLastAckRecv = reader.uint32();
+          break;
+        case /* uint32 tcpi_pmtu */ 22:
+          message.tcpiPmtu = reader.uint32();
+          break;
+        case /* uint32 tcpi_rcv_ssthresh */ 23:
+          message.tcpiRcvSsthresh = reader.uint32();
+          break;
+        case /* uint32 tcpi_rtt */ 24:
+          message.tcpiRtt = reader.uint32();
+          break;
+        case /* uint32 tcpi_rttvar */ 25:
+          message.tcpiRttvar = reader.uint32();
+          break;
+        case /* uint32 tcpi_snd_ssthresh */ 26:
+          message.tcpiSndSsthresh = reader.uint32();
+          break;
+        case /* uint32 tcpi_snd_cwnd */ 27:
+          message.tcpiSndCwnd = reader.uint32();
+          break;
+        case /* uint32 tcpi_advmss */ 28:
+          message.tcpiAdvmss = reader.uint32();
+          break;
+        case /* uint32 tcpi_reordering */ 29:
+          message.tcpiReordering = reader.uint32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<SocketOptionTcpInfo>): SocketOptionTcpInfo {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.tcpiState = 0;
-        message.tcpiCaState = 0;
-        message.tcpiRetransmits = 0;
-        message.tcpiProbes = 0;
-        message.tcpiBackoff = 0;
-        message.tcpiOptions = 0;
-        message.tcpiSndWscale = 0;
-        message.tcpiRcvWscale = 0;
-        message.tcpiRto = 0;
-        message.tcpiAto = 0;
-        message.tcpiSndMss = 0;
-        message.tcpiRcvMss = 0;
-        message.tcpiUnacked = 0;
-        message.tcpiSacked = 0;
-        message.tcpiLost = 0;
-        message.tcpiRetrans = 0;
-        message.tcpiFackets = 0;
-        message.tcpiLastDataSent = 0;
-        message.tcpiLastAckSent = 0;
-        message.tcpiLastDataRecv = 0;
-        message.tcpiLastAckRecv = 0;
-        message.tcpiPmtu = 0;
-        message.tcpiRcvSsthresh = 0;
-        message.tcpiRtt = 0;
-        message.tcpiRttvar = 0;
-        message.tcpiSndSsthresh = 0;
-        message.tcpiSndCwnd = 0;
-        message.tcpiAdvmss = 0;
-        message.tcpiReordering = 0;
-        if (value !== undefined)
-            reflectionMergePartial<SocketOptionTcpInfo>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SocketOptionTcpInfo): SocketOptionTcpInfo {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* uint32 tcpi_state */ 1:
-                    message.tcpiState = reader.uint32();
-                    break;
-                case /* uint32 tcpi_ca_state */ 2:
-                    message.tcpiCaState = reader.uint32();
-                    break;
-                case /* uint32 tcpi_retransmits */ 3:
-                    message.tcpiRetransmits = reader.uint32();
-                    break;
-                case /* uint32 tcpi_probes */ 4:
-                    message.tcpiProbes = reader.uint32();
-                    break;
-                case /* uint32 tcpi_backoff */ 5:
-                    message.tcpiBackoff = reader.uint32();
-                    break;
-                case /* uint32 tcpi_options */ 6:
-                    message.tcpiOptions = reader.uint32();
-                    break;
-                case /* uint32 tcpi_snd_wscale */ 7:
-                    message.tcpiSndWscale = reader.uint32();
-                    break;
-                case /* uint32 tcpi_rcv_wscale */ 8:
-                    message.tcpiRcvWscale = reader.uint32();
-                    break;
-                case /* uint32 tcpi_rto */ 9:
-                    message.tcpiRto = reader.uint32();
-                    break;
-                case /* uint32 tcpi_ato */ 10:
-                    message.tcpiAto = reader.uint32();
-                    break;
-                case /* uint32 tcpi_snd_mss */ 11:
-                    message.tcpiSndMss = reader.uint32();
-                    break;
-                case /* uint32 tcpi_rcv_mss */ 12:
-                    message.tcpiRcvMss = reader.uint32();
-                    break;
-                case /* uint32 tcpi_unacked */ 13:
-                    message.tcpiUnacked = reader.uint32();
-                    break;
-                case /* uint32 tcpi_sacked */ 14:
-                    message.tcpiSacked = reader.uint32();
-                    break;
-                case /* uint32 tcpi_lost */ 15:
-                    message.tcpiLost = reader.uint32();
-                    break;
-                case /* uint32 tcpi_retrans */ 16:
-                    message.tcpiRetrans = reader.uint32();
-                    break;
-                case /* uint32 tcpi_fackets */ 17:
-                    message.tcpiFackets = reader.uint32();
-                    break;
-                case /* uint32 tcpi_last_data_sent */ 18:
-                    message.tcpiLastDataSent = reader.uint32();
-                    break;
-                case /* uint32 tcpi_last_ack_sent */ 19:
-                    message.tcpiLastAckSent = reader.uint32();
-                    break;
-                case /* uint32 tcpi_last_data_recv */ 20:
-                    message.tcpiLastDataRecv = reader.uint32();
-                    break;
-                case /* uint32 tcpi_last_ack_recv */ 21:
-                    message.tcpiLastAckRecv = reader.uint32();
-                    break;
-                case /* uint32 tcpi_pmtu */ 22:
-                    message.tcpiPmtu = reader.uint32();
-                    break;
-                case /* uint32 tcpi_rcv_ssthresh */ 23:
-                    message.tcpiRcvSsthresh = reader.uint32();
-                    break;
-                case /* uint32 tcpi_rtt */ 24:
-                    message.tcpiRtt = reader.uint32();
-                    break;
-                case /* uint32 tcpi_rttvar */ 25:
-                    message.tcpiRttvar = reader.uint32();
-                    break;
-                case /* uint32 tcpi_snd_ssthresh */ 26:
-                    message.tcpiSndSsthresh = reader.uint32();
-                    break;
-                case /* uint32 tcpi_snd_cwnd */ 27:
-                    message.tcpiSndCwnd = reader.uint32();
-                    break;
-                case /* uint32 tcpi_advmss */ 28:
-                    message.tcpiAdvmss = reader.uint32();
-                    break;
-                case /* uint32 tcpi_reordering */ 29:
-                    message.tcpiReordering = reader.uint32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SocketOptionTcpInfo, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint32 tcpi_state = 1; */
-        if (message.tcpiState !== 0)
-            writer.tag(1, WireType.Varint).uint32(message.tcpiState);
-        /* uint32 tcpi_ca_state = 2; */
-        if (message.tcpiCaState !== 0)
-            writer.tag(2, WireType.Varint).uint32(message.tcpiCaState);
-        /* uint32 tcpi_retransmits = 3; */
-        if (message.tcpiRetransmits !== 0)
-            writer.tag(3, WireType.Varint).uint32(message.tcpiRetransmits);
-        /* uint32 tcpi_probes = 4; */
-        if (message.tcpiProbes !== 0)
-            writer.tag(4, WireType.Varint).uint32(message.tcpiProbes);
-        /* uint32 tcpi_backoff = 5; */
-        if (message.tcpiBackoff !== 0)
-            writer.tag(5, WireType.Varint).uint32(message.tcpiBackoff);
-        /* uint32 tcpi_options = 6; */
-        if (message.tcpiOptions !== 0)
-            writer.tag(6, WireType.Varint).uint32(message.tcpiOptions);
-        /* uint32 tcpi_snd_wscale = 7; */
-        if (message.tcpiSndWscale !== 0)
-            writer.tag(7, WireType.Varint).uint32(message.tcpiSndWscale);
-        /* uint32 tcpi_rcv_wscale = 8; */
-        if (message.tcpiRcvWscale !== 0)
-            writer.tag(8, WireType.Varint).uint32(message.tcpiRcvWscale);
-        /* uint32 tcpi_rto = 9; */
-        if (message.tcpiRto !== 0)
-            writer.tag(9, WireType.Varint).uint32(message.tcpiRto);
-        /* uint32 tcpi_ato = 10; */
-        if (message.tcpiAto !== 0)
-            writer.tag(10, WireType.Varint).uint32(message.tcpiAto);
-        /* uint32 tcpi_snd_mss = 11; */
-        if (message.tcpiSndMss !== 0)
-            writer.tag(11, WireType.Varint).uint32(message.tcpiSndMss);
-        /* uint32 tcpi_rcv_mss = 12; */
-        if (message.tcpiRcvMss !== 0)
-            writer.tag(12, WireType.Varint).uint32(message.tcpiRcvMss);
-        /* uint32 tcpi_unacked = 13; */
-        if (message.tcpiUnacked !== 0)
-            writer.tag(13, WireType.Varint).uint32(message.tcpiUnacked);
-        /* uint32 tcpi_sacked = 14; */
-        if (message.tcpiSacked !== 0)
-            writer.tag(14, WireType.Varint).uint32(message.tcpiSacked);
-        /* uint32 tcpi_lost = 15; */
-        if (message.tcpiLost !== 0)
-            writer.tag(15, WireType.Varint).uint32(message.tcpiLost);
-        /* uint32 tcpi_retrans = 16; */
-        if (message.tcpiRetrans !== 0)
-            writer.tag(16, WireType.Varint).uint32(message.tcpiRetrans);
-        /* uint32 tcpi_fackets = 17; */
-        if (message.tcpiFackets !== 0)
-            writer.tag(17, WireType.Varint).uint32(message.tcpiFackets);
-        /* uint32 tcpi_last_data_sent = 18; */
-        if (message.tcpiLastDataSent !== 0)
-            writer.tag(18, WireType.Varint).uint32(message.tcpiLastDataSent);
-        /* uint32 tcpi_last_ack_sent = 19; */
-        if (message.tcpiLastAckSent !== 0)
-            writer.tag(19, WireType.Varint).uint32(message.tcpiLastAckSent);
-        /* uint32 tcpi_last_data_recv = 20; */
-        if (message.tcpiLastDataRecv !== 0)
-            writer.tag(20, WireType.Varint).uint32(message.tcpiLastDataRecv);
-        /* uint32 tcpi_last_ack_recv = 21; */
-        if (message.tcpiLastAckRecv !== 0)
-            writer.tag(21, WireType.Varint).uint32(message.tcpiLastAckRecv);
-        /* uint32 tcpi_pmtu = 22; */
-        if (message.tcpiPmtu !== 0)
-            writer.tag(22, WireType.Varint).uint32(message.tcpiPmtu);
-        /* uint32 tcpi_rcv_ssthresh = 23; */
-        if (message.tcpiRcvSsthresh !== 0)
-            writer.tag(23, WireType.Varint).uint32(message.tcpiRcvSsthresh);
-        /* uint32 tcpi_rtt = 24; */
-        if (message.tcpiRtt !== 0)
-            writer.tag(24, WireType.Varint).uint32(message.tcpiRtt);
-        /* uint32 tcpi_rttvar = 25; */
-        if (message.tcpiRttvar !== 0)
-            writer.tag(25, WireType.Varint).uint32(message.tcpiRttvar);
-        /* uint32 tcpi_snd_ssthresh = 26; */
-        if (message.tcpiSndSsthresh !== 0)
-            writer.tag(26, WireType.Varint).uint32(message.tcpiSndSsthresh);
-        /* uint32 tcpi_snd_cwnd = 27; */
-        if (message.tcpiSndCwnd !== 0)
-            writer.tag(27, WireType.Varint).uint32(message.tcpiSndCwnd);
-        /* uint32 tcpi_advmss = 28; */
-        if (message.tcpiAdvmss !== 0)
-            writer.tag(28, WireType.Varint).uint32(message.tcpiAdvmss);
-        /* uint32 tcpi_reordering = 29; */
-        if (message.tcpiReordering !== 0)
-            writer.tag(29, WireType.Varint).uint32(message.tcpiReordering);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SocketOptionTcpInfo,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* uint32 tcpi_state = 1; */
+    if (message.tcpiState !== 0)
+      writer.tag(1, WireType.Varint).uint32(message.tcpiState);
+    /* uint32 tcpi_ca_state = 2; */
+    if (message.tcpiCaState !== 0)
+      writer.tag(2, WireType.Varint).uint32(message.tcpiCaState);
+    /* uint32 tcpi_retransmits = 3; */
+    if (message.tcpiRetransmits !== 0)
+      writer.tag(3, WireType.Varint).uint32(message.tcpiRetransmits);
+    /* uint32 tcpi_probes = 4; */
+    if (message.tcpiProbes !== 0)
+      writer.tag(4, WireType.Varint).uint32(message.tcpiProbes);
+    /* uint32 tcpi_backoff = 5; */
+    if (message.tcpiBackoff !== 0)
+      writer.tag(5, WireType.Varint).uint32(message.tcpiBackoff);
+    /* uint32 tcpi_options = 6; */
+    if (message.tcpiOptions !== 0)
+      writer.tag(6, WireType.Varint).uint32(message.tcpiOptions);
+    /* uint32 tcpi_snd_wscale = 7; */
+    if (message.tcpiSndWscale !== 0)
+      writer.tag(7, WireType.Varint).uint32(message.tcpiSndWscale);
+    /* uint32 tcpi_rcv_wscale = 8; */
+    if (message.tcpiRcvWscale !== 0)
+      writer.tag(8, WireType.Varint).uint32(message.tcpiRcvWscale);
+    /* uint32 tcpi_rto = 9; */
+    if (message.tcpiRto !== 0)
+      writer.tag(9, WireType.Varint).uint32(message.tcpiRto);
+    /* uint32 tcpi_ato = 10; */
+    if (message.tcpiAto !== 0)
+      writer.tag(10, WireType.Varint).uint32(message.tcpiAto);
+    /* uint32 tcpi_snd_mss = 11; */
+    if (message.tcpiSndMss !== 0)
+      writer.tag(11, WireType.Varint).uint32(message.tcpiSndMss);
+    /* uint32 tcpi_rcv_mss = 12; */
+    if (message.tcpiRcvMss !== 0)
+      writer.tag(12, WireType.Varint).uint32(message.tcpiRcvMss);
+    /* uint32 tcpi_unacked = 13; */
+    if (message.tcpiUnacked !== 0)
+      writer.tag(13, WireType.Varint).uint32(message.tcpiUnacked);
+    /* uint32 tcpi_sacked = 14; */
+    if (message.tcpiSacked !== 0)
+      writer.tag(14, WireType.Varint).uint32(message.tcpiSacked);
+    /* uint32 tcpi_lost = 15; */
+    if (message.tcpiLost !== 0)
+      writer.tag(15, WireType.Varint).uint32(message.tcpiLost);
+    /* uint32 tcpi_retrans = 16; */
+    if (message.tcpiRetrans !== 0)
+      writer.tag(16, WireType.Varint).uint32(message.tcpiRetrans);
+    /* uint32 tcpi_fackets = 17; */
+    if (message.tcpiFackets !== 0)
+      writer.tag(17, WireType.Varint).uint32(message.tcpiFackets);
+    /* uint32 tcpi_last_data_sent = 18; */
+    if (message.tcpiLastDataSent !== 0)
+      writer.tag(18, WireType.Varint).uint32(message.tcpiLastDataSent);
+    /* uint32 tcpi_last_ack_sent = 19; */
+    if (message.tcpiLastAckSent !== 0)
+      writer.tag(19, WireType.Varint).uint32(message.tcpiLastAckSent);
+    /* uint32 tcpi_last_data_recv = 20; */
+    if (message.tcpiLastDataRecv !== 0)
+      writer.tag(20, WireType.Varint).uint32(message.tcpiLastDataRecv);
+    /* uint32 tcpi_last_ack_recv = 21; */
+    if (message.tcpiLastAckRecv !== 0)
+      writer.tag(21, WireType.Varint).uint32(message.tcpiLastAckRecv);
+    /* uint32 tcpi_pmtu = 22; */
+    if (message.tcpiPmtu !== 0)
+      writer.tag(22, WireType.Varint).uint32(message.tcpiPmtu);
+    /* uint32 tcpi_rcv_ssthresh = 23; */
+    if (message.tcpiRcvSsthresh !== 0)
+      writer.tag(23, WireType.Varint).uint32(message.tcpiRcvSsthresh);
+    /* uint32 tcpi_rtt = 24; */
+    if (message.tcpiRtt !== 0)
+      writer.tag(24, WireType.Varint).uint32(message.tcpiRtt);
+    /* uint32 tcpi_rttvar = 25; */
+    if (message.tcpiRttvar !== 0)
+      writer.tag(25, WireType.Varint).uint32(message.tcpiRttvar);
+    /* uint32 tcpi_snd_ssthresh = 26; */
+    if (message.tcpiSndSsthresh !== 0)
+      writer.tag(26, WireType.Varint).uint32(message.tcpiSndSsthresh);
+    /* uint32 tcpi_snd_cwnd = 27; */
+    if (message.tcpiSndCwnd !== 0)
+      writer.tag(27, WireType.Varint).uint32(message.tcpiSndCwnd);
+    /* uint32 tcpi_advmss = 28; */
+    if (message.tcpiAdvmss !== 0)
+      writer.tag(28, WireType.Varint).uint32(message.tcpiAdvmss);
+    /* uint32 tcpi_reordering = 29; */
+    if (message.tcpiReordering !== 0)
+      writer.tag(29, WireType.Varint).uint32(message.tcpiReordering);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.SocketOptionTcpInfo
@@ -3048,54 +4401,81 @@ class SocketOptionTcpInfo$Type extends MessageType<SocketOptionTcpInfo> {
 export const SocketOptionTcpInfo = new SocketOptionTcpInfo$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetTopChannelsRequest$Type extends MessageType<GetTopChannelsRequest> {
-    constructor() {
-        super("grpc.channelz.v1.GetTopChannelsRequest", [
-            { no: 1, name: "start_channel_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 2, name: "max_results", kind: "scalar", T: 3 /*ScalarType.INT64*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetTopChannelsRequest", [
+      {
+        no: 1,
+        name: "start_channel_id",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      { no: 2, name: "max_results", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+    ]);
+  }
+  create(value?: PartialMessage<GetTopChannelsRequest>): GetTopChannelsRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.startChannelId = "0";
+    message.maxResults = "0";
+    if (value !== undefined)
+      reflectionMergePartial<GetTopChannelsRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetTopChannelsRequest,
+  ): GetTopChannelsRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 start_channel_id */ 1:
+          message.startChannelId = reader.int64().toString();
+          break;
+        case /* int64 max_results */ 2:
+          message.maxResults = reader.int64().toString();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetTopChannelsRequest>): GetTopChannelsRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.startChannelId = "0";
-        message.maxResults = "0";
-        if (value !== undefined)
-            reflectionMergePartial<GetTopChannelsRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetTopChannelsRequest): GetTopChannelsRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 start_channel_id */ 1:
-                    message.startChannelId = reader.int64().toString();
-                    break;
-                case /* int64 max_results */ 2:
-                    message.maxResults = reader.int64().toString();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetTopChannelsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 start_channel_id = 1; */
-        if (message.startChannelId !== "0")
-            writer.tag(1, WireType.Varint).int64(message.startChannelId);
-        /* int64 max_results = 2; */
-        if (message.maxResults !== "0")
-            writer.tag(2, WireType.Varint).int64(message.maxResults);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetTopChannelsRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 start_channel_id = 1; */
+    if (message.startChannelId !== "0")
+      writer.tag(1, WireType.Varint).int64(message.startChannelId);
+    /* int64 max_results = 2; */
+    if (message.maxResults !== "0")
+      writer.tag(2, WireType.Varint).int64(message.maxResults);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetTopChannelsRequest
@@ -3103,54 +4483,89 @@ class GetTopChannelsRequest$Type extends MessageType<GetTopChannelsRequest> {
 export const GetTopChannelsRequest = new GetTopChannelsRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetTopChannelsResponse$Type extends MessageType<GetTopChannelsResponse> {
-    constructor() {
-        super("grpc.channelz.v1.GetTopChannelsResponse", [
-            { no: 1, name: "channel", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => Channel },
-            { no: 2, name: "end", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetTopChannelsResponse", [
+      {
+        no: 1,
+        name: "channel",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => Channel,
+      },
+      { no: 2, name: "end", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<GetTopChannelsResponse>,
+  ): GetTopChannelsResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.channel = [];
+    message.end = false;
+    if (value !== undefined)
+      reflectionMergePartial<GetTopChannelsResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetTopChannelsResponse,
+  ): GetTopChannelsResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* repeated grpc.channelz.v1.Channel channel */ 1:
+          message.channel.push(
+            Channel.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* bool end */ 2:
+          message.end = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetTopChannelsResponse>): GetTopChannelsResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.channel = [];
-        message.end = false;
-        if (value !== undefined)
-            reflectionMergePartial<GetTopChannelsResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetTopChannelsResponse): GetTopChannelsResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated grpc.channelz.v1.Channel channel */ 1:
-                    message.channel.push(Channel.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* bool end */ 2:
-                    message.end = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetTopChannelsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated grpc.channelz.v1.Channel channel = 1; */
-        for (let i = 0; i < message.channel.length; i++)
-            Channel.internalBinaryWrite(message.channel[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* bool end = 2; */
-        if (message.end !== false)
-            writer.tag(2, WireType.Varint).bool(message.end);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetTopChannelsResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* repeated grpc.channelz.v1.Channel channel = 1; */
+    for (let i = 0; i < message.channel.length; i++)
+      Channel.internalBinaryWrite(
+        message.channel[i],
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* bool end = 2; */
+    if (message.end !== false) writer.tag(2, WireType.Varint).bool(message.end);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetTopChannelsResponse
@@ -3158,54 +4573,81 @@ class GetTopChannelsResponse$Type extends MessageType<GetTopChannelsResponse> {
 export const GetTopChannelsResponse = new GetTopChannelsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetServersRequest$Type extends MessageType<GetServersRequest> {
-    constructor() {
-        super("grpc.channelz.v1.GetServersRequest", [
-            { no: 1, name: "start_server_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 2, name: "max_results", kind: "scalar", T: 3 /*ScalarType.INT64*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetServersRequest", [
+      {
+        no: 1,
+        name: "start_server_id",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      { no: 2, name: "max_results", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+    ]);
+  }
+  create(value?: PartialMessage<GetServersRequest>): GetServersRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.startServerId = "0";
+    message.maxResults = "0";
+    if (value !== undefined)
+      reflectionMergePartial<GetServersRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetServersRequest,
+  ): GetServersRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 start_server_id */ 1:
+          message.startServerId = reader.int64().toString();
+          break;
+        case /* int64 max_results */ 2:
+          message.maxResults = reader.int64().toString();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetServersRequest>): GetServersRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.startServerId = "0";
-        message.maxResults = "0";
-        if (value !== undefined)
-            reflectionMergePartial<GetServersRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetServersRequest): GetServersRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 start_server_id */ 1:
-                    message.startServerId = reader.int64().toString();
-                    break;
-                case /* int64 max_results */ 2:
-                    message.maxResults = reader.int64().toString();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetServersRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 start_server_id = 1; */
-        if (message.startServerId !== "0")
-            writer.tag(1, WireType.Varint).int64(message.startServerId);
-        /* int64 max_results = 2; */
-        if (message.maxResults !== "0")
-            writer.tag(2, WireType.Varint).int64(message.maxResults);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetServersRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 start_server_id = 1; */
+    if (message.startServerId !== "0")
+      writer.tag(1, WireType.Varint).int64(message.startServerId);
+    /* int64 max_results = 2; */
+    if (message.maxResults !== "0")
+      writer.tag(2, WireType.Varint).int64(message.maxResults);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetServersRequest
@@ -3213,54 +4655,87 @@ class GetServersRequest$Type extends MessageType<GetServersRequest> {
 export const GetServersRequest = new GetServersRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetServersResponse$Type extends MessageType<GetServersResponse> {
-    constructor() {
-        super("grpc.channelz.v1.GetServersResponse", [
-            { no: 1, name: "server", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => Server },
-            { no: 2, name: "end", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetServersResponse", [
+      {
+        no: 1,
+        name: "server",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => Server,
+      },
+      { no: 2, name: "end", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(value?: PartialMessage<GetServersResponse>): GetServersResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.server = [];
+    message.end = false;
+    if (value !== undefined)
+      reflectionMergePartial<GetServersResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetServersResponse,
+  ): GetServersResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* repeated grpc.channelz.v1.Server server */ 1:
+          message.server.push(
+            Server.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* bool end */ 2:
+          message.end = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetServersResponse>): GetServersResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.server = [];
-        message.end = false;
-        if (value !== undefined)
-            reflectionMergePartial<GetServersResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetServersResponse): GetServersResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated grpc.channelz.v1.Server server */ 1:
-                    message.server.push(Server.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* bool end */ 2:
-                    message.end = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetServersResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated grpc.channelz.v1.Server server = 1; */
-        for (let i = 0; i < message.server.length; i++)
-            Server.internalBinaryWrite(message.server[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* bool end = 2; */
-        if (message.end !== false)
-            writer.tag(2, WireType.Varint).bool(message.end);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetServersResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* repeated grpc.channelz.v1.Server server = 1; */
+    for (let i = 0; i < message.server.length; i++)
+      Server.internalBinaryWrite(
+        message.server[i],
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* bool end = 2; */
+    if (message.end !== false) writer.tag(2, WireType.Varint).bool(message.end);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetServersResponse
@@ -3268,46 +4743,68 @@ class GetServersResponse$Type extends MessageType<GetServersResponse> {
 export const GetServersResponse = new GetServersResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetServerRequest$Type extends MessageType<GetServerRequest> {
-    constructor() {
-        super("grpc.channelz.v1.GetServerRequest", [
-            { no: 1, name: "server_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetServerRequest", [
+      { no: 1, name: "server_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+    ]);
+  }
+  create(value?: PartialMessage<GetServerRequest>): GetServerRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.serverId = "0";
+    if (value !== undefined)
+      reflectionMergePartial<GetServerRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetServerRequest,
+  ): GetServerRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 server_id */ 1:
+          message.serverId = reader.int64().toString();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetServerRequest>): GetServerRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.serverId = "0";
-        if (value !== undefined)
-            reflectionMergePartial<GetServerRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetServerRequest): GetServerRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 server_id */ 1:
-                    message.serverId = reader.int64().toString();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetServerRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 server_id = 1; */
-        if (message.serverId !== "0")
-            writer.tag(1, WireType.Varint).int64(message.serverId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetServerRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 server_id = 1; */
+    if (message.serverId !== "0")
+      writer.tag(1, WireType.Varint).int64(message.serverId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetServerRequest
@@ -3315,45 +4812,76 @@ class GetServerRequest$Type extends MessageType<GetServerRequest> {
 export const GetServerRequest = new GetServerRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetServerResponse$Type extends MessageType<GetServerResponse> {
-    constructor() {
-        super("grpc.channelz.v1.GetServerResponse", [
-            { no: 1, name: "server", kind: "message", T: () => Server }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetServerResponse", [
+      { no: 1, name: "server", kind: "message", T: () => Server },
+    ]);
+  }
+  create(value?: PartialMessage<GetServerResponse>): GetServerResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<GetServerResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetServerResponse,
+  ): GetServerResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.channelz.v1.Server server */ 1:
+          message.server = Server.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.server,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetServerResponse>): GetServerResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<GetServerResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetServerResponse): GetServerResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.channelz.v1.Server server */ 1:
-                    message.server = Server.internalBinaryRead(reader, reader.uint32(), options, message.server);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetServerResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.channelz.v1.Server server = 1; */
-        if (message.server)
-            Server.internalBinaryWrite(message.server, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetServerResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.channelz.v1.Server server = 1; */
+    if (message.server)
+      Server.internalBinaryWrite(
+        message.server,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetServerResponse
@@ -3361,62 +4889,91 @@ class GetServerResponse$Type extends MessageType<GetServerResponse> {
 export const GetServerResponse = new GetServerResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetServerSocketsRequest$Type extends MessageType<GetServerSocketsRequest> {
-    constructor() {
-        super("grpc.channelz.v1.GetServerSocketsRequest", [
-            { no: 1, name: "server_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 2, name: "start_socket_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 3, name: "max_results", kind: "scalar", T: 3 /*ScalarType.INT64*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetServerSocketsRequest", [
+      { no: 1, name: "server_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+      {
+        no: 2,
+        name: "start_socket_id",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      { no: 3, name: "max_results", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<GetServerSocketsRequest>,
+  ): GetServerSocketsRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.serverId = "0";
+    message.startSocketId = "0";
+    message.maxResults = "0";
+    if (value !== undefined)
+      reflectionMergePartial<GetServerSocketsRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetServerSocketsRequest,
+  ): GetServerSocketsRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 server_id */ 1:
+          message.serverId = reader.int64().toString();
+          break;
+        case /* int64 start_socket_id */ 2:
+          message.startSocketId = reader.int64().toString();
+          break;
+        case /* int64 max_results */ 3:
+          message.maxResults = reader.int64().toString();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetServerSocketsRequest>): GetServerSocketsRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.serverId = "0";
-        message.startSocketId = "0";
-        message.maxResults = "0";
-        if (value !== undefined)
-            reflectionMergePartial<GetServerSocketsRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetServerSocketsRequest): GetServerSocketsRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 server_id */ 1:
-                    message.serverId = reader.int64().toString();
-                    break;
-                case /* int64 start_socket_id */ 2:
-                    message.startSocketId = reader.int64().toString();
-                    break;
-                case /* int64 max_results */ 3:
-                    message.maxResults = reader.int64().toString();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetServerSocketsRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 server_id = 1; */
-        if (message.serverId !== "0")
-            writer.tag(1, WireType.Varint).int64(message.serverId);
-        /* int64 start_socket_id = 2; */
-        if (message.startSocketId !== "0")
-            writer.tag(2, WireType.Varint).int64(message.startSocketId);
-        /* int64 max_results = 3; */
-        if (message.maxResults !== "0")
-            writer.tag(3, WireType.Varint).int64(message.maxResults);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetServerSocketsRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 server_id = 1; */
+    if (message.serverId !== "0")
+      writer.tag(1, WireType.Varint).int64(message.serverId);
+    /* int64 start_socket_id = 2; */
+    if (message.startSocketId !== "0")
+      writer.tag(2, WireType.Varint).int64(message.startSocketId);
+    /* int64 max_results = 3; */
+    if (message.maxResults !== "0")
+      writer.tag(3, WireType.Varint).int64(message.maxResults);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetServerSocketsRequest
@@ -3424,54 +4981,89 @@ class GetServerSocketsRequest$Type extends MessageType<GetServerSocketsRequest> 
 export const GetServerSocketsRequest = new GetServerSocketsRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetServerSocketsResponse$Type extends MessageType<GetServerSocketsResponse> {
-    constructor() {
-        super("grpc.channelz.v1.GetServerSocketsResponse", [
-            { no: 1, name: "socket_ref", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => SocketRef },
-            { no: 2, name: "end", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetServerSocketsResponse", [
+      {
+        no: 1,
+        name: "socket_ref",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SocketRef,
+      },
+      { no: 2, name: "end", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<GetServerSocketsResponse>,
+  ): GetServerSocketsResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.socketRef = [];
+    message.end = false;
+    if (value !== undefined)
+      reflectionMergePartial<GetServerSocketsResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetServerSocketsResponse,
+  ): GetServerSocketsResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* repeated grpc.channelz.v1.SocketRef socket_ref */ 1:
+          message.socketRef.push(
+            SocketRef.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* bool end */ 2:
+          message.end = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetServerSocketsResponse>): GetServerSocketsResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.socketRef = [];
-        message.end = false;
-        if (value !== undefined)
-            reflectionMergePartial<GetServerSocketsResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetServerSocketsResponse): GetServerSocketsResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated grpc.channelz.v1.SocketRef socket_ref */ 1:
-                    message.socketRef.push(SocketRef.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* bool end */ 2:
-                    message.end = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetServerSocketsResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated grpc.channelz.v1.SocketRef socket_ref = 1; */
-        for (let i = 0; i < message.socketRef.length; i++)
-            SocketRef.internalBinaryWrite(message.socketRef[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* bool end = 2; */
-        if (message.end !== false)
-            writer.tag(2, WireType.Varint).bool(message.end);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetServerSocketsResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* repeated grpc.channelz.v1.SocketRef socket_ref = 1; */
+    for (let i = 0; i < message.socketRef.length; i++)
+      SocketRef.internalBinaryWrite(
+        message.socketRef[i],
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* bool end = 2; */
+    if (message.end !== false) writer.tag(2, WireType.Varint).bool(message.end);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetServerSocketsResponse
@@ -3479,46 +5071,68 @@ class GetServerSocketsResponse$Type extends MessageType<GetServerSocketsResponse
 export const GetServerSocketsResponse = new GetServerSocketsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetChannelRequest$Type extends MessageType<GetChannelRequest> {
-    constructor() {
-        super("grpc.channelz.v1.GetChannelRequest", [
-            { no: 1, name: "channel_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetChannelRequest", [
+      { no: 1, name: "channel_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+    ]);
+  }
+  create(value?: PartialMessage<GetChannelRequest>): GetChannelRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.channelId = "0";
+    if (value !== undefined)
+      reflectionMergePartial<GetChannelRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetChannelRequest,
+  ): GetChannelRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 channel_id */ 1:
+          message.channelId = reader.int64().toString();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetChannelRequest>): GetChannelRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.channelId = "0";
-        if (value !== undefined)
-            reflectionMergePartial<GetChannelRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetChannelRequest): GetChannelRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 channel_id */ 1:
-                    message.channelId = reader.int64().toString();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetChannelRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 channel_id = 1; */
-        if (message.channelId !== "0")
-            writer.tag(1, WireType.Varint).int64(message.channelId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetChannelRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 channel_id = 1; */
+    if (message.channelId !== "0")
+      writer.tag(1, WireType.Varint).int64(message.channelId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetChannelRequest
@@ -3526,45 +5140,76 @@ class GetChannelRequest$Type extends MessageType<GetChannelRequest> {
 export const GetChannelRequest = new GetChannelRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetChannelResponse$Type extends MessageType<GetChannelResponse> {
-    constructor() {
-        super("grpc.channelz.v1.GetChannelResponse", [
-            { no: 1, name: "channel", kind: "message", T: () => Channel }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetChannelResponse", [
+      { no: 1, name: "channel", kind: "message", T: () => Channel },
+    ]);
+  }
+  create(value?: PartialMessage<GetChannelResponse>): GetChannelResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<GetChannelResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetChannelResponse,
+  ): GetChannelResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.channelz.v1.Channel channel */ 1:
+          message.channel = Channel.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.channel,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetChannelResponse>): GetChannelResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<GetChannelResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetChannelResponse): GetChannelResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.channelz.v1.Channel channel */ 1:
-                    message.channel = Channel.internalBinaryRead(reader, reader.uint32(), options, message.channel);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetChannelResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.channelz.v1.Channel channel = 1; */
-        if (message.channel)
-            Channel.internalBinaryWrite(message.channel, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetChannelResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.channelz.v1.Channel channel = 1; */
+    if (message.channel)
+      Channel.internalBinaryWrite(
+        message.channel,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetChannelResponse
@@ -3572,46 +5217,73 @@ class GetChannelResponse$Type extends MessageType<GetChannelResponse> {
 export const GetChannelResponse = new GetChannelResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetSubchannelRequest$Type extends MessageType<GetSubchannelRequest> {
-    constructor() {
-        super("grpc.channelz.v1.GetSubchannelRequest", [
-            { no: 1, name: "subchannel_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetSubchannelRequest", [
+      {
+        no: 1,
+        name: "subchannel_id",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<GetSubchannelRequest>): GetSubchannelRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.subchannelId = "0";
+    if (value !== undefined)
+      reflectionMergePartial<GetSubchannelRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetSubchannelRequest,
+  ): GetSubchannelRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 subchannel_id */ 1:
+          message.subchannelId = reader.int64().toString();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetSubchannelRequest>): GetSubchannelRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.subchannelId = "0";
-        if (value !== undefined)
-            reflectionMergePartial<GetSubchannelRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetSubchannelRequest): GetSubchannelRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 subchannel_id */ 1:
-                    message.subchannelId = reader.int64().toString();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetSubchannelRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 subchannel_id = 1; */
-        if (message.subchannelId !== "0")
-            writer.tag(1, WireType.Varint).int64(message.subchannelId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetSubchannelRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 subchannel_id = 1; */
+    if (message.subchannelId !== "0")
+      writer.tag(1, WireType.Varint).int64(message.subchannelId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetSubchannelRequest
@@ -3619,45 +5291,76 @@ class GetSubchannelRequest$Type extends MessageType<GetSubchannelRequest> {
 export const GetSubchannelRequest = new GetSubchannelRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetSubchannelResponse$Type extends MessageType<GetSubchannelResponse> {
-    constructor() {
-        super("grpc.channelz.v1.GetSubchannelResponse", [
-            { no: 1, name: "subchannel", kind: "message", T: () => Subchannel }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetSubchannelResponse", [
+      { no: 1, name: "subchannel", kind: "message", T: () => Subchannel },
+    ]);
+  }
+  create(value?: PartialMessage<GetSubchannelResponse>): GetSubchannelResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<GetSubchannelResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetSubchannelResponse,
+  ): GetSubchannelResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.channelz.v1.Subchannel subchannel */ 1:
+          message.subchannel = Subchannel.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.subchannel,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetSubchannelResponse>): GetSubchannelResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<GetSubchannelResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetSubchannelResponse): GetSubchannelResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.channelz.v1.Subchannel subchannel */ 1:
-                    message.subchannel = Subchannel.internalBinaryRead(reader, reader.uint32(), options, message.subchannel);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetSubchannelResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.channelz.v1.Subchannel subchannel = 1; */
-        if (message.subchannel)
-            Subchannel.internalBinaryWrite(message.subchannel, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetSubchannelResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.channelz.v1.Subchannel subchannel = 1; */
+    if (message.subchannel)
+      Subchannel.internalBinaryWrite(
+        message.subchannel,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetSubchannelResponse
@@ -3665,54 +5368,76 @@ class GetSubchannelResponse$Type extends MessageType<GetSubchannelResponse> {
 export const GetSubchannelResponse = new GetSubchannelResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetSocketRequest$Type extends MessageType<GetSocketRequest> {
-    constructor() {
-        super("grpc.channelz.v1.GetSocketRequest", [
-            { no: 1, name: "socket_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 2, name: "summary", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetSocketRequest", [
+      { no: 1, name: "socket_id", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
+      { no: 2, name: "summary", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(value?: PartialMessage<GetSocketRequest>): GetSocketRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.socketId = "0";
+    message.summary = false;
+    if (value !== undefined)
+      reflectionMergePartial<GetSocketRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetSocketRequest,
+  ): GetSocketRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int64 socket_id */ 1:
+          message.socketId = reader.int64().toString();
+          break;
+        case /* bool summary */ 2:
+          message.summary = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetSocketRequest>): GetSocketRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.socketId = "0";
-        message.summary = false;
-        if (value !== undefined)
-            reflectionMergePartial<GetSocketRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetSocketRequest): GetSocketRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int64 socket_id */ 1:
-                    message.socketId = reader.int64().toString();
-                    break;
-                case /* bool summary */ 2:
-                    message.summary = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetSocketRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int64 socket_id = 1; */
-        if (message.socketId !== "0")
-            writer.tag(1, WireType.Varint).int64(message.socketId);
-        /* bool summary = 2; */
-        if (message.summary !== false)
-            writer.tag(2, WireType.Varint).bool(message.summary);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetSocketRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int64 socket_id = 1; */
+    if (message.socketId !== "0")
+      writer.tag(1, WireType.Varint).int64(message.socketId);
+    /* bool summary = 2; */
+    if (message.summary !== false)
+      writer.tag(2, WireType.Varint).bool(message.summary);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetSocketRequest
@@ -3720,45 +5445,76 @@ class GetSocketRequest$Type extends MessageType<GetSocketRequest> {
 export const GetSocketRequest = new GetSocketRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetSocketResponse$Type extends MessageType<GetSocketResponse> {
-    constructor() {
-        super("grpc.channelz.v1.GetSocketResponse", [
-            { no: 1, name: "socket", kind: "message", T: () => Socket }
-        ]);
+  constructor() {
+    super("grpc.channelz.v1.GetSocketResponse", [
+      { no: 1, name: "socket", kind: "message", T: () => Socket },
+    ]);
+  }
+  create(value?: PartialMessage<GetSocketResponse>): GetSocketResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<GetSocketResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetSocketResponse,
+  ): GetSocketResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.channelz.v1.Socket socket */ 1:
+          message.socket = Socket.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.socket,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GetSocketResponse>): GetSocketResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<GetSocketResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GetSocketResponse): GetSocketResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.channelz.v1.Socket socket */ 1:
-                    message.socket = Socket.internalBinaryRead(reader, reader.uint32(), options, message.socket);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GetSocketResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.channelz.v1.Socket socket = 1; */
-        if (message.socket)
-            Socket.internalBinaryWrite(message.socket, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetSocketResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.channelz.v1.Socket socket = 1; */
+    if (message.socket)
+      Socket.internalBinaryWrite(
+        message.socket,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.channelz.v1.GetSocketResponse
@@ -3768,11 +5524,37 @@ export const GetSocketResponse = new GetSocketResponse$Type();
  * @generated ServiceType for protobuf service grpc.channelz.v1.Channelz
  */
 export const Channelz = new ServiceType("grpc.channelz.v1.Channelz", [
-    { name: "GetTopChannels", options: {}, I: GetTopChannelsRequest, O: GetTopChannelsResponse },
-    { name: "GetServers", options: {}, I: GetServersRequest, O: GetServersResponse },
-    { name: "GetServer", options: {}, I: GetServerRequest, O: GetServerResponse },
-    { name: "GetServerSockets", options: {}, I: GetServerSocketsRequest, O: GetServerSocketsResponse },
-    { name: "GetChannel", localName: "getChannel$", options: {}, I: GetChannelRequest, O: GetChannelResponse },
-    { name: "GetSubchannel", options: {}, I: GetSubchannelRequest, O: GetSubchannelResponse },
-    { name: "GetSocket", options: {}, I: GetSocketRequest, O: GetSocketResponse }
+  {
+    name: "GetTopChannels",
+    options: {},
+    I: GetTopChannelsRequest,
+    O: GetTopChannelsResponse,
+  },
+  {
+    name: "GetServers",
+    options: {},
+    I: GetServersRequest,
+    O: GetServersResponse,
+  },
+  { name: "GetServer", options: {}, I: GetServerRequest, O: GetServerResponse },
+  {
+    name: "GetServerSockets",
+    options: {},
+    I: GetServerSocketsRequest,
+    O: GetServerSocketsResponse,
+  },
+  {
+    name: "GetChannel",
+    localName: "getChannel$",
+    options: {},
+    I: GetChannelRequest,
+    O: GetChannelResponse,
+  },
+  {
+    name: "GetSubchannel",
+    options: {},
+    I: GetSubchannelRequest,
+    O: GetSubchannelResponse,
+  },
+  { name: "GetSocket", options: {}, I: GetSocketRequest, O: GetSocketResponse },
 ]);

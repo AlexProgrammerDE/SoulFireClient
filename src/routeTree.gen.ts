@@ -8,481 +8,481 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './routes/__root'
-import { Route as DashboardRouteImport } from './routes/_dashboard'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as DashboardUserRouteImport } from './routes/_dashboard/user'
-import { Route as DashboardUserIndexRouteImport } from './routes/_dashboard/user/index'
-import { Route as DashboardUserSettingsRouteImport } from './routes/_dashboard/user/settings'
-import { Route as DashboardUserAdminRouteImport } from './routes/_dashboard/user/admin'
-import { Route as DashboardUserAccessRouteImport } from './routes/_dashboard/user/access'
-import { Route as DashboardInstanceInstanceRouteImport } from './routes/_dashboard/instance/$instance'
-import { Route as DashboardUserAdminIndexRouteImport } from './routes/_dashboard/user/admin/index'
-import { Route as DashboardInstanceInstanceIndexRouteImport } from './routes/_dashboard/instance/$instance/index'
-import { Route as DashboardUserAdminUsersRouteImport } from './routes/_dashboard/user/admin/users'
-import { Route as DashboardUserAdminTerminalRouteImport } from './routes/_dashboard/user/admin/terminal'
-import { Route as DashboardUserAdminScriptsRouteImport } from './routes/_dashboard/user/admin/scripts'
-import { Route as DashboardUserAdminLogsRouteImport } from './routes/_dashboard/user/admin/logs'
-import { Route as DashboardInstanceInstanceTerminalRouteImport } from './routes/_dashboard/instance/$instance/terminal'
-import { Route as DashboardInstanceInstanceScriptsRouteImport } from './routes/_dashboard/instance/$instance/scripts'
-import { Route as DashboardInstanceInstanceProxiesRouteImport } from './routes/_dashboard/instance/$instance/proxies'
-import { Route as DashboardInstanceInstanceMetaRouteImport } from './routes/_dashboard/instance/$instance/meta'
-import { Route as DashboardInstanceInstanceDiscoverRouteImport } from './routes/_dashboard/instance/$instance/discover'
-import { Route as DashboardInstanceInstanceAuditLogRouteImport } from './routes/_dashboard/instance/$instance/audit-log'
-import { Route as DashboardInstanceInstanceAccountsRouteImport } from './routes/_dashboard/instance/$instance/accounts'
-import { Route as DashboardUserAdminSettingsNamespaceRouteImport } from './routes/_dashboard/user/admin/settings/$namespace'
-import { Route as DashboardInstanceInstanceSettingsNamespaceRouteImport } from './routes/_dashboard/instance/$instance/settings/$namespace'
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as DashboardRouteImport } from "./routes/_dashboard";
+import { Route as DashboardInstanceInstanceRouteImport } from "./routes/_dashboard/instance/$instance";
+import { Route as DashboardInstanceInstanceAccountsRouteImport } from "./routes/_dashboard/instance/$instance/accounts";
+import { Route as DashboardInstanceInstanceAuditLogRouteImport } from "./routes/_dashboard/instance/$instance/audit-log";
+import { Route as DashboardInstanceInstanceDiscoverRouteImport } from "./routes/_dashboard/instance/$instance/discover";
+import { Route as DashboardInstanceInstanceIndexRouteImport } from "./routes/_dashboard/instance/$instance/index";
+import { Route as DashboardInstanceInstanceMetaRouteImport } from "./routes/_dashboard/instance/$instance/meta";
+import { Route as DashboardInstanceInstanceProxiesRouteImport } from "./routes/_dashboard/instance/$instance/proxies";
+import { Route as DashboardInstanceInstanceScriptsRouteImport } from "./routes/_dashboard/instance/$instance/scripts";
+import { Route as DashboardInstanceInstanceSettingsNamespaceRouteImport } from "./routes/_dashboard/instance/$instance/settings/$namespace";
+import { Route as DashboardInstanceInstanceTerminalRouteImport } from "./routes/_dashboard/instance/$instance/terminal";
+import { Route as DashboardUserRouteImport } from "./routes/_dashboard/user";
+import { Route as DashboardUserAccessRouteImport } from "./routes/_dashboard/user/access";
+import { Route as DashboardUserAdminRouteImport } from "./routes/_dashboard/user/admin";
+import { Route as DashboardUserAdminIndexRouteImport } from "./routes/_dashboard/user/admin/index";
+import { Route as DashboardUserAdminLogsRouteImport } from "./routes/_dashboard/user/admin/logs";
+import { Route as DashboardUserAdminScriptsRouteImport } from "./routes/_dashboard/user/admin/scripts";
+import { Route as DashboardUserAdminSettingsNamespaceRouteImport } from "./routes/_dashboard/user/admin/settings/$namespace";
+import { Route as DashboardUserAdminTerminalRouteImport } from "./routes/_dashboard/user/admin/terminal";
+import { Route as DashboardUserAdminUsersRouteImport } from "./routes/_dashboard/user/admin/users";
+import { Route as DashboardUserIndexRouteImport } from "./routes/_dashboard/user/index";
+import { Route as DashboardUserSettingsRouteImport } from "./routes/_dashboard/user/settings";
+import { Route as IndexRouteImport } from "./routes/index";
 
 const DashboardRoute = DashboardRouteImport.update({
-  id: '/_dashboard',
+  id: "/_dashboard",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => rootRouteImport,
-} as any)
+} as any);
 const DashboardUserRoute = DashboardUserRouteImport.update({
-  id: '/user',
-  path: '/user',
+  id: "/user",
+  path: "/user",
   getParentRoute: () => DashboardRoute,
-} as any)
+} as any);
 const DashboardUserIndexRoute = DashboardUserIndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => DashboardUserRoute,
-} as any)
+} as any);
 const DashboardUserSettingsRoute = DashboardUserSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
+  id: "/settings",
+  path: "/settings",
   getParentRoute: () => DashboardUserRoute,
-} as any)
+} as any);
 const DashboardUserAdminRoute = DashboardUserAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
+  id: "/admin",
+  path: "/admin",
   getParentRoute: () => DashboardUserRoute,
-} as any)
+} as any);
 const DashboardUserAccessRoute = DashboardUserAccessRouteImport.update({
-  id: '/access',
-  path: '/access',
+  id: "/access",
+  path: "/access",
   getParentRoute: () => DashboardUserRoute,
-} as any)
+} as any);
 const DashboardInstanceInstanceRoute =
   DashboardInstanceInstanceRouteImport.update({
-    id: '/instance/$instance',
-    path: '/instance/$instance',
+    id: "/instance/$instance",
+    path: "/instance/$instance",
     getParentRoute: () => DashboardRoute,
-  } as any)
+  } as any);
 const DashboardUserAdminIndexRoute = DashboardUserAdminIndexRouteImport.update({
-  id: '/',
-  path: '/',
+  id: "/",
+  path: "/",
   getParentRoute: () => DashboardUserAdminRoute,
-} as any)
+} as any);
 const DashboardInstanceInstanceIndexRoute =
   DashboardInstanceInstanceIndexRouteImport.update({
-    id: '/',
-    path: '/',
+    id: "/",
+    path: "/",
     getParentRoute: () => DashboardInstanceInstanceRoute,
-  } as any)
+  } as any);
 const DashboardUserAdminUsersRoute = DashboardUserAdminUsersRouteImport.update({
-  id: '/users',
-  path: '/users',
+  id: "/users",
+  path: "/users",
   getParentRoute: () => DashboardUserAdminRoute,
-} as any)
+} as any);
 const DashboardUserAdminTerminalRoute =
   DashboardUserAdminTerminalRouteImport.update({
-    id: '/terminal',
-    path: '/terminal',
+    id: "/terminal",
+    path: "/terminal",
     getParentRoute: () => DashboardUserAdminRoute,
-  } as any)
+  } as any);
 const DashboardUserAdminScriptsRoute =
   DashboardUserAdminScriptsRouteImport.update({
-    id: '/scripts',
-    path: '/scripts',
+    id: "/scripts",
+    path: "/scripts",
     getParentRoute: () => DashboardUserAdminRoute,
-  } as any)
+  } as any);
 const DashboardUserAdminLogsRoute = DashboardUserAdminLogsRouteImport.update({
-  id: '/logs',
-  path: '/logs',
+  id: "/logs",
+  path: "/logs",
   getParentRoute: () => DashboardUserAdminRoute,
-} as any)
+} as any);
 const DashboardInstanceInstanceTerminalRoute =
   DashboardInstanceInstanceTerminalRouteImport.update({
-    id: '/terminal',
-    path: '/terminal',
+    id: "/terminal",
+    path: "/terminal",
     getParentRoute: () => DashboardInstanceInstanceRoute,
-  } as any)
+  } as any);
 const DashboardInstanceInstanceScriptsRoute =
   DashboardInstanceInstanceScriptsRouteImport.update({
-    id: '/scripts',
-    path: '/scripts',
+    id: "/scripts",
+    path: "/scripts",
     getParentRoute: () => DashboardInstanceInstanceRoute,
-  } as any)
+  } as any);
 const DashboardInstanceInstanceProxiesRoute =
   DashboardInstanceInstanceProxiesRouteImport.update({
-    id: '/proxies',
-    path: '/proxies',
+    id: "/proxies",
+    path: "/proxies",
     getParentRoute: () => DashboardInstanceInstanceRoute,
-  } as any)
+  } as any);
 const DashboardInstanceInstanceMetaRoute =
   DashboardInstanceInstanceMetaRouteImport.update({
-    id: '/meta',
-    path: '/meta',
+    id: "/meta",
+    path: "/meta",
     getParentRoute: () => DashboardInstanceInstanceRoute,
-  } as any)
+  } as any);
 const DashboardInstanceInstanceDiscoverRoute =
   DashboardInstanceInstanceDiscoverRouteImport.update({
-    id: '/discover',
-    path: '/discover',
+    id: "/discover",
+    path: "/discover",
     getParentRoute: () => DashboardInstanceInstanceRoute,
-  } as any)
+  } as any);
 const DashboardInstanceInstanceAuditLogRoute =
   DashboardInstanceInstanceAuditLogRouteImport.update({
-    id: '/audit-log',
-    path: '/audit-log',
+    id: "/audit-log",
+    path: "/audit-log",
     getParentRoute: () => DashboardInstanceInstanceRoute,
-  } as any)
+  } as any);
 const DashboardInstanceInstanceAccountsRoute =
   DashboardInstanceInstanceAccountsRouteImport.update({
-    id: '/accounts',
-    path: '/accounts',
+    id: "/accounts",
+    path: "/accounts",
     getParentRoute: () => DashboardInstanceInstanceRoute,
-  } as any)
+  } as any);
 const DashboardUserAdminSettingsNamespaceRoute =
   DashboardUserAdminSettingsNamespaceRouteImport.update({
-    id: '/settings/$namespace',
-    path: '/settings/$namespace',
+    id: "/settings/$namespace",
+    path: "/settings/$namespace",
     getParentRoute: () => DashboardUserAdminRoute,
-  } as any)
+  } as any);
 const DashboardInstanceInstanceSettingsNamespaceRoute =
   DashboardInstanceInstanceSettingsNamespaceRouteImport.update({
-    id: '/settings/$namespace',
-    path: '/settings/$namespace',
+    id: "/settings/$namespace",
+    path: "/settings/$namespace",
     getParentRoute: () => DashboardInstanceInstanceRoute,
-  } as any)
+  } as any);
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/user': typeof DashboardUserRouteWithChildren
-  '/instance/$instance': typeof DashboardInstanceInstanceRouteWithChildren
-  '/user/access': typeof DashboardUserAccessRoute
-  '/user/admin': typeof DashboardUserAdminRouteWithChildren
-  '/user/settings': typeof DashboardUserSettingsRoute
-  '/user/': typeof DashboardUserIndexRoute
-  '/instance/$instance/accounts': typeof DashboardInstanceInstanceAccountsRoute
-  '/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
-  '/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
-  '/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
-  '/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
-  '/instance/$instance/scripts': typeof DashboardInstanceInstanceScriptsRoute
-  '/instance/$instance/terminal': typeof DashboardInstanceInstanceTerminalRoute
-  '/user/admin/logs': typeof DashboardUserAdminLogsRoute
-  '/user/admin/scripts': typeof DashboardUserAdminScriptsRoute
-  '/user/admin/terminal': typeof DashboardUserAdminTerminalRoute
-  '/user/admin/users': typeof DashboardUserAdminUsersRoute
-  '/instance/$instance/': typeof DashboardInstanceInstanceIndexRoute
-  '/user/admin/': typeof DashboardUserAdminIndexRoute
-  '/instance/$instance/settings/$namespace': typeof DashboardInstanceInstanceSettingsNamespaceRoute
-  '/user/admin/settings/$namespace': typeof DashboardUserAdminSettingsNamespaceRoute
+  "/": typeof IndexRoute;
+  "/user": typeof DashboardUserRouteWithChildren;
+  "/instance/$instance": typeof DashboardInstanceInstanceRouteWithChildren;
+  "/user/access": typeof DashboardUserAccessRoute;
+  "/user/admin": typeof DashboardUserAdminRouteWithChildren;
+  "/user/settings": typeof DashboardUserSettingsRoute;
+  "/user/": typeof DashboardUserIndexRoute;
+  "/instance/$instance/accounts": typeof DashboardInstanceInstanceAccountsRoute;
+  "/instance/$instance/audit-log": typeof DashboardInstanceInstanceAuditLogRoute;
+  "/instance/$instance/discover": typeof DashboardInstanceInstanceDiscoverRoute;
+  "/instance/$instance/meta": typeof DashboardInstanceInstanceMetaRoute;
+  "/instance/$instance/proxies": typeof DashboardInstanceInstanceProxiesRoute;
+  "/instance/$instance/scripts": typeof DashboardInstanceInstanceScriptsRoute;
+  "/instance/$instance/terminal": typeof DashboardInstanceInstanceTerminalRoute;
+  "/user/admin/logs": typeof DashboardUserAdminLogsRoute;
+  "/user/admin/scripts": typeof DashboardUserAdminScriptsRoute;
+  "/user/admin/terminal": typeof DashboardUserAdminTerminalRoute;
+  "/user/admin/users": typeof DashboardUserAdminUsersRoute;
+  "/instance/$instance/": typeof DashboardInstanceInstanceIndexRoute;
+  "/user/admin/": typeof DashboardUserAdminIndexRoute;
+  "/instance/$instance/settings/$namespace": typeof DashboardInstanceInstanceSettingsNamespaceRoute;
+  "/user/admin/settings/$namespace": typeof DashboardUserAdminSettingsNamespaceRoute;
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/user/access': typeof DashboardUserAccessRoute
-  '/user/settings': typeof DashboardUserSettingsRoute
-  '/user': typeof DashboardUserIndexRoute
-  '/instance/$instance/accounts': typeof DashboardInstanceInstanceAccountsRoute
-  '/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
-  '/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
-  '/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
-  '/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
-  '/instance/$instance/scripts': typeof DashboardInstanceInstanceScriptsRoute
-  '/instance/$instance/terminal': typeof DashboardInstanceInstanceTerminalRoute
-  '/user/admin/logs': typeof DashboardUserAdminLogsRoute
-  '/user/admin/scripts': typeof DashboardUserAdminScriptsRoute
-  '/user/admin/terminal': typeof DashboardUserAdminTerminalRoute
-  '/user/admin/users': typeof DashboardUserAdminUsersRoute
-  '/instance/$instance': typeof DashboardInstanceInstanceIndexRoute
-  '/user/admin': typeof DashboardUserAdminIndexRoute
-  '/instance/$instance/settings/$namespace': typeof DashboardInstanceInstanceSettingsNamespaceRoute
-  '/user/admin/settings/$namespace': typeof DashboardUserAdminSettingsNamespaceRoute
+  "/": typeof IndexRoute;
+  "/user/access": typeof DashboardUserAccessRoute;
+  "/user/settings": typeof DashboardUserSettingsRoute;
+  "/user": typeof DashboardUserIndexRoute;
+  "/instance/$instance/accounts": typeof DashboardInstanceInstanceAccountsRoute;
+  "/instance/$instance/audit-log": typeof DashboardInstanceInstanceAuditLogRoute;
+  "/instance/$instance/discover": typeof DashboardInstanceInstanceDiscoverRoute;
+  "/instance/$instance/meta": typeof DashboardInstanceInstanceMetaRoute;
+  "/instance/$instance/proxies": typeof DashboardInstanceInstanceProxiesRoute;
+  "/instance/$instance/scripts": typeof DashboardInstanceInstanceScriptsRoute;
+  "/instance/$instance/terminal": typeof DashboardInstanceInstanceTerminalRoute;
+  "/user/admin/logs": typeof DashboardUserAdminLogsRoute;
+  "/user/admin/scripts": typeof DashboardUserAdminScriptsRoute;
+  "/user/admin/terminal": typeof DashboardUserAdminTerminalRoute;
+  "/user/admin/users": typeof DashboardUserAdminUsersRoute;
+  "/instance/$instance": typeof DashboardInstanceInstanceIndexRoute;
+  "/user/admin": typeof DashboardUserAdminIndexRoute;
+  "/instance/$instance/settings/$namespace": typeof DashboardInstanceInstanceSettingsNamespaceRoute;
+  "/user/admin/settings/$namespace": typeof DashboardUserAdminSettingsNamespaceRoute;
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/_dashboard': typeof DashboardRouteWithChildren
-  '/_dashboard/user': typeof DashboardUserRouteWithChildren
-  '/_dashboard/instance/$instance': typeof DashboardInstanceInstanceRouteWithChildren
-  '/_dashboard/user/access': typeof DashboardUserAccessRoute
-  '/_dashboard/user/admin': typeof DashboardUserAdminRouteWithChildren
-  '/_dashboard/user/settings': typeof DashboardUserSettingsRoute
-  '/_dashboard/user/': typeof DashboardUserIndexRoute
-  '/_dashboard/instance/$instance/accounts': typeof DashboardInstanceInstanceAccountsRoute
-  '/_dashboard/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
-  '/_dashboard/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
-  '/_dashboard/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
-  '/_dashboard/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
-  '/_dashboard/instance/$instance/scripts': typeof DashboardInstanceInstanceScriptsRoute
-  '/_dashboard/instance/$instance/terminal': typeof DashboardInstanceInstanceTerminalRoute
-  '/_dashboard/user/admin/logs': typeof DashboardUserAdminLogsRoute
-  '/_dashboard/user/admin/scripts': typeof DashboardUserAdminScriptsRoute
-  '/_dashboard/user/admin/terminal': typeof DashboardUserAdminTerminalRoute
-  '/_dashboard/user/admin/users': typeof DashboardUserAdminUsersRoute
-  '/_dashboard/instance/$instance/': typeof DashboardInstanceInstanceIndexRoute
-  '/_dashboard/user/admin/': typeof DashboardUserAdminIndexRoute
-  '/_dashboard/instance/$instance/settings/$namespace': typeof DashboardInstanceInstanceSettingsNamespaceRoute
-  '/_dashboard/user/admin/settings/$namespace': typeof DashboardUserAdminSettingsNamespaceRoute
+  __root__: typeof rootRouteImport;
+  "/": typeof IndexRoute;
+  "/_dashboard": typeof DashboardRouteWithChildren;
+  "/_dashboard/user": typeof DashboardUserRouteWithChildren;
+  "/_dashboard/instance/$instance": typeof DashboardInstanceInstanceRouteWithChildren;
+  "/_dashboard/user/access": typeof DashboardUserAccessRoute;
+  "/_dashboard/user/admin": typeof DashboardUserAdminRouteWithChildren;
+  "/_dashboard/user/settings": typeof DashboardUserSettingsRoute;
+  "/_dashboard/user/": typeof DashboardUserIndexRoute;
+  "/_dashboard/instance/$instance/accounts": typeof DashboardInstanceInstanceAccountsRoute;
+  "/_dashboard/instance/$instance/audit-log": typeof DashboardInstanceInstanceAuditLogRoute;
+  "/_dashboard/instance/$instance/discover": typeof DashboardInstanceInstanceDiscoverRoute;
+  "/_dashboard/instance/$instance/meta": typeof DashboardInstanceInstanceMetaRoute;
+  "/_dashboard/instance/$instance/proxies": typeof DashboardInstanceInstanceProxiesRoute;
+  "/_dashboard/instance/$instance/scripts": typeof DashboardInstanceInstanceScriptsRoute;
+  "/_dashboard/instance/$instance/terminal": typeof DashboardInstanceInstanceTerminalRoute;
+  "/_dashboard/user/admin/logs": typeof DashboardUserAdminLogsRoute;
+  "/_dashboard/user/admin/scripts": typeof DashboardUserAdminScriptsRoute;
+  "/_dashboard/user/admin/terminal": typeof DashboardUserAdminTerminalRoute;
+  "/_dashboard/user/admin/users": typeof DashboardUserAdminUsersRoute;
+  "/_dashboard/instance/$instance/": typeof DashboardInstanceInstanceIndexRoute;
+  "/_dashboard/user/admin/": typeof DashboardUserAdminIndexRoute;
+  "/_dashboard/instance/$instance/settings/$namespace": typeof DashboardInstanceInstanceSettingsNamespaceRoute;
+  "/_dashboard/user/admin/settings/$namespace": typeof DashboardUserAdminSettingsNamespaceRoute;
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath
+  fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths:
-    | '/'
-    | '/user'
-    | '/instance/$instance'
-    | '/user/access'
-    | '/user/admin'
-    | '/user/settings'
-    | '/user/'
-    | '/instance/$instance/accounts'
-    | '/instance/$instance/audit-log'
-    | '/instance/$instance/discover'
-    | '/instance/$instance/meta'
-    | '/instance/$instance/proxies'
-    | '/instance/$instance/scripts'
-    | '/instance/$instance/terminal'
-    | '/user/admin/logs'
-    | '/user/admin/scripts'
-    | '/user/admin/terminal'
-    | '/user/admin/users'
-    | '/instance/$instance/'
-    | '/user/admin/'
-    | '/instance/$instance/settings/$namespace'
-    | '/user/admin/settings/$namespace'
-  fileRoutesByTo: FileRoutesByTo
+    | "/"
+    | "/user"
+    | "/instance/$instance"
+    | "/user/access"
+    | "/user/admin"
+    | "/user/settings"
+    | "/user/"
+    | "/instance/$instance/accounts"
+    | "/instance/$instance/audit-log"
+    | "/instance/$instance/discover"
+    | "/instance/$instance/meta"
+    | "/instance/$instance/proxies"
+    | "/instance/$instance/scripts"
+    | "/instance/$instance/terminal"
+    | "/user/admin/logs"
+    | "/user/admin/scripts"
+    | "/user/admin/terminal"
+    | "/user/admin/users"
+    | "/instance/$instance/"
+    | "/user/admin/"
+    | "/instance/$instance/settings/$namespace"
+    | "/user/admin/settings/$namespace";
+  fileRoutesByTo: FileRoutesByTo;
   to:
-    | '/'
-    | '/user/access'
-    | '/user/settings'
-    | '/user'
-    | '/instance/$instance/accounts'
-    | '/instance/$instance/audit-log'
-    | '/instance/$instance/discover'
-    | '/instance/$instance/meta'
-    | '/instance/$instance/proxies'
-    | '/instance/$instance/scripts'
-    | '/instance/$instance/terminal'
-    | '/user/admin/logs'
-    | '/user/admin/scripts'
-    | '/user/admin/terminal'
-    | '/user/admin/users'
-    | '/instance/$instance'
-    | '/user/admin'
-    | '/instance/$instance/settings/$namespace'
-    | '/user/admin/settings/$namespace'
+    | "/"
+    | "/user/access"
+    | "/user/settings"
+    | "/user"
+    | "/instance/$instance/accounts"
+    | "/instance/$instance/audit-log"
+    | "/instance/$instance/discover"
+    | "/instance/$instance/meta"
+    | "/instance/$instance/proxies"
+    | "/instance/$instance/scripts"
+    | "/instance/$instance/terminal"
+    | "/user/admin/logs"
+    | "/user/admin/scripts"
+    | "/user/admin/terminal"
+    | "/user/admin/users"
+    | "/instance/$instance"
+    | "/user/admin"
+    | "/instance/$instance/settings/$namespace"
+    | "/user/admin/settings/$namespace";
   id:
-    | '__root__'
-    | '/'
-    | '/_dashboard'
-    | '/_dashboard/user'
-    | '/_dashboard/instance/$instance'
-    | '/_dashboard/user/access'
-    | '/_dashboard/user/admin'
-    | '/_dashboard/user/settings'
-    | '/_dashboard/user/'
-    | '/_dashboard/instance/$instance/accounts'
-    | '/_dashboard/instance/$instance/audit-log'
-    | '/_dashboard/instance/$instance/discover'
-    | '/_dashboard/instance/$instance/meta'
-    | '/_dashboard/instance/$instance/proxies'
-    | '/_dashboard/instance/$instance/scripts'
-    | '/_dashboard/instance/$instance/terminal'
-    | '/_dashboard/user/admin/logs'
-    | '/_dashboard/user/admin/scripts'
-    | '/_dashboard/user/admin/terminal'
-    | '/_dashboard/user/admin/users'
-    | '/_dashboard/instance/$instance/'
-    | '/_dashboard/user/admin/'
-    | '/_dashboard/instance/$instance/settings/$namespace'
-    | '/_dashboard/user/admin/settings/$namespace'
-  fileRoutesById: FileRoutesById
+    | "__root__"
+    | "/"
+    | "/_dashboard"
+    | "/_dashboard/user"
+    | "/_dashboard/instance/$instance"
+    | "/_dashboard/user/access"
+    | "/_dashboard/user/admin"
+    | "/_dashboard/user/settings"
+    | "/_dashboard/user/"
+    | "/_dashboard/instance/$instance/accounts"
+    | "/_dashboard/instance/$instance/audit-log"
+    | "/_dashboard/instance/$instance/discover"
+    | "/_dashboard/instance/$instance/meta"
+    | "/_dashboard/instance/$instance/proxies"
+    | "/_dashboard/instance/$instance/scripts"
+    | "/_dashboard/instance/$instance/terminal"
+    | "/_dashboard/user/admin/logs"
+    | "/_dashboard/user/admin/scripts"
+    | "/_dashboard/user/admin/terminal"
+    | "/_dashboard/user/admin/users"
+    | "/_dashboard/instance/$instance/"
+    | "/_dashboard/user/admin/"
+    | "/_dashboard/instance/$instance/settings/$namespace"
+    | "/_dashboard/user/admin/settings/$namespace";
+  fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  DashboardRoute: typeof DashboardRouteWithChildren
+  IndexRoute: typeof IndexRoute;
+  DashboardRoute: typeof DashboardRouteWithChildren;
 }
 
-declare module '@tanstack/react-router' {
+declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    '/_dashboard': {
-      id: '/_dashboard'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_dashboard/user': {
-      id: '/_dashboard/user'
-      path: '/user'
-      fullPath: '/user'
-      preLoaderRoute: typeof DashboardUserRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/_dashboard/user/': {
-      id: '/_dashboard/user/'
-      path: '/'
-      fullPath: '/user/'
-      preLoaderRoute: typeof DashboardUserIndexRouteImport
-      parentRoute: typeof DashboardUserRoute
-    }
-    '/_dashboard/user/settings': {
-      id: '/_dashboard/user/settings'
-      path: '/settings'
-      fullPath: '/user/settings'
-      preLoaderRoute: typeof DashboardUserSettingsRouteImport
-      parentRoute: typeof DashboardUserRoute
-    }
-    '/_dashboard/user/admin': {
-      id: '/_dashboard/user/admin'
-      path: '/admin'
-      fullPath: '/user/admin'
-      preLoaderRoute: typeof DashboardUserAdminRouteImport
-      parentRoute: typeof DashboardUserRoute
-    }
-    '/_dashboard/user/access': {
-      id: '/_dashboard/user/access'
-      path: '/access'
-      fullPath: '/user/access'
-      preLoaderRoute: typeof DashboardUserAccessRouteImport
-      parentRoute: typeof DashboardUserRoute
-    }
-    '/_dashboard/instance/$instance': {
-      id: '/_dashboard/instance/$instance'
-      path: '/instance/$instance'
-      fullPath: '/instance/$instance'
-      preLoaderRoute: typeof DashboardInstanceInstanceRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/_dashboard/user/admin/': {
-      id: '/_dashboard/user/admin/'
-      path: '/'
-      fullPath: '/user/admin/'
-      preLoaderRoute: typeof DashboardUserAdminIndexRouteImport
-      parentRoute: typeof DashboardUserAdminRoute
-    }
-    '/_dashboard/instance/$instance/': {
-      id: '/_dashboard/instance/$instance/'
-      path: '/'
-      fullPath: '/instance/$instance/'
-      preLoaderRoute: typeof DashboardInstanceInstanceIndexRouteImport
-      parentRoute: typeof DashboardInstanceInstanceRoute
-    }
-    '/_dashboard/user/admin/users': {
-      id: '/_dashboard/user/admin/users'
-      path: '/users'
-      fullPath: '/user/admin/users'
-      preLoaderRoute: typeof DashboardUserAdminUsersRouteImport
-      parentRoute: typeof DashboardUserAdminRoute
-    }
-    '/_dashboard/user/admin/terminal': {
-      id: '/_dashboard/user/admin/terminal'
-      path: '/terminal'
-      fullPath: '/user/admin/terminal'
-      preLoaderRoute: typeof DashboardUserAdminTerminalRouteImport
-      parentRoute: typeof DashboardUserAdminRoute
-    }
-    '/_dashboard/user/admin/scripts': {
-      id: '/_dashboard/user/admin/scripts'
-      path: '/scripts'
-      fullPath: '/user/admin/scripts'
-      preLoaderRoute: typeof DashboardUserAdminScriptsRouteImport
-      parentRoute: typeof DashboardUserAdminRoute
-    }
-    '/_dashboard/user/admin/logs': {
-      id: '/_dashboard/user/admin/logs'
-      path: '/logs'
-      fullPath: '/user/admin/logs'
-      preLoaderRoute: typeof DashboardUserAdminLogsRouteImport
-      parentRoute: typeof DashboardUserAdminRoute
-    }
-    '/_dashboard/instance/$instance/terminal': {
-      id: '/_dashboard/instance/$instance/terminal'
-      path: '/terminal'
-      fullPath: '/instance/$instance/terminal'
-      preLoaderRoute: typeof DashboardInstanceInstanceTerminalRouteImport
-      parentRoute: typeof DashboardInstanceInstanceRoute
-    }
-    '/_dashboard/instance/$instance/scripts': {
-      id: '/_dashboard/instance/$instance/scripts'
-      path: '/scripts'
-      fullPath: '/instance/$instance/scripts'
-      preLoaderRoute: typeof DashboardInstanceInstanceScriptsRouteImport
-      parentRoute: typeof DashboardInstanceInstanceRoute
-    }
-    '/_dashboard/instance/$instance/proxies': {
-      id: '/_dashboard/instance/$instance/proxies'
-      path: '/proxies'
-      fullPath: '/instance/$instance/proxies'
-      preLoaderRoute: typeof DashboardInstanceInstanceProxiesRouteImport
-      parentRoute: typeof DashboardInstanceInstanceRoute
-    }
-    '/_dashboard/instance/$instance/meta': {
-      id: '/_dashboard/instance/$instance/meta'
-      path: '/meta'
-      fullPath: '/instance/$instance/meta'
-      preLoaderRoute: typeof DashboardInstanceInstanceMetaRouteImport
-      parentRoute: typeof DashboardInstanceInstanceRoute
-    }
-    '/_dashboard/instance/$instance/discover': {
-      id: '/_dashboard/instance/$instance/discover'
-      path: '/discover'
-      fullPath: '/instance/$instance/discover'
-      preLoaderRoute: typeof DashboardInstanceInstanceDiscoverRouteImport
-      parentRoute: typeof DashboardInstanceInstanceRoute
-    }
-    '/_dashboard/instance/$instance/audit-log': {
-      id: '/_dashboard/instance/$instance/audit-log'
-      path: '/audit-log'
-      fullPath: '/instance/$instance/audit-log'
-      preLoaderRoute: typeof DashboardInstanceInstanceAuditLogRouteImport
-      parentRoute: typeof DashboardInstanceInstanceRoute
-    }
-    '/_dashboard/instance/$instance/accounts': {
-      id: '/_dashboard/instance/$instance/accounts'
-      path: '/accounts'
-      fullPath: '/instance/$instance/accounts'
-      preLoaderRoute: typeof DashboardInstanceInstanceAccountsRouteImport
-      parentRoute: typeof DashboardInstanceInstanceRoute
-    }
-    '/_dashboard/user/admin/settings/$namespace': {
-      id: '/_dashboard/user/admin/settings/$namespace'
-      path: '/settings/$namespace'
-      fullPath: '/user/admin/settings/$namespace'
-      preLoaderRoute: typeof DashboardUserAdminSettingsNamespaceRouteImport
-      parentRoute: typeof DashboardUserAdminRoute
-    }
-    '/_dashboard/instance/$instance/settings/$namespace': {
-      id: '/_dashboard/instance/$instance/settings/$namespace'
-      path: '/settings/$namespace'
-      fullPath: '/instance/$instance/settings/$namespace'
-      preLoaderRoute: typeof DashboardInstanceInstanceSettingsNamespaceRouteImport
-      parentRoute: typeof DashboardInstanceInstanceRoute
-    }
+    "/_dashboard": {
+      id: "/_dashboard";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof DashboardRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/_dashboard/user": {
+      id: "/_dashboard/user";
+      path: "/user";
+      fullPath: "/user";
+      preLoaderRoute: typeof DashboardUserRouteImport;
+      parentRoute: typeof DashboardRoute;
+    };
+    "/_dashboard/user/": {
+      id: "/_dashboard/user/";
+      path: "/";
+      fullPath: "/user/";
+      preLoaderRoute: typeof DashboardUserIndexRouteImport;
+      parentRoute: typeof DashboardUserRoute;
+    };
+    "/_dashboard/user/settings": {
+      id: "/_dashboard/user/settings";
+      path: "/settings";
+      fullPath: "/user/settings";
+      preLoaderRoute: typeof DashboardUserSettingsRouteImport;
+      parentRoute: typeof DashboardUserRoute;
+    };
+    "/_dashboard/user/admin": {
+      id: "/_dashboard/user/admin";
+      path: "/admin";
+      fullPath: "/user/admin";
+      preLoaderRoute: typeof DashboardUserAdminRouteImport;
+      parentRoute: typeof DashboardUserRoute;
+    };
+    "/_dashboard/user/access": {
+      id: "/_dashboard/user/access";
+      path: "/access";
+      fullPath: "/user/access";
+      preLoaderRoute: typeof DashboardUserAccessRouteImport;
+      parentRoute: typeof DashboardUserRoute;
+    };
+    "/_dashboard/instance/$instance": {
+      id: "/_dashboard/instance/$instance";
+      path: "/instance/$instance";
+      fullPath: "/instance/$instance";
+      preLoaderRoute: typeof DashboardInstanceInstanceRouteImport;
+      parentRoute: typeof DashboardRoute;
+    };
+    "/_dashboard/user/admin/": {
+      id: "/_dashboard/user/admin/";
+      path: "/";
+      fullPath: "/user/admin/";
+      preLoaderRoute: typeof DashboardUserAdminIndexRouteImport;
+      parentRoute: typeof DashboardUserAdminRoute;
+    };
+    "/_dashboard/instance/$instance/": {
+      id: "/_dashboard/instance/$instance/";
+      path: "/";
+      fullPath: "/instance/$instance/";
+      preLoaderRoute: typeof DashboardInstanceInstanceIndexRouteImport;
+      parentRoute: typeof DashboardInstanceInstanceRoute;
+    };
+    "/_dashboard/user/admin/users": {
+      id: "/_dashboard/user/admin/users";
+      path: "/users";
+      fullPath: "/user/admin/users";
+      preLoaderRoute: typeof DashboardUserAdminUsersRouteImport;
+      parentRoute: typeof DashboardUserAdminRoute;
+    };
+    "/_dashboard/user/admin/terminal": {
+      id: "/_dashboard/user/admin/terminal";
+      path: "/terminal";
+      fullPath: "/user/admin/terminal";
+      preLoaderRoute: typeof DashboardUserAdminTerminalRouteImport;
+      parentRoute: typeof DashboardUserAdminRoute;
+    };
+    "/_dashboard/user/admin/scripts": {
+      id: "/_dashboard/user/admin/scripts";
+      path: "/scripts";
+      fullPath: "/user/admin/scripts";
+      preLoaderRoute: typeof DashboardUserAdminScriptsRouteImport;
+      parentRoute: typeof DashboardUserAdminRoute;
+    };
+    "/_dashboard/user/admin/logs": {
+      id: "/_dashboard/user/admin/logs";
+      path: "/logs";
+      fullPath: "/user/admin/logs";
+      preLoaderRoute: typeof DashboardUserAdminLogsRouteImport;
+      parentRoute: typeof DashboardUserAdminRoute;
+    };
+    "/_dashboard/instance/$instance/terminal": {
+      id: "/_dashboard/instance/$instance/terminal";
+      path: "/terminal";
+      fullPath: "/instance/$instance/terminal";
+      preLoaderRoute: typeof DashboardInstanceInstanceTerminalRouteImport;
+      parentRoute: typeof DashboardInstanceInstanceRoute;
+    };
+    "/_dashboard/instance/$instance/scripts": {
+      id: "/_dashboard/instance/$instance/scripts";
+      path: "/scripts";
+      fullPath: "/instance/$instance/scripts";
+      preLoaderRoute: typeof DashboardInstanceInstanceScriptsRouteImport;
+      parentRoute: typeof DashboardInstanceInstanceRoute;
+    };
+    "/_dashboard/instance/$instance/proxies": {
+      id: "/_dashboard/instance/$instance/proxies";
+      path: "/proxies";
+      fullPath: "/instance/$instance/proxies";
+      preLoaderRoute: typeof DashboardInstanceInstanceProxiesRouteImport;
+      parentRoute: typeof DashboardInstanceInstanceRoute;
+    };
+    "/_dashboard/instance/$instance/meta": {
+      id: "/_dashboard/instance/$instance/meta";
+      path: "/meta";
+      fullPath: "/instance/$instance/meta";
+      preLoaderRoute: typeof DashboardInstanceInstanceMetaRouteImport;
+      parentRoute: typeof DashboardInstanceInstanceRoute;
+    };
+    "/_dashboard/instance/$instance/discover": {
+      id: "/_dashboard/instance/$instance/discover";
+      path: "/discover";
+      fullPath: "/instance/$instance/discover";
+      preLoaderRoute: typeof DashboardInstanceInstanceDiscoverRouteImport;
+      parentRoute: typeof DashboardInstanceInstanceRoute;
+    };
+    "/_dashboard/instance/$instance/audit-log": {
+      id: "/_dashboard/instance/$instance/audit-log";
+      path: "/audit-log";
+      fullPath: "/instance/$instance/audit-log";
+      preLoaderRoute: typeof DashboardInstanceInstanceAuditLogRouteImport;
+      parentRoute: typeof DashboardInstanceInstanceRoute;
+    };
+    "/_dashboard/instance/$instance/accounts": {
+      id: "/_dashboard/instance/$instance/accounts";
+      path: "/accounts";
+      fullPath: "/instance/$instance/accounts";
+      preLoaderRoute: typeof DashboardInstanceInstanceAccountsRouteImport;
+      parentRoute: typeof DashboardInstanceInstanceRoute;
+    };
+    "/_dashboard/user/admin/settings/$namespace": {
+      id: "/_dashboard/user/admin/settings/$namespace";
+      path: "/settings/$namespace";
+      fullPath: "/user/admin/settings/$namespace";
+      preLoaderRoute: typeof DashboardUserAdminSettingsNamespaceRouteImport;
+      parentRoute: typeof DashboardUserAdminRoute;
+    };
+    "/_dashboard/instance/$instance/settings/$namespace": {
+      id: "/_dashboard/instance/$instance/settings/$namespace";
+      path: "/settings/$namespace";
+      fullPath: "/instance/$instance/settings/$namespace";
+      preLoaderRoute: typeof DashboardInstanceInstanceSettingsNamespaceRouteImport;
+      parentRoute: typeof DashboardInstanceInstanceRoute;
+    };
   }
 }
 
 interface DashboardUserAdminRouteChildren {
-  DashboardUserAdminLogsRoute: typeof DashboardUserAdminLogsRoute
-  DashboardUserAdminScriptsRoute: typeof DashboardUserAdminScriptsRoute
-  DashboardUserAdminTerminalRoute: typeof DashboardUserAdminTerminalRoute
-  DashboardUserAdminUsersRoute: typeof DashboardUserAdminUsersRoute
-  DashboardUserAdminIndexRoute: typeof DashboardUserAdminIndexRoute
-  DashboardUserAdminSettingsNamespaceRoute: typeof DashboardUserAdminSettingsNamespaceRoute
+  DashboardUserAdminLogsRoute: typeof DashboardUserAdminLogsRoute;
+  DashboardUserAdminScriptsRoute: typeof DashboardUserAdminScriptsRoute;
+  DashboardUserAdminTerminalRoute: typeof DashboardUserAdminTerminalRoute;
+  DashboardUserAdminUsersRoute: typeof DashboardUserAdminUsersRoute;
+  DashboardUserAdminIndexRoute: typeof DashboardUserAdminIndexRoute;
+  DashboardUserAdminSettingsNamespaceRoute: typeof DashboardUserAdminSettingsNamespaceRoute;
 }
 
 const DashboardUserAdminRouteChildren: DashboardUserAdminRouteChildren = {
@@ -493,16 +493,16 @@ const DashboardUserAdminRouteChildren: DashboardUserAdminRouteChildren = {
   DashboardUserAdminIndexRoute: DashboardUserAdminIndexRoute,
   DashboardUserAdminSettingsNamespaceRoute:
     DashboardUserAdminSettingsNamespaceRoute,
-}
+};
 
 const DashboardUserAdminRouteWithChildren =
-  DashboardUserAdminRoute._addFileChildren(DashboardUserAdminRouteChildren)
+  DashboardUserAdminRoute._addFileChildren(DashboardUserAdminRouteChildren);
 
 interface DashboardUserRouteChildren {
-  DashboardUserAccessRoute: typeof DashboardUserAccessRoute
-  DashboardUserAdminRoute: typeof DashboardUserAdminRouteWithChildren
-  DashboardUserSettingsRoute: typeof DashboardUserSettingsRoute
-  DashboardUserIndexRoute: typeof DashboardUserIndexRoute
+  DashboardUserAccessRoute: typeof DashboardUserAccessRoute;
+  DashboardUserAdminRoute: typeof DashboardUserAdminRouteWithChildren;
+  DashboardUserSettingsRoute: typeof DashboardUserSettingsRoute;
+  DashboardUserIndexRoute: typeof DashboardUserIndexRoute;
 }
 
 const DashboardUserRouteChildren: DashboardUserRouteChildren = {
@@ -510,22 +510,22 @@ const DashboardUserRouteChildren: DashboardUserRouteChildren = {
   DashboardUserAdminRoute: DashboardUserAdminRouteWithChildren,
   DashboardUserSettingsRoute: DashboardUserSettingsRoute,
   DashboardUserIndexRoute: DashboardUserIndexRoute,
-}
+};
 
 const DashboardUserRouteWithChildren = DashboardUserRoute._addFileChildren(
   DashboardUserRouteChildren,
-)
+);
 
 interface DashboardInstanceInstanceRouteChildren {
-  DashboardInstanceInstanceAccountsRoute: typeof DashboardInstanceInstanceAccountsRoute
-  DashboardInstanceInstanceAuditLogRoute: typeof DashboardInstanceInstanceAuditLogRoute
-  DashboardInstanceInstanceDiscoverRoute: typeof DashboardInstanceInstanceDiscoverRoute
-  DashboardInstanceInstanceMetaRoute: typeof DashboardInstanceInstanceMetaRoute
-  DashboardInstanceInstanceProxiesRoute: typeof DashboardInstanceInstanceProxiesRoute
-  DashboardInstanceInstanceScriptsRoute: typeof DashboardInstanceInstanceScriptsRoute
-  DashboardInstanceInstanceTerminalRoute: typeof DashboardInstanceInstanceTerminalRoute
-  DashboardInstanceInstanceIndexRoute: typeof DashboardInstanceInstanceIndexRoute
-  DashboardInstanceInstanceSettingsNamespaceRoute: typeof DashboardInstanceInstanceSettingsNamespaceRoute
+  DashboardInstanceInstanceAccountsRoute: typeof DashboardInstanceInstanceAccountsRoute;
+  DashboardInstanceInstanceAuditLogRoute: typeof DashboardInstanceInstanceAuditLogRoute;
+  DashboardInstanceInstanceDiscoverRoute: typeof DashboardInstanceInstanceDiscoverRoute;
+  DashboardInstanceInstanceMetaRoute: typeof DashboardInstanceInstanceMetaRoute;
+  DashboardInstanceInstanceProxiesRoute: typeof DashboardInstanceInstanceProxiesRoute;
+  DashboardInstanceInstanceScriptsRoute: typeof DashboardInstanceInstanceScriptsRoute;
+  DashboardInstanceInstanceTerminalRoute: typeof DashboardInstanceInstanceTerminalRoute;
+  DashboardInstanceInstanceIndexRoute: typeof DashboardInstanceInstanceIndexRoute;
+  DashboardInstanceInstanceSettingsNamespaceRoute: typeof DashboardInstanceInstanceSettingsNamespaceRoute;
 }
 
 const DashboardInstanceInstanceRouteChildren: DashboardInstanceInstanceRouteChildren =
@@ -546,31 +546,31 @@ const DashboardInstanceInstanceRouteChildren: DashboardInstanceInstanceRouteChil
     DashboardInstanceInstanceIndexRoute: DashboardInstanceInstanceIndexRoute,
     DashboardInstanceInstanceSettingsNamespaceRoute:
       DashboardInstanceInstanceSettingsNamespaceRoute,
-  }
+  };
 
 const DashboardInstanceInstanceRouteWithChildren =
   DashboardInstanceInstanceRoute._addFileChildren(
     DashboardInstanceInstanceRouteChildren,
-  )
+  );
 
 interface DashboardRouteChildren {
-  DashboardUserRoute: typeof DashboardUserRouteWithChildren
-  DashboardInstanceInstanceRoute: typeof DashboardInstanceInstanceRouteWithChildren
+  DashboardUserRoute: typeof DashboardUserRouteWithChildren;
+  DashboardInstanceInstanceRoute: typeof DashboardInstanceInstanceRouteWithChildren;
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardUserRoute: DashboardUserRouteWithChildren,
   DashboardInstanceInstanceRoute: DashboardInstanceInstanceRouteWithChildren,
-}
+};
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
   DashboardRouteChildren,
-)
+);
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRouteWithChildren,
-}
+};
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>()
+  ._addFileTypes<FileRouteTypes>();

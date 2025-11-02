@@ -23,15 +23,19 @@
 // The canonical version of this proto can be found at
 // https://github.com/grpc/grpc-proto/blob/master/grpc/binlog/v1/binarylog.proto
 //
-import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
-import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
-import type { BinaryReadOptions } from "@protobuf-ts/runtime";
-import type { IBinaryReader } from "@protobuf-ts/runtime";
-import { UnknownFieldHandler } from "@protobuf-ts/runtime";
-import type { PartialMessage } from "@protobuf-ts/runtime";
-import { reflectionMergePartial } from "@protobuf-ts/runtime";
-import { MessageType } from "@protobuf-ts/runtime";
+import type {
+  BinaryReadOptions,
+  BinaryWriteOptions,
+  IBinaryReader,
+  IBinaryWriter,
+  PartialMessage,
+} from "@protobuf-ts/runtime";
+import {
+  MessageType,
+  reflectionMergePartial,
+  UnknownFieldHandler,
+  WireType,
+} from "@protobuf-ts/runtime";
 import { Duration } from "../../../google/protobuf/duration";
 import { Timestamp } from "../../../google/protobuf/timestamp";
 /**
@@ -40,58 +44,61 @@ import { Timestamp } from "../../../google/protobuf/timestamp";
  * @generated from protobuf message grpc.binarylog.v1.GrpcLogEntry
  */
 export interface GrpcLogEntry {
-    /**
-     * The timestamp of the binary log message
-     *
-     * @generated from protobuf field: google.protobuf.Timestamp timestamp = 1
-     */
-    timestamp?: Timestamp;
-    /**
-     * Uniquely identifies a call. The value must not be 0 in order to disambiguate
-     * from an unset value.
-     * Each call may have several log entries, they will all have the same call_id.
-     * Nothing is guaranteed about their value other than they are unique across
-     * different RPCs in the same gRPC process.
-     *
-     * @generated from protobuf field: uint64 call_id = 2
-     */
-    callId: string;
-    /**
-     * The entry sequence id for this call. The first GrpcLogEntry has a
-     * value of 1, to disambiguate from an unset value. The purpose of
-     * this field is to detect missing entries in environments where
-     * durability or ordering is not guaranteed.
-     *
-     * @generated from protobuf field: uint64 sequence_id_within_call = 3
-     */
-    sequenceIdWithinCall: string;
-    /**
-     * @generated from protobuf field: grpc.binarylog.v1.GrpcLogEntry.EventType type = 4
-     */
-    type: GrpcLogEntry_EventType;
-    /**
-     * @generated from protobuf field: grpc.binarylog.v1.GrpcLogEntry.Logger logger = 5
-     */
-    logger: GrpcLogEntry_Logger; // One of the above Logger enum
-    /**
-     * The logger uses one of the following fields to record the payload,
-     * according to the type of the log entry.
-     *
-     * @generated from protobuf oneof: payload
-     */
-    payload: {
+  /**
+   * The timestamp of the binary log message
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp timestamp = 1
+   */
+  timestamp?: Timestamp;
+  /**
+   * Uniquely identifies a call. The value must not be 0 in order to disambiguate
+   * from an unset value.
+   * Each call may have several log entries, they will all have the same call_id.
+   * Nothing is guaranteed about their value other than they are unique across
+   * different RPCs in the same gRPC process.
+   *
+   * @generated from protobuf field: uint64 call_id = 2
+   */
+  callId: string;
+  /**
+   * The entry sequence id for this call. The first GrpcLogEntry has a
+   * value of 1, to disambiguate from an unset value. The purpose of
+   * this field is to detect missing entries in environments where
+   * durability or ordering is not guaranteed.
+   *
+   * @generated from protobuf field: uint64 sequence_id_within_call = 3
+   */
+  sequenceIdWithinCall: string;
+  /**
+   * @generated from protobuf field: grpc.binarylog.v1.GrpcLogEntry.EventType type = 4
+   */
+  type: GrpcLogEntry_EventType;
+  /**
+   * @generated from protobuf field: grpc.binarylog.v1.GrpcLogEntry.Logger logger = 5
+   */
+  logger: GrpcLogEntry_Logger; // One of the above Logger enum
+  /**
+   * The logger uses one of the following fields to record the payload,
+   * according to the type of the log entry.
+   *
+   * @generated from protobuf oneof: payload
+   */
+  payload:
+    | {
         oneofKind: "clientHeader";
         /**
          * @generated from protobuf field: grpc.binarylog.v1.ClientHeader client_header = 6
          */
         clientHeader: ClientHeader;
-    } | {
+      }
+    | {
         oneofKind: "serverHeader";
         /**
          * @generated from protobuf field: grpc.binarylog.v1.ServerHeader server_header = 7
          */
         serverHeader: ServerHeader;
-    } | {
+      }
+    | {
         oneofKind: "message";
         /**
          * Used by EVENT_TYPE_CLIENT_MESSAGE, EVENT_TYPE_SERVER_MESSAGE
@@ -99,31 +106,33 @@ export interface GrpcLogEntry {
          * @generated from protobuf field: grpc.binarylog.v1.Message message = 8
          */
         message: Message;
-    } | {
+      }
+    | {
         oneofKind: "trailer";
         /**
          * @generated from protobuf field: grpc.binarylog.v1.Trailer trailer = 9
          */
         trailer: Trailer;
-    } | {
+      }
+    | {
         oneofKind: undefined;
-    };
-    /**
-     * true if payload does not represent the full message or metadata.
-     *
-     * @generated from protobuf field: bool payload_truncated = 10
-     */
-    payloadTruncated: boolean;
-    /**
-     * Peer address information, will only be recorded on the first
-     * incoming event. On client side, peer is logged on
-     * EVENT_TYPE_SERVER_HEADER normally or EVENT_TYPE_SERVER_TRAILER in
-     * the case of trailers-only. On server side, peer is always
-     * logged on EVENT_TYPE_CLIENT_HEADER.
-     *
-     * @generated from protobuf field: grpc.binarylog.v1.Address peer = 11
-     */
-    peer?: Address;
+      };
+  /**
+   * true if payload does not represent the full message or metadata.
+   *
+   * @generated from protobuf field: bool payload_truncated = 10
+   */
+  payloadTruncated: boolean;
+  /**
+   * Peer address information, will only be recorded on the first
+   * incoming event. On client side, peer is logged on
+   * EVENT_TYPE_SERVER_HEADER normally or EVENT_TYPE_SERVER_TRAILER in
+   * the case of trailers-only. On server side, peer is always
+   * logged on EVENT_TYPE_CLIENT_HEADER.
+   *
+   * @generated from protobuf field: grpc.binarylog.v1.Address peer = 11
+   */
+  peer?: Address;
 }
 /**
  * Enumerates the type of event
@@ -133,63 +142,63 @@ export interface GrpcLogEntry {
  * @generated from protobuf enum grpc.binarylog.v1.GrpcLogEntry.EventType
  */
 export enum GrpcLogEntry_EventType {
-    /**
-     * @generated from protobuf enum value: EVENT_TYPE_UNKNOWN = 0;
-     */
-    UNKNOWN = 0,
-    /**
-     * Header sent from client to server
-     *
-     * @generated from protobuf enum value: EVENT_TYPE_CLIENT_HEADER = 1;
-     */
-    CLIENT_HEADER = 1,
-    /**
-     * Header sent from server to client
-     *
-     * @generated from protobuf enum value: EVENT_TYPE_SERVER_HEADER = 2;
-     */
-    SERVER_HEADER = 2,
-    /**
-     * Message sent from client to server
-     *
-     * @generated from protobuf enum value: EVENT_TYPE_CLIENT_MESSAGE = 3;
-     */
-    CLIENT_MESSAGE = 3,
-    /**
-     * Message sent from server to client
-     *
-     * @generated from protobuf enum value: EVENT_TYPE_SERVER_MESSAGE = 4;
-     */
-    SERVER_MESSAGE = 4,
-    /**
-     * A signal that client is done sending
-     *
-     * @generated from protobuf enum value: EVENT_TYPE_CLIENT_HALF_CLOSE = 5;
-     */
-    CLIENT_HALF_CLOSE = 5,
-    /**
-     * Trailer indicates the end of the RPC.
-     * On client side, this event means a trailer was either received
-     * from the network or the gRPC library locally generated a status
-     * to inform the application about a failure.
-     * On server side, this event means the server application requested
-     * to send a trailer. Note: EVENT_TYPE_CANCEL may still arrive after
-     * this due to races on server side.
-     *
-     * @generated from protobuf enum value: EVENT_TYPE_SERVER_TRAILER = 6;
-     */
-    SERVER_TRAILER = 6,
-    /**
-     * A signal that the RPC is cancelled. On client side, this
-     * indicates the client application requests a cancellation.
-     * On server side, this indicates that cancellation was detected.
-     * Note: This marks the end of the RPC. Events may arrive after
-     * this due to races. For example, on client side a trailer
-     * may arrive even though the application requested to cancel the RPC.
-     *
-     * @generated from protobuf enum value: EVENT_TYPE_CANCEL = 7;
-     */
-    CANCEL = 7
+  /**
+   * @generated from protobuf enum value: EVENT_TYPE_UNKNOWN = 0;
+   */
+  UNKNOWN = 0,
+  /**
+   * Header sent from client to server
+   *
+   * @generated from protobuf enum value: EVENT_TYPE_CLIENT_HEADER = 1;
+   */
+  CLIENT_HEADER = 1,
+  /**
+   * Header sent from server to client
+   *
+   * @generated from protobuf enum value: EVENT_TYPE_SERVER_HEADER = 2;
+   */
+  SERVER_HEADER = 2,
+  /**
+   * Message sent from client to server
+   *
+   * @generated from protobuf enum value: EVENT_TYPE_CLIENT_MESSAGE = 3;
+   */
+  CLIENT_MESSAGE = 3,
+  /**
+   * Message sent from server to client
+   *
+   * @generated from protobuf enum value: EVENT_TYPE_SERVER_MESSAGE = 4;
+   */
+  SERVER_MESSAGE = 4,
+  /**
+   * A signal that client is done sending
+   *
+   * @generated from protobuf enum value: EVENT_TYPE_CLIENT_HALF_CLOSE = 5;
+   */
+  CLIENT_HALF_CLOSE = 5,
+  /**
+   * Trailer indicates the end of the RPC.
+   * On client side, this event means a trailer was either received
+   * from the network or the gRPC library locally generated a status
+   * to inform the application about a failure.
+   * On server side, this event means the server application requested
+   * to send a trailer. Note: EVENT_TYPE_CANCEL may still arrive after
+   * this due to races on server side.
+   *
+   * @generated from protobuf enum value: EVENT_TYPE_SERVER_TRAILER = 6;
+   */
+  SERVER_TRAILER = 6,
+  /**
+   * A signal that the RPC is cancelled. On client side, this
+   * indicates the client application requests a cancellation.
+   * On server side, this indicates that cancellation was detected.
+   * Note: This marks the end of the RPC. Events may arrive after
+   * this due to races. For example, on client side a trailer
+   * may arrive even though the application requested to cancel the RPC.
+   *
+   * @generated from protobuf enum value: EVENT_TYPE_CANCEL = 7;
+   */
+  CANCEL = 7,
 }
 /**
  * Enumerates the entity that generates the log entry
@@ -197,95 +206,95 @@ export enum GrpcLogEntry_EventType {
  * @generated from protobuf enum grpc.binarylog.v1.GrpcLogEntry.Logger
  */
 export enum GrpcLogEntry_Logger {
-    /**
-     * @generated from protobuf enum value: LOGGER_UNKNOWN = 0;
-     */
-    UNKNOWN = 0,
-    /**
-     * @generated from protobuf enum value: LOGGER_CLIENT = 1;
-     */
-    CLIENT = 1,
-    /**
-     * @generated from protobuf enum value: LOGGER_SERVER = 2;
-     */
-    SERVER = 2
+  /**
+   * @generated from protobuf enum value: LOGGER_UNKNOWN = 0;
+   */
+  UNKNOWN = 0,
+  /**
+   * @generated from protobuf enum value: LOGGER_CLIENT = 1;
+   */
+  CLIENT = 1,
+  /**
+   * @generated from protobuf enum value: LOGGER_SERVER = 2;
+   */
+  SERVER = 2,
 }
 /**
  * @generated from protobuf message grpc.binarylog.v1.ClientHeader
  */
 export interface ClientHeader {
-    /**
-     * This contains only the metadata from the application.
-     *
-     * @generated from protobuf field: grpc.binarylog.v1.Metadata metadata = 1
-     */
-    metadata?: Metadata;
-    /**
-     * The name of the RPC method, which looks something like:
-     * /<service>/<method>
-     * Note the leading "/" character.
-     *
-     * @generated from protobuf field: string method_name = 2
-     */
-    methodName: string;
-    /**
-     * A single process may be used to run multiple virtual
-     * servers with different identities.
-     * The authority is the name of such a server identitiy.
-     * It is typically a portion of the URI in the form of
-     * <host> or <host>:<port> .
-     *
-     * @generated from protobuf field: string authority = 3
-     */
-    authority: string;
-    /**
-     * the RPC timeout
-     *
-     * @generated from protobuf field: google.protobuf.Duration timeout = 4
-     */
-    timeout?: Duration;
+  /**
+   * This contains only the metadata from the application.
+   *
+   * @generated from protobuf field: grpc.binarylog.v1.Metadata metadata = 1
+   */
+  metadata?: Metadata;
+  /**
+   * The name of the RPC method, which looks something like:
+   * /<service>/<method>
+   * Note the leading "/" character.
+   *
+   * @generated from protobuf field: string method_name = 2
+   */
+  methodName: string;
+  /**
+   * A single process may be used to run multiple virtual
+   * servers with different identities.
+   * The authority is the name of such a server identitiy.
+   * It is typically a portion of the URI in the form of
+   * <host> or <host>:<port> .
+   *
+   * @generated from protobuf field: string authority = 3
+   */
+  authority: string;
+  /**
+   * the RPC timeout
+   *
+   * @generated from protobuf field: google.protobuf.Duration timeout = 4
+   */
+  timeout?: Duration;
 }
 /**
  * @generated from protobuf message grpc.binarylog.v1.ServerHeader
  */
 export interface ServerHeader {
-    /**
-     * This contains only the metadata from the application.
-     *
-     * @generated from protobuf field: grpc.binarylog.v1.Metadata metadata = 1
-     */
-    metadata?: Metadata;
+  /**
+   * This contains only the metadata from the application.
+   *
+   * @generated from protobuf field: grpc.binarylog.v1.Metadata metadata = 1
+   */
+  metadata?: Metadata;
 }
 /**
  * @generated from protobuf message grpc.binarylog.v1.Trailer
  */
 export interface Trailer {
-    /**
-     * This contains only the metadata from the application.
-     *
-     * @generated from protobuf field: grpc.binarylog.v1.Metadata metadata = 1
-     */
-    metadata?: Metadata;
-    /**
-     * The gRPC status code.
-     *
-     * @generated from protobuf field: uint32 status_code = 2
-     */
-    statusCode: number;
-    /**
-     * An original status message before any transport specific
-     * encoding.
-     *
-     * @generated from protobuf field: string status_message = 3
-     */
-    statusMessage: string;
-    /**
-     * The value of the 'grpc-status-details-bin' metadata key. If
-     * present, this is always an encoded 'google.rpc.Status' message.
-     *
-     * @generated from protobuf field: bytes status_details = 4
-     */
-    statusDetails: Uint8Array;
+  /**
+   * This contains only the metadata from the application.
+   *
+   * @generated from protobuf field: grpc.binarylog.v1.Metadata metadata = 1
+   */
+  metadata?: Metadata;
+  /**
+   * The gRPC status code.
+   *
+   * @generated from protobuf field: uint32 status_code = 2
+   */
+  statusCode: number;
+  /**
+   * An original status message before any transport specific
+   * encoding.
+   *
+   * @generated from protobuf field: string status_message = 3
+   */
+  statusMessage: string;
+  /**
+   * The value of the 'grpc-status-details-bin' metadata key. If
+   * present, this is always an encoded 'google.rpc.Status' message.
+   *
+   * @generated from protobuf field: bytes status_details = 4
+   */
+  statusDetails: Uint8Array;
 }
 /**
  * Message payload, used by CLIENT_MESSAGE and SERVER_MESSAGE
@@ -293,19 +302,19 @@ export interface Trailer {
  * @generated from protobuf message grpc.binarylog.v1.Message
  */
 export interface Message {
-    /**
-     * Length of the message. It may not be the same as the length of the
-     * data field, as the logging payload can be truncated or omitted.
-     *
-     * @generated from protobuf field: uint32 length = 1
-     */
-    length: number;
-    /**
-     * May be truncated or omitted.
-     *
-     * @generated from protobuf field: bytes data = 2
-     */
-    data: Uint8Array;
+  /**
+   * Length of the message. It may not be the same as the length of the
+   * data field, as the logging payload can be truncated or omitted.
+   *
+   * @generated from protobuf field: uint32 length = 1
+   */
+  length: number;
+  /**
+   * May be truncated or omitted.
+   *
+   * @generated from protobuf field: bytes data = 2
+   */
+  data: Uint8Array;
 }
 /**
  * A list of metadata pairs, used in the payload of client header,
@@ -333,10 +342,10 @@ export interface Message {
  * @generated from protobuf message grpc.binarylog.v1.Metadata
  */
 export interface Metadata {
-    /**
-     * @generated from protobuf field: repeated grpc.binarylog.v1.MetadataEntry entry = 1
-     */
-    entry: MetadataEntry[];
+  /**
+   * @generated from protobuf field: repeated grpc.binarylog.v1.MetadataEntry entry = 1
+   */
+  entry: MetadataEntry[];
 }
 /**
  * A metadata key value pair
@@ -344,14 +353,14 @@ export interface Metadata {
  * @generated from protobuf message grpc.binarylog.v1.MetadataEntry
  */
 export interface MetadataEntry {
-    /**
-     * @generated from protobuf field: string key = 1
-     */
-    key: string;
-    /**
-     * @generated from protobuf field: bytes value = 2
-     */
-    value: Uint8Array;
+  /**
+   * @generated from protobuf field: string key = 1
+   */
+  key: string;
+  /**
+   * @generated from protobuf field: bytes value = 2
+   */
+  value: Uint8Array;
 }
 /**
  * Address information
@@ -359,178 +368,305 @@ export interface MetadataEntry {
  * @generated from protobuf message grpc.binarylog.v1.Address
  */
 export interface Address {
-    /**
-     * @generated from protobuf field: grpc.binarylog.v1.Address.Type type = 1
-     */
-    type: Address_Type;
-    /**
-     * @generated from protobuf field: string address = 2
-     */
-    address: string;
-    /**
-     * only for TYPE_IPV4 and TYPE_IPV6
-     *
-     * @generated from protobuf field: uint32 ip_port = 3
-     */
-    ipPort: number;
+  /**
+   * @generated from protobuf field: grpc.binarylog.v1.Address.Type type = 1
+   */
+  type: Address_Type;
+  /**
+   * @generated from protobuf field: string address = 2
+   */
+  address: string;
+  /**
+   * only for TYPE_IPV4 and TYPE_IPV6
+   *
+   * @generated from protobuf field: uint32 ip_port = 3
+   */
+  ipPort: number;
 }
 /**
  * @generated from protobuf enum grpc.binarylog.v1.Address.Type
  */
 export enum Address_Type {
-    /**
-     * @generated from protobuf enum value: TYPE_UNKNOWN = 0;
-     */
-    UNKNOWN = 0,
-    /**
-     * address is in 1.2.3.4 form
-     *
-     * @generated from protobuf enum value: TYPE_IPV4 = 1;
-     */
-    IPV4 = 1,
-    /**
-     * address is in IPv6 canonical form (RFC5952 section 4)
-     * The scope is NOT included in the address string.
-     *
-     * @generated from protobuf enum value: TYPE_IPV6 = 2;
-     */
-    IPV6 = 2,
-    /**
-     * address is UDS string
-     *
-     * @generated from protobuf enum value: TYPE_UNIX = 3;
-     */
-    UNIX = 3
+  /**
+   * @generated from protobuf enum value: TYPE_UNKNOWN = 0;
+   */
+  UNKNOWN = 0,
+  /**
+   * address is in 1.2.3.4 form
+   *
+   * @generated from protobuf enum value: TYPE_IPV4 = 1;
+   */
+  IPV4 = 1,
+  /**
+   * address is in IPv6 canonical form (RFC5952 section 4)
+   * The scope is NOT included in the address string.
+   *
+   * @generated from protobuf enum value: TYPE_IPV6 = 2;
+   */
+  IPV6 = 2,
+  /**
+   * address is UDS string
+   *
+   * @generated from protobuf enum value: TYPE_UNIX = 3;
+   */
+  UNIX = 3,
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class GrpcLogEntry$Type extends MessageType<GrpcLogEntry> {
-    constructor() {
-        super("grpc.binarylog.v1.GrpcLogEntry", [
-            { no: 1, name: "timestamp", kind: "message", T: () => Timestamp },
-            { no: 2, name: "call_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/ },
-            { no: 3, name: "sequence_id_within_call", kind: "scalar", T: 4 /*ScalarType.UINT64*/ },
-            { no: 4, name: "type", kind: "enum", T: () => ["grpc.binarylog.v1.GrpcLogEntry.EventType", GrpcLogEntry_EventType, "EVENT_TYPE_"] },
-            { no: 5, name: "logger", kind: "enum", T: () => ["grpc.binarylog.v1.GrpcLogEntry.Logger", GrpcLogEntry_Logger, "LOGGER_"] },
-            { no: 6, name: "client_header", kind: "message", oneof: "payload", T: () => ClientHeader },
-            { no: 7, name: "server_header", kind: "message", oneof: "payload", T: () => ServerHeader },
-            { no: 8, name: "message", kind: "message", oneof: "payload", T: () => Message },
-            { no: 9, name: "trailer", kind: "message", oneof: "payload", T: () => Trailer },
-            { no: 10, name: "payload_truncated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 11, name: "peer", kind: "message", T: () => Address }
-        ]);
+  constructor() {
+    super("grpc.binarylog.v1.GrpcLogEntry", [
+      { no: 1, name: "timestamp", kind: "message", T: () => Timestamp },
+      { no: 2, name: "call_id", kind: "scalar", T: 4 /*ScalarType.UINT64*/ },
+      {
+        no: 3,
+        name: "sequence_id_within_call",
+        kind: "scalar",
+        T: 4 /*ScalarType.UINT64*/,
+      },
+      {
+        no: 4,
+        name: "type",
+        kind: "enum",
+        T: () => [
+          "grpc.binarylog.v1.GrpcLogEntry.EventType",
+          GrpcLogEntry_EventType,
+          "EVENT_TYPE_",
+        ],
+      },
+      {
+        no: 5,
+        name: "logger",
+        kind: "enum",
+        T: () => [
+          "grpc.binarylog.v1.GrpcLogEntry.Logger",
+          GrpcLogEntry_Logger,
+          "LOGGER_",
+        ],
+      },
+      {
+        no: 6,
+        name: "client_header",
+        kind: "message",
+        oneof: "payload",
+        T: () => ClientHeader,
+      },
+      {
+        no: 7,
+        name: "server_header",
+        kind: "message",
+        oneof: "payload",
+        T: () => ServerHeader,
+      },
+      {
+        no: 8,
+        name: "message",
+        kind: "message",
+        oneof: "payload",
+        T: () => Message,
+      },
+      {
+        no: 9,
+        name: "trailer",
+        kind: "message",
+        oneof: "payload",
+        T: () => Trailer,
+      },
+      {
+        no: 10,
+        name: "payload_truncated",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      { no: 11, name: "peer", kind: "message", T: () => Address },
+    ]);
+  }
+  create(value?: PartialMessage<GrpcLogEntry>): GrpcLogEntry {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.callId = "0";
+    message.sequenceIdWithinCall = "0";
+    message.type = 0;
+    message.logger = 0;
+    message.payload = { oneofKind: undefined };
+    message.payloadTruncated = false;
+    if (value !== undefined)
+      reflectionMergePartial<GrpcLogEntry>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GrpcLogEntry,
+  ): GrpcLogEntry {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* google.protobuf.Timestamp timestamp */ 1:
+          message.timestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.timestamp,
+          );
+          break;
+        case /* uint64 call_id */ 2:
+          message.callId = reader.uint64().toString();
+          break;
+        case /* uint64 sequence_id_within_call */ 3:
+          message.sequenceIdWithinCall = reader.uint64().toString();
+          break;
+        case /* grpc.binarylog.v1.GrpcLogEntry.EventType type */ 4:
+          message.type = reader.int32();
+          break;
+        case /* grpc.binarylog.v1.GrpcLogEntry.Logger logger */ 5:
+          message.logger = reader.int32();
+          break;
+        case /* grpc.binarylog.v1.ClientHeader client_header */ 6:
+          message.payload = {
+            oneofKind: "clientHeader",
+            clientHeader: ClientHeader.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.payload as any).clientHeader,
+            ),
+          };
+          break;
+        case /* grpc.binarylog.v1.ServerHeader server_header */ 7:
+          message.payload = {
+            oneofKind: "serverHeader",
+            serverHeader: ServerHeader.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.payload as any).serverHeader,
+            ),
+          };
+          break;
+        case /* grpc.binarylog.v1.Message message */ 8:
+          message.payload = {
+            oneofKind: "message",
+            message: Message.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.payload as any).message,
+            ),
+          };
+          break;
+        case /* grpc.binarylog.v1.Trailer trailer */ 9:
+          message.payload = {
+            oneofKind: "trailer",
+            trailer: Trailer.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.payload as any).trailer,
+            ),
+          };
+          break;
+        case /* bool payload_truncated */ 10:
+          message.payloadTruncated = reader.bool();
+          break;
+        case /* grpc.binarylog.v1.Address peer */ 11:
+          message.peer = Address.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.peer,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GrpcLogEntry>): GrpcLogEntry {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.callId = "0";
-        message.sequenceIdWithinCall = "0";
-        message.type = 0;
-        message.logger = 0;
-        message.payload = { oneofKind: undefined };
-        message.payloadTruncated = false;
-        if (value !== undefined)
-            reflectionMergePartial<GrpcLogEntry>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GrpcLogEntry): GrpcLogEntry {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* google.protobuf.Timestamp timestamp */ 1:
-                    message.timestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.timestamp);
-                    break;
-                case /* uint64 call_id */ 2:
-                    message.callId = reader.uint64().toString();
-                    break;
-                case /* uint64 sequence_id_within_call */ 3:
-                    message.sequenceIdWithinCall = reader.uint64().toString();
-                    break;
-                case /* grpc.binarylog.v1.GrpcLogEntry.EventType type */ 4:
-                    message.type = reader.int32();
-                    break;
-                case /* grpc.binarylog.v1.GrpcLogEntry.Logger logger */ 5:
-                    message.logger = reader.int32();
-                    break;
-                case /* grpc.binarylog.v1.ClientHeader client_header */ 6:
-                    message.payload = {
-                        oneofKind: "clientHeader",
-                        clientHeader: ClientHeader.internalBinaryRead(reader, reader.uint32(), options, (message.payload as any).clientHeader)
-                    };
-                    break;
-                case /* grpc.binarylog.v1.ServerHeader server_header */ 7:
-                    message.payload = {
-                        oneofKind: "serverHeader",
-                        serverHeader: ServerHeader.internalBinaryRead(reader, reader.uint32(), options, (message.payload as any).serverHeader)
-                    };
-                    break;
-                case /* grpc.binarylog.v1.Message message */ 8:
-                    message.payload = {
-                        oneofKind: "message",
-                        message: Message.internalBinaryRead(reader, reader.uint32(), options, (message.payload as any).message)
-                    };
-                    break;
-                case /* grpc.binarylog.v1.Trailer trailer */ 9:
-                    message.payload = {
-                        oneofKind: "trailer",
-                        trailer: Trailer.internalBinaryRead(reader, reader.uint32(), options, (message.payload as any).trailer)
-                    };
-                    break;
-                case /* bool payload_truncated */ 10:
-                    message.payloadTruncated = reader.bool();
-                    break;
-                case /* grpc.binarylog.v1.Address peer */ 11:
-                    message.peer = Address.internalBinaryRead(reader, reader.uint32(), options, message.peer);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GrpcLogEntry, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* google.protobuf.Timestamp timestamp = 1; */
-        if (message.timestamp)
-            Timestamp.internalBinaryWrite(message.timestamp, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* uint64 call_id = 2; */
-        if (message.callId !== "0")
-            writer.tag(2, WireType.Varint).uint64(message.callId);
-        /* uint64 sequence_id_within_call = 3; */
-        if (message.sequenceIdWithinCall !== "0")
-            writer.tag(3, WireType.Varint).uint64(message.sequenceIdWithinCall);
-        /* grpc.binarylog.v1.GrpcLogEntry.EventType type = 4; */
-        if (message.type !== 0)
-            writer.tag(4, WireType.Varint).int32(message.type);
-        /* grpc.binarylog.v1.GrpcLogEntry.Logger logger = 5; */
-        if (message.logger !== 0)
-            writer.tag(5, WireType.Varint).int32(message.logger);
-        /* grpc.binarylog.v1.ClientHeader client_header = 6; */
-        if (message.payload.oneofKind === "clientHeader")
-            ClientHeader.internalBinaryWrite(message.payload.clientHeader, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.binarylog.v1.ServerHeader server_header = 7; */
-        if (message.payload.oneofKind === "serverHeader")
-            ServerHeader.internalBinaryWrite(message.payload.serverHeader, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.binarylog.v1.Message message = 8; */
-        if (message.payload.oneofKind === "message")
-            Message.internalBinaryWrite(message.payload.message, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
-        /* grpc.binarylog.v1.Trailer trailer = 9; */
-        if (message.payload.oneofKind === "trailer")
-            Trailer.internalBinaryWrite(message.payload.trailer, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
-        /* bool payload_truncated = 10; */
-        if (message.payloadTruncated !== false)
-            writer.tag(10, WireType.Varint).bool(message.payloadTruncated);
-        /* grpc.binarylog.v1.Address peer = 11; */
-        if (message.peer)
-            Address.internalBinaryWrite(message.peer, writer.tag(11, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GrpcLogEntry,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* google.protobuf.Timestamp timestamp = 1; */
+    if (message.timestamp)
+      Timestamp.internalBinaryWrite(
+        message.timestamp,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* uint64 call_id = 2; */
+    if (message.callId !== "0")
+      writer.tag(2, WireType.Varint).uint64(message.callId);
+    /* uint64 sequence_id_within_call = 3; */
+    if (message.sequenceIdWithinCall !== "0")
+      writer.tag(3, WireType.Varint).uint64(message.sequenceIdWithinCall);
+    /* grpc.binarylog.v1.GrpcLogEntry.EventType type = 4; */
+    if (message.type !== 0) writer.tag(4, WireType.Varint).int32(message.type);
+    /* grpc.binarylog.v1.GrpcLogEntry.Logger logger = 5; */
+    if (message.logger !== 0)
+      writer.tag(5, WireType.Varint).int32(message.logger);
+    /* grpc.binarylog.v1.ClientHeader client_header = 6; */
+    if (message.payload.oneofKind === "clientHeader")
+      ClientHeader.internalBinaryWrite(
+        message.payload.clientHeader,
+        writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.binarylog.v1.ServerHeader server_header = 7; */
+    if (message.payload.oneofKind === "serverHeader")
+      ServerHeader.internalBinaryWrite(
+        message.payload.serverHeader,
+        writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.binarylog.v1.Message message = 8; */
+    if (message.payload.oneofKind === "message")
+      Message.internalBinaryWrite(
+        message.payload.message,
+        writer.tag(8, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* grpc.binarylog.v1.Trailer trailer = 9; */
+    if (message.payload.oneofKind === "trailer")
+      Trailer.internalBinaryWrite(
+        message.payload.trailer,
+        writer.tag(9, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* bool payload_truncated = 10; */
+    if (message.payloadTruncated !== false)
+      writer.tag(10, WireType.Varint).bool(message.payloadTruncated);
+    /* grpc.binarylog.v1.Address peer = 11; */
+    if (message.peer)
+      Address.internalBinaryWrite(
+        message.peer,
+        writer.tag(11, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.binarylog.v1.GrpcLogEntry
@@ -538,68 +674,113 @@ class GrpcLogEntry$Type extends MessageType<GrpcLogEntry> {
 export const GrpcLogEntry = new GrpcLogEntry$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ClientHeader$Type extends MessageType<ClientHeader> {
-    constructor() {
-        super("grpc.binarylog.v1.ClientHeader", [
-            { no: 1, name: "metadata", kind: "message", T: () => Metadata },
-            { no: 2, name: "method_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "authority", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "timeout", kind: "message", T: () => Duration }
-        ]);
+  constructor() {
+    super("grpc.binarylog.v1.ClientHeader", [
+      { no: 1, name: "metadata", kind: "message", T: () => Metadata },
+      {
+        no: 2,
+        name: "method_name",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 3, name: "authority", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 4, name: "timeout", kind: "message", T: () => Duration },
+    ]);
+  }
+  create(value?: PartialMessage<ClientHeader>): ClientHeader {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.methodName = "";
+    message.authority = "";
+    if (value !== undefined)
+      reflectionMergePartial<ClientHeader>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ClientHeader,
+  ): ClientHeader {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.binarylog.v1.Metadata metadata */ 1:
+          message.metadata = Metadata.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.metadata,
+          );
+          break;
+        case /* string method_name */ 2:
+          message.methodName = reader.string();
+          break;
+        case /* string authority */ 3:
+          message.authority = reader.string();
+          break;
+        case /* google.protobuf.Duration timeout */ 4:
+          message.timeout = Duration.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.timeout,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ClientHeader>): ClientHeader {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.methodName = "";
-        message.authority = "";
-        if (value !== undefined)
-            reflectionMergePartial<ClientHeader>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ClientHeader): ClientHeader {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.binarylog.v1.Metadata metadata */ 1:
-                    message.metadata = Metadata.internalBinaryRead(reader, reader.uint32(), options, message.metadata);
-                    break;
-                case /* string method_name */ 2:
-                    message.methodName = reader.string();
-                    break;
-                case /* string authority */ 3:
-                    message.authority = reader.string();
-                    break;
-                case /* google.protobuf.Duration timeout */ 4:
-                    message.timeout = Duration.internalBinaryRead(reader, reader.uint32(), options, message.timeout);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ClientHeader, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.binarylog.v1.Metadata metadata = 1; */
-        if (message.metadata)
-            Metadata.internalBinaryWrite(message.metadata, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* string method_name = 2; */
-        if (message.methodName !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.methodName);
-        /* string authority = 3; */
-        if (message.authority !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.authority);
-        /* google.protobuf.Duration timeout = 4; */
-        if (message.timeout)
-            Duration.internalBinaryWrite(message.timeout, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ClientHeader,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.binarylog.v1.Metadata metadata = 1; */
+    if (message.metadata)
+      Metadata.internalBinaryWrite(
+        message.metadata,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* string method_name = 2; */
+    if (message.methodName !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.methodName);
+    /* string authority = 3; */
+    if (message.authority !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.authority);
+    /* google.protobuf.Duration timeout = 4; */
+    if (message.timeout)
+      Duration.internalBinaryWrite(
+        message.timeout,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.binarylog.v1.ClientHeader
@@ -607,45 +788,76 @@ class ClientHeader$Type extends MessageType<ClientHeader> {
 export const ClientHeader = new ClientHeader$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ServerHeader$Type extends MessageType<ServerHeader> {
-    constructor() {
-        super("grpc.binarylog.v1.ServerHeader", [
-            { no: 1, name: "metadata", kind: "message", T: () => Metadata }
-        ]);
+  constructor() {
+    super("grpc.binarylog.v1.ServerHeader", [
+      { no: 1, name: "metadata", kind: "message", T: () => Metadata },
+    ]);
+  }
+  create(value?: PartialMessage<ServerHeader>): ServerHeader {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<ServerHeader>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ServerHeader,
+  ): ServerHeader {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.binarylog.v1.Metadata metadata */ 1:
+          message.metadata = Metadata.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.metadata,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ServerHeader>): ServerHeader {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<ServerHeader>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ServerHeader): ServerHeader {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.binarylog.v1.Metadata metadata */ 1:
-                    message.metadata = Metadata.internalBinaryRead(reader, reader.uint32(), options, message.metadata);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ServerHeader, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.binarylog.v1.Metadata metadata = 1; */
-        if (message.metadata)
-            Metadata.internalBinaryWrite(message.metadata, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ServerHeader,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.binarylog.v1.Metadata metadata = 1; */
+    if (message.metadata)
+      Metadata.internalBinaryWrite(
+        message.metadata,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.binarylog.v1.ServerHeader
@@ -653,69 +865,115 @@ class ServerHeader$Type extends MessageType<ServerHeader> {
 export const ServerHeader = new ServerHeader$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Trailer$Type extends MessageType<Trailer> {
-    constructor() {
-        super("grpc.binarylog.v1.Trailer", [
-            { no: 1, name: "metadata", kind: "message", T: () => Metadata },
-            { no: 2, name: "status_code", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 3, name: "status_message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "status_details", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
-        ]);
+  constructor() {
+    super("grpc.binarylog.v1.Trailer", [
+      { no: 1, name: "metadata", kind: "message", T: () => Metadata },
+      {
+        no: 2,
+        name: "status_code",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 3,
+        name: "status_message",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 4,
+        name: "status_details",
+        kind: "scalar",
+        T: 12 /*ScalarType.BYTES*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<Trailer>): Trailer {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.statusCode = 0;
+    message.statusMessage = "";
+    message.statusDetails = new Uint8Array(0);
+    if (value !== undefined)
+      reflectionMergePartial<Trailer>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Trailer,
+  ): Trailer {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.binarylog.v1.Metadata metadata */ 1:
+          message.metadata = Metadata.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.metadata,
+          );
+          break;
+        case /* uint32 status_code */ 2:
+          message.statusCode = reader.uint32();
+          break;
+        case /* string status_message */ 3:
+          message.statusMessage = reader.string();
+          break;
+        case /* bytes status_details */ 4:
+          message.statusDetails = reader.bytes();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Trailer>): Trailer {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.statusCode = 0;
-        message.statusMessage = "";
-        message.statusDetails = new Uint8Array(0);
-        if (value !== undefined)
-            reflectionMergePartial<Trailer>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Trailer): Trailer {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.binarylog.v1.Metadata metadata */ 1:
-                    message.metadata = Metadata.internalBinaryRead(reader, reader.uint32(), options, message.metadata);
-                    break;
-                case /* uint32 status_code */ 2:
-                    message.statusCode = reader.uint32();
-                    break;
-                case /* string status_message */ 3:
-                    message.statusMessage = reader.string();
-                    break;
-                case /* bytes status_details */ 4:
-                    message.statusDetails = reader.bytes();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Trailer, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.binarylog.v1.Metadata metadata = 1; */
-        if (message.metadata)
-            Metadata.internalBinaryWrite(message.metadata, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* uint32 status_code = 2; */
-        if (message.statusCode !== 0)
-            writer.tag(2, WireType.Varint).uint32(message.statusCode);
-        /* string status_message = 3; */
-        if (message.statusMessage !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.statusMessage);
-        /* bytes status_details = 4; */
-        if (message.statusDetails.length)
-            writer.tag(4, WireType.LengthDelimited).bytes(message.statusDetails);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Trailer,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.binarylog.v1.Metadata metadata = 1; */
+    if (message.metadata)
+      Metadata.internalBinaryWrite(
+        message.metadata,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* uint32 status_code = 2; */
+    if (message.statusCode !== 0)
+      writer.tag(2, WireType.Varint).uint32(message.statusCode);
+    /* string status_message = 3; */
+    if (message.statusMessage !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.statusMessage);
+    /* bytes status_details = 4; */
+    if (message.statusDetails.length)
+      writer.tag(4, WireType.LengthDelimited).bytes(message.statusDetails);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.binarylog.v1.Trailer
@@ -723,54 +981,76 @@ class Trailer$Type extends MessageType<Trailer> {
 export const Trailer = new Trailer$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Message$Type extends MessageType<Message> {
-    constructor() {
-        super("grpc.binarylog.v1.Message", [
-            { no: 1, name: "length", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
-            { no: 2, name: "data", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
-        ]);
+  constructor() {
+    super("grpc.binarylog.v1.Message", [
+      { no: 1, name: "length", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+      { no: 2, name: "data", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+    ]);
+  }
+  create(value?: PartialMessage<Message>): Message {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.length = 0;
+    message.data = new Uint8Array(0);
+    if (value !== undefined)
+      reflectionMergePartial<Message>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Message,
+  ): Message {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* uint32 length */ 1:
+          message.length = reader.uint32();
+          break;
+        case /* bytes data */ 2:
+          message.data = reader.bytes();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Message>): Message {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.length = 0;
-        message.data = new Uint8Array(0);
-        if (value !== undefined)
-            reflectionMergePartial<Message>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Message): Message {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* uint32 length */ 1:
-                    message.length = reader.uint32();
-                    break;
-                case /* bytes data */ 2:
-                    message.data = reader.bytes();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Message, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* uint32 length = 1; */
-        if (message.length !== 0)
-            writer.tag(1, WireType.Varint).uint32(message.length);
-        /* bytes data = 2; */
-        if (message.data.length)
-            writer.tag(2, WireType.LengthDelimited).bytes(message.data);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Message,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* uint32 length = 1; */
+    if (message.length !== 0)
+      writer.tag(1, WireType.Varint).uint32(message.length);
+    /* bytes data = 2; */
+    if (message.data.length)
+      writer.tag(2, WireType.LengthDelimited).bytes(message.data);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.binarylog.v1.Message
@@ -778,46 +1058,80 @@ class Message$Type extends MessageType<Message> {
 export const Message = new Message$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Metadata$Type extends MessageType<Metadata> {
-    constructor() {
-        super("grpc.binarylog.v1.Metadata", [
-            { no: 1, name: "entry", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => MetadataEntry }
-        ]);
+  constructor() {
+    super("grpc.binarylog.v1.Metadata", [
+      {
+        no: 1,
+        name: "entry",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => MetadataEntry,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<Metadata>): Metadata {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.entry = [];
+    if (value !== undefined)
+      reflectionMergePartial<Metadata>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Metadata,
+  ): Metadata {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* repeated grpc.binarylog.v1.MetadataEntry entry */ 1:
+          message.entry.push(
+            MetadataEntry.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Metadata>): Metadata {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.entry = [];
-        if (value !== undefined)
-            reflectionMergePartial<Metadata>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Metadata): Metadata {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated grpc.binarylog.v1.MetadataEntry entry */ 1:
-                    message.entry.push(MetadataEntry.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Metadata, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated grpc.binarylog.v1.MetadataEntry entry = 1; */
-        for (let i = 0; i < message.entry.length; i++)
-            MetadataEntry.internalBinaryWrite(message.entry[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Metadata,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* repeated grpc.binarylog.v1.MetadataEntry entry = 1; */
+    for (let i = 0; i < message.entry.length; i++)
+      MetadataEntry.internalBinaryWrite(
+        message.entry[i],
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.binarylog.v1.Metadata
@@ -825,54 +1139,76 @@ class Metadata$Type extends MessageType<Metadata> {
 export const Metadata = new Metadata$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MetadataEntry$Type extends MessageType<MetadataEntry> {
-    constructor() {
-        super("grpc.binarylog.v1.MetadataEntry", [
-            { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "value", kind: "scalar", T: 12 /*ScalarType.BYTES*/ }
-        ]);
+  constructor() {
+    super("grpc.binarylog.v1.MetadataEntry", [
+      { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "value", kind: "scalar", T: 12 /*ScalarType.BYTES*/ },
+    ]);
+  }
+  create(value?: PartialMessage<MetadataEntry>): MetadataEntry {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.key = "";
+    message.value = new Uint8Array(0);
+    if (value !== undefined)
+      reflectionMergePartial<MetadataEntry>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: MetadataEntry,
+  ): MetadataEntry {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string key */ 1:
+          message.key = reader.string();
+          break;
+        case /* bytes value */ 2:
+          message.value = reader.bytes();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<MetadataEntry>): MetadataEntry {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.key = "";
-        message.value = new Uint8Array(0);
-        if (value !== undefined)
-            reflectionMergePartial<MetadataEntry>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MetadataEntry): MetadataEntry {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string key */ 1:
-                    message.key = reader.string();
-                    break;
-                case /* bytes value */ 2:
-                    message.value = reader.bytes();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: MetadataEntry, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string key = 1; */
-        if (message.key !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.key);
-        /* bytes value = 2; */
-        if (message.value.length)
-            writer.tag(2, WireType.LengthDelimited).bytes(message.value);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: MetadataEntry,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string key = 1; */
+    if (message.key !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.key);
+    /* bytes value = 2; */
+    if (message.value.length)
+      writer.tag(2, WireType.LengthDelimited).bytes(message.value);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.binarylog.v1.MetadataEntry
@@ -880,62 +1216,88 @@ class MetadataEntry$Type extends MessageType<MetadataEntry> {
 export const MetadataEntry = new MetadataEntry$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class Address$Type extends MessageType<Address> {
-    constructor() {
-        super("grpc.binarylog.v1.Address", [
-            { no: 1, name: "type", kind: "enum", T: () => ["grpc.binarylog.v1.Address.Type", Address_Type, "TYPE_"] },
-            { no: 2, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "ip_port", kind: "scalar", T: 13 /*ScalarType.UINT32*/ }
-        ]);
+  constructor() {
+    super("grpc.binarylog.v1.Address", [
+      {
+        no: 1,
+        name: "type",
+        kind: "enum",
+        T: () => ["grpc.binarylog.v1.Address.Type", Address_Type, "TYPE_"],
+      },
+      { no: 2, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "ip_port", kind: "scalar", T: 13 /*ScalarType.UINT32*/ },
+    ]);
+  }
+  create(value?: PartialMessage<Address>): Address {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.type = 0;
+    message.address = "";
+    message.ipPort = 0;
+    if (value !== undefined)
+      reflectionMergePartial<Address>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Address,
+  ): Address {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* grpc.binarylog.v1.Address.Type type */ 1:
+          message.type = reader.int32();
+          break;
+        case /* string address */ 2:
+          message.address = reader.string();
+          break;
+        case /* uint32 ip_port */ 3:
+          message.ipPort = reader.uint32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<Address>): Address {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.type = 0;
-        message.address = "";
-        message.ipPort = 0;
-        if (value !== undefined)
-            reflectionMergePartial<Address>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: Address): Address {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* grpc.binarylog.v1.Address.Type type */ 1:
-                    message.type = reader.int32();
-                    break;
-                case /* string address */ 2:
-                    message.address = reader.string();
-                    break;
-                case /* uint32 ip_port */ 3:
-                    message.ipPort = reader.uint32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: Address, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* grpc.binarylog.v1.Address.Type type = 1; */
-        if (message.type !== 0)
-            writer.tag(1, WireType.Varint).int32(message.type);
-        /* string address = 2; */
-        if (message.address !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.address);
-        /* uint32 ip_port = 3; */
-        if (message.ipPort !== 0)
-            writer.tag(3, WireType.Varint).uint32(message.ipPort);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Address,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* grpc.binarylog.v1.Address.Type type = 1; */
+    if (message.type !== 0) writer.tag(1, WireType.Varint).int32(message.type);
+    /* string address = 2; */
+    if (message.address !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.address);
+    /* uint32 ip_port = 3; */
+    if (message.ipPort !== 0)
+      writer.tag(3, WireType.Varint).uint32(message.ipPort);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message grpc.binarylog.v1.Address

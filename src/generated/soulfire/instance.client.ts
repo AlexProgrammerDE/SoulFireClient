@@ -3,128 +3,228 @@
 // @generated from protobuf file "soulfire/instance.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
-import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
-import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
-import { InstanceService } from "./instance";
-import type { InstanceAuditLogResponse } from "./instance";
-import type { InstanceAuditLogRequest } from "./instance";
-import type { InstanceStateChangeResponse } from "./instance";
-import type { InstanceStateChangeRequest } from "./instance";
-import type { InstanceUpdateConfigResponse } from "./instance";
-import type { InstanceUpdateConfigRequest } from "./instance";
-import type { InstanceUpdateMetaResponse } from "./instance";
-import type { InstanceUpdateMetaRequest } from "./instance";
-import type { InstanceInfoResponse } from "./instance";
-import type { InstanceInfoRequest } from "./instance";
-import type { InstanceListResponse } from "./instance";
-import type { InstanceListRequest } from "./instance";
-import type { InstanceDeleteResponse } from "./instance";
-import type { InstanceDeleteRequest } from "./instance";
+import type {
+  RpcOptions,
+  RpcTransport,
+  ServiceInfo,
+  UnaryCall,
+} from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type { InstanceCreateResponse } from "./instance";
-import type { InstanceCreateRequest } from "./instance";
-import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
-import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
+import type {
+  InstanceAuditLogRequest,
+  InstanceAuditLogResponse,
+  InstanceCreateRequest,
+  InstanceCreateResponse,
+  InstanceDeleteRequest,
+  InstanceDeleteResponse,
+  InstanceInfoRequest,
+  InstanceInfoResponse,
+  InstanceListRequest,
+  InstanceListResponse,
+  InstanceStateChangeRequest,
+  InstanceStateChangeResponse,
+  InstanceUpdateConfigRequest,
+  InstanceUpdateConfigResponse,
+  InstanceUpdateMetaRequest,
+  InstanceUpdateMetaResponse,
+} from "./instance";
+import { InstanceService } from "./instance";
 /**
  * @generated from protobuf service soulfire.v1.InstanceService
  */
 export interface IInstanceServiceClient {
-    /**
-     * @generated from protobuf rpc: CreateInstance
-     */
-    createInstance(input: InstanceCreateRequest, options?: RpcOptions): UnaryCall<InstanceCreateRequest, InstanceCreateResponse>;
-    /**
-     * @generated from protobuf rpc: DeleteInstance
-     */
-    deleteInstance(input: InstanceDeleteRequest, options?: RpcOptions): UnaryCall<InstanceDeleteRequest, InstanceDeleteResponse>;
-    /**
-     * @generated from protobuf rpc: ListInstances
-     */
-    listInstances(input: InstanceListRequest, options?: RpcOptions): UnaryCall<InstanceListRequest, InstanceListResponse>;
-    /**
-     * @generated from protobuf rpc: GetInstanceInfo
-     */
-    getInstanceInfo(input: InstanceInfoRequest, options?: RpcOptions): UnaryCall<InstanceInfoRequest, InstanceInfoResponse>;
-    /**
-     * @generated from protobuf rpc: UpdateInstanceMeta
-     */
-    updateInstanceMeta(input: InstanceUpdateMetaRequest, options?: RpcOptions): UnaryCall<InstanceUpdateMetaRequest, InstanceUpdateMetaResponse>;
-    /**
-     * @generated from protobuf rpc: UpdateInstanceConfig
-     */
-    updateInstanceConfig(input: InstanceUpdateConfigRequest, options?: RpcOptions): UnaryCall<InstanceUpdateConfigRequest, InstanceUpdateConfigResponse>;
-    /**
-     * @generated from protobuf rpc: ChangeInstanceState
-     */
-    changeInstanceState(input: InstanceStateChangeRequest, options?: RpcOptions): UnaryCall<InstanceStateChangeRequest, InstanceStateChangeResponse>;
-    /**
-     * @generated from protobuf rpc: GetAuditLog
-     */
-    getAuditLog(input: InstanceAuditLogRequest, options?: RpcOptions): UnaryCall<InstanceAuditLogRequest, InstanceAuditLogResponse>;
+  /**
+   * @generated from protobuf rpc: CreateInstance
+   */
+  createInstance(
+    input: InstanceCreateRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceCreateRequest, InstanceCreateResponse>;
+  /**
+   * @generated from protobuf rpc: DeleteInstance
+   */
+  deleteInstance(
+    input: InstanceDeleteRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceDeleteRequest, InstanceDeleteResponse>;
+  /**
+   * @generated from protobuf rpc: ListInstances
+   */
+  listInstances(
+    input: InstanceListRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceListRequest, InstanceListResponse>;
+  /**
+   * @generated from protobuf rpc: GetInstanceInfo
+   */
+  getInstanceInfo(
+    input: InstanceInfoRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceInfoRequest, InstanceInfoResponse>;
+  /**
+   * @generated from protobuf rpc: UpdateInstanceMeta
+   */
+  updateInstanceMeta(
+    input: InstanceUpdateMetaRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceUpdateMetaRequest, InstanceUpdateMetaResponse>;
+  /**
+   * @generated from protobuf rpc: UpdateInstanceConfig
+   */
+  updateInstanceConfig(
+    input: InstanceUpdateConfigRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceUpdateConfigRequest, InstanceUpdateConfigResponse>;
+  /**
+   * @generated from protobuf rpc: ChangeInstanceState
+   */
+  changeInstanceState(
+    input: InstanceStateChangeRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceStateChangeRequest, InstanceStateChangeResponse>;
+  /**
+   * @generated from protobuf rpc: GetAuditLog
+   */
+  getAuditLog(
+    input: InstanceAuditLogRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceAuditLogRequest, InstanceAuditLogResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.InstanceService
  */
-export class InstanceServiceClient implements IInstanceServiceClient, ServiceInfo {
-    typeName = InstanceService.typeName;
-    methods = InstanceService.methods;
-    options = InstanceService.options;
-    constructor(private readonly _transport: RpcTransport) {
-    }
-    /**
-     * @generated from protobuf rpc: CreateInstance
-     */
-    createInstance(input: InstanceCreateRequest, options?: RpcOptions): UnaryCall<InstanceCreateRequest, InstanceCreateResponse> {
-        const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return stackIntercept<InstanceCreateRequest, InstanceCreateResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: DeleteInstance
-     */
-    deleteInstance(input: InstanceDeleteRequest, options?: RpcOptions): UnaryCall<InstanceDeleteRequest, InstanceDeleteResponse> {
-        const method = this.methods[1], opt = this._transport.mergeOptions(options);
-        return stackIntercept<InstanceDeleteRequest, InstanceDeleteResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: ListInstances
-     */
-    listInstances(input: InstanceListRequest, options?: RpcOptions): UnaryCall<InstanceListRequest, InstanceListResponse> {
-        const method = this.methods[2], opt = this._transport.mergeOptions(options);
-        return stackIntercept<InstanceListRequest, InstanceListResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: GetInstanceInfo
-     */
-    getInstanceInfo(input: InstanceInfoRequest, options?: RpcOptions): UnaryCall<InstanceInfoRequest, InstanceInfoResponse> {
-        const method = this.methods[3], opt = this._transport.mergeOptions(options);
-        return stackIntercept<InstanceInfoRequest, InstanceInfoResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: UpdateInstanceMeta
-     */
-    updateInstanceMeta(input: InstanceUpdateMetaRequest, options?: RpcOptions): UnaryCall<InstanceUpdateMetaRequest, InstanceUpdateMetaResponse> {
-        const method = this.methods[4], opt = this._transport.mergeOptions(options);
-        return stackIntercept<InstanceUpdateMetaRequest, InstanceUpdateMetaResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: UpdateInstanceConfig
-     */
-    updateInstanceConfig(input: InstanceUpdateConfigRequest, options?: RpcOptions): UnaryCall<InstanceUpdateConfigRequest, InstanceUpdateConfigResponse> {
-        const method = this.methods[5], opt = this._transport.mergeOptions(options);
-        return stackIntercept<InstanceUpdateConfigRequest, InstanceUpdateConfigResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: ChangeInstanceState
-     */
-    changeInstanceState(input: InstanceStateChangeRequest, options?: RpcOptions): UnaryCall<InstanceStateChangeRequest, InstanceStateChangeResponse> {
-        const method = this.methods[6], opt = this._transport.mergeOptions(options);
-        return stackIntercept<InstanceStateChangeRequest, InstanceStateChangeResponse>("unary", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: GetAuditLog
-     */
-    getAuditLog(input: InstanceAuditLogRequest, options?: RpcOptions): UnaryCall<InstanceAuditLogRequest, InstanceAuditLogResponse> {
-        const method = this.methods[7], opt = this._transport.mergeOptions(options);
-        return stackIntercept<InstanceAuditLogRequest, InstanceAuditLogResponse>("unary", this._transport, method, opt, input);
-    }
+export class InstanceServiceClient
+  implements IInstanceServiceClient, ServiceInfo
+{
+  typeName = InstanceService.typeName;
+  methods = InstanceService.methods;
+  options = InstanceService.options;
+  constructor(private readonly _transport: RpcTransport) {}
+  /**
+   * @generated from protobuf rpc: CreateInstance
+   */
+  createInstance(
+    input: InstanceCreateRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceCreateRequest, InstanceCreateResponse> {
+    const method = this.methods[0],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<InstanceCreateRequest, InstanceCreateResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: DeleteInstance
+   */
+  deleteInstance(
+    input: InstanceDeleteRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceDeleteRequest, InstanceDeleteResponse> {
+    const method = this.methods[1],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<InstanceDeleteRequest, InstanceDeleteResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: ListInstances
+   */
+  listInstances(
+    input: InstanceListRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceListRequest, InstanceListResponse> {
+    const method = this.methods[2],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<InstanceListRequest, InstanceListResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: GetInstanceInfo
+   */
+  getInstanceInfo(
+    input: InstanceInfoRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceInfoRequest, InstanceInfoResponse> {
+    const method = this.methods[3],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<InstanceInfoRequest, InstanceInfoResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: UpdateInstanceMeta
+   */
+  updateInstanceMeta(
+    input: InstanceUpdateMetaRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceUpdateMetaRequest, InstanceUpdateMetaResponse> {
+    const method = this.methods[4],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InstanceUpdateMetaRequest,
+      InstanceUpdateMetaResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: UpdateInstanceConfig
+   */
+  updateInstanceConfig(
+    input: InstanceUpdateConfigRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceUpdateConfigRequest, InstanceUpdateConfigResponse> {
+    const method = this.methods[5],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InstanceUpdateConfigRequest,
+      InstanceUpdateConfigResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: ChangeInstanceState
+   */
+  changeInstanceState(
+    input: InstanceStateChangeRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceStateChangeRequest, InstanceStateChangeResponse> {
+    const method = this.methods[6],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InstanceStateChangeRequest,
+      InstanceStateChangeResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: GetAuditLog
+   */
+  getAuditLog(
+    input: InstanceAuditLogRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceAuditLogRequest, InstanceAuditLogResponse> {
+    const method = this.methods[7],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<InstanceAuditLogRequest, InstanceAuditLogResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
 }

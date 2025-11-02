@@ -3,101 +3,141 @@
 // @generated from protobuf file "soulfire/server.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
+
+import type {
+  BinaryReadOptions,
+  BinaryWriteOptions,
+  IBinaryReader,
+  IBinaryWriter,
+  PartialMessage,
+} from "@protobuf-ts/runtime";
+import {
+  MessageType,
+  reflectionMergePartial,
+  UnknownFieldHandler,
+  WireType,
+} from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
-import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
-import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
-import type { BinaryReadOptions } from "@protobuf-ts/runtime";
-import type { IBinaryReader } from "@protobuf-ts/runtime";
-import { UnknownFieldHandler } from "@protobuf-ts/runtime";
-import type { PartialMessage } from "@protobuf-ts/runtime";
-import { reflectionMergePartial } from "@protobuf-ts/runtime";
-import { MessageType } from "@protobuf-ts/runtime";
-import { SettingsPage } from "./common";
-import { SettingsNamespace } from "./common";
+import { SettingsNamespace, SettingsPage } from "./common";
 /**
  * @generated from protobuf message soulfire.v1.ServerConfig
  */
 export interface ServerConfig {
-    /**
-     * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace settings = 1
-     */
-    settings: SettingsNamespace[];
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace settings = 1
+   */
+  settings: SettingsNamespace[];
 }
 /**
  * @generated from protobuf message soulfire.v1.ServerInfoRequest
  */
-export interface ServerInfoRequest {
-}
+export interface ServerInfoRequest {}
 /**
  * @generated from protobuf message soulfire.v1.ServerInfoResponse
  */
 export interface ServerInfoResponse {
-    /**
-     * @generated from protobuf field: soulfire.v1.ServerConfig config = 1
-     */
-    config?: ServerConfig;
-    /**
-     * @generated from protobuf field: repeated soulfire.v1.SettingsPage server_settings = 2
-     */
-    serverSettings: SettingsPage[];
+  /**
+   * @generated from protobuf field: soulfire.v1.ServerConfig config = 1
+   */
+  config?: ServerConfig;
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.SettingsPage server_settings = 2
+   */
+  serverSettings: SettingsPage[];
 }
 /**
  * @generated from protobuf message soulfire.v1.ServerUpdateConfigRequest
  */
 export interface ServerUpdateConfigRequest {
-    /**
-     * @generated from protobuf field: soulfire.v1.ServerConfig config = 1
-     */
-    config?: ServerConfig;
+  /**
+   * @generated from protobuf field: soulfire.v1.ServerConfig config = 1
+   */
+  config?: ServerConfig;
 }
 /**
  * @generated from protobuf message soulfire.v1.ServerUpdateConfigResponse
  */
-export interface ServerUpdateConfigResponse {
-}
+export interface ServerUpdateConfigResponse {}
 // @generated message type with reflection information, may provide speed optimized methods
 class ServerConfig$Type extends MessageType<ServerConfig> {
-    constructor() {
-        super("soulfire.v1.ServerConfig", [
-            { no: 1, name: "settings", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => SettingsNamespace }
-        ]);
+  constructor() {
+    super("soulfire.v1.ServerConfig", [
+      {
+        no: 1,
+        name: "settings",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SettingsNamespace,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ServerConfig>): ServerConfig {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.settings = [];
+    if (value !== undefined)
+      reflectionMergePartial<ServerConfig>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ServerConfig,
+  ): ServerConfig {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* repeated soulfire.v1.SettingsNamespace settings */ 1:
+          message.settings.push(
+            SettingsNamespace.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ServerConfig>): ServerConfig {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.settings = [];
-        if (value !== undefined)
-            reflectionMergePartial<ServerConfig>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ServerConfig): ServerConfig {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated soulfire.v1.SettingsNamespace settings */ 1:
-                    message.settings.push(SettingsNamespace.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ServerConfig, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated soulfire.v1.SettingsNamespace settings = 1; */
-        for (let i = 0; i < message.settings.length; i++)
-            SettingsNamespace.internalBinaryWrite(message.settings[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ServerConfig,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* repeated soulfire.v1.SettingsNamespace settings = 1; */
+    for (let i = 0; i < message.settings.length; i++)
+      SettingsNamespace.internalBinaryWrite(
+        message.settings[i],
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.ServerConfig
@@ -105,37 +145,59 @@ class ServerConfig$Type extends MessageType<ServerConfig> {
 export const ServerConfig = new ServerConfig$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ServerInfoRequest$Type extends MessageType<ServerInfoRequest> {
-    constructor() {
-        super("soulfire.v1.ServerInfoRequest", []);
+  constructor() {
+    super("soulfire.v1.ServerInfoRequest", []);
+  }
+  create(value?: PartialMessage<ServerInfoRequest>): ServerInfoRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<ServerInfoRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ServerInfoRequest,
+  ): ServerInfoRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ServerInfoRequest>): ServerInfoRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<ServerInfoRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ServerInfoRequest): ServerInfoRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ServerInfoRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ServerInfoRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.ServerInfoRequest
@@ -143,53 +205,96 @@ class ServerInfoRequest$Type extends MessageType<ServerInfoRequest> {
 export const ServerInfoRequest = new ServerInfoRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ServerInfoResponse$Type extends MessageType<ServerInfoResponse> {
-    constructor() {
-        super("soulfire.v1.ServerInfoResponse", [
-            { no: 1, name: "config", kind: "message", T: () => ServerConfig },
-            { no: 2, name: "server_settings", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => SettingsPage }
-        ]);
+  constructor() {
+    super("soulfire.v1.ServerInfoResponse", [
+      { no: 1, name: "config", kind: "message", T: () => ServerConfig },
+      {
+        no: 2,
+        name: "server_settings",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SettingsPage,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ServerInfoResponse>): ServerInfoResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.serverSettings = [];
+    if (value !== undefined)
+      reflectionMergePartial<ServerInfoResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ServerInfoResponse,
+  ): ServerInfoResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.ServerConfig config */ 1:
+          message.config = ServerConfig.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.config,
+          );
+          break;
+        case /* repeated soulfire.v1.SettingsPage server_settings */ 2:
+          message.serverSettings.push(
+            SettingsPage.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ServerInfoResponse>): ServerInfoResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.serverSettings = [];
-        if (value !== undefined)
-            reflectionMergePartial<ServerInfoResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ServerInfoResponse): ServerInfoResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.ServerConfig config */ 1:
-                    message.config = ServerConfig.internalBinaryRead(reader, reader.uint32(), options, message.config);
-                    break;
-                case /* repeated soulfire.v1.SettingsPage server_settings */ 2:
-                    message.serverSettings.push(SettingsPage.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ServerInfoResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* soulfire.v1.ServerConfig config = 1; */
-        if (message.config)
-            ServerConfig.internalBinaryWrite(message.config, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* repeated soulfire.v1.SettingsPage server_settings = 2; */
-        for (let i = 0; i < message.serverSettings.length; i++)
-            SettingsPage.internalBinaryWrite(message.serverSettings[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ServerInfoResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.ServerConfig config = 1; */
+    if (message.config)
+      ServerConfig.internalBinaryWrite(
+        message.config,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.SettingsPage server_settings = 2; */
+    for (let i = 0; i < message.serverSettings.length; i++)
+      SettingsPage.internalBinaryWrite(
+        message.serverSettings[i],
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.ServerInfoResponse
@@ -197,45 +302,78 @@ class ServerInfoResponse$Type extends MessageType<ServerInfoResponse> {
 export const ServerInfoResponse = new ServerInfoResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ServerUpdateConfigRequest$Type extends MessageType<ServerUpdateConfigRequest> {
-    constructor() {
-        super("soulfire.v1.ServerUpdateConfigRequest", [
-            { no: 1, name: "config", kind: "message", T: () => ServerConfig }
-        ]);
+  constructor() {
+    super("soulfire.v1.ServerUpdateConfigRequest", [
+      { no: 1, name: "config", kind: "message", T: () => ServerConfig },
+    ]);
+  }
+  create(
+    value?: PartialMessage<ServerUpdateConfigRequest>,
+  ): ServerUpdateConfigRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<ServerUpdateConfigRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ServerUpdateConfigRequest,
+  ): ServerUpdateConfigRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.ServerConfig config */ 1:
+          message.config = ServerConfig.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.config,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ServerUpdateConfigRequest>): ServerUpdateConfigRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<ServerUpdateConfigRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ServerUpdateConfigRequest): ServerUpdateConfigRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.ServerConfig config */ 1:
-                    message.config = ServerConfig.internalBinaryRead(reader, reader.uint32(), options, message.config);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ServerUpdateConfigRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* soulfire.v1.ServerConfig config = 1; */
-        if (message.config)
-            ServerConfig.internalBinaryWrite(message.config, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ServerUpdateConfigRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.ServerConfig config = 1; */
+    if (message.config)
+      ServerConfig.internalBinaryWrite(
+        message.config,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.ServerUpdateConfigRequest
@@ -243,37 +381,61 @@ class ServerUpdateConfigRequest$Type extends MessageType<ServerUpdateConfigReque
 export const ServerUpdateConfigRequest = new ServerUpdateConfigRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ServerUpdateConfigResponse$Type extends MessageType<ServerUpdateConfigResponse> {
-    constructor() {
-        super("soulfire.v1.ServerUpdateConfigResponse", []);
+  constructor() {
+    super("soulfire.v1.ServerUpdateConfigResponse", []);
+  }
+  create(
+    value?: PartialMessage<ServerUpdateConfigResponse>,
+  ): ServerUpdateConfigResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<ServerUpdateConfigResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ServerUpdateConfigResponse,
+  ): ServerUpdateConfigResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ServerUpdateConfigResponse>): ServerUpdateConfigResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<ServerUpdateConfigResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ServerUpdateConfigResponse): ServerUpdateConfigResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ServerUpdateConfigResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ServerUpdateConfigResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.ServerUpdateConfigResponse
@@ -283,6 +445,16 @@ export const ServerUpdateConfigResponse = new ServerUpdateConfigResponse$Type();
  * @generated ServiceType for protobuf service soulfire.v1.ServerService
  */
 export const ServerService = new ServiceType("soulfire.v1.ServerService", [
-    { name: "GetServerInfo", options: {}, I: ServerInfoRequest, O: ServerInfoResponse },
-    { name: "UpdateServerConfig", options: {}, I: ServerUpdateConfigRequest, O: ServerUpdateConfigResponse }
+  {
+    name: "GetServerInfo",
+    options: {},
+    I: ServerInfoRequest,
+    O: ServerInfoResponse,
+  },
+  {
+    name: "UpdateServerConfig",
+    options: {},
+    I: ServerUpdateConfigRequest,
+    O: ServerUpdateConfigResponse,
+  },
 ]);

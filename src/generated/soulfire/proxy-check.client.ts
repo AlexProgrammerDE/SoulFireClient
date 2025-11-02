@@ -3,37 +3,52 @@
 // @generated from protobuf file "soulfire/proxy-check.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
-import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
-import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
-import { ProxyCheckService } from "./proxy-check";
+import type {
+  RpcOptions,
+  RpcTransport,
+  ServerStreamingCall,
+  ServiceInfo,
+} from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type { ProxyCheckResponse } from "./proxy-check";
-import type { ProxyCheckRequest } from "./proxy-check";
-import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
-import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
+import type { ProxyCheckRequest, ProxyCheckResponse } from "./proxy-check";
+import { ProxyCheckService } from "./proxy-check";
 /**
  * @generated from protobuf service soulfire.v1.ProxyCheckService
  */
 export interface IProxyCheckServiceClient {
-    /**
-     * @generated from protobuf rpc: Check
-     */
-    check(input: ProxyCheckRequest, options?: RpcOptions): ServerStreamingCall<ProxyCheckRequest, ProxyCheckResponse>;
+  /**
+   * @generated from protobuf rpc: Check
+   */
+  check(
+    input: ProxyCheckRequest,
+    options?: RpcOptions,
+  ): ServerStreamingCall<ProxyCheckRequest, ProxyCheckResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.ProxyCheckService
  */
-export class ProxyCheckServiceClient implements IProxyCheckServiceClient, ServiceInfo {
-    typeName = ProxyCheckService.typeName;
-    methods = ProxyCheckService.methods;
-    options = ProxyCheckService.options;
-    constructor(private readonly _transport: RpcTransport) {
-    }
-    /**
-     * @generated from protobuf rpc: Check
-     */
-    check(input: ProxyCheckRequest, options?: RpcOptions): ServerStreamingCall<ProxyCheckRequest, ProxyCheckResponse> {
-        const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return stackIntercept<ProxyCheckRequest, ProxyCheckResponse>("serverStreaming", this._transport, method, opt, input);
-    }
+export class ProxyCheckServiceClient
+  implements IProxyCheckServiceClient, ServiceInfo
+{
+  typeName = ProxyCheckService.typeName;
+  methods = ProxyCheckService.methods;
+  options = ProxyCheckService.options;
+  constructor(private readonly _transport: RpcTransport) {}
+  /**
+   * @generated from protobuf rpc: Check
+   */
+  check(
+    input: ProxyCheckRequest,
+    options?: RpcOptions,
+  ): ServerStreamingCall<ProxyCheckRequest, ProxyCheckResponse> {
+    const method = this.methods[0],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<ProxyCheckRequest, ProxyCheckResponse>(
+      "serverStreaming",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
 }

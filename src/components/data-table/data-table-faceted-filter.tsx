@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import type { Column } from '@tanstack/react-table';
-import { Check, PlusCircle, XCircle } from 'lucide-react';
-import * as React from 'react';
+import type { Column } from "@tanstack/react-table";
+import { Check, PlusCircle, XCircle } from "lucide-react";
+import * as React from "react";
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -14,15 +14,15 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from '@/components/ui/command';
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover';
-import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
-import type { Option } from '@/types/data-table';
+} from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
+import type { Option } from "@/types/data-table";
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
@@ -145,10 +145,10 @@ export function DataTableFacetedFilter<TData, TValue>({
                   >
                     <div
                       className={cn(
-                        'border-primary flex size-4 items-center justify-center rounded-sm border',
+                        "border-primary flex size-4 items-center justify-center rounded-sm border",
                         isSelected
-                          ? 'bg-primary'
-                          : 'opacity-50 [&_svg]:invisible',
+                          ? "bg-primary"
+                          : "opacity-50 [&_svg]:invisible",
                       )}
                     >
                       <Check />

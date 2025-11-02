@@ -3,45 +3,51 @@
 // @generated from protobuf file "soulfire/logs.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
-import { ServiceType } from '@protobuf-ts/runtime-rpc';
+
 import type {
   BinaryReadOptions,
   BinaryWriteOptions,
   IBinaryReader,
   IBinaryWriter,
   PartialMessage,
-} from '@protobuf-ts/runtime';
-import { MessageType, reflectionMergePartial, UnknownFieldHandler, WireType } from '@protobuf-ts/runtime';
-import { Timestamp } from '../google/protobuf/timestamp';
+} from "@protobuf-ts/runtime";
+import {
+  MessageType,
+  reflectionMergePartial,
+  UnknownFieldHandler,
+  WireType,
+} from "@protobuf-ts/runtime";
+import { ServiceType } from "@protobuf-ts/runtime-rpc";
+import { Timestamp } from "../google/protobuf/timestamp";
 
 /**
  * @generated from protobuf message soulfire.v1.LogString
  */
 export interface LogString {
-    /**
-     * @generated from protobuf field: string id = 1
-     */
-    id: string;
-    /**
-     * @generated from protobuf field: string message = 2
-     */
-    message: string;
-    /**
-     * @generated from protobuf field: optional string instance_id = 3
-     */
-    instanceId?: string;
-    /**
-     * @generated from protobuf field: optional string bot_account_id = 4
-     */
-    botAccountId?: string;
-    /**
-     * @generated from protobuf field: optional string script_id = 5
-     */
-    scriptId?: string;
-    /**
-     * @generated from protobuf field: bool personal = 6
-     */
-    personal: boolean;
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * @generated from protobuf field: string message = 2
+   */
+  message: string;
+  /**
+   * @generated from protobuf field: optional string instance_id = 3
+   */
+  instanceId?: string;
+  /**
+   * @generated from protobuf field: optional string bot_account_id = 4
+   */
+  botAccountId?: string;
+  /**
+   * @generated from protobuf field: optional string script_id = 5
+   */
+  scriptId?: string;
+  /**
+   * @generated from protobuf field: bool personal = 6
+   */
+  personal: boolean;
   /**
    * @generated from protobuf field: optional string instance_name = 7
    */
@@ -66,264 +72,342 @@ export interface LogString {
 /**
  * @generated from protobuf message soulfire.v1.GlobalLogScope
  */
-export interface GlobalLogScope {
-}
+export interface GlobalLogScope {}
 /**
  * @generated from protobuf message soulfire.v1.InstanceLogScope
  */
 export interface InstanceLogScope {
-    /**
-     * @generated from protobuf field: string instance_id = 1
-     */
-    instanceId: string;
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.BotLogScope
  */
 export interface BotLogScope {
-    /**
-     * @generated from protobuf field: string instance_id = 1
-     */
-    instanceId: string;
-    /**
-     * @generated from protobuf field: string bot_id = 2
-     */
-    botId: string;
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.GlobalScriptLogScope
  */
 export interface GlobalScriptLogScope {
-    /**
-     * @generated from protobuf field: string script_id = 1
-     */
-    scriptId: string;
+  /**
+   * @generated from protobuf field: string script_id = 1
+   */
+  scriptId: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.InstanceScriptLogScope
  */
 export interface InstanceScriptLogScope {
-    /**
-     * @generated from protobuf field: string instance_id = 1
-     */
-    instanceId: string;
-    /**
-     * @generated from protobuf field: string script_id = 2
-     */
-    scriptId: string;
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string script_id = 2
+   */
+  scriptId: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.PersonalLogScope
  */
-export interface PersonalLogScope {
-}
+export interface PersonalLogScope {}
 /**
  * @generated from protobuf message soulfire.v1.LogScope
  */
 export interface LogScope {
-    /**
-     * @generated from protobuf oneof: scope
-     */
-    scope: {
+  /**
+   * @generated from protobuf oneof: scope
+   */
+  scope:
+    | {
         oneofKind: "global";
         /**
          * @generated from protobuf field: soulfire.v1.GlobalLogScope global = 1
          */
         global: GlobalLogScope;
-    } | {
+      }
+    | {
         oneofKind: "instance";
         /**
          * @generated from protobuf field: soulfire.v1.InstanceLogScope instance = 2
          */
         instance: InstanceLogScope;
-    } | {
+      }
+    | {
         oneofKind: "bot";
         /**
          * @generated from protobuf field: soulfire.v1.BotLogScope bot = 3
          */
         bot: BotLogScope;
-    } | {
+      }
+    | {
         oneofKind: "globalScript";
         /**
          * @generated from protobuf field: soulfire.v1.GlobalScriptLogScope global_script = 4
          */
         globalScript: GlobalScriptLogScope;
-    } | {
+      }
+    | {
         oneofKind: "instanceScript";
         /**
          * @generated from protobuf field: soulfire.v1.InstanceScriptLogScope instance_script = 5
          */
         instanceScript: InstanceScriptLogScope;
-    } | {
+      }
+    | {
         oneofKind: "personal";
         /**
          * @generated from protobuf field: soulfire.v1.PersonalLogScope personal = 6
          */
         personal: PersonalLogScope;
-    } | {
+      }
+    | {
         oneofKind: undefined;
-    };
+      };
 }
 /**
  * @generated from protobuf message soulfire.v1.PreviousLogRequest
  */
 export interface PreviousLogRequest {
-    /**
-     * @generated from protobuf field: soulfire.v1.LogScope scope = 4
-     */
-    scope?: LogScope;
-    /**
-     * @generated from protobuf field: int32 count = 3
-     */
-    count: number;
+  /**
+   * @generated from protobuf field: soulfire.v1.LogScope scope = 4
+   */
+  scope?: LogScope;
+  /**
+   * @generated from protobuf field: int32 count = 3
+   */
+  count: number;
 }
 /**
  * @generated from protobuf message soulfire.v1.PreviousLogResponse
  */
 export interface PreviousLogResponse {
-    /**
-     * @generated from protobuf field: repeated soulfire.v1.LogString messages = 1
-     */
-    messages: LogString[];
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.LogString messages = 1
+   */
+  messages: LogString[];
 }
 /**
  * @generated from protobuf message soulfire.v1.LogRequest
  */
 export interface LogRequest {
-    /**
-     * @generated from protobuf field: soulfire.v1.LogScope scope = 3
-     */
-    scope?: LogScope;
+  /**
+   * @generated from protobuf field: soulfire.v1.LogScope scope = 3
+   */
+  scope?: LogScope;
 }
 /**
  * @generated from protobuf message soulfire.v1.LogResponse
  */
 export interface LogResponse {
-    /**
-     * @generated from protobuf field: soulfire.v1.LogString message = 1
-     */
-    message?: LogString;
+  /**
+   * @generated from protobuf field: soulfire.v1.LogString message = 1
+   */
+  message?: LogString;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class LogString$Type extends MessageType<LogString> {
-    constructor() {
-        super("soulfire.v1.LogString", [
-            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "instance_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-          { no: 4, name: 'bot_account_id', kind: 'scalar', opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "script_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-          { no: 6, name: 'personal', kind: 'scalar', T: 8 /*ScalarType.BOOL*/ },
-          { no: 7, name: 'instance_name', kind: 'scalar', opt: true, T: 9 /*ScalarType.STRING*/ },
-          { no: 8, name: 'bot_account_name', kind: 'scalar', opt: true, T: 9 /*ScalarType.STRING*/ },
-          { no: 9, name: 'timestamp', kind: 'message', T: () => Timestamp },
-          { no: 10, name: 'logger_name', kind: 'scalar', opt: true, T: 9 /*ScalarType.STRING*/ },
-          { no: 11, name: 'level', kind: 'scalar', opt: true, T: 9 /*ScalarType.STRING*/ },
-        ]);
+  constructor() {
+    super("soulfire.v1.LogString", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "instance_id",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 4,
+        name: "bot_account_id",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 5,
+        name: "script_id",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 6, name: "personal", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 7,
+        name: "instance_name",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 8,
+        name: "bot_account_name",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 9, name: "timestamp", kind: "message", T: () => Timestamp },
+      {
+        no: 10,
+        name: "logger_name",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 11,
+        name: "level",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<LogString>): LogString {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.message = "";
+    message.personal = false;
+    if (value !== undefined)
+      reflectionMergePartial<LogString>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: LogString,
+  ): LogString {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string message */ 2:
+          message.message = reader.string();
+          break;
+        case /* optional string instance_id */ 3:
+          message.instanceId = reader.string();
+          break;
+        case /* optional string bot_account_id */
+        4:
+          message.botAccountId = reader.string();
+          break;
+        case /* optional string script_id */ 5:
+          message.scriptId = reader.string();
+          break;
+        case /* bool personal */ 6:
+          message.personal = reader.bool();
+          break;
+        case /* optional string instance_name */
+        7:
+          message.instanceName = reader.string();
+          break;
+        case /* optional string bot_account_name */
+        8:
+          message.botAccountName = reader.string();
+          break;
+        case /* google.protobuf.Timestamp timestamp */
+        9:
+          message.timestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.timestamp,
+          );
+          break;
+        case /* optional string logger_name */
+        10:
+          message.loggerName = reader.string();
+          break;
+        case /* optional string level */
+        11:
+          message.level = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<LogString>): LogString {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.id = "";
-        message.message = "";
-        message.personal = false;
-        if (value !== undefined)
-            reflectionMergePartial<LogString>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LogString): LogString {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string id */ 1:
-                    message.id = reader.string();
-                    break;
-                case /* string message */ 2:
-                    message.message = reader.string();
-                    break;
-                case /* optional string instance_id */ 3:
-                    message.instanceId = reader.string();
-                    break;
-              case /* optional string bot_account_id */
-              4:
-                message.botAccountId = reader.string();
-                    break;
-                case /* optional string script_id */ 5:
-                    message.scriptId = reader.string();
-                    break;
-                case /* bool personal */ 6:
-                    message.personal = reader.bool();
-                    break;
-              case /* optional string instance_name */
-              7:
-                message.instanceName = reader.string();
-                break;
-              case /* optional string bot_account_name */
-              8:
-                message.botAccountName = reader.string();
-                break;
-              case /* google.protobuf.Timestamp timestamp */
-              9:
-                message.timestamp = Timestamp.internalBinaryRead(reader, reader.uint32(), options, message.timestamp);
-                break;
-              case /* optional string logger_name */
-              10:
-                message.loggerName = reader.string();
-                break;
-              case /* optional string level */
-              11:
-                message.level = reader.string();
-                break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: LogString, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string id = 1; */
-        if (message.id !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.id);
-        /* string message = 2; */
-        if (message.message !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.message);
-        /* optional string instance_id = 3; */
-        if (message.instanceId !== undefined)
-            writer.tag(3, WireType.LengthDelimited).string(message.instanceId);
-      /* optional string bot_account_id = 4; */
-      if (message.botAccountId !== undefined)
-        writer.tag(4, WireType.LengthDelimited).string(message.botAccountId);
-        /* optional string script_id = 5; */
-        if (message.scriptId !== undefined)
-            writer.tag(5, WireType.LengthDelimited).string(message.scriptId);
-        /* bool personal = 6; */
-        if (message.personal !== false)
-            writer.tag(6, WireType.Varint).bool(message.personal);
-      /* optional string instance_name = 7; */
-      if (message.instanceName !== undefined)
-        writer.tag(7, WireType.LengthDelimited).string(message.instanceName);
-      /* optional string bot_account_name = 8; */
-      if (message.botAccountName !== undefined)
-        writer.tag(8, WireType.LengthDelimited).string(message.botAccountName);
-      /* google.protobuf.Timestamp timestamp = 9; */
-      if (message.timestamp)
-        Timestamp.internalBinaryWrite(message.timestamp, writer.tag(9, WireType.LengthDelimited).fork(), options).join();
-      /* optional string logger_name = 10; */
-      if (message.loggerName !== undefined)
-        writer.tag(10, WireType.LengthDelimited).string(message.loggerName);
-      /* optional string level = 11; */
-      if (message.level !== undefined)
-        writer.tag(11, WireType.LengthDelimited).string(message.level);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: LogString,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string message = 2; */
+    if (message.message !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.message);
+    /* optional string instance_id = 3; */
+    if (message.instanceId !== undefined)
+      writer.tag(3, WireType.LengthDelimited).string(message.instanceId);
+    /* optional string bot_account_id = 4; */
+    if (message.botAccountId !== undefined)
+      writer.tag(4, WireType.LengthDelimited).string(message.botAccountId);
+    /* optional string script_id = 5; */
+    if (message.scriptId !== undefined)
+      writer.tag(5, WireType.LengthDelimited).string(message.scriptId);
+    /* bool personal = 6; */
+    if (message.personal !== false)
+      writer.tag(6, WireType.Varint).bool(message.personal);
+    /* optional string instance_name = 7; */
+    if (message.instanceName !== undefined)
+      writer.tag(7, WireType.LengthDelimited).string(message.instanceName);
+    /* optional string bot_account_name = 8; */
+    if (message.botAccountName !== undefined)
+      writer.tag(8, WireType.LengthDelimited).string(message.botAccountName);
+    /* google.protobuf.Timestamp timestamp = 9; */
+    if (message.timestamp)
+      Timestamp.internalBinaryWrite(
+        message.timestamp,
+        writer.tag(9, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* optional string logger_name = 10; */
+    if (message.loggerName !== undefined)
+      writer.tag(10, WireType.LengthDelimited).string(message.loggerName);
+    /* optional string level = 11; */
+    if (message.level !== undefined)
+      writer.tag(11, WireType.LengthDelimited).string(message.level);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.LogString
@@ -331,37 +415,59 @@ class LogString$Type extends MessageType<LogString> {
 export const LogString = new LogString$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GlobalLogScope$Type extends MessageType<GlobalLogScope> {
-    constructor() {
-        super("soulfire.v1.GlobalLogScope", []);
+  constructor() {
+    super("soulfire.v1.GlobalLogScope", []);
+  }
+  create(value?: PartialMessage<GlobalLogScope>): GlobalLogScope {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<GlobalLogScope>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GlobalLogScope,
+  ): GlobalLogScope {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GlobalLogScope>): GlobalLogScope {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<GlobalLogScope>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GlobalLogScope): GlobalLogScope {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GlobalLogScope, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GlobalLogScope,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.GlobalLogScope
@@ -369,46 +475,73 @@ class GlobalLogScope$Type extends MessageType<GlobalLogScope> {
 export const GlobalLogScope = new GlobalLogScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class InstanceLogScope$Type extends MessageType<InstanceLogScope> {
-    constructor() {
-        super("soulfire.v1.InstanceLogScope", [
-            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.InstanceLogScope", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<InstanceLogScope>): InstanceLogScope {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    if (value !== undefined)
+      reflectionMergePartial<InstanceLogScope>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceLogScope,
+  ): InstanceLogScope {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<InstanceLogScope>): InstanceLogScope {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.instanceId = "";
-        if (value !== undefined)
-            reflectionMergePartial<InstanceLogScope>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: InstanceLogScope): InstanceLogScope {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string instance_id */ 1:
-                    message.instanceId = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: InstanceLogScope, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string instance_id = 1; */
-        if (message.instanceId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceLogScope,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.InstanceLogScope
@@ -416,54 +549,81 @@ class InstanceLogScope$Type extends MessageType<InstanceLogScope> {
 export const InstanceLogScope = new InstanceLogScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class BotLogScope$Type extends MessageType<BotLogScope> {
-    constructor() {
-        super("soulfire.v1.BotLogScope", [
-            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.BotLogScope", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<BotLogScope>): BotLogScope {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    if (value !== undefined)
+      reflectionMergePartial<BotLogScope>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotLogScope,
+  ): BotLogScope {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<BotLogScope>): BotLogScope {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.instanceId = "";
-        message.botId = "";
-        if (value !== undefined)
-            reflectionMergePartial<BotLogScope>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BotLogScope): BotLogScope {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string instance_id */ 1:
-                    message.instanceId = reader.string();
-                    break;
-                case /* string bot_id */ 2:
-                    message.botId = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: BotLogScope, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string instance_id = 1; */
-        if (message.instanceId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
-        /* string bot_id = 2; */
-        if (message.botId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.botId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotLogScope,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.BotLogScope
@@ -471,46 +631,68 @@ class BotLogScope$Type extends MessageType<BotLogScope> {
 export const BotLogScope = new BotLogScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GlobalScriptLogScope$Type extends MessageType<GlobalScriptLogScope> {
-    constructor() {
-        super("soulfire.v1.GlobalScriptLogScope", [
-            { no: 1, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.GlobalScriptLogScope", [
+      { no: 1, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<GlobalScriptLogScope>): GlobalScriptLogScope {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.scriptId = "";
+    if (value !== undefined)
+      reflectionMergePartial<GlobalScriptLogScope>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GlobalScriptLogScope,
+  ): GlobalScriptLogScope {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string script_id */ 1:
+          message.scriptId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<GlobalScriptLogScope>): GlobalScriptLogScope {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.scriptId = "";
-        if (value !== undefined)
-            reflectionMergePartial<GlobalScriptLogScope>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: GlobalScriptLogScope): GlobalScriptLogScope {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string script_id */ 1:
-                    message.scriptId = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: GlobalScriptLogScope, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string script_id = 1; */
-        if (message.scriptId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.scriptId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GlobalScriptLogScope,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string script_id = 1; */
+    if (message.scriptId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.scriptId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.GlobalScriptLogScope
@@ -518,54 +700,83 @@ class GlobalScriptLogScope$Type extends MessageType<GlobalScriptLogScope> {
 export const GlobalScriptLogScope = new GlobalScriptLogScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class InstanceScriptLogScope$Type extends MessageType<InstanceScriptLogScope> {
-    constructor() {
-        super("soulfire.v1.InstanceScriptLogScope", [
-            { no: 1, name: "instance_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.InstanceScriptLogScope", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<InstanceScriptLogScope>,
+  ): InstanceScriptLogScope {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.scriptId = "";
+    if (value !== undefined)
+      reflectionMergePartial<InstanceScriptLogScope>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceScriptLogScope,
+  ): InstanceScriptLogScope {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string script_id */ 2:
+          message.scriptId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<InstanceScriptLogScope>): InstanceScriptLogScope {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.instanceId = "";
-        message.scriptId = "";
-        if (value !== undefined)
-            reflectionMergePartial<InstanceScriptLogScope>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: InstanceScriptLogScope): InstanceScriptLogScope {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string instance_id */ 1:
-                    message.instanceId = reader.string();
-                    break;
-                case /* string script_id */ 2:
-                    message.scriptId = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: InstanceScriptLogScope, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string instance_id = 1; */
-        if (message.instanceId !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
-        /* string script_id = 2; */
-        if (message.scriptId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.scriptId);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceScriptLogScope,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string script_id = 2; */
+    if (message.scriptId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.scriptId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.InstanceScriptLogScope
@@ -573,37 +784,59 @@ class InstanceScriptLogScope$Type extends MessageType<InstanceScriptLogScope> {
 export const InstanceScriptLogScope = new InstanceScriptLogScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PersonalLogScope$Type extends MessageType<PersonalLogScope> {
-    constructor() {
-        super("soulfire.v1.PersonalLogScope", []);
+  constructor() {
+    super("soulfire.v1.PersonalLogScope", []);
+  }
+  create(value?: PartialMessage<PersonalLogScope>): PersonalLogScope {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<PersonalLogScope>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: PersonalLogScope,
+  ): PersonalLogScope {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<PersonalLogScope>): PersonalLogScope {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<PersonalLogScope>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PersonalLogScope): PersonalLogScope {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: PersonalLogScope, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: PersonalLogScope,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.PersonalLogScope
@@ -611,99 +844,211 @@ class PersonalLogScope$Type extends MessageType<PersonalLogScope> {
 export const PersonalLogScope = new PersonalLogScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class LogScope$Type extends MessageType<LogScope> {
-    constructor() {
-        super("soulfire.v1.LogScope", [
-            { no: 1, name: "global", kind: "message", oneof: "scope", T: () => GlobalLogScope },
-            { no: 2, name: "instance", kind: "message", oneof: "scope", T: () => InstanceLogScope },
-            { no: 3, name: "bot", kind: "message", oneof: "scope", T: () => BotLogScope },
-            { no: 4, name: "global_script", kind: "message", oneof: "scope", T: () => GlobalScriptLogScope },
-            { no: 5, name: "instance_script", kind: "message", oneof: "scope", T: () => InstanceScriptLogScope },
-            { no: 6, name: "personal", kind: "message", oneof: "scope", T: () => PersonalLogScope }
-        ]);
+  constructor() {
+    super("soulfire.v1.LogScope", [
+      {
+        no: 1,
+        name: "global",
+        kind: "message",
+        oneof: "scope",
+        T: () => GlobalLogScope,
+      },
+      {
+        no: 2,
+        name: "instance",
+        kind: "message",
+        oneof: "scope",
+        T: () => InstanceLogScope,
+      },
+      {
+        no: 3,
+        name: "bot",
+        kind: "message",
+        oneof: "scope",
+        T: () => BotLogScope,
+      },
+      {
+        no: 4,
+        name: "global_script",
+        kind: "message",
+        oneof: "scope",
+        T: () => GlobalScriptLogScope,
+      },
+      {
+        no: 5,
+        name: "instance_script",
+        kind: "message",
+        oneof: "scope",
+        T: () => InstanceScriptLogScope,
+      },
+      {
+        no: 6,
+        name: "personal",
+        kind: "message",
+        oneof: "scope",
+        T: () => PersonalLogScope,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<LogScope>): LogScope {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.scope = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<LogScope>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: LogScope,
+  ): LogScope {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.GlobalLogScope global */ 1:
+          message.scope = {
+            oneofKind: "global",
+            global: GlobalLogScope.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.scope as any).global,
+            ),
+          };
+          break;
+        case /* soulfire.v1.InstanceLogScope instance */ 2:
+          message.scope = {
+            oneofKind: "instance",
+            instance: InstanceLogScope.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.scope as any).instance,
+            ),
+          };
+          break;
+        case /* soulfire.v1.BotLogScope bot */ 3:
+          message.scope = {
+            oneofKind: "bot",
+            bot: BotLogScope.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.scope as any).bot,
+            ),
+          };
+          break;
+        case /* soulfire.v1.GlobalScriptLogScope global_script */ 4:
+          message.scope = {
+            oneofKind: "globalScript",
+            globalScript: GlobalScriptLogScope.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.scope as any).globalScript,
+            ),
+          };
+          break;
+        case /* soulfire.v1.InstanceScriptLogScope instance_script */ 5:
+          message.scope = {
+            oneofKind: "instanceScript",
+            instanceScript: InstanceScriptLogScope.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.scope as any).instanceScript,
+            ),
+          };
+          break;
+        case /* soulfire.v1.PersonalLogScope personal */ 6:
+          message.scope = {
+            oneofKind: "personal",
+            personal: PersonalLogScope.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.scope as any).personal,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<LogScope>): LogScope {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.scope = { oneofKind: undefined };
-        if (value !== undefined)
-            reflectionMergePartial<LogScope>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LogScope): LogScope {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.GlobalLogScope global */ 1:
-                    message.scope = {
-                        oneofKind: "global",
-                        global: GlobalLogScope.internalBinaryRead(reader, reader.uint32(), options, (message.scope as any).global)
-                    };
-                    break;
-                case /* soulfire.v1.InstanceLogScope instance */ 2:
-                    message.scope = {
-                        oneofKind: "instance",
-                        instance: InstanceLogScope.internalBinaryRead(reader, reader.uint32(), options, (message.scope as any).instance)
-                    };
-                    break;
-                case /* soulfire.v1.BotLogScope bot */ 3:
-                    message.scope = {
-                        oneofKind: "bot",
-                        bot: BotLogScope.internalBinaryRead(reader, reader.uint32(), options, (message.scope as any).bot)
-                    };
-                    break;
-                case /* soulfire.v1.GlobalScriptLogScope global_script */ 4:
-                    message.scope = {
-                        oneofKind: "globalScript",
-                        globalScript: GlobalScriptLogScope.internalBinaryRead(reader, reader.uint32(), options, (message.scope as any).globalScript)
-                    };
-                    break;
-                case /* soulfire.v1.InstanceScriptLogScope instance_script */ 5:
-                    message.scope = {
-                        oneofKind: "instanceScript",
-                        instanceScript: InstanceScriptLogScope.internalBinaryRead(reader, reader.uint32(), options, (message.scope as any).instanceScript)
-                    };
-                    break;
-                case /* soulfire.v1.PersonalLogScope personal */ 6:
-                    message.scope = {
-                        oneofKind: "personal",
-                        personal: PersonalLogScope.internalBinaryRead(reader, reader.uint32(), options, (message.scope as any).personal)
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: LogScope, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* soulfire.v1.GlobalLogScope global = 1; */
-        if (message.scope.oneofKind === "global")
-            GlobalLogScope.internalBinaryWrite(message.scope.global, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.InstanceLogScope instance = 2; */
-        if (message.scope.oneofKind === "instance")
-            InstanceLogScope.internalBinaryWrite(message.scope.instance, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.BotLogScope bot = 3; */
-        if (message.scope.oneofKind === "bot")
-            BotLogScope.internalBinaryWrite(message.scope.bot, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.GlobalScriptLogScope global_script = 4; */
-        if (message.scope.oneofKind === "globalScript")
-            GlobalScriptLogScope.internalBinaryWrite(message.scope.globalScript, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.InstanceScriptLogScope instance_script = 5; */
-        if (message.scope.oneofKind === "instanceScript")
-            InstanceScriptLogScope.internalBinaryWrite(message.scope.instanceScript, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.PersonalLogScope personal = 6; */
-        if (message.scope.oneofKind === "personal")
-            PersonalLogScope.internalBinaryWrite(message.scope.personal, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: LogScope,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.GlobalLogScope global = 1; */
+    if (message.scope.oneofKind === "global")
+      GlobalLogScope.internalBinaryWrite(
+        message.scope.global,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.InstanceLogScope instance = 2; */
+    if (message.scope.oneofKind === "instance")
+      InstanceLogScope.internalBinaryWrite(
+        message.scope.instance,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.BotLogScope bot = 3; */
+    if (message.scope.oneofKind === "bot")
+      BotLogScope.internalBinaryWrite(
+        message.scope.bot,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.GlobalScriptLogScope global_script = 4; */
+    if (message.scope.oneofKind === "globalScript")
+      GlobalScriptLogScope.internalBinaryWrite(
+        message.scope.globalScript,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.InstanceScriptLogScope instance_script = 5; */
+    if (message.scope.oneofKind === "instanceScript")
+      InstanceScriptLogScope.internalBinaryWrite(
+        message.scope.instanceScript,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.PersonalLogScope personal = 6; */
+    if (message.scope.oneofKind === "personal")
+      PersonalLogScope.internalBinaryWrite(
+        message.scope.personal,
+        writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.LogScope
@@ -711,53 +1056,84 @@ class LogScope$Type extends MessageType<LogScope> {
 export const LogScope = new LogScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PreviousLogRequest$Type extends MessageType<PreviousLogRequest> {
-    constructor() {
-        super("soulfire.v1.PreviousLogRequest", [
-            { no: 4, name: "scope", kind: "message", T: () => LogScope },
-            { no: 3, name: "count", kind: "scalar", T: 5 /*ScalarType.INT32*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.PreviousLogRequest", [
+      { no: 4, name: "scope", kind: "message", T: () => LogScope },
+      { no: 3, name: "count", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  create(value?: PartialMessage<PreviousLogRequest>): PreviousLogRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.count = 0;
+    if (value !== undefined)
+      reflectionMergePartial<PreviousLogRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: PreviousLogRequest,
+  ): PreviousLogRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.LogScope scope */ 4:
+          message.scope = LogScope.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.scope,
+          );
+          break;
+        case /* int32 count */ 3:
+          message.count = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<PreviousLogRequest>): PreviousLogRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.count = 0;
-        if (value !== undefined)
-            reflectionMergePartial<PreviousLogRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PreviousLogRequest): PreviousLogRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.LogScope scope */ 4:
-                    message.scope = LogScope.internalBinaryRead(reader, reader.uint32(), options, message.scope);
-                    break;
-                case /* int32 count */ 3:
-                    message.count = reader.int32();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: PreviousLogRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int32 count = 3; */
-        if (message.count !== 0)
-            writer.tag(3, WireType.Varint).int32(message.count);
-        /* soulfire.v1.LogScope scope = 4; */
-        if (message.scope)
-            LogScope.internalBinaryWrite(message.scope, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: PreviousLogRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int32 count = 3; */
+    if (message.count !== 0)
+      writer.tag(3, WireType.Varint).int32(message.count);
+    /* soulfire.v1.LogScope scope = 4; */
+    if (message.scope)
+      LogScope.internalBinaryWrite(
+        message.scope,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.PreviousLogRequest
@@ -765,46 +1141,80 @@ class PreviousLogRequest$Type extends MessageType<PreviousLogRequest> {
 export const PreviousLogRequest = new PreviousLogRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class PreviousLogResponse$Type extends MessageType<PreviousLogResponse> {
-    constructor() {
-        super("soulfire.v1.PreviousLogResponse", [
-            { no: 1, name: "messages", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => LogString }
-        ]);
+  constructor() {
+    super("soulfire.v1.PreviousLogResponse", [
+      {
+        no: 1,
+        name: "messages",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => LogString,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<PreviousLogResponse>): PreviousLogResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.messages = [];
+    if (value !== undefined)
+      reflectionMergePartial<PreviousLogResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: PreviousLogResponse,
+  ): PreviousLogResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* repeated soulfire.v1.LogString messages */ 1:
+          message.messages.push(
+            LogString.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<PreviousLogResponse>): PreviousLogResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.messages = [];
-        if (value !== undefined)
-            reflectionMergePartial<PreviousLogResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: PreviousLogResponse): PreviousLogResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* repeated soulfire.v1.LogString messages */ 1:
-                    message.messages.push(LogString.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: PreviousLogResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* repeated soulfire.v1.LogString messages = 1; */
-        for (let i = 0; i < message.messages.length; i++)
-            LogString.internalBinaryWrite(message.messages[i], writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: PreviousLogResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* repeated soulfire.v1.LogString messages = 1; */
+    for (let i = 0; i < message.messages.length; i++)
+      LogString.internalBinaryWrite(
+        message.messages[i],
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.PreviousLogResponse
@@ -812,45 +1222,76 @@ class PreviousLogResponse$Type extends MessageType<PreviousLogResponse> {
 export const PreviousLogResponse = new PreviousLogResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class LogRequest$Type extends MessageType<LogRequest> {
-    constructor() {
-        super("soulfire.v1.LogRequest", [
-            { no: 3, name: "scope", kind: "message", T: () => LogScope }
-        ]);
+  constructor() {
+    super("soulfire.v1.LogRequest", [
+      { no: 3, name: "scope", kind: "message", T: () => LogScope },
+    ]);
+  }
+  create(value?: PartialMessage<LogRequest>): LogRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<LogRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: LogRequest,
+  ): LogRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.LogScope scope */ 3:
+          message.scope = LogScope.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.scope,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<LogRequest>): LogRequest {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<LogRequest>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LogRequest): LogRequest {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.LogScope scope */ 3:
-                    message.scope = LogScope.internalBinaryRead(reader, reader.uint32(), options, message.scope);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: LogRequest, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* soulfire.v1.LogScope scope = 3; */
-        if (message.scope)
-            LogScope.internalBinaryWrite(message.scope, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: LogRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.LogScope scope = 3; */
+    if (message.scope)
+      LogScope.internalBinaryWrite(
+        message.scope,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.LogRequest
@@ -858,45 +1299,76 @@ class LogRequest$Type extends MessageType<LogRequest> {
 export const LogRequest = new LogRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class LogResponse$Type extends MessageType<LogResponse> {
-    constructor() {
-        super("soulfire.v1.LogResponse", [
-            { no: 1, name: "message", kind: "message", T: () => LogString }
-        ]);
+  constructor() {
+    super("soulfire.v1.LogResponse", [
+      { no: 1, name: "message", kind: "message", T: () => LogString },
+    ]);
+  }
+  create(value?: PartialMessage<LogResponse>): LogResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<LogResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: LogResponse,
+  ): LogResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.LogString message */ 1:
+          message.message = LogString.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.message,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<LogResponse>): LogResponse {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<LogResponse>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: LogResponse): LogResponse {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.LogString message */ 1:
-                    message.message = LogString.internalBinaryRead(reader, reader.uint32(), options, message.message);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: LogResponse, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* soulfire.v1.LogString message = 1; */
-        if (message.message)
-            LogString.internalBinaryWrite(message.message, writer.tag(1, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: LogResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.LogString message = 1; */
+    if (message.message)
+      LogString.internalBinaryWrite(
+        message.message,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.LogResponse
@@ -906,6 +1378,17 @@ export const LogResponse = new LogResponse$Type();
  * @generated ServiceType for protobuf service soulfire.v1.LogsService
  */
 export const LogsService = new ServiceType("soulfire.v1.LogsService", [
-    { name: "GetPrevious", options: {}, I: PreviousLogRequest, O: PreviousLogResponse },
-    { name: "Subscribe", serverStreaming: true, options: {}, I: LogRequest, O: LogResponse }
+  {
+    name: "GetPrevious",
+    options: {},
+    I: PreviousLogRequest,
+    O: PreviousLogResponse,
+  },
+  {
+    name: "Subscribe",
+    serverStreaming: true,
+    options: {},
+    I: LogRequest,
+    O: LogResponse,
+  },
 ]);

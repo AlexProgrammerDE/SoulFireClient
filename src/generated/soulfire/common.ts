@@ -3,521 +3,527 @@
 // @generated from protobuf file "soulfire/common.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
-import type { BinaryWriteOptions } from "@protobuf-ts/runtime";
-import type { IBinaryWriter } from "@protobuf-ts/runtime";
-import { WireType } from "@protobuf-ts/runtime";
-import type { BinaryReadOptions } from "@protobuf-ts/runtime";
-import type { IBinaryReader } from "@protobuf-ts/runtime";
-import { UnknownFieldHandler } from "@protobuf-ts/runtime";
-import type { PartialMessage } from "@protobuf-ts/runtime";
-import { reflectionMergePartial } from "@protobuf-ts/runtime";
-import { MessageType } from "@protobuf-ts/runtime";
-import { Value } from "../google/protobuf/struct";
-import { Struct } from "../google/protobuf/struct";
+import type {
+  BinaryReadOptions,
+  BinaryWriteOptions,
+  IBinaryReader,
+  IBinaryWriter,
+  PartialMessage,
+} from "@protobuf-ts/runtime";
+import {
+  MessageType,
+  reflectionMergePartial,
+  UnknownFieldHandler,
+  WireType,
+} from "@protobuf-ts/runtime";
+import { Struct, Value } from "../google/protobuf/struct";
 /**
  * @generated from protobuf message soulfire.v1.ProxyProto
  */
 export interface ProxyProto {
-    /**
-     * @generated from protobuf field: soulfire.v1.ProxyProto.Type type = 1
-     */
-    type: ProxyProto_Type;
-    /**
-     * @generated from protobuf field: string address = 2
-     */
-    address: string;
-    /**
-     * @generated from protobuf field: optional string username = 3
-     */
-    username?: string;
-    /**
-     * @generated from protobuf field: optional string password = 4
-     */
-    password?: string;
+  /**
+   * @generated from protobuf field: soulfire.v1.ProxyProto.Type type = 1
+   */
+  type: ProxyProto_Type;
+  /**
+   * @generated from protobuf field: string address = 2
+   */
+  address: string;
+  /**
+   * @generated from protobuf field: optional string username = 3
+   */
+  username?: string;
+  /**
+   * @generated from protobuf field: optional string password = 4
+   */
+  password?: string;
 }
 /**
  * @generated from protobuf enum soulfire.v1.ProxyProto.Type
  */
 export enum ProxyProto_Type {
-    /**
-     * @generated from protobuf enum value: HTTP = 0;
-     */
-    HTTP = 0,
-    /**
-     * @generated from protobuf enum value: SOCKS4 = 1;
-     */
-    SOCKS4 = 1,
-    /**
-     * @generated from protobuf enum value: SOCKS5 = 2;
-     */
-    SOCKS5 = 2
+  /**
+   * @generated from protobuf enum value: HTTP = 0;
+   */
+  HTTP = 0,
+  /**
+   * @generated from protobuf enum value: SOCKS4 = 1;
+   */
+  SOCKS4 = 1,
+  /**
+   * @generated from protobuf enum value: SOCKS5 = 2;
+   */
+  SOCKS5 = 2,
 }
 /**
  * @generated from protobuf message soulfire.v1.MinecraftAccountProto
  */
 export interface MinecraftAccountProto {
-    /**
-     * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.AccountTypeProto type = 1
-     */
-    type: MinecraftAccountProto_AccountTypeProto;
-    /**
-     * @generated from protobuf field: string profile_id = 2
-     */
-    profileId: string;
-    /**
-     * @generated from protobuf field: string last_known_name = 3
-     */
-    lastKnownName: string;
-    /**
-     * @generated from protobuf oneof: account_data
-     */
-    accountData: {
+  /**
+   * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.AccountTypeProto type = 1
+   */
+  type: MinecraftAccountProto_AccountTypeProto;
+  /**
+   * @generated from protobuf field: string profile_id = 2
+   */
+  profileId: string;
+  /**
+   * @generated from protobuf field: string last_known_name = 3
+   */
+  lastKnownName: string;
+  /**
+   * @generated from protobuf oneof: account_data
+   */
+  accountData:
+    | {
         oneofKind: "onlineChainJavaData";
         /**
          * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.OnlineChainJavaData online_chain_java_data = 5
          */
         onlineChainJavaData: MinecraftAccountProto_OnlineChainJavaData;
-    } | {
+      }
+    | {
         oneofKind: "offlineJavaData";
         /**
          * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.OfflineJavaData offline_java_data = 6
          */
         offlineJavaData: MinecraftAccountProto_OfflineJavaData;
-    } | {
+      }
+    | {
         oneofKind: "bedrockData";
         /**
          * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.BedrockData bedrock_data = 7
          */
         bedrockData: MinecraftAccountProto_BedrockData;
-    } | {
+      }
+    | {
         oneofKind: undefined;
-    };
+      };
 }
 /**
  * @generated from protobuf message soulfire.v1.MinecraftAccountProto.OnlineChainJavaData
  */
 export interface MinecraftAccountProto_OnlineChainJavaData {
-    /**
-     * @generated from protobuf field: string auth_token = 1
-     */
-    authToken: string;
-    /**
-     * @generated from protobuf field: int64 token_expire_at = 2
-     */
-    tokenExpireAt: string;
-    /**
-     * @generated from protobuf field: google.protobuf.Struct auth_chain = 3
-     */
-    authChain?: Struct;
+  /**
+   * @generated from protobuf field: string auth_token = 1
+   */
+  authToken: string;
+  /**
+   * @generated from protobuf field: int64 token_expire_at = 2
+   */
+  tokenExpireAt: string;
+  /**
+   * @generated from protobuf field: google.protobuf.Struct auth_chain = 3
+   */
+  authChain?: Struct;
 }
 /**
  * @generated from protobuf message soulfire.v1.MinecraftAccountProto.OfflineJavaData
  */
-export interface MinecraftAccountProto_OfflineJavaData {
-}
+export interface MinecraftAccountProto_OfflineJavaData {}
 /**
  * @generated from protobuf message soulfire.v1.MinecraftAccountProto.BedrockData
  */
 export interface MinecraftAccountProto_BedrockData {
-    /**
-     * @generated from protobuf field: string mojang_jwt = 1
-     */
-    mojangJwt: string;
-    /**
-     * @generated from protobuf field: string identity_jwt = 2
-     */
-    identityJwt: string;
-    /**
-     * @generated from protobuf field: string public_key = 3
-     */
-    publicKey: string;
-    /**
-     * @generated from protobuf field: string private_key = 4
-     */
-    privateKey: string;
-    /**
-     * @generated from protobuf field: string device_id = 5
-     */
-    deviceId: string;
-    /**
-     * @generated from protobuf field: string play_fab_id = 6
-     */
-    playFabId: string;
-    /**
-     * @generated from protobuf field: google.protobuf.Struct auth_chain = 7
-     */
-    authChain?: Struct;
+  /**
+   * @generated from protobuf field: string mojang_jwt = 1
+   */
+  mojangJwt: string;
+  /**
+   * @generated from protobuf field: string identity_jwt = 2
+   */
+  identityJwt: string;
+  /**
+   * @generated from protobuf field: string public_key = 3
+   */
+  publicKey: string;
+  /**
+   * @generated from protobuf field: string private_key = 4
+   */
+  privateKey: string;
+  /**
+   * @generated from protobuf field: string device_id = 5
+   */
+  deviceId: string;
+  /**
+   * @generated from protobuf field: string play_fab_id = 6
+   */
+  playFabId: string;
+  /**
+   * @generated from protobuf field: google.protobuf.Struct auth_chain = 7
+   */
+  authChain?: Struct;
 }
 /**
  * @generated from protobuf enum soulfire.v1.MinecraftAccountProto.AccountTypeProto
  */
 export enum MinecraftAccountProto_AccountTypeProto {
-    /**
-     * @generated from protobuf enum value: MICROSOFT_JAVA_CREDENTIALS = 0;
-     */
-    MICROSOFT_JAVA_CREDENTIALS = 0,
-    /**
-     * @generated from protobuf enum value: MICROSOFT_BEDROCK_CREDENTIALS = 1;
-     */
-    MICROSOFT_BEDROCK_CREDENTIALS = 1,
-    /**
-     * @generated from protobuf enum value: OFFLINE = 4;
-     */
-    OFFLINE = 4,
-    /**
-     * @generated from protobuf enum value: MICROSOFT_JAVA_DEVICE_CODE = 5;
-     */
-    MICROSOFT_JAVA_DEVICE_CODE = 5,
-    /**
-     * @generated from protobuf enum value: MICROSOFT_BEDROCK_DEVICE_CODE = 6;
-     */
-    MICROSOFT_BEDROCK_DEVICE_CODE = 6,
-    /**
-     * @generated from protobuf enum value: MICROSOFT_JAVA_REFRESH_TOKEN = 7;
-     */
-    MICROSOFT_JAVA_REFRESH_TOKEN = 7
+  /**
+   * @generated from protobuf enum value: MICROSOFT_JAVA_CREDENTIALS = 0;
+   */
+  MICROSOFT_JAVA_CREDENTIALS = 0,
+  /**
+   * @generated from protobuf enum value: MICROSOFT_BEDROCK_CREDENTIALS = 1;
+   */
+  MICROSOFT_BEDROCK_CREDENTIALS = 1,
+  /**
+   * @generated from protobuf enum value: OFFLINE = 4;
+   */
+  OFFLINE = 4,
+  /**
+   * @generated from protobuf enum value: MICROSOFT_JAVA_DEVICE_CODE = 5;
+   */
+  MICROSOFT_JAVA_DEVICE_CODE = 5,
+  /**
+   * @generated from protobuf enum value: MICROSOFT_BEDROCK_DEVICE_CODE = 6;
+   */
+  MICROSOFT_BEDROCK_DEVICE_CODE = 6,
+  /**
+   * @generated from protobuf enum value: MICROSOFT_JAVA_REFRESH_TOKEN = 7;
+   */
+  MICROSOFT_JAVA_REFRESH_TOKEN = 7,
 }
 /**
  * @generated from protobuf message soulfire.v1.SettingsEntry
  */
 export interface SettingsEntry {
-    /**
-     * @generated from protobuf field: string key = 1
-     */
-    key: string;
-    /**
-     * @generated from protobuf field: google.protobuf.Value value = 2
-     */
-    value?: Value;
+  /**
+   * @generated from protobuf field: string key = 1
+   */
+  key: string;
+  /**
+   * @generated from protobuf field: google.protobuf.Value value = 2
+   */
+  value?: Value;
 }
 /**
  * @generated from protobuf message soulfire.v1.SettingsNamespace
  */
 export interface SettingsNamespace {
-    /**
-     * @generated from protobuf field: string namespace = 1
-     */
-    namespace: string;
-    /**
-     * @generated from protobuf field: repeated soulfire.v1.SettingsEntry entries = 2
-     */
-    entries: SettingsEntry[];
+  /**
+   * @generated from protobuf field: string namespace = 1
+   */
+  namespace: string;
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.SettingsEntry entries = 2
+   */
+  entries: SettingsEntry[];
 }
 /**
  * @generated from protobuf message soulfire.v1.StringSetting
  */
 export interface StringSetting {
-    /**
-     * @generated from protobuf field: string ui_name = 1
-     */
-    uiName: string;
-    /**
-     * @generated from protobuf field: string description = 2
-     */
-    description: string;
-    /**
-     * @generated from protobuf field: string def = 3
-     */
-    def: string;
-    /**
-     * @generated from protobuf field: soulfire.v1.StringSetting.InputType input_type = 10
-     */
-    inputType: StringSetting_InputType;
-    /**
-     * @generated from protobuf field: string placeholder = 6
-     */
-    placeholder: string;
-    /**
-     * @generated from protobuf field: int32 min_length = 7
-     */
-    minLength: number;
-    /**
-     * @generated from protobuf field: int32 max_length = 8
-     */
-    maxLength: number;
-    /**
-     * @generated from protobuf field: string pattern = 9
-     */
-    pattern: string;
-    /**
-     * @generated from protobuf field: bool disabled = 11
-     */
-    disabled: boolean;
+  /**
+   * @generated from protobuf field: string ui_name = 1
+   */
+  uiName: string;
+  /**
+   * @generated from protobuf field: string description = 2
+   */
+  description: string;
+  /**
+   * @generated from protobuf field: string def = 3
+   */
+  def: string;
+  /**
+   * @generated from protobuf field: soulfire.v1.StringSetting.InputType input_type = 10
+   */
+  inputType: StringSetting_InputType;
+  /**
+   * @generated from protobuf field: string placeholder = 6
+   */
+  placeholder: string;
+  /**
+   * @generated from protobuf field: int32 min_length = 7
+   */
+  minLength: number;
+  /**
+   * @generated from protobuf field: int32 max_length = 8
+   */
+  maxLength: number;
+  /**
+   * @generated from protobuf field: string pattern = 9
+   */
+  pattern: string;
+  /**
+   * @generated from protobuf field: bool disabled = 11
+   */
+  disabled: boolean;
 }
 /**
  * @generated from protobuf enum soulfire.v1.StringSetting.InputType
  */
 export enum StringSetting_InputType {
-    /**
-     * @generated from protobuf enum value: TEXT = 0;
-     */
-    TEXT = 0,
-    /**
-     * @generated from protobuf enum value: PASSWORD = 1;
-     */
-    PASSWORD = 1,
-    /**
-     * @generated from protobuf enum value: EMAIL = 2;
-     */
-    EMAIL = 2,
-    /**
-     * @generated from protobuf enum value: SEARCH = 3;
-     */
-    SEARCH = 3,
-    /**
-     * @generated from protobuf enum value: TEL = 4;
-     */
-    TEL = 4,
-    /**
-     * @generated from protobuf enum value: URL = 5;
-     */
-    URL = 5,
-    /**
-     * @generated from protobuf enum value: TEXTAREA = 6;
-     */
-    TEXTAREA = 6
+  /**
+   * @generated from protobuf enum value: TEXT = 0;
+   */
+  TEXT = 0,
+  /**
+   * @generated from protobuf enum value: PASSWORD = 1;
+   */
+  PASSWORD = 1,
+  /**
+   * @generated from protobuf enum value: EMAIL = 2;
+   */
+  EMAIL = 2,
+  /**
+   * @generated from protobuf enum value: SEARCH = 3;
+   */
+  SEARCH = 3,
+  /**
+   * @generated from protobuf enum value: TEL = 4;
+   */
+  TEL = 4,
+  /**
+   * @generated from protobuf enum value: URL = 5;
+   */
+  URL = 5,
+  /**
+   * @generated from protobuf enum value: TEXTAREA = 6;
+   */
+  TEXTAREA = 6,
 }
 /**
  * @generated from protobuf message soulfire.v1.IntSetting
  */
 export interface IntSetting {
-    /**
-     * @generated from protobuf field: string ui_name = 1
-     */
-    uiName: string;
-    /**
-     * @generated from protobuf field: string description = 2
-     */
-    description: string;
-    /**
-     * @generated from protobuf field: int32 def = 3
-     */
-    def: number;
-    /**
-     * @generated from protobuf field: int32 min = 4
-     */
-    min: number;
-    /**
-     * @generated from protobuf field: int32 max = 5
-     */
-    max: number;
-    /**
-     * @generated from protobuf field: int32 step = 6
-     */
-    step: number;
-    /**
-     * @generated from protobuf field: string placeholder = 7
-     */
-    placeholder: string;
-    /**
-     * @generated from protobuf field: bool thousand_separator = 8
-     */
-    thousandSeparator: boolean;
-    /**
-     * @generated from protobuf field: bool disabled = 9
-     */
-    disabled: boolean;
+  /**
+   * @generated from protobuf field: string ui_name = 1
+   */
+  uiName: string;
+  /**
+   * @generated from protobuf field: string description = 2
+   */
+  description: string;
+  /**
+   * @generated from protobuf field: int32 def = 3
+   */
+  def: number;
+  /**
+   * @generated from protobuf field: int32 min = 4
+   */
+  min: number;
+  /**
+   * @generated from protobuf field: int32 max = 5
+   */
+  max: number;
+  /**
+   * @generated from protobuf field: int32 step = 6
+   */
+  step: number;
+  /**
+   * @generated from protobuf field: string placeholder = 7
+   */
+  placeholder: string;
+  /**
+   * @generated from protobuf field: bool thousand_separator = 8
+   */
+  thousandSeparator: boolean;
+  /**
+   * @generated from protobuf field: bool disabled = 9
+   */
+  disabled: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.DoubleSetting
  */
 export interface DoubleSetting {
-    /**
-     * @generated from protobuf field: string ui_name = 1
-     */
-    uiName: string;
-    /**
-     * @generated from protobuf field: string description = 2
-     */
-    description: string;
-    /**
-     * @generated from protobuf field: double def = 3
-     */
-    def: number;
-    /**
-     * @generated from protobuf field: double min = 4
-     */
-    min: number;
-    /**
-     * @generated from protobuf field: double max = 5
-     */
-    max: number;
-    /**
-     * @generated from protobuf field: double step = 6
-     */
-    step: number;
-    /**
-     * @generated from protobuf field: string placeholder = 7
-     */
-    placeholder: string;
-    /**
-     * @generated from protobuf field: bool thousand_separator = 8
-     */
-    thousandSeparator: boolean;
-    /**
-     * @generated from protobuf field: int32 decimal_scale = 9
-     */
-    decimalScale: number;
-    /**
-     * @generated from protobuf field: bool fixed_decimal_scale = 10
-     */
-    fixedDecimalScale: boolean;
-    /**
-     * @generated from protobuf field: bool disabled = 11
-     */
-    disabled: boolean;
+  /**
+   * @generated from protobuf field: string ui_name = 1
+   */
+  uiName: string;
+  /**
+   * @generated from protobuf field: string description = 2
+   */
+  description: string;
+  /**
+   * @generated from protobuf field: double def = 3
+   */
+  def: number;
+  /**
+   * @generated from protobuf field: double min = 4
+   */
+  min: number;
+  /**
+   * @generated from protobuf field: double max = 5
+   */
+  max: number;
+  /**
+   * @generated from protobuf field: double step = 6
+   */
+  step: number;
+  /**
+   * @generated from protobuf field: string placeholder = 7
+   */
+  placeholder: string;
+  /**
+   * @generated from protobuf field: bool thousand_separator = 8
+   */
+  thousandSeparator: boolean;
+  /**
+   * @generated from protobuf field: int32 decimal_scale = 9
+   */
+  decimalScale: number;
+  /**
+   * @generated from protobuf field: bool fixed_decimal_scale = 10
+   */
+  fixedDecimalScale: boolean;
+  /**
+   * @generated from protobuf field: bool disabled = 11
+   */
+  disabled: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.BoolSetting
  */
 export interface BoolSetting {
-    /**
-     * @generated from protobuf field: string ui_name = 1
-     */
-    uiName: string;
-    /**
-     * @generated from protobuf field: string description = 2
-     */
-    description: string;
-    /**
-     * @generated from protobuf field: bool def = 3
-     */
-    def: boolean;
-    /**
-     * @generated from protobuf field: bool disabled = 4
-     */
-    disabled: boolean;
+  /**
+   * @generated from protobuf field: string ui_name = 1
+   */
+  uiName: string;
+  /**
+   * @generated from protobuf field: string description = 2
+   */
+  description: string;
+  /**
+   * @generated from protobuf field: bool def = 3
+   */
+  def: boolean;
+  /**
+   * @generated from protobuf field: bool disabled = 4
+   */
+  disabled: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.ComboSetting
  */
 export interface ComboSetting {
-    /**
-     * @generated from protobuf field: string ui_name = 1
-     */
-    uiName: string;
-    /**
-     * @generated from protobuf field: string description = 2
-     */
-    description: string;
-    /**
-     * List of options
-     *
-     * @generated from protobuf field: repeated soulfire.v1.ComboSetting.Option options = 3
-     */
-    options: ComboSetting_Option[];
-    /**
-     * @generated from protobuf field: string def = 4
-     */
-    def: string;
-    /**
-     * @generated from protobuf field: bool disabled = 5
-     */
-    disabled: boolean;
+  /**
+   * @generated from protobuf field: string ui_name = 1
+   */
+  uiName: string;
+  /**
+   * @generated from protobuf field: string description = 2
+   */
+  description: string;
+  /**
+   * List of options
+   *
+   * @generated from protobuf field: repeated soulfire.v1.ComboSetting.Option options = 3
+   */
+  options: ComboSetting_Option[];
+  /**
+   * @generated from protobuf field: string def = 4
+   */
+  def: string;
+  /**
+   * @generated from protobuf field: bool disabled = 5
+   */
+  disabled: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.ComboSetting.Option
  */
 export interface ComboSetting_Option {
-    /**
-     * Sent to server
-     *
-     * @generated from protobuf field: string id = 1
-     */
-    id: string;
-    /**
-     * Displayed to user
-     *
-     * @generated from protobuf field: string display_name = 2
-     */
-    displayName: string;
-    /**
-     * May be used for an icon for an option
-     *
-     * @generated from protobuf field: optional string icon_id = 3
-     */
-    iconId?: string;
-    /**
-     * keywords to also use for filtering
-     *
-     * @generated from protobuf field: repeated string keywords = 4
-     */
-    keywords: string[];
+  /**
+   * Sent to server
+   *
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * Displayed to user
+   *
+   * @generated from protobuf field: string display_name = 2
+   */
+  displayName: string;
+  /**
+   * May be used for an icon for an option
+   *
+   * @generated from protobuf field: optional string icon_id = 3
+   */
+  iconId?: string;
+  /**
+   * keywords to also use for filtering
+   *
+   * @generated from protobuf field: repeated string keywords = 4
+   */
+  keywords: string[];
 }
 /**
  * @generated from protobuf message soulfire.v1.StringListSetting
  */
 export interface StringListSetting {
-    /**
-     * @generated from protobuf field: string ui_name = 1
-     */
-    uiName: string;
-    /**
-     * @generated from protobuf field: string description = 2
-     */
-    description: string;
-    /**
-     * @generated from protobuf field: repeated string def = 3
-     */
-    def: string[];
-    /**
-     * @generated from protobuf field: bool disabled = 4
-     */
-    disabled: boolean;
+  /**
+   * @generated from protobuf field: string ui_name = 1
+   */
+  uiName: string;
+  /**
+   * @generated from protobuf field: string description = 2
+   */
+  description: string;
+  /**
+   * @generated from protobuf field: repeated string def = 3
+   */
+  def: string[];
+  /**
+   * @generated from protobuf field: bool disabled = 4
+   */
+  disabled: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.MinMaxSetting
  */
 export interface MinMaxSetting {
-    /**
-     * @generated from protobuf field: int32 min = 1
-     */
-    min: number;
-    /**
-     * @generated from protobuf field: int32 max = 2
-     */
-    max: number;
-    /**
-     * @generated from protobuf field: int32 step = 3
-     */
-    step: number;
-    /**
-     * @generated from protobuf field: bool thousand_separator = 4
-     */
-    thousandSeparator: boolean;
-    /**
-     * @generated from protobuf field: soulfire.v1.MinMaxSetting.Entry minEntry = 5
-     */
-    minEntry?: MinMaxSetting_Entry;
-    /**
-     * @generated from protobuf field: soulfire.v1.MinMaxSetting.Entry maxEntry = 6
-     */
-    maxEntry?: MinMaxSetting_Entry;
-    /**
-     * @generated from protobuf field: bool disabled = 7
-     */
-    disabled: boolean;
+  /**
+   * @generated from protobuf field: int32 min = 1
+   */
+  min: number;
+  /**
+   * @generated from protobuf field: int32 max = 2
+   */
+  max: number;
+  /**
+   * @generated from protobuf field: int32 step = 3
+   */
+  step: number;
+  /**
+   * @generated from protobuf field: bool thousand_separator = 4
+   */
+  thousandSeparator: boolean;
+  /**
+   * @generated from protobuf field: soulfire.v1.MinMaxSetting.Entry minEntry = 5
+   */
+  minEntry?: MinMaxSetting_Entry;
+  /**
+   * @generated from protobuf field: soulfire.v1.MinMaxSetting.Entry maxEntry = 6
+   */
+  maxEntry?: MinMaxSetting_Entry;
+  /**
+   * @generated from protobuf field: bool disabled = 7
+   */
+  disabled: boolean;
 }
 /**
  * @generated from protobuf message soulfire.v1.MinMaxSetting.Entry
  */
 export interface MinMaxSetting_Entry {
-    /**
-     * @generated from protobuf field: string ui_name = 1
-     */
-    uiName: string;
-    /**
-     * @generated from protobuf field: string description = 2
-     */
-    description: string;
-    /**
-     * @generated from protobuf field: int32 def = 3
-     */
-    def: number;
-    /**
-     * @generated from protobuf field: string placeholder = 4
-     */
-    placeholder: string;
+  /**
+   * @generated from protobuf field: string ui_name = 1
+   */
+  uiName: string;
+  /**
+   * @generated from protobuf field: string description = 2
+   */
+  description: string;
+  /**
+   * @generated from protobuf field: int32 def = 3
+   */
+  def: number;
+  /**
+   * @generated from protobuf field: string placeholder = 4
+   */
+  placeholder: string;
 }
 /**
  * A entry in the settings page
@@ -525,404 +531,450 @@ export interface MinMaxSetting_Entry {
  * @generated from protobuf message soulfire.v1.SettingEntry
  */
 export interface SettingEntry {
-    /**
-     * Basically we only send a kv map to the server with every setting entry
-     *
-     * @generated from protobuf field: string key = 1
-     */
-    key: string;
-    /**
-     * @generated from protobuf oneof: value
-     */
-    value: {
+  /**
+   * Basically we only send a kv map to the server with every setting entry
+   *
+   * @generated from protobuf field: string key = 1
+   */
+  key: string;
+  /**
+   * @generated from protobuf oneof: value
+   */
+  value:
+    | {
         oneofKind: "string";
         /**
          * @generated from protobuf field: soulfire.v1.StringSetting string = 2
          */
         string: StringSetting;
-    } | {
+      }
+    | {
         oneofKind: "int";
         /**
          * @generated from protobuf field: soulfire.v1.IntSetting int = 3
          */
         int: IntSetting;
-    } | {
+      }
+    | {
         oneofKind: "double";
         /**
          * @generated from protobuf field: soulfire.v1.DoubleSetting double = 4
          */
         double: DoubleSetting;
-    } | {
+      }
+    | {
         oneofKind: "bool";
         /**
          * @generated from protobuf field: soulfire.v1.BoolSetting bool = 5
          */
         bool: BoolSetting;
-    } | {
+      }
+    | {
         oneofKind: "combo";
         /**
          * @generated from protobuf field: soulfire.v1.ComboSetting combo = 6
          */
         combo: ComboSetting;
-    } | {
+      }
+    | {
         oneofKind: "stringList";
         /**
          * @generated from protobuf field: soulfire.v1.StringListSetting string_list = 7
          */
         stringList: StringListSetting;
-    } | {
+      }
+    | {
         oneofKind: "minMax";
         /**
          * @generated from protobuf field: soulfire.v1.MinMaxSetting min_max = 8
          */
         minMax: MinMaxSetting;
-    } | {
+      }
+    | {
         oneofKind: undefined;
-    };
+      };
 }
 /**
  * @generated from protobuf message soulfire.v1.SettingsPage
  */
 export interface SettingsPage {
-    /**
-     * @generated from protobuf field: optional soulfire.v1.ServerPlugin owning_plugin = 2
-     */
-    owningPlugin?: ServerPlugin;
-    /**
-     * The name of the page for these settings
-     *
-     * @generated from protobuf field: string page_name = 3
-     */
-    pageName: string;
-    /**
-     * What namespace the settings of this page represent
-     *
-     * @generated from protobuf field: string namespace = 4
-     */
-    namespace: string;
-    /**
-     * @generated from protobuf field: repeated soulfire.v1.SettingEntry entries = 5
-     */
-    entries: SettingEntry[];
-    /**
-     * https://lucide.dev icon id for this page (Usually rendered left of the page name)
-     *
-     * @generated from protobuf field: string icon_id = 6
-     */
-    iconId: string;
-    /**
-     * Key which makes this plugin "enabled" or "disabled"
-     *
-     * @generated from protobuf field: optional string enabled_key = 7
-     */
-    enabledKey?: string;
+  /**
+   * @generated from protobuf field: optional soulfire.v1.ServerPlugin owning_plugin = 2
+   */
+  owningPlugin?: ServerPlugin;
+  /**
+   * The name of the page for these settings
+   *
+   * @generated from protobuf field: string page_name = 3
+   */
+  pageName: string;
+  /**
+   * What namespace the settings of this page represent
+   *
+   * @generated from protobuf field: string namespace = 4
+   */
+  namespace: string;
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.SettingEntry entries = 5
+   */
+  entries: SettingEntry[];
+  /**
+   * https://lucide.dev icon id for this page (Usually rendered left of the page name)
+   *
+   * @generated from protobuf field: string icon_id = 6
+   */
+  iconId: string;
+  /**
+   * Key which makes this plugin "enabled" or "disabled"
+   *
+   * @generated from protobuf field: optional string enabled_key = 7
+   */
+  enabledKey?: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.ServerPlugin
  */
 export interface ServerPlugin {
-    /**
-     * @generated from protobuf field: string id = 1
-     */
-    id: string;
-    /**
-     * @generated from protobuf field: string version = 2
-     */
-    version: string;
-    /**
-     * @generated from protobuf field: string description = 3
-     */
-    description: string;
-    /**
-     * @generated from protobuf field: string author = 4
-     */
-    author: string;
-    /**
-     * @generated from protobuf field: string license = 5
-     */
-    license: string;
-    /**
-     * @generated from protobuf field: string website = 6
-     */
-    website: string;
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * @generated from protobuf field: string version = 2
+   */
+  version: string;
+  /**
+   * @generated from protobuf field: string description = 3
+   */
+  description: string;
+  /**
+   * @generated from protobuf field: string author = 4
+   */
+  author: string;
+  /**
+   * @generated from protobuf field: string license = 5
+   */
+  license: string;
+  /**
+   * @generated from protobuf field: string website = 6
+   */
+  website: string;
 }
 /**
  * @generated from protobuf enum soulfire.v1.AccountTypeCredentials
  */
 export enum AccountTypeCredentials {
-    /**
-     * @generated from protobuf enum value: MICROSOFT_JAVA_CREDENTIALS = 0;
-     */
-    MICROSOFT_JAVA_CREDENTIALS = 0,
-    /**
-     * @generated from protobuf enum value: MICROSOFT_BEDROCK_CREDENTIALS = 1;
-     */
-    MICROSOFT_BEDROCK_CREDENTIALS = 1,
-    /**
-     * @generated from protobuf enum value: OFFLINE = 4;
-     */
-    OFFLINE = 4,
-    /**
-     * @generated from protobuf enum value: MICROSOFT_JAVA_REFRESH_TOKEN = 5;
-     */
-    MICROSOFT_JAVA_REFRESH_TOKEN = 5
+  /**
+   * @generated from protobuf enum value: MICROSOFT_JAVA_CREDENTIALS = 0;
+   */
+  MICROSOFT_JAVA_CREDENTIALS = 0,
+  /**
+   * @generated from protobuf enum value: MICROSOFT_BEDROCK_CREDENTIALS = 1;
+   */
+  MICROSOFT_BEDROCK_CREDENTIALS = 1,
+  /**
+   * @generated from protobuf enum value: OFFLINE = 4;
+   */
+  OFFLINE = 4,
+  /**
+   * @generated from protobuf enum value: MICROSOFT_JAVA_REFRESH_TOKEN = 5;
+   */
+  MICROSOFT_JAVA_REFRESH_TOKEN = 5,
 }
 /**
  * @generated from protobuf enum soulfire.v1.AccountTypeDeviceCode
  */
 export enum AccountTypeDeviceCode {
-    /**
-     * @generated from protobuf enum value: MICROSOFT_JAVA_DEVICE_CODE = 0;
-     */
-    MICROSOFT_JAVA_DEVICE_CODE = 0,
-    /**
-     * @generated from protobuf enum value: MICROSOFT_BEDROCK_DEVICE_CODE = 1;
-     */
-    MICROSOFT_BEDROCK_DEVICE_CODE = 1
+  /**
+   * @generated from protobuf enum value: MICROSOFT_JAVA_DEVICE_CODE = 0;
+   */
+  MICROSOFT_JAVA_DEVICE_CODE = 0,
+  /**
+   * @generated from protobuf enum value: MICROSOFT_BEDROCK_DEVICE_CODE = 1;
+   */
+  MICROSOFT_BEDROCK_DEVICE_CODE = 1,
 }
 /**
  * @generated from protobuf enum soulfire.v1.GlobalPermission
  */
 export enum GlobalPermission {
-    /**
-     * @generated from protobuf enum value: CREATE_INSTANCE = 0;
-     */
-    CREATE_INSTANCE = 0,
-    /**
-     * @generated from protobuf enum value: GLOBAL_SUBSCRIBE_LOGS = 1;
-     */
-    GLOBAL_SUBSCRIBE_LOGS = 1,
-    /**
-     * @generated from protobuf enum value: READ_CLIENT_DATA = 2;
-     */
-    READ_CLIENT_DATA = 2,
-    /**
-     * @generated from protobuf enum value: READ_SERVER_CONFIG = 3;
-     */
-    READ_SERVER_CONFIG = 3,
-    /**
-     * @generated from protobuf enum value: UPDATE_SERVER_CONFIG = 4;
-     */
-    UPDATE_SERVER_CONFIG = 4,
-    /**
-     * @generated from protobuf enum value: CREATE_USER = 5;
-     */
-    CREATE_USER = 5,
-    /**
-     * @generated from protobuf enum value: READ_USER = 6;
-     */
-    READ_USER = 6,
-    /**
-     * @generated from protobuf enum value: UPDATE_USER = 7;
-     */
-    UPDATE_USER = 7,
-    /**
-     * @generated from protobuf enum value: DELETE_USER = 8;
-     */
-    DELETE_USER = 8,
-    /**
-     * @generated from protobuf enum value: GLOBAL_COMMAND_EXECUTION = 9;
-     */
-    GLOBAL_COMMAND_EXECUTION = 9,
-    /**
-     * @generated from protobuf enum value: INVALIDATE_SESSIONS = 11;
-     */
-    INVALIDATE_SESSIONS = 11,
-    /**
-     * @generated from protobuf enum value: GENERATE_SELF_WEBDAV_TOKEN = 12;
-     */
-    GENERATE_SELF_WEBDAV_TOKEN = 12,
-    /**
-     * @generated from protobuf enum value: GENERATE_SELF_API_TOKEN = 15;
-     */
-    GENERATE_SELF_API_TOKEN = 15,
-    /**
-     * @generated from protobuf enum value: UPDATE_SELF_USERNAME = 13;
-     */
-    UPDATE_SELF_USERNAME = 13,
-    /**
-     * @generated from protobuf enum value: UPDATE_SELF_EMAIL = 14;
-     */
-    UPDATE_SELF_EMAIL = 14,
-    /**
-     * @generated from protobuf enum value: GENERATE_API_TOKEN = 16;
-     */
-    GENERATE_API_TOKEN = 16,
-    /**
-     * @generated from protobuf enum value: INVALIDATE_SELF_SESSIONS = 17;
-     */
-    INVALIDATE_SELF_SESSIONS = 17,
-    /**
-     * @generated from protobuf enum value: CREATE_GLOBAL_SCRIPT = 18;
-     */
-    CREATE_GLOBAL_SCRIPT = 18,
-    /**
-     * @generated from protobuf enum value: READ_GLOBAL_SCRIPT = 19;
-     */
-    READ_GLOBAL_SCRIPT = 19,
-    /**
-     * @generated from protobuf enum value: UPDATE_GLOBAL_SCRIPT = 20;
-     */
-    UPDATE_GLOBAL_SCRIPT = 20,
-    /**
-     * @generated from protobuf enum value: DELETE_GLOBAL_SCRIPT = 21;
-     */
-    DELETE_GLOBAL_SCRIPT = 21,
-    /**
-     * @generated from protobuf enum value: ELEVATE_SCRIPT_PERMISSIONS = 22;
-     */
-    ELEVATE_SCRIPT_PERMISSIONS = 22
+  /**
+   * @generated from protobuf enum value: CREATE_INSTANCE = 0;
+   */
+  CREATE_INSTANCE = 0,
+  /**
+   * @generated from protobuf enum value: GLOBAL_SUBSCRIBE_LOGS = 1;
+   */
+  GLOBAL_SUBSCRIBE_LOGS = 1,
+  /**
+   * @generated from protobuf enum value: READ_CLIENT_DATA = 2;
+   */
+  READ_CLIENT_DATA = 2,
+  /**
+   * @generated from protobuf enum value: READ_SERVER_CONFIG = 3;
+   */
+  READ_SERVER_CONFIG = 3,
+  /**
+   * @generated from protobuf enum value: UPDATE_SERVER_CONFIG = 4;
+   */
+  UPDATE_SERVER_CONFIG = 4,
+  /**
+   * @generated from protobuf enum value: CREATE_USER = 5;
+   */
+  CREATE_USER = 5,
+  /**
+   * @generated from protobuf enum value: READ_USER = 6;
+   */
+  READ_USER = 6,
+  /**
+   * @generated from protobuf enum value: UPDATE_USER = 7;
+   */
+  UPDATE_USER = 7,
+  /**
+   * @generated from protobuf enum value: DELETE_USER = 8;
+   */
+  DELETE_USER = 8,
+  /**
+   * @generated from protobuf enum value: GLOBAL_COMMAND_EXECUTION = 9;
+   */
+  GLOBAL_COMMAND_EXECUTION = 9,
+  /**
+   * @generated from protobuf enum value: INVALIDATE_SESSIONS = 11;
+   */
+  INVALIDATE_SESSIONS = 11,
+  /**
+   * @generated from protobuf enum value: GENERATE_SELF_WEBDAV_TOKEN = 12;
+   */
+  GENERATE_SELF_WEBDAV_TOKEN = 12,
+  /**
+   * @generated from protobuf enum value: GENERATE_SELF_API_TOKEN = 15;
+   */
+  GENERATE_SELF_API_TOKEN = 15,
+  /**
+   * @generated from protobuf enum value: UPDATE_SELF_USERNAME = 13;
+   */
+  UPDATE_SELF_USERNAME = 13,
+  /**
+   * @generated from protobuf enum value: UPDATE_SELF_EMAIL = 14;
+   */
+  UPDATE_SELF_EMAIL = 14,
+  /**
+   * @generated from protobuf enum value: GENERATE_API_TOKEN = 16;
+   */
+  GENERATE_API_TOKEN = 16,
+  /**
+   * @generated from protobuf enum value: INVALIDATE_SELF_SESSIONS = 17;
+   */
+  INVALIDATE_SELF_SESSIONS = 17,
+  /**
+   * @generated from protobuf enum value: CREATE_GLOBAL_SCRIPT = 18;
+   */
+  CREATE_GLOBAL_SCRIPT = 18,
+  /**
+   * @generated from protobuf enum value: READ_GLOBAL_SCRIPT = 19;
+   */
+  READ_GLOBAL_SCRIPT = 19,
+  /**
+   * @generated from protobuf enum value: UPDATE_GLOBAL_SCRIPT = 20;
+   */
+  UPDATE_GLOBAL_SCRIPT = 20,
+  /**
+   * @generated from protobuf enum value: DELETE_GLOBAL_SCRIPT = 21;
+   */
+  DELETE_GLOBAL_SCRIPT = 21,
+  /**
+   * @generated from protobuf enum value: ELEVATE_SCRIPT_PERMISSIONS = 22;
+   */
+  ELEVATE_SCRIPT_PERMISSIONS = 22,
 }
 /**
  * @generated from protobuf enum soulfire.v1.InstancePermission
  */
 export enum InstancePermission {
-    /**
-     * @generated from protobuf enum value: INSTANCE_COMMAND_EXECUTION = 0;
-     */
-    INSTANCE_COMMAND_EXECUTION = 0,
-    /**
-     * @generated from protobuf enum value: READ_INSTANCE = 2;
-     */
-    READ_INSTANCE = 2,
-    /**
-     * @generated from protobuf enum value: UPDATE_INSTANCE_META = 3;
-     */
-    UPDATE_INSTANCE_META = 3,
-    /**
-     * @generated from protobuf enum value: UPDATE_INSTANCE_CONFIG = 14;
-     */
-    UPDATE_INSTANCE_CONFIG = 14,
-    /**
-     * @generated from protobuf enum value: DELETE_INSTANCE = 4;
-     */
-    DELETE_INSTANCE = 4,
-    /**
-     * @generated from protobuf enum value: CHANGE_INSTANCE_STATE = 5;
-     */
-    CHANGE_INSTANCE_STATE = 5,
-    /**
-     * @generated from protobuf enum value: AUTHENTICATE_MC_ACCOUNT = 6;
-     */
-    AUTHENTICATE_MC_ACCOUNT = 6,
-    /**
-     * @generated from protobuf enum value: CHECK_PROXY = 7;
-     */
-    CHECK_PROXY = 7,
-    /**
-     * @generated from protobuf enum value: DOWNLOAD_URL = 8;
-     */
-    DOWNLOAD_URL = 8,
-    /**
-     * @generated from protobuf enum value: ACCESS_OBJECT_STORAGE = 9;
-     */
-    ACCESS_OBJECT_STORAGE = 9,
-    /**
-     * @generated from protobuf enum value: ACCESS_SCRIPT_CODE_OBJECT_STORAGE = 20;
-     */
-    ACCESS_SCRIPT_CODE_OBJECT_STORAGE = 20,
-    /**
-     * @generated from protobuf enum value: INSTANCE_SUBSCRIBE_LOGS = 13;
-     */
-    INSTANCE_SUBSCRIBE_LOGS = 13,
-    /**
-     * @generated from protobuf enum value: READ_INSTANCE_AUDIT_LOGS = 15;
-     */
-    READ_INSTANCE_AUDIT_LOGS = 15,
-    /**
-     * @generated from protobuf enum value: CREATE_SCRIPT = 16;
-     */
-    CREATE_SCRIPT = 16,
-    /**
-     * @generated from protobuf enum value: READ_SCRIPT = 17;
-     */
-    READ_SCRIPT = 17,
-    /**
-     * @generated from protobuf enum value: UPDATE_SCRIPT = 18;
-     */
-    UPDATE_SCRIPT = 18,
-    /**
-     * @generated from protobuf enum value: DELETE_SCRIPT = 19;
-     */
-    DELETE_SCRIPT = 19
+  /**
+   * @generated from protobuf enum value: INSTANCE_COMMAND_EXECUTION = 0;
+   */
+  INSTANCE_COMMAND_EXECUTION = 0,
+  /**
+   * @generated from protobuf enum value: READ_INSTANCE = 2;
+   */
+  READ_INSTANCE = 2,
+  /**
+   * @generated from protobuf enum value: UPDATE_INSTANCE_META = 3;
+   */
+  UPDATE_INSTANCE_META = 3,
+  /**
+   * @generated from protobuf enum value: UPDATE_INSTANCE_CONFIG = 14;
+   */
+  UPDATE_INSTANCE_CONFIG = 14,
+  /**
+   * @generated from protobuf enum value: DELETE_INSTANCE = 4;
+   */
+  DELETE_INSTANCE = 4,
+  /**
+   * @generated from protobuf enum value: CHANGE_INSTANCE_STATE = 5;
+   */
+  CHANGE_INSTANCE_STATE = 5,
+  /**
+   * @generated from protobuf enum value: AUTHENTICATE_MC_ACCOUNT = 6;
+   */
+  AUTHENTICATE_MC_ACCOUNT = 6,
+  /**
+   * @generated from protobuf enum value: CHECK_PROXY = 7;
+   */
+  CHECK_PROXY = 7,
+  /**
+   * @generated from protobuf enum value: DOWNLOAD_URL = 8;
+   */
+  DOWNLOAD_URL = 8,
+  /**
+   * @generated from protobuf enum value: ACCESS_OBJECT_STORAGE = 9;
+   */
+  ACCESS_OBJECT_STORAGE = 9,
+  /**
+   * @generated from protobuf enum value: ACCESS_SCRIPT_CODE_OBJECT_STORAGE = 20;
+   */
+  ACCESS_SCRIPT_CODE_OBJECT_STORAGE = 20,
+  /**
+   * @generated from protobuf enum value: INSTANCE_SUBSCRIBE_LOGS = 13;
+   */
+  INSTANCE_SUBSCRIBE_LOGS = 13,
+  /**
+   * @generated from protobuf enum value: READ_INSTANCE_AUDIT_LOGS = 15;
+   */
+  READ_INSTANCE_AUDIT_LOGS = 15,
+  /**
+   * @generated from protobuf enum value: CREATE_SCRIPT = 16;
+   */
+  CREATE_SCRIPT = 16,
+  /**
+   * @generated from protobuf enum value: READ_SCRIPT = 17;
+   */
+  READ_SCRIPT = 17,
+  /**
+   * @generated from protobuf enum value: UPDATE_SCRIPT = 18;
+   */
+  UPDATE_SCRIPT = 18,
+  /**
+   * @generated from protobuf enum value: DELETE_SCRIPT = 19;
+   */
+  DELETE_SCRIPT = 19,
 }
 /**
  * @generated from protobuf enum soulfire.v1.UserRole
  */
 export enum UserRole {
-    /**
-     * @generated from protobuf enum value: ADMIN = 0;
-     */
-    ADMIN = 0,
-    /**
-     * @generated from protobuf enum value: USER = 1;
-     */
-    USER = 1
+  /**
+   * @generated from protobuf enum value: ADMIN = 0;
+   */
+  ADMIN = 0,
+  /**
+   * @generated from protobuf enum value: USER = 1;
+   */
+  USER = 1,
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ProxyProto$Type extends MessageType<ProxyProto> {
-    constructor() {
-        super("soulfire.v1.ProxyProto", [
-            { no: 1, name: "type", kind: "enum", T: () => ["soulfire.v1.ProxyProto.Type", ProxyProto_Type] },
-            { no: 2, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "username", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "password", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.ProxyProto", [
+      {
+        no: 1,
+        name: "type",
+        kind: "enum",
+        T: () => ["soulfire.v1.ProxyProto.Type", ProxyProto_Type],
+      },
+      { no: 2, name: "address", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "username",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 4,
+        name: "password",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ProxyProto>): ProxyProto {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.type = 0;
+    message.address = "";
+    if (value !== undefined)
+      reflectionMergePartial<ProxyProto>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ProxyProto,
+  ): ProxyProto {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.ProxyProto.Type type */ 1:
+          message.type = reader.int32();
+          break;
+        case /* string address */ 2:
+          message.address = reader.string();
+          break;
+        case /* optional string username */ 3:
+          message.username = reader.string();
+          break;
+        case /* optional string password */ 4:
+          message.password = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ProxyProto>): ProxyProto {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.type = 0;
-        message.address = "";
-        if (value !== undefined)
-            reflectionMergePartial<ProxyProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ProxyProto): ProxyProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.ProxyProto.Type type */ 1:
-                    message.type = reader.int32();
-                    break;
-                case /* string address */ 2:
-                    message.address = reader.string();
-                    break;
-                case /* optional string username */ 3:
-                    message.username = reader.string();
-                    break;
-                case /* optional string password */ 4:
-                    message.password = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ProxyProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* soulfire.v1.ProxyProto.Type type = 1; */
-        if (message.type !== 0)
-            writer.tag(1, WireType.Varint).int32(message.type);
-        /* string address = 2; */
-        if (message.address !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.address);
-        /* optional string username = 3; */
-        if (message.username !== undefined)
-            writer.tag(3, WireType.LengthDelimited).string(message.username);
-        /* optional string password = 4; */
-        if (message.password !== undefined)
-            writer.tag(4, WireType.LengthDelimited).string(message.password);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ProxyProto,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.ProxyProto.Type type = 1; */
+    if (message.type !== 0) writer.tag(1, WireType.Varint).int32(message.type);
+    /* string address = 2; */
+    if (message.address !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.address);
+    /* optional string username = 3; */
+    if (message.username !== undefined)
+      writer.tag(3, WireType.LengthDelimited).string(message.username);
+    /* optional string password = 4; */
+    if (message.password !== undefined)
+      writer.tag(4, WireType.LengthDelimited).string(message.password);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.ProxyProto
@@ -930,93 +982,174 @@ class ProxyProto$Type extends MessageType<ProxyProto> {
 export const ProxyProto = new ProxyProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
-    constructor() {
-        super("soulfire.v1.MinecraftAccountProto", [
-            { no: 1, name: "type", kind: "enum", T: () => ["soulfire.v1.MinecraftAccountProto.AccountTypeProto", MinecraftAccountProto_AccountTypeProto] },
-            { no: 2, name: "profile_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "last_known_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "online_chain_java_data", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OnlineChainJavaData },
-            { no: 6, name: "offline_java_data", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_OfflineJavaData },
-            { no: 7, name: "bedrock_data", kind: "message", oneof: "accountData", T: () => MinecraftAccountProto_BedrockData }
-        ]);
+  constructor() {
+    super("soulfire.v1.MinecraftAccountProto", [
+      {
+        no: 1,
+        name: "type",
+        kind: "enum",
+        T: () => [
+          "soulfire.v1.MinecraftAccountProto.AccountTypeProto",
+          MinecraftAccountProto_AccountTypeProto,
+        ],
+      },
+      { no: 2, name: "profile_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "last_known_name",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 5,
+        name: "online_chain_java_data",
+        kind: "message",
+        oneof: "accountData",
+        T: () => MinecraftAccountProto_OnlineChainJavaData,
+      },
+      {
+        no: 6,
+        name: "offline_java_data",
+        kind: "message",
+        oneof: "accountData",
+        T: () => MinecraftAccountProto_OfflineJavaData,
+      },
+      {
+        no: 7,
+        name: "bedrock_data",
+        kind: "message",
+        oneof: "accountData",
+        T: () => MinecraftAccountProto_BedrockData,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<MinecraftAccountProto>): MinecraftAccountProto {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.type = 0;
+    message.profileId = "";
+    message.lastKnownName = "";
+    message.accountData = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<MinecraftAccountProto>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: MinecraftAccountProto,
+  ): MinecraftAccountProto {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.MinecraftAccountProto.AccountTypeProto type */ 1:
+          message.type = reader.int32();
+          break;
+        case /* string profile_id */ 2:
+          message.profileId = reader.string();
+          break;
+        case /* string last_known_name */ 3:
+          message.lastKnownName = reader.string();
+          break;
+        case /* soulfire.v1.MinecraftAccountProto.OnlineChainJavaData online_chain_java_data */ 5:
+          message.accountData = {
+            oneofKind: "onlineChainJavaData",
+            onlineChainJavaData:
+              MinecraftAccountProto_OnlineChainJavaData.internalBinaryRead(
+                reader,
+                reader.uint32(),
+                options,
+                (message.accountData as any).onlineChainJavaData,
+              ),
+          };
+          break;
+        case /* soulfire.v1.MinecraftAccountProto.OfflineJavaData offline_java_data */ 6:
+          message.accountData = {
+            oneofKind: "offlineJavaData",
+            offlineJavaData:
+              MinecraftAccountProto_OfflineJavaData.internalBinaryRead(
+                reader,
+                reader.uint32(),
+                options,
+                (message.accountData as any).offlineJavaData,
+              ),
+          };
+          break;
+        case /* soulfire.v1.MinecraftAccountProto.BedrockData bedrock_data */ 7:
+          message.accountData = {
+            oneofKind: "bedrockData",
+            bedrockData: MinecraftAccountProto_BedrockData.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.accountData as any).bedrockData,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<MinecraftAccountProto>): MinecraftAccountProto {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.type = 0;
-        message.profileId = "";
-        message.lastKnownName = "";
-        message.accountData = { oneofKind: undefined };
-        if (value !== undefined)
-            reflectionMergePartial<MinecraftAccountProto>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MinecraftAccountProto): MinecraftAccountProto {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* soulfire.v1.MinecraftAccountProto.AccountTypeProto type */ 1:
-                    message.type = reader.int32();
-                    break;
-                case /* string profile_id */ 2:
-                    message.profileId = reader.string();
-                    break;
-                case /* string last_known_name */ 3:
-                    message.lastKnownName = reader.string();
-                    break;
-                case /* soulfire.v1.MinecraftAccountProto.OnlineChainJavaData online_chain_java_data */ 5:
-                    message.accountData = {
-                        oneofKind: "onlineChainJavaData",
-                        onlineChainJavaData: MinecraftAccountProto_OnlineChainJavaData.internalBinaryRead(reader, reader.uint32(), options, (message.accountData as any).onlineChainJavaData)
-                    };
-                    break;
-                case /* soulfire.v1.MinecraftAccountProto.OfflineJavaData offline_java_data */ 6:
-                    message.accountData = {
-                        oneofKind: "offlineJavaData",
-                        offlineJavaData: MinecraftAccountProto_OfflineJavaData.internalBinaryRead(reader, reader.uint32(), options, (message.accountData as any).offlineJavaData)
-                    };
-                    break;
-                case /* soulfire.v1.MinecraftAccountProto.BedrockData bedrock_data */ 7:
-                    message.accountData = {
-                        oneofKind: "bedrockData",
-                        bedrockData: MinecraftAccountProto_BedrockData.internalBinaryRead(reader, reader.uint32(), options, (message.accountData as any).bedrockData)
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: MinecraftAccountProto, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* soulfire.v1.MinecraftAccountProto.AccountTypeProto type = 1; */
-        if (message.type !== 0)
-            writer.tag(1, WireType.Varint).int32(message.type);
-        /* string profile_id = 2; */
-        if (message.profileId !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.profileId);
-        /* string last_known_name = 3; */
-        if (message.lastKnownName !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.lastKnownName);
-        /* soulfire.v1.MinecraftAccountProto.OnlineChainJavaData online_chain_java_data = 5; */
-        if (message.accountData.oneofKind === "onlineChainJavaData")
-            MinecraftAccountProto_OnlineChainJavaData.internalBinaryWrite(message.accountData.onlineChainJavaData, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.MinecraftAccountProto.OfflineJavaData offline_java_data = 6; */
-        if (message.accountData.oneofKind === "offlineJavaData")
-            MinecraftAccountProto_OfflineJavaData.internalBinaryWrite(message.accountData.offlineJavaData, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.MinecraftAccountProto.BedrockData bedrock_data = 7; */
-        if (message.accountData.oneofKind === "bedrockData")
-            MinecraftAccountProto_BedrockData.internalBinaryWrite(message.accountData.bedrockData, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: MinecraftAccountProto,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.MinecraftAccountProto.AccountTypeProto type = 1; */
+    if (message.type !== 0) writer.tag(1, WireType.Varint).int32(message.type);
+    /* string profile_id = 2; */
+    if (message.profileId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.profileId);
+    /* string last_known_name = 3; */
+    if (message.lastKnownName !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.lastKnownName);
+    /* soulfire.v1.MinecraftAccountProto.OnlineChainJavaData online_chain_java_data = 5; */
+    if (message.accountData.oneofKind === "onlineChainJavaData")
+      MinecraftAccountProto_OnlineChainJavaData.internalBinaryWrite(
+        message.accountData.onlineChainJavaData,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.MinecraftAccountProto.OfflineJavaData offline_java_data = 6; */
+    if (message.accountData.oneofKind === "offlineJavaData")
+      MinecraftAccountProto_OfflineJavaData.internalBinaryWrite(
+        message.accountData.offlineJavaData,
+        writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.MinecraftAccountProto.BedrockData bedrock_data = 7; */
+    if (message.accountData.oneofKind === "bedrockData")
+      MinecraftAccountProto_BedrockData.internalBinaryWrite(
+        message.accountData.bedrockData,
+        writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.MinecraftAccountProto
@@ -1024,247 +1157,403 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
 export const MinecraftAccountProto = new MinecraftAccountProto$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MinecraftAccountProto_OnlineChainJavaData$Type extends MessageType<MinecraftAccountProto_OnlineChainJavaData> {
-    constructor() {
-        super("soulfire.v1.MinecraftAccountProto.OnlineChainJavaData", [
-            { no: 1, name: "auth_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "token_expire_at", kind: "scalar", T: 3 /*ScalarType.INT64*/ },
-            { no: 3, name: "auth_chain", kind: "message", T: () => Struct }
-        ]);
+  constructor() {
+    super("soulfire.v1.MinecraftAccountProto.OnlineChainJavaData", [
+      { no: 1, name: "auth_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "token_expire_at",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      { no: 3, name: "auth_chain", kind: "message", T: () => Struct },
+    ]);
+  }
+  create(
+    value?: PartialMessage<MinecraftAccountProto_OnlineChainJavaData>,
+  ): MinecraftAccountProto_OnlineChainJavaData {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.authToken = "";
+    message.tokenExpireAt = "0";
+    if (value !== undefined)
+      reflectionMergePartial<MinecraftAccountProto_OnlineChainJavaData>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: MinecraftAccountProto_OnlineChainJavaData,
+  ): MinecraftAccountProto_OnlineChainJavaData {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string auth_token */ 1:
+          message.authToken = reader.string();
+          break;
+        case /* int64 token_expire_at */ 2:
+          message.tokenExpireAt = reader.int64().toString();
+          break;
+        case /* google.protobuf.Struct auth_chain */ 3:
+          message.authChain = Struct.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.authChain,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<MinecraftAccountProto_OnlineChainJavaData>): MinecraftAccountProto_OnlineChainJavaData {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.authToken = "";
-        message.tokenExpireAt = "0";
-        if (value !== undefined)
-            reflectionMergePartial<MinecraftAccountProto_OnlineChainJavaData>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MinecraftAccountProto_OnlineChainJavaData): MinecraftAccountProto_OnlineChainJavaData {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string auth_token */ 1:
-                    message.authToken = reader.string();
-                    break;
-                case /* int64 token_expire_at */ 2:
-                    message.tokenExpireAt = reader.int64().toString();
-                    break;
-                case /* google.protobuf.Struct auth_chain */ 3:
-                    message.authChain = Struct.internalBinaryRead(reader, reader.uint32(), options, message.authChain);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: MinecraftAccountProto_OnlineChainJavaData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string auth_token = 1; */
-        if (message.authToken !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.authToken);
-        /* int64 token_expire_at = 2; */
-        if (message.tokenExpireAt !== "0")
-            writer.tag(2, WireType.Varint).int64(message.tokenExpireAt);
-        /* google.protobuf.Struct auth_chain = 3; */
-        if (message.authChain)
-            Struct.internalBinaryWrite(message.authChain, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: MinecraftAccountProto_OnlineChainJavaData,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string auth_token = 1; */
+    if (message.authToken !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.authToken);
+    /* int64 token_expire_at = 2; */
+    if (message.tokenExpireAt !== "0")
+      writer.tag(2, WireType.Varint).int64(message.tokenExpireAt);
+    /* google.protobuf.Struct auth_chain = 3; */
+    if (message.authChain)
+      Struct.internalBinaryWrite(
+        message.authChain,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.MinecraftAccountProto.OnlineChainJavaData
  */
-export const MinecraftAccountProto_OnlineChainJavaData = new MinecraftAccountProto_OnlineChainJavaData$Type();
+export const MinecraftAccountProto_OnlineChainJavaData =
+  new MinecraftAccountProto_OnlineChainJavaData$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MinecraftAccountProto_OfflineJavaData$Type extends MessageType<MinecraftAccountProto_OfflineJavaData> {
-    constructor() {
-        super("soulfire.v1.MinecraftAccountProto.OfflineJavaData", []);
+  constructor() {
+    super("soulfire.v1.MinecraftAccountProto.OfflineJavaData", []);
+  }
+  create(
+    value?: PartialMessage<MinecraftAccountProto_OfflineJavaData>,
+  ): MinecraftAccountProto_OfflineJavaData {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<MinecraftAccountProto_OfflineJavaData>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: MinecraftAccountProto_OfflineJavaData,
+  ): MinecraftAccountProto_OfflineJavaData {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<MinecraftAccountProto_OfflineJavaData>): MinecraftAccountProto_OfflineJavaData {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        if (value !== undefined)
-            reflectionMergePartial<MinecraftAccountProto_OfflineJavaData>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MinecraftAccountProto_OfflineJavaData): MinecraftAccountProto_OfflineJavaData {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: MinecraftAccountProto_OfflineJavaData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: MinecraftAccountProto_OfflineJavaData,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.MinecraftAccountProto.OfflineJavaData
  */
-export const MinecraftAccountProto_OfflineJavaData = new MinecraftAccountProto_OfflineJavaData$Type();
+export const MinecraftAccountProto_OfflineJavaData =
+  new MinecraftAccountProto_OfflineJavaData$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MinecraftAccountProto_BedrockData$Type extends MessageType<MinecraftAccountProto_BedrockData> {
-    constructor() {
-        super("soulfire.v1.MinecraftAccountProto.BedrockData", [
-            { no: 1, name: "mojang_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "identity_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "public_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "private_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "device_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "play_fab_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "auth_chain", kind: "message", T: () => Struct }
-        ]);
+  constructor() {
+    super("soulfire.v1.MinecraftAccountProto.BedrockData", [
+      { no: 1, name: "mojang_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "identity_jwt",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 3, name: "public_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 4,
+        name: "private_key",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 5, name: "device_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 6,
+        name: "play_fab_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 7, name: "auth_chain", kind: "message", T: () => Struct },
+    ]);
+  }
+  create(
+    value?: PartialMessage<MinecraftAccountProto_BedrockData>,
+  ): MinecraftAccountProto_BedrockData {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.mojangJwt = "";
+    message.identityJwt = "";
+    message.publicKey = "";
+    message.privateKey = "";
+    message.deviceId = "";
+    message.playFabId = "";
+    if (value !== undefined)
+      reflectionMergePartial<MinecraftAccountProto_BedrockData>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: MinecraftAccountProto_BedrockData,
+  ): MinecraftAccountProto_BedrockData {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string mojang_jwt */ 1:
+          message.mojangJwt = reader.string();
+          break;
+        case /* string identity_jwt */ 2:
+          message.identityJwt = reader.string();
+          break;
+        case /* string public_key */ 3:
+          message.publicKey = reader.string();
+          break;
+        case /* string private_key */ 4:
+          message.privateKey = reader.string();
+          break;
+        case /* string device_id */ 5:
+          message.deviceId = reader.string();
+          break;
+        case /* string play_fab_id */ 6:
+          message.playFabId = reader.string();
+          break;
+        case /* google.protobuf.Struct auth_chain */ 7:
+          message.authChain = Struct.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.authChain,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<MinecraftAccountProto_BedrockData>): MinecraftAccountProto_BedrockData {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.mojangJwt = "";
-        message.identityJwt = "";
-        message.publicKey = "";
-        message.privateKey = "";
-        message.deviceId = "";
-        message.playFabId = "";
-        if (value !== undefined)
-            reflectionMergePartial<MinecraftAccountProto_BedrockData>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MinecraftAccountProto_BedrockData): MinecraftAccountProto_BedrockData {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string mojang_jwt */ 1:
-                    message.mojangJwt = reader.string();
-                    break;
-                case /* string identity_jwt */ 2:
-                    message.identityJwt = reader.string();
-                    break;
-                case /* string public_key */ 3:
-                    message.publicKey = reader.string();
-                    break;
-                case /* string private_key */ 4:
-                    message.privateKey = reader.string();
-                    break;
-                case /* string device_id */ 5:
-                    message.deviceId = reader.string();
-                    break;
-                case /* string play_fab_id */ 6:
-                    message.playFabId = reader.string();
-                    break;
-                case /* google.protobuf.Struct auth_chain */ 7:
-                    message.authChain = Struct.internalBinaryRead(reader, reader.uint32(), options, message.authChain);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: MinecraftAccountProto_BedrockData, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string mojang_jwt = 1; */
-        if (message.mojangJwt !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.mojangJwt);
-        /* string identity_jwt = 2; */
-        if (message.identityJwt !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.identityJwt);
-        /* string public_key = 3; */
-        if (message.publicKey !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.publicKey);
-        /* string private_key = 4; */
-        if (message.privateKey !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.privateKey);
-        /* string device_id = 5; */
-        if (message.deviceId !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.deviceId);
-        /* string play_fab_id = 6; */
-        if (message.playFabId !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.playFabId);
-        /* google.protobuf.Struct auth_chain = 7; */
-        if (message.authChain)
-            Struct.internalBinaryWrite(message.authChain, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: MinecraftAccountProto_BedrockData,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string mojang_jwt = 1; */
+    if (message.mojangJwt !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.mojangJwt);
+    /* string identity_jwt = 2; */
+    if (message.identityJwt !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.identityJwt);
+    /* string public_key = 3; */
+    if (message.publicKey !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.publicKey);
+    /* string private_key = 4; */
+    if (message.privateKey !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.privateKey);
+    /* string device_id = 5; */
+    if (message.deviceId !== "")
+      writer.tag(5, WireType.LengthDelimited).string(message.deviceId);
+    /* string play_fab_id = 6; */
+    if (message.playFabId !== "")
+      writer.tag(6, WireType.LengthDelimited).string(message.playFabId);
+    /* google.protobuf.Struct auth_chain = 7; */
+    if (message.authChain)
+      Struct.internalBinaryWrite(
+        message.authChain,
+        writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.MinecraftAccountProto.BedrockData
  */
-export const MinecraftAccountProto_BedrockData = new MinecraftAccountProto_BedrockData$Type();
+export const MinecraftAccountProto_BedrockData =
+  new MinecraftAccountProto_BedrockData$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SettingsEntry$Type extends MessageType<SettingsEntry> {
-    constructor() {
-        super("soulfire.v1.SettingsEntry", [
-            { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "value", kind: "message", T: () => Value }
-        ]);
+  constructor() {
+    super("soulfire.v1.SettingsEntry", [
+      { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "value", kind: "message", T: () => Value },
+    ]);
+  }
+  create(value?: PartialMessage<SettingsEntry>): SettingsEntry {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.key = "";
+    if (value !== undefined)
+      reflectionMergePartial<SettingsEntry>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SettingsEntry,
+  ): SettingsEntry {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string key */ 1:
+          message.key = reader.string();
+          break;
+        case /* google.protobuf.Value value */ 2:
+          message.value = Value.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.value,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<SettingsEntry>): SettingsEntry {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.key = "";
-        if (value !== undefined)
-            reflectionMergePartial<SettingsEntry>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SettingsEntry): SettingsEntry {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string key */ 1:
-                    message.key = reader.string();
-                    break;
-                case /* google.protobuf.Value value */ 2:
-                    message.value = Value.internalBinaryRead(reader, reader.uint32(), options, message.value);
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SettingsEntry, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string key = 1; */
-        if (message.key !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.key);
-        /* google.protobuf.Value value = 2; */
-        if (message.value)
-            Value.internalBinaryWrite(message.value, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SettingsEntry,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string key = 1; */
+    if (message.key !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.key);
+    /* google.protobuf.Value value = 2; */
+    if (message.value)
+      Value.internalBinaryWrite(
+        message.value,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.SettingsEntry
@@ -1272,54 +1561,88 @@ class SettingsEntry$Type extends MessageType<SettingsEntry> {
 export const SettingsEntry = new SettingsEntry$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SettingsNamespace$Type extends MessageType<SettingsNamespace> {
-    constructor() {
-        super("soulfire.v1.SettingsNamespace", [
-            { no: 1, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "entries", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => SettingsEntry }
-        ]);
+  constructor() {
+    super("soulfire.v1.SettingsNamespace", [
+      { no: 1, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "entries",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SettingsEntry,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<SettingsNamespace>): SettingsNamespace {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.namespace = "";
+    message.entries = [];
+    if (value !== undefined)
+      reflectionMergePartial<SettingsNamespace>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SettingsNamespace,
+  ): SettingsNamespace {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string namespace */ 1:
+          message.namespace = reader.string();
+          break;
+        case /* repeated soulfire.v1.SettingsEntry entries */ 2:
+          message.entries.push(
+            SettingsEntry.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<SettingsNamespace>): SettingsNamespace {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.namespace = "";
-        message.entries = [];
-        if (value !== undefined)
-            reflectionMergePartial<SettingsNamespace>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SettingsNamespace): SettingsNamespace {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string namespace */ 1:
-                    message.namespace = reader.string();
-                    break;
-                case /* repeated soulfire.v1.SettingsEntry entries */ 2:
-                    message.entries.push(SettingsEntry.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SettingsNamespace, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string namespace = 1; */
-        if (message.namespace !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.namespace);
-        /* repeated soulfire.v1.SettingsEntry entries = 2; */
-        for (let i = 0; i < message.entries.length; i++)
-            SettingsEntry.internalBinaryWrite(message.entries[i], writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SettingsNamespace,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string namespace = 1; */
+    if (message.namespace !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.namespace);
+    /* repeated soulfire.v1.SettingsEntry entries = 2; */
+    for (let i = 0; i < message.entries.length; i++)
+      SettingsEntry.internalBinaryWrite(
+        message.entries[i],
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.SettingsNamespace
@@ -1327,110 +1650,150 @@ class SettingsNamespace$Type extends MessageType<SettingsNamespace> {
 export const SettingsNamespace = new SettingsNamespace$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StringSetting$Type extends MessageType<StringSetting> {
-    constructor() {
-        super("soulfire.v1.StringSetting", [
-            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 10, name: "input_type", kind: "enum", T: () => ["soulfire.v1.StringSetting.InputType", StringSetting_InputType] },
-            { no: 6, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "min_length", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 8, name: "max_length", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 9, name: "pattern", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 11, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.StringSetting", [
+      { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 3, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 10,
+        name: "input_type",
+        kind: "enum",
+        T: () => [
+          "soulfire.v1.StringSetting.InputType",
+          StringSetting_InputType,
+        ],
+      },
+      {
+        no: 6,
+        name: "placeholder",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 7, name: "min_length", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 8, name: "max_length", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 9, name: "pattern", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 11, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(value?: PartialMessage<StringSetting>): StringSetting {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.uiName = "";
+    message.description = "";
+    message.def = "";
+    message.inputType = 0;
+    message.placeholder = "";
+    message.minLength = 0;
+    message.maxLength = 0;
+    message.pattern = "";
+    message.disabled = false;
+    if (value !== undefined)
+      reflectionMergePartial<StringSetting>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: StringSetting,
+  ): StringSetting {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string ui_name */ 1:
+          message.uiName = reader.string();
+          break;
+        case /* string description */ 2:
+          message.description = reader.string();
+          break;
+        case /* string def */ 3:
+          message.def = reader.string();
+          break;
+        case /* soulfire.v1.StringSetting.InputType input_type */ 10:
+          message.inputType = reader.int32();
+          break;
+        case /* string placeholder */ 6:
+          message.placeholder = reader.string();
+          break;
+        case /* int32 min_length */ 7:
+          message.minLength = reader.int32();
+          break;
+        case /* int32 max_length */ 8:
+          message.maxLength = reader.int32();
+          break;
+        case /* string pattern */ 9:
+          message.pattern = reader.string();
+          break;
+        case /* bool disabled */ 11:
+          message.disabled = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<StringSetting>): StringSetting {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.uiName = "";
-        message.description = "";
-        message.def = "";
-        message.inputType = 0;
-        message.placeholder = "";
-        message.minLength = 0;
-        message.maxLength = 0;
-        message.pattern = "";
-        message.disabled = false;
-        if (value !== undefined)
-            reflectionMergePartial<StringSetting>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StringSetting): StringSetting {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string ui_name */ 1:
-                    message.uiName = reader.string();
-                    break;
-                case /* string description */ 2:
-                    message.description = reader.string();
-                    break;
-                case /* string def */ 3:
-                    message.def = reader.string();
-                    break;
-                case /* soulfire.v1.StringSetting.InputType input_type */ 10:
-                    message.inputType = reader.int32();
-                    break;
-                case /* string placeholder */ 6:
-                    message.placeholder = reader.string();
-                    break;
-                case /* int32 min_length */ 7:
-                    message.minLength = reader.int32();
-                    break;
-                case /* int32 max_length */ 8:
-                    message.maxLength = reader.int32();
-                    break;
-                case /* string pattern */ 9:
-                    message.pattern = reader.string();
-                    break;
-                case /* bool disabled */ 11:
-                    message.disabled = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: StringSetting, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string ui_name = 1; */
-        if (message.uiName !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.uiName);
-        /* string description = 2; */
-        if (message.description !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.description);
-        /* string def = 3; */
-        if (message.def !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.def);
-        /* string placeholder = 6; */
-        if (message.placeholder !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.placeholder);
-        /* int32 min_length = 7; */
-        if (message.minLength !== 0)
-            writer.tag(7, WireType.Varint).int32(message.minLength);
-        /* int32 max_length = 8; */
-        if (message.maxLength !== 0)
-            writer.tag(8, WireType.Varint).int32(message.maxLength);
-        /* string pattern = 9; */
-        if (message.pattern !== "")
-            writer.tag(9, WireType.LengthDelimited).string(message.pattern);
-        /* soulfire.v1.StringSetting.InputType input_type = 10; */
-        if (message.inputType !== 0)
-            writer.tag(10, WireType.Varint).int32(message.inputType);
-        /* bool disabled = 11; */
-        if (message.disabled !== false)
-            writer.tag(11, WireType.Varint).bool(message.disabled);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: StringSetting,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string ui_name = 1; */
+    if (message.uiName !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.uiName);
+    /* string description = 2; */
+    if (message.description !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.description);
+    /* string def = 3; */
+    if (message.def !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.def);
+    /* string placeholder = 6; */
+    if (message.placeholder !== "")
+      writer.tag(6, WireType.LengthDelimited).string(message.placeholder);
+    /* int32 min_length = 7; */
+    if (message.minLength !== 0)
+      writer.tag(7, WireType.Varint).int32(message.minLength);
+    /* int32 max_length = 8; */
+    if (message.maxLength !== 0)
+      writer.tag(8, WireType.Varint).int32(message.maxLength);
+    /* string pattern = 9; */
+    if (message.pattern !== "")
+      writer.tag(9, WireType.LengthDelimited).string(message.pattern);
+    /* soulfire.v1.StringSetting.InputType input_type = 10; */
+    if (message.inputType !== 0)
+      writer.tag(10, WireType.Varint).int32(message.inputType);
+    /* bool disabled = 11; */
+    if (message.disabled !== false)
+      writer.tag(11, WireType.Varint).bool(message.disabled);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.StringSetting
@@ -1438,110 +1801,143 @@ class StringSetting$Type extends MessageType<StringSetting> {
 export const StringSetting = new StringSetting$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class IntSetting$Type extends MessageType<IntSetting> {
-    constructor() {
-        super("soulfire.v1.IntSetting", [
-            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "def", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 4, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 5, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 6, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 7, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "thousand_separator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 9, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.IntSetting", [
+      { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 3, name: "def", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 4, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 5, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 6, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      {
+        no: 7,
+        name: "placeholder",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 8,
+        name: "thousand_separator",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      { no: 9, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(value?: PartialMessage<IntSetting>): IntSetting {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.uiName = "";
+    message.description = "";
+    message.def = 0;
+    message.min = 0;
+    message.max = 0;
+    message.step = 0;
+    message.placeholder = "";
+    message.thousandSeparator = false;
+    message.disabled = false;
+    if (value !== undefined)
+      reflectionMergePartial<IntSetting>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: IntSetting,
+  ): IntSetting {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string ui_name */ 1:
+          message.uiName = reader.string();
+          break;
+        case /* string description */ 2:
+          message.description = reader.string();
+          break;
+        case /* int32 def */ 3:
+          message.def = reader.int32();
+          break;
+        case /* int32 min */ 4:
+          message.min = reader.int32();
+          break;
+        case /* int32 max */ 5:
+          message.max = reader.int32();
+          break;
+        case /* int32 step */ 6:
+          message.step = reader.int32();
+          break;
+        case /* string placeholder */ 7:
+          message.placeholder = reader.string();
+          break;
+        case /* bool thousand_separator */ 8:
+          message.thousandSeparator = reader.bool();
+          break;
+        case /* bool disabled */ 9:
+          message.disabled = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<IntSetting>): IntSetting {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.uiName = "";
-        message.description = "";
-        message.def = 0;
-        message.min = 0;
-        message.max = 0;
-        message.step = 0;
-        message.placeholder = "";
-        message.thousandSeparator = false;
-        message.disabled = false;
-        if (value !== undefined)
-            reflectionMergePartial<IntSetting>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: IntSetting): IntSetting {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string ui_name */ 1:
-                    message.uiName = reader.string();
-                    break;
-                case /* string description */ 2:
-                    message.description = reader.string();
-                    break;
-                case /* int32 def */ 3:
-                    message.def = reader.int32();
-                    break;
-                case /* int32 min */ 4:
-                    message.min = reader.int32();
-                    break;
-                case /* int32 max */ 5:
-                    message.max = reader.int32();
-                    break;
-                case /* int32 step */ 6:
-                    message.step = reader.int32();
-                    break;
-                case /* string placeholder */ 7:
-                    message.placeholder = reader.string();
-                    break;
-                case /* bool thousand_separator */ 8:
-                    message.thousandSeparator = reader.bool();
-                    break;
-                case /* bool disabled */ 9:
-                    message.disabled = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: IntSetting, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string ui_name = 1; */
-        if (message.uiName !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.uiName);
-        /* string description = 2; */
-        if (message.description !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.description);
-        /* int32 def = 3; */
-        if (message.def !== 0)
-            writer.tag(3, WireType.Varint).int32(message.def);
-        /* int32 min = 4; */
-        if (message.min !== 0)
-            writer.tag(4, WireType.Varint).int32(message.min);
-        /* int32 max = 5; */
-        if (message.max !== 0)
-            writer.tag(5, WireType.Varint).int32(message.max);
-        /* int32 step = 6; */
-        if (message.step !== 0)
-            writer.tag(6, WireType.Varint).int32(message.step);
-        /* string placeholder = 7; */
-        if (message.placeholder !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.placeholder);
-        /* bool thousand_separator = 8; */
-        if (message.thousandSeparator !== false)
-            writer.tag(8, WireType.Varint).bool(message.thousandSeparator);
-        /* bool disabled = 9; */
-        if (message.disabled !== false)
-            writer.tag(9, WireType.Varint).bool(message.disabled);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: IntSetting,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string ui_name = 1; */
+    if (message.uiName !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.uiName);
+    /* string description = 2; */
+    if (message.description !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.description);
+    /* int32 def = 3; */
+    if (message.def !== 0) writer.tag(3, WireType.Varint).int32(message.def);
+    /* int32 min = 4; */
+    if (message.min !== 0) writer.tag(4, WireType.Varint).int32(message.min);
+    /* int32 max = 5; */
+    if (message.max !== 0) writer.tag(5, WireType.Varint).int32(message.max);
+    /* int32 step = 6; */
+    if (message.step !== 0) writer.tag(6, WireType.Varint).int32(message.step);
+    /* string placeholder = 7; */
+    if (message.placeholder !== "")
+      writer.tag(7, WireType.LengthDelimited).string(message.placeholder);
+    /* bool thousand_separator = 8; */
+    if (message.thousandSeparator !== false)
+      writer.tag(8, WireType.Varint).bool(message.thousandSeparator);
+    /* bool disabled = 9; */
+    if (message.disabled !== false)
+      writer.tag(9, WireType.Varint).bool(message.disabled);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.IntSetting
@@ -1549,126 +1945,169 @@ class IntSetting$Type extends MessageType<IntSetting> {
 export const IntSetting = new IntSetting$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class DoubleSetting$Type extends MessageType<DoubleSetting> {
-    constructor() {
-        super("soulfire.v1.DoubleSetting", [
-            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "def", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 4, name: "min", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 5, name: "max", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 6, name: "step", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
-            { no: 7, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 8, name: "thousand_separator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 9, name: "decimal_scale", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 10, name: "fixed_decimal_scale", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 11, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.DoubleSetting", [
+      { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 3, name: "def", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 4, name: "min", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 5, name: "max", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 6, name: "step", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+      {
+        no: 7,
+        name: "placeholder",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 8,
+        name: "thousand_separator",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      {
+        no: 9,
+        name: "decimal_scale",
+        kind: "scalar",
+        T: 5 /*ScalarType.INT32*/,
+      },
+      {
+        no: 10,
+        name: "fixed_decimal_scale",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      { no: 11, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(value?: PartialMessage<DoubleSetting>): DoubleSetting {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.uiName = "";
+    message.description = "";
+    message.def = 0;
+    message.min = 0;
+    message.max = 0;
+    message.step = 0;
+    message.placeholder = "";
+    message.thousandSeparator = false;
+    message.decimalScale = 0;
+    message.fixedDecimalScale = false;
+    message.disabled = false;
+    if (value !== undefined)
+      reflectionMergePartial<DoubleSetting>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DoubleSetting,
+  ): DoubleSetting {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string ui_name */ 1:
+          message.uiName = reader.string();
+          break;
+        case /* string description */ 2:
+          message.description = reader.string();
+          break;
+        case /* double def */ 3:
+          message.def = reader.double();
+          break;
+        case /* double min */ 4:
+          message.min = reader.double();
+          break;
+        case /* double max */ 5:
+          message.max = reader.double();
+          break;
+        case /* double step */ 6:
+          message.step = reader.double();
+          break;
+        case /* string placeholder */ 7:
+          message.placeholder = reader.string();
+          break;
+        case /* bool thousand_separator */ 8:
+          message.thousandSeparator = reader.bool();
+          break;
+        case /* int32 decimal_scale */ 9:
+          message.decimalScale = reader.int32();
+          break;
+        case /* bool fixed_decimal_scale */ 10:
+          message.fixedDecimalScale = reader.bool();
+          break;
+        case /* bool disabled */ 11:
+          message.disabled = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<DoubleSetting>): DoubleSetting {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.uiName = "";
-        message.description = "";
-        message.def = 0;
-        message.min = 0;
-        message.max = 0;
-        message.step = 0;
-        message.placeholder = "";
-        message.thousandSeparator = false;
-        message.decimalScale = 0;
-        message.fixedDecimalScale = false;
-        message.disabled = false;
-        if (value !== undefined)
-            reflectionMergePartial<DoubleSetting>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: DoubleSetting): DoubleSetting {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string ui_name */ 1:
-                    message.uiName = reader.string();
-                    break;
-                case /* string description */ 2:
-                    message.description = reader.string();
-                    break;
-                case /* double def */ 3:
-                    message.def = reader.double();
-                    break;
-                case /* double min */ 4:
-                    message.min = reader.double();
-                    break;
-                case /* double max */ 5:
-                    message.max = reader.double();
-                    break;
-                case /* double step */ 6:
-                    message.step = reader.double();
-                    break;
-                case /* string placeholder */ 7:
-                    message.placeholder = reader.string();
-                    break;
-                case /* bool thousand_separator */ 8:
-                    message.thousandSeparator = reader.bool();
-                    break;
-                case /* int32 decimal_scale */ 9:
-                    message.decimalScale = reader.int32();
-                    break;
-                case /* bool fixed_decimal_scale */ 10:
-                    message.fixedDecimalScale = reader.bool();
-                    break;
-                case /* bool disabled */ 11:
-                    message.disabled = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: DoubleSetting, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string ui_name = 1; */
-        if (message.uiName !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.uiName);
-        /* string description = 2; */
-        if (message.description !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.description);
-        /* double def = 3; */
-        if (message.def !== 0)
-            writer.tag(3, WireType.Bit64).double(message.def);
-        /* double min = 4; */
-        if (message.min !== 0)
-            writer.tag(4, WireType.Bit64).double(message.min);
-        /* double max = 5; */
-        if (message.max !== 0)
-            writer.tag(5, WireType.Bit64).double(message.max);
-        /* double step = 6; */
-        if (message.step !== 0)
-            writer.tag(6, WireType.Bit64).double(message.step);
-        /* string placeholder = 7; */
-        if (message.placeholder !== "")
-            writer.tag(7, WireType.LengthDelimited).string(message.placeholder);
-        /* bool thousand_separator = 8; */
-        if (message.thousandSeparator !== false)
-            writer.tag(8, WireType.Varint).bool(message.thousandSeparator);
-        /* int32 decimal_scale = 9; */
-        if (message.decimalScale !== 0)
-            writer.tag(9, WireType.Varint).int32(message.decimalScale);
-        /* bool fixed_decimal_scale = 10; */
-        if (message.fixedDecimalScale !== false)
-            writer.tag(10, WireType.Varint).bool(message.fixedDecimalScale);
-        /* bool disabled = 11; */
-        if (message.disabled !== false)
-            writer.tag(11, WireType.Varint).bool(message.disabled);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DoubleSetting,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string ui_name = 1; */
+    if (message.uiName !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.uiName);
+    /* string description = 2; */
+    if (message.description !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.description);
+    /* double def = 3; */
+    if (message.def !== 0) writer.tag(3, WireType.Bit64).double(message.def);
+    /* double min = 4; */
+    if (message.min !== 0) writer.tag(4, WireType.Bit64).double(message.min);
+    /* double max = 5; */
+    if (message.max !== 0) writer.tag(5, WireType.Bit64).double(message.max);
+    /* double step = 6; */
+    if (message.step !== 0) writer.tag(6, WireType.Bit64).double(message.step);
+    /* string placeholder = 7; */
+    if (message.placeholder !== "")
+      writer.tag(7, WireType.LengthDelimited).string(message.placeholder);
+    /* bool thousand_separator = 8; */
+    if (message.thousandSeparator !== false)
+      writer.tag(8, WireType.Varint).bool(message.thousandSeparator);
+    /* int32 decimal_scale = 9; */
+    if (message.decimalScale !== 0)
+      writer.tag(9, WireType.Varint).int32(message.decimalScale);
+    /* bool fixed_decimal_scale = 10; */
+    if (message.fixedDecimalScale !== false)
+      writer.tag(10, WireType.Varint).bool(message.fixedDecimalScale);
+    /* bool disabled = 11; */
+    if (message.disabled !== false)
+      writer.tag(11, WireType.Varint).bool(message.disabled);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.DoubleSetting
@@ -1676,70 +2115,96 @@ class DoubleSetting$Type extends MessageType<DoubleSetting> {
 export const DoubleSetting = new DoubleSetting$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class BoolSetting$Type extends MessageType<BoolSetting> {
-    constructor() {
-        super("soulfire.v1.BoolSetting", [
-            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "def", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 4, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.BoolSetting", [
+      { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 3, name: "def", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 4, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(value?: PartialMessage<BoolSetting>): BoolSetting {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.uiName = "";
+    message.description = "";
+    message.def = false;
+    message.disabled = false;
+    if (value !== undefined)
+      reflectionMergePartial<BoolSetting>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BoolSetting,
+  ): BoolSetting {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string ui_name */ 1:
+          message.uiName = reader.string();
+          break;
+        case /* string description */ 2:
+          message.description = reader.string();
+          break;
+        case /* bool def */ 3:
+          message.def = reader.bool();
+          break;
+        case /* bool disabled */ 4:
+          message.disabled = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<BoolSetting>): BoolSetting {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.uiName = "";
-        message.description = "";
-        message.def = false;
-        message.disabled = false;
-        if (value !== undefined)
-            reflectionMergePartial<BoolSetting>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: BoolSetting): BoolSetting {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string ui_name */ 1:
-                    message.uiName = reader.string();
-                    break;
-                case /* string description */ 2:
-                    message.description = reader.string();
-                    break;
-                case /* bool def */ 3:
-                    message.def = reader.bool();
-                    break;
-                case /* bool disabled */ 4:
-                    message.disabled = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: BoolSetting, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string ui_name = 1; */
-        if (message.uiName !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.uiName);
-        /* string description = 2; */
-        if (message.description !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.description);
-        /* bool def = 3; */
-        if (message.def !== false)
-            writer.tag(3, WireType.Varint).bool(message.def);
-        /* bool disabled = 4; */
-        if (message.disabled !== false)
-            writer.tag(4, WireType.Varint).bool(message.disabled);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BoolSetting,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string ui_name = 1; */
+    if (message.uiName !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.uiName);
+    /* string description = 2; */
+    if (message.description !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.description);
+    /* bool def = 3; */
+    if (message.def !== false) writer.tag(3, WireType.Varint).bool(message.def);
+    /* bool disabled = 4; */
+    if (message.disabled !== false)
+      writer.tag(4, WireType.Varint).bool(message.disabled);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.BoolSetting
@@ -1747,78 +2212,121 @@ class BoolSetting$Type extends MessageType<BoolSetting> {
 export const BoolSetting = new BoolSetting$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ComboSetting$Type extends MessageType<ComboSetting> {
-    constructor() {
-        super("soulfire.v1.ComboSetting", [
-            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "options", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => ComboSetting_Option },
-            { no: 4, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.ComboSetting", [
+      { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 3,
+        name: "options",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ComboSetting_Option,
+      },
+      { no: 4, name: "def", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 5, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(value?: PartialMessage<ComboSetting>): ComboSetting {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.uiName = "";
+    message.description = "";
+    message.options = [];
+    message.def = "";
+    message.disabled = false;
+    if (value !== undefined)
+      reflectionMergePartial<ComboSetting>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ComboSetting,
+  ): ComboSetting {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string ui_name */ 1:
+          message.uiName = reader.string();
+          break;
+        case /* string description */ 2:
+          message.description = reader.string();
+          break;
+        case /* repeated soulfire.v1.ComboSetting.Option options */ 3:
+          message.options.push(
+            ComboSetting_Option.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        case /* string def */ 4:
+          message.def = reader.string();
+          break;
+        case /* bool disabled */ 5:
+          message.disabled = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ComboSetting>): ComboSetting {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.uiName = "";
-        message.description = "";
-        message.options = [];
-        message.def = "";
-        message.disabled = false;
-        if (value !== undefined)
-            reflectionMergePartial<ComboSetting>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ComboSetting): ComboSetting {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string ui_name */ 1:
-                    message.uiName = reader.string();
-                    break;
-                case /* string description */ 2:
-                    message.description = reader.string();
-                    break;
-                case /* repeated soulfire.v1.ComboSetting.Option options */ 3:
-                    message.options.push(ComboSetting_Option.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* string def */ 4:
-                    message.def = reader.string();
-                    break;
-                case /* bool disabled */ 5:
-                    message.disabled = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ComboSetting, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string ui_name = 1; */
-        if (message.uiName !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.uiName);
-        /* string description = 2; */
-        if (message.description !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.description);
-        /* repeated soulfire.v1.ComboSetting.Option options = 3; */
-        for (let i = 0; i < message.options.length; i++)
-            ComboSetting_Option.internalBinaryWrite(message.options[i], writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* string def = 4; */
-        if (message.def !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.def);
-        /* bool disabled = 5; */
-        if (message.disabled !== false)
-            writer.tag(5, WireType.Varint).bool(message.disabled);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ComboSetting,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string ui_name = 1; */
+    if (message.uiName !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.uiName);
+    /* string description = 2; */
+    if (message.description !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.description);
+    /* repeated soulfire.v1.ComboSetting.Option options = 3; */
+    for (let i = 0; i < message.options.length; i++)
+      ComboSetting_Option.internalBinaryWrite(
+        message.options[i],
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* string def = 4; */
+    if (message.def !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.def);
+    /* bool disabled = 5; */
+    if (message.disabled !== false)
+      writer.tag(5, WireType.Varint).bool(message.disabled);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.ComboSetting
@@ -1826,69 +2334,108 @@ class ComboSetting$Type extends MessageType<ComboSetting> {
 export const ComboSetting = new ComboSetting$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ComboSetting_Option$Type extends MessageType<ComboSetting_Option> {
-    constructor() {
-        super("soulfire.v1.ComboSetting.Option", [
-            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "display_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "icon_id", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "keywords", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.ComboSetting.Option", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "display_name",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 3,
+        name: "icon_id",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 4,
+        name: "keywords",
+        kind: "scalar",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ComboSetting_Option>): ComboSetting_Option {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.displayName = "";
+    message.keywords = [];
+    if (value !== undefined)
+      reflectionMergePartial<ComboSetting_Option>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ComboSetting_Option,
+  ): ComboSetting_Option {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string display_name */ 2:
+          message.displayName = reader.string();
+          break;
+        case /* optional string icon_id */ 3:
+          message.iconId = reader.string();
+          break;
+        case /* repeated string keywords */ 4:
+          message.keywords.push(reader.string());
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ComboSetting_Option>): ComboSetting_Option {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.id = "";
-        message.displayName = "";
-        message.keywords = [];
-        if (value !== undefined)
-            reflectionMergePartial<ComboSetting_Option>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ComboSetting_Option): ComboSetting_Option {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string id */ 1:
-                    message.id = reader.string();
-                    break;
-                case /* string display_name */ 2:
-                    message.displayName = reader.string();
-                    break;
-                case /* optional string icon_id */ 3:
-                    message.iconId = reader.string();
-                    break;
-                case /* repeated string keywords */ 4:
-                    message.keywords.push(reader.string());
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ComboSetting_Option, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string id = 1; */
-        if (message.id !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.id);
-        /* string display_name = 2; */
-        if (message.displayName !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.displayName);
-        /* optional string icon_id = 3; */
-        if (message.iconId !== undefined)
-            writer.tag(3, WireType.LengthDelimited).string(message.iconId);
-        /* repeated string keywords = 4; */
-        for (let i = 0; i < message.keywords.length; i++)
-            writer.tag(4, WireType.LengthDelimited).string(message.keywords[i]);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ComboSetting_Option,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string display_name = 2; */
+    if (message.displayName !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.displayName);
+    /* optional string icon_id = 3; */
+    if (message.iconId !== undefined)
+      writer.tag(3, WireType.LengthDelimited).string(message.iconId);
+    /* repeated string keywords = 4; */
+    for (let i = 0; i < message.keywords.length; i++)
+      writer.tag(4, WireType.LengthDelimited).string(message.keywords[i]);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.ComboSetting.Option
@@ -1896,70 +2443,103 @@ class ComboSetting_Option$Type extends MessageType<ComboSetting_Option> {
 export const ComboSetting_Option = new ComboSetting_Option$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StringListSetting$Type extends MessageType<StringListSetting> {
-    constructor() {
-        super("soulfire.v1.StringListSetting", [
-            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "def", kind: "scalar", repeat: 2 /*RepeatType.UNPACKED*/, T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.StringListSetting", [
+      { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 3,
+        name: "def",
+        kind: "scalar",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 4, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(value?: PartialMessage<StringListSetting>): StringListSetting {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.uiName = "";
+    message.description = "";
+    message.def = [];
+    message.disabled = false;
+    if (value !== undefined)
+      reflectionMergePartial<StringListSetting>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: StringListSetting,
+  ): StringListSetting {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string ui_name */ 1:
+          message.uiName = reader.string();
+          break;
+        case /* string description */ 2:
+          message.description = reader.string();
+          break;
+        case /* repeated string def */ 3:
+          message.def.push(reader.string());
+          break;
+        case /* bool disabled */ 4:
+          message.disabled = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<StringListSetting>): StringListSetting {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.uiName = "";
-        message.description = "";
-        message.def = [];
-        message.disabled = false;
-        if (value !== undefined)
-            reflectionMergePartial<StringListSetting>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: StringListSetting): StringListSetting {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string ui_name */ 1:
-                    message.uiName = reader.string();
-                    break;
-                case /* string description */ 2:
-                    message.description = reader.string();
-                    break;
-                case /* repeated string def */ 3:
-                    message.def.push(reader.string());
-                    break;
-                case /* bool disabled */ 4:
-                    message.disabled = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: StringListSetting, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string ui_name = 1; */
-        if (message.uiName !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.uiName);
-        /* string description = 2; */
-        if (message.description !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.description);
-        /* repeated string def = 3; */
-        for (let i = 0; i < message.def.length; i++)
-            writer.tag(3, WireType.LengthDelimited).string(message.def[i]);
-        /* bool disabled = 4; */
-        if (message.disabled !== false)
-            writer.tag(4, WireType.Varint).bool(message.disabled);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: StringListSetting,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string ui_name = 1; */
+    if (message.uiName !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.uiName);
+    /* string description = 2; */
+    if (message.description !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.description);
+    /* repeated string def = 3; */
+    for (let i = 0; i < message.def.length; i++)
+      writer.tag(3, WireType.LengthDelimited).string(message.def[i]);
+    /* bool disabled = 4; */
+    if (message.disabled !== false)
+      writer.tag(4, WireType.Varint).bool(message.disabled);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.StringListSetting
@@ -1967,92 +2547,144 @@ class StringListSetting$Type extends MessageType<StringListSetting> {
 export const StringListSetting = new StringListSetting$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MinMaxSetting$Type extends MessageType<MinMaxSetting> {
-    constructor() {
-        super("soulfire.v1.MinMaxSetting", [
-            { no: 1, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 2, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 3, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 4, name: "thousand_separator", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-            { no: 5, name: "minEntry", kind: "message", T: () => MinMaxSetting_Entry },
-            { no: 6, name: "maxEntry", kind: "message", T: () => MinMaxSetting_Entry },
-            { no: 7, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.MinMaxSetting", [
+      { no: 1, name: "min", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 2, name: "max", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 3, name: "step", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      {
+        no: 4,
+        name: "thousand_separator",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      {
+        no: 5,
+        name: "minEntry",
+        kind: "message",
+        T: () => MinMaxSetting_Entry,
+      },
+      {
+        no: 6,
+        name: "maxEntry",
+        kind: "message",
+        T: () => MinMaxSetting_Entry,
+      },
+      { no: 7, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(value?: PartialMessage<MinMaxSetting>): MinMaxSetting {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.min = 0;
+    message.max = 0;
+    message.step = 0;
+    message.thousandSeparator = false;
+    message.disabled = false;
+    if (value !== undefined)
+      reflectionMergePartial<MinMaxSetting>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: MinMaxSetting,
+  ): MinMaxSetting {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int32 min */ 1:
+          message.min = reader.int32();
+          break;
+        case /* int32 max */ 2:
+          message.max = reader.int32();
+          break;
+        case /* int32 step */ 3:
+          message.step = reader.int32();
+          break;
+        case /* bool thousand_separator */ 4:
+          message.thousandSeparator = reader.bool();
+          break;
+        case /* soulfire.v1.MinMaxSetting.Entry minEntry */ 5:
+          message.minEntry = MinMaxSetting_Entry.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.minEntry,
+          );
+          break;
+        case /* soulfire.v1.MinMaxSetting.Entry maxEntry */ 6:
+          message.maxEntry = MinMaxSetting_Entry.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.maxEntry,
+          );
+          break;
+        case /* bool disabled */ 7:
+          message.disabled = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<MinMaxSetting>): MinMaxSetting {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.min = 0;
-        message.max = 0;
-        message.step = 0;
-        message.thousandSeparator = false;
-        message.disabled = false;
-        if (value !== undefined)
-            reflectionMergePartial<MinMaxSetting>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MinMaxSetting): MinMaxSetting {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* int32 min */ 1:
-                    message.min = reader.int32();
-                    break;
-                case /* int32 max */ 2:
-                    message.max = reader.int32();
-                    break;
-                case /* int32 step */ 3:
-                    message.step = reader.int32();
-                    break;
-                case /* bool thousand_separator */ 4:
-                    message.thousandSeparator = reader.bool();
-                    break;
-                case /* soulfire.v1.MinMaxSetting.Entry minEntry */ 5:
-                    message.minEntry = MinMaxSetting_Entry.internalBinaryRead(reader, reader.uint32(), options, message.minEntry);
-                    break;
-                case /* soulfire.v1.MinMaxSetting.Entry maxEntry */ 6:
-                    message.maxEntry = MinMaxSetting_Entry.internalBinaryRead(reader, reader.uint32(), options, message.maxEntry);
-                    break;
-                case /* bool disabled */ 7:
-                    message.disabled = reader.bool();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: MinMaxSetting, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* int32 min = 1; */
-        if (message.min !== 0)
-            writer.tag(1, WireType.Varint).int32(message.min);
-        /* int32 max = 2; */
-        if (message.max !== 0)
-            writer.tag(2, WireType.Varint).int32(message.max);
-        /* int32 step = 3; */
-        if (message.step !== 0)
-            writer.tag(3, WireType.Varint).int32(message.step);
-        /* bool thousand_separator = 4; */
-        if (message.thousandSeparator !== false)
-            writer.tag(4, WireType.Varint).bool(message.thousandSeparator);
-        /* soulfire.v1.MinMaxSetting.Entry minEntry = 5; */
-        if (message.minEntry)
-            MinMaxSetting_Entry.internalBinaryWrite(message.minEntry, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.MinMaxSetting.Entry maxEntry = 6; */
-        if (message.maxEntry)
-            MinMaxSetting_Entry.internalBinaryWrite(message.maxEntry, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* bool disabled = 7; */
-        if (message.disabled !== false)
-            writer.tag(7, WireType.Varint).bool(message.disabled);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: MinMaxSetting,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int32 min = 1; */
+    if (message.min !== 0) writer.tag(1, WireType.Varint).int32(message.min);
+    /* int32 max = 2; */
+    if (message.max !== 0) writer.tag(2, WireType.Varint).int32(message.max);
+    /* int32 step = 3; */
+    if (message.step !== 0) writer.tag(3, WireType.Varint).int32(message.step);
+    /* bool thousand_separator = 4; */
+    if (message.thousandSeparator !== false)
+      writer.tag(4, WireType.Varint).bool(message.thousandSeparator);
+    /* soulfire.v1.MinMaxSetting.Entry minEntry = 5; */
+    if (message.minEntry)
+      MinMaxSetting_Entry.internalBinaryWrite(
+        message.minEntry,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.MinMaxSetting.Entry maxEntry = 6; */
+    if (message.maxEntry)
+      MinMaxSetting_Entry.internalBinaryWrite(
+        message.maxEntry,
+        writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* bool disabled = 7; */
+    if (message.disabled !== false)
+      writer.tag(7, WireType.Varint).bool(message.disabled);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.MinMaxSetting
@@ -2060,70 +2692,101 @@ class MinMaxSetting$Type extends MessageType<MinMaxSetting> {
 export const MinMaxSetting = new MinMaxSetting$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MinMaxSetting_Entry$Type extends MessageType<MinMaxSetting_Entry> {
-    constructor() {
-        super("soulfire.v1.MinMaxSetting.Entry", [
-            { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "def", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
-            { no: 4, name: "placeholder", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.MinMaxSetting.Entry", [
+      { no: 1, name: "ui_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 3, name: "def", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      {
+        no: 4,
+        name: "placeholder",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<MinMaxSetting_Entry>): MinMaxSetting_Entry {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.uiName = "";
+    message.description = "";
+    message.def = 0;
+    message.placeholder = "";
+    if (value !== undefined)
+      reflectionMergePartial<MinMaxSetting_Entry>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: MinMaxSetting_Entry,
+  ): MinMaxSetting_Entry {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string ui_name */ 1:
+          message.uiName = reader.string();
+          break;
+        case /* string description */ 2:
+          message.description = reader.string();
+          break;
+        case /* int32 def */ 3:
+          message.def = reader.int32();
+          break;
+        case /* string placeholder */ 4:
+          message.placeholder = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<MinMaxSetting_Entry>): MinMaxSetting_Entry {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.uiName = "";
-        message.description = "";
-        message.def = 0;
-        message.placeholder = "";
-        if (value !== undefined)
-            reflectionMergePartial<MinMaxSetting_Entry>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: MinMaxSetting_Entry): MinMaxSetting_Entry {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string ui_name */ 1:
-                    message.uiName = reader.string();
-                    break;
-                case /* string description */ 2:
-                    message.description = reader.string();
-                    break;
-                case /* int32 def */ 3:
-                    message.def = reader.int32();
-                    break;
-                case /* string placeholder */ 4:
-                    message.placeholder = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: MinMaxSetting_Entry, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string ui_name = 1; */
-        if (message.uiName !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.uiName);
-        /* string description = 2; */
-        if (message.description !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.description);
-        /* int32 def = 3; */
-        if (message.def !== 0)
-            writer.tag(3, WireType.Varint).int32(message.def);
-        /* string placeholder = 4; */
-        if (message.placeholder !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.placeholder);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: MinMaxSetting_Entry,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string ui_name = 1; */
+    if (message.uiName !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.uiName);
+    /* string description = 2; */
+    if (message.description !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.description);
+    /* int32 def = 3; */
+    if (message.def !== 0) writer.tag(3, WireType.Varint).int32(message.def);
+    /* string placeholder = 4; */
+    if (message.placeholder !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.placeholder);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.MinMaxSetting.Entry
@@ -2131,117 +2794,244 @@ class MinMaxSetting_Entry$Type extends MessageType<MinMaxSetting_Entry> {
 export const MinMaxSetting_Entry = new MinMaxSetting_Entry$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SettingEntry$Type extends MessageType<SettingEntry> {
-    constructor() {
-        super("soulfire.v1.SettingEntry", [
-            { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "string", kind: "message", oneof: "value", T: () => StringSetting },
-            { no: 3, name: "int", kind: "message", oneof: "value", T: () => IntSetting },
-            { no: 4, name: "double", kind: "message", oneof: "value", T: () => DoubleSetting },
-            { no: 5, name: "bool", kind: "message", oneof: "value", T: () => BoolSetting },
-            { no: 6, name: "combo", kind: "message", oneof: "value", T: () => ComboSetting },
-            { no: 7, name: "string_list", kind: "message", oneof: "value", T: () => StringListSetting },
-            { no: 8, name: "min_max", kind: "message", oneof: "value", T: () => MinMaxSetting }
-        ]);
+  constructor() {
+    super("soulfire.v1.SettingEntry", [
+      { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "string",
+        kind: "message",
+        oneof: "value",
+        T: () => StringSetting,
+      },
+      {
+        no: 3,
+        name: "int",
+        kind: "message",
+        oneof: "value",
+        T: () => IntSetting,
+      },
+      {
+        no: 4,
+        name: "double",
+        kind: "message",
+        oneof: "value",
+        T: () => DoubleSetting,
+      },
+      {
+        no: 5,
+        name: "bool",
+        kind: "message",
+        oneof: "value",
+        T: () => BoolSetting,
+      },
+      {
+        no: 6,
+        name: "combo",
+        kind: "message",
+        oneof: "value",
+        T: () => ComboSetting,
+      },
+      {
+        no: 7,
+        name: "string_list",
+        kind: "message",
+        oneof: "value",
+        T: () => StringListSetting,
+      },
+      {
+        no: 8,
+        name: "min_max",
+        kind: "message",
+        oneof: "value",
+        T: () => MinMaxSetting,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<SettingEntry>): SettingEntry {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.key = "";
+    message.value = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<SettingEntry>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SettingEntry,
+  ): SettingEntry {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string key */ 1:
+          message.key = reader.string();
+          break;
+        case /* soulfire.v1.StringSetting string */ 2:
+          message.value = {
+            oneofKind: "string",
+            string: StringSetting.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.value as any).string,
+            ),
+          };
+          break;
+        case /* soulfire.v1.IntSetting int */ 3:
+          message.value = {
+            oneofKind: "int",
+            int: IntSetting.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.value as any).int,
+            ),
+          };
+          break;
+        case /* soulfire.v1.DoubleSetting double */ 4:
+          message.value = {
+            oneofKind: "double",
+            double: DoubleSetting.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.value as any).double,
+            ),
+          };
+          break;
+        case /* soulfire.v1.BoolSetting bool */ 5:
+          message.value = {
+            oneofKind: "bool",
+            bool: BoolSetting.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.value as any).bool,
+            ),
+          };
+          break;
+        case /* soulfire.v1.ComboSetting combo */ 6:
+          message.value = {
+            oneofKind: "combo",
+            combo: ComboSetting.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.value as any).combo,
+            ),
+          };
+          break;
+        case /* soulfire.v1.StringListSetting string_list */ 7:
+          message.value = {
+            oneofKind: "stringList",
+            stringList: StringListSetting.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.value as any).stringList,
+            ),
+          };
+          break;
+        case /* soulfire.v1.MinMaxSetting min_max */ 8:
+          message.value = {
+            oneofKind: "minMax",
+            minMax: MinMaxSetting.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.value as any).minMax,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<SettingEntry>): SettingEntry {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.key = "";
-        message.value = { oneofKind: undefined };
-        if (value !== undefined)
-            reflectionMergePartial<SettingEntry>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SettingEntry): SettingEntry {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string key */ 1:
-                    message.key = reader.string();
-                    break;
-                case /* soulfire.v1.StringSetting string */ 2:
-                    message.value = {
-                        oneofKind: "string",
-                        string: StringSetting.internalBinaryRead(reader, reader.uint32(), options, (message.value as any).string)
-                    };
-                    break;
-                case /* soulfire.v1.IntSetting int */ 3:
-                    message.value = {
-                        oneofKind: "int",
-                        int: IntSetting.internalBinaryRead(reader, reader.uint32(), options, (message.value as any).int)
-                    };
-                    break;
-                case /* soulfire.v1.DoubleSetting double */ 4:
-                    message.value = {
-                        oneofKind: "double",
-                        double: DoubleSetting.internalBinaryRead(reader, reader.uint32(), options, (message.value as any).double)
-                    };
-                    break;
-                case /* soulfire.v1.BoolSetting bool */ 5:
-                    message.value = {
-                        oneofKind: "bool",
-                        bool: BoolSetting.internalBinaryRead(reader, reader.uint32(), options, (message.value as any).bool)
-                    };
-                    break;
-                case /* soulfire.v1.ComboSetting combo */ 6:
-                    message.value = {
-                        oneofKind: "combo",
-                        combo: ComboSetting.internalBinaryRead(reader, reader.uint32(), options, (message.value as any).combo)
-                    };
-                    break;
-                case /* soulfire.v1.StringListSetting string_list */ 7:
-                    message.value = {
-                        oneofKind: "stringList",
-                        stringList: StringListSetting.internalBinaryRead(reader, reader.uint32(), options, (message.value as any).stringList)
-                    };
-                    break;
-                case /* soulfire.v1.MinMaxSetting min_max */ 8:
-                    message.value = {
-                        oneofKind: "minMax",
-                        minMax: MinMaxSetting.internalBinaryRead(reader, reader.uint32(), options, (message.value as any).minMax)
-                    };
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SettingEntry, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string key = 1; */
-        if (message.key !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.key);
-        /* soulfire.v1.StringSetting string = 2; */
-        if (message.value.oneofKind === "string")
-            StringSetting.internalBinaryWrite(message.value.string, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.IntSetting int = 3; */
-        if (message.value.oneofKind === "int")
-            IntSetting.internalBinaryWrite(message.value.int, writer.tag(3, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.DoubleSetting double = 4; */
-        if (message.value.oneofKind === "double")
-            DoubleSetting.internalBinaryWrite(message.value.double, writer.tag(4, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.BoolSetting bool = 5; */
-        if (message.value.oneofKind === "bool")
-            BoolSetting.internalBinaryWrite(message.value.bool, writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.ComboSetting combo = 6; */
-        if (message.value.oneofKind === "combo")
-            ComboSetting.internalBinaryWrite(message.value.combo, writer.tag(6, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.StringListSetting string_list = 7; */
-        if (message.value.oneofKind === "stringList")
-            StringListSetting.internalBinaryWrite(message.value.stringList, writer.tag(7, WireType.LengthDelimited).fork(), options).join();
-        /* soulfire.v1.MinMaxSetting min_max = 8; */
-        if (message.value.oneofKind === "minMax")
-            MinMaxSetting.internalBinaryWrite(message.value.minMax, writer.tag(8, WireType.LengthDelimited).fork(), options).join();
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SettingEntry,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string key = 1; */
+    if (message.key !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.key);
+    /* soulfire.v1.StringSetting string = 2; */
+    if (message.value.oneofKind === "string")
+      StringSetting.internalBinaryWrite(
+        message.value.string,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.IntSetting int = 3; */
+    if (message.value.oneofKind === "int")
+      IntSetting.internalBinaryWrite(
+        message.value.int,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.DoubleSetting double = 4; */
+    if (message.value.oneofKind === "double")
+      DoubleSetting.internalBinaryWrite(
+        message.value.double,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.BoolSetting bool = 5; */
+    if (message.value.oneofKind === "bool")
+      BoolSetting.internalBinaryWrite(
+        message.value.bool,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.ComboSetting combo = 6; */
+    if (message.value.oneofKind === "combo")
+      ComboSetting.internalBinaryWrite(
+        message.value.combo,
+        writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.StringListSetting string_list = 7; */
+    if (message.value.oneofKind === "stringList")
+      StringListSetting.internalBinaryWrite(
+        message.value.stringList,
+        writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.MinMaxSetting min_max = 8; */
+    if (message.value.oneofKind === "minMax")
+      MinMaxSetting.internalBinaryWrite(
+        message.value.minMax,
+        writer.tag(8, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.SettingEntry
@@ -2249,84 +3039,133 @@ class SettingEntry$Type extends MessageType<SettingEntry> {
 export const SettingEntry = new SettingEntry$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SettingsPage$Type extends MessageType<SettingsPage> {
-    constructor() {
-        super("soulfire.v1.SettingsPage", [
-            { no: 2, name: "owning_plugin", kind: "message", T: () => ServerPlugin },
-            { no: 3, name: "page_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "entries", kind: "message", repeat: 2 /*RepeatType.UNPACKED*/, T: () => SettingEntry },
-            { no: 6, name: "icon_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 7, name: "enabled_key", kind: "scalar", opt: true, T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.SettingsPage", [
+      { no: 2, name: "owning_plugin", kind: "message", T: () => ServerPlugin },
+      { no: 3, name: "page_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 4, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 5,
+        name: "entries",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SettingEntry,
+      },
+      { no: 6, name: "icon_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 7,
+        name: "enabled_key",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<SettingsPage>): SettingsPage {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.pageName = "";
+    message.namespace = "";
+    message.entries = [];
+    message.iconId = "";
+    if (value !== undefined)
+      reflectionMergePartial<SettingsPage>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SettingsPage,
+  ): SettingsPage {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* optional soulfire.v1.ServerPlugin owning_plugin */ 2:
+          message.owningPlugin = ServerPlugin.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.owningPlugin,
+          );
+          break;
+        case /* string page_name */ 3:
+          message.pageName = reader.string();
+          break;
+        case /* string namespace */ 4:
+          message.namespace = reader.string();
+          break;
+        case /* repeated soulfire.v1.SettingEntry entries */ 5:
+          message.entries.push(
+            SettingEntry.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* string icon_id */ 6:
+          message.iconId = reader.string();
+          break;
+        case /* optional string enabled_key */ 7:
+          message.enabledKey = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<SettingsPage>): SettingsPage {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.pageName = "";
-        message.namespace = "";
-        message.entries = [];
-        message.iconId = "";
-        if (value !== undefined)
-            reflectionMergePartial<SettingsPage>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: SettingsPage): SettingsPage {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* optional soulfire.v1.ServerPlugin owning_plugin */ 2:
-                    message.owningPlugin = ServerPlugin.internalBinaryRead(reader, reader.uint32(), options, message.owningPlugin);
-                    break;
-                case /* string page_name */ 3:
-                    message.pageName = reader.string();
-                    break;
-                case /* string namespace */ 4:
-                    message.namespace = reader.string();
-                    break;
-                case /* repeated soulfire.v1.SettingEntry entries */ 5:
-                    message.entries.push(SettingEntry.internalBinaryRead(reader, reader.uint32(), options));
-                    break;
-                case /* string icon_id */ 6:
-                    message.iconId = reader.string();
-                    break;
-                case /* optional string enabled_key */ 7:
-                    message.enabledKey = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: SettingsPage, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* optional soulfire.v1.ServerPlugin owning_plugin = 2; */
-        if (message.owningPlugin)
-            ServerPlugin.internalBinaryWrite(message.owningPlugin, writer.tag(2, WireType.LengthDelimited).fork(), options).join();
-        /* string page_name = 3; */
-        if (message.pageName !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.pageName);
-        /* string namespace = 4; */
-        if (message.namespace !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.namespace);
-        /* repeated soulfire.v1.SettingEntry entries = 5; */
-        for (let i = 0; i < message.entries.length; i++)
-            SettingEntry.internalBinaryWrite(message.entries[i], writer.tag(5, WireType.LengthDelimited).fork(), options).join();
-        /* string icon_id = 6; */
-        if (message.iconId !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.iconId);
-        /* optional string enabled_key = 7; */
-        if (message.enabledKey !== undefined)
-            writer.tag(7, WireType.LengthDelimited).string(message.enabledKey);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SettingsPage,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* optional soulfire.v1.ServerPlugin owning_plugin = 2; */
+    if (message.owningPlugin)
+      ServerPlugin.internalBinaryWrite(
+        message.owningPlugin,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* string page_name = 3; */
+    if (message.pageName !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.pageName);
+    /* string namespace = 4; */
+    if (message.namespace !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.namespace);
+    /* repeated soulfire.v1.SettingEntry entries = 5; */
+    for (let i = 0; i < message.entries.length; i++)
+      SettingEntry.internalBinaryWrite(
+        message.entries[i],
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* string icon_id = 6; */
+    if (message.iconId !== "")
+      writer.tag(6, WireType.LengthDelimited).string(message.iconId);
+    /* optional string enabled_key = 7; */
+    if (message.enabledKey !== undefined)
+      writer.tag(7, WireType.LengthDelimited).string(message.enabledKey);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.SettingsPage
@@ -2334,86 +3173,113 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
 export const SettingsPage = new SettingsPage$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ServerPlugin$Type extends MessageType<ServerPlugin> {
-    constructor() {
-        super("soulfire.v1.ServerPlugin", [
-            { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 2, name: "version", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 3, name: "description", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 4, name: "author", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 5, name: "license", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-            { no: 6, name: "website", kind: "scalar", T: 9 /*ScalarType.STRING*/ }
-        ]);
+  constructor() {
+    super("soulfire.v1.ServerPlugin", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "version", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 4, name: "author", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 5, name: "license", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 6, name: "website", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<ServerPlugin>): ServerPlugin {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.version = "";
+    message.description = "";
+    message.author = "";
+    message.license = "";
+    message.website = "";
+    if (value !== undefined)
+      reflectionMergePartial<ServerPlugin>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ServerPlugin,
+  ): ServerPlugin {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string version */ 2:
+          message.version = reader.string();
+          break;
+        case /* string description */ 3:
+          message.description = reader.string();
+          break;
+        case /* string author */ 4:
+          message.author = reader.string();
+          break;
+        case /* string license */ 5:
+          message.license = reader.string();
+          break;
+        case /* string website */ 6:
+          message.website = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
     }
-    create(value?: PartialMessage<ServerPlugin>): ServerPlugin {
-        const message = globalThis.Object.create((this.messagePrototype!));
-        message.id = "";
-        message.version = "";
-        message.description = "";
-        message.author = "";
-        message.license = "";
-        message.website = "";
-        if (value !== undefined)
-            reflectionMergePartial<ServerPlugin>(this, message, value);
-        return message;
-    }
-    internalBinaryRead(reader: IBinaryReader, length: number, options: BinaryReadOptions, target?: ServerPlugin): ServerPlugin {
-        let message = target ?? this.create(), end = reader.pos + length;
-        while (reader.pos < end) {
-            let [fieldNo, wireType] = reader.tag();
-            switch (fieldNo) {
-                case /* string id */ 1:
-                    message.id = reader.string();
-                    break;
-                case /* string version */ 2:
-                    message.version = reader.string();
-                    break;
-                case /* string description */ 3:
-                    message.description = reader.string();
-                    break;
-                case /* string author */ 4:
-                    message.author = reader.string();
-                    break;
-                case /* string license */ 5:
-                    message.license = reader.string();
-                    break;
-                case /* string website */ 6:
-                    message.website = reader.string();
-                    break;
-                default:
-                    let u = options.readUnknownField;
-                    if (u === "throw")
-                        throw new globalThis.Error(`Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`);
-                    let d = reader.skip(wireType);
-                    if (u !== false)
-                        (u === true ? UnknownFieldHandler.onRead : u)(this.typeName, message, fieldNo, wireType, d);
-            }
-        }
-        return message;
-    }
-    internalBinaryWrite(message: ServerPlugin, writer: IBinaryWriter, options: BinaryWriteOptions): IBinaryWriter {
-        /* string id = 1; */
-        if (message.id !== "")
-            writer.tag(1, WireType.LengthDelimited).string(message.id);
-        /* string version = 2; */
-        if (message.version !== "")
-            writer.tag(2, WireType.LengthDelimited).string(message.version);
-        /* string description = 3; */
-        if (message.description !== "")
-            writer.tag(3, WireType.LengthDelimited).string(message.description);
-        /* string author = 4; */
-        if (message.author !== "")
-            writer.tag(4, WireType.LengthDelimited).string(message.author);
-        /* string license = 5; */
-        if (message.license !== "")
-            writer.tag(5, WireType.LengthDelimited).string(message.license);
-        /* string website = 6; */
-        if (message.website !== "")
-            writer.tag(6, WireType.LengthDelimited).string(message.website);
-        let u = options.writeUnknownFields;
-        if (u !== false)
-            (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
-        return writer;
-    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ServerPlugin,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string version = 2; */
+    if (message.version !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.version);
+    /* string description = 3; */
+    if (message.description !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.description);
+    /* string author = 4; */
+    if (message.author !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.author);
+    /* string license = 5; */
+    if (message.license !== "")
+      writer.tag(5, WireType.LengthDelimited).string(message.license);
+    /* string website = 6; */
+    if (message.website !== "")
+      writer.tag(6, WireType.LengthDelimited).string(message.website);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
 }
 /**
  * @generated MessageType for protobuf message soulfire.v1.ServerPlugin

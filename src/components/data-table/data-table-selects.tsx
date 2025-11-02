@@ -1,26 +1,26 @@
-import { CellContext, HeaderContext } from '@tanstack/react-table';
-import { Checkbox } from '@/components/ui/checkbox.tsx';
-import { useTranslation } from 'react-i18next';
+import { CellContext, HeaderContext } from "@tanstack/react-table";
+import { useTranslation } from "react-i18next";
+import { Checkbox } from "@/components/ui/checkbox.tsx";
 
 export function SelectAllHeader<T>({ table }: HeaderContext<T, unknown>) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   return (
     <div className="flex">
       <Checkbox
         className="my-auto"
         checked={
           table.getIsAllRowsSelected() ||
-          (table.getIsSomeRowsSelected() && 'indeterminate')
+          (table.getIsSomeRowsSelected() && "indeterminate")
         }
         onCheckedChange={(value) => table.toggleAllRowsSelected(!!value)}
-        aria-label={t('dataTable.selectAll')}
+        aria-label={t("dataTable.selectAll")}
       />
     </div>
   );
 }
 
 export function SelectRowHeader<T>({ row }: CellContext<T, unknown>) {
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
   return (
     <div className="flex">
       <Checkbox
@@ -28,7 +28,7 @@ export function SelectRowHeader<T>({ row }: CellContext<T, unknown>) {
         disabled={!row.getCanSelect()}
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label={t('dataTable.selectRow')}
+        aria-label={t("dataTable.selectRow")}
       />
     </div>
   );

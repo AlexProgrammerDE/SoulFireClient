@@ -3,64 +3,106 @@
 // @generated from protobuf file "soulfire/mc-auth.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
-import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
-import type { ServiceInfo } from "@protobuf-ts/runtime-rpc";
-import { MCAuthService } from "./mc-auth";
-import type { RefreshResponse } from "./mc-auth";
-import type { RefreshRequest } from "./mc-auth";
-import type { UnaryCall } from "@protobuf-ts/runtime-rpc";
-import type { DeviceCodeAuthResponse } from "./mc-auth";
-import type { DeviceCodeAuthRequest } from "./mc-auth";
+import type {
+  RpcOptions,
+  RpcTransport,
+  ServerStreamingCall,
+  ServiceInfo,
+  UnaryCall,
+} from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type { CredentialsAuthResponse } from "./mc-auth";
-import type { CredentialsAuthRequest } from "./mc-auth";
-import type { ServerStreamingCall } from "@protobuf-ts/runtime-rpc";
-import type { RpcOptions } from "@protobuf-ts/runtime-rpc";
+import type {
+  CredentialsAuthRequest,
+  CredentialsAuthResponse,
+  DeviceCodeAuthRequest,
+  DeviceCodeAuthResponse,
+  RefreshRequest,
+  RefreshResponse,
+} from "./mc-auth";
+import { MCAuthService } from "./mc-auth";
 /**
  * @generated from protobuf service soulfire.v1.MCAuthService
  */
 export interface IMCAuthServiceClient {
-    /**
-     * @generated from protobuf rpc: LoginCredentials
-     */
-    loginCredentials(input: CredentialsAuthRequest, options?: RpcOptions): ServerStreamingCall<CredentialsAuthRequest, CredentialsAuthResponse>;
-    /**
-     * @generated from protobuf rpc: LoginDeviceCode
-     */
-    loginDeviceCode(input: DeviceCodeAuthRequest, options?: RpcOptions): ServerStreamingCall<DeviceCodeAuthRequest, DeviceCodeAuthResponse>;
-    /**
-     * @generated from protobuf rpc: Refresh
-     */
-    refresh(input: RefreshRequest, options?: RpcOptions): UnaryCall<RefreshRequest, RefreshResponse>;
+  /**
+   * @generated from protobuf rpc: LoginCredentials
+   */
+  loginCredentials(
+    input: CredentialsAuthRequest,
+    options?: RpcOptions,
+  ): ServerStreamingCall<CredentialsAuthRequest, CredentialsAuthResponse>;
+  /**
+   * @generated from protobuf rpc: LoginDeviceCode
+   */
+  loginDeviceCode(
+    input: DeviceCodeAuthRequest,
+    options?: RpcOptions,
+  ): ServerStreamingCall<DeviceCodeAuthRequest, DeviceCodeAuthResponse>;
+  /**
+   * @generated from protobuf rpc: Refresh
+   */
+  refresh(
+    input: RefreshRequest,
+    options?: RpcOptions,
+  ): UnaryCall<RefreshRequest, RefreshResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.MCAuthService
  */
 export class MCAuthServiceClient implements IMCAuthServiceClient, ServiceInfo {
-    typeName = MCAuthService.typeName;
-    methods = MCAuthService.methods;
-    options = MCAuthService.options;
-    constructor(private readonly _transport: RpcTransport) {
-    }
-    /**
-     * @generated from protobuf rpc: LoginCredentials
-     */
-    loginCredentials(input: CredentialsAuthRequest, options?: RpcOptions): ServerStreamingCall<CredentialsAuthRequest, CredentialsAuthResponse> {
-        const method = this.methods[0], opt = this._transport.mergeOptions(options);
-        return stackIntercept<CredentialsAuthRequest, CredentialsAuthResponse>("serverStreaming", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: LoginDeviceCode
-     */
-    loginDeviceCode(input: DeviceCodeAuthRequest, options?: RpcOptions): ServerStreamingCall<DeviceCodeAuthRequest, DeviceCodeAuthResponse> {
-        const method = this.methods[1], opt = this._transport.mergeOptions(options);
-        return stackIntercept<DeviceCodeAuthRequest, DeviceCodeAuthResponse>("serverStreaming", this._transport, method, opt, input);
-    }
-    /**
-     * @generated from protobuf rpc: Refresh
-     */
-    refresh(input: RefreshRequest, options?: RpcOptions): UnaryCall<RefreshRequest, RefreshResponse> {
-        const method = this.methods[2], opt = this._transport.mergeOptions(options);
-        return stackIntercept<RefreshRequest, RefreshResponse>("unary", this._transport, method, opt, input);
-    }
+  typeName = MCAuthService.typeName;
+  methods = MCAuthService.methods;
+  options = MCAuthService.options;
+  constructor(private readonly _transport: RpcTransport) {}
+  /**
+   * @generated from protobuf rpc: LoginCredentials
+   */
+  loginCredentials(
+    input: CredentialsAuthRequest,
+    options?: RpcOptions,
+  ): ServerStreamingCall<CredentialsAuthRequest, CredentialsAuthResponse> {
+    const method = this.methods[0],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<CredentialsAuthRequest, CredentialsAuthResponse>(
+      "serverStreaming",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: LoginDeviceCode
+   */
+  loginDeviceCode(
+    input: DeviceCodeAuthRequest,
+    options?: RpcOptions,
+  ): ServerStreamingCall<DeviceCodeAuthRequest, DeviceCodeAuthResponse> {
+    const method = this.methods[1],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<DeviceCodeAuthRequest, DeviceCodeAuthResponse>(
+      "serverStreaming",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: Refresh
+   */
+  refresh(
+    input: RefreshRequest,
+    options?: RpcOptions,
+  ): UnaryCall<RefreshRequest, RefreshResponse> {
+    const method = this.methods[2],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<RefreshRequest, RefreshResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
 }
