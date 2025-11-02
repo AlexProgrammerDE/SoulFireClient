@@ -32,7 +32,7 @@
       "!src/components/data-table/**",
       "!src/generated/**",
       "!src/routeTree.gen.ts"
-    ]
+    ],
     "enabled": true,
     "rules": {
       "recommended": true,
