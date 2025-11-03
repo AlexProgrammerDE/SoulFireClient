@@ -59,7 +59,6 @@
       "microsoftCredentials": "Microsoft Zugangsdaten",
       "microsoftDeviceCode": "Microsoft Gerätecode",
       "microsoftRefreshToken": "Microsoft Aktualisierungstoken",
-      "theAltening": "The Altening",
       "dialog": {
         "title": "Importiere {{type}} Konten",
         "description": "Fügen Sie Ihre Konten hier ein, eins pro Zeile"

@@ -59,7 +59,6 @@
       "microsoftCredentials": "Poświadczenia Microsoft",
       "microsoftDeviceCode": "Kod urządzenia Microsoft",
       "microsoftRefreshToken": "Microsoft Refresh Token",
-      "theAltening": "The Altening",
       "dialog": {
         "title": "Importuj konta {{type}}",
         "description": "Wklej tutaj swoje konta, po jednym na linię"

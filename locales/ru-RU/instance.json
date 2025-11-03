@@ -59,7 +59,6 @@
       "microsoftCredentials": "Учетные данные Microsoft",
       "microsoftDeviceCode": "Код устройства Microsoft",
       "microsoftRefreshToken": "Microsoft Refresh Token",
-      "theAltening": "The Altening",
       "dialog": {
         "title": "Импорт {{type}} аккаунтов",
         "description": "Вставьте здесь свои аккаунты, по одном на строу"
