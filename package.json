@@ -124,7 +124,7 @@
     "@tanstack/react-router": "^1.114.27",
     "@tanstack/router-cli": "^1.114.27",
     "@tanstack/router-plugin": "^1.114.27",
-    "@tauri-apps/cli": "2.9.3",
+    "@tauri-apps/cli": "2.9.4",
     "@types/file-saver": "^2.0.7",
     "@types/loadable__component": "^5.13.9",
     "@types/node": "^24.0.0",
