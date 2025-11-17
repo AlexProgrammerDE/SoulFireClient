@@ -243,7 +243,7 @@ function Index() {
         />
       </svg>
       <main className="flex min-h-dvh w-full flex-col">
-        <div className="m-auto flex w-full max-w-lg flex-col gap-6">
+        <div className="m-auto flex w-full max-w-lg flex-col gap-4">
           <ExternalLink
             href="https://soulfiremc.com"
             className="flex flex-row items-center justify-center gap-2 text-center"
@@ -286,6 +286,19 @@ function Index() {
           )}
           <div>
             <div className="text-muted-foreground text-center text-xs text-balance">
+              <p className="mb-2">
+                <Trans
+                  i18nKey="login:newUser"
+                  components={{
+                    a: (
+                      <ExternalLink
+                        href="https://soulfiremc.com/demo-video"
+                        className="text-nowrap text-blue-500"
+                      />
+                    ),
+                  }}
+                />
+              </p>
               <p className="mb-1">
                 {t("footer.version", {
                   version: APP_VERSION,

@@ -5,6 +5,7 @@
     },
     "title": "SoulFire"
   },
+  "newUser": "New to SoulFire? We recommend checking out the <a>getting started guide</a>.",
   "connect": {
     "title": "Connect to a SoulFire server",
     "description": "Select which type of SoulFire server to connect to.",
