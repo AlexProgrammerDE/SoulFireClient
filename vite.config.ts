@@ -44,6 +44,7 @@ export default defineConfig({
     react(),
     svgr(),
   ],
+  clearScreen: false,
   resolve: {
     alias: {
       "@": resolve(process.cwd(), "src"),
