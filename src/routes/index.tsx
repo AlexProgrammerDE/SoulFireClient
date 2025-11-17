@@ -83,7 +83,6 @@ import {
   createAddressOnlyTransport,
   setAuthentication,
 } from "@/lib/web-rpc.ts";
-import Logo from "../../public/logo.png";
 
 const LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY = "form-server-address";
 const LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY = "form-server-token";
@@ -249,7 +248,7 @@ function Index() {
               className="size-8"
               width={32}
               height={32}
-              src={Logo}
+              src="/logo.png"
               alt={t("header.image.alt")}
             />
             <p className="font-medium tracking-wide">{t("header.title")}</p>
