@@ -26,6 +26,7 @@ import { Trans, useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { z } from "zod";
 import { ExternalLink } from "@/components/external-link.tsx";
+import { ModeToggle } from "@/components/mode-toggle.tsx";
 import { SystemInfoContext } from "@/components/providers/system-info-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import {
@@ -353,6 +354,7 @@ function Index() {
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
+              <ModeToggle />
             </div>
           </div>
         </div>
