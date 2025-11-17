@@ -244,7 +244,10 @@ function Index() {
       </svg>
       <main className="flex min-h-dvh w-full flex-col">
         <div className="m-auto flex w-full max-w-lg flex-col gap-6">
-          <div className="flex flex-row items-center justify-center gap-2 text-center">
+          <ExternalLink
+            href="https://soulfiremc.com"
+            className="flex flex-row items-center justify-center gap-2 text-center"
+          >
             <img
               className="size-8"
               width={32}
@@ -253,7 +256,7 @@ function Index() {
               alt={t("header.image.alt")}
             />
             <p className="font-medium tracking-wide">{t("header.title")}</p>
-          </div>
+          </ExternalLink>
           {loginType === null && (
             <DefaultMenu
               setLoginType={setLoginType}
