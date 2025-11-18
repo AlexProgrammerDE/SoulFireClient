@@ -5,6 +5,7 @@
     },
     "title": "SoulFire"
   },
+  "newUser": "",
   "connect": {
     "title": "Pripojte sa k serveru SoulFire",
     "description": "Vyberte typ servera SoulFire, ku ktorému sa chcete pripojiť.",

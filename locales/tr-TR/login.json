@@ -5,6 +5,7 @@
     },
     "title": "SoulFire"
   },
+  "newUser": "",
   "connect": {
     "title": "SoulFire Sunucusuna Bağlan",
     "description": "Hangi tür SoulFire sunucusuna bağlanmak istiyorsanız onu seçin.",
