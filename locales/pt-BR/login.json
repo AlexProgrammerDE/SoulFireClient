@@ -5,6 +5,7 @@
     },
     "title": "SoulFire"
   },
+  "newUser": "",
   "connect": {
     "title": "Conecte-se a um servidor SoulFire",
     "description": "Selecione o tipo de servidor do SoulFire para se conectar.",
