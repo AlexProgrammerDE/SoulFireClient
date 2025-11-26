@@ -67,7 +67,7 @@
         "fromClipboard": "",
         "textarea": {
           "placeholder": "",
-          "submit": ""
+          "submit": "Cargar desde texto"
         }
       },
       "url": {
@@ -107,7 +107,7 @@
     },
     "pauseToast": {
       "loading": "",
-      "success": "",
+      "success": "Ataque pausado correctamente",
       "error": ""
     },
     "stopToast": {
