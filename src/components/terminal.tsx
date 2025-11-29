@@ -83,13 +83,10 @@ const MemoAnsiHtml = React.memo(
           {content.instanceName && (
             <>
               <span>{"\u0020"}</span>
-              <span>Instance: {content.instanceName}</span>
-            </>
-          )}
-          {content.botAccountName && (
-            <>
-              <span>{"\u0020"}</span>
-              <span>Bot: {content.botAccountName}</span>
+              <span>
+                {content.instanceName}
+                {content.botAccountName ? `:${content.botAccountName}` : ""}
+              </span>
             </>
           )}
           <span>{"\u0020"}</span>
@@ -427,6 +424,8 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
                 level: entry.level,
                 timestamp: entry.timestamp,
                 loggerName: entry.loggerName,
+                instanceName: entry.instanceName,
+                botAccountName: entry.botAccountName,
               }}
             />
           );
