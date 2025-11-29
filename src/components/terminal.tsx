@@ -67,7 +67,7 @@ const MemoAnsiHtml = React.memo(
           <span>{content.level}</span>
           {content.timestamp && (
             <>
-              <span>{"\u202F"}</span>
+              <span>{"\u0020"}</span>
               <span>
                 {timestampToDate(content.timestamp).toLocaleTimeString(
                   i18n.resolvedLanguage,
@@ -75,9 +75,9 @@ const MemoAnsiHtml = React.memo(
               </span>
             </>
           )}
-          <span>{"\u202F"}</span>
+          <span>{"\u0020"}</span>
           <span>{formatLoggerName(content.loggerName)}</span>
-          <span>{"\u202F"}</span>
+          <span>{"\u0020"}</span>
         </span>
         <AnsiHtml
           text={
@@ -88,11 +88,11 @@ const MemoAnsiHtml = React.memo(
         />
         {isImportantLog(content.level) && (
           <>
-            <span className="inline-flex select-none">{"\u202F"}</span>
+            <span className="select-none">{"\u0020"}</span>
             <Button
               variant="ghost"
               size="sm"
-              className="h-fit px-0 inline-flex align-middle select-none size-3"
+              className="h-fit px-0 select-none size-3"
               onClick={() => {
                 copyToClipboard(stripAnsi(content.message));
               }}
@@ -100,11 +100,11 @@ const MemoAnsiHtml = React.memo(
             >
               <ClipboardIcon />
             </Button>
-            <span className="inline-flex select-none">{"\u202F"}</span>
+            <span className="select-none">{"\u0020"}</span>
             <Button
               variant="ghost"
               size="sm"
-              className="h-fit px-0 inline-flex align-middle select-none size-3"
+              className="h-fit px-0 select-none size-3"
               onClick={() => {
                 toast.promise(
                   uploadToMcLogs(stripAnsi(content.message)).then(
