@@ -49,7 +49,12 @@ const MemoAnsiHtml = React.memo(
   }: {
     content: Pick<
       TerminalLine,
-      "message" | "level" | "timestamp" | "loggerName"
+      | "message"
+      | "level"
+      | "timestamp"
+      | "loggerName"
+      | "instanceName"
+      | "botAccountName"
     >;
   }) => {
     const copyToClipboard = useCopyToClipboard();
@@ -73,6 +78,18 @@ const MemoAnsiHtml = React.memo(
                   i18n.resolvedLanguage,
                 )}
               </span>
+            </>
+          )}
+          {content.instanceName && (
+            <>
+              <span>{"\u0020"}</span>
+              <span>Instance: {content.instanceName}</span>
+            </>
+          )}
+          {content.botAccountName && (
+            <>
+              <span>{"\u0020"}</span>
+              <span>Bot: {content.botAccountName}</span>
             </>
           )}
           <span>{"\u0020"}</span>
