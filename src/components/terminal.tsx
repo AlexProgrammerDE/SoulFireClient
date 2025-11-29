@@ -13,13 +13,12 @@ import React, {
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { TerminalThemeContext } from "@/components/providers/terminal-theme-context.tsx";
-import { SFTimeAgo } from "@/components/sf-timeago.tsx";
-import { Button } from "@/components/ui/button.tsx";
 import { LogsServiceClient } from "@/generated/soulfire/logs.client.ts";
 import type { LogScope, LogString } from "@/generated/soulfire/logs.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { cn, isDemo, timestampToDate, uploadToMcLogs } from "@/lib/utils.tsx";
 import { TransportContext } from "./providers/transport-context.tsx";
+import { Button } from "./ui/button.tsx";
 import { ScrollArea } from "./ui/scroll-area.tsx";
 
 const MAX_TERMINAL_LINES = 500;
@@ -54,10 +53,10 @@ const MemoAnsiHtml = React.memo(
     >;
   }) => {
     const copyToClipboard = useCopyToClipboard();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     return (
-      <div className={"w-full hover:bg-(--terminal-selection-bg)/25"}>
+      <span className="w-full hover:bg-(--terminal-selection-bg)/25">
         <span
           className={cn({
             "text-(--ansi-yellow)": content.level === "WARN",
@@ -65,23 +64,22 @@ const MemoAnsiHtml = React.memo(
               content.level === "ERROR" || content.level === "FATAL",
           })}
         >
-          <span className="inline-flex align-middle">{content.level}</span>
+          <span>{content.level}</span>
           {content.timestamp && (
             <>
-              <span className="inline-flex align-middle">{"\u202F"}</span>
-              <span className="inline-flex align-middle">
-                <SFTimeAgo date={timestampToDate(content.timestamp)} />
+              <span>{"\u202F"}</span>
+              <span>
+                {timestampToDate(content.timestamp).toLocaleTimeString(
+                  i18n.resolvedLanguage,
+                )}
               </span>
             </>
           )}
-          <span className="inline-flex align-middle">{"\u202F"}</span>
-          <span className="inline-flex align-middle">
-            {formatLoggerName(content.loggerName)}
-          </span>
-          <span className="inline-flex align-middle">{"\u202F"}</span>
+          <span>{"\u202F"}</span>
+          <span>{formatLoggerName(content.loggerName)}</span>
+          <span>{"\u202F"}</span>
         </span>
         <AnsiHtml
-          className="inline-flex align-middle"
           text={
             stripAnsi(content.message).endsWith("\n")
               ? content.message
@@ -132,7 +130,7 @@ const MemoAnsiHtml = React.memo(
             </Button>
           </>
         )}
-      </div>
+      </span>
     );
   },
 );
@@ -402,7 +400,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
         } as CSSProperties
       }
     >
-      <p className="h-full min-h-[calc(75vh-8rem)] cursor-text py-0.5 pl-0.5 break-all whitespace-pre-wrap select-text selection:bg-(--terminal-selection-bg)/25">
+      <p className="h-full flex flex-col min-h-[calc(75vh-8rem)] cursor-text py-0.5 pl-0.5 break-all whitespace-pre-wrap select-text selection:bg-(--terminal-selection-bg)/25">
         {entries.map((entry) => {
           return (
             <MemoAnsiHtml
