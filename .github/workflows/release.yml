@@ -1,4 +1,4 @@
-name: 'publish'
+name: Release
 
 on:
   workflow_dispatch:
@@ -10,6 +10,8 @@ on:
         description: 'Server version to use for release'
         required: true
 
+# FIXME: Entire secret keys should not be inherited, Use specific set of secrets explicitly instead.
+# See this issue to learn more: https://github.com/zizmorcore/zizmor/issues/360
 jobs:
   set-server-version:
     uses: AlexProgrammerDE/SoulFireClient/.github/workflows/set-server-version.yml@main
@@ -34,18 +36,19 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: 'Checkout Repository'
-        uses: actions/checkout@v6
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # 6.0.0
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0
+          persist-credentials: false
 
       - name: 'Push to release branch'
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@77c5b412c50b723d2a4fbc6d71fb5723bcd439aa # 1.0.0
         with:
           branch: 'release'
 
       - name: 'Push to demo branch'
-        uses: ad-m/github-push-action@master
+        uses: ad-m/github-push-action@77c5b412c50b723d2a4fbc6d71fb5723bcd439aa # 1.0.0
         with:
           branch: 'demo'
 
@@ -99,21 +102,22 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - name: 'Shared: Checkout Repository'
-        uses: actions/checkout@v6
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # 6.0.0
         with:
           ref: ${{ github.ref }}
           persist-credentials: false
 
       - name: 'Shared: Set up nasm'
-        uses: ilammy/setup-nasm@v1
+        uses: ilammy/setup-nasm@72793074d3c8cdda771dba85f6deafe00623038b # 1.5.2
 
       - name: 'Shared: Setup node'
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # 6.0.0
         with:
           node-version: lts/*
+          check-latest: true
 
       - name: 'Shared: Install pnpm'
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # 4.2.0
         with:
           version: latest
 
@@ -127,12 +131,12 @@ jobs:
           echo "$env:CARGO_HOME\bin" >> $env:GITHUB_PATH
 
       - name: 'Shared: Install Rust toolchain'
-        uses: dtolnay/rust-toolchain@nightly
+        uses: dtolnay/rust-toolchain@cf76244e99afbae1b55057e1d471a1513fe6295c # 1.70.0
         with:
           targets: ${{ matrix.rust-targets }}
 
       - name: 'Desktop: Cache dependencies'
-        uses: Swatinem/rust-cache@v2
+        uses: Swatinem/rust-cache@779680da715d629ac1d338a641029a2f4372abb5 # 2.8.2
         with:
           save-if: ${{ github.ref == 'refs/heads/main' }}
           workspaces: src-tauri
@@ -156,7 +160,7 @@ jobs:
         run: pnpm install
 
       - name: 'Desktop: Build tauri project'
-        uses: tauri-apps/tauri-action@v0
+        uses: tauri-apps/tauri-action@19b93bb55601e3e373a93cfb6eb4242e45f5af20 # 0.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
@@ -214,7 +218,7 @@ jobs:
       - name: 'Windows AMD64/AArch64: Upload unsigned artifact'
         id: upload-unsigned-artifact
         if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # 5.0.0
         with:
           name: ${{ matrix.type }}-unsigned
           path: |
@@ -223,14 +227,14 @@ jobs:
 
       - name: 'Windows AMD64/AArch64: Notify Admin'
         if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
-        uses: tsickert/discord-webhook@v7.0.0
+        uses: tsickert/discord-webhook@b217a69502f52803de774ded2b1ab7c282e99645 # 7.0.0
         with:
           webhook-url: ${{ secrets.ADMIN_WEBHOOK_URL }}
           content: <@864603174899941376> Permit the signing request for SoulFireClient ${{ inputs.app-version }} on ${{ matrix.type }} https://app.signpath.io/Web/e091b552-3623-4d9d-83d7-059d8f32978b/SigningRequests
 
       - name: 'Windows AMD64/AArch64: Submit signing request'
         if: matrix.type == 'windows-amd64' || matrix.type == 'windows-aarch64'
-        uses: signpath/github-action-submit-signing-request@v2.0
+        uses: signpath/github-action-submit-signing-request@3f9250c56651ff692d6729a2fbb0603a42d7d322 # 2.0
         with:
           api-token: '${{ secrets.SIGNPATH_API_TOKEN }}'
           organization-id: 'e091b552-3623-4d9d-83d7-059d8f32978b'
@@ -248,7 +252,7 @@ jobs:
           pnpm tauri signer sign -k "${{ secrets.TAURI_PRIVATE_KEY }}" -p "${{ secrets.TAURI_KEY_PASSWORD }}" $fileName
 
       - name: 'Desktop: Upload artifacts'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # 5.0.0
         with:
           name: ${{ matrix.type }}
           path: |
@@ -265,32 +269,32 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Download linux-amd64 artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # 6.0.0
         with:
           name: linux-amd64
           path: release-artifacts/linux-amd64
       - name: Download linux-aarch64 artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # 6.0.0
         with:
           name: linux-aarch64
           path: release-artifacts/linux-aarch64
       - name: Download macos-aarch64 artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # 6.0.0
         with:
           name: macos-aarch64
           path: release-artifacts/macos-aarch64
       - name: Download macos-amd64 artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # 6.0.0
         with:
           name: macos-amd64
           path: release-artifacts/macos-amd64
       - name: Download windows-amd64 artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # 6.0.0
         with:
           name: windows-amd64
           path: release-artifacts/windows-amd64
       - name: Download windows-aarch64 artifacts
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # 6.0.0
         with:
           name: windows-aarch64
           path: release-artifacts/windows-aarch64
@@ -314,33 +318,33 @@ jobs:
           currentDate=$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")
           cat << EOF > 'release-artifacts/latest.json'
           {
-            "version": "${{ inputs.app-version }}",
+            "version": "${INPUTS_APP_VERSION}",
             "notes": "See the assets to download this version and install.",
             "pub_date": "$currentDate",
             "platforms": {
               "windows-x86_64": {
                 "signature": "$(cat "$windowsAmd64SigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$windowsAmd64File")"
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$windowsAmd64File")"
               },
               "windows-aarch64": {
                 "signature": "$(cat "$windowsAarch64SigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$windowsAarch64File")"
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$windowsAarch64File")"
               },
               "darwin-aarch64": {
                 "signature": "$(cat "$macosAarch64SigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$macosAarch64File")"
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$macosAarch64File")"
               },
               "darwin-x86_64": {
                 "signature": "$(cat "$macosAmd64SigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$macosAmd64File")"
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$macosAmd64File")"
               },
               "linux-x86_64": {
                 "signature": "$(cat "$linuxAmd64AppImageSigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$linuxAmd64AppImageFile")"
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$linuxAmd64AppImageFile")"
               },
               "linux-aarch64": {
                 "signature": "$(cat "$linuxAarch64AppImageSigFile")",
-                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${{ inputs.app-version }}/$(basename "$linuxAarch64AppImageFile")"
+                "url": "https://github.com/AlexProgrammerDE/SoulFireClient/releases/download/${INPUTS_APP_VERSION}/$(basename "$linuxAarch64AppImageFile")"
               }
             }
           }
@@ -349,10 +353,12 @@ jobs:
           echo "macosAmd64DmgFile=$(basename "$macosAmd64DmgFile")" >> $GITHUB_OUTPUT
           echo "windowsAmd64File=$(basename "$windowsAmd64File")" >> $GITHUB_OUTPUT
           echo "windowsAarch64File=$(basename "$windowsAarch64File")" >> $GITHUB_OUTPUT
+        env:
+          INPUTS_APP_VERSION: ${{ inputs.app-version }}
 
       - name: Build Changelog
         id: github_release
-        uses: mikepenz/release-changelog-builder-action@v6
+        uses: mikepenz/release-changelog-builder-action@439f79b5b5428107c7688c1d2b0e8bacc9b8792c # 6.0.1
         with:
           mode: COMMIT
           toTag: ${{ github.ref }}
@@ -426,7 +432,7 @@ jobs:
 
       - name: Create Release
         id: init-release
-        uses: softprops/action-gh-release@v2.4.2
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # 2.5.0
         with:
           body: |
             ## Download Links
@@ -457,8 +463,8 @@ jobs:
             release-artifacts/**/*.dmg
             release-artifacts/latest.json
 
-      - name: Discord Webhook Action
-        uses: tsickert/discord-webhook@v7.0.0
+      - name: Announce new SoulFireClient release
+        uses: tsickert/discord-webhook@b217a69502f52803de774ded2b1ab7c282e99645 # 7.0.0
         with:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
           content: <@&850705047938793503> New SoulFireClient version released!

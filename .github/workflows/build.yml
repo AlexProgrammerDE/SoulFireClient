@@ -1,7 +1,10 @@
-name: 'test'
+name: Build
 
 on:
   - push
+
+permissions:
+  contents: write
 
 jobs:
   test-tauri:
@@ -56,20 +59,21 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - name: 'Shared: Checkout repository'
-        uses: actions/checkout@v6
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # 6.0.0
         with:
           persist-credentials: false
 
       - name: 'Shared: Set up nasm'
-        uses: ilammy/setup-nasm@v1
+        uses: ilammy/setup-nasm@72793074d3c8cdda771dba85f6deafe00623038b # 1.5.2
 
       - name: 'Shared: Setup node'
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # 6.0.0
         with:
           node-version: lts/*
+          check-latest: true
 
       - name: 'Shared: Install pnpm'
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # 4.2.0
         with:
           version: latest
 
@@ -83,13 +87,13 @@ jobs:
           echo "$env:CARGO_HOME\bin" >> $env:GITHUB_PATH
 
       - name: 'Shared: Install Rust toolchain'
-        uses: dtolnay/rust-toolchain@nightly
+        uses: dtolnay/rust-toolchain@cf76244e99afbae1b55057e1d471a1513fe6295c # 1.70.0
         with:
           targets: ${{ matrix.rust-targets }}
 
       - name: 'Desktop: Cache dependencies'
         if: matrix.type != 'android'
-        uses: Swatinem/rust-cache@v2
+        uses: Swatinem/rust-cache@779680da715d629ac1d338a641029a2f4372abb5 # 2.8.2
         with:
           save-if: ${{ github.ref == 'refs/heads/main' }}
           workspaces: src-tauri
@@ -114,7 +118,7 @@ jobs:
 
       - name: 'Desktop: Build Tauri project'
         if: matrix.type != 'android'
-        uses: tauri-apps/tauri-action@v0
+        uses: tauri-apps/tauri-action@19b93bb55601e3e373a93cfb6eb4242e45f5af20 # 0.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
@@ -125,7 +129,7 @@ jobs:
           args: ${{ matrix.args }}
 
       - name: 'Desktop: Upload artifacts (Ubuntu AMD64)'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # 5.0.0
         if: matrix.type == 'linux-amd64'
         with:
           name: tauri-artifact-linux-amd64
@@ -135,7 +139,7 @@ jobs:
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (Ubuntu AArch64)'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # 5.0.0
         if: matrix.type == 'linux-aarch64'
         with:
           name: tauri-artifact-linux-aarch64
@@ -145,7 +149,7 @@ jobs:
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (macOS AArch64)'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # 5.0.0
         if: matrix.type == 'macos-aarch64'
         with:
           name: tauri-artifact-macos-aarch64
@@ -155,7 +159,7 @@ jobs:
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (macOS AMD64)'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # 5.0.0
         if: matrix.type == 'macos-amd64'
         with:
           name: tauri-artifact-macos-amd64
@@ -165,7 +169,7 @@ jobs:
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (Windows AMD64)'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # 5.0.0
         if: matrix.type == 'windows-amd64'
         with:
           name: tauri-artifact-windows-amd64
@@ -174,7 +178,7 @@ jobs:
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (Windows AArch64)'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # 5.0.0
         if: matrix.type == 'windows-aarch64'
         with:
           name: tauri-artifact-windows-aarch64
@@ -193,7 +197,7 @@ jobs:
 
       - name: 'Android: Set up JDK 21'
         if: matrix.type == 'android'
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@dded0888837ed1f317902acf8a20df0ad188d165 # 5.0.0
         with:
           java-version: '21'
           distribution: 'temurin'
@@ -201,12 +205,12 @@ jobs:
 
       - name: 'Android: Setup Android SDK'
         if: matrix.type == 'android'
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@9fc6c4e9069bf8d3d10b2204b1fb8f6ef7065407 # 3.2.2
 
       - name: 'Android: Set up NDK'
         if: matrix.type == 'android'
         id: setup-ndk
-        uses: nttld/setup-ndk@v1
+        uses: nttld/setup-ndk@afb4c9964b521afb97c864b7d40b11e6911bd410 # 1.5.0
         with:
           ndk-version: r26d
           link-to-sdk: false
@@ -248,7 +252,7 @@ jobs:
 
       - name: 'Android: Upload artifacts'
         if: matrix.type == 'android'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # 5.0.0
         with:
           name: tauri-artifact-android
           path: './src-tauri/gen/android/app/build/outputs'
