@@ -1,8 +1,11 @@
-name: 'Build and Test'
+name: Test
 
 on:
   - push
   - pull_request
+
+permissions:
+  contents: read
 
 jobs:
   test:
@@ -11,21 +14,22 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: 'Checkout repository'
-        uses: actions/checkout@v6
+        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # 6.0.0
         with:
           persist-credentials: false
 
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # 4.2.0
         name: Install pnpm
         with:
           version: latest
           run_install: false
 
       - name: Install Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # 6.0.0
         with:
           node-version: lts/*
           cache: 'pnpm'
+          check-latest: true
 
       - name: Install dependencies
         run: pnpm install
