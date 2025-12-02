@@ -39,7 +39,7 @@ jobs:
           version: latest
 
       - name: 'Shared: Install Rust toolchain'
-        uses: dtolnay/rust-toolchain@0c3131df9e5407c0c36352032d04af846dbe0fb7 # nightly
+        uses: dtolnay/rust-toolchain@0b1efabc08b657293548b77fb76cc02d26091c7e # nightly
 
       - name: 'Desktop: Cache dependencies'
         uses: Swatinem/rust-cache@779680da715d629ac1d338a641029a2f4372abb5 # 2.8.2
