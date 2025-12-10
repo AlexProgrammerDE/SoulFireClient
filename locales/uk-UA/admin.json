@@ -35,7 +35,7 @@
           "description": ""
         },
         "email": {
-          "label": "",
+          "label": "Електронна пошта",
           "placeholder": "",
           "description": ""
         },
@@ -85,7 +85,7 @@
     },
     "table": {
       "username": "",
-      "email": "",
+      "email": "Електронна пошта",
       "role": "",
       "createdAt": "",
       "minIssuedAt": "",
