@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: 'Checkout Repository'
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # 6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # 6.0.1
         with:
           ref: ${{ github.ref }}
           fetch-depth: 0
@@ -102,7 +102,7 @@ jobs:
     runs-on: ${{ matrix.platform }}
     steps:
       - name: 'Shared: Checkout Repository'
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # 6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # 6.0.1
         with:
           ref: ${{ github.ref }}
           persist-credentials: false
@@ -111,7 +111,7 @@ jobs:
         uses: ilammy/setup-nasm@72793074d3c8cdda771dba85f6deafe00623038b # 1.5.2
 
       - name: 'Shared: Setup node'
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # 6.0.0
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # 6.1.0
         with:
           node-version: lts/*
           check-latest: true
