@@ -926,6 +926,12 @@ export const demoInstanceSettings: SettingsPage[] = [
     iconId: "triangle-alert",
   },
   {
+    pageName: "Pathfinding",
+    namespace: "pathfinding",
+    entries: [],
+    iconId: "route",
+  },
+  {
     pageName: "AI Settings",
     namespace: "ai",
     entries: [

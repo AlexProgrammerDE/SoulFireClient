@@ -3,6 +3,7 @@ import { Link, type LinkProps, useRouteContext } from "@tanstack/react-router";
 import {
   BoltIcon,
   BotIcon,
+  RouteIcon,
   SparklesIcon,
   UsersIcon,
   WaypointsIcon,
@@ -64,6 +65,14 @@ export function NavSettings() {
       linkProps: {
         to: "/instance/$instance/settings/$namespace",
         params: { instance: instanceInfo.id, namespace: "ai" },
+      },
+    },
+    {
+      title: t("instanceSidebar.pathfindingSettings"),
+      icon: RouteIcon,
+      linkProps: {
+        to: "/instance/$instance/settings/$namespace",
+        params: { instance: instanceInfo.id, namespace: "pathfinding" },
       },
     },
     ...(hasInstancePermission(

@@ -217,6 +217,7 @@
     "metaSettings": "Instance Settings",
     "proxySettings": "Proxy Settings",
     "aiSettings": "AI Settings",
+    "pathfindingSettings": "Pathfinding Settings",
     "discoverPlugins": "Plugins",
     "instanceScripts": "Scripts"
   },
