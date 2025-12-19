@@ -212,14 +212,9 @@ jobs:
         id: setup-ndk
         uses: nttld/setup-ndk@afb4c9964b521afb97c864b7d40b11e6911bd410 # 1.5.0
         with:
-          ndk-version: r26d
+          ndk-version: r29
           link-to-sdk: false
           add-to-path: false
-
-      - name: 'Android: Install Tauri CLI'
-        if: matrix.type == 'android'
-        run: |
-          cargo install --debug --force --locked tauri-cli
 
       - name: 'Android: Decode JKS file'
         if: matrix.type == 'android'
@@ -246,7 +241,7 @@ jobs:
           export ANDROID_NDK_HOME=$NDK_HOME
           export PATH=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
 
-          cargo tauri android build
+          pnpm tauri android build
         env:
           NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
 
