@@ -22,13 +22,13 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: 'Shared: Checkout repository'
-        uses: actions/checkout@1af3b93b6815bc44a9784bd300feb67ff0d1eeb3 # 6.0.0
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # 6.0.1
         with:
           ref: ${{ github.ref }}
           persist-credentials: false
 
       - name: 'Shared: Setup node'
-        uses: actions/setup-node@2028fbc5c25fe9cf00d9f06a71cc4710d4507903 # 6.0.0
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # 6.1.0
         with:
           node-version: lts/*
           check-latest: true
@@ -84,6 +84,6 @@ jobs:
           mv tmp.json src-tauri/tauri.conf.json
 
       - name: 'Commit Version'
-        uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 # 7.0.0
+        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # 7.1.0
         with:
           commit_message: 'chore(release): bump version to ${{ inputs.version }}'
