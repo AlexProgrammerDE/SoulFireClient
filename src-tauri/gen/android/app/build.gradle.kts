@@ -74,7 +74,7 @@ rust {
 }
 
 dependencies {
-    implementation("androidx.webkit:webkit:1.14.0")
+    implementation("androidx.webkit:webkit:1.15.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.13.0")
     testImplementation("junit:junit:4.13.2")
