@@ -19,7 +19,6 @@ import {
 } from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { Timestamp } from "../google/protobuf/timestamp";
-
 /**
  * @generated from protobuf message soulfire.v1.LogString
  */
@@ -303,8 +302,7 @@ class LogString$Type extends MessageType<LogString> {
         case /* optional string instance_id */ 3:
           message.instanceId = reader.string();
           break;
-        case /* optional string bot_account_id */
-        4:
+        case /* optional string bot_account_id */ 4:
           message.botAccountId = reader.string();
           break;
         case /* optional string script_id */ 5:
@@ -313,16 +311,13 @@ class LogString$Type extends MessageType<LogString> {
         case /* bool personal */ 6:
           message.personal = reader.bool();
           break;
-        case /* optional string instance_name */
-        7:
+        case /* optional string instance_name */ 7:
           message.instanceName = reader.string();
           break;
-        case /* optional string bot_account_name */
-        8:
+        case /* optional string bot_account_name */ 8:
           message.botAccountName = reader.string();
           break;
-        case /* google.protobuf.Timestamp timestamp */
-        9:
+        case /* google.protobuf.Timestamp timestamp */ 9:
           message.timestamp = Timestamp.internalBinaryRead(
             reader,
             reader.uint32(),
@@ -330,12 +325,10 @@ class LogString$Type extends MessageType<LogString> {
             message.timestamp,
           );
           break;
-        case /* optional string logger_name */
-        10:
+        case /* optional string logger_name */ 10:
           message.loggerName = reader.string();
           break;
-        case /* optional string level */
-        11:
+        case /* optional string level */ 11:
           message.level = reader.string();
           break;
         default:

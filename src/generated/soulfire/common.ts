@@ -105,14 +105,6 @@ export interface MinecraftAccountProto {
  */
 export interface MinecraftAccountProto_OnlineChainJavaData {
   /**
-   * @generated from protobuf field: string auth_token = 1
-   */
-  authToken: string;
-  /**
-   * @generated from protobuf field: int64 token_expire_at = 2
-   */
-  tokenExpireAt: string;
-  /**
    * @generated from protobuf field: google.protobuf.Struct auth_chain = 3
    */
   authChain?: Struct;
@@ -125,30 +117,6 @@ export interface MinecraftAccountProto_OfflineJavaData {}
  * @generated from protobuf message soulfire.v1.MinecraftAccountProto.BedrockData
  */
 export interface MinecraftAccountProto_BedrockData {
-  /**
-   * @generated from protobuf field: string mojang_jwt = 1
-   */
-  mojangJwt: string;
-  /**
-   * @generated from protobuf field: string identity_jwt = 2
-   */
-  identityJwt: string;
-  /**
-   * @generated from protobuf field: string public_key = 3
-   */
-  publicKey: string;
-  /**
-   * @generated from protobuf field: string private_key = 4
-   */
-  privateKey: string;
-  /**
-   * @generated from protobuf field: string device_id = 5
-   */
-  deviceId: string;
-  /**
-   * @generated from protobuf field: string play_fab_id = 6
-   */
-  playFabId: string;
   /**
    * @generated from protobuf field: google.protobuf.Struct auth_chain = 7
    */
@@ -1159,13 +1127,6 @@ export const MinecraftAccountProto = new MinecraftAccountProto$Type();
 class MinecraftAccountProto_OnlineChainJavaData$Type extends MessageType<MinecraftAccountProto_OnlineChainJavaData> {
   constructor() {
     super("soulfire.v1.MinecraftAccountProto.OnlineChainJavaData", [
-      { no: 1, name: "auth_token", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-      {
-        no: 2,
-        name: "token_expire_at",
-        kind: "scalar",
-        T: 3 /*ScalarType.INT64*/,
-      },
       { no: 3, name: "auth_chain", kind: "message", T: () => Struct },
     ]);
   }
@@ -1173,8 +1134,6 @@ class MinecraftAccountProto_OnlineChainJavaData$Type extends MessageType<Minecra
     value?: PartialMessage<MinecraftAccountProto_OnlineChainJavaData>,
   ): MinecraftAccountProto_OnlineChainJavaData {
     const message = globalThis.Object.create(this.messagePrototype!);
-    message.authToken = "";
-    message.tokenExpireAt = "0";
     if (value !== undefined)
       reflectionMergePartial<MinecraftAccountProto_OnlineChainJavaData>(
         this,
@@ -1194,12 +1153,6 @@ class MinecraftAccountProto_OnlineChainJavaData$Type extends MessageType<Minecra
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
-        case /* string auth_token */ 1:
-          message.authToken = reader.string();
-          break;
-        case /* int64 token_expire_at */ 2:
-          message.tokenExpireAt = reader.int64().toString();
-          break;
         case /* google.protobuf.Struct auth_chain */ 3:
           message.authChain = Struct.internalBinaryRead(
             reader,
@@ -1232,12 +1185,6 @@ class MinecraftAccountProto_OnlineChainJavaData$Type extends MessageType<Minecra
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    /* string auth_token = 1; */
-    if (message.authToken !== "")
-      writer.tag(1, WireType.LengthDelimited).string(message.authToken);
-    /* int64 token_expire_at = 2; */
-    if (message.tokenExpireAt !== "0")
-      writer.tag(2, WireType.Varint).int64(message.tokenExpireAt);
     /* google.protobuf.Struct auth_chain = 3; */
     if (message.authChain)
       Struct.internalBinaryWrite(
@@ -1331,27 +1278,6 @@ export const MinecraftAccountProto_OfflineJavaData =
 class MinecraftAccountProto_BedrockData$Type extends MessageType<MinecraftAccountProto_BedrockData> {
   constructor() {
     super("soulfire.v1.MinecraftAccountProto.BedrockData", [
-      { no: 1, name: "mojang_jwt", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-      {
-        no: 2,
-        name: "identity_jwt",
-        kind: "scalar",
-        T: 9 /*ScalarType.STRING*/,
-      },
-      { no: 3, name: "public_key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-      {
-        no: 4,
-        name: "private_key",
-        kind: "scalar",
-        T: 9 /*ScalarType.STRING*/,
-      },
-      { no: 5, name: "device_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-      {
-        no: 6,
-        name: "play_fab_id",
-        kind: "scalar",
-        T: 9 /*ScalarType.STRING*/,
-      },
       { no: 7, name: "auth_chain", kind: "message", T: () => Struct },
     ]);
   }
@@ -1359,12 +1285,6 @@ class MinecraftAccountProto_BedrockData$Type extends MessageType<MinecraftAccoun
     value?: PartialMessage<MinecraftAccountProto_BedrockData>,
   ): MinecraftAccountProto_BedrockData {
     const message = globalThis.Object.create(this.messagePrototype!);
-    message.mojangJwt = "";
-    message.identityJwt = "";
-    message.publicKey = "";
-    message.privateKey = "";
-    message.deviceId = "";
-    message.playFabId = "";
     if (value !== undefined)
       reflectionMergePartial<MinecraftAccountProto_BedrockData>(
         this,
@@ -1384,24 +1304,6 @@ class MinecraftAccountProto_BedrockData$Type extends MessageType<MinecraftAccoun
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
-        case /* string mojang_jwt */ 1:
-          message.mojangJwt = reader.string();
-          break;
-        case /* string identity_jwt */ 2:
-          message.identityJwt = reader.string();
-          break;
-        case /* string public_key */ 3:
-          message.publicKey = reader.string();
-          break;
-        case /* string private_key */ 4:
-          message.privateKey = reader.string();
-          break;
-        case /* string device_id */ 5:
-          message.deviceId = reader.string();
-          break;
-        case /* string play_fab_id */ 6:
-          message.playFabId = reader.string();
-          break;
         case /* google.protobuf.Struct auth_chain */ 7:
           message.authChain = Struct.internalBinaryRead(
             reader,
@@ -1434,24 +1336,6 @@ class MinecraftAccountProto_BedrockData$Type extends MessageType<MinecraftAccoun
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    /* string mojang_jwt = 1; */
-    if (message.mojangJwt !== "")
-      writer.tag(1, WireType.LengthDelimited).string(message.mojangJwt);
-    /* string identity_jwt = 2; */
-    if (message.identityJwt !== "")
-      writer.tag(2, WireType.LengthDelimited).string(message.identityJwt);
-    /* string public_key = 3; */
-    if (message.publicKey !== "")
-      writer.tag(3, WireType.LengthDelimited).string(message.publicKey);
-    /* string private_key = 4; */
-    if (message.privateKey !== "")
-      writer.tag(4, WireType.LengthDelimited).string(message.privateKey);
-    /* string device_id = 5; */
-    if (message.deviceId !== "")
-      writer.tag(5, WireType.LengthDelimited).string(message.deviceId);
-    /* string play_fab_id = 6; */
-    if (message.playFabId !== "")
-      writer.tag(6, WireType.LengthDelimited).string(message.playFabId);
     /* google.protobuf.Struct auth_chain = 7; */
     if (message.authChain)
       Struct.internalBinaryWrite(

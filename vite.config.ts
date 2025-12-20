@@ -1,9 +1,8 @@
-// biome-ignore assist/source/organizeImports: <explanation>
 import * as fs from "node:fs";
 import { resolve } from "node:path";
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
+import react from "@vitejs/plugin-react-swc";
+import { defineConfig } from "vite";
 import svgr from "vite-plugin-svgr";
 import tauriConf from "./src-tauri/tauri.conf.json" with { type: "json" };
 
