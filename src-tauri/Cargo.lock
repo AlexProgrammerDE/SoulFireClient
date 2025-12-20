@@ -5137,6 +5137,7 @@ name = "soulfire"
 version = "2.1.1"
 dependencies = [
  "async-std",
+ "aws-lc-sys",
  "discord-presence",
  "flate2",
  "hex",
