@@ -217,6 +217,7 @@
     "metaSettings": "Настройки экземпляра",
     "proxySettings": "Настройки прокси",
     "aiSettings": "Настройки ИИ",
+    "pathfindingSettings": "",
     "discoverPlugins": "Плагины",
     "instanceScripts": "Скрипты"
   },
