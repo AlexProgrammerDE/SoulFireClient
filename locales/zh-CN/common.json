@@ -217,6 +217,7 @@
     "metaSettings": "",
     "proxySettings": "代理设置",
     "aiSettings": "AI设置",
+    "pathfindingSettings": "",
     "discoverPlugins": "插件",
     "instanceScripts": ""
   },
