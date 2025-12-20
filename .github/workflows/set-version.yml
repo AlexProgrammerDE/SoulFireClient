@@ -25,7 +25,6 @@ jobs:
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # 6.0.1
         with:
           ref: ${{ github.ref }}
-          persist-credentials: false
 
       - name: 'Shared: Setup node'
         uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # 6.1.0
