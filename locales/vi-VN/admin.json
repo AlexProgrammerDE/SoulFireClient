@@ -1,0 +1,95 @@
+{
+  "overview": {
+    "welcome": "",
+    "instancesChart": {
+      "title": "",
+      "instances": "",
+      "label": {
+        "state": "",
+        "active": "",
+        "stopped": "",
+        "other": ""
+      }
+    },
+    "usersChart": {
+      "title": "",
+      "users": "",
+      "label": {
+        "role": "",
+        "user": "",
+        "admin": "",
+        "other": ""
+      }
+    }
+  },
+  "users": {
+    "filterPlaceholder": "",
+    "baseUserDialog": {
+      "form": {
+        "username": {
+          "min": "",
+          "max": "",
+          "regex": "",
+          "label": "",
+          "placeholder": "",
+          "description": ""
+        },
+        "email": {
+          "label": "",
+          "placeholder": "",
+          "description": ""
+        },
+        "role": {
+          "label": "",
+          "description": "",
+          "user": "",
+          "admin": ""
+        }
+      }
+    },
+    "addUserDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "",
+        "add": ""
+      }
+    },
+    "updateUserDialog": {
+      "title": "",
+      "description": "",
+      "form": {
+        "cancel": "",
+        "update": ""
+      }
+    },
+    "addToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "updateToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "invalidateToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "username": "",
+      "email": "",
+      "role": "",
+      "createdAt": "",
+      "minIssuedAt": "",
+      "actions": ""
+    }
+  }
+}
