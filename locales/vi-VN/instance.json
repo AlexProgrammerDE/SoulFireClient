@@ -1,0 +1,78 @@
+{
+  "proxy": {
+    "filterPlaceholder": "",
+    "listImportToast": {
+      "loading": "",
+      "success": "",
+      "error": "",
+      "noProxies": ""
+    },
+    "import": {
+      "proxyType": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "uri": "",
+      "dialog": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "checkToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "invalidFormat": "",
+    "table": {
+      "type": "",
+      "address": "",
+      "username": "",
+      "password": ""
+    }
+  },
+  "account": {
+    "filterPlaceholder": "",
+    "listImportToast": {
+      "loading": "",
+      "allFailed": "",
+      "someFailed": "",
+      "noneFailed": "",
+      "error": "",
+      "noAccounts": ""
+    },
+    "unknownError": "",
+    "deviceCodeImportToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "import": {
+      "javaEdition": "",
+      "bedrockEdition": "",
+      "offline": "",
+      "microsoftCredentials": "",
+      "microsoftDeviceCode": "",
+      "microsoftRefreshToken": "",
+      "dialog": {
+        "title": "",
+        "description": ""
+      }
+    },
+    "removeToast": {
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
+    "table": {
+      "type": "",
+      "profileId": "",
+      "lastKnownName": ""
+    }
+  }
+}
