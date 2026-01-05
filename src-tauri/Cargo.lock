@@ -5134,7 +5134,7 @@ dependencies = [
 
 [[package]]
 name = "soulfire"
-version = "2.2.1"
+version = "2.2.2"
 dependencies = [
  "async-std",
  "aws-lc-sys",
