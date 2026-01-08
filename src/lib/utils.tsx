@@ -34,6 +34,7 @@ import {
 
 export const ROOT_USER_ID = "00000000-0000-0000-0000-000000000000";
 const LOCAL_STORAGE_TERMINAL_THEME_KEY = "terminal-theme";
+const LOCAL_STORAGE_DEMO_MODE_KEY = "demo-mode";
 
 const emojiMap = APP_LOCALES.split(",").reduce<Record<string, FlagComponent>>(
   (acc, locale) => {
@@ -78,7 +79,10 @@ export function openExternalUrl(url: string) {
 }
 
 export function isDemo() {
-  return document.location.host === "demo.soulfiremc.com";
+  return (
+    document.location.host === "demo.soulfiremc.com" ||
+    localStorage.getItem(LOCAL_STORAGE_DEMO_MODE_KEY) === "true"
+  );
 }
 
 export function cancellablePromiseDefault<T extends () => void>(
