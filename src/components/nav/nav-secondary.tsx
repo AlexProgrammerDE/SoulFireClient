@@ -24,7 +24,7 @@ export function NavSecondary({
   const items: NavLinks = [
     {
       title: t("sidebar.documentation"),
-      url: "https://soulfiremc.com/docs",
+      url: "https://soulfiremc.com/docs?utm_source=soulfire-client&utm_medium=app&utm_campaign=sidebar-docs",
       icon: BookOpenTextIcon,
     },
     {
@@ -34,7 +34,7 @@ export function NavSecondary({
     },
     {
       title: t("sidebar.discord"),
-      url: "https://soulfiremc.com/discord",
+      url: "https://soulfiremc.com/discord?utm_source=soulfire-client&utm_medium=app&utm_campaign=sidebar-discord",
       icon: SiDiscord,
     },
   ];

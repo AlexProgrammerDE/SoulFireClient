@@ -245,7 +245,7 @@ function Index() {
       <main className="flex min-h-dvh w-full flex-col">
         <div className="m-auto flex w-full max-w-lg flex-col gap-4">
           <ExternalLink
-            href="https://soulfiremc.com"
+            href="https://soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-logo"
             className="flex flex-row items-center justify-center gap-2 text-center"
           >
             <img
@@ -292,7 +292,7 @@ function Index() {
                   components={{
                     a: (
                       <ExternalLink
-                        href="https://soulfiremc.com/demo-video"
+                        href="https://soulfiremc.com/demo-video?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-demo-video"
                         className="text-nowrap text-blue-500"
                       />
                     ),
@@ -310,7 +310,7 @@ function Index() {
                   {APP_ENVIRONMENT === "production" && (
                     <a
                       className="text-blue-500"
-                      href="https://preview.soulfiremc.com"
+                      href="https://preview.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-preview"
                     >
                       {t("footer.preview")}
                     </a>
@@ -318,7 +318,7 @@ function Index() {
                   {APP_ENVIRONMENT === "preview" && (
                     <a
                       className="text-blue-500"
-                      href="https://app.soulfiremc.com"
+                      href="https://app.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-production"
                     >
                       {t("footer.production")}
                     </a>
@@ -362,7 +362,7 @@ function Index() {
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
                     <DropdownMenuItem asChild>
-                      <ExternalLink href="https://translate.soulfiremc.com">
+                      <ExternalLink href="https://translate.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=login-translate">
                         <HeartHandshakeIcon />
                         {t("footer.helpTranslate")}
                       </ExternalLink>

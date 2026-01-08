@@ -69,7 +69,7 @@ function GetAccountsButton() {
 
   return (
     <Button variant="outline" size="sm" asChild>
-      <ExternalLink href="https://soulfiremc.com/get-accounts">
+      <ExternalLink href="https://soulfiremc.com/get-accounts?utm_source=soulfire-client&utm_medium=app&utm_campaign=accounts-get">
         <ShoppingCartIcon />
         {t("account.getAccounts")}
       </ExternalLink>
@@ -619,7 +619,7 @@ function AccountSettings() {
         },
       ]}
       pageName={t("pageName.accountSettings")}
-      documentationLink="https://soulfiremc.com/docs/usage/accounts"
+      documentationLink="https://soulfiremc.com/docs/usage/accounts?utm_source=soulfire-client&utm_medium=app&utm_campaign=accounts-docs"
     >
       <Content />
     </InstancePageLayout>

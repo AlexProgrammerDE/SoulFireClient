@@ -243,7 +243,7 @@ function GetProxiesButton() {
 
   return (
     <Button variant="outline" size="sm" asChild>
-      <ExternalLink href="https://soulfiremc.com/get-proxies">
+      <ExternalLink href="https://soulfiremc.com/get-proxies?utm_source=soulfire-client&utm_medium=app&utm_campaign=proxies-get">
         <ShoppingCartIcon />
         {t("proxy.getProxies")}
       </ExternalLink>
@@ -589,7 +589,7 @@ function ProxySettings() {
         },
       ]}
       pageName={t("pageName.proxySettings")}
-      documentationLink="https://soulfiremc.com/docs/usage/proxies"
+      documentationLink="https://soulfiremc.com/docs/usage/proxies?utm_source=soulfire-client&utm_medium=app&utm_campaign=proxies-docs"
     >
       <Content />
     </InstancePageLayout>

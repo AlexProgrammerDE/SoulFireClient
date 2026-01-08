@@ -147,7 +147,7 @@ function Content() {
             <span>{t("access.token.generate")}</span>
           </Button>
           <Button variant="secondary" asChild>
-            <ExternalLink href="https://soulfiremc.com/docs/guides/webdav">
+            <ExternalLink href="https://soulfiremc.com/docs/guides/webdav?utm_source=soulfire-client&utm_medium=app&utm_campaign=access-webdav-docs">
               <BookOpenTextIcon />
               <span>{t("access.howToConnect")}</span>
             </ExternalLink>

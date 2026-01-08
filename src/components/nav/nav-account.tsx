@@ -249,7 +249,7 @@ export function NavAccount() {
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                       <DropdownMenuItem asChild>
-                        <ExternalLink href="https://translate.soulfiremc.com">
+                        <ExternalLink href="https://translate.soulfiremc.com?utm_source=soulfire-client&utm_medium=app&utm_campaign=settings-translate">
                           <HeartHandshakeIcon />
                           {t("userSidebar.helpTranslate")}
                         </ExternalLink>
