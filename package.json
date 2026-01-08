@@ -128,7 +128,8 @@
       "@swc/core",
       "@tailwindcss/oxide",
       "core-js",
-      "esbuild"
+      "esbuild",
+      "msw"
     ]
   }
 }
