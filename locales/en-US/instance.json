@@ -1,5 +1,7 @@
 {
   "proxy": {
+    "getProxies": "Get Proxies",
+    "addProxies": "Add Proxies",
     "filterPlaceholder": "Filter proxies...",
     "listImportToast": {
       "loading": "Importing proxies...",
@@ -37,6 +39,8 @@
     }
   },
   "account": {
+    "getAccounts": "Get Accounts",
+    "addAccounts": "Add Accounts",
     "filterPlaceholder": "Filter accounts...",
     "listImportToast": {
       "loading": "Importing accounts... {{checked}}/{{total}} (Success: {{success}} Failed: {{failed}})",

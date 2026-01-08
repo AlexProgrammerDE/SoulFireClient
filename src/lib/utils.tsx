@@ -1,6 +1,7 @@
 import type { JsonValue } from "@protobuf-ts/runtime";
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
+import { open as shellOpen } from "@tauri-apps/plugin-shell";
 import { type ClassValue, clsx } from "clsx";
 import type { FlagComponent } from "country-flag-icons/react/1x1";
 import * as Flags from "country-flag-icons/react/3x2";
@@ -66,6 +67,14 @@ export function isTauri() {
       }
     ).__TAURI__ !== undefined
   );
+}
+
+export function openExternalUrl(url: string) {
+  if (isTauri()) {
+    void shellOpen(url);
+  } else {
+    window.open(url, "_blank");
+  }
 }
 
 export function isDemo() {

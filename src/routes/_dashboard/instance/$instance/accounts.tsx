@@ -6,12 +6,12 @@ import {
 } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import type { ColumnDef, Table as ReactTable } from "@tanstack/react-table";
-import { open as shellOpen } from "@tauri-apps/plugin-shell";
 import {
   KeyRoundIcon,
   MonitorSmartphoneIcon,
   PlusIcon,
   RotateCcwKeyIcon,
+  ShoppingCartIcon,
   TextIcon,
   TrashIcon,
   WifiOffIcon,
@@ -33,6 +33,7 @@ import {
 import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
 import ImportDialog from "@/components/dialog/import-dialog.tsx";
+import { ExternalLink } from "@/components/external-link.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { InstanceSettingsPageComponent } from "@/components/settings-page.tsx";
@@ -61,7 +62,20 @@ import {
   type ProfileAccount,
   type ProfileRoot,
 } from "@/lib/types.ts";
-import { isTauri, runAsync, setInstanceConfig } from "@/lib/utils.tsx";
+import { openExternalUrl, runAsync, setInstanceConfig } from "@/lib/utils.tsx";
+
+function GetAccountsButton() {
+  const { t } = useTranslation("instance");
+
+  return (
+    <Button variant="outline" size="sm" asChild>
+      <ExternalLink href="https://soulfiremc.com/get-accounts">
+        <ShoppingCartIcon />
+        {t("account.getAccounts")}
+      </ExternalLink>
+    </Button>
+  );
+}
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/accounts")(
   {
@@ -366,13 +380,9 @@ function AddButton() {
                 if (message.data.oneofKind === "account") {
                   resolve(message.data.account);
                 } else if (message.data.oneofKind === "deviceCode") {
-                  if (isTauri()) {
-                    void shellOpen(
-                      message.data.deviceCode.directVerificationUri,
-                    );
-                  } else {
-                    window.open(message.data.deviceCode.directVerificationUri);
-                  }
+                  openExternalUrl(
+                    message.data.deviceCode.directVerificationUri,
+                  );
                 }
               });
               responses.onError((e) => {
@@ -419,6 +429,7 @@ function AddButton() {
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="sm">
             <PlusIcon />
+            {t("account.addAccounts")}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -649,6 +660,7 @@ function Content() {
       >
         <DataTableToolbar table={table}>
           <DataTableSortList table={table} />
+          <GetAccountsButton />
           <AddButton />
         </DataTableToolbar>
       </DataTable>

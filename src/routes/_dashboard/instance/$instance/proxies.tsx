@@ -11,6 +11,7 @@ import {
   Dice5Icon,
   GlobeIcon,
   PlusIcon,
+  ShoppingCartIcon,
   TextIcon,
   TrashIcon,
   Wand2Icon,
@@ -33,6 +34,7 @@ import {
 import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
 import ImportDialog from "@/components/dialog/import-dialog.tsx";
+import { ExternalLink } from "@/components/external-link.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { InstanceSettingsPageComponent } from "@/components/settings-page.tsx";
@@ -236,6 +238,19 @@ const columns: ColumnDef<ProfileProxy>[] = [
   },
 ];
 
+function GetProxiesButton() {
+  const { t } = useTranslation("instance");
+
+  return (
+    <Button variant="outline" size="sm" asChild>
+      <ExternalLink href="https://soulfiremc.com/get-proxies">
+        <ShoppingCartIcon />
+        {t("proxy.getProxies")}
+      </ExternalLink>
+    </Button>
+  );
+}
+
 function AddButton() {
   const { t } = useTranslation("instance");
   const queryClient = useQueryClient();
@@ -330,6 +345,7 @@ function AddButton() {
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="sm">
             <PlusIcon />
+            {t("proxy.addProxies")}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
@@ -614,6 +630,7 @@ function Content() {
       >
         <DataTableToolbar table={table}>
           <DataTableSortList table={table} />
+          <GetProxiesButton />
           <AddButton />
         </DataTableToolbar>
       </DataTable>
