@@ -1,5 +1,7 @@
 {
   "proxy": {
+    "getProxies": "",
+    "addProxies": "",
     "filterPlaceholder": "过滤代理服务器...",
     "listImportToast": {
       "loading": "正在导入代理...",
@@ -37,6 +39,8 @@
     }
   },
   "account": {
+    "getAccounts": "",
+    "addAccounts": "",
     "filterPlaceholder": "筛选账户...",
     "listImportToast": {
       "loading": "导入账户中… {{checked}}/{{total}}（成功：{{success}} 失败：{{failed}}）",
