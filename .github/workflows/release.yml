@@ -131,7 +131,7 @@ jobs:
           echo "$env:CARGO_HOME\bin" >> $env:GITHUB_PATH
 
       - name: 'Shared: Install Rust toolchain'
-        uses: dtolnay/rust-toolchain@0c3131df9e5407c0c36352032d04af846dbe0fb7 # nightly
+        uses: dtolnay/rust-toolchain@f7ccc83f9ed1e5b9c81d8a67d7ad1a747e22a561 # nightly
         with:
           targets: ${{ matrix.rust-targets }}
 
