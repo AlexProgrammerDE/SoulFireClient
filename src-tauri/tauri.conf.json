@@ -44,7 +44,7 @@
       "dmg"
     ],
     "homepage": "https://soulfiremc.com",
-    "license": "GPL-3.0",
+    "license": "AGPL-3.0",
     "licenseFile": "../LICENSE",
     "externalBin": [],
     "windows": {
