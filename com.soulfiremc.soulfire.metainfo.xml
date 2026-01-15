@@ -6,7 +6,7 @@
   <summary>Advanced Minecraft Server-Stresser Tool</summary>
 
   <metadata_license>FSFAP</metadata_license>
-  <project_license>GPL-3.0-or-later</project_license>
+  <project_license>AGPL-3.0-or-later</project_license>
 
   <supports>
     <control>pointing</control>
