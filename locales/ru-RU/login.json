@@ -5,7 +5,7 @@
     },
     "title": "SoulFire"
   },
-  "newUser": "",
+  "newUser": "Вы новичок в SoulFire? Мы рекомендуем ознакомиться с <a>руководством по началу работы</a>.",
   "connect": {
     "title": "Подключение к серверу SoulFire",
     "description": "Выберите тип подключения к SoulFire серверу.",
