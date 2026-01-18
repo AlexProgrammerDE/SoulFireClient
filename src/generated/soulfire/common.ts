@@ -178,6 +178,19 @@ export interface SettingsNamespace {
   entries: SettingsEntry[];
 }
 /**
+ * @generated from protobuf message soulfire.v1.SettingsEntryIdentifier
+ */
+export interface SettingsEntryIdentifier {
+  /**
+   * @generated from protobuf field: string namespace = 1
+   */
+  namespace: string;
+  /**
+   * @generated from protobuf field: string key = 2
+   */
+  key: string;
+}
+/**
  * @generated from protobuf message soulfire.v1.StringSetting
  */
 export interface StringSetting {
@@ -496,15 +509,19 @@ export interface MinMaxSetting_Entry {
 /**
  * A entry in the settings page
  *
- * @generated from protobuf message soulfire.v1.SettingEntry
+ * @generated from protobuf message soulfire.v1.SettingsPageEntry
  */
-export interface SettingEntry {
+export interface SettingsPageEntry {
   /**
-   * Basically we only send a kv map to the server with every setting entry
+   * id + namespace that this setting corresponds to
    *
-   * @generated from protobuf field: string key = 1
+   * @generated from protobuf field: soulfire.v1.SettingsEntryIdentifier id = 9
    */
-  key: string;
+  id?: SettingsEntryIdentifier;
+  /**
+   * @generated from protobuf field: soulfire.v1.SettingsPageEntryScopeType scope = 10
+   */
+  scope: SettingsPageEntryScopeType;
   /**
    * @generated from protobuf oneof: value
    */
@@ -567,9 +584,9 @@ export interface SettingEntry {
  */
 export interface SettingsPage {
   /**
-   * @generated from protobuf field: optional soulfire.v1.ServerPlugin owning_plugin = 2
+   * @generated from protobuf field: optional string owning_plugin_id = 2
    */
-  owningPlugin?: ServerPlugin;
+  owningPluginId?: string;
   /**
    * The name of the page for these settings
    *
@@ -577,15 +594,9 @@ export interface SettingsPage {
    */
   pageName: string;
   /**
-   * What namespace the settings of this page represent
-   *
-   * @generated from protobuf field: string namespace = 4
+   * @generated from protobuf field: repeated soulfire.v1.SettingsPageEntry entries = 5
    */
-  namespace: string;
-  /**
-   * @generated from protobuf field: repeated soulfire.v1.SettingEntry entries = 5
-   */
-  entries: SettingEntry[];
+  entries: SettingsPageEntry[];
   /**
    * https://lucide.dev icon id for this page (Usually rendered left of the page name)
    *
@@ -595,9 +606,9 @@ export interface SettingsPage {
   /**
    * Key which makes this plugin "enabled" or "disabled"
    *
-   * @generated from protobuf field: optional string enabled_key = 7
+   * @generated from protobuf field: optional soulfire.v1.SettingsEntryIdentifier enabled_identifier = 7
    */
-  enabledKey?: string;
+  enabledIdentifier?: SettingsEntryIdentifier;
 }
 /**
  * @generated from protobuf message soulfire.v1.ServerPlugin
@@ -827,6 +838,14 @@ export enum InstancePermission {
    * @generated from protobuf enum value: DELETE_SCRIPT = 19;
    */
   DELETE_SCRIPT = 19,
+  /**
+   * @generated from protobuf enum value: READ_BOT_INFO = 10;
+   */
+  READ_BOT_INFO = 10,
+  /**
+   * @generated from protobuf enum value: UPDATE_BOT_CONFIG = 11;
+   */
+  UPDATE_BOT_CONFIG = 11,
 }
 /**
  * @generated from protobuf enum soulfire.v1.UserRole
@@ -840,6 +859,23 @@ export enum UserRole {
    * @generated from protobuf enum value: USER = 1;
    */
   USER = 1,
+}
+/**
+ * @generated from protobuf enum soulfire.v1.SettingsPageEntryScopeType
+ */
+export enum SettingsPageEntryScopeType {
+  /**
+   * @generated from protobuf enum value: SERVER = 0;
+   */
+  SERVER = 0,
+  /**
+   * @generated from protobuf enum value: INSTANCE = 1;
+   */
+  INSTANCE = 1,
+  /**
+   * @generated from protobuf enum value: BOT = 2;
+   */
+  BOT = 2,
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class ProxyProto$Type extends MessageType<ProxyProto> {
@@ -1532,6 +1568,85 @@ class SettingsNamespace$Type extends MessageType<SettingsNamespace> {
  * @generated MessageType for protobuf message soulfire.v1.SettingsNamespace
  */
 export const SettingsNamespace = new SettingsNamespace$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SettingsEntryIdentifier$Type extends MessageType<SettingsEntryIdentifier> {
+  constructor() {
+    super("soulfire.v1.SettingsEntryIdentifier", [
+      { no: 1, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<SettingsEntryIdentifier>,
+  ): SettingsEntryIdentifier {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.namespace = "";
+    message.key = "";
+    if (value !== undefined)
+      reflectionMergePartial<SettingsEntryIdentifier>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SettingsEntryIdentifier,
+  ): SettingsEntryIdentifier {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string namespace */ 1:
+          message.namespace = reader.string();
+          break;
+        case /* string key */ 2:
+          message.key = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SettingsEntryIdentifier,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string namespace = 1; */
+    if (message.namespace !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.namespace);
+    /* string key = 2; */
+    if (message.key !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.key);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.SettingsEntryIdentifier
+ */
+export const SettingsEntryIdentifier = new SettingsEntryIdentifier$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class StringSetting$Type extends MessageType<StringSetting> {
   constructor() {
@@ -2677,10 +2792,19 @@ class MinMaxSetting_Entry$Type extends MessageType<MinMaxSetting_Entry> {
  */
 export const MinMaxSetting_Entry = new MinMaxSetting_Entry$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class SettingEntry$Type extends MessageType<SettingEntry> {
+class SettingsPageEntry$Type extends MessageType<SettingsPageEntry> {
   constructor() {
-    super("soulfire.v1.SettingEntry", [
-      { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    super("soulfire.v1.SettingsPageEntry", [
+      { no: 9, name: "id", kind: "message", T: () => SettingsEntryIdentifier },
+      {
+        no: 10,
+        name: "scope",
+        kind: "enum",
+        T: () => [
+          "soulfire.v1.SettingsPageEntryScopeType",
+          SettingsPageEntryScopeType,
+        ],
+      },
       {
         no: 2,
         name: "string",
@@ -2732,27 +2856,35 @@ class SettingEntry$Type extends MessageType<SettingEntry> {
       },
     ]);
   }
-  create(value?: PartialMessage<SettingEntry>): SettingEntry {
+  create(value?: PartialMessage<SettingsPageEntry>): SettingsPageEntry {
     const message = globalThis.Object.create(this.messagePrototype!);
-    message.key = "";
+    message.scope = 0;
     message.value = { oneofKind: undefined };
     if (value !== undefined)
-      reflectionMergePartial<SettingEntry>(this, message, value);
+      reflectionMergePartial<SettingsPageEntry>(this, message, value);
     return message;
   }
   internalBinaryRead(
     reader: IBinaryReader,
     length: number,
     options: BinaryReadOptions,
-    target?: SettingEntry,
-  ): SettingEntry {
+    target?: SettingsPageEntry,
+  ): SettingsPageEntry {
     let message = target ?? this.create(),
       end = reader.pos + length;
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
-        case /* string key */ 1:
-          message.key = reader.string();
+        case /* soulfire.v1.SettingsEntryIdentifier id */ 9:
+          message.id = SettingsEntryIdentifier.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.id,
+          );
+          break;
+        case /* soulfire.v1.SettingsPageEntryScopeType scope */ 10:
+          message.scope = reader.int32();
           break;
         case /* soulfire.v1.StringSetting string */ 2:
           message.value = {
@@ -2851,13 +2983,10 @@ class SettingEntry$Type extends MessageType<SettingEntry> {
     return message;
   }
   internalBinaryWrite(
-    message: SettingEntry,
+    message: SettingsPageEntry,
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    /* string key = 1; */
-    if (message.key !== "")
-      writer.tag(1, WireType.LengthDelimited).string(message.key);
     /* soulfire.v1.StringSetting string = 2; */
     if (message.value.oneofKind === "string")
       StringSetting.internalBinaryWrite(
@@ -2907,6 +3036,16 @@ class SettingEntry$Type extends MessageType<SettingEntry> {
         writer.tag(8, WireType.LengthDelimited).fork(),
         options,
       ).join();
+    /* soulfire.v1.SettingsEntryIdentifier id = 9; */
+    if (message.id)
+      SettingsEntryIdentifier.internalBinaryWrite(
+        message.id,
+        writer.tag(9, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.SettingsPageEntryScopeType scope = 10; */
+    if (message.scope !== 0)
+      writer.tag(10, WireType.Varint).int32(message.scope);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -2918,37 +3057,40 @@ class SettingEntry$Type extends MessageType<SettingEntry> {
   }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.SettingEntry
+ * @generated MessageType for protobuf message soulfire.v1.SettingsPageEntry
  */
-export const SettingEntry = new SettingEntry$Type();
+export const SettingsPageEntry = new SettingsPageEntry$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SettingsPage$Type extends MessageType<SettingsPage> {
   constructor() {
     super("soulfire.v1.SettingsPage", [
-      { no: 2, name: "owning_plugin", kind: "message", T: () => ServerPlugin },
+      {
+        no: 2,
+        name: "owning_plugin_id",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
       { no: 3, name: "page_name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-      { no: 4, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
       {
         no: 5,
         name: "entries",
         kind: "message",
         repeat: 2 /*RepeatType.UNPACKED*/,
-        T: () => SettingEntry,
+        T: () => SettingsPageEntry,
       },
       { no: 6, name: "icon_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
       {
         no: 7,
-        name: "enabled_key",
-        kind: "scalar",
-        opt: true,
-        T: 9 /*ScalarType.STRING*/,
+        name: "enabled_identifier",
+        kind: "message",
+        T: () => SettingsEntryIdentifier,
       },
     ]);
   }
   create(value?: PartialMessage<SettingsPage>): SettingsPage {
     const message = globalThis.Object.create(this.messagePrototype!);
     message.pageName = "";
-    message.namespace = "";
     message.entries = [];
     message.iconId = "";
     if (value !== undefined)
@@ -2966,30 +3108,32 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
-        case /* optional soulfire.v1.ServerPlugin owning_plugin */ 2:
-          message.owningPlugin = ServerPlugin.internalBinaryRead(
-            reader,
-            reader.uint32(),
-            options,
-            message.owningPlugin,
-          );
+        case /* optional string owning_plugin_id */ 2:
+          message.owningPluginId = reader.string();
           break;
         case /* string page_name */ 3:
           message.pageName = reader.string();
           break;
-        case /* string namespace */ 4:
-          message.namespace = reader.string();
-          break;
-        case /* repeated soulfire.v1.SettingEntry entries */ 5:
+        case /* repeated soulfire.v1.SettingsPageEntry entries */ 5:
           message.entries.push(
-            SettingEntry.internalBinaryRead(reader, reader.uint32(), options),
+            SettingsPageEntry.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
           );
           break;
         case /* string icon_id */ 6:
           message.iconId = reader.string();
           break;
-        case /* optional string enabled_key */ 7:
-          message.enabledKey = reader.string();
+        case /* optional soulfire.v1.SettingsEntryIdentifier enabled_identifier */ 7:
+          message.enabledIdentifier =
+            SettingsEntryIdentifier.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              message.enabledIdentifier,
+            );
           break;
         default:
           let u = options.readUnknownField;
@@ -3015,22 +3159,15 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    /* optional soulfire.v1.ServerPlugin owning_plugin = 2; */
-    if (message.owningPlugin)
-      ServerPlugin.internalBinaryWrite(
-        message.owningPlugin,
-        writer.tag(2, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
+    /* optional string owning_plugin_id = 2; */
+    if (message.owningPluginId !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.owningPluginId);
     /* string page_name = 3; */
     if (message.pageName !== "")
       writer.tag(3, WireType.LengthDelimited).string(message.pageName);
-    /* string namespace = 4; */
-    if (message.namespace !== "")
-      writer.tag(4, WireType.LengthDelimited).string(message.namespace);
-    /* repeated soulfire.v1.SettingEntry entries = 5; */
+    /* repeated soulfire.v1.SettingsPageEntry entries = 5; */
     for (let i = 0; i < message.entries.length; i++)
-      SettingEntry.internalBinaryWrite(
+      SettingsPageEntry.internalBinaryWrite(
         message.entries[i],
         writer.tag(5, WireType.LengthDelimited).fork(),
         options,
@@ -3038,9 +3175,13 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
     /* string icon_id = 6; */
     if (message.iconId !== "")
       writer.tag(6, WireType.LengthDelimited).string(message.iconId);
-    /* optional string enabled_key = 7; */
-    if (message.enabledKey !== undefined)
-      writer.tag(7, WireType.LengthDelimited).string(message.enabledKey);
+    /* optional soulfire.v1.SettingsEntryIdentifier enabled_identifier = 7; */
+    if (message.enabledIdentifier)
+      SettingsEntryIdentifier.internalBinaryWrite(
+        message.enabledIdentifier,
+        writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(

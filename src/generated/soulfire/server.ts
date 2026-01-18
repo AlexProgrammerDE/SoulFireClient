@@ -18,7 +18,7 @@ import {
   WireType,
 } from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
-import { SettingsNamespace, SettingsPage } from "./common";
+import { ServerPlugin, SettingsNamespace, SettingsPage } from "./common";
 /**
  * @generated from protobuf message soulfire.v1.ServerConfig
  */
@@ -44,6 +44,10 @@ export interface ServerInfoResponse {
    * @generated from protobuf field: repeated soulfire.v1.SettingsPage server_settings = 2
    */
   serverSettings: SettingsPage[];
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.ServerPlugin plugins = 3
+   */
+  plugins: ServerPlugin[];
 }
 /**
  * @generated from protobuf message soulfire.v1.ServerUpdateConfigRequest
@@ -215,11 +219,19 @@ class ServerInfoResponse$Type extends MessageType<ServerInfoResponse> {
         repeat: 2 /*RepeatType.UNPACKED*/,
         T: () => SettingsPage,
       },
+      {
+        no: 3,
+        name: "plugins",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ServerPlugin,
+      },
     ]);
   }
   create(value?: PartialMessage<ServerInfoResponse>): ServerInfoResponse {
     const message = globalThis.Object.create(this.messagePrototype!);
     message.serverSettings = [];
+    message.plugins = [];
     if (value !== undefined)
       reflectionMergePartial<ServerInfoResponse>(this, message, value);
     return message;
@@ -246,6 +258,11 @@ class ServerInfoResponse$Type extends MessageType<ServerInfoResponse> {
         case /* repeated soulfire.v1.SettingsPage server_settings */ 2:
           message.serverSettings.push(
             SettingsPage.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* repeated soulfire.v1.ServerPlugin plugins */ 3:
+          message.plugins.push(
+            ServerPlugin.internalBinaryRead(reader, reader.uint32(), options),
           );
           break;
         default:
@@ -284,6 +301,13 @@ class ServerInfoResponse$Type extends MessageType<ServerInfoResponse> {
       SettingsPage.internalBinaryWrite(
         message.serverSettings[i],
         writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.ServerPlugin plugins = 3; */
+    for (let i = 0; i < message.plugins.length; i++)
+      ServerPlugin.internalBinaryWrite(
+        message.plugins[i],
+        writer.tag(3, WireType.LengthDelimited).fork(),
         options,
       ).join();
     let u = options.writeUnknownFields;

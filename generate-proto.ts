@@ -25,7 +25,16 @@ function compileProtos(): void {
 
   const command = `protoc --ts_out src/generated --ts_opt long_type_string --ts_opt optimize_code_size --ts_opt eslint_disable --ts_opt ts_nocheck --proto_path protos ${protoFiles.join(" ")}`;
   console.log(`Running: ${command}`);
-  execSync(command, { stdio: "inherit" });
+
+  // Disable Web Storage API for Node.js v25+ compatibility
+  // This fixes @typescript/vfs which is used by protoc-gen-ts
+  const existingNodeOptions = process.env.NODE_OPTIONS ?? "";
+  const env = {
+    ...process.env,
+    NODE_OPTIONS: `${existingNodeOptions} --no-webstorage`.trim(),
+  };
+
+  execSync(command, { stdio: "inherit", env });
 }
 
 compileProtos();

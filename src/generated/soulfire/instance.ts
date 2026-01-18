@@ -23,6 +23,7 @@ import {
   InstancePermission,
   MinecraftAccountProto,
   ProxyProto,
+  ServerPlugin,
   SettingsNamespace,
   SettingsPage,
 } from "./common";
@@ -179,6 +180,10 @@ export interface InstanceInfoResponse {
    * @generated from protobuf field: repeated soulfire.v1.SettingsPage instance_settings = 6
    */
   instanceSettings: SettingsPage[];
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.ServerPlugin plugins = 7
+   */
+  plugins: ServerPlugin[];
 }
 /**
  * @generated from protobuf message soulfire.v1.InstanceUpdateMetaRequest
@@ -1295,6 +1300,13 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
         repeat: 2 /*RepeatType.UNPACKED*/,
         T: () => SettingsPage,
       },
+      {
+        no: 7,
+        name: "plugins",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ServerPlugin,
+      },
     ]);
   }
   create(value?: PartialMessage<InstanceInfoResponse>): InstanceInfoResponse {
@@ -1304,6 +1316,7 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
     message.state = 0;
     message.instancePermissions = [];
     message.instanceSettings = [];
+    message.plugins = [];
     if (value !== undefined)
       reflectionMergePartial<InstanceInfoResponse>(this, message, value);
     return message;
@@ -1348,6 +1361,11 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
         case /* repeated soulfire.v1.SettingsPage instance_settings */ 6:
           message.instanceSettings.push(
             SettingsPage.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* repeated soulfire.v1.ServerPlugin plugins */ 7:
+          message.plugins.push(
+            ServerPlugin.internalBinaryRead(reader, reader.uint32(), options),
           );
           break;
         default:
@@ -1402,6 +1420,13 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
       SettingsPage.internalBinaryWrite(
         message.instanceSettings[i],
         writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.ServerPlugin plugins = 7; */
+    for (let i = 0; i < message.plugins.length; i++)
+      ServerPlugin.internalBinaryWrite(
+        message.plugins[i],
+        writer.tag(7, WireType.LengthDelimited).fork(),
         options,
       ).join();
     let u = options.writeUnknownFields;
