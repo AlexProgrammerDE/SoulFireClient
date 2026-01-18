@@ -19,12 +19,12 @@ tauri-build = { version = "2.4.0", features = [] }
 serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 tauri = { version = "2.8.4", features = ["macos-private-api", "devtools", "tray-icon"] }
-reqwest = { version = "0.12.23", features = ["json"] }
+reqwest = { version = "0.13.0", features = ["json"] }
 tar = "0.4.44"
 flate2 = "1.1.2"
 strip-ansi-escapes = "0.2.1"
 zip = "7.0.0"
-rust_cast = "0.19.0"
+rust_cast = "0.21.0"
 mdns-sd = "0.17.0"
 log = "0.4.27"
 discord-presence = "3.0.0"

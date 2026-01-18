@@ -67,7 +67,7 @@ jobs:
         uses: ilammy/setup-nasm@72793074d3c8cdda771dba85f6deafe00623038b # 1.5.2
 
       - name: 'Shared: Setup node'
-        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # 6.1.0
+        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # 6.2.0
         with:
           node-version: lts/*
           check-latest: true
@@ -119,7 +119,7 @@ jobs:
 
       - name: 'Desktop: Build Tauri project'
         if: matrix.type != 'android'
-        uses: tauri-apps/tauri-action@19b93bb55601e3e373a93cfb6eb4242e45f5af20 # 0.6.0
+        uses: tauri-apps/tauri-action@73fb865345c54760d875b94642314f8c0c894afa # 0.6.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
