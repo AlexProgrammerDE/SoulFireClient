@@ -77,6 +77,7 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
             ),
             config: instanceConfig,
             instanceSettings: demoInstanceSettings,
+            plugins: [],
             state: InstanceState.RUNNING,
           };
         }

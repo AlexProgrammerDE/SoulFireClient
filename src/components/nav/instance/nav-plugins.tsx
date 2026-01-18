@@ -51,16 +51,16 @@ export function NavPlugins() {
     ...instanceInfoQueryOptions,
     select: (info) => info.profile,
   });
-  const namespace = useParams({
-    from: "/_dashboard/instance/$instance/settings/$namespace",
-    select: (params) => params.namespace,
+  const pageId = useParams({
+    from: "/_dashboard/instance/$instance/settings/$pageId",
+    select: (params) => params.pageId,
     shouldThrow: false,
   });
   const settingsEntry = instanceInfo.instanceSettings.find(
-    (s) => s.namespace === namespace,
+    (s) => s.id === pageId,
   );
   const [pluginCollapsibleOpen, setPluginCollapsibleOpen] = useState(
-    settingsEntry !== undefined && settingsEntry.owningPlugin !== undefined,
+    settingsEntry !== undefined && settingsEntry.owningPluginId !== undefined,
   );
 
   const navLinks: NavLinks = [
@@ -94,24 +94,28 @@ export function NavPlugins() {
   const pluginSettingLinks: NavLinks = instanceInfo.instanceSettings
     .filter(
       (setting) =>
-        setting.owningPlugin !== undefined && setting.enabledKey !== undefined,
+        setting.owningPluginId !== undefined &&
+        setting.enabledIdentifier !== undefined,
     )
     .filter(
       (setting) =>
         getEntryValueByType(
-          setting.namespace,
           profile,
-          setting.entries.find((entry) => entry.key === setting.enabledKey),
+          setting.entries.find(
+            (entry) =>
+              entry.id?.key === setting.enabledIdentifier?.key &&
+              entry.id?.namespace === setting.enabledIdentifier?.namespace,
+          ),
         ) === true,
     )
     .map((setting) => ({
       title: setting.pageName,
       icon: (props) => <DynamicIcon {...props} name={setting.iconId} />,
       linkProps: {
-        to: "/instance/$instance/settings/$namespace",
+        to: "/instance/$instance/settings/$pageId",
         params: {
           instance: instanceInfo.id,
-          namespace: setting.namespace,
+          pageId: setting.id,
         },
       },
     }));

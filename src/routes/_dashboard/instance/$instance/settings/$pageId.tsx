@@ -10,12 +10,12 @@ import { InstanceSettingsPageComponent } from "@/components/settings-page.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 
 export const Route = createFileRoute(
-  "/_dashboard/instance/$instance/settings/$namespace",
+  "/_dashboard/instance/$instance/settings/$pageId",
 )({
-  component: SettingsNamespace,
+  component: SettingsPage,
 });
 
-function SettingsNamespace() {
+function SettingsPage() {
   return (
     <Suspense fallback={<ContentSkeleton />}>
       <Content />
@@ -41,20 +41,24 @@ function ContentSkeleton() {
 
 function Content() {
   const { t } = useTranslation("common");
-  const { namespace } = Route.useParams();
+  const { pageId } = Route.useParams();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const settingsEntry = instanceInfo.instanceSettings.find(
-    (s) => s.namespace === namespace,
+    (s) => s.id === pageId,
   );
   if (!settingsEntry) {
     return <NotFoundComponent />;
   }
 
+  const plugin = settingsEntry.owningPluginId
+    ? instanceInfo.plugins.find((p) => p.id === settingsEntry.owningPluginId)
+    : undefined;
+
   return (
     <InstancePageLayout
       extraCrumbs={[
-        settingsEntry.owningPlugin
+        plugin
           ? {
               id: "plugin",
               content: t("breadcrumbs.plugins"),
@@ -68,8 +72,8 @@ function Content() {
     >
       <div className="flex h-full w-full grow flex-row gap-2">
         <div className="flex h-full grow flex-col gap-4">
-          {settingsEntry.owningPlugin && (
-            <PluginInfoCard settingsEntry={settingsEntry} />
+          {plugin && (
+            <PluginInfoCard settingsEntry={settingsEntry} plugin={plugin} />
           )}
           <div className="flex flex-col gap-2">
             <InstanceSettingsPageComponent data={settingsEntry} />

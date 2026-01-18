@@ -37,11 +37,22 @@ function Content() {
       {instanceInfo.instanceSettings
         .filter(
           (settings) =>
-            settings.owningPlugin !== undefined && settings.enabledKey !== null,
+            settings.owningPluginId !== undefined &&
+            settings.enabledIdentifier !== undefined,
         )
-        .map((settings) => (
-          <PluginInfoCard key={settings.namespace} settingsEntry={settings} />
-        ))}
+        .map((settings) => {
+          const plugin = instanceInfo.plugins.find(
+            (p) => p.id === settings.owningPluginId,
+          );
+          if (!plugin) return null;
+          return (
+            <PluginInfoCard
+              key={settings.id}
+              settingsEntry={settings}
+              plugin={plugin}
+            />
+          );
+        })}
     </div>
   );
 }

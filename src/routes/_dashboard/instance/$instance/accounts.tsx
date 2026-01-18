@@ -645,7 +645,7 @@ function Content() {
         <InstanceSettingsPageComponent
           data={
             instanceInfo.instanceSettings.find(
-              (s) => s.namespace === "account",
+              (s) => s.id === "account",
             ) as SettingsPage
           }
         />

@@ -2,8 +2,36 @@ import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
 import {
   GlobalPermission,
   type SettingsPage,
+  SettingsPageEntryScopeType,
 } from "@/generated/soulfire/common.ts";
 import { smartEntries } from "@/lib/utils.tsx";
+
+// Helper to convert old demo data format to new format
+function convertDemoSettingsPage(
+  pageName: string,
+  namespace: string,
+  entries: Array<{
+    key: string;
+    value: SettingsPage["entries"][0]["value"];
+  }>,
+  iconId: string,
+  owningPluginId?: string,
+  enabledKey?: string,
+  scope: SettingsPageEntryScopeType = SettingsPageEntryScopeType.INSTANCE,
+): SettingsPage {
+  return {
+    id: namespace, // Use namespace as page id for demo data
+    pageName,
+    entries: entries.map((e) => ({
+      id: { namespace, key: e.key },
+      scope,
+      value: e.value,
+    })),
+    iconId,
+    owningPluginId,
+    enabledIdentifier: enabledKey ? { namespace, key: enabledKey } : undefined,
+  };
+}
 
 export const demoClientData: ClientDataResponse = {
   id: "00000000-0000-0000-0000-000000000000",
@@ -24,7 +52,9 @@ export const demoClientData: ClientDataResponse = {
   },
 };
 
-export const demoInstanceSettings: SettingsPage[] = [
+// Demo data uses legacy format - entries are converted at runtime
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const legacyDemoInstanceSettings: any[] = [
   {
     pageName: "Bot Settings",
     namespace: "bot",
@@ -2537,7 +2567,22 @@ export const demoInstanceSettings: SettingsPage[] = [
   },
 ];
 
-export const demoServerSettings: SettingsPage[] = [
+// Convert legacy demo data to new format
+export const demoInstanceSettings: SettingsPage[] =
+  legacyDemoInstanceSettings.map((page) =>
+    convertDemoSettingsPage(
+      page.pageName,
+      page.namespace,
+      page.entries,
+      page.iconId,
+      page.owningPlugin?.id,
+      page.enabledKey,
+      SettingsPageEntryScopeType.INSTANCE,
+    ),
+  );
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const legacyDemoServerSettings: any[] = [
   {
     pageName: "Server Settings",
     namespace: "server",
@@ -2872,3 +2917,17 @@ export const demoServerSettings: SettingsPage[] = [
     iconId: "triangle-alert",
   },
 ];
+
+// Convert legacy demo data to new format
+export const demoServerSettings: SettingsPage[] = legacyDemoServerSettings.map(
+  (page) =>
+    convertDemoSettingsPage(
+      page.pageName,
+      page.namespace,
+      page.entries,
+      page.iconId,
+      page.owningPlugin?.id,
+      page.enabledKey,
+      SettingsPageEntryScopeType.SERVER,
+    ),
+);

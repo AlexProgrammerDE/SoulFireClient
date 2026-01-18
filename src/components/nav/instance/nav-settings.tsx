@@ -39,8 +39,8 @@ export function NavSettings() {
       title: t("instanceSidebar.botSettings"),
       icon: BotIcon,
       linkProps: {
-        to: "/instance/$instance/settings/$namespace",
-        params: { instance: instanceInfo.id, namespace: "bot" },
+        to: "/instance/$instance/settings/$pageId",
+        params: { instance: instanceInfo.id, pageId: "bot" },
       },
     },
     {
@@ -63,16 +63,16 @@ export function NavSettings() {
       title: t("instanceSidebar.aiSettings"),
       icon: SparklesIcon,
       linkProps: {
-        to: "/instance/$instance/settings/$namespace",
-        params: { instance: instanceInfo.id, namespace: "ai" },
+        to: "/instance/$instance/settings/$pageId",
+        params: { instance: instanceInfo.id, pageId: "ai" },
       },
     },
     {
       title: t("instanceSidebar.pathfindingSettings"),
       icon: RouteIcon,
       linkProps: {
-        to: "/instance/$instance/settings/$namespace",
-        params: { instance: instanceInfo.id, namespace: "pathfinding" },
+        to: "/instance/$instance/settings/$pageId",
+        params: { instance: instanceInfo.id, pageId: "pathfinding" },
       },
     },
     ...(hasInstancePermission(

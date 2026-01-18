@@ -86,16 +86,16 @@ export function NavUserAdmin() {
       title: t("userSidebar.serverSettings"),
       icon: ServerIcon,
       linkProps: {
-        to: "/user/admin/settings/$namespace",
-        params: { namespace: "server" },
+        to: "/user/admin/settings/$pageId",
+        params: { pageId: "server" },
       },
     },
     {
       title: t("userSidebar.devSettings"),
       icon: BugIcon,
       linkProps: {
-        to: "/user/admin/settings/$namespace",
-        params: { namespace: "dev" },
+        to: "/user/admin/settings/$pageId",
+        params: { pageId: "dev" },
       },
     },
   ];

@@ -30,8 +30,8 @@ import { Route as DashboardInstanceInstanceMetaRouteImport } from './routes/_das
 import { Route as DashboardInstanceInstanceDiscoverRouteImport } from './routes/_dashboard/instance/$instance/discover'
 import { Route as DashboardInstanceInstanceAuditLogRouteImport } from './routes/_dashboard/instance/$instance/audit-log'
 import { Route as DashboardInstanceInstanceAccountsRouteImport } from './routes/_dashboard/instance/$instance/accounts'
-import { Route as DashboardUserAdminSettingsNamespaceRouteImport } from './routes/_dashboard/user/admin/settings/$namespace'
-import { Route as DashboardInstanceInstanceSettingsNamespaceRouteImport } from './routes/_dashboard/instance/$instance/settings/$namespace'
+import { Route as DashboardUserAdminSettingsPageIdRouteImport } from './routes/_dashboard/user/admin/settings/$pageId'
+import { Route as DashboardInstanceInstanceSettingsPageIdRouteImport } from './routes/_dashboard/instance/$instance/settings/$pageId'
 
 const DashboardRoute = DashboardRouteImport.update({
   id: '/_dashboard',
@@ -148,16 +148,16 @@ const DashboardInstanceInstanceAccountsRoute =
     path: '/accounts',
     getParentRoute: () => DashboardInstanceInstanceRoute,
   } as any)
-const DashboardUserAdminSettingsNamespaceRoute =
-  DashboardUserAdminSettingsNamespaceRouteImport.update({
-    id: '/settings/$namespace',
-    path: '/settings/$namespace',
+const DashboardUserAdminSettingsPageIdRoute =
+  DashboardUserAdminSettingsPageIdRouteImport.update({
+    id: '/settings/$pageId',
+    path: '/settings/$pageId',
     getParentRoute: () => DashboardUserAdminRoute,
   } as any)
-const DashboardInstanceInstanceSettingsNamespaceRoute =
-  DashboardInstanceInstanceSettingsNamespaceRouteImport.update({
-    id: '/settings/$namespace',
-    path: '/settings/$namespace',
+const DashboardInstanceInstanceSettingsPageIdRoute =
+  DashboardInstanceInstanceSettingsPageIdRouteImport.update({
+    id: '/settings/$pageId',
+    path: '/settings/$pageId',
     getParentRoute: () => DashboardInstanceInstanceRoute,
   } as any)
 
@@ -182,8 +182,8 @@ export interface FileRoutesByFullPath {
   '/user/admin/users': typeof DashboardUserAdminUsersRoute
   '/instance/$instance/': typeof DashboardInstanceInstanceIndexRoute
   '/user/admin/': typeof DashboardUserAdminIndexRoute
-  '/instance/$instance/settings/$namespace': typeof DashboardInstanceInstanceSettingsNamespaceRoute
-  '/user/admin/settings/$namespace': typeof DashboardUserAdminSettingsNamespaceRoute
+  '/instance/$instance/settings/$pageId': typeof DashboardInstanceInstanceSettingsPageIdRoute
+  '/user/admin/settings/$pageId': typeof DashboardUserAdminSettingsPageIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -203,8 +203,8 @@ export interface FileRoutesByTo {
   '/user/admin/users': typeof DashboardUserAdminUsersRoute
   '/instance/$instance': typeof DashboardInstanceInstanceIndexRoute
   '/user/admin': typeof DashboardUserAdminIndexRoute
-  '/instance/$instance/settings/$namespace': typeof DashboardInstanceInstanceSettingsNamespaceRoute
-  '/user/admin/settings/$namespace': typeof DashboardUserAdminSettingsNamespaceRoute
+  '/instance/$instance/settings/$pageId': typeof DashboardInstanceInstanceSettingsPageIdRoute
+  '/user/admin/settings/$pageId': typeof DashboardUserAdminSettingsPageIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -229,8 +229,8 @@ export interface FileRoutesById {
   '/_dashboard/user/admin/users': typeof DashboardUserAdminUsersRoute
   '/_dashboard/instance/$instance/': typeof DashboardInstanceInstanceIndexRoute
   '/_dashboard/user/admin/': typeof DashboardUserAdminIndexRoute
-  '/_dashboard/instance/$instance/settings/$namespace': typeof DashboardInstanceInstanceSettingsNamespaceRoute
-  '/_dashboard/user/admin/settings/$namespace': typeof DashboardUserAdminSettingsNamespaceRoute
+  '/_dashboard/instance/$instance/settings/$pageId': typeof DashboardInstanceInstanceSettingsPageIdRoute
+  '/_dashboard/user/admin/settings/$pageId': typeof DashboardUserAdminSettingsPageIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -255,8 +255,8 @@ export interface FileRouteTypes {
     | '/user/admin/users'
     | '/instance/$instance/'
     | '/user/admin/'
-    | '/instance/$instance/settings/$namespace'
-    | '/user/admin/settings/$namespace'
+    | '/instance/$instance/settings/$pageId'
+    | '/user/admin/settings/$pageId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -276,8 +276,8 @@ export interface FileRouteTypes {
     | '/user/admin/users'
     | '/instance/$instance'
     | '/user/admin'
-    | '/instance/$instance/settings/$namespace'
-    | '/user/admin/settings/$namespace'
+    | '/instance/$instance/settings/$pageId'
+    | '/user/admin/settings/$pageId'
   id:
     | '__root__'
     | '/'
@@ -301,8 +301,8 @@ export interface FileRouteTypes {
     | '/_dashboard/user/admin/users'
     | '/_dashboard/instance/$instance/'
     | '/_dashboard/user/admin/'
-    | '/_dashboard/instance/$instance/settings/$namespace'
-    | '/_dashboard/user/admin/settings/$namespace'
+    | '/_dashboard/instance/$instance/settings/$pageId'
+    | '/_dashboard/user/admin/settings/$pageId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -459,18 +459,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardInstanceInstanceAccountsRouteImport
       parentRoute: typeof DashboardInstanceInstanceRoute
     }
-    '/_dashboard/user/admin/settings/$namespace': {
-      id: '/_dashboard/user/admin/settings/$namespace'
-      path: '/settings/$namespace'
-      fullPath: '/user/admin/settings/$namespace'
-      preLoaderRoute: typeof DashboardUserAdminSettingsNamespaceRouteImport
+    '/_dashboard/user/admin/settings/$pageId': {
+      id: '/_dashboard/user/admin/settings/$pageId'
+      path: '/settings/$pageId'
+      fullPath: '/user/admin/settings/$pageId'
+      preLoaderRoute: typeof DashboardUserAdminSettingsPageIdRouteImport
       parentRoute: typeof DashboardUserAdminRoute
     }
-    '/_dashboard/instance/$instance/settings/$namespace': {
-      id: '/_dashboard/instance/$instance/settings/$namespace'
-      path: '/settings/$namespace'
-      fullPath: '/instance/$instance/settings/$namespace'
-      preLoaderRoute: typeof DashboardInstanceInstanceSettingsNamespaceRouteImport
+    '/_dashboard/instance/$instance/settings/$pageId': {
+      id: '/_dashboard/instance/$instance/settings/$pageId'
+      path: '/settings/$pageId'
+      fullPath: '/instance/$instance/settings/$pageId'
+      preLoaderRoute: typeof DashboardInstanceInstanceSettingsPageIdRouteImport
       parentRoute: typeof DashboardInstanceInstanceRoute
     }
   }
@@ -482,7 +482,7 @@ interface DashboardUserAdminRouteChildren {
   DashboardUserAdminTerminalRoute: typeof DashboardUserAdminTerminalRoute
   DashboardUserAdminUsersRoute: typeof DashboardUserAdminUsersRoute
   DashboardUserAdminIndexRoute: typeof DashboardUserAdminIndexRoute
-  DashboardUserAdminSettingsNamespaceRoute: typeof DashboardUserAdminSettingsNamespaceRoute
+  DashboardUserAdminSettingsPageIdRoute: typeof DashboardUserAdminSettingsPageIdRoute
 }
 
 const DashboardUserAdminRouteChildren: DashboardUserAdminRouteChildren = {
@@ -491,8 +491,7 @@ const DashboardUserAdminRouteChildren: DashboardUserAdminRouteChildren = {
   DashboardUserAdminTerminalRoute: DashboardUserAdminTerminalRoute,
   DashboardUserAdminUsersRoute: DashboardUserAdminUsersRoute,
   DashboardUserAdminIndexRoute: DashboardUserAdminIndexRoute,
-  DashboardUserAdminSettingsNamespaceRoute:
-    DashboardUserAdminSettingsNamespaceRoute,
+  DashboardUserAdminSettingsPageIdRoute: DashboardUserAdminSettingsPageIdRoute,
 }
 
 const DashboardUserAdminRouteWithChildren =
@@ -525,7 +524,7 @@ interface DashboardInstanceInstanceRouteChildren {
   DashboardInstanceInstanceScriptsRoute: typeof DashboardInstanceInstanceScriptsRoute
   DashboardInstanceInstanceTerminalRoute: typeof DashboardInstanceInstanceTerminalRoute
   DashboardInstanceInstanceIndexRoute: typeof DashboardInstanceInstanceIndexRoute
-  DashboardInstanceInstanceSettingsNamespaceRoute: typeof DashboardInstanceInstanceSettingsNamespaceRoute
+  DashboardInstanceInstanceSettingsPageIdRoute: typeof DashboardInstanceInstanceSettingsPageIdRoute
 }
 
 const DashboardInstanceInstanceRouteChildren: DashboardInstanceInstanceRouteChildren =
@@ -544,8 +543,8 @@ const DashboardInstanceInstanceRouteChildren: DashboardInstanceInstanceRouteChil
     DashboardInstanceInstanceTerminalRoute:
       DashboardInstanceInstanceTerminalRoute,
     DashboardInstanceInstanceIndexRoute: DashboardInstanceInstanceIndexRoute,
-    DashboardInstanceInstanceSettingsNamespaceRoute:
-      DashboardInstanceInstanceSettingsNamespaceRoute,
+    DashboardInstanceInstanceSettingsPageIdRoute:
+      DashboardInstanceInstanceSettingsPageIdRoute,
   }
 
 const DashboardInstanceInstanceRouteWithChildren =

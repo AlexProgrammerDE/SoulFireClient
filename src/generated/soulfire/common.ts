@@ -584,6 +584,12 @@ export interface SettingsPageEntry {
  */
 export interface SettingsPage {
   /**
+   * Unique page identifier (URL-safe, e.g., "bot", "account", "auto-reconnect")
+   *
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
    * @generated from protobuf field: optional string owning_plugin_id = 2
    */
   owningPluginId?: string;
@@ -3064,6 +3070,7 @@ export const SettingsPageEntry = new SettingsPageEntry$Type();
 class SettingsPage$Type extends MessageType<SettingsPage> {
   constructor() {
     super("soulfire.v1.SettingsPage", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
       {
         no: 2,
         name: "owning_plugin_id",
@@ -3090,6 +3097,7 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
   }
   create(value?: PartialMessage<SettingsPage>): SettingsPage {
     const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
     message.pageName = "";
     message.entries = [];
     message.iconId = "";
@@ -3108,6 +3116,9 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
         case /* optional string owning_plugin_id */ 2:
           message.owningPluginId = reader.string();
           break;
@@ -3159,6 +3170,9 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
     /* optional string owning_plugin_id = 2; */
     if (message.owningPluginId !== undefined)
       writer.tag(2, WireType.LengthDelimited).string(message.owningPluginId);

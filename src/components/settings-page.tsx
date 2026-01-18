@@ -47,8 +47,8 @@ import {
   type IntSetting,
   type MinMaxSetting,
   type MinMaxSetting_Entry,
-  type SettingEntry,
   type SettingsPage,
+  type SettingsPageEntry,
   type StringListSetting,
   type StringSetting,
   StringSetting_InputType,
@@ -535,21 +535,21 @@ function MinMaxComponent(props: {
 }
 
 function EntryComponent<T extends BaseSettings>(props: {
-  namespace: string;
-  entry: SettingEntry;
+  entry: SettingsPageEntry;
   invalidateQuery: () => Promise<void>;
   setConfig: (config: T) => Promise<void>;
   config: T;
 }) {
+  const namespace = props.entry.id?.namespace;
+  const key = props.entry.id?.key;
   const value = useMemo(
-    () => getEntryValueByType(props.namespace, props.config, props.entry),
-    [props.config, props.entry, props.namespace],
+    () => getEntryValueByType(props.config, props.entry),
+    [props.config, props.entry],
   );
   const setValueMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
-      await props.setConfig(
-        updateEntry(props.namespace, props.entry.key, value, props.config),
-      );
+      if (!namespace || !key) return;
+      await props.setConfig(updateEntry(namespace, key, value, props.config));
     },
     onSettled: async () => {
       await props.invalidateQuery();
@@ -566,7 +566,7 @@ function EntryComponent<T extends BaseSettings>(props: {
 }
 
 export function GenericEntryComponent(props: {
-  entry: SettingEntry["value"];
+  entry: SettingsPageEntry["value"];
   value: JsonValue;
   changeCallback: (value: JsonValue) => void;
 }) {
@@ -721,15 +721,21 @@ function ClientSettingsPageComponent<T extends BaseSettings>({
   setConfig: (config: T) => Promise<void>;
   config: T;
 }) {
+  const enabledIdentifier = data.enabledIdentifier;
   return (
     <>
       {data.entries
-        .filter((entry) => entry.key !== data.enabledKey)
-        .map((page) => (
+        .filter(
+          (entry) =>
+            !(
+              entry.id?.key === enabledIdentifier?.key &&
+              entry.id?.namespace === enabledIdentifier?.namespace
+            ),
+        )
+        .map((entry) => (
           <EntryComponent
-            namespace={data.namespace}
-            key={page.key}
-            entry={page}
+            key={`${entry.id?.namespace}:${entry.id?.key}`}
+            entry={entry}
             setConfig={setConfig}
             invalidateQuery={invalidateQuery}
             config={config}

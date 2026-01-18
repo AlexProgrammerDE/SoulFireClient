@@ -26,6 +26,7 @@ export const Route = createFileRoute("/_dashboard/user/admin")({
             config: serverConfig,
             profile: convertFromServerProto(serverConfig),
             serverSettings: demoServerSettings,
+            plugins: [],
           };
         }
 

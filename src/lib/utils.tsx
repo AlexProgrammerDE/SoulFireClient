@@ -14,7 +14,7 @@ import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
 import type {
   GlobalPermission,
   InstancePermission,
-  SettingEntry,
+  SettingsPageEntry,
 } from "@/generated/soulfire/common.ts";
 import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
 import type {
@@ -212,51 +212,41 @@ function getEntryValue(
 }
 
 export function getEntryValueByType(
-  namespace: string,
   config: BaseSettings,
-  entry: SettingEntry | undefined,
+  entry: SettingsPageEntry | undefined,
 ): JsonValue {
+  const namespace = entry?.id?.namespace;
+  const key = entry?.id?.key;
+  if (!namespace || !key) {
+    return null;
+  }
+
   switch (entry?.value.oneofKind) {
     case "string": {
-      return getEntryValue(
-        namespace,
-        entry.key,
-        config,
-        entry.value.string.def,
-      );
+      return getEntryValue(namespace, key, config, entry.value.string.def);
     }
     case "int": {
-      return getEntryValue(namespace, entry.key, config, entry.value.int.def);
+      return getEntryValue(namespace, key, config, entry.value.int.def);
     }
     case "bool": {
-      return getEntryValue(namespace, entry.key, config, entry.value.bool.def);
+      return getEntryValue(namespace, key, config, entry.value.bool.def);
     }
     case "double": {
-      return getEntryValue(
-        namespace,
-        entry.key,
-        config,
-        entry.value.double.def,
-      );
+      return getEntryValue(namespace, key, config, entry.value.double.def);
     }
     case "combo": {
-      return getEntryValue(namespace, entry.key, config, entry.value.combo.def);
+      return getEntryValue(namespace, key, config, entry.value.combo.def);
     }
     case "stringList": {
-      return getEntryValue(
-        namespace,
-        entry.key,
-        config,
-        entry.value.stringList.def,
-      );
+      return getEntryValue(namespace, key, config, entry.value.stringList.def);
     }
     case "minMax": {
-      return getEntryValue(namespace, entry.key, config, {
+      return getEntryValue(namespace, key, config, {
         min: entry.value.minMax.minEntry?.def ?? null,
         max: entry.value.minMax.maxEntry?.def ?? null,
       });
     }
-    case undefined: {
+    default: {
       return null;
     }
   }
