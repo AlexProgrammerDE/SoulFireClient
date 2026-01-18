@@ -6,5 +6,6 @@
       "automerge": true,
       "automergeType": "branch"
     }
-  ]
+  ],
+  "ignorePaths": ["src-tauri/gen/"]
 }
