@@ -1,7 +1,7 @@
 {
   "proxy": {
-    "getProxies": "",
-    "addProxies": "",
+    "getProxies": "Получить прокси",
+    "addProxies": "Добавить прокси",
     "filterPlaceholder": "Фильтр прокси...",
     "listImportToast": {
       "loading": "Импорт прокси...",
@@ -39,8 +39,8 @@
     }
   },
   "account": {
-    "getAccounts": "",
-    "addAccounts": "",
+    "getAccounts": "Получить аккаунты",
+    "addAccounts": "Добавить аккаунты",
     "filterPlaceholder": "Фильтр учетных записей...",
     "listImportToast": {
       "loading": "Импорт аккаунтов... {{checked}}/{{total}} (Успешно: {{success}} не удалось: {{failed}})",

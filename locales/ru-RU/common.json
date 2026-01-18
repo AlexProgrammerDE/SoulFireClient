@@ -217,7 +217,7 @@
     "metaSettings": "Настройки экземпляра",
     "proxySettings": "Настройки прокси",
     "aiSettings": "Настройки ИИ",
-    "pathfindingSettings": "",
+    "pathfindingSettings": "Настройки поиска пути",
     "discoverPlugins": "Плагины",
     "instanceScripts": "Скрипты"
   },
@@ -307,7 +307,7 @@
       "generate": "Сгенерировать токен",
       "placeholder": "Нажмите 'Сгенерировать токен' ниже",
       "generating": "Генерация токена...",
-      "success": "",
+      "success": "Токен успешно сгенерирован",
       "error": "Не удалось сгенерировать токен",
       "copy": "Копировать токен"
     },
@@ -317,17 +317,17 @@
     "documentation": "Документация",
     "howToConnect": "Как подключиться"
   },
-  "uploadToMcLogs": "",
+  "uploadToMcLogs": "Загрузить на mclo.gs",
   "mcLogsUpload": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Загрузка на mclo.gs...",
+    "success": "Загружено на mclo.gs! Посмотрите здесь: {{url}}",
+    "error": "Ошибка загрузки на mclo.gs"
   },
-  "copyToClipboard": "",
+  "copyToClipboard": "Скопировать в буфер обмена",
   "clipboardCopy": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Копирование в буфер обмена...",
+    "success": "\"{{content}}\" скопирован в буфер обмена",
+    "error": "Ошибка копирования в буфер обмена"
   },
   "instanceState": {
     "starting": "Запуск",
