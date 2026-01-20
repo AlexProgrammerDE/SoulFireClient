@@ -6,7 +6,7 @@ import { defineConfig } from "vite";
 import svgr from "vite-plugin-svgr";
 import tauriConf from "./src-tauri/tauri.conf.json" with { type: "json" };
 
-const dev = process.env.NODE_ENV !== "production";
+const _dev = process.env.NODE_ENV !== "production";
 
 const baseEnv = process.env.VERCEL_ENV ?? process.env.NODE_ENV;
 const appEnv =
@@ -70,11 +70,20 @@ export default defineConfig({
       "Content-Security-Policy": tauriConf.app.security.csp,
     },
     watch: {
-      ignored: ["**/.git/**", "**/node_modules/**", "**/src-tauri/**"],
+      ignored: ["**/src-tauri/**"],
     },
   },
+  envPrefix: ["VITE_", "TAURI_ENV_*"],
   build: {
-    target: "es2020",
-    sourcemap: dev ? "inline" : true,
+    // Tauri uses Chromium on Windows and WebKit on macOS and Linux
+    target: process.env.TAURI_ENV_PLATFORM
+      ? process.env.TAURI_ENV_PLATFORM === "windows"
+        ? "chrome105"
+        : "safari13"
+      : "es2020",
+    // don't minify for debug builds
+    minify: !process.env.TAURI_ENV_DEBUG ? "esbuild" : false,
+    // produce sourcemaps for debug builds
+    sourcemap: !!process.env.TAURI_ENV_DEBUG,
   },
 });
