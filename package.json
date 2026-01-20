@@ -6,7 +6,7 @@
   "scripts": {
     "generate-routes": "tsr generate",
     "watch-routes": "tsr watch",
-    "dev": "vite",
+    "dev": "cross-env NODE_OPTIONS=--max-old-space-size=8192 vite",
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
