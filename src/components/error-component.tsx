@@ -1,3 +1,4 @@
+import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import { useNavigate, useRouter } from "@tanstack/react-router";
 import { emit } from "@tauri-apps/api/event";
 import {
@@ -24,7 +25,12 @@ export function ErrorComponent({ error }: { error: Error }) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
   const router = useRouter();
+  const queryErrorResetBoundary = useQueryErrorResetBoundary();
   const [revalidating, setRevalidating] = useState(false);
+
+  useEffect(() => {
+    queryErrorResetBoundary.reset();
+  }, [queryErrorResetBoundary]);
 
   const revalidate = useCallback(() => {
     setRevalidating(true);

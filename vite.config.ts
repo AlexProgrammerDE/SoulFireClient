@@ -6,8 +6,6 @@ import { defineConfig } from "vite";
 import svgr from "vite-plugin-svgr";
 import tauriConf from "./src-tauri/tauri.conf.json" with { type: "json" };
 
-const _dev = process.env.NODE_ENV !== "production";
-
 const baseEnv = process.env.VERCEL_ENV ?? process.env.NODE_ENV;
 const appEnv =
   baseEnv === "production"
