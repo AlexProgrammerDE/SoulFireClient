@@ -27,6 +27,7 @@ const namespaces = fs
   .join(",");
 
 const host = process.env.TAURI_DEV_HOST;
+const isDev = appEnv === "development";
 
 export default defineConfig({
   define: {
@@ -38,7 +39,7 @@ export default defineConfig({
   plugins: [
     tanstackRouter({
       target: "react",
-      autoCodeSplitting: true,
+      autoCodeSplitting: !isDev,
     }),
     react(),
     svgr(),
@@ -68,7 +69,7 @@ export default defineConfig({
       "Content-Security-Policy": tauriConf.app.security.csp,
     },
     watch: {
-      ignored: ["**/src-tauri/**"],
+      ignored: ["**/src-tauri/**", "**/target/**", "**/.idea/**"],
     },
   },
   envPrefix: ["VITE_", "TAURI_ENV_*"],
