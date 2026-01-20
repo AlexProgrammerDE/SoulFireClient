@@ -775,26 +775,41 @@ export function SettingFieldByKey<T extends BaseSettings>(props: {
   );
 }
 
+export type DisabledSettingId = {
+  namespace: string;
+  key: string;
+};
+
 function ClientSettingsPageComponent<T extends BaseSettings>({
   data,
   invalidateQuery,
   setConfig,
   config,
+  disabledIds = [],
 }: {
   data: SettingsPage;
   invalidateQuery: () => Promise<void>;
   setConfig: (config: T) => Promise<void>;
   config: T;
+  disabledIds?: DisabledSettingId[];
 }) {
   const enabledIdentifier = data.enabledIdentifier;
+  const allDisabledIds = useMemo(() => {
+    const result = [...disabledIds];
+    if (enabledIdentifier) {
+      result.push(enabledIdentifier);
+    }
+    return result;
+  }, [disabledIds, enabledIdentifier]);
+
   return (
     <>
       {data.entries
         .filter(
           (entryId) =>
-            !(
-              entryId.key === enabledIdentifier?.key &&
-              entryId.namespace === enabledIdentifier?.namespace
+            !allDisabledIds.some(
+              (id) =>
+                entryId.namespace === id.namespace && entryId.key === id.key,
             ),
         )
         .map((entryId) => (
@@ -812,8 +827,10 @@ function ClientSettingsPageComponent<T extends BaseSettings>({
 
 export function InstanceSettingsPageComponent({
   data,
+  disabledIds,
 }: {
   data: SettingsPage;
+  disabledIds?: DisabledSettingId[];
 }) {
   const queryClient = useQueryClient();
   const instanceInfoQueryOptions = useRouteContext({
@@ -849,6 +866,7 @@ export function InstanceSettingsPageComponent({
           });
         }}
         config={profile}
+        disabledIds={disabledIds}
       />
     </SettingsRegistryContext.Provider>
   );

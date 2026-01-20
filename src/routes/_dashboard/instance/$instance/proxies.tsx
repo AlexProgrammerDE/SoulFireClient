@@ -37,7 +37,11 @@ import ImportDialog from "@/components/dialog/import-dialog.tsx";
 import { ExternalLink } from "@/components/external-link.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
-import { InstanceSettingsPageComponent } from "@/components/settings-page.tsx";
+import {
+  type DisabledSettingId,
+  InstanceSettingsPageComponent,
+  SettingFieldByKey,
+} from "@/components/settings-page.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import {
@@ -61,6 +65,10 @@ import {
   type ProfileRoot,
 } from "@/lib/types.ts";
 import { runAsync, setInstanceConfig } from "@/lib/utils.tsx";
+
+const PROXY_SETTINGS_DISABLED_IDS: DisabledSettingId[] = [
+  { namespace: "proxy", key: "proxy-check-concurrency" },
+];
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/proxies")({
   component: ProxySettings,
@@ -404,6 +412,27 @@ function AddButton() {
           textInput={{
             defaultValue: "",
           }}
+          extraContent={
+            <SettingFieldByKey
+              namespace="proxy"
+              settingKey="proxy-check-concurrency"
+              invalidateQuery={async () => {
+                await queryClient.invalidateQueries({
+                  queryKey: instanceInfoQueryOptions.queryKey,
+                });
+              }}
+              setConfig={async (jsonProfile) => {
+                await setInstanceConfig(
+                  jsonProfile,
+                  instanceInfo,
+                  transport,
+                  queryClient,
+                  instanceInfoQueryOptions.queryKey,
+                );
+              }}
+              config={profile}
+            />
+          }
         />
       )}
     </>
@@ -618,6 +647,7 @@ function Content() {
               (s) => s.id === "proxy",
             ) as SettingsPage
           }
+          disabledIds={PROXY_SETTINGS_DISABLED_IDS}
         />
       </div>
       <DataTable

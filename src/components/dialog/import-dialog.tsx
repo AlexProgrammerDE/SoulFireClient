@@ -7,6 +7,7 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { readTextFile } from "@tauri-apps/plugin-fs";
 import { ClipboardIcon, FileIcon, GlobeIcon, TextIcon } from "lucide-react";
 import MimeMatcher from "mime-matcher";
+import type { ReactNode } from "react";
 import { use, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -44,6 +45,7 @@ export type ImportDialogProps = {
   }[];
   allowMultiple: boolean;
   textInput: TextInput | null;
+  extraContent?: ReactNode;
 };
 
 export default function ImportDialog(props: ImportDialogProps) {
@@ -289,6 +291,12 @@ function MainDialog(
             </div>
             {props.textInput !== null && (
               <TextInput {...props} textInput={props.textInput} />
+            )}
+            {props.extraContent && (
+              <>
+                <Separator orientation="horizontal" />
+                {props.extraContent}
+              </>
             )}
           </div>
         </CredenzaBody>
