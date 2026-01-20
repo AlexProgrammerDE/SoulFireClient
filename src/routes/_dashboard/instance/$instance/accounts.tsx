@@ -12,6 +12,7 @@ import {
   PlusIcon,
   RotateCcwKeyIcon,
   ShoppingCartIcon,
+  SparklesIcon,
   TextIcon,
   TrashIcon,
   WifiOffIcon,
@@ -32,6 +33,7 @@ import {
 } from "@/components/data-table/data-table-selects.tsx";
 import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
+import GenerateAccountsDialog from "@/components/dialog/generate-accounts-dialog.tsx";
 import ImportDialog from "@/components/dialog/import-dialog.tsx";
 import { ExternalLink } from "@/components/external-link.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
@@ -74,6 +76,72 @@ function GetAccountsButton() {
         {t("account.getAccounts")}
       </ExternalLink>
     </Button>
+  );
+}
+
+function GenerateAccountsButton() {
+  const { t } = useTranslation("instance");
+  const queryClient = useQueryClient();
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
+  const transport = use(TransportContext);
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const { trackEvent } = useAptabase();
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const { mutateAsync: setProfileMutation } = useMutation({
+    mutationFn: async (
+      profileTransformer: (prev: ProfileRoot) => ProfileRoot,
+    ) => {
+      await setInstanceConfig(
+        profileTransformer(profile),
+        instanceInfo,
+        transport,
+        queryClient,
+        instanceInfoQueryOptions.queryKey,
+      );
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: instanceInfoQueryOptions.queryKey,
+      });
+    },
+  });
+
+  const handleGenerate = useCallback(
+    async (newAccounts: ProfileAccount[], overrideExisting: boolean) => {
+      void trackEvent("generate_accounts", { count: newAccounts.length });
+      await setProfileMutation((prev) => {
+        if (overrideExisting) {
+          return { ...prev, accounts: newAccounts };
+        }
+        const existingSet = new Set(prev.accounts.map((a) => a.profileId));
+        return {
+          ...prev,
+          accounts: prev.accounts.concat(
+            newAccounts.filter((a) => !existingSet.has(a.profileId)),
+          ),
+        };
+      });
+    },
+    [setProfileMutation, trackEvent],
+  );
+
+  return (
+    <>
+      <Button variant="outline" size="sm" onClick={() => setDialogOpen(true)}>
+        <SparklesIcon />
+        {t("account.generateAccounts")}
+      </Button>
+      <GenerateAccountsDialog
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+        onGenerate={handleGenerate}
+        existingAccountCount={profile.accounts.length}
+      />
+    </>
   );
 }
 
@@ -661,6 +729,7 @@ function Content() {
         <DataTableToolbar table={table}>
           <DataTableSortList table={table} />
           <GetAccountsButton />
+          <GenerateAccountsButton />
           <AddButton />
         </DataTableToolbar>
       </DataTable>

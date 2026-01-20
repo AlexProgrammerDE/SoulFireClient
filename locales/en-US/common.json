@@ -114,6 +114,15 @@
       "loading": "Stopping attack...",
       "success": "Attack stopped successfully",
       "error": "Failed to stop attack"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "No Accounts Configured",
+      "noAccountsDescription": "You need to have accounts imported before starting an attack. You requested {{required}} bots.",
+      "notEnoughTitle": "Not Enough Accounts",
+      "notEnoughDescription": "You requested {{required}} bots but only have {{available}} accounts imported.",
+      "hint": "You can generate offline accounts or import accounts from the Account Settings page.",
+      "continueWithExisting": "Continue with {{count}} accounts",
+      "generateAccounts": "Generate Accounts"
     }
   },
   "icon": {
