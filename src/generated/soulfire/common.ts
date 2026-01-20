@@ -507,71 +507,75 @@ export interface MinMaxSetting_Entry {
   placeholder: string;
 }
 /**
- * A entry in the settings page
+ * A setting definition that can be rendered anywhere by identifier
  *
- * @generated from protobuf message soulfire.v1.SettingsPageEntry
+ * @generated from protobuf message soulfire.v1.SettingsDefinition
  */
-export interface SettingsPageEntry {
+export interface SettingsDefinition {
   /**
-   * id + namespace that this setting corresponds to
+   * Unique identifier for this setting (namespace + key)
    *
-   * @generated from protobuf field: soulfire.v1.SettingsEntryIdentifier id = 9
+   * @generated from protobuf field: soulfire.v1.SettingsEntryIdentifier id = 1
    */
   id?: SettingsEntryIdentifier;
   /**
-   * @generated from protobuf field: soulfire.v1.SettingsPageEntryScopeType scope = 10
+   * Which scope this setting belongs to (SERVER, INSTANCE, BOT)
+   *
+   * @generated from protobuf field: soulfire.v1.SettingsPageEntryScopeType scope = 2
    */
   scope: SettingsPageEntryScopeType;
   /**
-   * @generated from protobuf oneof: value
+   * The actual setting type and UI configuration
+   *
+   * @generated from protobuf oneof: type
    */
-  value:
+  type:
     | {
         oneofKind: "string";
         /**
-         * @generated from protobuf field: soulfire.v1.StringSetting string = 2
+         * @generated from protobuf field: soulfire.v1.StringSetting string = 3
          */
         string: StringSetting;
       }
     | {
         oneofKind: "int";
         /**
-         * @generated from protobuf field: soulfire.v1.IntSetting int = 3
+         * @generated from protobuf field: soulfire.v1.IntSetting int = 4
          */
         int: IntSetting;
       }
     | {
         oneofKind: "double";
         /**
-         * @generated from protobuf field: soulfire.v1.DoubleSetting double = 4
+         * @generated from protobuf field: soulfire.v1.DoubleSetting double = 5
          */
         double: DoubleSetting;
       }
     | {
         oneofKind: "bool";
         /**
-         * @generated from protobuf field: soulfire.v1.BoolSetting bool = 5
+         * @generated from protobuf field: soulfire.v1.BoolSetting bool = 6
          */
         bool: BoolSetting;
       }
     | {
         oneofKind: "combo";
         /**
-         * @generated from protobuf field: soulfire.v1.ComboSetting combo = 6
+         * @generated from protobuf field: soulfire.v1.ComboSetting combo = 7
          */
         combo: ComboSetting;
       }
     | {
         oneofKind: "stringList";
         /**
-         * @generated from protobuf field: soulfire.v1.StringListSetting string_list = 7
+         * @generated from protobuf field: soulfire.v1.StringListSetting string_list = 8
          */
         stringList: StringListSetting;
       }
     | {
         oneofKind: "minMax";
         /**
-         * @generated from protobuf field: soulfire.v1.MinMaxSetting min_max = 8
+         * @generated from protobuf field: soulfire.v1.MinMaxSetting min_max = 9
          */
         minMax: MinMaxSetting;
       }
@@ -580,6 +584,8 @@ export interface SettingsPageEntry {
       };
 }
 /**
+ * A page definition that references settings by their identifiers
+ *
  * @generated from protobuf message soulfire.v1.SettingsPage
  */
 export interface SettingsPage {
@@ -590,19 +596,23 @@ export interface SettingsPage {
    */
   id: string;
   /**
+   * Plugin that owns this settings page (optional for internal pages)
+   *
    * @generated from protobuf field: optional string owning_plugin_id = 2
    */
   owningPluginId?: string;
   /**
-   * The name of the page for these settings
+   * The display name of the page
    *
    * @generated from protobuf field: string page_name = 3
    */
   pageName: string;
   /**
-   * @generated from protobuf field: repeated soulfire.v1.SettingsPageEntry entries = 5
+   * Ordered list of setting identifiers to render on this page
+   *
+   * @generated from protobuf field: repeated soulfire.v1.SettingsEntryIdentifier entries = 5
    */
-  entries: SettingsPageEntry[];
+  entries: SettingsEntryIdentifier[];
   /**
    * https://lucide.dev icon id for this page (Usually rendered left of the page name)
    *
@@ -610,7 +620,7 @@ export interface SettingsPage {
    */
   iconId: string;
   /**
-   * Key which makes this plugin "enabled" or "disabled"
+   * Setting identifier that controls whether this page/plugin is enabled
    *
    * @generated from protobuf field: optional soulfire.v1.SettingsEntryIdentifier enabled_identifier = 7
    */
@@ -2798,12 +2808,12 @@ class MinMaxSetting_Entry$Type extends MessageType<MinMaxSetting_Entry> {
  */
 export const MinMaxSetting_Entry = new MinMaxSetting_Entry$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class SettingsPageEntry$Type extends MessageType<SettingsPageEntry> {
+class SettingsDefinition$Type extends MessageType<SettingsDefinition> {
   constructor() {
-    super("soulfire.v1.SettingsPageEntry", [
-      { no: 9, name: "id", kind: "message", T: () => SettingsEntryIdentifier },
+    super("soulfire.v1.SettingsDefinition", [
+      { no: 1, name: "id", kind: "message", T: () => SettingsEntryIdentifier },
       {
-        no: 10,
+        no: 2,
         name: "scope",
         kind: "enum",
         T: () => [
@@ -2812,76 +2822,76 @@ class SettingsPageEntry$Type extends MessageType<SettingsPageEntry> {
         ],
       },
       {
-        no: 2,
+        no: 3,
         name: "string",
         kind: "message",
-        oneof: "value",
+        oneof: "type",
         T: () => StringSetting,
       },
       {
-        no: 3,
+        no: 4,
         name: "int",
         kind: "message",
-        oneof: "value",
+        oneof: "type",
         T: () => IntSetting,
       },
       {
-        no: 4,
+        no: 5,
         name: "double",
         kind: "message",
-        oneof: "value",
+        oneof: "type",
         T: () => DoubleSetting,
       },
       {
-        no: 5,
+        no: 6,
         name: "bool",
         kind: "message",
-        oneof: "value",
+        oneof: "type",
         T: () => BoolSetting,
       },
       {
-        no: 6,
+        no: 7,
         name: "combo",
         kind: "message",
-        oneof: "value",
+        oneof: "type",
         T: () => ComboSetting,
       },
       {
-        no: 7,
+        no: 8,
         name: "string_list",
         kind: "message",
-        oneof: "value",
+        oneof: "type",
         T: () => StringListSetting,
       },
       {
-        no: 8,
+        no: 9,
         name: "min_max",
         kind: "message",
-        oneof: "value",
+        oneof: "type",
         T: () => MinMaxSetting,
       },
     ]);
   }
-  create(value?: PartialMessage<SettingsPageEntry>): SettingsPageEntry {
+  create(value?: PartialMessage<SettingsDefinition>): SettingsDefinition {
     const message = globalThis.Object.create(this.messagePrototype!);
     message.scope = 0;
-    message.value = { oneofKind: undefined };
+    message.type = { oneofKind: undefined };
     if (value !== undefined)
-      reflectionMergePartial<SettingsPageEntry>(this, message, value);
+      reflectionMergePartial<SettingsDefinition>(this, message, value);
     return message;
   }
   internalBinaryRead(
     reader: IBinaryReader,
     length: number,
     options: BinaryReadOptions,
-    target?: SettingsPageEntry,
-  ): SettingsPageEntry {
+    target?: SettingsDefinition,
+  ): SettingsDefinition {
     let message = target ?? this.create(),
       end = reader.pos + length;
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
-        case /* soulfire.v1.SettingsEntryIdentifier id */ 9:
+        case /* soulfire.v1.SettingsEntryIdentifier id */ 1:
           message.id = SettingsEntryIdentifier.internalBinaryRead(
             reader,
             reader.uint32(),
@@ -2889,83 +2899,83 @@ class SettingsPageEntry$Type extends MessageType<SettingsPageEntry> {
             message.id,
           );
           break;
-        case /* soulfire.v1.SettingsPageEntryScopeType scope */ 10:
+        case /* soulfire.v1.SettingsPageEntryScopeType scope */ 2:
           message.scope = reader.int32();
           break;
-        case /* soulfire.v1.StringSetting string */ 2:
-          message.value = {
+        case /* soulfire.v1.StringSetting string */ 3:
+          message.type = {
             oneofKind: "string",
             string: StringSetting.internalBinaryRead(
               reader,
               reader.uint32(),
               options,
-              (message.value as any).string,
+              (message.type as any).string,
             ),
           };
           break;
-        case /* soulfire.v1.IntSetting int */ 3:
-          message.value = {
+        case /* soulfire.v1.IntSetting int */ 4:
+          message.type = {
             oneofKind: "int",
             int: IntSetting.internalBinaryRead(
               reader,
               reader.uint32(),
               options,
-              (message.value as any).int,
+              (message.type as any).int,
             ),
           };
           break;
-        case /* soulfire.v1.DoubleSetting double */ 4:
-          message.value = {
+        case /* soulfire.v1.DoubleSetting double */ 5:
+          message.type = {
             oneofKind: "double",
             double: DoubleSetting.internalBinaryRead(
               reader,
               reader.uint32(),
               options,
-              (message.value as any).double,
+              (message.type as any).double,
             ),
           };
           break;
-        case /* soulfire.v1.BoolSetting bool */ 5:
-          message.value = {
+        case /* soulfire.v1.BoolSetting bool */ 6:
+          message.type = {
             oneofKind: "bool",
             bool: BoolSetting.internalBinaryRead(
               reader,
               reader.uint32(),
               options,
-              (message.value as any).bool,
+              (message.type as any).bool,
             ),
           };
           break;
-        case /* soulfire.v1.ComboSetting combo */ 6:
-          message.value = {
+        case /* soulfire.v1.ComboSetting combo */ 7:
+          message.type = {
             oneofKind: "combo",
             combo: ComboSetting.internalBinaryRead(
               reader,
               reader.uint32(),
               options,
-              (message.value as any).combo,
+              (message.type as any).combo,
             ),
           };
           break;
-        case /* soulfire.v1.StringListSetting string_list */ 7:
-          message.value = {
+        case /* soulfire.v1.StringListSetting string_list */ 8:
+          message.type = {
             oneofKind: "stringList",
             stringList: StringListSetting.internalBinaryRead(
               reader,
               reader.uint32(),
               options,
-              (message.value as any).stringList,
+              (message.type as any).stringList,
             ),
           };
           break;
-        case /* soulfire.v1.MinMaxSetting min_max */ 8:
-          message.value = {
+        case /* soulfire.v1.MinMaxSetting min_max */ 9:
+          message.type = {
             oneofKind: "minMax",
             minMax: MinMaxSetting.internalBinaryRead(
               reader,
               reader.uint32(),
               options,
-              (message.value as any).minMax,
+              (message.type as any).minMax,
             ),
           };
           break;
@@ -2989,69 +2999,69 @@ class SettingsPageEntry$Type extends MessageType<SettingsPageEntry> {
     return message;
   }
   internalBinaryWrite(
-    message: SettingsPageEntry,
+    message: SettingsDefinition,
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    /* soulfire.v1.StringSetting string = 2; */
-    if (message.value.oneofKind === "string")
-      StringSetting.internalBinaryWrite(
-        message.value.string,
-        writer.tag(2, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
-    /* soulfire.v1.IntSetting int = 3; */
-    if (message.value.oneofKind === "int")
-      IntSetting.internalBinaryWrite(
-        message.value.int,
-        writer.tag(3, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
-    /* soulfire.v1.DoubleSetting double = 4; */
-    if (message.value.oneofKind === "double")
-      DoubleSetting.internalBinaryWrite(
-        message.value.double,
-        writer.tag(4, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
-    /* soulfire.v1.BoolSetting bool = 5; */
-    if (message.value.oneofKind === "bool")
-      BoolSetting.internalBinaryWrite(
-        message.value.bool,
-        writer.tag(5, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
-    /* soulfire.v1.ComboSetting combo = 6; */
-    if (message.value.oneofKind === "combo")
-      ComboSetting.internalBinaryWrite(
-        message.value.combo,
-        writer.tag(6, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
-    /* soulfire.v1.StringListSetting string_list = 7; */
-    if (message.value.oneofKind === "stringList")
-      StringListSetting.internalBinaryWrite(
-        message.value.stringList,
-        writer.tag(7, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
-    /* soulfire.v1.MinMaxSetting min_max = 8; */
-    if (message.value.oneofKind === "minMax")
-      MinMaxSetting.internalBinaryWrite(
-        message.value.minMax,
-        writer.tag(8, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
-    /* soulfire.v1.SettingsEntryIdentifier id = 9; */
+    /* soulfire.v1.SettingsEntryIdentifier id = 1; */
     if (message.id)
       SettingsEntryIdentifier.internalBinaryWrite(
         message.id,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.SettingsPageEntryScopeType scope = 2; */
+    if (message.scope !== 0)
+      writer.tag(2, WireType.Varint).int32(message.scope);
+    /* soulfire.v1.StringSetting string = 3; */
+    if (message.type.oneofKind === "string")
+      StringSetting.internalBinaryWrite(
+        message.type.string,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.IntSetting int = 4; */
+    if (message.type.oneofKind === "int")
+      IntSetting.internalBinaryWrite(
+        message.type.int,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.DoubleSetting double = 5; */
+    if (message.type.oneofKind === "double")
+      DoubleSetting.internalBinaryWrite(
+        message.type.double,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.BoolSetting bool = 6; */
+    if (message.type.oneofKind === "bool")
+      BoolSetting.internalBinaryWrite(
+        message.type.bool,
+        writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.ComboSetting combo = 7; */
+    if (message.type.oneofKind === "combo")
+      ComboSetting.internalBinaryWrite(
+        message.type.combo,
+        writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.StringListSetting string_list = 8; */
+    if (message.type.oneofKind === "stringList")
+      StringListSetting.internalBinaryWrite(
+        message.type.stringList,
+        writer.tag(8, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.MinMaxSetting min_max = 9; */
+    if (message.type.oneofKind === "minMax")
+      MinMaxSetting.internalBinaryWrite(
+        message.type.minMax,
         writer.tag(9, WireType.LengthDelimited).fork(),
         options,
       ).join();
-    /* soulfire.v1.SettingsPageEntryScopeType scope = 10; */
-    if (message.scope !== 0)
-      writer.tag(10, WireType.Varint).int32(message.scope);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -3063,9 +3073,9 @@ class SettingsPageEntry$Type extends MessageType<SettingsPageEntry> {
   }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.SettingsPageEntry
+ * @generated MessageType for protobuf message soulfire.v1.SettingsDefinition
  */
-export const SettingsPageEntry = new SettingsPageEntry$Type();
+export const SettingsDefinition = new SettingsDefinition$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SettingsPage$Type extends MessageType<SettingsPage> {
   constructor() {
@@ -3084,7 +3094,7 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
         name: "entries",
         kind: "message",
         repeat: 2 /*RepeatType.UNPACKED*/,
-        T: () => SettingsPageEntry,
+        T: () => SettingsEntryIdentifier,
       },
       { no: 6, name: "icon_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
       {
@@ -3125,9 +3135,9 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
         case /* string page_name */ 3:
           message.pageName = reader.string();
           break;
-        case /* repeated soulfire.v1.SettingsPageEntry entries */ 5:
+        case /* repeated soulfire.v1.SettingsEntryIdentifier entries */ 5:
           message.entries.push(
-            SettingsPageEntry.internalBinaryRead(
+            SettingsEntryIdentifier.internalBinaryRead(
               reader,
               reader.uint32(),
               options,
@@ -3179,9 +3189,9 @@ class SettingsPage$Type extends MessageType<SettingsPage> {
     /* string page_name = 3; */
     if (message.pageName !== "")
       writer.tag(3, WireType.LengthDelimited).string(message.pageName);
-    /* repeated soulfire.v1.SettingsPageEntry entries = 5; */
+    /* repeated soulfire.v1.SettingsEntryIdentifier entries = 5; */
     for (let i = 0; i < message.entries.length; i++)
-      SettingsPageEntry.internalBinaryWrite(
+      SettingsEntryIdentifier.internalBinaryWrite(
         message.entries[i],
         writer.tag(5, WireType.LengthDelimited).fork(),
         options,

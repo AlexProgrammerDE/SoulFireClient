@@ -12,7 +12,7 @@ import UserPageLayout from "@/components/nav/user/user-page-layout.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import {
   ComponentTitle,
-  GenericEntryComponent,
+  SettingTypeRenderer,
 } from "@/components/settings-page.tsx";
 import { Card } from "@/components/ui/card.tsx";
 import { UserAvatar } from "@/components/user-avatar.tsx";
@@ -110,8 +110,8 @@ function Content() {
             </div>
           </Card>
         </div>
-        <GenericEntryComponent
-          entry={{
+        <SettingTypeRenderer
+          settingType={{
             oneofKind: "string",
             string: {
               uiName: "Username",
@@ -132,8 +132,8 @@ function Content() {
           value={clientInfo.username}
           changeCallback={setUsernameMutation.mutate}
         />
-        <GenericEntryComponent
-          entry={{
+        <SettingTypeRenderer
+          settingType={{
             oneofKind: "string",
             string: {
               uiName: "Email",

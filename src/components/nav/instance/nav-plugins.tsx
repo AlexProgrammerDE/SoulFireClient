@@ -15,6 +15,10 @@ import { type ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import DynamicIcon from "@/components/dynamic-icon.tsx";
 import {
+  createSettingsRegistry,
+  type SettingsRegistry,
+} from "@/components/providers/settings-registry-context.tsx";
+import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
@@ -30,7 +34,7 @@ import {
   SidebarMenuSubItem,
   useSidebar,
 } from "@/components/ui/sidebar.tsx";
-import { getEntryValueByType } from "@/lib/utils.tsx";
+import { getSettingValue } from "@/lib/utils.tsx";
 
 type NavLinks = {
   title: string;
@@ -91,23 +95,23 @@ export function NavPlugins() {
     },
   ];
 
+  // Create a registry to look up settings definitions
+  const settingsRegistry: SettingsRegistry = createSettingsRegistry(
+    instanceInfo.settingsDefinitions,
+  );
+
   const pluginSettingLinks: NavLinks = instanceInfo.instanceSettings
     .filter(
       (setting) =>
         setting.owningPluginId !== undefined &&
         setting.enabledIdentifier !== undefined,
     )
-    .filter(
-      (setting) =>
-        getEntryValueByType(
-          profile,
-          setting.entries.find(
-            (entry) =>
-              entry.id?.key === setting.enabledIdentifier?.key &&
-              entry.id?.namespace === setting.enabledIdentifier?.namespace,
-          ),
-        ) === true,
-    )
+    .filter((setting) => {
+      const enabledDefinition = settingsRegistry.getDefinition(
+        setting.enabledIdentifier,
+      );
+      return getSettingValue(profile, enabledDefinition) === true;
+    })
     .map((setting) => ({
       title: setting.pageName,
       icon: (props) => <DynamicIcon {...props} name={setting.iconId} />,

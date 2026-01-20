@@ -18,7 +18,12 @@ import {
   WireType,
 } from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
-import { ServerPlugin, SettingsNamespace, SettingsPage } from "./common";
+import {
+  ServerPlugin,
+  SettingsDefinition,
+  SettingsNamespace,
+  SettingsPage,
+} from "./common";
 /**
  * @generated from protobuf message soulfire.v1.ServerConfig
  */
@@ -41,6 +46,14 @@ export interface ServerInfoResponse {
    */
   config?: ServerConfig;
   /**
+   * All available settings definitions that can be rendered by identifier
+   *
+   * @generated from protobuf field: repeated soulfire.v1.SettingsDefinition settings_definitions = 4
+   */
+  settingsDefinitions: SettingsDefinition[];
+  /**
+   * Pages that group settings together (reference settings by identifier)
+   *
    * @generated from protobuf field: repeated soulfire.v1.SettingsPage server_settings = 2
    */
   serverSettings: SettingsPage[];
@@ -213,6 +226,13 @@ class ServerInfoResponse$Type extends MessageType<ServerInfoResponse> {
     super("soulfire.v1.ServerInfoResponse", [
       { no: 1, name: "config", kind: "message", T: () => ServerConfig },
       {
+        no: 4,
+        name: "settings_definitions",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SettingsDefinition,
+      },
+      {
         no: 2,
         name: "server_settings",
         kind: "message",
@@ -230,6 +250,7 @@ class ServerInfoResponse$Type extends MessageType<ServerInfoResponse> {
   }
   create(value?: PartialMessage<ServerInfoResponse>): ServerInfoResponse {
     const message = globalThis.Object.create(this.messagePrototype!);
+    message.settingsDefinitions = [];
     message.serverSettings = [];
     message.plugins = [];
     if (value !== undefined)
@@ -253,6 +274,15 @@ class ServerInfoResponse$Type extends MessageType<ServerInfoResponse> {
             reader.uint32(),
             options,
             message.config,
+          );
+          break;
+        case /* repeated soulfire.v1.SettingsDefinition settings_definitions */ 4:
+          message.settingsDefinitions.push(
+            SettingsDefinition.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
           );
           break;
         case /* repeated soulfire.v1.SettingsPage server_settings */ 2:
@@ -308,6 +338,13 @@ class ServerInfoResponse$Type extends MessageType<ServerInfoResponse> {
       ServerPlugin.internalBinaryWrite(
         message.plugins[i],
         writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.SettingsDefinition settings_definitions = 4; */
+    for (let i = 0; i < message.settingsDefinitions.length; i++)
+      SettingsDefinition.internalBinaryWrite(
+        message.settingsDefinitions[i],
+        writer.tag(4, WireType.LengthDelimited).fork(),
         options,
       ).join();
     let u = options.writeUnknownFields;

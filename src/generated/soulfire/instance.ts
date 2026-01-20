@@ -24,6 +24,7 @@ import {
   MinecraftAccountProto,
   ProxyProto,
   ServerPlugin,
+  SettingsDefinition,
   SettingsNamespace,
   SettingsPage,
 } from "./common";
@@ -177,6 +178,14 @@ export interface InstanceInfoResponse {
    */
   instancePermissions: InstancePermissionState[];
   /**
+   * All available settings definitions that can be rendered by identifier
+   *
+   * @generated from protobuf field: repeated soulfire.v1.SettingsDefinition settings_definitions = 8
+   */
+  settingsDefinitions: SettingsDefinition[];
+  /**
+   * Pages that group settings together (reference settings by identifier)
+   *
    * @generated from protobuf field: repeated soulfire.v1.SettingsPage instance_settings = 6
    */
   instanceSettings: SettingsPage[];
@@ -1294,6 +1303,13 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
         T: () => InstancePermissionState,
       },
       {
+        no: 8,
+        name: "settings_definitions",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SettingsDefinition,
+      },
+      {
         no: 6,
         name: "instance_settings",
         kind: "message",
@@ -1315,6 +1331,7 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
     message.icon = "";
     message.state = 0;
     message.instancePermissions = [];
+    message.settingsDefinitions = [];
     message.instanceSettings = [];
     message.plugins = [];
     if (value !== undefined)
@@ -1352,6 +1369,15 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
         case /* repeated soulfire.v1.InstancePermissionState instance_permissions */ 4:
           message.instancePermissions.push(
             InstancePermissionState.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        case /* repeated soulfire.v1.SettingsDefinition settings_definitions */ 8:
+          message.settingsDefinitions.push(
+            SettingsDefinition.internalBinaryRead(
               reader,
               reader.uint32(),
               options,
@@ -1427,6 +1453,13 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
       ServerPlugin.internalBinaryWrite(
         message.plugins[i],
         writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.SettingsDefinition settings_definitions = 8; */
+    for (let i = 0; i < message.settingsDefinitions.length; i++)
+      SettingsDefinition.internalBinaryWrite(
+        message.settingsDefinitions[i],
+        writer.tag(8, WireType.LengthDelimited).fork(),
         options,
       ).join();
     let u = options.writeUnknownFields;

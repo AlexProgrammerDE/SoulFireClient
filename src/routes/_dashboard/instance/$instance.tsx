@@ -4,7 +4,10 @@ import { ErrorComponent } from "@/components/error-component.tsx";
 import { InstanceSidebar } from "@/components/nav/instance/instance-sidebar.tsx";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar.tsx";
 import { TooltipProvider } from "@/components/ui/tooltip.tsx";
-import { demoInstanceSettings } from "@/demo-data.ts";
+import {
+  demoInstanceSettings,
+  demoInstanceSettingsDefinitions,
+} from "@/demo-data.ts";
 import {
   InstancePermission,
   MinecraftAccountProto_AccountTypeProto,
@@ -76,6 +79,7 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
               }),
             ),
             config: instanceConfig,
+            settingsDefinitions: demoInstanceSettingsDefinitions,
             instanceSettings: demoInstanceSettings,
             plugins: [],
             state: InstanceState.RUNNING,

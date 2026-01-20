@@ -1,36 +1,44 @@
 import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
 import {
   GlobalPermission,
+  type SettingsDefinition,
   type SettingsPage,
   SettingsPageEntryScopeType,
 } from "@/generated/soulfire/common.ts";
 import { smartEntries } from "@/lib/utils.tsx";
 
-// Helper to convert old demo data format to new format
-function convertDemoSettingsPage(
+// Legacy entry format used in demo data
+type LegacyEntry = {
+  key: string;
+  value: SettingsDefinition["type"];
+};
+
+// Helper to convert legacy demo data format to new decoupled format
+function convertDemoSettings(
   pageName: string,
   namespace: string,
-  entries: Array<{
-    key: string;
-    value: SettingsPage["entries"][0]["value"];
-  }>,
+  entries: LegacyEntry[],
   iconId: string,
   owningPluginId?: string,
   enabledKey?: string,
   scope: SettingsPageEntryScopeType = SettingsPageEntryScopeType.INSTANCE,
-): SettingsPage {
-  return {
+): { page: SettingsPage; definitions: SettingsDefinition[] } {
+  const definitions: SettingsDefinition[] = entries.map((e) => ({
+    id: { namespace, key: e.key },
+    scope,
+    type: e.value,
+  }));
+
+  const page: SettingsPage = {
     id: namespace, // Use namespace as page id for demo data
     pageName,
-    entries: entries.map((e) => ({
-      id: { namespace, key: e.key },
-      scope,
-      value: e.value,
-    })),
+    entries: entries.map((e) => ({ namespace, key: e.key })),
     iconId,
     owningPluginId,
     enabledIdentifier: enabledKey ? { namespace, key: enabledKey } : undefined,
   };
+
+  return { page, definitions };
 }
 
 export const demoClientData: ClientDataResponse = {
@@ -2568,18 +2576,22 @@ const legacyDemoInstanceSettings: any[] = [
 ];
 
 // Convert legacy demo data to new format
+const convertedInstanceSettings = legacyDemoInstanceSettings.map((page) =>
+  convertDemoSettings(
+    page.pageName,
+    page.namespace,
+    page.entries,
+    page.iconId,
+    page.owningPlugin?.id,
+    page.enabledKey,
+    SettingsPageEntryScopeType.INSTANCE,
+  ),
+);
+
 export const demoInstanceSettings: SettingsPage[] =
-  legacyDemoInstanceSettings.map((page) =>
-    convertDemoSettingsPage(
-      page.pageName,
-      page.namespace,
-      page.entries,
-      page.iconId,
-      page.owningPlugin?.id,
-      page.enabledKey,
-      SettingsPageEntryScopeType.INSTANCE,
-    ),
-  );
+  convertedInstanceSettings.map((r) => r.page);
+export const demoInstanceSettingsDefinitions: SettingsDefinition[] =
+  convertedInstanceSettings.flatMap((r) => r.definitions);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const legacyDemoServerSettings: any[] = [
@@ -2919,15 +2931,20 @@ const legacyDemoServerSettings: any[] = [
 ];
 
 // Convert legacy demo data to new format
-export const demoServerSettings: SettingsPage[] = legacyDemoServerSettings.map(
-  (page) =>
-    convertDemoSettingsPage(
-      page.pageName,
-      page.namespace,
-      page.entries,
-      page.iconId,
-      page.owningPlugin?.id,
-      page.enabledKey,
-      SettingsPageEntryScopeType.SERVER,
-    ),
+const convertedServerSettings = legacyDemoServerSettings.map((page) =>
+  convertDemoSettings(
+    page.pageName,
+    page.namespace,
+    page.entries,
+    page.iconId,
+    page.owningPlugin?.id,
+    page.enabledKey,
+    SettingsPageEntryScopeType.SERVER,
+  ),
 );
+
+export const demoServerSettings: SettingsPage[] = convertedServerSettings.map(
+  (r) => r.page,
+);
+export const demoServerSettingsDefinitions: SettingsDefinition[] =
+  convertedServerSettings.flatMap((r) => r.definitions);

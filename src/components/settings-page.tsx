@@ -22,6 +22,12 @@ import type { NumberFormatValues } from "react-number-format/types/types";
 import { toast } from "sonner";
 import DynamicIcon from "@/components/dynamic-icon.tsx";
 import { TextInfoButton } from "@/components/info-buttons.tsx";
+import {
+  createSettingsRegistry,
+  SettingsRegistryContext,
+  useSettingsDefinition,
+  useSettingsRegistry,
+} from "@/components/providers/settings-registry-context.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
@@ -47,8 +53,9 @@ import {
   type IntSetting,
   type MinMaxSetting,
   type MinMaxSetting_Entry,
+  type SettingsDefinition,
+  type SettingsEntryIdentifier,
   type SettingsPage,
-  type SettingsPageEntry,
   type StringListSetting,
   type StringSetting,
   StringSetting_InputType,
@@ -58,7 +65,8 @@ import { useLocaleNumberFormat } from "@/hooks/use-locale-number-format.tsx";
 import type { BaseSettings } from "@/lib/types.ts";
 import {
   cn,
-  getEntryValueByType,
+  getSettingIdentifierKey,
+  getSettingValue,
   setInstanceConfig,
   setServerConfig,
   updateEntry,
@@ -534,56 +542,29 @@ function MinMaxComponent(props: {
   );
 }
 
-function EntryComponent<T extends BaseSettings>(props: {
-  entry: SettingsPageEntry;
-  invalidateQuery: () => Promise<void>;
-  setConfig: (config: T) => Promise<void>;
-  config: T;
-}) {
-  const namespace = props.entry.id?.namespace;
-  const key = props.entry.id?.key;
-  const value = useMemo(
-    () => getEntryValueByType(props.config, props.entry),
-    [props.config, props.entry],
-  );
-  const setValueMutation = useMutation({
-    mutationFn: async (value: JsonValue) => {
-      if (!namespace || !key) return;
-      await props.setConfig(updateEntry(namespace, key, value, props.config));
-    },
-    onSettled: async () => {
-      await props.invalidateQuery();
-    },
-  });
-
-  return (
-    <GenericEntryComponent
-      entry={props.entry.value}
-      value={value}
-      changeCallback={setValueMutation.mutate}
-    />
-  );
-}
-
-export function GenericEntryComponent(props: {
-  entry: SettingsPageEntry["value"];
+/**
+ * Renders a setting type (the UI input component) with its value and change callback.
+ * This is a pure presentation component that takes a setting type definition and renders it.
+ */
+export function SettingTypeRenderer(props: {
+  settingType: SettingsDefinition["type"];
   value: JsonValue;
   changeCallback: (value: JsonValue) => void;
 }) {
-  if (!props.entry || props.value === undefined) {
+  if (!props.settingType || props.value === undefined) {
     return null;
   }
 
-  switch (props.entry.oneofKind) {
+  switch (props.settingType.oneofKind) {
     case "string": {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.entry.string.uiName}
-            description={props.entry.string.description}
+            title={props.settingType.string.uiName}
+            description={props.settingType.string.description}
           />
           <StringComponent
-            setting={props.entry.string}
+            setting={props.settingType.string}
             value={props.value as string}
             changeCallback={props.changeCallback}
           />
@@ -594,11 +575,11 @@ export function GenericEntryComponent(props: {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.entry.int.uiName}
-            description={props.entry.int.description}
+            title={props.settingType.int.uiName}
+            description={props.settingType.int.description}
           />
           <IntComponent
-            setting={props.entry.int}
+            setting={props.settingType.int}
             value={props.value as number}
             changeCallback={props.changeCallback}
           />
@@ -609,11 +590,11 @@ export function GenericEntryComponent(props: {
       return (
         <div className="flex max-w-xl flex-row gap-1">
           <BoolComponent
-            setting={props.entry.bool}
+            setting={props.settingType.bool}
             value={props.value as boolean}
             changeCallback={props.changeCallback}
-            title={props.entry.bool.uiName}
-            description={props.entry.bool.description}
+            title={props.settingType.bool.uiName}
+            description={props.settingType.bool.description}
           />
         </div>
       );
@@ -622,11 +603,11 @@ export function GenericEntryComponent(props: {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.entry.double.uiName}
-            description={props.entry.double.description}
+            title={props.settingType.double.uiName}
+            description={props.settingType.double.description}
           />
           <DoubleComponent
-            setting={props.entry.double}
+            setting={props.settingType.double}
             value={props.value as number}
             changeCallback={props.changeCallback}
           />
@@ -637,11 +618,11 @@ export function GenericEntryComponent(props: {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.entry.combo.uiName}
-            description={props.entry.combo.description}
+            title={props.settingType.combo.uiName}
+            description={props.settingType.combo.description}
           />
           <ComboComponent
-            setting={props.entry.combo}
+            setting={props.settingType.combo}
             value={props.value as string}
             changeCallback={props.changeCallback}
           />
@@ -652,11 +633,11 @@ export function GenericEntryComponent(props: {
       return (
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title={props.entry.stringList.uiName}
-            description={props.entry.stringList.description}
+            title={props.settingType.stringList.uiName}
+            description={props.settingType.stringList.description}
           />
           <StringListComponent
-            setting={props.entry.stringList}
+            setting={props.settingType.stringList}
             value={props.value as string[]}
             changeCallback={props.changeCallback}
           />
@@ -672,12 +653,12 @@ export function GenericEntryComponent(props: {
         <>
           <div className="flex max-w-xl flex-col gap-1">
             <ComponentTitle
-              title={props.entry.minMax.minEntry?.uiName}
-              description={props.entry.minMax.minEntry?.description}
+              title={props.settingType.minMax.minEntry?.uiName}
+              description={props.settingType.minMax.minEntry?.description}
             />
             <MinMaxComponent
-              setting={props.entry.minMax}
-              entry={props.entry.minMax.minEntry as MinMaxSetting_Entry}
+              setting={props.settingType.minMax}
+              entry={props.settingType.minMax.minEntry as MinMaxSetting_Entry}
               value={castValue.min}
               changeCallback={(v) => {
                 props.changeCallback({
@@ -689,12 +670,12 @@ export function GenericEntryComponent(props: {
           </div>
           <div className="flex max-w-xl flex-col gap-1">
             <ComponentTitle
-              title={props.entry.minMax.maxEntry?.uiName}
-              description={props.entry.minMax.maxEntry?.description}
+              title={props.settingType.minMax.maxEntry?.uiName}
+              description={props.settingType.minMax.maxEntry?.description}
             />
             <MinMaxComponent
-              setting={props.entry.minMax}
-              entry={props.entry.minMax.maxEntry as MinMaxSetting_Entry}
+              setting={props.settingType.minMax}
+              entry={props.settingType.minMax.maxEntry as MinMaxSetting_Entry}
               value={castValue.max}
               changeCallback={(v) => {
                 props.changeCallback({
@@ -708,6 +689,90 @@ export function GenericEntryComponent(props: {
       );
     }
   }
+}
+
+/**
+ * Component that renders a setting field by its identifier.
+ * This is the main component for mounting settings anywhere in the UI.
+ * It looks up the setting definition from context and handles value management.
+ */
+export function SettingField<T extends BaseSettings>(props: {
+  settingId: SettingsEntryIdentifier;
+  invalidateQuery: () => Promise<void>;
+  setConfig: (config: T) => Promise<void>;
+  config: T;
+}) {
+  const definition = useSettingsDefinition(props.settingId);
+  const namespace = props.settingId.namespace;
+  const key = props.settingId.key;
+  const value = useMemo(
+    () => getSettingValue(props.config, definition),
+    [props.config, definition],
+  );
+  const setValueMutation = useMutation({
+    mutationFn: async (value: JsonValue) => {
+      await props.setConfig(updateEntry(namespace, key, value, props.config));
+    },
+    onSettled: async () => {
+      await props.invalidateQuery();
+    },
+  });
+
+  if (!definition) {
+    return null;
+  }
+
+  return (
+    <SettingTypeRenderer
+      settingType={definition.type}
+      value={value}
+      changeCallback={setValueMutation.mutate}
+    />
+  );
+}
+
+/**
+ * Component that renders a setting field by namespace and key strings.
+ * Convenience wrapper around SettingField for when you have separate strings.
+ */
+export function SettingFieldByKey<T extends BaseSettings>(props: {
+  namespace: string;
+  settingKey: string;
+  invalidateQuery: () => Promise<void>;
+  setConfig: (config: T) => Promise<void>;
+  config: T;
+}) {
+  const registry = useSettingsRegistry();
+  const definition = registry.getDefinitionByKey(
+    props.namespace,
+    props.settingKey,
+  );
+  const value = useMemo(
+    () => getSettingValue(props.config, definition),
+    [props.config, definition],
+  );
+  const setValueMutation = useMutation({
+    mutationFn: async (value: JsonValue) => {
+      await props.setConfig(
+        updateEntry(props.namespace, props.settingKey, value, props.config),
+      );
+    },
+    onSettled: async () => {
+      await props.invalidateQuery();
+    },
+  });
+
+  if (!definition) {
+    return null;
+  }
+
+  return (
+    <SettingTypeRenderer
+      settingType={definition.type}
+      value={value}
+      changeCallback={setValueMutation.mutate}
+    />
+  );
 }
 
 function ClientSettingsPageComponent<T extends BaseSettings>({
@@ -726,16 +791,16 @@ function ClientSettingsPageComponent<T extends BaseSettings>({
     <>
       {data.entries
         .filter(
-          (entry) =>
+          (entryId) =>
             !(
-              entry.id?.key === enabledIdentifier?.key &&
-              entry.id?.namespace === enabledIdentifier?.namespace
+              entryId.key === enabledIdentifier?.key &&
+              entryId.namespace === enabledIdentifier?.namespace
             ),
         )
-        .map((entry) => (
-          <EntryComponent
-            key={`${entry.id?.namespace}:${entry.id?.key}`}
-            entry={entry}
+        .map((entryId) => (
+          <SettingField
+            key={getSettingIdentifierKey(entryId)}
+            settingId={entryId}
             setConfig={setConfig}
             invalidateQuery={invalidateQuery}
             config={config}
@@ -761,25 +826,31 @@ export function InstanceSettingsPageComponent({
     ...instanceInfoQueryOptions,
     select: (info) => info.profile,
   });
+  const settingsRegistry = useMemo(
+    () => createSettingsRegistry(instanceInfo.settingsDefinitions),
+    [instanceInfo.settingsDefinitions],
+  );
   return (
-    <ClientSettingsPageComponent
-      data={data}
-      setConfig={async (jsonProfile) =>
-        await setInstanceConfig(
-          jsonProfile,
-          instanceInfo,
-          transport,
-          queryClient,
-          instanceInfoQueryOptions.queryKey,
-        )
-      }
-      invalidateQuery={async () => {
-        await queryClient.invalidateQueries({
-          queryKey: instanceInfoQueryOptions.queryKey,
-        });
-      }}
-      config={profile}
-    />
+    <SettingsRegistryContext.Provider value={settingsRegistry}>
+      <ClientSettingsPageComponent
+        data={data}
+        setConfig={async (jsonProfile) =>
+          await setInstanceConfig(
+            jsonProfile,
+            instanceInfo,
+            transport,
+            queryClient,
+            instanceInfoQueryOptions.queryKey,
+          )
+        }
+        invalidateQuery={async () => {
+          await queryClient.invalidateQueries({
+            queryKey: instanceInfoQueryOptions.queryKey,
+          });
+        }}
+        config={profile}
+      />
+    </SettingsRegistryContext.Provider>
   );
 }
 
@@ -789,28 +860,35 @@ export function AdminSettingsPageComponent({ data }: { data: SettingsPage }) {
     from: "/_dashboard/user/admin",
     select: (context) => context.serverInfoQueryOptions,
   });
+  const { data: serverInfo } = useSuspenseQuery(serverInfoQueryOptions);
   const { data: serverConfig } = useSuspenseQuery({
     ...serverInfoQueryOptions,
     select: (info) => info.profile,
   });
   const transport = use(TransportContext);
+  const settingsRegistry = useMemo(
+    () => createSettingsRegistry(serverInfo.settingsDefinitions),
+    [serverInfo.settingsDefinitions],
+  );
   return (
-    <ClientSettingsPageComponent
-      data={data}
-      setConfig={async (jsonProfile) =>
-        await setServerConfig(
-          jsonProfile,
-          transport,
-          queryClient,
-          serverInfoQueryOptions.queryKey,
-        )
-      }
-      invalidateQuery={async () => {
-        await queryClient.invalidateQueries({
-          queryKey: serverInfoQueryOptions.queryKey,
-        });
-      }}
-      config={serverConfig}
-    />
+    <SettingsRegistryContext.Provider value={settingsRegistry}>
+      <ClientSettingsPageComponent
+        data={data}
+        setConfig={async (jsonProfile) =>
+          await setServerConfig(
+            jsonProfile,
+            transport,
+            queryClient,
+            serverInfoQueryOptions.queryKey,
+          )
+        }
+        invalidateQuery={async () => {
+          await queryClient.invalidateQueries({
+            queryKey: serverInfoQueryOptions.queryKey,
+          });
+        }}
+        config={serverConfig}
+      />
+    </SettingsRegistryContext.Provider>
   );
 }

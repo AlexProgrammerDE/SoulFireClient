@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { getAllIconTags } from "@/components/dynamic-icon.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
-import { GenericEntryComponent } from "@/components/settings-page.tsx";
+import { SettingTypeRenderer } from "@/components/settings-page.tsx";
 import {
   InstancePermission,
   StringSetting_InputType,
@@ -98,8 +98,8 @@ function Content() {
   return (
     <div className="container flex h-full w-full grow flex-col gap-4">
       <div className="flex flex-col gap-2">
-        <GenericEntryComponent
-          entry={{
+        <SettingTypeRenderer
+          settingType={{
             oneofKind: "string",
             string: {
               uiName: "Friendly Name",
@@ -120,8 +120,8 @@ function Content() {
           value={instanceInfo.friendlyName}
           changeCallback={setFriendlyNameMutation.mutate}
         />
-        <GenericEntryComponent
-          entry={{
+        <SettingTypeRenderer
+          settingType={{
             oneofKind: "combo",
             combo: {
               uiName: "Icon",

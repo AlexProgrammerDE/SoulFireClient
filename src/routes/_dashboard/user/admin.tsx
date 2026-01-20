@@ -1,6 +1,9 @@
 import { queryOptions } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { demoServerSettings } from "@/demo-data.ts";
+import {
+  demoServerSettings,
+  demoServerSettingsDefinitions,
+} from "@/demo-data.ts";
 import { UserRole } from "@/generated/soulfire/common.ts";
 import { ServerServiceClient } from "@/generated/soulfire/server.client.ts";
 import type { ServerConfig } from "@/generated/soulfire/server.ts";
@@ -25,6 +28,7 @@ export const Route = createFileRoute("/_dashboard/user/admin")({
           return {
             config: serverConfig,
             profile: convertFromServerProto(serverConfig),
+            settingsDefinitions: demoServerSettingsDefinitions,
             serverSettings: demoServerSettings,
             plugins: [],
           };

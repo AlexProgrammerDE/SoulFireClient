@@ -14,7 +14,8 @@ import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
 import type {
   GlobalPermission,
   InstancePermission,
-  SettingsPageEntry,
+  SettingsDefinition,
+  SettingsEntryIdentifier,
 } from "@/generated/soulfire/common.ts";
 import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
 import type {
@@ -211,45 +212,54 @@ function getEntryValue(
   return current;
 }
 
-export function getEntryValueByType(
+export function getSettingValue(
   config: BaseSettings,
-  entry: SettingsPageEntry | undefined,
+  definition: SettingsDefinition | undefined,
 ): JsonValue {
-  const namespace = entry?.id?.namespace;
-  const key = entry?.id?.key;
+  const namespace = definition?.id?.namespace;
+  const key = definition?.id?.key;
   if (!namespace || !key) {
     return null;
   }
 
-  switch (entry?.value.oneofKind) {
+  switch (definition?.type.oneofKind) {
     case "string": {
-      return getEntryValue(namespace, key, config, entry.value.string.def);
+      return getEntryValue(namespace, key, config, definition.type.string.def);
     }
     case "int": {
-      return getEntryValue(namespace, key, config, entry.value.int.def);
+      return getEntryValue(namespace, key, config, definition.type.int.def);
     }
     case "bool": {
-      return getEntryValue(namespace, key, config, entry.value.bool.def);
+      return getEntryValue(namespace, key, config, definition.type.bool.def);
     }
     case "double": {
-      return getEntryValue(namespace, key, config, entry.value.double.def);
+      return getEntryValue(namespace, key, config, definition.type.double.def);
     }
     case "combo": {
-      return getEntryValue(namespace, key, config, entry.value.combo.def);
+      return getEntryValue(namespace, key, config, definition.type.combo.def);
     }
     case "stringList": {
-      return getEntryValue(namespace, key, config, entry.value.stringList.def);
+      return getEntryValue(
+        namespace,
+        key,
+        config,
+        definition.type.stringList.def,
+      );
     }
     case "minMax": {
       return getEntryValue(namespace, key, config, {
-        min: entry.value.minMax.minEntry?.def ?? null,
-        max: entry.value.minMax.maxEntry?.def ?? null,
+        min: definition.type.minMax.minEntry?.def ?? null,
+        max: definition.type.minMax.maxEntry?.def ?? null,
       });
     }
     default: {
       return null;
     }
   }
+}
+
+export function getSettingIdentifierKey(id: SettingsEntryIdentifier): string {
+  return `${id.namespace}:${id.key}`;
 }
 
 export async function setInstanceConfig(

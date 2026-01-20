@@ -20,12 +20,12 @@ import {
 import { Switch } from "@/components/ui/switch.tsx";
 import type {
   ServerPlugin,
+  SettingsDefinition,
   SettingsPage,
-  SettingsPageEntry,
 } from "@/generated/soulfire/common.ts";
 import type { BaseSettings } from "@/lib/types.ts";
 import {
-  getEntryValueByType,
+  getSettingValue,
   setInstanceConfig,
   setServerConfig,
   updateEntry,
@@ -103,16 +103,21 @@ function PluginCardTitle(props: { settingsEntry: SettingsPage }) {
 function usePluginEnabledState(
   settingsEntry: SettingsPage,
   profile: BaseSettings,
+  settingsDefinitions: SettingsDefinition[],
 ) {
   const enabledIdentifier = settingsEntry.enabledIdentifier;
-  const enabledEntry = settingsEntry.entries.find(
-    (entry) =>
-      entry.id?.key === enabledIdentifier?.key &&
-      entry.id?.namespace === enabledIdentifier?.namespace,
-  ) as SettingsPageEntry;
+  const enabledDefinition = useMemo(
+    () =>
+      settingsDefinitions.find(
+        (def) =>
+          def.id?.key === enabledIdentifier?.key &&
+          def.id?.namespace === enabledIdentifier?.namespace,
+      ),
+    [settingsDefinitions, enabledIdentifier],
+  );
   const enabledValue = useMemo(
-    () => getEntryValueByType(profile, enabledEntry) === true,
-    [profile, enabledEntry],
+    () => getSettingValue(profile, enabledDefinition) === true,
+    [profile, enabledDefinition],
   );
   return { enabledIdentifier, enabledValue };
 }
@@ -136,6 +141,7 @@ export function PluginInfoCard(props: {
   const { enabledIdentifier, enabledValue } = usePluginEnabledState(
     props.settingsEntry,
     profile,
+    instanceInfo.settingsDefinitions,
   );
 
   const setEnabledMutation = useMutation({
@@ -191,6 +197,7 @@ export function ServerPluginInfoCard(props: {
     from: "/_dashboard/user/admin",
     select: (context) => context.serverInfoQueryOptions,
   });
+  const { data: serverInfo } = useSuspenseQuery(serverInfoQueryOptions);
   const { data: profile } = useSuspenseQuery({
     ...serverInfoQueryOptions,
     select: (info) => info.profile,
@@ -201,6 +208,7 @@ export function ServerPluginInfoCard(props: {
   const { enabledIdentifier, enabledValue } = usePluginEnabledState(
     props.settingsEntry,
     profile,
+    serverInfo.settingsDefinitions,
   );
 
   const setEnabledMutation = useMutation({
