@@ -114,6 +114,15 @@
       "loading": "正在停止攻击...",
       "success": "攻击已成功停止",
       "error": "停止攻击失败"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "",
+      "noAccountsDescription": "",
+      "notEnoughTitle": "",
+      "notEnoughDescription": "",
+      "hint": "",
+      "continueWithExisting": "",
+      "generateAccounts": ""
     }
   },
   "icon": {

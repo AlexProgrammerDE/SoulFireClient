@@ -114,6 +114,15 @@
       "loading": "",
       "success": "",
       "error": ""
+    },
+    "accountWarning": {
+      "noAccountsTitle": "",
+      "noAccountsDescription": "",
+      "notEnoughTitle": "",
+      "notEnoughDescription": "",
+      "hint": "",
+      "continueWithExisting": "",
+      "generateAccounts": ""
     }
   },
   "icon": {

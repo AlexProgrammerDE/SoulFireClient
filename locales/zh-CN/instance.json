@@ -41,6 +41,7 @@
   "account": {
     "getAccounts": "",
     "addAccounts": "",
+    "generateAccounts": "",
     "filterPlaceholder": "筛选账户...",
     "listImportToast": {
       "loading": "导入账户中… {{checked}}/{{total}}（成功：{{success}} 失败：{{failed}}）",
@@ -55,6 +56,22 @@
       "loading": "导入帐户...",
       "success": "帐户已导入！",
       "error": "导入帐户失败"
+    },
+    "generate": {
+      "title": "",
+      "description": "",
+      "amount": "",
+      "nameFormat": "",
+      "nameFormatHelp": "",
+      "overrideExisting": "",
+      "submit": "",
+      "generating": "",
+      "progress": "",
+      "success": "",
+      "allFailed": "",
+      "error": "",
+      "invalidAmount": "",
+      "missingPlaceholder": ""
     },
     "import": {
       "javaEdition": "Java 版",

@@ -114,6 +114,15 @@
       "loading": "Angriff wird gestoppt...",
       "success": "Angriff erfolgreich gestoppt",
       "error": "Fehler beim Stoppen des Angriffs"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "",
+      "noAccountsDescription": "",
+      "notEnoughTitle": "",
+      "notEnoughDescription": "",
+      "hint": "",
+      "continueWithExisting": "",
+      "generateAccounts": ""
     }
   },
   "icon": {

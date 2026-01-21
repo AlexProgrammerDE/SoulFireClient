@@ -114,6 +114,15 @@
       "loading": "Zatrzymywanie ataku...",
       "success": "Atak zatrzymany pomyślnie",
       "error": "Nie udało się zatrzymać ataku"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "",
+      "noAccountsDescription": "",
+      "notEnoughTitle": "",
+      "notEnoughDescription": "",
+      "hint": "",
+      "continueWithExisting": "",
+      "generateAccounts": ""
     }
   },
   "icon": {

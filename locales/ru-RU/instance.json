@@ -41,6 +41,7 @@
   "account": {
     "getAccounts": "Получить аккаунты",
     "addAccounts": "Добавить аккаунты",
+    "generateAccounts": "",
     "filterPlaceholder": "Фильтр учетных записей...",
     "listImportToast": {
       "loading": "Импорт аккаунтов... {{checked}}/{{total}} (Успешно: {{success}} не удалось: {{failed}})",
@@ -55,6 +56,22 @@
       "loading": "Импорт аккаунта...",
       "success": "Аккаунт импортирован!",
       "error": "Не удалось импортировать аккаунт"
+    },
+    "generate": {
+      "title": "",
+      "description": "",
+      "amount": "",
+      "nameFormat": "",
+      "nameFormatHelp": "",
+      "overrideExisting": "",
+      "submit": "",
+      "generating": "",
+      "progress": "",
+      "success": "",
+      "allFailed": "",
+      "error": "",
+      "invalidAmount": "",
+      "missingPlaceholder": ""
     },
     "import": {
       "javaEdition": "Java Edition",
