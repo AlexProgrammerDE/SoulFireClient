@@ -59,7 +59,7 @@ export default function UserPageLayout(props: {
             <>
               <Separator
                 orientation="vertical"
-                className="data-[orientation=vertical]:h-4"
+                className="my-auto data-[orientation=vertical]:h-4"
               />
               <Button variant="ghost" size="icon" className="h-7 w-7" asChild>
                 <ExternalLink href={props.documentationLink}>
@@ -73,7 +73,7 @@ export default function UserPageLayout(props: {
           )}
           <Separator
             orientation="vertical"
-            className="mr-2 data-[orientation=vertical]:h-4"
+            className="mr-2 my-auto data-[orientation=vertical]:h-4"
           />
           <Breadcrumb>
             <BreadcrumbList>
