@@ -18,6 +18,7 @@ import {
   WireType,
 } from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
+import { Value } from "../google/protobuf/struct";
 import {
   ServerPlugin,
   SettingsDefinition,
@@ -75,6 +76,29 @@ export interface ServerUpdateConfigRequest {
  * @generated from protobuf message soulfire.v1.ServerUpdateConfigResponse
  */
 export interface ServerUpdateConfigResponse {}
+/**
+ * Granular config entry update (single key-value)
+ *
+ * @generated from protobuf message soulfire.v1.ServerUpdateConfigEntryRequest
+ */
+export interface ServerUpdateConfigEntryRequest {
+  /**
+   * @generated from protobuf field: string namespace = 1
+   */
+  namespace: string;
+  /**
+   * @generated from protobuf field: string key = 2
+   */
+  key: string;
+  /**
+   * @generated from protobuf field: google.protobuf.Value value = 3
+   */
+  value?: Value;
+}
+/**
+ * @generated from protobuf message soulfire.v1.ServerUpdateConfigEntryResponse
+ */
+export interface ServerUpdateConfigEntryResponse {}
 // @generated message type with reflection information, may provide speed optimized methods
 class ServerConfig$Type extends MessageType<ServerConfig> {
   constructor() {
@@ -502,6 +526,173 @@ class ServerUpdateConfigResponse$Type extends MessageType<ServerUpdateConfigResp
  * @generated MessageType for protobuf message soulfire.v1.ServerUpdateConfigResponse
  */
 export const ServerUpdateConfigResponse = new ServerUpdateConfigResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ServerUpdateConfigEntryRequest$Type extends MessageType<ServerUpdateConfigEntryRequest> {
+  constructor() {
+    super("soulfire.v1.ServerUpdateConfigEntryRequest", [
+      { no: 1, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "value", kind: "message", T: () => Value },
+    ]);
+  }
+  create(
+    value?: PartialMessage<ServerUpdateConfigEntryRequest>,
+  ): ServerUpdateConfigEntryRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.namespace = "";
+    message.key = "";
+    if (value !== undefined)
+      reflectionMergePartial<ServerUpdateConfigEntryRequest>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ServerUpdateConfigEntryRequest,
+  ): ServerUpdateConfigEntryRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string namespace */ 1:
+          message.namespace = reader.string();
+          break;
+        case /* string key */ 2:
+          message.key = reader.string();
+          break;
+        case /* google.protobuf.Value value */ 3:
+          message.value = Value.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.value,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ServerUpdateConfigEntryRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string namespace = 1; */
+    if (message.namespace !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.namespace);
+    /* string key = 2; */
+    if (message.key !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.key);
+    /* google.protobuf.Value value = 3; */
+    if (message.value)
+      Value.internalBinaryWrite(
+        message.value,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ServerUpdateConfigEntryRequest
+ */
+export const ServerUpdateConfigEntryRequest =
+  new ServerUpdateConfigEntryRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ServerUpdateConfigEntryResponse$Type extends MessageType<ServerUpdateConfigEntryResponse> {
+  constructor() {
+    super("soulfire.v1.ServerUpdateConfigEntryResponse", []);
+  }
+  create(
+    value?: PartialMessage<ServerUpdateConfigEntryResponse>,
+  ): ServerUpdateConfigEntryResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<ServerUpdateConfigEntryResponse>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ServerUpdateConfigEntryResponse,
+  ): ServerUpdateConfigEntryResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ServerUpdateConfigEntryResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ServerUpdateConfigEntryResponse
+ */
+export const ServerUpdateConfigEntryResponse =
+  new ServerUpdateConfigEntryResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.ServerService
  */
@@ -517,5 +708,11 @@ export const ServerService = new ServiceType("soulfire.v1.ServerService", [
     options: {},
     I: ServerUpdateConfigRequest,
     O: ServerUpdateConfigResponse,
+  },
+  {
+    name: "UpdateServerConfigEntry",
+    options: {},
+    I: ServerUpdateConfigEntryRequest,
+    O: ServerUpdateConfigEntryResponse,
   },
 ]);

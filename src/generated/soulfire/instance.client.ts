@@ -11,6 +11,10 @@ import type {
 } from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type {
+  InstanceAddAccountRequest,
+  InstanceAddAccountResponse,
+  InstanceAddProxyRequest,
+  InstanceAddProxyResponse,
   InstanceAuditLogRequest,
   InstanceAuditLogResponse,
   InstanceCreateRequest,
@@ -21,12 +25,22 @@ import type {
   InstanceInfoResponse,
   InstanceListRequest,
   InstanceListResponse,
+  InstanceRemoveAccountRequest,
+  InstanceRemoveAccountResponse,
+  InstanceRemoveProxyRequest,
+  InstanceRemoveProxyResponse,
   InstanceStateChangeRequest,
   InstanceStateChangeResponse,
+  InstanceUpdateAccountRequest,
+  InstanceUpdateAccountResponse,
+  InstanceUpdateConfigEntryRequest,
+  InstanceUpdateConfigEntryResponse,
   InstanceUpdateConfigRequest,
   InstanceUpdateConfigResponse,
   InstanceUpdateMetaRequest,
   InstanceUpdateMetaResponse,
+  InstanceUpdateProxyRequest,
+  InstanceUpdateProxyResponse,
 } from "./instance";
 import { InstanceService } from "./instance";
 /**
@@ -69,12 +83,72 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceUpdateMetaRequest, InstanceUpdateMetaResponse>;
   /**
+   * Used only for profile import - sends entire config
+   *
    * @generated from protobuf rpc: UpdateInstanceConfig
    */
   updateInstanceConfig(
     input: InstanceUpdateConfigRequest,
     options?: RpcOptions,
   ): UnaryCall<InstanceUpdateConfigRequest, InstanceUpdateConfigResponse>;
+  /**
+   * Granular update for individual config entries
+   *
+   * @generated from protobuf rpc: UpdateInstanceConfigEntry
+   */
+  updateInstanceConfigEntry(
+    input: InstanceUpdateConfigEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    InstanceUpdateConfigEntryRequest,
+    InstanceUpdateConfigEntryResponse
+  >;
+  /**
+   * Account operations
+   *
+   * @generated from protobuf rpc: AddInstanceAccount
+   */
+  addInstanceAccount(
+    input: InstanceAddAccountRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceAddAccountRequest, InstanceAddAccountResponse>;
+  /**
+   * @generated from protobuf rpc: RemoveInstanceAccount
+   */
+  removeInstanceAccount(
+    input: InstanceRemoveAccountRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceRemoveAccountRequest, InstanceRemoveAccountResponse>;
+  /**
+   * @generated from protobuf rpc: UpdateInstanceAccount
+   */
+  updateInstanceAccount(
+    input: InstanceUpdateAccountRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceUpdateAccountRequest, InstanceUpdateAccountResponse>;
+  /**
+   * Proxy operations
+   *
+   * @generated from protobuf rpc: AddInstanceProxy
+   */
+  addInstanceProxy(
+    input: InstanceAddProxyRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceAddProxyRequest, InstanceAddProxyResponse>;
+  /**
+   * @generated from protobuf rpc: RemoveInstanceProxy
+   */
+  removeInstanceProxy(
+    input: InstanceRemoveProxyRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceRemoveProxyRequest, InstanceRemoveProxyResponse>;
+  /**
+   * @generated from protobuf rpc: UpdateInstanceProxy
+   */
+  updateInstanceProxy(
+    input: InstanceUpdateProxyRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceUpdateProxyRequest, InstanceUpdateProxyResponse>;
   /**
    * @generated from protobuf rpc: ChangeInstanceState
    */
@@ -183,6 +257,8 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Used only for profile import - sends entire config
+   *
    * @generated from protobuf rpc: UpdateInstanceConfig
    */
   updateInstanceConfig(
@@ -197,13 +273,123 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Granular update for individual config entries
+   *
+   * @generated from protobuf rpc: UpdateInstanceConfigEntry
+   */
+  updateInstanceConfigEntry(
+    input: InstanceUpdateConfigEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    InstanceUpdateConfigEntryRequest,
+    InstanceUpdateConfigEntryResponse
+  > {
+    const method = this.methods[6],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InstanceUpdateConfigEntryRequest,
+      InstanceUpdateConfigEntryResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * Account operations
+   *
+   * @generated from protobuf rpc: AddInstanceAccount
+   */
+  addInstanceAccount(
+    input: InstanceAddAccountRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceAddAccountRequest, InstanceAddAccountResponse> {
+    const method = this.methods[7],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InstanceAddAccountRequest,
+      InstanceAddAccountResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: RemoveInstanceAccount
+   */
+  removeInstanceAccount(
+    input: InstanceRemoveAccountRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceRemoveAccountRequest, InstanceRemoveAccountResponse> {
+    const method = this.methods[8],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InstanceRemoveAccountRequest,
+      InstanceRemoveAccountResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: UpdateInstanceAccount
+   */
+  updateInstanceAccount(
+    input: InstanceUpdateAccountRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceUpdateAccountRequest, InstanceUpdateAccountResponse> {
+    const method = this.methods[9],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InstanceUpdateAccountRequest,
+      InstanceUpdateAccountResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * Proxy operations
+   *
+   * @generated from protobuf rpc: AddInstanceProxy
+   */
+  addInstanceProxy(
+    input: InstanceAddProxyRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceAddProxyRequest, InstanceAddProxyResponse> {
+    const method = this.methods[10],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<InstanceAddProxyRequest, InstanceAddProxyResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: RemoveInstanceProxy
+   */
+  removeInstanceProxy(
+    input: InstanceRemoveProxyRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceRemoveProxyRequest, InstanceRemoveProxyResponse> {
+    const method = this.methods[11],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InstanceRemoveProxyRequest,
+      InstanceRemoveProxyResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: UpdateInstanceProxy
+   */
+  updateInstanceProxy(
+    input: InstanceUpdateProxyRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceUpdateProxyRequest, InstanceUpdateProxyResponse> {
+    const method = this.methods[12],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InstanceUpdateProxyRequest,
+      InstanceUpdateProxyResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
    * @generated from protobuf rpc: ChangeInstanceState
    */
   changeInstanceState(
     input: InstanceStateChangeRequest,
     options?: RpcOptions,
   ): UnaryCall<InstanceStateChangeRequest, InstanceStateChangeResponse> {
-    const method = this.methods[6],
+    const method = this.methods[13],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<
       InstanceStateChangeRequest,
@@ -217,7 +403,7 @@ export class InstanceServiceClient
     input: InstanceAuditLogRequest,
     options?: RpcOptions,
   ): UnaryCall<InstanceAuditLogRequest, InstanceAuditLogResponse> {
-    const method = this.methods[7],
+    const method = this.methods[14],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<InstanceAuditLogRequest, InstanceAuditLogResponse>(
       "unary",

@@ -18,6 +18,7 @@ import {
   WireType,
 } from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
+import { Value } from "../google/protobuf/struct";
 import { SettingsNamespace } from "./common";
 /**
  * @generated from protobuf message soulfire.v1.BotConfig
@@ -100,6 +101,37 @@ export interface BotUpdateConfigRequest {
  * @generated from protobuf message soulfire.v1.BotUpdateConfigResponse
  */
 export interface BotUpdateConfigResponse {}
+/**
+ * Granular config entry update (single key-value)
+ *
+ * @generated from protobuf message soulfire.v1.BotUpdateConfigEntryRequest
+ */
+export interface BotUpdateConfigEntryRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+  /**
+   * @generated from protobuf field: string namespace = 3
+   */
+  namespace: string;
+  /**
+   * @generated from protobuf field: string key = 4
+   */
+  key: string;
+  /**
+   * @generated from protobuf field: google.protobuf.Value value = 5
+   */
+  value?: Value;
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotUpdateConfigEntryResponse
+ */
+export interface BotUpdateConfigEntryResponse {}
 // @generated message type with reflection information, may provide speed optimized methods
 class BotConfig$Type extends MessageType<BotConfig> {
   constructor() {
@@ -618,6 +650,190 @@ class BotUpdateConfigResponse$Type extends MessageType<BotUpdateConfigResponse> 
  * @generated MessageType for protobuf message soulfire.v1.BotUpdateConfigResponse
  */
 export const BotUpdateConfigResponse = new BotUpdateConfigResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotUpdateConfigEntryRequest$Type extends MessageType<BotUpdateConfigEntryRequest> {
+  constructor() {
+    super("soulfire.v1.BotUpdateConfigEntryRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 4, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 5, name: "value", kind: "message", T: () => Value },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotUpdateConfigEntryRequest>,
+  ): BotUpdateConfigEntryRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    message.namespace = "";
+    message.key = "";
+    if (value !== undefined)
+      reflectionMergePartial<BotUpdateConfigEntryRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotUpdateConfigEntryRequest,
+  ): BotUpdateConfigEntryRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        case /* string namespace */ 3:
+          message.namespace = reader.string();
+          break;
+        case /* string key */ 4:
+          message.key = reader.string();
+          break;
+        case /* google.protobuf.Value value */ 5:
+          message.value = Value.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.value,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotUpdateConfigEntryRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    /* string namespace = 3; */
+    if (message.namespace !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.namespace);
+    /* string key = 4; */
+    if (message.key !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.key);
+    /* google.protobuf.Value value = 5; */
+    if (message.value)
+      Value.internalBinaryWrite(
+        message.value,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotUpdateConfigEntryRequest
+ */
+export const BotUpdateConfigEntryRequest =
+  new BotUpdateConfigEntryRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotUpdateConfigEntryResponse$Type extends MessageType<BotUpdateConfigEntryResponse> {
+  constructor() {
+    super("soulfire.v1.BotUpdateConfigEntryResponse", []);
+  }
+  create(
+    value?: PartialMessage<BotUpdateConfigEntryResponse>,
+  ): BotUpdateConfigEntryResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<BotUpdateConfigEntryResponse>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotUpdateConfigEntryResponse,
+  ): BotUpdateConfigEntryResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotUpdateConfigEntryResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotUpdateConfigEntryResponse
+ */
+export const BotUpdateConfigEntryResponse =
+  new BotUpdateConfigEntryResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.BotService
  */
@@ -628,5 +844,11 @@ export const BotService = new ServiceType("soulfire.v1.BotService", [
     options: {},
     I: BotUpdateConfigRequest,
     O: BotUpdateConfigResponse,
+  },
+  {
+    name: "UpdateBotConfigEntry",
+    options: {},
+    I: BotUpdateConfigEntryRequest,
+    O: BotUpdateConfigEntryResponse,
   },
 ]);

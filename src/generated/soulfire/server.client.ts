@@ -13,6 +13,8 @@ import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type {
   ServerInfoRequest,
   ServerInfoResponse,
+  ServerUpdateConfigEntryRequest,
+  ServerUpdateConfigEntryResponse,
   ServerUpdateConfigRequest,
   ServerUpdateConfigResponse,
 } from "./server";
@@ -29,12 +31,23 @@ export interface IServerServiceClient {
     options?: RpcOptions,
   ): UnaryCall<ServerInfoRequest, ServerInfoResponse>;
   /**
+   * Used only for profile import - sends entire config
+   *
    * @generated from protobuf rpc: UpdateServerConfig
    */
   updateServerConfig(
     input: ServerUpdateConfigRequest,
     options?: RpcOptions,
   ): UnaryCall<ServerUpdateConfigRequest, ServerUpdateConfigResponse>;
+  /**
+   * Granular update for individual config entries
+   *
+   * @generated from protobuf rpc: UpdateServerConfigEntry
+   */
+  updateServerConfigEntry(
+    input: ServerUpdateConfigEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<ServerUpdateConfigEntryRequest, ServerUpdateConfigEntryResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.ServerService
@@ -62,6 +75,8 @@ export class ServerServiceClient implements IServerServiceClient, ServiceInfo {
     );
   }
   /**
+   * Used only for profile import - sends entire config
+   *
    * @generated from protobuf rpc: UpdateServerConfig
    */
   updateServerConfig(
@@ -73,6 +88,25 @@ export class ServerServiceClient implements IServerServiceClient, ServiceInfo {
     return stackIntercept<
       ServerUpdateConfigRequest,
       ServerUpdateConfigResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * Granular update for individual config entries
+   *
+   * @generated from protobuf rpc: UpdateServerConfigEntry
+   */
+  updateServerConfigEntry(
+    input: ServerUpdateConfigEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    ServerUpdateConfigEntryRequest,
+    ServerUpdateConfigEntryResponse
+  > {
+    const method = this.methods[2],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      ServerUpdateConfigEntryRequest,
+      ServerUpdateConfigEntryResponse
     >("unary", this._transport, method, opt, input);
   }
 }

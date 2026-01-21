@@ -13,6 +13,8 @@ import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type {
   BotInfoRequest,
   BotInfoResponse,
+  BotUpdateConfigEntryRequest,
+  BotUpdateConfigEntryResponse,
   BotUpdateConfigRequest,
   BotUpdateConfigResponse,
 } from "./bot";
@@ -29,12 +31,23 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotInfoRequest, BotInfoResponse>;
   /**
+   * Used only for profile import - sends entire config
+   *
    * @generated from protobuf rpc: UpdateBotConfig
    */
   updateBotConfig(
     input: BotUpdateConfigRequest,
     options?: RpcOptions,
   ): UnaryCall<BotUpdateConfigRequest, BotUpdateConfigResponse>;
+  /**
+   * Granular update for individual config entries
+   *
+   * @generated from protobuf rpc: UpdateBotConfigEntry
+   */
+  updateBotConfigEntry(
+    input: BotUpdateConfigEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotUpdateConfigEntryRequest, BotUpdateConfigEntryResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.BotService
@@ -62,6 +75,8 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
+   * Used only for profile import - sends entire config
+   *
    * @generated from protobuf rpc: UpdateBotConfig
    */
   updateBotConfig(
@@ -77,5 +92,21 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
       opt,
       input,
     );
+  }
+  /**
+   * Granular update for individual config entries
+   *
+   * @generated from protobuf rpc: UpdateBotConfigEntry
+   */
+  updateBotConfigEntry(
+    input: BotUpdateConfigEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotUpdateConfigEntryRequest, BotUpdateConfigEntryResponse> {
+    const method = this.methods[2],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      BotUpdateConfigEntryRequest,
+      BotUpdateConfigEntryResponse
+    >("unary", this._transport, method, opt, input);
   }
 }

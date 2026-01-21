@@ -18,6 +18,7 @@ import {
   WireType,
 } from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
+import { Value } from "../google/protobuf/struct";
 import { Timestamp } from "../google/protobuf/timestamp";
 import {
   InstancePermission,
@@ -245,6 +246,143 @@ export interface InstanceUpdateConfigRequest {
  * @generated from protobuf message soulfire.v1.InstanceUpdateConfigResponse
  */
 export interface InstanceUpdateConfigResponse {}
+/**
+ * Granular config entry update (single key-value)
+ *
+ * @generated from protobuf message soulfire.v1.InstanceUpdateConfigEntryRequest
+ */
+export interface InstanceUpdateConfigEntryRequest {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * @generated from protobuf field: string namespace = 2
+   */
+  namespace: string;
+  /**
+   * @generated from protobuf field: string key = 3
+   */
+  key: string;
+  /**
+   * @generated from protobuf field: google.protobuf.Value value = 4
+   */
+  value?: Value;
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceUpdateConfigEntryResponse
+ */
+export interface InstanceUpdateConfigEntryResponse {}
+/**
+ * Account operations
+ *
+ * @generated from protobuf message soulfire.v1.InstanceAddAccountRequest
+ */
+export interface InstanceAddAccountRequest {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * @generated from protobuf field: soulfire.v1.MinecraftAccountProto account = 2
+   */
+  account?: MinecraftAccountProto;
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceAddAccountResponse
+ */
+export interface InstanceAddAccountResponse {}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceRemoveAccountRequest
+ */
+export interface InstanceRemoveAccountRequest {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * @generated from protobuf field: string profile_id = 2
+   */
+  profileId: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceRemoveAccountResponse
+ */
+export interface InstanceRemoveAccountResponse {}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceUpdateAccountRequest
+ */
+export interface InstanceUpdateAccountRequest {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * @generated from protobuf field: soulfire.v1.MinecraftAccountProto account = 2
+   */
+  account?: MinecraftAccountProto;
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceUpdateAccountResponse
+ */
+export interface InstanceUpdateAccountResponse {}
+/**
+ * Proxy operations
+ *
+ * @generated from protobuf message soulfire.v1.InstanceAddProxyRequest
+ */
+export interface InstanceAddProxyRequest {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * @generated from protobuf field: soulfire.v1.ProxyProto proxy = 2
+   */
+  proxy?: ProxyProto;
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceAddProxyResponse
+ */
+export interface InstanceAddProxyResponse {}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceRemoveProxyRequest
+ */
+export interface InstanceRemoveProxyRequest {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * @generated from protobuf field: int32 index = 2
+   */
+  index: number;
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceRemoveProxyResponse
+ */
+export interface InstanceRemoveProxyResponse {}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceUpdateProxyRequest
+ */
+export interface InstanceUpdateProxyRequest {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * @generated from protobuf field: int32 index = 2
+   */
+  index: number;
+  /**
+   * @generated from protobuf field: soulfire.v1.ProxyProto proxy = 3
+   */
+  proxy?: ProxyProto;
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceUpdateProxyResponse
+ */
+export interface InstanceUpdateProxyResponse {}
 /**
  * @generated from protobuf message soulfire.v1.InstanceStateChangeRequest
  */
@@ -1798,6 +1936,1099 @@ class InstanceUpdateConfigResponse$Type extends MessageType<InstanceUpdateConfig
 export const InstanceUpdateConfigResponse =
   new InstanceUpdateConfigResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class InstanceUpdateConfigEntryRequest$Type extends MessageType<InstanceUpdateConfigEntryRequest> {
+  constructor() {
+    super("soulfire.v1.InstanceUpdateConfigEntryRequest", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 4, name: "value", kind: "message", T: () => Value },
+    ]);
+  }
+  create(
+    value?: PartialMessage<InstanceUpdateConfigEntryRequest>,
+  ): InstanceUpdateConfigEntryRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.namespace = "";
+    message.key = "";
+    if (value !== undefined)
+      reflectionMergePartial<InstanceUpdateConfigEntryRequest>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceUpdateConfigEntryRequest,
+  ): InstanceUpdateConfigEntryRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string namespace */ 2:
+          message.namespace = reader.string();
+          break;
+        case /* string key */ 3:
+          message.key = reader.string();
+          break;
+        case /* google.protobuf.Value value */ 4:
+          message.value = Value.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.value,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceUpdateConfigEntryRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string namespace = 2; */
+    if (message.namespace !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.namespace);
+    /* string key = 3; */
+    if (message.key !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.key);
+    /* google.protobuf.Value value = 4; */
+    if (message.value)
+      Value.internalBinaryWrite(
+        message.value,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceUpdateConfigEntryRequest
+ */
+export const InstanceUpdateConfigEntryRequest =
+  new InstanceUpdateConfigEntryRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceUpdateConfigEntryResponse$Type extends MessageType<InstanceUpdateConfigEntryResponse> {
+  constructor() {
+    super("soulfire.v1.InstanceUpdateConfigEntryResponse", []);
+  }
+  create(
+    value?: PartialMessage<InstanceUpdateConfigEntryResponse>,
+  ): InstanceUpdateConfigEntryResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<InstanceUpdateConfigEntryResponse>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceUpdateConfigEntryResponse,
+  ): InstanceUpdateConfigEntryResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceUpdateConfigEntryResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceUpdateConfigEntryResponse
+ */
+export const InstanceUpdateConfigEntryResponse =
+  new InstanceUpdateConfigEntryResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceAddAccountRequest$Type extends MessageType<InstanceAddAccountRequest> {
+  constructor() {
+    super("soulfire.v1.InstanceAddAccountRequest", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "account",
+        kind: "message",
+        T: () => MinecraftAccountProto,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<InstanceAddAccountRequest>,
+  ): InstanceAddAccountRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    if (value !== undefined)
+      reflectionMergePartial<InstanceAddAccountRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceAddAccountRequest,
+  ): InstanceAddAccountRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* soulfire.v1.MinecraftAccountProto account */ 2:
+          message.account = MinecraftAccountProto.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.account,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceAddAccountRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* soulfire.v1.MinecraftAccountProto account = 2; */
+    if (message.account)
+      MinecraftAccountProto.internalBinaryWrite(
+        message.account,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAddAccountRequest
+ */
+export const InstanceAddAccountRequest = new InstanceAddAccountRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceAddAccountResponse$Type extends MessageType<InstanceAddAccountResponse> {
+  constructor() {
+    super("soulfire.v1.InstanceAddAccountResponse", []);
+  }
+  create(
+    value?: PartialMessage<InstanceAddAccountResponse>,
+  ): InstanceAddAccountResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<InstanceAddAccountResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceAddAccountResponse,
+  ): InstanceAddAccountResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceAddAccountResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAddAccountResponse
+ */
+export const InstanceAddAccountResponse = new InstanceAddAccountResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceRemoveAccountRequest$Type extends MessageType<InstanceRemoveAccountRequest> {
+  constructor() {
+    super("soulfire.v1.InstanceRemoveAccountRequest", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "profile_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<InstanceRemoveAccountRequest>,
+  ): InstanceRemoveAccountRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.profileId = "";
+    if (value !== undefined)
+      reflectionMergePartial<InstanceRemoveAccountRequest>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceRemoveAccountRequest,
+  ): InstanceRemoveAccountRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string profile_id */ 2:
+          message.profileId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceRemoveAccountRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string profile_id = 2; */
+    if (message.profileId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.profileId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceRemoveAccountRequest
+ */
+export const InstanceRemoveAccountRequest =
+  new InstanceRemoveAccountRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceRemoveAccountResponse$Type extends MessageType<InstanceRemoveAccountResponse> {
+  constructor() {
+    super("soulfire.v1.InstanceRemoveAccountResponse", []);
+  }
+  create(
+    value?: PartialMessage<InstanceRemoveAccountResponse>,
+  ): InstanceRemoveAccountResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<InstanceRemoveAccountResponse>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceRemoveAccountResponse,
+  ): InstanceRemoveAccountResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceRemoveAccountResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceRemoveAccountResponse
+ */
+export const InstanceRemoveAccountResponse =
+  new InstanceRemoveAccountResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceUpdateAccountRequest$Type extends MessageType<InstanceUpdateAccountRequest> {
+  constructor() {
+    super("soulfire.v1.InstanceUpdateAccountRequest", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "account",
+        kind: "message",
+        T: () => MinecraftAccountProto,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<InstanceUpdateAccountRequest>,
+  ): InstanceUpdateAccountRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    if (value !== undefined)
+      reflectionMergePartial<InstanceUpdateAccountRequest>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceUpdateAccountRequest,
+  ): InstanceUpdateAccountRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* soulfire.v1.MinecraftAccountProto account */ 2:
+          message.account = MinecraftAccountProto.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.account,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceUpdateAccountRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* soulfire.v1.MinecraftAccountProto account = 2; */
+    if (message.account)
+      MinecraftAccountProto.internalBinaryWrite(
+        message.account,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceUpdateAccountRequest
+ */
+export const InstanceUpdateAccountRequest =
+  new InstanceUpdateAccountRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceUpdateAccountResponse$Type extends MessageType<InstanceUpdateAccountResponse> {
+  constructor() {
+    super("soulfire.v1.InstanceUpdateAccountResponse", []);
+  }
+  create(
+    value?: PartialMessage<InstanceUpdateAccountResponse>,
+  ): InstanceUpdateAccountResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<InstanceUpdateAccountResponse>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceUpdateAccountResponse,
+  ): InstanceUpdateAccountResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceUpdateAccountResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceUpdateAccountResponse
+ */
+export const InstanceUpdateAccountResponse =
+  new InstanceUpdateAccountResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceAddProxyRequest$Type extends MessageType<InstanceAddProxyRequest> {
+  constructor() {
+    super("soulfire.v1.InstanceAddProxyRequest", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "proxy", kind: "message", T: () => ProxyProto },
+    ]);
+  }
+  create(
+    value?: PartialMessage<InstanceAddProxyRequest>,
+  ): InstanceAddProxyRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    if (value !== undefined)
+      reflectionMergePartial<InstanceAddProxyRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceAddProxyRequest,
+  ): InstanceAddProxyRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* soulfire.v1.ProxyProto proxy */ 2:
+          message.proxy = ProxyProto.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.proxy,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceAddProxyRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* soulfire.v1.ProxyProto proxy = 2; */
+    if (message.proxy)
+      ProxyProto.internalBinaryWrite(
+        message.proxy,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAddProxyRequest
+ */
+export const InstanceAddProxyRequest = new InstanceAddProxyRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceAddProxyResponse$Type extends MessageType<InstanceAddProxyResponse> {
+  constructor() {
+    super("soulfire.v1.InstanceAddProxyResponse", []);
+  }
+  create(
+    value?: PartialMessage<InstanceAddProxyResponse>,
+  ): InstanceAddProxyResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<InstanceAddProxyResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceAddProxyResponse,
+  ): InstanceAddProxyResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceAddProxyResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAddProxyResponse
+ */
+export const InstanceAddProxyResponse = new InstanceAddProxyResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceRemoveProxyRequest$Type extends MessageType<InstanceRemoveProxyRequest> {
+  constructor() {
+    super("soulfire.v1.InstanceRemoveProxyRequest", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<InstanceRemoveProxyRequest>,
+  ): InstanceRemoveProxyRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.index = 0;
+    if (value !== undefined)
+      reflectionMergePartial<InstanceRemoveProxyRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceRemoveProxyRequest,
+  ): InstanceRemoveProxyRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* int32 index */ 2:
+          message.index = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceRemoveProxyRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* int32 index = 2; */
+    if (message.index !== 0)
+      writer.tag(2, WireType.Varint).int32(message.index);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceRemoveProxyRequest
+ */
+export const InstanceRemoveProxyRequest = new InstanceRemoveProxyRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceRemoveProxyResponse$Type extends MessageType<InstanceRemoveProxyResponse> {
+  constructor() {
+    super("soulfire.v1.InstanceRemoveProxyResponse", []);
+  }
+  create(
+    value?: PartialMessage<InstanceRemoveProxyResponse>,
+  ): InstanceRemoveProxyResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<InstanceRemoveProxyResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceRemoveProxyResponse,
+  ): InstanceRemoveProxyResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceRemoveProxyResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceRemoveProxyResponse
+ */
+export const InstanceRemoveProxyResponse =
+  new InstanceRemoveProxyResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceUpdateProxyRequest$Type extends MessageType<InstanceUpdateProxyRequest> {
+  constructor() {
+    super("soulfire.v1.InstanceUpdateProxyRequest", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 3, name: "proxy", kind: "message", T: () => ProxyProto },
+    ]);
+  }
+  create(
+    value?: PartialMessage<InstanceUpdateProxyRequest>,
+  ): InstanceUpdateProxyRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.index = 0;
+    if (value !== undefined)
+      reflectionMergePartial<InstanceUpdateProxyRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceUpdateProxyRequest,
+  ): InstanceUpdateProxyRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* int32 index */ 2:
+          message.index = reader.int32();
+          break;
+        case /* soulfire.v1.ProxyProto proxy */ 3:
+          message.proxy = ProxyProto.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.proxy,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceUpdateProxyRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* int32 index = 2; */
+    if (message.index !== 0)
+      writer.tag(2, WireType.Varint).int32(message.index);
+    /* soulfire.v1.ProxyProto proxy = 3; */
+    if (message.proxy)
+      ProxyProto.internalBinaryWrite(
+        message.proxy,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceUpdateProxyRequest
+ */
+export const InstanceUpdateProxyRequest = new InstanceUpdateProxyRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceUpdateProxyResponse$Type extends MessageType<InstanceUpdateProxyResponse> {
+  constructor() {
+    super("soulfire.v1.InstanceUpdateProxyResponse", []);
+  }
+  create(
+    value?: PartialMessage<InstanceUpdateProxyResponse>,
+  ): InstanceUpdateProxyResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<InstanceUpdateProxyResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceUpdateProxyResponse,
+  ): InstanceUpdateProxyResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceUpdateProxyResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceUpdateProxyResponse
+ */
+export const InstanceUpdateProxyResponse =
+  new InstanceUpdateProxyResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class InstanceStateChangeRequest$Type extends MessageType<InstanceStateChangeRequest> {
   constructor() {
     super("soulfire.v1.InstanceStateChangeRequest", [
@@ -2272,6 +3503,48 @@ export const InstanceService = new ServiceType("soulfire.v1.InstanceService", [
     options: {},
     I: InstanceUpdateConfigRequest,
     O: InstanceUpdateConfigResponse,
+  },
+  {
+    name: "UpdateInstanceConfigEntry",
+    options: {},
+    I: InstanceUpdateConfigEntryRequest,
+    O: InstanceUpdateConfigEntryResponse,
+  },
+  {
+    name: "AddInstanceAccount",
+    options: {},
+    I: InstanceAddAccountRequest,
+    O: InstanceAddAccountResponse,
+  },
+  {
+    name: "RemoveInstanceAccount",
+    options: {},
+    I: InstanceRemoveAccountRequest,
+    O: InstanceRemoveAccountResponse,
+  },
+  {
+    name: "UpdateInstanceAccount",
+    options: {},
+    I: InstanceUpdateAccountRequest,
+    O: InstanceUpdateAccountResponse,
+  },
+  {
+    name: "AddInstanceProxy",
+    options: {},
+    I: InstanceAddProxyRequest,
+    O: InstanceAddProxyResponse,
+  },
+  {
+    name: "RemoveInstanceProxy",
+    options: {},
+    I: InstanceRemoveProxyRequest,
+    O: InstanceRemoveProxyResponse,
+  },
+  {
+    name: "UpdateInstanceProxy",
+    options: {},
+    I: InstanceUpdateProxyRequest,
+    O: InstanceUpdateProxyResponse,
   },
   {
     name: "ChangeInstanceState",
