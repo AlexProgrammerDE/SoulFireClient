@@ -47,8 +47,8 @@
           "placeholder": "Mój bot Minecraft",
           "description": "Nazwa, którą chcesz nadać tej instancji.",
           "min": "Przyjazna nazwa musi mieć co najmniej 3 znaki.",
-          "max": "",
-          "regex": ""
+          "max": "Przyjazna nazwa musi mieć nie więcej niż 32 znaki.",
+          "regex": "Przyjazna nazwa może zawierać tylko litery, cyfry i spacje"
         },
         "cancel": "Anuluj",
         "create": "Utwórz"
@@ -116,13 +116,13 @@
       "error": "Nie udało się zatrzymać ataku"
     },
     "accountWarning": {
-      "noAccountsTitle": "",
-      "noAccountsDescription": "",
-      "notEnoughTitle": "",
-      "notEnoughDescription": "",
-      "hint": "",
-      "continueWithExisting": "",
-      "generateAccounts": ""
+      "noAccountsTitle": "Brak skonfigurowanych kont",
+      "noAccountsDescription": "Musisz zaimportować konta przed rozpoczęciem ataku. Poprosiłeś o {{required}} botów.",
+      "notEnoughTitle": "Za mało kont",
+      "notEnoughDescription": "Poprosiłeś o {{required}} botów, ale masz zaimportowane tylko {{available}} kont.",
+      "hint": "Możesz wygenerować konta offline lub zaimportować konta na stronie Ustawienia konta.",
+      "continueWithExisting": "Kontynuuj z {{count}} kontem",
+      "generateAccounts": "Generuj konta"
     }
   },
   "icon": {
@@ -223,26 +223,26 @@
     "pluginSettings": "Ustawienia wtyczek",
     "botSettings": "Ustawienia botów",
     "accountSettings": "Ustawienia konta",
-    "metaSettings": "",
+    "metaSettings": "Ustawienia instancji",
     "proxySettings": "Ustawienia serwera proxy",
     "aiSettings": "Ustawienia SI",
-    "pathfindingSettings": "",
+    "pathfindingSettings": "Ustawienia pathfindingu",
     "discoverPlugins": "Wtyczki",
-    "instanceScripts": ""
+    "instanceScripts": "Skrypty"
   },
   "userSidebar": {
     "readDocumentation": "Przeczytaj dokumentację",
     "userGroup": "Użytkownik",
     "instances": "Instancje",
-    "access": "",
+    "access": "Dostęp",
     "createInstance": "Utwórz instancję",
     "settings": "Ustawienia",
     "adminGroup": "Administrator",
     "adminOverview": "Przegląd",
-    "adminLogs": "",
+    "adminLogs": "Logi",
     "adminTerminal": "Konsola",
     "users": "Użytkownicy",
-    "adminScripts": "",
+    "adminScripts": "Skrypty",
     "serverSettings": "Ustawienia serwera",
     "devSettings": "Ustawienia deweloperskie",
     "theme": {
@@ -264,13 +264,13 @@
       "error": "Wylogowanie nie powiodło się"
     },
     "exit": "Wyjdź",
-    "stopImpersonating": "",
-    "helpTranslate": ""
+    "stopImpersonating": "Przestań podszywać się",
+    "helpTranslate": "Przetłumacz SoulFire"
   },
   "sidebar": {
     "documentation": "Dokumentacja",
     "buyMeACoffee": "Kup mi kawę",
-    "discord": ""
+    "discord": "Discord"
   },
   "breadcrumbs": {
     "admin": "Administrator",
@@ -281,62 +281,62 @@
   "noInstancesFound": "Nie znaleziono instancji",
   "pageName": {
     "terminal": "Konsola",
-    "logs": "",
+    "logs": "Logi",
     "audit-log": "Dziennik zdarzeń",
     "instances": "Instancje",
-    "access": "",
+    "access": "Dostęp",
     "settings": "Ustawienia",
     "proxySettings": "Ustawienia serwera proxy",
     "overview": "Przegląd",
     "users": "Użytkownicy",
     "accountSettings": "Ustawienia konta",
-    "metaSettings": "",
+    "metaSettings": "Ustawienia instancji",
     "discoverPlugins": "Wtyczki",
-    "adminScripts": "",
-    "instanceScripts": ""
+    "adminScripts": "Skrypty",
+    "instanceScripts": "Skrypty"
   },
   "access": {
     "webdav": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "Dostęp WebDAV",
+      "description": "SoulFire pozwala na dostęp do plików instancji, skryptów i innych za pomocą protokołu WebDAV.",
+      "publicAddress": "Publiczny adres WebDAV",
+      "personalToken": "Osobisty token WebDAV",
+      "securityWarning": "Twój osobisty token WebDAV jest bardzo ważny. Nie udostępniaj go nikomu. Używany jest do uwierzytelniania przy dostępie do Twoich plików. Użyj go jako hasła do WebDAV podczas połączenia. Nazwa użytkownika nie jest wymagana, jeśli pojawi się prośba o login, możesz wpisać dowolną wartość (np. 'soulfire').",
+      "addressDescription": "To jest adres, którego musisz użyć, aby uzyskać dostęp do swoich plików. Czasami należy użyć dav:// lub davs:// zamiast http(s)://."
     },
     "api": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "Dostęp API",
+      "description": "gRPC HTTP API SoulFire umożliwia programistyczny dostęp do Twoich instancji za pomocą zapytań webowych.",
+      "publicAddress": "Publiczny adres API",
+      "personalToken": "Osobisty token API",
+      "securityWarning": "Twój osobisty token API jest bardzo ważny. Nie udostępniaj go nikomu. Używany jest do uwierzytelniania przy korzystaniu z API.",
+      "addressDescription": "To jest adres, którego musisz użyć, aby uzyskać dostęp do API."
     },
     "token": {
-      "generate": "",
-      "placeholder": "",
-      "generating": "",
-      "success": "",
-      "error": "",
-      "copy": ""
+      "generate": "Generuj token",
+      "placeholder": "Kliknij \\\"Generuj token\\\" poniżej",
+      "generating": "Generowanie tokena...",
+      "success": "Token został pomyślnie wygenerowany",
+      "error": "Nie udało się wygenerować tokena",
+      "copy": "Kopiuj token"
     },
     "address": {
-      "copy": ""
+      "copy": "Kopiuj adres"
     },
     "documentation": "Dokumentacja",
-    "howToConnect": ""
+    "howToConnect": "Jak się połączyć"
   },
-  "uploadToMcLogs": "",
+  "uploadToMcLogs": "Wyślij do mclo.gs",
   "mcLogsUpload": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Wysyłanie do mclo.gs...",
+    "success": "Wysłano do mclo.gs! Zobacz tutaj: {{url}}",
+    "error": "Nie udało się wysłać do mclo.gs"
   },
-  "copyToClipboard": "",
+  "copyToClipboard": "Kopiuj do schowka",
   "clipboardCopy": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Kopiowanie do schowka...",
+    "success": "Skopiowano \"{{content}}\" do schowka",
+    "error": "Nie udało się skopiować do schowka"
   },
   "instanceState": {
     "starting": "Uruchamianie",
@@ -346,80 +346,80 @@
     "stopped": "Zatrzymana"
   },
   "auditLog": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Filtruj dzienniki audytu...",
     "user": "Użytkownik",
-    "action": "",
-    "timestamp": "",
-    "executedCommand": "",
-    "startedAttack": "",
-    "resumedAttack": "",
-    "pausedAttack": "",
-    "stoppedAttack": ""
+    "action": "Akcja",
+    "timestamp": "Znacznik czasu",
+    "executedCommand": "Wykonano polecenie: {{data}}",
+    "startedAttack": "Rozpoczął atak",
+    "resumedAttack": "Wznowił atak",
+    "pausedAttack": "Wstrzymał atak",
+    "stoppedAttack": "Zatrzymał atak"
   },
-  "pickADate": "",
+  "pickADate": "Wybierz datę",
   "scripts": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Filtruj skrypty...",
     "baseScriptDialog": {
       "form": {
         "scriptName": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "Nazwy skryptów muszą mieć co najmniej 3 znaki",
+          "max": "Nazwy skryptów mogą mieć maksymalnie 32 znaki",
+          "regex": "Nazwy skryptów muszą być pisane małymi literami, zaczynać się znakiem alfanumerycznym, następnie mogą zawierać znaki alfanumeryczne lub myślniki, oraz kończyć się znakiem alfanumerycznym.",
+          "label": "Nazwa",
+          "placeholder": "Mój skrypt",
+          "description": "Nazwa skryptu."
         },
         "elevatedPermissions": {
-          "label": "",
-          "description": ""
+          "label": "Podwyższone uprawnienia",
+          "description": "Czy skrypt powinien działać z podwyższonymi uprawnieniami. Tylko administratorzy mogą włączyć tę opcję."
         }
       }
     },
     "addScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Dodaj nowy skrypt",
+      "description": "Skrypty to małe programy uruchamiane na serwerze SoulFire. Można ich użyć do automatyzacji zadań, tworzenia niestandardowych zachowań i nie tylko.",
       "form": {
         "cancel": "Anuluj",
         "add": "Dodaj"
       }
     },
     "updateScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Aktualizuj skrypt",
+      "description": "Zaktualizuj informacje o skrypcie.",
       "form": {
         "cancel": "Anuluj",
-        "update": ""
+        "update": "Aktualizuj"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Usuwanie skryptów...",
+      "success": "Usunięto skrypty!",
+      "error": "Nie udało się usunąć skryptów"
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Dodawanie skryptu...",
+      "success": "Dodano skrypt!",
+      "error": "Nie udało się dodać skryptu"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Aktualizowanie skryptu...",
+      "success": "Zaktualizowano skrypt!",
+      "error": "Nie udało się zaktualizować skryptu"
     },
     "restartToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Restartowanie skryptu...",
+      "success": "Zrestartowano skrypt!",
+      "error": "Nie udało się zrestartować skryptu"
     },
     "table": {
       "type": "Typ",
-      "scriptName": "",
-      "language": "",
-      "elevatedPermissions": "",
-      "createdAt": "",
-      "actions": ""
+      "scriptName": "Nazwa",
+      "language": "Język",
+      "elevatedPermissions": "Podwyższone uprawnienia",
+      "createdAt": "Utworzono",
+      "actions": "Akcje"
     },
-    "globalScript": "",
-    "instanceScript": ""
+    "globalScript": "Globalny",
+    "instanceScript": "Instancja"
   }
 }

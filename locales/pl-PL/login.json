@@ -5,13 +5,13 @@
     },
     "title": "SoulFire"
   },
-  "newUser": "",
+  "newUser": "Nowy w SoulFire? Polecamy zapoznać się z <a>przewodnikiem dla początkujących</a>.",
   "connect": {
     "title": "Połącz z serwerem SoulFire",
     "description": "Wybierz typ serwera SoulFire, z którym chcesz się połączyć.",
     "integrated": {
       "title": "Serwer zintegrowany (lokalny)",
-      "description": ""
+      "description": "Uruchamia serwer SoulFire na twoim komputerze. Konfiguracja jest automatyczna i nie wymaga żadnych ustawień. (Wymaga aplikacji Desktop/Android)"
     },
     "dedicated": {
       "title": "Serwer dedykowany (zdalny)",
@@ -29,30 +29,30 @@
       "success": "Zintegrowany serwer uruchomiony",
       "error": "Nie udało się uruchomić serwera zintegrowanego"
     },
-    "description": "",
+    "description": "Zintegrowany serwer działa lokalnie na Twoim komputerze. W razie potrzeby skonfiguruj poniżej argumenty uruchamiania Javy.",
     "form": {
       "jvmArgs": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "Argumenty JVM",
+        "description": "Argumenty Java VM dla SoulFire. Aby użyć 4GB RAM, dodaj <bold>-Xmx4G</bold>. Domyślnie ustawione jest 25% Twojego RAM-u.",
+        "placeholder": "Twoje argumenty JVM tutaj"
       },
       "back": "Wróć",
       "start": "Rozpocznij"
     },
     "mobile": {
-      "description": "",
+      "description": "Aby uruchomić zintegrowany serwer na urządzeniu mobilnym, musisz wykonać kilka ręcznych kroków.",
       "form": {
         "termuxCommand": {
-          "title": "",
-          "description": ""
+          "title": "Polecenie Termux",
+          "description": "Zainstaluj <a>aplikację Termux</a>, a następnie uruchom to polecenie w Termuxie, aby zainstalować serwer SoulFire. Następnie będziesz musiał uruchomić polecenie <copy>generate-token api</copy>, aby wygenerować token. Później wprowadź token poniżej."
         },
         "token": {
           "title": "Token",
-          "description": "",
+          "description": "Token do uwierzytelniania z lokalnym serwerem.",
           "placeholder": "Tajny token"
         },
         "back": "Wróć",
-        "connect": ""
+        "connect": "Połącz"
       }
     }
   },
@@ -98,6 +98,6 @@
     "version": "Klient SoulFire {{version}} - {{environment}}",
     "preview": "Szukasz podglądu?",
     "production": "Szukasz wersji produkcyjnej?",
-    "helpTranslate": ""
+    "helpTranslate": "Przetłumacz SoulFire"
   }
 }

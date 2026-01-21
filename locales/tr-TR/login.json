@@ -5,13 +5,13 @@
     },
     "title": "SoulFire"
   },
-  "newUser": "",
+  "newUser": "SoulFire'a yeni misiniz? <a>Başlarken rehberine</a> göz atmanızı öneririz.",
   "connect": {
     "title": "SoulFire Sunucusuna Bağlan",
     "description": "Hangi tür SoulFire sunucusuna bağlanmak istiyorsanız onu seçin.",
     "integrated": {
       "title": "Yerel Sunucu (ev)",
-      "description": ""
+      "description": "Bilgisayarınızda bir SoulFire sunucusu çalıştırır. Kurulum otomatiktir ve yapılandırma gerektirmez. (Masaüstü/Android uygulaması gerektirir)"
     },
     "dedicated": {
       "title": "Dedicated Sunucu (uzaktan bağlantı)",
@@ -29,30 +29,30 @@
       "success": "Yerel sunucu başladı",
       "error": "Yerel sunucu başlatılamadı"
     },
-    "description": "",
+    "description": "Entegre sunucu bilgisayarınızda yerel olarak çalışır. Gerekirse aşağıdan Java başlatma argümanlarını yapılandırın.",
     "form": {
       "jvmArgs": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "JVM argümanları",
+        "description": "SoulFire Java VM argümanları. 4GB RAM kullanmak için <bold>-Xmx4G</bold> ekleyin. Varsayılan olarak RAM'inizin %25'i kullanılır.",
+        "placeholder": "JVM argümanlarınızı buraya girin"
       },
       "back": "Geri Dön",
-      "start": ""
+      "start": "Başlat"
     },
     "mobile": {
-      "description": "",
+      "description": "Entegre sunucuyu mobilde çalıştırmak için birkaç manuel adımı tamamlamanız gerekiyor.",
       "form": {
         "termuxCommand": {
-          "title": "",
-          "description": ""
+          "title": "Termux komutu",
+          "description": "<a>Termux uygulamasını</a> yükleyin, ardından SoulFire sunucusunu yüklemek için bu komutu Termux'ta çalıştırın. Daha sonra bir token oluşturmak için <copy>generate-token api</copy> komutunu çalıştırmanız gerekecek. Ardından aşağıya token'ı girin."
         },
         "token": {
           "title": "Token",
-          "description": "",
+          "description": "Yerel sunucuda kimlik doğrulaması yapmak için token.",
           "placeholder": "Gizli Token"
         },
         "back": "Geri Dön",
-        "connect": ""
+        "connect": "Bağlan"
       }
     }
   },
@@ -88,9 +88,9 @@
   "emailCode": {
     "description": "Bir hesabınız varsa, <bold>{{email}}</bold> adresine bir kod gönderdik. Lütfen aşağıya girin.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Kod kontrol ediliyor...",
+      "success": "Giriş yapıldı",
+      "error": "Kod geçersiz"
     },
     "back": "Geri Dön"
   },
@@ -98,6 +98,6 @@
     "version": "SoulFireMc Client {{version}} - {{environment}}",
     "preview": "Ön izleme mi arıyorsunuz?",
     "production": "Prodüksiyon mu arıyorsunuz?",
-    "helpTranslate": ""
+    "helpTranslate": "SoulFire'ı Çevirin"
   }
 }

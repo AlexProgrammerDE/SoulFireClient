@@ -1,7 +1,7 @@
 {
   "proxy": {
-    "getProxies": "",
-    "addProxies": "",
+    "getProxies": "Proxies abrufen",
+    "addProxies": "Proxies hinzufügen",
     "filterPlaceholder": "Proxies filtern...",
     "listImportToast": {
       "loading": "Proxies werden importiert...",
@@ -39,9 +39,9 @@
     }
   },
   "account": {
-    "getAccounts": "",
-    "addAccounts": "",
-    "generateAccounts": "",
+    "getAccounts": "Konten abrufen",
+    "addAccounts": "Konten hinzufügen",
+    "generateAccounts": "Konten generieren",
     "filterPlaceholder": "Konten filtern...",
     "listImportToast": {
       "loading": "Importiere Konten... {{checked}}/{{total}} (Erfolg: {{success}} Fehlgeschlagen: {{failed}})",
@@ -58,20 +58,20 @@
       "error": "Fehler beim Importieren des Kontos"
     },
     "generate": {
-      "title": "",
-      "description": "",
-      "amount": "",
-      "nameFormat": "",
-      "nameFormatHelp": "",
-      "overrideExisting": "",
-      "submit": "",
-      "generating": "",
-      "progress": "",
-      "success": "",
-      "allFailed": "",
-      "error": "",
-      "invalidAmount": "",
-      "missingPlaceholder": ""
+      "title": "Offline-Konten generieren",
+      "description": "Offline-Java-Konten mit einem benutzerdefinierten Namensformat generieren.",
+      "amount": "Anzahl",
+      "nameFormat": "Namensformat",
+      "nameFormatHelp": "Verwenden Sie %d als Platzhalter für die Kontonummer (z. B. wird aus Bot_%d Bot_1, Bot_2 usw.)",
+      "overrideExisting": "Vorhandene {{count}} Konten überschreiben",
+      "submit": "Generieren",
+      "generating": "Generiere...",
+      "progress": "Konten werden generiert... {{checked}}/{{total}} (Erfolg: {{success}} Fehlgeschlagen: {{failed}})",
+      "success": "{{count}} Konten generiert!",
+      "allFailed": "Fehler beim Generieren aller Konten",
+      "error": "Fehler beim Generieren der Konten",
+      "invalidAmount": "Bitte geben Sie eine gültige Anzahl ein (mindestens 1)",
+      "missingPlaceholder": "Das Namensformat muss einen %d-Platzhalter enthalten"
     },
     "import": {
       "javaEdition": "Java Edition",

@@ -1,99 +1,99 @@
 {
   "proxy": {
-    "getProxies": "",
-    "addProxies": "",
-    "filterPlaceholder": "",
+    "getProxies": "Získat proxy servery",
+    "addProxies": "Přidat proxy servery",
+    "filterPlaceholder": "Filtrovat proxy...",
     "listImportToast": {
-      "loading": "",
-      "success": "",
-      "error": "",
-      "noProxies": ""
+      "loading": "Importuji proxy...",
+      "success": "{{count}} proxy importováno!",
+      "error": "Nepodařilo se importovat proxy.",
+      "noProxies": "Žádné proxy k importu"
     },
     "import": {
-      "proxyType": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "uri": "",
+      "proxyType": "Typ proxy",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
       "dialog": {
-        "title": "",
-        "description": ""
+        "title": "Importovat proxy typu {{type}}",
+        "description": "Vložte své proxy zde, jednu na řádek"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Odstraňuji proxy...",
+      "success": "{{count}} proxy odstraněno!",
+      "error": "Nepodařilo se odstranit proxy."
     },
     "checkToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Kontrola proxy... {{checked}}/{{total}} (Úspěšných: {{success}} Neúspěšných: {{failed}})",
+      "success": "{{count}} nefunkčních proxy odstraněno!",
+      "error": "Nepodařilo se zkontrolovat proxy."
     },
-    "invalidFormat": "",
+    "invalidFormat": "Neplatný formát proxy",
     "table": {
-      "type": "",
-      "address": "",
-      "username": "",
-      "password": ""
+      "type": "Typ",
+      "address": "Adresa",
+      "username": "Uživatelské jméno",
+      "password": "Heslo"
     }
   },
   "account": {
-    "getAccounts": "",
-    "addAccounts": "",
-    "generateAccounts": "",
-    "filterPlaceholder": "",
+    "getAccounts": "Získat účty",
+    "addAccounts": "Přidat účty",
+    "generateAccounts": "Vygenerovat účty",
+    "filterPlaceholder": "Filtrovat účty...",
     "listImportToast": {
-      "loading": "",
-      "allFailed": "",
-      "someFailed": "",
-      "noneFailed": "",
-      "error": "",
-      "noAccounts": ""
+      "loading": "Importuji účty... {{checked}}/{{total}} (Úspěšných: {{success}} Neúspěšných: {{failed}})",
+      "allFailed": "Nepodařilo se importovat žádné účty.",
+      "someFailed": "Importováno {{count}} účtů, nepodařilo se importovat {{failed}} účtů.",
+      "noneFailed": "{{count}} účtů importováno!",
+      "error": "Nepodařilo se importovat účty.",
+      "noAccounts": "Žádné účty k importu"
     },
-    "unknownError": "",
+    "unknownError": "Neznámá chyba",
     "deviceCodeImportToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Importuji účet...",
+      "success": "Účet importován!",
+      "error": "Nepodařilo se importovat účet"
     },
     "generate": {
-      "title": "",
-      "description": "",
-      "amount": "",
-      "nameFormat": "",
-      "nameFormatHelp": "",
-      "overrideExisting": "",
-      "submit": "",
-      "generating": "",
-      "progress": "",
-      "success": "",
-      "allFailed": "",
-      "error": "",
-      "invalidAmount": "",
-      "missingPlaceholder": ""
+      "title": "Vygenerovat offline účty",
+      "description": "Vygenerujte offline Java účty s vlastním formátem jména.",
+      "amount": "Počet",
+      "nameFormat": "Formát jména",
+      "nameFormatHelp": "Použijte %d jako zástupný znak pro číslo účtu (např. Bot_%d se stane Bot_1, Bot_2 atd.)",
+      "overrideExisting": "Přepsat existující {{count}} účty",
+      "submit": "Generovat",
+      "generating": "Generuje se...",
+      "progress": "Generování účtů... {{checked}}/{{total}} (Úspěšně: {{success}} Neúspěšně: {{failed}})",
+      "success": "Vygenerováno {{count}} účtů!",
+      "allFailed": "Nepodařilo se vygenerovat žádné účty",
+      "error": "Nepodařilo se vygenerovat účty",
+      "invalidAmount": "Zadejte prosím platný počet (alespoň 1)",
+      "missingPlaceholder": "Formát jména musí obsahovat zástupný znak %d"
     },
     "import": {
-      "javaEdition": "",
-      "bedrockEdition": "",
-      "offline": "",
-      "microsoftCredentials": "",
-      "microsoftDeviceCode": "",
-      "microsoftRefreshToken": "",
+      "javaEdition": "Java Edition",
+      "bedrockEdition": "Bedrock Edition",
+      "offline": "Offline",
+      "microsoftCredentials": "Microsoft přihlašovací údaje",
+      "microsoftDeviceCode": "Microsoft Device Code",
+      "microsoftRefreshToken": "Microsoft Refresh Token",
       "dialog": {
-        "title": "",
-        "description": ""
+        "title": "Importovat účty typu {{type}}",
+        "description": "Vložte své účty zde, jeden na řádek"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Odstraňuji účty...",
+      "success": "{{count}} účtů odstraněno!",
+      "error": "Nepodařilo se odstranit účty"
     },
     "table": {
-      "type": "",
-      "profileId": "",
-      "lastKnownName": ""
+      "type": "Typ",
+      "profileId": "UUID",
+      "lastKnownName": "Uživatelské jméno"
     }
   }
 }

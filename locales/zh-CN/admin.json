@@ -23,72 +23,72 @@
     }
   },
   "users": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "过滤用户...",
     "baseUserDialog": {
       "form": {
         "username": {
-          "min": "",
-          "max": "",
-          "regex": "",
+          "min": "用户名至少需要3个字符",
+          "max": "用户名最多允许32个字符",
+          "regex": "用户名必须为小写字母，以字母或数字开头，中间只能包含字母、数字或短横线，并以字母或数字结尾。",
           "label": "用户名",
-          "placeholder": "",
-          "description": ""
+          "placeholder": "请输入用户名",
+          "description": "唯一标识用户的用户名"
         },
         "email": {
           "label": "电子邮箱",
-          "placeholder": "",
-          "description": ""
+          "placeholder": "请输入邮箱",
+          "description": "用于通知和登录的用户邮箱地址"
         },
         "role": {
           "label": "用户类型",
-          "description": "",
+          "description": "用户的角色。管理员可管理所有用户和实例，普通用户只能管理自己的实例。",
           "user": "用户",
           "admin": "管理员"
         }
       }
     },
     "addUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "添加新用户",
+      "description": "将新用户添加到此服务器",
       "form": {
         "cancel": "取消",
-        "add": ""
+        "add": "添加用户"
       }
     },
     "updateUserDialog": {
       "title": "更新用户",
-      "description": "",
+      "description": "更新该用户的信息",
       "form": {
         "cancel": "取消",
-        "update": ""
+        "update": "更新用户"
       }
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "正在添加用户...",
+      "success": "已添加用户！",
+      "error": "添加用户失败"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "正在更新用户...",
+      "success": "用户已更新！",
+      "error": "更新用户失败"
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "正在删除用户...",
+      "success": "已删除用户！",
+      "error": "删除用户失败"
     },
     "invalidateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "正在注销用户...",
+      "success": "用户已注销！",
+      "error": "注销用户失败"
     },
     "table": {
       "username": "用户名",
       "email": "电子邮箱",
       "role": "用户类型",
-      "createdAt": "",
-      "minIssuedAt": "",
+      "createdAt": "创建时间",
+      "minIssuedAt": "最早登录",
       "actions": "操作"
     }
   }

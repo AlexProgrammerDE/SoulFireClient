@@ -1,30 +1,30 @@
 {
   "locale": "Yerel",
-  "cancel": "",
+  "cancel": "İptal",
   "error": {
-    "noAddressOrToken": "",
+    "noAddressOrToken": "Sunucu adresi veya jeton bulunamadı",
     "page": {
       "title": "Hata",
       "description": "Sayfa yüklenirken bir hata oluştu. Daha fazla bilgi konsolda bulunabilir.",
       "logOut": "Çıkış Yap",
-      "reloadPage": ""
+      "reloadPage": "Sayfayı yeniden yükle"
     },
     "connectionFailed": "SoulFire sunucusuna bağlantı başarısız oldu."
   },
   "notFound": {
     "page": {
       "title": "Bulunamadı",
-      "description": "",
+      "description": "Bu konumda bir sayfa bulunamadı",
       "logOut": "Çıkış Yap",
-      "reloadPage": ""
+      "reloadPage": "Sayfayı yeniden yükle"
     }
   },
   "pending": {
-    "connecting": ""
+    "connecting": "Bağlanıyor..."
   },
   "dialog": {
     "about": {
-      "title": "",
+      "title": "SoulFire Hakkında",
       "description": "SoulFire clientinin {{version}} sürümünü kullanıyorsunuz.",
       "type": "Tip",
       "value": "Değer",
@@ -45,128 +45,128 @@
         "friendlyName": {
           "label": "\"Dostça ad",
           "placeholder": "Benim Botum",
-          "description": "",
-          "min": "",
-          "max": "",
-          "regex": ""
+          "description": "Bu örneğe vermek istediğiniz isim.",
+          "min": "Takma ad en az 3 karakter uzunluğunda olmalıdır.",
+          "max": "Takma ad en fazla 32 karakter uzunluğunda olmalıdır.",
+          "regex": "Takma ad yalnızca harf, rakam ve boşluk içermelidir"
         },
-        "cancel": "",
-        "create": ""
+        "cancel": "İptal",
+        "create": "Oluştur"
       },
       "createToast": {
-        "loading": "",
-        "success": "",
-        "error": ""
+        "loading": "Örnek oluşturuluyor...",
+        "success": "Örnek başarıyla oluşturuldu",
+        "error": "Örnek oluşturmada hata oluştu"
       }
     },
     "import": {
       "main": {
-        "fromFile": "",
-        "fromUrl": "",
-        "firstClipboardItem": "",
-        "fromClipboard": "",
+        "fromFile": "Dosyadan",
+        "fromUrl": "URL'den",
+        "firstClipboardItem": "Pano içinde birden fazla öğeniz vardı, yalnızca ilki kullanılacak.",
+        "fromClipboard": "Panodan",
         "textarea": {
-          "placeholder": "",
-          "submit": ""
+          "placeholder": "Metni buraya girin...",
+          "submit": "Metinden yükle"
         }
       },
       "url": {
-        "description": "",
+        "description": "URL'den yükleme SoulFire sunucusunun hedef sunucuya bir GET isteği göndermesine ve yanıtı veri olarak kullanmasına neden olur.",
         "form": {
           "url": {
-            "placeholder": "",
-            "empty": ""
+            "placeholder": "URL'yi buraya girin...",
+            "empty": "Lütfen geçerli bir URL girin"
           }
         },
-        "submit": "",
+        "submit": "URL'den yükle",
         "toast": {
-          "loading": "",
-          "success": "",
-          "error": ""
+          "loading": "Veri indiriliyor...",
+          "success": "Veri yüklendi!",
+          "error": "Veri indirilemedi"
         }
       }
     }
   },
   "commandInput": {
-    "placeholder": ""
+    "placeholder": "Komut girin ('help' yazarsanız liste çıkar)"
   },
   "controls": {
-    "start": "",
-    "resume": "",
-    "pause": "",
-    "stop": "",
+    "start": "Başlat",
+    "resume": "Devam et",
+    "pause": "Duraklat",
+    "stop": "Durdur",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Saldırı başlatılıyor...",
+      "success": "Saldırı başarıyla başlatıldı",
+      "error": "Saldırı başlatılamadı"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Saldırı devam ettiriliyor...",
+      "success": "Saldırı başarıyla devam ettirildi",
+      "error": "Saldırı devam ettirilemedi"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Saldırı duraklatılıyor...",
+      "success": "Saldırı başarıyla duraklatıldı",
+      "error": "Saldırı duraklatılamadı"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Saldırı durduruluyor...",
+      "success": "Saldırı başarıyla durduruldu",
+      "error": "Saldırı durdurulamadı"
     },
     "accountWarning": {
-      "noAccountsTitle": "",
-      "noAccountsDescription": "",
-      "notEnoughTitle": "",
-      "notEnoughDescription": "",
-      "hint": "",
-      "continueWithExisting": "",
-      "generateAccounts": ""
+      "noAccountsTitle": "Hiçbir Hesap Yapılandırılmadı",
+      "noAccountsDescription": "Bir saldırı başlatmadan önce hesapları içe aktarmanız gerekir. {{required}} bot talep ettiniz.",
+      "notEnoughTitle": "Yeterli Hesap Yok",
+      "notEnoughDescription": "{{required}} bot talep ettiniz ama yalnızca {{available}} hesap içe aktardınız.",
+      "hint": "Çevrimdışı hesaplar oluşturabilir veya Hesap Ayarları sayfasından hesapları içe aktarabilirsiniz.",
+      "continueWithExisting": "{{count}} hesap ile devam et",
+      "generateAccounts": "Hesapları Oluştur"
     }
   },
   "icon": {
-    "invalidName": ""
+    "invalidName": "Geçersiz simge adı: {{name}}"
   },
   "dataTable": {
-    "noResults": "",
-    "rowsSelected": "",
-    "rowsPerPage": "",
-    "currentPage": "",
-    "goFirst": "",
-    "goPrevious": "",
-    "goNext": "",
-    "goLast": "",
-    "selectAll": "",
-    "selectRow": ""
+    "noResults": "Sonuç yok.",
+    "rowsSelected": "{{total}} satırdan {{amount}} tanesi seçildi",
+    "rowsPerPage": "Sayfa başına satır",
+    "currentPage": "Sayfa {{page}} / {{total}}",
+    "goFirst": "İlk sayfaya git",
+    "goPrevious": "Önceki sayfaya git",
+    "goNext": "Sonraki sayfaya git",
+    "goLast": "Son sayfaya git",
+    "selectAll": "Tümünü seç",
+    "selectRow": "Satırı seç"
   },
   "pluginCard": {
-    "version": "",
-    "author": "",
-    "license": "",
-    "website": ""
+    "version": "Sürüm: {{version}}",
+    "author": "Yazar: {{author}}",
+    "license": "Lisans: {{license}}",
+    "website": "Web sitesi"
   },
   "settingsPage": {
-    "namespacesNotFound": "",
+    "namespacesNotFound": "Ayar ad alanları bulunamadı",
     "stringList": {
-      "placeholder": "",
-      "add": "",
-      "remove": ""
+      "placeholder": "Yeni bir giriş ekle...",
+      "add": "Ekle",
+      "remove": "Kaldır"
     },
     "invalidNumberToast": {
-      "title": "",
-      "description": ""
+      "title": "Geçersiz sayı!",
+      "description": "Değer {{min}} ile {{max}} arasında olmalıdır"
     }
   },
   "terminal": {
-    "noLogs": "",
-    "demo-1": "",
-    "demo-2": "",
-    "demo-3": "",
-    "demo-4": ""
+    "noLogs": "🧙 Görünüşe göre görüntülenecek günlük yok; birkaç komut çalıştırmayı deneyin!",
+    "demo-1": "Demo moduna hoş geldiniz! 🧪",
+    "demo-2": "Bu, SoulFire'ın salt okunur örneğidir",
+    "demo-3": "SoulFire'ı yüklemeye karar vermeden önce tüm menüler ve özelliklere göz atın :D",
+    "demo-4": "Bizimle iletişime geçmek isterseniz Discord sunucumuza katılmaktan çekinmeyin: https://soulfiremc.com/discord"
   },
   "uiBreadcrumb": {
-    "more": ""
+    "more": "Daha fazla"
   },
   "uiDialog": {
     "close": "Kapat"
@@ -175,251 +175,251 @@
     "close": "Kapat"
   },
   "uiSidebar": {
-    "toggle": ""
+    "toggle": "Kenar Çubuğunu Aç / Kapat"
   },
   "castMenu": {
-    "title": "",
-    "disconnected": "",
-    "alreadyConnected": "",
+    "title": "Yayınla",
+    "disconnected": "{{device}} bağlantısı kesildi",
+    "alreadyConnected": "Zaten {{device}} adlı cihaza bağlısınız",
     "connectToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "{{device}} cihazına bağlanılıyor...",
+      "success": "{{device}} cihazına bağlanıldı",
+      "error": "{{device}} cihazına bağlanılamadı"
     },
-    "noDevices": "",
-    "broadcastLabel": "",
+    "noDevices": "Cihaz bulunamadı",
+    "broadcastLabel": "Yayın testi",
     "broadcastToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Mesaj yayınlanıyor...",
+      "success": "Mesaj yayınlandı!",
+      "error": "Mesaj yayınlanamadı"
     }
   },
   "instanceSidebar": {
-    "readDocumentation": "",
-    "backToDashboard": "",
+    "readDocumentation": "Dokümantasyonu oku",
+    "backToDashboard": "Panele dön",
     "deleteToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Örnek siliniyor...",
+      "success": "Örnek silindi",
+      "error": "Örnek silinemedi"
     },
-    "instancesGroup": "",
-    "createInstance": "",
+    "instancesGroup": "Örnekler",
+    "createInstance": "Örnek Oluştur",
     "loadProfileToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Profil yükleniyor...",
+      "success": "Profil yüklendi",
+      "error": "Profil yüklenemedi"
     },
-    "loadProfile": "",
-    "loadFromFile": "",
-    "profileSaved": "",
-    "saveProfile": "",
-    "deleteInstance": "",
-    "controlsGroup": "",
-    "overview": "",
-    "terminal": "",
-    "audit-log": "",
-    "settingsGroup": "",
-    "pluginsGroup": "",
-    "pluginSettings": "",
-    "botSettings": "",
-    "accountSettings": "",
-    "metaSettings": "",
-    "proxySettings": "",
-    "aiSettings": "",
-    "pathfindingSettings": "",
-    "discoverPlugins": "",
-    "instanceScripts": ""
+    "loadProfile": "Profili Yükle",
+    "loadFromFile": "Dosyadan yükle",
+    "profileSaved": "Profil kaydedildi",
+    "saveProfile": "Profili Kaydet",
+    "deleteInstance": "Örneği Sil",
+    "controlsGroup": "Kontroller",
+    "overview": "Genel Bakış",
+    "terminal": "Terminal",
+    "audit-log": "Denetim Günlüğü",
+    "settingsGroup": "Ayarlar",
+    "pluginsGroup": "Eklentiler",
+    "pluginSettings": "Eklenti Ayarları",
+    "botSettings": "Bot Ayarları",
+    "accountSettings": "Hesap Ayarları",
+    "metaSettings": "Örnek Ayarları",
+    "proxySettings": "Proxy Ayarları",
+    "aiSettings": "Yapay Zeka Ayarları",
+    "pathfindingSettings": "Yol Bulma Ayarları",
+    "discoverPlugins": "Eklentiler",
+    "instanceScripts": "Betikler"
   },
   "userSidebar": {
-    "readDocumentation": "",
-    "userGroup": "",
-    "instances": "",
-    "access": "",
-    "createInstance": "",
-    "settings": "",
-    "adminGroup": "",
-    "adminOverview": "",
-    "adminLogs": "",
-    "adminTerminal": "",
+    "readDocumentation": "Dokümantasyonu oku",
+    "userGroup": "Kullanıcı",
+    "instances": "Örnekler",
+    "access": "Erişim",
+    "createInstance": "Örnek Oluştur",
+    "settings": "Ayarlar",
+    "adminGroup": "Yönetici",
+    "adminOverview": "Genel Bakış",
+    "adminLogs": "Kayıtlar",
+    "adminTerminal": "Terminal",
     "users": "Kullanıcılar",
-    "adminScripts": "",
-    "serverSettings": "",
-    "devSettings": "",
+    "adminScripts": "Betikler",
+    "serverSettings": "Sunucu Ayarları",
+    "devSettings": "Geliştirici Ayarları",
     "theme": {
-      "title": "",
-      "system": "",
-      "light": "",
-      "dark": ""
+      "title": "Tema",
+      "system": "Sistem",
+      "light": "Açık",
+      "dark": "Koyu"
     },
     "terminal": {
-      "title": ""
+      "title": "Terminal"
     },
-    "configDir": "",
-    "dataDir": "",
-    "about": "",
+    "configDir": "Yapılandırma dizini",
+    "dataDir": "Veri dizini",
+    "about": "Hakkında",
     "logOut": "Çıkış Yap",
     "logOutToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Çıkış yapılıyor...",
+      "success": "Çıkış yapıldı",
+      "error": "Çıkış yapılamadı"
     },
-    "exit": "",
-    "stopImpersonating": "",
-    "helpTranslate": ""
+    "exit": "Çıkış",
+    "stopImpersonating": "Kimliğe bürünmeyi bırak",
+    "helpTranslate": "SoulFire'ı Çevirin"
   },
   "sidebar": {
-    "documentation": "",
-    "buyMeACoffee": "",
-    "discord": ""
+    "documentation": "Dokümantasyon",
+    "buyMeACoffee": "Bana bir kahve ısmarla",
+    "discord": "Discord"
   },
   "breadcrumbs": {
-    "admin": "",
-    "settings": "",
-    "controls": "",
-    "plugins": ""
+    "admin": "Yönetici",
+    "settings": "Ayarlar",
+    "controls": "Kontroller",
+    "plugins": "Eklentiler"
   },
-  "noInstancesFound": "",
+  "noInstancesFound": "Örnek bulunamadı",
   "pageName": {
-    "terminal": "",
-    "logs": "",
-    "audit-log": "",
-    "instances": "",
-    "access": "",
-    "settings": "",
-    "proxySettings": "",
-    "overview": "",
+    "terminal": "Terminal",
+    "logs": "Kayıtlar",
+    "audit-log": "Denetim Günlüğü",
+    "instances": "Örnekler",
+    "access": "Erişim",
+    "settings": "Ayarlar",
+    "proxySettings": "Proxy Ayarları",
+    "overview": "Genel Bakış",
     "users": "Kullanıcılar",
-    "accountSettings": "",
-    "metaSettings": "",
-    "discoverPlugins": "",
-    "adminScripts": "",
-    "instanceScripts": ""
+    "accountSettings": "Hesap Ayarları",
+    "metaSettings": "Örnek Ayarları",
+    "discoverPlugins": "Eklentiler",
+    "adminScripts": "Betikler",
+    "instanceScripts": "Betikler"
   },
   "access": {
     "webdav": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "WebDAV Erişimi",
+      "description": "SoulFire ile örneklere, betiklere ve diğer dosyalara WebDAV protokolü kullanarak erişebilirsiniz.",
+      "publicAddress": "Genel WebDAV Adresi",
+      "personalToken": "Kişisel WebDAV Jetonu",
+      "securityWarning": "Kişisel WebDAV Jetonunuz çok önemlidir. Kimseyle paylaşmayın. Dosyalarınıza erişirken kimlik doğrulama için kullanılır. WebDAV'a bağlanırken şifre olarak kullanın. Kullanıcı adı gerekmez, istenirse istediğiniz bir değeri yazabilirsiniz. (örn. 'soulfire')",
+      "addressDescription": "Bu dosyalarınıza erişmek için kullanmanız gereken adrestir. Bazen http(s):// yerine dav:// veya davs:// kullanmanız gerekebilir."
     },
     "api": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "API Erişimi",
+      "description": "SoulFire'ın gRPC HTTP API'sı, örneklerle programatik olarak web istekleriyle etkileşime girmenizi sağlar.",
+      "publicAddress": "Genel API Adresi",
+      "personalToken": "Kişisel API Jetonu",
+      "securityWarning": "Kişisel API Jetonunuz çok önemlidir. Kimseyle paylaşmayın. API'ye erişirken kimlik doğrulama için kullanılır.",
+      "addressDescription": "Bu, API'ye erişmek için kullanmanız gereken adrestir."
     },
     "token": {
-      "generate": "",
-      "placeholder": "",
-      "generating": "",
-      "success": "",
-      "error": "",
-      "copy": ""
+      "generate": "Jeton Oluştur",
+      "placeholder": "Aşağıdan 'Jeton Oluştur'u tıklayın",
+      "generating": "Jeton oluşturuluyor...",
+      "success": "Token başarıyla oluşturuldu",
+      "error": "Jeton oluşturulamadı",
+      "copy": "Jetonu Kopyala"
     },
     "address": {
-      "copy": ""
+      "copy": "Adresi Kopyala"
     },
-    "documentation": "",
-    "howToConnect": ""
+    "documentation": "Dokümantasyon",
+    "howToConnect": "Nasıl bağlanılır"
   },
-  "uploadToMcLogs": "",
+  "uploadToMcLogs": "mclo.gs'ye yükle",
   "mcLogsUpload": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "mclo.gs'ye yükleniyor...",
+    "success": "mclo.gs'ye yüklendi! Buradan görüntüleyin: {{url}}",
+    "error": "mclo.gs'ye yükleme başarısız oldu"
   },
-  "copyToClipboard": "",
+  "copyToClipboard": "Panoya kopyala",
   "clipboardCopy": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Panoya kopyalanıyor...",
+    "success": "\"{{content}}\" panoya kopyalandı",
+    "error": "Panoya kopyalama başarısız oldu"
   },
   "instanceState": {
-    "starting": "",
-    "running": "",
-    "paused": "",
-    "stopping": "",
-    "stopped": ""
+    "starting": "Başlatılıyor",
+    "running": "Çalışıyor",
+    "paused": "Duraklatıldı",
+    "stopping": "Durduruluyor",
+    "stopped": "Durduruldu"
   },
   "auditLog": {
-    "filterPlaceholder": "",
-    "user": "",
-    "action": "",
-    "timestamp": "",
-    "executedCommand": "",
-    "startedAttack": "",
-    "resumedAttack": "",
-    "pausedAttack": "",
-    "stoppedAttack": ""
+    "filterPlaceholder": "Denetim günlüklerini filtrele...",
+    "user": "Kullanıcı",
+    "action": "Eylem",
+    "timestamp": "Zaman damgası",
+    "executedCommand": "Çalıştırılan komut: {{data}}",
+    "startedAttack": "Bir saldırı başlatıldı",
+    "resumedAttack": "Bir saldırı devam ettirildi",
+    "pausedAttack": "Bir saldırı duraklatıldı",
+    "stoppedAttack": "Bir saldırı durduruldu"
   },
-  "pickADate": "",
+  "pickADate": "Bir tarih seçin",
   "scripts": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Betikleri filtrele...",
     "baseScriptDialog": {
       "form": {
         "scriptName": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "Betik adı en az 3 karakter olmalıdır",
+          "max": "Betik adı en fazla 32 karakter olmalıdır",
+          "regex": "Betik adı küçük harf olmalı, alfanümerik karakter ile başlamalı, devamında alfanümerik veya tire olabilir, alfanümerik ile bitmelidir.",
+          "label": "Ad",
+          "placeholder": "Benim Betiğim",
+          "description": "Betik adı."
         },
         "elevatedPermissions": {
-          "label": "",
-          "description": ""
+          "label": "Yükseltilmiş Yetkiler",
+          "description": "Betiğin yükseltilmiş yetkilerle çalıştırılıp çalıştırılmayacağı. Sadece yöneticiler bu seçeneği etkinleştirebilir."
         }
       }
     },
     "addScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Yeni bir betik ekle",
+      "description": "Betikler, SoulFire sunucusunda çalışan küçük programlardır. Görevleri otomatikleştirmek, özel davranışlar oluşturmak gibi amaçlarla kullanılabilirler.",
       "form": {
-        "cancel": "",
-        "add": ""
+        "cancel": "İptal",
+        "add": "Ekle"
       }
     },
     "updateScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Betik güncelle",
+      "description": "Betiğin bilgisini güncelleyin.",
       "form": {
-        "cancel": "",
-        "update": ""
+        "cancel": "İptal",
+        "update": "Güncelle"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Betikler kaldırılıyor...",
+      "success": "Betikler kaldırıldı!",
+      "error": "Betikler kaldırılamadı"
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Betik ekleniyor...",
+      "success": "Betik eklendi!",
+      "error": "Betik eklenemedi"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Betik güncelleniyor...",
+      "success": "Betik güncellendi!",
+      "error": "Betik güncellenemedi"
     },
     "restartToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Betik yeniden başlatılıyor...",
+      "success": "Betik yeniden başlatıldı!",
+      "error": "Betik yeniden başlatılamadı"
     },
     "table": {
       "type": "Tip",
-      "scriptName": "",
-      "language": "",
-      "elevatedPermissions": "",
-      "createdAt": "",
-      "actions": ""
+      "scriptName": "Ad",
+      "language": "Dil",
+      "elevatedPermissions": "Yükseltilmiş Yetkiler",
+      "createdAt": "Oluşturulma",
+      "actions": "İşlemler"
     },
-    "globalScript": "",
-    "instanceScript": ""
+    "globalScript": "Genel",
+    "instanceScript": "Örnek"
   }
 }

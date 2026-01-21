@@ -1,99 +1,99 @@
 {
   "proxy": {
-    "getProxies": "",
-    "addProxies": "",
-    "filterPlaceholder": "",
+    "getProxies": "Proxyleri Al",
+    "addProxies": "Proxy Ekle",
+    "filterPlaceholder": "Proxyleri filtrele...",
     "listImportToast": {
-      "loading": "",
-      "success": "",
-      "error": "",
-      "noProxies": ""
+      "loading": "Proxyler içe aktarılıyor...",
+      "success": "{{count}} proxy içe aktarıldı!",
+      "error": "Proxyler içe aktarılamadı",
+      "noProxies": "İçe aktarılacak proxy yok"
     },
     "import": {
-      "proxyType": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "uri": "",
+      "proxyType": "Proxy Türü",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
       "dialog": {
-        "title": "",
-        "description": ""
+        "title": "{{type}} proxyleri içe aktar",
+        "description": "Proxylerinizi buraya yapıştırın, her satıra bir tane olacak şekilde"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Proxyler kaldırılıyor...",
+      "success": "{{count}} proxy kaldırıldı!",
+      "error": "Proxyler kaldırılamadı"
     },
     "checkToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Proxyler kontrol ediliyor... {{checked}}/{{total}} (Başarılı: {{success}} Başarısız: {{failed}})",
+      "success": "{{count}} bozuk proxy kaldırıldı!",
+      "error": "Proxyler kontrol edilemedi"
     },
-    "invalidFormat": "",
+    "invalidFormat": "Geçersiz proxy formatı",
     "table": {
       "type": "Tip",
       "address": "Adres",
-      "username": "",
-      "password": ""
+      "username": "Kullanıcı Adı",
+      "password": "Şifre"
     }
   },
   "account": {
-    "getAccounts": "",
-    "addAccounts": "",
-    "generateAccounts": "",
-    "filterPlaceholder": "",
+    "getAccounts": "Hesapları Al",
+    "addAccounts": "Hesap Ekle",
+    "generateAccounts": "Hesapları Oluştur",
+    "filterPlaceholder": "Hesapları filtrele...",
     "listImportToast": {
-      "loading": "",
-      "allFailed": "",
-      "someFailed": "",
-      "noneFailed": "",
-      "error": "",
-      "noAccounts": ""
+      "loading": "Hesaplar içe aktarılıyor... {{checked}}/{{total}} (Başarılı: {{success}} Başarısız: {{failed}})",
+      "allFailed": "Hiçbir hesap içe aktarılamadı",
+      "someFailed": "{{count}} hesap içe aktarıldı, {{failed}} hesap içe aktarılamadı",
+      "noneFailed": "{{count}} hesap içe aktarıldı!",
+      "error": "Hesaplar içe aktarılamadı",
+      "noAccounts": "İçe aktarılacak hesap yok"
     },
-    "unknownError": "",
+    "unknownError": "Bilinmeyen hata",
     "deviceCodeImportToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Hesap içe aktarılıyor...",
+      "success": "Hesap içe aktarıldı!",
+      "error": "Hesap içe aktarılamadı"
     },
     "generate": {
-      "title": "",
-      "description": "",
-      "amount": "",
-      "nameFormat": "",
-      "nameFormatHelp": "",
-      "overrideExisting": "",
-      "submit": "",
-      "generating": "",
-      "progress": "",
-      "success": "",
-      "allFailed": "",
-      "error": "",
-      "invalidAmount": "",
-      "missingPlaceholder": ""
+      "title": "Çevrimdışı Hesap Oluştur",
+      "description": "Özel bir ad formatı ile çevrimdışı Java hesapları oluşturun.",
+      "amount": "Miktar",
+      "nameFormat": "Ad Formatı",
+      "nameFormatHelp": "Hesap numarası için %d kullanın (örn. Bot_%d, Bot_1, Bot_2 vb. olur)",
+      "overrideExisting": "Varolan {{count}} hesabın üzerine yaz",
+      "submit": "Oluştur",
+      "generating": "Oluşturuluyor...",
+      "progress": "Hesaplar oluşturuluyor... {{checked}}/{{total}} (Başarılı: {{success}} Hatalı: {{failed}})",
+      "success": "{{count}} hesap oluşturuldu!",
+      "allFailed": "Hiç hesap oluşturulamadı",
+      "error": "Hesaplar oluşturulamadı",
+      "invalidAmount": "Lütfen geçerli bir miktar girin (en az 1)",
+      "missingPlaceholder": "Ad formatı %d yer tutucu içermeli"
     },
     "import": {
-      "javaEdition": "",
-      "bedrockEdition": "",
-      "offline": "",
-      "microsoftCredentials": "",
-      "microsoftDeviceCode": "",
-      "microsoftRefreshToken": "",
+      "javaEdition": "Java Sürümü",
+      "bedrockEdition": "Bedrock Sürümü",
+      "offline": "Çevrimdışı",
+      "microsoftCredentials": "Microsoft Kimlik Bilgileri",
+      "microsoftDeviceCode": "Microsoft Cihaz Kodu",
+      "microsoftRefreshToken": "Microsoft Yenileme Jetonu",
       "dialog": {
-        "title": "",
-        "description": ""
+        "title": "{{type}} hesapları içe aktar",
+        "description": "Hesaplarınızı buraya yapıştırın, her satıra bir tane olacak şekilde"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Hesaplar kaldırılıyor...",
+      "success": "{{count}} hesap kaldırıldı!",
+      "error": "Hesaplar kaldırılamadı"
     },
     "table": {
       "type": "Tip",
-      "profileId": "",
-      "lastKnownName": ""
+      "profileId": "UUID",
+      "lastKnownName": "Kullanıcı Adı"
     }
   }
 }

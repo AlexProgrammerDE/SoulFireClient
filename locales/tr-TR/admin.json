@@ -3,11 +3,11 @@
     "welcome": "Hoş geldiniz, {{name}} 🧙",
     "instancesChart": {
       "title": "Bu sunucudaki toplam Olay sayısı",
-      "instances": "",
+      "instances": "Örnekler",
       "label": {
         "state": "Durum",
         "active": "Aktif",
-        "stopped": "",
+        "stopped": "Durduruldu",
         "other": "Diğer"
       }
     },
@@ -16,80 +16,80 @@
       "users": "Kullanıcılar",
       "label": {
         "role": "Rol",
-        "user": "",
-        "admin": "",
+        "user": "Kullanıcı",
+        "admin": "Yönetici",
         "other": "Diğer"
       }
     }
   },
   "users": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Kullanıcıları filtrele...",
     "baseUserDialog": {
       "form": {
         "username": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "Kullanıcı adları en az 3 karakter olmalıdır",
+          "max": "Kullanıcı adları en fazla 32 karakter olmalıdır",
+          "regex": "Kullanıcı adları küçük harflerden oluşmalı, bir alfasayısal karakter ile başlamalı, devamında alfasayısal karakterler veya tireler kullanılmalı ve yine bir alfasayısal karakter ile bitmelidir.",
+          "label": "Kullanıcı Adı",
+          "placeholder": "Kullanıcı adı girin",
+          "description": "Kullanıcıyı tanımlayan benzersiz bir kullanıcı adı"
         },
         "email": {
           "label": "Mail Adresi",
-          "placeholder": "",
-          "description": ""
+          "placeholder": "E-posta girin",
+          "description": "Kullanıcının bildirimler ve giriş yapmak için kullanılan e-posta adresi"
         },
         "role": {
           "label": "Rol",
-          "description": "",
-          "user": "",
-          "admin": ""
+          "description": "Kullanıcının rolü. Yöneticiler kullanıcıları ve tüm örnekleri yönetebilir. Kullanıcılar yalnızca kendi örneklerini yönetebilir.",
+          "user": "Kullanıcı",
+          "admin": "Yönetici"
         }
       }
     },
     "addUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Yeni bir kullanıcı ekle",
+      "description": "Bu sunucuya yeni bir kullanıcı ekleyin",
       "form": {
-        "cancel": "",
-        "add": ""
+        "cancel": "İptal",
+        "add": "Kullanıcı Ekle"
       }
     },
     "updateUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Kullanıcıyı güncelle",
+      "description": "Kullanıcının bilgilerini güncelleyin",
       "form": {
-        "cancel": "",
-        "update": ""
+        "cancel": "İptal",
+        "update": "Kullanıcıyı Güncelle"
       }
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Kullanıcı ekleniyor...",
+      "success": "Kullanıcı eklendi!",
+      "error": "Kullanıcı eklenemedi"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Kullanıcı güncelleniyor...",
+      "success": "Kullanıcı güncellendi!",
+      "error": "Kullanıcı güncellenemedi"
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Kullanıcılar kaldırılıyor...",
+      "success": "Kullanıcılar kaldırıldı!",
+      "error": "Kullanıcılar kaldırılamadı"
     },
     "invalidateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Kullanıcılar çıkış yaptırılıyor...",
+      "success": "Kullanıcılar çıkış yaptı!",
+      "error": "Kullanıcıların çıkışı yapılamadı"
     },
     "table": {
-      "username": "",
+      "username": "Kullanıcı Adı",
       "email": "Mail Adresi",
       "role": "Rol",
-      "createdAt": "",
-      "minIssuedAt": "",
-      "actions": ""
+      "createdAt": "Oluşturulma",
+      "minIssuedAt": "Min. Giriş",
+      "actions": "İşlemler"
     }
   }
 }

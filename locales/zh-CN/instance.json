@@ -1,7 +1,7 @@
 {
   "proxy": {
-    "getProxies": "",
-    "addProxies": "",
+    "getProxies": "获取代理服务器",
+    "addProxies": "添加代理服务器",
     "filterPlaceholder": "过滤代理服务器...",
     "listImportToast": {
       "loading": "正在导入代理...",
@@ -39,9 +39,9 @@
     }
   },
   "account": {
-    "getAccounts": "",
-    "addAccounts": "",
-    "generateAccounts": "",
+    "getAccounts": "获取账户",
+    "addAccounts": "添加账户",
+    "generateAccounts": "生成账户",
     "filterPlaceholder": "筛选账户...",
     "listImportToast": {
       "loading": "导入账户中… {{checked}}/{{total}}（成功：{{success}} 失败：{{failed}}）",
@@ -58,20 +58,20 @@
       "error": "导入帐户失败"
     },
     "generate": {
-      "title": "",
-      "description": "",
-      "amount": "",
-      "nameFormat": "",
-      "nameFormatHelp": "",
-      "overrideExisting": "",
-      "submit": "",
-      "generating": "",
-      "progress": "",
-      "success": "",
-      "allFailed": "",
-      "error": "",
-      "invalidAmount": "",
-      "missingPlaceholder": ""
+      "title": "生成离线账户",
+      "description": "使用自定义名称格式生成离线 Java 账户。",
+      "amount": "数量",
+      "nameFormat": "名称格式",
+      "nameFormatHelp": "使用 %d 作为账户编号的占位符（例如，Bot_%d 将变为 Bot_1、Bot_2 等）",
+      "overrideExisting": "覆盖现有的 {{count}} 个账户",
+      "submit": "生成",
+      "generating": "正在生成...",
+      "progress": "正在生成账户... {{checked}}/{{total}}（成功：{{success}} 失败：{{failed}}）",
+      "success": "已生成 {{count}} 个账户！",
+      "allFailed": "未能生成任何账户",
+      "error": "生成账户失败",
+      "invalidAmount": "请输入有效的数量（至少为 1）",
+      "missingPlaceholder": "名称格式必须包含 %d 占位符"
     },
     "import": {
       "javaEdition": "Java 版",

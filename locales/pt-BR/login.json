@@ -5,13 +5,13 @@
     },
     "title": "SoulFire"
   },
-  "newUser": "",
+  "newUser": "Novo no SoulFire? Recomendamos conferir o <a>guia de introdução</a>.",
   "connect": {
     "title": "Conecte-se a um servidor SoulFire",
     "description": "Selecione o tipo de servidor do SoulFire para se conectar.",
     "integrated": {
       "title": "Servidor integrado (local)",
-      "description": ""
+      "description": "Executa um servidor SoulFire no seu computador. A configuração é automática e não requer configuração. (Requer o aplicativo Desktop/Android)"
     },
     "dedicated": {
       "title": "Servidor dedicado (remoto)",
@@ -29,44 +29,44 @@
       "success": "Servidor integrado iniciado",
       "error": "Falha ao iniciar o servidor integrado"
     },
-    "description": "",
+    "description": "O servidor integrado roda localmente no seu PC. Configure os argumentos de inicialização do Java abaixo, se necessário.",
     "form": {
       "jvmArgs": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "Argumentos JVM",
+        "description": "Os argumentos da Java VM do SoulFire. Para usar 4GB de RAM, adicione <bold>-Xmx4G</bold>. O padrão é 25% da sua RAM.",
+        "placeholder": "Seus argumentos JVM aqui"
       },
       "back": "Voltar",
       "start": "Iniciar"
     },
     "mobile": {
-      "description": "",
+      "description": "Para executar o servidor integrado no celular, você precisa completar alguns passos manualmente.",
       "form": {
         "termuxCommand": {
-          "title": "",
-          "description": ""
+          "title": "Comando Termux",
+          "description": "Instale o <a>aplicativo Termux</a> e, em seguida, execute este comando no Termux para instalar o servidor SoulFire. Depois, você precisará executar o comando <copy>generate-token api</copy> para gerar um token. Em seguida, insira o token abaixo."
         },
         "token": {
           "title": "Token",
-          "description": "",
+          "description": "Token para autenticação com o servidor local.",
           "placeholder": "Token Secreto"
         },
         "back": "Voltar",
-        "connect": ""
+        "connect": "Conectar"
       }
     }
   },
   "dedicated": {
     "description": "Coloque o endereço e o token do servidor SoulFire que você deseja se conectar.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Conectando ao servidor...",
+      "success": "Conectado ao servidor",
+      "error": "Falha ao conectar-se ao servidor"
     },
     "form": {
       "address": {
         "title": "Endereço",
-        "description": "",
+        "description": "Endereço do seu servidor SoulFire.",
         "placeholder": "http://localhost:38765"
       },
       "token": {
@@ -75,22 +75,22 @@
         "description": "Token para autenticação com o servidor."
       },
       "email": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "E-mail",
+        "placeholder": "root@soulfiremc.com",
+        "description": "E-mail da sua conta SoulFire."
       },
       "back": "Voltar",
-      "useToken": "",
-      "useEmail": "",
-      "login": ""
+      "useToken": "Usar token",
+      "useEmail": "Usar e-mail",
+      "login": "Entrar"
     }
   },
   "emailCode": {
-    "description": "",
+    "description": "Se você tem uma conta, enviamos um código para <bold>{{email}}</bold>. Insira-o abaixo.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Verificando código...",
+      "success": "Conectado",
+      "error": "Código inválido"
     },
     "back": "Voltar"
   },
@@ -98,6 +98,6 @@
     "version": "Cliente SoulFire {{version}} - {{environment}}",
     "preview": "Procurando uma visualização?",
     "production": "Procurando produção?",
-    "helpTranslate": ""
+    "helpTranslate": "Ajude a traduzir o SoulFire"
   }
 }

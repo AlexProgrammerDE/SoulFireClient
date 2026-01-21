@@ -1,95 +1,95 @@
 {
   "overview": {
-    "welcome": "",
+    "welcome": "Chào mừng trở lại, {{name}} 🧙",
     "instancesChart": {
-      "title": "",
-      "instances": "",
+      "title": "Tổng số phiên bản trên máy chủ này",
+      "instances": "Các phiên bản",
       "label": {
-        "state": "",
-        "active": "",
-        "stopped": "",
-        "other": ""
+        "state": "Trạng thái",
+        "active": "Đang hoạt động",
+        "stopped": "Đã dừng",
+        "other": "Khác"
       }
     },
     "usersChart": {
       "title": "",
-      "users": "",
+      "users": "Người dùng",
       "label": {
-        "role": "",
-        "user": "",
-        "admin": "",
-        "other": ""
+        "role": "Vai trò",
+        "user": "Người dùng",
+        "admin": "Quản trị viên",
+        "other": "Khác"
       }
     }
   },
   "users": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Lọc người dùng...",
     "baseUserDialog": {
       "form": {
         "username": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
+          "min": "Tên người dùng phải có ít nhất 3 ký tự",
+          "max": "Tên người dùng phải có nhiều nhất 32 ký tự",
+          "regex": "Tên người dùng phải viết thường, bắt đầu bằng ký tự chữ hoặc số, theo sau là các ký tự chữ, số hoặc dấu gạch ngang và kết thúc bằng ký tự chữ hoặc số.",
+          "label": "Tên đăng nhập",
+          "placeholder": "Nhập tên người dùng",
           "description": ""
         },
         "email": {
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "label": "Email",
+          "placeholder": "Nhập email",
+          "description": "Địa chỉ email của người dùng dùng để nhận thông báo và đăng nhập"
         },
         "role": {
-          "label": "",
-          "description": "",
-          "user": "",
-          "admin": ""
+          "label": "Vai trò",
+          "description": "Vai trò của người dùng. Quản trị viên có thể quản lý người dùng và tất cả các phiên bản. Người dùng chỉ được phép quản lý phiên bản của riêng mình.",
+          "user": "Người dùng",
+          "admin": "Quản trị viên"
         }
       }
     },
     "addUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Thêm người dùng mới",
+      "description": "Thêm người dùng mới vào máy chủ này",
       "form": {
-        "cancel": "",
-        "add": ""
+        "cancel": "Hủy",
+        "add": "Thêm người dùng"
       }
     },
     "updateUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Cập nhật người dùng",
+      "description": "Cập nhật thông tin người dùng",
       "form": {
-        "cancel": "",
-        "update": ""
+        "cancel": "Hủy",
+        "update": "Cập nhật người dùng"
       }
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang thêm người dùng...",
+      "success": "Đã thêm người dùng!",
+      "error": "Thêm người dùng thất bại"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang cập nhật người dùng...",
+      "success": "Đã cập nhật người dùng!",
+      "error": "Cập nhật người dùng thất bại"
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang xóa người dùng...",
+      "success": "Đã xóa người dùng!",
+      "error": "Xóa người dùng thất bại"
     },
     "invalidateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang đăng xuất người dùng...",
+      "success": "Đã đăng xuất người dùng!",
+      "error": "Đăng xuất người dùng thất bại"
     },
     "table": {
-      "username": "",
-      "email": "",
-      "role": "",
-      "createdAt": "",
-      "minIssuedAt": "",
-      "actions": ""
+      "username": "Tên đăng nhập",
+      "email": "Email",
+      "role": "Vai trò",
+      "createdAt": "Đã tạo",
+      "minIssuedAt": "Lần đăng nhập sớm nhất",
+      "actions": "Hành động"
     }
   }
 }

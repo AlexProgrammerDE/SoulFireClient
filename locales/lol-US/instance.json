@@ -1,99 +1,99 @@
 {
   "proxy": {
-    "getProxies": "",
-    "addProxies": "",
-    "filterPlaceholder": "",
+    "getProxies": "Getz Proxyz!",
+    "addProxies": "Add Proxyz!",
+    "filterPlaceholder": "Findz proxies...",
     "listImportToast": {
-      "loading": "",
-      "success": "",
-      "error": "",
-      "noProxies": ""
+      "loading": "Importin proxyz... waitz plz!",
+      "success": "{{count}} proxies imported! Much wow!",
+      "error": "Proxyz import failz!",
+      "noProxies": "No proxyz here for importin, sry."
     },
     "import": {
-      "proxyType": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "uri": "",
+      "proxyType": "Proxy Typz",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
       "dialog": {
-        "title": "",
-        "description": ""
+        "title": "Import {{type}} proxyz",
+        "description": "Paste ur proxies here, putz one per line kthx."
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Remoovin proxies... hold ur kibble.",
+      "success": "Removed {{count}} proxyz!",
+      "error": "Cudnt remoov proxies, much sads."
     },
     "checkToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Chekin proxyz... {{checked}}/{{total}} (Success: {{success}} Failz: {{failed}})",
+      "success": "Removed {{count}} broked proxyz!",
+      "error": "Proxy check borked! No can haz check."
     },
-    "invalidFormat": "",
+    "invalidFormat": "Proxy not rite format, no cheezburgerz.",
     "table": {
       "type": "Tyep",
       "address": "Addres",
-      "username": "",
-      "password": ""
+      "username": "Usernamez",
+      "password": "Passwurd"
     }
   },
   "account": {
-    "getAccounts": "",
-    "addAccounts": "",
-    "generateAccounts": "",
-    "filterPlaceholder": "",
+    "getAccounts": "Getz Accountz!",
+    "addAccounts": "Add Accountz!",
+    "generateAccounts": "Genurayt Accountz!",
+    "filterPlaceholder": "Findz acountz...",
     "listImportToast": {
-      "loading": "",
-      "allFailed": "",
-      "someFailed": "",
-      "noneFailed": "",
-      "error": "",
-      "noAccounts": ""
+      "loading": "Importin acountz... {{checked}}/{{total}} (Success: {{success}} Failz: {{failed}})",
+      "allFailed": "Oopsies, no acountz gotz importd, kthxbye.",
+      "someFailed": "{{count}} acountz imported, but {{failed}} acountz no werk. Oh noes!",
+      "noneFailed": "{{count}} acountz imported! Yayz!",
+      "error": "Oopsies, accountz no can haz importz",
+      "noAccounts": "No acountz here for importin, sry."
     },
-    "unknownError": "",
+    "unknownError": "I dunno wut went wrongz",
     "deviceCodeImportToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Importin accountz... plz wait (o rly?)",
+      "success": "Acount waz imported! Yamz!",
+      "error": "Import account failz!"
     },
     "generate": {
-      "title": "",
-      "description": "",
-      "amount": "",
-      "nameFormat": "",
-      "nameFormatHelp": "",
-      "overrideExisting": "",
-      "submit": "",
-      "generating": "",
-      "progress": "",
-      "success": "",
-      "allFailed": "",
-      "error": "",
-      "invalidAmount": "",
-      "missingPlaceholder": ""
+      "title": "Genurayt Offline Accountz!",
+      "description": "Genurayt offline Java accountz wif custom name formatz, kthx!",
+      "amount": "Amownt",
+      "nameFormat": "Naym Format",
+      "nameFormatHelp": "Uze %d az placeholder fur account numbur (exampul: Bot_%d becumz Bot_1, Bot_2, etcz)",
+      "overrideExisting": "Ovurrite existin {{count}} accountz",
+      "submit": "Genurayt",
+      "generating": "Genuraytin...",
+      "progress": "Genuraytin accountz... {{checked}}/{{total}} (Succesz: {{success}} Failz: {{failed}})",
+      "success": "Genurayted {{count}} accountz!",
+      "allFailed": "Faild tu genurayt any accountz",
+      "error": "Faild tu genurayt accountz",
+      "invalidAmount": "Plz enterz valid amownt (at leest 1)",
+      "missingPlaceholder": "Naym format haz to haz %d placeholder"
     },
     "import": {
-      "javaEdition": "",
-      "bedrockEdition": "",
-      "offline": "",
-      "microsoftCredentials": "",
-      "microsoftDeviceCode": "",
-      "microsoftRefreshToken": "",
+      "javaEdition": "Java Editshun",
+      "bedrockEdition": "Bedrock Editshun",
+      "offline": "Offlyne",
+      "microsoftCredentials": "Microsoft Passwurdz",
+      "microsoftDeviceCode": "Microsoft Device Codez",
+      "microsoftRefreshToken": "Microsoft Refresh Tokenz",
       "dialog": {
-        "title": "",
-        "description": ""
+        "title": "Import {{type}} acountz",
+        "description": "Paste ur acountz here, one purr line kthx."
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Remoovin acountz... hold on kitteh.",
+      "success": "Removed {{count}} acountz!",
+      "error": "Remoovin acountz failed, no cheezburgerz."
     },
     "table": {
       "type": "Tyep",
-      "profileId": "",
-      "lastKnownName": ""
+      "profileId": "UUID",
+      "lastKnownName": "Usernamez"
     }
   }
 }

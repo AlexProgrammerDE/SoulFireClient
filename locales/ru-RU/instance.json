@@ -41,7 +41,7 @@
   "account": {
     "getAccounts": "Получить аккаунты",
     "addAccounts": "Добавить аккаунты",
-    "generateAccounts": "",
+    "generateAccounts": "Сгенерировать аккаунты",
     "filterPlaceholder": "Фильтр учетных записей...",
     "listImportToast": {
       "loading": "Импорт аккаунтов... {{checked}}/{{total}} (Успешно: {{success}} не удалось: {{failed}})",
@@ -58,20 +58,20 @@
       "error": "Не удалось импортировать аккаунт"
     },
     "generate": {
-      "title": "",
-      "description": "",
-      "amount": "",
-      "nameFormat": "",
-      "nameFormatHelp": "",
-      "overrideExisting": "",
-      "submit": "",
-      "generating": "",
-      "progress": "",
-      "success": "",
-      "allFailed": "",
-      "error": "",
-      "invalidAmount": "",
-      "missingPlaceholder": ""
+      "title": "Сгенерировать оффлайн-аккаунты",
+      "description": "Сгенерируйте оффлайн Java-аккаунты с пользовательским шаблоном имени.",
+      "amount": "Количество",
+      "nameFormat": "Формат имени",
+      "nameFormatHelp": "Используйте %d как заполнитель для номера аккаунта (например, Bot_%d станет Bot_1, Bot_2 и т. д.)",
+      "overrideExisting": "Перезаписать существующие {{count}} аккаунтов",
+      "submit": "Сгенерировать",
+      "generating": "Генерация...",
+      "progress": "Генерация аккаунтов... {{checked}}/{{total}} (Успешно: {{success}} Не удалось: {{failed}})",
+      "success": "Сгенерировано {{count}} аккаунтов!",
+      "allFailed": "Не удалось сгенерировать ни одного аккаунта",
+      "error": "Не удалось сгенерировать аккаунты",
+      "invalidAmount": "Пожалуйста, введите корректное количество (минимум 1)",
+      "missingPlaceholder": "В формате имени должен быть заполнитель %d"
     },
     "import": {
       "javaEdition": "Java Edition",

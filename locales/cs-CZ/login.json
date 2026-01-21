@@ -1,103 +1,103 @@
 {
   "header": {
     "image": {
-      "alt": ""
+      "alt": "Logo SoulFire"
     },
-    "title": ""
+    "title": "SoulFire"
   },
-  "newUser": "",
+  "newUser": "Jste v SoulFire noví? Doporučujeme podívat se na <a>průvodce začátkem</a>.",
   "connect": {
-    "title": "",
-    "description": "",
+    "title": "Připojit se k serveru SoulFire",
+    "description": "Vyberte, ke kterému typu serveru SoulFire se chcete připojit.",
     "integrated": {
-      "title": "",
-      "description": ""
+      "title": "Integrovaný server (lokální)",
+      "description": "Spustí server SoulFire na vašem počítači. Nastavení je automatické a nevyžaduje žádnou konfiguraci. (Vyžaduje aplikaci pro Desktop/Android)"
     },
     "dedicated": {
-      "title": "",
-      "description": ""
+      "title": "Dedikovaný server (vzdálený)",
+      "description": "Připojí se ke vzdálené instanci serveru SoulFire. Je potřeba zadat adresu a token serveru."
     },
     "demo": {
-      "title": "",
-      "description": ""
+      "title": "Demo server",
+      "description": "Simuluje virtuální server s demo daty. Tento server je pouze pro čtení a nelze na něm provádět žádné změny."
     }
   },
   "integrated": {
-    "preparing": "",
+    "preparing": "Připravuji spuštění integrovaného serveru...",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Spouštění integrovaného serveru...",
+      "success": "Integrovaný server spuštěn",
+      "error": "Nepodařilo se spustit integrovaný server"
     },
-    "description": "",
+    "description": "Integrovaný server běží lokálně na vašem PC. Pokud je třeba, nastavte níže argumenty pro spuštění Javy.",
     "form": {
       "jvmArgs": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "JVM argumenty",
+        "description": "Argumenty pro Java VM SoulFire. Pro použití 4GB RAM přidejte <bold>-Xmx4G</bold>. Výchozí hodnota je 25 % vaší RAM.",
+        "placeholder": "Vaše JVM argumenty zde"
       },
-      "back": "",
-      "start": ""
+      "back": "Zpět",
+      "start": "Spustit"
     },
     "mobile": {
-      "description": "",
+      "description": "Pro spuštění integrovaného serveru na mobilu musíte provést několik ručních kroků.",
       "form": {
         "termuxCommand": {
-          "title": "",
-          "description": ""
+          "title": "Příkaz Termux",
+          "description": "Nainstalujte si <a>aplikaci Termux</a>, poté spusťte tento příkaz v Termuxu pro instalaci serveru SoulFire. Následně musíte spustit příkaz <copy>generate-token api</copy> pro vygenerování tokenu. Poté zadejte vygenerovaný token níže."
         },
         "token": {
-          "title": "",
-          "description": "",
-          "placeholder": ""
+          "title": "Token",
+          "description": "Token pro ověření u místního serveru.",
+          "placeholder": "Tajný token"
         },
-        "back": "",
-        "connect": ""
+        "back": "Zpět",
+        "connect": "Připojit"
       }
     }
   },
   "dedicated": {
-    "description": "",
+    "description": "Zadejte adresu a token serveru SoulFire, ke kterému se chcete připojit.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Připojování k serveru...",
+      "success": "Připojeno k serveru",
+      "error": "Nepodařilo se připojit k serveru"
     },
     "form": {
       "address": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "Adresa",
+        "description": "Adresa vašeho serveru SoulFire.",
+        "placeholder": "http://localhost:38765"
       },
       "token": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "Token",
+        "placeholder": "Tajný token",
+        "description": "Token pro ověření u serveru."
       },
       "email": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "Email",
+        "placeholder": "root@soulfiremc.com",
+        "description": "Email vašeho účtu SoulFire."
       },
-      "back": "",
-      "useToken": "",
-      "useEmail": "",
-      "login": ""
+      "back": "Zpět",
+      "useToken": "Použít token",
+      "useEmail": "Použít email",
+      "login": "Přihlásit se"
     }
   },
   "emailCode": {
-    "description": "",
+    "description": "Pokud máte účet, poslali jsme kód na <bold>{{email}}</bold>. Zadejte jej níže.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Kontrola kódu...",
+      "success": "Přihlášeno",
+      "error": "Kód je neplatný"
     },
-    "back": ""
+    "back": "Zpět"
   },
   "footer": {
-    "version": "",
-    "preview": "",
-    "production": "",
-    "helpTranslate": ""
+    "version": "SoulFire klient {{version}} – {{environment}}",
+    "preview": "Hledáte náhled?",
+    "production": "Hledáte produkci?",
+    "helpTranslate": "Přeložit SoulFire"
   }
 }

@@ -1,425 +1,425 @@
 {
-  "locale": "",
-  "cancel": "",
+  "locale": "Lokallaşdırma",
+  "cancel": "Ləğv et",
   "error": {
-    "noAddressOrToken": "",
+    "noAddressOrToken": "Server ünvanı və ya token tapılmadı",
     "page": {
-      "title": "",
-      "description": "",
-      "logOut": "",
-      "reloadPage": ""
+      "title": "Xəta",
+      "description": "Səhifə yüklənərkən xəta baş verdi. Daha ətraflı məlumat konsolda görünəcək.",
+      "logOut": "Çıxış",
+      "reloadPage": "Səhifəni yenilə"
     },
-    "connectionFailed": ""
+    "connectionFailed": "SoulFire serveri ilə əlaqə alınmadı."
   },
   "notFound": {
     "page": {
-      "title": "",
-      "description": "",
-      "logOut": "",
-      "reloadPage": ""
+      "title": "Tapılmadı",
+      "description": "Bu ünvanda səhifə tapılmadı",
+      "logOut": "Çıxış",
+      "reloadPage": "Səhifəni yenilə"
     }
   },
   "pending": {
-    "connecting": ""
+    "connecting": "Bağlanılır..."
   },
   "dialog": {
     "about": {
-      "title": "",
-      "description": "",
-      "type": "",
-      "value": "",
+      "title": "SoulFire haqqında",
+      "description": "SoulFire müştərisinin {{version}} versiyasını işlədirsiniz.",
+      "type": "Növ",
+      "value": "Dəyər",
       "fields": {
-        "operatingSystem": "",
-        "platform": "",
-        "locale": "",
-        "architecture": "",
-        "environment": "",
-        "browser": ""
+        "operatingSystem": "Əməliyyat Sistemi",
+        "platform": "Platforma",
+        "locale": "Lokallaşdırma",
+        "architecture": "Arxitektura",
+        "environment": "Mühit",
+        "browser": "Brauzer"
       },
-      "close": ""
+      "close": "Bağla"
     },
     "createInstance": {
-      "title": "",
-      "description": "",
+      "title": "Yeni instansiya yaradın",
+      "description": "İnstanları fərqləndirmək üçün onlara dost adlar verməlisiniz. İstədiyiniz adı yaza bilərsiniz, məsələn, \"Mənim Minecraft Botum\".",
       "form": {
         "friendlyName": {
-          "label": "",
-          "placeholder": "",
-          "description": "",
-          "min": "",
-          "max": "",
-          "regex": ""
+          "label": "Dost adı",
+          "placeholder": "Mənim Minecraft Botum",
+          "description": "Bu instansiyaya vermək istədiyiniz ad.",
+          "min": "Dost adı ən azı 3 simvol uzunluğunda olmalıdır.",
+          "max": "Dost adı maksimum 32 simvol olmalıdır.",
+          "regex": "Dost ad yalnız hərflərdən, rəqəmlərdən və boşluqlardan ibarət olmalıdır"
         },
-        "cancel": "",
-        "create": ""
+        "cancel": "Ləğv et",
+        "create": "Yarat"
       },
       "createToast": {
-        "loading": "",
-        "success": "",
-        "error": ""
+        "loading": "İnstan yaradılır...",
+        "success": "İnstan uğurla yaradıldı",
+        "error": "İnstanı yaratmaq mümkün olmadı"
       }
     },
     "import": {
       "main": {
-        "fromFile": "",
-        "fromUrl": "",
-        "firstClipboardItem": "",
-        "fromClipboard": "",
+        "fromFile": "Fayldan",
+        "fromUrl": "URL-dən",
+        "firstClipboardItem": "Arxivdə bir neçə element var idi, yalnız birincisi istifadə olunur.",
+        "fromClipboard": "Arxivdən",
         "textarea": {
-          "placeholder": "",
-          "submit": ""
+          "placeholder": "Mətni bura yazın...",
+          "submit": "Mətndən yüklə"
         }
       },
       "url": {
-        "description": "",
+        "description": "URL-dən yükləyərkən SoulFire serveri hədəf serverə GET sorğusu göndərəcək və cavabı data kimi istifadə edəcək.",
         "form": {
           "url": {
-            "placeholder": "",
-            "empty": ""
+            "placeholder": "URL-i bura əlavə edin...",
+            "empty": "Zəhmət olmasa düzgün URL daxil edin"
           }
         },
-        "submit": "",
+        "submit": "URL-dən yüklə",
         "toast": {
-          "loading": "",
-          "success": "",
-          "error": ""
+          "loading": "Məlumatlar yüklənir...",
+          "success": "Məlumatlar yükləndi!",
+          "error": "Məlumatları yükləmək alınmadı"
         }
       }
     }
   },
   "commandInput": {
-    "placeholder": ""
+    "placeholder": "Əmr daxil edin ('help' yazın siyahı üçün)"
   },
   "controls": {
-    "start": "",
-    "resume": "",
-    "pause": "",
-    "stop": "",
+    "start": "Başla",
+    "resume": "Davam et",
+    "pause": "Fasilə",
+    "stop": "Dayandır",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Hücum başlayır...",
+      "success": "Hücum uğurla başladı",
+      "error": "Hücumu başlatmaq alınmadı"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Hücum davam etdirilir...",
+      "success": "Hücum uğurla davam etdirildi",
+      "error": "Hücumun davamını bərpa etmək mümkün olmadı"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Hücum dayandırılır...",
+      "success": "Hücum uğurla dayandırıldı",
+      "error": "Hücumu dayandırmaq mümkün olmadı"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Hücum dayandırılır...",
+      "success": "Hücum uğurla dayandırıldı",
+      "error": "Hücumu dayandırmaq alınmadı"
     },
     "accountWarning": {
-      "noAccountsTitle": "",
-      "noAccountsDescription": "",
-      "notEnoughTitle": "",
-      "notEnoughDescription": "",
-      "hint": "",
-      "continueWithExisting": "",
-      "generateAccounts": ""
+      "noAccountsTitle": "Heç bir hesab qurulmayıb",
+      "noAccountsDescription": "Hücum başlatmazdan əvvəl hesabları əlavə etməlisiniz. Sizin {{required}} bot tələbiniz var.",
+      "notEnoughTitle": "Kifayət qədər hesab yoxdur",
+      "notEnoughDescription": "{{required}} bot istədiniz, amma yalnız {{available}} hesab əlavə olunub.",
+      "hint": "Offline hesablar yarada və ya Hesab Ayarları səhifəsindən hesablar əlavə edə bilərsiniz.",
+      "continueWithExisting": "{{count}} hesabla davam et",
+      "generateAccounts": "Hesablar yarat"
     }
   },
   "icon": {
-    "invalidName": ""
+    "invalidName": "Yanlış ikon adı: {{name}}"
   },
   "dataTable": {
-    "noResults": "",
-    "rowsSelected": "",
-    "rowsPerPage": "",
-    "currentPage": "",
-    "goFirst": "",
-    "goPrevious": "",
-    "goNext": "",
-    "goLast": "",
-    "selectAll": "",
-    "selectRow": ""
+    "noResults": "Nəticə yoxdur.",
+    "rowsSelected": "{amount, plural, one {# / # sətir seçildi} other {# / # sətir seçildi}}",
+    "rowsPerPage": "Səhifədəki sətir sayı",
+    "currentPage": "Səhifə {{page}} / {{total}}",
+    "goFirst": "İlk səhifəyə keç",
+    "goPrevious": "Əvvəlki səhifəyə keç",
+    "goNext": "Növbəti səhifəyə keç",
+    "goLast": "Son səhifəyə keç",
+    "selectAll": "Hamısını seç",
+    "selectRow": "Sətri seç"
   },
   "pluginCard": {
-    "version": "",
-    "author": "",
-    "license": "",
-    "website": ""
+    "version": "Versiya: {{version}}",
+    "author": "Müəllif: {{author}}",
+    "license": "Lisenziya: {{license}}",
+    "website": "Vebsayt"
   },
   "settingsPage": {
-    "namespacesNotFound": "",
+    "namespacesNotFound": "Tənzimləmə bölmələri tapılmadı",
     "stringList": {
-      "placeholder": "",
-      "add": "",
-      "remove": ""
+      "placeholder": "Yeni daxil əlavə edin...",
+      "add": "Əlavə et",
+      "remove": "Sil"
     },
     "invalidNumberToast": {
-      "title": "",
-      "description": ""
+      "title": "Yanlış say!",
+      "description": "Dəyər {{min}} və {{max}} arasında olmalıdır"
     }
   },
   "terminal": {
-    "noLogs": "",
-    "demo-1": "",
-    "demo-2": "",
-    "demo-3": "",
-    "demo-4": ""
+    "noLogs": "🧙 Görünür göstərmək üçün heç bir log yoxdur; bir neçə əmr icra etməyə çalışın!",
+    "demo-1": "Demo rejiminə xoş gəldiniz! 🧪",
+    "demo-2": "Bu, SoulFire-in yalnız oxumaq üçün nəzərdə tutulmuş instansiyasıdır",
+    "demo-3": "SoulFire-i qurmaq qərarına gəlməzdən əvvəl bütün menyu və funksiyalara baxın :D",
+    "demo-4": "Bizim Discord serverə qoşulmaqdan çəkinməyin: https://soulfiremc.com/discord"
   },
   "uiBreadcrumb": {
-    "more": ""
+    "more": "Daha çox"
   },
   "uiDialog": {
-    "close": ""
+    "close": "Bağla"
   },
   "uiSheet": {
-    "close": ""
+    "close": "Bağla"
   },
   "uiSidebar": {
-    "toggle": ""
+    "toggle": "Yan paneli aç/bağla"
   },
   "castMenu": {
-    "title": "",
-    "disconnected": "",
-    "alreadyConnected": "",
+    "title": "Yayımla",
+    "disconnected": "{{device}} ilə əlaqə kəsildi",
+    "alreadyConnected": "Artıq {{device}} ilə bağlıdır",
     "connectToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "{{device}}-ə bağlanılır...",
+      "success": "{{device}}-ə qoşuldu",
+      "error": "{{device}}-ə qoşulmaq mümkün olmadı"
     },
-    "noDevices": "",
-    "broadcastLabel": "",
+    "noDevices": "Cihaz tapılmadı",
+    "broadcastLabel": "Yayım testi",
     "broadcastToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Mesaj yayılır...",
+      "success": "Mesaj yayıldı!",
+      "error": "Mesajı yaymaq mümkün olmadı"
     }
   },
   "instanceSidebar": {
-    "readDocumentation": "",
-    "backToDashboard": "",
+    "readDocumentation": "Sənədləri oxu",
+    "backToDashboard": "Panelə geri dön",
     "deleteToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Instansiya silinir...",
+      "success": "Instansiya silindi",
+      "error": "Instansiyanı silmək mümkün olmadı"
     },
-    "instancesGroup": "",
-    "createInstance": "",
+    "instancesGroup": "Instansiyalar",
+    "createInstance": "Instansiya yarat",
     "loadProfileToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Profil yüklənir...",
+      "success": "Profil yükləndi",
+      "error": "Profil yüklənmədi"
     },
-    "loadProfile": "",
-    "loadFromFile": "",
-    "profileSaved": "",
-    "saveProfile": "",
-    "deleteInstance": "",
-    "controlsGroup": "",
-    "overview": "",
-    "terminal": "",
-    "audit-log": "",
-    "settingsGroup": "",
-    "pluginsGroup": "",
-    "pluginSettings": "",
-    "botSettings": "",
-    "accountSettings": "",
-    "metaSettings": "",
-    "proxySettings": "",
-    "aiSettings": "",
-    "pathfindingSettings": "",
-    "discoverPlugins": "",
-    "instanceScripts": ""
+    "loadProfile": "Profil yüklə",
+    "loadFromFile": "Fayldan yüklə",
+    "profileSaved": "Profil yadda saxlanıldı",
+    "saveProfile": "Profil yadda saxla",
+    "deleteInstance": "Instansiyanı sil",
+    "controlsGroup": "İdarəetmə",
+    "overview": "İcmal",
+    "terminal": "Terminal",
+    "audit-log": "Audit Log",
+    "settingsGroup": "Ayarlar",
+    "pluginsGroup": "Pluginlər",
+    "pluginSettings": "Plugin ayarları",
+    "botSettings": "Bot ayarları",
+    "accountSettings": "Hesab ayarları",
+    "metaSettings": "İnstan ayarları",
+    "proxySettings": "Proxy ayarları",
+    "aiSettings": "Süni intellekt ayarları",
+    "pathfindingSettings": "Yol tapma ayarları",
+    "discoverPlugins": "Pluginlər",
+    "instanceScripts": "Skriptlər"
   },
   "userSidebar": {
-    "readDocumentation": "",
-    "userGroup": "",
-    "instances": "",
-    "access": "",
-    "createInstance": "",
-    "settings": "",
-    "adminGroup": "",
-    "adminOverview": "",
-    "adminLogs": "",
-    "adminTerminal": "",
-    "users": "",
-    "adminScripts": "",
-    "serverSettings": "",
-    "devSettings": "",
+    "readDocumentation": "Sənədləri oxu",
+    "userGroup": "İstifadəçi",
+    "instances": "Instansiyalar",
+    "access": "Giriş",
+    "createInstance": "Instansiya yarat",
+    "settings": "Ayarlar",
+    "adminGroup": "Admin",
+    "adminOverview": "İcmal",
+    "adminLogs": "Jurnalları",
+    "adminTerminal": "Terminal",
+    "users": "İstifadəçilər",
+    "adminScripts": "Skriptlər",
+    "serverSettings": "Server ayarları",
+    "devSettings": "Tərtibatçı ayarları",
     "theme": {
-      "title": "",
-      "system": "",
-      "light": "",
-      "dark": ""
+      "title": "Tema",
+      "system": "Sistem",
+      "light": "Aydın",
+      "dark": "Qaranlıq"
     },
     "terminal": {
-      "title": ""
+      "title": "Terminal"
     },
-    "configDir": "",
-    "dataDir": "",
-    "about": "",
-    "logOut": "",
+    "configDir": "Qovluq konfiqurasiyası",
+    "dataDir": "Məlumat qovluğu",
+    "about": "Haqqında",
+    "logOut": "Çıxış",
     "logOutToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Çıxılır...",
+      "success": "Çıxış edildi",
+      "error": "Çıxış etmək mümkün olmadı"
     },
-    "exit": "",
-    "stopImpersonating": "",
-    "helpTranslate": ""
+    "exit": "Çıxış",
+    "stopImpersonating": "İmzası dayandır",
+    "helpTranslate": "SoulFire tərcümə et"
   },
   "sidebar": {
-    "documentation": "",
-    "buyMeACoffee": "",
-    "discord": ""
+    "documentation": "Sənədlər",
+    "buyMeACoffee": "Bir kubok al",
+    "discord": "Discord"
   },
   "breadcrumbs": {
-    "admin": "",
-    "settings": "",
-    "controls": "",
-    "plugins": ""
+    "admin": "Admin",
+    "settings": "Ayarlar",
+    "controls": "İdarəetmə",
+    "plugins": "Pluginlər"
   },
-  "noInstancesFound": "",
+  "noInstancesFound": "Instansiya tapılmadı",
   "pageName": {
-    "terminal": "",
-    "logs": "",
-    "audit-log": "",
-    "instances": "",
-    "access": "",
-    "settings": "",
-    "proxySettings": "",
-    "overview": "",
-    "users": "",
-    "accountSettings": "",
-    "metaSettings": "",
-    "discoverPlugins": "",
-    "adminScripts": "",
-    "instanceScripts": ""
+    "terminal": "Terminal",
+    "logs": "Jurnalları",
+    "audit-log": "Audit Log",
+    "instances": "Instansiyalar",
+    "access": "Giriş",
+    "settings": "Ayarlar",
+    "proxySettings": "Proxy ayarları",
+    "overview": "İcmal",
+    "users": "İstifadəçilər",
+    "accountSettings": "Hesab ayarları",
+    "metaSettings": "İnstan ayarları",
+    "discoverPlugins": "Pluginlər",
+    "adminScripts": "Skriptlər",
+    "instanceScripts": "Skriptlər"
   },
   "access": {
     "webdav": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "WebDAV Girişi",
+      "description": "SoulFire sizə instansiya, skript və digər fayllara WebDAV protokolu vasitəsilə çıxış imkanı verir.",
+      "publicAddress": "İctimai WebDAV ünvanı",
+      "personalToken": "Şəxsi WebDAV Token",
+      "securityWarning": "Şəxsi WebDAV Tokeniniz çox vacibdir. Onu heç kimlə paylaşmayın. Fayllarınıza çıxış etdikdə sizi identifikasiya etmək üçün istifadə olunur. Qoşulanda WebDAV şifrəniz kimi bundan istifadə edin. İstifadəçi adı tələb olunarsa, istədiyinizi yaza bilərsiniz (məs. 'soulfire').",
+      "addressDescription": "Fayllarınıza çıxış üçün istifadə etməli olduğunuz ünvandır. Bəzən http(s):// əvəzinə dav:// və ya davs:// istifadə etməli olursunuz."
     },
     "api": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "API Girişi",
+      "description": "SoulFire-in gRPC HTTP API-si sizə instansiyalarınızı proqramlaşdırılmış şəkildə web sorğularla idarə etməyə imkan verir.",
+      "publicAddress": "İctimai API ünvanı",
+      "personalToken": "Şəxsi API Token",
+      "securityWarning": "Şəxsi API Tokeniniz çox vacibdir. Onu heç kimlə paylaşmayın. API-yə çıxış edərkən sizi identifikasiya etmək üçün istifadə olunur.",
+      "addressDescription": "API-yə çıxış əldə etmək üçün istifadə etməli olduğunuz ünvandır."
     },
     "token": {
-      "generate": "",
-      "placeholder": "",
-      "generating": "",
-      "success": "",
-      "error": "",
-      "copy": ""
+      "generate": "Token yarat",
+      "placeholder": "Aşağıdakı 'Token yarat' düyməsini klikləyin",
+      "generating": "Token yaradılır...",
+      "success": "Token uğurla yaradıldı",
+      "error": "Token yaratmaq olmadı",
+      "copy": "Tokeni kopyala"
     },
     "address": {
-      "copy": ""
+      "copy": "Ünvani kopyala"
     },
-    "documentation": "",
-    "howToConnect": ""
+    "documentation": "Sənədlər",
+    "howToConnect": "Necə qoşulmalı"
   },
-  "uploadToMcLogs": "",
+  "uploadToMcLogs": "mclo.gs-ə yüklə",
   "mcLogsUpload": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "mclo.gs-ə yüklənir...",
+    "success": "mclo.gs-ə yükləndi! Burada baxın: {{url}}",
+    "error": "mclo.gs-ə yükləmək mümkün olmadı"
   },
-  "copyToClipboard": "",
+  "copyToClipboard": "Panoya kopyala",
   "clipboardCopy": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Panoya kopyalanır...",
+    "success": "\"{{content}}\" panoya kopyalandı",
+    "error": "Panoya kopyalama uğursuz oldu"
   },
   "instanceState": {
-    "starting": "",
-    "running": "",
-    "paused": "",
-    "stopping": "",
-    "stopped": ""
+    "starting": "Başlanır",
+    "running": "İşləyir",
+    "paused": "Dayandırılıb",
+    "stopping": "Dayandırılır",
+    "stopped": "Dayandırılıb"
   },
   "auditLog": {
-    "filterPlaceholder": "",
-    "user": "",
-    "action": "",
-    "timestamp": "",
-    "executedCommand": "",
-    "startedAttack": "",
-    "resumedAttack": "",
-    "pausedAttack": "",
-    "stoppedAttack": ""
+    "filterPlaceholder": "Audit loglarını filtr edin...",
+    "user": "İstifadəçi",
+    "action": "Əməliyyat",
+    "timestamp": "Zaman nöqtəsi",
+    "executedCommand": "İcra edilmiş əmr: {{data}}",
+    "startedAttack": "Hücum başladıldı",
+    "resumedAttack": "Hücum davam etdirildi",
+    "pausedAttack": "Hücum dayandırıldı",
+    "stoppedAttack": "Hücum dayandırılıb"
   },
-  "pickADate": "",
+  "pickADate": "Tarix seçin",
   "scripts": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Skript üzrə filtreləyin...",
     "baseScriptDialog": {
       "form": {
         "scriptName": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "Skript adı ən azı 3 simvol olmalıdır",
+          "max": "Skript adı ən çox 32 simvol olmalıdır",
+          "regex": "Skript adı kiçik hərflə başlamalıdır, ilk hərf və növbəti hərflər və ya tire alfanumerik simvol olmalıdır, sonu da alfanumerik simvolla bitməlidir.",
+          "label": "Adı",
+          "placeholder": "Mənim Skriptim",
+          "description": "Skriptin adı."
         },
         "elevatedPermissions": {
-          "label": "",
-          "description": ""
+          "label": "Yüksəldilmiş İcazələr",
+          "description": "Skript yüksək hüquqlarla işləsinmi. Yalnız adminlər bu seçimi aktiv edə bilər."
         }
       }
     },
     "addScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Yeni skript əlavə et",
+      "description": "Skriptlər SoulFire serverində işləyən kiçik proqramlardır. Onlar tapşırıqların avtomatlaşdırılması, fərdi davranışların yaradılması və daha çox üçün istifadə oluna bilər.",
       "form": {
-        "cancel": "",
-        "add": ""
+        "cancel": "Ləğv et",
+        "add": "Əlavə et"
       }
     },
     "updateScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Skripti yenilə",
+      "description": "Skriptin məlumatını yeniləyin.",
       "form": {
-        "cancel": "",
-        "update": ""
+        "cancel": "Ləğv et",
+        "update": "Yenilə"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Skriptlər silinir...",
+      "success": "Skriptlər silindi!",
+      "error": "Skriptləri silmək mümkün olmadı"
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Skript əlavə olunur...",
+      "success": "Skript əlavə olundu!",
+      "error": "Skript əlavə etmək mümkün olmadı"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Skript yenilənir...",
+      "success": "Skript yeniləndi!",
+      "error": "Skripti yeniləmək mümkün olmadı"
     },
     "restartToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Skript yenidən başladılır...",
+      "success": "Skript yenidən başladıldı!",
+      "error": "Skripti yenidən başlatmaq mümkün olmadı"
     },
     "table": {
-      "type": "",
-      "scriptName": "",
-      "language": "",
-      "elevatedPermissions": "",
-      "createdAt": "",
-      "actions": ""
+      "type": "Növ",
+      "scriptName": "Adı",
+      "language": "Dil",
+      "elevatedPermissions": "Yüksəldilmiş İcazələr",
+      "createdAt": "Yaradılıb",
+      "actions": "Əməliyyatlar"
     },
-    "globalScript": "",
-    "instanceScript": ""
+    "globalScript": "Qlobal",
+    "instanceScript": "Instansiya"
   }
 }

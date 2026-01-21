@@ -47,8 +47,8 @@
           "placeholder": "我的 Minecraft 机器人",
           "description": "您想要赋予此实例的名称",
           "min": "名称至少需要3个字符",
-          "max": "",
-          "regex": ""
+          "max": "名称最多允许32个字符",
+          "regex": "名称只能包含字母、数字和空格"
         },
         "cancel": "取消",
         "create": "创建"
@@ -116,13 +116,13 @@
       "error": "停止攻击失败"
     },
     "accountWarning": {
-      "noAccountsTitle": "",
-      "noAccountsDescription": "",
-      "notEnoughTitle": "",
-      "notEnoughDescription": "",
-      "hint": "",
-      "continueWithExisting": "",
-      "generateAccounts": ""
+      "noAccountsTitle": "未配置账户",
+      "noAccountsDescription": "在开始攻击前，您需要先导入账户。您请求了 {{required}} 个机器人。",
+      "notEnoughTitle": "账户数量不足",
+      "notEnoughDescription": "您请求了 {{required}} 个机器人，但只导入了 {{available}} 个账户。",
+      "hint": "您可以生成离线账户或在账户设置页面导入账户。",
+      "continueWithExisting": "继续使用 {{count}} 个账户",
+      "generateAccounts": "生成账户"
     }
   },
   "icon": {
@@ -223,26 +223,26 @@
     "pluginSettings": "插件设置",
     "botSettings": "机器人设置",
     "accountSettings": "帐户设置",
-    "metaSettings": "",
+    "metaSettings": "实例设置",
     "proxySettings": "代理设置",
     "aiSettings": "AI设置",
-    "pathfindingSettings": "",
+    "pathfindingSettings": "路径寻路设置",
     "discoverPlugins": "插件",
-    "instanceScripts": ""
+    "instanceScripts": "脚本"
   },
   "userSidebar": {
     "readDocumentation": "阅读文档",
     "userGroup": "用户",
     "instances": "实例",
-    "access": "",
+    "access": "访问权限",
     "createInstance": "创建实例",
     "settings": "设置",
     "adminGroup": "管理员",
     "adminOverview": "概况",
-    "adminLogs": "",
+    "adminLogs": "日志",
     "adminTerminal": "终端",
     "users": "用户",
-    "adminScripts": "",
+    "adminScripts": "脚本",
     "serverSettings": "服务器设置",
     "devSettings": "开发者设置",
     "theme": {
@@ -265,12 +265,12 @@
     },
     "exit": "退出",
     "stopImpersonating": "",
-    "helpTranslate": ""
+    "helpTranslate": "协助翻译 SoulFire"
   },
   "sidebar": {
     "documentation": "文档",
     "buyMeACoffee": "捐赠",
-    "discord": ""
+    "discord": "Discord"
   },
   "breadcrumbs": {
     "admin": "管理员",
@@ -281,62 +281,62 @@
   "noInstancesFound": "未找到实例",
   "pageName": {
     "terminal": "终端",
-    "logs": "",
+    "logs": "日志",
     "audit-log": "审计日志",
     "instances": "实例",
-    "access": "",
+    "access": "访问权限",
     "settings": "设置",
     "proxySettings": "代理设置",
     "overview": "概况",
     "users": "用户",
     "accountSettings": "帐户设置",
-    "metaSettings": "",
+    "metaSettings": "实例设置",
     "discoverPlugins": "插件",
-    "adminScripts": "",
-    "instanceScripts": ""
+    "adminScripts": "脚本",
+    "instanceScripts": "脚本"
   },
   "access": {
     "webdav": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "WebDAV 访问",
+      "description": "SoulFire 允许你通过 WebDAV 协议访问实例、脚本和其它文件。",
+      "publicAddress": "公共 WebDAV 地址",
+      "personalToken": "个人 WebDAV Token",
+      "securityWarning": "你的个人 WebDAV Token 非常重要。请勿与他人分享。它用于你访问文件时的身份验证。在连接时将其用作 WebDAV 密码。不需要用户名，如果系统要求输入，可以填写任意内容（如 \"soulfire\"）。",
+      "addressDescription": "这是你访问文件需要使用的地址。有时你需要将 http(s):// 替换为 dav:// 或 davs://。"
     },
     "api": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "API 访问",
+      "description": "SoulFire 的 gRPC HTTP API 允许你通过网页请求以编程方式与实例交互。",
+      "publicAddress": "公共 API 地址",
+      "personalToken": "个人 API Token",
+      "securityWarning": "你的个人 API Token 非常重要。请勿与他人分享。它用于你访问 API 时的身份验证。",
+      "addressDescription": "这是你访问 API 需要使用的地址。"
     },
     "token": {
-      "generate": "",
-      "placeholder": "",
-      "generating": "",
-      "success": "",
-      "error": "",
-      "copy": ""
+      "generate": "生成 Token",
+      "placeholder": "点击下方“生成 Token”",
+      "generating": "正在生成 token...",
+      "success": "令牌生成成功",
+      "error": "生成 token 失败",
+      "copy": "复制 Token"
     },
     "address": {
-      "copy": ""
+      "copy": "复制地址"
     },
     "documentation": "文档",
-    "howToConnect": ""
+    "howToConnect": "如何连接"
   },
-  "uploadToMcLogs": "",
+  "uploadToMcLogs": "上传到 mclo.gs",
   "mcLogsUpload": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "正在上传到 mclo.gs...",
+    "success": "已上传到 mclo.gs！在此查看：{{url}}",
+    "error": "上传到 mclo.gs 失败"
   },
-  "copyToClipboard": "",
+  "copyToClipboard": "复制到剪贴板",
   "clipboardCopy": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "正在复制到剪贴板...",
+    "success": "已将“{{content}}”复制到剪贴板",
+    "error": "复制到剪贴板失败"
   },
   "instanceState": {
     "starting": "正在启动",
@@ -346,38 +346,38 @@
     "stopped": "已停止"
   },
   "auditLog": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "筛选审计日志...",
     "user": "用户",
-    "action": "",
+    "action": "操作",
     "timestamp": "",
-    "executedCommand": "",
-    "startedAttack": "",
-    "resumedAttack": "",
-    "pausedAttack": "",
-    "stoppedAttack": ""
+    "executedCommand": "执行的命令：{{data}}",
+    "startedAttack": "发起了攻击",
+    "resumedAttack": "恢复了攻击",
+    "pausedAttack": "暂停了攻击",
+    "stoppedAttack": "停止了攻击"
   },
   "pickADate": "选日期",
   "scripts": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "筛选脚本...",
     "baseScriptDialog": {
       "form": {
         "scriptName": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "脚本名称至少需要3个字符",
+          "max": "脚本名称最多允许32个字符",
+          "regex": "脚本名称必须为小写，必须以字母或数字开头，其余只能包含字母、数字或短横线，并且以字母或数字结尾。",
+          "label": "名称",
+          "placeholder": "我的脚本",
+          "description": "脚本的名称。"
         },
         "elevatedPermissions": {
-          "label": "",
-          "description": ""
+          "label": "高级权限",
+          "description": "是否让脚本以高级权限运行。只有管理员可以启用此选项。"
         }
       }
     },
     "addScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "添加新脚本",
+      "description": "脚本是在 SoulFire 服务器上运行的小型程序。它们可用于自动化任务、创建自定义行为等。",
       "form": {
         "cancel": "取消",
         "add": "添加"
@@ -385,41 +385,41 @@
     },
     "updateScriptDialog": {
       "title": "更新脚本",
-      "description": "",
+      "description": "更新脚本信息。",
       "form": {
         "cancel": "取消",
-        "update": ""
+        "update": "更新"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "正在删除脚本...",
+      "success": "脚本已删除！",
+      "error": "删除脚本失败"
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "正在添加脚本...",
+      "success": "脚本已添加！",
+      "error": "添加脚本失败"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "正在更新脚本...",
+      "success": "脚本已更新！",
+      "error": "更新脚本失败"
     },
     "restartToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "正在重启脚本...",
+      "success": "脚本已重启！",
+      "error": "重启脚本失败"
     },
     "table": {
       "type": "类型",
-      "scriptName": "",
-      "language": "",
-      "elevatedPermissions": "",
-      "createdAt": "",
+      "scriptName": "名称",
+      "language": "语言",
+      "elevatedPermissions": "高级权限",
+      "createdAt": "创建时间",
       "actions": "操作"
     },
-    "globalScript": "",
-    "instanceScript": ""
+    "globalScript": "全局",
+    "instanceScript": "实例"
   }
 }

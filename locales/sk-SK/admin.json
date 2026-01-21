@@ -1,95 +1,95 @@
 {
   "overview": {
-    "welcome": "",
+    "welcome": "Vitaj späť, {{name}} 🧙",
     "instancesChart": {
-      "title": "",
-      "instances": "",
+      "title": "Celkový počet inštancií na tomto serveri",
+      "instances": "Inštancie",
       "label": {
-        "state": "",
-        "active": "",
-        "stopped": "",
-        "other": ""
+        "state": "Stav",
+        "active": "Aktívne",
+        "stopped": "Zastavené",
+        "other": "Ostatné"
       }
     },
     "usersChart": {
-      "title": "",
-      "users": "",
+      "title": "Celkový počet používateľov na tomto serveri",
+      "users": "Používatelia",
       "label": {
-        "role": "",
-        "user": "",
-        "admin": "",
-        "other": ""
+        "role": "Rola",
+        "user": "Používateľ",
+        "admin": "Admin",
+        "other": "Ostatné"
       }
     }
   },
   "users": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Filtrovať používateľov...",
     "baseUserDialog": {
       "form": {
         "username": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "Používateľské mená musia mať aspoň 3 znaky",
+          "max": "Používateľské mená môžu mať najviac 32 znakov",
+          "regex": "Používateľské mená musia byť malými písmenami, začínať alfanumerickým znakom, nasledovať môžu ďalšie alfanumerické znaky alebo pomlčky a končiť alfanumerickým znakom.",
+          "label": "Používateľské meno",
+          "placeholder": "Zadajte používateľské meno",
+          "description": "Jedinečné používateľské meno, ktoré identifikuje používateľa"
         },
         "email": {
           "label": "E-mail",
-          "placeholder": "",
-          "description": ""
+          "placeholder": "Zadajte e-mail",
+          "description": "E-mailová adresa používateľa používaná na notifikácie a prihlásenie"
         },
         "role": {
-          "label": "",
-          "description": "",
-          "user": "",
-          "admin": ""
+          "label": "Rola",
+          "description": "Rola používateľa. Správcovia môžu spravovať používateľov a všetky inštancie. Používatelia môžu spravovať iba svoje vlastné inštancie.",
+          "user": "Používateľ",
+          "admin": "Admin"
         }
       }
     },
     "addUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Pridať nového používateľa",
+      "description": "Pridať nového používateľa na tento server",
       "form": {
-        "cancel": "",
-        "add": ""
+        "cancel": "Zrušiť",
+        "add": "Pridať používateľa"
       }
     },
     "updateUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Aktualizovať používateľa",
+      "description": "Aktualizujte informácie o používateľovi",
       "form": {
-        "cancel": "",
-        "update": ""
+        "cancel": "Zrušiť",
+        "update": "Aktualizovať používateľa"
       }
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Pridávanie používateľa...",
+      "success": "Používateľ pridaný!",
+      "error": "Nepodarilo sa pridať používateľa"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Aktualizácia používateľa...",
+      "success": "Používateľ bol aktualizovaný!",
+      "error": "Nepodarilo sa aktualizovať používateľa"
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Odstraňovanie používateľov...",
+      "success": "Používatelia boli odstránení!",
+      "error": "Nepodarilo sa odstrániť používateľov"
     },
     "invalidateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Odhlasovanie používateľov...",
+      "success": "Používatelia boli odhlásení!",
+      "error": "Nepodarilo sa odhlásiť používateľov"
     },
     "table": {
-      "username": "",
+      "username": "Používateľské meno",
       "email": "E-mail",
-      "role": "",
-      "createdAt": "",
-      "minIssuedAt": "",
-      "actions": ""
+      "role": "Rola",
+      "createdAt": "Vytvorené",
+      "minIssuedAt": "Min. prihlásenie",
+      "actions": "Akcie"
     }
   }
 }

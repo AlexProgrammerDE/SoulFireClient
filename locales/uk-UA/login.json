@@ -1,103 +1,103 @@
 {
   "header": {
     "image": {
-      "alt": ""
+      "alt": "Логотип SoulFire"
     },
-    "title": ""
+    "title": "SoulFire"
   },
-  "newUser": "",
+  "newUser": "Вперше у SoulFire? Радимо ознайомитися з <a>посібником для початківців</a>.",
   "connect": {
-    "title": "",
-    "description": "",
+    "title": "Підключіться до сервера SoulFire",
+    "description": "Оберіть тип сервера SoulFire, до якого бажаєте підключитися.",
     "integrated": {
-      "title": "",
-      "description": ""
+      "title": "Інтегрований сервер (локальний)",
+      "description": "Запускає сервер SoulFire на вашому компʼютері. Налаштування відбувається автоматично й не вимагає конфігурації. (Потрібен додаток для ПК або Android)"
     },
     "dedicated": {
-      "title": "",
-      "description": ""
+      "title": "Виділений сервер (віддалений)",
+      "description": "Підключення до віддаленої інстанції сервера SoulFire. Вам потрібно ввести адресу та токен сервера."
     },
     "demo": {
-      "title": "",
-      "description": ""
+      "title": "Демонстраційний сервер",
+      "description": "Імітує віртуальний сервер із демонстраційними даними. Цей сервер доступний лише для читання, ви не можете нічого змінювати."
     }
   },
   "integrated": {
-    "preparing": "",
+    "preparing": "Підготовка до запуску інтегрованого сервера...",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Запуск інтегрованого сервера...",
+      "success": "Інтегрований сервер запущено",
+      "error": "Не вдалося запустити інтегрований сервер"
     },
-    "description": "",
+    "description": "Інтегрований сервер працює локально на вашому ПК. За потреби змініть аргументи запуску Java нижче.",
     "form": {
       "jvmArgs": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "Аргументи JVM",
+        "description": "Аргументи Java VM для SoulFire. Щоб використовувати 4 ГБ RAM, додайте <bold>-Xmx4G</bold>. За замовчуванням використовується 25% вашої RAM.",
+        "placeholder": "Ваші аргументи JVM тут"
       },
-      "back": "",
-      "start": ""
+      "back": "Назад",
+      "start": "Почати"
     },
     "mobile": {
-      "description": "",
+      "description": "Щоб запустити інтегрований сервер на мобільному пристрої, потрібно виконати кілька ручних кроків.",
       "form": {
         "termuxCommand": {
-          "title": "",
-          "description": ""
+          "title": "Команда Termux",
+          "description": "Встановіть <a>додаток Termux</a>, а потім виконайте цю команду в Termux для встановлення сервера SoulFire. Після цього потрібно виконати команду <copy>generate-token api</copy> для створення токена. Потім введіть токен нижче."
         },
         "token": {
-          "title": "",
-          "description": "",
-          "placeholder": ""
+          "title": "Токен",
+          "description": "Токен для автентифікації з локальним сервером.",
+          "placeholder": "Секретний токен"
         },
-        "back": "",
-        "connect": ""
+        "back": "Назад",
+        "connect": "Підключитися"
       }
     }
   },
   "dedicated": {
-    "description": "",
+    "description": "Введіть адресу та токен сервера SoulFire, до якого бажаєте підключитися.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Підключення до сервера...",
+      "success": "Підключено до сервера",
+      "error": "Не вдалося підключитися до сервера"
     },
     "form": {
       "address": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "Адреса",
+        "description": "Адреса вашого сервера SoulFire.",
+        "placeholder": "http://localhost:38765"
       },
       "token": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "Токен",
+        "placeholder": "Секретний токен",
+        "description": "Токен для автентифікації на сервері."
       },
       "email": {
         "title": "Електронна пошта",
-        "placeholder": "",
-        "description": ""
+        "placeholder": "root@soulfiremc.com",
+        "description": "Email вашого акаунту SoulFire."
       },
-      "back": "",
-      "useToken": "",
-      "useEmail": "",
-      "login": ""
+      "back": "Назад",
+      "useToken": "Використати токен",
+      "useEmail": "Використати email",
+      "login": "Увійти"
     }
   },
   "emailCode": {
-    "description": "",
+    "description": "Якщо у вас є обліковий запис, ми надіслали код на <bold>{{email}}</bold>. Введіть його нижче.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Перевіряємо код...",
+      "success": "Вхід виконано",
+      "error": "Недійсний код"
     },
-    "back": ""
+    "back": "Назад"
   },
   "footer": {
-    "version": "",
-    "preview": "",
-    "production": "",
-    "helpTranslate": ""
+    "version": "SoulFire Клієнт {{version}} — {{environment}}",
+    "preview": "Шукаєте попередню версію?",
+    "production": "Шукаєте продуктивну версію?",
+    "helpTranslate": "Перекласти SoulFire"
   }
 }
