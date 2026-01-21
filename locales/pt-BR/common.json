@@ -114,6 +114,15 @@
       "loading": "Parando o ataque...",
       "success": "Ataque interrompido com sucesso",
       "error": "Falha ao interromper o ataque"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "",
+      "noAccountsDescription": "",
+      "notEnoughTitle": "",
+      "notEnoughDescription": "",
+      "hint": "",
+      "continueWithExisting": "",
+      "generateAccounts": ""
     }
   },
   "icon": {

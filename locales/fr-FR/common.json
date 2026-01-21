@@ -114,6 +114,15 @@
       "loading": "Arrêt de l'attaque...",
       "success": "Attaque arrêtée avec succès",
       "error": "Échec de l'arrêt de l'attaque"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "",
+      "noAccountsDescription": "",
+      "notEnoughTitle": "",
+      "notEnoughDescription": "",
+      "hint": "",
+      "continueWithExisting": "",
+      "generateAccounts": ""
     }
   },
   "icon": {

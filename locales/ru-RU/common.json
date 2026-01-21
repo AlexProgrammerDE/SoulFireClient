@@ -114,6 +114,15 @@
       "loading": "Прекращение атаки...",
       "success": "Атака успешно остановлена",
       "error": "Не удалось остановить атаку"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "",
+      "noAccountsDescription": "",
+      "notEnoughTitle": "",
+      "notEnoughDescription": "",
+      "hint": "",
+      "continueWithExisting": "",
+      "generateAccounts": ""
     }
   },
   "icon": {
