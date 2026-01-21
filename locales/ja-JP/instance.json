@@ -1,0 +1,99 @@
+{
+  "proxy": {
+    "getProxies": "プロキシを取得",
+    "addProxies": "プロキシを追加",
+    "filterPlaceholder": "プロキシをフィルター...",
+    "listImportToast": {
+      "loading": "プロキシをインポート中...",
+      "success": "{{count}}件のプロキシをインポートしました！",
+      "error": "プロキシのインポートに失敗しました。",
+      "noProxies": "インポートするプロキシがありません。"
+    },
+    "import": {
+      "proxyType": "プロキシタイプ",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "{{type}}プロキシをインポート",
+        "description": "ここにプロキシを1行ごとに貼り付けてください。"
+      }
+    },
+    "removeToast": {
+      "loading": "プロキシを削除中...",
+      "success": "{{count}}件のプロキシを削除しました！",
+      "error": "プロキシの削除に失敗しました。"
+    },
+    "checkToast": {
+      "loading": "プロキシをチェック中... {{checked}}/{{total}}（成功：{{success}} 失敗：{{failed}}）",
+      "success": "{{count}}件の壊れたプロキシを削除しました！",
+      "error": "プロキシのチェックに失敗しました。"
+    },
+    "invalidFormat": "無効なプロキシ形式です。",
+    "table": {
+      "type": "種類",
+      "address": "アドレス",
+      "username": "ユーザー名",
+      "password": "パスワード"
+    }
+  },
+  "account": {
+    "getAccounts": "アカウントを取得",
+    "addAccounts": "アカウントを追加",
+    "generateAccounts": "アカウントを生成",
+    "filterPlaceholder": "アカウントをフィルター...",
+    "listImportToast": {
+      "loading": "アカウントをインポート中... {{checked}}/{{total}}（成功：{{success}} 失敗：{{failed}}）",
+      "allFailed": "アカウントのインポートにすべて失敗しました。",
+      "someFailed": "{{count}}件のアカウントをインポートし、{{failed}}件のアカウントのインポートに失敗しました。",
+      "noneFailed": "{{count}}件のアカウントをインポートしました！",
+      "error": "アカウントのインポートに失敗しました。",
+      "noAccounts": "インポートするアカウントがありません。"
+    },
+    "unknownError": "不明なエラー",
+    "deviceCodeImportToast": {
+      "loading": "アカウントをインポート中...",
+      "success": "アカウントをインポートしました！",
+      "error": "アカウントのインポートに失敗しました。"
+    },
+    "generate": {
+      "title": "オフラインアカウントを生成",
+      "description": "カスタム名フォーマットでオフラインJavaアカウントを生成します。",
+      "amount": "件数",
+      "nameFormat": "名前フォーマット",
+      "nameFormatHelp": "%dをアカウント番号のプレースホルダーとして使用します（例：Bot_%d は Bot_1, Bot_2 などになります）。",
+      "overrideExisting": "既存の{{count}}件のアカウントを上書き",
+      "submit": "生成",
+      "generating": "生成中...",
+      "progress": "アカウントを生成中... {{checked}}/{{total}}（成功：{{success}} 失敗：{{failed}}）",
+      "success": "{{count}}件のアカウントを生成しました！",
+      "allFailed": "アカウントの生成にすべて失敗しました。",
+      "error": "アカウントの生成に失敗しました。",
+      "invalidAmount": "有効な件数（1以上）を入力してください。",
+      "missingPlaceholder": "名前フォーマットに%dプレースホルダーが含まれている必要があります。"
+    },
+    "import": {
+      "javaEdition": "Java版",
+      "bedrockEdition": "Bedrock版",
+      "offline": "オフライン",
+      "microsoftCredentials": "Microsoft認証情報",
+      "microsoftDeviceCode": "Microsoftデバイスコード",
+      "microsoftRefreshToken": "Microsoftリフレッシュトークン",
+      "dialog": {
+        "title": "{{type}}アカウントをインポート",
+        "description": "ここにアカウントを1行ごとに貼り付けてください。"
+      }
+    },
+    "removeToast": {
+      "loading": "アカウントを削除中...",
+      "success": "{{count}}件のアカウントを削除しました！",
+      "error": "アカウントの削除に失敗しました。"
+    },
+    "table": {
+      "type": "種類",
+      "profileId": "UUID",
+      "lastKnownName": "ユーザー名"
+    }
+  }
+}

@@ -1,0 +1,425 @@
+{
+  "locale": "Lokalisointi",
+  "cancel": "Peruuta",
+  "error": {
+    "noAddressOrToken": "Palvelimen osoitetta tai tokenia ei löytynyt",
+    "page": {
+      "title": "Virhe",
+      "description": "Tapahtui virhe ladattaessa sivua. Lisätietoja löytyy konsolista.",
+      "logOut": "Kirjaudu ulos",
+      "reloadPage": "Lataa sivu uudelleen"
+    },
+    "connectionFailed": "Yhteys SoulFire-palvelimeen epäonnistui."
+  },
+  "notFound": {
+    "page": {
+      "title": "Ei löytynyt",
+      "description": "Sivua ei löytynyt tästä sijainnista",
+      "logOut": "Kirjaudu ulos",
+      "reloadPage": "Lataa sivu uudelleen"
+    }
+  },
+  "pending": {
+    "connecting": "Yhdistetään..."
+  },
+  "dialog": {
+    "about": {
+      "title": "Tietoa SoulFiresta",
+      "description": "Käytössäsi on SoulFire-asiakasohjelman versio {{version}}.",
+      "type": "Tyyppi",
+      "value": "Arvo",
+      "fields": {
+        "operatingSystem": "Käyttöjärjestelmä",
+        "platform": "Alusta",
+        "locale": "Lokalisointi",
+        "architecture": "Arkkitehtuuri",
+        "environment": "Ympäristö",
+        "browser": "Selain"
+      },
+      "close": "Sulje"
+    },
+    "createInstance": {
+      "title": "Luo uusi instanssi",
+      "description": "Instansseille tarvitaan selkokieliset nimet, jotta voit erottaa ne toisistaan. Voit käyttää mitä tahansa nimeä, esim. \"Oma Minecraft-bottini\".",
+      "form": {
+        "friendlyName": {
+          "label": "Selkokielinen nimi",
+          "placeholder": "Oma Minecraft-bottini",
+          "description": "Nimi, jonka haluat antaa tälle instanssille.",
+          "min": "Selkokielisen nimen on oltava vähintään 3 merkkiä pitkä.",
+          "max": "Selkokielisen nimen on oltava enintään 32 merkkiä pitkä.",
+          "regex": "Selkokielinen nimi saa sisältää vain kirjaimia, numeroita ja välilyöntejä"
+        },
+        "cancel": "Peruuta",
+        "create": "Luo"
+      },
+      "createToast": {
+        "loading": "Luodaan instanssia...",
+        "success": "Instanssi luotu onnistuneesti",
+        "error": "Instanssin luominen epäonnistui"
+      }
+    },
+    "import": {
+      "main": {
+        "fromFile": "Tiedostosta",
+        "fromUrl": "URL-osoitteesta",
+        "firstClipboardItem": "Leikepöydällä oli useita kohteita, käytetään vain ensimmäistä.",
+        "fromClipboard": "Leikepöydältä",
+        "textarea": {
+          "placeholder": "Syötä teksti tähän...",
+          "submit": "Lataa tekstistä"
+        }
+      },
+      "url": {
+        "description": "Lataus URL-osoitteesta saa SoulFire-palvelimen tekemään GET-pyynnön kohdepalvelimelle ja käyttämään vastausta datana.",
+        "form": {
+          "url": {
+            "placeholder": "Syötä URL-osoite tähän...",
+            "empty": "Anna kelvollinen URL-osoite"
+          }
+        },
+        "submit": "Lataa URL-osoitteesta",
+        "toast": {
+          "loading": "Ladataan tietoja...",
+          "success": "Tiedot ladattu!",
+          "error": "Tietojen lataus epäonnistui"
+        }
+      }
+    }
+  },
+  "commandInput": {
+    "placeholder": "Syötä komento (kirjoita 'help' nähdäksesi luettelon)"
+  },
+  "controls": {
+    "start": "Aloita",
+    "resume": "Jatka",
+    "pause": "Tauota",
+    "stop": "Pysäytä",
+    "startToast": {
+      "loading": "Hyökkäys käynnistyy...",
+      "success": "Hyökkäys käynnistyi onnistuneesti",
+      "error": "Hyökkäyksen käynnistäminen epäonnistui"
+    },
+    "resumeToast": {
+      "loading": "Hyökkäys jatkuu...",
+      "success": "Hyökkäys jatkui onnistuneesti",
+      "error": "Hyökkäyksen jatkaminen epäonnistui"
+    },
+    "pauseToast": {
+      "loading": "Tauotetaan hyökkäystä...",
+      "success": "Hyökkäys tauotettu",
+      "error": "Hyökkäyksen tauottaminen epäonnistui"
+    },
+    "stopToast": {
+      "loading": "Pysäytetään hyökkäys...",
+      "success": "Hyökkäys pysäytetty onnistuneesti",
+      "error": "Hyökkäyksen pysäyttäminen epäonnistui"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "Yhtään tiliä ei ole asetettu",
+      "noAccountsDescription": "Sinulla täytyy olla tilejä tuotu ennen hyökkäyksen aloittamista. Pyysit {{required}} bottia.",
+      "notEnoughTitle": "Tilejä ei tarpeeksi",
+      "notEnoughDescription": "Pyysit {{required}} bottia, mutta vain {{available}} tili(ä) on tuotu.",
+      "hint": "Voit luoda offline-tilejä tai tuoda tilejä Tili-asetukset -sivulta.",
+      "continueWithExisting": "Jatka {{count}} tilillä",
+      "generateAccounts": "Luo tilejä"
+    }
+  },
+  "icon": {
+    "invalidName": "Virheellinen kuvakkeen nimi: {{name}}"
+  },
+  "dataTable": {
+    "noResults": "Ei tuloksia.",
+    "rowsSelected": "{amount} / {total} rivi(ä) valittu",
+    "rowsPerPage": "Rivejä per sivu",
+    "currentPage": "Sivu {{page}} / {{total}}",
+    "goFirst": "Siirry ensimmäiselle sivulle",
+    "goPrevious": "Siirry edelliselle sivulle",
+    "goNext": "Siirry seuraavalle sivulle",
+    "goLast": "Siirry viimeiselle sivulle",
+    "selectAll": "Valitse kaikki",
+    "selectRow": "Valitse rivi"
+  },
+  "pluginCard": {
+    "version": "Versio: {{version}}",
+    "author": "Tekijä: {{author}}",
+    "license": "Lisenssi: {{license}}",
+    "website": "Sivusto"
+  },
+  "settingsPage": {
+    "namespacesNotFound": "Asetusten nimiavaruuksia ei löytynyt",
+    "stringList": {
+      "placeholder": "Lisää uusi merkintä...",
+      "add": "Lisää",
+      "remove": "Poista"
+    },
+    "invalidNumberToast": {
+      "title": "Virheellinen numero!",
+      "description": "Arvon tulee olla välillä {{min}} ja {{max}}"
+    }
+  },
+  "terminal": {
+    "noLogs": "🧙 Näyttää siltä, että mitään lokia ei ole näytettävänä; kokeile suorittaa komentoja!",
+    "demo-1": "Tervetuloa demotilaan! 🧪",
+    "demo-2": "Tämä on SoulFiren vain-luku -instanssi",
+    "demo-3": "Tutustu kaikkiin valikoihin ja ominaisuuksiin ennen kuin päätät asentaa SoulFiren :D",
+    "demo-4": "Liity rohkeasti Discord-serverillemme, jos haluat ottaa yhteyttä: https://soulfiremc.com/discord"
+  },
+  "uiBreadcrumb": {
+    "more": "Lisää"
+  },
+  "uiDialog": {
+    "close": "Sulje"
+  },
+  "uiSheet": {
+    "close": "Sulje"
+  },
+  "uiSidebar": {
+    "toggle": "Näytä/piilota sivupalkki"
+  },
+  "castMenu": {
+    "title": "Cast",
+    "disconnected": "Yhteys laitteeseen {{device}} katkaistu",
+    "alreadyConnected": "Olet jo yhteydessä laitteeseen {{device}}",
+    "connectToast": {
+      "loading": "Yhdistetään laitteeseen {{device}}...",
+      "success": "Yhdistetty laitteeseen {{device}}",
+      "error": "Yhdistäminen laitteeseen {{device}} epäonnistui"
+    },
+    "noDevices": "Laitteita ei löytynyt",
+    "broadcastLabel": "Lähetyskoe",
+    "broadcastToast": {
+      "loading": "Lähetetään viestiä...",
+      "success": "Viestin lähetys onnistui!",
+      "error": "Viestin lähetys epäonnistui"
+    }
+  },
+  "instanceSidebar": {
+    "readDocumentation": "Lue dokumentaatio",
+    "backToDashboard": "Takaisin hallintapaneeliin",
+    "deleteToast": {
+      "loading": "Poistetaan instanssia...",
+      "success": "Instanssi poistettu",
+      "error": "Instanssin poistaminen epäonnistui"
+    },
+    "instancesGroup": "Instanssit",
+    "createInstance": "Luo instanssi",
+    "loadProfileToast": {
+      "loading": "Ladataan profiilia...",
+      "success": "Profiili ladattu",
+      "error": "Profiilin lataus epäonnistui"
+    },
+    "loadProfile": "Lataa profiili",
+    "loadFromFile": "Lataa tiedostosta",
+    "profileSaved": "Profiili tallennettu",
+    "saveProfile": "Tallenna profiili",
+    "deleteInstance": "Poista instanssi",
+    "controlsGroup": "Ohjaimet",
+    "overview": "Yleiskatsaus",
+    "terminal": "Terminaali",
+    "audit-log": "Audit-loki",
+    "settingsGroup": "Asetukset",
+    "pluginsGroup": "Liitännäiset",
+    "pluginSettings": "Plugin-asetukset",
+    "botSettings": "Botti-asetukset",
+    "accountSettings": "Tilin asetukset",
+    "metaSettings": "Instanssin asetukset",
+    "proxySettings": "Välityspalvelimen asetukset",
+    "aiSettings": "AI-asetukset",
+    "pathfindingSettings": "Polunhakuasetukset",
+    "discoverPlugins": "Liitännäiset",
+    "instanceScripts": "Skriptit"
+  },
+  "userSidebar": {
+    "readDocumentation": "Lue dokumentaatio",
+    "userGroup": "Käyttäjä",
+    "instances": "Instanssit",
+    "access": "Pääsy",
+    "createInstance": "Luo instanssi",
+    "settings": "Asetukset",
+    "adminGroup": "Ylläpitäjä",
+    "adminOverview": "Yleiskatsaus",
+    "adminLogs": "Lokit",
+    "adminTerminal": "Terminaali",
+    "users": "Käyttäjät",
+    "adminScripts": "Skriptit",
+    "serverSettings": "Palvelinasetukset",
+    "devSettings": "Kehittäjäasetukset",
+    "theme": {
+      "title": "Teema",
+      "system": "Järjestelmä",
+      "light": "Vaalea",
+      "dark": "Tumma"
+    },
+    "terminal": {
+      "title": "Terminaali"
+    },
+    "configDir": "Asetuskansio",
+    "dataDir": "Datakansio",
+    "about": "Tietoja",
+    "logOut": "Kirjaudu ulos",
+    "logOutToast": {
+      "loading": "Kirjaudutaan ulos...",
+      "success": "Kirjauduttu ulos",
+      "error": "Uloskirjautuminen epäonnistui"
+    },
+    "exit": "Poistu",
+    "stopImpersonating": "Lopeta esittäminen",
+    "helpTranslate": "Käännä SoulFire"
+  },
+  "sidebar": {
+    "documentation": "Dokumentaatio",
+    "buyMeACoffee": "Osta minulle kahvi",
+    "discord": "Discord"
+  },
+  "breadcrumbs": {
+    "admin": "Ylläpitäjä",
+    "settings": "Asetukset",
+    "controls": "Ohjaimet",
+    "plugins": "Liitännäiset"
+  },
+  "noInstancesFound": "Yhtään instanssia ei löytynyt",
+  "pageName": {
+    "terminal": "Terminaali",
+    "logs": "Lokit",
+    "audit-log": "Audit-loki",
+    "instances": "Instanssit",
+    "access": "Pääsy",
+    "settings": "Asetukset",
+    "proxySettings": "Välityspalvelimen asetukset",
+    "overview": "Yleiskatsaus",
+    "users": "Käyttäjät",
+    "accountSettings": "Tilin asetukset",
+    "metaSettings": "Instanssin asetukset",
+    "discoverPlugins": "Liitännäiset",
+    "adminScripts": "Skriptit",
+    "instanceScripts": "Skriptit"
+  },
+  "access": {
+    "webdav": {
+      "title": "WebDAV-pääsy",
+      "description": "SoulFire mahdollistaa instanssi-, skripti- ja muiden tiedostojen käytön WebDAV-protokollan avulla.",
+      "publicAddress": "Julkinen WebDAV-osoite",
+      "personalToken": "Henkilökohtainen WebDAV-token",
+      "securityWarning": "Henkilökohtainen WebDAV-tokenisi on erittäin tärkeä. Älä jaa sitä kenellekään. Sitä käytetään sinun tunnistamiseen tiedostoihisi käsiksi pääsyssä. Käytä sitä WebDAV-salasananasi yhdistäessäsi. Käyttäjätunnusta ei tarvita, voit käyttää mitä tahansa arvoa jos sitä kysytään. (esim. 'soulfire')",
+      "addressDescription": "Tämä on osoite, jota sinun tulee käyttää tiedostoihisi käsiksi pääsyyn. Joskus sinun täytyy käyttää dav:// tai davs:// http(s):// sijaan."
+    },
+    "api": {
+      "title": "API-pääsy",
+      "description": "SoulFiren gRPC HTTP API:n avulla voit käyttää instanssejasi ohjelmallisesti verkkopyyntöjen avulla.",
+      "publicAddress": "Julkinen API-osoite",
+      "personalToken": "Henkilökohtainen API-token",
+      "securityWarning": "Henkilökohtainen API-tokenisi on erittäin tärkeä. Älä jaa sitä kenellekään. Sitä käytetään tunnistautumiseen API:lle käsiksi pääsyssä.",
+      "addressDescription": "Tämä on osoite, jota tarvitset API:lle käsiksi pääsyyn."
+    },
+    "token": {
+      "generate": "Luo token",
+      "placeholder": "Klikkaa \"Luo token\" alla",
+      "generating": "Luodaan tokenia...",
+      "success": "Token luotu onnistuneesti",
+      "error": "Tokenin luonti epäonnistui",
+      "copy": "Kopioi token"
+    },
+    "address": {
+      "copy": "Kopioi osoite"
+    },
+    "documentation": "Dokumentaatio",
+    "howToConnect": "Kuinka yhdistää"
+  },
+  "uploadToMcLogs": "Lataa mclo.gs-palveluun",
+  "mcLogsUpload": {
+    "loading": "Ladataan mclo.gs-palveluun...",
+    "success": "Ladattu mclo.gs-palveluun! Katso täältä: {{url}}",
+    "error": "Lataus mclo.gs:ään epäonnistui"
+  },
+  "copyToClipboard": "Kopioi leikepöydälle",
+  "clipboardCopy": {
+    "loading": "Kopioidaan leikepöydälle...",
+    "success": "Kopioitiin \"{{content}}\" leikepöydälle",
+    "error": "Kopiointi leikepöydälle epäonnistui"
+  },
+  "instanceState": {
+    "starting": "Käynnistetään",
+    "running": "Käynnissä",
+    "paused": "Tauotettu",
+    "stopping": "Pysäytetään",
+    "stopped": "Pysäytetty"
+  },
+  "auditLog": {
+    "filterPlaceholder": "Suodata audit-lokia...",
+    "user": "Käyttäjä",
+    "action": "Toiminto",
+    "timestamp": "Aikaleima",
+    "executedCommand": "Suoritettiin komento: {{data}}",
+    "startedAttack": "Aloitti hyökkäyksen",
+    "resumedAttack": "Jatkoi hyökkäystä",
+    "pausedAttack": "Tauotti hyökkäyksen",
+    "stoppedAttack": "Pysäytti hyökkäyksen"
+  },
+  "pickADate": "Valitse päivämäärä",
+  "scripts": {
+    "filterPlaceholder": "Suodata skriptejä...",
+    "baseScriptDialog": {
+      "form": {
+        "scriptName": {
+          "min": "Skriptien nimen on oltava vähintään 3 merkkiä pitkä",
+          "max": "Skriptien nimen on oltava enintään 32 merkkiä pitkä",
+          "regex": "Skriptin nimen tulee olla pienaakkosilla, alkaa aakkos- tai numeromerkillä, jonka jälkeen vain aakkos-/numeromerkkejä tai tavuviivoja, ja päättyä aakkos- tai numeromerkkiin.",
+          "label": "Nimi",
+          "placeholder": "Oma skripti",
+          "description": "Skriptin nimi."
+        },
+        "elevatedPermissions": {
+          "label": "Korkeat oikeudet",
+          "description": "Suoritetaanko skripti korkein oikeuksin. Vain ylläpitäjät voivat ottaa tämän käyttöön."
+        }
+      }
+    },
+    "addScriptDialog": {
+      "title": "Lisää uusi skripti",
+      "description": "Skriptit ovat pieniä ohjelmia, jotka suoritetaan SoulFire-palvelimella. Niitä voidaan käyttää tehtävien automatisointiin, oman toiminnan luomiseen ja muuhun.",
+      "form": {
+        "cancel": "Peruuta",
+        "add": "Lisää"
+      }
+    },
+    "updateScriptDialog": {
+      "title": "Päivitä skripti",
+      "description": "Päivitä skriptin tiedot.",
+      "form": {
+        "cancel": "Peruuta",
+        "update": "Päivitä"
+      }
+    },
+    "removeToast": {
+      "loading": "Poistetaan skriptejä...",
+      "success": "Skriptit poistettu!",
+      "error": "Skriptien poistaminen epäonnistui"
+    },
+    "addToast": {
+      "loading": "Lisätään skriptiä...",
+      "success": "Skripti lisätty!",
+      "error": "Skriptin lisääminen epäonnistui"
+    },
+    "updateToast": {
+      "loading": "Päivitetään skriptiä...",
+      "success": "Skripti päivitetty!",
+      "error": "Skriptin päivitys epäonnistui"
+    },
+    "restartToast": {
+      "loading": "Käynnistetään skriptiä uudelleen...",
+      "success": "Skripti käynnistetty uudelleen!",
+      "error": "Skriptin uudelleenkäynnistys epäonnistui"
+    },
+    "table": {
+      "type": "Tyyppi",
+      "scriptName": "Nimi",
+      "language": "Kieli",
+      "elevatedPermissions": "Korkeat oikeudet",
+      "createdAt": "Luotu",
+      "actions": "Toiminnot"
+    },
+    "globalScript": "Globaali",
+    "instanceScript": "Instanssi"
+  }
+}

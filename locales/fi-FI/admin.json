@@ -1,0 +1,95 @@
+{
+  "overview": {
+    "welcome": "Tervetuloa takaisin, {{name}} 🧙",
+    "instancesChart": {
+      "title": "Instanssien kokonaismäärä tällä palvelimella",
+      "instances": "Instanssit",
+      "label": {
+        "state": "Tila",
+        "active": "Aktiivinen",
+        "stopped": "Pysäytetty",
+        "other": "Muu"
+      }
+    },
+    "usersChart": {
+      "title": "Käyttäjien kokonaismäärä tällä palvelimella",
+      "users": "Käyttäjät",
+      "label": {
+        "role": "Rooli",
+        "user": "Käyttäjä",
+        "admin": "Ylläpitäjä",
+        "other": "Muu"
+      }
+    }
+  },
+  "users": {
+    "filterPlaceholder": "Suodata käyttäjiä...",
+    "baseUserDialog": {
+      "form": {
+        "username": {
+          "min": "Käyttäjätunnuksen pitää olla vähintään 3 merkkiä pitkä",
+          "max": "Käyttäjätunnuksen pitää olla enintään 32 merkkiä pitkä",
+          "regex": "Käyttäjätunnuksen tulee olla pienaakkosilla, alkaa aakkosnumeerisella merkillä, jonka jälkeen voi olla lisää aakkosnumeerisia merkkejä tai tavuviivoja, ja päättyä aakkosnumeeriseen merkkiin.",
+          "label": "Käyttäjätunnus",
+          "placeholder": "Anna käyttäjätunnus",
+          "description": "Yksilöllinen käyttäjätunnus, joka tunnistaa käyttäjän"
+        },
+        "email": {
+          "label": "Sähköposti",
+          "placeholder": "Anna sähköposti",
+          "description": "Käyttäjän sähköpostiosoite, jota käytetään ilmoituksiin ja kirjautumiseen"
+        },
+        "role": {
+          "label": "Rooli",
+          "description": "Käyttäjän rooli. Ylläpitäjät voivat hallita käyttäjiä ja kaikkia instansseja. Käyttäjät voivat hallita vain omia instanssejaan.",
+          "user": "Käyttäjä",
+          "admin": "Ylläpitäjä"
+        }
+      }
+    },
+    "addUserDialog": {
+      "title": "Lisää uusi käyttäjä",
+      "description": "Lisää uusi käyttäjä tälle palvelimelle",
+      "form": {
+        "cancel": "Peruuta",
+        "add": "Lisää käyttäjä"
+      }
+    },
+    "updateUserDialog": {
+      "title": "Päivitä käyttäjä",
+      "description": "Päivitä käyttäjän tiedot",
+      "form": {
+        "cancel": "Peruuta",
+        "update": "Päivitä käyttäjä"
+      }
+    },
+    "addToast": {
+      "loading": "Lisätään käyttäjää...",
+      "success": "Käyttäjä lisätty!",
+      "error": "Käyttäjän lisääminen epäonnistui"
+    },
+    "updateToast": {
+      "loading": "Päivitetään käyttäjää...",
+      "success": "Käyttäjä päivitetty!",
+      "error": "Käyttäjän päivitys epäonnistui"
+    },
+    "removeToast": {
+      "loading": "Poistetaan käyttäjiä...",
+      "success": "Käyttäjät poistettu!",
+      "error": "Käyttäjien poistaminen epäonnistui"
+    },
+    "invalidateToast": {
+      "loading": "Kirjataan käyttäjiä ulos...",
+      "success": "Käyttäjät kirjattu ulos!",
+      "error": "Uloskirjautuminen epäonnistui"
+    },
+    "table": {
+      "username": "Käyttäjätunnus",
+      "email": "Sähköposti",
+      "role": "Rooli",
+      "createdAt": "Luotu",
+      "minIssuedAt": "Min. kirjautuminen",
+      "actions": "Toiminnot"
+    }
+  }
+}

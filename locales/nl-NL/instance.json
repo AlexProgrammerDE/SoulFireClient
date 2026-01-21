@@ -1,0 +1,99 @@
+{
+  "proxy": {
+    "getProxies": "Proxies ophalen",
+    "addProxies": "Proxies toevoegen",
+    "filterPlaceholder": "Proxies filteren...",
+    "listImportToast": {
+      "loading": "Proxies importeren...",
+      "success": "{{count}} proxies geïmporteerd!",
+      "error": "Importeren van proxies mislukt",
+      "noProxies": "Geen proxies om te importeren"
+    },
+    "import": {
+      "proxyType": "Proxytype",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "Importeer {{type}} proxies",
+        "description": "Plak hier je proxies, één per regel"
+      }
+    },
+    "removeToast": {
+      "loading": "Proxies worden verwijderd...",
+      "success": "{{count}} proxies verwijderd!",
+      "error": "Verwijderen van proxies mislukt"
+    },
+    "checkToast": {
+      "loading": "Proxies worden gecontroleerd... {{checked}}/{{total}} (Succes: {{success}} Mislukt: {{failed}})",
+      "success": "{{count}} defecte proxies verwijderd!",
+      "error": "Controleren van proxies mislukt"
+    },
+    "invalidFormat": "Ongeldig proxyformaat",
+    "table": {
+      "type": "Type",
+      "address": "Adres",
+      "username": "Gebruikersnaam",
+      "password": "Wachtwoord"
+    }
+  },
+  "account": {
+    "getAccounts": "Accounts ophalen",
+    "addAccounts": "Accounts toevoegen",
+    "generateAccounts": "Accounts genereren",
+    "filterPlaceholder": "Accounts filteren...",
+    "listImportToast": {
+      "loading": "Accounts worden geïmporteerd... {{checked}}/{{total}} (Succes: {{success}} Mislukt: {{failed}})",
+      "allFailed": "Importeren van accounts mislukt.",
+      "someFailed": "{{count}} accounts geïmporteerd, importeren van {{failed}} accounts mislukt.",
+      "noneFailed": "{{count}} accounts geïmporteerd!",
+      "error": "Importeren van accounts mislukt.",
+      "noAccounts": "Geen accounts om te importeren"
+    },
+    "unknownError": "Onbekende fout",
+    "deviceCodeImportToast": {
+      "loading": "Account wordt geïmporteerd...",
+      "success": "Account geïmporteerd!",
+      "error": "Importeren van account mislukt"
+    },
+    "generate": {
+      "title": "Offline accounts genereren",
+      "description": "Genereer offline Java-accounts met een aangepast naampatroon.",
+      "amount": "Aantal",
+      "nameFormat": "Naamformaat",
+      "nameFormatHelp": "Gebruik %d als placeholder voor het accountnummer (bijvoorbeeld: Bot_%d wordt Bot_1, Bot_2, enz.)",
+      "overrideExisting": "Overschrijf bestaande {{count}} accounts",
+      "submit": "Genereren",
+      "generating": "Bezig met genereren...",
+      "progress": "Accounts worden gegenereerd... {{checked}}/{{total}} (Succes: {{success}} Mislukt: {{failed}})",
+      "success": "{{count}} accounts gegenereerd!",
+      "allFailed": "Kon geen enkele account genereren",
+      "error": "Aanmaken van accounts mislukt",
+      "invalidAmount": "Voer een geldig aantal in (minimaal 1)",
+      "missingPlaceholder": "Naamformaat moet een %d placeholder bevatten"
+    },
+    "import": {
+      "javaEdition": "Java-editie",
+      "bedrockEdition": "Bedrock-editie",
+      "offline": "Offline",
+      "microsoftCredentials": "Microsoft-gegevens",
+      "microsoftDeviceCode": "Microsoft-apparaatcode",
+      "microsoftRefreshToken": "Microsoft-vernieuwingstoken",
+      "dialog": {
+        "title": "Importeer {{type}} accounts",
+        "description": "Plak hier je accounts, één per regel"
+      }
+    },
+    "removeToast": {
+      "loading": "Accounts worden verwijderd...",
+      "success": "{{count}} accounts verwijderd!",
+      "error": "Verwijderen van accounts mislukt"
+    },
+    "table": {
+      "type": "Type",
+      "profileId": "UUID",
+      "lastKnownName": "Gebruikersnaam"
+    }
+  }
+}

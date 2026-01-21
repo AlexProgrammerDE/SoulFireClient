@@ -1,0 +1,95 @@
+{
+  "overview": {
+    "welcome": "Selamat datang kembali, {{name}} 🧙",
+    "instancesChart": {
+      "title": "Total instansi di server ini",
+      "instances": "Instansi",
+      "label": {
+        "state": "Status",
+        "active": "Aktif",
+        "stopped": "Dihentikan",
+        "other": "Lainnya"
+      }
+    },
+    "usersChart": {
+      "title": "Total pengguna di server ini",
+      "users": "Pengguna",
+      "label": {
+        "role": "Peran",
+        "user": "Pengguna",
+        "admin": "Admin",
+        "other": "Lainnya"
+      }
+    }
+  },
+  "users": {
+    "filterPlaceholder": "Cari pengguna...",
+    "baseUserDialog": {
+      "form": {
+        "username": {
+          "min": "Nama pengguna harus minimal 3 karakter",
+          "max": "Nama pengguna maksimal 32 karakter",
+          "regex": "Nama pengguna harus berupa huruf kecil, dimulai dengan karakter alfanumerik, diikuti karakter alfanumerik atau tanda hubung, dan diakhiri dengan karakter alfanumerik.",
+          "label": "Nama Pengguna",
+          "placeholder": "Masukkan nama pengguna",
+          "description": "Nama pengguna unik yang mengidentifikasi pengguna"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Masukkan email",
+          "description": "Alamat email pengguna yang digunakan untuk notifikasi dan login"
+        },
+        "role": {
+          "label": "Peran",
+          "description": "Peran pengguna. Admin dapat mengelola pengguna dan semua instansi. Pengguna hanya dapat mengelola instansi mereka sendiri.",
+          "user": "Pengguna",
+          "admin": "Admin"
+        }
+      }
+    },
+    "addUserDialog": {
+      "title": "Tambah pengguna baru",
+      "description": "Tambahkan pengguna baru ke server ini",
+      "form": {
+        "cancel": "Batal",
+        "add": "Tambah Pengguna"
+      }
+    },
+    "updateUserDialog": {
+      "title": "Perbarui pengguna",
+      "description": "Perbarui informasi pengguna",
+      "form": {
+        "cancel": "Batal",
+        "update": "Perbarui Pengguna"
+      }
+    },
+    "addToast": {
+      "loading": "Menambah pengguna...",
+      "success": "Pengguna berhasil ditambahkan!",
+      "error": "Gagal menambah pengguna"
+    },
+    "updateToast": {
+      "loading": "Memperbarui pengguna...",
+      "success": "Pengguna berhasil diperbarui!",
+      "error": "Gagal memperbarui pengguna"
+    },
+    "removeToast": {
+      "loading": "Menghapus pengguna...",
+      "success": "Pengguna berhasil dihapus!",
+      "error": "Gagal menghapus pengguna"
+    },
+    "invalidateToast": {
+      "loading": "Mengeluarkan pengguna...",
+      "success": "Pengguna berhasil keluar!",
+      "error": "Gagal mengeluarkan pengguna"
+    },
+    "table": {
+      "username": "Nama Pengguna",
+      "email": "Email",
+      "role": "Peran",
+      "createdAt": "Dibuat",
+      "minIssuedAt": "Login Minimal",
+      "actions": "Aksi"
+    }
+  }
+}

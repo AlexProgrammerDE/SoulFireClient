@@ -1,0 +1,425 @@
+{
+  "locale": "Lingua",
+  "cancel": "Annulla",
+  "error": {
+    "noAddressOrToken": "Nessun indirizzo server o token trovato",
+    "page": {
+      "title": "Errore",
+      "description": "Si è verificato un errore durante il caricamento della pagina. Puoi trovare maggiori informazioni nella console.",
+      "logOut": "Disconnetti",
+      "reloadPage": "Ricarica pagina"
+    },
+    "connectionFailed": "Connessione al server SoulFire non riuscita."
+  },
+  "notFound": {
+    "page": {
+      "title": "Non trovato",
+      "description": "Non è stato possibile trovare una pagina in questa posizione",
+      "logOut": "Disconnetti",
+      "reloadPage": "Ricarica pagina"
+    }
+  },
+  "pending": {
+    "connecting": "Connessione in corso..."
+  },
+  "dialog": {
+    "about": {
+      "title": "Informazioni su SoulFire",
+      "description": "Stai usando la versione {{version}} del client SoulFire.",
+      "type": "Tipo",
+      "value": "Valore",
+      "fields": {
+        "operatingSystem": "Sistema operativo",
+        "platform": "Piattaforma",
+        "locale": "Lingua",
+        "architecture": "Architettura",
+        "environment": "Ambiente",
+        "browser": "Browser"
+      },
+      "close": "Chiudi"
+    },
+    "createInstance": {
+      "title": "Crea una nuova istanza",
+      "description": "Le istanze hanno bisogno di nomi descrittivi per distinguerle. Può essere qualsiasi nome, ad esempio, \"Il mio Bot Minecraft\".",
+      "form": {
+        "friendlyName": {
+          "label": "Nome descrittivo",
+          "placeholder": "Il mio Bot Minecraft",
+          "description": "Il nome che vuoi dare a questa istanza.",
+          "min": "Il nome descrittivo deve essere lungo almeno 3 caratteri.",
+          "max": "Il nome descrittivo deve essere lungo al massimo 32 caratteri.",
+          "regex": "Il nome descrittivo può contenere solo lettere, numeri e spazi"
+        },
+        "cancel": "Annulla",
+        "create": "Crea"
+      },
+      "createToast": {
+        "loading": "Creazione dell'istanza...",
+        "success": "Istanza creata con successo",
+        "error": "Impossibile creare l'istanza"
+      }
+    },
+    "import": {
+      "main": {
+        "fromFile": "Da file",
+        "fromUrl": "Da URL",
+        "firstClipboardItem": "Avevi più elementi negli appunti, verrà utilizzato solo il primo.",
+        "fromClipboard": "Da appunti",
+        "textarea": {
+          "placeholder": "Inserisci testo qui...",
+          "submit": "Carica da testo"
+        }
+      },
+      "url": {
+        "description": "Caricare da URL farà sì che il server SoulFire effettui una richiesta GET al server di destinazione e utilizzi la risposta come dati.",
+        "form": {
+          "url": {
+            "placeholder": "Inserisci URL qui...",
+            "empty": "Inserisci un URL valido"
+          }
+        },
+        "submit": "Carica da URL",
+        "toast": {
+          "loading": "Scaricamento dati...",
+          "success": "Dati caricati!",
+          "error": "Impossibile scaricare i dati"
+        }
+      }
+    }
+  },
+  "commandInput": {
+    "placeholder": "Inserisci comando (digita 'help' per l'elenco)"
+  },
+  "controls": {
+    "start": "Avvia",
+    "resume": "Riprendi",
+    "pause": "Pausa",
+    "stop": "Ferma",
+    "startToast": {
+      "loading": "Avvio attacco...",
+      "success": "Attacco avviato con successo",
+      "error": "Impossibile avviare l'attacco"
+    },
+    "resumeToast": {
+      "loading": "Ripresa attacco...",
+      "success": "Attacco ripreso con successo",
+      "error": "Impossibile riprendere l'attacco"
+    },
+    "pauseToast": {
+      "loading": "Messa in pausa dell'attacco...",
+      "success": "Attacco messo in pausa con successo",
+      "error": "Impossibile mettere in pausa l'attacco"
+    },
+    "stopToast": {
+      "loading": "Arresto dell'attacco...",
+      "success": "Attacco arrestato con successo",
+      "error": "Impossibile arrestare l'attacco"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "Nessun account configurato",
+      "noAccountsDescription": "Devi importare gli account prima di avviare un attacco. Hai richiesto {{required}} bot.",
+      "notEnoughTitle": "Account insufficienti",
+      "notEnoughDescription": "Hai richiesto {{required}} bot ma hai importato solo {{available}} account.",
+      "hint": "Puoi generare account offline o importarli dalla pagina delle impostazioni account.",
+      "continueWithExisting": "Continua con {{count}} account",
+      "generateAccounts": "Genera Account"
+    }
+  },
+  "icon": {
+    "invalidName": "Nome icona non valido: {{name}}"
+  },
+  "dataTable": {
+    "noResults": "Nessun risultato.",
+    "rowsSelected": "{amount, plural, one {# di # riga selezionata} other {# di # righe selezionate}}",
+    "rowsPerPage": "Righe per pagina",
+    "currentPage": "Pagina {{page}} di {{total}}",
+    "goFirst": "Vai alla prima pagina",
+    "goPrevious": "Vai alla pagina precedente",
+    "goNext": "Vai alla pagina successiva",
+    "goLast": "Vai all'ultima pagina",
+    "selectAll": "Seleziona tutto",
+    "selectRow": "Seleziona riga"
+  },
+  "pluginCard": {
+    "version": "Versione: {{version}}",
+    "author": "Autore: {{author}}",
+    "license": "Licenza: {{license}}",
+    "website": "Sito web"
+  },
+  "settingsPage": {
+    "namespacesNotFound": "Nessuno spazio di impostazione trovato",
+    "stringList": {
+      "placeholder": "Aggiungi una nuova voce...",
+      "add": "Aggiungi",
+      "remove": "Rimuovi"
+    },
+    "invalidNumberToast": {
+      "title": "Numero non valido!",
+      "description": "Il valore deve essere compreso tra {{min}} e {{max}}"
+    }
+  },
+  "terminal": {
+    "noLogs": "🧙 Sembra che non ci siano log da mostrare; prova ad eseguire qualche comando!",
+    "demo-1": "Benvenuto nella modalità demo! 🧪",
+    "demo-2": "Questa è un'istanza in sola lettura di SoulFire",
+    "demo-3": "Esplora tutti i menu e le funzionalità prima di decidere di installare SoulFire :D",
+    "demo-4": "Sentiti libero di unirti al nostro server Discord se vuoi contattarci: https://soulfiremc.com/discord"
+  },
+  "uiBreadcrumb": {
+    "more": "Altro"
+  },
+  "uiDialog": {
+    "close": "Chiudi"
+  },
+  "uiSheet": {
+    "close": "Chiudi"
+  },
+  "uiSidebar": {
+    "toggle": "Mostra/Nascondi barra laterale"
+  },
+  "castMenu": {
+    "title": "Trasmetti",
+    "disconnected": "Disconnesso da {{device}}",
+    "alreadyConnected": "Già connesso a {{device}}",
+    "connectToast": {
+      "loading": "Connessione a {{device}}...",
+      "success": "Connesso a {{device}}",
+      "error": "Impossibile connettersi a {{device}}"
+    },
+    "noDevices": "Nessun dispositivo trovato",
+    "broadcastLabel": "Test trasmissione",
+    "broadcastToast": {
+      "loading": "Invio messaggio in corso...",
+      "success": "Messaggio trasmesso!",
+      "error": "Impossibile trasmettere il messaggio"
+    }
+  },
+  "instanceSidebar": {
+    "readDocumentation": "Leggi la documentazione",
+    "backToDashboard": "Torna alla dashboard",
+    "deleteToast": {
+      "loading": "Eliminazione istanza...",
+      "success": "Istanza eliminata",
+      "error": "Impossibile eliminare l'istanza"
+    },
+    "instancesGroup": "Istanze",
+    "createInstance": "Crea istanza",
+    "loadProfileToast": {
+      "loading": "Caricamento profilo...",
+      "success": "Profilo caricato",
+      "error": "Impossibile caricare il profilo"
+    },
+    "loadProfile": "Carica profilo",
+    "loadFromFile": "Carica da file",
+    "profileSaved": "Profilo salvato",
+    "saveProfile": "Salva profilo",
+    "deleteInstance": "Elimina istanza",
+    "controlsGroup": "Controlli",
+    "overview": "Panoramica",
+    "terminal": "Terminale",
+    "audit-log": "Registro di audit",
+    "settingsGroup": "Impostazioni",
+    "pluginsGroup": "Plugin",
+    "pluginSettings": "Impostazioni plugin",
+    "botSettings": "Impostazioni bot",
+    "accountSettings": "Impostazioni account",
+    "metaSettings": "Impostazioni istanza",
+    "proxySettings": "Impostazioni proxy",
+    "aiSettings": "Impostazioni AI",
+    "pathfindingSettings": "Impostazioni pathfinding",
+    "discoverPlugins": "Plugin",
+    "instanceScripts": "Script"
+  },
+  "userSidebar": {
+    "readDocumentation": "Leggi la documentazione",
+    "userGroup": "Utente",
+    "instances": "Istanze",
+    "access": "Accesso",
+    "createInstance": "Crea istanza",
+    "settings": "Impostazioni",
+    "adminGroup": "Admin",
+    "adminOverview": "Panoramica",
+    "adminLogs": "Log",
+    "adminTerminal": "Terminale",
+    "users": "Utenti",
+    "adminScripts": "Script",
+    "serverSettings": "Impostazioni server",
+    "devSettings": "Impostazioni sviluppatore",
+    "theme": {
+      "title": "Tema",
+      "system": "Sistema",
+      "light": "Chiaro",
+      "dark": "Scuro"
+    },
+    "terminal": {
+      "title": "Terminale"
+    },
+    "configDir": "Cartella configurazione",
+    "dataDir": "Cartella dati",
+    "about": "Informazioni",
+    "logOut": "Disconnetti",
+    "logOutToast": {
+      "loading": "Disconnessione in corso...",
+      "success": "Disconnesso",
+      "error": "Impossibile disconnettere"
+    },
+    "exit": "Esci",
+    "stopImpersonating": "Interrompi impersonificazione",
+    "helpTranslate": "Traduci SoulFire"
+  },
+  "sidebar": {
+    "documentation": "Documentazione",
+    "buyMeACoffee": "Offrimi un caffè",
+    "discord": "Discord"
+  },
+  "breadcrumbs": {
+    "admin": "Admin",
+    "settings": "Impostazioni",
+    "controls": "Controlli",
+    "plugins": "Plugin"
+  },
+  "noInstancesFound": "Nessuna istanza trovata",
+  "pageName": {
+    "terminal": "Terminale",
+    "logs": "Log",
+    "audit-log": "Registro di audit",
+    "instances": "Istanze",
+    "access": "Accesso",
+    "settings": "Impostazioni",
+    "proxySettings": "Impostazioni proxy",
+    "overview": "Panoramica",
+    "users": "Utenti",
+    "accountSettings": "Impostazioni account",
+    "metaSettings": "Impostazioni istanza",
+    "discoverPlugins": "Plugin",
+    "adminScripts": "Script",
+    "instanceScripts": "Script"
+  },
+  "access": {
+    "webdav": {
+      "title": "Accesso WebDAV",
+      "description": "SoulFire ti permette di accedere a file di istanze, script e altri file tramite il protocollo WebDAV.",
+      "publicAddress": "Indirizzo WebDAV pubblico",
+      "personalToken": "Token WebDAV personale",
+      "securityWarning": "Il tuo Token WebDAV personale è molto importante. Non condividerlo con nessuno. Viene utilizzato per autenticarti quando accedi ai tuoi file. Usalo come password WebDAV quando ti connetti. Il nome utente non è richiesto, se ti viene richiesto puoi usare qualsiasi valore (ad es. 'soulfire')",
+      "addressDescription": "Questo è l'indirizzo che devi utilizzare per accedere ai tuoi file. A volte devi usare dav:// o davs:// invece di http(s)://."
+    },
+    "api": {
+      "title": "Accesso API",
+      "description": "L'API HTTP gRPC di SoulFire ti consente di interagire con le tue istanze in modo programmato tramite richieste web.",
+      "publicAddress": "Indirizzo API pubblico",
+      "personalToken": "Token API personale",
+      "securityWarning": "Il tuo Token API personale è molto importante. Non condividerlo con nessuno. Viene utilizzato per autenticarti quando accedi all'API.",
+      "addressDescription": "Questo è l'indirizzo che devi utilizzare per accedere all'API."
+    },
+    "token": {
+      "generate": "Genera token",
+      "placeholder": "Clicca su 'Genera token' qui sotto",
+      "generating": "Generazione token...",
+      "success": "Token generato con successo",
+      "error": "Impossibile generare il token",
+      "copy": "Copia token"
+    },
+    "address": {
+      "copy": "Copia indirizzo"
+    },
+    "documentation": "Documentazione",
+    "howToConnect": "Come connettersi"
+  },
+  "uploadToMcLogs": "Carica su mclo.gs",
+  "mcLogsUpload": {
+    "loading": "Caricamento su mclo.gs...",
+    "success": "Caricato su mclo.gs! Visualizzalo qui: {{url}}",
+    "error": "Impossibile caricare su mclo.gs"
+  },
+  "copyToClipboard": "Copia negli appunti",
+  "clipboardCopy": {
+    "loading": "Copia negli appunti in corso...",
+    "success": "\"{{content}}\" copiato negli appunti",
+    "error": "Impossibile copiare negli appunti"
+  },
+  "instanceState": {
+    "starting": "Avvio in corso",
+    "running": "In esecuzione",
+    "paused": "In pausa",
+    "stopping": "Arresto in corso",
+    "stopped": "Arrestato"
+  },
+  "auditLog": {
+    "filterPlaceholder": "Filtra audit log...",
+    "user": "Utente",
+    "action": "Azione",
+    "timestamp": "Data e ora",
+    "executedCommand": "Comando eseguito: {{data}}",
+    "startedAttack": "Attacco avviato",
+    "resumedAttack": "Attacco ripreso",
+    "pausedAttack": "Attacco messo in pausa",
+    "stoppedAttack": "Attacco arrestato"
+  },
+  "pickADate": "Scegli una data",
+  "scripts": {
+    "filterPlaceholder": "Filtra script...",
+    "baseScriptDialog": {
+      "form": {
+        "scriptName": {
+          "min": "I nomi degli script devono essere lunghi almeno 3 caratteri",
+          "max": "I nomi degli script devono essere al massimo di 32 caratteri",
+          "regex": "I nomi degli script devono essere in minuscolo, iniziare con un carattere alfanumerico, seguiti da altri caratteri alfanumerici o trattini e terminare con un carattere alfanumerico.",
+          "label": "Nome",
+          "placeholder": "Il mio Script",
+          "description": "Il nome dello script."
+        },
+        "elevatedPermissions": {
+          "label": "Permessi elevati",
+          "description": "Se lo script deve essere eseguito con permessi elevati. Solo gli admin possono abilitare questa opzione."
+        }
+      }
+    },
+    "addScriptDialog": {
+      "title": "Aggiungi un nuovo script",
+      "description": "Gli script sono piccoli programmi che vengono eseguiti sul server SoulFire. Possono essere usati per automatizzare attività, creare comportamenti personalizzati e altro.",
+      "form": {
+        "cancel": "Annulla",
+        "add": "Aggiungi"
+      }
+    },
+    "updateScriptDialog": {
+      "title": "Aggiorna script",
+      "description": "Aggiorna le informazioni dello script.",
+      "form": {
+        "cancel": "Annulla",
+        "update": "Aggiorna"
+      }
+    },
+    "removeToast": {
+      "loading": "Rimozione script in corso...",
+      "success": "Script rimossi!",
+      "error": "Impossibile rimuovere gli script"
+    },
+    "addToast": {
+      "loading": "Aggiunta script in corso...",
+      "success": "Script aggiunto!",
+      "error": "Impossibile aggiungere lo script"
+    },
+    "updateToast": {
+      "loading": "Aggiornamento script in corso...",
+      "success": "Script aggiornato!",
+      "error": "Impossibile aggiornare lo script"
+    },
+    "restartToast": {
+      "loading": "Riavvio script in corso...",
+      "success": "Script riavviato!",
+      "error": "Impossibile riavviare lo script"
+    },
+    "table": {
+      "type": "Tipo",
+      "scriptName": "Nome",
+      "language": "Linguaggio",
+      "elevatedPermissions": "Permessi elevati",
+      "createdAt": "Creato",
+      "actions": "Azioni"
+    },
+    "globalScript": "Globale",
+    "instanceScript": "Istanza"
+  }
+}

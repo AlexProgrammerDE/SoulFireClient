@@ -1,0 +1,99 @@
+{
+  "proxy": {
+    "getProxies": "รับพร็อกซี",
+    "addProxies": "เพิ่มพร็อกซี",
+    "filterPlaceholder": "กรองพร็อกซี...",
+    "listImportToast": {
+      "loading": "กำลังนำเข้าพร็อกซี...",
+      "success": "นำเข้าพร็อกซีแล้ว {{count}} รายการ!",
+      "error": "ไม่สามารถนำเข้าพร็อกซีได้",
+      "noProxies": "ไม่มีพร็อกซีให้นำเข้า"
+    },
+    "import": {
+      "proxyType": "ประเภทพร็อกซี",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "นำเข้าพร็อกซี {{type}}",
+        "description": "วางพร็อกซีของคุณที่นี่ ทีละบรรทัด"
+      }
+    },
+    "removeToast": {
+      "loading": "กำลังลบพร็อกซี...",
+      "success": "ลบพร็อกซีแล้ว {{count}} รายการ!",
+      "error": "ไม่สามารถลบพร็อกซีได้"
+    },
+    "checkToast": {
+      "loading": "กำลังตรวจสอบพร็อกซี... {{checked}}/{{total}} (สำเร็จ: {{success}} ล้มเหลว: {{failed}})",
+      "success": "ลบพร็อกซีที่เสียแล้ว {{count}} รายการ!",
+      "error": "ไม่สามารถตรวจสอบพร็อกซีได้"
+    },
+    "invalidFormat": "รูปแบบพร็อกซีไม่ถูกต้อง",
+    "table": {
+      "type": "ประเภท",
+      "address": "ที่อยู่",
+      "username": "ชื่อผู้ใช้",
+      "password": "รหัสผ่าน"
+    }
+  },
+  "account": {
+    "getAccounts": "รับไอดี",
+    "addAccounts": "เพิ่มไอดี",
+    "generateAccounts": "สร้างไอดี",
+    "filterPlaceholder": "กรองไอดี...",
+    "listImportToast": {
+      "loading": "กำลังนำเข้าไอดี... {{checked}}/{{total}} (สำเร็จ: {{success}} ล้มเหลว: {{failed}})",
+      "allFailed": "ไม่สามารถนำเข้าไอดีใดๆ ได้เลย",
+      "someFailed": "นำเข้าไอดีแล้ว {{count}} รายการ, ไม่สามารถนำเข้าได้ {{failed}} รายการ",
+      "noneFailed": "นำเข้าไอดีแล้ว {{count}} รายการ!",
+      "error": "ไม่สามารถนำเข้าไอดีได้",
+      "noAccounts": "ไม่มีไอดีให้นำเข้า"
+    },
+    "unknownError": "ข้อผิดพลาดที่ไม่ทราบสาเหตุ",
+    "deviceCodeImportToast": {
+      "loading": "กำลังนำเข้าไอดี...",
+      "success": "นำเข้าไอดีเรียบร้อย!",
+      "error": "ไม่สามารถนำเข้าไอดีได้"
+    },
+    "generate": {
+      "title": "สร้างไอดีออฟไลน์",
+      "description": "สร้างไอดี Java แบบออฟไลน์ ด้วยรูปแบบชื่อที่กำหนดเอง",
+      "amount": "จำนวน",
+      "nameFormat": "รูปแบบชื่อ",
+      "nameFormatHelp": "ใช้ %d เป็นตำแหน่งตัวเลขในชื่อ (เช่น Bot_%d จะกลายเป็น Bot_1, Bot_2 เป็นต้น)",
+      "overrideExisting": "แทนที่ไอดีที่มีอยู่ {{count}} รายการ",
+      "submit": "สร้าง",
+      "generating": "กำลังสร้าง...",
+      "progress": "กำลังสร้างไอดี... {{checked}}/{{total}} (สำเร็จ: {{success}} ล้มเหลว: {{failed}})",
+      "success": "สร้างไอดีแล้ว {{count}} รายการ!",
+      "allFailed": "ไม่สามารถสร้างไอดีใดๆ ได้เลย",
+      "error": "ไม่สามารถสร้างไอดีได้",
+      "invalidAmount": "กรุณาใส่จำนวนที่ถูกต้อง (อย่างน้อย 1)",
+      "missingPlaceholder": "รูปแบบชื่อจำเป็นต้องมี %d อยู่ด้วย"
+    },
+    "import": {
+      "javaEdition": "Java Edition",
+      "bedrockEdition": "Bedrock Edition",
+      "offline": "ออฟไลน์",
+      "microsoftCredentials": "ข้อมูลบัญชี Microsoft",
+      "microsoftDeviceCode": "รหัสอุปกรณ์ Microsoft",
+      "microsoftRefreshToken": "โทเค็นรีเฟรชของ Microsoft",
+      "dialog": {
+        "title": "นำเข้าไอดี {{type}}",
+        "description": "วางไอดีของคุณที่นี่ ทีละบรรทัด"
+      }
+    },
+    "removeToast": {
+      "loading": "กำลังลบไอดี...",
+      "success": "ลบไอดีแล้ว {{count}} รายการ!",
+      "error": "ไม่สามารถลบไอดีได้"
+    },
+    "table": {
+      "type": "ประเภท",
+      "profileId": "UUID",
+      "lastKnownName": "ชื่อผู้ใช้"
+    }
+  }
+}

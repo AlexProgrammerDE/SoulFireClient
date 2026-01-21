@@ -1,0 +1,103 @@
+{
+  "header": {
+    "image": {
+      "alt": "SoulFire ロゴ"
+    },
+    "title": "SoulFire"
+  },
+  "newUser": "SoulFireを初めてご利用ですか？<a>はじめてガイド</a>をご覧になることをおすすめします。",
+  "connect": {
+    "title": "SoulFireサーバーに接続する",
+    "description": "接続するSoulFireサーバーの種類を選択してください。",
+    "integrated": {
+      "title": "統合サーバー（ローカル）",
+      "description": "お使いのコンピューターでSoulFireサーバーを実行します。セットアップは自動で、設定は不要です。（デスクトップ／Androidアプリが必要です）"
+    },
+    "dedicated": {
+      "title": "専用サーバー（リモート）",
+      "description": "SoulFireサーバーのリモートインスタンスに接続します。サーバーのアドレスとトークンを入力する必要があります。"
+    },
+    "demo": {
+      "title": "デモサーバー",
+      "description": "デモデータを使って仮想サーバーをシミュレートします。このサーバーは閲覧専用で、変更はできません。"
+    }
+  },
+  "integrated": {
+    "preparing": "統合サーバーの起動準備中...",
+    "toast": {
+      "loading": "統合サーバーを起動中...",
+      "success": "統合サーバーが起動しました",
+      "error": "統合サーバーの起動に失敗しました"
+    },
+    "description": "統合サーバーはご利用のPCでローカルに動作します。必要に応じて下記でJava起動引数を設定してください。",
+    "form": {
+      "jvmArgs": {
+        "title": "JVM引数",
+        "description": "SoulFire Java VMの引数です。4GBのRAMを使用するには <bold>-Xmx4G</bold> を追加してください。デフォルトはRAMの25％です。",
+        "placeholder": "ここにJVM引数を入力"
+      },
+      "back": "戻る",
+      "start": "開始"
+    },
+    "mobile": {
+      "description": "モバイルで統合サーバーを実行するには、いくつか手動の手順を行う必要があります。",
+      "form": {
+        "termuxCommand": {
+          "title": "Termuxコマンド",
+          "description": "<a>Termuxアプリ</a>をインストールし、Termuxでこのコマンドを実行してSoulFireサーバーをインストールしてください。その後で <copy>generate-token api</copy> コマンドを実行してトークンを生成します。そのトークンを下の欄に入力してください。"
+        },
+        "token": {
+          "title": "トークン",
+          "description": "ローカルサーバー認証用のトークンです。",
+          "placeholder": "シークレットトークン"
+        },
+        "back": "戻る",
+        "connect": "接続"
+      }
+    }
+  },
+  "dedicated": {
+    "description": "接続したいSoulFireサーバーのアドレスとトークンを入力してください。",
+    "toast": {
+      "loading": "サーバーに接続中...",
+      "success": "サーバーに接続しました",
+      "error": "サーバーへの接続に失敗しました"
+    },
+    "form": {
+      "address": {
+        "title": "アドレス",
+        "description": "SoulFireサーバーのアドレスです。",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "トークン",
+        "placeholder": "シークレットトークン",
+        "description": "サーバー認証用のトークンです。"
+      },
+      "email": {
+        "title": "メールアドレス",
+        "placeholder": "root@soulfiremc.com",
+        "description": "SoulFireアカウントのメールアドレスです。"
+      },
+      "back": "戻る",
+      "useToken": "トークンを使用",
+      "useEmail": "メールを使用",
+      "login": "ログイン"
+    }
+  },
+  "emailCode": {
+    "description": "アカウントがある場合は、<bold>{{email}}</bold> にコードを送信しました。下に入力してください。",
+    "toast": {
+      "loading": "コードを確認中...",
+      "success": "ログインしました",
+      "error": "コードが無効です"
+    },
+    "back": "戻る"
+  },
+  "footer": {
+    "version": "SoulFireクライアント {{version}} - {{environment}}",
+    "preview": "プレビューをお探しですか？",
+    "production": "本番環境をお探しですか？",
+    "helpTranslate": "SoulFireの翻訳を手伝う"
+  }
+}

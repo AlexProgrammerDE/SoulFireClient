@@ -1,0 +1,425 @@
+{
+  "locale": "Lokal",
+  "cancel": "Batal",
+  "error": {
+    "noAddressOrToken": "Alamat server atau token tidak ditemukan",
+    "page": {
+      "title": "Kesalahan",
+      "description": "Terjadi kesalahan saat mencoba memuat halaman. Informasi lebih lanjut dapat ditemukan di konsol.",
+      "logOut": "Keluar",
+      "reloadPage": "Muat ulang halaman"
+    },
+    "connectionFailed": "Koneksi ke server SoulFire gagal."
+  },
+  "notFound": {
+    "page": {
+      "title": "Tidak ditemukan",
+      "description": "Tidak dapat menemukan halaman di lokasi ini",
+      "logOut": "Keluar",
+      "reloadPage": "Muat ulang halaman"
+    }
+  },
+  "pending": {
+    "connecting": "Menghubungkan..."
+  },
+  "dialog": {
+    "about": {
+      "title": "Tentang SoulFire",
+      "description": "Anda menjalankan SoulFire client versi {{version}}.",
+      "type": "Tipe",
+      "value": "Nilai",
+      "fields": {
+        "operatingSystem": "Sistem Operasi",
+        "platform": "Platform",
+        "locale": "Lokal",
+        "architecture": "Arsitektur",
+        "environment": "Lingkungan",
+        "browser": "Peramban"
+      },
+      "close": "Tutup"
+    },
+    "createInstance": {
+      "title": "Buat instansi baru",
+      "description": "Tiap instansi memerlukan nama ramah agar dapat dibedakan. Anda bebas memberi nama apapun, misalnya, \"Bot Minecraft Saya\".",
+      "form": {
+        "friendlyName": {
+          "label": "Nama ramah",
+          "placeholder": "Bot Minecraft Saya",
+          "description": "Nama yang ingin Anda berikan untuk instansi ini.",
+          "min": "Nama ramah harus memiliki minimal 3 karakter.",
+          "max": "Nama ramah harus maksimal 32 karakter.",
+          "regex": "Nama ramah hanya boleh berisi huruf, angka, dan spasi"
+        },
+        "cancel": "Batal",
+        "create": "Buat"
+      },
+      "createToast": {
+        "loading": "Membuat instansi...",
+        "success": "Instansi berhasil dibuat",
+        "error": "Gagal membuat instansi"
+      }
+    },
+    "import": {
+      "main": {
+        "fromFile": "Dari berkas",
+        "fromUrl": "Dari URL",
+        "firstClipboardItem": "Terdapat beberapa item di clipboard Anda, hanya menggunakan yang pertama.",
+        "fromClipboard": "Dari clipboard",
+        "textarea": {
+          "placeholder": "Masukkan teks di sini...",
+          "submit": "Muat dari teks"
+        }
+      },
+      "url": {
+        "description": "Memuat dari URL akan membuat server SoulFire melakukan permintaan GET ke server tujuan dan menggunakan responnya sebagai data.",
+        "form": {
+          "url": {
+            "placeholder": "Masukkan URL di sini...",
+            "empty": "Harap masukkan URL yang valid"
+          }
+        },
+        "submit": "Muat dari URL",
+        "toast": {
+          "loading": "Mengunduh data...",
+          "success": "Data berhasil dimuat!",
+          "error": "Gagal mengunduh data"
+        }
+      }
+    }
+  },
+  "commandInput": {
+    "placeholder": "Masukkan perintah (ketik 'help' untuk daftar)"
+  },
+  "controls": {
+    "start": "Mulai",
+    "resume": "Lanjutkan",
+    "pause": "Jeda",
+    "stop": "Berhenti",
+    "startToast": {
+      "loading": "Memulai serangan...",
+      "success": "Serangan berhasil dimulai",
+      "error": "Gagal memulai serangan"
+    },
+    "resumeToast": {
+      "loading": "Melanjutkan serangan...",
+      "success": "Serangan berhasil dilanjutkan",
+      "error": "Gagal melanjutkan serangan"
+    },
+    "pauseToast": {
+      "loading": "Menjeda serangan...",
+      "success": "Serangan berhasil dijeda",
+      "error": "Gagal menjeda serangan"
+    },
+    "stopToast": {
+      "loading": "Menghentikan serangan...",
+      "success": "Serangan berhasil dihentikan",
+      "error": "Gagal menghentikan serangan"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "Tidak Ada Akun yang Dikonfigurasi",
+      "noAccountsDescription": "Anda perlu mengimpor akun sebelum memulai serangan. Anda meminta {{required}} bot.",
+      "notEnoughTitle": "Akun Tidak Cukup",
+      "notEnoughDescription": "Anda meminta {{required}} bot namun hanya memiliki {{available}} akun diimpor.",
+      "hint": "Anda dapat menghasilkan akun offline atau mengimpor akun dari halaman Pengaturan Akun.",
+      "continueWithExisting": "Lanjutkan dengan {{count}} akun",
+      "generateAccounts": "Buat Akun"
+    }
+  },
+  "icon": {
+    "invalidName": "Nama ikon tidak valid: {{name}}"
+  },
+  "dataTable": {
+    "noResults": "Tidak ada hasil.",
+    "rowsSelected": "{{amount}} dari {{total}} baris dipilih",
+    "rowsPerPage": "Baris per halaman",
+    "currentPage": "Halaman {{page}} dari {{total}}",
+    "goFirst": "Ke halaman pertama",
+    "goPrevious": "Ke halaman sebelumnya",
+    "goNext": "Ke halaman berikutnya",
+    "goLast": "Ke halaman terakhir",
+    "selectAll": "Pilih semua",
+    "selectRow": "Pilih baris"
+  },
+  "pluginCard": {
+    "version": "Versi: {{version}}",
+    "author": "Penulis: {{author}}",
+    "license": "Lisensi: {{license}}",
+    "website": "Situs web"
+  },
+  "settingsPage": {
+    "namespacesNotFound": "Namespace pengaturan tidak ditemukan",
+    "stringList": {
+      "placeholder": "Tambahkan entri baru...",
+      "add": "Tambah",
+      "remove": "Hapus"
+    },
+    "invalidNumberToast": {
+      "title": "Nomor tidak valid!",
+      "description": "Nilai harus antara {{min}} dan {{max}}"
+    }
+  },
+  "terminal": {
+    "noLogs": "🧙 Sepertinya tidak ada log untuk ditampilkan; coba jalankan beberapa perintah!",
+    "demo-1": "Selamat datang di mode demo! 🧪",
+    "demo-2": "Ini adalah instansi SoulFire hanya-baca",
+    "demo-3": "Jelajahi semua menu dan fitur sebelum memutuskan untuk menginstal SoulFire :D",
+    "demo-4": "Silakan bergabung dengan server Discord kami jika ingin menghubungi: https://soulfiremc.com/discord"
+  },
+  "uiBreadcrumb": {
+    "more": "Lainnya"
+  },
+  "uiDialog": {
+    "close": "Tutup"
+  },
+  "uiSheet": {
+    "close": "Tutup"
+  },
+  "uiSidebar": {
+    "toggle": "Tampilkan/Sembunyikan Sidebar"
+  },
+  "castMenu": {
+    "title": "Cast",
+    "disconnected": "Terputus dari {{device}}",
+    "alreadyConnected": "Sudah terhubung ke {{device}}",
+    "connectToast": {
+      "loading": "Menghubungkan ke {{device}}...",
+      "success": "Terhubung ke {{device}}",
+      "error": "Gagal terhubung ke {{device}}"
+    },
+    "noDevices": "Tidak ada perangkat ditemukan",
+    "broadcastLabel": "Uji siaran",
+    "broadcastToast": {
+      "loading": "Mengirim pesan siaran...",
+      "success": "Pesan berhasil disiarkan!",
+      "error": "Gagal menyiarkan pesan"
+    }
+  },
+  "instanceSidebar": {
+    "readDocumentation": "Baca dokumentasi",
+    "backToDashboard": "Kembali ke dasbor",
+    "deleteToast": {
+      "loading": "Menghapus instansi...",
+      "success": "Instansi dihapus",
+      "error": "Gagal menghapus instansi"
+    },
+    "instancesGroup": "Instansi",
+    "createInstance": "Buat Instansi",
+    "loadProfileToast": {
+      "loading": "Memuat profil...",
+      "success": "Profil dimuat",
+      "error": "Gagal memuat profil"
+    },
+    "loadProfile": "Muat Profil",
+    "loadFromFile": "Muat dari berkas",
+    "profileSaved": "Profil tersimpan",
+    "saveProfile": "Simpan Profil",
+    "deleteInstance": "Hapus Instansi",
+    "controlsGroup": "Kontrol",
+    "overview": "Ikhtisar",
+    "terminal": "Terminal",
+    "audit-log": "Log Audit",
+    "settingsGroup": "Pengaturan",
+    "pluginsGroup": "Plugin",
+    "pluginSettings": "Pengaturan Plugin",
+    "botSettings": "Pengaturan Bot",
+    "accountSettings": "Pengaturan Akun",
+    "metaSettings": "Pengaturan Instansi",
+    "proxySettings": "Pengaturan Proxy",
+    "aiSettings": "Pengaturan AI",
+    "pathfindingSettings": "Pengaturan Pathfinding",
+    "discoverPlugins": "Plugin",
+    "instanceScripts": "Skrip"
+  },
+  "userSidebar": {
+    "readDocumentation": "Baca dokumentasi",
+    "userGroup": "Pengguna",
+    "instances": "Instansi",
+    "access": "Akses",
+    "createInstance": "Buat Instansi",
+    "settings": "Pengaturan",
+    "adminGroup": "Admin",
+    "adminOverview": "Ikhtisar",
+    "adminLogs": "Log",
+    "adminTerminal": "Terminal",
+    "users": "Pengguna",
+    "adminScripts": "Skrip",
+    "serverSettings": "Pengaturan Server",
+    "devSettings": "Pengaturan Dev",
+    "theme": {
+      "title": "Tema",
+      "system": "Sistem",
+      "light": "Terang",
+      "dark": "Gelap"
+    },
+    "terminal": {
+      "title": "Terminal"
+    },
+    "configDir": "Direktori konfigurasi",
+    "dataDir": "Direktori data",
+    "about": "Tentang",
+    "logOut": "Keluar",
+    "logOutToast": {
+      "loading": "Keluar...",
+      "success": "Telah keluar",
+      "error": "Gagal keluar"
+    },
+    "exit": "Keluar",
+    "stopImpersonating": "Berhenti menyamar",
+    "helpTranslate": "Terjemahkan SoulFire"
+  },
+  "sidebar": {
+    "documentation": "Dokumentasi",
+    "buyMeACoffee": "Beli saya kopi",
+    "discord": "Discord"
+  },
+  "breadcrumbs": {
+    "admin": "Admin",
+    "settings": "Pengaturan",
+    "controls": "Kontrol",
+    "plugins": "Plugin"
+  },
+  "noInstancesFound": "Tidak ada instansi ditemukan",
+  "pageName": {
+    "terminal": "Terminal",
+    "logs": "Log",
+    "audit-log": "Log Audit",
+    "instances": "Instansi",
+    "access": "Akses",
+    "settings": "Pengaturan",
+    "proxySettings": "Pengaturan Proxy",
+    "overview": "Ikhtisar",
+    "users": "Pengguna",
+    "accountSettings": "Pengaturan Akun",
+    "metaSettings": "Pengaturan Instansi",
+    "discoverPlugins": "Plugin",
+    "adminScripts": "Skrip",
+    "instanceScripts": "Skrip"
+  },
+  "access": {
+    "webdav": {
+      "title": "Akses WebDAV",
+      "description": "SoulFire memungkinkan Anda mengakses file instansi, skrip dan lainnya menggunakan protokol WebDAV.",
+      "publicAddress": "Alamat WebDAV Publik",
+      "personalToken": "Token WebDAV Pribadi",
+      "securityWarning": "Token WebDAV pribadi Anda sangat penting. Jangan bagikan kepada siapapun. Token ini digunakan untuk mengautentikasi Anda saat mengakses file. Gunakan ini sebagai kata sandi WebDAV saat menghubungkan. Nama pengguna tidak diperlukan, jika diminta Anda bisa menggunakan nilai apapun yang diinginkan. (misal 'soulfire')",
+      "addressDescription": "Ini adalah alamat yang perlu Anda gunakan untuk mengakses file Anda. Terkadang Anda perlu menggunakan dav:// atau davs:// sebagai pengganti http(s)://."
+    },
+    "api": {
+      "title": "Akses API",
+      "description": "gRPC HTTP API SoulFire memungkinkan Anda berinteraksi dengan instansi secara terprogram menggunakan permintaan web.",
+      "publicAddress": "Alamat API Publik",
+      "personalToken": "Token API Pribadi",
+      "securityWarning": "Token API pribadi Anda sangat penting. Jangan bagikan kepada siapapun. Token ini digunakan untuk mengautentikasi Anda saat mengakses API.",
+      "addressDescription": "Ini adalah alamat yang perlu Anda gunakan untuk mengakses API."
+    },
+    "token": {
+      "generate": "Buat Token",
+      "placeholder": "Klik 'Buat Token' di bawah",
+      "generating": "Membuat token...",
+      "success": "Token berhasil dibuat",
+      "error": "Gagal membuat token",
+      "copy": "Salin Token"
+    },
+    "address": {
+      "copy": "Salin Alamat"
+    },
+    "documentation": "Dokumentasi",
+    "howToConnect": "Cara menghubungkan"
+  },
+  "uploadToMcLogs": "Unggah ke mclo.gs",
+  "mcLogsUpload": {
+    "loading": "Mengunggah ke mclo.gs...",
+    "success": "Berhasil diunggah ke mclo.gs! Lihat di sini: {{url}}",
+    "error": "Gagal mengunggah ke mclo.gs"
+  },
+  "copyToClipboard": "Salin ke clipboard",
+  "clipboardCopy": {
+    "loading": "Menyalin ke clipboard...",
+    "success": "\"{{content}}\" berhasil disalin ke clipboard",
+    "error": "Gagal menyalin ke clipboard"
+  },
+  "instanceState": {
+    "starting": "Memulai",
+    "running": "Berjalan",
+    "paused": "Dijeda",
+    "stopping": "Menghentikan",
+    "stopped": "Dihentikan"
+  },
+  "auditLog": {
+    "filterPlaceholder": "Filter log audit...",
+    "user": "Pengguna",
+    "action": "Aksi",
+    "timestamp": "Waktu",
+    "executedCommand": "Perintah dijalankan: {{data}}",
+    "startedAttack": "Memulai serangan",
+    "resumedAttack": "Melanjutkan serangan",
+    "pausedAttack": "Menjeda serangan",
+    "stoppedAttack": "Menghentikan serangan"
+  },
+  "pickADate": "Pilih tanggal",
+  "scripts": {
+    "filterPlaceholder": "Filter skrip...",
+    "baseScriptDialog": {
+      "form": {
+        "scriptName": {
+          "min": "Nama skrip minimal 3 karakter",
+          "max": "Nama skrip maksimal 32 karakter",
+          "regex": "Nama skrip harus huruf kecil, diawali karakter alfanumerik, diikuti karakter alfanumerik atau tanda hubung, dan diakhiri karakter alfanumerik.",
+          "label": "Nama",
+          "placeholder": "Skrip Saya",
+          "description": "Nama skrip."
+        },
+        "elevatedPermissions": {
+          "label": "Izin Tertinggi",
+          "description": "Apakah skrip dijalankan dengan izin tertinggi. Hanya admin yang bisa mengaktifkan opsi ini."
+        }
+      }
+    },
+    "addScriptDialog": {
+      "title": "Tambah skrip baru",
+      "description": "Skrip adalah program kecil yang berjalan di server SoulFire. Skrip dapat digunakan untuk mengotomasi tugas, membuat perilaku khusus, dan lainnya.",
+      "form": {
+        "cancel": "Batal",
+        "add": "Tambah"
+      }
+    },
+    "updateScriptDialog": {
+      "title": "Perbarui skrip",
+      "description": "Perbarui informasi skrip.",
+      "form": {
+        "cancel": "Batal",
+        "update": "Perbarui"
+      }
+    },
+    "removeToast": {
+      "loading": "Menghapus skrip...",
+      "success": "Skrip dihapus!",
+      "error": "Gagal menghapus skrip"
+    },
+    "addToast": {
+      "loading": "Menambah skrip...",
+      "success": "Skrip berhasil ditambahkan!",
+      "error": "Gagal menambah skrip"
+    },
+    "updateToast": {
+      "loading": "Memperbarui skrip...",
+      "success": "Skrip berhasil diperbarui!",
+      "error": "Gagal memperbarui skrip"
+    },
+    "restartToast": {
+      "loading": "Merestart skrip...",
+      "success": "Skrip berhasil direstart!",
+      "error": "Gagal merestart skrip"
+    },
+    "table": {
+      "type": "Tipe",
+      "scriptName": "Nama",
+      "language": "Bahasa",
+      "elevatedPermissions": "Izin Tertinggi",
+      "createdAt": "Dibuat",
+      "actions": "Aksi"
+    },
+    "globalScript": "Global",
+    "instanceScript": "Instansi"
+  }
+}

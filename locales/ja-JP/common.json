@@ -1,0 +1,425 @@
+{
+  "locale": "ロケール",
+  "cancel": "キャンセル",
+  "error": {
+    "noAddressOrToken": "サーバーアドレスまたはトークンが見つかりません",
+    "page": {
+      "title": "エラー",
+      "description": "ページの読み込み中にエラーが発生しました。詳細はコンソールでご確認ください。",
+      "logOut": "ログアウト",
+      "reloadPage": "ページを再読み込み"
+    },
+    "connectionFailed": "SoulFireサーバーへの接続に失敗しました。"
+  },
+  "notFound": {
+    "page": {
+      "title": "見つかりません",
+      "description": "この場所にページが見つかりませんでした",
+      "logOut": "ログアウト",
+      "reloadPage": "ページを再読み込み"
+    }
+  },
+  "pending": {
+    "connecting": "接続中..."
+  },
+  "dialog": {
+    "about": {
+      "title": "SoulFireについて",
+      "description": "SoulFireクライアントのバージョン{{version}}を実行中です。",
+      "type": "種類",
+      "value": "値",
+      "fields": {
+        "operatingSystem": "オペレーティングシステム",
+        "platform": "プラットフォーム",
+        "locale": "ロケール",
+        "architecture": "アーキテクチャ",
+        "environment": "環境",
+        "browser": "ブラウザ"
+      },
+      "close": "閉じる"
+    },
+    "createInstance": {
+      "title": "新しいインスタンスを作成",
+      "description": "インスタンスを区別するために、わかりやすい名前が必要です。どんな名前でも構いません。例：「マイMinecraftボット」",
+      "form": {
+        "friendlyName": {
+          "label": "わかりやすい名前",
+          "placeholder": "マイMinecraftボット",
+          "description": "このインスタンスに付けたい名前です。",
+          "min": "わかりやすい名前は3文字以上である必要があります。",
+          "max": "わかりやすい名前は最大32文字である必要があります。",
+          "regex": "わかりやすい名前は、文字・数字・スペースのみ使用できます"
+        },
+        "cancel": "キャンセル",
+        "create": "作成"
+      },
+      "createToast": {
+        "loading": "インスタンスを作成中...",
+        "success": "インスタンスの作成に成功しました",
+        "error": "インスタンスの作成に失敗しました"
+      }
+    },
+    "import": {
+      "main": {
+        "fromFile": "ファイルから",
+        "fromUrl": "URLから",
+        "firstClipboardItem": "クリップボードに複数のアイテムがありましたが、最初のもののみ使用します。",
+        "fromClipboard": "クリップボードから",
+        "textarea": {
+          "placeholder": "ここにテキストを入力...",
+          "submit": "テキストから読み込む"
+        }
+      },
+      "url": {
+        "description": "URLからの読み込みは、SoulFireサーバーが対象サーバーにGETリクエストを送り、そのレスポンスをデータとして使用します。",
+        "form": {
+          "url": {
+            "placeholder": "ここにURLを入力...",
+            "empty": "有効なURLを入力してください"
+          }
+        },
+        "submit": "URLから読み込む",
+        "toast": {
+          "loading": "データをダウンロード中...",
+          "success": "データを読み込みました！",
+          "error": "データのダウンロードに失敗しました"
+        }
+      }
+    }
+  },
+  "commandInput": {
+    "placeholder": "コマンドを入力 (一覧は「help」と入力)"
+  },
+  "controls": {
+    "start": "開始",
+    "resume": "再開",
+    "pause": "一時停止",
+    "stop": "停止",
+    "startToast": {
+      "loading": "攻撃を開始しています...",
+      "success": "攻撃が正常に開始されました",
+      "error": "攻撃の開始に失敗しました"
+    },
+    "resumeToast": {
+      "loading": "攻撃を再開しています...",
+      "success": "攻撃が正常に再開されました",
+      "error": "攻撃の再開に失敗しました"
+    },
+    "pauseToast": {
+      "loading": "攻撃を一時停止しています...",
+      "success": "攻撃が正常に一時停止されました",
+      "error": "攻撃の一時停止に失敗しました"
+    },
+    "stopToast": {
+      "loading": "攻撃を停止しています...",
+      "success": "攻撃が正常に停止されました",
+      "error": "攻撃の停止に失敗しました"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "アカウントが設定されていません",
+      "noAccountsDescription": "攻撃を開始するにはアカウントをインポートする必要があります。リクエストしたボット数: {{required}}体。",
+      "notEnoughTitle": "アカウントが不足しています",
+      "notEnoughDescription": "{{required}}体のボットをリクエストしましたが、インポート済みアカウントは{{available}}件のみです。",
+      "hint": "オフラインアカウントを生成するか、アカウント設定ページからアカウントをインポートできます。",
+      "continueWithExisting": "{{count}}件のアカウントで続行",
+      "generateAccounts": "アカウントを生成"
+    }
+  },
+  "icon": {
+    "invalidName": "無効なアイコン名: {{name}}"
+  },
+  "dataTable": {
+    "noResults": "結果がありません。",
+    "rowsSelected": "{{total}}件中{{amount}}件の行が選択されました",
+    "rowsPerPage": "1ページあたりの行数",
+    "currentPage": "{{total}}ページ中{{page}}ページ",
+    "goFirst": "最初のページへ移動",
+    "goPrevious": "前のページへ移動",
+    "goNext": "次のページへ移動",
+    "goLast": "最後のページへ移動",
+    "selectAll": "すべて選択",
+    "selectRow": "行を選択"
+  },
+  "pluginCard": {
+    "version": "バージョン: {{version}}",
+    "author": "作成者: {{author}}",
+    "license": "ライセンス: {{license}}",
+    "website": "ウェブサイト"
+  },
+  "settingsPage": {
+    "namespacesNotFound": "設定のネームスペースが見つかりません",
+    "stringList": {
+      "placeholder": "新しいエントリを追加...",
+      "add": "追加",
+      "remove": "削除"
+    },
+    "invalidNumberToast": {
+      "title": "無効な数値です！",
+      "description": "値は{{min}}〜{{max}}の間である必要があります"
+    }
+  },
+  "terminal": {
+    "noLogs": "🧙 表示できるログがありません。コマンドを実行してみてください！",
+    "demo-1": "デモモードへようこそ！🧪",
+    "demo-2": "これはSoulFireの読み取り専用インスタンスです",
+    "demo-3": "SoulFireをインストールする前に、すべてのメニューや機能をチェックしましょう :D",
+    "demo-4": "連絡を取りたい方は、Discordサーバーにお気軽にご参加ください: https://soulfiremc.com/discord"
+  },
+  "uiBreadcrumb": {
+    "more": "もっと見る"
+  },
+  "uiDialog": {
+    "close": "閉じる"
+  },
+  "uiSheet": {
+    "close": "閉じる"
+  },
+  "uiSidebar": {
+    "toggle": "サイドバーの切り替え"
+  },
+  "castMenu": {
+    "title": "キャスト",
+    "disconnected": "{{device}}から切断されました",
+    "alreadyConnected": "すでに{{device}}に接続しています",
+    "connectToast": {
+      "loading": "{{device}}に接続中...",
+      "success": "{{device}}に接続しました",
+      "error": "{{device}}への接続に失敗しました"
+    },
+    "noDevices": "デバイスが見つかりません",
+    "broadcastLabel": "ブロードキャストテスト",
+    "broadcastToast": {
+      "loading": "メッセージをブロードキャスト中...",
+      "success": "メッセージがブロードキャストされました！",
+      "error": "メッセージのブロードキャストに失敗しました"
+    }
+  },
+  "instanceSidebar": {
+    "readDocumentation": "ドキュメントを読む",
+    "backToDashboard": "ダッシュボードに戻る",
+    "deleteToast": {
+      "loading": "インスタンスを削除中...",
+      "success": "インスタンスを削除しました",
+      "error": "インスタンスの削除に失敗しました"
+    },
+    "instancesGroup": "インスタンス",
+    "createInstance": "インスタンス作成",
+    "loadProfileToast": {
+      "loading": "プロファイルを読み込み中...",
+      "success": "プロファイルを読み込みました",
+      "error": "プロファイルの読み込みに失敗しました"
+    },
+    "loadProfile": "プロファイルを読み込む",
+    "loadFromFile": "ファイルから読み込む",
+    "profileSaved": "プロファイルを保存しました",
+    "saveProfile": "プロファイルを保存",
+    "deleteInstance": "インスタンスを削除",
+    "controlsGroup": "コントロール",
+    "overview": "概要",
+    "terminal": "ターミナル",
+    "audit-log": "監査ログ",
+    "settingsGroup": "設定",
+    "pluginsGroup": "プラグイン",
+    "pluginSettings": "プラグイン設定",
+    "botSettings": "ボット設定",
+    "accountSettings": "アカウント設定",
+    "metaSettings": "インスタンス設定",
+    "proxySettings": "プロキシ設定",
+    "aiSettings": "AI設定",
+    "pathfindingSettings": "パスファインディング設定",
+    "discoverPlugins": "プラグイン",
+    "instanceScripts": "スクリプト"
+  },
+  "userSidebar": {
+    "readDocumentation": "ドキュメントを読む",
+    "userGroup": "ユーザー",
+    "instances": "インスタンス",
+    "access": "アクセス",
+    "createInstance": "インスタンス作成",
+    "settings": "設定",
+    "adminGroup": "管理者",
+    "adminOverview": "概要",
+    "adminLogs": "ログ",
+    "adminTerminal": "ターミナル",
+    "users": "ユーザー",
+    "adminScripts": "スクリプト",
+    "serverSettings": "サーバー設定",
+    "devSettings": "開発者設定",
+    "theme": {
+      "title": "テーマ",
+      "system": "システム",
+      "light": "ライト",
+      "dark": "ダーク"
+    },
+    "terminal": {
+      "title": "ターミナル"
+    },
+    "configDir": "設定ディレクトリ",
+    "dataDir": "データディレクトリ",
+    "about": "情報",
+    "logOut": "ログアウト",
+    "logOutToast": {
+      "loading": "ログアウト中...",
+      "success": "ログアウトしました",
+      "error": "ログアウトに失敗しました"
+    },
+    "exit": "終了",
+    "stopImpersonating": "なりすましをやめる",
+    "helpTranslate": "SoulFireの翻訳を手伝う"
+  },
+  "sidebar": {
+    "documentation": "ドキュメント",
+    "buyMeACoffee": "コーヒーをおごってください",
+    "discord": "Discord"
+  },
+  "breadcrumbs": {
+    "admin": "管理者",
+    "settings": "設定",
+    "controls": "コントロール",
+    "plugins": "プラグイン"
+  },
+  "noInstancesFound": "インスタンスが見つかりません",
+  "pageName": {
+    "terminal": "ターミナル",
+    "logs": "ログ",
+    "audit-log": "監査ログ",
+    "instances": "インスタンス",
+    "access": "アクセス",
+    "settings": "設定",
+    "proxySettings": "プロキシ設定",
+    "overview": "概要",
+    "users": "ユーザー",
+    "accountSettings": "アカウント設定",
+    "metaSettings": "インスタンス設定",
+    "discoverPlugins": "プラグイン",
+    "adminScripts": "スクリプト",
+    "instanceScripts": "スクリプト"
+  },
+  "access": {
+    "webdav": {
+      "title": "WebDAVアクセス",
+      "description": "SoulFireはWebDAVプロトコルでインスタンス、スクリプト、その他のファイルにアクセスできます。",
+      "publicAddress": "公開WebDAVアドレス",
+      "personalToken": "個人用WebDAVトークン",
+      "securityWarning": "あなたの個人用WebDAVトークンは非常に重要です。誰とも共有しないでください。ファイルへアクセスする際の認証に使われます。WebDAVに接続する際にはパスワードとして使ってください。ユーザー名は不要ですが、必要な場合は任意の値（例：「soulfire」）を入力してください。",
+      "addressDescription": "これは自分のファイルにアクセスする際に使用するアドレスです。場合によってはhttp(s)://の代わりにdav://またはdavs://を使う必要があります。"
+    },
+    "api": {
+      "title": "APIアクセス",
+      "description": "SoulFireのgRPC HTTP APIを使うことで、ウェブリクエストでインスタンスをプログラム的に操作できます。",
+      "publicAddress": "公開APIアドレス",
+      "personalToken": "個人用APIトークン",
+      "securityWarning": "あなたの個人用APIトークンは非常に重要です。誰とも共有しないでください。APIへアクセスする際の認証に使われます。",
+      "addressDescription": "これがAPIへアクセスする際に必要なアドレスです。"
+    },
+    "token": {
+      "generate": "トークンを生成",
+      "placeholder": "下の「トークンを生成」をクリックしてください",
+      "generating": "トークンを生成中...",
+      "success": "トークンの生成に成功しました",
+      "error": "トークンの生成に失敗しました",
+      "copy": "トークンをコピー"
+    },
+    "address": {
+      "copy": "アドレスをコピー"
+    },
+    "documentation": "ドキュメント",
+    "howToConnect": "接続方法"
+  },
+  "uploadToMcLogs": "mclo.gsにアップロード",
+  "mcLogsUpload": {
+    "loading": "mclo.gsにアップロード中...",
+    "success": "mclo.gsにアップロードしました！こちらで表示: {{url}}",
+    "error": "mclo.gsへのアップロードに失敗しました"
+  },
+  "copyToClipboard": "クリップボードにコピー",
+  "clipboardCopy": {
+    "loading": "クリップボードにコピー中...",
+    "success": "「{{content}}」をクリップボードにコピーしました",
+    "error": "クリップボードへのコピーに失敗しました"
+  },
+  "instanceState": {
+    "starting": "開始中",
+    "running": "稼働中",
+    "paused": "一時停止中",
+    "stopping": "停止中",
+    "stopped": "停止済み"
+  },
+  "auditLog": {
+    "filterPlaceholder": "監査ログを絞り込み...",
+    "user": "ユーザー",
+    "action": "アクション",
+    "timestamp": "タイムスタンプ",
+    "executedCommand": "コマンドを実行: {{data}}",
+    "startedAttack": "攻撃を開始しました",
+    "resumedAttack": "攻撃を再開しました",
+    "pausedAttack": "攻撃を一時停止しました",
+    "stoppedAttack": "攻撃を停止しました"
+  },
+  "pickADate": "日付を選択",
+  "scripts": {
+    "filterPlaceholder": "スクリプトを絞り込み...",
+    "baseScriptDialog": {
+      "form": {
+        "scriptName": {
+          "min": "スクリプト名は3文字以上である必要があります",
+          "max": "スクリプト名は最大32文字までです",
+          "regex": "スクリプト名は小文字で始まり、英数字で始まる必要があり、その後は英数字またはハイフン、最後も英数字で終わる必要があります。",
+          "label": "名前",
+          "placeholder": "マイスクリプト",
+          "description": "スクリプトの名前です。"
+        },
+        "elevatedPermissions": {
+          "label": "管理者権限",
+          "description": "スクリプトを管理者権限で実行するかどうか。管理者のみこのオプションを有効にできます。"
+        }
+      }
+    },
+    "addScriptDialog": {
+      "title": "新しいスクリプトを追加",
+      "description": "スクリプトはSoulFireサーバー上で動作する小さなプログラムです。タスクの自動化やカスタム動作の作成などに使えます。",
+      "form": {
+        "cancel": "キャンセル",
+        "add": "追加"
+      }
+    },
+    "updateScriptDialog": {
+      "title": "スクリプトを更新",
+      "description": "スクリプトの情報を更新します。",
+      "form": {
+        "cancel": "キャンセル",
+        "update": "更新"
+      }
+    },
+    "removeToast": {
+      "loading": "スクリプトを削除中...",
+      "success": "スクリプトを削除しました！",
+      "error": "スクリプトの削除に失敗しました"
+    },
+    "addToast": {
+      "loading": "スクリプトを追加中...",
+      "success": "スクリプトを追加しました！",
+      "error": "スクリプトの追加に失敗しました"
+    },
+    "updateToast": {
+      "loading": "スクリプトを更新中...",
+      "success": "スクリプトを更新しました！",
+      "error": "スクリプトの更新に失敗しました"
+    },
+    "restartToast": {
+      "loading": "スクリプトを再起動中...",
+      "success": "スクリプトを再起動しました！",
+      "error": "スクリプトの再起動に失敗しました"
+    },
+    "table": {
+      "type": "種類",
+      "scriptName": "名前",
+      "language": "言語",
+      "elevatedPermissions": "管理者権限",
+      "createdAt": "作成日",
+      "actions": "操作"
+    },
+    "globalScript": "グローバル",
+    "instanceScript": "インスタンス"
+  }
+}

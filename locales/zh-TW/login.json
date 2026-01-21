@@ -1,0 +1,103 @@
+{
+  "header": {
+    "image": {
+      "alt": "SoulFire 標誌"
+    },
+    "title": "SoulFire"
+  },
+  "newUser": "初次使用 SoulFire？我們建議先閱讀 <a>入門指南</a>。",
+  "connect": {
+    "title": "連接到 SoulFire 伺服器",
+    "description": "選擇要連接的 SoulFire 伺服器類型。",
+    "integrated": {
+      "title": "整合式伺服器（本機）",
+      "description": "在您的電腦上運行 SoulFire 伺服器。安裝將自動進行，無需設定。（需要 Desktop/Android 應用程式）"
+    },
+    "dedicated": {
+      "title": "專用伺服器（遠端）",
+      "description": "連接到遠端的 SoulFire 伺服器實例。您需要提供伺服器的位址和權杖。"
+    },
+    "demo": {
+      "title": "演示伺服器",
+      "description": "模擬帶有演示資料的虛擬伺服器。此伺服器為唯讀，您無法對其進行任何更改。"
+    }
+  },
+  "integrated": {
+    "preparing": "正在準備啟動整合式伺服器...",
+    "toast": {
+      "loading": "正在啟動整合式伺服器...",
+      "success": "整合式伺服器已啟動",
+      "error": "啟動整合式伺服器失敗"
+    },
+    "description": "整合式伺服器在您的電腦本機運行。如有需要，請在下方設定 Java 啟動參數。",
+    "form": {
+      "jvmArgs": {
+        "title": "JVM 參數",
+        "description": "SoulFire Java 虛擬機參數。要使用 4GB 記憶體，請新增 <bold>-Xmx4G</bold>。預設為您記憶體的 25%。",
+        "placeholder": "在此輸入您的 JVM 參數"
+      },
+      "back": "返回",
+      "start": "開始"
+    },
+    "mobile": {
+      "description": "如要在行動裝置上執行整合式伺服器，您需要完成幾個手動步驟。",
+      "form": {
+        "termuxCommand": {
+          "title": "Termux 命令",
+          "description": "請安裝 <a>Termux 應用程式</a>，然後在 Termux 中執行以下指令以安裝 SoulFire 伺服器。隨後，您需要執行 <copy>generate-token api</copy> 指令來產生權杖。然後在下方輸入權杖。"
+        },
+        "token": {
+          "title": "權杖",
+          "description": "用於本機伺服器驗證的權杖。",
+          "placeholder": "密碼權杖"
+        },
+        "back": "返回",
+        "connect": "連接"
+      }
+    }
+  },
+  "dedicated": {
+    "description": "請輸入您要連接的 SoulFire 伺服器位址和權杖。",
+    "toast": {
+      "loading": "正在連接伺服器...",
+      "success": "已連接到伺服器",
+      "error": "連接伺服器失敗"
+    },
+    "form": {
+      "address": {
+        "title": "位址",
+        "description": "您的 SoulFire 伺服器位址。",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "權杖",
+        "placeholder": "密碼權杖",
+        "description": "用於驗證伺服器的權杖。"
+      },
+      "email": {
+        "title": "電子郵件",
+        "placeholder": "root@soulfiremc.com",
+        "description": "您的 SoulFire 帳戶電子郵件信箱。"
+      },
+      "back": "返回",
+      "useToken": "使用權杖",
+      "useEmail": "使用電子郵件",
+      "login": "登入"
+    }
+  },
+  "emailCode": {
+    "description": "如果您擁有帳戶，我們已發送驗證碼到 <bold>{{email}}</bold>。請在下方輸入驗證碼。",
+    "toast": {
+      "loading": "正在檢查驗證碼...",
+      "success": "已登入",
+      "error": "驗證碼無效"
+    },
+    "back": "返回"
+  },
+  "footer": {
+    "version": "SoulFire 用戶端 {{version}} - {{environment}}",
+    "preview": "正在尋找預覽版本？",
+    "production": "正在尋找正式版本？",
+    "helpTranslate": "協助翻譯 SoulFire"
+  }
+}

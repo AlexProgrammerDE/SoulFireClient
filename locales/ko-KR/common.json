@@ -1,0 +1,425 @@
+{
+  "locale": "로케일",
+  "cancel": "취소",
+  "error": {
+    "noAddressOrToken": "서버 주소나 토큰을 찾을 수 없습니다",
+    "page": {
+      "title": "오류",
+      "description": "페이지를 불러오는 도중 오류가 발생했습니다. 자세한 정보는 콘솔에서 확인할 수 있습니다.",
+      "logOut": "로그아웃",
+      "reloadPage": "페이지 새로고침"
+    },
+    "connectionFailed": "SoulFire 서버 연결에 실패했습니다."
+  },
+  "notFound": {
+    "page": {
+      "title": "찾을 수 없음",
+      "description": "이 위치에서는 페이지를 찾을 수 없습니다",
+      "logOut": "로그아웃",
+      "reloadPage": "페이지 새로고침"
+    }
+  },
+  "pending": {
+    "connecting": "연결 중..."
+  },
+  "dialog": {
+    "about": {
+      "title": "SoulFire 정보",
+      "description": "현재 SoulFire 클라이언트 버전 {{version}}을(를) 사용 중입니다.",
+      "type": "종류",
+      "value": "값",
+      "fields": {
+        "operatingSystem": "운영 체제",
+        "platform": "플랫폼",
+        "locale": "로케일",
+        "architecture": "아키텍처",
+        "environment": "환경",
+        "browser": "브라우저"
+      },
+      "close": "닫기"
+    },
+    "createInstance": {
+      "title": "새 인스턴스 만들기",
+      "description": "인스턴스를 구분할 수 있도록 친근한 이름이 필요합니다. 원하는 어떤 이름이든 사용할 수 있습니다. 예시: \"내 마인크래프트 봇\"",
+      "form": {
+        "friendlyName": {
+          "label": "친근한 이름",
+          "placeholder": "내 마인크래프트 봇",
+          "description": "이 인스턴스에 부여할 이름입니다.",
+          "min": "친근한 이름은 최소 3자 이상이어야 합니다.",
+          "max": "친근한 이름은 최대 32자까지 사용할 수 있습니다.",
+          "regex": "친근한 이름은 영문자, 숫자, 공백만 사용할 수 있습니다"
+        },
+        "cancel": "취소",
+        "create": "생성"
+      },
+      "createToast": {
+        "loading": "인스턴스 생성 중...",
+        "success": "인스턴스가 성공적으로 생성되었습니다",
+        "error": "인스턴스 생성에 실패했습니다"
+      }
+    },
+    "import": {
+      "main": {
+        "fromFile": "파일에서",
+        "fromUrl": "URL에서",
+        "firstClipboardItem": "클립보드에 여러 항목이 감지되어 첫 번째 항목만 사용합니다.",
+        "fromClipboard": "클립보드에서",
+        "textarea": {
+          "placeholder": "여기에 텍스트를 입력하세요...",
+          "submit": "텍스트에서 불러오기"
+        }
+      },
+      "url": {
+        "description": "URL에서 불러오면 SoulFire 서버가 대상 서버에 GET 요청을 보내고 응답을 데이터로 사용합니다.",
+        "form": {
+          "url": {
+            "placeholder": "여기에 URL을 입력하세요...",
+            "empty": "유효한 URL을 입력하세요"
+          }
+        },
+        "submit": "URL에서 불러오기",
+        "toast": {
+          "loading": "데이터 다운로드 중...",
+          "success": "데이터가 불러와졌습니다!",
+          "error": "데이터 다운로드에 실패했습니다"
+        }
+      }
+    }
+  },
+  "commandInput": {
+    "placeholder": "명령 입력 (목록이 필요하면 'help' 입력)"
+  },
+  "controls": {
+    "start": "시작",
+    "resume": "다시 시작",
+    "pause": "일시 정지",
+    "stop": "중지",
+    "startToast": {
+      "loading": "공격 시작 중...",
+      "success": "공격이 성공적으로 시작되었습니다",
+      "error": "공격 시작에 실패했습니다"
+    },
+    "resumeToast": {
+      "loading": "공격 재개 중...",
+      "success": "공격이 성공적으로 재개되었습니다",
+      "error": "공격 재개에 실패했습니다"
+    },
+    "pauseToast": {
+      "loading": "공격 일시 정지 중...",
+      "success": "공격이 성공적으로 일시 정지되었습니다",
+      "error": "공격 일시 정지에 실패했습니다"
+    },
+    "stopToast": {
+      "loading": "공격 중지 중...",
+      "success": "공격이 성공적으로 중지되었습니다",
+      "error": "공격 중지에 실패했습니다"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "계정이 구성되지 않음",
+      "noAccountsDescription": "공격을 시작하려면 먼저 계정을 가져와야 합니다. 요청한 봇 수: {{required}}",
+      "notEnoughTitle": "계정이 부족함",
+      "notEnoughDescription": "{{required}}개의 봇이 요청되었으나, 가져온 계정은 {{available}}개입니다.",
+      "hint": "오프라인 계정을 생성하거나 계정 설정 페이지에서 계정을 가져올 수 있습니다.",
+      "continueWithExisting": "{{count}}개의 계정으로 계속하기",
+      "generateAccounts": "계정 생성"
+    }
+  },
+  "icon": {
+    "invalidName": "잘못된 아이콘 이름: {{name}}"
+  },
+  "dataTable": {
+    "noResults": "결과가 없습니다.",
+    "rowsSelected": "{{amount}} / {{total}}개의 행이 선택됨",
+    "rowsPerPage": "페이지당 행 수",
+    "currentPage": "{{page}} / {{total}}페이지",
+    "goFirst": "첫 페이지로 이동",
+    "goPrevious": "이전 페이지로 이동",
+    "goNext": "다음 페이지로 이동",
+    "goLast": "마지막 페이지로 이동",
+    "selectAll": "모두 선택",
+    "selectRow": "행 선택"
+  },
+  "pluginCard": {
+    "version": "버전: {{version}}",
+    "author": "작성자: {{author}}",
+    "license": "라이선스: {{license}}",
+    "website": "웹사이트"
+  },
+  "settingsPage": {
+    "namespacesNotFound": "설정 네임스페이스를 찾을 수 없습니다",
+    "stringList": {
+      "placeholder": "새 항목 추가...",
+      "add": "추가",
+      "remove": "제거"
+    },
+    "invalidNumberToast": {
+      "title": "유효하지 않은 숫자입니다!",
+      "description": "값은 {{min}}에서 {{max}} 사이여야 합니다"
+    }
+  },
+  "terminal": {
+    "noLogs": "🧙 표시할 로그가 없습니다. 명령어를 실행해 보세요!",
+    "demo-1": "데모 모드에 오신 것을 환영합니다! 🧪",
+    "demo-2": "이것은 SoulFire의 읽기 전용 인스턴스입니다",
+    "demo-3": "SoulFire를 설치하기 전에 모든 메뉴와 기능을 확인해 보세요 :D",
+    "demo-4": "문의가 있으시면 언제든지 Discord 서버에 참여해 주세요: https://soulfiremc.com/discord"
+  },
+  "uiBreadcrumb": {
+    "more": "더보기"
+  },
+  "uiDialog": {
+    "close": "닫기"
+  },
+  "uiSheet": {
+    "close": "닫기"
+  },
+  "uiSidebar": {
+    "toggle": "사이드바 전환"
+  },
+  "castMenu": {
+    "title": "캐스트",
+    "disconnected": "{{device}}과(와) 연결이 끊어졌습니다",
+    "alreadyConnected": "이미 {{device}}에 연결되어 있습니다",
+    "connectToast": {
+      "loading": "{{device}}에 연결 중...",
+      "success": "{{device}}에 연결되었습니다",
+      "error": "{{device}}에 연결하지 못했습니다"
+    },
+    "noDevices": "기기를 찾을 수 없습니다",
+    "broadcastLabel": "브로드캐스트 테스트",
+    "broadcastToast": {
+      "loading": "메시지 브로드캐스트 중...",
+      "success": "메시지가 브로드캐스트되었습니다!",
+      "error": "메시지 브로드캐스트에 실패했습니다"
+    }
+  },
+  "instanceSidebar": {
+    "readDocumentation": "문서 읽기",
+    "backToDashboard": "대시보드로 돌아가기",
+    "deleteToast": {
+      "loading": "인스턴스 삭제 중...",
+      "success": "인스턴스가 삭제되었습니다",
+      "error": "인스턴스 삭제에 실패했습니다"
+    },
+    "instancesGroup": "인스턴스",
+    "createInstance": "인스턴스 생성",
+    "loadProfileToast": {
+      "loading": "프로필 불러오는 중...",
+      "success": "프로필이 불러와졌습니다",
+      "error": "프로필 불러오기에 실패했습니다"
+    },
+    "loadProfile": "프로필 불러오기",
+    "loadFromFile": "파일에서 불러오기",
+    "profileSaved": "프로필이 저장되었습니다",
+    "saveProfile": "프로필 저장하기",
+    "deleteInstance": "인스턴스 삭제",
+    "controlsGroup": "컨트롤",
+    "overview": "개요",
+    "terminal": "터미널",
+    "audit-log": "감사 로그",
+    "settingsGroup": "설정",
+    "pluginsGroup": "플러그인",
+    "pluginSettings": "플러그인 설정",
+    "botSettings": "봇 설정",
+    "accountSettings": "계정 설정",
+    "metaSettings": "인스턴스 설정",
+    "proxySettings": "프록시 설정",
+    "aiSettings": "AI 설정",
+    "pathfindingSettings": "경로 탐색 설정",
+    "discoverPlugins": "플러그인",
+    "instanceScripts": "스크립트"
+  },
+  "userSidebar": {
+    "readDocumentation": "문서 읽기",
+    "userGroup": "사용자",
+    "instances": "인스턴스",
+    "access": "접근",
+    "createInstance": "인스턴스 생성",
+    "settings": "설정",
+    "adminGroup": "관리자",
+    "adminOverview": "개요",
+    "adminLogs": "로그",
+    "adminTerminal": "터미널",
+    "users": "사용자",
+    "adminScripts": "스크립트",
+    "serverSettings": "서버 설정",
+    "devSettings": "개발자 설정",
+    "theme": {
+      "title": "테마",
+      "system": "시스템",
+      "light": "라이트",
+      "dark": "다크"
+    },
+    "terminal": {
+      "title": "터미널"
+    },
+    "configDir": "설정 디렉터리",
+    "dataDir": "데이터 디렉터리",
+    "about": "정보",
+    "logOut": "로그아웃",
+    "logOutToast": {
+      "loading": "로그아웃 중...",
+      "success": "로그아웃 되었습니다",
+      "error": "로그아웃에 실패했습니다"
+    },
+    "exit": "종료",
+    "stopImpersonating": "가상화 중지",
+    "helpTranslate": "SoulFire 번역 참여"
+  },
+  "sidebar": {
+    "documentation": "문서",
+    "buyMeACoffee": "커피 한 잔 사주세요",
+    "discord": "Discord"
+  },
+  "breadcrumbs": {
+    "admin": "관리자",
+    "settings": "설정",
+    "controls": "컨트롤",
+    "plugins": "플러그인"
+  },
+  "noInstancesFound": "인스턴스를 찾을 수 없습니다",
+  "pageName": {
+    "terminal": "터미널",
+    "logs": "로그",
+    "audit-log": "감사 로그",
+    "instances": "인스턴스",
+    "access": "접근",
+    "settings": "설정",
+    "proxySettings": "프록시 설정",
+    "overview": "개요",
+    "users": "사용자",
+    "accountSettings": "계정 설정",
+    "metaSettings": "인스턴스 설정",
+    "discoverPlugins": "플러그인",
+    "adminScripts": "스크립트",
+    "instanceScripts": "스크립트"
+  },
+  "access": {
+    "webdav": {
+      "title": "WebDAV 접근",
+      "description": "SoulFire를 통해 인스턴스, 스크립트 및 기타 파일에 WebDAV 프로토콜로 접근할 수 있습니다.",
+      "publicAddress": "공용 WebDAV 주소",
+      "personalToken": "개인 WebDAV 토큰",
+      "securityWarning": "개인 WebDAV 토큰은 매우 중요하므로 누구와도 공유하지 마세요. 이 토큰은 파일 접근 시 본인 인증에 사용됩니다. WebDAV에 연결할 때 비밀번호로 사용하세요. 사용자명은 필요하지 않으며, 요청 시 아무 값이나 입력할 수 있습니다. (예: 'soulfire')",
+      "addressDescription": "이 주소는 파일에 접근할 때 사용해야 합니다. 경우에 따라 http(s):// 대신 dav:// 또는 davs://를 사용해야 할 수 있습니다."
+    },
+    "api": {
+      "title": "API 접근",
+      "description": "SoulFire의 gRPC HTTP API를 통해 Web 요청을 사용해 인스턴스와 프로그래밍 방식으로 상호작용할 수 있습니다.",
+      "publicAddress": "공용 API 주소",
+      "personalToken": "개인 API 토큰",
+      "securityWarning": "개인 API 토큰은 매우 중요하므로 누구와도 공유하지 마세요. API 접근 시 본인 인증에 사용됩니다.",
+      "addressDescription": "API에 접근할 때 사용할 주소입니다."
+    },
+    "token": {
+      "generate": "토큰 생성",
+      "placeholder": "아래에서 '토큰 생성'을 클릭하세요",
+      "generating": "토큰 생성 중...",
+      "success": "토큰이 성공적으로 생성되었습니다",
+      "error": "토큰 생성에 실패했습니다",
+      "copy": "토큰 복사"
+    },
+    "address": {
+      "copy": "주소 복사"
+    },
+    "documentation": "문서",
+    "howToConnect": "연결 방법"
+  },
+  "uploadToMcLogs": "mclo.gs로 업로드",
+  "mcLogsUpload": {
+    "loading": "mclo.gs로 업로드 중...",
+    "success": "mclo.gs에 업로드됨! 여기에서 보기: {{url}}",
+    "error": "mclo.gs로 업로드에 실패했습니다"
+  },
+  "copyToClipboard": "클립보드에 복사",
+  "clipboardCopy": {
+    "loading": "클립보드에 복사 중...",
+    "success": "\"{{content}}\"(을)를 클립보드에 복사했습니다",
+    "error": "클립보드 복사에 실패했습니다"
+  },
+  "instanceState": {
+    "starting": "시작 중",
+    "running": "실행 중",
+    "paused": "일시 정지됨",
+    "stopping": "중지 중",
+    "stopped": "중지됨"
+  },
+  "auditLog": {
+    "filterPlaceholder": "감사 로그 필터...",
+    "user": "사용자",
+    "action": "동작",
+    "timestamp": "타임스탬프",
+    "executedCommand": "명령 실행됨: {{data}}",
+    "startedAttack": "공격 시작함",
+    "resumedAttack": "공격 재개함",
+    "pausedAttack": "공격 일시정지함",
+    "stoppedAttack": "공격 중지함"
+  },
+  "pickADate": "날짜 선택",
+  "scripts": {
+    "filterPlaceholder": "스크립트 필터...",
+    "baseScriptDialog": {
+      "form": {
+        "scriptName": {
+          "min": "스크립트 이름은 최소 3자 이상이어야 합니다",
+          "max": "스크립트 이름은 최대 32자까지 사용할 수 있습니다",
+          "regex": "스크립트 이름은 소문자여야 하며, 영숫자로 시작하고, 그 뒤로 영숫자나 대시가 오며, 영숫자로 끝나야 합니다.",
+          "label": "이름",
+          "placeholder": "내 스크립트",
+          "description": "스크립트의 이름입니다."
+        },
+        "elevatedPermissions": {
+          "label": "상승된 권한",
+          "description": "스크립트를 상승된 권한으로 실행할지 여부입니다. 관리자인 경우에만 활성화할 수 있습니다."
+        }
+      }
+    },
+    "addScriptDialog": {
+      "title": "새 스크립트 추가",
+      "description": "스크립트는 SoulFire 서버에서 실행되는 작은 프로그램입니다. 작업 자동화, 사용자 정의 동작 생성 등에 사용할 수 있습니다.",
+      "form": {
+        "cancel": "취소",
+        "add": "추가"
+      }
+    },
+    "updateScriptDialog": {
+      "title": "스크립트 업데이트",
+      "description": "스크립트 정보를 업데이트합니다.",
+      "form": {
+        "cancel": "취소",
+        "update": "업데이트"
+      }
+    },
+    "removeToast": {
+      "loading": "스크립트 삭제 중...",
+      "success": "스크립트가 삭제되었습니다!",
+      "error": "스크립트 삭제에 실패했습니다"
+    },
+    "addToast": {
+      "loading": "스크립트 추가 중...",
+      "success": "스크립트가 추가되었습니다!",
+      "error": "스크립트 추가에 실패했습니다"
+    },
+    "updateToast": {
+      "loading": "스크립트 업데이트 중...",
+      "success": "스크립트가 업데이트되었습니다!",
+      "error": "스크립트 업데이트에 실패했습니다"
+    },
+    "restartToast": {
+      "loading": "스크립트 재시작 중...",
+      "success": "스크립트가 재시작되었습니다!",
+      "error": "스크립트 재시작에 실패했습니다"
+    },
+    "table": {
+      "type": "종류",
+      "scriptName": "이름",
+      "language": "언어",
+      "elevatedPermissions": "상승된 권한",
+      "createdAt": "생성일",
+      "actions": "동작"
+    },
+    "globalScript": "글로벌",
+    "instanceScript": "인스턴스"
+  }
+}

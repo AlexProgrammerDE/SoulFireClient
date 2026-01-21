@@ -1,0 +1,99 @@
+{
+  "proxy": {
+    "getProxies": "Dapatkan Proxy",
+    "addProxies": "Tambah Proxy",
+    "filterPlaceholder": "Saring proxy...",
+    "listImportToast": {
+      "loading": "Mengimpor proxy...",
+      "success": "{{count}} proxy berhasil diimpor!",
+      "error": "Gagal mengimpor proxy",
+      "noProxies": "Tidak ada proxy untuk diimpor"
+    },
+    "import": {
+      "proxyType": "Jenis Proxy",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "Impor proxy {{type}}",
+        "description": "Tempel proxy Anda di sini, satu baris per proxy"
+      }
+    },
+    "removeToast": {
+      "loading": "Menghapus proxy...",
+      "success": "{{count}} proxy telah dihapus!",
+      "error": "Gagal menghapus proxy"
+    },
+    "checkToast": {
+      "loading": "Memeriksa proxy... {{checked}}/{{total}} (Berhasil: {{success}} Gagal: {{failed}})",
+      "success": "{{count}} proxy rusak telah dihapus!",
+      "error": "Gagal memeriksa proxy"
+    },
+    "invalidFormat": "Format proxy tidak valid",
+    "table": {
+      "type": "Tipe",
+      "address": "Alamat",
+      "username": "Nama Pengguna",
+      "password": "Kata Sandi"
+    }
+  },
+  "account": {
+    "getAccounts": "Dapatkan Akun",
+    "addAccounts": "Tambah Akun",
+    "generateAccounts": "Buat Akun",
+    "filterPlaceholder": "Saring akun...",
+    "listImportToast": {
+      "loading": "Mengimpor akun... {{checked}}/{{total}} (Berhasil: {{success}} Gagal: {{failed}})",
+      "allFailed": "Gagal mengimpor akun apa pun",
+      "someFailed": "Berhasil mengimpor {{count}} akun, gagal mengimpor {{failed}} akun",
+      "noneFailed": "{{count}} akun berhasil diimpor!",
+      "error": "Gagal mengimpor akun",
+      "noAccounts": "Tidak ada akun untuk diimpor"
+    },
+    "unknownError": "Kesalahan tidak diketahui",
+    "deviceCodeImportToast": {
+      "loading": "Mengimpor akun...",
+      "success": "Akun berhasil diimpor!",
+      "error": "Gagal mengimpor akun"
+    },
+    "generate": {
+      "title": "Buat Akun Offline",
+      "description": "Buat akun Java offline dengan format nama khusus.",
+      "amount": "Jumlah",
+      "nameFormat": "Format Nama",
+      "nameFormatHelp": "Gunakan %d sebagai penampung nomor akun (misal: Bot_%d menjadi Bot_1, Bot_2, dst.)",
+      "overrideExisting": "Timpa {{count}} akun yang sudah ada",
+      "submit": "Buat",
+      "generating": "Sedang membuat...",
+      "progress": "Sedang membuat akun... {{checked}}/{{total}} (Berhasil: {{success}} Gagal: {{failed}})",
+      "success": "Berhasil membuat {{count}} akun!",
+      "allFailed": "Gagal membuat akun apa pun",
+      "error": "Gagal membuat akun",
+      "invalidAmount": "Silakan masukkan jumlah yang valid (setidaknya 1)",
+      "missingPlaceholder": "Format nama harus mengandung penampung %d"
+    },
+    "import": {
+      "javaEdition": "Java Edition",
+      "bedrockEdition": "Bedrock Edition",
+      "offline": "Luring",
+      "microsoftCredentials": "Kredensial Microsoft",
+      "microsoftDeviceCode": "Kode Perangkat Microsoft",
+      "microsoftRefreshToken": "Token Refresh Microsoft",
+      "dialog": {
+        "title": "Impor akun {{type}}",
+        "description": "Tempel akun Anda di sini, satu baris per akun"
+      }
+    },
+    "removeToast": {
+      "loading": "Menghapus akun...",
+      "success": "{{count}} akun telah dihapus!",
+      "error": "Gagal menghapus akun"
+    },
+    "table": {
+      "type": "Tipe",
+      "profileId": "UUID",
+      "lastKnownName": "Nama Pengguna"
+    }
+  }
+}

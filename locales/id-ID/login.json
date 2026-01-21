@@ -1,0 +1,103 @@
+{
+  "header": {
+    "image": {
+      "alt": "Logo SoulFire"
+    },
+    "title": "SoulFire"
+  },
+  "newUser": "Baru di SoulFire? Kami sarankan melihat <a>panduan memulai</a>.",
+  "connect": {
+    "title": "Hubungkan ke server SoulFire",
+    "description": "Pilih tipe server SoulFire yang ingin Anda hubungkan.",
+    "integrated": {
+      "title": "Server terintegrasi (lokal)",
+      "description": "Menjalankan server SoulFire di komputer Anda. Pengaturannya otomatis dan tidak memerlukan konfigurasi. (Membutuhkan aplikasi Desktop/Android)"
+    },
+    "dedicated": {
+      "title": "Server khusus (jarak jauh)",
+      "description": "Menghubungkan ke instansi server SoulFire jarak jauh. Anda perlu memasukkan alamat dan token server."
+    },
+    "demo": {
+      "title": "Server demo",
+      "description": "Mensimulasikan server virtual dengan data demo. Server ini hanya-baca dan Anda tidak dapat melakukan perubahan apapun."
+    }
+  },
+  "integrated": {
+    "preparing": "Mempersiapkan untuk memulai server terintegrasi...",
+    "toast": {
+      "loading": "Memulai server terintegrasi...",
+      "success": "Server terintegrasi telah dimulai",
+      "error": "Gagal memulai server terintegrasi"
+    },
+    "description": "Server terintegrasi berjalan secara lokal di PC Anda. Konfigurasikan argumen mulai Java di bawah ini jika diperlukan.",
+    "form": {
+      "jvmArgs": {
+        "title": "Argumen JVM",
+        "description": "Argumen SoulFire Java VM. Untuk menggunakan 4GB RAM, tambahkan <bold>-Xmx4G</bold>. Defaultnya adalah 25% dari RAM Anda.",
+        "placeholder": "Argumen JVM Anda di sini"
+      },
+      "back": "Kembali",
+      "start": "Mulai"
+    },
+    "mobile": {
+      "description": "Untuk menjalankan server terintegrasi di ponsel, Anda perlu menyelesaikan beberapa langkah manual.",
+      "form": {
+        "termuxCommand": {
+          "title": "Perintah Termux",
+          "description": "Instal <a>aplikasi Termux</a>, lalu jalankan perintah ini di Termux untuk menginstal server SoulFire. Anda kemudian harus menjalankan perintah <copy>generate-token api</copy> untuk menghasilkan token. Setelah itu masukkan token di bawah."
+        },
+        "token": {
+          "title": "Token",
+          "description": "Token untuk otentikasi dengan server lokal.",
+          "placeholder": "Token rahasia"
+        },
+        "back": "Kembali",
+        "connect": "Hubungkan"
+      }
+    }
+  },
+  "dedicated": {
+    "description": "Masukkan alamat dan token dari server SoulFire yang ingin Anda hubungkan.",
+    "toast": {
+      "loading": "Menghubungkan ke server...",
+      "success": "Berhasil terhubung ke server",
+      "error": "Gagal terhubung ke server"
+    },
+    "form": {
+      "address": {
+        "title": "Alamat",
+        "description": "Alamat server SoulFire Anda.",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "Token",
+        "placeholder": "Token rahasia",
+        "description": "Token untuk otentikasi dengan server."
+      },
+      "email": {
+        "title": "Email",
+        "placeholder": "root@soulfiremc.com",
+        "description": "Email akun SoulFire Anda."
+      },
+      "back": "Kembali",
+      "useToken": "Gunakan token",
+      "useEmail": "Gunakan email",
+      "login": "Masuk"
+    }
+  },
+  "emailCode": {
+    "description": "Jika Anda memiliki akun, kami telah mengirimkan kode ke <bold>{{email}}</bold>. Masukkan di bawah.",
+    "toast": {
+      "loading": "Memeriksa kode...",
+      "success": "Berhasil masuk",
+      "error": "Kode tidak valid"
+    },
+    "back": "Kembali"
+  },
+  "footer": {
+    "version": "SoulFire Client {{version}} - {{environment}}",
+    "preview": "Mencari pratinjau?",
+    "production": "Mencari produksi?",
+    "helpTranslate": "Terjemahkan SoulFire"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "header": {
+    "image": {
+      "alt": "SoulFire-logo"
+    },
+    "title": "SoulFire"
+  },
+  "newUser": "Oletko uusi SoulFiressä? Suosittelemme aloittamaan <a>aloitusoppaalla</a>.",
+  "connect": {
+    "title": "Yhdistä SoulFire-palvelimeen",
+    "description": "Valitse mihin tyyppiseen SoulFire-palvelimeen haluat yhdistää.",
+    "integrated": {
+      "title": "Integroitu palvelin (paikallinen)",
+      "description": "Ajaa SoulFire-palvelimen tietokoneellasi. Asennus on automaattinen eikä vaadi asetuksia. (Vaatii Desktop- tai Android-sovelluksen)"
+    },
+    "dedicated": {
+      "title": "Oma palvelin (etä)",
+      "description": "Yhdistää SoulFire-palvelimen etäinstanssiin. Sinun täytyy antaa palvelimen osoite ja tunnus."
+    },
+    "demo": {
+      "title": "Demo-palvelin",
+      "description": "Simuloi virtuaalista palvelinta demodatan kanssa. Tämä palvelin on vain luku -etkä voi tehdä muutoksia siihen."
+    }
+  },
+  "integrated": {
+    "preparing": "Valmistellaan integroidun palvelimen käynnistystä...",
+    "toast": {
+      "loading": "Käynnistetään integroitu palvelin...",
+      "success": "Integroitu palvelin käynnistetty",
+      "error": "Integroitu palvelin ei käynnistynyt"
+    },
+    "description": "Integroitu palvelin toimii paikallisesti tietokoneellasi. Voit tarvittaessa määrittää Java-käynnistysparametrit alla.",
+    "form": {
+      "jvmArgs": {
+        "title": "JVM-parametrit",
+        "description": "SoulFire Java VM -parametrit. Käyttääksesi 4 Gt RAM-muistia, lisää <bold>-Xmx4G</bold>. Oletus on 25 % RAMistasi.",
+        "placeholder": "JVM-parametrisi tähän"
+      },
+      "back": "Takaisin",
+      "start": "Aloita"
+    },
+    "mobile": {
+      "description": "Jos haluat ajaa integroitua palvelinta mobiililla, sinun tulee suorittaa muutama manuaalinen vaihe.",
+      "form": {
+        "termuxCommand": {
+          "title": "Termux-komento",
+          "description": "Asenna <a>Termux-sovellus</a> ja suorita tämä komento Termuxissa asentaaksesi SoulFire-palvelin. Sinun tulee sitten suorittaa <copy>generate-token api</copy> -komento tuottaaksesi tunnuksen. Anna tunnus alle."
+        },
+        "token": {
+          "title": "Tunnus",
+          "description": "Tunnus, jolla tunnistaudutaan paikalliseen palvelimeen.",
+          "placeholder": "Salainen tunnus"
+        },
+        "back": "Takaisin",
+        "connect": "Yhdistä"
+      }
+    }
+  },
+  "dedicated": {
+    "description": "Anna SoulFire-palvelimen osoite ja tunnus, johon haluat yhdistää.",
+    "toast": {
+      "loading": "Yhdistetään palvelimeen...",
+      "success": "Yhdistetty palvelimeen",
+      "error": "Yhdistäminen palvelimeen epäonnistui"
+    },
+    "form": {
+      "address": {
+        "title": "Osoite",
+        "description": "SoulFire-palvelimesi osoite.",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "Tunnus",
+        "placeholder": "Salainen tunnus",
+        "description": "Tunnus palvelimelle tunnistautumista varten."
+      },
+      "email": {
+        "title": "Sähköposti",
+        "placeholder": "root@soulfiremc.com",
+        "description": "SoulFire-tilisi sähköpostiosoite."
+      },
+      "back": "Takaisin",
+      "useToken": "Käytä tunnusta",
+      "useEmail": "Käytä sähköpostia",
+      "login": "Kirjaudu sisään"
+    }
+  },
+  "emailCode": {
+    "description": "Jos sinulla on tili, olemme lähettäneet koodin osoitteeseen <bold>{{email}}</bold>. Syötä se alle.",
+    "toast": {
+      "loading": "Tarkistetaan koodi...",
+      "success": "Kirjauduttu sisään",
+      "error": "Koodi on virheellinen"
+    },
+    "back": "Takaisin"
+  },
+  "footer": {
+    "version": "SoulFire Client {{version}} – {{environment}}",
+    "preview": "Etsitkö esikatselua?",
+    "production": "Etsitkö tuotantoa?",
+    "helpTranslate": "Käännä SoulFire"
+  }
+}

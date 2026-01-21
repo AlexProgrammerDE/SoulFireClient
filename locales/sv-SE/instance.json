@@ -1,0 +1,99 @@
+{
+  "proxy": {
+    "getProxies": "Hämta proxies",
+    "addProxies": "Lägg till proxies",
+    "filterPlaceholder": "Filtrera proxies...",
+    "listImportToast": {
+      "loading": "Importerar proxies...",
+      "success": "{{count}} proxies har importerats!",
+      "error": "Misslyckades att importera proxies",
+      "noProxies": "Inga proxies att importera"
+    },
+    "import": {
+      "proxyType": "ProxytTyp",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "Importera {{type}} proxies",
+        "description": "Klistra in dina proxies här, en per rad"
+      }
+    },
+    "removeToast": {
+      "loading": "Tar bort proxies...",
+      "success": "{{count}} proxies har tagits bort!",
+      "error": "Misslyckades att ta bort proxies"
+    },
+    "checkToast": {
+      "loading": "Kontrollerar proxies... {{checked}}/{{total}} (Lyckade: {{success}} Misslyckade: {{failed}})",
+      "success": "{{count}} trasiga proxies har tagits bort!",
+      "error": "Misslyckades att kontrollera proxies"
+    },
+    "invalidFormat": "Ogiltigt proxyformat",
+    "table": {
+      "type": "Typ",
+      "address": "Adress",
+      "username": "Användarnamn",
+      "password": "Lösenord"
+    }
+  },
+  "account": {
+    "getAccounts": "Hämta konton",
+    "addAccounts": "Lägg till konton",
+    "generateAccounts": "Generera konton",
+    "filterPlaceholder": "Filtrera konton...",
+    "listImportToast": {
+      "loading": "Importerar konton... {{checked}}/{{total}} (Lyckade: {{success}} Misslyckade: {{failed}})",
+      "allFailed": "Misslyckades att importera några konton alls.",
+      "someFailed": "Importerade {{count}} konton, misslyckades att importera {{failed}} konton.",
+      "noneFailed": "{{count}} konton har importerats!",
+      "error": "Misslyckades att importera konton.",
+      "noAccounts": "Inga konton att importera"
+    },
+    "unknownError": "Okänt fel",
+    "deviceCodeImportToast": {
+      "loading": "Importerar konto...",
+      "success": "Konto importerat!",
+      "error": "Misslyckades att importera konto"
+    },
+    "generate": {
+      "title": "Generera offline-konton",
+      "description": "Generera offline Java-konton med ett anpassat namnmönster.",
+      "amount": "Antal",
+      "nameFormat": "Namnformat",
+      "nameFormatHelp": "Använd %d som platshållare för kontonumret (t.ex. Bot_%d blir Bot_1, Bot_2, osv.)",
+      "overrideExisting": "Åsidosätt befintliga {{count}} konton",
+      "submit": "Generera",
+      "generating": "Genererar...",
+      "progress": "Genererar konton... {{checked}}/{{total}} (Lyckade: {{success}} Misslyckade: {{failed}})",
+      "success": "{{count}} konton har genererats!",
+      "allFailed": "Misslyckades att generera några konton alls",
+      "error": "Misslyckades att generera konton",
+      "invalidAmount": "Ange ett giltigt antal (minst 1)",
+      "missingPlaceholder": "Namnformatet måste innehålla platshållaren %d"
+    },
+    "import": {
+      "javaEdition": "Java Edition",
+      "bedrockEdition": "Bedrock Edition",
+      "offline": "Offline",
+      "microsoftCredentials": "Microsoft-uppgifter",
+      "microsoftDeviceCode": "Microsoft Enhetskod",
+      "microsoftRefreshToken": "Microsoft Uppfriskningstoken",
+      "dialog": {
+        "title": "Importera {{type}} konton",
+        "description": "Klistra in dina konton här, ett per rad"
+      }
+    },
+    "removeToast": {
+      "loading": "Tar bort konton...",
+      "success": "{{count}} konton har tagits bort!",
+      "error": "Misslyckades att ta bort konton"
+    },
+    "table": {
+      "type": "Typ",
+      "profileId": "UUID",
+      "lastKnownName": "Användarnamn"
+    }
+  }
+}
