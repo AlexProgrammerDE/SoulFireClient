@@ -69,11 +69,13 @@
       "nameFormat": "Name Format",
       "nameFormatHelp": "Use %d as a placeholder for the account number (e.g., Bot_%d becomes Bot_1, Bot_2, etc.)",
       "overrideExisting": "Override existing {{count}} accounts",
+      "overrideExistingHelp": "When unchecked, accounts with usernames that already exist will be skipped.\nWhen checked, all accounts will be generated and any existing accounts with the same UUID will be replaced.",
       "submit": "Generate",
       "generating": "Generating...",
       "progress": "Generating accounts... {{checked}}/{{total}} (Success: {{success}} Failed: {{failed}})",
       "success": "Generated {{count}} accounts!",
       "allFailed": "Failed to generate any accounts",
+      "allExist": "All usernames already exist. Enable 'Override existing accounts' to regenerate them.",
       "error": "Failed to generate accounts",
       "invalidAmount": "Please enter a valid amount (at least 1)",
       "missingPlaceholder": "Name format must contain %d placeholder"

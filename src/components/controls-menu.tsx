@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 import { PlayIcon, SquareIcon, TimerIcon, TimerOffIcon } from "lucide-react";
-import { use, useCallback, useState } from "react";
+import { use, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import GenerateAccountsDialog from "@/components/dialog/generate-accounts-dialog.tsx";
@@ -37,13 +37,16 @@ function addAndDeduplicate(
   overrideExisting: boolean,
 ) {
   if (overrideExisting) {
-    return newAccounts;
+    // Remove accounts with colliding UUIDs, then add new accounts
+    const newProfileIds = new Set(newAccounts.map((a) => a.profileId));
+    const filteredExisting = accounts.filter(
+      (a) => !newProfileIds.has(a.profileId),
+    );
+    return [...filteredExisting, ...newAccounts];
   }
 
-  const existingSet = new Set(accounts.map((a) => a.profileId));
-  return accounts.concat(
-    newAccounts.filter((a) => !existingSet.has(a.profileId)),
-  );
+  // Just append new accounts (duplicates already filtered during generation)
+  return [...accounts, ...newAccounts];
 }
 
 export default function ControlsMenu() {
@@ -59,6 +62,10 @@ export default function ControlsMenu() {
     ...instanceInfoQueryOptions,
     select: (info) => info.profile,
   });
+  const existingUsernames = useMemo(
+    () => new Set(profile.accounts.map((a) => a.lastKnownName)),
+    [profile.accounts],
+  );
   const [accountWarning, setAccountWarning] =
     useState<AccountWarningState>(null);
   const [generateDialogOpen, setGenerateDialogOpen] = useState(false);
@@ -348,6 +355,7 @@ export default function ControlsMenu() {
         }}
         onGenerate={handleGenerateAccounts}
         existingAccountCount={profile.accounts.length}
+        existingUsernames={existingUsernames}
       />
     </>
   );

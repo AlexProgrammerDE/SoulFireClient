@@ -3,6 +3,7 @@ import { useRouteContext } from "@tanstack/react-router";
 import { use, useId, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { type ExternalToast, toast } from "sonner";
+import { TextInfoButton } from "@/components/info-buttons.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
@@ -27,6 +28,7 @@ export type GenerateAccountsDialogProps = {
   onOpenChange: (open: boolean) => void;
   onGenerate: (accounts: ProfileAccount[], overrideExisting: boolean) => void;
   existingAccountCount: number;
+  existingUsernames: Set<string>;
 };
 
 export default function GenerateAccountsDialog({
@@ -34,6 +36,7 @@ export default function GenerateAccountsDialog({
   onOpenChange,
   onGenerate,
   existingAccountCount,
+  existingUsernames,
 }: GenerateAccountsDialogProps) {
   const { t } = useTranslation("instance");
   const transport = use(TransportContext);
@@ -70,7 +73,18 @@ export default function GenerateAccountsDialog({
     // Generate usernames based on format
     const usernames: string[] = [];
     for (let i = 1; i <= amount; i++) {
-      usernames.push(nameFormat.replace("%d", String(i)));
+      const username = nameFormat.replace("%d", String(i));
+      // Skip usernames that already exist if not overriding
+      if (!overrideExisting && existingUsernames.has(username)) {
+        continue;
+      }
+      usernames.push(username);
+    }
+
+    if (usernames.length === 0) {
+      setIsGenerating(false);
+      toast.error(t("account.generate.allExist"));
+      return;
     }
 
     const service = new MCAuthServiceClient(transport);
@@ -222,6 +236,9 @@ export default function GenerateAccountsDialog({
                   count: existingAccountCount,
                 })}
               </Label>
+              <TextInfoButton
+                value={t("account.generate.overrideExistingHelp")}
+              />
             </div>
           )}
         </CredenzaBody>

@@ -17,7 +17,7 @@ import {
   TrashIcon,
   WifiOffIcon,
 } from "lucide-react";
-import { use, useCallback, useState } from "react";
+import { use, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { type ExternalToast, toast } from "sonner";
 import { DataTable } from "@/components/data-table/data-table.tsx";
@@ -119,19 +119,27 @@ function GenerateAccountsButton() {
     },
   });
 
+  const existingUsernames = useMemo(
+    () => new Set(profile.accounts.map((a) => a.lastKnownName)),
+    [profile.accounts],
+  );
+
   const handleGenerate = useCallback(
     async (newAccounts: ProfileAccount[], overrideExisting: boolean) => {
       void trackEvent("generate_accounts", { count: newAccounts.length });
       await setProfileMutation((prev) => {
         if (overrideExisting) {
-          return { ...prev, accounts: newAccounts };
+          // Remove accounts with colliding UUIDs, then add new accounts
+          const newProfileIds = new Set(newAccounts.map((a) => a.profileId));
+          const filteredExisting = prev.accounts.filter(
+            (a) => !newProfileIds.has(a.profileId),
+          );
+          return { ...prev, accounts: [...filteredExisting, ...newAccounts] };
         }
-        const existingSet = new Set(prev.accounts.map((a) => a.profileId));
+        // Just append new accounts (duplicates already filtered during generation)
         return {
           ...prev,
-          accounts: prev.accounts.concat(
-            newAccounts.filter((a) => !existingSet.has(a.profileId)),
-          ),
+          accounts: [...prev.accounts, ...newAccounts],
         };
       });
     },
@@ -149,6 +157,7 @@ function GenerateAccountsButton() {
         onOpenChange={setDialogOpen}
         onGenerate={handleGenerate}
         existingAccountCount={profile.accounts.length}
+        existingUsernames={existingUsernames}
       />
     </>
   );
