@@ -33,7 +33,9 @@ import {
 } from "@/components/data-table/data-table-selects.tsx";
 import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
-import GenerateAccountsDialog from "@/components/dialog/generate-accounts-dialog.tsx";
+import GenerateAccountsDialog, {
+  type GenerateAccountsMode,
+} from "@/components/dialog/generate-accounts-dialog.tsx";
 import ImportDialog from "@/components/dialog/import-dialog.tsx";
 import { ExternalLink } from "@/components/external-link.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
@@ -125,22 +127,28 @@ function GenerateAccountsButton() {
   );
 
   const handleGenerate = useCallback(
-    async (newAccounts: ProfileAccount[], overrideExisting: boolean) => {
-      void trackEvent("generate_accounts", { count: newAccounts.length });
+    async (newAccounts: ProfileAccount[], mode: GenerateAccountsMode) => {
+      void trackEvent("generate_accounts", { count: newAccounts.length, mode });
       await setProfileMutation((prev) => {
-        if (overrideExisting) {
-          // Remove accounts with colliding UUIDs, then add new accounts
-          const newProfileIds = new Set(newAccounts.map((a) => a.profileId));
-          const filteredExisting = prev.accounts.filter(
-            (a) => !newProfileIds.has(a.profileId),
-          );
-          return { ...prev, accounts: [...filteredExisting, ...newAccounts] };
+        switch (mode) {
+          case "IGNORE_EXISTING":
+            // Just append new accounts (duplicates already filtered during generation)
+            return {
+              ...prev,
+              accounts: [...prev.accounts, ...newAccounts],
+            };
+          case "REPLACE_EXISTING": {
+            // Remove accounts with colliding UUIDs, then add new accounts
+            const newProfileIds = new Set(newAccounts.map((a) => a.profileId));
+            const filteredExisting = prev.accounts.filter(
+              (a) => !newProfileIds.has(a.profileId),
+            );
+            return { ...prev, accounts: [...filteredExisting, ...newAccounts] };
+          }
+          case "REPLACE_ALL":
+            // Delete all existing accounts and replace with generated ones
+            return { ...prev, accounts: newAccounts };
         }
-        // Just append new accounts (duplicates already filtered during generation)
-        return {
-          ...prev,
-          accounts: [...prev.accounts, ...newAccounts],
-        };
       });
     },
     [setProfileMutation, trackEvent],

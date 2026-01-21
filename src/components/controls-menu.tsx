@@ -8,7 +8,9 @@ import { PlayIcon, SquareIcon, TimerIcon, TimerOffIcon } from "lucide-react";
 import { use, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import GenerateAccountsDialog from "@/components/dialog/generate-accounts-dialog.tsx";
+import GenerateAccountsDialog, {
+  type GenerateAccountsMode,
+} from "@/components/dialog/generate-accounts-dialog.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import {
@@ -31,22 +33,27 @@ type AccountWarningState = {
   availableAmount: number;
 } | null;
 
-function addAndDeduplicate(
+function applyGenerateMode(
   accounts: ProfileAccount[],
   newAccounts: ProfileAccount[],
-  overrideExisting: boolean,
+  mode: GenerateAccountsMode,
 ) {
-  if (overrideExisting) {
-    // Remove accounts with colliding UUIDs, then add new accounts
-    const newProfileIds = new Set(newAccounts.map((a) => a.profileId));
-    const filteredExisting = accounts.filter(
-      (a) => !newProfileIds.has(a.profileId),
-    );
-    return [...filteredExisting, ...newAccounts];
+  switch (mode) {
+    case "IGNORE_EXISTING":
+      // Just append new accounts (duplicates already filtered during generation)
+      return [...accounts, ...newAccounts];
+    case "REPLACE_EXISTING": {
+      // Remove accounts with colliding UUIDs, then add new accounts
+      const newProfileIds = new Set(newAccounts.map((a) => a.profileId));
+      const filteredExisting = accounts.filter(
+        (a) => !newProfileIds.has(a.profileId),
+      );
+      return [...filteredExisting, ...newAccounts];
+    }
+    case "REPLACE_ALL":
+      // Delete all existing accounts and replace with generated ones
+      return newAccounts;
   }
-
-  // Just append new accounts (duplicates already filtered during generation)
-  return [...accounts, ...newAccounts];
 }
 
 export default function ControlsMenu() {
@@ -151,14 +158,10 @@ export default function ControlsMenu() {
   });
 
   const handleGenerateAccounts = useCallback(
-    async (newAccounts: ProfileAccount[], overrideExisting: boolean) => {
+    async (newAccounts: ProfileAccount[], mode: GenerateAccountsMode) => {
       await setProfileMutation((prev) => ({
         ...prev,
-        accounts: addAndDeduplicate(
-          prev.accounts,
-          newAccounts,
-          overrideExisting,
-        ),
+        accounts: applyGenerateMode(prev.accounts, newAccounts, mode),
       }));
 
       // If we were waiting to start an attack, do it now

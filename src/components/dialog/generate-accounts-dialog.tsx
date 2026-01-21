@@ -6,7 +6,6 @@ import { type ExternalToast, toast } from "sonner";
 import { TextInfoButton } from "@/components/info-buttons.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
-import { Checkbox } from "@/components/ui/checkbox.tsx";
 import {
   Credenza,
   CredenzaBody,
@@ -18,15 +17,27 @@ import {
 } from "@/components/ui/credenza.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select.tsx";
 import { AccountTypeCredentials } from "@/generated/soulfire/common.ts";
 import { MCAuthServiceClient } from "@/generated/soulfire/mc-auth.client.ts";
 import type { ProfileAccount } from "@/lib/types.ts";
 import { runAsync } from "@/lib/utils.tsx";
 
+export type GenerateAccountsMode =
+  | "IGNORE_EXISTING"
+  | "REPLACE_EXISTING"
+  | "REPLACE_ALL";
+
 export type GenerateAccountsDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onGenerate: (accounts: ProfileAccount[], overrideExisting: boolean) => void;
+  onGenerate: (accounts: ProfileAccount[], mode: GenerateAccountsMode) => void;
   existingAccountCount: number;
   existingUsernames: Set<string>;
 };
@@ -47,11 +58,11 @@ export default function GenerateAccountsDialog({
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const [amount, setAmount] = useState(1);
   const [nameFormat, setNameFormat] = useState("Bot_%d");
-  const [overrideExisting, setOverrideExisting] = useState(false);
+  const [mode, setMode] = useState<GenerateAccountsMode>("IGNORE_EXISTING");
   const [isGenerating, setIsGenerating] = useState(false);
   const amountId = useId();
   const nameFormatId = useId();
-  const overrideExistingId = useId();
+  const modeId = useId();
 
   const handleGenerate = () => {
     if (amount < 1) {
@@ -74,8 +85,8 @@ export default function GenerateAccountsDialog({
     const usernames: string[] = [];
     for (let i = 1; i <= amount; i++) {
       const username = nameFormat.replace("%d", String(i));
-      // Skip usernames that already exist if not overriding
-      if (!overrideExisting && existingUsernames.has(username)) {
+      // Skip usernames that already exist only in IGNORE_EXISTING mode
+      if (mode === "IGNORE_EXISTING" && existingUsernames.has(username)) {
         continue;
       }
       usernames.push(username);
@@ -136,7 +147,7 @@ export default function GenerateAccountsDialog({
                 cancel: undefined,
               });
             } else {
-              onGenerate(accountsToAdd, overrideExisting);
+              onGenerate(accountsToAdd, mode);
               onOpenChange(false);
               toast.success(
                 t("account.generate.success", { count: accountsToAdd.length }),
@@ -222,25 +233,31 @@ export default function GenerateAccountsDialog({
               {t("account.generate.nameFormatHelp")}
             </p>
           </div>
-          {existingAccountCount > 0 && (
+          <div className="flex flex-col gap-2">
             <div className="flex items-center gap-2">
-              <Checkbox
-                id={overrideExistingId}
-                checked={overrideExisting}
-                onCheckedChange={(checked) =>
-                  setOverrideExisting(checked === true)
-                }
-              />
-              <Label htmlFor={overrideExistingId} className="cursor-pointer">
-                {t("account.generate.overrideExisting", {
-                  count: existingAccountCount,
-                })}
-              </Label>
-              <TextInfoButton
-                value={t("account.generate.overrideExistingHelp")}
-              />
+              <Label htmlFor={modeId}>{t("account.generate.mode")}</Label>
+              <TextInfoButton value={t("account.generate.modeHelp")} />
             </div>
-          )}
+            <Select
+              value={mode}
+              onValueChange={(value) => setMode(value as GenerateAccountsMode)}
+            >
+              <SelectTrigger id={modeId} className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="IGNORE_EXISTING">
+                  {t("account.generate.modeIgnoreExisting")}
+                </SelectItem>
+                <SelectItem value="REPLACE_EXISTING">
+                  {t("account.generate.modeReplaceExisting")}
+                </SelectItem>
+                <SelectItem value="REPLACE_ALL">
+                  {t("account.generate.modeReplaceAll")}
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </CredenzaBody>
         <CredenzaFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)}>
