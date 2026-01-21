@@ -89,24 +89,47 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
             instanceSettings: demoInstanceSettings,
             plugins: [],
             state: InstanceState.RUNNING,
+            lastModified: {
+              seconds: "0",
+              nanos: 0,
+            },
           };
         }
+
+        // Get previous cached data to use for if-modified-since check
+        const previousData = props.client.getQueryData<InstanceInfoQueryData>([
+          "instance-info",
+          instance,
+        ]);
 
         const instanceService = new InstanceServiceClient(transport);
         const result = await instanceService.getInstanceInfo(
           {
             id: instance,
+            ifModifiedSince: previousData?.lastModified,
           },
           {
             abort: props.signal,
           },
         );
 
-        // console.log(JSON.stringify(result.response.instanceSettings))
+        if (result.response.result.oneofKind === "notModified") {
+          // Return previous data if not modified
+          if (previousData) {
+            return previousData;
+          }
+          throw new Error("No cached data available");
+        }
+
+        if (result.response.result.oneofKind !== "info") {
+          throw new Error("Unexpected response type");
+        }
+
+        const info = result.response.result.info;
         return {
           id: instance,
-          profile: convertFromInstanceProto(result.response.config),
-          ...result.response,
+          profile: convertFromInstanceProto(info.config),
+          ...info,
         };
       },
       refetchInterval: 3_000,

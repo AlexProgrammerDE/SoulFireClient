@@ -68,13 +68,13 @@ import {
   getEnumKeyByValue,
   mapUnionToValue,
   type ProfileAccount,
-  type ProfileRoot,
 } from "@/lib/types.ts";
 import {
   addInstanceAccount,
+  addInstanceAccountsBatch,
   openExternalUrl,
+  removeInstanceAccountsBatch,
   runAsync,
-  setInstanceConfigFull,
   updateInstanceConfigEntry,
 } from "@/lib/utils.tsx";
 
@@ -108,13 +108,28 @@ function GenerateAccountsButton() {
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { trackEvent } = useAptabase();
   const [dialogOpen, setDialogOpen] = useState(false);
-  // Using setInstanceConfigFull for bulk operations (profile import style)
-  const { mutateAsync: setProfileMutation } = useMutation({
-    mutationFn: async (
-      profileTransformer: (prev: ProfileRoot) => ProfileRoot,
-    ) => {
-      await setInstanceConfigFull(
-        profileTransformer(profile),
+  // Batch add accounts mutation
+  const { mutateAsync: addAccountsBatchMutation } = useMutation({
+    mutationFn: async (accounts: ProfileAccount[]) => {
+      await addInstanceAccountsBatch(
+        accounts,
+        instanceInfo,
+        transport,
+        queryClient,
+        instanceInfoQueryOptions.queryKey,
+      );
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: instanceInfoQueryOptions.queryKey,
+      });
+    },
+  });
+  // Batch remove accounts mutation
+  const { mutateAsync: removeAccountsBatchMutation } = useMutation({
+    mutationFn: async (profileIds: string[]) => {
+      await removeInstanceAccountsBatch(
+        profileIds,
         instanceInfo,
         transport,
         queryClient,
@@ -136,29 +151,40 @@ function GenerateAccountsButton() {
   const handleGenerate = useCallback(
     async (newAccounts: ProfileAccount[], mode: GenerateAccountsMode) => {
       void trackEvent("generate_accounts", { count: newAccounts.length, mode });
-      await setProfileMutation((prev) => {
-        switch (mode) {
-          case "IGNORE_EXISTING":
-            // Just append new accounts (duplicates already filtered during generation)
-            return {
-              ...prev,
-              accounts: [...prev.accounts, ...newAccounts],
-            };
-          case "REPLACE_EXISTING": {
-            // Remove accounts with colliding UUIDs, then add new accounts
-            const newProfileIds = new Set(newAccounts.map((a) => a.profileId));
-            const filteredExisting = prev.accounts.filter(
-              (a) => !newProfileIds.has(a.profileId),
-            );
-            return { ...prev, accounts: [...filteredExisting, ...newAccounts] };
+      switch (mode) {
+        case "IGNORE_EXISTING":
+          // Just append new accounts (duplicates already filtered during generation)
+          await addAccountsBatchMutation(newAccounts);
+          break;
+        case "REPLACE_EXISTING": {
+          // Remove accounts with colliding UUIDs, then add new accounts
+          const newProfileIds = newAccounts.map((a) => a.profileId);
+          const existingToRemove = profile.accounts
+            .filter((a) => newProfileIds.includes(a.profileId))
+            .map((a) => a.profileId);
+          if (existingToRemove.length > 0) {
+            await removeAccountsBatchMutation(existingToRemove);
           }
-          case "REPLACE_ALL":
-            // Delete all existing accounts and replace with generated ones
-            return { ...prev, accounts: newAccounts };
+          await addAccountsBatchMutation(newAccounts);
+          break;
         }
-      });
+        case "REPLACE_ALL": {
+          // Delete all existing accounts and replace with generated ones
+          const allExistingIds = profile.accounts.map((a) => a.profileId);
+          if (allExistingIds.length > 0) {
+            await removeAccountsBatchMutation(allExistingIds);
+          }
+          await addAccountsBatchMutation(newAccounts);
+          break;
+        }
+      }
     },
-    [setProfileMutation, trackEvent],
+    [
+      addAccountsBatchMutation,
+      removeAccountsBatchMutation,
+      profile.accounts,
+      trackEvent,
+    ],
   );
 
   return (
@@ -184,7 +210,7 @@ export const Route = createFileRoute("/_dashboard/instance/$instance/accounts")(
   },
 );
 
-function addAndDeduplicate(
+function _addAndDeduplicate(
   accounts: ProfileAccount[],
   newAccounts: ProfileAccount[],
 ) {
@@ -299,13 +325,11 @@ function AddButton() {
   const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { trackEvent } = useAptabase();
-  // Using setInstanceConfigFull for bulk operations (profile import style)
-  const { mutateAsync: setProfileMutation } = useMutation({
-    mutationFn: async (
-      profileTransformer: (prev: ProfileRoot) => ProfileRoot,
-    ) => {
-      await setInstanceConfigFull(
-        profileTransformer(profile),
+  // Batch add accounts mutation for bulk import
+  const { mutateAsync: addAccountsBatchMutation } = useMutation({
+    mutationFn: async (accounts: ProfileAccount[]) => {
+      await addInstanceAccountsBatch(
+        accounts,
         instanceInfo,
         transport,
         queryClient,
@@ -318,7 +342,7 @@ function AddButton() {
       });
     },
   });
-  // Granular account add mutation
+  // Granular account add mutation for single account (device code)
   const { mutateAsync: addAccountMutation } = useMutation({
     mutationFn: async (account: ProfileAccount) => {
       await addInstanceAccount(
@@ -396,11 +420,10 @@ function AddButton() {
             case "fullList": {
               const accountsToAdd = data.fullList.account;
 
-              // Using full profile update for bulk import
-              await setProfileMutation((prev) => ({
-                ...prev,
-                accounts: addAndDeduplicate(prev.accounts, accountsToAdd),
-              }));
+              // Using batch add for bulk import
+              if (accountsToAdd.length > 0) {
+                await addAccountsBatchMutation(accountsToAdd);
+              }
 
               if (accountsToAdd.length === 0) {
                 toast.error(t("account.listImportToast.allFailed"), {
@@ -469,7 +492,7 @@ function AddButton() {
     [
       accountTypeCredentialsSelected,
       instanceInfo.id,
-      setProfileMutation,
+      addAccountsBatchMutation,
       t,
       transport,
     ],
@@ -706,20 +729,14 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   const { t } = useTranslation("instance");
   const queryClient = useQueryClient();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
   const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { trackEvent } = useAptabase();
-  // Using setInstanceConfigFull for bulk removal (profile import style)
-  const { mutateAsync: setProfileMutation } = useMutation({
-    mutationFn: async (
-      profileTransformer: (prev: ProfileRoot) => ProfileRoot,
-    ) => {
-      await setInstanceConfigFull(
-        profileTransformer(profile),
+  // Batch remove accounts mutation
+  const { mutateAsync: removeAccountsBatchMutation } = useMutation({
+    mutationFn: async (profileIds: string[]) => {
+      await removeInstanceAccountsBatch(
+        profileIds,
         instanceInfo,
         transport,
         queryClient,
@@ -746,12 +763,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
             .rows.map((r) => r.original);
 
           toast.promise(
-            setProfileMutation((prev) => ({
-              ...prev,
-              accounts: prev.accounts.filter(
-                (a) => !selectedRows.some((r) => r.profileId === a.profileId),
-              ),
-            })),
+            removeAccountsBatchMutation(selectedRows.map((r) => r.profileId)),
             {
               loading: t("account.removeToast.loading"),
               success: t("account.removeToast.success", {

@@ -8,7 +8,7 @@ import type {
 } from "@/generated/soulfire/common.ts";
 import {
   type InstanceConfig,
-  type InstanceInfoResponse,
+  type InstanceInfo,
   InstanceState,
 } from "@/generated/soulfire/instance.ts";
 import type {
@@ -31,7 +31,7 @@ export type ServerInfoQueryData = ServerInfoResponse & {
   profile: BaseSettings;
 };
 
-export type InstanceInfoQueryData = InstanceInfoResponse & {
+export type InstanceInfoQueryData = InstanceInfo & {
   id: string;
   profile: ProfileRoot;
 };

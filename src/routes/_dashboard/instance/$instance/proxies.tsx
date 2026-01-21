@@ -4,7 +4,7 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { createFileRoute, deepEqual } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import type { ColumnDef, Table as ReactTable } from "@tanstack/react-table";
 import {
   Dice4Icon,
@@ -70,11 +70,11 @@ import {
   getEnumKeyByValue,
   mapUnionToValue,
   type ProfileProxy,
-  type ProfileRoot,
 } from "@/lib/types.ts";
 import {
+  addInstanceProxiesBatch,
+  removeInstanceProxiesBatch,
   runAsync,
-  setInstanceConfigFull,
   updateInstanceConfigEntry,
 } from "@/lib/utils.tsx";
 
@@ -276,22 +276,16 @@ function AddButton() {
   const { t } = useTranslation("instance");
   const queryClient = useQueryClient();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
   const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const [proxyTypeSelected, setProxyTypeSelected] =
     useState<UIProxyType | null>(null);
   const { trackEvent } = useAptabase();
-  // Using setInstanceConfigFull for bulk operations (profile import style)
-  const { mutateAsync: setProfileMutation } = useMutation({
-    mutationFn: async (
-      profileTransformer: (prev: ProfileRoot) => ProfileRoot,
-    ) => {
-      await setInstanceConfigFull(
-        profileTransformer(profile),
+  // Batch add proxies mutation
+  const { mutateAsync: addProxiesBatchMutation } = useMutation({
+    mutationFn: async (proxies: ProfileProxy[]) => {
+      await addInstanceProxiesBatch(
+        proxies,
         instanceInfo,
         transport,
         queryClient,
@@ -342,10 +336,7 @@ function AddButton() {
             proxiesToAdd.push(proxy);
           }
 
-          await setProfileMutation((prev) => ({
-            ...prev,
-            proxies: [...prev.proxies, ...proxiesToAdd],
-          }));
+          await addProxiesBatchMutation(proxiesToAdd);
           return proxiesToAdd.length;
         })(),
         {
@@ -358,7 +349,7 @@ function AddButton() {
         },
       );
     },
-    [proxyTypeSelected, setProfileMutation, t],
+    [proxyTypeSelected, addProxiesBatchMutation, t],
   );
 
   return (
@@ -444,13 +435,11 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { trackEvent } = useAptabase();
   const [checkDialogOpen, setCheckDialogOpen] = useState(false);
-  // Using setInstanceConfigFull for bulk operations (profile import style)
-  const { mutateAsync: setProfileMutation } = useMutation({
-    mutationFn: async (
-      profileTransformer: (prev: ProfileRoot) => ProfileRoot,
-    ) => {
-      await setInstanceConfigFull(
-        profileTransformer(profile),
+  // Batch remove proxies mutation
+  const { mutateAsync: removeProxiesBatchMutation } = useMutation({
+    mutationFn: async (addresses: string[]) => {
+      await removeInstanceProxiesBatch(
+        addresses,
         instanceInfo,
         transport,
         queryClient,
@@ -535,12 +524,11 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               success++;
             } else {
               failed++;
-              await setProfileMutation((prev) => ({
-                ...prev,
-                proxies: prev.proxies.filter(
-                  (a) => !deepEqual(data.single.proxy, a),
-                ),
-              }));
+              // Remove the invalid proxy by address
+              const proxyToRemove = data.single.proxy;
+              if (proxyToRemove) {
+                await removeProxiesBatchMutation([proxyToRemove.address]);
+              }
             }
 
             toast.loading(loadingReport(), {
@@ -566,7 +554,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
     props.table,
     t,
     instanceInfo.id,
-    setProfileMutation,
+    removeProxiesBatchMutation,
   ]);
 
   return (
@@ -657,12 +645,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             .rows.map((r) => r.original);
 
           toast.promise(
-            setProfileMutation((prev) => ({
-              ...prev,
-              proxies: prev.proxies.filter(
-                (a) => !selectedRows.some((r) => r.address === a.address),
-              ),
-            })),
+            removeProxiesBatchMutation(selectedRows.map((r) => r.address)),
             {
               loading: t("proxy.removeToast.loading"),
               success: t("proxy.removeToast.success", {

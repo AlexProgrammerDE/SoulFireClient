@@ -760,6 +760,95 @@ export async function updateInstanceAccount(
   });
 }
 
+// Batch account operations
+export async function addInstanceAccountsBatch(
+  accounts: ProfileAccount[],
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  const accountProtos: MinecraftAccountProto[] = accounts;
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
+
+      return {
+        ...old,
+        profile: {
+          ...old.profile,
+          accounts: [...old.profile.accounts, ...accounts],
+        },
+      };
+    },
+  );
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.addInstanceAccountsBatch({
+    id: instanceInfo.id,
+    accounts: accountProtos,
+  });
+}
+
+export async function removeInstanceAccountsBatch(
+  profileIds: string[],
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  const profileIdSet = new Set(profileIds);
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
+
+      return {
+        ...old,
+        profile: {
+          ...old.profile,
+          accounts: old.profile.accounts.filter(
+            (a) => !profileIdSet.has(a.profileId),
+          ),
+        },
+      };
+    },
+  );
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.removeInstanceAccountsBatch({
+    id: instanceInfo.id,
+    profileIds: profileIds,
+  });
+}
+
 // Proxy operations
 export async function addInstanceProxy(
   proxy: ProfileProxy,
@@ -887,6 +976,95 @@ export async function updateInstanceProxy(
     id: instanceInfo.id,
     index: index,
     proxy: proxyProto,
+  });
+}
+
+// Batch proxy operations
+export async function addInstanceProxiesBatch(
+  proxies: ProfileProxy[],
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  const proxyProtos: ProxyProto[] = proxies;
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
+
+      return {
+        ...old,
+        profile: {
+          ...old.profile,
+          proxies: [...old.profile.proxies, ...proxies],
+        },
+      };
+    },
+  );
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.addInstanceProxiesBatch({
+    id: instanceInfo.id,
+    proxies: proxyProtos,
+  });
+}
+
+export async function removeInstanceProxiesBatch(
+  addresses: string[],
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  const addressSet = new Set(addresses);
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
+
+      return {
+        ...old,
+        profile: {
+          ...old.profile,
+          proxies: old.profile.proxies.filter(
+            (p) => !addressSet.has(p.address),
+          ),
+        },
+      };
+    },
+  );
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.removeInstanceProxiesBatch({
+    id: instanceInfo.id,
+    addresses: addresses,
   });
 }
 
