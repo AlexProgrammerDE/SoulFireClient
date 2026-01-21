@@ -153,11 +153,17 @@ export interface InstanceInfoRequest {
    * @generated from protobuf field: string id = 1
    */
   id: string;
+  /**
+   * Optional: if provided, returns NotModified if config hasn't changed since this timestamp
+   *
+   * @generated from protobuf field: optional google.protobuf.Timestamp if_modified_since = 2
+   */
+  ifModifiedSince?: Timestamp;
 }
 /**
- * @generated from protobuf message soulfire.v1.InstanceInfoResponse
+ * @generated from protobuf message soulfire.v1.InstanceInfo
  */
-export interface InstanceInfoResponse {
+export interface InstanceInfo {
   /**
    * @generated from protobuf field: string friendly_name = 1
    */
@@ -194,6 +200,47 @@ export interface InstanceInfoResponse {
    * @generated from protobuf field: repeated soulfire.v1.ServerPlugin plugins = 7
    */
   plugins: ServerPlugin[];
+  /**
+   * When the config was last modified
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp last_modified = 9
+   */
+  lastModified?: Timestamp;
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceNotModified
+ */
+export interface InstanceNotModified {
+  /**
+   * @generated from protobuf field: google.protobuf.Timestamp last_modified = 1
+   */
+  lastModified?: Timestamp;
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceInfoResponse
+ */
+export interface InstanceInfoResponse {
+  /**
+   * @generated from protobuf oneof: result
+   */
+  result:
+    | {
+        oneofKind: "info";
+        /**
+         * @generated from protobuf field: soulfire.v1.InstanceInfo info = 1
+         */
+        info: InstanceInfo;
+      }
+    | {
+        oneofKind: "notModified";
+        /**
+         * @generated from protobuf field: soulfire.v1.InstanceNotModified not_modified = 2
+         */
+        notModified: InstanceNotModified;
+      }
+    | {
+        oneofKind: undefined;
+      };
 }
 /**
  * @generated from protobuf message soulfire.v1.InstanceUpdateMetaRequest
@@ -327,6 +374,42 @@ export interface InstanceUpdateAccountRequest {
  */
 export interface InstanceUpdateAccountResponse {}
 /**
+ * Batch account operations
+ *
+ * @generated from protobuf message soulfire.v1.InstanceAddAccountsBatchRequest
+ */
+export interface InstanceAddAccountsBatchRequest {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.MinecraftAccountProto accounts = 2
+   */
+  accounts: MinecraftAccountProto[];
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceAddAccountsBatchResponse
+ */
+export interface InstanceAddAccountsBatchResponse {}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceRemoveAccountsBatchRequest
+ */
+export interface InstanceRemoveAccountsBatchRequest {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * @generated from protobuf field: repeated string profile_ids = 2
+   */
+  profileIds: string[];
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceRemoveAccountsBatchResponse
+ */
+export interface InstanceRemoveAccountsBatchResponse {}
+/**
  * Proxy operations
  *
  * @generated from protobuf message soulfire.v1.InstanceAddProxyRequest
@@ -383,6 +466,42 @@ export interface InstanceUpdateProxyRequest {
  * @generated from protobuf message soulfire.v1.InstanceUpdateProxyResponse
  */
 export interface InstanceUpdateProxyResponse {}
+/**
+ * Batch proxy operations
+ *
+ * @generated from protobuf message soulfire.v1.InstanceAddProxiesBatchRequest
+ */
+export interface InstanceAddProxiesBatchRequest {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.ProxyProto proxies = 2
+   */
+  proxies: ProxyProto[];
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceAddProxiesBatchResponse
+ */
+export interface InstanceAddProxiesBatchResponse {}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceRemoveProxiesBatchRequest
+ */
+export interface InstanceRemoveProxiesBatchRequest {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * @generated from protobuf field: repeated string addresses = 2
+   */
+  addresses: string[];
+}
+/**
+ * @generated from protobuf message soulfire.v1.InstanceRemoveProxiesBatchResponse
+ */
+export interface InstanceRemoveProxiesBatchResponse {}
 /**
  * @generated from protobuf message soulfire.v1.InstanceStateChangeRequest
  */
@@ -1351,6 +1470,7 @@ class InstanceInfoRequest$Type extends MessageType<InstanceInfoRequest> {
   constructor() {
     super("soulfire.v1.InstanceInfoRequest", [
       { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "if_modified_since", kind: "message", T: () => Timestamp },
     ]);
   }
   create(value?: PartialMessage<InstanceInfoRequest>): InstanceInfoRequest {
@@ -1373,6 +1493,14 @@ class InstanceInfoRequest$Type extends MessageType<InstanceInfoRequest> {
       switch (fieldNo) {
         case /* string id */ 1:
           message.id = reader.string();
+          break;
+        case /* optional google.protobuf.Timestamp if_modified_since */ 2:
+          message.ifModifiedSince = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.ifModifiedSince,
+          );
           break;
         default:
           let u = options.readUnknownField;
@@ -1401,6 +1529,13 @@ class InstanceInfoRequest$Type extends MessageType<InstanceInfoRequest> {
     /* string id = 1; */
     if (message.id !== "")
       writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* optional google.protobuf.Timestamp if_modified_since = 2; */
+    if (message.ifModifiedSince)
+      Timestamp.internalBinaryWrite(
+        message.ifModifiedSince,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -1416,9 +1551,9 @@ class InstanceInfoRequest$Type extends MessageType<InstanceInfoRequest> {
  */
 export const InstanceInfoRequest = new InstanceInfoRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
+class InstanceInfo$Type extends MessageType<InstanceInfo> {
   constructor() {
-    super("soulfire.v1.InstanceInfoResponse", [
+    super("soulfire.v1.InstanceInfo", [
       {
         no: 1,
         name: "friendly_name",
@@ -1461,9 +1596,10 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
         repeat: 2 /*RepeatType.UNPACKED*/,
         T: () => ServerPlugin,
       },
+      { no: 9, name: "last_modified", kind: "message", T: () => Timestamp },
     ]);
   }
-  create(value?: PartialMessage<InstanceInfoResponse>): InstanceInfoResponse {
+  create(value?: PartialMessage<InstanceInfo>): InstanceInfo {
     const message = globalThis.Object.create(this.messagePrototype!);
     message.friendlyName = "";
     message.icon = "";
@@ -1473,15 +1609,15 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
     message.instanceSettings = [];
     message.plugins = [];
     if (value !== undefined)
-      reflectionMergePartial<InstanceInfoResponse>(this, message, value);
+      reflectionMergePartial<InstanceInfo>(this, message, value);
     return message;
   }
   internalBinaryRead(
     reader: IBinaryReader,
     length: number,
     options: BinaryReadOptions,
-    target?: InstanceInfoResponse,
-  ): InstanceInfoResponse {
+    target?: InstanceInfo,
+  ): InstanceInfo {
     let message = target ?? this.create(),
       end = reader.pos + length;
     while (reader.pos < end) {
@@ -1532,6 +1668,14 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
             ServerPlugin.internalBinaryRead(reader, reader.uint32(), options),
           );
           break;
+        case /* google.protobuf.Timestamp last_modified */ 9:
+          message.lastModified = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.lastModified,
+          );
+          break;
         default:
           let u = options.readUnknownField;
           if (u === "throw")
@@ -1552,7 +1696,7 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
     return message;
   }
   internalBinaryWrite(
-    message: InstanceInfoResponse,
+    message: InstanceInfo,
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
@@ -1598,6 +1742,202 @@ class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
       SettingsDefinition.internalBinaryWrite(
         message.settingsDefinitions[i],
         writer.tag(8, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* google.protobuf.Timestamp last_modified = 9; */
+    if (message.lastModified)
+      Timestamp.internalBinaryWrite(
+        message.lastModified,
+        writer.tag(9, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceInfo
+ */
+export const InstanceInfo = new InstanceInfo$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceNotModified$Type extends MessageType<InstanceNotModified> {
+  constructor() {
+    super("soulfire.v1.InstanceNotModified", [
+      { no: 1, name: "last_modified", kind: "message", T: () => Timestamp },
+    ]);
+  }
+  create(value?: PartialMessage<InstanceNotModified>): InstanceNotModified {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<InstanceNotModified>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceNotModified,
+  ): InstanceNotModified {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* google.protobuf.Timestamp last_modified */ 1:
+          message.lastModified = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.lastModified,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceNotModified,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* google.protobuf.Timestamp last_modified = 1; */
+    if (message.lastModified)
+      Timestamp.internalBinaryWrite(
+        message.lastModified,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceNotModified
+ */
+export const InstanceNotModified = new InstanceNotModified$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceInfoResponse$Type extends MessageType<InstanceInfoResponse> {
+  constructor() {
+    super("soulfire.v1.InstanceInfoResponse", [
+      {
+        no: 1,
+        name: "info",
+        kind: "message",
+        oneof: "result",
+        T: () => InstanceInfo,
+      },
+      {
+        no: 2,
+        name: "not_modified",
+        kind: "message",
+        oneof: "result",
+        T: () => InstanceNotModified,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<InstanceInfoResponse>): InstanceInfoResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.result = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<InstanceInfoResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceInfoResponse,
+  ): InstanceInfoResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.InstanceInfo info */ 1:
+          message.result = {
+            oneofKind: "info",
+            info: InstanceInfo.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.result as any).info,
+            ),
+          };
+          break;
+        case /* soulfire.v1.InstanceNotModified not_modified */ 2:
+          message.result = {
+            oneofKind: "notModified",
+            notModified: InstanceNotModified.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.result as any).notModified,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceInfoResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.InstanceInfo info = 1; */
+    if (message.result.oneofKind === "info")
+      InstanceInfo.internalBinaryWrite(
+        message.result.info,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.InstanceNotModified not_modified = 2; */
+    if (message.result.oneofKind === "notModified")
+      InstanceNotModified.internalBinaryWrite(
+        message.result.notModified,
+        writer.tag(2, WireType.LengthDelimited).fork(),
         options,
       ).join();
     let u = options.writeUnknownFields;
@@ -2580,6 +2920,330 @@ class InstanceUpdateAccountResponse$Type extends MessageType<InstanceUpdateAccou
 export const InstanceUpdateAccountResponse =
   new InstanceUpdateAccountResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class InstanceAddAccountsBatchRequest$Type extends MessageType<InstanceAddAccountsBatchRequest> {
+  constructor() {
+    super("soulfire.v1.InstanceAddAccountsBatchRequest", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "accounts",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => MinecraftAccountProto,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<InstanceAddAccountsBatchRequest>,
+  ): InstanceAddAccountsBatchRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.accounts = [];
+    if (value !== undefined)
+      reflectionMergePartial<InstanceAddAccountsBatchRequest>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceAddAccountsBatchRequest,
+  ): InstanceAddAccountsBatchRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* repeated soulfire.v1.MinecraftAccountProto accounts */ 2:
+          message.accounts.push(
+            MinecraftAccountProto.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceAddAccountsBatchRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* repeated soulfire.v1.MinecraftAccountProto accounts = 2; */
+    for (let i = 0; i < message.accounts.length; i++)
+      MinecraftAccountProto.internalBinaryWrite(
+        message.accounts[i],
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAddAccountsBatchRequest
+ */
+export const InstanceAddAccountsBatchRequest =
+  new InstanceAddAccountsBatchRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceAddAccountsBatchResponse$Type extends MessageType<InstanceAddAccountsBatchResponse> {
+  constructor() {
+    super("soulfire.v1.InstanceAddAccountsBatchResponse", []);
+  }
+  create(
+    value?: PartialMessage<InstanceAddAccountsBatchResponse>,
+  ): InstanceAddAccountsBatchResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<InstanceAddAccountsBatchResponse>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceAddAccountsBatchResponse,
+  ): InstanceAddAccountsBatchResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceAddAccountsBatchResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAddAccountsBatchResponse
+ */
+export const InstanceAddAccountsBatchResponse =
+  new InstanceAddAccountsBatchResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceRemoveAccountsBatchRequest$Type extends MessageType<InstanceRemoveAccountsBatchRequest> {
+  constructor() {
+    super("soulfire.v1.InstanceRemoveAccountsBatchRequest", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "profile_ids",
+        kind: "scalar",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<InstanceRemoveAccountsBatchRequest>,
+  ): InstanceRemoveAccountsBatchRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.profileIds = [];
+    if (value !== undefined)
+      reflectionMergePartial<InstanceRemoveAccountsBatchRequest>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceRemoveAccountsBatchRequest,
+  ): InstanceRemoveAccountsBatchRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* repeated string profile_ids */ 2:
+          message.profileIds.push(reader.string());
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceRemoveAccountsBatchRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* repeated string profile_ids = 2; */
+    for (let i = 0; i < message.profileIds.length; i++)
+      writer.tag(2, WireType.LengthDelimited).string(message.profileIds[i]);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceRemoveAccountsBatchRequest
+ */
+export const InstanceRemoveAccountsBatchRequest =
+  new InstanceRemoveAccountsBatchRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceRemoveAccountsBatchResponse$Type extends MessageType<InstanceRemoveAccountsBatchResponse> {
+  constructor() {
+    super("soulfire.v1.InstanceRemoveAccountsBatchResponse", []);
+  }
+  create(
+    value?: PartialMessage<InstanceRemoveAccountsBatchResponse>,
+  ): InstanceRemoveAccountsBatchResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<InstanceRemoveAccountsBatchResponse>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceRemoveAccountsBatchResponse,
+  ): InstanceRemoveAccountsBatchResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceRemoveAccountsBatchResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceRemoveAccountsBatchResponse
+ */
+export const InstanceRemoveAccountsBatchResponse =
+  new InstanceRemoveAccountsBatchResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class InstanceAddProxyRequest$Type extends MessageType<InstanceAddProxyRequest> {
   constructor() {
     super("soulfire.v1.InstanceAddProxyRequest", [
@@ -3028,6 +3692,326 @@ class InstanceUpdateProxyResponse$Type extends MessageType<InstanceUpdateProxyRe
  */
 export const InstanceUpdateProxyResponse =
   new InstanceUpdateProxyResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceAddProxiesBatchRequest$Type extends MessageType<InstanceAddProxiesBatchRequest> {
+  constructor() {
+    super("soulfire.v1.InstanceAddProxiesBatchRequest", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "proxies",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ProxyProto,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<InstanceAddProxiesBatchRequest>,
+  ): InstanceAddProxiesBatchRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.proxies = [];
+    if (value !== undefined)
+      reflectionMergePartial<InstanceAddProxiesBatchRequest>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceAddProxiesBatchRequest,
+  ): InstanceAddProxiesBatchRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* repeated soulfire.v1.ProxyProto proxies */ 2:
+          message.proxies.push(
+            ProxyProto.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceAddProxiesBatchRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* repeated soulfire.v1.ProxyProto proxies = 2; */
+    for (let i = 0; i < message.proxies.length; i++)
+      ProxyProto.internalBinaryWrite(
+        message.proxies[i],
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAddProxiesBatchRequest
+ */
+export const InstanceAddProxiesBatchRequest =
+  new InstanceAddProxiesBatchRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceAddProxiesBatchResponse$Type extends MessageType<InstanceAddProxiesBatchResponse> {
+  constructor() {
+    super("soulfire.v1.InstanceAddProxiesBatchResponse", []);
+  }
+  create(
+    value?: PartialMessage<InstanceAddProxiesBatchResponse>,
+  ): InstanceAddProxiesBatchResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<InstanceAddProxiesBatchResponse>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceAddProxiesBatchResponse,
+  ): InstanceAddProxiesBatchResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceAddProxiesBatchResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceAddProxiesBatchResponse
+ */
+export const InstanceAddProxiesBatchResponse =
+  new InstanceAddProxiesBatchResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceRemoveProxiesBatchRequest$Type extends MessageType<InstanceRemoveProxiesBatchRequest> {
+  constructor() {
+    super("soulfire.v1.InstanceRemoveProxiesBatchRequest", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "addresses",
+        kind: "scalar",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<InstanceRemoveProxiesBatchRequest>,
+  ): InstanceRemoveProxiesBatchRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.addresses = [];
+    if (value !== undefined)
+      reflectionMergePartial<InstanceRemoveProxiesBatchRequest>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceRemoveProxiesBatchRequest,
+  ): InstanceRemoveProxiesBatchRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* repeated string addresses */ 2:
+          message.addresses.push(reader.string());
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceRemoveProxiesBatchRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* repeated string addresses = 2; */
+    for (let i = 0; i < message.addresses.length; i++)
+      writer.tag(2, WireType.LengthDelimited).string(message.addresses[i]);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceRemoveProxiesBatchRequest
+ */
+export const InstanceRemoveProxiesBatchRequest =
+  new InstanceRemoveProxiesBatchRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class InstanceRemoveProxiesBatchResponse$Type extends MessageType<InstanceRemoveProxiesBatchResponse> {
+  constructor() {
+    super("soulfire.v1.InstanceRemoveProxiesBatchResponse", []);
+  }
+  create(
+    value?: PartialMessage<InstanceRemoveProxiesBatchResponse>,
+  ): InstanceRemoveProxiesBatchResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<InstanceRemoveProxiesBatchResponse>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InstanceRemoveProxiesBatchResponse,
+  ): InstanceRemoveProxiesBatchResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InstanceRemoveProxiesBatchResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InstanceRemoveProxiesBatchResponse
+ */
+export const InstanceRemoveProxiesBatchResponse =
+  new InstanceRemoveProxiesBatchResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class InstanceStateChangeRequest$Type extends MessageType<InstanceStateChangeRequest> {
   constructor() {
@@ -3529,6 +4513,18 @@ export const InstanceService = new ServiceType("soulfire.v1.InstanceService", [
     O: InstanceUpdateAccountResponse,
   },
   {
+    name: "AddInstanceAccountsBatch",
+    options: {},
+    I: InstanceAddAccountsBatchRequest,
+    O: InstanceAddAccountsBatchResponse,
+  },
+  {
+    name: "RemoveInstanceAccountsBatch",
+    options: {},
+    I: InstanceRemoveAccountsBatchRequest,
+    O: InstanceRemoveAccountsBatchResponse,
+  },
+  {
     name: "AddInstanceProxy",
     options: {},
     I: InstanceAddProxyRequest,
@@ -3545,6 +4541,18 @@ export const InstanceService = new ServiceType("soulfire.v1.InstanceService", [
     options: {},
     I: InstanceUpdateProxyRequest,
     O: InstanceUpdateProxyResponse,
+  },
+  {
+    name: "AddInstanceProxiesBatch",
+    options: {},
+    I: InstanceAddProxiesBatchRequest,
+    O: InstanceAddProxiesBatchResponse,
+  },
+  {
+    name: "RemoveInstanceProxiesBatch",
+    options: {},
+    I: InstanceRemoveProxiesBatchRequest,
+    O: InstanceRemoveProxiesBatchResponse,
   },
   {
     name: "ChangeInstanceState",

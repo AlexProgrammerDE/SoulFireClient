@@ -28,11 +28,15 @@ function compileProtos(): void {
 
   // Disable Web Storage API for Node.js v25+ compatibility
   // This fixes @typescript/vfs which is used by protoc-gen-ts
+  const major = Number(process.versions.node.split(".")[0]);
   const existingNodeOptions = process.env.NODE_OPTIONS ?? "";
-  const env = {
-    ...process.env,
-    NODE_OPTIONS: `${existingNodeOptions} --no-webstorage`.trim(),
-  };
+  const env =
+    major >= 25
+      ? {
+          ...process.env,
+          NODE_OPTIONS: `${existingNodeOptions} --no-webstorage`.trim(),
+        }
+      : process.env;
 
   execSync(command, { stdio: "inherit", env });
 }

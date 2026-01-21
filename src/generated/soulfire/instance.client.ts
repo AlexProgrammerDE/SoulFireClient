@@ -13,6 +13,10 @@ import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type {
   InstanceAddAccountRequest,
   InstanceAddAccountResponse,
+  InstanceAddAccountsBatchRequest,
+  InstanceAddAccountsBatchResponse,
+  InstanceAddProxiesBatchRequest,
+  InstanceAddProxiesBatchResponse,
   InstanceAddProxyRequest,
   InstanceAddProxyResponse,
   InstanceAuditLogRequest,
@@ -27,6 +31,10 @@ import type {
   InstanceListResponse,
   InstanceRemoveAccountRequest,
   InstanceRemoveAccountResponse,
+  InstanceRemoveAccountsBatchRequest,
+  InstanceRemoveAccountsBatchResponse,
+  InstanceRemoveProxiesBatchRequest,
+  InstanceRemoveProxiesBatchResponse,
   InstanceRemoveProxyRequest,
   InstanceRemoveProxyResponse,
   InstanceStateChangeRequest,
@@ -127,6 +135,28 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceUpdateAccountRequest, InstanceUpdateAccountResponse>;
   /**
+   * Batch account operations
+   *
+   * @generated from protobuf rpc: AddInstanceAccountsBatch
+   */
+  addInstanceAccountsBatch(
+    input: InstanceAddAccountsBatchRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    InstanceAddAccountsBatchRequest,
+    InstanceAddAccountsBatchResponse
+  >;
+  /**
+   * @generated from protobuf rpc: RemoveInstanceAccountsBatch
+   */
+  removeInstanceAccountsBatch(
+    input: InstanceRemoveAccountsBatchRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    InstanceRemoveAccountsBatchRequest,
+    InstanceRemoveAccountsBatchResponse
+  >;
+  /**
    * Proxy operations
    *
    * @generated from protobuf rpc: AddInstanceProxy
@@ -149,6 +179,25 @@ export interface IInstanceServiceClient {
     input: InstanceUpdateProxyRequest,
     options?: RpcOptions,
   ): UnaryCall<InstanceUpdateProxyRequest, InstanceUpdateProxyResponse>;
+  /**
+   * Batch proxy operations
+   *
+   * @generated from protobuf rpc: AddInstanceProxiesBatch
+   */
+  addInstanceProxiesBatch(
+    input: InstanceAddProxiesBatchRequest,
+    options?: RpcOptions,
+  ): UnaryCall<InstanceAddProxiesBatchRequest, InstanceAddProxiesBatchResponse>;
+  /**
+   * @generated from protobuf rpc: RemoveInstanceProxiesBatch
+   */
+  removeInstanceProxiesBatch(
+    input: InstanceRemoveProxiesBatchRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    InstanceRemoveProxiesBatchRequest,
+    InstanceRemoveProxiesBatchResponse
+  >;
   /**
    * @generated from protobuf rpc: ChangeInstanceState
    */
@@ -336,6 +385,42 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Batch account operations
+   *
+   * @generated from protobuf rpc: AddInstanceAccountsBatch
+   */
+  addInstanceAccountsBatch(
+    input: InstanceAddAccountsBatchRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    InstanceAddAccountsBatchRequest,
+    InstanceAddAccountsBatchResponse
+  > {
+    const method = this.methods[10],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InstanceAddAccountsBatchRequest,
+      InstanceAddAccountsBatchResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: RemoveInstanceAccountsBatch
+   */
+  removeInstanceAccountsBatch(
+    input: InstanceRemoveAccountsBatchRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    InstanceRemoveAccountsBatchRequest,
+    InstanceRemoveAccountsBatchResponse
+  > {
+    const method = this.methods[11],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InstanceRemoveAccountsBatchRequest,
+      InstanceRemoveAccountsBatchResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
    * Proxy operations
    *
    * @generated from protobuf rpc: AddInstanceProxy
@@ -344,7 +429,7 @@ export class InstanceServiceClient
     input: InstanceAddProxyRequest,
     options?: RpcOptions,
   ): UnaryCall<InstanceAddProxyRequest, InstanceAddProxyResponse> {
-    const method = this.methods[10],
+    const method = this.methods[12],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<InstanceAddProxyRequest, InstanceAddProxyResponse>(
       "unary",
@@ -361,7 +446,7 @@ export class InstanceServiceClient
     input: InstanceRemoveProxyRequest,
     options?: RpcOptions,
   ): UnaryCall<InstanceRemoveProxyRequest, InstanceRemoveProxyResponse> {
-    const method = this.methods[11],
+    const method = this.methods[13],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<
       InstanceRemoveProxyRequest,
@@ -375,11 +460,47 @@ export class InstanceServiceClient
     input: InstanceUpdateProxyRequest,
     options?: RpcOptions,
   ): UnaryCall<InstanceUpdateProxyRequest, InstanceUpdateProxyResponse> {
-    const method = this.methods[12],
+    const method = this.methods[14],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<
       InstanceUpdateProxyRequest,
       InstanceUpdateProxyResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * Batch proxy operations
+   *
+   * @generated from protobuf rpc: AddInstanceProxiesBatch
+   */
+  addInstanceProxiesBatch(
+    input: InstanceAddProxiesBatchRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    InstanceAddProxiesBatchRequest,
+    InstanceAddProxiesBatchResponse
+  > {
+    const method = this.methods[15],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InstanceAddProxiesBatchRequest,
+      InstanceAddProxiesBatchResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: RemoveInstanceProxiesBatch
+   */
+  removeInstanceProxiesBatch(
+    input: InstanceRemoveProxiesBatchRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    InstanceRemoveProxiesBatchRequest,
+    InstanceRemoveProxiesBatchResponse
+  > {
+    const method = this.methods[16],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      InstanceRemoveProxiesBatchRequest,
+      InstanceRemoveProxiesBatchResponse
     >("unary", this._transport, method, opt, input);
   }
   /**
@@ -389,7 +510,7 @@ export class InstanceServiceClient
     input: InstanceStateChangeRequest,
     options?: RpcOptions,
   ): UnaryCall<InstanceStateChangeRequest, InstanceStateChangeResponse> {
-    const method = this.methods[13],
+    const method = this.methods[17],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<
       InstanceStateChangeRequest,
@@ -403,7 +524,7 @@ export class InstanceServiceClient
     input: InstanceAuditLogRequest,
     options?: RpcOptions,
   ): UnaryCall<InstanceAuditLogRequest, InstanceAuditLogResponse> {
-    const method = this.methods[14],
+    const method = this.methods[18],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<InstanceAuditLogRequest, InstanceAuditLogResponse>(
       "unary",
