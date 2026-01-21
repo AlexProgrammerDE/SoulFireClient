@@ -45,6 +45,14 @@ import {
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog.tsx";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -68,6 +76,7 @@ import { runAsync, setInstanceConfig } from "@/lib/utils.tsx";
 
 const PROXY_SETTINGS_DISABLED_IDS: DisabledSettingId[] = [
   { namespace: "proxy", key: "proxy-check-concurrency" },
+  { namespace: "proxy", key: "proxy-check-address" },
 ];
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/proxies")({
@@ -412,27 +421,6 @@ function AddButton() {
           textInput={{
             defaultValue: "",
           }}
-          extraContent={
-            <SettingFieldByKey
-              namespace="proxy"
-              settingKey="proxy-check-concurrency"
-              invalidateQuery={async () => {
-                await queryClient.invalidateQueries({
-                  queryKey: instanceInfoQueryOptions.queryKey,
-                });
-              }}
-              setConfig={async (jsonProfile) => {
-                await setInstanceConfig(
-                  jsonProfile,
-                  instanceInfo,
-                  transport,
-                  queryClient,
-                  instanceInfoQueryOptions.queryKey,
-                );
-              }}
-              config={profile}
-            />
-          }
         />
       )}
     </>
@@ -450,6 +438,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { trackEvent } = useAptabase();
+  const [checkDialogOpen, setCheckDialogOpen] = useState(false);
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (
       profileTransformer: (prev: ProfileRoot) => ProfileRoot,
@@ -469,106 +458,184 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
     },
   });
 
+  const selectedProxyCount =
+    props.table.getFilteredSelectedRowModel().rows.length;
+
+  const performProxyCheck = useCallback(() => {
+    if (transport === null) {
+      return;
+    }
+
+    void trackEvent("check_proxies", {
+      count: selectedProxyCount,
+    });
+
+    const selectedRows = props.table
+      .getFilteredSelectedRowModel()
+      .rows.map((r) => r.original);
+
+    const abortController = new AbortController();
+    const loadingData: ExternalToast = {
+      cancel: {
+        label: t("common:cancel"),
+        onClick: () => {
+          abortController.abort();
+        },
+      },
+    };
+    const total = selectedRows.length;
+    let failed = 0;
+    let success = 0;
+    const loadingReport = () =>
+      t("proxy.checkToast.loading", {
+        checked: success + failed,
+        total,
+        success,
+        failed,
+      });
+    const toastId = toast.loading(loadingReport(), loadingData);
+    const service = new ProxyCheckServiceClient(transport);
+    const { responses } = service.check(
+      {
+        instanceId: instanceInfo.id,
+        proxy: selectedRows,
+      },
+      {
+        abort: abortController.signal,
+      },
+    );
+    responses.onMessage((r) => {
+      runAsync(async () => {
+        const data = r.data;
+        switch (data.oneofKind) {
+          case "end": {
+            toast.success(
+              t("proxy.checkToast.success", {
+                count: failed,
+              }),
+              {
+                id: toastId,
+                cancel: undefined,
+              },
+            );
+            break;
+          }
+          case "single": {
+            if (abortController.signal.aborted) {
+              return;
+            }
+
+            if (data.single.valid) {
+              success++;
+            } else {
+              failed++;
+              await setProfileMutation((prev) => ({
+                ...prev,
+                proxies: prev.proxies.filter(
+                  (a) => !deepEqual(data.single.proxy, a),
+                ),
+              }));
+            }
+
+            toast.loading(loadingReport(), {
+              id: toastId,
+              ...loadingData,
+            });
+            break;
+          }
+        }
+      });
+      responses.onError((e) => {
+        console.error(e);
+        toast.error(t("proxy.checkToast.error"), {
+          id: toastId,
+          cancel: undefined,
+        });
+      });
+    });
+  }, [
+    transport,
+    trackEvent,
+    selectedProxyCount,
+    props.table,
+    t,
+    instanceInfo.id,
+    setProfileMutation,
+  ]);
+
   return (
     <>
       <DataTableActionBarAction
         tooltip="Check selected proxies"
-        onClick={() => {
-          if (transport === null) {
-            return;
-          }
-
-          void trackEvent("check_proxies", {
-            count: props.table.getFilteredSelectedRowModel().rows.length,
-          });
-
-          const selectedRows = props.table
-            .getFilteredSelectedRowModel()
-            .rows.map((r) => r.original);
-
-          const abortController = new AbortController();
-          const loadingData: ExternalToast = {
-            cancel: {
-              label: t("common:cancel"),
-              onClick: () => {
-                abortController.abort();
-              },
-            },
-          };
-          const total = selectedRows.length;
-          let failed = 0;
-          let success = 0;
-          const loadingReport = () =>
-            t("proxy.checkToast.loading", {
-              checked: success + failed,
-              total,
-              success,
-              failed,
-            });
-          const toastId = toast.loading(loadingReport(), loadingData);
-          const service = new ProxyCheckServiceClient(transport);
-          const { responses } = service.check(
-            {
-              instanceId: instanceInfo.id,
-              proxy: selectedRows,
-            },
-            {
-              abort: abortController.signal,
-            },
-          );
-          responses.onMessage((r) => {
-            runAsync(async () => {
-              const data = r.data;
-              switch (data.oneofKind) {
-                case "end": {
-                  toast.success(
-                    t("proxy.checkToast.success", {
-                      count: failed,
-                    }),
-                    {
-                      id: toastId,
-                      cancel: undefined,
-                    },
-                  );
-                  break;
-                }
-                case "single": {
-                  if (abortController.signal.aborted) {
-                    return;
-                  }
-
-                  if (data.single.valid) {
-                    success++;
-                  } else {
-                    failed++;
-                    await setProfileMutation((prev) => ({
-                      ...prev,
-                      proxies: prev.proxies.filter(
-                        (a) => !deepEqual(data.single.proxy, a),
-                      ),
-                    }));
-                  }
-
-                  toast.loading(loadingReport(), {
-                    id: toastId,
-                    ...loadingData,
-                  });
-                  break;
-                }
-              }
-            });
-            responses.onError((e) => {
-              console.error(e);
-              toast.error(t("proxy.checkToast.error"), {
-                id: toastId,
-                cancel: undefined,
-              });
-            });
-          });
-        }}
+        onClick={() => setCheckDialogOpen(true)}
       >
         <Wand2Icon />
       </DataTableActionBarAction>
+      <Dialog open={checkDialogOpen} onOpenChange={setCheckDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("proxy.checkDialog.title")}</DialogTitle>
+            <DialogDescription>
+              {t("proxy.checkDialog.description", {
+                count: selectedProxyCount,
+              })}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-4">
+            <SettingFieldByKey
+              namespace="proxy"
+              settingKey="proxy-check-address"
+              invalidateQuery={async () => {
+                await queryClient.invalidateQueries({
+                  queryKey: instanceInfoQueryOptions.queryKey,
+                });
+              }}
+              setConfig={async (jsonProfile) => {
+                await setInstanceConfig(
+                  jsonProfile,
+                  instanceInfo,
+                  transport,
+                  queryClient,
+                  instanceInfoQueryOptions.queryKey,
+                );
+              }}
+              config={profile}
+            />
+            <SettingFieldByKey
+              namespace="proxy"
+              settingKey="proxy-check-concurrency"
+              invalidateQuery={async () => {
+                await queryClient.invalidateQueries({
+                  queryKey: instanceInfoQueryOptions.queryKey,
+                });
+              }}
+              setConfig={async (jsonProfile) => {
+                await setInstanceConfig(
+                  jsonProfile,
+                  instanceInfo,
+                  transport,
+                  queryClient,
+                  instanceInfoQueryOptions.queryKey,
+                );
+              }}
+              config={profile}
+            />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setCheckDialogOpen(false)}>
+              {t("common:cancel")}
+            </Button>
+            <Button
+              onClick={() => {
+                setCheckDialogOpen(false);
+                performProxyCheck();
+              }}
+            >
+              {t("proxy.checkDialog.confirm")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       <DataTableActionBarAction
         tooltip="Remove selected proxies"
         onClick={() => {

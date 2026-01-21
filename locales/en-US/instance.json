@@ -30,6 +30,11 @@
       "success": "Removed {{count}} broken proxies!",
       "error": "Failed to check proxies"
     },
+    "checkDialog": {
+      "title": "Check Proxies",
+      "description": "You are about to check {{count}} proxies. Invalid proxies will be removed automatically.",
+      "confirm": "Start Check"
+    },
     "invalidFormat": "Invalid proxy format",
     "table": {
       "type": "Type",

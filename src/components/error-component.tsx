@@ -3,6 +3,7 @@ import { useNavigate, useRouter } from "@tanstack/react-router";
 import { emit } from "@tauri-apps/api/event";
 import {
   BugIcon,
+  ChevronDownIcon,
   LoaderCircleIcon,
   LogOutIcon,
   RotateCwIcon,
@@ -18,6 +19,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card.tsx";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible.tsx";
 import { isTauri, runAsync } from "@/lib/utils.tsx";
 import { logOut } from "@/lib/web-rpc.ts";
 
@@ -27,6 +33,7 @@ export function ErrorComponent({ error }: { error: Error }) {
   const router = useRouter();
   const queryErrorResetBoundary = useQueryErrorResetBoundary();
   const [revalidating, setRevalidating] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
     queryErrorResetBoundary.reset();
@@ -47,9 +54,11 @@ export function ErrorComponent({ error }: { error: Error }) {
     };
   }, [revalidate]);
 
+  const hasStack = error.stack && error.stack !== error.message;
+
   return (
     <div className="flex size-full grow">
-      <Card className="m-auto flex flex-col">
+      <Card className="m-auto flex max-w-2xl flex-col">
         <CardHeader>
           <CardTitle className="fle-row flex gap-1 text-2xl font-bold">
             <BugIcon className="h-8" />
@@ -58,7 +67,34 @@ export function ErrorComponent({ error }: { error: Error }) {
           <CardDescription>{t("error.page.description")}</CardDescription>
         </CardHeader>
         <CardContent>
-          <p className="max-w-2xl truncate text-red-500">{error.message}</p>
+          <Collapsible open={expanded} onOpenChange={setExpanded}>
+            <div className="flex flex-col gap-2">
+              <p className="select-text break-words text-red-500">
+                {error.message}
+              </p>
+              {hasStack && (
+                <>
+                  <CollapsibleTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="w-fit gap-1 px-2"
+                    >
+                      <ChevronDownIcon
+                        className={`size-4 transition-transform ${expanded ? "rotate-180" : ""}`}
+                      />
+                      {t("error.page.showDetails")}
+                    </Button>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <pre className="max-h-64 select-text overflow-auto rounded-md bg-muted p-3 font-mono text-xs text-muted-foreground">
+                      {error.stack}
+                    </pre>
+                  </CollapsibleContent>
+                </>
+              )}
+            </div>
+          </Collapsible>
         </CardContent>
         <CardFooter className="flex flex-row gap-2">
           <Button

@@ -72,6 +72,7 @@ import { openExternalUrl, runAsync, setInstanceConfig } from "@/lib/utils.tsx";
 
 const ACCOUNT_SETTINGS_DISABLED_IDS: DisabledSettingId[] = [
   { namespace: "account", key: "account-import-concurrency" },
+  { namespace: "account", key: "use-proxies-for-account-auth" },
 ];
 
 function GetAccountsButton() {
@@ -609,25 +610,46 @@ function AddButton() {
             defaultValue: "",
           }}
           extraContent={
-            <SettingFieldByKey
-              namespace="account"
-              settingKey="account-import-concurrency"
-              invalidateQuery={async () => {
-                await queryClient.invalidateQueries({
-                  queryKey: instanceInfoQueryOptions.queryKey,
-                });
-              }}
-              setConfig={async (jsonProfile) => {
-                await setInstanceConfig(
-                  jsonProfile,
-                  instanceInfo,
-                  transport,
-                  queryClient,
-                  instanceInfoQueryOptions.queryKey,
-                );
-              }}
-              config={profile}
-            />
+            <div className="flex flex-col gap-4">
+              <SettingFieldByKey
+                namespace="account"
+                settingKey="use-proxies-for-account-auth"
+                invalidateQuery={async () => {
+                  await queryClient.invalidateQueries({
+                    queryKey: instanceInfoQueryOptions.queryKey,
+                  });
+                }}
+                setConfig={async (jsonProfile) => {
+                  await setInstanceConfig(
+                    jsonProfile,
+                    instanceInfo,
+                    transport,
+                    queryClient,
+                    instanceInfoQueryOptions.queryKey,
+                  );
+                }}
+                config={profile}
+              />
+              <SettingFieldByKey
+                namespace="account"
+                settingKey="account-import-concurrency"
+                invalidateQuery={async () => {
+                  await queryClient.invalidateQueries({
+                    queryKey: instanceInfoQueryOptions.queryKey,
+                  });
+                }}
+                setConfig={async (jsonProfile) => {
+                  await setInstanceConfig(
+                    jsonProfile,
+                    instanceInfo,
+                    transport,
+                    queryClient,
+                    instanceInfoQueryOptions.queryKey,
+                  );
+                }}
+                config={profile}
+              />
+            </div>
           }
         />
       )}

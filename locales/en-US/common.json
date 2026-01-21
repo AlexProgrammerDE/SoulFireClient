@@ -7,7 +7,8 @@
       "title": "Error",
       "description": "An error occurred while trying to load the page. More information can be found in the console.",
       "logOut": "Log out",
-      "reloadPage": "Reload page"
+      "reloadPage": "Reload page",
+      "showDetails": "Show details"
     },
     "connectionFailed": "Connection to the SoulFire server failed."
   },
