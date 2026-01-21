@@ -26,9 +26,8 @@ import type {
 import type { BaseSettings } from "@/lib/types.ts";
 import {
   getSettingValue,
-  setInstanceConfig,
-  setServerConfig,
-  updateEntry,
+  updateInstanceConfigEntry,
+  updateServerConfigEntry,
 } from "@/lib/utils.tsx";
 import DynamicIcon from "./dynamic-icon";
 
@@ -147,13 +146,10 @@ export function PluginInfoCard(props: {
   const setEnabledMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
       if (!enabledIdentifier) return;
-      await setInstanceConfig(
-        updateEntry(
-          enabledIdentifier.namespace,
-          enabledIdentifier.key,
-          value,
-          profile,
-        ),
+      await updateInstanceConfigEntry(
+        enabledIdentifier.namespace,
+        enabledIdentifier.key,
+        value,
         instanceInfo,
         transport,
         queryClient,
@@ -214,13 +210,10 @@ export function ServerPluginInfoCard(props: {
   const setEnabledMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
       if (!enabledIdentifier) return;
-      await setServerConfig(
-        updateEntry(
-          enabledIdentifier.namespace,
-          enabledIdentifier.key,
-          value,
-          profile,
-        ),
+      await updateServerConfigEntry(
+        enabledIdentifier.namespace,
+        enabledIdentifier.key,
+        value,
         transport,
         queryClient,
         serverInfoQueryOptions.queryKey,

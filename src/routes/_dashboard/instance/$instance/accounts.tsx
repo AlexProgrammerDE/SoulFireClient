@@ -70,7 +70,13 @@ import {
   type ProfileAccount,
   type ProfileRoot,
 } from "@/lib/types.ts";
-import { openExternalUrl, runAsync, setInstanceConfig } from "@/lib/utils.tsx";
+import {
+  addInstanceAccount,
+  openExternalUrl,
+  runAsync,
+  setInstanceConfigFull,
+  updateInstanceConfigEntry,
+} from "@/lib/utils.tsx";
 
 const ACCOUNT_SETTINGS_DISABLED_IDS: DisabledSettingId[] = [
   { namespace: "account", key: "account-import-concurrency" },
@@ -102,11 +108,12 @@ function GenerateAccountsButton() {
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { trackEvent } = useAptabase();
   const [dialogOpen, setDialogOpen] = useState(false);
+  // Using setInstanceConfigFull for bulk operations (profile import style)
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (
       profileTransformer: (prev: ProfileRoot) => ProfileRoot,
     ) => {
-      await setInstanceConfig(
+      await setInstanceConfigFull(
         profileTransformer(profile),
         instanceInfo,
         transport,
@@ -292,12 +299,30 @@ function AddButton() {
   const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { trackEvent } = useAptabase();
+  // Using setInstanceConfigFull for bulk operations (profile import style)
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (
       profileTransformer: (prev: ProfileRoot) => ProfileRoot,
     ) => {
-      await setInstanceConfig(
+      await setInstanceConfigFull(
         profileTransformer(profile),
+        instanceInfo,
+        transport,
+        queryClient,
+        instanceInfoQueryOptions.queryKey,
+      );
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: instanceInfoQueryOptions.queryKey,
+      });
+    },
+  });
+  // Granular account add mutation
+  const { mutateAsync: addAccountMutation } = useMutation({
+    mutationFn: async (account: ProfileAccount) => {
+      await addInstanceAccount(
+        account,
         instanceInfo,
         transport,
         queryClient,
@@ -371,6 +396,7 @@ function AddButton() {
             case "fullList": {
               const accountsToAdd = data.fullList.account;
 
+              // Using full profile update for bulk import
               await setProfileMutation((prev) => ({
                 ...prev,
                 accounts: addAndDeduplicate(prev.accounts, accountsToAdd),
@@ -493,10 +519,8 @@ function AddButton() {
           });
 
           const promiseResult = await promise;
-          await setProfileMutation((prev) => ({
-            ...prev,
-            accounts: addAndDeduplicate(prev.accounts, [promiseResult]),
-          }));
+          // Using granular add for single account
+          await addAccountMutation(promiseResult);
         })(),
         {
           loading: t("account.deviceCodeImportToast.loading"),
@@ -514,7 +538,7 @@ function AddButton() {
         },
       );
     },
-    [instanceInfo.id, setProfileMutation, t, transport],
+    [instanceInfo.id, addAccountMutation, t, transport],
   );
 
   return (
@@ -636,9 +660,11 @@ function AddButton() {
                     queryKey: instanceInfoQueryOptions.queryKey,
                   });
                 }}
-                setConfig={async (jsonProfile) => {
-                  await setInstanceConfig(
-                    jsonProfile,
+                updateConfigEntry={async (namespace, key, value) => {
+                  await updateInstanceConfigEntry(
+                    namespace,
+                    key,
+                    value,
                     instanceInfo,
                     transport,
                     queryClient,
@@ -655,9 +681,11 @@ function AddButton() {
                     queryKey: instanceInfoQueryOptions.queryKey,
                   });
                 }}
-                setConfig={async (jsonProfile) => {
-                  await setInstanceConfig(
-                    jsonProfile,
+                updateConfigEntry={async (namespace, key, value) => {
+                  await updateInstanceConfigEntry(
+                    namespace,
+                    key,
+                    value,
                     instanceInfo,
                     transport,
                     queryClient,
@@ -685,11 +713,12 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { trackEvent } = useAptabase();
+  // Using setInstanceConfigFull for bulk removal (profile import style)
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (
       profileTransformer: (prev: ProfileRoot) => ProfileRoot,
     ) => {
-      await setInstanceConfig(
+      await setInstanceConfigFull(
         profileTransformer(profile),
         instanceInfo,
         transport,

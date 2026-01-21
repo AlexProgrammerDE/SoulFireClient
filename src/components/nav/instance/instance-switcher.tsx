@@ -57,7 +57,7 @@ import {
   hasInstancePermission,
   isTauri,
   runAsync,
-  setInstanceConfig,
+  setInstanceConfigFull,
 } from "@/lib/utils.tsx";
 
 function SidebarInstanceButton() {
@@ -157,9 +157,10 @@ function InstanceActionButtons() {
   });
   const systemInfo = use(SystemInfoContext);
   const instanceProfileInputRef = useRef<HTMLInputElement>(null);
+  // Using setInstanceConfigFull for profile import
   const setProfileMutation = useMutation({
     mutationFn: async (profile: ProfileRoot) => {
-      await setInstanceConfig(
+      await setInstanceConfigFull(
         profile,
         instanceInfo,
         transport,

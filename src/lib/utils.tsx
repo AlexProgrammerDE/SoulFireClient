@@ -8,12 +8,17 @@ import * as Flags from "country-flag-icons/react/3x2";
 import { sha256 } from "js-sha256";
 import type { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
+import { Value } from "@/generated/google/protobuf/struct.ts";
 import type { Timestamp } from "@/generated/google/protobuf/timestamp.ts";
+import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
+import type { BotInfoResponse } from "@/generated/soulfire/bot.ts";
 import { ClientServiceClient } from "@/generated/soulfire/client.client.ts";
 import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
 import type {
   GlobalPermission,
   InstancePermission,
+  MinecraftAccountProto,
+  ProxyProto,
   SettingsDefinition,
   SettingsEntryIdentifier,
 } from "@/generated/soulfire/common.ts";
@@ -29,6 +34,8 @@ import {
   convertToInstanceProto,
   convertToServerProto,
   type InstanceInfoQueryData,
+  type ProfileAccount,
+  type ProfileProxy,
   type ProfileRoot,
   type ServerInfoQueryData,
 } from "@/lib/types.ts";
@@ -262,46 +269,6 @@ export function getSettingIdentifierKey(id: SettingsEntryIdentifier): string {
   return `${id.namespace}:${id.key}`;
 }
 
-export async function setInstanceConfig(
-  jsonProfile: ProfileRoot,
-  instanceInfo: {
-    id: string;
-  },
-  transport: RpcTransport | null,
-  queryClient: QueryClient,
-  instanceInfoQueryKey: QueryKey,
-) {
-  if (transport === null) {
-    return;
-  }
-
-  const targetProfile = convertToInstanceProto(jsonProfile);
-  await queryClient.cancelQueries({
-    queryKey: instanceInfoQueryKey,
-  });
-  // Update optimistically
-  queryClient.setQueryData<InstanceInfoQueryData>(
-    instanceInfoQueryKey,
-    (old) => {
-      if (old === undefined) {
-        return;
-      }
-
-      return {
-        ...old,
-        config: targetProfile,
-        profile: jsonProfile,
-      };
-    },
-  );
-
-  const instanceService = new InstanceServiceClient(transport);
-  await instanceService.updateInstanceConfig({
-    id: instanceInfo.id,
-    config: targetProfile,
-  });
-}
-
 export async function setInstanceIcon(
   icon: string,
   instanceInfo: {
@@ -440,7 +407,49 @@ export async function setInstanceFriendlyName(
   });
 }
 
-export async function setServerConfig(
+// Used only for profile import - sends entire config
+export async function setInstanceConfigFull(
+  jsonProfile: ProfileRoot,
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  const targetProfile = convertToInstanceProto(jsonProfile);
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
+
+      return {
+        ...old,
+        config: targetProfile,
+        profile: jsonProfile,
+      };
+    },
+  );
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.updateInstanceConfig({
+    id: instanceInfo.id,
+    config: targetProfile,
+  });
+}
+
+// Used only for profile import - sends entire config
+export async function setServerConfigFull(
   jsonProfile: BaseSettings,
   transport: RpcTransport | null,
   queryClient: QueryClient,
@@ -472,6 +481,418 @@ export async function setServerConfig(
     config: targetProfile,
   });
 }
+
+// Granular config entry update for instance settings
+export async function updateInstanceConfigEntry(
+  namespace: string,
+  key: string,
+  value: JsonValue,
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
+
+      return {
+        ...old,
+        profile: updateEntry(namespace, key, value, old.profile),
+      };
+    },
+  );
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.updateInstanceConfigEntry({
+    id: instanceInfo.id,
+    namespace: namespace,
+    key: key,
+    value: Value.fromJson(value),
+  });
+}
+
+// Granular config entry update for server settings
+export async function updateServerConfigEntry(
+  namespace: string,
+  key: string,
+  value: JsonValue,
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  serverInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  await queryClient.cancelQueries({
+    queryKey: serverInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<ServerInfoQueryData>(serverInfoQueryKey, (old) => {
+    if (old === undefined) {
+      return;
+    }
+
+    return {
+      ...old,
+      profile: updateEntry(namespace, key, value, old.profile),
+    };
+  });
+
+  const serverService = new ServerServiceClient(transport);
+  await serverService.updateServerConfigEntry({
+    namespace: namespace,
+    key: key,
+    value: Value.fromJson(value),
+  });
+}
+
+// Granular config entry update for bot settings
+export async function updateBotConfigEntry(
+  namespace: string,
+  key: string,
+  value: JsonValue,
+  instanceId: string,
+  botId: string,
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  botInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  await queryClient.cancelQueries({
+    queryKey: botInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<BotInfoResponse>(botInfoQueryKey, (old) => {
+    if (old === undefined) {
+      return;
+    }
+
+    const currentSettings = old.config?.settings ?? [];
+    const namespaceIndex = currentSettings.findIndex(
+      (ns) => ns.namespace === namespace,
+    );
+    const newSettings = [...currentSettings];
+    if (namespaceIndex >= 0) {
+      const entries = [...newSettings[namespaceIndex].entries];
+      const entryIndex = entries.findIndex((e) => e.key === key);
+      if (entryIndex >= 0) {
+        entries[entryIndex] = { key, value: Value.fromJson(value) };
+      } else {
+        entries.push({ key, value: Value.fromJson(value) });
+      }
+      newSettings[namespaceIndex] = {
+        ...newSettings[namespaceIndex],
+        entries,
+      };
+    } else {
+      newSettings.push({
+        namespace,
+        entries: [{ key, value: Value.fromJson(value) }],
+      });
+    }
+
+    return {
+      ...old,
+      config: {
+        ...old.config,
+        settings: newSettings,
+      },
+    };
+  });
+
+  const botService = new BotServiceClient(transport);
+  await botService.updateBotConfigEntry({
+    instanceId: instanceId,
+    botId: botId,
+    namespace: namespace,
+    key: key,
+    value: Value.fromJson(value),
+  });
+}
+
+// Account operations
+export async function addInstanceAccount(
+  account: ProfileAccount,
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  const accountProto: MinecraftAccountProto = account;
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
+
+      return {
+        ...old,
+        profile: {
+          ...old.profile,
+          accounts: [...old.profile.accounts, account],
+        },
+      };
+    },
+  );
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.addInstanceAccount({
+    id: instanceInfo.id,
+    account: accountProto,
+  });
+}
+
+export async function removeInstanceAccount(
+  profileId: string,
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
+
+      return {
+        ...old,
+        profile: {
+          ...old.profile,
+          accounts: old.profile.accounts.filter(
+            (a) => a.profileId !== profileId,
+          ),
+        },
+      };
+    },
+  );
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.removeInstanceAccount({
+    id: instanceInfo.id,
+    profileId: profileId,
+  });
+}
+
+export async function updateInstanceAccount(
+  account: ProfileAccount,
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  const accountProto: MinecraftAccountProto = account;
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
+
+      return {
+        ...old,
+        profile: {
+          ...old.profile,
+          accounts: old.profile.accounts.map((a) =>
+            a.profileId === account.profileId ? account : a,
+          ),
+        },
+      };
+    },
+  );
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.updateInstanceAccount({
+    id: instanceInfo.id,
+    account: accountProto,
+  });
+}
+
+// Proxy operations
+export async function addInstanceProxy(
+  proxy: ProfileProxy,
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  const proxyProto: ProxyProto = proxy;
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
+
+      return {
+        ...old,
+        profile: {
+          ...old.profile,
+          proxies: [...old.profile.proxies, proxy],
+        },
+      };
+    },
+  );
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.addInstanceProxy({
+    id: instanceInfo.id,
+    proxy: proxyProto,
+  });
+}
+
+export async function removeInstanceProxy(
+  index: number,
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
+
+      return {
+        ...old,
+        profile: {
+          ...old.profile,
+          proxies: old.profile.proxies.filter((_, i) => i !== index),
+        },
+      };
+    },
+  );
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.removeInstanceProxy({
+    id: instanceInfo.id,
+    index: index,
+  });
+}
+
+export async function updateInstanceProxy(
+  index: number,
+  proxy: ProfileProxy,
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  if (transport === null) {
+    return;
+  }
+
+  const proxyProto: ProxyProto = proxy;
+
+  await queryClient.cancelQueries({
+    queryKey: instanceInfoQueryKey,
+  });
+  // Update optimistically
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
+      }
+
+      return {
+        ...old,
+        profile: {
+          ...old.profile,
+          proxies: old.profile.proxies.map((p, i) => (i === index ? proxy : p)),
+        },
+      };
+    },
+  );
+
+  const instanceService = new InstanceServiceClient(transport);
+  await instanceService.updateInstanceProxy({
+    id: instanceInfo.id,
+    index: index,
+    proxy: proxyProto,
+  });
+}
+
+// Keep the old function names for backward compatibility (these are used for profile import only now)
+export const setServerConfig = setServerConfigFull;
+export const setInstanceConfig = setInstanceConfigFull;
 
 export async function setSelfUsername(
   username: string,

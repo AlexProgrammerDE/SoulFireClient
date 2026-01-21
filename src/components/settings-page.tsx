@@ -67,9 +67,8 @@ import {
   cn,
   getSettingIdentifierKey,
   getSettingValue,
-  setInstanceConfig,
-  setServerConfig,
-  updateEntry,
+  updateInstanceConfigEntry,
+  updateServerConfigEntry,
 } from "@/lib/utils.tsx";
 
 function isAllowedValidator(
@@ -699,7 +698,11 @@ export function SettingTypeRenderer(props: {
 export function SettingField<T extends BaseSettings>(props: {
   settingId: SettingsEntryIdentifier;
   invalidateQuery: () => Promise<void>;
-  setConfig: (config: T) => Promise<void>;
+  updateConfigEntry: (
+    namespace: string,
+    key: string,
+    value: JsonValue,
+  ) => Promise<void>;
   config: T;
 }) {
   const definition = useSettingsDefinition(props.settingId);
@@ -711,7 +714,7 @@ export function SettingField<T extends BaseSettings>(props: {
   );
   const setValueMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
-      await props.setConfig(updateEntry(namespace, key, value, props.config));
+      await props.updateConfigEntry(namespace, key, value);
     },
     onSettled: async () => {
       await props.invalidateQuery();
@@ -739,7 +742,11 @@ export function SettingFieldByKey<T extends BaseSettings>(props: {
   namespace: string;
   settingKey: string;
   invalidateQuery: () => Promise<void>;
-  setConfig: (config: T) => Promise<void>;
+  updateConfigEntry: (
+    namespace: string,
+    key: string,
+    value: JsonValue,
+  ) => Promise<void>;
   config: T;
 }) {
   const registry = useSettingsRegistry();
@@ -753,9 +760,7 @@ export function SettingFieldByKey<T extends BaseSettings>(props: {
   );
   const setValueMutation = useMutation({
     mutationFn: async (value: JsonValue) => {
-      await props.setConfig(
-        updateEntry(props.namespace, props.settingKey, value, props.config),
-      );
+      await props.updateConfigEntry(props.namespace, props.settingKey, value);
     },
     onSettled: async () => {
       await props.invalidateQuery();
@@ -783,13 +788,17 @@ export type DisabledSettingId = {
 function ClientSettingsPageComponent<T extends BaseSettings>({
   data,
   invalidateQuery,
-  setConfig,
+  updateConfigEntry,
   config,
   disabledIds = [],
 }: {
   data: SettingsPage;
   invalidateQuery: () => Promise<void>;
-  setConfig: (config: T) => Promise<void>;
+  updateConfigEntry: (
+    namespace: string,
+    key: string,
+    value: JsonValue,
+  ) => Promise<void>;
   config: T;
   disabledIds?: DisabledSettingId[];
 }) {
@@ -816,7 +825,7 @@ function ClientSettingsPageComponent<T extends BaseSettings>({
           <SettingField
             key={getSettingIdentifierKey(entryId)}
             settingId={entryId}
-            setConfig={setConfig}
+            updateConfigEntry={updateConfigEntry}
             invalidateQuery={invalidateQuery}
             config={config}
           />
@@ -851,9 +860,11 @@ export function InstanceSettingsPageComponent({
     <SettingsRegistryContext.Provider value={settingsRegistry}>
       <ClientSettingsPageComponent
         data={data}
-        setConfig={async (jsonProfile) =>
-          await setInstanceConfig(
-            jsonProfile,
+        updateConfigEntry={async (namespace, key, value) =>
+          await updateInstanceConfigEntry(
+            namespace,
+            key,
+            value,
             instanceInfo,
             transport,
             queryClient,
@@ -892,9 +903,11 @@ export function AdminSettingsPageComponent({ data }: { data: SettingsPage }) {
     <SettingsRegistryContext.Provider value={settingsRegistry}>
       <ClientSettingsPageComponent
         data={data}
-        setConfig={async (jsonProfile) =>
-          await setServerConfig(
-            jsonProfile,
+        updateConfigEntry={async (namespace, key, value) =>
+          await updateServerConfigEntry(
+            namespace,
+            key,
+            value,
             transport,
             queryClient,
             serverInfoQueryOptions.queryKey,

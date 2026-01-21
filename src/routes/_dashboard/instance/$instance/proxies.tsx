@@ -72,7 +72,11 @@ import {
   type ProfileProxy,
   type ProfileRoot,
 } from "@/lib/types.ts";
-import { runAsync, setInstanceConfig } from "@/lib/utils.tsx";
+import {
+  runAsync,
+  setInstanceConfigFull,
+  updateInstanceConfigEntry,
+} from "@/lib/utils.tsx";
 
 const PROXY_SETTINGS_DISABLED_IDS: DisabledSettingId[] = [
   { namespace: "proxy", key: "proxy-check-concurrency" },
@@ -281,11 +285,12 @@ function AddButton() {
   const [proxyTypeSelected, setProxyTypeSelected] =
     useState<UIProxyType | null>(null);
   const { trackEvent } = useAptabase();
+  // Using setInstanceConfigFull for bulk operations (profile import style)
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (
       profileTransformer: (prev: ProfileRoot) => ProfileRoot,
     ) => {
-      await setInstanceConfig(
+      await setInstanceConfigFull(
         profileTransformer(profile),
         instanceInfo,
         transport,
@@ -439,11 +444,12 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { trackEvent } = useAptabase();
   const [checkDialogOpen, setCheckDialogOpen] = useState(false);
+  // Using setInstanceConfigFull for bulk operations (profile import style)
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (
       profileTransformer: (prev: ProfileRoot) => ProfileRoot,
     ) => {
-      await setInstanceConfig(
+      await setInstanceConfigFull(
         profileTransformer(profile),
         instanceInfo,
         transport,
@@ -590,9 +596,11 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
                   queryKey: instanceInfoQueryOptions.queryKey,
                 });
               }}
-              setConfig={async (jsonProfile) => {
-                await setInstanceConfig(
-                  jsonProfile,
+              updateConfigEntry={async (namespace, key, value) => {
+                await updateInstanceConfigEntry(
+                  namespace,
+                  key,
+                  value,
                   instanceInfo,
                   transport,
                   queryClient,
@@ -609,9 +617,11 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
                   queryKey: instanceInfoQueryOptions.queryKey,
                 });
               }}
-              setConfig={async (jsonProfile) => {
-                await setInstanceConfig(
-                  jsonProfile,
+              updateConfigEntry={async (namespace, key, value) => {
+                await updateInstanceConfigEntry(
+                  namespace,
+                  key,
+                  value,
                   instanceInfo,
                   transport,
                   queryClient,

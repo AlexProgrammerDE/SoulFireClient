@@ -25,7 +25,7 @@ import {
 import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
 import { InstanceState } from "@/generated/soulfire/instance.ts";
 import type { ProfileAccount, ProfileRoot } from "@/lib/types.ts";
-import { setInstanceConfig } from "@/lib/utils.tsx";
+import { setInstanceConfigFull } from "@/lib/utils.tsx";
 
 type AccountWarningState = {
   type: "no_accounts" | "not_enough_accounts";
@@ -78,11 +78,12 @@ export default function ControlsMenu() {
   const [generateDialogOpen, setGenerateDialogOpen] = useState(false);
   const [pendingStartAction, setPendingStartAction] = useState(false);
 
+  // Using setInstanceConfigFull for bulk operations (profile import style)
   const { mutateAsync: setProfileMutation } = useMutation({
     mutationFn: async (
       profileTransformer: (prev: ProfileRoot) => ProfileRoot,
     ) => {
-      await setInstanceConfig(
+      await setInstanceConfigFull(
         profileTransformer(profile),
         instanceInfo,
         transport,
