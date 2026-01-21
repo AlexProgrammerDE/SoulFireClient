@@ -1,7 +1,7 @@
 {
   "proxy": {
-    "getProxies": "",
-    "addProxies": "",
+    "getProxies": "Obtenir des proxies",
+    "addProxies": "Ajouter des proxies",
     "filterPlaceholder": "Filtrer les proxies...",
     "listImportToast": {
       "loading": "Importation des proxys...",
@@ -39,9 +39,9 @@
     }
   },
   "account": {
-    "getAccounts": "",
-    "addAccounts": "",
-    "generateAccounts": "",
+    "getAccounts": "Obtenir des comptes",
+    "addAccounts": "Ajouter des comptes",
+    "generateAccounts": "Générer des comptes",
     "filterPlaceholder": "Filtrer les comptes...",
     "listImportToast": {
       "loading": "Importation des comptes... {{checked}}/{{total}} (Réussi : {{success}} Échoué : {{failed}})",
@@ -58,20 +58,20 @@
       "error": "Impossible d'importer le compte"
     },
     "generate": {
-      "title": "",
-      "description": "",
-      "amount": "",
-      "nameFormat": "",
-      "nameFormatHelp": "",
-      "overrideExisting": "",
-      "submit": "",
-      "generating": "",
-      "progress": "",
-      "success": "",
-      "allFailed": "",
-      "error": "",
-      "invalidAmount": "",
-      "missingPlaceholder": ""
+      "title": "Générer des comptes hors ligne",
+      "description": "Générez des comptes Java hors ligne avec un format de nom personnalisé.",
+      "amount": "Quantité",
+      "nameFormat": "Format du nom",
+      "nameFormatHelp": "Utilisez %d comme variable de remplacement pour le numéro de compte (par exemple, Bot_%d devient Bot_1, Bot_2, etc.)",
+      "overrideExisting": "Remplacer les {{count}} comptes existants",
+      "submit": "Générer",
+      "generating": "Génération...",
+      "progress": "Génération des comptes... {{checked}}/{{total}} (Réussite : {{success}} Échec : {{failed}})",
+      "success": "{{count}} comptes générés !",
+      "allFailed": "Impossible de générer des comptes",
+      "error": "Échec de la génération des comptes",
+      "invalidAmount": "Veuillez saisir une quantité valide (au moins 1)",
+      "missingPlaceholder": "Le format du nom doit contenir le variable %d"
     },
     "import": {
       "javaEdition": "Java Edition",

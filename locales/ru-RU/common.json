@@ -116,13 +116,13 @@
       "error": "Не удалось остановить атаку"
     },
     "accountWarning": {
-      "noAccountsTitle": "",
-      "noAccountsDescription": "",
-      "notEnoughTitle": "",
-      "notEnoughDescription": "",
-      "hint": "",
-      "continueWithExisting": "",
-      "generateAccounts": ""
+      "noAccountsTitle": "Нет настроенных аккаунтов",
+      "noAccountsDescription": "Вам нужно импортировать аккаунты перед началом атаки. Вы запросили {{required}} ботов.",
+      "notEnoughTitle": "Недостаточно аккаунтов",
+      "notEnoughDescription": "Вы запросили {{required}} ботов, но импортировано только {{available}} аккаунтов.",
+      "hint": "Вы можете сгенерировать офлайн-аккаунты или импортировать аккаунты на странице настроек аккаунта.",
+      "continueWithExisting": "Продолжить с {{count}} аккаунтами",
+      "generateAccounts": "Сгенерировать аккаунты"
     }
   },
   "icon": {

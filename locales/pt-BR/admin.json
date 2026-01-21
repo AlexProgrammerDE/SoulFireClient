@@ -30,65 +30,65 @@
           "min": "O nome de usuário deve ter pelo menos 3 caracteres",
           "max": "Nomes de usuário devem ter no máximo 32 caracteres",
           "regex": "Nomes de usuário devem ter letras minúsculas, começar com um caractere alfanumérico, seguido de caracteres alfanuméricos ou hifens e terminar com um caractere alfanumérico.",
-          "label": "",
+          "label": "Usuário",
           "placeholder": "Digite seu usuário",
           "description": "Um nome de usuário exclusivo que identifica o usuário"
         },
         "email": {
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "label": "E-mail",
+          "placeholder": "Digite o e-mail",
+          "description": "O endereço de e-mail do usuário utilizado para notificações e login"
         },
         "role": {
           "label": "Função",
-          "description": "",
+          "description": "O papel do usuário. Administradores podem gerenciar usuários e todas as instâncias. Usuários podem gerenciar apenas suas próprias instâncias.",
           "user": "Usuário",
           "admin": "Administrador"
         }
       }
     },
     "addUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Adicionar um novo usuário",
+      "description": "Adicione um novo usuário a este servidor",
       "form": {
         "cancel": "Cancelar",
-        "add": ""
+        "add": "Adicionar usuário"
       }
     },
     "updateUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Atualizar usuário",
+      "description": "Atualize as informações do usuário",
       "form": {
         "cancel": "Cancelar",
-        "update": ""
+        "update": "Atualizar usuário"
       }
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Adicionando usuário...",
+      "success": "Usuário adicionado!",
+      "error": "Falha ao adicionar usuário"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Atualizando usuário...",
+      "success": "Usuário atualizado!",
+      "error": "Falha ao atualizar usuário"
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Removendo usuários...",
+      "success": "Usuários removidos!",
+      "error": "Falha ao remover usuários"
     },
     "invalidateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Encerrando sessões dos usuários...",
+      "success": "Sessões dos usuários encerradas!",
+      "error": "Falha ao encerrar sessões dos usuários"
     },
     "table": {
-      "username": "",
-      "email": "",
+      "username": "Usuário",
+      "email": "E-mail",
       "role": "Função",
-      "createdAt": "",
-      "minIssuedAt": "",
+      "createdAt": "Criado",
+      "minIssuedAt": "Login Mínimo",
       "actions": "Ações"
     }
   }

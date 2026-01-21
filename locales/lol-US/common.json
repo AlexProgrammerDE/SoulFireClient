@@ -48,7 +48,7 @@
           "description": "Teh naym u wantz 2 giv 2 dis instanec.",
           "min": "Teh friendly naym must bees at least 3 characterz long.",
           "max": "Teh friendly naym must bees at most 32 characterz long.",
-          "regex": ""
+          "regex": "Friendly naym only haz letterz, numberz, an spacez, kthx"
         },
         "cancel": "cancel k?",
         "create": "Makee Makee"
@@ -96,77 +96,77 @@
     "pause": "Pawse",
     "stop": "Stawp",
     "startToast": {
-      "loading": "",
+      "loading": "Startin attak...",
       "success": "Teh attack successfully strated",
       "error": "Fialed to strat attacc"
     },
     "resumeToast": {
       "loading": "Resooming attak...",
       "success": "Teh attack resumed perfectly",
-      "error": ""
+      "error": "Faild 2 rezooom attak"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Pawsin attak...",
+      "success": "Attak pawzed gudly",
+      "error": "Faild 2 pawz attak"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Stopping attak...",
+      "success": "Attak stopped gudly",
+      "error": "Faild 2 stop attak"
     },
     "accountWarning": {
-      "noAccountsTitle": "",
-      "noAccountsDescription": "",
-      "notEnoughTitle": "",
-      "notEnoughDescription": "",
-      "hint": "",
-      "continueWithExisting": "",
-      "generateAccounts": ""
+      "noAccountsTitle": "No Akownz Setted Up",
+      "noAccountsDescription": "U need akownz imported b4 startin an attak. U wantd {{required}} botz.",
+      "notEnoughTitle": "Not Enuf Akownz",
+      "notEnoughDescription": "U wantd {{required}} botz but hav only {{available}} akownz imported.",
+      "hint": "U can make offlain akownz or import frum teh Akown Settin'z page.",
+      "continueWithExisting": "Continue wif {{count}} akownz",
+      "generateAccounts": "Genurayt Accountz!"
     }
   },
   "icon": {
-    "invalidName": ""
+    "invalidName": "Invalid ikon naym: {{name}}"
   },
   "dataTable": {
     "noResults": "Nu results.",
-    "rowsSelected": "",
-    "rowsPerPage": "",
-    "currentPage": "",
-    "goFirst": "",
-    "goPrevious": "",
-    "goNext": "",
-    "goLast": "",
+    "rowsSelected": "{{amount}} ov {{total}} row(s) selekted",
+    "rowsPerPage": "Rowz per page",
+    "currentPage": "Page {{page}} ov {{total}}",
+    "goFirst": "Go to furst page",
+    "goPrevious": "Go to previous page",
+    "goNext": "Go to next page",
+    "goLast": "Go to last page",
     "selectAll": "Selecc all",
-    "selectRow": ""
+    "selectRow": "Selekt row"
   },
   "pluginCard": {
-    "version": "",
-    "author": "",
-    "license": "",
-    "website": ""
+    "version": "Vurshun: {{version}}",
+    "author": "Author: {{author}}",
+    "license": "License: {{license}}",
+    "website": "Website"
   },
   "settingsPage": {
-    "namespacesNotFound": "",
+    "namespacesNotFound": "Settingz naymespaces not finded",
     "stringList": {
-      "placeholder": "",
+      "placeholder": "Add new entry...",
       "add": "Put stuff",
       "remove": "Exit stuff"
     },
     "invalidNumberToast": {
       "title": "Dats Invalid Number!",
-      "description": ""
+      "description": "Da valyo must be btw {{min}} an {{max}}"
     }
   },
   "terminal": {
-    "noLogs": "",
-    "demo-1": "",
-    "demo-2": "",
-    "demo-3": "",
-    "demo-4": ""
+    "noLogs": "🧙 It lookz lyk no logz 2 show; go rayn sum commanz!",
+    "demo-1": "Herro, demo mode! 🧪",
+    "demo-2": "Dis iz read-only SoulFire thingy",
+    "demo-3": "Check awt all teh menuz an fun stuff befur puttin SoulFire on ur blockz :D",
+    "demo-4": "If u wanna meow, hopz on our Discord: https://soulfiremc.com/discord"
   },
   "uiBreadcrumb": {
-    "more": ""
+    "more": "More"
   },
   "uiDialog": {
     "close": "Cloes"
@@ -175,251 +175,251 @@
     "close": "Cloes"
   },
   "uiSidebar": {
-    "toggle": ""
+    "toggle": "Toggle Sidebar"
   },
   "castMenu": {
-    "title": "",
-    "disconnected": "",
-    "alreadyConnected": "",
+    "title": "Cast",
+    "disconnected": "Disconectd frum {{device}}",
+    "alreadyConnected": "You alreddy connekted to {{device}}",
     "connectToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Connektin to {{device}}...",
+      "success": "Connekted to {{device}}",
+      "error": "Faild 2 connekt to {{device}}"
     },
-    "noDevices": "",
-    "broadcastLabel": "",
+    "noDevices": "No devisez foundz",
+    "broadcastLabel": "Broadcast test",
     "broadcastToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Broadcastin messige...",
+      "success": "Messige broadcasted!",
+      "error": "Failed 2 broadcast messige"
     }
   },
   "instanceSidebar": {
-    "readDocumentation": "",
-    "backToDashboard": "",
+    "readDocumentation": "Reed dokumentashun",
+    "backToDashboard": "Bak 2 dashboard",
     "deleteToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Deletin instance...",
+      "success": "Instance deleted",
+      "error": "Faild 2 delet instance"
     },
-    "instancesGroup": "",
-    "createInstance": "",
+    "instancesGroup": "Instances",
+    "createInstance": "Creeate Instance",
     "loadProfileToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Loadin profile...",
+      "success": "Profile loaded",
+      "error": "Faild 2 load profile"
     },
-    "loadProfile": "",
-    "loadFromFile": "",
-    "profileSaved": "",
-    "saveProfile": "",
-    "deleteInstance": "",
-    "controlsGroup": "",
-    "overview": "",
-    "terminal": "",
-    "audit-log": "",
-    "settingsGroup": "",
-    "pluginsGroup": "",
-    "pluginSettings": "",
-    "botSettings": "",
-    "accountSettings": "",
-    "metaSettings": "",
-    "proxySettings": "",
-    "aiSettings": "",
-    "pathfindingSettings": "",
-    "discoverPlugins": "",
-    "instanceScripts": ""
+    "loadProfile": "Load Profile",
+    "loadFromFile": "Load frum file",
+    "profileSaved": "Profile saved",
+    "saveProfile": "Save Profile",
+    "deleteInstance": "Deleet Instance",
+    "controlsGroup": "Controlz",
+    "overview": "Ovarview",
+    "terminal": "Termenawl",
+    "audit-log": "Audit Log",
+    "settingsGroup": "Settingz",
+    "pluginsGroup": "Plugins",
+    "pluginSettings": "Plugin Settingz",
+    "botSettings": "Bot Settingz",
+    "accountSettings": "Account Settingz",
+    "metaSettings": "Instance Settingz",
+    "proxySettings": "Proxy Settingz",
+    "aiSettings": "AI Settingz",
+    "pathfindingSettings": "Pathfindin Settin'z",
+    "discoverPlugins": "Plugins",
+    "instanceScripts": "Scriptz"
   },
   "userSidebar": {
-    "readDocumentation": "",
-    "userGroup": "",
-    "instances": "",
-    "access": "",
-    "createInstance": "",
-    "settings": "",
-    "adminGroup": "",
-    "adminOverview": "",
-    "adminLogs": "",
-    "adminTerminal": "",
-    "users": "",
-    "adminScripts": "",
-    "serverSettings": "",
-    "devSettings": "",
+    "readDocumentation": "Reed dokumentashun",
+    "userGroup": "Uzer",
+    "instances": "Instances",
+    "access": "Akcess",
+    "createInstance": "Creeate Instance",
+    "settings": "Settingz",
+    "adminGroup": "Admin",
+    "adminOverview": "Ovarview",
+    "adminLogs": "LOGZ",
+    "adminTerminal": "Termenawl",
+    "users": "Hoomans",
+    "adminScripts": "Scriptz",
+    "serverSettings": "Server Settingz",
+    "devSettings": "Dev Settingz",
     "theme": {
-      "title": "",
-      "system": "",
-      "light": "",
-      "dark": ""
+      "title": "Theme",
+      "system": "Sistem",
+      "light": "Lite",
+      "dark": "Dark"
     },
     "terminal": {
-      "title": ""
+      "title": "Termenawl"
     },
-    "configDir": "",
-    "dataDir": "",
-    "about": "",
+    "configDir": "Config direktery",
+    "dataDir": "Data direktery",
+    "about": "Aboutz",
     "logOut": "Walk out",
     "logOutToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Loggin owt...",
+      "success": "Logged owt",
+      "error": "Faild 2 log owt"
     },
-    "exit": "",
-    "stopImpersonating": "",
-    "helpTranslate": ""
+    "exit": "Exitz",
+    "stopImpersonating": "Stop im-pur-sonatin",
+    "helpTranslate": "Halp translayt SoulFire"
   },
   "sidebar": {
-    "documentation": "",
-    "buyMeACoffee": "",
-    "discord": ""
+    "documentation": "Documentashun",
+    "buyMeACoffee": "Buy me coffeez",
+    "discord": "Discord"
   },
   "breadcrumbs": {
-    "admin": "",
-    "settings": "",
-    "controls": "",
-    "plugins": ""
+    "admin": "Admin",
+    "settings": "Settingz",
+    "controls": "Controlz",
+    "plugins": "Plugins"
   },
-  "noInstancesFound": "",
+  "noInstancesFound": "No instancez founded",
   "pageName": {
-    "terminal": "",
-    "logs": "",
-    "audit-log": "",
-    "instances": "",
-    "access": "",
-    "settings": "",
-    "proxySettings": "",
-    "overview": "",
-    "users": "",
-    "accountSettings": "",
-    "metaSettings": "",
-    "discoverPlugins": "",
-    "adminScripts": "",
-    "instanceScripts": ""
+    "terminal": "Termenawl",
+    "logs": "LOGZ",
+    "audit-log": "Audit Log",
+    "instances": "Instances",
+    "access": "Akcess",
+    "settings": "Settingz",
+    "proxySettings": "Proxy Settingz",
+    "overview": "Ovarview",
+    "users": "Hoomans",
+    "accountSettings": "Account Settingz",
+    "metaSettings": "Instance Settingz",
+    "discoverPlugins": "Plugins",
+    "adminScripts": "Scriptz",
+    "instanceScripts": "Scriptz"
   },
   "access": {
     "webdav": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "WebDAV Akcess",
+      "description": "SoulFire lets u akcess instance, scriptz an stuff wif WebDAV proto-kol.",
+      "publicAddress": "Public WebDAV Adress",
+      "personalToken": "Pursonal WebDAV Token",
+      "securityWarning": "Ur pursonal WebDAV Token iz srs biznes. Don't gives it 2 anycat. It makez u log in, so yus it as WebDAV passwurd. Username izn't needed, but put whateever (ex. 'soulfire').",
+      "addressDescription": "Dis iz teh adress you need 2 get ur filez. Sometimes u use dav:// or davs:// instead ov http(s)://."
     },
     "api": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "API Akcess",
+      "description": "SoulFire's gRPC HTTP API lets u play wif ur instancez using cheezburgerz... we mean, web reqwests.",
+      "publicAddress": "Public API Adress",
+      "personalToken": "Pursonal API Token",
+      "securityWarning": "Ur pursonal API Token iz srs biznes. Don't givz to anycat. Iz for ur API only.",
+      "addressDescription": "Dis iz da adress to yo API."
     },
     "token": {
-      "generate": "",
-      "placeholder": "",
-      "generating": "",
-      "success": "",
-      "error": "",
-      "copy": ""
+      "generate": "Genrate Token",
+      "placeholder": "Clik 'Genrate Token' belowz",
+      "generating": "Genrating token...",
+      "success": "Token made'd successfulleh",
+      "error": "Faild 2 genrate token",
+      "copy": "Coppy Token"
     },
     "address": {
-      "copy": ""
+      "copy": "Coppy Adress"
     },
-    "documentation": "",
-    "howToConnect": ""
+    "documentation": "Documentashun",
+    "howToConnect": "How 2 connekt"
   },
-  "uploadToMcLogs": "",
+  "uploadToMcLogs": "Uplod to mclo.gs",
   "mcLogsUpload": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Uplodin to mclo.gs...",
+    "success": "Uploded to mclo.gs! Seez it heer: {{url}}",
+    "error": "Uplod to mclo.gs FAILED!"
   },
-  "copyToClipboard": "",
+  "copyToClipboard": "Copyz to clipbored",
   "clipboardCopy": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Copyin to clipbored...",
+    "success": "Copied \"{{content}}\" to clipbored",
+    "error": "Copyz to clipbored FAILED!"
   },
   "instanceState": {
-    "starting": "",
-    "running": "",
-    "paused": "",
-    "stopping": "",
-    "stopped": ""
+    "starting": "Startin",
+    "running": "Runnin",
+    "paused": "Pawzed",
+    "stopping": "Stopping",
+    "stopped": "Stopped"
   },
   "auditLog": {
-    "filterPlaceholder": "",
-    "user": "",
-    "action": "",
-    "timestamp": "",
-    "executedCommand": "",
-    "startedAttack": "",
-    "resumedAttack": "",
-    "pausedAttack": "",
-    "stoppedAttack": ""
+    "filterPlaceholder": "Filter audit logz...",
+    "user": "Uzer",
+    "action": "Akshun",
+    "timestamp": "Timestamp",
+    "executedCommand": "Did command: {{data}}",
+    "startedAttack": "Had startz attak",
+    "resumedAttack": "Had rezooomd attak",
+    "pausedAttack": "Had pawzed attak",
+    "stoppedAttack": "Had stopped attak"
   },
-  "pickADate": "",
+  "pickADate": "Pickz a datez",
   "scripts": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Filter scriptz...",
     "baseScriptDialog": {
       "form": {
         "scriptName": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "Script naymz need b at leest 3 letturz",
+          "max": "Script naymz can be 32 letterz max",
+          "regex": "Script names haz 2 be only smol letterz, start wif one lettur or numb, then letturz/numbz/dashz, an end wif lettur or numb.",
+          "label": "Naym",
+          "placeholder": "Mah Script",
+          "description": "Da naym of da script."
         },
         "elevatedPermissions": {
-          "label": "",
-          "description": ""
+          "label": "Elevatid Permishunz",
+          "description": "If script shud run like boss. Only admins can cheez this."
         }
       }
     },
     "addScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Add new script",
+      "description": "Scriptz r smol codez runnin on da SoulFire servr. U ken do automate stuff, custom fun, much wow.",
       "form": {
         "cancel": "cancel k?",
         "add": "Put stuff"
       }
     },
     "updateScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Uppdate script",
+      "description": "Uppdate informations of da script.",
       "form": {
         "cancel": "cancel k?",
-        "update": ""
+        "update": "Uppdate"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Remooving scriptz...",
+      "success": "Scriptz remooved!",
+      "error": "Faild 2 remoove scriptz"
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Addin script...",
+      "success": "Script added!",
+      "error": "Faild 2 add script"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Uppdating script...",
+      "success": "Scriptz updated!",
+      "error": "Faild 2 uppdate script"
     },
     "restartToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Restarrting script...",
+      "success": "Scriptz restarted!",
+      "error": "Faild 2 restarrt script"
     },
     "table": {
       "type": "Tyep",
-      "scriptName": "",
-      "language": "",
-      "elevatedPermissions": "",
-      "createdAt": "",
-      "actions": ""
+      "scriptName": "Naym",
+      "language": "Langwage",
+      "elevatedPermissions": "Elevatid Permishunz",
+      "createdAt": "Makd",
+      "actions": "Akshuns"
     },
-    "globalScript": "",
-    "instanceScript": ""
+    "globalScript": "Globel",
+    "instanceScript": "Inztanz"
   }
 }

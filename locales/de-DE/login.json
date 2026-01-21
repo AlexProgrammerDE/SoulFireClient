@@ -5,13 +5,13 @@
     },
     "title": "SoulFire"
   },
-  "newUser": "",
+  "newUser": "Neu bei SoulFire? Wir empfehlen, den <a>Erste Schritte-Leitfaden</a> anzusehen.",
   "connect": {
     "title": "Verbinde dich mit einem SoulFire Server",
     "description": "Wähle den Typ des SoulFire Servers, mit dem du dich verbinden möchtest.",
     "integrated": {
       "title": "Integrierter Server (lokal)",
-      "description": ""
+      "description": "Führt einen SoulFire-Server auf deinem Computer aus. Die Einrichtung ist automatisch und erfordert keine Konfiguration. (Erfordert die Desktop-/Android-App)"
     },
     "dedicated": {
       "title": "Dedizierter Server (Remote)",
@@ -29,44 +29,44 @@
       "success": "Integrierter Server gestartet",
       "error": "Fehler beim Starten des integrierten Servers"
     },
-    "description": "",
+    "description": "Der integrierte Server läuft lokal auf deinem PC. Konfiguriere bei Bedarf die Java-Startargumente unten.",
     "form": {
       "jvmArgs": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "JVM-Argumente",
+        "description": "Die SoulFire Java-VM-Argumente. Um 4GB RAM zu nutzen, füge <bold>-Xmx4G</bold> hinzu. Standardmäßig sind es 25% deines RAMs.",
+        "placeholder": "Deine JVM-Argumente hier"
       },
       "back": "Zurück",
       "start": "Start"
     },
     "mobile": {
-      "description": "",
+      "description": "Um den integrierten Server auf dem Mobilgerät auszuführen, müssen Sie einige manuelle Schritte durchführen.",
       "form": {
         "termuxCommand": {
-          "title": "",
-          "description": ""
+          "title": "Termux-Befehl",
+          "description": "Installieren Sie die <a>Termux-App</a> und führen Sie dann diesen Befehl in Termux aus, um den SoulFire-Server zu installieren. Danach müssen Sie den Befehl <copy>generate-token api</copy> ausführen, um ein Token zu generieren. Geben Sie das Token anschließend unten ein."
         },
         "token": {
           "title": "Token",
-          "description": "",
+          "description": "Token zur Authentifizierung mit dem lokalen Server.",
           "placeholder": "Geheimer Token"
         },
         "back": "Zurück",
-        "connect": ""
+        "connect": "Verbinden"
       }
     }
   },
   "dedicated": {
     "description": "Geben Sie die Adresse und das Token des SoulFire Servers ein, mit dem Sie sich verbinden möchten.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Verbinde mit Server...",
+      "success": "Mit Server verbunden",
+      "error": "Verbindung zum Server fehlgeschlagen"
     },
     "form": {
       "address": {
         "title": "Adresse",
-        "description": "",
+        "description": "Adresse deines SoulFire-Servers.",
         "placeholder": "http://localhost:38765"
       },
       "token": {
@@ -75,22 +75,22 @@
         "description": "Token zum Authentifizieren mit dem Server."
       },
       "email": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "E-Mail",
+        "placeholder": "root@soulfiremc.com",
+        "description": "E-Mail deines SoulFire-Kontos."
       },
       "back": "Zurück",
-      "useToken": "",
-      "useEmail": "",
-      "login": ""
+      "useToken": "Token verwenden",
+      "useEmail": "E-Mail verwenden",
+      "login": "Anmelden"
     }
   },
   "emailCode": {
-    "description": "",
+    "description": "Wenn du ein Konto hast, haben wir einen Code an <bold>{{email}}</bold> gesendet. Gib ihn unten ein.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Code wird überprüft...",
+      "success": "Angemeldet",
+      "error": "Code ist ungültig"
     },
     "back": "Zurück"
   },
@@ -98,6 +98,6 @@
     "version": "SoulFire Client {{version}} - {{environment}}",
     "preview": "Suchst du Vorschau?",
     "production": "Suchst du Produktion?",
-    "helpTranslate": ""
+    "helpTranslate": "SoulFire übersetzen"
   }
 }

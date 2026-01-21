@@ -1,95 +1,95 @@
 {
   "overview": {
-    "welcome": "",
+    "welcome": "Vítejte zpět, {{name}} 🧙",
     "instancesChart": {
-      "title": "",
-      "instances": "",
+      "title": "Celkový počet instancí na tomto serveru",
+      "instances": "Instance",
       "label": {
-        "state": "",
-        "active": "",
-        "stopped": "",
-        "other": ""
+        "state": "Stav",
+        "active": "Aktivní",
+        "stopped": "Zastaveno",
+        "other": "Ostatní"
       }
     },
     "usersChart": {
-      "title": "",
-      "users": "",
+      "title": "Celkový počet uživatelů na tomto serveru",
+      "users": "Uživatelé",
       "label": {
-        "role": "",
-        "user": "",
-        "admin": "",
-        "other": ""
+        "role": "Role",
+        "user": "Uživatel",
+        "admin": "Admin",
+        "other": "Ostatní"
       }
     }
   },
   "users": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Filtrovat uživatele...",
     "baseUserDialog": {
       "form": {
         "username": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "Uživatelská jména musí mít alespoň 3 znaky",
+          "max": "Uživatelská jména mohou mít maximálně 32 znaků",
+          "regex": "Uživatelská jména musí být malými písmeny, začínat alfanumerickým znakem, mohou pokračovat dalšími alfanumerickými znaky nebo pomlčkami a končit alfanumerickým znakem.",
+          "label": "Uživatelské jméno",
+          "placeholder": "Zadejte uživatelské jméno",
+          "description": "Jedinečné uživatelské jméno, které identifikuje uživatele"
         },
         "email": {
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "label": "Email",
+          "placeholder": "Zadejte e-mail",
+          "description": "E-mailová adresa uživatele sloužící pro oznámení a přihlášení"
         },
         "role": {
-          "label": "",
-          "description": "",
-          "user": "",
-          "admin": ""
+          "label": "Role",
+          "description": "Role uživatele. Správci mohou spravovat uživatele a všechny instance. Uživatelé mohou spravovat pouze své vlastní instance.",
+          "user": "Uživatel",
+          "admin": "Admin"
         }
       }
     },
     "addUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Přidat nového uživatele",
+      "description": "Přidejte nového uživatele na tento server",
       "form": {
-        "cancel": "",
-        "add": ""
+        "cancel": "Zrušit",
+        "add": "Přidat uživatele"
       }
     },
     "updateUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Aktualizovat uživatele",
+      "description": "Aktualizujte informace o uživateli",
       "form": {
-        "cancel": "",
-        "update": ""
+        "cancel": "Zrušit",
+        "update": "Aktualizovat uživatele"
       }
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Přidávání uživatele...",
+      "success": "Uživatel přidán!",
+      "error": "Nepodařilo se přidat uživatele"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Aktualizace uživatele...",
+      "success": "Uživatel aktualizován!",
+      "error": "Nepodařilo se aktualizovat uživatele"
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Odstraňování uživatelů...",
+      "success": "Uživatelé odstraněni!",
+      "error": "Nepodařilo se odstranit uživatele"
     },
     "invalidateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Odhlašování uživatelů...",
+      "success": "Uživatelé odhlášeni!",
+      "error": "Nepodařilo se odhlásit uživatele"
     },
     "table": {
-      "username": "",
-      "email": "",
-      "role": "",
-      "createdAt": "",
-      "minIssuedAt": "",
-      "actions": ""
+      "username": "Uživatelské jméno",
+      "email": "Email",
+      "role": "Role",
+      "createdAt": "Vytvořeno",
+      "minIssuedAt": "Minimální přihlášení",
+      "actions": "Akce"
     }
   }
 }

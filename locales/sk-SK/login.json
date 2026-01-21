@@ -5,13 +5,13 @@
     },
     "title": "SoulFire"
   },
-  "newUser": "",
+  "newUser": "Ste v SoulFire noví? Odporúčame si pozrieť <a>príručku na začiatok</a>.",
   "connect": {
     "title": "Pripojte sa k serveru SoulFire",
     "description": "Vyberte typ servera SoulFire, ku ktorému sa chcete pripojiť.",
     "integrated": {
       "title": "Integrovaný server (lokálny)",
-      "description": ""
+      "description": "Spustí server SoulFire na vašom počítači. Nastavenie je automatické a nevyžaduje žiadnu konfiguráciu. (Vyžaduje aplikáciu pre počítač/Android)"
     },
     "dedicated": {
       "title": "Dedikovaný server (vzdialený)",
@@ -37,22 +37,22 @@
         "placeholder": "Tu sú vaše argumenty JVM"
       },
       "back": "Späť",
-      "start": ""
+      "start": "Spustiť"
     },
     "mobile": {
-      "description": "",
+      "description": "Na spustenie integrovaného servera na mobile je potrebné vykonať niekoľko manuálnych krokov.",
       "form": {
         "termuxCommand": {
-          "title": "",
-          "description": ""
+          "title": "Príkaz pre Termux",
+          "description": "Nainštalujte si <a>aplikáciu Termux</a> a potom v Termuxe spustite nasledujúci príkaz na inštaláciu servera SoulFire. Následne budete musieť spustiť príkaz <copy>generate-token api</copy> na vygenerovanie tokenu. Potom zadajte nižšie tento token."
         },
         "token": {
           "title": "Token",
-          "description": "",
+          "description": "Token na autentifikáciu s lokálnym serverom.",
           "placeholder": "Tajný token"
         },
         "back": "Späť",
-        "connect": ""
+        "connect": "Pripojiť"
       }
     }
   },

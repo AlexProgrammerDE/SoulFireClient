@@ -116,13 +116,13 @@
       "error": "Falha ao interromper o ataque"
     },
     "accountWarning": {
-      "noAccountsTitle": "",
-      "noAccountsDescription": "",
-      "notEnoughTitle": "",
-      "notEnoughDescription": "",
-      "hint": "",
-      "continueWithExisting": "",
-      "generateAccounts": ""
+      "noAccountsTitle": "Nenhuma Conta Configurada",
+      "noAccountsDescription": "Você precisa importar contas antes de iniciar um ataque. Você solicitou {{required}} bots.",
+      "notEnoughTitle": "Contas Insuficientes",
+      "notEnoughDescription": "Você solicitou {{required}} bots mas só tem {{available}} contas importadas.",
+      "hint": "Você pode gerar contas offline ou importar contas na página de Configurações de Conta.",
+      "continueWithExisting": "Continuar com {{count}} contas",
+      "generateAccounts": "Gerar Contas"
     }
   },
   "icon": {
@@ -226,7 +226,7 @@
     "metaSettings": "Configurações da Instância",
     "proxySettings": "Configurações de Proxy",
     "aiSettings": "Configurações de IA",
-    "pathfindingSettings": "",
+    "pathfindingSettings": "Configurações de Pathfinding",
     "discoverPlugins": "Plugins",
     "instanceScripts": "Scripts"
   },
@@ -234,12 +234,12 @@
     "readDocumentation": "Ler a documentação",
     "userGroup": "Usuário",
     "instances": "Instâncias",
-    "access": "",
+    "access": "Acesso",
     "createInstance": "Criar Instância",
     "settings": "Configurações",
     "adminGroup": "Administrador",
     "adminOverview": "Visão geral",
-    "adminLogs": "",
+    "adminLogs": "Logs",
     "adminTerminal": "Terminal",
     "users": "Usuários",
     "adminScripts": "Scripts",
@@ -264,13 +264,13 @@
       "error": "Falha ao encerrar sessão"
     },
     "exit": "Sair",
-    "stopImpersonating": "",
-    "helpTranslate": ""
+    "stopImpersonating": "Parar de personificar",
+    "helpTranslate": "Ajude a traduzir o SoulFire"
   },
   "sidebar": {
     "documentation": "Documentação",
     "buyMeACoffee": "Compre-me um café",
-    "discord": ""
+    "discord": "Discord"
   },
   "breadcrumbs": {
     "admin": "Administrador",
@@ -281,10 +281,10 @@
   "noInstancesFound": "Nenhuma instância encontrada",
   "pageName": {
     "terminal": "Terminal",
-    "logs": "",
+    "logs": "Logs",
     "audit-log": "Registro de auditoria",
     "instances": "Instâncias",
-    "access": "",
+    "access": "Acesso",
     "settings": "Configurações",
     "proxySettings": "Configurações de Proxy",
     "overview": "Visão geral",
@@ -297,46 +297,46 @@
   },
   "access": {
     "webdav": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "Acesso WebDAV",
+      "description": "O SoulFire permite que você acesse instâncias, scripts e outros arquivos usando o protocolo WebDAV.",
+      "publicAddress": "Endereço WebDAV público",
+      "personalToken": "Token pessoal WebDAV",
+      "securityWarning": "Seu Token pessoal do WebDAV é muito importante. Não o compartilhe com ninguém. Ele é usado para autenticar você ao acessar seus arquivos. Use-o como sua senha WebDAV ao conectar. O nome de usuário não é necessário; se for solicitado um, você pode usar qualquer valor que desejar (por exemplo, 'soulfire').",
+      "addressDescription": "Este é o endereço que você deve usar para acessar seus arquivos. Às vezes, é necessário usar dav:// ou davs:// em vez de http(s)://."
     },
     "api": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "Acesso via API",
+      "description": "A API HTTP gRPC do SoulFire permite que você interaja com suas instâncias programaticamente usando requisições web.",
+      "publicAddress": "Endereço público da API",
+      "personalToken": "Token pessoal da API",
+      "securityWarning": "Seu token pessoal da API é muito importante. Não o compartilhe com ninguém. Ele é usado para autenticar você ao acessar a API.",
+      "addressDescription": "Este é o endereço que você deve usar para acessar a API."
     },
     "token": {
-      "generate": "",
-      "placeholder": "",
-      "generating": "",
-      "success": "",
-      "error": "",
-      "copy": ""
+      "generate": "Gerar Token",
+      "placeholder": "Clique em 'Gerar Token' abaixo",
+      "generating": "Gerando token...",
+      "success": "Token gerado com sucesso",
+      "error": "Falha ao gerar token",
+      "copy": "Copiar Token"
     },
     "address": {
-      "copy": ""
+      "copy": "Copiar Endereço"
     },
     "documentation": "Documentação",
-    "howToConnect": ""
+    "howToConnect": "Como conectar"
   },
-  "uploadToMcLogs": "",
+  "uploadToMcLogs": "Enviar para mclo.gs",
   "mcLogsUpload": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Enviando para mclo.gs...",
+    "success": "Enviado para mclo.gs! Veja aqui: {{url}}",
+    "error": "Falha ao enviar para mclo.gs"
   },
-  "copyToClipboard": "",
+  "copyToClipboard": "Copiar para a área de transferência",
   "clipboardCopy": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Copiando para a área de transferência...",
+    "success": "\"{{content}}\" copiado para a área de transferência",
+    "error": "Falha ao copiar para a área de transferência"
   },
   "instanceState": {
     "starting": "A iniciar",
@@ -346,80 +346,80 @@
     "stopped": "Interrompido"
   },
   "auditLog": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Filtrar logs de auditoria...",
     "user": "Usuário",
-    "action": "",
-    "timestamp": "",
-    "executedCommand": "",
-    "startedAttack": "",
-    "resumedAttack": "",
-    "pausedAttack": "",
-    "stoppedAttack": ""
+    "action": "Ação",
+    "timestamp": "Data e hora",
+    "executedCommand": "Comando executado: {{data}}",
+    "startedAttack": "Iniciou um ataque",
+    "resumedAttack": "Retomou um ataque",
+    "pausedAttack": "Pausou um ataque",
+    "stoppedAttack": "Parou um ataque"
   },
-  "pickADate": "",
+  "pickADate": "Escolha uma data",
   "scripts": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Filtrar scripts...",
     "baseScriptDialog": {
       "form": {
         "scriptName": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "Os nomes dos scripts devem ter pelo menos 3 caracteres",
+          "max": "Os nomes dos scripts devem ter no máximo 32 caracteres",
+          "regex": "Os nomes dos scripts devem ter letras minúsculas, começar com um caractere alfanumérico, seguido de mais caracteres alfanuméricos ou hifens, e terminar com um caractere alfanumérico.",
+          "label": "Nome",
+          "placeholder": "Meu Script",
+          "description": "O nome do script."
         },
         "elevatedPermissions": {
-          "label": "",
-          "description": ""
+          "label": "Permissões Elevadas",
+          "description": "Se o script deve ser executado com permissões elevadas. Apenas administradores podem habilitar essa opção."
         }
       }
     },
     "addScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Adicionar um novo script",
+      "description": "Scripts são pequenos programas que rodam no servidor SoulFire. Eles podem ser usados para automatizar tarefas, criar comportamentos customizados e muito mais.",
       "form": {
         "cancel": "Cancelar",
         "add": "Adicionar"
       }
     },
     "updateScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Atualizar script",
+      "description": "Atualize as informações do script.",
       "form": {
         "cancel": "Cancelar",
-        "update": ""
+        "update": "Atualizar"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Removendo scripts...",
+      "success": "Scripts removidos!",
+      "error": "Falha ao remover scripts"
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Adicionando script...",
+      "success": "Script adicionado!",
+      "error": "Falha ao adicionar script"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Atualizando script...",
+      "success": "Script atualizado!",
+      "error": "Falha ao atualizar script"
     },
     "restartToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Reiniciando script...",
+      "success": "Script reiniciado!",
+      "error": "Falha ao reiniciar script"
     },
     "table": {
       "type": "Tipo",
-      "scriptName": "",
-      "language": "",
-      "elevatedPermissions": "",
-      "createdAt": "",
+      "scriptName": "Nome",
+      "language": "Idioma",
+      "elevatedPermissions": "Permissões Elevadas",
+      "createdAt": "Criado",
       "actions": "Ações"
     },
-    "globalScript": "",
-    "instanceScript": ""
+    "globalScript": "Global",
+    "instanceScript": "Instância"
   }
 }

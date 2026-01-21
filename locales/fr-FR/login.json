@@ -5,13 +5,13 @@
     },
     "title": "SoulFire"
   },
-  "newUser": "",
+  "newUser": "Nouveau sur SoulFire\u0000a0? Nous vous recommandons de consulter le <a>guide de d\u0000e9marrage</a>.",
   "connect": {
     "title": "Connexion à un serveur SoulFire",
     "description": "Sélectionnez le type de serveur SoulFire auquel se connecter.",
     "integrated": {
       "title": "Serveur intégré (local)",
-      "description": ""
+      "description": "Exécute un serveur SoulFire sur votre ordinateur. La configuration est automatique et ne nécessite aucune intervention. (Nécessite l'application de bureau/Android)"
     },
     "dedicated": {
       "title": "Serveur dédié (distant)",
@@ -40,19 +40,19 @@
       "start": "Démarrer"
     },
     "mobile": {
-      "description": "",
+      "description": "Pour exécuter le serveur intégré sur mobile, vous devez effectuer quelques étapes manuelles.",
       "form": {
         "termuxCommand": {
-          "title": "",
-          "description": ""
+          "title": "Commande Termux",
+          "description": "Installez l'<a>application Termux</a>, puis exécutez cette commande dans Termux pour installer le serveur SoulFire. Vous devrez ensuite exécuter la commande <copy>generate-token api</copy> pour générer un jeton. Entrez ensuite le jeton ci-dessous."
         },
         "token": {
           "title": "Token",
-          "description": "",
+          "description": "Jeton pour s'authentifier avec le serveur local.",
           "placeholder": "Token secret"
         },
         "back": "Retour",
-        "connect": ""
+        "connect": "Se connecter"
       }
     }
   },

@@ -3,15 +3,15 @@
     "image": {
       "alt": "SoulFire imagen logotipo"
     },
-    "title": ""
+    "title": "SoulFire"
   },
-  "newUser": "",
+  "newUser": "¿Eres nuevo en SoulFire? Te recomendamos consultar la <a>guía de inicio</a>.",
   "connect": {
     "title": "Conectarse a un servidor SoulFire",
     "description": "Seleccione el tipo de servidor de SoulFire al que conectar.",
     "integrated": {
       "title": "Servidor integrado (local)",
-      "description": ""
+      "description": "Ejecuta un servidor de SoulFire en tu equipo. La configuración es automática y no requiere ninguna configuración. (Requiere la aplicación de escritorio/Android)"
     },
     "dedicated": {
       "title": "Servidor dedicado (remoto)",
@@ -23,74 +23,74 @@
     }
   },
   "integrated": {
-    "preparing": "",
+    "preparing": "Preparando para iniciar el servidor integrado...",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Iniciando servidor integrado...",
+      "success": "Servidor integrado iniciado",
+      "error": "No se pudo iniciar el servidor integrado"
     },
-    "description": "",
+    "description": "El servidor integrado se ejecuta localmente en tu PC. Configura los argumentos de inicio de Java abajo si es necesario.",
     "form": {
       "jvmArgs": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "Argumentos JVM",
+        "description": "Los argumentos de la máquina virtual Java de SoulFire. Para usar 4GB de RAM, añade <bold>-Xmx4G</bold>. El valor predeterminado es el 25% de tu RAM.",
+        "placeholder": "Tus argumentos JVM aquí"
       },
       "back": "Volver",
-      "start": ""
+      "start": "Iniciar"
     },
     "mobile": {
-      "description": "",
+      "description": "Para ejecutar el servidor integrado en el móvil, necesitas completar algunos pasos manuales.",
       "form": {
         "termuxCommand": {
-          "title": "",
-          "description": ""
+          "title": "Comando Termux",
+          "description": "Instala la <a>aplicación Termux</a>, luego ejecuta este comando en Termux para instalar el servidor de SoulFire. Después necesitarás ejecutar el comando <copy>generate-token api</copy> para generar un token. Luego, ingresa el token abajo."
         },
         "token": {
-          "title": "",
-          "description": "",
+          "title": "Token",
+          "description": "Token para autenticarte con el servidor local.",
           "placeholder": "Token secreto"
         },
         "back": "Volver",
-        "connect": ""
+        "connect": "Conectarse"
       }
     }
   },
   "dedicated": {
     "description": "Introduzca la dirección de conexión y el token del servidor de SoulFire al que desea conectarse.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Conectando al servidor...",
+      "success": "Conectado al servidor",
+      "error": "No se pudo conectar al servidor"
     },
     "form": {
       "address": {
         "title": "Dirección de conexión",
-        "description": "",
-        "placeholder": ""
+        "description": "Dirección de tu servidor SoulFire.",
+        "placeholder": "http://localhost:38765"
       },
       "token": {
-        "title": "",
+        "title": "Token",
         "placeholder": "Token secreto",
         "description": "Token de autenticación con el servidor de SoulFire."
       },
       "email": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "Correo electrónico",
+        "placeholder": "root@soulfiremc.com",
+        "description": "Correo electrónico de tu cuenta SoulFire."
       },
       "back": "Volver",
-      "useToken": "",
-      "useEmail": "",
-      "login": ""
+      "useToken": "Usar token",
+      "useEmail": "Usar correo electrónico",
+      "login": "Iniciar sesión"
     }
   },
   "emailCode": {
-    "description": "",
+    "description": "Si tienes una cuenta, hemos enviado un código a <bold>{{email}}</bold>. Introdúcelo a continuación.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Verificando código...",
+      "success": "Sesión iniciada",
+      "error": "El código no es válido"
     },
     "back": "Volver"
   },
@@ -98,6 +98,6 @@
     "version": "Cliente SoulFire {{version}} - {{environment}}",
     "preview": "¿En busca de una vista de prueba?",
     "production": "",
-    "helpTranslate": ""
+    "helpTranslate": "Traducir SoulFire"
   }
 }

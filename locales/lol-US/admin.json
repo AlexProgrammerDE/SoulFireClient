@@ -1,95 +1,95 @@
 {
   "overview": {
-    "welcome": "",
+    "welcome": "WELCUM BAK, {{name}} 🧙",
     "instancesChart": {
-      "title": "",
-      "instances": "",
+      "title": "Total instansz on dis server",
+      "instances": "Instances",
       "label": {
-        "state": "",
-        "active": "",
-        "stopped": "",
-        "other": ""
+        "state": "Stait",
+        "active": "Actiev",
+        "stopped": "Stopped",
+        "other": "Othr"
       }
     },
     "usersChart": {
-      "title": "",
-      "users": "",
+      "title": "Total hoomans on dis server",
+      "users": "Hoomans",
       "label": {
-        "role": "",
-        "user": "",
-        "admin": "",
-        "other": ""
+        "role": "Roel",
+        "user": "Uzer",
+        "admin": "Admin",
+        "other": "Othr"
       }
     }
   },
   "users": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Filtur hoomans...",
     "baseUserDialog": {
       "form": {
         "username": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "Usernamez must be at leest 3 charactrz",
+          "max": "Usernamez must be at most 32 charactrz",
+          "regex": "Usernamez must bee lowercase, beginz wif alphanuumerik letter, moar alphanuumerik or dashes, endz wif alphanuumerik letter.",
+          "label": "Usernamez",
+          "placeholder": "Enter usernamez",
+          "description": "A speshul usernamez dat markz da hooman"
         },
         "email": {
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "label": "EMAYL",
+          "placeholder": "Enter emailz",
+          "description": "Da emailz adress of da hooman, used fur notifikayshuns an loginz"
         },
         "role": {
-          "label": "",
-          "description": "",
-          "user": "",
-          "admin": ""
+          "label": "Roel",
+          "description": "Da roel of da hooman. Adminz kin manaj hoomans n all instansz. Hoomans kin only manaj their own instansz.",
+          "user": "Uzer",
+          "admin": "Admin"
         }
       }
     },
     "addUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Ad a new hooman",
+      "description": "Ad a new hooman to dis server",
       "form": {
         "cancel": "cancel k?",
-        "add": ""
+        "add": "AD Hooman"
       }
     },
     "updateUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Updet hooman",
+      "description": "Updet da hooman's info",
       "form": {
         "cancel": "cancel k?",
-        "update": ""
+        "update": "Updet Hooman"
       }
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Addin hooman...",
+      "success": "Hooman added!",
+      "error": "Fayld to ad hooman"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Updatin hooman...",
+      "success": "Hooman updatd!",
+      "error": "Fayld to updet hooman"
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Remuvin hoomans...",
+      "success": "Hoomans remuved!",
+      "error": "Fayld to remuv hoomans"
     },
     "invalidateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Loggin hoomans owt...",
+      "success": "Hoomans loggd owt!",
+      "error": "Fayld to log owt hoomans"
     },
     "table": {
-      "username": "",
-      "email": "",
-      "role": "",
-      "createdAt": "",
-      "minIssuedAt": "",
-      "actions": ""
+      "username": "Usernamez",
+      "email": "EMAYL",
+      "role": "Roel",
+      "createdAt": "Makd",
+      "minIssuedAt": "Min Login",
+      "actions": "Akshuns"
     }
   }
 }

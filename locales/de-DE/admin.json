@@ -23,69 +23,69 @@
     }
   },
   "users": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Benutzer filtern...",
     "baseUserDialog": {
       "form": {
         "username": {
-          "min": "",
-          "max": "",
-          "regex": "",
+          "min": "Benutzernamen müssen mindestens 3 Zeichen lang sein",
+          "max": "Benutzernamen dürfen höchstens 32 Zeichen lang sein",
+          "regex": "Benutzernamen müssen klein geschrieben sein, mit einem alphanumerischen Zeichen beginnen, gefolgt von weiteren alphanumerischen Zeichen oder Bindestrichen, und mit einem alphanumerischen Zeichen enden.",
           "label": "Benutzername",
-          "placeholder": "",
-          "description": ""
+          "placeholder": "Benutzernamen eingeben",
+          "description": "Ein eindeutiger Benutzername, der den Benutzer identifiziert"
         },
         "email": {
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "label": "E-Mail",
+          "placeholder": "E-Mail eingeben",
+          "description": "Die E-Mail-Adresse des Benutzers, verwendet für Benachrichtigungen und Anmeldung"
         },
         "role": {
           "label": "Rolle",
-          "description": "",
+          "description": "Die Rolle des Benutzers. Admins können Benutzer und alle Instanzen verwalten. Benutzer können nur ihre eigenen Instanzen verwalten.",
           "user": "Nutzer",
           "admin": "Admin"
         }
       }
     },
     "addUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Neuen Benutzer hinzufügen",
+      "description": "Einen neuen Benutzer zu diesem Server hinzufügen",
       "form": {
         "cancel": "Abbrechen",
-        "add": ""
+        "add": "Benutzer hinzufügen"
       }
     },
     "updateUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Benutzer aktualisieren",
+      "description": "Informationen des Benutzers aktualisieren",
       "form": {
         "cancel": "Abbrechen",
-        "update": ""
+        "update": "Benutzer aktualisieren"
       }
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Benutzer wird hinzugefügt...",
+      "success": "Benutzer hinzugefügt!",
+      "error": "Fehler beim Hinzufügen des Benutzers"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Benutzer wird aktualisiert...",
+      "success": "Benutzer aktualisiert!",
+      "error": "Fehler beim Aktualisieren des Benutzers"
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Benutzer werden entfernt...",
+      "success": "Benutzer entfernt!",
+      "error": "Fehler beim Entfernen der Benutzer"
     },
     "invalidateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Benutzer werden abgemeldet...",
+      "success": "Benutzer abgemeldet!",
+      "error": "Fehler beim Abmelden der Benutzer"
     },
     "table": {
       "username": "Benutzername",
-      "email": "",
+      "email": "E-Mail",
       "role": "Rolle",
       "createdAt": "Erstellt",
       "minIssuedAt": "Min. Login",

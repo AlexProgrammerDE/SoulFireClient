@@ -116,13 +116,13 @@
       "error": "Échec de l'arrêt de l'attaque"
     },
     "accountWarning": {
-      "noAccountsTitle": "",
-      "noAccountsDescription": "",
-      "notEnoughTitle": "",
-      "notEnoughDescription": "",
-      "hint": "",
-      "continueWithExisting": "",
-      "generateAccounts": ""
+      "noAccountsTitle": "Aucun compte configuré",
+      "noAccountsDescription": "Vous devez importer des comptes avant de démarrer une attaque. Vous avez demandé {{required}} bots.",
+      "notEnoughTitle": "Pas assez de comptes",
+      "notEnoughDescription": "Vous avez demandé {{required}} bots, mais seulement {{available}} comptes sont importés.",
+      "hint": "Vous pouvez générer des comptes hors ligne ou importer des comptes depuis la page de Configuration des comptes.",
+      "continueWithExisting": "Continuer avec {{count}} comptes",
+      "generateAccounts": "Générer des comptes"
     }
   },
   "icon": {
@@ -226,7 +226,7 @@
     "metaSettings": "Paramètres de l'instance",
     "proxySettings": "Paramètres de proxy",
     "aiSettings": "Paramètres IA",
-    "pathfindingSettings": "",
+    "pathfindingSettings": "Paramètres de Pathfinding",
     "discoverPlugins": "Plugins",
     "instanceScripts": "Scripts"
   },
@@ -239,7 +239,7 @@
     "settings": "Paramètres",
     "adminGroup": "Administrateur",
     "adminOverview": "Aperçu",
-    "adminLogs": "",
+    "adminLogs": "Journaux",
     "adminTerminal": "Terminal",
     "users": "Utilisateur·rice·s",
     "adminScripts": "Scripts",
@@ -281,7 +281,7 @@
   "noInstancesFound": "Aucune instance n'a été trouvée",
   "pageName": {
     "terminal": "Terminal",
-    "logs": "",
+    "logs": "Journaux",
     "audit-log": "Logs du serveur",
     "instances": "Instances",
     "access": "Accès",
@@ -316,7 +316,7 @@
       "generate": "Générer le token",
       "placeholder": "Cliquez sur \"Générer un token\" ci-dessous",
       "generating": "Génération du token...",
-      "success": "",
+      "success": "Jeton généré avec succès",
       "error": "Impossible de générer le token",
       "copy": "Copier le token"
     },
@@ -326,17 +326,17 @@
     "documentation": "Documentation",
     "howToConnect": "Comment se connecter"
   },
-  "uploadToMcLogs": "",
+  "uploadToMcLogs": "Télécharger sur mclo.gs",
   "mcLogsUpload": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Téléchargement vers mclo.gs...",
+    "success": "Téléchargé sur mclo.gs\u0000a0! Voir ici\u0000a0: {{url}}",
+    "error": "\u0000cchec du téléchargement vers mclo.gs"
   },
-  "copyToClipboard": "",
+  "copyToClipboard": "Copier dans le presse-papier",
   "clipboardCopy": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Copie dans le presse-papier...",
+    "success": "\"{{content}}\" copié dans le presse-papier",
+    "error": "\u0000cchec de la copie dans le presse-papier"
   },
   "instanceState": {
     "starting": "Démarrage",

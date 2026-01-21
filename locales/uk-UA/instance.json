@@ -1,99 +1,99 @@
 {
   "proxy": {
-    "getProxies": "",
-    "addProxies": "",
-    "filterPlaceholder": "",
+    "getProxies": "Отримати проксі",
+    "addProxies": "Додати проксі",
+    "filterPlaceholder": "Фільтрувати проксі...",
     "listImportToast": {
-      "loading": "",
-      "success": "",
-      "error": "",
-      "noProxies": ""
+      "loading": "Імпортування проксі...",
+      "success": "Імпортовано {{count}} проксі!",
+      "error": "Не вдалося імпортувати проксі",
+      "noProxies": "Немає проксі для імпортування"
     },
     "import": {
-      "proxyType": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "uri": "",
+      "proxyType": "Тип проксі",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
       "dialog": {
-        "title": "",
-        "description": ""
+        "title": "Імпортувати {{type}} проксі",
+        "description": "Вставте ваші проксі тут, по одному на рядок"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Видалення проксі...",
+      "success": "Видалено {{count}} проксі!",
+      "error": "Не вдалося видалити проксі"
     },
     "checkToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Перевірка проксі... {{checked}}/{{total}} (Успішно: {{success}} Не вдалося: {{failed}})",
+      "success": "Видалено {{count}} пошкоджених проксі!",
+      "error": "Не вдалося перевірити проксі"
     },
-    "invalidFormat": "",
+    "invalidFormat": "Неправильний формат проксі",
     "table": {
-      "type": "",
-      "address": "",
-      "username": "",
-      "password": ""
+      "type": "Тип",
+      "address": "Адреса",
+      "username": "Ім'я користувача",
+      "password": "Пароль"
     }
   },
   "account": {
-    "getAccounts": "",
-    "addAccounts": "",
-    "generateAccounts": "",
-    "filterPlaceholder": "",
+    "getAccounts": "Отримати акаунти",
+    "addAccounts": "Додати акаунти",
+    "generateAccounts": "Згенерувати акаунти",
+    "filterPlaceholder": "Фільтрувати акаунти...",
     "listImportToast": {
-      "loading": "",
-      "allFailed": "",
-      "someFailed": "",
-      "noneFailed": "",
-      "error": "",
-      "noAccounts": ""
+      "loading": "Імпортування акаунтів... {{checked}}/{{total}} (Успішно: {{success}} Не вдалося: {{failed}})",
+      "allFailed": "Не вдалося імпортувати жодного акаунта.",
+      "someFailed": "Імпортовано {{count}} акаунтів, не вдалося імпортувати {{failed}} акаунтів",
+      "noneFailed": "Імпортовано {{count}} акаунтів!",
+      "error": "Не вдалося імпортувати акаунти",
+      "noAccounts": "Немає акаунтів для імпортування"
     },
-    "unknownError": "",
+    "unknownError": "Невідома помилка",
     "deviceCodeImportToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Імпорт акаунта...",
+      "success": "Акаунт імпортовано!",
+      "error": "Не вдалося імпортувати акаунт"
     },
     "generate": {
-      "title": "",
-      "description": "",
-      "amount": "",
-      "nameFormat": "",
-      "nameFormatHelp": "",
-      "overrideExisting": "",
-      "submit": "",
-      "generating": "",
-      "progress": "",
-      "success": "",
-      "allFailed": "",
-      "error": "",
-      "invalidAmount": "",
-      "missingPlaceholder": ""
+      "title": "Згенерувати офлайн-акаунти",
+      "description": "Згенеруйте офлайн Java-акаунти з власним форматом імені.",
+      "amount": "Кількість",
+      "nameFormat": "Формат імені",
+      "nameFormatHelp": "Використовуйте %d як заповнювач для номера акаунта (наприклад, Bot_%d стане Bot_1, Bot_2 тощо)",
+      "overrideExisting": "Замінити існуючі {{count}} акаунти",
+      "submit": "Згенерувати",
+      "generating": "Генерується...",
+      "progress": "Генеруємо акаунти... {{checked}}/{{total}} (Успішно: {{success}} Помилки: {{failed}})",
+      "success": "Згенеровано {{count}} акаунт!",
+      "allFailed": "Не вдалося згенерувати жодного акаунта",
+      "error": "Не вдалося згенерувати акаунти",
+      "invalidAmount": "Вкажіть коректну кількість (не менше 1)",
+      "missingPlaceholder": "Формат імені має містити заповнювач %d"
     },
     "import": {
-      "javaEdition": "",
-      "bedrockEdition": "",
-      "offline": "",
-      "microsoftCredentials": "",
-      "microsoftDeviceCode": "",
-      "microsoftRefreshToken": "",
+      "javaEdition": "Java Edition",
+      "bedrockEdition": "Bedrock Edition",
+      "offline": "Офлайн",
+      "microsoftCredentials": "Облікові дані Microsoft",
+      "microsoftDeviceCode": "Код пристрою Microsoft",
+      "microsoftRefreshToken": "Токен оновлення Microsoft",
       "dialog": {
-        "title": "",
-        "description": ""
+        "title": "Імпортувати {{type}} акаунти",
+        "description": "Вставте ваші акаунти тут, по одному на рядок"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Видалення акаунтів...",
+      "success": "Видалено {{count}} акаунтів!",
+      "error": "Не вдалося видалити акаунти"
     },
     "table": {
-      "type": "",
-      "profileId": "",
-      "lastKnownName": ""
+      "type": "Тип",
+      "profileId": "UUID",
+      "lastKnownName": "Ім'я користувача"
     }
   }
 }

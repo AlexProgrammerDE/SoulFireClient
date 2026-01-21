@@ -1,95 +1,95 @@
 {
   "overview": {
-    "welcome": "",
+    "welcome": "Yenidən xoş gəldin, {{name}} 🧙",
     "instancesChart": {
-      "title": "",
-      "instances": "",
+      "title": "Bu serverdəki ümumi instanslar",
+      "instances": "Instansiyalar",
       "label": {
-        "state": "",
-        "active": "",
-        "stopped": "",
-        "other": ""
+        "state": "Vəziyyət",
+        "active": "Aktiv",
+        "stopped": "Dayandırılıb",
+        "other": "Digər"
       }
     },
     "usersChart": {
-      "title": "",
-      "users": "",
+      "title": "Bu serverdəki ümumi istifadəçi sayı",
+      "users": "İstifadəçilər",
       "label": {
-        "role": "",
-        "user": "",
-        "admin": "",
-        "other": ""
+        "role": "Rol",
+        "user": "İstifadəçi",
+        "admin": "Admin",
+        "other": "Digər"
       }
     }
   },
   "users": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "İstifadəçiləri filtr et...",
     "baseUserDialog": {
       "form": {
         "username": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "İstifadəçi adları ən azı 3 simvoldan ibarət olmalıdır",
+          "max": "İstifadəçi adları ən çox 32 simvoldan ibarət olmalıdır",
+          "regex": "İstifadəçi adları yalnız kiçik hərflərlə, əlifba və ya rəqəmlə başlamalı, davamında yenə əlifba/rəqəm və ya defis olmalı və əlifba/rəqəmlə bitməlidir.",
+          "label": "İstifadəçi adı",
+          "placeholder": "İstifadəçi adını daxil edin",
+          "description": "İstifadəçini tanıdan unikal istifadəçi adı"
         },
         "email": {
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "label": "Email",
+          "placeholder": "Email daxil edin",
+          "description": "İstifadəçinin bildirişlər və giriş üçün istifadə edəcəyi email ünvanı"
         },
         "role": {
-          "label": "",
-          "description": "",
-          "user": "",
-          "admin": ""
+          "label": "Rol",
+          "description": "İstifadəçinin rolu. Adminlər istifadəçiləri və bütün instansları idarə edə bilər. İstifadəçilər yalnız öz instanslarını idarə edə bilər.",
+          "user": "İstifadəçi",
+          "admin": "Admin"
         }
       }
     },
     "addUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "Yeni istifadəçi əlavə et",
+      "description": "Bu serverə yeni istifadəçi əlavə edin",
       "form": {
-        "cancel": "",
-        "add": ""
+        "cancel": "Ləğv et",
+        "add": "İstifadəçi əlavə et"
       }
     },
     "updateUserDialog": {
-      "title": "",
-      "description": "",
+      "title": "İstifadəçini yenilə",
+      "description": "İstifadəçi məlumatlarını yeniləyin",
       "form": {
-        "cancel": "",
-        "update": ""
+        "cancel": "Ləğv et",
+        "update": "İstifadəçini yenilə"
       }
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "İstifadəçi əlavə olunur...",
+      "success": "İstifadəçi əlavə edildi!",
+      "error": "İstifadəçi əlavə etmək alınmadı"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "İstifadəçi yenilənir...",
+      "success": "İstifadəçi yeniləndi!",
+      "error": "İstifadəçi yenilənə bilmədi"
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "İstifadəçilər silinir...",
+      "success": "İstifadəçilər silindi!",
+      "error": "İstifadəçiləri silmək mümkün olmadı"
     },
     "invalidateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "İstifadəçilər çıxarılır...",
+      "success": "İstifadəçilər çıxarıldı!",
+      "error": "İstifadəçiləri çıxarmaq mümkün olmadı"
     },
     "table": {
-      "username": "",
-      "email": "",
-      "role": "",
-      "createdAt": "",
-      "minIssuedAt": "",
-      "actions": ""
+      "username": "İstifadəçi adı",
+      "email": "Email",
+      "role": "Rol",
+      "createdAt": "Yaradılıb",
+      "minIssuedAt": "Minimal giriş",
+      "actions": "Əməliyyatlar"
     }
   }
 }

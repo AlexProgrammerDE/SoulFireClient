@@ -5,13 +5,13 @@
     },
     "title": "SoulFire"
   },
-  "newUser": "",
+  "newUser": "Nu to SoulFire? We recommends lookin at teh <a>gettin started guide</a>, kthx!",
   "connect": {
     "title": "Connect 2 SoulFier servr",
     "description": "Select which tyep ov SoulFier servr 2 connect 2.",
     "integrated": {
       "title": "Integratd servr (local)",
-      "description": ""
+      "description": "Runz SoulFier servr on ur computr. Teh setup iz super ez an needz no configurz. (U needz Desktop/Android app, kthx)"
     },
     "dedicated": {
       "title": "Dedicatd servr (remoet)",
@@ -29,44 +29,44 @@
       "success": "Integratd servr startd",
       "error": "Faild 2 start integratd servr"
     },
-    "description": "",
+    "description": "Da intigratid server runz local on ur PC. Configur Java start argumints below if u wantz.",
     "form": {
       "jvmArgs": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "JVM argumints",
+        "description": "Teh SoulFire Java VM argumints. To use 4GB RAM, add <bold>-Xmx4G</bold>. Default is 25% of ur RAM.",
+        "placeholder": "Ur JVM argumints herez"
       },
       "back": "Bak",
       "start": "Strat"
     },
     "mobile": {
-      "description": "",
+      "description": "To run teh integrayted servurr on moobile, u haz to doo sum manooal stoopz.",
       "form": {
         "termuxCommand": {
-          "title": "",
-          "description": ""
+          "title": "Termux kommando",
+          "description": "Inztall teh <a>Termux app</a>, den doez dis kommando in Termux to inztall SoulFire servurr. Den, yoo needz to do teh <copy>generate-token api</copy> kommando to generayt tokenz. Den enterz teh tokenz belowz."
         },
         "token": {
           "title": "Token",
-          "description": "",
+          "description": "Token to autentikate wif teh local servurr.",
           "placeholder": "Seekret token"
         },
         "back": "Bak",
-        "connect": ""
+        "connect": "CONEKT"
       }
     }
   },
   "dedicated": {
     "description": "Put in teh addres an token ov teh SoulFire servr u wantz 2 connect 2.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Connekting to serverz...",
+      "success": "Connektahed to serverz",
+      "error": "Faild 2 connekt to serverz"
     },
     "form": {
       "address": {
         "title": "Addres",
-        "description": "",
+        "description": "Adresz uf ur SoulFire serverz.",
         "placeholder": "http://localhost:38765"
       },
       "token": {
@@ -75,22 +75,22 @@
         "description": "Token 2 aufenticaet wif teh servr."
       },
       "email": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "EMAYL",
+        "placeholder": "root@soulfiremc.com",
+        "description": "Emayl uf ur SoulFire akkountz."
       },
       "back": "Bak",
-      "useToken": "",
-      "useEmail": "",
-      "login": ""
+      "useToken": "Useh tokenz",
+      "useEmail": "Useh emayl",
+      "login": "LOGINZ"
     }
   },
   "emailCode": {
-    "description": "",
+    "description": "If u has accownt, we sended kod to <bold>{{email}}</bold>. Entar it belowz.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Checkin kod...",
+      "success": "Logd in",
+      "error": "Kod not validz"
     },
     "back": "Bak"
   },
@@ -98,6 +98,6 @@
     "version": "SoulFire Client {{version}} - {{environment}}",
     "preview": "Lukingz 4 preview?",
     "production": "Lukingz 4 producshun?",
-    "helpTranslate": ""
+    "helpTranslate": "Halp translayt SoulFire"
   }
 }

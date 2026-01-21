@@ -1,103 +1,103 @@
 {
   "header": {
     "image": {
-      "alt": ""
+      "alt": "SoulFire loqosu"
     },
-    "title": ""
+    "title": "SoulFire"
   },
-  "newUser": "",
+  "newUser": "SoulFire üçün yenisiniz? <a>Başlama bələdçisi</a>nə baxmanızı tövsiyə edirik.",
   "connect": {
-    "title": "",
-    "description": "",
+    "title": "SoulFire serverinə qoşulun",
+    "description": "Qoşulmaq istədiyiniz SoulFire serverinin növünü seçin.",
     "integrated": {
-      "title": "",
-      "description": ""
+      "title": "İnteqrasiyalı server (lokal)",
+      "description": "SoulFire serverinizi kompüterinizdə işlədər. Quraşdırma avtomatikdir və heç bir ayar tələb etmir. (Desktop/Android proqramı tələb olunur)"
     },
     "dedicated": {
-      "title": "",
-      "description": ""
+      "title": "Ayrılmış server (uzaq)",
+      "description": "SoulFire serverinin uzaq instansiyasına qoşulur. Serverin ünvanını və tokenini təqdim etməlisiniz."
     },
     "demo": {
-      "title": "",
-      "description": ""
+      "title": "Demo server",
+      "description": "Demo məlumatlarla virtual bir serveri simulyasiya edir. Bu server yalnız oxumaq üçün nəzərdə tutulur və siz heç bir dəyişiklik edə bilməzsiniz."
     }
   },
   "integrated": {
-    "preparing": "",
+    "preparing": "İnteqrasiyalı serverin başlatmasına hazırlıq...",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "İnteqrasiyalı server başladılır...",
+      "success": "İnteqrasiyalı server başlatıldı",
+      "error": "İnteqrasiyalı serveri başlatmaq mümkün olmadı"
     },
-    "description": "",
+    "description": "İnteqrasiyalı server kompüterinizdə yerli olaraq işləyir. Lazım olarsa aşağıda Java başladılma arqumentlərini tənzimləyin.",
     "form": {
       "jvmArgs": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "JVM arqumentləri",
+        "description": "SoulFire Java VM arqumentləri. 4GB RAM istifadə etmək üçün <bold>-Xmx4G</bold> əlavə edin. Standart olaraq RAM-ınızın 25%-idir.",
+        "placeholder": "JVM arqumentlərinizi bura yazın"
       },
-      "back": "",
-      "start": ""
+      "back": "Geri",
+      "start": "Başla"
     },
     "mobile": {
-      "description": "",
+      "description": "İnteqrasiyalı serveri mobil cihazda işlətmək üçün bir neçə əl addımını tamamlamağınız lazımdır.",
       "form": {
         "termuxCommand": {
-          "title": "",
-          "description": ""
+          "title": "Termux əmri",
+          "description": "<a>Termux proqramını</a> quraşdırın, ardınca isə SoulFire serverini quraşdırmaq üçün bu əmri Termux-da işlədin. Sonra <copy>generate-token api</copy> əmrini işlədərək token yaradın. Daha sonra tokeni aşağıya daxil edin."
         },
         "token": {
-          "title": "",
-          "description": "",
-          "placeholder": ""
+          "title": "Token",
+          "description": "Yerli serverdə autentifikasiya üçün token.",
+          "placeholder": "Gizli token"
         },
-        "back": "",
-        "connect": ""
+        "back": "Geri",
+        "connect": "Qoşul"
       }
     }
   },
   "dedicated": {
-    "description": "",
+    "description": "Qoşulmaq istədiyiniz SoulFire serverinin ünvanını və tokenini daxil edin.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Serverə qoşulur...",
+      "success": "Serverə qoşuldu",
+      "error": "Serverə qoşulmaq mümkün olmadı"
     },
     "form": {
       "address": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "Ünvan",
+        "description": "SoulFire serverinizin ünvanı.",
+        "placeholder": "http://localhost:38765"
       },
       "token": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "Token",
+        "placeholder": "Gizli token",
+        "description": "Serverdə autentifikasiya üçün token."
       },
       "email": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "Email",
+        "placeholder": "root@soulfiremc.com",
+        "description": "SoulFire hesabınızın email ünvanı."
       },
-      "back": "",
-      "useToken": "",
-      "useEmail": "",
-      "login": ""
+      "back": "Geri",
+      "useToken": "Token istifadə et",
+      "useEmail": "Email istifadə et",
+      "login": "Daxil ol"
     }
   },
   "emailCode": {
-    "description": "",
+    "description": "Hesabınız varsa, <bold>{{email}}</bold> ünvanına kod göndərdik. Aşağıda daxil edin.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Kod yoxlanılır...",
+      "success": "Daxil olundu",
+      "error": "Kod yanlışdır"
     },
-    "back": ""
+    "back": "Geri"
   },
   "footer": {
-    "version": "",
-    "preview": "",
-    "production": "",
-    "helpTranslate": ""
+    "version": "SoulFire Client {{version}} - {{environment}}",
+    "preview": "Ön izləmə axtarırsınız?",
+    "production": "İstehsalat üçün baxırsınız?",
+    "helpTranslate": "SoulFire tərcümə et"
   }
 }

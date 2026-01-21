@@ -1,103 +1,103 @@
 {
   "header": {
     "image": {
-      "alt": ""
+      "alt": "Logo SoulFire"
     },
-    "title": ""
+    "title": "SoulFire"
   },
-  "newUser": "",
+  "newUser": "Mới dùng SoulFire? Chúng tôi khuyến nghị bạn xem <a>hướng dẫn bắt đầu</a>.",
   "connect": {
-    "title": "",
-    "description": "",
+    "title": "Kết nối tới máy chủ SoulFire",
+    "description": "Chọn loại máy chủ SoulFire bạn muốn kết nối.",
     "integrated": {
-      "title": "",
-      "description": ""
+      "title": "Máy chủ tích hợp (cục bộ)",
+      "description": "Chạy máy chủ SoulFire trên máy tính của bạn. Thiết lập hoàn toàn tự động và không cần cấu hình thêm. (Yêu cầu ứng dụng Desktop/Android)"
     },
     "dedicated": {
-      "title": "",
-      "description": ""
+      "title": "Máy chủ riêng (từ xa)",
+      "description": "Kết nối tới một máy chủ SoulFire từ xa. Bạn cần cung cấp địa chỉ và mã token của máy chủ này."
     },
     "demo": {
-      "title": "",
-      "description": ""
+      "title": "Máy chủ demo",
+      "description": "Mô phỏng một máy chủ ảo với dữ liệu demo. Máy chủ này chỉ đọc và bạn không thể thay đổi gì trên đó."
     }
   },
   "integrated": {
-    "preparing": "",
+    "preparing": "Đang chuẩn bị khởi động máy chủ tích hợp...",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang khởi động máy chủ tích hợp...",
+      "success": "Đã khởi động máy chủ tích hợp",
+      "error": "Không thể khởi động máy chủ tích hợp"
     },
-    "description": "",
+    "description": "Máy chủ tích hợp chạy cục bộ trên máy tính của bạn. Nếu cần, hãy cấu hình các tham số khởi động Java ở bên dưới.",
     "form": {
       "jvmArgs": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "Tham số JVM",
+        "description": "Tham số máy ảo Java của SoulFire. Để dùng 4GB RAM, hãy thêm <bold>-Xmx4G</bold>. Mặc định là 25% RAM của bạn.",
+        "placeholder": "Tham số JVM của bạn tại đây"
       },
-      "back": "",
-      "start": ""
+      "back": "Quay lại",
+      "start": "Bắt đầu"
     },
     "mobile": {
-      "description": "",
+      "description": "Để chạy máy chủ tích hợp trên thiết bị di động, bạn cần thực hiện một số bước thủ công.",
       "form": {
         "termuxCommand": {
-          "title": "",
-          "description": ""
+          "title": "Lệnh Termux",
+          "description": "Cài đặt <a>ứng dụng Termux</a>, sau đó chạy lệnh này trong Termux để cài đặt máy chủ SoulFire. Tiếp đến bạn cần chạy lệnh <copy>generate-token api</copy> để tạo mã token. Sau đó nhập mã token bên dưới."
         },
         "token": {
-          "title": "",
-          "description": "",
-          "placeholder": ""
+          "title": "Token",
+          "description": "Token để xác thực với máy chủ cục bộ.",
+          "placeholder": "Mã token bí mật"
         },
-        "back": "",
-        "connect": ""
+        "back": "Quay lại",
+        "connect": "Kết nối"
       }
     }
   },
   "dedicated": {
-    "description": "",
+    "description": "Nhập địa chỉ và mã token của máy chủ SoulFire bạn muốn kết nối.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang kết nối tới máy chủ...",
+      "success": "Đã kết nối tới máy chủ",
+      "error": "Kết nối tới máy chủ thất bại"
     },
     "form": {
       "address": {
-        "title": "",
-        "description": "",
-        "placeholder": ""
+        "title": "Địa chỉ",
+        "description": "Địa chỉ máy chủ SoulFire của bạn.",
+        "placeholder": "http://localhost:38765"
       },
       "token": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "Token",
+        "placeholder": "Mã token bí mật",
+        "description": "Token để xác thực với máy chủ."
       },
       "email": {
-        "title": "",
-        "placeholder": "",
-        "description": ""
+        "title": "Email",
+        "placeholder": "root@soulfiremc.com",
+        "description": "Email tài khoản SoulFire của bạn."
       },
-      "back": "",
-      "useToken": "",
-      "useEmail": "",
-      "login": ""
+      "back": "Quay lại",
+      "useToken": "Dùng token",
+      "useEmail": "Dùng email",
+      "login": "Đăng nhập"
     }
   },
   "emailCode": {
-    "description": "",
+    "description": "Nếu bạn đã có tài khoản, chúng tôi đã gửi một mã đến <bold>{{email}}</bold>. Nhập mã đó bên dưới.",
     "toast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang kiểm tra mã...",
+      "success": "Đã đăng nhập",
+      "error": "Mã không hợp lệ"
     },
-    "back": ""
+    "back": "Quay lại"
   },
   "footer": {
-    "version": "",
-    "preview": "",
-    "production": "",
-    "helpTranslate": ""
+    "version": "SoulFire Client {{version}} - {{environment}}",
+    "preview": "Bạn muốn xem bản xem trước?",
+    "production": "Bạn muốn truy cập bản sản xuất?",
+    "helpTranslate": "Dịch SoulFire"
   }
 }

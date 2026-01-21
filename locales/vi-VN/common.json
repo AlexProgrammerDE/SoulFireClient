@@ -1,425 +1,425 @@
 {
-  "locale": "",
-  "cancel": "",
+  "locale": "Ngôn ngữ",
+  "cancel": "Hủy",
   "error": {
-    "noAddressOrToken": "",
+    "noAddressOrToken": "Không tìm thấy địa chỉ máy chủ hoặc mã thông báo",
     "page": {
-      "title": "",
-      "description": "",
-      "logOut": "",
-      "reloadPage": ""
+      "title": "Lỗi",
+      "description": "Đã xảy ra lỗi khi tải trang. Xem thêm thông tin trong bảng điều khiển.",
+      "logOut": "Đăng xuất",
+      "reloadPage": "Tải lại trang"
     },
-    "connectionFailed": ""
+    "connectionFailed": "Kết nối đến máy chủ SoulFire thất bại."
   },
   "notFound": {
     "page": {
-      "title": "",
-      "description": "",
-      "logOut": "",
-      "reloadPage": ""
+      "title": "Không tìm thấy",
+      "description": "Không tìm thấy trang tại vị trí này",
+      "logOut": "Đăng xuất",
+      "reloadPage": "Tải lại trang"
     }
   },
   "pending": {
-    "connecting": ""
+    "connecting": "Đang kết nối..."
   },
   "dialog": {
     "about": {
-      "title": "",
-      "description": "",
-      "type": "",
-      "value": "",
+      "title": "Giới thiệu SoulFire",
+      "description": "Bạn đang chạy phiên bản {{version}} của ứng dụng SoulFire.",
+      "type": "Loại",
+      "value": "Giá trị",
       "fields": {
-        "operatingSystem": "",
-        "platform": "",
-        "locale": "",
-        "architecture": "",
-        "environment": "",
-        "browser": ""
+        "operatingSystem": "Hệ điều hành",
+        "platform": "Nền tảng",
+        "locale": "Ngôn ngữ",
+        "architecture": "Kiến trúc",
+        "environment": "Môi trường",
+        "browser": "Trình duyệt"
       },
-      "close": ""
+      "close": "Đóng"
     },
     "createInstance": {
-      "title": "",
-      "description": "",
+      "title": "Tạo một phiên bản mới",
+      "description": "Các phiên bản cần tên thân thiện để bạn phân biệt. Bạn có thể đặt bất kỳ tên nào bạn muốn, ví dụ, \"Bot Minecraft của tôi\".",
       "form": {
         "friendlyName": {
-          "label": "",
-          "placeholder": "",
-          "description": "",
-          "min": "",
-          "max": "",
-          "regex": ""
+          "label": "Tên thân thiện",
+          "placeholder": "Bot Minecraft của tôi",
+          "description": "Tên bạn muốn đặt cho phiên bản này.",
+          "min": "Tên thân thiện phải có ít nhất 3 ký tự.",
+          "max": "Tên thân thiện phải có tối đa 32 ký tự.",
+          "regex": "Tên thân thiện chỉ được chứa chữ cái, số và khoảng trắng"
         },
-        "cancel": "",
-        "create": ""
+        "cancel": "Hủy",
+        "create": "Tạo"
       },
       "createToast": {
-        "loading": "",
-        "success": "",
-        "error": ""
+        "loading": "Đang tạo phiên bản...",
+        "success": "Tạo phiên bản thành công",
+        "error": "Tạo phiên bản thất bại"
       }
     },
     "import": {
       "main": {
-        "fromFile": "",
-        "fromUrl": "",
-        "firstClipboardItem": "",
-        "fromClipboard": "",
+        "fromFile": "Từ tệp",
+        "fromUrl": "Từ URL",
+        "firstClipboardItem": "Bạn có nhiều mục trong bộ nhớ tạm, chỉ sử dụng mục đầu tiên.",
+        "fromClipboard": "Từ bộ nhớ tạm",
         "textarea": {
-          "placeholder": "",
-          "submit": ""
+          "placeholder": "Nhập văn bản tại đây...",
+          "submit": "Tải từ văn bản"
         }
       },
       "url": {
-        "description": "",
+        "description": "Tải từ URL sẽ khiến máy chủ SoulFire gửi yêu cầu GET đến máy chủ đích và dùng phản hồi làm dữ liệu.",
         "form": {
           "url": {
-            "placeholder": "",
-            "empty": ""
+            "placeholder": "Nhập URL tại đây...",
+            "empty": "Vui lòng nhập URL hợp lệ"
           }
         },
-        "submit": "",
+        "submit": "Tải từ URL",
         "toast": {
-          "loading": "",
-          "success": "",
-          "error": ""
+          "loading": "Đang tải dữ liệu...",
+          "success": "Dữ liệu đã được tải!",
+          "error": "Không tải được dữ liệu"
         }
       }
     }
   },
   "commandInput": {
-    "placeholder": ""
+    "placeholder": "Nhập lệnh (gõ 'help' để xem danh sách)"
   },
   "controls": {
-    "start": "",
-    "resume": "",
-    "pause": "",
-    "stop": "",
+    "start": "Bắt đầu",
+    "resume": "Tiếp tục",
+    "pause": "Tạm dừng",
+    "stop": "Dừng lại",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang bắt đầu tấn công...",
+      "success": "Bắt đầu tấn công thành công",
+      "error": "Không bắt đầu được tấn công"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang tiếp tục tấn công...",
+      "success": "Tiếp tục tấn công thành công",
+      "error": "Tiếp tục tấn công thất bại"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang tạm dừng tấn công...",
+      "success": "Tạm dừng tấn công thành công",
+      "error": "Tạm dừng tấn công thất bại"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang dừng tấn công...",
+      "success": "Dừng tấn công thành công",
+      "error": "Dừng tấn công thất bại"
     },
     "accountWarning": {
-      "noAccountsTitle": "",
-      "noAccountsDescription": "",
-      "notEnoughTitle": "",
-      "notEnoughDescription": "",
-      "hint": "",
-      "continueWithExisting": "",
-      "generateAccounts": ""
+      "noAccountsTitle": "Chưa cấu hình tài khoản nào cả.",
+      "noAccountsDescription": "Bạn cần nhập tài khoản trước khi bắt đầu một cuộc tấn công. Bạn đã yêu cầu {{required}} bot.",
+      "notEnoughTitle": "Không đủ tài khoản",
+      "notEnoughDescription": "Bạn đã yêu cầu {{required}} bot nhưng chỉ có {{available}} tài khoản được nhập.",
+      "hint": "Bạn có thể tạo tài khoản ngoại tuyến hoặc nhập tài khoản từ trang Cài đặt tài khoản.",
+      "continueWithExisting": "Tiếp tục với {{count}} tài khoản",
+      "generateAccounts": "Tạo Tài khoản"
     }
   },
   "icon": {
-    "invalidName": ""
+    "invalidName": "Tên biểu tượng không hợp lệ: {{name}}"
   },
   "dataTable": {
-    "noResults": "",
-    "rowsSelected": "",
-    "rowsPerPage": "",
-    "currentPage": "",
-    "goFirst": "",
-    "goPrevious": "",
-    "goNext": "",
-    "goLast": "",
-    "selectAll": "",
-    "selectRow": ""
+    "noResults": "Không có kết quả.",
+    "rowsSelected": "Đã chọn {{amount}} trên tổng số {{total}} dòng",
+    "rowsPerPage": "Số dòng trên mỗi trang",
+    "currentPage": "Trang {{page}} trên tổng số {{total}}",
+    "goFirst": "Đi đến trang đầu tiên",
+    "goPrevious": "Đi đến trang trước",
+    "goNext": "Đi đến trang tiếp theo",
+    "goLast": "Đi đến trang cuối cùng",
+    "selectAll": "Chọn tất cả",
+    "selectRow": "Chọn dòng"
   },
   "pluginCard": {
-    "version": "",
-    "author": "",
-    "license": "",
-    "website": ""
+    "version": "Phiên bản: {{version}}",
+    "author": "Tác giả: {{author}}",
+    "license": "Giấy phép: {{license}}",
+    "website": "Website"
   },
   "settingsPage": {
-    "namespacesNotFound": "",
+    "namespacesNotFound": "Không tìm thấy không gian cài đặt",
     "stringList": {
-      "placeholder": "",
-      "add": "",
-      "remove": ""
+      "placeholder": "Thêm mục mới...",
+      "add": "Thêm",
+      "remove": "Xóa"
     },
     "invalidNumberToast": {
-      "title": "",
-      "description": ""
+      "title": "Số không hợp lệ!",
+      "description": "Giá trị phải nằm trong khoảng từ {{min}} đến {{max}}"
     }
   },
   "terminal": {
-    "noLogs": "",
-    "demo-1": "",
-    "demo-2": "",
-    "demo-3": "",
-    "demo-4": ""
+    "noLogs": "🧙 Có vẻ như không có nhật ký nào để hiển thị; hãy thử chạy một số lệnh!",
+    "demo-1": "Chào mừng đến với chế độ dùng thử! 🧪",
+    "demo-2": "Đây là một phiên bản chỉ đọc của SoulFire",
+    "demo-3": "Hãy kiểm tra tất cả menu và tính năng trước khi quyết định cài đặt SoulFire :D",
+    "demo-4": "Bạn có thể tham gia máy chủ Discord của chúng tôi nếu muốn liên hệ: https://soulfiremc.com/discord"
   },
   "uiBreadcrumb": {
-    "more": ""
+    "more": "Thêm"
   },
   "uiDialog": {
-    "close": ""
+    "close": "Đóng"
   },
   "uiSheet": {
-    "close": ""
+    "close": "Đóng"
   },
   "uiSidebar": {
-    "toggle": ""
+    "toggle": "Bật/Tắt thanh bên"
   },
   "castMenu": {
-    "title": "",
-    "disconnected": "",
-    "alreadyConnected": "",
+    "title": "Truyền",
+    "disconnected": "Đã ngắt kết nối khỏi {{device}}",
+    "alreadyConnected": "Đã kết nối với {{device}}",
     "connectToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang kết nối đến {{device}}...",
+      "success": "Đã kết nối với {{device}}",
+      "error": "Kết nối đến {{device}} thất bại"
     },
-    "noDevices": "",
-    "broadcastLabel": "",
+    "noDevices": "Không tìm thấy thiết bị nào",
+    "broadcastLabel": "Kiểm tra truyền tải",
     "broadcastToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang truyền tin nhắn...",
+      "success": "Đã truyền tin nhắn!",
+      "error": "Truyền tin nhắn thất bại"
     }
   },
   "instanceSidebar": {
-    "readDocumentation": "",
-    "backToDashboard": "",
+    "readDocumentation": "Đọc tài liệu hướng dẫn",
+    "backToDashboard": "Quay lại bảng điều khiển",
     "deleteToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang xóa phiên bản...",
+      "success": "Đã xóa phiên bản",
+      "error": "Xóa phiên bản thất bại"
     },
-    "instancesGroup": "",
-    "createInstance": "",
+    "instancesGroup": "Các phiên bản",
+    "createInstance": "Tạo phiên bản",
     "loadProfileToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang tải hồ sơ...",
+      "success": "Đã tải hồ sơ",
+      "error": "Tải hồ sơ thất bại"
     },
-    "loadProfile": "",
-    "loadFromFile": "",
-    "profileSaved": "",
-    "saveProfile": "",
-    "deleteInstance": "",
-    "controlsGroup": "",
-    "overview": "",
-    "terminal": "",
-    "audit-log": "",
-    "settingsGroup": "",
-    "pluginsGroup": "",
-    "pluginSettings": "",
-    "botSettings": "",
-    "accountSettings": "",
-    "metaSettings": "",
-    "proxySettings": "",
-    "aiSettings": "",
-    "pathfindingSettings": "",
-    "discoverPlugins": "",
-    "instanceScripts": ""
+    "loadProfile": "Tải hồ sơ",
+    "loadFromFile": "Tải từ tệp",
+    "profileSaved": "Đã lưu hồ sơ",
+    "saveProfile": "Lưu hồ sơ",
+    "deleteInstance": "Xóa phiên bản",
+    "controlsGroup": "Bảng điều khiển",
+    "overview": "Tổng quan",
+    "terminal": "Terminal",
+    "audit-log": "Nhật ký kiểm toán",
+    "settingsGroup": "Cài đặt",
+    "pluginsGroup": "Plugins",
+    "pluginSettings": "Cài đặt Plugin",
+    "botSettings": "Cài đặt Bot",
+    "accountSettings": "Cài đặt tài khoản",
+    "metaSettings": "Cài đặt phiên bản",
+    "proxySettings": "Cài đặt Proxy",
+    "aiSettings": "Cài đặt AI",
+    "pathfindingSettings": "Cài đặt tìm đường",
+    "discoverPlugins": "Plugins",
+    "instanceScripts": "Scripts"
   },
   "userSidebar": {
-    "readDocumentation": "",
-    "userGroup": "",
-    "instances": "",
-    "access": "",
-    "createInstance": "",
-    "settings": "",
-    "adminGroup": "",
-    "adminOverview": "",
-    "adminLogs": "",
-    "adminTerminal": "",
-    "users": "",
-    "adminScripts": "",
-    "serverSettings": "",
-    "devSettings": "",
+    "readDocumentation": "Đọc tài liệu hướng dẫn",
+    "userGroup": "Người dùng",
+    "instances": "Các phiên bản",
+    "access": "Quyền truy cập",
+    "createInstance": "Tạo phiên bản",
+    "settings": "Cài đặt",
+    "adminGroup": "Quản trị viên",
+    "adminOverview": "Tổng quan",
+    "adminLogs": "Nhật ký",
+    "adminTerminal": "Terminal",
+    "users": "Người dùng",
+    "adminScripts": "Scripts",
+    "serverSettings": "Cài đặt máy chủ",
+    "devSettings": "Cài đặt nhà phát triển",
     "theme": {
-      "title": "",
-      "system": "",
-      "light": "",
-      "dark": ""
+      "title": "Chủ đề",
+      "system": "Hệ thống",
+      "light": "Sáng",
+      "dark": "Tối"
     },
     "terminal": {
-      "title": ""
+      "title": "Terminal"
     },
-    "configDir": "",
-    "dataDir": "",
-    "about": "",
-    "logOut": "",
+    "configDir": "Thư mục cấu hình",
+    "dataDir": "Thư mục dữ liệu",
+    "about": "Giới thiệu",
+    "logOut": "Đăng xuất",
     "logOutToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang đăng xuất...",
+      "success": "Đã đăng xuất",
+      "error": "Đăng xuất thất bại"
     },
-    "exit": "",
-    "stopImpersonating": "",
-    "helpTranslate": ""
+    "exit": "Thoát",
+    "stopImpersonating": "Dừng giả lập",
+    "helpTranslate": "Dịch SoulFire"
   },
   "sidebar": {
-    "documentation": "",
-    "buyMeACoffee": "",
-    "discord": ""
+    "documentation": "Tài liệu hướng dẫn",
+    "buyMeACoffee": "Ủng hộ tôi một ly cà phê",
+    "discord": "Discord"
   },
   "breadcrumbs": {
-    "admin": "",
-    "settings": "",
-    "controls": "",
-    "plugins": ""
+    "admin": "Quản trị viên",
+    "settings": "Cài đặt",
+    "controls": "Bảng điều khiển",
+    "plugins": "Plugins"
   },
-  "noInstancesFound": "",
+  "noInstancesFound": "Không tìm thấy phiên bản nào",
   "pageName": {
-    "terminal": "",
-    "logs": "",
-    "audit-log": "",
-    "instances": "",
-    "access": "",
-    "settings": "",
-    "proxySettings": "",
-    "overview": "",
-    "users": "",
-    "accountSettings": "",
-    "metaSettings": "",
-    "discoverPlugins": "",
-    "adminScripts": "",
-    "instanceScripts": ""
+    "terminal": "Terminal",
+    "logs": "Nhật ký",
+    "audit-log": "Nhật ký kiểm toán",
+    "instances": "Các phiên bản",
+    "access": "Quyền truy cập",
+    "settings": "Cài đặt",
+    "proxySettings": "Cài đặt Proxy",
+    "overview": "Tổng quan",
+    "users": "Người dùng",
+    "accountSettings": "Cài đặt tài khoản",
+    "metaSettings": "Cài đặt phiên bản",
+    "discoverPlugins": "Plugins",
+    "adminScripts": "Scripts",
+    "instanceScripts": "Scripts"
   },
   "access": {
     "webdav": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "Truy cập WebDAV",
+      "description": "SoulFire cho phép bạn truy cập các tệp phiên bản, script và tệp khác bằng giao thức WebDAV.",
+      "publicAddress": "Địa chỉ WebDAV công khai",
+      "personalToken": "Mã thông báo WebDAV cá nhân",
+      "securityWarning": "Mã thông báo WebDAV cá nhân của bạn rất quan trọng. Không chia sẻ nó với bất kỳ ai. Nó được dùng để xác thực khi bạn truy cập các tệp của mình. Sử dụng nó làm mật khẩu WebDAV khi kết nối. Không cần tên người dùng, nếu được yêu cầu bạn có thể nhập bất kỳ giá trị nào (ví dụ: 'soulfire')",
+      "addressDescription": "Đây là địa chỉ bạn cần sử dụng để truy cập tệp của mình. Đôi khi bạn cần dùng dav:// hoặc davs:// thay cho http(s)://."
     },
     "api": {
-      "title": "",
-      "description": "",
-      "publicAddress": "",
-      "personalToken": "",
-      "securityWarning": "",
-      "addressDescription": ""
+      "title": "Truy cập API",
+      "description": "API HTTP gRPC của SoulFire cho phép bạn tương tác với các phiên bản của bạn thông qua yêu cầu web.",
+      "publicAddress": "Địa chỉ API công khai",
+      "personalToken": "Mã thông báo API cá nhân",
+      "securityWarning": "Mã thông báo API cá nhân của bạn rất quan trọng. Không chia sẻ nó với bất kỳ ai. Nó được dùng để xác thực khi truy cập API.",
+      "addressDescription": "Đây là địa chỉ bạn cần sử dụng để truy cập API."
     },
     "token": {
-      "generate": "",
-      "placeholder": "",
-      "generating": "",
-      "success": "",
-      "error": "",
-      "copy": ""
+      "generate": "Tạo mã thông báo",
+      "placeholder": "Nhấn 'Tạo mã thông báo' bên dưới",
+      "generating": "Đang tạo mã thông báo...",
+      "success": "Tạo mã thông báo thành công",
+      "error": "Tạo mã thông báo thất bại",
+      "copy": "Sao chép mã thông báo"
     },
     "address": {
-      "copy": ""
+      "copy": "Sao chép địa chỉ"
     },
-    "documentation": "",
-    "howToConnect": ""
+    "documentation": "Tài liệu hướng dẫn",
+    "howToConnect": "Cách kết nối"
   },
-  "uploadToMcLogs": "",
+  "uploadToMcLogs": "Tải lên mclo.gs",
   "mcLogsUpload": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Đang tải lên mclo.gs...",
+    "success": "Đã tải lên mclo.gs! Xem tại đây: {{url}}",
+    "error": "Tải lên mclo.gs thất bại"
   },
-  "copyToClipboard": "",
+  "copyToClipboard": "Sao chép vào bộ nhớ tạm",
   "clipboardCopy": {
-    "loading": "",
-    "success": "",
-    "error": ""
+    "loading": "Đang sao chép vào bộ nhớ tạm...",
+    "success": "Đã sao chép \"{{content}}\" vào bộ nhớ tạm",
+    "error": "Sao chép vào bộ nhớ tạm thất bại"
   },
   "instanceState": {
-    "starting": "",
-    "running": "",
-    "paused": "",
-    "stopping": "",
-    "stopped": ""
+    "starting": "Đang bắt đầu",
+    "running": "Đang chạy",
+    "paused": "Đã tạm dừng",
+    "stopping": "Đang dừng",
+    "stopped": "Đã dừng"
   },
   "auditLog": {
-    "filterPlaceholder": "",
-    "user": "",
-    "action": "",
-    "timestamp": "",
-    "executedCommand": "",
-    "startedAttack": "",
-    "resumedAttack": "",
-    "pausedAttack": "",
-    "stoppedAttack": ""
+    "filterPlaceholder": "Lọc nhật ký kiểm toán...",
+    "user": "Người dùng",
+    "action": "Hành động",
+    "timestamp": "Dấu thời gian",
+    "executedCommand": "Đã thực thi lệnh: {{data}}",
+    "startedAttack": "Đã bắt đầu một cuộc tấn công",
+    "resumedAttack": "Đã tiếp tục một cuộc tấn công",
+    "pausedAttack": "Đã tạm dừng một cuộc tấn công",
+    "stoppedAttack": "Đã dừng một cuộc tấn công"
   },
-  "pickADate": "",
+  "pickADate": "Chọn ngày",
   "scripts": {
-    "filterPlaceholder": "",
+    "filterPlaceholder": "Lọc scripts...",
     "baseScriptDialog": {
       "form": {
         "scriptName": {
-          "min": "",
-          "max": "",
-          "regex": "",
-          "label": "",
-          "placeholder": "",
-          "description": ""
+          "min": "Tên script phải có ít nhất 3 ký tự",
+          "max": "Tên script phải có tối đa 32 ký tự",
+          "regex": "Tên script phải là chữ thường, bắt đầu và kết thúc bằng ký tự chữ/số, có thể thêm dấu gạch giữa, và không có ký tự đặc biệt khác.",
+          "label": "Tên",
+          "placeholder": "Script của tôi",
+          "description": "Tên của script."
         },
         "elevatedPermissions": {
-          "label": "",
-          "description": ""
+          "label": "Quyền nâng cao",
+          "description": "Script có nên chạy với quyền nâng cao không. Chỉ quản trị viên mới được bật tùy chọn này."
         }
       }
     },
     "addScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Thêm script mới",
+      "description": "Scripts là các chương trình nhỏ chạy trên máy chủ SoulFire. Chúng có thể dùng để tự động hóa, tạo hành vi tùy chỉnh, và nhiều hơn nữa.",
       "form": {
-        "cancel": "",
-        "add": ""
+        "cancel": "Hủy",
+        "add": "Thêm"
       }
     },
     "updateScriptDialog": {
-      "title": "",
-      "description": "",
+      "title": "Cập nhật script",
+      "description": "Cập nhật thông tin cho script này.",
       "form": {
-        "cancel": "",
-        "update": ""
+        "cancel": "Hủy",
+        "update": "Cập nhật"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang xóa scripts...",
+      "success": "Đã xóa scripts!",
+      "error": "Không xóa được scripts"
     },
     "addToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang thêm script...",
+      "success": "Đã thêm script!",
+      "error": "Không thêm được script"
     },
     "updateToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang cập nhật script...",
+      "success": "Đã cập nhật script!",
+      "error": "Không cập nhật được script"
     },
     "restartToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang khởi động lại script...",
+      "success": "Đã khởi động lại script!",
+      "error": "Khởi động lại script thất bại"
     },
     "table": {
-      "type": "",
-      "scriptName": "",
-      "language": "",
-      "elevatedPermissions": "",
-      "createdAt": "",
-      "actions": ""
+      "type": "Loại",
+      "scriptName": "Tên",
+      "language": "Ngôn ngữ",
+      "elevatedPermissions": "Quyền nâng cao",
+      "createdAt": "Đã tạo",
+      "actions": "Hành động"
     },
-    "globalScript": "",
-    "instanceScript": ""
+    "globalScript": "Toàn cục",
+    "instanceScript": "Phiên bản"
   }
 }

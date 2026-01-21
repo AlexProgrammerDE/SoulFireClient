@@ -1,99 +1,99 @@
 {
   "proxy": {
-    "getProxies": "",
-    "addProxies": "",
-    "filterPlaceholder": "",
+    "getProxies": "Obtener proxies",
+    "addProxies": "Agregar proxies",
+    "filterPlaceholder": "Filtrar proxies...",
     "listImportToast": {
-      "loading": "",
-      "success": "",
-      "error": "",
-      "noProxies": ""
+      "loading": "Importando proxies...",
+      "success": "¡{{count}} proxies importados!",
+      "error": "Error al importar proxies",
+      "noProxies": "No hay proxies para importar"
     },
     "import": {
-      "proxyType": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "uri": "",
+      "proxyType": "Tipo de proxy",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
       "dialog": {
-        "title": "",
-        "description": ""
+        "title": "Importar proxies {{type}}",
+        "description": "Pega tus proxies aquí, uno por línea"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Eliminando proxies...",
+      "success": "¡{{count}} proxies eliminados!",
+      "error": "Error al eliminar proxies"
     },
     "checkToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Comprobando proxies... {{checked}}/{{total}} (Éxito: {{success}} Fallidos: {{failed}})",
+      "success": "¡{{count}} proxies defectuosos eliminados!",
+      "error": "Error al comprobar proxies"
     },
-    "invalidFormat": "",
+    "invalidFormat": "Formato de proxy inválido",
     "table": {
       "type": "Tipo",
       "address": "Dirección de conexión",
-      "username": "",
-      "password": ""
+      "username": "Nombre de usuario",
+      "password": "Contraseña"
     }
   },
   "account": {
-    "getAccounts": "",
-    "addAccounts": "",
-    "generateAccounts": "",
-    "filterPlaceholder": "",
+    "getAccounts": "Obtener cuentas",
+    "addAccounts": "Agregar cuentas",
+    "generateAccounts": "Generar cuentas",
+    "filterPlaceholder": "Filtrar cuentas...",
     "listImportToast": {
-      "loading": "",
-      "allFailed": "",
-      "someFailed": "",
-      "noneFailed": "",
-      "error": "",
-      "noAccounts": ""
+      "loading": "Importando cuentas... {{checked}}/{{total}} (Éxito: {{success}} Fallidos: {{failed}})",
+      "allFailed": "Error al importar cualquier cuenta.",
+      "someFailed": "Se importaron {{count}} cuentas, no se pudieron importar {{failed}} cuentas.",
+      "noneFailed": "¡{{count}} cuentas importadas!",
+      "error": "Error al importar cuentas.",
+      "noAccounts": "No hay cuentas para importar"
     },
-    "unknownError": "",
+    "unknownError": "Error desconocido",
     "deviceCodeImportToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Importando cuenta...",
+      "success": "¡Cuenta importada!",
+      "error": "Error al importar la cuenta"
     },
     "generate": {
-      "title": "",
-      "description": "",
-      "amount": "",
-      "nameFormat": "",
-      "nameFormatHelp": "",
-      "overrideExisting": "",
-      "submit": "",
-      "generating": "",
-      "progress": "",
-      "success": "",
-      "allFailed": "",
-      "error": "",
-      "invalidAmount": "",
-      "missingPlaceholder": ""
+      "title": "Generar cuentas offline",
+      "description": "Genera cuentas de Java offline con un formato de nombre personalizado.",
+      "amount": "Cantidad",
+      "nameFormat": "Formato de nombre",
+      "nameFormatHelp": "Usa %d como marcador de posición para el número de cuenta (por ejemplo, Bot_%d se convierte en Bot_1, Bot_2, etc.)",
+      "overrideExisting": "Sobrescribir {{count}} cuentas existentes",
+      "submit": "Generar",
+      "generating": "Generando...",
+      "progress": "Generando cuentas... {{checked}}/{{total}} (Éxito: {{success}} Fallidas: {{failed}})",
+      "success": "¡Se generó {{count}} cuenta!",
+      "allFailed": "No se pudo generar ninguna cuenta",
+      "error": "No se pudieron generar las cuentas",
+      "invalidAmount": "Por favor ingresa una cantidad válida (al menos 1)",
+      "missingPlaceholder": "El formato de nombre debe contener el marcador de posición %d"
     },
     "import": {
-      "javaEdition": "",
-      "bedrockEdition": "",
-      "offline": "",
-      "microsoftCredentials": "",
-      "microsoftDeviceCode": "",
-      "microsoftRefreshToken": "",
+      "javaEdition": "Edición Java",
+      "bedrockEdition": "Edición Bedrock",
+      "offline": "Sin conexión",
+      "microsoftCredentials": "Credenciales de Microsoft",
+      "microsoftDeviceCode": "Código de dispositivo de Microsoft",
+      "microsoftRefreshToken": "Token de actualización de Microsoft",
       "dialog": {
-        "title": "",
-        "description": ""
+        "title": "Importar cuentas {{type}}",
+        "description": "Pega tus cuentas aquí, una por línea"
       }
     },
     "removeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Eliminando cuentas...",
+      "success": "¡{{count}} cuentas eliminadas!",
+      "error": "Error al eliminar cuentas"
     },
     "table": {
       "type": "Tipo",
-      "profileId": "",
-      "lastKnownName": ""
+      "profileId": "UUID",
+      "lastKnownName": "Nombre de usuario"
     }
   }
 }
