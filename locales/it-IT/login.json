@@ -1,0 +1,103 @@
+{
+  "header": {
+    "image": {
+      "alt": "Logo SoulFire"
+    },
+    "title": "SoulFire"
+  },
+  "newUser": "Nuovo su SoulFire? Ti consigliamo di leggere la <a>guida introduttiva</a>.",
+  "connect": {
+    "title": "Connetti a un server SoulFire",
+    "description": "Seleziona il tipo di server SoulFire a cui connetterti.",
+    "integrated": {
+      "title": "Server integrato (locale)",
+      "description": "Esegue un server SoulFire sul tuo computer. La configurazione è automatica e non richiede alcuna impostazione. (Richiede l'app Desktop/Android)"
+    },
+    "dedicated": {
+      "title": "Server dedicato (remoto)",
+      "description": "Si connette a un'istanza remota del server SoulFire. Dovrai fornire l'indirizzo e il token del server."
+    },
+    "demo": {
+      "title": "Server demo",
+      "description": "Simula un server virtuale con dati demo. Questo server è in sola lettura e non puoi apportare modifiche."
+    }
+  },
+  "integrated": {
+    "preparing": "Preparazione dell'avvio del server integrato...",
+    "toast": {
+      "loading": "Avvio del server integrato...",
+      "success": "Server integrato avviato",
+      "error": "Avvio del server integrato non riuscito"
+    },
+    "description": "Il server integrato viene eseguito localmente sul tuo PC. Configura gli argomenti di avvio Java qui sotto se necessario.",
+    "form": {
+      "jvmArgs": {
+        "title": "Argomenti JVM",
+        "description": "Argomenti Java VM di SoulFire. Per usare 4GB di RAM, aggiungi <bold>-Xmx4G</bold>. Il valore predefinito è il 25% della tua RAM.",
+        "placeholder": "I tuoi argomenti JVM qui"
+      },
+      "back": "Indietro",
+      "start": "Avvia"
+    },
+    "mobile": {
+      "description": "Per eseguire il server integrato su mobile, devi completare alcuni passaggi manuali.",
+      "form": {
+        "termuxCommand": {
+          "title": "Comando Termux",
+          "description": "Installa l'<a>app Termux</a>, quindi esegui questo comando in Termux per installare il server SoulFire. Dovrai poi eseguire il comando <copy>generate-token api</copy> per generare un token. Poi inserisci il token qui sotto."
+        },
+        "token": {
+          "title": "Token",
+          "description": "Token per autenticarsi con il server locale.",
+          "placeholder": "Token segreto"
+        },
+        "back": "Indietro",
+        "connect": "Connetti"
+      }
+    }
+  },
+  "dedicated": {
+    "description": "Inserisci l'indirizzo e il token del server SoulFire a cui vuoi collegarti.",
+    "toast": {
+      "loading": "Connessione al server...",
+      "success": "Connesso al server",
+      "error": "Connessione al server non riuscita"
+    },
+    "form": {
+      "address": {
+        "title": "Indirizzo",
+        "description": "Indirizzo del tuo server SoulFire.",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "Token",
+        "placeholder": "Token segreto",
+        "description": "Token per autenticarsi con il server."
+      },
+      "email": {
+        "title": "Email",
+        "placeholder": "root@soulfiremc.com",
+        "description": "Email del tuo account SoulFire."
+      },
+      "back": "Indietro",
+      "useToken": "Usa token",
+      "useEmail": "Usa email",
+      "login": "Accedi"
+    }
+  },
+  "emailCode": {
+    "description": "Se hai un account, abbiamo inviato un codice a <bold>{{email}}</bold>. Inseriscilo qui sotto.",
+    "toast": {
+      "loading": "Verifica del codice...",
+      "success": "Accesso effettuato",
+      "error": "Codice non valido"
+    },
+    "back": "Indietro"
+  },
+  "footer": {
+    "version": "SoulFire Client {{version}} - {{environment}}",
+    "preview": "Cerchi l'anteprima?",
+    "production": "Cerchi la versione di produzione?",
+    "helpTranslate": "Traduci SoulFire"
+  }
+}

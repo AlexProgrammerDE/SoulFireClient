@@ -1,0 +1,425 @@
+{
+  "locale": "Taal",
+  "cancel": "Annuleren",
+  "error": {
+    "noAddressOrToken": "Geen serveradres of token gevonden",
+    "page": {
+      "title": "Fout",
+      "description": "Er is een fout opgetreden bij het laden van de pagina. Meer informatie is te vinden in de console.",
+      "logOut": "Uitloggen",
+      "reloadPage": "Pagina herladen"
+    },
+    "connectionFailed": "Verbinding met de SoulFire-server mislukt."
+  },
+  "notFound": {
+    "page": {
+      "title": "Niet gevonden",
+      "description": "Kon geen pagina vinden op deze locatie",
+      "logOut": "Uitloggen",
+      "reloadPage": "Pagina herladen"
+    }
+  },
+  "pending": {
+    "connecting": "Verbinden..."
+  },
+  "dialog": {
+    "about": {
+      "title": "Over SoulFire",
+      "description": "U gebruikt versie {{version}} van de SoulFire-client.",
+      "type": "Type",
+      "value": "Waarde",
+      "fields": {
+        "operatingSystem": "Besturingssysteem",
+        "platform": "Platform",
+        "locale": "Taal",
+        "architecture": "Architectuur",
+        "environment": "Omgeving",
+        "browser": "Browser"
+      },
+      "close": "Sluiten"
+    },
+    "createInstance": {
+      "title": "Een nieuwe instantie aanmaken",
+      "description": "Instanties hebben een vriendelijke naam nodig zodat je ze van elkaar kunt onderscheiden. Dit kan elke naam zijn die je wilt, bijvoorbeeld \"Mijn Minecraft Bot\".",
+      "form": {
+        "friendlyName": {
+          "label": "Vriendelijke naam",
+          "placeholder": "Mijn Minecraft Bot",
+          "description": "De naam die je aan deze instantie wilt geven.",
+          "min": "De vriendelijke naam moet minimaal 3 tekens lang zijn.",
+          "max": "De vriendelijke naam mag maximaal 32 tekens lang zijn.",
+          "regex": "De vriendelijke naam mag alleen letters, cijfers en spaties bevatten"
+        },
+        "cancel": "Annuleren",
+        "create": "Aanmaken"
+      },
+      "createToast": {
+        "loading": "Instantie wordt aangemaakt...",
+        "success": "Instantie succesvol aangemaakt",
+        "error": "Maken van instantie mislukt"
+      }
+    },
+    "import": {
+      "main": {
+        "fromFile": "Uit bestand",
+        "fromUrl": "Van URL",
+        "firstClipboardItem": "Er stonden meerdere items in het klembord, alleen het eerste wordt gebruikt.",
+        "fromClipboard": "Uit klembord",
+        "textarea": {
+          "placeholder": "Voer hier tekst in...",
+          "submit": "Laden vanaf tekst"
+        }
+      },
+      "url": {
+        "description": "Laden van een URL zorgt ervoor dat de SoulFire-server een GET-verzoek doet naar de doelserver en de respons gebruikt als data.",
+        "form": {
+          "url": {
+            "placeholder": "Voer hier een URL in...",
+            "empty": "Voer een geldige URL in"
+          }
+        },
+        "submit": "Laden van URL",
+        "toast": {
+          "loading": "Data wordt gedownload...",
+          "success": "Data geladen!",
+          "error": "Downloaden van data mislukt"
+        }
+      }
+    }
+  },
+  "commandInput": {
+    "placeholder": "Voer commando in (typ 'help' voor lijst)"
+  },
+  "controls": {
+    "start": "Start",
+    "resume": "Hervatten",
+    "pause": "Pauzeren",
+    "stop": "Stoppen",
+    "startToast": {
+      "loading": "Aanval starten...",
+      "success": "Aanval succesvol gestart",
+      "error": "Starten van aanval mislukt"
+    },
+    "resumeToast": {
+      "loading": "Aanval hervatten...",
+      "success": "Aanval succesvol hervat",
+      "error": "Hervatten van aanval mislukt"
+    },
+    "pauseToast": {
+      "loading": "Aanval pauzeren...",
+      "success": "Aanval succesvol gepauzeerd",
+      "error": "Pauzeren van aanval mislukt"
+    },
+    "stopToast": {
+      "loading": "Aanval stoppen...",
+      "success": "Aanval succesvol gestopt",
+      "error": "Stoppen van aanval mislukt"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "Geen accounts geconfigureerd",
+      "noAccountsDescription": "Je moet accounts geïmporteerd hebben voordat je een aanval kunt starten. Je hebt {{required}} bots aangevraagd.",
+      "notEnoughTitle": "Niet genoeg accounts",
+      "notEnoughDescription": "Je hebt {{required}} bots aangevraagd maar slechts {{available}} accounts geïmporteerd.",
+      "hint": "Je kunt offline accounts genereren of accounts importeren vanaf de pagina Accountinstellingen.",
+      "continueWithExisting": "Doorgaan met {{count}} accounts",
+      "generateAccounts": "Accounts genereren"
+    }
+  },
+  "icon": {
+    "invalidName": "Ongeldige pictogramnaam: {{name}}"
+  },
+  "dataTable": {
+    "noResults": "Geen resultaten.",
+    "rowsSelected": "{{amount}} van {{total}} rij(en) geselecteerd",
+    "rowsPerPage": "Rijen per pagina",
+    "currentPage": "Pagina {{page}} van {{total}}",
+    "goFirst": "Ga naar eerste pagina",
+    "goPrevious": "Ga naar vorige pagina",
+    "goNext": "Ga naar volgende pagina",
+    "goLast": "Ga naar laatste pagina",
+    "selectAll": "Alles selecteren",
+    "selectRow": "Rij selecteren"
+  },
+  "pluginCard": {
+    "version": "Versie: {{version}}",
+    "author": "Auteur: {{author}}",
+    "license": "Licentie: {{license}}",
+    "website": "Website"
+  },
+  "settingsPage": {
+    "namespacesNotFound": "Instelling-namespaces niet gevonden",
+    "stringList": {
+      "placeholder": "Een nieuw item toevoegen...",
+      "add": "Toevoegen",
+      "remove": "Verwijderen"
+    },
+    "invalidNumberToast": {
+      "title": "Ongeldig nummer!",
+      "description": "De waarde moet tussen {{min}} en {{max}} liggen"
+    }
+  },
+  "terminal": {
+    "noLogs": "🧙 Het lijkt erop dat er geen logs zijn om weer te geven; probeer een paar commando&#39;s uit te voeren!",
+    "demo-1": "Welkom in demomodus! 🧪",
+    "demo-2": "Dit is een alleen-lezen instantie van SoulFire",
+    "demo-3": "Bekijk alle menu's en functies voordat je beslist om SoulFire te installeren :D",
+    "demo-4": "Voel je vrij om lid te worden van onze Discord-server als je contact wilt opnemen: https://soulfiremc.com/discord"
+  },
+  "uiBreadcrumb": {
+    "more": "Meer"
+  },
+  "uiDialog": {
+    "close": "Sluiten"
+  },
+  "uiSheet": {
+    "close": "Sluiten"
+  },
+  "uiSidebar": {
+    "toggle": "Zijbalk wisselen"
+  },
+  "castMenu": {
+    "title": "Casten",
+    "disconnected": "Verbinding verbroken met {{device}}",
+    "alreadyConnected": "Al verbonden met {{device}}",
+    "connectToast": {
+      "loading": "Verbinding maken met {{device}}...",
+      "success": "Verbonden met {{device}}",
+      "error": "Verbinding maken met {{device}} mislukt"
+    },
+    "noDevices": "Geen apparaten gevonden",
+    "broadcastLabel": "Uitzendtest",
+    "broadcastToast": {
+      "loading": "Bericht uitzenden...",
+      "success": "Bericht uitgezonden!",
+      "error": "Uitzenden van bericht mislukt"
+    }
+  },
+  "instanceSidebar": {
+    "readDocumentation": "Lees documentatie",
+    "backToDashboard": "Terug naar dashboard",
+    "deleteToast": {
+      "loading": "Instantie verwijderen...",
+      "success": "Instantie verwijderd",
+      "error": "Instantie verwijderen mislukt"
+    },
+    "instancesGroup": "Instanties",
+    "createInstance": "Instantie aanmaken",
+    "loadProfileToast": {
+      "loading": "Profiel laden...",
+      "success": "Profiel geladen",
+      "error": "Laden van profiel mislukt"
+    },
+    "loadProfile": "Laad profiel",
+    "loadFromFile": "Laad uit bestand",
+    "profileSaved": "Profiel opgeslagen",
+    "saveProfile": "Profiel opslaan",
+    "deleteInstance": "Instantie verwijderen",
+    "controlsGroup": "Bediening",
+    "overview": "Overzicht",
+    "terminal": "Terminal",
+    "audit-log": "Auditlogboek",
+    "settingsGroup": "Instellingen",
+    "pluginsGroup": "Plug-ins",
+    "pluginSettings": "Plug-in instellingen",
+    "botSettings": "Bot instellingen",
+    "accountSettings": "Account instellingen",
+    "metaSettings": "Instellingen van instantie",
+    "proxySettings": "Proxy-instellingen",
+    "aiSettings": "AI-instellingen",
+    "pathfindingSettings": "Padzoeken-instellingen",
+    "discoverPlugins": "Plug-ins",
+    "instanceScripts": "Scripts"
+  },
+  "userSidebar": {
+    "readDocumentation": "Lees documentatie",
+    "userGroup": "Gebruiker",
+    "instances": "Instanties",
+    "access": "Toegang",
+    "createInstance": "Instantie aanmaken",
+    "settings": "Instellingen",
+    "adminGroup": "Beheerder",
+    "adminOverview": "Overzicht",
+    "adminLogs": "Logs",
+    "adminTerminal": "Terminal",
+    "users": "Gebruikers",
+    "adminScripts": "Scripts",
+    "serverSettings": "Serverinstellingen",
+    "devSettings": "Ontwikkelaar instellingen",
+    "theme": {
+      "title": "Thema",
+      "system": "Systeem",
+      "light": "Licht",
+      "dark": "Donker"
+    },
+    "terminal": {
+      "title": "Terminal"
+    },
+    "configDir": "Config-map",
+    "dataDir": "Data-map",
+    "about": "Over",
+    "logOut": "Uitloggen",
+    "logOutToast": {
+      "loading": "Uitloggen...",
+      "success": "Uitgelogd",
+      "error": "Uitloggen mislukt"
+    },
+    "exit": "Afsluiten",
+    "stopImpersonating": "Imiteren stoppen",
+    "helpTranslate": "Vertaal SoulFire"
+  },
+  "sidebar": {
+    "documentation": "Documentatie",
+    "buyMeACoffee": "Trakteer me op een koffie",
+    "discord": "Discord"
+  },
+  "breadcrumbs": {
+    "admin": "Beheerder",
+    "settings": "Instellingen",
+    "controls": "Bediening",
+    "plugins": "Plug-ins"
+  },
+  "noInstancesFound": "Geen instanties gevonden",
+  "pageName": {
+    "terminal": "Terminal",
+    "logs": "Logs",
+    "audit-log": "Auditlogboek",
+    "instances": "Instanties",
+    "access": "Toegang",
+    "settings": "Instellingen",
+    "proxySettings": "Proxy-instellingen",
+    "overview": "Overzicht",
+    "users": "Gebruikers",
+    "accountSettings": "Account instellingen",
+    "metaSettings": "Instellingen van instantie",
+    "discoverPlugins": "Plug-ins",
+    "adminScripts": "Scripts",
+    "instanceScripts": "Scripts"
+  },
+  "access": {
+    "webdav": {
+      "title": "WebDAV-toegang",
+      "description": "SoulFire geeft je toegang tot instantie-, script- en andere bestanden via het WebDAV-protocol.",
+      "publicAddress": "Openbaar WebDAV-adres",
+      "personalToken": "Persoonlijk WebDAV-token",
+      "securityWarning": "Je persoonlijke WebDAV-token is erg belangrijk. Deel deze niet met anderen. Het wordt gebruikt om je te authenticeren bij toegang tot je bestanden. Gebruik het als je WebDAV-wachtwoord bij het verbinden. Een gebruikersnaam is niet vereist, als erom gevraagd wordt kun je elke waarde invullen die je wilt (bijv. 'soulfire').",
+      "addressDescription": "Dit is het adres dat je nodig hebt om toegang te krijgen tot je bestanden. Soms moet je dav:// of davs:// gebruiken in plaats van http(s)://."
+    },
+    "api": {
+      "title": "API-toegang",
+      "description": "SoulFire's gRPC HTTP API laat je programmatisch met je instanties communiceren via web requests.",
+      "publicAddress": "Openbaar API-adres",
+      "personalToken": "Persoonlijk API-token",
+      "securityWarning": "Je persoonlijke API-token is erg belangrijk. Deel deze niet met anderen. Het wordt gebruikt om je te authenticeren bij toegang tot de API.",
+      "addressDescription": "Dit is het adres dat je nodig hebt om toegang te krijgen tot de API."
+    },
+    "token": {
+      "generate": "Token genereren",
+      "placeholder": "Klik hieronder op &#39;Token genereren&#39;",
+      "generating": "Token wordt gegenereerd...",
+      "success": "Token succesvol gegenereerd",
+      "error": "Token genereren mislukt",
+      "copy": "Token kopiëren"
+    },
+    "address": {
+      "copy": "Adres kopiëren"
+    },
+    "documentation": "Documentatie",
+    "howToConnect": "Hoe verbinden"
+  },
+  "uploadToMcLogs": "Uploaden naar mclo.gs",
+  "mcLogsUpload": {
+    "loading": "Uploaden naar mclo.gs...",
+    "success": "Geüpload naar mclo.gs! Bekijk het hier: {{url}}",
+    "error": "Uploaden naar mclo.gs mislukt"
+  },
+  "copyToClipboard": "Kopiëren naar klembord",
+  "clipboardCopy": {
+    "loading": "Kopiëren naar klembord...",
+    "success": "\"{{content}}\" gekopieerd naar klembord",
+    "error": "Kopiëren naar klembord mislukt"
+  },
+  "instanceState": {
+    "starting": "Starten",
+    "running": "Draait",
+    "paused": "Gepauzeerd",
+    "stopping": "Beëindigen",
+    "stopped": "Gestopt"
+  },
+  "auditLog": {
+    "filterPlaceholder": "Filter auditlogs...",
+    "user": "Gebruiker",
+    "action": "Actie",
+    "timestamp": "Tijdstempel",
+    "executedCommand": "Uitgevoerd commando: {{data}}",
+    "startedAttack": "Een aanval gestart",
+    "resumedAttack": "Een aanval hervat",
+    "pausedAttack": "Een aanval gepauzeerd",
+    "stoppedAttack": "Een aanval gestopt"
+  },
+  "pickADate": "Selecteer een datum",
+  "scripts": {
+    "filterPlaceholder": "Scripts filteren...",
+    "baseScriptDialog": {
+      "form": {
+        "scriptName": {
+          "min": "Scriptnamen moeten minimaal 3 tekens bevatten",
+          "max": "Scriptnamen mogen maximaal 32 tekens bevatten",
+          "regex": "Scriptnamen moeten kleine letters zijn, beginnen met een alfanumeriek teken, gevolgd door alfanumerieke tekens of streepjes, en eindigen met een alfanumeriek teken.",
+          "label": "Naam",
+          "placeholder": "Mijn Script",
+          "description": "De naam van het script."
+        },
+        "elevatedPermissions": {
+          "label": "Verhoogde rechten",
+          "description": "Of het script met verhoogde rechten moet draaien. Alleen beheerders kunnen deze optie inschakelen."
+        }
+      }
+    },
+    "addScriptDialog": {
+      "title": "Een nieuw script toevoegen",
+      "description": "Scripts zijn kleine programma&#39;s die op de SoulFire-server draaien. Ze kunnen worden gebruikt om taken te automatiseren, aangepast gedrag te creëren, en meer.",
+      "form": {
+        "cancel": "Annuleren",
+        "add": "Toevoegen"
+      }
+    },
+    "updateScriptDialog": {
+      "title": "Script bijwerken",
+      "description": "Werk de informatie van het script bij.",
+      "form": {
+        "cancel": "Annuleren",
+        "update": "Bijwerken"
+      }
+    },
+    "removeToast": {
+      "loading": "Scripts worden verwijderd...",
+      "success": "Scripts verwijderd!",
+      "error": "Verwijderen van scripts mislukt"
+    },
+    "addToast": {
+      "loading": "Script toevoegen...",
+      "success": "Script toegevoegd!",
+      "error": "Toevoegen van script mislukt"
+    },
+    "updateToast": {
+      "loading": "Script bijwerken...",
+      "success": "Script bijgewerkt!",
+      "error": "Bijwerken van script mislukt"
+    },
+    "restartToast": {
+      "loading": "Script wordt herstart...",
+      "success": "Script herstart!",
+      "error": "Herstarten van script mislukt"
+    },
+    "table": {
+      "type": "Type",
+      "scriptName": "Naam",
+      "language": "Taal",
+      "elevatedPermissions": "Verhoogde rechten",
+      "createdAt": "Aangemaakt",
+      "actions": "Acties"
+    },
+    "globalScript": "Globaal",
+    "instanceScript": "Instantie"
+  }
+}

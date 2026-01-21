@@ -1,0 +1,95 @@
+{
+  "overview": {
+    "welcome": "Welkom terug, {{name}} 🧙",
+    "instancesChart": {
+      "title": "Totaal aantal instanties op deze server",
+      "instances": "Instanties",
+      "label": {
+        "state": "Status",
+        "active": "Actief",
+        "stopped": "Gestopt",
+        "other": "Overig"
+      }
+    },
+    "usersChart": {
+      "title": "Totaal aantal gebruikers op deze server",
+      "users": "Gebruikers",
+      "label": {
+        "role": "Rol",
+        "user": "Gebruiker",
+        "admin": "Beheerder",
+        "other": "Overig"
+      }
+    }
+  },
+  "users": {
+    "filterPlaceholder": "Gebruikers filteren...",
+    "baseUserDialog": {
+      "form": {
+        "username": {
+          "min": "Gebruikersnamen moeten minimaal 3 tekens bevatten",
+          "max": "Gebruikersnamen mogen maximaal 32 tekens bevatten",
+          "regex": "Gebruikersnamen moeten kleine letters zijn, beginnen met een alfanumeriek teken, gevolgd door meer alfanumerieke tekens of streepjes, en eindigen met een alfanumeriek teken.",
+          "label": "Gebruikersnaam",
+          "placeholder": "Voer gebruikersnaam in",
+          "description": "Een unieke gebruikersnaam die de gebruiker identificeert"
+        },
+        "email": {
+          "label": "E-mailadres",
+          "placeholder": "Voer e-mailadres in",
+          "description": "Het e-mailadres van de gebruiker dat wordt gebruikt voor meldingen en inloggen"
+        },
+        "role": {
+          "label": "Rol",
+          "description": "De rol van de gebruiker. Beheerders kunnen gebruikers en alle instanties beheren. Gebruikers kunnen alleen hun eigen instanties beheren.",
+          "user": "Gebruiker",
+          "admin": "Beheerder"
+        }
+      }
+    },
+    "addUserDialog": {
+      "title": "Nieuwe gebruiker toevoegen",
+      "description": "Voeg een nieuwe gebruiker toe aan deze server",
+      "form": {
+        "cancel": "Annuleren",
+        "add": "Gebruiker toevoegen"
+      }
+    },
+    "updateUserDialog": {
+      "title": "Gebruiker bijwerken",
+      "description": "Werk de informatie van de gebruiker bij",
+      "form": {
+        "cancel": "Annuleren",
+        "update": "Gebruiker bijwerken"
+      }
+    },
+    "addToast": {
+      "loading": "Gebruiker wordt toegevoegd...",
+      "success": "Gebruiker toegevoegd!",
+      "error": "Toevoegen van gebruiker mislukt"
+    },
+    "updateToast": {
+      "loading": "Gebruiker bijwerken...",
+      "success": "Gebruiker bijgewerkt!",
+      "error": "Bijwerken van gebruiker mislukt"
+    },
+    "removeToast": {
+      "loading": "Gebruikers worden verwijderd...",
+      "success": "Gebruikers verwijderd!",
+      "error": "Verwijderen van gebruikers mislukt"
+    },
+    "invalidateToast": {
+      "loading": "Gebruikers worden uitgelogd...",
+      "success": "Gebruikers uitgelogd!",
+      "error": "Uitloggen van gebruikers mislukt"
+    },
+    "table": {
+      "username": "Gebruikersnaam",
+      "email": "E-mailadres",
+      "role": "Rol",
+      "createdAt": "Aangemaakt",
+      "minIssuedAt": "Min. login",
+      "actions": "Acties"
+    }
+  }
+}

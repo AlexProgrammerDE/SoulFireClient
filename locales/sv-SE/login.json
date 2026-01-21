@@ -1,0 +1,103 @@
+{
+  "header": {
+    "image": {
+      "alt": "SoulFire-logotyp"
+    },
+    "title": "SoulFire"
+  },
+  "newUser": "Ny på SoulFire? Vi rekommenderar att du kollar in <a>kom igång-guiden</a>.",
+  "connect": {
+    "title": "Anslut till en SoulFire-server",
+    "description": "Välj vilken typ av SoulFire-server du vill ansluta till.",
+    "integrated": {
+      "title": "Integrerad server (lokal)",
+      "description": "Kör en SoulFire-server på din dator. Installationen är automatisk och kräver ingen konfiguration. (Kräver desktop-/Android-app)"
+    },
+    "dedicated": {
+      "title": "Dedikerad server (fjärr)",
+      "description": "Ansluter till en fjärrinstans av SoulFire-servern. Du måste ange serverns adress och token."
+    },
+    "demo": {
+      "title": "Demoserver",
+      "description": "Simulerar en virtuell server med demodata. Denna server är skrivskyddad och du kan inte göra några ändringar på den."
+    }
+  },
+  "integrated": {
+    "preparing": "Förbereder att starta integrerad server...",
+    "toast": {
+      "loading": "Startar integrerad server...",
+      "success": "Integrerad server startad",
+      "error": "Misslyckades med att starta integrerad server"
+    },
+    "description": "Den integrerade servern körs lokalt på din dator. Konfigurera Java-startargumenten nedan om det behövs.",
+    "form": {
+      "jvmArgs": {
+        "title": "JVM-argument",
+        "description": "SoulFire Java VM-argument. För att använda 4 GB RAM, lägg till <bold>-Xmx4G</bold>. Standard är 25 % av ditt RAM.",
+        "placeholder": "Dina JVM-argument här"
+      },
+      "back": "Tillbaka",
+      "start": "Starta"
+    },
+    "mobile": {
+      "description": "För att köra den integrerade servern på mobil måste du genomföra några manuella steg.",
+      "form": {
+        "termuxCommand": {
+          "title": "Termux-kommando",
+          "description": "Installera <a>Termux-appen</a> och kör sedan detta kommando i Termux för att installera SoulFire-servern. Du behöver sedan köra kommandot <copy>generate-token api</copy> för att generera en token. Ange sedan token nedan."
+        },
+        "token": {
+          "title": "Token",
+          "description": "Token för att autentisera mot den lokala servern.",
+          "placeholder": "Hemlig token"
+        },
+        "back": "Tillbaka",
+        "connect": "Anslut"
+      }
+    }
+  },
+  "dedicated": {
+    "description": "Fyll i adressen och token för den SoulFire-server du vill ansluta till.",
+    "toast": {
+      "loading": "Ansluter till server...",
+      "success": "Ansluten till server",
+      "error": "Misslyckades med att ansluta till servern"
+    },
+    "form": {
+      "address": {
+        "title": "Adress",
+        "description": "Adress till din SoulFire-server.",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "Token",
+        "placeholder": "Hemlig token",
+        "description": "Token för att autentisera mot servern."
+      },
+      "email": {
+        "title": "E-post",
+        "placeholder": "root@soulfiremc.com",
+        "description": "E-post till ditt SoulFire-konto."
+      },
+      "back": "Tillbaka",
+      "useToken": "Använd token",
+      "useEmail": "Använd e-post",
+      "login": "Logga in"
+    }
+  },
+  "emailCode": {
+    "description": "Om du har ett konto har vi skickat en kod till <bold>{{email}}</bold>. Ange den nedan.",
+    "toast": {
+      "loading": "Kontrollerar kod...",
+      "success": "Inloggad",
+      "error": "Ogiltig kod"
+    },
+    "back": "Tillbaka"
+  },
+  "footer": {
+    "version": "SoulFire-klient {{version}} – {{environment}}",
+    "preview": "Letar du efter förhandsvisning?",
+    "production": "Letar du efter produktion?",
+    "helpTranslate": "Översätt SoulFire"
+  }
+}

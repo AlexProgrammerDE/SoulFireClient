@@ -1,0 +1,99 @@
+{
+  "proxy": {
+    "getProxies": "獲取代理伺服器",
+    "addProxies": "新增代理伺服器",
+    "filterPlaceholder": "篩選代理伺服器...",
+    "listImportToast": {
+      "loading": "正在導入代理伺服器...",
+      "success": "已導入 {{count}} 個代理伺服器！",
+      "error": "導入代理伺服器失敗",
+      "noProxies": "沒有可導入的代理伺服器"
+    },
+    "import": {
+      "proxyType": "代理伺服器類型",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "導入 {{type}} 代理伺服器",
+        "description": "請將您的代理伺服器貼在此處，每行一個"
+      }
+    },
+    "removeToast": {
+      "loading": "正在移除代理伺服器...",
+      "success": "已移除 {{count}} 個代理伺服器！",
+      "error": "移除代理伺服器失敗"
+    },
+    "checkToast": {
+      "loading": "正在檢查代理伺服器... {{checked}}/{{total}}（成功：{{success}} 失敗：{{failed}}）",
+      "success": "已移除 {{count}} 個損壞的代理伺服器！",
+      "error": "檢查代理伺服器失敗"
+    },
+    "invalidFormat": "代理伺服器格式無效",
+    "table": {
+      "type": "類型",
+      "address": "位址",
+      "username": "使用者名稱",
+      "password": "密碼"
+    }
+  },
+  "account": {
+    "getAccounts": "獲取帳戶",
+    "addAccounts": "新增帳戶",
+    "generateAccounts": "產生帳戶",
+    "filterPlaceholder": "篩選帳戶...",
+    "listImportToast": {
+      "loading": "正在導入帳戶... {{checked}}/{{total}}（成功：{{success}} 失敗：{{failed}}）",
+      "allFailed": "未能導入任何帳戶",
+      "someFailed": "已導入 {{count}} 個帳戶，未能導入 {{failed}} 個帳戶",
+      "noneFailed": "已導入 {{count}} 個帳戶！",
+      "error": "導入帳戶失敗",
+      "noAccounts": "沒有可導入的帳戶"
+    },
+    "unknownError": "未知錯誤",
+    "deviceCodeImportToast": {
+      "loading": "正在導入帳戶...",
+      "success": "帳戶已導入！",
+      "error": "導入帳戶失敗"
+    },
+    "generate": {
+      "title": "產生離線帳戶",
+      "description": "以自訂名稱格式產生離線 Java 帳戶。",
+      "amount": "數量",
+      "nameFormat": "名稱格式",
+      "nameFormatHelp": "請使用 %d 作為帳戶編號的佔位符（例如：Bot_%d 會變成 Bot_1、Bot_2 等）",
+      "overrideExisting": "覆蓋現有的 {{count}} 個帳戶",
+      "submit": "產生",
+      "generating": "正在產生...",
+      "progress": "正在產生帳戶... {{checked}}/{{total}}（成功：{{success}} 失敗：{{failed}}）",
+      "success": "已產生 {{count}} 個帳戶！",
+      "allFailed": "未能產生任何帳戶",
+      "error": "產生帳戶失敗",
+      "invalidAmount": "請輸入有效數量（至少 1）",
+      "missingPlaceholder": "名稱格式必須包含 %d 佔位符"
+    },
+    "import": {
+      "javaEdition": "Java 版",
+      "bedrockEdition": "Bedrock 版",
+      "offline": "離線",
+      "microsoftCredentials": "Microsoft 憑證",
+      "microsoftDeviceCode": "Microsoft 裝置驗證碼",
+      "microsoftRefreshToken": "Microsoft 重新整理權杖",
+      "dialog": {
+        "title": "導入 {{type}} 帳戶",
+        "description": "請將您的帳戶貼在此處，每行一個"
+      }
+    },
+    "removeToast": {
+      "loading": "正在移除帳戶...",
+      "success": "已移除 {{count}} 個帳戶！",
+      "error": "移除帳戶失敗"
+    },
+    "table": {
+      "type": "類型",
+      "profileId": "UUID",
+      "lastKnownName": "使用者名稱"
+    }
+  }
+}

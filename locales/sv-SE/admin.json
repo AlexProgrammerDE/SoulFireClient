@@ -1,0 +1,95 @@
+{
+  "overview": {
+    "welcome": "Välkommen tillbaka, {{name}} 🧙",
+    "instancesChart": {
+      "title": "Totalt antal instanser på den här servern",
+      "instances": "Instanser",
+      "label": {
+        "state": "Status",
+        "active": "Aktiv",
+        "stopped": "Stoppad",
+        "other": "Annat"
+      }
+    },
+    "usersChart": {
+      "title": "Totalt antal användare på den här servern",
+      "users": "Användare",
+      "label": {
+        "role": "Roll",
+        "user": "Användare",
+        "admin": "Admin",
+        "other": "Annat"
+      }
+    }
+  },
+  "users": {
+    "filterPlaceholder": "Filtrera användare...",
+    "baseUserDialog": {
+      "form": {
+        "username": {
+          "min": "Användarnamn måste vara minst 3 tecken",
+          "max": "Användarnamn får vara högst 32 tecken",
+          "regex": "Användarnamn måste vara med små bokstäver, börja med en alfanumerisk tecken, följt av fler alfanumeriska tecken eller bindestreck, och sluta med en alfanumerisk tecken.",
+          "label": "Användarnamn",
+          "placeholder": "Ange användarnamn",
+          "description": "Ett unikt användarnamn som identifierar användaren"
+        },
+        "email": {
+          "label": "E-post",
+          "placeholder": "Ange e-post",
+          "description": "Användarens e-postadress används för aviseringar och inloggning"
+        },
+        "role": {
+          "label": "Roll",
+          "description": "Användarens roll. Administratörer kan hantera användare och alla instanser. Användare kan endast hantera sina egna instanser.",
+          "user": "Användare",
+          "admin": "Admin"
+        }
+      }
+    },
+    "addUserDialog": {
+      "title": "Lägg till en ny användare",
+      "description": "Lägg till en ny användare på den här servern",
+      "form": {
+        "cancel": "Avbryt",
+        "add": "Lägg till användare"
+      }
+    },
+    "updateUserDialog": {
+      "title": "Uppdatera användare",
+      "description": "Uppdatera användarens information",
+      "form": {
+        "cancel": "Avbryt",
+        "update": "Uppdatera användare"
+      }
+    },
+    "addToast": {
+      "loading": "Lägger till användare...",
+      "success": "Användaren tillagd!",
+      "error": "Misslyckades med att lägga till användaren"
+    },
+    "updateToast": {
+      "loading": "Uppdaterar användare...",
+      "success": "Användare uppdaterad!",
+      "error": "Misslyckades med att uppdatera användaren"
+    },
+    "removeToast": {
+      "loading": "Tar bort användare...",
+      "success": "Användare borttagna!",
+      "error": "Misslyckades med att ta bort användare"
+    },
+    "invalidateToast": {
+      "loading": "Loggar ut användare...",
+      "success": "Användare utloggade!",
+      "error": "Misslyckades med att logga ut användare"
+    },
+    "table": {
+      "username": "Användarnamn",
+      "email": "E-post",
+      "role": "Roll",
+      "createdAt": "Skapad",
+      "minIssuedAt": "Min inloggning",
+      "actions": "Åtgärder"
+    }
+  }
+}

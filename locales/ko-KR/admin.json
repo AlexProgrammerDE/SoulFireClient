@@ -1,0 +1,95 @@
+{
+  "overview": {
+    "welcome": "다시 오신 것을 환영합니다, {{name}} 🧙",
+    "instancesChart": {
+      "title": "이 서버의 전체 인스턴스 개수",
+      "instances": "인스턴스",
+      "label": {
+        "state": "상태",
+        "active": "활성화됨",
+        "stopped": "중지됨",
+        "other": "기타"
+      }
+    },
+    "usersChart": {
+      "title": "이 서버의 전체 사용자 수",
+      "users": "사용자",
+      "label": {
+        "role": "역할",
+        "user": "사용자",
+        "admin": "관리자",
+        "other": "기타"
+      }
+    }
+  },
+  "users": {
+    "filterPlaceholder": "사용자 필터...",
+    "baseUserDialog": {
+      "form": {
+        "username": {
+          "min": "사용자 이름은 최소 3자 이상이어야 합니다",
+          "max": "사용자 이름은 최대 32자까지 가능합니다",
+          "regex": "사용자 이름은 소문자이어야 하며, 알파벳 혹은 숫자로 시작하고, 이후에는 더 많은 알파벳, 숫자 또는 대시(-)가 올 수 있으며, 마지막은 알파벳 또는 숫자로 끝나야 합니다.",
+          "label": "사용자 이름",
+          "placeholder": "사용자 이름 입력",
+          "description": "사용자를 식별하는 고유한 사용자 이름"
+        },
+        "email": {
+          "label": "이메일",
+          "placeholder": "이메일 입력",
+          "description": "알림 및 로그인을 위해 사용되는 사용자의 이메일 주소"
+        },
+        "role": {
+          "label": "역할",
+          "description": "사용자의 역할입니다. 관리자는 사용자를 관리하고 모든 인스턴스를 관리할 수 있습니다. 일반 사용자는 자신의 인스턴스만 관리할 수 있습니다.",
+          "user": "사용자",
+          "admin": "관리자"
+        }
+      }
+    },
+    "addUserDialog": {
+      "title": "새 사용자 추가",
+      "description": "이 서버에 새 사용자를 추가합니다",
+      "form": {
+        "cancel": "취소",
+        "add": "사용자 추가"
+      }
+    },
+    "updateUserDialog": {
+      "title": "사용자 업데이트",
+      "description": "사용자 정보를 업데이트합니다",
+      "form": {
+        "cancel": "취소",
+        "update": "사용자 업데이트"
+      }
+    },
+    "addToast": {
+      "loading": "사용자 추가 중...",
+      "success": "사용자가 추가되었습니다!",
+      "error": "사용자 추가 실패"
+    },
+    "updateToast": {
+      "loading": "사용자 업데이트 중...",
+      "success": "사용자가 업데이트되었습니다!",
+      "error": "사용자 업데이트 실패"
+    },
+    "removeToast": {
+      "loading": "사용자 삭제 중...",
+      "success": "사용자가 삭제되었습니다!",
+      "error": "사용자 삭제 실패"
+    },
+    "invalidateToast": {
+      "loading": "사용자 로그아웃 중...",
+      "success": "사용자가 로그아웃되었습니다!",
+      "error": "사용자 로그아웃 실패"
+    },
+    "table": {
+      "username": "사용자 이름",
+      "email": "이메일",
+      "role": "역할",
+      "createdAt": "생성일",
+      "minIssuedAt": "최소 로그인",
+      "actions": "동작"
+    }
+  }
+}

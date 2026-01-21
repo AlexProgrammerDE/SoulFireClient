@@ -1,0 +1,99 @@
+{
+  "proxy": {
+    "getProxies": "Hae proxyja",
+    "addProxies": "Lisää proxyja",
+    "filterPlaceholder": "Suodata proxyt...",
+    "listImportToast": {
+      "loading": "Tuodaan proxyja...",
+      "success": "{{count}} proxy tuotu!",
+      "error": "Proxyjen tuominen epäonnistui",
+      "noProxies": "Ei proxyja tuotavaksi"
+    },
+    "import": {
+      "proxyType": "Proxy-tyyppi",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "Tuo {{type}} proxyja",
+        "description": "Liitä proxysi tähän, yksi per rivi"
+      }
+    },
+    "removeToast": {
+      "loading": "Poistetaan proxyja...",
+      "success": "{{count}} proxy poistettu!",
+      "error": "Proxyjen poistaminen epäonnistui"
+    },
+    "checkToast": {
+      "loading": "Tarkistetaan proxyja... {{checked}}/{{total}} (Onnistui: {{success}} Epäonnistui: {{failed}})",
+      "success": "{{count}} viallista proxyä poistettu!",
+      "error": "Proxyjen tarkistus epäonnistui"
+    },
+    "invalidFormat": "Virheellinen proxyn muoto",
+    "table": {
+      "type": "Tyyppi",
+      "address": "Osoite",
+      "username": "Käyttäjätunnus",
+      "password": "Salasana"
+    }
+  },
+  "account": {
+    "getAccounts": "Hae tilejä",
+    "addAccounts": "Lisää tilejä",
+    "generateAccounts": "Luo tilejä",
+    "filterPlaceholder": "Suodata tilejä...",
+    "listImportToast": {
+      "loading": "Tuodaan tilejä... {{checked}}/{{total}} (Onnistui: {{success}} Epäonnistui: {{failed}})",
+      "allFailed": "Tilien tuominen epäonnistui kokonaan.",
+      "someFailed": "Tuotiin {{count}} tiliä, {{failed}} tilin tuominen epäonnistui.",
+      "noneFailed": "{{count}} tiliä tuotu!",
+      "error": "Tilien tuominen epäonnistui",
+      "noAccounts": "Ei tilejä tuotavaksi"
+    },
+    "unknownError": "Tuntematon virhe",
+    "deviceCodeImportToast": {
+      "loading": "Tiliä tuodaan...",
+      "success": "Tili tuotu!",
+      "error": "Tilin tuominen epäonnistui"
+    },
+    "generate": {
+      "title": "Luo offline-tilejä",
+      "description": "Luo offline-Java-tilejä omavalintaisella nimi­muodolla.",
+      "amount": "Määrä",
+      "nameFormat": "Nimimuoto",
+      "nameFormatHelp": "Käytä %d numero­paikkamerkkinä tilin numerolle (esim. Bot_%d → Bot_1, Bot_2 jne.)",
+      "overrideExisting": "Korvaa olemassa olevat {{count}} tiliä",
+      "submit": "Luo",
+      "generating": "Luodaan...",
+      "progress": "Luodaan tilejä... {{checked}}/{{total}} (Onnistui: {{success}} Epäonnistui: {{failed}})",
+      "success": "{{count}} tiliä luotu!",
+      "allFailed": "Yhtään tiliä ei voitu luoda",
+      "error": "Tilien luonti epäonnistui",
+      "invalidAmount": "Syötä kelvollinen määrä (vähintään 1)",
+      "missingPlaceholder": "Nimimuodossa on oltava %d-paikkamerkki"
+    },
+    "import": {
+      "javaEdition": "Java Edition",
+      "bedrockEdition": "Bedrock Edition",
+      "offline": "Offline",
+      "microsoftCredentials": "Microsoft-tunnukset",
+      "microsoftDeviceCode": "Microsoft-laitteen koodi",
+      "microsoftRefreshToken": "Microsoft-virkistystunnus",
+      "dialog": {
+        "title": "Tuo {{type}} tilejä",
+        "description": "Liitä tilisi tähän, yksi per rivi"
+      }
+    },
+    "removeToast": {
+      "loading": "Poistetaan tilejä...",
+      "success": "{{count}} tiliä poistettu!",
+      "error": "Tilien poistaminen epäonnistui"
+    },
+    "table": {
+      "type": "Tyyppi",
+      "profileId": "UUID",
+      "lastKnownName": "Käyttäjätunnus"
+    }
+  }
+}

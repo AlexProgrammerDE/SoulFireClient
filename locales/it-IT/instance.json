@@ -1,0 +1,99 @@
+{
+  "proxy": {
+    "getProxies": "Ottieni Proxy",
+    "addProxies": "Aggiungi Proxy",
+    "filterPlaceholder": "Filtra proxy...",
+    "listImportToast": {
+      "loading": "Importazione proxy in corso...",
+      "success": "{{count}} proxy importati!",
+      "error": "Impossibile importare i proxy.",
+      "noProxies": "Nessun proxy da importare"
+    },
+    "import": {
+      "proxyType": "Tipo di proxy",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "Importa proxy {{type}}",
+        "description": "Incolla i tuoi proxy qui, uno per riga"
+      }
+    },
+    "removeToast": {
+      "loading": "Rimozione proxy in corso...",
+      "success": "{{count}} proxy rimossi!",
+      "error": "Impossibile rimuovere i proxy."
+    },
+    "checkToast": {
+      "loading": "Verifica dei proxy in corso... {{checked}}/{{total}} (Successo: {{success}} Falliti: {{failed}})",
+      "success": "{{count}} proxy difettosi rimossi!",
+      "error": "Impossibile verificare i proxy."
+    },
+    "invalidFormat": "Formato proxy non valido",
+    "table": {
+      "type": "Tipo",
+      "address": "Indirizzo",
+      "username": "Nome utente",
+      "password": "Password"
+    }
+  },
+  "account": {
+    "getAccounts": "Ottieni Account",
+    "addAccounts": "Aggiungi Account",
+    "generateAccounts": "Genera Account",
+    "filterPlaceholder": "Filtra account...",
+    "listImportToast": {
+      "loading": "Importazione account in corso... {{checked}}/{{total}} (Successo: {{success}} Falliti: {{failed}})",
+      "allFailed": "Impossibile importare gli account.",
+      "someFailed": "Importati {{count}} account, impossibile importarli {{failed}}.",
+      "noneFailed": "{{count}} account importati!",
+      "error": "Impossibile importare gli account.",
+      "noAccounts": "Nessun account da importare"
+    },
+    "unknownError": "Errore sconosciuto",
+    "deviceCodeImportToast": {
+      "loading": "Importazione account in corso...",
+      "success": "Account importato!",
+      "error": "Impossibile importare l'account."
+    },
+    "generate": {
+      "title": "Genera Account Offline",
+      "description": "Genera account Java offline con un formato nome personalizzato.",
+      "amount": "Quantità",
+      "nameFormat": "Formato nome",
+      "nameFormatHelp": "Usa %d come segnaposto per il numero dell'account (es: Bot_%d diventa Bot_1, Bot_2, ecc.)",
+      "overrideExisting": "Sovrascrivi i {{count}} account esistenti",
+      "submit": "Genera",
+      "generating": "Generazione in corso...",
+      "progress": "Generazione account in corso... {{checked}}/{{total}} (Successo: {{success}} Falliti: {{failed}})",
+      "success": "{{count}} account generati!",
+      "allFailed": "Impossibile generare alcun account",
+      "error": "Impossibile generare gli account.",
+      "invalidAmount": "Inserisci una quantità valida (almeno 1)",
+      "missingPlaceholder": "Il formato nome deve contenere il segnaposto %d"
+    },
+    "import": {
+      "javaEdition": "Java Edition",
+      "bedrockEdition": "Bedrock Edition",
+      "offline": "Offline",
+      "microsoftCredentials": "Credenziali Microsoft",
+      "microsoftDeviceCode": "Codice dispositivo Microsoft",
+      "microsoftRefreshToken": "Token di aggiornamento Microsoft",
+      "dialog": {
+        "title": "Importa account {{type}}",
+        "description": "Incolla qui i tuoi account, uno per riga"
+      }
+    },
+    "removeToast": {
+      "loading": "Rimozione account in corso...",
+      "success": "{{count}} account rimossi!",
+      "error": "Impossibile rimuovere gli account."
+    },
+    "table": {
+      "type": "Tipo",
+      "profileId": "UUID",
+      "lastKnownName": "Nome utente"
+    }
+  }
+}

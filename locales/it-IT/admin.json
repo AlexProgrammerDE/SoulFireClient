@@ -1,0 +1,95 @@
+{
+  "overview": {
+    "welcome": "Bentornato, {{name}} 🧙",
+    "instancesChart": {
+      "title": "Istanza totali su questo server",
+      "instances": "Istanze",
+      "label": {
+        "state": "Stato",
+        "active": "Attivo",
+        "stopped": "Arrestato",
+        "other": "Altro"
+      }
+    },
+    "usersChart": {
+      "title": "Utenti totali su questo server",
+      "users": "Utenti",
+      "label": {
+        "role": "Ruolo",
+        "user": "Utente",
+        "admin": "Admin",
+        "other": "Altro"
+      }
+    }
+  },
+  "users": {
+    "filterPlaceholder": "Filtra utenti...",
+    "baseUserDialog": {
+      "form": {
+        "username": {
+          "min": "I nomi utente devono avere almeno 3 caratteri",
+          "max": "I nomi utente devono avere al massimo 32 caratteri",
+          "regex": "I nomi utente devono essere in minuscolo, iniziare con un carattere alfanumerico, seguiti da altri caratteri alfanumerici o trattini, e terminare con un carattere alfanumerico.",
+          "label": "Nome utente",
+          "placeholder": "Inserisci nome utente",
+          "description": "Un nome utente univoco che identifica l'utente"
+        },
+        "email": {
+          "label": "Email",
+          "placeholder": "Inserisci email",
+          "description": "L'indirizzo email dell'utente utilizzato per notifiche e accesso"
+        },
+        "role": {
+          "label": "Ruolo",
+          "description": "Il ruolo dell'utente. Gli amministratori possono gestire utenti e tutte le istanze. Gli utenti possono gestire solo le proprie istanze.",
+          "user": "Utente",
+          "admin": "Admin"
+        }
+      }
+    },
+    "addUserDialog": {
+      "title": "Aggiungi un nuovo utente",
+      "description": "Aggiungi un nuovo utente a questo server",
+      "form": {
+        "cancel": "Annulla",
+        "add": "Aggiungi utente"
+      }
+    },
+    "updateUserDialog": {
+      "title": "Aggiorna utente",
+      "description": "Aggiorna le informazioni dell'utente",
+      "form": {
+        "cancel": "Annulla",
+        "update": "Aggiorna utente"
+      }
+    },
+    "addToast": {
+      "loading": "Aggiunta utente...",
+      "success": "Utente aggiunto!",
+      "error": "Impossibile aggiungere l'utente"
+    },
+    "updateToast": {
+      "loading": "Aggiornamento utente...",
+      "success": "Utente aggiornato!",
+      "error": "Impossibile aggiornare l'utente"
+    },
+    "removeToast": {
+      "loading": "Rimozione utenti...",
+      "success": "Utenti rimossi!",
+      "error": "Impossibile rimuovere gli utenti"
+    },
+    "invalidateToast": {
+      "loading": "Uscita utenti in corso...",
+      "success": "Utenti disconnessi!",
+      "error": "Impossibile disconnettere gli utenti"
+    },
+    "table": {
+      "username": "Nome utente",
+      "email": "Email",
+      "role": "Ruolo",
+      "createdAt": "Creato",
+      "minIssuedAt": "Login Min",
+      "actions": "Azioni"
+    }
+  }
+}

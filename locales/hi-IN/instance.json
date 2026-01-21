@@ -1,0 +1,99 @@
+{
+  "proxy": {
+    "getProxies": "प्रॉक्सी प्राप्त करें",
+    "addProxies": "प्रॉक्सी जोड़ें",
+    "filterPlaceholder": "प्रॉक्सी छाँटें...",
+    "listImportToast": {
+      "loading": "प्रॉक्सी आयात हो रही हैं...",
+      "success": "{{count}} प्रॉक्सी आयात हुईं!",
+      "error": "प्रॉक्सी आयात करने में विफल रहे",
+      "noProxies": "आयात करने के लिए कोई प्रॉक्सी नहीं है"
+    },
+    "import": {
+      "proxyType": "प्रॉक्सी प्रकार",
+      "http": "HTTP",
+      "socks4": "SOCKS4",
+      "socks5": "SOCKS5",
+      "uri": "URI",
+      "dialog": {
+        "title": "{{type}} प्रॉक्सी आयात करें",
+        "description": "अपनी प्रॉक्सियाँ यहाँ चिपकाएँ, प्रत्येक पंक्ति में एक"
+      }
+    },
+    "removeToast": {
+      "loading": "प्रॉक्सी हटाई जा रही हैं...",
+      "success": "{{count}} प्रॉक्सी हटाई गईं!",
+      "error": "प्रॉक्सी हटाने में विफल रहे"
+    },
+    "checkToast": {
+      "loading": "प्रॉक्सी जाँची जा रही हैं... {{checked}}/{{total}} (सफल: {{success}} विफल: {{failed}})",
+      "success": "{{count}} टूटी हुई प्रॉक्सी हटाई गईं!",
+      "error": "प्रॉक्सी जांचने में विफल रहे"
+    },
+    "invalidFormat": "अमान्य प्रॉक्सी प्रारूप",
+    "table": {
+      "type": "प्रकार",
+      "address": "पता",
+      "username": "उपयोगकर्ता नाम",
+      "password": "पासवर्ड"
+    }
+  },
+  "account": {
+    "getAccounts": "खाते प्राप्त करें",
+    "addAccounts": "खाते जोड़ें",
+    "generateAccounts": "खाते जनरेट करें",
+    "filterPlaceholder": "खातों को छाँटें...",
+    "listImportToast": {
+      "loading": "खाते आयात हो रहे हैं... {{checked}}/{{total}} (सफल: {{success}} विफल: {{failed}})",
+      "allFailed": "कोई भी खाता आयात करने में विफल रहे",
+      "someFailed": "{{count}} खाते आयात किए गए, {{failed}} खाते आयात करने में विफल रहे",
+      "noneFailed": "{{count}} खाते आयात हुए!",
+      "error": "खाते आयात करने में विफल रहे",
+      "noAccounts": "आयात करने के लिए कोई खाता नहीं है"
+    },
+    "unknownError": "अज्ञात त्रुटि",
+    "deviceCodeImportToast": {
+      "loading": "खाता आयात हो रहा है...",
+      "success": "खाता आयात हुआ!",
+      "error": "खाता आयात करने में विफल रहे"
+    },
+    "generate": {
+      "title": "ऑफ़लाइन खाते जनरेट करें",
+      "description": "मनचाहे नाम प्रारूप के साथ ऑफ़लाइन जावा खाते जनरेट करें।",
+      "amount": "संख्या",
+      "nameFormat": "नाम प्रारूप",
+      "nameFormatHelp": "%d को खाते की संख्या के लिए प्लेसहोल्डर के रूप में प्रयोग करें (उदा., Bot_%d बन जाएगा Bot_1, Bot_2, आदि)",
+      "overrideExisting": "मौजूदा {{count}} खातों को अधिरोहित करें",
+      "submit": "जनरेट करें",
+      "generating": "जनरेट किया जा रहा है...",
+      "progress": "खाते जनरेट हो रहे हैं... {{checked}}/{{total}} (सफल: {{success}} विफल: {{failed}})",
+      "success": "{{count}} खाते जनरेट किए गए!",
+      "allFailed": "कोई भी खाता जनरेट करने में विफल रहे",
+      "error": "खाते जनरेट करने में विफल रहे",
+      "invalidAmount": "कृपया एक मान्य संख्या दर्ज करें (कम से कम 1)",
+      "missingPlaceholder": "नाम प्रारूप में %d प्लेसहोल्डर होना आवश्यक है"
+    },
+    "import": {
+      "javaEdition": "जावा संस्करण",
+      "bedrockEdition": "बेडरॉक संस्करण",
+      "offline": "ऑफ़लाइन",
+      "microsoftCredentials": "Microsoft क्रेडेंशियल्स",
+      "microsoftDeviceCode": "Microsoft डिवाइस कोड",
+      "microsoftRefreshToken": "Microsoft रिफ्रेश टोकन",
+      "dialog": {
+        "title": "{{type}} खाते आयात करें",
+        "description": "अपने खाते यहाँ चिपकाएँ, प्रत्येक पंक्ति में एक"
+      }
+    },
+    "removeToast": {
+      "loading": "खाते हटाए जा रहे हैं...",
+      "success": "{{count}} खाते हटाए गए!",
+      "error": "खाते हटाने में विफल रहे"
+    },
+    "table": {
+      "type": "प्रकार",
+      "profileId": "UUID",
+      "lastKnownName": "उपयोगकर्ता नाम"
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "overview": {
+    "welcome": "おかえりなさい、{{name}} 🧙",
+    "instancesChart": {
+      "title": "このサーバー上の合計インスタンス数",
+      "instances": "インスタンス",
+      "label": {
+        "state": "状態",
+        "active": "稼働中",
+        "stopped": "停止済み",
+        "other": "その他"
+      }
+    },
+    "usersChart": {
+      "title": "このサーバー上の合計ユーザー数",
+      "users": "ユーザー",
+      "label": {
+        "role": "役割",
+        "user": "ユーザー",
+        "admin": "管理者",
+        "other": "その他"
+      }
+    }
+  },
+  "users": {
+    "filterPlaceholder": "ユーザーを検索...",
+    "baseUserDialog": {
+      "form": {
+        "username": {
+          "min": "ユーザー名は3文字以上で入力してください",
+          "max": "ユーザー名は32文字以内で入力してください",
+          "regex": "ユーザー名は小文字で始まり、英数字で始まり、その後も英数字またはダッシュ（-）を含み、最後は英数字で終わる必要があります。",
+          "label": "ユーザー名",
+          "placeholder": "ユーザー名を入力してください",
+          "description": "ユーザーを識別するための一意のユーザー名"
+        },
+        "email": {
+          "label": "メールアドレス",
+          "placeholder": "メールアドレスを入力してください",
+          "description": "通知やログインに使用されるユーザーのメールアドレス"
+        },
+        "role": {
+          "label": "役割",
+          "description": "ユーザーの役割です。管理者はユーザーや全インスタンスを管理できます。ユーザーは自分のインスタンスのみ管理できます。",
+          "user": "ユーザー",
+          "admin": "管理者"
+        }
+      }
+    },
+    "addUserDialog": {
+      "title": "新しいユーザーを追加",
+      "description": "このサーバーに新しいユーザーを追加します",
+      "form": {
+        "cancel": "キャンセル",
+        "add": "ユーザー追加"
+      }
+    },
+    "updateUserDialog": {
+      "title": "ユーザー情報の更新",
+      "description": "ユーザーの情報を更新します",
+      "form": {
+        "cancel": "キャンセル",
+        "update": "ユーザー更新"
+      }
+    },
+    "addToast": {
+      "loading": "ユーザーを追加中...",
+      "success": "ユーザーが追加されました！",
+      "error": "ユーザーの追加に失敗しました"
+    },
+    "updateToast": {
+      "loading": "ユーザーを更新中...",
+      "success": "ユーザーが更新されました！",
+      "error": "ユーザーの更新に失敗しました"
+    },
+    "removeToast": {
+      "loading": "ユーザーを削除中...",
+      "success": "ユーザーを削除しました！",
+      "error": "ユーザーの削除に失敗しました"
+    },
+    "invalidateToast": {
+      "loading": "ユーザーをログアウト中...",
+      "success": "ユーザーがログアウトしました！",
+      "error": "ユーザーのログアウトに失敗しました"
+    },
+    "table": {
+      "username": "ユーザー名",
+      "email": "メールアドレス",
+      "role": "役割",
+      "createdAt": "作成日",
+      "minIssuedAt": "最小ログイン日時",
+      "actions": "操作"
+    }
+  }
+}

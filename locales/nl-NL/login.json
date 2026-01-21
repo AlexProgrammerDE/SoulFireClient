@@ -1,0 +1,103 @@
+{
+  "header": {
+    "image": {
+      "alt": "SoulFire-logo"
+    },
+    "title": "SoulFire"
+  },
+  "newUser": "Nieuw bij SoulFire? We raden aan de <a>starthandleiding</a> te bekijken.",
+  "connect": {
+    "title": "Verbind met een SoulFire-server",
+    "description": "Selecteer met welk type SoulFire-server je wilt verbinden.",
+    "integrated": {
+      "title": "Geïntegreerde server (lokaal)",
+      "description": "Draait een SoulFire-server op jouw computer. De installatie is automatisch en vereist geen configuratie. (Vereist de Desktop/Android-app)"
+    },
+    "dedicated": {
+      "title": "Dedicated server (extern)",
+      "description": "Verbindt met een externe instantie van de SoulFire-server. Je moet het adres en de token van de server invullen."
+    },
+    "demo": {
+      "title": "Demo-server",
+      "description": "Simuleert een virtuele server met demogegevens. Deze server is alleen-lezen en je kunt hier geen wijzigingen op aanbrengen."
+    }
+  },
+  "integrated": {
+    "preparing": "Bezig met voorbereiden om geïntegreerde server te starten...",
+    "toast": {
+      "loading": "Geïntegreerde server wordt gestart...",
+      "success": "Geïntegreerde server gestart",
+      "error": "Kan geïntegreerde server niet starten"
+    },
+    "description": "De geïntegreerde server draait lokaal op je pc. Stel indien nodig hieronder de Java-opstartargumenten in.",
+    "form": {
+      "jvmArgs": {
+        "title": "JVM-argumenten",
+        "description": "De SoulFire Java VM-argumenten. Om 4GB RAM te gebruiken, voeg <bold>-Xmx4G</bold> toe. Standaard is dit 25% van je RAM.",
+        "placeholder": "Jouw JVM-argumenten hier"
+      },
+      "back": "Terug",
+      "start": "Start"
+    },
+    "mobile": {
+      "description": "Om de geïntegreerde server op mobiel te draaien, moet je enkele handmatige stappen uitvoeren.",
+      "form": {
+        "termuxCommand": {
+          "title": "Termux-commando",
+          "description": "Installeer de <a>Termux-app</a> en voer vervolgens dit commando uit in Termux om de SoulFire-server te installeren. Daarna moet je het commando <copy>generate-token api</copy> uitvoeren om een token te genereren. Voer daarna hieronder het token in."
+        },
+        "token": {
+          "title": "Token",
+          "description": "Token om te authenticeren met de lokale server.",
+          "placeholder": "Geheime token"
+        },
+        "back": "Terug",
+        "connect": "Verbinden"
+      }
+    }
+  },
+  "dedicated": {
+    "description": "Vul het adres en de token in van de SoulFire-server waarmee je wilt verbinden.",
+    "toast": {
+      "loading": "Bezig met verbinden met server...",
+      "success": "Verbonden met server",
+      "error": "Kon geen verbinding maken met de server"
+    },
+    "form": {
+      "address": {
+        "title": "Adres",
+        "description": "Adres van jouw SoulFire-server.",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "Token",
+        "placeholder": "Geheime token",
+        "description": "Token om mee te authenticeren bij de server."
+      },
+      "email": {
+        "title": "E-mailadres",
+        "placeholder": "root@soulfiremc.com",
+        "description": "E-mailadres van jouw SoulFire-account."
+      },
+      "back": "Terug",
+      "useToken": "Gebruik token",
+      "useEmail": "Gebruik e-mail",
+      "login": "Inloggen"
+    }
+  },
+  "emailCode": {
+    "description": "Als je een account hebt, hebben we een code gestuurd naar <bold>{{email}}</bold>. Voer deze hieronder in.",
+    "toast": {
+      "loading": "Code wordt gecontroleerd...",
+      "success": "Ingelogd",
+      "error": "Code is ongeldig"
+    },
+    "back": "Terug"
+  },
+  "footer": {
+    "version": "SoulFire Client {{version}} - {{environment}}",
+    "preview": "Op zoek naar preview?",
+    "production": "Op zoek naar productie?",
+    "helpTranslate": "Vertaal SoulFire"
+  }
+}
