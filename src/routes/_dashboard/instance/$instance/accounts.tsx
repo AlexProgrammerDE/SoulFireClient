@@ -11,6 +11,7 @@ import {
   MonitorSmartphoneIcon,
   PlusIcon,
   RotateCcwKeyIcon,
+  SettingsIcon,
   ShoppingCartIcon,
   SparklesIcon,
   TextIcon,
@@ -33,6 +34,7 @@ import {
 } from "@/components/data-table/data-table-selects.tsx";
 import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
+import { AccountConfigDialog } from "@/components/dialog/account-config-dialog.tsx";
 import GenerateAccountsDialog from "@/components/dialog/generate-accounts-dialog.tsx";
 import ImportDialog from "@/components/dialog/import-dialog.tsx";
 import { ExternalLink } from "@/components/external-link.tsx";
@@ -53,6 +55,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip.tsx";
 import type { SettingsPage } from "@/generated/soulfire/common";
 import {
   AccountTypeCredentials,
@@ -199,6 +206,35 @@ const accountTypeToIcon = (
     }
   });
 
+function ActionsCell({ account }: { account: ProfileAccount }) {
+  const { t } = useTranslation("instance");
+  const [configOpen, setConfigOpen] = useState(false);
+
+  return (
+    <>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-8"
+            onClick={() => setConfigOpen(true)}
+          >
+            <SettingsIcon className="size-4" />
+            <span className="sr-only">{t("account.config.openButton")}</span>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>{t("account.config.openButton")}</TooltipContent>
+      </Tooltip>
+      <AccountConfigDialog
+        account={account}
+        open={configOpen}
+        onOpenChange={setConfigOpen}
+      />
+    </>
+  );
+}
+
 const columns: ColumnDef<ProfileAccount>[] = [
   {
     id: "select",
@@ -270,6 +306,14 @@ const columns: ColumnDef<ProfileAccount>[] = [
       icon: TextIcon,
     },
     enableColumnFilter: true,
+  },
+  {
+    id: "actions",
+    header: () => <span className="sr-only">Actions</span>,
+    cell: ({ row }) => <ActionsCell account={row.original} />,
+    size: 48,
+    enableSorting: false,
+    enableHiding: false,
   },
 ];
 

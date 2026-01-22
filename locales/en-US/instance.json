@@ -104,6 +104,13 @@
       "type": "Type",
       "profileId": "UUID",
       "lastKnownName": "Username"
+    },
+    "config": {
+      "title": "Configure {{name}}",
+      "description": "Configure per-bot settings for this account",
+      "openButton": "Configure account",
+      "pageTitle": "{{name}} - {{page}} Settings",
+      "noSettings": "No settings available for this page"
     }
   }
 }
