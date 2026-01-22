@@ -158,10 +158,10 @@ export function AccountConfigDialog({
 
 function DialogSkeleton({ isMobile }: { isMobile: boolean }) {
   return (
-    <SidebarProvider className="items-start">
+    <SidebarProvider className="h-[480px] items-stretch">
       {!isMobile && (
         <Sidebar collapsible="none" className="hidden md:flex">
-          <SidebarContent>
+          <SidebarContent className="overflow-y-auto">
             <SidebarGroup>
               <SidebarGroupContent>
                 <SidebarMenu>
@@ -179,7 +179,7 @@ function DialogSkeleton({ isMobile }: { isMobile: boolean }) {
           </SidebarContent>
         </Sidebar>
       )}
-      <main className="flex h-[480px] flex-1 flex-col overflow-hidden">
+      <main className="flex flex-1 flex-col overflow-hidden">
         <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
           {isMobile ? (
             <Skeleton className="h-9 w-full" />
@@ -276,9 +276,9 @@ function DialogContentInner({
 
   return (
     <SettingsRegistryContext.Provider value={settingsRegistry}>
-      <SidebarProvider className="items-start">
+      <SidebarProvider className="h-[480px] items-stretch">
         {!isMobile && (
-          <Sidebar collapsible="none" className="hidden h-[480px] md:flex">
+          <Sidebar collapsible="none" className="hidden md:flex">
             <SidebarContent className="overflow-y-auto">
               <SidebarGroup>
                 <SidebarGroupContent>
@@ -303,7 +303,7 @@ function DialogContentInner({
             </SidebarContent>
           </Sidebar>
         )}
-        <main className="flex h-[480px] flex-1 flex-col overflow-hidden">
+        <main className="flex flex-1 flex-col overflow-hidden">
           <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
             {isMobile ? (
               <Select
