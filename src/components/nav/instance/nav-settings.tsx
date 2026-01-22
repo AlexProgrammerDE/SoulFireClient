@@ -1,15 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, type LinkProps, useRouteContext } from "@tanstack/react-router";
-import {
-  BoltIcon,
-  BotIcon,
-  RouteIcon,
-  SparklesIcon,
-  UsersIcon,
-  WaypointsIcon,
-} from "lucide-react";
-import type { ReactNode } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import DynamicIcon from "@/components/dynamic-icon.tsx";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -22,7 +15,7 @@ import { hasInstancePermission } from "@/lib/utils.tsx";
 
 type NavLink = {
   title: string;
-  icon: (props: { className: string }) => ReactNode;
+  iconId: string;
   linkProps: LinkProps;
 };
 
@@ -34,10 +27,19 @@ export function NavSettings() {
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
 
+  // Create a lookup map for page icons from server settings
+  const pageIconMap = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const page of instanceInfo.instanceSettings) {
+      map.set(page.id, page.iconId);
+    }
+    return map;
+  }, [instanceInfo.instanceSettings]);
+
   const navLinks: NavLink[] = [
     {
       title: t("instanceSidebar.botSettings"),
-      icon: BotIcon,
+      iconId: pageIconMap.get("bot") ?? "bot",
       linkProps: {
         to: "/instance/$instance/settings/$pageId",
         params: { instance: instanceInfo.id, pageId: "bot" },
@@ -45,7 +47,7 @@ export function NavSettings() {
     },
     {
       title: t("instanceSidebar.accountSettings"),
-      icon: UsersIcon,
+      iconId: pageIconMap.get("account") ?? "users",
       linkProps: {
         to: "/instance/$instance/accounts",
         params: { instance: instanceInfo.id },
@@ -53,7 +55,7 @@ export function NavSettings() {
     },
     {
       title: t("instanceSidebar.proxySettings"),
-      icon: WaypointsIcon,
+      iconId: pageIconMap.get("proxy") ?? "waypoints",
       linkProps: {
         to: "/instance/$instance/proxies",
         params: { instance: instanceInfo.id },
@@ -61,7 +63,7 @@ export function NavSettings() {
     },
     {
       title: t("instanceSidebar.aiSettings"),
-      icon: SparklesIcon,
+      iconId: pageIconMap.get("ai") ?? "sparkles",
       linkProps: {
         to: "/instance/$instance/settings/$pageId",
         params: { instance: instanceInfo.id, pageId: "ai" },
@@ -69,7 +71,7 @@ export function NavSettings() {
     },
     {
       title: t("instanceSidebar.pathfindingSettings"),
-      icon: RouteIcon,
+      iconId: pageIconMap.get("pathfinding") ?? "route",
       linkProps: {
         to: "/instance/$instance/settings/$pageId",
         params: { instance: instanceInfo.id, pageId: "pathfinding" },
@@ -82,7 +84,7 @@ export function NavSettings() {
       ? [
           {
             title: t("instanceSidebar.metaSettings"),
-            icon: BoltIcon,
+            iconId: "bolt",
             linkProps: {
               to: "/instance/$instance/meta",
               params: { instance: instanceInfo.id },
@@ -108,7 +110,7 @@ export function NavSettings() {
                 }}
                 {...item.linkProps}
               >
-                <item.icon className="size-4" />
+                <DynamicIcon name={item.iconId} className="size-4" />
                 <span>{item.title}</span>
               </Link>
             </SidebarMenuButton>

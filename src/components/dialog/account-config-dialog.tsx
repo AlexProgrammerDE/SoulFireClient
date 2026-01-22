@@ -52,29 +52,16 @@ import { Switch } from "@/components/ui/switch.tsx";
 import { Value } from "@/generated/google/protobuf/struct.ts";
 import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
 import type { BotInfoResponse } from "@/generated/soulfire/bot.ts";
-import type {
-  ServerPlugin,
-  SettingsDefinition,
-  SettingsEntryIdentifier,
-  SettingsPage,
+import {
+  type ServerPlugin,
+  type SettingsDefinition,
+  type SettingsEntryIdentifier,
+  type SettingsPage,
+  SettingsPageEntryScopeType,
 } from "@/generated/soulfire/common.ts";
 import { useIsMobile } from "@/hooks/use-mobile.ts";
 import type { ProfileAccount } from "@/lib/types.ts";
 import { getSettingIdentifierKey, updateBotConfigEntry } from "@/lib/utils.tsx";
-
-// Scope 2 = per-bot settings
-const PER_BOT_SCOPE = 2;
-
-// Override placeholder icons with proper icons for known page IDs
-const PAGE_ICON_OVERRIDES: Record<string, string> = {
-  bot: "bot",
-  ai: "sparkles",
-  pathfinding: "route",
-};
-
-function getPageIcon(page: SettingsPage): string {
-  return PAGE_ICON_OVERRIDES[page.id] ?? page.iconId;
-}
 
 type BotSettingsPage = SettingsPage & {
   plugin?: ServerPlugin;
@@ -88,7 +75,7 @@ function getBotSettingsPages(
   // Build a set of all per-bot setting identifiers (scope 2)
   const perBotDefinitionIds = new Set(
     settingsDefinitions
-      .filter((def) => def.scope === PER_BOT_SCOPE)
+      .filter((def) => def.scope === SettingsPageEntryScopeType.BOT)
       .map((def) => getSettingIdentifierKey(def.id as SettingsEntryIdentifier)),
   );
 
@@ -301,7 +288,7 @@ function DialogContentInner({
                           onClick={() => setSelectedPage(page.id)}
                         >
                           <DynamicIcon
-                            name={getPageIcon(page)}
+                            name={page.iconId}
                             className="size-4 shrink-0"
                           />
                           <span className="truncate">{page.pageName}</span>
@@ -329,7 +316,7 @@ function DialogContentInner({
                     <SelectItem key={page.id} value={page.id}>
                       <div className="flex items-center gap-2">
                         <DynamicIcon
-                          name={getPageIcon(page)}
+                          name={page.iconId}
                           className="size-4 shrink-0"
                         />
                         <span>{page.pageName}</span>
@@ -343,7 +330,7 @@ function DialogContentInner({
                 {currentPage && (
                   <>
                     <DynamicIcon
-                      name={getPageIcon(currentPage)}
+                      name={currentPage.iconId}
                       className="size-4 shrink-0"
                     />
                     <span className="font-medium">
@@ -454,7 +441,7 @@ function BotPluginInfoCard({
       <CardHeader>
         <div className="flex flex-row items-center justify-between gap-2">
           <CardTitle className="flex flex-row items-center gap-2 text-xl">
-            <DynamicIcon className="size-6 shrink-0" name={getPageIcon(page)} />
+            <DynamicIcon className="size-6 shrink-0" name={page.iconId} />
             {page.pageName}
           </CardTitle>
           {enabledIdentifier && (
