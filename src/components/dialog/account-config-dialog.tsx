@@ -278,8 +278,8 @@ function DialogContentInner({
     <SettingsRegistryContext.Provider value={settingsRegistry}>
       <SidebarProvider className="items-start">
         {!isMobile && (
-          <Sidebar collapsible="none" className="hidden md:flex">
-            <SidebarContent>
+          <Sidebar collapsible="none" className="hidden h-[480px] md:flex">
+            <SidebarContent className="overflow-y-auto">
               <SidebarGroup>
                 <SidebarGroupContent>
                   <SidebarMenu>
