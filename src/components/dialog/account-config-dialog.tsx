@@ -65,6 +65,17 @@ import { getSettingIdentifierKey, updateBotConfigEntry } from "@/lib/utils.tsx";
 // Scope 2 = per-bot settings
 const PER_BOT_SCOPE = 2;
 
+// Override placeholder icons with proper icons for known page IDs
+const PAGE_ICON_OVERRIDES: Record<string, string> = {
+  bot: "bot",
+  ai: "sparkles",
+  pathfinding: "route",
+};
+
+function getPageIcon(page: SettingsPage): string {
+  return PAGE_ICON_OVERRIDES[page.id] ?? page.iconId;
+}
+
 type BotSettingsPage = SettingsPage & {
   plugin?: ServerPlugin;
 };
@@ -290,7 +301,7 @@ function DialogContentInner({
                           onClick={() => setSelectedPage(page.id)}
                         >
                           <DynamicIcon
-                            name={page.iconId}
+                            name={getPageIcon(page)}
                             className="size-4 shrink-0"
                           />
                           <span className="truncate">{page.pageName}</span>
@@ -318,7 +329,7 @@ function DialogContentInner({
                     <SelectItem key={page.id} value={page.id}>
                       <div className="flex items-center gap-2">
                         <DynamicIcon
-                          name={page.iconId}
+                          name={getPageIcon(page)}
                           className="size-4 shrink-0"
                         />
                         <span>{page.pageName}</span>
@@ -332,7 +343,7 @@ function DialogContentInner({
                 {currentPage && (
                   <>
                     <DynamicIcon
-                      name={currentPage.iconId}
+                      name={getPageIcon(currentPage)}
                       className="size-4 shrink-0"
                     />
                     <span className="font-medium">
@@ -443,7 +454,7 @@ function BotPluginInfoCard({
       <CardHeader>
         <div className="flex flex-row items-center justify-between gap-2">
           <CardTitle className="flex flex-row items-center gap-2 text-xl">
-            <DynamicIcon className="size-6 shrink-0" name={page.iconId} />
+            <DynamicIcon className="size-6 shrink-0" name={getPageIcon(page)} />
             {page.pageName}
           </CardTitle>
           {enabledIdentifier && (
