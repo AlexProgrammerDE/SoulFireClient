@@ -197,7 +197,6 @@ function GenerateAccountsButton() {
         open={dialogOpen}
         onOpenChange={setDialogOpen}
         onGenerate={handleGenerate}
-        existingAccountCount={profile.accounts.length}
         existingUsernames={existingUsernames}
       />
     </>

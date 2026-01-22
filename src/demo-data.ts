@@ -61,7 +61,7 @@ export const demoClientData: ClientDataResponse = {
 };
 
 // Demo data uses legacy format - entries are converted at runtime
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: Legacy format requires any type
 const legacyDemoInstanceSettings: any[] = [
   {
     pageName: "Bot Settings",
@@ -2593,7 +2593,7 @@ export const demoInstanceSettings: SettingsPage[] =
 export const demoInstanceSettingsDefinitions: SettingsDefinition[] =
   convertedInstanceSettings.flatMap((r) => r.definitions);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: Legacy format requires any type
 const legacyDemoServerSettings: any[] = [
   {
     pageName: "Server Settings",

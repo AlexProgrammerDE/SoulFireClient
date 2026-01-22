@@ -24,7 +24,7 @@ import type {
 } from "@/generated/soulfire/common.ts";
 import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
 import type {
-  InstanceInfoResponse,
+  InstanceInfo,
   InstanceListResponse,
   InstanceListResponse_Instance,
 } from "@/generated/soulfire/instance.ts";
@@ -136,7 +136,7 @@ export function hasGlobalPermission(
 }
 
 export function hasInstancePermission(
-  instanceInfo: InstanceInfoResponse | InstanceListResponse_Instance,
+  instanceInfo: InstanceInfo | InstanceListResponse_Instance,
   permission: InstancePermission,
 ) {
   if (isDemo()) {

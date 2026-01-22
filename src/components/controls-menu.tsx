@@ -358,7 +358,6 @@ export default function ControlsMenu() {
           }
         }}
         onGenerate={handleGenerateAccounts}
-        existingAccountCount={profile.accounts.length}
         existingUsernames={existingUsernames}
       />
     </>

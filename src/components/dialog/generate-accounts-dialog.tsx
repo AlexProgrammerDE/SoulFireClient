@@ -38,7 +38,6 @@ export type GenerateAccountsDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onGenerate: (accounts: ProfileAccount[], mode: GenerateAccountsMode) => void;
-  existingAccountCount: number;
   existingUsernames: Set<string>;
 };
 
@@ -46,7 +45,6 @@ export default function GenerateAccountsDialog({
   open,
   onOpenChange,
   onGenerate,
-  existingAccountCount,
   existingUsernames,
 }: GenerateAccountsDialogProps) {
   const { t } = useTranslation("instance");
