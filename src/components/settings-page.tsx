@@ -26,7 +26,7 @@ import {
   createSettingsRegistry,
   SettingsRegistryContext,
   useSettingsDefinition,
-  useSettingsRegistry,
+  useSettingsDefinitionByKey,
 } from "@/components/providers/settings-registry-context.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -695,7 +695,7 @@ export function SettingTypeRenderer(props: {
  * This is the main component for mounting settings anywhere in the UI.
  * It looks up the setting definition from context and handles value management.
  */
-export function SettingField<T extends BaseSettings>(props: {
+function SettingField<T extends BaseSettings>(props: {
   settingId: SettingsEntryIdentifier;
   invalidateQuery: () => Promise<void>;
   updateConfigEntry: (
@@ -734,11 +734,7 @@ export function SettingField<T extends BaseSettings>(props: {
   );
 }
 
-/**
- * Component that renders a setting field by namespace and key strings.
- * Convenience wrapper around SettingField for when you have separate strings.
- */
-export function SettingFieldByKey<T extends BaseSettings>(props: {
+export function InstanceSettingFieldByKey<T extends BaseSettings>(props: {
   namespace: string;
   settingKey: string;
   invalidateQuery: () => Promise<void>;
@@ -749,8 +745,39 @@ export function SettingFieldByKey<T extends BaseSettings>(props: {
   ) => Promise<void>;
   config: T;
 }) {
-  const registry = useSettingsRegistry();
-  const definition = registry.getDefinitionByKey(
+  const instanceInfoQueryOptions = useRouteContext({
+    from: "/_dashboard/instance/$instance",
+    select: (context) => context.instanceInfoQueryOptions,
+  });
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const settingsRegistry = useMemo(
+    () => createSettingsRegistry(instanceInfo.settingsDefinitions),
+    [instanceInfo.settingsDefinitions],
+  );
+
+  return (
+    <SettingsRegistryContext.Provider value={settingsRegistry}>
+      <SettingFieldByKey {...props} />
+    </SettingsRegistryContext.Provider>
+  );
+}
+
+/**
+ * Component that renders a setting field by namespace and key strings.
+ * Convenience wrapper around SettingField for when you have separate strings.
+ */
+function SettingFieldByKey<T extends BaseSettings>(props: {
+  namespace: string;
+  settingKey: string;
+  invalidateQuery: () => Promise<void>;
+  updateConfigEntry: (
+    namespace: string,
+    key: string,
+    value: JsonValue,
+  ) => Promise<void>;
+  config: T;
+}) {
+  const definition = useSettingsDefinitionByKey(
     props.namespace,
     props.settingKey,
   );

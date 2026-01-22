@@ -42,8 +42,8 @@ import InstancePageLayout from "@/components/nav/instance/instance-page-layout.t
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import {
   type DisabledSettingId,
+  InstanceSettingFieldByKey,
   InstanceSettingsPageComponent,
-  SettingFieldByKey,
 } from "@/components/settings-page.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -674,7 +674,7 @@ function AddButton() {
           }}
           extraContent={
             <div className="flex flex-col gap-4">
-              <SettingFieldByKey
+              <InstanceSettingFieldByKey
                 namespace="account"
                 settingKey="use-proxies-for-account-auth"
                 invalidateQuery={async () => {
@@ -695,7 +695,7 @@ function AddButton() {
                 }}
                 config={profile}
               />
-              <SettingFieldByKey
+              <InstanceSettingFieldByKey
                 namespace="account"
                 settingKey="account-import-concurrency"
                 invalidateQuery={async () => {

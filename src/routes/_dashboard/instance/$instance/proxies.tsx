@@ -39,8 +39,8 @@ import InstancePageLayout from "@/components/nav/instance/instance-page-layout.t
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import {
   type DisabledSettingId,
+  InstanceSettingFieldByKey,
   InstanceSettingsPageComponent,
-  SettingFieldByKey,
 } from "@/components/settings-page.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -576,7 +576,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
             </DialogDescription>
           </DialogHeader>
           <div className="flex flex-col gap-4">
-            <SettingFieldByKey
+            <InstanceSettingFieldByKey
               namespace="proxy"
               settingKey="proxy-check-address"
               invalidateQuery={async () => {
@@ -597,7 +597,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
               }}
               config={profile}
             />
-            <SettingFieldByKey
+            <InstanceSettingFieldByKey
               namespace="proxy"
               settingKey="proxy-check-concurrency"
               invalidateQuery={async () => {
