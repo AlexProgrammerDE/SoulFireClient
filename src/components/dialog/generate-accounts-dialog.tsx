@@ -26,13 +26,8 @@ import {
 } from "@/components/ui/select.tsx";
 import { AccountTypeCredentials } from "@/generated/soulfire/common.ts";
 import { MCAuthServiceClient } from "@/generated/soulfire/mc-auth.client.ts";
-import type { ProfileAccount } from "@/lib/types.ts";
+import type { GenerateAccountsMode, ProfileAccount } from "@/lib/types.ts";
 import { runAsync } from "@/lib/utils.tsx";
-
-export type GenerateAccountsMode =
-  | "IGNORE_EXISTING"
-  | "REPLACE_EXISTING"
-  | "REPLACE_ALL";
 
 export type GenerateAccountsDialogProps = {
   open: boolean;

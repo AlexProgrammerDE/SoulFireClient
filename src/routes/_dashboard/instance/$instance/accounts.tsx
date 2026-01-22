@@ -33,9 +33,7 @@ import {
 } from "@/components/data-table/data-table-selects.tsx";
 import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
-import GenerateAccountsDialog, {
-  type GenerateAccountsMode,
-} from "@/components/dialog/generate-accounts-dialog.tsx";
+import GenerateAccountsDialog from "@/components/dialog/generate-accounts-dialog.tsx";
 import ImportDialog from "@/components/dialog/import-dialog.tsx";
 import { ExternalLink } from "@/components/external-link.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
@@ -64,6 +62,7 @@ import {
 import { MCAuthServiceClient } from "@/generated/soulfire/mc-auth.client.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
 import {
+  type GenerateAccountsMode,
   getEnumEntries,
   getEnumKeyByValue,
   mapUnionToValue,
@@ -72,6 +71,7 @@ import {
 import {
   addInstanceAccount,
   addInstanceAccountsBatch,
+  applyGeneratedAccounts,
   openExternalUrl,
   removeInstanceAccountsBatch,
   runAsync,
@@ -108,28 +108,19 @@ function GenerateAccountsButton() {
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { trackEvent } = useAptabase();
   const [dialogOpen, setDialogOpen] = useState(false);
-  // Batch add accounts mutation
-  const { mutateAsync: addAccountsBatchMutation } = useMutation({
-    mutationFn: async (accounts: ProfileAccount[]) => {
-      await addInstanceAccountsBatch(
-        accounts,
-        instanceInfo,
-        transport,
-        queryClient,
-        instanceInfoQueryOptions.queryKey,
-      );
-    },
-    onSettled: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: instanceInfoQueryOptions.queryKey,
-      });
-    },
-  });
-  // Batch remove accounts mutation
-  const { mutateAsync: removeAccountsBatchMutation } = useMutation({
-    mutationFn: async (profileIds: string[]) => {
-      await removeInstanceAccountsBatch(
-        profileIds,
+
+  const { mutateAsync: applyGeneratedAccountsMutation } = useMutation({
+    mutationFn: async ({
+      newAccounts,
+      mode,
+    }: {
+      newAccounts: ProfileAccount[];
+      mode: GenerateAccountsMode;
+    }) => {
+      await applyGeneratedAccounts(
+        newAccounts,
+        mode,
+        profile.accounts,
         instanceInfo,
         transport,
         queryClient,
@@ -151,40 +142,9 @@ function GenerateAccountsButton() {
   const handleGenerate = useCallback(
     async (newAccounts: ProfileAccount[], mode: GenerateAccountsMode) => {
       void trackEvent("generate_accounts", { count: newAccounts.length, mode });
-      switch (mode) {
-        case "IGNORE_EXISTING":
-          // Just append new accounts (duplicates already filtered during generation)
-          await addAccountsBatchMutation(newAccounts);
-          break;
-        case "REPLACE_EXISTING": {
-          // Remove accounts with colliding UUIDs, then add new accounts
-          const newProfileIds = newAccounts.map((a) => a.profileId);
-          const existingToRemove = profile.accounts
-            .filter((a) => newProfileIds.includes(a.profileId))
-            .map((a) => a.profileId);
-          if (existingToRemove.length > 0) {
-            await removeAccountsBatchMutation(existingToRemove);
-          }
-          await addAccountsBatchMutation(newAccounts);
-          break;
-        }
-        case "REPLACE_ALL": {
-          // Delete all existing accounts and replace with generated ones
-          const allExistingIds = profile.accounts.map((a) => a.profileId);
-          if (allExistingIds.length > 0) {
-            await removeAccountsBatchMutation(allExistingIds);
-          }
-          await addAccountsBatchMutation(newAccounts);
-          break;
-        }
-      }
+      await applyGeneratedAccountsMutation({ newAccounts, mode });
     },
-    [
-      addAccountsBatchMutation,
-      removeAccountsBatchMutation,
-      profile.accounts,
-      trackEvent,
-    ],
+    [applyGeneratedAccountsMutation, trackEvent],
   );
 
   return (

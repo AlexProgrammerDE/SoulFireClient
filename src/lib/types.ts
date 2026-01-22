@@ -27,6 +27,11 @@ export type ProfileRoot = BaseSettings & {
   proxies: ProfileProxy[];
 };
 
+export type GenerateAccountsMode =
+  | "IGNORE_EXISTING"
+  | "REPLACE_EXISTING"
+  | "REPLACE_ALL";
+
 export type ServerInfoQueryData = ServerInfoResponse & {
   profile: BaseSettings;
 };

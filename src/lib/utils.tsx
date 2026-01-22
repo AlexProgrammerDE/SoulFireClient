@@ -33,6 +33,7 @@ import {
   type BaseSettings,
   convertToInstanceProto,
   convertToServerProto,
+  type GenerateAccountsMode,
   type InstanceInfoQueryData,
   type ProfileAccount,
   type ProfileProxy,
@@ -847,6 +848,76 @@ export async function removeInstanceAccountsBatch(
     id: instanceInfo.id,
     profileIds: profileIds,
   });
+}
+
+export async function applyGeneratedAccounts(
+  newAccounts: ProfileAccount[],
+  mode: GenerateAccountsMode,
+  existingAccounts: ProfileAccount[],
+  instanceInfo: {
+    id: string;
+  },
+  transport: RpcTransport | null,
+  queryClient: QueryClient,
+  instanceInfoQueryKey: QueryKey,
+) {
+  switch (mode) {
+    case "IGNORE_EXISTING":
+      // Just append new accounts (duplicates already filtered during generation)
+      await addInstanceAccountsBatch(
+        newAccounts,
+        instanceInfo,
+        transport,
+        queryClient,
+        instanceInfoQueryKey,
+      );
+      break;
+    case "REPLACE_EXISTING": {
+      // Remove accounts with colliding UUIDs, then add new accounts
+      const newProfileIds = new Set(newAccounts.map((a) => a.profileId));
+      const existingToRemove = existingAccounts
+        .filter((a) => newProfileIds.has(a.profileId))
+        .map((a) => a.profileId);
+      if (existingToRemove.length > 0) {
+        await removeInstanceAccountsBatch(
+          existingToRemove,
+          instanceInfo,
+          transport,
+          queryClient,
+          instanceInfoQueryKey,
+        );
+      }
+      await addInstanceAccountsBatch(
+        newAccounts,
+        instanceInfo,
+        transport,
+        queryClient,
+        instanceInfoQueryKey,
+      );
+      break;
+    }
+    case "REPLACE_ALL": {
+      // Delete all existing accounts and replace with generated ones
+      const allExistingIds = existingAccounts.map((a) => a.profileId);
+      if (allExistingIds.length > 0) {
+        await removeInstanceAccountsBatch(
+          allExistingIds,
+          instanceInfo,
+          transport,
+          queryClient,
+          instanceInfoQueryKey,
+        );
+      }
+      await addInstanceAccountsBatch(
+        newAccounts,
+        instanceInfo,
+        transport,
+        queryClient,
+        instanceInfoQueryKey,
+      );
+      break;
+    }
+  }
 }
 
 // Proxy operations

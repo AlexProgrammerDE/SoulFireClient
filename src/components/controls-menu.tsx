@@ -9,9 +9,7 @@ import { PlayIcon, SquareIcon, TimerIcon, TimerOffIcon } from "lucide-react";
 import { use, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-import GenerateAccountsDialog, {
-  type GenerateAccountsMode,
-} from "@/components/dialog/generate-accounts-dialog.tsx";
+import GenerateAccountsDialog from "@/components/dialog/generate-accounts-dialog.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import {
@@ -25,37 +23,14 @@ import {
 } from "@/components/ui/credenza.tsx";
 import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
 import { InstanceState } from "@/generated/soulfire/instance.ts";
-import type { ProfileAccount, ProfileRoot } from "@/lib/types.ts";
-import { setInstanceConfigFull } from "@/lib/utils.tsx";
+import type { GenerateAccountsMode, ProfileAccount } from "@/lib/types.ts";
+import { applyGeneratedAccounts } from "@/lib/utils.tsx";
 
 type AccountWarningState = {
   type: "no_accounts" | "not_enough_accounts";
   requiredAmount: number;
   availableAmount: number;
 } | null;
-
-function applyGenerateMode(
-  accounts: ProfileAccount[],
-  newAccounts: ProfileAccount[],
-  mode: GenerateAccountsMode,
-) {
-  switch (mode) {
-    case "IGNORE_EXISTING":
-      // Just append new accounts (duplicates already filtered during generation)
-      return [...accounts, ...newAccounts];
-    case "REPLACE_EXISTING": {
-      // Remove accounts with colliding UUIDs, then add new accounts
-      const newProfileIds = new Set(newAccounts.map((a) => a.profileId));
-      const filteredExisting = accounts.filter(
-        (a) => !newProfileIds.has(a.profileId),
-      );
-      return [...filteredExisting, ...newAccounts];
-    }
-    case "REPLACE_ALL":
-      // Delete all existing accounts and replace with generated ones
-      return newAccounts;
-  }
-}
 
 export default function ControlsMenu() {
   const { t } = useTranslation("common");
@@ -81,13 +56,18 @@ export default function ControlsMenu() {
 
   const isMutating = useIsMutating();
 
-  // Using setInstanceConfigFull for bulk operations (profile import style)
-  const { mutateAsync: setProfileMutation } = useMutation({
-    mutationFn: async (
-      profileTransformer: (prev: ProfileRoot) => ProfileRoot,
-    ) => {
-      await setInstanceConfigFull(
-        profileTransformer(profile),
+  const { mutateAsync: applyGeneratedAccountsMutation } = useMutation({
+    mutationFn: async ({
+      newAccounts,
+      mode,
+    }: {
+      newAccounts: ProfileAccount[];
+      mode: GenerateAccountsMode;
+    }) => {
+      await applyGeneratedAccounts(
+        newAccounts,
+        mode,
+        profile.accounts,
         instanceInfo,
         transport,
         queryClient,
@@ -163,10 +143,7 @@ export default function ControlsMenu() {
 
   const handleGenerateAccounts = useCallback(
     async (newAccounts: ProfileAccount[], mode: GenerateAccountsMode) => {
-      await setProfileMutation((prev) => ({
-        ...prev,
-        accounts: applyGenerateMode(prev.accounts, newAccounts, mode),
-      }));
+      await applyGeneratedAccountsMutation({ newAccounts, mode });
 
       // If we were waiting to start an attack, do it now
       if (pendingStartAction) {
@@ -174,7 +151,7 @@ export default function ControlsMenu() {
         await doStartAttack();
       }
     },
-    [doStartAttack, pendingStartAction, setProfileMutation],
+    [applyGeneratedAccountsMutation, doStartAttack, pendingStartAction],
   );
 
   const handleContinueWithExisting = useCallback(async () => {
