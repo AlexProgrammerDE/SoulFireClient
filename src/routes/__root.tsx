@@ -6,7 +6,10 @@ import {
 } from "@tanstack/react-router";
 import "../App.css";
 import { AptabaseProvider, useAptabase } from "@aptabase/react";
+import { TanStackDevtools } from "@tanstack/react-devtools";
 import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { setTheme } from "@tauri-apps/api/app";
 import { invoke } from "@tauri-apps/api/core";
 import { emit } from "@tauri-apps/api/event";
@@ -248,6 +251,18 @@ function RootLayout() {
                     <PointerReset />
                     <AboutProvider>
                       <Outlet />
+                      <TanStackDevtools
+                        plugins={[
+                          {
+                            name: "TanStack Query",
+                            render: <ReactQueryDevtoolsPanel />,
+                          },
+                          {
+                            name: "TanStack Router",
+                            render: <TanStackRouterDevtoolsPanel />,
+                          },
+                        ]}
+                      />
                     </AboutProvider>
                   </div>
                 </TerminalThemeContext>

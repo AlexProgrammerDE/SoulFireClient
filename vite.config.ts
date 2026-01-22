@@ -1,5 +1,6 @@
 import * as fs from "node:fs";
 import { resolve } from "node:path";
+import { devtools } from "@tanstack/devtools-vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
@@ -37,6 +38,7 @@ export default defineConfig({
     APP_NAMESPACES: JSON.stringify(namespaces),
   },
   plugins: [
+    devtools(),
     tanstackRouter({
       target: "react",
       autoCodeSplitting: !isDev,
