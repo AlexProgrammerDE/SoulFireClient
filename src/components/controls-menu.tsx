@@ -1,4 +1,5 @@
 import {
+  useIsMutating,
   useMutation,
   useQueryClient,
   useSuspenseQuery,
@@ -77,6 +78,8 @@ export default function ControlsMenu() {
     useState<AccountWarningState>(null);
   const [generateDialogOpen, setGenerateDialogOpen] = useState(false);
   const [pendingStartAction, setPendingStartAction] = useState(false);
+
+  const isMutating = useIsMutating();
 
   // Using setInstanceConfigFull for bulk operations (profile import style)
   const { mutateAsync: setProfileMutation } = useMutation({
@@ -267,7 +270,9 @@ export default function ControlsMenu() {
         <Button
           variant="secondary"
           onClick={() => startMutation.mutate()}
-          disabled={instanceInfo.state !== InstanceState.STOPPED}
+          disabled={
+            instanceInfo.state !== InstanceState.STOPPED || isMutating > 0
+          }
         >
           <PlayIcon />
           {t("controls.start")}
