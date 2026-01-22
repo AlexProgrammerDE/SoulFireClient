@@ -158,7 +158,7 @@ export function AccountConfigDialog({
 
 function DialogSkeleton({ isMobile }: { isMobile: boolean }) {
   return (
-    <SidebarProvider className="h-[480px] items-stretch">
+    <SidebarProvider className="h-[480px] min-h-0 items-stretch">
       {!isMobile && (
         <Sidebar collapsible="none" className="hidden md:flex">
           <SidebarContent className="overflow-y-auto">
@@ -276,7 +276,7 @@ function DialogContentInner({
 
   return (
     <SettingsRegistryContext.Provider value={settingsRegistry}>
-      <SidebarProvider className="h-[480px] items-stretch">
+      <SidebarProvider className="h-[480px] min-h-0 items-stretch">
         {!isMobile && (
           <Sidebar collapsible="none" className="hidden md:flex">
             <SidebarContent className="overflow-y-auto">
