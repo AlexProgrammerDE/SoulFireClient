@@ -7,7 +7,8 @@
       "title": "Virhe",
       "description": "Tapahtui virhe ladattaessa sivua. Lisätietoja löytyy konsolista.",
       "logOut": "Kirjaudu ulos",
-      "reloadPage": "Lataa sivu uudelleen"
+      "reloadPage": "Lataa sivu uudelleen",
+      "showDetails": ""
     },
     "connectionFailed": "Yhteys SoulFire-palvelimeen epäonnistui."
   },

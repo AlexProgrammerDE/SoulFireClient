@@ -30,6 +30,11 @@
       "success": "{{count}} trasiga proxies har tagits bort!",
       "error": "Misslyckades att kontrollera proxies"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Ogiltigt proxyformat",
     "table": {
       "type": "Typ",
@@ -63,12 +68,17 @@
       "amount": "Antal",
       "nameFormat": "Namnformat",
       "nameFormatHelp": "Använd %d som platshållare för kontonumret (t.ex. Bot_%d blir Bot_1, Bot_2, osv.)",
-      "overrideExisting": "Åsidosätt befintliga {{count}} konton",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Generera",
       "generating": "Genererar...",
       "progress": "Genererar konton... {{checked}}/{{total}} (Lyckade: {{success}} Misslyckade: {{failed}})",
       "success": "{{count}} konton har genererats!",
       "allFailed": "Misslyckades att generera några konton alls",
+      "allExist": "",
       "error": "Misslyckades att generera konton",
       "invalidAmount": "Ange ett giltigt antal (minst 1)",
       "missingPlaceholder": "Namnformatet måste innehålla platshållaren %d"

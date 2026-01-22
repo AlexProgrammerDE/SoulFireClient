@@ -30,6 +30,11 @@
       "success": "{{count}} टूटी हुई प्रॉक्सी हटाई गईं!",
       "error": "प्रॉक्सी जांचने में विफल रहे"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "अमान्य प्रॉक्सी प्रारूप",
     "table": {
       "type": "प्रकार",
@@ -63,12 +68,17 @@
       "amount": "संख्या",
       "nameFormat": "नाम प्रारूप",
       "nameFormatHelp": "%d को खाते की संख्या के लिए प्लेसहोल्डर के रूप में प्रयोग करें (उदा., Bot_%d बन जाएगा Bot_1, Bot_2, आदि)",
-      "overrideExisting": "मौजूदा {{count}} खातों को अधिरोहित करें",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "जनरेट करें",
       "generating": "जनरेट किया जा रहा है...",
       "progress": "खाते जनरेट हो रहे हैं... {{checked}}/{{total}} (सफल: {{success}} विफल: {{failed}})",
       "success": "{{count}} खाते जनरेट किए गए!",
       "allFailed": "कोई भी खाता जनरेट करने में विफल रहे",
+      "allExist": "",
       "error": "खाते जनरेट करने में विफल रहे",
       "invalidAmount": "कृपया एक मान्य संख्या दर्ज करें (कम से कम 1)",
       "missingPlaceholder": "नाम प्रारूप में %d प्लेसहोल्डर होना आवश्यक है"

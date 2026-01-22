@@ -30,6 +30,11 @@
       "success": "Удалено {{count}} сломанных прокси серверов!",
       "error": "Не удалось проверить прокси"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Неверный формат прокси",
     "table": {
       "type": "Тип",
@@ -63,12 +68,17 @@
       "amount": "Количество",
       "nameFormat": "Формат имени",
       "nameFormatHelp": "Используйте %d как заполнитель для номера аккаунта (например, Bot_%d станет Bot_1, Bot_2 и т. д.)",
-      "overrideExisting": "Перезаписать существующие {{count}} аккаунтов",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Сгенерировать",
       "generating": "Генерация...",
       "progress": "Генерация аккаунтов... {{checked}}/{{total}} (Успешно: {{success}} Не удалось: {{failed}})",
       "success": "Сгенерировано {{count}} аккаунтов!",
       "allFailed": "Не удалось сгенерировать ни одного аккаунта",
+      "allExist": "",
       "error": "Не удалось сгенерировать аккаунты",
       "invalidAmount": "Пожалуйста, введите корректное количество (минимум 1)",
       "missingPlaceholder": "В формате имени должен быть заполнитель %d"

@@ -30,6 +30,11 @@
       "success": "已移除 {{count}} 個損壞的代理伺服器！",
       "error": "檢查代理伺服器失敗"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "代理伺服器格式無效",
     "table": {
       "type": "類型",
@@ -63,12 +68,17 @@
       "amount": "數量",
       "nameFormat": "名稱格式",
       "nameFormatHelp": "請使用 %d 作為帳戶編號的佔位符（例如：Bot_%d 會變成 Bot_1、Bot_2 等）",
-      "overrideExisting": "覆蓋現有的 {{count}} 個帳戶",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "產生",
       "generating": "正在產生...",
       "progress": "正在產生帳戶... {{checked}}/{{total}}（成功：{{success}} 失敗：{{failed}}）",
       "success": "已產生 {{count}} 個帳戶！",
       "allFailed": "未能產生任何帳戶",
+      "allExist": "",
       "error": "產生帳戶失敗",
       "invalidAmount": "請輸入有效數量（至少 1）",
       "missingPlaceholder": "名稱格式必須包含 %d 佔位符"

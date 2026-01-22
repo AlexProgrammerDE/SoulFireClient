@@ -30,6 +30,11 @@
       "success": "{{count}} proxy difettosi rimossi!",
       "error": "Impossibile verificare i proxy."
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Formato proxy non valido",
     "table": {
       "type": "Tipo",
@@ -63,12 +68,17 @@
       "amount": "Quantità",
       "nameFormat": "Formato nome",
       "nameFormatHelp": "Usa %d come segnaposto per il numero dell'account (es: Bot_%d diventa Bot_1, Bot_2, ecc.)",
-      "overrideExisting": "Sovrascrivi i {{count}} account esistenti",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Genera",
       "generating": "Generazione in corso...",
       "progress": "Generazione account in corso... {{checked}}/{{total}} (Successo: {{success}} Falliti: {{failed}})",
       "success": "{{count}} account generati!",
       "allFailed": "Impossibile generare alcun account",
+      "allExist": "",
       "error": "Impossibile generare gli account.",
       "invalidAmount": "Inserisci una quantità valida (almeno 1)",
       "missingPlaceholder": "Il formato nome deve contenere il segnaposto %d"

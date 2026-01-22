@@ -30,6 +30,11 @@
       "success": "{{count}} proxy rusak telah dihapus!",
       "error": "Gagal memeriksa proxy"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Format proxy tidak valid",
     "table": {
       "type": "Tipe",
@@ -63,12 +68,17 @@
       "amount": "Jumlah",
       "nameFormat": "Format Nama",
       "nameFormatHelp": "Gunakan %d sebagai penampung nomor akun (misal: Bot_%d menjadi Bot_1, Bot_2, dst.)",
-      "overrideExisting": "Timpa {{count}} akun yang sudah ada",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Buat",
       "generating": "Sedang membuat...",
       "progress": "Sedang membuat akun... {{checked}}/{{total}} (Berhasil: {{success}} Gagal: {{failed}})",
       "success": "Berhasil membuat {{count}} akun!",
       "allFailed": "Gagal membuat akun apa pun",
+      "allExist": "",
       "error": "Gagal membuat akun",
       "invalidAmount": "Silakan masukkan jumlah yang valid (setidaknya 1)",
       "missingPlaceholder": "Format nama harus mengandung penampung %d"

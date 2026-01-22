@@ -30,6 +30,11 @@
       "success": "删除了 {{count}} 个无效的代理!",
       "error": "无法检查代理"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "无效的代理格式",
     "table": {
       "type": "类型",
@@ -63,12 +68,17 @@
       "amount": "数量",
       "nameFormat": "名称格式",
       "nameFormatHelp": "使用 %d 作为账户编号的占位符（例如，Bot_%d 将变为 Bot_1、Bot_2 等）",
-      "overrideExisting": "覆盖现有的 {{count}} 个账户",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "生成",
       "generating": "正在生成...",
       "progress": "正在生成账户... {{checked}}/{{total}}（成功：{{success}} 失败：{{failed}}）",
       "success": "已生成 {{count}} 个账户！",
       "allFailed": "未能生成任何账户",
+      "allExist": "",
       "error": "生成账户失败",
       "invalidAmount": "请输入有效的数量（至少为 1）",
       "missingPlaceholder": "名称格式必须包含 %d 占位符"

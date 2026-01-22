@@ -30,6 +30,11 @@
       "success": "ลบพร็อกซีที่เสียแล้ว {{count}} รายการ!",
       "error": "ไม่สามารถตรวจสอบพร็อกซีได้"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "รูปแบบพร็อกซีไม่ถูกต้อง",
     "table": {
       "type": "ประเภท",
@@ -63,12 +68,17 @@
       "amount": "จำนวน",
       "nameFormat": "รูปแบบชื่อ",
       "nameFormatHelp": "ใช้ %d เป็นตำแหน่งตัวเลขในชื่อ (เช่น Bot_%d จะกลายเป็น Bot_1, Bot_2 เป็นต้น)",
-      "overrideExisting": "แทนที่ไอดีที่มีอยู่ {{count}} รายการ",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "สร้าง",
       "generating": "กำลังสร้าง...",
       "progress": "กำลังสร้างไอดี... {{checked}}/{{total}} (สำเร็จ: {{success}} ล้มเหลว: {{failed}})",
       "success": "สร้างไอดีแล้ว {{count}} รายการ!",
       "allFailed": "ไม่สามารถสร้างไอดีใดๆ ได้เลย",
+      "allExist": "",
       "error": "ไม่สามารถสร้างไอดีได้",
       "invalidAmount": "กรุณาใส่จำนวนที่ถูกต้อง (อย่างน้อย 1)",
       "missingPlaceholder": "รูปแบบชื่อจำเป็นต้องมี %d อยู่ด้วย"

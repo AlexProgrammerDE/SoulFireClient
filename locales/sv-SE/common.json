@@ -7,7 +7,8 @@
       "title": "Fel",
       "description": "Ett fel uppstod när sidan skulle laddas. Mer information finns i konsolen.",
       "logOut": "Logga ut",
-      "reloadPage": "Ladda om sidan"
+      "reloadPage": "Ladda om sidan",
+      "showDetails": ""
     },
     "connectionFailed": "Anslutning till SoulFire-servern misslyckades."
   },

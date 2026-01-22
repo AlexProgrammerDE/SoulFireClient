@@ -7,7 +7,8 @@
       "title": "Błąd",
       "description": "Wystąpił błąd podczas ładowania strony. Więcej informacji znajdziesz w konsoli.",
       "logOut": "Wyloguj się",
-      "reloadPage": "Odśwież stronę"
+      "reloadPage": "Odśwież stronę",
+      "showDetails": ""
     },
     "connectionFailed": "Połączenie do serwera SoulFire nieudane."
   },

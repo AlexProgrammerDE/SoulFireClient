@@ -30,6 +30,11 @@
       "success": "Usunięto {{count}} uszkodzonych serwerów proxy!",
       "error": "Nie udało się sprawdzić serwerów proxy"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Nieprawidłowy format proxy",
     "table": {
       "type": "Typ",
@@ -63,12 +68,17 @@
       "amount": "Ilość",
       "nameFormat": "Format nazwy",
       "nameFormatHelp": "Użyj %d jako symbolu zastępczego dla numeru konta (np. Bot_%d stanie się Bot_1, Bot_2 itd.)",
-      "overrideExisting": "Nadpisz istniejące {{count}} konta",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Generuj",
       "generating": "Generowanie...",
       "progress": "Generowanie kont... {{checked}}/{{total}} (Sukces: {{success}} Niepowodzenie: {{failed}})",
       "success": "Wygenerowano {{count}} kont!",
       "allFailed": "Nie udało się wygenerować żadnych kont",
+      "allExist": "",
       "error": "Nie udało się wygenerować kont",
       "invalidAmount": "Wprowadź poprawną ilość (co najmniej 1)",
       "missingPlaceholder": "Format nazwy musi zawierać symbol zastępczy %d"

@@ -30,6 +30,11 @@
       "success": "Entfernte {{count}} defekte Proxies!",
       "error": "Fehler beim Prüfen der Proxies"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Ungültiges Proxy Format",
     "table": {
       "type": "Typ",
@@ -63,12 +68,17 @@
       "amount": "Anzahl",
       "nameFormat": "Namensformat",
       "nameFormatHelp": "Verwenden Sie %d als Platzhalter für die Kontonummer (z. B. wird aus Bot_%d Bot_1, Bot_2 usw.)",
-      "overrideExisting": "Vorhandene {{count}} Konten überschreiben",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Generieren",
       "generating": "Generiere...",
       "progress": "Konten werden generiert... {{checked}}/{{total}} (Erfolg: {{success}} Fehlgeschlagen: {{failed}})",
       "success": "{{count}} Konten generiert!",
       "allFailed": "Fehler beim Generieren aller Konten",
+      "allExist": "",
       "error": "Fehler beim Generieren der Konten",
       "invalidAmount": "Bitte geben Sie eine gültige Anzahl ein (mindestens 1)",
       "missingPlaceholder": "Das Namensformat muss einen %d-Platzhalter enthalten"

@@ -30,6 +30,11 @@
       "success": "{{count, plural, one {Removido {{count}} proxy quebrado!} other {Removidos {{count}} proxies quebrados!}}",
       "error": "Falha ao verificar proxies"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Formato de proxy inválido",
     "table": {
       "type": "Tipo",
@@ -63,12 +68,17 @@
       "amount": "Quantidade",
       "nameFormat": "Formato do Nome",
       "nameFormatHelp": "Use %d como um espaço reservado para o número da conta (ex.: Bot_%d vira Bot_1, Bot_2, etc.)",
-      "overrideExisting": "Sobrescrever {{count}} contas existentes",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Gerar",
       "generating": "Gerando...",
       "progress": "Gerando contas... {{checked}}/{{total}} (Sucesso: {{success}} Falhas: {{failed}})",
       "success": "{{count}} contas geradas!",
       "allFailed": "Falha ao gerar contas",
+      "allExist": "",
       "error": "Falha ao gerar contas",
       "invalidAmount": "Por favor, insira uma quantidade válida (no mínimo 1)",
       "missingPlaceholder": "O formato do nome deve conter o espaço reservado %d"
