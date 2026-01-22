@@ -32,7 +32,6 @@ import { ServerServiceClient } from "@/generated/soulfire/server.client.ts";
 import {
   type BaseSettings,
   convertToInstanceProto,
-  convertToServerProto,
   type GenerateAccountsMode,
   type InstanceInfoQueryData,
   type ProfileAccount,
@@ -100,7 +99,7 @@ export function cancellablePromiseDefault<T extends () => void>(
   return cancellablePromise(promise, (run) => run());
 }
 
-export function cancellablePromise<T>(
+function cancellablePromise<T>(
   promise: Promise<T>,
   cancel: (value: T) => void,
 ): () => void {
@@ -449,40 +448,6 @@ export async function setInstanceConfigFull(
   });
 }
 
-// Used only for profile import - sends entire config
-export async function setServerConfigFull(
-  jsonProfile: BaseSettings,
-  transport: RpcTransport | null,
-  queryClient: QueryClient,
-  serverInfoQueryKey: QueryKey,
-) {
-  if (transport === null) {
-    return;
-  }
-
-  const targetProfile = convertToServerProto(jsonProfile);
-  await queryClient.cancelQueries({
-    queryKey: serverInfoQueryKey,
-  });
-  // Update optimistically
-  queryClient.setQueryData<ServerInfoQueryData>(serverInfoQueryKey, (old) => {
-    if (old === undefined) {
-      return;
-    }
-
-    return {
-      ...old,
-      config: targetProfile,
-      profile: jsonProfile,
-    };
-  });
-
-  const serverService = new ServerServiceClient(transport);
-  await serverService.updateServerConfig({
-    config: targetProfile,
-  });
-}
-
 // Granular config entry update for instance settings
 export async function updateInstanceConfigEntry(
   namespace: string,
@@ -673,94 +638,6 @@ export async function addInstanceAccount(
   });
 }
 
-export async function removeInstanceAccount(
-  profileId: string,
-  instanceInfo: {
-    id: string;
-  },
-  transport: RpcTransport | null,
-  queryClient: QueryClient,
-  instanceInfoQueryKey: QueryKey,
-) {
-  if (transport === null) {
-    return;
-  }
-
-  await queryClient.cancelQueries({
-    queryKey: instanceInfoQueryKey,
-  });
-  // Update optimistically
-  queryClient.setQueryData<InstanceInfoQueryData>(
-    instanceInfoQueryKey,
-    (old) => {
-      if (old === undefined) {
-        return;
-      }
-
-      return {
-        ...old,
-        profile: {
-          ...old.profile,
-          accounts: old.profile.accounts.filter(
-            (a) => a.profileId !== profileId,
-          ),
-        },
-      };
-    },
-  );
-
-  const instanceService = new InstanceServiceClient(transport);
-  await instanceService.removeInstanceAccount({
-    id: instanceInfo.id,
-    profileId: profileId,
-  });
-}
-
-export async function updateInstanceAccount(
-  account: ProfileAccount,
-  instanceInfo: {
-    id: string;
-  },
-  transport: RpcTransport | null,
-  queryClient: QueryClient,
-  instanceInfoQueryKey: QueryKey,
-) {
-  if (transport === null) {
-    return;
-  }
-
-  const accountProto: MinecraftAccountProto = account;
-
-  await queryClient.cancelQueries({
-    queryKey: instanceInfoQueryKey,
-  });
-  // Update optimistically
-  queryClient.setQueryData<InstanceInfoQueryData>(
-    instanceInfoQueryKey,
-    (old) => {
-      if (old === undefined) {
-        return;
-      }
-
-      return {
-        ...old,
-        profile: {
-          ...old.profile,
-          accounts: old.profile.accounts.map((a) =>
-            a.profileId === account.profileId ? account : a,
-          ),
-        },
-      };
-    },
-  );
-
-  const instanceService = new InstanceServiceClient(transport);
-  await instanceService.updateInstanceAccount({
-    id: instanceInfo.id,
-    account: accountProto,
-  });
-}
-
 // Batch account operations
 export async function addInstanceAccountsBatch(
   accounts: ProfileAccount[],
@@ -920,136 +797,6 @@ export async function applyGeneratedAccounts(
   }
 }
 
-// Proxy operations
-export async function addInstanceProxy(
-  proxy: ProfileProxy,
-  instanceInfo: {
-    id: string;
-  },
-  transport: RpcTransport | null,
-  queryClient: QueryClient,
-  instanceInfoQueryKey: QueryKey,
-) {
-  if (transport === null) {
-    return;
-  }
-
-  const proxyProto: ProxyProto = proxy;
-
-  await queryClient.cancelQueries({
-    queryKey: instanceInfoQueryKey,
-  });
-  // Update optimistically
-  queryClient.setQueryData<InstanceInfoQueryData>(
-    instanceInfoQueryKey,
-    (old) => {
-      if (old === undefined) {
-        return;
-      }
-
-      return {
-        ...old,
-        profile: {
-          ...old.profile,
-          proxies: [...old.profile.proxies, proxy],
-        },
-      };
-    },
-  );
-
-  const instanceService = new InstanceServiceClient(transport);
-  await instanceService.addInstanceProxy({
-    id: instanceInfo.id,
-    proxy: proxyProto,
-  });
-}
-
-export async function removeInstanceProxy(
-  index: number,
-  instanceInfo: {
-    id: string;
-  },
-  transport: RpcTransport | null,
-  queryClient: QueryClient,
-  instanceInfoQueryKey: QueryKey,
-) {
-  if (transport === null) {
-    return;
-  }
-
-  await queryClient.cancelQueries({
-    queryKey: instanceInfoQueryKey,
-  });
-  // Update optimistically
-  queryClient.setQueryData<InstanceInfoQueryData>(
-    instanceInfoQueryKey,
-    (old) => {
-      if (old === undefined) {
-        return;
-      }
-
-      return {
-        ...old,
-        profile: {
-          ...old.profile,
-          proxies: old.profile.proxies.filter((_, i) => i !== index),
-        },
-      };
-    },
-  );
-
-  const instanceService = new InstanceServiceClient(transport);
-  await instanceService.removeInstanceProxy({
-    id: instanceInfo.id,
-    index: index,
-  });
-}
-
-export async function updateInstanceProxy(
-  index: number,
-  proxy: ProfileProxy,
-  instanceInfo: {
-    id: string;
-  },
-  transport: RpcTransport | null,
-  queryClient: QueryClient,
-  instanceInfoQueryKey: QueryKey,
-) {
-  if (transport === null) {
-    return;
-  }
-
-  const proxyProto: ProxyProto = proxy;
-
-  await queryClient.cancelQueries({
-    queryKey: instanceInfoQueryKey,
-  });
-  // Update optimistically
-  queryClient.setQueryData<InstanceInfoQueryData>(
-    instanceInfoQueryKey,
-    (old) => {
-      if (old === undefined) {
-        return;
-      }
-
-      return {
-        ...old,
-        profile: {
-          ...old.profile,
-          proxies: old.profile.proxies.map((p, i) => (i === index ? proxy : p)),
-        },
-      };
-    },
-  );
-
-  const instanceService = new InstanceServiceClient(transport);
-  await instanceService.updateInstanceProxy({
-    id: instanceInfo.id,
-    index: index,
-    proxy: proxyProto,
-  });
-}
-
 // Batch proxy operations
 export async function addInstanceProxiesBatch(
   proxies: ProfileProxy[],
@@ -1139,10 +886,6 @@ export async function removeInstanceProxiesBatch(
   });
 }
 
-// Keep the old function names for backward compatibility (these are used for profile import only now)
-export const setServerConfig = setServerConfigFull;
-export const setInstanceConfig = setInstanceConfigFull;
-
 export async function setSelfUsername(
   username: string,
   transport: RpcTransport | null,
@@ -1231,7 +974,7 @@ export function smartEntries<T extends object>(
   ]);
 }
 
-export type McLogsResponse =
+type McLogsResponse =
   | {
       success: true;
       id: string;
