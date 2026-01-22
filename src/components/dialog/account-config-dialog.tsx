@@ -6,9 +6,10 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
-import { BotIcon, RouteIcon, SparklesIcon } from "lucide-react";
-import { type ReactNode, Suspense, use, useMemo, useState } from "react";
+import { Suspense, use, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import DynamicIcon from "@/components/dynamic-icon.tsx";
+import { ExternalLink } from "@/components/external-link.tsx";
 import {
   createSettingsRegistry,
   SettingsRegistryContext,
@@ -16,6 +17,13 @@ import {
 } from "@/components/providers/settings-registry-context.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { SettingTypeRenderer } from "@/components/settings-page.tsx";
+import { Badge } from "@/components/ui/badge.tsx";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card.tsx";
 import {
   Dialog,
   DialogContent,
@@ -40,10 +48,12 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { Switch } from "@/components/ui/switch.tsx";
 import { Value } from "@/generated/google/protobuf/struct.ts";
 import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
 import type { BotInfoResponse } from "@/generated/soulfire/bot.ts";
 import type {
+  ServerPlugin,
   SettingsDefinition,
   SettingsEntryIdentifier,
   SettingsPage,
@@ -52,40 +62,43 @@ import { useIsMobile } from "@/hooks/use-mobile.ts";
 import type { ProfileAccount } from "@/lib/types.ts";
 import { getSettingIdentifierKey, updateBotConfigEntry } from "@/lib/utils.tsx";
 
-type NavItem = {
-  id: string;
-  name: string;
-  icon: (props: { className?: string }) => ReactNode;
-};
-
-const BOT_SETTINGS_NAV: NavItem[] = [
-  { id: "bot", name: "Bot", icon: BotIcon },
-  { id: "ai", name: "AI", icon: SparklesIcon },
-  { id: "pathfinding", name: "Pathfinding", icon: RouteIcon },
-];
-
 // Scope 2 = per-bot settings
 const PER_BOT_SCOPE = 2;
+
+type BotSettingsPage = SettingsPage & {
+  plugin?: ServerPlugin;
+};
 
 function getBotSettingsPages(
   instanceSettings: SettingsPage[],
   settingsDefinitions: SettingsDefinition[],
-): SettingsPage[] {
-  // Filter settings pages to only include entries with scope 2 (per-bot)
+  plugins: ServerPlugin[],
+): BotSettingsPage[] {
+  // Build a set of all per-bot setting identifiers (scope 2)
   const perBotDefinitionIds = new Set(
     settingsDefinitions
       .filter((def) => def.scope === PER_BOT_SCOPE)
       .map((def) => getSettingIdentifierKey(def.id as SettingsEntryIdentifier)),
   );
 
+  // Go through all pages in order, filter entries to only include per-bot settings
   return instanceSettings
-    .filter((page) => BOT_SETTINGS_NAV.some((nav) => nav.id === page.id))
-    .map((page) => ({
-      ...page,
-      entries: page.entries.filter((entry) =>
+    .map((page) => {
+      const filteredEntries = page.entries.filter((entry) =>
         perBotDefinitionIds.has(getSettingIdentifierKey(entry)),
-      ),
-    }))
+      );
+
+      // Find plugin info if this is a plugin page
+      const plugin = page.owningPluginId
+        ? plugins.find((p) => p.id === page.owningPluginId)
+        : undefined;
+
+      return {
+        ...page,
+        entries: filteredEntries,
+        plugin,
+      };
+    })
     .filter((page) => page.entries.length > 0);
 }
 
@@ -116,7 +129,7 @@ export function AccountConfigDialog({
 }: AccountConfigDialogProps) {
   const { t } = useTranslation("instance");
   const isMobile = useIsMobile();
-  const [selectedPage, setSelectedPage] = useState(BOT_SETTINGS_NAV[0].id);
+  const [selectedPage, setSelectedPage] = useState<string | null>(null);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -152,11 +165,11 @@ function DialogSkeleton({ isMobile }: { isMobile: boolean }) {
             <SidebarGroup>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {BOT_SETTINGS_NAV.map((item) => (
-                    <SidebarMenuItem key={item.id}>
+                  {[1, 2, 3].map((i) => (
+                    <SidebarMenuItem key={i}>
                       <SidebarMenuButton disabled>
-                        <item.icon />
-                        <span>{item.name}</span>
+                        <Skeleton className="size-4" />
+                        <Skeleton className="h-4 w-24" />
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   ))}
@@ -191,7 +204,7 @@ function DialogContentInner({
   isMobile,
 }: {
   account: ProfileAccount;
-  selectedPage: string;
+  selectedPage: string | null;
   setSelectedPage: (page: string) => void;
   isMobile: boolean;
 }) {
@@ -233,8 +246,13 @@ function DialogContentInner({
       getBotSettingsPages(
         instanceInfo.instanceSettings,
         instanceInfo.settingsDefinitions,
+        instanceInfo.plugins,
       ),
-    [instanceInfo.instanceSettings, instanceInfo.settingsDefinitions],
+    [
+      instanceInfo.instanceSettings,
+      instanceInfo.settingsDefinitions,
+      instanceInfo.plugins,
+    ],
   );
 
   const settingsRegistry = useMemo(
@@ -247,8 +265,14 @@ function DialogContentInner({
     [botInfo],
   );
 
+  // Auto-select first page if none selected
+  useEffect(() => {
+    if (selectedPage === null && botSettingsPages.length > 0) {
+      setSelectedPage(botSettingsPages[0].id);
+    }
+  }, [selectedPage, botSettingsPages, setSelectedPage]);
+
   const currentPage = botSettingsPages.find((p) => p.id === selectedPage);
-  const currentNavItem = BOT_SETTINGS_NAV.find((n) => n.id === selectedPage);
 
   return (
     <SettingsRegistryContext.Provider value={settingsRegistry}>
@@ -259,16 +283,17 @@ function DialogContentInner({
               <SidebarGroup>
                 <SidebarGroupContent>
                   <SidebarMenu>
-                    {BOT_SETTINGS_NAV.filter((nav) =>
-                      botSettingsPages.some((p) => p.id === nav.id),
-                    ).map((item) => (
-                      <SidebarMenuItem key={item.id}>
+                    {botSettingsPages.map((page) => (
+                      <SidebarMenuItem key={page.id}>
                         <SidebarMenuButton
-                          isActive={item.id === selectedPage}
-                          onClick={() => setSelectedPage(item.id)}
+                          isActive={page.id === selectedPage}
+                          onClick={() => setSelectedPage(page.id)}
                         >
-                          <item.icon />
-                          <span>{item.name}</span>
+                          <DynamicIcon
+                            name={page.iconId}
+                            className="size-4 shrink-0"
+                          />
+                          <span className="truncate">{page.pageName}</span>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     ))}
@@ -281,18 +306,22 @@ function DialogContentInner({
         <main className="flex h-[480px] flex-1 flex-col overflow-hidden">
           <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
             {isMobile ? (
-              <Select value={selectedPage} onValueChange={setSelectedPage}>
+              <Select
+                value={selectedPage ?? undefined}
+                onValueChange={setSelectedPage}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  {BOT_SETTINGS_NAV.filter((nav) =>
-                    botSettingsPages.some((p) => p.id === nav.id),
-                  ).map((item) => (
-                    <SelectItem key={item.id} value={item.id}>
+                  {botSettingsPages.map((page) => (
+                    <SelectItem key={page.id} value={page.id}>
                       <div className="flex items-center gap-2">
-                        <item.icon className="size-4" />
-                        <span>{item.name}</span>
+                        <DynamicIcon
+                          name={page.iconId}
+                          className="size-4 shrink-0"
+                        />
+                        <span>{page.pageName}</span>
                       </div>
                     </SelectItem>
                   ))}
@@ -300,13 +329,16 @@ function DialogContentInner({
               </Select>
             ) : (
               <div className="flex items-center gap-2">
-                {currentNavItem && (
+                {currentPage && (
                   <>
-                    <currentNavItem.icon className="size-4" />
+                    <DynamicIcon
+                      name={currentPage.iconId}
+                      className="size-4 shrink-0"
+                    />
                     <span className="font-medium">
                       {t("account.config.pageTitle", {
                         name: account.lastKnownName,
-                        page: currentNavItem.name,
+                        page: currentPage.pageName,
                       })}
                     </span>
                   </>
@@ -322,6 +354,7 @@ function DialogContentInner({
                 instanceId={instanceInfo.id}
                 botId={account.profileId}
                 botInfoQueryKey={botInfoQueryOptions.queryKey}
+                settingsDefinitions={instanceInfo.settingsDefinitions}
               />
             ) : (
               <div className="text-muted-foreground">
@@ -335,22 +368,162 @@ function DialogContentInner({
   );
 }
 
+function BotPluginInfoCard({
+  page,
+  plugin,
+  botConfig,
+  instanceId,
+  botId,
+  botInfoQueryKey,
+  settingsDefinitions,
+}: {
+  page: BotSettingsPage;
+  plugin: ServerPlugin;
+  botConfig: Record<string, Record<string, JsonValue>>;
+  instanceId: string;
+  botId: string;
+  botInfoQueryKey: readonly unknown[];
+  settingsDefinitions: SettingsDefinition[];
+}) {
+  const { t } = useTranslation("common");
+  const transport = use(TransportContext);
+  const queryClient = useQueryClient();
+
+  const enabledIdentifier = page.enabledIdentifier;
+
+  // Find enabled definition
+  const enabledDefinition = useMemo(
+    () =>
+      settingsDefinitions.find(
+        (def) =>
+          def.id?.key === enabledIdentifier?.key &&
+          def.id?.namespace === enabledIdentifier?.namespace,
+      ),
+    [settingsDefinitions, enabledIdentifier],
+  );
+
+  // Get enabled value from bot config, falling back to default
+  const enabledValue = useMemo(() => {
+    if (!enabledIdentifier || !enabledDefinition) return true;
+
+    const namespace = enabledIdentifier.namespace;
+    const key = enabledIdentifier.key;
+    const current = botConfig[namespace]?.[key];
+
+    if (current !== undefined) {
+      return current === true;
+    }
+
+    // Get default from definition (bool settings have a def field)
+    if (enabledDefinition.type.oneofKind === "bool") {
+      return enabledDefinition.type.bool.def;
+    }
+
+    return true;
+  }, [botConfig, enabledIdentifier, enabledDefinition]);
+
+  const setEnabledMutation = useMutation({
+    mutationFn: async (value: JsonValue) => {
+      if (!enabledIdentifier) return;
+      await updateBotConfigEntry(
+        enabledIdentifier.namespace,
+        enabledIdentifier.key,
+        value,
+        instanceId,
+        botId,
+        transport,
+        queryClient,
+        botInfoQueryKey,
+      );
+    },
+  });
+
+  return (
+    <Card className="container">
+      <CardHeader>
+        <div className="flex flex-row items-center justify-between gap-2">
+          <CardTitle className="flex flex-row items-center gap-2 text-xl">
+            <DynamicIcon className="size-6 shrink-0" name={page.iconId} />
+            {page.pageName}
+          </CardTitle>
+          {enabledIdentifier && (
+            <Switch
+              checked={enabledValue}
+              onCheckedChange={setEnabledMutation.mutate}
+            />
+          )}
+        </div>
+        <CardDescription className="whitespace-pre-line">
+          {plugin.description}
+        </CardDescription>
+        <div className="mt-2 flex flex-wrap gap-2">
+          <Badge variant="secondary">
+            {t("pluginCard.version", { version: plugin.version })}
+          </Badge>
+          <Badge variant="secondary">
+            {t("pluginCard.author", { author: plugin.author })}
+          </Badge>
+          <Badge variant="secondary">
+            {t("pluginCard.license", { license: plugin.license })}
+          </Badge>
+          {plugin.website && (
+            <ExternalLink
+              href={plugin.website}
+              className="inline-flex items-center"
+            >
+              <Badge variant="secondary">
+                {t("pluginCard.website", { website: plugin.website })}
+              </Badge>
+            </ExternalLink>
+          )}
+        </div>
+      </CardHeader>
+    </Card>
+  );
+}
+
 function BotSettingsPageContent({
   page,
   botConfig,
   instanceId,
   botId,
   botInfoQueryKey,
+  settingsDefinitions,
 }: {
-  page: SettingsPage;
+  page: BotSettingsPage;
   botConfig: Record<string, Record<string, JsonValue>>;
   instanceId: string;
   botId: string;
   botInfoQueryKey: readonly unknown[];
+  settingsDefinitions: SettingsDefinition[];
 }) {
+  // Filter out the enabled identifier from the entries list
+  const enabledIdentifier = page.enabledIdentifier;
+  const filteredEntries = useMemo(() => {
+    if (!enabledIdentifier) return page.entries;
+    return page.entries.filter(
+      (entry) =>
+        !(
+          entry.namespace === enabledIdentifier.namespace &&
+          entry.key === enabledIdentifier.key
+        ),
+    );
+  }, [page.entries, enabledIdentifier]);
+
   return (
     <div className="flex flex-col gap-4">
-      {page.entries.map((entryId) => (
+      {page.plugin && (
+        <BotPluginInfoCard
+          page={page}
+          plugin={page.plugin}
+          botConfig={botConfig}
+          instanceId={instanceId}
+          botId={botId}
+          botInfoQueryKey={botInfoQueryKey}
+          settingsDefinitions={settingsDefinitions}
+        />
+      )}
+      {filteredEntries.map((entryId) => (
         <BotSettingField
           key={getSettingIdentifierKey(entryId)}
           settingId={entryId}
