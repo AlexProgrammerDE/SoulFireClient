@@ -112,5 +112,38 @@
       "pageTitle": "{{name}} - {{page}} Settings",
       "noSettings": "No settings available for this page"
     }
+  },
+  "bots": {
+    "searchPlaceholder": "Search bots...",
+    "onlineCount": "{{online}} online / {{total}} total",
+    "noBots": "No bots configured. Add accounts from the Account Settings page.",
+    "noBotsFound": "No bots match your search.",
+    "online": "Online",
+    "offline": "Offline",
+    "backToBots": "Back to Bots",
+    "comingSoon": "Coming Soon",
+    "positionPanel": {
+      "title": "Position & Rotation",
+      "position": "Position",
+      "rotation": "Rotation",
+      "offline": "Bot is offline. Position data is only available when the bot is connected."
+    },
+    "chatPanel": {
+      "title": "Chat Messages",
+      "description": "Chat messages from this bot will appear here in a future update."
+    },
+    "commandPanel": {
+      "title": "Bot Commands",
+      "placeholder": "Send command to this bot...",
+      "description": "Bot-scoped commands will be available in a future update."
+    },
+    "inventoryPanel": {
+      "title": "Inventory",
+      "description": "Inventory viewing will be available in a future update."
+    },
+    "visualPanel": {
+      "title": "Live View",
+      "description": "Live visual rendering will be available in a future update."
+    }
   }
 }

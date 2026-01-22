@@ -43,6 +43,41 @@ export interface BotInfoRequest {
   botId: string;
 }
 /**
+ * @generated from protobuf message soulfire.v1.BotListRequest
+ */
+export interface BotListRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotListEntry
+ */
+export interface BotListEntry {
+  /**
+   * @generated from protobuf field: string profile_id = 1
+   */
+  profileId: string;
+  /**
+   * @generated from protobuf field: bool is_online = 2
+   */
+  isOnline: boolean;
+  /**
+   * @generated from protobuf field: optional soulfire.v1.BotLiveState live_state = 3
+   */
+  liveState?: BotLiveState;
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotListResponse
+ */
+export interface BotListResponse {
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.BotListEntry bots = 1
+   */
+  bots: BotListEntry[];
+}
+/**
  * @generated from protobuf message soulfire.v1.BotLiveState
  */
 export interface BotLiveState {
@@ -299,6 +334,254 @@ class BotInfoRequest$Type extends MessageType<BotInfoRequest> {
  * @generated MessageType for protobuf message soulfire.v1.BotInfoRequest
  */
 export const BotInfoRequest = new BotInfoRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotListRequest$Type extends MessageType<BotListRequest> {
+  constructor() {
+    super("soulfire.v1.BotListRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<BotListRequest>): BotListRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    if (value !== undefined)
+      reflectionMergePartial<BotListRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotListRequest,
+  ): BotListRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotListRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotListRequest
+ */
+export const BotListRequest = new BotListRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotListEntry$Type extends MessageType<BotListEntry> {
+  constructor() {
+    super("soulfire.v1.BotListEntry", [
+      { no: 1, name: "profile_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "is_online", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 3, name: "live_state", kind: "message", T: () => BotLiveState },
+    ]);
+  }
+  create(value?: PartialMessage<BotListEntry>): BotListEntry {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.profileId = "";
+    message.isOnline = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotListEntry>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotListEntry,
+  ): BotListEntry {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string profile_id */ 1:
+          message.profileId = reader.string();
+          break;
+        case /* bool is_online */ 2:
+          message.isOnline = reader.bool();
+          break;
+        case /* optional soulfire.v1.BotLiveState live_state */ 3:
+          message.liveState = BotLiveState.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.liveState,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotListEntry,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string profile_id = 1; */
+    if (message.profileId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.profileId);
+    /* bool is_online = 2; */
+    if (message.isOnline !== false)
+      writer.tag(2, WireType.Varint).bool(message.isOnline);
+    /* optional soulfire.v1.BotLiveState live_state = 3; */
+    if (message.liveState)
+      BotLiveState.internalBinaryWrite(
+        message.liveState,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotListEntry
+ */
+export const BotListEntry = new BotListEntry$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotListResponse$Type extends MessageType<BotListResponse> {
+  constructor() {
+    super("soulfire.v1.BotListResponse", [
+      {
+        no: 1,
+        name: "bots",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => BotListEntry,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<BotListResponse>): BotListResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.bots = [];
+    if (value !== undefined)
+      reflectionMergePartial<BotListResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotListResponse,
+  ): BotListResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* repeated soulfire.v1.BotListEntry bots */ 1:
+          message.bots.push(
+            BotListEntry.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotListResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* repeated soulfire.v1.BotListEntry bots = 1; */
+    for (let i = 0; i < message.bots.length; i++)
+      BotListEntry.internalBinaryWrite(
+        message.bots[i],
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotListResponse
+ */
+export const BotListResponse = new BotListResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class BotLiveState$Type extends MessageType<BotLiveState> {
   constructor() {
@@ -838,6 +1121,7 @@ export const BotUpdateConfigEntryResponse =
  * @generated ServiceType for protobuf service soulfire.v1.BotService
  */
 export const BotService = new ServiceType("soulfire.v1.BotService", [
+  { name: "GetBotList", options: {}, I: BotListRequest, O: BotListResponse },
   { name: "GetBotInfo", options: {}, I: BotInfoRequest, O: BotInfoResponse },
   {
     name: "UpdateBotConfig",

@@ -2,7 +2,12 @@
 
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Link, type LinkProps, useRouteContext } from "@tanstack/react-router";
-import { HouseIcon, SquareTerminalIcon, TextSearchIcon } from "lucide-react";
+import {
+  HouseIcon,
+  SquareTerminalIcon,
+  TextSearchIcon,
+  UsersIcon,
+} from "lucide-react";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -41,6 +46,14 @@ export function NavControls() {
       icon: SquareTerminalIcon,
       linkProps: {
         to: "/instance/$instance/terminal",
+        params: { instance: instanceInfo.id },
+      },
+    },
+    {
+      title: t("instanceSidebar.bots"),
+      icon: UsersIcon,
+      linkProps: {
+        to: "/instance/$instance/bots",
         params: { instance: instanceInfo.id },
       },
     },

@@ -218,6 +218,7 @@
     "controlsGroup": "Controls",
     "overview": "Overview",
     "terminal": "Terminal",
+    "bots": "Bots",
     "audit-log": "Audit Log",
     "settingsGroup": "Settings",
     "pluginsGroup": "Plugins",
@@ -277,13 +278,16 @@
     "admin": "Admin",
     "settings": "Settings",
     "controls": "Controls",
-    "plugins": "Plugins"
+    "plugins": "Plugins",
+    "bots": "Bots"
   },
   "noInstancesFound": "No instances found",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Logs",
     "audit-log": "Audit Log",
+    "bots": "Bots",
+    "botDetail": "Bot Details",
     "instances": "Instances",
     "access": "Access",
     "settings": "Settings",

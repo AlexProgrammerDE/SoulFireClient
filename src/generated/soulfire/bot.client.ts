@@ -13,6 +13,8 @@ import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type {
   BotInfoRequest,
   BotInfoResponse,
+  BotListRequest,
+  BotListResponse,
   BotUpdateConfigEntryRequest,
   BotUpdateConfigEntryResponse,
   BotUpdateConfigRequest,
@@ -23,6 +25,13 @@ import { BotService } from "./bot";
  * @generated from protobuf service soulfire.v1.BotService
  */
 export interface IBotServiceClient {
+  /**
+   * @generated from protobuf rpc: GetBotList
+   */
+  getBotList(
+    input: BotListRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotListRequest, BotListResponse>;
   /**
    * @generated from protobuf rpc: GetBotInfo
    */
@@ -58,13 +67,30 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
   options = BotService.options;
   constructor(private readonly _transport: RpcTransport) {}
   /**
+   * @generated from protobuf rpc: GetBotList
+   */
+  getBotList(
+    input: BotListRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotListRequest, BotListResponse> {
+    const method = this.methods[0],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<BotListRequest, BotListResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
    * @generated from protobuf rpc: GetBotInfo
    */
   getBotInfo(
     input: BotInfoRequest,
     options?: RpcOptions,
   ): UnaryCall<BotInfoRequest, BotInfoResponse> {
-    const method = this.methods[0],
+    const method = this.methods[1],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotInfoRequest, BotInfoResponse>(
       "unary",
@@ -83,7 +109,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotUpdateConfigRequest,
     options?: RpcOptions,
   ): UnaryCall<BotUpdateConfigRequest, BotUpdateConfigResponse> {
-    const method = this.methods[1],
+    const method = this.methods[2],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotUpdateConfigRequest, BotUpdateConfigResponse>(
       "unary",
@@ -102,7 +128,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotUpdateConfigEntryRequest,
     options?: RpcOptions,
   ): UnaryCall<BotUpdateConfigEntryRequest, BotUpdateConfigEntryResponse> {
-    const method = this.methods[2],
+    const method = this.methods[3],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<
       BotUpdateConfigEntryRequest,

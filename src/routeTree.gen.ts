@@ -28,10 +28,12 @@ import { Route as DashboardInstanceInstanceScriptsRouteImport } from './routes/_
 import { Route as DashboardInstanceInstanceProxiesRouteImport } from './routes/_dashboard/instance/$instance/proxies'
 import { Route as DashboardInstanceInstanceMetaRouteImport } from './routes/_dashboard/instance/$instance/meta'
 import { Route as DashboardInstanceInstanceDiscoverRouteImport } from './routes/_dashboard/instance/$instance/discover'
+import { Route as DashboardInstanceInstanceBotsRouteImport } from './routes/_dashboard/instance/$instance/bots'
 import { Route as DashboardInstanceInstanceAuditLogRouteImport } from './routes/_dashboard/instance/$instance/audit-log'
 import { Route as DashboardInstanceInstanceAccountsRouteImport } from './routes/_dashboard/instance/$instance/accounts'
 import { Route as DashboardUserAdminSettingsPageIdRouteImport } from './routes/_dashboard/user/admin/settings/$pageId'
 import { Route as DashboardInstanceInstanceSettingsPageIdRouteImport } from './routes/_dashboard/instance/$instance/settings/$pageId'
+import { Route as DashboardInstanceInstanceBotsBotIdRouteImport } from './routes/_dashboard/instance/$instance/bots.$botId'
 
 const DashboardRoute = DashboardRouteImport.update({
   id: '/_dashboard',
@@ -136,6 +138,12 @@ const DashboardInstanceInstanceDiscoverRoute =
     path: '/discover',
     getParentRoute: () => DashboardInstanceInstanceRoute,
   } as any)
+const DashboardInstanceInstanceBotsRoute =
+  DashboardInstanceInstanceBotsRouteImport.update({
+    id: '/bots',
+    path: '/bots',
+    getParentRoute: () => DashboardInstanceInstanceRoute,
+  } as any)
 const DashboardInstanceInstanceAuditLogRoute =
   DashboardInstanceInstanceAuditLogRouteImport.update({
     id: '/audit-log',
@@ -160,6 +168,12 @@ const DashboardInstanceInstanceSettingsPageIdRoute =
     path: '/settings/$pageId',
     getParentRoute: () => DashboardInstanceInstanceRoute,
   } as any)
+const DashboardInstanceInstanceBotsBotIdRoute =
+  DashboardInstanceInstanceBotsBotIdRouteImport.update({
+    id: '/$botId',
+    path: '/$botId',
+    getParentRoute: () => DashboardInstanceInstanceBotsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -171,6 +185,7 @@ export interface FileRoutesByFullPath {
   '/user/': typeof DashboardUserIndexRoute
   '/instance/$instance/accounts': typeof DashboardInstanceInstanceAccountsRoute
   '/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
+  '/instance/$instance/bots': typeof DashboardInstanceInstanceBotsRouteWithChildren
   '/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
   '/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
@@ -182,6 +197,7 @@ export interface FileRoutesByFullPath {
   '/user/admin/users': typeof DashboardUserAdminUsersRoute
   '/instance/$instance/': typeof DashboardInstanceInstanceIndexRoute
   '/user/admin/': typeof DashboardUserAdminIndexRoute
+  '/instance/$instance/bots/$botId': typeof DashboardInstanceInstanceBotsBotIdRoute
   '/instance/$instance/settings/$pageId': typeof DashboardInstanceInstanceSettingsPageIdRoute
   '/user/admin/settings/$pageId': typeof DashboardUserAdminSettingsPageIdRoute
 }
@@ -192,6 +208,7 @@ export interface FileRoutesByTo {
   '/user': typeof DashboardUserIndexRoute
   '/instance/$instance/accounts': typeof DashboardInstanceInstanceAccountsRoute
   '/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
+  '/instance/$instance/bots': typeof DashboardInstanceInstanceBotsRouteWithChildren
   '/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
   '/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
@@ -203,6 +220,7 @@ export interface FileRoutesByTo {
   '/user/admin/users': typeof DashboardUserAdminUsersRoute
   '/instance/$instance': typeof DashboardInstanceInstanceIndexRoute
   '/user/admin': typeof DashboardUserAdminIndexRoute
+  '/instance/$instance/bots/$botId': typeof DashboardInstanceInstanceBotsBotIdRoute
   '/instance/$instance/settings/$pageId': typeof DashboardInstanceInstanceSettingsPageIdRoute
   '/user/admin/settings/$pageId': typeof DashboardUserAdminSettingsPageIdRoute
 }
@@ -218,6 +236,7 @@ export interface FileRoutesById {
   '/_dashboard/user/': typeof DashboardUserIndexRoute
   '/_dashboard/instance/$instance/accounts': typeof DashboardInstanceInstanceAccountsRoute
   '/_dashboard/instance/$instance/audit-log': typeof DashboardInstanceInstanceAuditLogRoute
+  '/_dashboard/instance/$instance/bots': typeof DashboardInstanceInstanceBotsRouteWithChildren
   '/_dashboard/instance/$instance/discover': typeof DashboardInstanceInstanceDiscoverRoute
   '/_dashboard/instance/$instance/meta': typeof DashboardInstanceInstanceMetaRoute
   '/_dashboard/instance/$instance/proxies': typeof DashboardInstanceInstanceProxiesRoute
@@ -229,6 +248,7 @@ export interface FileRoutesById {
   '/_dashboard/user/admin/users': typeof DashboardUserAdminUsersRoute
   '/_dashboard/instance/$instance/': typeof DashboardInstanceInstanceIndexRoute
   '/_dashboard/user/admin/': typeof DashboardUserAdminIndexRoute
+  '/_dashboard/instance/$instance/bots/$botId': typeof DashboardInstanceInstanceBotsBotIdRoute
   '/_dashboard/instance/$instance/settings/$pageId': typeof DashboardInstanceInstanceSettingsPageIdRoute
   '/_dashboard/user/admin/settings/$pageId': typeof DashboardUserAdminSettingsPageIdRoute
 }
@@ -244,6 +264,7 @@ export interface FileRouteTypes {
     | '/user/'
     | '/instance/$instance/accounts'
     | '/instance/$instance/audit-log'
+    | '/instance/$instance/bots'
     | '/instance/$instance/discover'
     | '/instance/$instance/meta'
     | '/instance/$instance/proxies'
@@ -255,6 +276,7 @@ export interface FileRouteTypes {
     | '/user/admin/users'
     | '/instance/$instance/'
     | '/user/admin/'
+    | '/instance/$instance/bots/$botId'
     | '/instance/$instance/settings/$pageId'
     | '/user/admin/settings/$pageId'
   fileRoutesByTo: FileRoutesByTo
@@ -265,6 +287,7 @@ export interface FileRouteTypes {
     | '/user'
     | '/instance/$instance/accounts'
     | '/instance/$instance/audit-log'
+    | '/instance/$instance/bots'
     | '/instance/$instance/discover'
     | '/instance/$instance/meta'
     | '/instance/$instance/proxies'
@@ -276,6 +299,7 @@ export interface FileRouteTypes {
     | '/user/admin/users'
     | '/instance/$instance'
     | '/user/admin'
+    | '/instance/$instance/bots/$botId'
     | '/instance/$instance/settings/$pageId'
     | '/user/admin/settings/$pageId'
   id:
@@ -290,6 +314,7 @@ export interface FileRouteTypes {
     | '/_dashboard/user/'
     | '/_dashboard/instance/$instance/accounts'
     | '/_dashboard/instance/$instance/audit-log'
+    | '/_dashboard/instance/$instance/bots'
     | '/_dashboard/instance/$instance/discover'
     | '/_dashboard/instance/$instance/meta'
     | '/_dashboard/instance/$instance/proxies'
@@ -301,6 +326,7 @@ export interface FileRouteTypes {
     | '/_dashboard/user/admin/users'
     | '/_dashboard/instance/$instance/'
     | '/_dashboard/user/admin/'
+    | '/_dashboard/instance/$instance/bots/$botId'
     | '/_dashboard/instance/$instance/settings/$pageId'
     | '/_dashboard/user/admin/settings/$pageId'
   fileRoutesById: FileRoutesById
@@ -445,6 +471,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardInstanceInstanceDiscoverRouteImport
       parentRoute: typeof DashboardInstanceInstanceRoute
     }
+    '/_dashboard/instance/$instance/bots': {
+      id: '/_dashboard/instance/$instance/bots'
+      path: '/bots'
+      fullPath: '/instance/$instance/bots'
+      preLoaderRoute: typeof DashboardInstanceInstanceBotsRouteImport
+      parentRoute: typeof DashboardInstanceInstanceRoute
+    }
     '/_dashboard/instance/$instance/audit-log': {
       id: '/_dashboard/instance/$instance/audit-log'
       path: '/audit-log'
@@ -472,6 +505,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/instance/$instance/settings/$pageId'
       preLoaderRoute: typeof DashboardInstanceInstanceSettingsPageIdRouteImport
       parentRoute: typeof DashboardInstanceInstanceRoute
+    }
+    '/_dashboard/instance/$instance/bots/$botId': {
+      id: '/_dashboard/instance/$instance/bots/$botId'
+      path: '/$botId'
+      fullPath: '/instance/$instance/bots/$botId'
+      preLoaderRoute: typeof DashboardInstanceInstanceBotsBotIdRouteImport
+      parentRoute: typeof DashboardInstanceInstanceBotsRoute
     }
   }
 }
@@ -515,9 +555,25 @@ const DashboardUserRouteWithChildren = DashboardUserRoute._addFileChildren(
   DashboardUserRouteChildren,
 )
 
+interface DashboardInstanceInstanceBotsRouteChildren {
+  DashboardInstanceInstanceBotsBotIdRoute: typeof DashboardInstanceInstanceBotsBotIdRoute
+}
+
+const DashboardInstanceInstanceBotsRouteChildren: DashboardInstanceInstanceBotsRouteChildren =
+  {
+    DashboardInstanceInstanceBotsBotIdRoute:
+      DashboardInstanceInstanceBotsBotIdRoute,
+  }
+
+const DashboardInstanceInstanceBotsRouteWithChildren =
+  DashboardInstanceInstanceBotsRoute._addFileChildren(
+    DashboardInstanceInstanceBotsRouteChildren,
+  )
+
 interface DashboardInstanceInstanceRouteChildren {
   DashboardInstanceInstanceAccountsRoute: typeof DashboardInstanceInstanceAccountsRoute
   DashboardInstanceInstanceAuditLogRoute: typeof DashboardInstanceInstanceAuditLogRoute
+  DashboardInstanceInstanceBotsRoute: typeof DashboardInstanceInstanceBotsRouteWithChildren
   DashboardInstanceInstanceDiscoverRoute: typeof DashboardInstanceInstanceDiscoverRoute
   DashboardInstanceInstanceMetaRoute: typeof DashboardInstanceInstanceMetaRoute
   DashboardInstanceInstanceProxiesRoute: typeof DashboardInstanceInstanceProxiesRoute
@@ -533,6 +589,8 @@ const DashboardInstanceInstanceRouteChildren: DashboardInstanceInstanceRouteChil
       DashboardInstanceInstanceAccountsRoute,
     DashboardInstanceInstanceAuditLogRoute:
       DashboardInstanceInstanceAuditLogRoute,
+    DashboardInstanceInstanceBotsRoute:
+      DashboardInstanceInstanceBotsRouteWithChildren,
     DashboardInstanceInstanceDiscoverRoute:
       DashboardInstanceInstanceDiscoverRoute,
     DashboardInstanceInstanceMetaRoute: DashboardInstanceInstanceMetaRoute,
