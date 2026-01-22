@@ -2,7 +2,6 @@ import type { LucideProps } from "lucide-react";
 import dynamicIconImports from "lucide-react/dynamicIconImports";
 import tags from "lucide-static/tags.json" with { type: "json" };
 import React, { Suspense } from "react";
-import i18n from "@/lib/i18n";
 
 export function getAllIconTags() {
   return Object.entries(tags);
@@ -19,16 +18,12 @@ const cache = new Map<
   React.LazyExoticComponent<React.ComponentType<LucideProps>>
 >();
 
-function convertUnsafeIconName(name: string): LucideIconName {
+function convertUnsafeIconName(name: string): LucideIconName | null {
   if (name in dynamicIconImports) {
     return name as LucideIconName;
   }
 
-  throw new Error(
-    i18n.t("icon.invalidName", {
-      name,
-    }),
-  );
+  return null;
 }
 
 function loadCachedIcon(name: LucideIconName) {
@@ -42,8 +37,11 @@ function loadCachedIcon(name: LucideIconName) {
   return lazyValue;
 }
 
+const FALLBACK_ICON: LucideIconName = "settings";
+
 const DynamicIcon = React.memo(({ name, ...props }: IconProps) => {
-  const LazyIcon = loadCachedIcon(convertUnsafeIconName(name));
+  const iconName = convertUnsafeIconName(name) ?? FALLBACK_ICON;
+  const LazyIcon = loadCachedIcon(iconName);
 
   return (
     <Suspense fallback={<div className={props.className} />}>
