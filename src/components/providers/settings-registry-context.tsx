@@ -1,6 +1,4 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useRouteContext } from "@tanstack/react-router";
-import { useMemo } from "react";
+import { createContext, useContext, useMemo } from "react";
 import type {
   SettingsDefinition,
   SettingsEntryIdentifier,
@@ -11,18 +9,24 @@ export type SettingsRegistry = {
   getDefinition: (
     id: SettingsEntryIdentifier | undefined,
   ) => SettingsDefinition | undefined;
+  getDefinitionByKey: (
+    namespace: string,
+    key: string,
+  ) => SettingsDefinition | undefined;
 };
 
+export const SettingsRegistryContext = createContext<SettingsRegistry | null>(
+  null,
+);
+
 export function useSettingsRegistry(): SettingsRegistry {
-  const instanceInfoQueryOptions = useRouteContext({
-    from: "/_dashboard/instance/$instance",
-    select: (context) => context.instanceInfoQueryOptions,
-  });
-  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  return useMemo(
-    () => createSettingsRegistry(instanceInfo.settingsDefinitions),
-    [instanceInfo.settingsDefinitions],
-  );
+  const context = useContext(SettingsRegistryContext);
+  if (!context) {
+    throw new Error(
+      "useSettingsRegistry must be used within a SettingsRegistryProvider",
+    );
+  }
+  return context;
 }
 
 export function useSettingsDefinition(
@@ -30,6 +34,17 @@ export function useSettingsDefinition(
 ): SettingsDefinition | undefined {
   const registry = useSettingsRegistry();
   return useMemo(() => registry.getDefinition(id), [registry, id]);
+}
+
+export function useSettingsDefinitionByKey(
+  namespace: string,
+  key: string,
+): SettingsDefinition | undefined {
+  const registry = useSettingsRegistry();
+  return useMemo(
+    () => registry.getDefinitionByKey(namespace, key),
+    [registry, namespace, key],
+  );
 }
 
 export function createSettingsRegistry(
@@ -49,6 +64,9 @@ export function createSettingsRegistry(
     getDefinition: (id) => {
       if (!id) return undefined;
       return definitionMap.get(`${id.namespace}:${id.key}`);
+    },
+    getDefinitionByKey: (namespace, key) => {
+      return definitionMap.get(`${namespace}:${key}`);
     },
   };
 }

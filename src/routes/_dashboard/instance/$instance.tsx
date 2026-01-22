@@ -1,7 +1,13 @@
-import { queryOptions } from "@tanstack/react-query";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { CatchBoundary, createFileRoute, Outlet } from "@tanstack/react-router";
+import type { ReactNode } from "react";
+import { useMemo } from "react";
 import { ErrorComponent } from "@/components/error-component.tsx";
 import { InstanceSidebar } from "@/components/nav/instance/instance-sidebar.tsx";
+import {
+  createSettingsRegistry,
+  SettingsRegistryContext,
+} from "@/components/providers/settings-registry-context.tsx";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar.tsx";
 import { TooltipProvider } from "@/components/ui/tooltip.tsx";
 import {
@@ -145,6 +151,21 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
   component: InstanceLayout,
 });
 
+function SettingsRegistryProvider({ children }: { children: ReactNode }) {
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const settingsRegistry = useMemo(
+    () => createSettingsRegistry(instanceInfo.settingsDefinitions),
+    [instanceInfo.settingsDefinitions],
+  );
+
+  return (
+    <SettingsRegistryContext.Provider value={settingsRegistry}>
+      {children}
+    </SettingsRegistryContext.Provider>
+  );
+}
+
 function InstanceLayout() {
   const isMobile = useIsMobile();
   const sidebarState = localStorage.getItem("sidebar:state");
@@ -160,7 +181,9 @@ function InstanceLayout() {
             getResetKey={() => "instance-layout"}
             errorComponent={ErrorComponent}
           >
-            <Outlet />
+            <SettingsRegistryProvider>
+              <Outlet />
+            </SettingsRegistryProvider>
           </CatchBoundary>
         </SidebarInset>
       </TooltipProvider>
