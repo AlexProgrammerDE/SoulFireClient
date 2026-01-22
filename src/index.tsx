@@ -7,6 +7,8 @@ import {
 import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import "@/lib/i18n";
+import type { GrpcStatusCode } from "@protobuf-ts/grpcweb-transport";
+import type { RpcError } from "@protobuf-ts/runtime-rpc";
 import { broadcastQueryClient } from "@tanstack/query-broadcast-client-experimental";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ErrorComponent } from "@/components/error-component.tsx";
@@ -19,7 +21,25 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       // Retries on an initial load failure
-      retry: 5,
+      retry: (failureCount, error) => {
+        const code = error
+          ? ((error as RpcError).code as keyof typeof GrpcStatusCode)
+          : "";
+        if (
+          code === "UNAUTHENTICATED" ||
+          code === "PERMISSION_DENIED" ||
+          code === "FAILED_PRECONDITION" ||
+          code === "NOT_FOUND" ||
+          code === "ALREADY_EXISTS" ||
+          code === "INVALID_ARGUMENT" ||
+          code === "UNIMPLEMENTED" ||
+          code === "OUT_OF_RANGE" ||
+          code === "DATA_LOSS"
+        ) {
+          return false;
+        }
+        return failureCount < 5;
+      },
       structuralSharing: (prev: unknown, next: unknown) =>
         deepEqual(prev, next) ? prev : next,
     },
