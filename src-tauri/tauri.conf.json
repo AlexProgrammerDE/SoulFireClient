@@ -28,7 +28,7 @@
       }
     ],
     "security": {
-      "csp": "default-src 'self' customprotocol: asset:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; connect-src 'self' ipc: http://ipc.localhost https://aptabase.pistonmaster.net https://api.mclo.gs *; font-src 'self'; frame-src 'self'; img-src 'self' data: blob: https://www.gravatar.com 'self' asset: http://asset.localhost; manifest-src 'self'; media-src 'self'; worker-src 'self';"
+      "csp": "default-src 'self' customprotocol: asset:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'self'; connect-src 'self' ipc: http://ipc.localhost https://aptabase.pistonmaster.net https://api.mclo.gs *; font-src 'self'; frame-src 'self'; img-src 'self' data: blob: https://www.gravatar.com https://mc-heads.net 'self' asset: http://asset.localhost; manifest-src 'self'; media-src 'self'; worker-src 'self';"
     }
   },
   "bundle": {

@@ -232,7 +232,7 @@ function BotCard({
           <div className="flex items-start gap-3">
             {/* Minecraft avatar */}
             <img
-              src={`https://crafatar.com/avatars/${bot.profileId}?overlay=true&size=48`}
+              src={`https://mc-heads.net/avatar/${bot.profileId}/48`}
               alt={bot.lastKnownName}
               className="size-12 rounded"
               loading="lazy"

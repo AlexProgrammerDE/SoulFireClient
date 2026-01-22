@@ -245,7 +245,7 @@ function BotSkinPreview({
         <div className="flex items-start gap-4">
           {/* Full body render */}
           <img
-            src={`https://crafatar.com/renders/body/${account.profileId}?overlay=true&scale=4`}
+            src={`https://mc-heads.net/body/${account.profileId}`}
             alt={account.lastKnownName}
             className="h-32 w-auto"
             loading="lazy"
