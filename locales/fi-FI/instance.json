@@ -30,6 +30,11 @@
       "success": "{{count}} viallista proxyä poistettu!",
       "error": "Proxyjen tarkistus epäonnistui"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Virheellinen proxyn muoto",
     "table": {
       "type": "Tyyppi",
@@ -63,12 +68,17 @@
       "amount": "Määrä",
       "nameFormat": "Nimimuoto",
       "nameFormatHelp": "Käytä %d numero­paikkamerkkinä tilin numerolle (esim. Bot_%d → Bot_1, Bot_2 jne.)",
-      "overrideExisting": "Korvaa olemassa olevat {{count}} tiliä",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Luo",
       "generating": "Luodaan...",
       "progress": "Luodaan tilejä... {{checked}}/{{total}} (Onnistui: {{success}} Epäonnistui: {{failed}})",
       "success": "{{count}} tiliä luotu!",
       "allFailed": "Yhtään tiliä ei voitu luoda",
+      "allExist": "",
       "error": "Tilien luonti epäonnistui",
       "invalidAmount": "Syötä kelvollinen määrä (vähintään 1)",
       "missingPlaceholder": "Nimimuodossa on oltava %d-paikkamerkki"

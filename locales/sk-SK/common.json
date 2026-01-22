@@ -7,7 +7,8 @@
       "title": "Chyba",
       "description": "Pri načítaní stránky došlo k chybe. Viac informácií je v konzole.",
       "logOut": "Odhlásiť sa",
-      "reloadPage": "Obnoviť stránku"
+      "reloadPage": "Obnoviť stránku",
+      "showDetails": ""
     },
     "connectionFailed": "Nepodarilo sa pripojiť k serveru SoulFire."
   },

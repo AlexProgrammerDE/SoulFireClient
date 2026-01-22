@@ -7,7 +7,8 @@
       "title": "Erreur",
       "description": "Une erreur s'est produite en essayant de charger la page. Plus d'informations peuvent être trouvées dans la console.",
       "logOut": "Déconnexion",
-      "reloadPage": "Recharger la page"
+      "reloadPage": "Recharger la page",
+      "showDetails": ""
     },
     "connectionFailed": "Échec de la connexion au serveur SoulFire.."
   },

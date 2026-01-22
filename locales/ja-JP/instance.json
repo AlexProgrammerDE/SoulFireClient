@@ -30,6 +30,11 @@
       "success": "{{count}}件の壊れたプロキシを削除しました！",
       "error": "プロキシのチェックに失敗しました。"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "無効なプロキシ形式です。",
     "table": {
       "type": "種類",
@@ -63,12 +68,17 @@
       "amount": "件数",
       "nameFormat": "名前フォーマット",
       "nameFormatHelp": "%dをアカウント番号のプレースホルダーとして使用します（例：Bot_%d は Bot_1, Bot_2 などになります）。",
-      "overrideExisting": "既存の{{count}}件のアカウントを上書き",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "生成",
       "generating": "生成中...",
       "progress": "アカウントを生成中... {{checked}}/{{total}}（成功：{{success}} 失敗：{{failed}}）",
       "success": "{{count}}件のアカウントを生成しました！",
       "allFailed": "アカウントの生成にすべて失敗しました。",
+      "allExist": "",
       "error": "アカウントの生成に失敗しました。",
       "invalidAmount": "有効な件数（1以上）を入力してください。",
       "missingPlaceholder": "名前フォーマットに%dプレースホルダーが含まれている必要があります。"

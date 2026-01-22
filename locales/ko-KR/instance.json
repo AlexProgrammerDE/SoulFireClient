@@ -30,6 +30,11 @@
       "success": "손상된 프록시 {{count}}개를 삭제했습니다!",
       "error": "프록시 확인에 실패했습니다."
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "잘못된 프록시 형식",
     "table": {
       "type": "종류",
@@ -63,12 +68,17 @@
       "amount": "수량",
       "nameFormat": "이름 형식",
       "nameFormatHelp": "계정 번호를 위한 자리 표시자로 %d를 사용하세요 (예: Bot_%d → Bot_1, Bot_2 등)",
-      "overrideExisting": "기존의 {{count}}개 계정 덮어쓰기",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "생성",
       "generating": "생성 중...",
       "progress": "계정 생성 중... {{checked}}/{{total}} (성공: {{success}} 실패: {{failed}})",
       "success": "{{count}}개의 계정이 생성되었습니다!",
       "allFailed": "계정 생성에 모두 실패했습니다.",
+      "allExist": "",
       "error": "계정 생성에 실패했습니다.",
       "invalidAmount": "유효한 수량(최소 1개)을 입력하세요.",
       "missingPlaceholder": "이름 형식에 %d 자리 표시자가 포함되어야 합니다."

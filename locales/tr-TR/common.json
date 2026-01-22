@@ -7,7 +7,8 @@
       "title": "Hata",
       "description": "Sayfa yüklenirken bir hata oluştu. Daha fazla bilgi konsolda bulunabilir.",
       "logOut": "Çıkış Yap",
-      "reloadPage": "Sayfayı yeniden yükle"
+      "reloadPage": "Sayfayı yeniden yükle",
+      "showDetails": ""
     },
     "connectionFailed": "SoulFire sunucusuna bağlantı başarısız oldu."
   },

@@ -7,7 +7,8 @@
       "title": "出错",
       "description": "尝试加载页面时发生错误。更多信息可在控制台中找到。",
       "logOut": "退出登录",
-      "reloadPage": "重新载入页面"
+      "reloadPage": "重新载入页面",
+      "showDetails": ""
     },
     "connectionFailed": "连接 SoulFire 服务器失败。"
   },

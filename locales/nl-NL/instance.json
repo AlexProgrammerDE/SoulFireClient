@@ -30,6 +30,11 @@
       "success": "{{count}} defecte proxies verwijderd!",
       "error": "Controleren van proxies mislukt"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Ongeldig proxyformaat",
     "table": {
       "type": "Type",
@@ -63,12 +68,17 @@
       "amount": "Aantal",
       "nameFormat": "Naamformaat",
       "nameFormatHelp": "Gebruik %d als placeholder voor het accountnummer (bijvoorbeeld: Bot_%d wordt Bot_1, Bot_2, enz.)",
-      "overrideExisting": "Overschrijf bestaande {{count}} accounts",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Genereren",
       "generating": "Bezig met genereren...",
       "progress": "Accounts worden gegenereerd... {{checked}}/{{total}} (Succes: {{success}} Mislukt: {{failed}})",
       "success": "{{count}} accounts gegenereerd!",
       "allFailed": "Kon geen enkele account genereren",
+      "allExist": "",
       "error": "Aanmaken van accounts mislukt",
       "invalidAmount": "Voer een geldig aantal in (minimaal 1)",
       "missingPlaceholder": "Naamformaat moet een %d placeholder bevatten"

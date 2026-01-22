@@ -30,6 +30,11 @@
       "success": "{{count}} proxys corrompus supprimés !",
       "error": "Impossible de vérifier les proxys"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Format de proxy invalide",
     "table": {
       "type": "Type",
@@ -63,12 +68,17 @@
       "amount": "Quantité",
       "nameFormat": "Format du nom",
       "nameFormatHelp": "Utilisez %d comme variable de remplacement pour le numéro de compte (par exemple, Bot_%d devient Bot_1, Bot_2, etc.)",
-      "overrideExisting": "Remplacer les {{count}} comptes existants",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Générer",
       "generating": "Génération...",
       "progress": "Génération des comptes... {{checked}}/{{total}} (Réussite : {{success}} Échec : {{failed}})",
       "success": "{{count}} comptes générés !",
       "allFailed": "Impossible de générer des comptes",
+      "allExist": "",
       "error": "Échec de la génération des comptes",
       "invalidAmount": "Veuillez saisir une quantité valide (au moins 1)",
       "missingPlaceholder": "Le format du nom doit contenir le variable %d"

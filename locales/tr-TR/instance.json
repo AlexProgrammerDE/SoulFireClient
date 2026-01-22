@@ -30,6 +30,11 @@
       "success": "{{count}} bozuk proxy kaldırıldı!",
       "error": "Proxyler kontrol edilemedi"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Geçersiz proxy formatı",
     "table": {
       "type": "Tip",
@@ -63,12 +68,17 @@
       "amount": "Miktar",
       "nameFormat": "Ad Formatı",
       "nameFormatHelp": "Hesap numarası için %d kullanın (örn. Bot_%d, Bot_1, Bot_2 vb. olur)",
-      "overrideExisting": "Varolan {{count}} hesabın üzerine yaz",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Oluştur",
       "generating": "Oluşturuluyor...",
       "progress": "Hesaplar oluşturuluyor... {{checked}}/{{total}} (Başarılı: {{success}} Hatalı: {{failed}})",
       "success": "{{count}} hesap oluşturuldu!",
       "allFailed": "Hiç hesap oluşturulamadı",
+      "allExist": "",
       "error": "Hesaplar oluşturulamadı",
       "invalidAmount": "Lütfen geçerli bir miktar girin (en az 1)",
       "missingPlaceholder": "Ad formatı %d yer tutucu içermeli"

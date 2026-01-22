@@ -7,7 +7,8 @@
       "title": "Kesalahan",
       "description": "Terjadi kesalahan saat mencoba memuat halaman. Informasi lebih lanjut dapat ditemukan di konsol.",
       "logOut": "Keluar",
-      "reloadPage": "Muat ulang halaman"
+      "reloadPage": "Muat ulang halaman",
+      "showDetails": ""
     },
     "connectionFailed": "Koneksi ke server SoulFire gagal."
   },

@@ -30,6 +30,11 @@
       "success": "Đã xóa {{count}} proxy lỗi!",
       "error": "Không thể kiểm tra proxy."
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Định dạng proxy không hợp lệ",
     "table": {
       "type": "Loại",
@@ -63,12 +68,17 @@
       "amount": "Số lượng",
       "nameFormat": "Định dạng tên",
       "nameFormatHelp": "Sử dụng %d như một ký tự đại diện cho số tài khoản (ví dụ: Bot_%d sẽ trở thành Bot_1, Bot_2, v.v.)",
-      "overrideExisting": "Ghi đè lên {{count}} tài khoản hiện có",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Tạo",
       "generating": "Đang tạo...",
       "progress": "Đang tạo tài khoản... {{checked}}/{{total}} (Thành công: {{success}} Thất bại: {{failed}})",
       "success": "Đã tạo {{count}} tài khoản!",
       "allFailed": "Không thể tạo bất kỳ tài khoản nào",
+      "allExist": "",
       "error": "Không thể tạo tài khoản",
       "invalidAmount": "Vui lòng nhập số lượng hợp lệ (ít nhất là 1)",
       "missingPlaceholder": "Định dạng tên phải chứa ký tự đại diện %d"

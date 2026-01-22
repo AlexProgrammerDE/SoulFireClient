@@ -30,6 +30,11 @@
       "success": "{{count}} pozulmuş proxy silindi!",
       "error": "Proxy-ləri yoxlamaq mümkün olmadı"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Yanlış proxy formatı",
     "table": {
       "type": "Növ",
@@ -63,12 +68,17 @@
       "amount": "Miqdar",
       "nameFormat": "Ad Formatı",
       "nameFormatHelp": "Hesab nömrəsi üçün %d saxlayıcı kimi istifadə edin (məsələn, Bot_%d Bot_1, Bot_2 və s. olur)",
-      "overrideExisting": "Mövcud olan {{count}} hesabı üstələyin",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Yarat",
       "generating": "Yaradılır...",
       "progress": "Hesablar yaradılır... {{checked}}/{{total}} (Uğur: {{success}} Uğursuz: {{failed}})",
       "success": "{{count}} hesab yaradıldı!",
       "allFailed": "Heç bir hesab yaradılmadı",
+      "allExist": "",
       "error": "Hesabları yaratmaq mümkün olmadı",
       "invalidAmount": "Zəhmət olmasa düzgün miqdar daxil edin (ən azı 1)",
       "missingPlaceholder": "Ad formatında %d saxlayıcı olmalıdır"

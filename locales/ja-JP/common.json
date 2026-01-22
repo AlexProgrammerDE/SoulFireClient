@@ -7,7 +7,8 @@
       "title": "エラー",
       "description": "ページの読み込み中にエラーが発生しました。詳細はコンソールでご確認ください。",
       "logOut": "ログアウト",
-      "reloadPage": "ページを再読み込み"
+      "reloadPage": "ページを再読み込み",
+      "showDetails": ""
     },
     "connectionFailed": "SoulFireサーバーへの接続に失敗しました。"
   },

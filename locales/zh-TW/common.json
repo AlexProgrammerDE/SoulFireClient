@@ -7,7 +7,8 @@
       "title": "錯誤",
       "description": "載入頁面時發生錯誤。更多資訊可在主控台查看。",
       "logOut": "登出",
-      "reloadPage": "重新載入頁面"
+      "reloadPage": "重新載入頁面",
+      "showDetails": ""
     },
     "connectionFailed": "連接 SoulFire 伺服器失敗。"
   },

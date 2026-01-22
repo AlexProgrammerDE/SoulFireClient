@@ -7,7 +7,8 @@
       "title": "Lỗi",
       "description": "Đã xảy ra lỗi khi tải trang. Xem thêm thông tin trong bảng điều khiển.",
       "logOut": "Đăng xuất",
-      "reloadPage": "Tải lại trang"
+      "reloadPage": "Tải lại trang",
+      "showDetails": ""
     },
     "connectionFailed": "Kết nối đến máy chủ SoulFire thất bại."
   },

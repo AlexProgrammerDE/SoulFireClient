@@ -30,6 +30,11 @@
       "success": "{{count}} nefunkčních proxy odstraněno!",
       "error": "Nepodařilo se zkontrolovat proxy."
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Neplatný formát proxy",
     "table": {
       "type": "Typ",
@@ -63,12 +68,17 @@
       "amount": "Počet",
       "nameFormat": "Formát jména",
       "nameFormatHelp": "Použijte %d jako zástupný znak pro číslo účtu (např. Bot_%d se stane Bot_1, Bot_2 atd.)",
-      "overrideExisting": "Přepsat existující {{count}} účty",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Generovat",
       "generating": "Generuje se...",
       "progress": "Generování účtů... {{checked}}/{{total}} (Úspěšně: {{success}} Neúspěšně: {{failed}})",
       "success": "Vygenerováno {{count}} účtů!",
       "allFailed": "Nepodařilo se vygenerovat žádné účty",
+      "allExist": "",
       "error": "Nepodařilo se vygenerovat účty",
       "invalidAmount": "Zadejte prosím platný počet (alespoň 1)",
       "missingPlaceholder": "Formát jména musí obsahovat zástupný znak %d"

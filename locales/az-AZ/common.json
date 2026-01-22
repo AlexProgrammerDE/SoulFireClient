@@ -7,7 +7,8 @@
       "title": "Xəta",
       "description": "Səhifə yüklənərkən xəta baş verdi. Daha ətraflı məlumat konsolda görünəcək.",
       "logOut": "Çıxış",
-      "reloadPage": "Səhifəni yenilə"
+      "reloadPage": "Səhifəni yenilə",
+      "showDetails": ""
     },
     "connectionFailed": "SoulFire serveri ilə əlaqə alınmadı."
   },

@@ -7,7 +7,8 @@
       "title": "Ewwow",
       "description": "Error happen when i try give you page. You can see whay in the consol.",
       "logOut": "Walk out",
-      "reloadPage": "Spin paeg"
+      "reloadPage": "Spin paeg",
+      "showDetails": ""
     },
     "connectionFailed": "Cunnection unsuccessful."
   },

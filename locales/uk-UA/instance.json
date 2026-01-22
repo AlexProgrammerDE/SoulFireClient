@@ -30,6 +30,11 @@
       "success": "Видалено {{count}} пошкоджених проксі!",
       "error": "Не вдалося перевірити проксі"
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Неправильний формат проксі",
     "table": {
       "type": "Тип",
@@ -63,12 +68,17 @@
       "amount": "Кількість",
       "nameFormat": "Формат імені",
       "nameFormatHelp": "Використовуйте %d як заповнювач для номера акаунта (наприклад, Bot_%d стане Bot_1, Bot_2 тощо)",
-      "overrideExisting": "Замінити існуючі {{count}} акаунти",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Згенерувати",
       "generating": "Генерується...",
       "progress": "Генеруємо акаунти... {{checked}}/{{total}} (Успішно: {{success}} Помилки: {{failed}})",
       "success": "Згенеровано {{count}} акаунт!",
       "allFailed": "Не вдалося згенерувати жодного акаунта",
+      "allExist": "",
       "error": "Не вдалося згенерувати акаунти",
       "invalidAmount": "Вкажіть коректну кількість (не менше 1)",
       "missingPlaceholder": "Формат імені має містити заповнювач %d"

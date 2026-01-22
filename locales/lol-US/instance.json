@@ -30,6 +30,11 @@
       "success": "Removed {{count}} broked proxyz!",
       "error": "Proxy check borked! No can haz check."
     },
+    "checkDialog": {
+      "title": "",
+      "description": "",
+      "confirm": ""
+    },
     "invalidFormat": "Proxy not rite format, no cheezburgerz.",
     "table": {
       "type": "Tyep",
@@ -63,12 +68,17 @@
       "amount": "Amownt",
       "nameFormat": "Naym Format",
       "nameFormatHelp": "Uze %d az placeholder fur account numbur (exampul: Bot_%d becumz Bot_1, Bot_2, etcz)",
-      "overrideExisting": "Ovurrite existin {{count}} accountz",
+      "mode": "",
+      "modeHelp": "",
+      "modeIgnoreExisting": "",
+      "modeReplaceExisting": "",
+      "modeReplaceAll": "",
       "submit": "Genurayt",
       "generating": "Genuraytin...",
       "progress": "Genuraytin accountz... {{checked}}/{{total}} (Succesz: {{success}} Failz: {{failed}})",
       "success": "Genurayted {{count}} accountz!",
       "allFailed": "Faild tu genurayt any accountz",
+      "allExist": "",
       "error": "Faild tu genurayt accountz",
       "invalidAmount": "Plz enterz valid amownt (at leest 1)",
       "missingPlaceholder": "Naym format haz to haz %d placeholder"
