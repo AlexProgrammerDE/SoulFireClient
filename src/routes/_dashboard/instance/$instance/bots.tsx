@@ -224,7 +224,7 @@ function BotCard({
 
   return (
     <Link
-      to="/instance/$instance/bots/$botId"
+      to="/instance/$instance/bot/$botId"
       params={{ instance: instanceId, botId: bot.profileId }}
     >
       <Card className="hover:bg-muted/50 h-full cursor-pointer transition-colors">

@@ -40,7 +40,7 @@ import { createTransport } from "@/lib/web-rpc.ts";
 const INVENTORY_SLOTS = Array.from({ length: 36 }, (_, i) => `slot-${i}`);
 
 export const Route = createFileRoute(
-  "/_dashboard/instance/$instance/bots/$botId",
+  "/_dashboard/instance/$instance/bot/$botId",
 )({
   beforeLoad: (props) => {
     const { instance, botId } = props.params;
