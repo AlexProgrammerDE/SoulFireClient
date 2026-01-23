@@ -78,6 +78,29 @@ export interface BotListResponse {
   bots: BotListEntry[];
 }
 /**
+ * Represents an item in an inventory slot
+ *
+ * @generated from protobuf message soulfire.v1.InventorySlot
+ */
+export interface InventorySlot {
+  /**
+   * @generated from protobuf field: int32 slot = 1
+   */
+  slot: number;
+  /**
+   * @generated from protobuf field: string item_id = 2
+   */
+  itemId: string; // e.g., "minecraft:diamond_sword"
+  /**
+   * @generated from protobuf field: int32 count = 3
+   */
+  count: number;
+  /**
+   * @generated from protobuf field: optional string display_name = 4
+   */
+  displayName?: string; // Custom name if present
+}
+/**
  * @generated from protobuf message soulfire.v1.BotLiveState
  */
 export interface BotLiveState {
@@ -101,6 +124,57 @@ export interface BotLiveState {
    * @generated from protobuf field: float yRot = 5
    */
   yRot: number;
+  /**
+   * Health and food
+   *
+   * @generated from protobuf field: float health = 6
+   */
+  health: number;
+  /**
+   * @generated from protobuf field: float max_health = 7
+   */
+  maxHealth: number;
+  /**
+   * @generated from protobuf field: int32 food_level = 8
+   */
+  foodLevel: number;
+  /**
+   * @generated from protobuf field: float saturation_level = 9
+   */
+  saturationLevel: number;
+  /**
+   * Inventory (only non-empty slots)
+   *
+   * @generated from protobuf field: repeated soulfire.v1.InventorySlot inventory = 10
+   */
+  inventory: InventorySlot[];
+  /**
+   * @generated from protobuf field: int32 selected_hotbar_slot = 11
+   */
+  selectedHotbarSlot: number;
+  /**
+   * World info
+   *
+   * @generated from protobuf field: string dimension = 12
+   */
+  dimension: string; // e.g., "minecraft:overworld"
+  /**
+   * Experience
+   *
+   * @generated from protobuf field: int32 experience_level = 13
+   */
+  experienceLevel: number;
+  /**
+   * @generated from protobuf field: float experience_progress = 14
+   */
+  experienceProgress: number; // 0.0 to 1.0
+  /**
+   * Skin texture hash for avatar rendering (e.g., "abc123def456...")
+   * Use with https://mc-heads.net/body/<hash> for full body render
+   *
+   * @generated from protobuf field: optional string skin_texture_hash = 15
+   */
+  skinTextureHash?: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.BotInfoResponse
@@ -167,6 +241,38 @@ export interface BotUpdateConfigEntryRequest {
  * @generated from protobuf message soulfire.v1.BotUpdateConfigEntryResponse
  */
 export interface BotUpdateConfigEntryResponse {}
+/**
+ * POV Rendering
+ *
+ * @generated from protobuf message soulfire.v1.BotRenderPovRequest
+ */
+export interface BotRenderPovRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+  /**
+   * @generated from protobuf field: int32 width = 3
+   */
+  width: number; // Image width (default 854)
+  /**
+   * @generated from protobuf field: int32 height = 4
+   */
+  height: number; // Image height (default 480)
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotRenderPovResponse
+ */
+export interface BotRenderPovResponse {
+  /**
+   * @generated from protobuf field: string image_base64 = 1
+   */
+  imageBase64: string; // Base64 encoded PNG image
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class BotConfig$Type extends MessageType<BotConfig> {
   constructor() {
@@ -583,6 +689,103 @@ class BotListResponse$Type extends MessageType<BotListResponse> {
  */
 export const BotListResponse = new BotListResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class InventorySlot$Type extends MessageType<InventorySlot> {
+  constructor() {
+    super("soulfire.v1.InventorySlot", [
+      { no: 1, name: "slot", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 2, name: "item_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "count", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      {
+        no: 4,
+        name: "display_name",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<InventorySlot>): InventorySlot {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.slot = 0;
+    message.itemId = "";
+    message.count = 0;
+    if (value !== undefined)
+      reflectionMergePartial<InventorySlot>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: InventorySlot,
+  ): InventorySlot {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int32 slot */ 1:
+          message.slot = reader.int32();
+          break;
+        case /* string item_id */ 2:
+          message.itemId = reader.string();
+          break;
+        case /* int32 count */ 3:
+          message.count = reader.int32();
+          break;
+        case /* optional string display_name */ 4:
+          message.displayName = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: InventorySlot,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int32 slot = 1; */
+    if (message.slot !== 0) writer.tag(1, WireType.Varint).int32(message.slot);
+    /* string item_id = 2; */
+    if (message.itemId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.itemId);
+    /* int32 count = 3; */
+    if (message.count !== 0)
+      writer.tag(3, WireType.Varint).int32(message.count);
+    /* optional string display_name = 4; */
+    if (message.displayName !== undefined)
+      writer.tag(4, WireType.LengthDelimited).string(message.displayName);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.InventorySlot
+ */
+export const InventorySlot = new InventorySlot$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class BotLiveState$Type extends MessageType<BotLiveState> {
   constructor() {
     super("soulfire.v1.BotLiveState", [
@@ -591,6 +794,48 @@ class BotLiveState$Type extends MessageType<BotLiveState> {
       { no: 3, name: "z", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
       { no: 4, name: "xRot", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
       { no: 5, name: "yRot", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+      { no: 6, name: "health", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+      { no: 7, name: "max_health", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+      { no: 8, name: "food_level", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      {
+        no: 9,
+        name: "saturation_level",
+        kind: "scalar",
+        T: 2 /*ScalarType.FLOAT*/,
+      },
+      {
+        no: 10,
+        name: "inventory",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => InventorySlot,
+      },
+      {
+        no: 11,
+        name: "selected_hotbar_slot",
+        kind: "scalar",
+        T: 5 /*ScalarType.INT32*/,
+      },
+      { no: 12, name: "dimension", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 13,
+        name: "experience_level",
+        kind: "scalar",
+        T: 5 /*ScalarType.INT32*/,
+      },
+      {
+        no: 14,
+        name: "experience_progress",
+        kind: "scalar",
+        T: 2 /*ScalarType.FLOAT*/,
+      },
+      {
+        no: 15,
+        name: "skin_texture_hash",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
     ]);
   }
   create(value?: PartialMessage<BotLiveState>): BotLiveState {
@@ -600,6 +845,15 @@ class BotLiveState$Type extends MessageType<BotLiveState> {
     message.z = 0;
     message.xRot = 0;
     message.yRot = 0;
+    message.health = 0;
+    message.maxHealth = 0;
+    message.foodLevel = 0;
+    message.saturationLevel = 0;
+    message.inventory = [];
+    message.selectedHotbarSlot = 0;
+    message.dimension = "";
+    message.experienceLevel = 0;
+    message.experienceProgress = 0;
     if (value !== undefined)
       reflectionMergePartial<BotLiveState>(this, message, value);
     return message;
@@ -629,6 +883,38 @@ class BotLiveState$Type extends MessageType<BotLiveState> {
           break;
         case /* float yRot */ 5:
           message.yRot = reader.float();
+          break;
+        case /* float health */ 6:
+          message.health = reader.float();
+          break;
+        case /* float max_health */ 7:
+          message.maxHealth = reader.float();
+          break;
+        case /* int32 food_level */ 8:
+          message.foodLevel = reader.int32();
+          break;
+        case /* float saturation_level */ 9:
+          message.saturationLevel = reader.float();
+          break;
+        case /* repeated soulfire.v1.InventorySlot inventory */ 10:
+          message.inventory.push(
+            InventorySlot.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* int32 selected_hotbar_slot */ 11:
+          message.selectedHotbarSlot = reader.int32();
+          break;
+        case /* string dimension */ 12:
+          message.dimension = reader.string();
+          break;
+        case /* int32 experience_level */ 13:
+          message.experienceLevel = reader.int32();
+          break;
+        case /* float experience_progress */ 14:
+          message.experienceProgress = reader.float();
+          break;
+        case /* optional string skin_texture_hash */ 15:
+          message.skinTextureHash = reader.string();
           break;
         default:
           let u = options.readUnknownField;
@@ -664,6 +950,40 @@ class BotLiveState$Type extends MessageType<BotLiveState> {
     if (message.xRot !== 0) writer.tag(4, WireType.Bit32).float(message.xRot);
     /* float yRot = 5; */
     if (message.yRot !== 0) writer.tag(5, WireType.Bit32).float(message.yRot);
+    /* float health = 6; */
+    if (message.health !== 0)
+      writer.tag(6, WireType.Bit32).float(message.health);
+    /* float max_health = 7; */
+    if (message.maxHealth !== 0)
+      writer.tag(7, WireType.Bit32).float(message.maxHealth);
+    /* int32 food_level = 8; */
+    if (message.foodLevel !== 0)
+      writer.tag(8, WireType.Varint).int32(message.foodLevel);
+    /* float saturation_level = 9; */
+    if (message.saturationLevel !== 0)
+      writer.tag(9, WireType.Bit32).float(message.saturationLevel);
+    /* repeated soulfire.v1.InventorySlot inventory = 10; */
+    for (let i = 0; i < message.inventory.length; i++)
+      InventorySlot.internalBinaryWrite(
+        message.inventory[i],
+        writer.tag(10, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* int32 selected_hotbar_slot = 11; */
+    if (message.selectedHotbarSlot !== 0)
+      writer.tag(11, WireType.Varint).int32(message.selectedHotbarSlot);
+    /* string dimension = 12; */
+    if (message.dimension !== "")
+      writer.tag(12, WireType.LengthDelimited).string(message.dimension);
+    /* int32 experience_level = 13; */
+    if (message.experienceLevel !== 0)
+      writer.tag(13, WireType.Varint).int32(message.experienceLevel);
+    /* float experience_progress = 14; */
+    if (message.experienceProgress !== 0)
+      writer.tag(14, WireType.Bit32).float(message.experienceProgress);
+    /* optional string skin_texture_hash = 15; */
+    if (message.skinTextureHash !== undefined)
+      writer.tag(15, WireType.LengthDelimited).string(message.skinTextureHash);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -1117,6 +1437,178 @@ class BotUpdateConfigEntryResponse$Type extends MessageType<BotUpdateConfigEntry
  */
 export const BotUpdateConfigEntryResponse =
   new BotUpdateConfigEntryResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotRenderPovRequest$Type extends MessageType<BotRenderPovRequest> {
+  constructor() {
+    super("soulfire.v1.BotRenderPovRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "width", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 4, name: "height", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  create(value?: PartialMessage<BotRenderPovRequest>): BotRenderPovRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    message.width = 0;
+    message.height = 0;
+    if (value !== undefined)
+      reflectionMergePartial<BotRenderPovRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotRenderPovRequest,
+  ): BotRenderPovRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        case /* int32 width */ 3:
+          message.width = reader.int32();
+          break;
+        case /* int32 height */ 4:
+          message.height = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotRenderPovRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    /* int32 width = 3; */
+    if (message.width !== 0)
+      writer.tag(3, WireType.Varint).int32(message.width);
+    /* int32 height = 4; */
+    if (message.height !== 0)
+      writer.tag(4, WireType.Varint).int32(message.height);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotRenderPovRequest
+ */
+export const BotRenderPovRequest = new BotRenderPovRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotRenderPovResponse$Type extends MessageType<BotRenderPovResponse> {
+  constructor() {
+    super("soulfire.v1.BotRenderPovResponse", [
+      {
+        no: 1,
+        name: "image_base64",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<BotRenderPovResponse>): BotRenderPovResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.imageBase64 = "";
+    if (value !== undefined)
+      reflectionMergePartial<BotRenderPovResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotRenderPovResponse,
+  ): BotRenderPovResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string image_base64 */ 1:
+          message.imageBase64 = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotRenderPovResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string image_base64 = 1; */
+    if (message.imageBase64 !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.imageBase64);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotRenderPovResponse
+ */
+export const BotRenderPovResponse = new BotRenderPovResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.BotService
  */
@@ -1134,5 +1626,11 @@ export const BotService = new ServiceType("soulfire.v1.BotService", [
     options: {},
     I: BotUpdateConfigEntryRequest,
     O: BotUpdateConfigEntryResponse,
+  },
+  {
+    name: "RenderBotPov",
+    options: {},
+    I: BotRenderPovRequest,
+    O: BotRenderPovResponse,
   },
 ]);

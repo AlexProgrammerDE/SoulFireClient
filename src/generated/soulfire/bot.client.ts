@@ -15,6 +15,8 @@ import type {
   BotInfoResponse,
   BotListRequest,
   BotListResponse,
+  BotRenderPovRequest,
+  BotRenderPovResponse,
   BotUpdateConfigEntryRequest,
   BotUpdateConfigEntryResponse,
   BotUpdateConfigRequest,
@@ -57,6 +59,15 @@ export interface IBotServiceClient {
     input: BotUpdateConfigEntryRequest,
     options?: RpcOptions,
   ): UnaryCall<BotUpdateConfigEntryRequest, BotUpdateConfigEntryResponse>;
+  /**
+   * Render the bot's point of view using software rendering
+   *
+   * @generated from protobuf rpc: RenderBotPov
+   */
+  renderBotPov(
+    input: BotRenderPovRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotRenderPovRequest, BotRenderPovResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.BotService
@@ -134,5 +145,24 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
       BotUpdateConfigEntryRequest,
       BotUpdateConfigEntryResponse
     >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * Render the bot's point of view using software rendering
+   *
+   * @generated from protobuf rpc: RenderBotPov
+   */
+  renderBotPov(
+    input: BotRenderPovRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotRenderPovRequest, BotRenderPovResponse> {
+    const method = this.methods[4],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<BotRenderPovRequest, BotRenderPovResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
   }
 }

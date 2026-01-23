@@ -208,6 +208,16 @@ function Content() {
   );
 }
 
+// Helper to get the avatar URL based on skin texture hash
+function getHeadUrl(skinTextureHash?: string): string {
+  if (skinTextureHash) {
+    // Use the skin texture hash for online bots with skins
+    return `https://mc-heads.net/head/${skinTextureHash}/48`;
+  }
+  // Default to Steve for offline bots or bots without skin data
+  return "https://mc-heads.net/head/MHF_Steve/48";
+}
+
 function BotCard({
   bot,
   instanceId,
@@ -232,7 +242,7 @@ function BotCard({
           <div className="flex items-start gap-3">
             {/* Minecraft avatar */}
             <img
-              src={`https://mc-heads.net/avatar/${bot.profileId}/48`}
+              src={getHeadUrl(bot.liveState?.skinTextureHash)}
               alt={bot.lastKnownName}
               className="size-12 rounded"
               loading="lazy"
@@ -250,7 +260,7 @@ function BotCard({
                   variant={bot.isOnline ? "default" : "secondary"}
                   className="text-xs"
                 >
-                  {bot.isOnline ? "Online" : "Offline"}
+                  {bot.isOnline ? "Online" : "Not Joined"}
                 </Badge>
               </div>
             </div>

@@ -120,8 +120,12 @@
     "noBotsFound": "No bots match your search.",
     "online": "Online",
     "offline": "Offline",
+    "notJoined": "Not Joined",
     "backToBots": "Back to Bots",
     "comingSoon": "Coming Soon",
+    "terminalPanel": {
+      "title": "Bot Logs"
+    },
     "positionPanel": {
       "title": "Position & Rotation",
       "position": "Position",
@@ -137,13 +141,41 @@
       "placeholder": "Send command to this bot...",
       "description": "Bot-scoped commands will be available in a future update."
     },
+    "povPanel": {
+      "title": "Bot POV",
+      "capture": "Capture",
+      "refresh": "Refresh",
+      "clickToCapture": "Click Capture to render the bot's point of view",
+      "offline": "Bot is offline. POV rendering is only available when the bot is connected."
+    },
+    "statsPanel": {
+      "title": "Bot Stats",
+      "health": "Health",
+      "food": "Food",
+      "saturation": "Saturation",
+      "experience": "Experience",
+      "level": "Level",
+      "toNextLevel": "to next level",
+      "offline": "Bot is offline. Stats are only available when the bot is connected."
+    },
     "inventoryPanel": {
       "title": "Inventory",
-      "description": "Inventory viewing will be available in a future update."
+      "hotbar": "Hotbar",
+      "main": "Main Inventory",
+      "items": "items",
+      "offline": "Bot is offline. Inventory is only available when the bot is connected."
     },
     "visualPanel": {
-      "title": "Live View",
-      "description": "Live visual rendering will be available in a future update."
+      "title": "Bot View",
+      "compass": "Facing Direction",
+      "lookDirection": "Look Angle",
+      "lookingUp": "Looking up",
+      "lookingDown": "Looking down",
+      "lookingStraight": "Looking straight",
+      "worldInfo": "World Info",
+      "dimension": "Dimension",
+      "biome": "Biome",
+      "offline": "Bot is offline. Visual data is only available when the bot is connected."
     }
   }
 }

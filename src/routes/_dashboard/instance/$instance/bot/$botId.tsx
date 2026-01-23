@@ -2,20 +2,27 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeftIcon,
+  CameraIcon,
   CompassIcon,
   EyeIcon,
+  HeartIcon,
   KeyRoundIcon,
-  MessageSquareIcon,
+  LoaderIcon,
   MonitorIcon,
   MonitorSmartphoneIcon,
   PackageIcon,
+  RefreshCwIcon,
   RotateCcwKeyIcon,
+  SparklesIcon,
   TerminalIcon,
+  UtensilsIcon,
   WifiOffIcon,
 } from "lucide-react";
-import { useMemo } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
+import CommandInput from "@/components/command-input.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
+import { TerminalComponent } from "@/components/terminal.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import {
@@ -25,19 +32,26 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card.tsx";
-import { Input } from "@/components/ui/input.tsx";
 import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
-import type { BotInfoResponse } from "@/generated/soulfire/bot.ts";
-import { MinecraftAccountProto_AccountTypeProto } from "@/generated/soulfire/common.ts";
+import type {
+  BotInfoResponse,
+  BotLiveState,
+  InventorySlot,
+} from "@/generated/soulfire/bot.ts";
+import type { CommandScope } from "@/generated/soulfire/command.ts";
+import {
+  InstancePermission,
+  MinecraftAccountProto_AccountTypeProto,
+} from "@/generated/soulfire/common.ts";
+import type { LogScope } from "@/generated/soulfire/logs.ts";
 import {
   getEnumKeyByValue,
+  type InstanceInfoQueryData,
   mapUnionToValue,
   type ProfileAccount,
 } from "@/lib/types.ts";
+import { hasInstancePermission } from "@/lib/utils.tsx";
 import { createTransport } from "@/lib/web-rpc.ts";
-
-// Static inventory slot keys for the mock inventory grid
-const INVENTORY_SLOTS = Array.from({ length: 36 }, (_, i) => `slot-${i}`);
 
 export const Route = createFileRoute(
   "/_dashboard/instance/$instance/bot/$botId",
@@ -169,8 +183,10 @@ function BotDetailContent({
   instanceId: string;
 }) {
   const { t } = useTranslation("instance");
-  const { botInfoQueryOptions } = Route.useRouteContext();
+  const { botInfoQueryOptions, instanceInfoQueryOptions } =
+    Route.useRouteContext();
   const { data: botInfo } = useSuspenseQuery(botInfoQueryOptions);
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
 
   const isOnline = !!botInfo.liveState;
   const typeKey = getEnumKeyByValue(
@@ -178,6 +194,31 @@ function BotDetailContent({
     account.type,
   );
   const TypeIcon = accountTypeToIcon(typeKey);
+
+  const logScope = useMemo<LogScope>(
+    () => ({
+      scope: {
+        oneofKind: "bot",
+        bot: {
+          instanceId,
+          botId: account.profileId,
+        },
+      },
+    }),
+    [instanceId, account.profileId],
+  );
+
+  const commandScope = useMemo<CommandScope>(
+    () => ({
+      scope: {
+        oneofKind: "instance",
+        instance: {
+          instanceId,
+        },
+      },
+    }),
+    [instanceId],
+  );
 
   return (
     <div className="container flex flex-col gap-4 py-4">
@@ -199,41 +240,68 @@ function BotDetailContent({
           <BotSkinPreview
             account={account}
             isOnline={isOnline}
+            skinTextureHash={botInfo.liveState?.skinTextureHash}
             typeKey={typeKey}
             TypeIcon={TypeIcon}
           />
 
-          {/* Chat panel (mock) */}
-          <BotChatPanel />
+          {/* Stats panel (health, food, xp) */}
+          <BotStatsPanel liveState={botInfo.liveState} isOnline={isOnline} />
 
-          {/* Inventory panel (mock) */}
-          <BotInventoryPanel />
+          {/* Inventory panel */}
+          <BotInventoryPanel
+            liveState={botInfo.liveState}
+            isOnline={isOnline}
+          />
         </div>
 
         {/* Right column */}
         <div className="flex flex-col gap-4">
+          {/* POV Render panel */}
+          <BotPovPanel
+            instanceId={instanceId}
+            botId={account.profileId}
+            isOnline={isOnline}
+          />
+
           {/* Position panel */}
           <BotPositionPanel liveState={botInfo.liveState} isOnline={isOnline} />
 
-          {/* Command panel (mock) */}
-          <BotCommandPanel />
+          {/* Visual panel with compass */}
+          <BotVisualPanel liveState={botInfo.liveState} isOnline={isOnline} />
 
-          {/* Visual placeholder (mock) */}
-          <BotVisualPlaceholder />
+          {/* Terminal panel with bot-scoped logs */}
+          <BotTerminalPanel
+            logScope={logScope}
+            commandScope={commandScope}
+            instanceInfo={instanceInfo}
+          />
         </div>
       </div>
     </div>
   );
 }
 
+// Helper to get the avatar URL based on online status and skin hash
+function getAvatarUrl(skinTextureHash?: string): string {
+  if (skinTextureHash) {
+    // Use the skin texture hash for online bots with skins
+    return `https://mc-heads.net/body/${skinTextureHash}`;
+  }
+  // Default to Steve for offline bots or bots without skin data
+  return "https://mc-heads.net/body/MHF_Steve";
+}
+
 function BotSkinPreview({
   account,
   isOnline,
+  skinTextureHash,
   typeKey,
   TypeIcon,
 }: {
   account: ProfileAccount;
   isOnline: boolean;
+  skinTextureHash?: string;
   typeKey: keyof typeof MinecraftAccountProto_AccountTypeProto;
   TypeIcon: React.ComponentType<{ className?: string }>;
 }) {
@@ -245,7 +313,7 @@ function BotSkinPreview({
         <div className="flex items-start gap-4">
           {/* Full body render */}
           <img
-            src={`https://mc-heads.net/body/${account.profileId}`}
+            src={getAvatarUrl(skinTextureHash)}
             alt={account.lastKnownName}
             className="h-32 w-auto"
             loading="lazy"
@@ -257,7 +325,7 @@ function BotSkinPreview({
                 variant={isOnline ? "default" : "secondary"}
                 className="text-sm"
               >
-                {isOnline ? t("bots.online") : t("bots.offline")}
+                {isOnline ? t("bots.online") : t("bots.notJoined")}
               </Badge>
               <Badge variant="outline" className="text-sm">
                 <TypeIcon className="mr-1 size-3" />
@@ -278,7 +346,7 @@ function BotPositionPanel({
   liveState,
   isOnline,
 }: {
-  liveState?: BotInfoResponse["liveState"];
+  liveState?: BotLiveState;
   isOnline: boolean;
 }) {
   const { t } = useTranslation("instance");
@@ -345,61 +413,322 @@ function BotPositionPanel({
   );
 }
 
-function BotChatPanel() {
+function BotTerminalPanel({
+  logScope,
+  commandScope,
+  instanceInfo,
+}: {
+  logScope: LogScope;
+  commandScope: CommandScope;
+  instanceInfo: InstanceInfoQueryData;
+}) {
   const { t } = useTranslation("instance");
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <MessageSquareIcon className="size-5" />
-          {t("bots.chatPanel.title")}
-          <Badge variant="secondary" className="ml-auto">
-            {t("bots.comingSoon")}
-          </Badge>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="bg-muted/30 flex items-center justify-center rounded-lg p-8">
-          <p className="text-muted-foreground text-center text-sm">
-            {t("bots.chatPanel.description")}
-          </p>
-        </div>
-      </CardContent>
-    </Card>
-  );
-}
-
-function BotCommandPanel() {
-  const { t } = useTranslation("instance");
-
-  return (
-    <Card>
-      <CardHeader>
+      <CardHeader className="pb-2">
         <CardTitle className="flex items-center gap-2">
           <TerminalIcon className="size-5" />
-          {t("bots.commandPanel.title")}
-          <Badge variant="secondary" className="ml-auto">
-            {t("bots.comingSoon")}
-          </Badge>
+          {t("bots.terminalPanel.title")}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-2">
-        <Input
-          placeholder={t("bots.commandPanel.placeholder")}
-          disabled
-          className="font-mono"
-        />
-        <p className="text-muted-foreground text-xs">
-          {t("bots.commandPanel.description")}
-        </p>
+        <TerminalComponent scope={logScope} />
+        {hasInstancePermission(
+          instanceInfo,
+          InstancePermission.INSTANCE_COMMAND_EXECUTION,
+        ) && <CommandInput scope={commandScope} />}
       </CardContent>
     </Card>
   );
 }
 
-function BotInventoryPanel() {
+function BotStatsPanel({
+  liveState,
+  isOnline,
+}: {
+  liveState?: BotLiveState;
+  isOnline: boolean;
+}) {
   const { t } = useTranslation("instance");
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <HeartIcon className="size-5" />
+          {t("bots.statsPanel.title")}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {isOnline && liveState ? (
+          <div className="space-y-4">
+            {/* Health bar */}
+            <div>
+              <div className="mb-1 flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <HeartIcon className="size-4 text-red-500" />
+                  <span className="text-sm font-medium">
+                    {t("bots.statsPanel.health")}
+                  </span>
+                </div>
+                <span className="font-mono text-sm">
+                  {liveState.health.toFixed(1)} /{" "}
+                  {liveState.maxHealth.toFixed(1)}
+                </span>
+              </div>
+              <div className="bg-muted h-3 overflow-hidden rounded-full">
+                <div
+                  className="h-full bg-red-500 transition-all"
+                  style={{
+                    width: `${(liveState.health / liveState.maxHealth) * 100}%`,
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Food bar */}
+            <div>
+              <div className="mb-1 flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <UtensilsIcon className="size-4 text-amber-500" />
+                  <span className="text-sm font-medium">
+                    {t("bots.statsPanel.food")}
+                  </span>
+                </div>
+                <span className="font-mono text-sm">
+                  {liveState.foodLevel} / 20
+                </span>
+              </div>
+              <div className="bg-muted h-3 overflow-hidden rounded-full">
+                <div
+                  className="h-full bg-amber-500 transition-all"
+                  style={{ width: `${(liveState.foodLevel / 20) * 100}%` }}
+                />
+              </div>
+              <p className="text-muted-foreground mt-0.5 text-xs">
+                {t("bots.statsPanel.saturation")}:{" "}
+                {liveState.saturationLevel.toFixed(1)}
+              </p>
+            </div>
+
+            {/* Experience bar */}
+            <div>
+              <div className="mb-1 flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <SparklesIcon className="size-4 text-green-500" />
+                  <span className="text-sm font-medium">
+                    {t("bots.statsPanel.experience")}
+                  </span>
+                </div>
+                <span className="font-mono text-sm">
+                  {t("bots.statsPanel.level")} {liveState.experienceLevel}
+                </span>
+              </div>
+              <div className="bg-muted h-3 overflow-hidden rounded-full">
+                <div
+                  className="h-full bg-green-500 transition-all"
+                  style={{ width: `${liveState.experienceProgress * 100}%` }}
+                />
+              </div>
+              <p className="text-muted-foreground mt-0.5 text-xs">
+                {(liveState.experienceProgress * 100).toFixed(0)}%{" "}
+                {t("bots.statsPanel.toNextLevel")}
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+            <p className="text-muted-foreground">
+              {t("bots.statsPanel.offline")}
+            </p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function BotPovPanel({
+  instanceId,
+  botId,
+  isOnline,
+}: {
+  instanceId: string;
+  botId: string;
+  isOnline: boolean;
+}) {
+  const { t } = useTranslation("instance");
+  const [povImage, setPovImage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const renderPov = useCallback(async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const transport = createTransport();
+      if (transport === null) {
+        // Demo mode
+        setError("POV rendering not available in demo mode");
+        return;
+      }
+
+      const botService = new BotServiceClient(transport);
+      const result = await botService.renderBotPov({
+        instanceId,
+        botId,
+        width: 854,
+        height: 480,
+      });
+
+      setPovImage(result.response.imageBase64);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to render POV");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [instanceId, botId]);
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <CameraIcon className="size-5" />
+          {t("bots.povPanel.title")}
+          {isOnline && (
+            <Button
+              variant="outline"
+              size="sm"
+              className="ml-auto"
+              onClick={renderPov}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <LoaderIcon className="mr-1 size-4 animate-spin" />
+              ) : (
+                <RefreshCwIcon className="mr-1 size-4" />
+              )}
+              {povImage
+                ? t("bots.povPanel.refresh")
+                : t("bots.povPanel.capture")}
+            </Button>
+          )}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {isOnline ? (
+          <div className="space-y-2">
+            {error && (
+              <div className="bg-destructive/10 text-destructive rounded-lg p-3 text-sm">
+                {error}
+              </div>
+            )}
+            {povImage ? (
+              <div className="overflow-hidden rounded-lg">
+                <img
+                  src={`data:image/png;base64,${povImage}`}
+                  alt="Bot POV"
+                  className="w-full"
+                />
+              </div>
+            ) : (
+              <div className="bg-muted/30 flex aspect-video items-center justify-center rounded-lg">
+                <div className="text-center">
+                  <CameraIcon className="text-muted-foreground mx-auto size-12" />
+                  <p className="text-muted-foreground mt-2 text-sm">
+                    {t("bots.povPanel.clickToCapture")}
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="bg-muted/30 flex aspect-video items-center justify-center rounded-lg">
+            <div className="text-center">
+              <CameraIcon className="text-muted-foreground mx-auto size-12" />
+              <p className="text-muted-foreground mt-2 text-sm">
+                {t("bots.povPanel.offline")}
+              </p>
+            </div>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+// Minecraft inventory slot indices
+const HOTBAR_START = 36; // Slots 36-44 are hotbar
+const _HOTBAR_END = 45;
+const MAIN_INV_START = 9; // Slots 9-35 are main inventory
+const _MAIN_INV_END = 36;
+
+function getItemForSlot(
+  inventory: InventorySlot[],
+  slotIndex: number,
+): InventorySlot | undefined {
+  return inventory.find((item) => item.slot === slotIndex);
+}
+
+function formatItemId(itemId: string): string {
+  // Remove minecraft: prefix and format nicely
+  return itemId.replace("minecraft:", "").replace(/_/g, " ");
+}
+
+function InventorySlotDisplay({
+  item,
+  isSelected,
+  slotNumber,
+}: {
+  item?: InventorySlot;
+  isSelected?: boolean;
+  slotNumber?: number;
+}) {
+  if (!item) {
+    return (
+      <div
+        className={`bg-muted/50 border-border flex aspect-square items-center justify-center rounded border text-xs ${
+          isSelected ? "ring-primary ring-2" : ""
+        }`}
+      >
+        {slotNumber !== undefined && (
+          <span className="text-muted-foreground/30">{slotNumber}</span>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`bg-muted border-border relative flex aspect-square items-center justify-center rounded border ${
+        isSelected ? "ring-primary ring-2" : ""
+      }`}
+      title={`${item.displayName || formatItemId(item.itemId)} x${item.count}`}
+    >
+      <span className="max-w-full truncate px-0.5 text-center text-[10px] leading-tight">
+        {formatItemId(item.itemId).slice(0, 6)}
+      </span>
+      {item.count > 1 && (
+        <span className="absolute bottom-0 right-0.5 text-[9px] font-bold">
+          {item.count}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function BotInventoryPanel({
+  liveState,
+  isOnline,
+}: {
+  liveState?: BotLiveState;
+  isOnline: boolean;
+}) {
+  const { t } = useTranslation("instance");
+  const inventory = liveState?.inventory ?? [];
+  const selectedSlot = liveState?.selectedHotbarSlot ?? 0;
 
   return (
     <Card>
@@ -407,31 +736,92 @@ function BotInventoryPanel() {
         <CardTitle className="flex items-center gap-2">
           <PackageIcon className="size-5" />
           {t("bots.inventoryPanel.title")}
-          <Badge variant="secondary" className="ml-auto">
-            {t("bots.comingSoon")}
-          </Badge>
+          {inventory.length > 0 && (
+            <Badge variant="outline" className="ml-auto">
+              {inventory.length} {t("bots.inventoryPanel.items")}
+            </Badge>
+          )}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {/* 9x4 inventory grid placeholder */}
-        <div className="grid grid-cols-9 gap-1">
-          {INVENTORY_SLOTS.map((slot) => (
-            <div
-              key={slot}
-              className="bg-muted/50 border-border aspect-square rounded border"
-            />
-          ))}
-        </div>
-        <p className="text-muted-foreground mt-2 text-center text-xs">
-          {t("bots.inventoryPanel.description")}
-        </p>
+        {isOnline ? (
+          <>
+            {/* Hotbar (9 slots) - slots 36-44 in player inventory */}
+            <div className="mb-3">
+              <p className="text-muted-foreground mb-1 text-xs font-medium">
+                {t("bots.inventoryPanel.hotbar")}
+              </p>
+              <div className="grid grid-cols-9 gap-1">
+                {Array.from({ length: 9 }, (_, i) => {
+                  const slotIndex = HOTBAR_START + i;
+                  const item = getItemForSlot(inventory, slotIndex);
+                  return (
+                    <InventorySlotDisplay
+                      // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list, order doesn't matter
+                      key={`hotbar-${i}`}
+                      item={item}
+                      isSelected={i === selectedSlot}
+                      slotNumber={i + 1}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            {/* Main inventory (27 slots - 3 rows of 9) - slots 9-35 */}
+            <div>
+              <p className="text-muted-foreground mb-1 text-xs font-medium">
+                {t("bots.inventoryPanel.main")}
+              </p>
+              <div className="grid grid-cols-9 gap-1">
+                {Array.from({ length: 27 }, (_, i) => {
+                  const slotIndex = MAIN_INV_START + i;
+                  const item = getItemForSlot(inventory, slotIndex);
+                  // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list, order doesn't matter
+                  return <InventorySlotDisplay key={`main-${i}`} item={item} />;
+                })}
+              </div>
+            </div>
+          </>
+        ) : (
+          <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+            <p className="text-muted-foreground">
+              {t("bots.inventoryPanel.offline")}
+            </p>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
 }
 
-function BotVisualPlaceholder() {
+function formatDimension(dimension: string): string {
+  // Format dimension ID like "minecraft:overworld" to "Overworld"
+  const name = dimension.replace("minecraft:", "").replace(/_/g, " ");
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+function BotVisualPanel({
+  liveState,
+  isOnline,
+}: {
+  liveState?: BotLiveState;
+  isOnline: boolean;
+}) {
   const { t } = useTranslation("instance");
+
+  // Convert yaw to compass direction
+  const getCompassDirection = (yaw: number) => {
+    // Normalize yaw to 0-360
+    const normalizedYaw = ((yaw % 360) + 360) % 360;
+    if (normalizedYaw >= 337.5 || normalizedYaw < 22.5) return "S";
+    if (normalizedYaw >= 22.5 && normalizedYaw < 67.5) return "SW";
+    if (normalizedYaw >= 67.5 && normalizedYaw < 112.5) return "W";
+    if (normalizedYaw >= 112.5 && normalizedYaw < 157.5) return "NW";
+    if (normalizedYaw >= 157.5 && normalizedYaw < 202.5) return "N";
+    if (normalizedYaw >= 202.5 && normalizedYaw < 247.5) return "NE";
+    if (normalizedYaw >= 247.5 && normalizedYaw < 292.5) return "E";
+    return "SE";
+  };
 
   return (
     <Card>
@@ -439,20 +829,119 @@ function BotVisualPlaceholder() {
         <CardTitle className="flex items-center gap-2">
           <EyeIcon className="size-5" />
           {t("bots.visualPanel.title")}
-          <Badge variant="secondary" className="ml-auto">
-            {t("bots.comingSoon")}
-          </Badge>
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="bg-muted/30 flex aspect-video items-center justify-center rounded-lg">
-          <div className="text-center">
-            <MonitorIcon className="text-muted-foreground mx-auto size-12" />
-            <p className="text-muted-foreground mt-2 text-sm">
-              {t("bots.visualPanel.description")}
-            </p>
+        {isOnline && liveState ? (
+          <div className="flex flex-col gap-4">
+            {/* Compass */}
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-muted-foreground text-xs font-medium uppercase">
+                {t("bots.visualPanel.compass")}
+              </p>
+              <div className="relative size-32">
+                {/* Compass background */}
+                <div className="border-border bg-muted/30 absolute inset-0 rounded-full border-2" />
+                {/* Cardinal directions */}
+                <span className="text-muted-foreground absolute left-1/2 top-1 -translate-x-1/2 text-xs font-bold">
+                  N
+                </span>
+                <span className="text-muted-foreground absolute bottom-1 left-1/2 -translate-x-1/2 text-xs font-bold">
+                  S
+                </span>
+                <span className="text-muted-foreground absolute left-1 top-1/2 -translate-y-1/2 text-xs font-bold">
+                  W
+                </span>
+                <span className="text-muted-foreground absolute right-1 top-1/2 -translate-y-1/2 text-xs font-bold">
+                  E
+                </span>
+                {/* Direction indicator */}
+                <div
+                  className="absolute left-1/2 top-1/2 h-12 w-1 origin-bottom -translate-x-1/2 -translate-y-full"
+                  style={{
+                    transform: `translateX(-50%) translateY(-100%) rotate(${liveState.yRot + 180}deg)`,
+                    transformOrigin: "bottom center",
+                  }}
+                >
+                  <div className="bg-primary h-full w-full rounded-full" />
+                  <div
+                    className="border-primary absolute -top-1 left-1/2 size-0 -translate-x-1/2 border-4 border-transparent border-b-4"
+                    style={{ borderBottomColor: "hsl(var(--primary))" }}
+                  />
+                </div>
+                {/* Center dot */}
+                <div className="bg-primary absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full" />
+              </div>
+              <div className="text-center">
+                <p className="text-lg font-bold">
+                  {getCompassDirection(liveState.yRot)}
+                </p>
+                <p className="text-muted-foreground text-xs">
+                  {liveState.yRot.toFixed(1)}°
+                </p>
+              </div>
+            </div>
+
+            {/* Look direction (pitch) */}
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-muted-foreground text-xs font-medium uppercase">
+                {t("bots.visualPanel.lookDirection")}
+              </p>
+              <div className="flex items-center gap-4">
+                <div className="bg-muted/30 relative h-24 w-4 overflow-hidden rounded-full">
+                  {/* Pitch indicator */}
+                  <div
+                    className="bg-primary absolute left-0 right-0 h-2 rounded-full transition-all"
+                    style={{
+                      // Pitch ranges from -90 (up) to 90 (down)
+                      // Map to percentage: -90 -> 0%, 0 -> 50%, 90 -> 100%
+                      top: `${((liveState.xRot + 90) / 180) * 100}%`,
+                      transform: "translateY(-50%)",
+                    }}
+                  />
+                </div>
+                <div className="text-sm">
+                  <p className="text-muted-foreground">
+                    {liveState.xRot < -30
+                      ? t("bots.visualPanel.lookingUp")
+                      : liveState.xRot > 30
+                        ? t("bots.visualPanel.lookingDown")
+                        : t("bots.visualPanel.lookingStraight")}
+                  </p>
+                  <p className="text-muted-foreground text-xs">
+                    {liveState.xRot.toFixed(1)}°
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* World info */}
+            <div className="border-border bg-muted/20 rounded-lg border p-3">
+              <p className="text-muted-foreground mb-2 text-xs font-medium uppercase">
+                {t("bots.visualPanel.worldInfo")}
+              </p>
+              <div className="text-sm">
+                <div>
+                  <span className="text-muted-foreground">
+                    {t("bots.visualPanel.dimension")}:
+                  </span>{" "}
+                  <span className="font-mono">
+                    {formatDimension(liveState.dimension)}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="bg-muted/30 flex aspect-video items-center justify-center rounded-lg">
+            <div className="text-center">
+              <MonitorIcon className="text-muted-foreground mx-auto size-12" />
+              <p className="text-muted-foreground mt-2 text-sm">
+                {t("bots.visualPanel.offline")}
+              </p>
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
