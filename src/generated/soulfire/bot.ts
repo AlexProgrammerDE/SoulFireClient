@@ -273,6 +273,268 @@ export interface BotRenderPovResponse {
    */
   imageBase64: string; // Base64 encoded PNG image
 }
+/**
+ * Inventory Actions - click on a slot to interact with it
+ *
+ * @generated from protobuf message soulfire.v1.BotInventoryClickRequest
+ */
+export interface BotInventoryClickRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+  /**
+   * @generated from protobuf field: int32 slot = 3
+   */
+  slot: number; // Slot index (-999 for outside/drop)
+  /**
+   * @generated from protobuf field: soulfire.v1.ClickType click_type = 4
+   */
+  clickType: ClickType;
+  /**
+   * @generated from protobuf field: int32 hotbar_slot = 5
+   */
+  hotbarSlot: number; // For SWAP_HOTBAR action (0-8)
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotInventoryClickResponse
+ */
+export interface BotInventoryClickResponse {
+  /**
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+  /**
+   * @generated from protobuf field: optional string error = 2
+   */
+  error?: string;
+}
+/**
+ * Get current inventory state including carried item
+ *
+ * @generated from protobuf message soulfire.v1.BotInventoryStateRequest
+ */
+export interface BotInventoryStateRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+}
+/**
+ * A group of slots that should be rendered together
+ *
+ * @generated from protobuf message soulfire.v1.SlotRegion
+ */
+export interface SlotRegion {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string; // Unique ID, e.g., "container", "player_hotbar"
+  /**
+   * @generated from protobuf field: string label = 2
+   */
+  label: string; // Display label, e.g., "Chest", "Hotbar"
+  /**
+   * @generated from protobuf field: int32 start_index = 3
+   */
+  startIndex: number; // First slot index in this region
+  /**
+   * @generated from protobuf field: int32 slot_count = 4
+   */
+  slotCount: number; // Number of slots in this region
+  /**
+   * @generated from protobuf field: int32 columns = 5
+   */
+  columns: number; // Grid columns for layout
+  /**
+   * @generated from protobuf field: soulfire.v1.SlotRegionType type = 6
+   */
+  type: SlotRegionType; // Affects rendering behavior
+}
+/**
+ * Describes the layout of an open container
+ *
+ * @generated from protobuf message soulfire.v1.ContainerLayout
+ */
+export interface ContainerLayout {
+  /**
+   * @generated from protobuf field: string title = 1
+   */
+  title: string; // Container title/name
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.SlotRegion regions = 2
+   */
+  regions: SlotRegion[]; // Ordered list of slot regions to render
+  /**
+   * @generated from protobuf field: int32 total_slots = 3
+   */
+  totalSlots: number; // Total number of slots
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotInventoryStateResponse
+ */
+export interface BotInventoryStateResponse {
+  /**
+   * @generated from protobuf field: soulfire.v1.ContainerLayout layout = 1
+   */
+  layout?: ContainerLayout; // Container layout information
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.InventorySlot slots = 2
+   */
+  slots: InventorySlot[]; // All inventory slots with items
+  /**
+   * @generated from protobuf field: optional soulfire.v1.InventorySlot carried_item = 3
+   */
+  carriedItem?: InventorySlot; // Item currently on cursor
+  /**
+   * @generated from protobuf field: int32 selected_hotbar_slot = 4
+   */
+  selectedHotbarSlot: number;
+}
+/**
+ * Close current container
+ *
+ * @generated from protobuf message soulfire.v1.BotCloseContainerRequest
+ */
+export interface BotCloseContainerRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotCloseContainerResponse
+ */
+export interface BotCloseContainerResponse {
+  /**
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+}
+/**
+ * Open player inventory
+ *
+ * @generated from protobuf message soulfire.v1.BotOpenInventoryRequest
+ */
+export interface BotOpenInventoryRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotOpenInventoryResponse
+ */
+export interface BotOpenInventoryResponse {
+  /**
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+}
+/**
+ * @generated from protobuf enum soulfire.v1.ClickType
+ */
+export enum ClickType {
+  /**
+   * @generated from protobuf enum value: CLICK_TYPE_UNSPECIFIED = 0;
+   */
+  CLICK_TYPE_UNSPECIFIED = 0,
+  /**
+   * Pick up / place stack
+   *
+   * @generated from protobuf enum value: LEFT_CLICK = 1;
+   */
+  LEFT_CLICK = 1,
+  /**
+   * Pick up half / place one
+   *
+   * @generated from protobuf enum value: RIGHT_CLICK = 2;
+   */
+  RIGHT_CLICK = 2,
+  /**
+   * Quick move to other inventory section
+   *
+   * @generated from protobuf enum value: SHIFT_LEFT_CLICK = 3;
+   */
+  SHIFT_LEFT_CLICK = 3,
+  /**
+   * Drop one item (Q key on slot)
+   *
+   * @generated from protobuf enum value: DROP_ONE = 4;
+   */
+  DROP_ONE = 4,
+  /**
+   * Drop entire stack (Ctrl+Q on slot)
+   *
+   * @generated from protobuf enum value: DROP_ALL = 5;
+   */
+  DROP_ALL = 5,
+  /**
+   * Swap slot with hotbar (1-9 keys)
+   *
+   * @generated from protobuf enum value: SWAP_HOTBAR = 6;
+   */
+  SWAP_HOTBAR = 6,
+  /**
+   * Clone item (creative mode)
+   *
+   * @generated from protobuf enum value: MIDDLE_CLICK = 7;
+   */
+  MIDDLE_CLICK = 7,
+}
+/**
+ * Describes how a region of slots should be rendered
+ *
+ * @generated from protobuf enum soulfire.v1.SlotRegionType
+ */
+export enum SlotRegionType {
+  /**
+   * Regular interactive slots
+   *
+   * @generated from protobuf enum value: SLOT_REGION_NORMAL = 0;
+   */
+  SLOT_REGION_NORMAL = 0,
+  /**
+   * Output-only (crafting result, furnace output)
+   *
+   * @generated from protobuf enum value: SLOT_REGION_OUTPUT = 1;
+   */
+  SLOT_REGION_OUTPUT = 1,
+  /**
+   * Display-only (lectern book, some special slots)
+   *
+   * @generated from protobuf enum value: SLOT_REGION_DISPLAY = 2;
+   */
+  SLOT_REGION_DISPLAY = 2,
+  /**
+   * Player hotbar (show selection indicator)
+   *
+   * @generated from protobuf enum value: SLOT_REGION_HOTBAR = 3;
+   */
+  SLOT_REGION_HOTBAR = 3,
+  /**
+   * Armor slots (show armor icons as placeholder)
+   *
+   * @generated from protobuf enum value: SLOT_REGION_ARMOR = 4;
+   */
+  SLOT_REGION_ARMOR = 4,
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class BotConfig$Type extends MessageType<BotConfig> {
   constructor() {
@@ -1609,6 +1871,934 @@ class BotRenderPovResponse$Type extends MessageType<BotRenderPovResponse> {
  * @generated MessageType for protobuf message soulfire.v1.BotRenderPovResponse
  */
 export const BotRenderPovResponse = new BotRenderPovResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotInventoryClickRequest$Type extends MessageType<BotInventoryClickRequest> {
+  constructor() {
+    super("soulfire.v1.BotInventoryClickRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "slot", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      {
+        no: 4,
+        name: "click_type",
+        kind: "enum",
+        T: () => ["soulfire.v1.ClickType", ClickType],
+      },
+      { no: 5, name: "hotbar_slot", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotInventoryClickRequest>,
+  ): BotInventoryClickRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    message.slot = 0;
+    message.clickType = 0;
+    message.hotbarSlot = 0;
+    if (value !== undefined)
+      reflectionMergePartial<BotInventoryClickRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotInventoryClickRequest,
+  ): BotInventoryClickRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        case /* int32 slot */ 3:
+          message.slot = reader.int32();
+          break;
+        case /* soulfire.v1.ClickType click_type */ 4:
+          message.clickType = reader.int32();
+          break;
+        case /* int32 hotbar_slot */ 5:
+          message.hotbarSlot = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotInventoryClickRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    /* int32 slot = 3; */
+    if (message.slot !== 0) writer.tag(3, WireType.Varint).int32(message.slot);
+    /* soulfire.v1.ClickType click_type = 4; */
+    if (message.clickType !== 0)
+      writer.tag(4, WireType.Varint).int32(message.clickType);
+    /* int32 hotbar_slot = 5; */
+    if (message.hotbarSlot !== 0)
+      writer.tag(5, WireType.Varint).int32(message.hotbarSlot);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotInventoryClickRequest
+ */
+export const BotInventoryClickRequest = new BotInventoryClickRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotInventoryClickResponse$Type extends MessageType<BotInventoryClickResponse> {
+  constructor() {
+    super("soulfire.v1.BotInventoryClickResponse", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 2,
+        name: "error",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotInventoryClickResponse>,
+  ): BotInventoryClickResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotInventoryClickResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotInventoryClickResponse,
+  ): BotInventoryClickResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        case /* optional string error */ 2:
+          message.error = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotInventoryClickResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    /* optional string error = 2; */
+    if (message.error !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.error);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotInventoryClickResponse
+ */
+export const BotInventoryClickResponse = new BotInventoryClickResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotInventoryStateRequest$Type extends MessageType<BotInventoryStateRequest> {
+  constructor() {
+    super("soulfire.v1.BotInventoryStateRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotInventoryStateRequest>,
+  ): BotInventoryStateRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    if (value !== undefined)
+      reflectionMergePartial<BotInventoryStateRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotInventoryStateRequest,
+  ): BotInventoryStateRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotInventoryStateRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotInventoryStateRequest
+ */
+export const BotInventoryStateRequest = new BotInventoryStateRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SlotRegion$Type extends MessageType<SlotRegion> {
+  constructor() {
+    super("soulfire.v1.SlotRegion", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "start_index", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 4, name: "slot_count", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 5, name: "columns", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      {
+        no: 6,
+        name: "type",
+        kind: "enum",
+        T: () => ["soulfire.v1.SlotRegionType", SlotRegionType],
+      },
+    ]);
+  }
+  create(value?: PartialMessage<SlotRegion>): SlotRegion {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.label = "";
+    message.startIndex = 0;
+    message.slotCount = 0;
+    message.columns = 0;
+    message.type = 0;
+    if (value !== undefined)
+      reflectionMergePartial<SlotRegion>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SlotRegion,
+  ): SlotRegion {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string label */ 2:
+          message.label = reader.string();
+          break;
+        case /* int32 start_index */ 3:
+          message.startIndex = reader.int32();
+          break;
+        case /* int32 slot_count */ 4:
+          message.slotCount = reader.int32();
+          break;
+        case /* int32 columns */ 5:
+          message.columns = reader.int32();
+          break;
+        case /* soulfire.v1.SlotRegionType type */ 6:
+          message.type = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SlotRegion,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string label = 2; */
+    if (message.label !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.label);
+    /* int32 start_index = 3; */
+    if (message.startIndex !== 0)
+      writer.tag(3, WireType.Varint).int32(message.startIndex);
+    /* int32 slot_count = 4; */
+    if (message.slotCount !== 0)
+      writer.tag(4, WireType.Varint).int32(message.slotCount);
+    /* int32 columns = 5; */
+    if (message.columns !== 0)
+      writer.tag(5, WireType.Varint).int32(message.columns);
+    /* soulfire.v1.SlotRegionType type = 6; */
+    if (message.type !== 0) writer.tag(6, WireType.Varint).int32(message.type);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.SlotRegion
+ */
+export const SlotRegion = new SlotRegion$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ContainerLayout$Type extends MessageType<ContainerLayout> {
+  constructor() {
+    super("soulfire.v1.ContainerLayout", [
+      { no: 1, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "regions",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SlotRegion,
+      },
+      { no: 3, name: "total_slots", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  create(value?: PartialMessage<ContainerLayout>): ContainerLayout {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.title = "";
+    message.regions = [];
+    message.totalSlots = 0;
+    if (value !== undefined)
+      reflectionMergePartial<ContainerLayout>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ContainerLayout,
+  ): ContainerLayout {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string title */ 1:
+          message.title = reader.string();
+          break;
+        case /* repeated soulfire.v1.SlotRegion regions */ 2:
+          message.regions.push(
+            SlotRegion.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* int32 total_slots */ 3:
+          message.totalSlots = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ContainerLayout,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string title = 1; */
+    if (message.title !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.title);
+    /* repeated soulfire.v1.SlotRegion regions = 2; */
+    for (let i = 0; i < message.regions.length; i++)
+      SlotRegion.internalBinaryWrite(
+        message.regions[i],
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* int32 total_slots = 3; */
+    if (message.totalSlots !== 0)
+      writer.tag(3, WireType.Varint).int32(message.totalSlots);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ContainerLayout
+ */
+export const ContainerLayout = new ContainerLayout$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotInventoryStateResponse$Type extends MessageType<BotInventoryStateResponse> {
+  constructor() {
+    super("soulfire.v1.BotInventoryStateResponse", [
+      { no: 1, name: "layout", kind: "message", T: () => ContainerLayout },
+      {
+        no: 2,
+        name: "slots",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => InventorySlot,
+      },
+      { no: 3, name: "carried_item", kind: "message", T: () => InventorySlot },
+      {
+        no: 4,
+        name: "selected_hotbar_slot",
+        kind: "scalar",
+        T: 5 /*ScalarType.INT32*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotInventoryStateResponse>,
+  ): BotInventoryStateResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.slots = [];
+    message.selectedHotbarSlot = 0;
+    if (value !== undefined)
+      reflectionMergePartial<BotInventoryStateResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotInventoryStateResponse,
+  ): BotInventoryStateResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.ContainerLayout layout */ 1:
+          message.layout = ContainerLayout.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.layout,
+          );
+          break;
+        case /* repeated soulfire.v1.InventorySlot slots */ 2:
+          message.slots.push(
+            InventorySlot.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* optional soulfire.v1.InventorySlot carried_item */ 3:
+          message.carriedItem = InventorySlot.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.carriedItem,
+          );
+          break;
+        case /* int32 selected_hotbar_slot */ 4:
+          message.selectedHotbarSlot = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotInventoryStateResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.ContainerLayout layout = 1; */
+    if (message.layout)
+      ContainerLayout.internalBinaryWrite(
+        message.layout,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.InventorySlot slots = 2; */
+    for (let i = 0; i < message.slots.length; i++)
+      InventorySlot.internalBinaryWrite(
+        message.slots[i],
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* optional soulfire.v1.InventorySlot carried_item = 3; */
+    if (message.carriedItem)
+      InventorySlot.internalBinaryWrite(
+        message.carriedItem,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* int32 selected_hotbar_slot = 4; */
+    if (message.selectedHotbarSlot !== 0)
+      writer.tag(4, WireType.Varint).int32(message.selectedHotbarSlot);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotInventoryStateResponse
+ */
+export const BotInventoryStateResponse = new BotInventoryStateResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotCloseContainerRequest$Type extends MessageType<BotCloseContainerRequest> {
+  constructor() {
+    super("soulfire.v1.BotCloseContainerRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotCloseContainerRequest>,
+  ): BotCloseContainerRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    if (value !== undefined)
+      reflectionMergePartial<BotCloseContainerRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotCloseContainerRequest,
+  ): BotCloseContainerRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotCloseContainerRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotCloseContainerRequest
+ */
+export const BotCloseContainerRequest = new BotCloseContainerRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotCloseContainerResponse$Type extends MessageType<BotCloseContainerResponse> {
+  constructor() {
+    super("soulfire.v1.BotCloseContainerResponse", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotCloseContainerResponse>,
+  ): BotCloseContainerResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotCloseContainerResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotCloseContainerResponse,
+  ): BotCloseContainerResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotCloseContainerResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotCloseContainerResponse
+ */
+export const BotCloseContainerResponse = new BotCloseContainerResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotOpenInventoryRequest$Type extends MessageType<BotOpenInventoryRequest> {
+  constructor() {
+    super("soulfire.v1.BotOpenInventoryRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotOpenInventoryRequest>,
+  ): BotOpenInventoryRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    if (value !== undefined)
+      reflectionMergePartial<BotOpenInventoryRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotOpenInventoryRequest,
+  ): BotOpenInventoryRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotOpenInventoryRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotOpenInventoryRequest
+ */
+export const BotOpenInventoryRequest = new BotOpenInventoryRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotOpenInventoryResponse$Type extends MessageType<BotOpenInventoryResponse> {
+  constructor() {
+    super("soulfire.v1.BotOpenInventoryResponse", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotOpenInventoryResponse>,
+  ): BotOpenInventoryResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotOpenInventoryResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotOpenInventoryResponse,
+  ): BotOpenInventoryResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotOpenInventoryResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotOpenInventoryResponse
+ */
+export const BotOpenInventoryResponse = new BotOpenInventoryResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.BotService
  */
@@ -1632,5 +2822,29 @@ export const BotService = new ServiceType("soulfire.v1.BotService", [
     options: {},
     I: BotRenderPovRequest,
     O: BotRenderPovResponse,
+  },
+  {
+    name: "ClickInventorySlot",
+    options: {},
+    I: BotInventoryClickRequest,
+    O: BotInventoryClickResponse,
+  },
+  {
+    name: "GetInventoryState",
+    options: {},
+    I: BotInventoryStateRequest,
+    O: BotInventoryStateResponse,
+  },
+  {
+    name: "CloseContainer",
+    options: {},
+    I: BotCloseContainerRequest,
+    O: BotCloseContainerResponse,
+  },
+  {
+    name: "OpenInventory",
+    options: {},
+    I: BotOpenInventoryRequest,
+    O: BotOpenInventoryResponse,
   },
 ]);

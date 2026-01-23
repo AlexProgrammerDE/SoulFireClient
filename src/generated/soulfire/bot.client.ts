@@ -11,10 +11,18 @@ import type {
 } from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type {
+  BotCloseContainerRequest,
+  BotCloseContainerResponse,
   BotInfoRequest,
   BotInfoResponse,
+  BotInventoryClickRequest,
+  BotInventoryClickResponse,
+  BotInventoryStateRequest,
+  BotInventoryStateResponse,
   BotListRequest,
   BotListResponse,
+  BotOpenInventoryRequest,
+  BotOpenInventoryResponse,
   BotRenderPovRequest,
   BotRenderPovResponse,
   BotUpdateConfigEntryRequest,
@@ -68,6 +76,36 @@ export interface IBotServiceClient {
     input: BotRenderPovRequest,
     options?: RpcOptions,
   ): UnaryCall<BotRenderPovRequest, BotRenderPovResponse>;
+  /**
+   * Inventory management
+   *
+   * @generated from protobuf rpc: ClickInventorySlot
+   */
+  clickInventorySlot(
+    input: BotInventoryClickRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotInventoryClickRequest, BotInventoryClickResponse>;
+  /**
+   * @generated from protobuf rpc: GetInventoryState
+   */
+  getInventoryState(
+    input: BotInventoryStateRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotInventoryStateRequest, BotInventoryStateResponse>;
+  /**
+   * @generated from protobuf rpc: CloseContainer
+   */
+  closeContainer(
+    input: BotCloseContainerRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotCloseContainerRequest, BotCloseContainerResponse>;
+  /**
+   * @generated from protobuf rpc: OpenInventory
+   */
+  openInventory(
+    input: BotOpenInventoryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotOpenInventoryRequest, BotOpenInventoryResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.BotService
@@ -158,6 +196,76 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     const method = this.methods[4],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotRenderPovRequest, BotRenderPovResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Inventory management
+   *
+   * @generated from protobuf rpc: ClickInventorySlot
+   */
+  clickInventorySlot(
+    input: BotInventoryClickRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotInventoryClickRequest, BotInventoryClickResponse> {
+    const method = this.methods[5],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<BotInventoryClickRequest, BotInventoryClickResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: GetInventoryState
+   */
+  getInventoryState(
+    input: BotInventoryStateRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotInventoryStateRequest, BotInventoryStateResponse> {
+    const method = this.methods[6],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<BotInventoryStateRequest, BotInventoryStateResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: CloseContainer
+   */
+  closeContainer(
+    input: BotCloseContainerRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotCloseContainerRequest, BotCloseContainerResponse> {
+    const method = this.methods[7],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<BotCloseContainerRequest, BotCloseContainerResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: OpenInventory
+   */
+  openInventory(
+    input: BotOpenInventoryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotOpenInventoryRequest, BotOpenInventoryResponse> {
+    const method = this.methods[8],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<BotOpenInventoryRequest, BotOpenInventoryResponse>(
       "unary",
       this._transport,
       method,

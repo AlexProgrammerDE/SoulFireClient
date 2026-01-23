@@ -1,10 +1,16 @@
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import {
+  queryOptions,
+  useMutation,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeftIcon,
+  BackpackIcon,
   CameraIcon,
   CompassIcon,
   EyeIcon,
+  HandIcon,
   HeartIcon,
   KeyRoundIcon,
   LoaderIcon,
@@ -13,10 +19,13 @@ import {
   PackageIcon,
   RefreshCwIcon,
   RotateCcwKeyIcon,
+  ShieldIcon,
   SparklesIcon,
   TerminalIcon,
+  Trash2Icon,
   UtensilsIcon,
   WifiOffIcon,
+  XIcon,
 } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -35,9 +44,13 @@ import {
 import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
 import type {
   BotInfoResponse,
+  BotInventoryClickRequest,
+  BotInventoryStateResponse,
   BotLiveState,
   InventorySlot,
+  SlotRegion,
 } from "@/generated/soulfire/bot.ts";
+import { ClickType, SlotRegionType } from "@/generated/soulfire/bot.ts";
 import type { CommandScope } from "@/generated/soulfire/command.ts";
 import {
   InstancePermission,
@@ -250,8 +263,9 @@ function BotDetailContent({
 
           {/* Inventory panel */}
           <BotInventoryPanel
-            liveState={botInfo.liveState}
             isOnline={isOnline}
+            instanceId={instanceId}
+            botId={account.profileId}
           />
         </div>
 
@@ -659,19 +673,6 @@ function BotPovPanel({
   );
 }
 
-// Minecraft inventory slot indices
-const HOTBAR_START = 36; // Slots 36-44 are hotbar
-const _HOTBAR_END = 45;
-const MAIN_INV_START = 9; // Slots 9-35 are main inventory
-const _MAIN_INV_END = 36;
-
-function getItemForSlot(
-  inventory: InventorySlot[],
-  slotIndex: number,
-): InventorySlot | undefined {
-  return inventory.find((item) => item.slot === slotIndex);
-}
-
 function formatItemId(itemId: string): string {
   // Remove minecraft: prefix and format nicely
   return itemId.replace("minecraft:", "").replace(/_/g, " ");
@@ -681,31 +682,63 @@ function InventorySlotDisplay({
   item,
   isSelected,
   slotNumber,
+  onClick,
+  onRightClick,
+  onShiftClick,
+  isClickable,
 }: {
   item?: InventorySlot;
   isSelected?: boolean;
   slotNumber?: number;
+  onClick?: () => void;
+  onRightClick?: () => void;
+  onShiftClick?: () => void;
+  isClickable?: boolean;
 }) {
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (e.shiftKey && onShiftClick) {
+      onShiftClick();
+    } else if (onClick) {
+      onClick();
+    }
+  };
+
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onRightClick) {
+      onRightClick();
+    }
+  };
+
+  const baseClasses = `flex size-8 items-center justify-center rounded border text-xs transition-colors ${
+    isSelected ? "ring-primary ring-2" : ""
+  } ${isClickable ? "cursor-pointer hover:border-primary/50" : ""}`;
+
   if (!item) {
     return (
-      <div
-        className={`bg-muted/50 border-border flex aspect-square items-center justify-center rounded border text-xs ${
-          isSelected ? "ring-primary ring-2" : ""
-        }`}
+      <button
+        type="button"
+        className={`bg-muted/50 border-border ${baseClasses}`}
+        onClick={handleClick}
+        onContextMenu={handleContextMenu}
+        disabled={!isClickable}
       >
         {slotNumber !== undefined && (
           <span className="text-muted-foreground/30">{slotNumber}</span>
         )}
-      </div>
+      </button>
     );
   }
 
   return (
-    <div
-      className={`bg-muted border-border relative flex aspect-square items-center justify-center rounded border ${
-        isSelected ? "ring-primary ring-2" : ""
-      }`}
-      title={`${item.displayName || formatItemId(item.itemId)} x${item.count}`}
+    <button
+      type="button"
+      className={`bg-muted border-border relative ${baseClasses}`}
+      onClick={handleClick}
+      onContextMenu={handleContextMenu}
+      title={`${item.displayName || formatItemId(item.itemId)} x${item.count}${isClickable ? "\nLeft click: Pick up/place\nRight click: Pick up half/place one\nShift+click: Quick move" : ""}`}
+      disabled={!isClickable}
     >
       <span className="max-w-full truncate px-0.5 text-center text-[10px] leading-tight">
         {formatItemId(item.itemId).slice(0, 6)}
@@ -715,73 +748,263 @@ function InventorySlotDisplay({
           {item.count}
         </span>
       )}
+    </button>
+  );
+}
+
+// Renders a single region of inventory slots
+function SlotRegionGrid({
+  region,
+  slots,
+  selectedHotbarSlot,
+  onSlotClick,
+}: {
+  region: SlotRegion;
+  slots: InventorySlot[];
+  selectedHotbarSlot: number;
+  onSlotClick: (slotIndex: number, clickType: ClickType) => void;
+}) {
+  const isHotbar = region.type === SlotRegionType.SLOT_REGION_HOTBAR;
+  const isArmor = region.type === SlotRegionType.SLOT_REGION_ARMOR;
+  const isOutput = region.type === SlotRegionType.SLOT_REGION_OUTPUT;
+
+  return (
+    <div>
+      <p className="text-muted-foreground mb-1 text-xs font-medium flex items-center gap-1">
+        {isArmor && <ShieldIcon className="size-3" />}
+        {region.label}
+        {isOutput && <span className="text-muted-foreground/50">(output)</span>}
+      </p>
+      <div
+        className="inline-grid gap-1"
+        style={{ gridTemplateColumns: `repeat(${region.columns}, 2rem)` }}
+      >
+        {Array.from({ length: region.slotCount }, (_, i) => {
+          const slotIndex = region.startIndex + i;
+          const item = slots.find((s) => s.slot === slotIndex);
+          const isSelected = isHotbar && i === selectedHotbarSlot;
+
+          return (
+            <InventorySlotDisplay
+              key={`${region.id}-${slotIndex}`}
+              item={item}
+              isSelected={isSelected}
+              slotNumber={isHotbar ? i + 1 : undefined}
+              isClickable={region.type !== SlotRegionType.SLOT_REGION_DISPLAY}
+              onClick={() => onSlotClick(slotIndex, ClickType.LEFT_CLICK)}
+              onRightClick={() => onSlotClick(slotIndex, ClickType.RIGHT_CLICK)}
+              onShiftClick={() =>
+                onSlotClick(slotIndex, ClickType.SHIFT_LEFT_CLICK)
+              }
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
 
 function BotInventoryPanel({
-  liveState,
   isOnline,
+  instanceId,
+  botId,
 }: {
-  liveState?: BotLiveState;
   isOnline: boolean;
+  instanceId: string;
+  botId: string;
 }) {
   const { t } = useTranslation("instance");
-  const inventory = liveState?.inventory ?? [];
-  const selectedSlot = liveState?.selectedHotbarSlot ?? 0;
+
+  // Query for inventory state with layout
+  const { data: inventoryState, refetch } = useSuspenseQuery(
+    queryOptions({
+      queryKey: ["inventory-state", instanceId, botId],
+      queryFn: async (): Promise<BotInventoryStateResponse | null> => {
+        if (!isOnline) return null;
+        const transport = createTransport();
+        if (transport === null) return null;
+        const botService = new BotServiceClient(transport);
+        const result = await botService.getInventoryState({
+          instanceId,
+          botId,
+        });
+        return result.response;
+      },
+      refetchInterval: 1_000,
+    }),
+  );
+
+  // Mutation for clicking inventory slots
+  const clickMutation = useMutation({
+    mutationFn: async (request: BotInventoryClickRequest) => {
+      const transport = createTransport();
+      if (transport === null) {
+        throw new Error("Not connected");
+      }
+      const botService = new BotServiceClient(transport);
+      return botService.clickInventorySlot(request);
+    },
+    onSuccess: () => {
+      void refetch();
+    },
+  });
+
+  // Mutation for closing container
+  const closeContainerMutation = useMutation({
+    mutationFn: async () => {
+      const transport = createTransport();
+      if (transport === null) {
+        throw new Error("Not connected");
+      }
+      const botService = new BotServiceClient(transport);
+      return botService.closeContainer({ instanceId, botId });
+    },
+    onSuccess: () => {
+      void refetch();
+    },
+  });
+
+  // Mutation for opening player inventory
+  const openInventoryMutation = useMutation({
+    mutationFn: async () => {
+      const transport = createTransport();
+      if (transport === null) {
+        throw new Error("Not connected");
+      }
+      const botService = new BotServiceClient(transport);
+      return botService.openInventory({ instanceId, botId });
+    },
+    onSuccess: () => {
+      void refetch();
+    },
+  });
+
+  const handleSlotClick = useCallback(
+    (slotIndex: number, clickType: ClickType) => {
+      clickMutation.mutate({
+        instanceId,
+        botId,
+        slot: slotIndex,
+        clickType,
+        hotbarSlot: 0,
+      });
+    },
+    [clickMutation, instanceId, botId],
+  );
+
+  const handleDropOutside = useCallback(
+    (dropAll: boolean) => {
+      clickMutation.mutate({
+        instanceId,
+        botId,
+        slot: -999, // Outside slot for dropping
+        clickType: dropAll ? ClickType.LEFT_CLICK : ClickType.RIGHT_CLICK,
+        hotbarSlot: 0,
+      });
+    },
+    [clickMutation, instanceId, botId],
+  );
+
+  const layout = inventoryState?.layout;
+  const slots = inventoryState?.slots ?? [];
+  const carriedItem = inventoryState?.carriedItem;
+  const selectedHotbarSlot = inventoryState?.selectedHotbarSlot ?? 0;
+  const isPlayerInventory = layout?.title === "Inventory";
 
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <PackageIcon className="size-5" />
-          {t("bots.inventoryPanel.title")}
-          {inventory.length > 0 && (
+          {layout?.title || t("bots.inventoryPanel.title")}
+          {slots.length > 0 && (
             <Badge variant="outline" className="ml-auto">
-              {inventory.length} {t("bots.inventoryPanel.items")}
+              {slots.length} {t("bots.inventoryPanel.items")}
             </Badge>
           )}
         </CardTitle>
       </CardHeader>
       <CardContent>
-        {isOnline ? (
-          <>
-            {/* Hotbar (9 slots) - slots 36-44 in player inventory */}
-            <div className="mb-3">
-              <p className="text-muted-foreground mb-1 text-xs font-medium">
-                {t("bots.inventoryPanel.hotbar")}
-              </p>
-              <div className="grid grid-cols-9 gap-1">
-                {Array.from({ length: 9 }, (_, i) => {
-                  const slotIndex = HOTBAR_START + i;
-                  const item = getItemForSlot(inventory, slotIndex);
-                  return (
-                    <InventorySlotDisplay
-                      // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list, order doesn't matter
-                      key={`hotbar-${i}`}
-                      item={item}
-                      isSelected={i === selectedSlot}
-                      slotNumber={i + 1}
-                    />
-                  );
-                })}
+        {isOnline && layout ? (
+          <div className="space-y-3">
+            {/* Container controls */}
+            <div className="flex gap-2">
+              {!isPlayerInventory && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => closeContainerMutation.mutate()}
+                  disabled={closeContainerMutation.isPending}
+                >
+                  <XIcon className="mr-1 size-4" />
+                  {t("bots.inventoryPanel.closeContainer")}
+                </Button>
+              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => openInventoryMutation.mutate()}
+                disabled={openInventoryMutation.isPending}
+              >
+                <BackpackIcon className="mr-1 size-4" />
+                {t("bots.inventoryPanel.openInventory")}
+              </Button>
+            </div>
+
+            {/* Carried item indicator */}
+            {carriedItem && (
+              <div className="border-primary/50 bg-primary/10 flex items-center gap-2 rounded-lg border p-2">
+                <HandIcon className="text-primary size-4" />
+                <span className="text-sm">
+                  {t("bots.inventoryPanel.carrying")}:{" "}
+                  <span className="font-medium">
+                    {formatItemId(carriedItem.itemId)} x{carriedItem.count}
+                  </span>
+                </span>
+              </div>
+            )}
+
+            {/* Render all slot regions from layout */}
+            {layout.regions.map((region) => (
+              <SlotRegionGrid
+                key={region.id}
+                region={region}
+                slots={slots}
+                selectedHotbarSlot={selectedHotbarSlot}
+                onSlotClick={handleSlotClick}
+              />
+            ))}
+
+            {/* Drop zone */}
+            <div className="border-destructive/30 hover:border-destructive/50 hover:bg-destructive/5 flex items-center justify-center gap-2 rounded-lg border-2 border-dashed p-3 transition-colors">
+              <Trash2Icon className="text-muted-foreground size-4" />
+              <div className="flex gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleDropOutside(false)}
+                  disabled={!carriedItem}
+                  className="text-xs"
+                >
+                  {t("bots.inventoryPanel.dropOne")}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleDropOutside(true)}
+                  disabled={!carriedItem}
+                  className="text-xs"
+                >
+                  {t("bots.inventoryPanel.dropAll")}
+                </Button>
               </div>
             </div>
-            {/* Main inventory (27 slots - 3 rows of 9) - slots 9-35 */}
-            <div>
-              <p className="text-muted-foreground mb-1 text-xs font-medium">
-                {t("bots.inventoryPanel.main")}
-              </p>
-              <div className="grid grid-cols-9 gap-1">
-                {Array.from({ length: 27 }, (_, i) => {
-                  const slotIndex = MAIN_INV_START + i;
-                  const item = getItemForSlot(inventory, slotIndex);
-                  // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list, order doesn't matter
-                  return <InventorySlotDisplay key={`main-${i}`} item={item} />;
-                })}
-              </div>
-            </div>
-          </>
+
+            {/* Click instructions */}
+            <p className="text-muted-foreground text-center text-xs">
+              {t("bots.inventoryPanel.clickHint")}
+            </p>
+          </div>
         ) : (
           <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
             <p className="text-muted-foreground">

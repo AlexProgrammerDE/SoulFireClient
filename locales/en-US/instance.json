@@ -163,6 +163,12 @@
       "hotbar": "Hotbar",
       "main": "Main Inventory",
       "items": "items",
+      "carrying": "Carrying",
+      "dropOne": "Drop One",
+      "dropAll": "Drop All",
+      "closeContainer": "Close",
+      "openInventory": "Open Inventory",
+      "clickHint": "Left click: pick up/place | Right click: half/one | Shift+click: quick move",
       "offline": "Bot is offline. Inventory is only available when the bot is connected."
     },
     "visualPanel": {
