@@ -3,7 +3,7 @@
   <id>com.soulfiremc.soulfire</id>
 
   <name>SoulFire</name>
-  <summary>Advanced Minecraft Server-Stresser Tool</summary>
+  <summary>Advanced Minecraft Bot Tool</summary>
 
   <metadata_license>FSFAP</metadata_license>
   <project_license>AGPL-3.0-or-later</project_license>
@@ -16,7 +16,7 @@
 
   <description>
     <p>
-      Advanced Minecraft Server-Stresser Tool. Launch bot attacks on your servers to measure performance.
+      Advanced Minecraft Bot Tool. Deploy bots for testing, automation, and server development.
     </p>
   </description>
 

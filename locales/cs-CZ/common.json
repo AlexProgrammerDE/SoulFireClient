@@ -97,28 +97,28 @@
     "pause": "Pozastavit",
     "stop": "Zastavit",
     "startToast": {
-      "loading": "Spouštím útok...",
-      "success": "Útok byl úspěšně spuštěn",
-      "error": "Nepodařilo se spustit útok"
+      "loading": "Spouštím relaci...",
+      "success": "Relace byla úspěšně spuštěna",
+      "error": "Nepodařilo se spustit relaci"
     },
     "resumeToast": {
-      "loading": "Pokračuji v útoku...",
-      "success": "Útok byl úspěšně obnoven",
-      "error": "Nepodařilo se pokračovat v útoku"
+      "loading": "Pokračuji v relaci...",
+      "success": "Relace byla úspěšně obnovena",
+      "error": "Nepodařilo se pokračovat v relaci"
     },
     "pauseToast": {
-      "loading": "Pozastavuji útok...",
-      "success": "Útok byl úspěšně pozastaven",
-      "error": "Nepodařilo se pozastavit útok"
+      "loading": "Pozastavuji relaci...",
+      "success": "Relace byla úspěšně pozastavena",
+      "error": "Nepodařilo se pozastavit relaci"
     },
     "stopToast": {
-      "loading": "Zastavuji útok...",
-      "success": "Útok byl úspěšně zastaven",
-      "error": "Nepodařilo se zastavit útok"
+      "loading": "Zastavuji relaci...",
+      "success": "Relace byla úspěšně zastavena",
+      "error": "Nepodařilo se zastavit relaci"
     },
     "accountWarning": {
       "noAccountsTitle": "Žádné účty nejsou nastaveny",
-      "noAccountsDescription": "Než zahájíte útok, musíte mít importované účty. Požadováno: {{required}} botů.",
+      "noAccountsDescription": "Než zahájíte relaci, musíte mít importované účty. Požadováno: {{required}} botů.",
       "notEnoughTitle": "Nedostatek účtů",
       "notEnoughDescription": "Požadovali jste {{required}} botů, ale máte importováno pouze {{available}} účtů.",
       "hint": "Můžete vygenerovat offline účty nebo importovat účty na stránce Nastavení účtu.",
@@ -356,10 +356,10 @@
     "action": "Akce",
     "timestamp": "Časové razítko",
     "executedCommand": "Proveden příkaz: {{data}}",
-    "startedAttack": "Zahájen útok",
-    "resumedAttack": "Obnoven útok",
-    "pausedAttack": "Pozastaven útok",
-    "stoppedAttack": "Ukončen útok"
+    "startedSession": "Zahájena relace",
+    "resumedSession": "Obnovena relace",
+    "pausedSession": "Pozastavena relace",
+    "stoppedSession": "Ukončena relace"
   },
   "pickADate": "Vyberte datum",
   "scripts": {

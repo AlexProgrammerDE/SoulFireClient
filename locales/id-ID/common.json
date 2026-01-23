@@ -97,28 +97,28 @@
     "pause": "Jeda",
     "stop": "Berhenti",
     "startToast": {
-      "loading": "Memulai serangan...",
-      "success": "Serangan berhasil dimulai",
-      "error": "Gagal memulai serangan"
+      "loading": "Memulai sesi...",
+      "success": "Sesi berhasil dimulai",
+      "error": "Gagal memulai sesi"
     },
     "resumeToast": {
-      "loading": "Melanjutkan serangan...",
-      "success": "Serangan berhasil dilanjutkan",
-      "error": "Gagal melanjutkan serangan"
+      "loading": "Melanjutkan sesi...",
+      "success": "Sesi berhasil dilanjutkan",
+      "error": "Gagal melanjutkan sesi"
     },
     "pauseToast": {
-      "loading": "Menjeda serangan...",
-      "success": "Serangan berhasil dijeda",
-      "error": "Gagal menjeda serangan"
+      "loading": "Menjeda sesi...",
+      "success": "Sesi berhasil dijeda",
+      "error": "Gagal menjeda sesi"
     },
     "stopToast": {
-      "loading": "Menghentikan serangan...",
-      "success": "Serangan berhasil dihentikan",
-      "error": "Gagal menghentikan serangan"
+      "loading": "Menghentikan sesi...",
+      "success": "Sesi berhasil dihentikan",
+      "error": "Gagal menghentikan sesi"
     },
     "accountWarning": {
       "noAccountsTitle": "Tidak Ada Akun yang Dikonfigurasi",
-      "noAccountsDescription": "Anda perlu mengimpor akun sebelum memulai serangan. Anda meminta {{required}} bot.",
+      "noAccountsDescription": "Anda perlu mengimpor akun sebelum memulai sesi. Anda meminta {{required}} bot.",
       "notEnoughTitle": "Akun Tidak Cukup",
       "notEnoughDescription": "Anda meminta {{required}} bot namun hanya memiliki {{available}} akun diimpor.",
       "hint": "Anda dapat menghasilkan akun offline atau mengimpor akun dari halaman Pengaturan Akun.",
@@ -356,10 +356,10 @@
     "action": "Aksi",
     "timestamp": "Waktu",
     "executedCommand": "Perintah dijalankan: {{data}}",
-    "startedAttack": "Memulai serangan",
-    "resumedAttack": "Melanjutkan serangan",
-    "pausedAttack": "Menjeda serangan",
-    "stoppedAttack": "Menghentikan serangan"
+    "startedSession": "Memulai sesi",
+    "resumedSession": "Melanjutkan sesi",
+    "pausedSession": "Menjeda sesi",
+    "stoppedSession": "Menghentikan sesi"
   },
   "pickADate": "Pilih tanggal",
   "scripts": {

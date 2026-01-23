@@ -97,28 +97,28 @@
     "pause": "일시 정지",
     "stop": "중지",
     "startToast": {
-      "loading": "공격 시작 중...",
-      "success": "공격이 성공적으로 시작되었습니다",
-      "error": "공격 시작에 실패했습니다"
+      "loading": "세션 시작 중...",
+      "success": "세션이 성공적으로 시작되었습니다",
+      "error": "세션 시작에 실패했습니다"
     },
     "resumeToast": {
-      "loading": "공격 재개 중...",
-      "success": "공격이 성공적으로 재개되었습니다",
-      "error": "공격 재개에 실패했습니다"
+      "loading": "세션 재개 중...",
+      "success": "세션이 성공적으로 재개되었습니다",
+      "error": "세션 재개에 실패했습니다"
     },
     "pauseToast": {
-      "loading": "공격 일시 정지 중...",
-      "success": "공격이 성공적으로 일시 정지되었습니다",
-      "error": "공격 일시 정지에 실패했습니다"
+      "loading": "세션 일시 정지 중...",
+      "success": "세션이 성공적으로 일시 정지되었습니다",
+      "error": "세션 일시 정지에 실패했습니다"
     },
     "stopToast": {
-      "loading": "공격 중지 중...",
-      "success": "공격이 성공적으로 중지되었습니다",
-      "error": "공격 중지에 실패했습니다"
+      "loading": "세션 중지 중...",
+      "success": "세션이 성공적으로 중지되었습니다",
+      "error": "세션 중지에 실패했습니다"
     },
     "accountWarning": {
       "noAccountsTitle": "계정이 구성되지 않음",
-      "noAccountsDescription": "공격을 시작하려면 먼저 계정을 가져와야 합니다. 요청한 봇 수: {{required}}",
+      "noAccountsDescription": "세션을 시작하려면 먼저 계정을 가져와야 합니다. 요청한 봇 수: {{required}}",
       "notEnoughTitle": "계정이 부족함",
       "notEnoughDescription": "{{required}}개의 봇이 요청되었으나, 가져온 계정은 {{available}}개입니다.",
       "hint": "오프라인 계정을 생성하거나 계정 설정 페이지에서 계정을 가져올 수 있습니다.",
@@ -356,10 +356,10 @@
     "action": "동작",
     "timestamp": "타임스탬프",
     "executedCommand": "명령 실행됨: {{data}}",
-    "startedAttack": "공격 시작함",
-    "resumedAttack": "공격 재개함",
-    "pausedAttack": "공격 일시정지함",
-    "stoppedAttack": "공격 중지함"
+    "startedSession": "세션 시작함",
+    "resumedSession": "세션 재개함",
+    "pausedSession": "세션 일시정지함",
+    "stoppedSession": "세션 중지함"
   },
   "pickADate": "날짜 선택",
   "scripts": {

@@ -97,28 +97,28 @@
     "pause": "Pausar",
     "stop": "Detener",
     "startToast": {
-      "loading": "Iniciando ataque...",
-      "success": "Ataque iniciado correctamente",
-      "error": "Error al iniciar el ataque"
+      "loading": "Iniciando sesión...",
+      "success": "Sesión iniciada correctamente",
+      "error": "Error al iniciar la sesión"
     },
     "resumeToast": {
-      "loading": "Reanudando ataque...",
-      "success": "Ataque reanudado con éxito",
-      "error": "Error al reanudar el ataque"
+      "loading": "Reanudando sesión...",
+      "success": "Sesión reanudada con éxito",
+      "error": "Error al reanudar la sesión"
     },
     "pauseToast": {
-      "loading": "Pausando ataque...",
-      "success": "Ataque pausado correctamente",
-      "error": "Error al pausar el ataque"
+      "loading": "Pausando sesión...",
+      "success": "Sesión pausada correctamente",
+      "error": "Error al pausar la sesión"
     },
     "stopToast": {
-      "loading": "Deteniendo ataque...",
-      "success": "Ataque detenido correctamente",
-      "error": "Error al detener el ataque"
+      "loading": "Deteniendo sesión...",
+      "success": "Sesión detenida correctamente",
+      "error": "Error al detener la sesión"
     },
     "accountWarning": {
       "noAccountsTitle": "No hay cuentas configuradas",
-      "noAccountsDescription": "Debes importar cuentas antes de iniciar un ataque. Has solicitado {{required}} bots.",
+      "noAccountsDescription": "Debes importar cuentas antes de iniciar una sesión. Has solicitado {{required}} bots.",
       "notEnoughTitle": "No hay suficientes cuentas",
       "notEnoughDescription": "Has solicitado {{required}} bots pero solo tienes {{available}} cuentas importadas.",
       "hint": "Puedes generar cuentas offline o importar cuentas desde la página de Configuración de Cuenta.",
@@ -356,10 +356,10 @@
     "action": "Acción",
     "timestamp": "Marca de tiempo",
     "executedCommand": "Comando ejecutado: {{data}}",
-    "startedAttack": "Ataque iniciado",
-    "resumedAttack": "Ataque reanudado",
-    "pausedAttack": "Ataque pausado",
-    "stoppedAttack": "Ataque detenido"
+    "startedSession": "Sesión iniciada",
+    "resumedSession": "Sesión reanudada",
+    "pausedSession": "Sesión pausada",
+    "stoppedSession": "Sesión detenida"
   },
   "pickADate": "Selecciona una fecha",
   "scripts": {

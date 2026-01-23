@@ -97,28 +97,28 @@
     "pause": "Pauser",
     "stop": "Arrêter",
     "startToast": {
-      "loading": "Démarrage de l'attaque...",
-      "success": "L'attaque a démarré avec succès",
-      "error": "Échec du lancement de l'attaque"
+      "loading": "Démarrage de la session...",
+      "success": "La session a démarré avec succès",
+      "error": "Échec du lancement de la session"
     },
     "resumeToast": {
-      "loading": "Reprise de l'attaque...",
-      "success": "L'attaque a repris avec succès",
-      "error": "Échec de la reprise de l'attaque"
+      "loading": "Reprise de la session...",
+      "success": "La session a repris avec succès",
+      "error": "Échec de la reprise de la session"
     },
     "pauseToast": {
-      "loading": "Interruption de l'attaque...",
-      "success": "L'attaque a été interrompue avec succès",
-      "error": "Échec de l'interruption de l'attaque"
+      "loading": "Interruption de la session...",
+      "success": "La session a été interrompue avec succès",
+      "error": "Échec de l'interruption de la session"
     },
     "stopToast": {
-      "loading": "Arrêt de l'attaque...",
-      "success": "Attaque arrêtée avec succès",
-      "error": "Échec de l'arrêt de l'attaque"
+      "loading": "Arrêt de la session...",
+      "success": "Session arrêtée avec succès",
+      "error": "Échec de l'arrêt de la session"
     },
     "accountWarning": {
       "noAccountsTitle": "Aucun compte configuré",
-      "noAccountsDescription": "Vous devez importer des comptes avant de démarrer une attaque. Vous avez demandé {{required}} bots.",
+      "noAccountsDescription": "Vous devez importer des comptes avant de démarrer une session. Vous avez demandé {{required}} bots.",
       "notEnoughTitle": "Pas assez de comptes",
       "notEnoughDescription": "Vous avez demandé {{required}} bots, mais seulement {{available}} comptes sont importés.",
       "hint": "Vous pouvez générer des comptes hors ligne ou importer des comptes depuis la page de Configuration des comptes.",
@@ -356,10 +356,10 @@
     "action": "Action",
     "timestamp": "Horodatage",
     "executedCommand": "Commande exécutée : {{data}}",
-    "startedAttack": "Attaque démarrée",
-    "resumedAttack": "Attaque reprise",
-    "pausedAttack": "Attaque suspendue",
-    "stoppedAttack": "Attaque arrêtée"
+    "startedSession": "Session démarrée",
+    "resumedSession": "Session reprise",
+    "pausedSession": "Session suspendue",
+    "stoppedSession": "Session arrêtée"
   },
   "pickADate": "Choisir une date",
   "scripts": {

@@ -97,28 +97,28 @@
     "pause": "暫停",
     "stop": "停止",
     "startToast": {
-      "loading": "正在啟動攻擊...",
-      "success": "攻擊啟動成功",
-      "error": "啟動攻擊失敗"
+      "loading": "正在啟動工作階段...",
+      "success": "工作階段啟動成功",
+      "error": "啟動工作階段失敗"
     },
     "resumeToast": {
-      "loading": "正在恢復攻擊...",
-      "success": "攻擊已成功恢復",
-      "error": "恢復攻擊失敗"
+      "loading": "正在恢復工作階段...",
+      "success": "工作階段已成功恢復",
+      "error": "恢復工作階段失敗"
     },
     "pauseToast": {
-      "loading": "正在暫停攻擊...",
-      "success": "攻擊暫停成功",
-      "error": "暫停攻擊失敗"
+      "loading": "正在暫停工作階段...",
+      "success": "工作階段暫停成功",
+      "error": "暫停工作階段失敗"
     },
     "stopToast": {
-      "loading": "正在停止攻擊...",
-      "success": "攻擊停止成功",
-      "error": "停止攻擊失敗"
+      "loading": "正在停止工作階段...",
+      "success": "工作階段停止成功",
+      "error": "停止工作階段失敗"
     },
     "accountWarning": {
       "noAccountsTitle": "未設定帳戶",
-      "noAccountsDescription": "在啟動攻擊前，您需要先匯入帳戶。您要求了 {{required}} 個 bot。",
+      "noAccountsDescription": "在啟動工作階段前，您需要先匯入帳戶。您要求了 {{required}} 個 bot。",
       "notEnoughTitle": "帳戶數不足",
       "notEnoughDescription": "您要求了 {{required}} 個 bot，但僅匯入 {{available}} 個帳戶。",
       "hint": "您可以在帳戶設定頁面產生離線帳戶或匯入帳戶。",
@@ -356,10 +356,10 @@
     "action": "動作",
     "timestamp": "時間戳記",
     "executedCommand": "執行指令：{{data}}",
-    "startedAttack": "已啟動攻擊",
-    "resumedAttack": "已恢復攻擊",
-    "pausedAttack": "已暫停攻擊",
-    "stoppedAttack": "已停止攻擊"
+    "startedSession": "已啟動工作階段",
+    "resumedSession": "已恢復工作階段",
+    "pausedSession": "已暫停工作階段",
+    "stoppedSession": "已停止工作階段"
   },
   "pickADate": "選擇日期",
   "scripts": {

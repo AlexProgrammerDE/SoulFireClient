@@ -97,28 +97,28 @@
     "pause": "一時停止",
     "stop": "停止",
     "startToast": {
-      "loading": "攻撃を開始しています...",
-      "success": "攻撃が正常に開始されました",
-      "error": "攻撃の開始に失敗しました"
+      "loading": "セッションを開始しています...",
+      "success": "セッションが正常に開始されました",
+      "error": "セッションの開始に失敗しました"
     },
     "resumeToast": {
-      "loading": "攻撃を再開しています...",
-      "success": "攻撃が正常に再開されました",
-      "error": "攻撃の再開に失敗しました"
+      "loading": "セッションを再開しています...",
+      "success": "セッションが正常に再開されました",
+      "error": "セッションの再開に失敗しました"
     },
     "pauseToast": {
-      "loading": "攻撃を一時停止しています...",
-      "success": "攻撃が正常に一時停止されました",
-      "error": "攻撃の一時停止に失敗しました"
+      "loading": "セッションを一時停止しています...",
+      "success": "セッションが正常に一時停止されました",
+      "error": "セッションの一時停止に失敗しました"
     },
     "stopToast": {
-      "loading": "攻撃を停止しています...",
-      "success": "攻撃が正常に停止されました",
-      "error": "攻撃の停止に失敗しました"
+      "loading": "セッションを停止しています...",
+      "success": "セッションが正常に停止されました",
+      "error": "セッションの停止に失敗しました"
     },
     "accountWarning": {
       "noAccountsTitle": "アカウントが設定されていません",
-      "noAccountsDescription": "攻撃を開始するにはアカウントをインポートする必要があります。リクエストしたボット数: {{required}}体。",
+      "noAccountsDescription": "セッションを開始するにはアカウントをインポートする必要があります。リクエストしたボット数: {{required}}体。",
       "notEnoughTitle": "アカウントが不足しています",
       "notEnoughDescription": "{{required}}体のボットをリクエストしましたが、インポート済みアカウントは{{available}}件のみです。",
       "hint": "オフラインアカウントを生成するか、アカウント設定ページからアカウントをインポートできます。",
@@ -356,10 +356,10 @@
     "action": "アクション",
     "timestamp": "タイムスタンプ",
     "executedCommand": "コマンドを実行: {{data}}",
-    "startedAttack": "攻撃を開始しました",
-    "resumedAttack": "攻撃を再開しました",
-    "pausedAttack": "攻撃を一時停止しました",
-    "stoppedAttack": "攻撃を停止しました"
+    "startedSession": "セッションを開始しました",
+    "resumedSession": "セッションを再開しました",
+    "pausedSession": "セッションを一時停止しました",
+    "stoppedSession": "セッションを停止しました"
   },
   "pickADate": "日付を選択",
   "scripts": {

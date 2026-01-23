@@ -97,28 +97,28 @@
     "pause": "Pausieren",
     "stop": "Stopp",
     "startToast": {
-      "loading": "Starte Angriff...",
-      "success": "Angriff erfolgreich gestartet",
-      "error": "Fehler beim Start des Angriffs"
+      "loading": "Starte Sitzung...",
+      "success": "Sitzung erfolgreich gestartet",
+      "error": "Fehler beim Start der Sitzung"
     },
     "resumeToast": {
-      "loading": "Angriff wird fortgesetzt...",
-      "success": "Angriff erfolgreich fortgesetzt",
-      "error": "Fehler beim Fortsetzen des Angriffs"
+      "loading": "Sitzung wird fortgesetzt...",
+      "success": "Sitzung erfolgreich fortgesetzt",
+      "error": "Fehler beim Fortsetzen der Sitzung"
     },
     "pauseToast": {
-      "loading": "Angriff wird pausiert...",
-      "success": "Angriff erfolgreich pausiert",
-      "error": "Fehler beim Pausieren des Angriffs"
+      "loading": "Sitzung wird pausiert...",
+      "success": "Sitzung erfolgreich pausiert",
+      "error": "Fehler beim Pausieren der Sitzung"
     },
     "stopToast": {
-      "loading": "Angriff wird gestoppt...",
-      "success": "Angriff erfolgreich gestoppt",
-      "error": "Fehler beim Stoppen des Angriffs"
+      "loading": "Sitzung wird gestoppt...",
+      "success": "Sitzung erfolgreich gestoppt",
+      "error": "Fehler beim Stoppen der Sitzung"
     },
     "accountWarning": {
       "noAccountsTitle": "Keine Konten konfiguriert",
-      "noAccountsDescription": "Sie müssen Konten importiert haben, bevor Sie einen Angriff starten. Sie haben {{required}} Bots angefordert.",
+      "noAccountsDescription": "Sie müssen Konten importiert haben, bevor Sie eine Sitzung starten. Sie haben {{required}} Bots angefordert.",
       "notEnoughTitle": "Nicht genügend Konten",
       "notEnoughDescription": "Sie haben {{required}} Bots angefordert, aber nur {{available}} Konten importiert.",
       "hint": "Sie können Offline-Konten generieren oder Konten auf der Seite Kontoeinstellungen importieren.",
@@ -356,10 +356,10 @@
     "action": "Aktion",
     "timestamp": "Zeitstempel",
     "executedCommand": "Ausgeführter Befehl: {{data}}",
-    "startedAttack": "Angriff gestartet",
-    "resumedAttack": "Angriff fortgesetzt",
-    "pausedAttack": "Angriff pausiert",
-    "stoppedAttack": "Angriff gestoppt"
+    "startedSession": "Sitzung gestartet",
+    "resumedSession": "Sitzung fortgesetzt",
+    "pausedSession": "Sitzung pausiert",
+    "stoppedSession": "Sitzung gestoppt"
   },
   "pickADate": "Datum auswählen",
   "scripts": {

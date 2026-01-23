@@ -97,28 +97,28 @@
     "pause": "Duraklat",
     "stop": "Durdur",
     "startToast": {
-      "loading": "Saldırı başlatılıyor...",
-      "success": "Saldırı başarıyla başlatıldı",
-      "error": "Saldırı başlatılamadı"
+      "loading": "Oturum başlatılıyor...",
+      "success": "Oturum başarıyla başlatıldı",
+      "error": "Oturum başlatılamadı"
     },
     "resumeToast": {
-      "loading": "Saldırı devam ettiriliyor...",
-      "success": "Saldırı başarıyla devam ettirildi",
-      "error": "Saldırı devam ettirilemedi"
+      "loading": "Oturum devam ettiriliyor...",
+      "success": "Oturum başarıyla devam ettirildi",
+      "error": "Oturum devam ettirilemedi"
     },
     "pauseToast": {
-      "loading": "Saldırı duraklatılıyor...",
-      "success": "Saldırı başarıyla duraklatıldı",
-      "error": "Saldırı duraklatılamadı"
+      "loading": "Oturum duraklatılıyor...",
+      "success": "Oturum başarıyla duraklatıldı",
+      "error": "Oturum duraklatılamadı"
     },
     "stopToast": {
-      "loading": "Saldırı durduruluyor...",
-      "success": "Saldırı başarıyla durduruldu",
-      "error": "Saldırı durdurulamadı"
+      "loading": "Oturum durduruluyor...",
+      "success": "Oturum başarıyla durduruldu",
+      "error": "Oturum durdurulamadı"
     },
     "accountWarning": {
       "noAccountsTitle": "Hiçbir Hesap Yapılandırılmadı",
-      "noAccountsDescription": "Bir saldırı başlatmadan önce hesapları içe aktarmanız gerekir. {{required}} bot talep ettiniz.",
+      "noAccountsDescription": "Bir oturum başlatmadan önce hesapları içe aktarmanız gerekir. {{required}} bot talep ettiniz.",
       "notEnoughTitle": "Yeterli Hesap Yok",
       "notEnoughDescription": "{{required}} bot talep ettiniz ama yalnızca {{available}} hesap içe aktardınız.",
       "hint": "Çevrimdışı hesaplar oluşturabilir veya Hesap Ayarları sayfasından hesapları içe aktarabilirsiniz.",
@@ -356,10 +356,10 @@
     "action": "Eylem",
     "timestamp": "Zaman damgası",
     "executedCommand": "Çalıştırılan komut: {{data}}",
-    "startedAttack": "Bir saldırı başlatıldı",
-    "resumedAttack": "Bir saldırı devam ettirildi",
-    "pausedAttack": "Bir saldırı duraklatıldı",
-    "stoppedAttack": "Bir saldırı durduruldu"
+    "startedSession": "Bir oturum başlatıldı",
+    "resumedSession": "Bir oturum devam ettirildi",
+    "pausedSession": "Bir oturum duraklatıldı",
+    "stoppedSession": "Bir oturum durduruldu"
   },
   "pickADate": "Bir tarih seçin",
   "scripts": {

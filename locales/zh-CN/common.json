@@ -97,28 +97,28 @@
     "pause": "暂停",
     "stop": "停止",
     "startToast": {
-      "loading": "正在开始攻击...",
-      "success": "攻击已成功开始",
-      "error": "启动攻击失败"
+      "loading": "正在开始会话...",
+      "success": "会话已成功开始",
+      "error": "启动会话失败"
     },
     "resumeToast": {
-      "loading": "正在恢复攻击...",
-      "success": "攻击已成功恢复",
-      "error": "恢复攻击失败"
+      "loading": "正在恢复会话...",
+      "success": "会话已成功恢复",
+      "error": "恢复会话失败"
     },
     "pauseToast": {
-      "loading": "正在暂停攻击...",
-      "success": "攻击已成功暂停",
-      "error": "暂停攻击失败"
+      "loading": "正在暂停会话...",
+      "success": "会话已成功暂停",
+      "error": "暂停会话失败"
     },
     "stopToast": {
-      "loading": "正在停止攻击...",
-      "success": "攻击已成功停止",
-      "error": "停止攻击失败"
+      "loading": "正在停止会话...",
+      "success": "会话已成功停止",
+      "error": "停止会话失败"
     },
     "accountWarning": {
       "noAccountsTitle": "未配置账户",
-      "noAccountsDescription": "在开始攻击前，您需要先导入账户。您请求了 {{required}} 个机器人。",
+      "noAccountsDescription": "在开始会话前，您需要先导入账户。您请求了 {{required}} 个机器人。",
       "notEnoughTitle": "账户数量不足",
       "notEnoughDescription": "您请求了 {{required}} 个机器人，但只导入了 {{available}} 个账户。",
       "hint": "您可以生成离线账户或在账户设置页面导入账户。",
@@ -356,10 +356,10 @@
     "action": "操作",
     "timestamp": "",
     "executedCommand": "执行的命令：{{data}}",
-    "startedAttack": "发起了攻击",
-    "resumedAttack": "恢复了攻击",
-    "pausedAttack": "暂停了攻击",
-    "stoppedAttack": "停止了攻击"
+    "startedSession": "发起了会话",
+    "resumedSession": "恢复了会话",
+    "pausedSession": "暂停了会话",
+    "stoppedSession": "停止了会话"
   },
   "pickADate": "选日期",
   "scripts": {

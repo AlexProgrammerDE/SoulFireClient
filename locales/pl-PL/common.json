@@ -97,28 +97,28 @@
     "pause": "Wstrzymaj",
     "stop": "Zatrzymaj",
     "startToast": {
-      "loading": "Zaczynanie ataku...",
-      "success": "Atak rozpoczęty pomyślnie",
-      "error": "Nie udało się rozpocząć ataku"
+      "loading": "Rozpoczynanie sesji...",
+      "success": "Sesja rozpoczęta pomyślnie",
+      "error": "Nie udało się rozpocząć sesji"
     },
     "resumeToast": {
-      "loading": "Wznawiam atak...",
-      "success": "Atak wznowiony pomyślnie",
-      "error": "Nie udało się wznowić ataku"
+      "loading": "Wznawiam sesję...",
+      "success": "Sesja wznowiona pomyślnie",
+      "error": "Nie udało się wznowić sesji"
     },
     "pauseToast": {
-      "loading": "Wstrzymywanie ataku...",
-      "success": "Atak wstrzymany pomyślnie",
-      "error": "Nie udało się wstrzymać ataku"
+      "loading": "Wstrzymywanie sesji...",
+      "success": "Sesja wstrzymana pomyślnie",
+      "error": "Nie udało się wstrzymać sesji"
     },
     "stopToast": {
-      "loading": "Zatrzymywanie ataku...",
-      "success": "Atak zatrzymany pomyślnie",
-      "error": "Nie udało się zatrzymać ataku"
+      "loading": "Zatrzymywanie sesji...",
+      "success": "Sesja zatrzymana pomyślnie",
+      "error": "Nie udało się zatrzymać sesji"
     },
     "accountWarning": {
       "noAccountsTitle": "Brak skonfigurowanych kont",
-      "noAccountsDescription": "Musisz zaimportować konta przed rozpoczęciem ataku. Poprosiłeś o {{required}} botów.",
+      "noAccountsDescription": "Musisz zaimportować konta przed rozpoczęciem sesji. Poprosiłeś o {{required}} botów.",
       "notEnoughTitle": "Za mało kont",
       "notEnoughDescription": "Poprosiłeś o {{required}} botów, ale masz zaimportowane tylko {{available}} kont.",
       "hint": "Możesz wygenerować konta offline lub zaimportować konta na stronie Ustawienia konta.",
@@ -356,10 +356,10 @@
     "action": "Akcja",
     "timestamp": "Znacznik czasu",
     "executedCommand": "Wykonano polecenie: {{data}}",
-    "startedAttack": "Rozpoczął atak",
-    "resumedAttack": "Wznowił atak",
-    "pausedAttack": "Wstrzymał atak",
-    "stoppedAttack": "Zatrzymał atak"
+    "startedSession": "Rozpoczął sesję",
+    "resumedSession": "Wznowił sesję",
+    "pausedSession": "Wstrzymał sesję",
+    "stoppedSession": "Zatrzymał sesję"
   },
   "pickADate": "Wybierz datę",
   "scripts": {

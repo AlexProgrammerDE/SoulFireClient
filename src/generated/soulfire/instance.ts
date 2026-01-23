@@ -571,21 +571,21 @@ export enum InstanceAuditLogResponse_AuditLogEntryType {
    */
   EXECUTE_COMMAND = 0,
   /**
-   * @generated from protobuf enum value: START_ATTACK = 1;
+   * @generated from protobuf enum value: START_SESSION = 1;
    */
-  START_ATTACK = 1,
+  START_SESSION = 1,
   /**
-   * @generated from protobuf enum value: PAUSE_ATTACK = 2;
+   * @generated from protobuf enum value: PAUSE_SESSION = 2;
    */
-  PAUSE_ATTACK = 2,
+  PAUSE_SESSION = 2,
   /**
-   * @generated from protobuf enum value: RESUME_ATTACK = 3;
+   * @generated from protobuf enum value: RESUME_SESSION = 3;
    */
-  RESUME_ATTACK = 3,
+  RESUME_SESSION = 3,
   /**
-   * @generated from protobuf enum value: STOP_ATTACK = 4;
+   * @generated from protobuf enum value: STOP_SESSION = 4;
    */
-  STOP_ATTACK = 4,
+  STOP_SESSION = 4,
 }
 /**
  * @generated from protobuf enum soulfire.v1.InstanceState

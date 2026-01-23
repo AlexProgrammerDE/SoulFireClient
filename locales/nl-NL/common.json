@@ -97,28 +97,28 @@
     "pause": "Pauzeren",
     "stop": "Stoppen",
     "startToast": {
-      "loading": "Aanval starten...",
-      "success": "Aanval succesvol gestart",
-      "error": "Starten van aanval mislukt"
+      "loading": "Sessie starten...",
+      "success": "Sessie succesvol gestart",
+      "error": "Starten van sessie mislukt"
     },
     "resumeToast": {
-      "loading": "Aanval hervatten...",
-      "success": "Aanval succesvol hervat",
-      "error": "Hervatten van aanval mislukt"
+      "loading": "Sessie hervatten...",
+      "success": "Sessie succesvol hervat",
+      "error": "Hervatten van sessie mislukt"
     },
     "pauseToast": {
-      "loading": "Aanval pauzeren...",
-      "success": "Aanval succesvol gepauzeerd",
-      "error": "Pauzeren van aanval mislukt"
+      "loading": "Sessie pauzeren...",
+      "success": "Sessie succesvol gepauzeerd",
+      "error": "Pauzeren van sessie mislukt"
     },
     "stopToast": {
-      "loading": "Aanval stoppen...",
-      "success": "Aanval succesvol gestopt",
-      "error": "Stoppen van aanval mislukt"
+      "loading": "Sessie stoppen...",
+      "success": "Sessie succesvol gestopt",
+      "error": "Stoppen van sessie mislukt"
     },
     "accountWarning": {
       "noAccountsTitle": "Geen accounts geconfigureerd",
-      "noAccountsDescription": "Je moet accounts geïmporteerd hebben voordat je een aanval kunt starten. Je hebt {{required}} bots aangevraagd.",
+      "noAccountsDescription": "Je moet accounts geïmporteerd hebben voordat je een sessie kunt starten. Je hebt {{required}} bots aangevraagd.",
       "notEnoughTitle": "Niet genoeg accounts",
       "notEnoughDescription": "Je hebt {{required}} bots aangevraagd maar slechts {{available}} accounts geïmporteerd.",
       "hint": "Je kunt offline accounts genereren of accounts importeren vanaf de pagina Accountinstellingen.",
@@ -356,10 +356,10 @@
     "action": "Actie",
     "timestamp": "Tijdstempel",
     "executedCommand": "Uitgevoerd commando: {{data}}",
-    "startedAttack": "Een aanval gestart",
-    "resumedAttack": "Een aanval hervat",
-    "pausedAttack": "Een aanval gepauzeerd",
-    "stoppedAttack": "Een aanval gestopt"
+    "startedSession": "Een sessie gestart",
+    "resumedSession": "Een sessie hervat",
+    "pausedSession": "Een sessie gepauzeerd",
+    "stoppedSession": "Een sessie gestopt"
   },
   "pickADate": "Selecteer een datum",
   "scripts": {

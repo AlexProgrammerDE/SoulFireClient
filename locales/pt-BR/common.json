@@ -97,28 +97,28 @@
     "pause": "Pausar",
     "stop": "Parar",
     "startToast": {
-      "loading": "Iniciando ataque...",
-      "success": "Ataque iniciado com sucesso",
-      "error": "Falha ao iniciar ataque"
+      "loading": "Iniciando sessão...",
+      "success": "Sessão iniciada com sucesso",
+      "error": "Falha ao iniciar sessão"
     },
     "resumeToast": {
-      "loading": "Retomando ataque...",
-      "success": "Ataque retomado com sucesso",
-      "error": "Falha ao retomar o ataque"
+      "loading": "Retomando sessão...",
+      "success": "Sessão retomada com sucesso",
+      "error": "Falha ao retomar a sessão"
     },
     "pauseToast": {
-      "loading": "Pausando ataque...",
-      "success": "Ataque pausado com sucesso",
-      "error": "Falha ao pausar o ataque"
+      "loading": "Pausando sessão...",
+      "success": "Sessão pausada com sucesso",
+      "error": "Falha ao pausar a sessão"
     },
     "stopToast": {
-      "loading": "Parando o ataque...",
-      "success": "Ataque interrompido com sucesso",
-      "error": "Falha ao interromper o ataque"
+      "loading": "Parando a sessão...",
+      "success": "Sessão interrompida com sucesso",
+      "error": "Falha ao interromper a sessão"
     },
     "accountWarning": {
       "noAccountsTitle": "Nenhuma Conta Configurada",
-      "noAccountsDescription": "Você precisa importar contas antes de iniciar um ataque. Você solicitou {{required}} bots.",
+      "noAccountsDescription": "Você precisa importar contas antes de iniciar uma sessão. Você solicitou {{required}} bots.",
       "notEnoughTitle": "Contas Insuficientes",
       "notEnoughDescription": "Você solicitou {{required}} bots mas só tem {{available}} contas importadas.",
       "hint": "Você pode gerar contas offline ou importar contas na página de Configurações de Conta.",
@@ -356,10 +356,10 @@
     "action": "Ação",
     "timestamp": "Data e hora",
     "executedCommand": "Comando executado: {{data}}",
-    "startedAttack": "Iniciou um ataque",
-    "resumedAttack": "Retomou um ataque",
-    "pausedAttack": "Pausou um ataque",
-    "stoppedAttack": "Parou um ataque"
+    "startedSession": "Iniciou uma sessão",
+    "resumedSession": "Retomou uma sessão",
+    "pausedSession": "Pausou uma sessão",
+    "stoppedSession": "Parou uma sessão"
   },
   "pickADate": "Escolha uma data",
   "scripts": {

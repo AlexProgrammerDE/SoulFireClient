@@ -97,28 +97,28 @@
     "pause": "Pawse",
     "stop": "Stawp",
     "startToast": {
-      "loading": "Startin attak...",
-      "success": "Teh attack successfully strated",
-      "error": "Fialed to strat attacc"
+      "loading": "Startin seshun...",
+      "success": "Teh seshun successfully strated",
+      "error": "Fialed to strat seshun"
     },
     "resumeToast": {
-      "loading": "Resooming attak...",
-      "success": "Teh attack resumed perfectly",
-      "error": "Faild 2 rezooom attak"
+      "loading": "Resooming seshun...",
+      "success": "Teh seshun resumed perfectly",
+      "error": "Faild 2 rezooom seshun"
     },
     "pauseToast": {
-      "loading": "Pawsin attak...",
-      "success": "Attak pawzed gudly",
-      "error": "Faild 2 pawz attak"
+      "loading": "Pawsin seshun...",
+      "success": "Seshun pawzed gudly",
+      "error": "Faild 2 pawz seshun"
     },
     "stopToast": {
-      "loading": "Stopping attak...",
-      "success": "Attak stopped gudly",
-      "error": "Faild 2 stop attak"
+      "loading": "Stopping seshun...",
+      "success": "Seshun stopped gudly",
+      "error": "Faild 2 stop seshun"
     },
     "accountWarning": {
       "noAccountsTitle": "No Akownz Setted Up",
-      "noAccountsDescription": "U need akownz imported b4 startin an attak. U wantd {{required}} botz.",
+      "noAccountsDescription": "U need akownz imported b4 startin a seshun. U wantd {{required}} botz.",
       "notEnoughTitle": "Not Enuf Akownz",
       "notEnoughDescription": "U wantd {{required}} botz but hav only {{available}} akownz imported.",
       "hint": "U can make offlain akownz or import frum teh Akown Settin'z page.",
@@ -356,10 +356,10 @@
     "action": "Akshun",
     "timestamp": "Timestamp",
     "executedCommand": "Did command: {{data}}",
-    "startedAttack": "Had startz attak",
-    "resumedAttack": "Had rezooomd attak",
-    "pausedAttack": "Had pawzed attak",
-    "stoppedAttack": "Had stopped attak"
+    "startedSession": "Had startz seshun",
+    "resumedSession": "Had rezooomd seshun",
+    "pausedSession": "Had pawzed seshun",
+    "stoppedSession": "Had stopped seshun"
   },
   "pickADate": "Pickz a datez",
   "scripts": {

@@ -97,28 +97,28 @@
     "pause": "Tauota",
     "stop": "Pysäytä",
     "startToast": {
-      "loading": "Hyökkäys käynnistyy...",
-      "success": "Hyökkäys käynnistyi onnistuneesti",
-      "error": "Hyökkäyksen käynnistäminen epäonnistui"
+      "loading": "Istunto käynnistyy...",
+      "success": "Istunto käynnistyi onnistuneesti",
+      "error": "Istunnon käynnistäminen epäonnistui"
     },
     "resumeToast": {
-      "loading": "Hyökkäys jatkuu...",
-      "success": "Hyökkäys jatkui onnistuneesti",
-      "error": "Hyökkäyksen jatkaminen epäonnistui"
+      "loading": "Istunto jatkuu...",
+      "success": "Istunto jatkui onnistuneesti",
+      "error": "Istunnon jatkaminen epäonnistui"
     },
     "pauseToast": {
-      "loading": "Tauotetaan hyökkäystä...",
-      "success": "Hyökkäys tauotettu",
-      "error": "Hyökkäyksen tauottaminen epäonnistui"
+      "loading": "Tauotetaan istuntoa...",
+      "success": "Istunto tauotettu",
+      "error": "Istunnon tauottaminen epäonnistui"
     },
     "stopToast": {
-      "loading": "Pysäytetään hyökkäys...",
-      "success": "Hyökkäys pysäytetty onnistuneesti",
-      "error": "Hyökkäyksen pysäyttäminen epäonnistui"
+      "loading": "Pysäytetään istunto...",
+      "success": "Istunto pysäytetty onnistuneesti",
+      "error": "Istunnon pysäyttäminen epäonnistui"
     },
     "accountWarning": {
       "noAccountsTitle": "Yhtään tiliä ei ole asetettu",
-      "noAccountsDescription": "Sinulla täytyy olla tilejä tuotu ennen hyökkäyksen aloittamista. Pyysit {{required}} bottia.",
+      "noAccountsDescription": "Sinulla täytyy olla tilejä tuotu ennen istunnon aloittamista. Pyysit {{required}} bottia.",
       "notEnoughTitle": "Tilejä ei tarpeeksi",
       "notEnoughDescription": "Pyysit {{required}} bottia, mutta vain {{available}} tili(ä) on tuotu.",
       "hint": "Voit luoda offline-tilejä tai tuoda tilejä Tili-asetukset -sivulta.",
@@ -356,10 +356,10 @@
     "action": "Toiminto",
     "timestamp": "Aikaleima",
     "executedCommand": "Suoritettiin komento: {{data}}",
-    "startedAttack": "Aloitti hyökkäyksen",
-    "resumedAttack": "Jatkoi hyökkäystä",
-    "pausedAttack": "Tauotti hyökkäyksen",
-    "stoppedAttack": "Pysäytti hyökkäyksen"
+    "startedSession": "Aloitti istunnon",
+    "resumedSession": "Jatkoi istuntoa",
+    "pausedSession": "Tauotti istunnon",
+    "stoppedSession": "Pysäytti istunnon"
   },
   "pickADate": "Valitse päivämäärä",
   "scripts": {

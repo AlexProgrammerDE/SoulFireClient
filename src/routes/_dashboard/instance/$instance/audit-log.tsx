@@ -82,14 +82,14 @@ export const Route = createFileRoute(
 
 function toI18nKey(type: InstanceAuditLogResponse_AuditLogEntryType) {
   switch (type) {
-    case InstanceAuditLogResponse_AuditLogEntryType.START_ATTACK:
-      return "auditLog.startedAttack";
-    case InstanceAuditLogResponse_AuditLogEntryType.STOP_ATTACK:
-      return "auditLog.stoppedAttack";
-    case InstanceAuditLogResponse_AuditLogEntryType.RESUME_ATTACK:
-      return "auditLog.resumedAttack";
-    case InstanceAuditLogResponse_AuditLogEntryType.PAUSE_ATTACK:
-      return "auditLog.pausedAttack";
+    case InstanceAuditLogResponse_AuditLogEntryType.START_SESSION:
+      return "auditLog.startedSession";
+    case InstanceAuditLogResponse_AuditLogEntryType.STOP_SESSION:
+      return "auditLog.stoppedSession";
+    case InstanceAuditLogResponse_AuditLogEntryType.RESUME_SESSION:
+      return "auditLog.resumedSession";
+    case InstanceAuditLogResponse_AuditLogEntryType.PAUSE_SESSION:
+      return "auditLog.pausedSession";
     case InstanceAuditLogResponse_AuditLogEntryType.EXECUTE_COMMAND:
       return "auditLog.executedCommand";
   }
@@ -102,13 +102,13 @@ const logTypeToIcon = (
     switch (key) {
       case "EXECUTE_COMMAND":
         return SquareTerminalIcon;
-      case "START_ATTACK":
+      case "START_SESSION":
         return PlayIcon;
-      case "PAUSE_ATTACK":
+      case "PAUSE_SESSION":
         return TimerIcon;
-      case "RESUME_ATTACK":
+      case "RESUME_SESSION":
         return TimerOffIcon;
-      case "STOP_ATTACK":
+      case "STOP_SESSION":
         return SquareIcon;
     }
   });

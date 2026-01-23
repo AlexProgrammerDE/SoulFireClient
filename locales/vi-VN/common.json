@@ -97,28 +97,28 @@
     "pause": "Tạm dừng",
     "stop": "Dừng lại",
     "startToast": {
-      "loading": "Đang bắt đầu tấn công...",
-      "success": "Bắt đầu tấn công thành công",
-      "error": "Không bắt đầu được tấn công"
+      "loading": "Đang bắt đầu phiên...",
+      "success": "Bắt đầu phiên thành công",
+      "error": "Không bắt đầu được phiên"
     },
     "resumeToast": {
-      "loading": "Đang tiếp tục tấn công...",
-      "success": "Tiếp tục tấn công thành công",
-      "error": "Tiếp tục tấn công thất bại"
+      "loading": "Đang tiếp tục phiên...",
+      "success": "Tiếp tục phiên thành công",
+      "error": "Tiếp tục phiên thất bại"
     },
     "pauseToast": {
-      "loading": "Đang tạm dừng tấn công...",
-      "success": "Tạm dừng tấn công thành công",
-      "error": "Tạm dừng tấn công thất bại"
+      "loading": "Đang tạm dừng phiên...",
+      "success": "Tạm dừng phiên thành công",
+      "error": "Tạm dừng phiên thất bại"
     },
     "stopToast": {
-      "loading": "Đang dừng tấn công...",
-      "success": "Dừng tấn công thành công",
-      "error": "Dừng tấn công thất bại"
+      "loading": "Đang dừng phiên...",
+      "success": "Dừng phiên thành công",
+      "error": "Dừng phiên thất bại"
     },
     "accountWarning": {
       "noAccountsTitle": "Chưa cấu hình tài khoản nào cả.",
-      "noAccountsDescription": "Bạn cần nhập tài khoản trước khi bắt đầu một cuộc tấn công. Bạn đã yêu cầu {{required}} bot.",
+      "noAccountsDescription": "Bạn cần nhập tài khoản trước khi bắt đầu một phiên. Bạn đã yêu cầu {{required}} bot.",
       "notEnoughTitle": "Không đủ tài khoản",
       "notEnoughDescription": "Bạn đã yêu cầu {{required}} bot nhưng chỉ có {{available}} tài khoản được nhập.",
       "hint": "Bạn có thể tạo tài khoản ngoại tuyến hoặc nhập tài khoản từ trang Cài đặt tài khoản.",
@@ -356,10 +356,10 @@
     "action": "Hành động",
     "timestamp": "Dấu thời gian",
     "executedCommand": "Đã thực thi lệnh: {{data}}",
-    "startedAttack": "Đã bắt đầu một cuộc tấn công",
-    "resumedAttack": "Đã tiếp tục một cuộc tấn công",
-    "pausedAttack": "Đã tạm dừng một cuộc tấn công",
-    "stoppedAttack": "Đã dừng một cuộc tấn công"
+    "startedSession": "Đã bắt đầu một phiên",
+    "resumedSession": "Đã tiếp tục một phiên",
+    "pausedSession": "Đã tạm dừng một phiên",
+    "stoppedSession": "Đã dừng một phiên"
   },
   "pickADate": "Chọn ngày",
   "scripts": {

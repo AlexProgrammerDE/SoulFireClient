@@ -97,28 +97,28 @@
     "pause": "Fasilə",
     "stop": "Dayandır",
     "startToast": {
-      "loading": "Hücum başlayır...",
-      "success": "Hücum uğurla başladı",
-      "error": "Hücumu başlatmaq alınmadı"
+      "loading": "Sessiya başlayır...",
+      "success": "Sessiya uğurla başladı",
+      "error": "Sessiyanı başlatmaq alınmadı"
     },
     "resumeToast": {
-      "loading": "Hücum davam etdirilir...",
-      "success": "Hücum uğurla davam etdirildi",
-      "error": "Hücumun davamını bərpa etmək mümkün olmadı"
+      "loading": "Sessiya davam etdirilir...",
+      "success": "Sessiya uğurla davam etdirildi",
+      "error": "Sessiyanın davamını bərpa etmək mümkün olmadı"
     },
     "pauseToast": {
-      "loading": "Hücum dayandırılır...",
-      "success": "Hücum uğurla dayandırıldı",
-      "error": "Hücumu dayandırmaq mümkün olmadı"
+      "loading": "Sessiya dayandırılır...",
+      "success": "Sessiya uğurla dayandırıldı",
+      "error": "Sessiyanı dayandırmaq mümkün olmadı"
     },
     "stopToast": {
-      "loading": "Hücum dayandırılır...",
-      "success": "Hücum uğurla dayandırıldı",
-      "error": "Hücumu dayandırmaq alınmadı"
+      "loading": "Sessiya dayandırılır...",
+      "success": "Sessiya uğurla dayandırıldı",
+      "error": "Sessiyanı dayandırmaq alınmadı"
     },
     "accountWarning": {
       "noAccountsTitle": "Heç bir hesab qurulmayıb",
-      "noAccountsDescription": "Hücum başlatmazdan əvvəl hesabları əlavə etməlisiniz. Sizin {{required}} bot tələbiniz var.",
+      "noAccountsDescription": "Sessiya başlatmazdan əvvəl hesabları əlavə etməlisiniz. Sizin {{required}} bot tələbiniz var.",
       "notEnoughTitle": "Kifayət qədər hesab yoxdur",
       "notEnoughDescription": "{{required}} bot istədiniz, amma yalnız {{available}} hesab əlavə olunub.",
       "hint": "Offline hesablar yarada və ya Hesab Ayarları səhifəsindən hesablar əlavə edə bilərsiniz.",
@@ -356,10 +356,10 @@
     "action": "Əməliyyat",
     "timestamp": "Zaman nöqtəsi",
     "executedCommand": "İcra edilmiş əmr: {{data}}",
-    "startedAttack": "Hücum başladıldı",
-    "resumedAttack": "Hücum davam etdirildi",
-    "pausedAttack": "Hücum dayandırıldı",
-    "stoppedAttack": "Hücum dayandırılıb"
+    "startedSession": "Sessiya başladıldı",
+    "resumedSession": "Sessiya davam etdirildi",
+    "pausedSession": "Sessiya dayandırıldı",
+    "stoppedSession": "Sessiya dayandırılıb"
   },
   "pickADate": "Tarix seçin",
   "scripts": {
