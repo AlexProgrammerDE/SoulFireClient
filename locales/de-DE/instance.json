@@ -31,9 +31,9 @@
       "error": "Fehler beim Prüfen der Proxies"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Proxies überprüfen",
+      "description": "Sie sind dabei, {{count}} Proxies zu überprüfen. Ungültige Proxies werden automatisch entfernt.",
+      "confirm": "Prüfung starten"
     },
     "invalidFormat": "Ungültiges Proxy Format",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Anzahl",
       "nameFormat": "Namensformat",
       "nameFormatHelp": "Verwenden Sie %d als Platzhalter für die Kontonummer (z. B. wird aus Bot_%d Bot_1, Bot_2 usw.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Vorhandene Konten",
+      "modeHelp": "Wählen Sie, wie vorhandene Konten behandelt werden sollen:\n\n• Vorhandene ignorieren: Erstellt nur Konten mit Namen, die noch nicht existieren. Belässt alle vorhandenen Konten unverändert.\n\n• Vorhandene ersetzen: Erstellt alle Konten und ersetzt dabei vorhandene Konten mit derselben UUID. Andere Konten werden beibehalten.\n\n• Alle ersetzen: Löscht ALLE vorhandenen Konten und ersetzt sie durch die generierten Konten.",
+      "modeIgnoreExisting": "Vorhandene ignorieren",
+      "modeReplaceExisting": "Vorhandene ersetzen",
+      "modeReplaceAll": "Alle ersetzen",
       "submit": "Generieren",
       "generating": "Generiere...",
       "progress": "Konten werden generiert... {{checked}}/{{total}} (Erfolg: {{success}} Fehlgeschlagen: {{failed}})",
       "success": "{{count}} Konten generiert!",
       "allFailed": "Fehler beim Generieren aller Konten",
-      "allExist": "",
+      "allExist": "Alle Benutzernamen existieren bereits. Aktiviere „Vorhandene Konten überschreiben“, um sie neu zu generieren.",
       "error": "Fehler beim Generieren der Konten",
       "invalidAmount": "Bitte geben Sie eine gültige Anzahl ein (mindestens 1)",
       "missingPlaceholder": "Das Namensformat muss einen %d-Platzhalter enthalten"
@@ -104,6 +104,46 @@
       "type": "Typ",
       "profileId": "UUID",
       "lastKnownName": "Benutzername"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Offline",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

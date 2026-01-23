@@ -8,7 +8,7 @@
       "description": "Pri načítaní stránky došlo k chybe. Viac informácií je v konzole.",
       "logOut": "Odhlásiť sa",
       "reloadPage": "Obnoviť stránku",
-      "showDetails": ""
+      "showDetails": "Zobraziť podrobnosti"
     },
     "connectionFailed": "Nepodarilo sa pripojiť k serveru SoulFire."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Ovládanie",
     "overview": "Prehľad",
     "terminal": "Terminál",
+    "bots": "",
     "audit-log": "Audit log",
     "settingsGroup": "Nastavenia",
     "pluginsGroup": "Doplnky",
@@ -277,13 +278,16 @@
     "admin": "Admin",
     "settings": "Nastavenia",
     "controls": "Ovládanie",
-    "plugins": "Doplnky"
+    "plugins": "Doplnky",
+    "bots": ""
   },
   "noInstancesFound": "Neboli nájdené žiadne inštancie",
   "pageName": {
     "terminal": "Terminál",
     "logs": "Záznamy",
     "audit-log": "Audit log",
+    "bots": "",
+    "botDetail": "",
     "instances": "Inštancie",
     "access": "Prístup",
     "settings": "Nastavenia",

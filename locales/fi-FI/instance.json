@@ -31,9 +31,9 @@
       "error": "Proxyjen tarkistus epäonnistui"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Tarkista välityspalvelimet",
+      "description": "Olet tarkistamassa {{count}} välityspalvelinta. Virheelliset välityspalvelimet poistetaan automaattisesti.",
+      "confirm": "Aloita tarkistus"
     },
     "invalidFormat": "Virheellinen proxyn muoto",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Määrä",
       "nameFormat": "Nimimuoto",
       "nameFormatHelp": "Käytä %d numero­paikkamerkkinä tilin numerolle (esim. Bot_%d → Bot_1, Bot_2 jne.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Olemassa olevat tilit",
+      "modeHelp": "Valitse, miten olemassa olevat tilit käsitellään:\n\n• Ohita olemassa olevat: Luo vain sellaisia tilejä, joiden nimet eivät ole vielä käytössä. Kaikki olemassa olevat tilit säilyvät muuttumattomina.\n\n• Korvaa olemassa olevat: Luo kaikki tilit ja korvaa olemassa olevat tilit, joilla on sama UUID. Muut tilit säilyvät.\n\n• Korvaa kaikki: Poistaa KAIKKI olemassa olevat tilit ja korvaa ne uusilla luoduilla tileillä.",
+      "modeIgnoreExisting": "Ohita olemassa olevat",
+      "modeReplaceExisting": "Korvaa olemassa olevat",
+      "modeReplaceAll": "Korvaa kaikki",
       "submit": "Luo",
       "generating": "Luodaan...",
       "progress": "Luodaan tilejä... {{checked}}/{{total}} (Onnistui: {{success}} Epäonnistui: {{failed}})",
       "success": "{{count}} tiliä luotu!",
       "allFailed": "Yhtään tiliä ei voitu luoda",
-      "allExist": "",
+      "allExist": "Kaikki käyttäjänimet ovat jo olemassa. Ota käyttöön \\\"Korvaa olemassa olevat tilit\\\" uudelleenluodaksesi ne.",
       "error": "Tilien luonti epäonnistui",
       "invalidAmount": "Syötä kelvollinen määrä (vähintään 1)",
       "missingPlaceholder": "Nimimuodossa on oltava %d-paikkamerkki"
@@ -104,6 +104,46 @@
       "type": "Tyyppi",
       "profileId": "UUID",
       "lastKnownName": "Käyttäjätunnus"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Offline",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

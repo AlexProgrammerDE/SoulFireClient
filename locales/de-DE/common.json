@@ -8,7 +8,7 @@
       "description": "Beim Laden der Seite ist ein Fehler aufgetreten. Weitere Informationen finden Sie in der Konsole.",
       "logOut": "Ausloggen",
       "reloadPage": "Seite neu laden",
-      "showDetails": ""
+      "showDetails": "Details anzeigen"
     },
     "connectionFailed": "Verbindung zum SoulFire-Server fehlgeschlagen."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Steuerung",
     "overview": "Übersicht",
     "terminal": "Terminal",
+    "bots": "",
     "audit-log": "Audit-Log",
     "settingsGroup": "Einstellungen",
     "pluginsGroup": "Plugins",
@@ -277,13 +278,16 @@
     "admin": "Admin",
     "settings": "Einstellungen",
     "controls": "Steuerung",
-    "plugins": "Plugins"
+    "plugins": "Plugins",
+    "bots": ""
   },
   "noInstancesFound": "Keine Instanzen gefunden",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Protokolle",
     "audit-log": "Audit-Log",
+    "bots": "",
+    "botDetail": "",
     "instances": "Instanzen",
     "access": "Zugriff",
     "settings": "Einstellungen",

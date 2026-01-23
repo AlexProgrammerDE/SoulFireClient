@@ -31,9 +31,9 @@
       "error": "Nie udało się sprawdzić serwerów proxy"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Sprawdź serwery proxy",
+      "description": "Zamierzasz sprawdzić {{count}} serwerów proxy. Nieprawidłowe serwery proxy zostaną automatycznie usunięte.",
+      "confirm": "Rozpocznij sprawdzanie"
     },
     "invalidFormat": "Nieprawidłowy format proxy",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Ilość",
       "nameFormat": "Format nazwy",
       "nameFormatHelp": "Użyj %d jako symbolu zastępczego dla numeru konta (np. Bot_%d stanie się Bot_1, Bot_2 itd.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Istniejące konta",
+      "modeHelp": "Wybierz, jak obsłużyć istniejące konta:\n\n• Ignoruj istniejące: Generuje tylko konta z nazwami, które jeszcze nie istnieją. Wszystkie istniejące konta pozostają bez zmian.\n\n• Zastąp istniejące: Generuje wszystkie konta, zastępując wszelkie istniejące konta o tym samym UUID. Pozostałe konta są zachowane.\n\n• Zastąp wszystkie: Usuwa WSZYSTKIE istniejące konta i zastępuje je wygenerowanymi kontami.",
+      "modeIgnoreExisting": "Ignoruj istniejące",
+      "modeReplaceExisting": "Zastąp istniejące",
+      "modeReplaceAll": "Zastąp wszystko",
       "submit": "Generuj",
       "generating": "Generowanie...",
       "progress": "Generowanie kont... {{checked}}/{{total}} (Sukces: {{success}} Niepowodzenie: {{failed}})",
       "success": "Wygenerowano {{count}} kont!",
       "allFailed": "Nie udało się wygenerować żadnych kont",
-      "allExist": "",
+      "allExist": "Wszystkie nazwy użytkowników już istnieją. Włącz \"Zastąp istniejące konta\", aby je wygenerować ponownie.",
       "error": "Nie udało się wygenerować kont",
       "invalidAmount": "Wprowadź poprawną ilość (co najmniej 1)",
       "missingPlaceholder": "Format nazwy musi zawierać symbol zastępczy %d"
@@ -104,6 +104,46 @@
       "type": "Typ",
       "profileId": "UUID",
       "lastKnownName": "Nazwa użytkownika"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Niedostępny",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

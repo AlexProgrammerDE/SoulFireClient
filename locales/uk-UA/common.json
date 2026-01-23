@@ -8,7 +8,7 @@
       "description": "Виникла помилка під час завантаження сторінки. Додаткову інформацію можна знайти в консолі.",
       "logOut": "Вийти",
       "reloadPage": "Перезавантажити сторінку",
-      "showDetails": ""
+      "showDetails": "Показати подробиці"
     },
     "connectionFailed": "Не вдалося підключитися до сервера SoulFire."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Керування",
     "overview": "Огляд",
     "terminal": "Термінал",
+    "bots": "",
     "audit-log": "Аудит-лог",
     "settingsGroup": "Налаштування",
     "pluginsGroup": "Плагіни",
@@ -277,13 +278,16 @@
     "admin": "Адмін",
     "settings": "Налаштування",
     "controls": "Керування",
-    "plugins": "Плагіни"
+    "plugins": "Плагіни",
+    "bots": ""
   },
   "noInstancesFound": "Екземпляри не знайдено",
   "pageName": {
     "terminal": "Термінал",
     "logs": "Журнали відповідності діяльності або доступу користувачів",
     "audit-log": "Аудит-лог",
+    "bots": "",
+    "botDetail": "",
     "instances": "Екземпляри",
     "access": "Доступ",
     "settings": "Налаштування",

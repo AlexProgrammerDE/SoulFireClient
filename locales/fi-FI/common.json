@@ -8,7 +8,7 @@
       "description": "Tapahtui virhe ladattaessa sivua. Lisätietoja löytyy konsolista.",
       "logOut": "Kirjaudu ulos",
       "reloadPage": "Lataa sivu uudelleen",
-      "showDetails": ""
+      "showDetails": "Näytä tiedot"
     },
     "connectionFailed": "Yhteys SoulFire-palvelimeen epäonnistui."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Ohjaimet",
     "overview": "Yleiskatsaus",
     "terminal": "Terminaali",
+    "bots": "",
     "audit-log": "Audit-loki",
     "settingsGroup": "Asetukset",
     "pluginsGroup": "Liitännäiset",
@@ -277,13 +278,16 @@
     "admin": "Ylläpitäjä",
     "settings": "Asetukset",
     "controls": "Ohjaimet",
-    "plugins": "Liitännäiset"
+    "plugins": "Liitännäiset",
+    "bots": ""
   },
   "noInstancesFound": "Yhtään instanssia ei löytynyt",
   "pageName": {
     "terminal": "Terminaali",
     "logs": "Lokit",
     "audit-log": "Audit-loki",
+    "bots": "",
+    "botDetail": "",
     "instances": "Instanssit",
     "access": "Pääsy",
     "settings": "Asetukset",

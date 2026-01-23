@@ -31,9 +31,9 @@
       "error": "无法检查代理"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "检查代理服务器",
+      "description": "您即将检查{{count}}个代理。无效的代理将会自动移除。",
+      "confirm": "开始检查"
     },
     "invalidFormat": "无效的代理格式",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "数量",
       "nameFormat": "名称格式",
       "nameFormatHelp": "使用 %d 作为账户编号的占位符（例如，Bot_%d 将变为 Bot_1、Bot_2 等）",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "已有帐户",
+      "modeHelp": "请选择如何处理已有帐户：\n\n• 忽略已有：仅生成名称尚不存在的帐户，保留所有已有帐户不变。\n\n• 替换已有：生成所有帐户，替换任何具有相同UUID的已有帐户，其它帐户保留。\n\n• 全部替换：删除所有已有帐户，并用生成的帐户替换。",
+      "modeIgnoreExisting": "忽略已有",
+      "modeReplaceExisting": "替换已有",
+      "modeReplaceAll": "全部替换",
       "submit": "生成",
       "generating": "正在生成...",
       "progress": "正在生成账户... {{checked}}/{{total}}（成功：{{success}} 失败：{{failed}}）",
       "success": "已生成 {{count}} 个账户！",
       "allFailed": "未能生成任何账户",
-      "allExist": "",
+      "allExist": "所有用户名已存在。请启用“覆盖已有账户”以重新生成。",
       "error": "生成账户失败",
       "invalidAmount": "请输入有效的数量（至少为 1）",
       "missingPlaceholder": "名称格式必须包含 %d 占位符"
@@ -104,6 +104,46 @@
       "type": "类型",
       "profileId": "UUID",
       "lastKnownName": "用户名"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "离线",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

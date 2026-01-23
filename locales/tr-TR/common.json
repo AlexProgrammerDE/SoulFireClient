@@ -8,7 +8,7 @@
       "description": "Sayfa yüklenirken bir hata oluştu. Daha fazla bilgi konsolda bulunabilir.",
       "logOut": "Çıkış Yap",
       "reloadPage": "Sayfayı yeniden yükle",
-      "showDetails": ""
+      "showDetails": "Ayrıntıları göster"
     },
     "connectionFailed": "SoulFire sunucusuna bağlantı başarısız oldu."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Kontroller",
     "overview": "Genel Bakış",
     "terminal": "Terminal",
+    "bots": "",
     "audit-log": "Denetim Günlüğü",
     "settingsGroup": "Ayarlar",
     "pluginsGroup": "Eklentiler",
@@ -277,13 +278,16 @@
     "admin": "Yönetici",
     "settings": "Ayarlar",
     "controls": "Kontroller",
-    "plugins": "Eklentiler"
+    "plugins": "Eklentiler",
+    "bots": ""
   },
   "noInstancesFound": "Örnek bulunamadı",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Kayıtlar",
     "audit-log": "Denetim Günlüğü",
+    "bots": "",
+    "botDetail": "",
     "instances": "Örnekler",
     "access": "Erişim",
     "settings": "Ayarlar",

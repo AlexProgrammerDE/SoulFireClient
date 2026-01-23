@@ -8,7 +8,7 @@
       "description": "ページの読み込み中にエラーが発生しました。詳細はコンソールでご確認ください。",
       "logOut": "ログアウト",
       "reloadPage": "ページを再読み込み",
-      "showDetails": ""
+      "showDetails": "詳細を表示する。"
     },
     "connectionFailed": "SoulFireサーバーへの接続に失敗しました。"
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "コントロール",
     "overview": "概要",
     "terminal": "ターミナル",
+    "bots": "",
     "audit-log": "監査ログ",
     "settingsGroup": "設定",
     "pluginsGroup": "プラグイン",
@@ -277,13 +278,16 @@
     "admin": "管理者",
     "settings": "設定",
     "controls": "コントロール",
-    "plugins": "プラグイン"
+    "plugins": "プラグイン",
+    "bots": ""
   },
   "noInstancesFound": "インスタンスが見つかりません",
   "pageName": {
     "terminal": "ターミナル",
     "logs": "ログ",
     "audit-log": "監査ログ",
+    "bots": "",
+    "botDetail": "",
     "instances": "インスタンス",
     "access": "アクセス",
     "settings": "設定",

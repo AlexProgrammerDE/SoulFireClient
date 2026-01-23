@@ -31,9 +31,9 @@
       "error": "Proxyler kontrol edilemedi"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Proxyleri Kontrol Et",
+      "description": "{{count}} proxyyi kontrol etmek üzeresiniz. Geçersiz proxyler otomatik olarak kaldırılacaktır.",
+      "confirm": "Kontrolü Başlat"
     },
     "invalidFormat": "Geçersiz proxy formatı",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Miktar",
       "nameFormat": "Ad Formatı",
       "nameFormatHelp": "Hesap numarası için %d kullanın (örn. Bot_%d, Bot_1, Bot_2 vb. olur)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Mevcut Hesaplar",
+      "modeHelp": "Mevcut hesaplarla nasıl işlem yapılacağını seçin:\n\n• Mevcut Olanları Yoksay: Sadece henüz var olmayan isimlerle hesap oluşturur. Var olan tüm hesaplar olduğu gibi kalır.\n\n• Mevcut Olanları Değiştir: Tüm hesapları oluşturur ve aynı UUID'ye sahip mevcut hesapları değiştirir. Diğer hesaplar korunur.\n\n• Tümünü Değiştir: MEVCUT TÜM hesapları siler ve bunları oluşturulan hesaplarla değiştirir.",
+      "modeIgnoreExisting": "Mevcut Olanları Yoksay",
+      "modeReplaceExisting": "Mevcut Olanları Değiştir",
+      "modeReplaceAll": "Tümünü Değiştir",
       "submit": "Oluştur",
       "generating": "Oluşturuluyor...",
       "progress": "Hesaplar oluşturuluyor... {{checked}}/{{total}} (Başarılı: {{success}} Hatalı: {{failed}})",
       "success": "{{count}} hesap oluşturuldu!",
       "allFailed": "Hiç hesap oluşturulamadı",
-      "allExist": "",
+      "allExist": "Tüm kullanıcı adları zaten mevcut. Yeniden oluşturmak için 'Mevcut hesapların üzerine yaz' seçeneğini etkinleştirin.",
       "error": "Hesaplar oluşturulamadı",
       "invalidAmount": "Lütfen geçerli bir miktar girin (en az 1)",
       "missingPlaceholder": "Ad formatı %d yer tutucu içermeli"
@@ -104,6 +104,46 @@
       "type": "Tip",
       "profileId": "UUID",
       "lastKnownName": "Kullanıcı Adı"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Çevrimdışı",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

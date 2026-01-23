@@ -31,9 +31,9 @@
       "error": "Misslyckades att kontrollera proxies"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Kontrollera proxysar",
+      "description": "Du är på väg att kontrollera {{count}} proxysar. Ogiltiga proxysar tas bort automatiskt.",
+      "confirm": "Starta kontroll"
     },
     "invalidFormat": "Ogiltigt proxyformat",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Antal",
       "nameFormat": "Namnformat",
       "nameFormatHelp": "Använd %d som platshållare för kontonumret (t.ex. Bot_%d blir Bot_1, Bot_2, osv.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Befintliga konton",
+      "modeHelp": "Välj hur du vill hantera befintliga konton:\n\n• Ignorera befintliga: Skapar endast konton med namn som inte redan finns. Alla befintliga konton lämnas oförändrade.\n\n• Ersätt befintliga: Skapar alla konton och ersätter de befintliga som har samma UUID. Andra konton behålls.\n\n• Ersätt alla: Tar bort ALLA befintliga konton och ersätter dem med de skapade kontona.",
+      "modeIgnoreExisting": "Ignorera befintliga",
+      "modeReplaceExisting": "Ersätt befintliga",
+      "modeReplaceAll": "Ersätt alla",
       "submit": "Generera",
       "generating": "Genererar...",
       "progress": "Genererar konton... {{checked}}/{{total}} (Lyckade: {{success}} Misslyckade: {{failed}})",
       "success": "{{count}} konton har genererats!",
       "allFailed": "Misslyckades att generera några konton alls",
-      "allExist": "",
+      "allExist": "Alla användarnamn finns redan. Aktivera \"Skriv över befintliga konton\" för att skapa dem på nytt.",
       "error": "Misslyckades att generera konton",
       "invalidAmount": "Ange ett giltigt antal (minst 1)",
       "missingPlaceholder": "Namnformatet måste innehålla platshållaren %d"
@@ -104,6 +104,46 @@
       "type": "Typ",
       "profileId": "UUID",
       "lastKnownName": "Användarnamn"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Offline",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

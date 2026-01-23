@@ -31,9 +31,9 @@
       "error": "Controleren van proxies mislukt"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Proxies controleren",
+      "description": "Je staat op het punt om {{count}} proxies te controleren. Ongeldige proxies worden automatisch verwijderd.",
+      "confirm": "Controle starten"
     },
     "invalidFormat": "Ongeldig proxyformaat",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Aantal",
       "nameFormat": "Naamformaat",
       "nameFormatHelp": "Gebruik %d als placeholder voor het accountnummer (bijvoorbeeld: Bot_%d wordt Bot_1, Bot_2, enz.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Bestaande accounts",
+      "modeHelp": "Kies hoe je omgaat met bestaande accounts:\n\n• Negeer bestaanden: Genereert alleen accounts met namen die nog niet bestaan. Alle bestaande accounts blijven ongewijzigd.\n\n• Vervang bestaanden: Genereert alle accounts en vervangt bestaande accounts met dezelfde UUID. Andere accounts blijven behouden.\n\n• Alles vervangen: Verwijdert ALLE bestaande accounts en vervangt ze door de gegenereerde accounts.",
+      "modeIgnoreExisting": "Bestaanden negeren",
+      "modeReplaceExisting": "Bestaanden vervangen",
+      "modeReplaceAll": "Alles vervangen",
       "submit": "Genereren",
       "generating": "Bezig met genereren...",
       "progress": "Accounts worden gegenereerd... {{checked}}/{{total}} (Succes: {{success}} Mislukt: {{failed}})",
       "success": "{{count}} accounts gegenereerd!",
       "allFailed": "Kon geen enkele account genereren",
-      "allExist": "",
+      "allExist": "Alle gebruikersnamen bestaan al. Schakel 'Bestaande accounts overschrijven' in om ze opnieuw te genereren.",
       "error": "Aanmaken van accounts mislukt",
       "invalidAmount": "Voer een geldig aantal in (minimaal 1)",
       "missingPlaceholder": "Naamformaat moet een %d placeholder bevatten"
@@ -104,6 +104,46 @@
       "type": "Type",
       "profileId": "UUID",
       "lastKnownName": "Gebruikersnaam"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Offline",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

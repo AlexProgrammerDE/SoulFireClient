@@ -31,9 +31,9 @@
       "error": "Error al comprobar proxies"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Verificar proxies",
+      "description": "Estás a punto de verificar {{count}} proxies. Los proxies inválidos se eliminarán automáticamente.",
+      "confirm": "Iniciar verificación"
     },
     "invalidFormat": "Formato de proxy inválido",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Cantidad",
       "nameFormat": "Formato de nombre",
       "nameFormatHelp": "Usa %d como marcador de posición para el número de cuenta (por ejemplo, Bot_%d se convierte en Bot_1, Bot_2, etc.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Cuentas existentes",
+      "modeHelp": "Elige cómo manejar las cuentas existentes:\n\n• Ignorar existentes: Solo genera cuentas con nombres que aún no existen. Todas las cuentas existentes se mantienen sin cambios.\n\n• Reemplazar existentes: Genera todas las cuentas y reemplaza las que tengan el mismo UUID. Las demás cuentas se mantienen.\n\n• Reemplazar todas: Elimina TODAS las cuentas existentes y las reemplaza por las cuentas generadas.",
+      "modeIgnoreExisting": "Ignorar existentes",
+      "modeReplaceExisting": "Reemplazar existentes",
+      "modeReplaceAll": "Reemplazar todo",
       "submit": "Generar",
       "generating": "Generando...",
       "progress": "Generando cuentas... {{checked}}/{{total}} (Éxito: {{success}} Fallidas: {{failed}})",
       "success": "¡Se generó {{count}} cuenta!",
       "allFailed": "No se pudo generar ninguna cuenta",
-      "allExist": "",
+      "allExist": "Todos los nombres de usuario ya existen. Activa 'Sobrescribir cuentas existentes' para regenerarlos.",
       "error": "No se pudieron generar las cuentas",
       "invalidAmount": "Por favor ingresa una cantidad válida (al menos 1)",
       "missingPlaceholder": "El formato de nombre debe contener el marcador de posición %d"
@@ -104,6 +104,46 @@
       "type": "Tipo",
       "profileId": "UUID",
       "lastKnownName": "Nombre de usuario"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Sin conexión",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

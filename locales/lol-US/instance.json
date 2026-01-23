@@ -31,9 +31,9 @@
       "error": "Proxy check borked! No can haz check."
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Chek Proxyz",
+      "description": "U iz about to chek {{count}} proxyz. Bad proxyz will be deletd automatiklee.",
+      "confirm": "Start Chek"
     },
     "invalidFormat": "Proxy not rite format, no cheezburgerz.",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Amownt",
       "nameFormat": "Naym Format",
       "nameFormatHelp": "Uze %d az placeholder fur account numbur (exampul: Bot_%d becumz Bot_1, Bot_2, etcz)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Alreddy Got Acowntz",
+      "modeHelp": "Choose how to deal wif alreddy hav acowntz:\n\n• Ignore Alreddy: Only makez acowntz wif naemz tht don\"t exist yet. Keepez al old acowntz as dey is.\n\n• Replaze Alreddy: Makez all acowntz, swapz any acowntz dat haz same UUID. Other acowntz stay.\n\n• Replaze All: DELEEET ALL acowntz an replaze wit new gen acowntz.",
+      "modeIgnoreExisting": "Ignore Alreddy",
+      "modeReplaceExisting": "Replaze Alreddy",
+      "modeReplaceAll": "Replac ALL TEH FINGS",
       "submit": "Genurayt",
       "generating": "Genuraytin...",
       "progress": "Genuraytin accountz... {{checked}}/{{total}} (Succesz: {{success}} Failz: {{failed}})",
       "success": "Genurayted {{count}} accountz!",
       "allFailed": "Faild tu genurayt any accountz",
-      "allExist": "",
+      "allExist": "All teh usernamez alredy exist. Plz enable 'OVERRID EXISTIN ACCOUNTS' to regen dem.",
       "error": "Faild tu genurayt accountz",
       "invalidAmount": "Plz enterz valid amownt (at leest 1)",
       "missingPlaceholder": "Naym format haz to haz %d placeholder"
@@ -104,6 +104,46 @@
       "type": "Tyep",
       "profileId": "UUID",
       "lastKnownName": "Usernamez"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Offlyne",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

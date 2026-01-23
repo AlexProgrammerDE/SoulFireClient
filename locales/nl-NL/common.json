@@ -8,7 +8,7 @@
       "description": "Er is een fout opgetreden bij het laden van de pagina. Meer informatie is te vinden in de console.",
       "logOut": "Uitloggen",
       "reloadPage": "Pagina herladen",
-      "showDetails": ""
+      "showDetails": "Details weergeven"
     },
     "connectionFailed": "Verbinding met de SoulFire-server mislukt."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Bediening",
     "overview": "Overzicht",
     "terminal": "Terminal",
+    "bots": "",
     "audit-log": "Auditlogboek",
     "settingsGroup": "Instellingen",
     "pluginsGroup": "Plug-ins",
@@ -277,13 +278,16 @@
     "admin": "Beheerder",
     "settings": "Instellingen",
     "controls": "Bediening",
-    "plugins": "Plug-ins"
+    "plugins": "Plug-ins",
+    "bots": ""
   },
   "noInstancesFound": "Geen instanties gevonden",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Logs",
     "audit-log": "Auditlogboek",
+    "bots": "",
+    "botDetail": "",
     "instances": "Instanties",
     "access": "Toegang",
     "settings": "Instellingen",

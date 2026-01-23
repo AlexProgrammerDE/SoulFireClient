@@ -8,7 +8,7 @@
       "description": "Ett fel uppstod när sidan skulle laddas. Mer information finns i konsolen.",
       "logOut": "Logga ut",
       "reloadPage": "Ladda om sidan",
-      "showDetails": ""
+      "showDetails": "Visa detaljer"
     },
     "connectionFailed": "Anslutning till SoulFire-servern misslyckades."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Kontroller",
     "overview": "Översikt",
     "terminal": "Terminal",
+    "bots": "",
     "audit-log": "Granskningslogg",
     "settingsGroup": "Inställningar",
     "pluginsGroup": "Plugins",
@@ -277,13 +278,16 @@
     "admin": "Admin",
     "settings": "Inställningar",
     "controls": "Kontroller",
-    "plugins": "Plugins"
+    "plugins": "Plugins",
+    "bots": ""
   },
   "noInstancesFound": "Inga instanser hittades",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Loggar",
     "audit-log": "Granskningslogg",
+    "bots": "",
+    "botDetail": "",
     "instances": "Instanser",
     "access": "Åtkomst",
     "settings": "Inställningar",

@@ -31,9 +31,9 @@
       "error": "Impossibile verificare i proxy."
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Controlla Proxy",
+      "description": "Stai per controllare {{count}} proxy. I proxy non validi verranno rimossi automaticamente.",
+      "confirm": "Avvia Controllo"
     },
     "invalidFormat": "Formato proxy non valido",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Quantità",
       "nameFormat": "Formato nome",
       "nameFormatHelp": "Usa %d come segnaposto per il numero dell'account (es: Bot_%d diventa Bot_1, Bot_2, ecc.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Account Esistenti",
+      "modeHelp": "Scegli come gestire gli account esistenti:\n\n• Ignora Esistenti: Genera solo account con nomi che non esistono già. Mantiene tutti gli account esistenti invariati.\n\n• Sostituisci Esistenti: Genera tutti gli account, sostituendo quelli esistenti che hanno lo stesso UUID. Gli altri account vengono mantenuti.\n\n• Sostituisci Tutto: Elimina TUTTI gli account esistenti e li sostituisce con quelli generati.",
+      "modeIgnoreExisting": "Ignora Esistenti",
+      "modeReplaceExisting": "Sostituisci Esistenti",
+      "modeReplaceAll": "Sostituisci tutto",
       "submit": "Genera",
       "generating": "Generazione in corso...",
       "progress": "Generazione account in corso... {{checked}}/{{total}} (Successo: {{success}} Falliti: {{failed}})",
       "success": "{{count}} account generati!",
       "allFailed": "Impossibile generare alcun account",
-      "allExist": "",
+      "allExist": "Tutti i nomi utente esistono già. Abilita \"Sovrascrivi account esistenti\" per rigenerarli.",
       "error": "Impossibile generare gli account.",
       "invalidAmount": "Inserisci una quantità valida (almeno 1)",
       "missingPlaceholder": "Il formato nome deve contenere il segnaposto %d"
@@ -104,6 +104,46 @@
       "type": "Tipo",
       "profileId": "UUID",
       "lastKnownName": "Nome utente"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Offline",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

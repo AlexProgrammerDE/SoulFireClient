@@ -8,7 +8,7 @@
       "description": "Səhifə yüklənərkən xəta baş verdi. Daha ətraflı məlumat konsolda görünəcək.",
       "logOut": "Çıxış",
       "reloadPage": "Səhifəni yenilə",
-      "showDetails": ""
+      "showDetails": "Təfərrüatları göstər"
     },
     "connectionFailed": "SoulFire serveri ilə əlaqə alınmadı."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "İdarəetmə",
     "overview": "İcmal",
     "terminal": "Terminal",
+    "bots": "",
     "audit-log": "Audit Log",
     "settingsGroup": "Ayarlar",
     "pluginsGroup": "Pluginlər",
@@ -277,13 +278,16 @@
     "admin": "Admin",
     "settings": "Ayarlar",
     "controls": "İdarəetmə",
-    "plugins": "Pluginlər"
+    "plugins": "Pluginlər",
+    "bots": ""
   },
   "noInstancesFound": "Instansiya tapılmadı",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Jurnalları",
     "audit-log": "Audit Log",
+    "bots": "",
+    "botDetail": "",
     "instances": "Instansiyalar",
     "access": "Giriş",
     "settings": "Ayarlar",

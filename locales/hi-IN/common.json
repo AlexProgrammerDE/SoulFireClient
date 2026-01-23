@@ -8,7 +8,7 @@
       "description": "पृष्ठ लोड करने की कोशिश करते समय एक त्रुटि हुई। अधिक जानकारी कंसोल में मिल सकती है।",
       "logOut": "लॉग आउट करें",
       "reloadPage": "पृष्ठ पुनः लोड करें",
-      "showDetails": ""
+      "showDetails": "विवरण दिखाएँ"
     },
     "connectionFailed": "SoulFire सर्वर से कनेक्शन विफल रहा।"
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "नियंत्रण",
     "overview": "अवलोकन",
     "terminal": "टर्मिनल",
+    "bots": "",
     "audit-log": "ऑडिट लॉग",
     "settingsGroup": "सेटिंग्स",
     "pluginsGroup": "प्लगइन्स",
@@ -277,13 +278,16 @@
     "admin": "प्रशासक",
     "settings": "सेटिंग्स",
     "controls": "नियंत्रण",
-    "plugins": "प्लगइन्स"
+    "plugins": "प्लगइन्स",
+    "bots": ""
   },
   "noInstancesFound": "कोई इंस्टेंस नहीं मिला",
   "pageName": {
     "terminal": "टर्मिनल",
     "logs": "लॉग्स",
     "audit-log": "ऑडिट लॉग",
+    "bots": "",
+    "botDetail": "",
     "instances": "इंस्टेंस",
     "access": "पहुँच",
     "settings": "सेटिंग्स",

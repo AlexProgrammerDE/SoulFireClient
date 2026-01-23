@@ -31,9 +31,9 @@
       "error": "プロキシのチェックに失敗しました。"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "プロキシの確認",
+      "description": "{{count}}個のプロキシを確認しようとしています。無効なプロキシは自動的に削除されます。",
+      "confirm": "確認を開始"
     },
     "invalidFormat": "無効なプロキシ形式です。",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "件数",
       "nameFormat": "名前フォーマット",
       "nameFormatHelp": "%dをアカウント番号のプレースホルダーとして使用します（例：Bot_%d は Bot_1, Bot_2 などになります）。",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "既存のアカウント",
+      "modeHelp": "既存のアカウントの処理方法を選択してください:\n\n• 既存を無視: すでに存在しない名前のアカウントのみ生成します。既存のアカウントはすべてそのまま残します。\n\n• 既存を置換: すべてのアカウントを生成し、UUIDが同じ既存のアカウントを置換します。他のアカウントはそのまま残します。\n\n• すべて置換: すべての既存アカウントを削除し、生成したアカウントに置き換えます。",
+      "modeIgnoreExisting": "既存を無視",
+      "modeReplaceExisting": "既存を置換",
+      "modeReplaceAll": "すべて置換",
       "submit": "生成",
       "generating": "生成中...",
       "progress": "アカウントを生成中... {{checked}}/{{total}}（成功：{{success}} 失敗：{{failed}}）",
       "success": "{{count}}件のアカウントを生成しました！",
       "allFailed": "アカウントの生成にすべて失敗しました。",
-      "allExist": "",
+      "allExist": "すべてのユーザー名は既に存在します。「既存のアカウントを上書き」を有効にして再生成してください。",
       "error": "アカウントの生成に失敗しました。",
       "invalidAmount": "有効な件数（1以上）を入力してください。",
       "missingPlaceholder": "名前フォーマットに%dプレースホルダーが含まれている必要があります。"
@@ -104,6 +104,46 @@
       "type": "種類",
       "profileId": "UUID",
       "lastKnownName": "ユーザー名"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "オフライン",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

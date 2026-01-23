@@ -8,7 +8,7 @@
       "description": "Se ha producido un error al intentar cargar la página. Puedes encontrar más información en la consola.",
       "logOut": "Cerrar Sesión",
       "reloadPage": "Recargar página",
-      "showDetails": ""
+      "showDetails": "Mostrar detalles"
     },
     "connectionFailed": "Conexión con el servidor SoulFire fallida."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Controles",
     "overview": "Resumen",
     "terminal": "Terminal",
+    "bots": "",
     "audit-log": "Registro de auditoría",
     "settingsGroup": "Configuraciones",
     "pluginsGroup": "Plugins",
@@ -277,13 +278,16 @@
     "admin": "Admin",
     "settings": "Configuraciones",
     "controls": "Controles",
-    "plugins": "Plugins"
+    "plugins": "Plugins",
+    "bots": ""
   },
   "noInstancesFound": "No se encontraron instancias",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Registros",
     "audit-log": "Registro de auditoría",
+    "bots": "",
+    "botDetail": "",
     "instances": "Instancias",
     "access": "Acceso",
     "settings": "Configuraciones",

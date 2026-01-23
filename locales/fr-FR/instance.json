@@ -31,9 +31,9 @@
       "error": "Impossible de vérifier les proxys"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Vérifier les proxys",
+      "description": "Vous êtes sur le point de vérifier {{count}} proxys. Les proxys invalides seront supprimés automatiquement.",
+      "confirm": "Démarrer la vérification"
     },
     "invalidFormat": "Format de proxy invalide",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Quantité",
       "nameFormat": "Format du nom",
       "nameFormatHelp": "Utilisez %d comme variable de remplacement pour le numéro de compte (par exemple, Bot_%d devient Bot_1, Bot_2, etc.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Comptes existants",
+      "modeHelp": "Choisissez comment gérer les comptes existants :\n\n• Ignorer les existants : Ne génère que des comptes dont les noms n'existent pas déjà. Tous les comptes existants restent inchangés.\n\n• Remplacer les existants : Génère tous les comptes, en remplaçant ceux qui ont le même UUID. Les autres comptes sont conservés.\n\n• Tout remplacer : Supprime TOUS les comptes existants et les remplace par les comptes générés.",
+      "modeIgnoreExisting": "Ignorer les existants",
+      "modeReplaceExisting": "Remplacer les existants",
+      "modeReplaceAll": "Remplacer tout",
       "submit": "Générer",
       "generating": "Génération...",
       "progress": "Génération des comptes... {{checked}}/{{total}} (Réussite : {{success}} Échec : {{failed}})",
       "success": "{{count}} comptes générés !",
       "allFailed": "Impossible de générer des comptes",
-      "allExist": "",
+      "allExist": "Tous les noms d'utilisateur existent déjà. Activez « Écraser les comptes existants » pour les régénérer.",
       "error": "Échec de la génération des comptes",
       "invalidAmount": "Veuillez saisir une quantité valide (au moins 1)",
       "missingPlaceholder": "Le format du nom doit contenir le variable %d"
@@ -104,6 +104,46 @@
       "type": "Type",
       "profileId": "UUID",
       "lastKnownName": "Nom d´utilisateur"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Hors-ligne",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }
