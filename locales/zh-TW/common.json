@@ -8,7 +8,7 @@
       "description": "載入頁面時發生錯誤。更多資訊可在主控台查看。",
       "logOut": "登出",
       "reloadPage": "重新載入頁面",
-      "showDetails": ""
+      "showDetails": "顯示詳細資料"
     },
     "connectionFailed": "連接 SoulFire 伺服器失敗。"
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "控制項",
     "overview": "總覽",
     "terminal": "終端機",
+    "bots": "",
     "audit-log": "稽核日誌",
     "settingsGroup": "設定",
     "pluginsGroup": "插件",
@@ -277,13 +278,16 @@
     "admin": "管理員",
     "settings": "設定",
     "controls": "控制項",
-    "plugins": "插件"
+    "plugins": "插件",
+    "bots": ""
   },
   "noInstancesFound": "未找到任何實例",
   "pageName": {
     "terminal": "終端機",
     "logs": "日誌",
     "audit-log": "稽核日誌",
+    "bots": "",
+    "botDetail": "",
     "instances": "實例清單",
     "access": "存取權限",
     "settings": "設定",

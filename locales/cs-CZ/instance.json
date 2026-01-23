@@ -31,9 +31,9 @@
       "error": "Nepodařilo se zkontrolovat proxy."
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Zkontrolovat proxy servery",
+      "description": "Chystáte se zkontrolovat {{count}} proxy serverů. Neplatné proxy budou automaticky odstraněny.",
+      "confirm": "Spustit kontrolu"
     },
     "invalidFormat": "Neplatný formát proxy",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Počet",
       "nameFormat": "Formát jména",
       "nameFormatHelp": "Použijte %d jako zástupný znak pro číslo účtu (např. Bot_%d se stane Bot_1, Bot_2 atd.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Existující účty",
+      "modeHelp": "Zvolte, jak chcete zacházet s existujícími účty:\n\n• Ignorovat existující: Generuje pouze účty se jmény, která zatím neexistují. Všechny existující účty zůstanou beze změny.\n\n• Nahradit existující: Vygeneruje všechny účty a nahradí všechny existující účty, které mají stejné UUID. Ostatní účty zůstanou.\n\n• Nahradit vše: Smaže VŠECHNY existující účty a nahradí je vygenerovanými účty.",
+      "modeIgnoreExisting": "Ignorovat existující",
+      "modeReplaceExisting": "Nahradit existující",
+      "modeReplaceAll": "Nahradit vše",
       "submit": "Generovat",
       "generating": "Generuje se...",
       "progress": "Generování účtů... {{checked}}/{{total}} (Úspěšně: {{success}} Neúspěšně: {{failed}})",
       "success": "Vygenerováno {{count}} účtů!",
       "allFailed": "Nepodařilo se vygenerovat žádné účty",
-      "allExist": "",
+      "allExist": "Všechna uživatelská jména již existují. Pro jejich opětovné vygenerování povolte možnost \"Přepsat existující účty\".",
       "error": "Nepodařilo se vygenerovat účty",
       "invalidAmount": "Zadejte prosím platný počet (alespoň 1)",
       "missingPlaceholder": "Formát jména musí obsahovat zástupný znak %d"
@@ -104,6 +104,46 @@
       "type": "Typ",
       "profileId": "UUID",
       "lastKnownName": "Uživatelské jméno"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Offline",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

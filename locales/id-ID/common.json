@@ -8,7 +8,7 @@
       "description": "Terjadi kesalahan saat mencoba memuat halaman. Informasi lebih lanjut dapat ditemukan di konsol.",
       "logOut": "Keluar",
       "reloadPage": "Muat ulang halaman",
-      "showDetails": ""
+      "showDetails": "Tampilkan detail"
     },
     "connectionFailed": "Koneksi ke server SoulFire gagal."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Kontrol",
     "overview": "Ikhtisar",
     "terminal": "Terminal",
+    "bots": "",
     "audit-log": "Log Audit",
     "settingsGroup": "Pengaturan",
     "pluginsGroup": "Plugin",
@@ -277,13 +278,16 @@
     "admin": "Admin",
     "settings": "Pengaturan",
     "controls": "Kontrol",
-    "plugins": "Plugin"
+    "plugins": "Plugin",
+    "bots": ""
   },
   "noInstancesFound": "Tidak ada instansi ditemukan",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Log",
     "audit-log": "Log Audit",
+    "bots": "",
+    "botDetail": "",
     "instances": "Instansi",
     "access": "Akses",
     "settings": "Pengaturan",

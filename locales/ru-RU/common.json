@@ -8,7 +8,7 @@
       "description": "При попытке загрузить страницу произошла ошибка. Более подробную информацию можно найти в консоли.",
       "logOut": "Выйти",
       "reloadPage": "Перезагрузить страницу",
-      "showDetails": ""
+      "showDetails": "Показать детали"
     },
     "connectionFailed": "Не удалось подключиться к серверу SoulFire."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Управление",
     "overview": "Обзор",
     "terminal": "Терминал",
+    "bots": "",
     "audit-log": "Журнал аудита",
     "settingsGroup": "Настройки",
     "pluginsGroup": "Плагины",
@@ -277,13 +278,16 @@
     "admin": "Администратор",
     "settings": "Настройки",
     "controls": "Управление",
-    "plugins": "Плагины"
+    "plugins": "Плагины",
+    "bots": ""
   },
   "noInstancesFound": "Экземпляры не найдены",
   "pageName": {
     "terminal": "Терминал",
     "logs": "Логи",
     "audit-log": "Журнал аудита",
+    "bots": "",
+    "botDetail": "",
     "instances": "Экземпляры",
     "access": "Доступ",
     "settings": "Настройки",

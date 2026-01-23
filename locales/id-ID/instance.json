@@ -31,9 +31,9 @@
       "error": "Gagal memeriksa proxy"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Periksa Proksi",
+      "description": "Anda akan memeriksa {{count}} proksi. Proksi yang tidak valid akan dihapus secara otomatis.",
+      "confirm": "Mulai Pemeriksaan"
     },
     "invalidFormat": "Format proxy tidak valid",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Jumlah",
       "nameFormat": "Format Nama",
       "nameFormatHelp": "Gunakan %d sebagai penampung nomor akun (misal: Bot_%d menjadi Bot_1, Bot_2, dst.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Akun yang Ada",
+      "modeHelp": "Pilih cara menangani akun yang sudah ada:\n\n• Abaikan yang Ada: Hanya membuat akun dengan nama yang belum ada. Semua akun yang ada tetap tidak berubah.\n\n• Ganti yang Ada: Membuat semua akun, mengganti akun yang sudah ada dengan UUID yang sama. Akun lainnya tetap ada.\n\n• Ganti Semua: Menghapus SEMUA akun yang ada dan menggantinya dengan akun yang dibuat.",
+      "modeIgnoreExisting": "Abaikan yang Ada",
+      "modeReplaceExisting": "Ganti yang Ada",
+      "modeReplaceAll": "Ganti Semua",
       "submit": "Buat",
       "generating": "Sedang membuat...",
       "progress": "Sedang membuat akun... {{checked}}/{{total}} (Berhasil: {{success}} Gagal: {{failed}})",
       "success": "Berhasil membuat {{count}} akun!",
       "allFailed": "Gagal membuat akun apa pun",
-      "allExist": "",
+      "allExist": "Semua nama pengguna sudah ada. Aktifkan 'Timpa akun yang sudah ada' untuk membuat ulang mereka.",
       "error": "Gagal membuat akun",
       "invalidAmount": "Silakan masukkan jumlah yang valid (setidaknya 1)",
       "missingPlaceholder": "Format nama harus mengandung penampung %d"
@@ -104,6 +104,46 @@
       "type": "Tipe",
       "profileId": "UUID",
       "lastKnownName": "Nama Pengguna"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Luring",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

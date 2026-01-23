@@ -8,7 +8,7 @@
       "description": "Si è verificato un errore durante il caricamento della pagina. Puoi trovare maggiori informazioni nella console.",
       "logOut": "Disconnetti",
       "reloadPage": "Ricarica pagina",
-      "showDetails": ""
+      "showDetails": "Mostra dettagli"
     },
     "connectionFailed": "Connessione al server SoulFire non riuscita."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Controlli",
     "overview": "Panoramica",
     "terminal": "Terminale",
+    "bots": "",
     "audit-log": "Registro di audit",
     "settingsGroup": "Impostazioni",
     "pluginsGroup": "Plugin",
@@ -277,13 +278,16 @@
     "admin": "Admin",
     "settings": "Impostazioni",
     "controls": "Controlli",
-    "plugins": "Plugin"
+    "plugins": "Plugin",
+    "bots": ""
   },
   "noInstancesFound": "Nessuna istanza trovata",
   "pageName": {
     "terminal": "Terminale",
     "logs": "Log",
     "audit-log": "Registro di audit",
+    "bots": "",
+    "botDetail": "",
     "instances": "Istanze",
     "access": "Accesso",
     "settings": "Impostazioni",

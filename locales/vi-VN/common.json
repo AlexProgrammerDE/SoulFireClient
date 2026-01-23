@@ -8,7 +8,7 @@
       "description": "Đã xảy ra lỗi khi tải trang. Xem thêm thông tin trong bảng điều khiển.",
       "logOut": "Đăng xuất",
       "reloadPage": "Tải lại trang",
-      "showDetails": ""
+      "showDetails": "Hiển thị chi tiết"
     },
     "connectionFailed": "Kết nối đến máy chủ SoulFire thất bại."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Bảng điều khiển",
     "overview": "Tổng quan",
     "terminal": "Terminal",
+    "bots": "",
     "audit-log": "Nhật ký kiểm toán",
     "settingsGroup": "Cài đặt",
     "pluginsGroup": "Plugins",
@@ -277,13 +278,16 @@
     "admin": "Quản trị viên",
     "settings": "Cài đặt",
     "controls": "Bảng điều khiển",
-    "plugins": "Plugins"
+    "plugins": "Plugins",
+    "bots": ""
   },
   "noInstancesFound": "Không tìm thấy phiên bản nào",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Nhật ký",
     "audit-log": "Nhật ký kiểm toán",
+    "bots": "",
+    "botDetail": "",
     "instances": "Các phiên bản",
     "access": "Quyền truy cập",
     "settings": "Cài đặt",

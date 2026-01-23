@@ -31,9 +31,9 @@
       "error": "Nepodarilo sa skontrolovať proxy."
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Skontrolovať proxy servery",
+      "description": "Chystáte sa skontrolovať {{count}} proxy. Neplatné proxy budú automaticky odstránené.",
+      "confirm": "Spustiť kontrolu"
     },
     "invalidFormat": "Neplatný formát proxy",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Množstvo",
       "nameFormat": "Formát názvu",
       "nameFormatHelp": "Použite %d ako zástupný znak pre číslo účtu (napr. Bot_%d sa stane Bot_1, Bot_2 atď.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Existujúce účty",
+      "modeHelp": "Vyberte spôsob, ako narábať s existujúcimi účtami:\n\n• Ignorovať existujúce: Generuje iba účty s menami, ktoré ešte neexistujú. Všetky existujúce účty zostanú nezmenené.\n\n• Nahradiť existujúce: Vygeneruje všetky účty a nahradí existujúce účty s rovnakým UUID. Ostatné účty zostanú.\n\n• Nahradiť všetko: Vymaže VŠETKY existujúce účty a nahradí ich vygenerovanými účtami.",
+      "modeIgnoreExisting": "Ignorovať existujúce",
+      "modeReplaceExisting": "Nahradiť existujúce",
+      "modeReplaceAll": "Nahradiť všetko",
       "submit": "Generovať",
       "generating": "Generovanie...",
       "progress": "Generujú sa účty... {{checked}}/{{total}} (Úspešné: {{success}} Neúspešné: {{failed}})",
       "success": "Vygenerovaných {{count}} účtov!",
       "allFailed": "Nepodarilo sa vygenerovať žiadne účty",
-      "allExist": "",
+      "allExist": "Všetky používateľské mená už existujú. Ak chcete ich znovu vygenerovať, povoľte možnosť „Prepísať existujúce účty“.",
       "error": "Nepodarilo sa vygenerovať účty",
       "invalidAmount": "Zadajte platné množstvo (aspoň 1)",
       "missingPlaceholder": "Formát názvu musí obsahovať zástupný znak %d"
@@ -104,6 +104,46 @@
       "type": "Typ",
       "profileId": "UUID",
       "lastKnownName": "Používateľské meno"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Offline",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

@@ -8,7 +8,7 @@
       "description": "Wystąpił błąd podczas ładowania strony. Więcej informacji znajdziesz w konsoli.",
       "logOut": "Wyloguj się",
       "reloadPage": "Odśwież stronę",
-      "showDetails": ""
+      "showDetails": "Pokaż szczegóły"
     },
     "connectionFailed": "Połączenie do serwera SoulFire nieudane."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Sterowanie",
     "overview": "Przegląd",
     "terminal": "Konsola",
+    "bots": "",
     "audit-log": "Dziennik zdarzeń",
     "settingsGroup": "Ustawienia",
     "pluginsGroup": "Wtyczki",
@@ -277,13 +278,16 @@
     "admin": "Administrator",
     "settings": "Ustawienia",
     "controls": "Sterowanie",
-    "plugins": "Wtyczki"
+    "plugins": "Wtyczki",
+    "bots": ""
   },
   "noInstancesFound": "Nie znaleziono instancji",
   "pageName": {
     "terminal": "Konsola",
     "logs": "Logi",
     "audit-log": "Dziennik zdarzeń",
+    "bots": "",
+    "botDetail": "",
     "instances": "Instancje",
     "access": "Dostęp",
     "settings": "Ustawienia",

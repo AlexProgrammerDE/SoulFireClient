@@ -8,7 +8,7 @@
       "description": "เกิดข้อผิดพลาดขณะพยายามโหลดหน้า ดูข้อมูลเพิ่มเติมได้ที่คอนโซล",
       "logOut": "ออกจากระบบ",
       "reloadPage": "โหลดหน้านี้ใหม่",
-      "showDetails": ""
+      "showDetails": "แสดงรายละเอียด"
     },
     "connectionFailed": "เชื่อมต่อกับเซิร์ฟเวอร์ SoulFire ไม่สำเร็จ"
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "ส่วนควบคุม",
     "overview": "ภาพรวม",
     "terminal": "เทอร์มินัล",
+    "bots": "",
     "audit-log": "บันทึกตรวจสอบ",
     "settingsGroup": "การตั้งค่า",
     "pluginsGroup": "ปลั๊กอิน",
@@ -277,13 +278,16 @@
     "admin": "แอดมิน",
     "settings": "การตั้งค่า",
     "controls": "ส่วนควบคุม",
-    "plugins": "ปลั๊กอิน"
+    "plugins": "ปลั๊กอิน",
+    "bots": ""
   },
   "noInstancesFound": "ไม่พบบัญชีอินสแตนซ์",
   "pageName": {
     "terminal": "เทอร์มินัล",
     "logs": "บันทึก",
     "audit-log": "บันทึกตรวจสอบ",
+    "bots": "",
+    "botDetail": "",
     "instances": "อินสแตนซ์",
     "access": "การเข้าถึง",
     "settings": "การตั้งค่า",

@@ -31,9 +31,9 @@
       "error": "ไม่สามารถตรวจสอบพร็อกซีได้"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "ตรวจสอบพร็อกซี",
+      "description": "คุณกำลังจะตรวจสอบพร็อกซี {{count}} รายการ พร็อกซีที่ไม่ถูกต้องจะถูกลบโดยอัตโนมัติ",
+      "confirm": "เริ่มตรวจสอบ"
     },
     "invalidFormat": "รูปแบบพร็อกซีไม่ถูกต้อง",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "จำนวน",
       "nameFormat": "รูปแบบชื่อ",
       "nameFormatHelp": "ใช้ %d เป็นตำแหน่งตัวเลขในชื่อ (เช่น Bot_%d จะกลายเป็น Bot_1, Bot_2 เป็นต้น)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "บัญชีที่มีอยู่แล้ว",
+      "modeHelp": "เลือกวิธีจัดการกับบัญชีที่มีอยู่แล้ว:\n\n• ไม่สนใจบัญชีที่มีอยู่: สร้างแต่บัญชีที่ยังไม่มีชื่อในระบบเท่านั้น บัญชีเดิมทั้งหมดยังคงอยู่เหมือนเดิม\n\n• แทนที่บัญชีที่มีอยู่: สร้างบัญชีทั้งหมดโดยแทนที่บัญชีที่มี UUID เดิม ส่วนบัญชีอื่น ๆ จะยังอยู่\n\n• แทนที่ทั้งหมด: ลบบัญชีเดิมทั้งระบบ และแทนที่ด้วยบัญชีที่สร้างใหม่ทั้งหมด",
+      "modeIgnoreExisting": "ไม่สนใจบัญชีที่มีอยู่",
+      "modeReplaceExisting": "แทนที่บัญชีที่มีอยู่",
+      "modeReplaceAll": "แทนที่ทั้งหมด",
       "submit": "สร้าง",
       "generating": "กำลังสร้าง...",
       "progress": "กำลังสร้างไอดี... {{checked}}/{{total}} (สำเร็จ: {{success}} ล้มเหลว: {{failed}})",
       "success": "สร้างไอดีแล้ว {{count}} รายการ!",
       "allFailed": "ไม่สามารถสร้างไอดีใดๆ ได้เลย",
-      "allExist": "",
+      "allExist": "ชื่อผู้ใช้ทั้งหมดมีอยู่แล้ว กรุณาเปิดใช้งาน 'เขียนทับบัญชีที่มีอยู่' เพื่อสร้างใหม่อีกครั้ง",
       "error": "ไม่สามารถสร้างไอดีได้",
       "invalidAmount": "กรุณาใส่จำนวนที่ถูกต้อง (อย่างน้อย 1)",
       "missingPlaceholder": "รูปแบบชื่อจำเป็นต้องมี %d อยู่ด้วย"
@@ -104,6 +104,46 @@
       "type": "ประเภท",
       "profileId": "UUID",
       "lastKnownName": "ชื่อผู้ใช้"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "ออฟไลน์",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

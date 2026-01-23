@@ -31,9 +31,9 @@
       "error": "Falha ao verificar proxies"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Verificar Proxies",
+      "description": "Você está prestes a verificar {{count}} proxies. Proxies inválidos serão removidos automaticamente.",
+      "confirm": "Iniciar Verificação"
     },
     "invalidFormat": "Formato de proxy inválido",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Quantidade",
       "nameFormat": "Formato do Nome",
       "nameFormatHelp": "Use %d como um espaço reservado para o número da conta (ex.: Bot_%d vira Bot_1, Bot_2, etc.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Contas Existentes",
+      "modeHelp": "Escolha como lidar com as contas existentes:\n\n• Ignorar Existentes: Gera apenas contas com nomes que ainda não existem. Mantém todas as contas existentes inalteradas.\n\n• Substituir Existentes: Gera todas as contas, substituindo quaisquer contas existentes que tenham o mesmo UUID. As outras contas são mantidas.\n\n• Substituir Todas: Exclui TODAS as contas existentes e as substitui pelas contas geradas.",
+      "modeIgnoreExisting": "Ignorar Existentes",
+      "modeReplaceExisting": "Substituir Existentes",
+      "modeReplaceAll": "Substituir tudo",
       "submit": "Gerar",
       "generating": "Gerando...",
       "progress": "Gerando contas... {{checked}}/{{total}} (Sucesso: {{success}} Falhas: {{failed}})",
       "success": "{{count}} contas geradas!",
       "allFailed": "Falha ao gerar contas",
-      "allExist": "",
+      "allExist": "Todos os nomes de usuário já existem. Ative \"Substituir contas existentes\" para regenerá-los.",
       "error": "Falha ao gerar contas",
       "invalidAmount": "Por favor, insira uma quantidade válida (no mínimo 1)",
       "missingPlaceholder": "O formato do nome deve conter o espaço reservado %d"
@@ -104,6 +104,46 @@
       "type": "Tipo",
       "profileId": "UUID",
       "lastKnownName": "Usuário"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Offline",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

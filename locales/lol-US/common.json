@@ -8,7 +8,7 @@
       "description": "Error happen when i try give you page. You can see whay in the consol.",
       "logOut": "Walk out",
       "reloadPage": "Spin paeg",
-      "showDetails": ""
+      "showDetails": "Sho detalez"
     },
     "connectionFailed": "Cunnection unsuccessful."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Controlz",
     "overview": "Ovarview",
     "terminal": "Termenawl",
+    "bots": "",
     "audit-log": "Audit Log",
     "settingsGroup": "Settingz",
     "pluginsGroup": "Plugins",
@@ -277,13 +278,16 @@
     "admin": "Admin",
     "settings": "Settingz",
     "controls": "Controlz",
-    "plugins": "Plugins"
+    "plugins": "Plugins",
+    "bots": ""
   },
   "noInstancesFound": "No instancez founded",
   "pageName": {
     "terminal": "Termenawl",
     "logs": "LOGZ",
     "audit-log": "Audit Log",
+    "bots": "",
+    "botDetail": "",
     "instances": "Instances",
     "access": "Akcess",
     "settings": "Settingz",

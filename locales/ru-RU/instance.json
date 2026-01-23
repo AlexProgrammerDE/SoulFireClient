@@ -31,9 +31,9 @@
       "error": "Не удалось проверить прокси"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Проверить прокси",
+      "description": "Вы собираетесь проверить {{count}} прокси. Недействительные прокси будут автоматически удалены.",
+      "confirm": "Начать проверку"
     },
     "invalidFormat": "Неверный формат прокси",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Количество",
       "nameFormat": "Формат имени",
       "nameFormatHelp": "Используйте %d как заполнитель для номера аккаунта (например, Bot_%d станет Bot_1, Bot_2 и т. д.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Существующие аккаунты",
+      "modeHelp": "Выберите, как поступать с существующими аккаунтами:\n\n• Игнорировать существующие: Генерируются только аккаунты с именами, которых ещё нет. Все существующие аккаунты остаются без изменений.\n\n• Заменить существующие: Генерируются все аккаунты, при этом существующие аккаунты с тем же UUID заменяются. Другие аккаунты сохраняются.\n\n• Заменить все: Удаляются ВСЕ существующие аккаунты и заменяются сгенерированными.",
+      "modeIgnoreExisting": "Игнорировать существующие",
+      "modeReplaceExisting": "Заменить существующие",
+      "modeReplaceAll": "Заменить всё",
       "submit": "Сгенерировать",
       "generating": "Генерация...",
       "progress": "Генерация аккаунтов... {{checked}}/{{total}} (Успешно: {{success}} Не удалось: {{failed}})",
       "success": "Сгенерировано {{count}} аккаунтов!",
       "allFailed": "Не удалось сгенерировать ни одного аккаунта",
-      "allExist": "",
+      "allExist": "Все имена пользователей уже существуют. Включите «Перезаписать существующие аккаунты», чтобы сгенерировать их заново.",
       "error": "Не удалось сгенерировать аккаунты",
       "invalidAmount": "Пожалуйста, введите корректное количество (минимум 1)",
       "missingPlaceholder": "В формате имени должен быть заполнитель %d"
@@ -104,6 +104,46 @@
       "type": "Тип",
       "profileId": "UUID",
       "lastKnownName": "Имя пользователя"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Офлайн",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

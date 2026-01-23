@@ -8,7 +8,7 @@
       "description": "Une erreur s'est produite en essayant de charger la page. Plus d'informations peuvent être trouvées dans la console.",
       "logOut": "Déconnexion",
       "reloadPage": "Recharger la page",
-      "showDetails": ""
+      "showDetails": "Afficher les détails"
     },
     "connectionFailed": "Échec de la connexion au serveur SoulFire.."
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "Contrôles",
     "overview": "Aperçu",
     "terminal": "Terminal",
+    "bots": "",
     "audit-log": "Logs du serveur",
     "settingsGroup": "Paramètres",
     "pluginsGroup": "Plugins",
@@ -277,13 +278,16 @@
     "admin": "Administrateur",
     "settings": "Paramètres",
     "controls": "Contrôles",
-    "plugins": "Plugins"
+    "plugins": "Plugins",
+    "bots": ""
   },
   "noInstancesFound": "Aucune instance n'a été trouvée",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Journaux",
     "audit-log": "Logs du serveur",
+    "bots": "",
+    "botDetail": "",
     "instances": "Instances",
     "access": "Accès",
     "settings": "Paramètres",

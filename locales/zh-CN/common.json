@@ -8,7 +8,7 @@
       "description": "尝试加载页面时发生错误。更多信息可在控制台中找到。",
       "logOut": "退出登录",
       "reloadPage": "重新载入页面",
-      "showDetails": ""
+      "showDetails": "显示详情"
     },
     "connectionFailed": "连接 SoulFire 服务器失败。"
   },
@@ -218,6 +218,7 @@
     "controlsGroup": "控制",
     "overview": "概况",
     "terminal": "终端",
+    "bots": "",
     "audit-log": "审计日志",
     "settingsGroup": "设置",
     "pluginsGroup": "插件",
@@ -277,13 +278,16 @@
     "admin": "管理员",
     "settings": "设置",
     "controls": "控制",
-    "plugins": "插件"
+    "plugins": "插件",
+    "bots": ""
   },
   "noInstancesFound": "未找到实例",
   "pageName": {
     "terminal": "终端",
     "logs": "日志",
     "audit-log": "审计日志",
+    "bots": "",
+    "botDetail": "",
     "instances": "实例",
     "access": "访问权限",
     "settings": "设置",

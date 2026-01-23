@@ -31,9 +31,9 @@
       "error": "प्रॉक्सी जांचने में विफल रहे"
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "प्रॉक्सी जांचें",
+      "description": "आप {{count}} प्रॉक्सी जांचने वाले हैं। अमान्य प्रॉक्सी स्वचालित रूप से हटा दिए जाएंगे।",
+      "confirm": "जांच शुरू करें"
     },
     "invalidFormat": "अमान्य प्रॉक्सी प्रारूप",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "संख्या",
       "nameFormat": "नाम प्रारूप",
       "nameFormatHelp": "%d को खाते की संख्या के लिए प्लेसहोल्डर के रूप में प्रयोग करें (उदा., Bot_%d बन जाएगा Bot_1, Bot_2, आदि)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "मौजूदा खाते",
+      "modeHelp": "मौजूदा खातों को कैसे संभालना है चुनें:\n\n• मौजूदा को अनदेखा करें: केवल ऐसे खातों को बनाता है जिनके नाम पहले से मौजूद नहीं हैं। सभी मौजूदा खाते अपरिवर्तित रहते हैं।\n\n• मौजूदा को बदलें: सभी खाते बनाता है, और किसी खाते की UUID अगर पहले से मौजूद है तो उसे बदल देता है। अन्य खाते वही रहते हैं।\n\n• सभी बदलें: सभी मौजूदा खातों को हटा देता है और उनकी जगह नए बनाए गए खातों को जोड़ देता है।",
+      "modeIgnoreExisting": "मौजूदा को अनदेखा करें",
+      "modeReplaceExisting": "मौजूदा को बदलें",
+      "modeReplaceAll": "सभी को बदलें",
       "submit": "जनरेट करें",
       "generating": "जनरेट किया जा रहा है...",
       "progress": "खाते जनरेट हो रहे हैं... {{checked}}/{{total}} (सफल: {{success}} विफल: {{failed}})",
       "success": "{{count}} खाते जनरेट किए गए!",
       "allFailed": "कोई भी खाता जनरेट करने में विफल रहे",
-      "allExist": "",
+      "allExist": "सभी उपयोगकर्ता नाम पहले से मौजूद हैं। इन्हें फिर से जनरेट करने के लिए 'मौजूदा खातों को ओवरराइट करें' सक्षम करें।",
       "error": "खाते जनरेट करने में विफल रहे",
       "invalidAmount": "कृपया एक मान्य संख्या दर्ज करें (कम से कम 1)",
       "missingPlaceholder": "नाम प्रारूप में %d प्लेसहोल्डर होना आवश्यक है"
@@ -104,6 +104,46 @@
       "type": "प्रकार",
       "profileId": "UUID",
       "lastKnownName": "उपयोगकर्ता नाम"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "ऑफ़लाइन",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }

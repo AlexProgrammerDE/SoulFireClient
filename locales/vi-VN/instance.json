@@ -31,9 +31,9 @@
       "error": "Không thể kiểm tra proxy."
     },
     "checkDialog": {
-      "title": "",
-      "description": "",
-      "confirm": ""
+      "title": "Kiểm Tra Proxy",
+      "description": "Bạn sắp kiểm tra {{count}} proxy. Proxy không hợp lệ sẽ tự động bị xóa.",
+      "confirm": "Bắt Đầu Kiểm Tra"
     },
     "invalidFormat": "Định dạng proxy không hợp lệ",
     "table": {
@@ -68,17 +68,17 @@
       "amount": "Số lượng",
       "nameFormat": "Định dạng tên",
       "nameFormatHelp": "Sử dụng %d như một ký tự đại diện cho số tài khoản (ví dụ: Bot_%d sẽ trở thành Bot_1, Bot_2, v.v.)",
-      "mode": "",
-      "modeHelp": "",
-      "modeIgnoreExisting": "",
-      "modeReplaceExisting": "",
-      "modeReplaceAll": "",
+      "mode": "Tài Khoản Hiện Có",
+      "modeHelp": "Chọn cách xử lý các tài khoản hiện có:\n\n• Bỏ Qua Hiện Có: Chỉ tạo các tài khoản với tên chưa tồn tại. Giữ nguyên tất cả tài khoản hiện có.\n\n• Thay Thế Hiện Có: Tạo tất cả tài khoản, thay thế bất kỳ tài khoản nào có cùng UUID. Các tài khoản khác được giữ nguyên.\n\n• Thay Thế Tất Cả: Xóa TẤT CẢ tài khoản hiện có và thay thế bằng các tài khoản vừa được tạo.",
+      "modeIgnoreExisting": "Bỏ Qua Hiện Có",
+      "modeReplaceExisting": "Thay Thế Hiện Có",
+      "modeReplaceAll": "Thay thế tất cả",
       "submit": "Tạo",
       "generating": "Đang tạo...",
       "progress": "Đang tạo tài khoản... {{checked}}/{{total}} (Thành công: {{success}} Thất bại: {{failed}})",
       "success": "Đã tạo {{count}} tài khoản!",
       "allFailed": "Không thể tạo bất kỳ tài khoản nào",
-      "allExist": "",
+      "allExist": "Tất cả tên người dùng đã tồn tại. Hãy bật 'Ghi đè lên tài khoản hiện có' để tạo lại chúng.",
       "error": "Không thể tạo tài khoản",
       "invalidAmount": "Vui lòng nhập số lượng hợp lệ (ít nhất là 1)",
       "missingPlaceholder": "Định dạng tên phải chứa ký tự đại diện %d"
@@ -104,6 +104,46 @@
       "type": "Loại",
       "profileId": "UUID",
       "lastKnownName": "Tên đăng nhập"
+    },
+    "config": {
+      "title": "",
+      "description": "",
+      "openButton": "",
+      "pageTitle": "",
+      "noSettings": ""
+    }
+  },
+  "bots": {
+    "searchPlaceholder": "",
+    "onlineCount": "",
+    "noBots": "",
+    "noBotsFound": "",
+    "online": "",
+    "offline": "Ngoại tuyến",
+    "backToBots": "",
+    "comingSoon": "",
+    "positionPanel": {
+      "title": "",
+      "position": "",
+      "rotation": "",
+      "offline": ""
+    },
+    "chatPanel": {
+      "title": "",
+      "description": ""
+    },
+    "commandPanel": {
+      "title": "",
+      "placeholder": "",
+      "description": ""
+    },
+    "inventoryPanel": {
+      "title": "",
+      "description": ""
+    },
+    "visualPanel": {
+      "title": "",
+      "description": ""
     }
   }
 }
