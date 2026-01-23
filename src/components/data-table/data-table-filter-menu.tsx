@@ -44,10 +44,9 @@ import { getFiltersStateParser } from "@/lib/parsers";
 import { cn } from "@/lib/utils";
 import type { ExtendedColumnFilter, FilterOperator } from "@/types/data-table";
 
-const FILTERS_KEY = "filters";
 const DEBOUNCE_MS = 300;
 const THROTTLE_MS = 50;
-const OPEN_MENU_SHORTCUT = "f";
+const FILTER_SHORTCUT_KEY = "f";
 const REMOVE_FILTER_SHORTCUTS = ["backspace", "delete"];
 
 interface DataTableFilterMenuProps<TData>
@@ -56,6 +55,7 @@ interface DataTableFilterMenuProps<TData>
   debounceMs?: number;
   throttleMs?: number;
   shallow?: boolean;
+  disabled?: boolean;
 }
 
 export function DataTableFilterMenu<TData>({
@@ -63,7 +63,7 @@ export function DataTableFilterMenu<TData>({
   debounceMs = DEBOUNCE_MS,
   throttleMs = THROTTLE_MS,
   shallow = true,
-  align = "start",
+  disabled,
   ...props
 }: DataTableFilterMenuProps<TData>) {
   const id = React.useId();
@@ -107,7 +107,7 @@ export function DataTableFilterMenu<TData>({
   );
 
   const [filters, setFilters] = useQueryState(
-    FILTERS_KEY,
+    table.options.meta?.queryKeys?.filters ?? "filters",
     getFiltersStateParser<TData>(columns.map((field) => field.id))
       .withDefault([])
       .withOptions({
@@ -187,35 +187,26 @@ export function DataTableFilterMenu<TData>({
     function onKeyDown(event: KeyboardEvent) {
       if (
         event.target instanceof HTMLInputElement ||
-        event.target instanceof HTMLTextAreaElement
+        event.target instanceof HTMLTextAreaElement ||
+        (event.target instanceof HTMLElement &&
+          event.target.contentEditable === "true")
       ) {
         return;
       }
 
       if (
-        event.key.toLowerCase() === OPEN_MENU_SHORTCUT &&
-        !event.ctrlKey &&
-        !event.metaKey &&
-        !event.shiftKey
+        event.key.toLowerCase() === FILTER_SHORTCUT_KEY &&
+        (event.ctrlKey || event.metaKey) &&
+        event.shiftKey
       ) {
         event.preventDefault();
-        setOpen(true);
-      }
-
-      if (
-        event.key.toLowerCase() === OPEN_MENU_SHORTCUT &&
-        event.shiftKey &&
-        !open &&
-        filters.length > 0
-      ) {
-        event.preventDefault();
-        onFilterRemove(filters[filters.length - 1]?.filterId ?? "");
+        setOpen((prev) => !prev);
       }
     }
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open, filters, onFilterRemove]);
+  }, []);
 
   const onTriggerKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -231,7 +222,7 @@ export function DataTableFilterMenu<TData>({
   );
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
+    <div role="list" className="flex flex-wrap items-center gap-2">
       {filters.map((filter) => (
         <DataTableFilterItem
           key={filter.filterId}
@@ -259,17 +250,17 @@ export function DataTableFilterMenu<TData>({
             aria-label="Open filter command menu"
             variant="outline"
             size={filters.length > 0 ? "icon" : "sm"}
-            className={cn(filters.length > 0 && "size-8", "h-8")}
+            className={cn(filters.length > 0 && "size-8", "h-8 font-normal")}
             ref={triggerRef}
             onKeyDown={onTriggerKeyDown}
+            disabled={disabled}
           >
-            <ListFilter />
+            <ListFilter className="text-muted-foreground" />
             {filters.length > 0 ? null : "Filter"}
           </Button>
         </PopoverTrigger>
         <PopoverContent
-          align={align}
-          className="w-full max-w-[var(--radix-popover-content-available-width)] origin-[var(--radix-popover-content-transform-origin)] p-0"
+          className="w-full max-w-(--radix-popover-content-available-width) p-0"
           {...props}
         >
           <Command loop className="[&_[cmdk-input-wrapper]_svg]:hidden">
@@ -397,7 +388,7 @@ function DataTableFilterItem<TData>({
         key={filter.filterId}
         role="listitem"
         id={filterItemId}
-        className="bg-background flex h-8 items-center rounded-md"
+        className="flex h-8 items-center rounded-md bg-background"
         onKeyDown={onItemKeyDown}
       >
         <Popover open={showFieldSelector} onOpenChange={setShowFieldSelector}>
@@ -405,7 +396,7 @@ function DataTableFilterItem<TData>({
             <Button
               variant="ghost"
               size="sm"
-              className="dark:bg-input/30 rounded-none rounded-l-md border border-r-0 font-normal"
+              className="rounded-none rounded-l-md border border-r-0 font-normal dark:bg-input/30"
             >
               {columnMeta?.icon && (
                 <columnMeta.icon className="text-muted-foreground" />
@@ -413,10 +404,7 @@ function DataTableFilterItem<TData>({
               {columnMeta?.label ?? column.id}
             </Button>
           </PopoverTrigger>
-          <PopoverContent
-            align="start"
-            className="w-48 origin-[var(--radix-popover-content-transform-origin)] p-0"
-          >
+          <PopoverContent align="start" className="w-48 p-0">
             <Command loop>
               <CommandInput placeholder="Search fields..." />
               <CommandList>
@@ -474,14 +462,11 @@ function DataTableFilterItem<TData>({
         >
           <SelectTrigger
             aria-controls={operatorListboxId}
-            className="h-8 rounded-none border-r-0 px-2.5 lowercase [&_svg]:hidden [&[data-size]]:h-8"
+            className="h-8 rounded-none border-r-0 px-2.5 lowercase data-size:h-8 [&_svg]:hidden"
           >
             <SelectValue placeholder={filter.operator} />
           </SelectTrigger>
-          <SelectContent
-            id={operatorListboxId}
-            className="origin-[var(--radix-select-content-transform-origin)]"
-          >
+          <SelectContent id={operatorListboxId}>
             {filterOperators.map((operator) => (
               <SelectItem
                 key={operator.value}
@@ -505,7 +490,7 @@ function DataTableFilterItem<TData>({
           aria-controls={filterItemId}
           variant="ghost"
           size="sm"
-          className="dark:bg-input/30 h-full rounded-none rounded-r-md border border-l-0 px-1.5 font-normal"
+          className="h-full rounded-none rounded-r-md border border-l-0 px-1.5 font-normal dark:bg-input/30"
           onClick={() => onFilterRemove(filter.filterId)}
         >
           <X className="size-3.5" />
@@ -567,7 +552,8 @@ function FilterValueSelector<TData>({
     case "dateRange":
       return (
         <Calendar
-          initialFocus
+          autoFocus
+          captionLayout="dropdown"
           mode="single"
           selected={value ? new Date(value) : undefined}
           onSelect={(date) => onSelect(date?.getTime().toString() ?? "")}
@@ -629,7 +615,7 @@ function onFilterInputRender<TData>({
           filter.operator === "isEmpty" ? "empty" : "not empty"
         }`}
         aria-live="polite"
-        className="text-muted-foreground dark:bg-input/30 h-full w-16 rounded-none border bg-transparent px-1.5 py-0.5"
+        className="h-full w-16 rounded-none border bg-transparent px-1.5 py-0.5 text-muted-foreground dark:bg-input/30"
       />
     );
   }
@@ -648,7 +634,7 @@ function onFilterInputRender<TData>({
             column={column}
             inputId={inputId}
             onFilterUpdate={onFilterUpdate}
-            className="size-full max-w-28 gap-0 [&_[data-slot='range-min']]:border-r-0 [&_input]:rounded-none [&_input]:px-1.5"
+            className="size-full max-w-28 gap-0 **:data-[slot='range-min']:border-r-0 [&_input]:rounded-none [&_input]:px-1.5"
           />
         );
       }
@@ -719,7 +705,7 @@ function onFilterInputRender<TData>({
               aria-controls={inputListboxId}
               variant="ghost"
               size="sm"
-              className="dark:bg-input/30 h-full min-w-16 rounded-none border px-1.5 font-normal"
+              className="h-full min-w-16 rounded-none border px-1.5 font-normal dark:bg-input/30"
             >
               {selectedOptions.length === 0 ? (
                 filter.variant === "multiSelect" ? (
@@ -734,7 +720,7 @@ function onFilterInputRender<TData>({
                       selectedOption.icon ? (
                         <div
                           key={selectedOption.value}
-                          className="bg-background rounded-full border p-0.5"
+                          className="rounded-full border bg-background p-0.5"
                         >
                           <selectedOption.icon className="size-3.5" />
                         </div>
@@ -753,7 +739,7 @@ function onFilterInputRender<TData>({
           <PopoverContent
             id={inputListboxId}
             align="start"
-            className="w-48 origin-[var(--radix-popover-content-transform-origin)] p-0"
+            className="w-48 p-0"
           >
             <Command>
               <CommandInput placeholder="Search options..." />
@@ -804,13 +790,21 @@ function onFilterInputRender<TData>({
         ? filter.value.filter(Boolean)
         : [filter.value, filter.value].filter(Boolean);
 
+      const startDate = dateValue[0]
+        ? new Date(Number(dateValue[0]))
+        : undefined;
+      const endDate = dateValue[1] ? new Date(Number(dateValue[1])) : undefined;
+
+      const isSameDate =
+        startDate &&
+        endDate &&
+        startDate.toDateString() === endDate.toDateString();
+
       const displayValue =
-        filter.operator === "isBetween" && dateValue.length === 2
-          ? `${formatDate(new Date(Number(dateValue[0])))} - ${formatDate(
-              new Date(Number(dateValue[1])),
-            )}`
-          : dateValue[0]
-            ? formatDate(new Date(Number(dateValue[0])))
+        filter.operator === "isBetween" && dateValue.length === 2 && !isSameDate
+          ? `${formatDate(startDate, { month: "short" })} - ${formatDate(endDate, { month: "short" })}`
+          : startDate
+            ? formatDate(startDate, { month: "short" })
             : "Pick date...";
 
       return (
@@ -822,7 +816,7 @@ function onFilterInputRender<TData>({
               variant="ghost"
               size="sm"
               className={cn(
-                "dark:bg-input/30 h-full rounded-none border px-1.5 font-normal",
+                "h-full rounded-none border px-1.5 font-normal dark:bg-input/30",
                 !filter.value && "text-muted-foreground",
               )}
             >
@@ -833,12 +827,13 @@ function onFilterInputRender<TData>({
           <PopoverContent
             id={inputListboxId}
             align="start"
-            className="w-auto origin-[var(--radix-popover-content-transform-origin)] p-0"
+            className="w-auto p-0"
           >
             {filter.operator === "isBetween" ? (
               <Calendar
+                autoFocus
+                captionLayout="dropdown"
                 mode="range"
-                initialFocus
                 selected={
                   dateValue.length === 2
                     ? {
@@ -863,8 +858,9 @@ function onFilterInputRender<TData>({
               />
             ) : (
               <Calendar
+                autoFocus
+                captionLayout="dropdown"
                 mode="single"
-                initialFocus
                 selected={
                   dateValue[0] ? new Date(Number(dateValue[0])) : undefined
                 }

@@ -83,7 +83,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     id: "username",
     accessorKey: "username",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Username" />
+      <DataTableColumnHeader column={column} label="Username" />
     ),
     cell: ({ row }) => (
       <div className="flex flex-row items-center justify-start gap-2">
@@ -108,7 +108,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     id: "email",
     accessorKey: "email",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
+      <DataTableColumnHeader column={column} label="Email" />
     ),
     meta: {
       label: "Email",
@@ -123,7 +123,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     accessorFn: (row) => getEnumKeyByValue(UserRole, row.role),
     accessorKey: "role",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Role" />
+      <DataTableColumnHeader column={column} label="Role" />
     ),
     cell: ({ cell }) => {
       const type = cell.getValue<keyof typeof UserRole>();
@@ -154,7 +154,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     accessorFn: (row) => timestampToDate(row.createdAt as Timestamp),
     accessorKey: "createdAt",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Created at" />
+      <DataTableColumnHeader column={column} label="Created at" />
     ),
     cell: ({ row }) => (
       <SFTimeAgo date={timestampToDate(row.original.createdAt as Timestamp)} />
@@ -174,7 +174,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     accessorFn: (row) => timestampToDate(row.minIssuedAt as Timestamp),
     accessorKey: "minIssuedAt",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Min issued at" />
+      <DataTableColumnHeader column={column} label="Min issued at" />
     ),
     cell: ({ row }) => (
       <SFTimeAgo

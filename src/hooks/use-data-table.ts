@@ -1,5 +1,3 @@
-"use client";
-
 import {
   type ColumnFiltersState,
   getCoreRowModel,
@@ -19,23 +17,24 @@ import {
   type VisibilityState,
 } from "@tanstack/react-table";
 import {
-  type Parser,
   parseAsArrayOf,
   parseAsInteger,
   parseAsString,
+  type SingleParser,
   type UseQueryStateOptions,
   useQueryState,
   useQueryStates,
 } from "nuqs";
 import * as React from "react";
-
 import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
 import { getSortingStateParser } from "@/lib/parsers";
-import type { ExtendedColumnSort } from "@/types/data-table";
+import type { ExtendedColumnSort, QueryKeys } from "@/types/data-table";
 
 const PAGE_KEY = "page";
 const PER_PAGE_KEY = "perPage";
 const SORT_KEY = "sort";
+const FILTERS_KEY = "filters";
+const JOIN_OPERATOR_KEY = "joinOperator";
 const ARRAY_SEPARATOR = ",";
 const DEBOUNCE_MS = 300;
 const THROTTLE_MS = 50;
@@ -54,6 +53,7 @@ interface UseDataTableProps<TData>
   initialState?: Omit<Partial<TableState>, "sorting"> & {
     sorting?: ExtendedColumnSort<TData>[];
   };
+  queryKeys?: Partial<QueryKeys>;
   history?: "push" | "replace";
   debounceMs?: number;
   throttleMs?: number;
@@ -69,6 +69,7 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     columns,
     pageCount,
     initialState,
+    queryKeys,
     history = "replace",
     debounceMs = DEBOUNCE_MS,
     throttleMs = THROTTLE_MS,
@@ -79,6 +80,11 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     startTransition,
     ...tableProps
   } = props;
+  const pageKey = queryKeys?.page ?? PAGE_KEY;
+  const perPageKey = queryKeys?.perPage ?? PER_PAGE_KEY;
+  const sortKey = queryKeys?.sort ?? SORT_KEY;
+  const filtersKey = queryKeys?.filters ?? FILTERS_KEY;
+  const joinOperatorKey = queryKeys?.joinOperator ?? JOIN_OPERATOR_KEY;
 
   const queryStateOptions = React.useMemo<
     Omit<UseQueryStateOptions<string>, "parse">
@@ -110,11 +116,11 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     React.useState<VisibilityState>(initialState?.columnVisibility ?? {});
 
   const [page, setPage] = useQueryState(
-    PAGE_KEY,
+    pageKey,
     parseAsInteger.withOptions(queryStateOptions).withDefault(1),
   );
   const [perPage, setPerPage] = useQueryState(
-    PER_PAGE_KEY,
+    perPageKey,
     parseAsInteger
       .withOptions(queryStateOptions)
       .withDefault(initialState?.pagination?.pageSize ?? 10),
@@ -148,7 +154,7 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
   }, [columns]);
 
   const [sorting, setSorting] = useQueryState(
-    SORT_KEY,
+    sortKey,
     getSortingStateParser<TData>(columnIds)
       .withOptions(queryStateOptions)
       .withDefault(initialState?.sorting ?? []),
@@ -176,7 +182,7 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     if (enableAdvancedFilter) return {};
 
     return filterableColumns.reduce<
-      Record<string, Parser<string> | Parser<string[]>>
+      Record<string, SingleParser<string> | SingleParser<string[]>>
     >((acc, column) => {
       if (column.meta?.options) {
         acc[column.id ?? ""] = parseAsArrayOf(
@@ -274,6 +280,7 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
       ...tableProps.defaultColumn,
       enableColumnFilter: false,
     },
+    // Modified to prevent selecting some rows
     enableRowSelection: tableProps.enableRowSelection || true,
     onRowSelectionChange: setRowSelection,
     onPaginationChange,
@@ -287,7 +294,21 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
+    // Removed manual filtering settings here
+    meta: {
+      ...tableProps.meta,
+      queryKeys: {
+        page: pageKey,
+        perPage: perPageKey,
+        sort: sortKey,
+        filters: filtersKey,
+        joinOperator: joinOperatorKey,
+      },
+    },
   });
 
-  return { table, shallow, debounceMs, throttleMs };
+  return React.useMemo(
+    () => ({ table, shallow, debounceMs, throttleMs }),
+    [table, shallow, debounceMs, throttleMs],
+  );
 }

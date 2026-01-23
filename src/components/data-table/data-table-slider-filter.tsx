@@ -31,6 +31,21 @@ function getIsValidRange(value: unknown): value is RangeValue {
   );
 }
 
+function parseValuesAsNumbers(value: unknown): RangeValue | undefined {
+  if (
+    Array.isArray(value) &&
+    value.length === 2 &&
+    value.every(
+      (v) =>
+        (typeof v === "string" || typeof v === "number") && !Number.isNaN(v),
+    )
+  ) {
+    return [Number(value[0]), Number(value[1])];
+  }
+
+  return undefined;
+}
+
 interface DataTableSliderFilterProps<TData> {
   column: Column<TData, unknown>;
   title?: string;
@@ -42,9 +57,7 @@ export function DataTableSliderFilter<TData>({
 }: DataTableSliderFilterProps<TData>) {
   const id = React.useId();
 
-  const columnFilterValue = getIsValidRange(column.getFilterValue())
-    ? (column.getFilterValue() as RangeValue)
-    : undefined;
+  const columnFilterValue = parseValuesAsNumbers(column.getFilterValue());
 
   const defaultRange = column.columnDef.meta?.range;
   const unit = column.columnDef.meta?.unit;
@@ -130,13 +143,17 @@ export function DataTableSliderFilter<TData>({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="border-dashed">
+        <Button
+          variant="outline"
+          size="sm"
+          className="border-dashed font-normal"
+        >
           {columnFilterValue ? (
             <div
               role="button"
               aria-label={`Clear ${title} filter`}
               tabIndex={0}
-              className="focus-visible:ring-ring rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:ring-1 focus-visible:outline-none"
+              className="rounded-sm opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
               onClick={onReset}
             >
               <XCircle />
@@ -160,7 +177,7 @@ export function DataTableSliderFilter<TData>({
       </PopoverTrigger>
       <PopoverContent align="start" className="flex w-auto flex-col gap-4">
         <div className="flex flex-col gap-3">
-          <p className="leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+          <p className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             {title}
           </p>
           <div className="flex items-center gap-4">
@@ -183,7 +200,7 @@ export function DataTableSliderFilter<TData>({
                 className={cn("h-8 w-24", unit && "pr-8")}
               />
               {unit && (
-                <span className="bg-accent text-muted-foreground absolute top-0 right-0 bottom-0 flex items-center rounded-r-md px-2 text-sm">
+                <span className="absolute top-0 right-0 bottom-0 flex items-center rounded-r-md bg-accent px-2 text-muted-foreground text-sm">
                   {unit}
                 </span>
               )}
@@ -207,7 +224,7 @@ export function DataTableSliderFilter<TData>({
                 className={cn("h-8 w-24", unit && "pr-8")}
               />
               {unit && (
-                <span className="bg-accent text-muted-foreground absolute top-0 right-0 bottom-0 flex items-center rounded-r-md px-2 text-sm">
+                <span className="absolute top-0 right-0 bottom-0 flex items-center rounded-r-md bg-accent px-2 text-muted-foreground text-sm">
                   {unit}
                 </span>
               )}

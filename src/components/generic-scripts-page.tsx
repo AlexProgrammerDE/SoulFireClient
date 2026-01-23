@@ -85,7 +85,7 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     id: "scriptName",
     accessorKey: "scriptName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} label="Name" />
     ),
     cell: ({ row }) => (
       <div className="flex flex-row items-center gap-2">
@@ -106,7 +106,7 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     accessorFn: (row) => row.scriptScope?.scope.oneofKind ?? "",
     accessorKey: "scriptScope",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Scope" />
+      <DataTableColumnHeader column={column} label="Scope" />
     ),
     cell: ({ row }) => {
       return row.original.scriptScope?.scope.oneofKind === "instanceScript" ? (
@@ -149,7 +149,7 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     accessorFn: (row) => getEnumKeyByValue(ScriptLanguage, row.language),
     accessorKey: "language",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Language" />
+      <DataTableColumnHeader column={column} label="Language" />
     ),
     cell: ({ cell }) => {
       const type = cell.getValue<keyof typeof ScriptLanguage>();
@@ -179,7 +179,7 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     id: "elevatedPermissions",
     accessorKey: "elevatedPermissions",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Elevated permissions" />
+      <DataTableColumnHeader column={column} label="Elevated permissions" />
     ),
     meta: {
       label: "Elevated permissions",
@@ -193,7 +193,7 @@ const columns: ColumnDef<ScriptListResponse_Script>[] = [
     accessorFn: (row) => timestampToDate(row.createdAt as Timestamp),
     accessorKey: "createdAt",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Created at" />
+      <DataTableColumnHeader column={column} label="Created at" />
     ),
     cell: ({ row }) => (
       <SFTimeAgo date={timestampToDate(row.original.createdAt as Timestamp)} />

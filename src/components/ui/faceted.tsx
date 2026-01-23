@@ -161,7 +161,7 @@ function FacetedBadgeList(props: FacetedBadgeListProps) {
     return (
       <div
         {...badgeListProps}
-        className="text-muted-foreground flex w-full items-center gap-1"
+        className="flex w-full items-center gap-1 text-muted-foreground"
       >
         {placeholder}
         <ChevronsUpDown className="ml-auto size-4 shrink-0 opacity-50" />
@@ -241,7 +241,7 @@ function FacetedItem(props: FacetedItemProps) {
         context.onItemSelect(currentValue);
       }
     },
-    [onSelect, context.onItemSelect],
+    [onSelect, context],
   );
 
   return (
@@ -254,7 +254,7 @@ function FacetedItem(props: FacetedItemProps) {
     >
       <span
         className={cn(
-          "border-primary flex size-4 items-center justify-center rounded-sm border",
+          "flex size-4 items-center justify-center rounded-sm border border-primary",
           isSelected
             ? "bg-primary text-primary-foreground"
             : "opacity-50 [&_svg]:invisible",

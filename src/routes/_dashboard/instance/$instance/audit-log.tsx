@@ -119,7 +119,7 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     accessorFn: (row) => `${row.user?.username} ${row.user?.email}`,
     accessorKey: "user",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="User" />
+      <DataTableColumnHeader column={column} label="User" />
     ),
     cell: ({ row }) => (
       <div className="flex flex-row items-center justify-start gap-2">
@@ -145,7 +145,7 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
       getEnumKeyByValue(InstanceAuditLogResponse_AuditLogEntryType, row.type),
     accessorKey: "type",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Type" />
+      <DataTableColumnHeader column={column} label="Type" />
     ),
     cell: ({ row }) => {
       const Icon = logTypeToIcon(
@@ -187,7 +187,7 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     accessorFn: (row) => timestampToDate(row.timestamp as Timestamp),
     accessorKey: "timestamp",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Timestamp" />
+      <DataTableColumnHeader column={column} label="Timestamp" />
     ),
     cell: ({ row }) => (
       <SFTimeAgo date={timestampToDate(row.original.timestamp as Timestamp)} />

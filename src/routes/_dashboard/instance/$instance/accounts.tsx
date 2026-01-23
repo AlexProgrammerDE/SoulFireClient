@@ -250,7 +250,7 @@ const columns: ColumnDef<ProfileAccount>[] = [
       getEnumKeyByValue(MinecraftAccountProto_AccountTypeProto, row.type),
     accessorKey: "type",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Type" />
+      <DataTableColumnHeader column={column} label="Type" />
     ),
     cell: ({ cell }) => {
       const type =
@@ -283,7 +283,7 @@ const columns: ColumnDef<ProfileAccount>[] = [
     id: "profileId",
     accessorKey: "profileId",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Profile ID" />
+      <DataTableColumnHeader column={column} label="Profile ID" />
     ),
     meta: {
       label: "Profile ID",
@@ -297,7 +297,7 @@ const columns: ColumnDef<ProfileAccount>[] = [
     id: "lastKnownName",
     accessorKey: "lastKnownName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Last known name" />
+      <DataTableColumnHeader column={column} label="Last known name" />
     ),
     meta: {
       label: "Last known name",

@@ -101,7 +101,7 @@ export function DataTableRangeFilter<TData>({
         defaultValue={value[0]}
         onChange={(event) => onRangeValueChange(event.target.value, true)}
       />
-      <span className="text-muted-foreground sr-only shrink-0">to</span>
+      <span className="sr-only shrink-0 text-muted-foreground">to</span>
       <Input
         id={`${inputId}-max`}
         type="number"

@@ -189,7 +189,7 @@ const columns: ColumnDef<ProfileProxy>[] = [
     accessorFn: (row) => getEnumKeyByValue(ProxyProto_Type, row.type),
     accessorKey: "type",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Type" />
+      <DataTableColumnHeader column={column} label="Type" />
     ),
     cell: ({ cell }) => {
       const type = cell.getValue<keyof typeof ProxyProto_Type>();
@@ -219,7 +219,7 @@ const columns: ColumnDef<ProfileProxy>[] = [
     id: "address",
     accessorKey: "address",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Address" />
+      <DataTableColumnHeader column={column} label="Address" />
     ),
     meta: {
       label: "Address",
@@ -233,7 +233,7 @@ const columns: ColumnDef<ProfileProxy>[] = [
     id: "username",
     accessorKey: "username",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Username" />
+      <DataTableColumnHeader column={column} label="Username" />
     ),
     meta: {
       label: "Username",
@@ -247,7 +247,7 @@ const columns: ColumnDef<ProfileProxy>[] = [
     id: "password",
     accessorKey: "password",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Password" />
+      <DataTableColumnHeader column={column} label="Password" />
     ),
     meta: {
       label: "Password",
