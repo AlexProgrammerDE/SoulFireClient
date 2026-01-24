@@ -17,6 +17,8 @@ import {
   MonitorSmartphoneIcon,
   MousePointerClickIcon,
   PackageIcon,
+  PauseIcon,
+  PlayIcon,
   RefreshCwIcon,
   RotateCcwKeyIcon,
   ShieldIcon,
@@ -27,7 +29,7 @@ import {
   WifiOffIcon,
   XIcon,
 } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CommandInput from "@/components/command-input.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
@@ -586,8 +588,14 @@ function BotPovPanel({
   const [povImage, setPovImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [autoRefresh, setAutoRefresh] = useState(false);
+  const isLoadingRef = useRef(false);
 
   const renderPov = useCallback(async () => {
+    // Prevent overlapping requests
+    if (isLoadingRef.current) return;
+
+    isLoadingRef.current = true;
     setIsLoading(true);
     setError(null);
 
@@ -610,10 +618,34 @@ function BotPovPanel({
       setPovImage(result.response.imageBase64);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to render POV");
+      // Stop auto-refresh on error
+      setAutoRefresh(false);
     } finally {
       setIsLoading(false);
+      isLoadingRef.current = false;
     }
   }, [instanceId, botId]);
+
+  // Auto-refresh effect
+  useEffect(() => {
+    if (!autoRefresh || !isOnline) return;
+
+    // Capture immediately when auto-refresh is enabled
+    void renderPov();
+
+    const interval = setInterval(() => {
+      void renderPov();
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [autoRefresh, isOnline, renderPov]);
+
+  // Stop auto-refresh when going offline
+  useEffect(() => {
+    if (!isOnline) {
+      setAutoRefresh(false);
+    }
+  }, [isOnline]);
 
   return (
     <Card>
@@ -622,22 +654,40 @@ function BotPovPanel({
           <CameraIcon className="size-5" />
           {t("bots.povPanel.title")}
           {isOnline && (
-            <Button
-              variant="outline"
-              size="sm"
-              className="ml-auto"
-              onClick={renderPov}
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <LoaderIcon className="mr-1 size-4 animate-spin" />
-              ) : (
-                <RefreshCwIcon className="mr-1 size-4" />
-              )}
-              {povImage
-                ? t("bots.povPanel.refresh")
-                : t("bots.povPanel.capture")}
-            </Button>
+            <div className="ml-auto flex gap-2">
+              <Button
+                variant={autoRefresh ? "default" : "outline"}
+                size="sm"
+                onClick={() => setAutoRefresh(!autoRefresh)}
+                title={
+                  autoRefresh
+                    ? t("bots.povPanel.stopAutoRefresh")
+                    : t("bots.povPanel.startAutoRefresh")
+                }
+              >
+                {autoRefresh ? (
+                  <PauseIcon className="mr-1 size-4" />
+                ) : (
+                  <PlayIcon className="mr-1 size-4" />
+                )}
+                {t("bots.povPanel.auto")}
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={renderPov}
+                disabled={isLoading || autoRefresh}
+              >
+                {isLoading ? (
+                  <LoaderIcon className="mr-1 size-4 animate-spin" />
+                ) : (
+                  <RefreshCwIcon className="mr-1 size-4" />
+                )}
+                {povImage
+                  ? t("bots.povPanel.refresh")
+                  : t("bots.povPanel.capture")}
+              </Button>
+            </div>
           )}
         </CardTitle>
       </CardHeader>

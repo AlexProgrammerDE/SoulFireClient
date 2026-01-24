@@ -148,6 +148,9 @@
       "title": "Bot POV",
       "capture": "Capture",
       "refresh": "Refresh",
+      "auto": "Auto",
+      "startAutoRefresh": "Start auto-refresh (1 second interval)",
+      "stopAutoRefresh": "Stop auto-refresh",
       "clickToCapture": "Click Capture to render the bot's point of view",
       "offline": "Bot is offline. POV rendering is only available when the bot is connected."
     },
