@@ -1055,82 +1055,85 @@ function BotVisualPanel({
       <CardContent>
         {isOnline && liveState ? (
           <div className="flex flex-col gap-4">
-            {/* Compass */}
-            <div className="flex flex-col items-center gap-2">
-              <p className="text-muted-foreground text-xs font-medium uppercase">
-                {t("bots.visualPanel.compass")}
-              </p>
-              <div className="relative size-32">
-                {/* Compass background */}
-                <div className="border-border bg-muted/30 absolute inset-0 rounded-full border-2" />
-                {/* Cardinal directions */}
-                <span className="text-muted-foreground absolute left-1/2 top-1 -translate-x-1/2 text-xs font-bold">
-                  N
-                </span>
-                <span className="text-muted-foreground absolute bottom-1 left-1/2 -translate-x-1/2 text-xs font-bold">
-                  S
-                </span>
-                <span className="text-muted-foreground absolute left-1 top-1/2 -translate-y-1/2 text-xs font-bold">
-                  W
-                </span>
-                <span className="text-muted-foreground absolute right-1 top-1/2 -translate-y-1/2 text-xs font-bold">
-                  E
-                </span>
-                {/* Direction indicator */}
-                <div
-                  className="absolute bottom-1/2 left-1/2 h-12 w-1 origin-bottom"
-                  style={{
-                    transform: `translateX(-50%) rotate(${liveState.yRot + 180}deg)`,
-                  }}
-                >
-                  <div className="bg-primary h-full w-full rounded-full" />
-                  <div
-                    className="border-primary absolute -top-1 left-1/2 size-0 -translate-x-1/2 border-4 border-transparent border-b-4"
-                    style={{ borderBottomColor: "hsl(var(--primary))" }}
-                  />
-                </div>
-                {/* Center dot */}
-                <div className="bg-primary absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full" />
-              </div>
-              <div className="text-center">
-                <p className="text-lg font-bold">
-                  {getCompassDirection(liveState.yRot)}
+            {/* Compass and Look direction side by side on desktop */}
+            <div className="flex flex-col items-center gap-4 md:flex-row md:justify-center md:gap-8">
+              {/* Compass */}
+              <div className="flex flex-col items-center gap-2">
+                <p className="text-muted-foreground text-xs font-medium uppercase">
+                  {t("bots.visualPanel.compass")}
                 </p>
-                <p className="text-muted-foreground text-xs">
-                  {liveState.yRot.toFixed(1)}°
-                </p>
-              </div>
-            </div>
-
-            {/* Look direction (pitch) */}
-            <div className="flex flex-col items-center gap-2">
-              <p className="text-muted-foreground text-xs font-medium uppercase">
-                {t("bots.visualPanel.lookDirection")}
-              </p>
-              <div className="flex items-center gap-4">
-                <div className="bg-muted/30 relative h-24 w-4 overflow-hidden rounded-full">
-                  {/* Pitch indicator */}
+                <div className="relative size-32">
+                  {/* Compass background */}
+                  <div className="border-border bg-muted/30 absolute inset-0 rounded-full border-2" />
+                  {/* Cardinal directions */}
+                  <span className="text-muted-foreground absolute left-1/2 top-1 -translate-x-1/2 text-xs font-bold">
+                    N
+                  </span>
+                  <span className="text-muted-foreground absolute bottom-1 left-1/2 -translate-x-1/2 text-xs font-bold">
+                    S
+                  </span>
+                  <span className="text-muted-foreground absolute left-1 top-1/2 -translate-y-1/2 text-xs font-bold">
+                    W
+                  </span>
+                  <span className="text-muted-foreground absolute right-1 top-1/2 -translate-y-1/2 text-xs font-bold">
+                    E
+                  </span>
+                  {/* Direction indicator */}
                   <div
-                    className="bg-primary absolute left-0 right-0 h-2 rounded-full transition-all"
+                    className="absolute bottom-1/2 left-1/2 h-12 w-1 origin-bottom"
                     style={{
-                      // Pitch ranges from -90 (up) to 90 (down)
-                      // Map to percentage: -90 -> 0%, 0 -> 50%, 90 -> 100%
-                      top: `${((liveState.xRot + 90) / 180) * 100}%`,
-                      transform: "translateY(-50%)",
+                      transform: `translateX(-50%) rotate(${liveState.yRot + 180}deg)`,
                     }}
-                  />
+                  >
+                    <div className="bg-primary h-full w-full rounded-full" />
+                    <div
+                      className="border-primary absolute -top-1 left-1/2 size-0 -translate-x-1/2 border-4 border-transparent border-b-4"
+                      style={{ borderBottomColor: "hsl(var(--primary))" }}
+                    />
+                  </div>
+                  {/* Center dot */}
+                  <div className="bg-primary absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full" />
                 </div>
-                <div className="text-sm">
-                  <p className="text-muted-foreground">
-                    {liveState.xRot < -30
-                      ? t("bots.visualPanel.lookingUp")
-                      : liveState.xRot > 30
-                        ? t("bots.visualPanel.lookingDown")
-                        : t("bots.visualPanel.lookingStraight")}
+                <div className="text-center">
+                  <p className="text-lg font-bold">
+                    {getCompassDirection(liveState.yRot)}
                   </p>
                   <p className="text-muted-foreground text-xs">
-                    {liveState.xRot.toFixed(1)}°
+                    {liveState.yRot.toFixed(1)}°
                   </p>
+                </div>
+              </div>
+
+              {/* Look direction (pitch) */}
+              <div className="flex flex-col items-center gap-2">
+                <p className="text-muted-foreground text-xs font-medium uppercase">
+                  {t("bots.visualPanel.lookDirection")}
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className="bg-muted/30 relative h-24 w-4 overflow-hidden rounded-full">
+                    {/* Pitch indicator */}
+                    <div
+                      className="bg-primary absolute left-0 right-0 h-2 rounded-full transition-all"
+                      style={{
+                        // Pitch ranges from -90 (up) to 90 (down)
+                        // Map to percentage: -90 -> 0%, 0 -> 50%, 90 -> 100%
+                        top: `${((liveState.xRot + 90) / 180) * 100}%`,
+                        transform: "translateY(-50%)",
+                      }}
+                    />
+                  </div>
+                  <div className="text-sm">
+                    <p className="text-muted-foreground">
+                      {liveState.xRot < -30
+                        ? t("bots.visualPanel.lookingUp")
+                        : liveState.xRot > 30
+                          ? t("bots.visualPanel.lookingDown")
+                          : t("bots.visualPanel.lookingStraight")}
+                    </p>
+                    <p className="text-muted-foreground text-xs">
+                      {liveState.xRot.toFixed(1)}°
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
