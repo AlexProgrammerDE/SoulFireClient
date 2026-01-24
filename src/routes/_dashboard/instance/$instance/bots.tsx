@@ -1,15 +1,29 @@
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import {
+  infiniteQueryOptions,
+  queryOptions,
+  useSuspenseInfiniteQuery,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   KeyRoundIcon,
+  LoaderCircleIcon,
   MapPinIcon,
   MonitorSmartphoneIcon,
   RotateCcwKeyIcon,
   SearchIcon,
   WifiOffIcon,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import {
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
+import { LoadingComponent } from "@/components/loading-component.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import {
@@ -32,15 +46,16 @@ import {
 } from "@/lib/types.ts";
 import { createTransport } from "@/lib/web-rpc.ts";
 
+const PAGE_SIZE = 50;
+
 export const Route = createFileRoute("/_dashboard/instance/$instance/bots")({
   beforeLoad: (props) => {
     const { instance } = props.params;
-    const botListQueryOptions = queryOptions({
-      queryKey: ["bot-list", instance],
+    const botStatusQueryOptions = queryOptions({
+      queryKey: ["bot-status", instance],
       queryFn: async (queryProps): Promise<BotListResponse> => {
         const transport = createTransport();
         if (transport === null) {
-          // Demo mode - return empty bot list
           return { bots: [] };
         }
         const botService = new BotServiceClient(transport);
@@ -52,11 +67,11 @@ export const Route = createFileRoute("/_dashboard/instance/$instance/bots")({
       },
       refetchInterval: 3_000,
     });
-    return { botListQueryOptions };
+    return { botStatusQueryOptions };
   },
   loader: (props) => {
     void props.context.queryClient.prefetchQuery(
-      props.context.botListQueryOptions,
+      props.context.botStatusQueryOptions,
     );
   },
   component: Bots,
@@ -127,47 +142,11 @@ function Bots() {
 
 function Content() {
   const { t } = useTranslation("instance");
-  const { instanceInfoQueryOptions, botListQueryOptions } =
-    Route.useRouteContext();
-  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const { data: botList } = useSuspenseQuery(botListQueryOptions);
   const [search, setSearch] = useState("");
-
-  // Merge account data with online status
-  const botsWithStatus = useMemo(() => {
-    const statusMap = new Map<string, BotListEntry>();
-    for (const entry of botList.bots) {
-      statusMap.set(entry.profileId, entry);
-    }
-
-    return instanceInfo.profile.accounts.map((account): BotWithStatus => {
-      const status = statusMap.get(account.profileId);
-      return {
-        ...account,
-        isOnline: status?.isOnline ?? false,
-        liveState: status?.liveState,
-      };
-    });
-  }, [instanceInfo.profile.accounts, botList.bots]);
-
-  // Filter by search
-  const filteredBots = useMemo(() => {
-    if (!search.trim()) return botsWithStatus;
-    const searchLower = search.toLowerCase();
-    return botsWithStatus.filter((bot) =>
-      bot.lastKnownName.toLowerCase().includes(searchLower),
-    );
-  }, [botsWithStatus, search]);
-
-  // Count online bots
-  const onlineCount = useMemo(
-    () => botsWithStatus.filter((bot) => bot.isOnline).length,
-    [botsWithStatus],
-  );
 
   return (
     <div className="container flex h-full w-full grow flex-col gap-4 py-4">
-      {/* Search and stats */}
+      {/* Search input - always visible, no data needed */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative max-w-sm flex-1">
           <SearchIcon className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
@@ -178,43 +157,195 @@ function Content() {
             className="pl-9"
           />
         </div>
-        <Badge variant="outline" className="w-fit">
-          {t("bots.onlineCount", {
-            online: onlineCount,
-            total: botsWithStatus.length,
-          })}
-        </Badge>
+        <Suspense
+          fallback={
+            <Badge variant="outline" className="w-fit">
+              {t("bots.onlineCount", { online: "...", total: "..." })}
+            </Badge>
+          }
+        >
+          <OnlineCountBadge />
+        </Suspense>
       </div>
 
-      {/* Bot grid */}
-      {filteredBots.length === 0 ? (
-        <div className="text-muted-foreground flex flex-1 items-center justify-center">
-          {botsWithStatus.length === 0
-            ? t("bots.noBots")
-            : t("bots.noBotsFound")}
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredBots.map((bot) => (
-            <BotCard
-              key={bot.profileId}
-              bot={bot}
-              instanceId={instanceInfo.id}
-            />
-          ))}
-        </div>
-      )}
+      {/* Bot grid - needs data */}
+      <Suspense fallback={<LoadingComponent />}>
+        <BotGrid search={search} />
+      </Suspense>
     </div>
+  );
+}
+
+function OnlineCountBadge() {
+  const { t } = useTranslation("instance");
+  const { instanceInfoQueryOptions, botStatusQueryOptions } =
+    Route.useRouteContext();
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const { data: botStatus } = useSuspenseQuery(botStatusQueryOptions);
+
+  const onlineCount = useMemo(() => {
+    const statusMap = new Map<string, BotListEntry>();
+    for (const entry of botStatus.bots) {
+      statusMap.set(entry.profileId, entry);
+    }
+    return instanceInfo.profile.accounts.filter((account) => {
+      const status = statusMap.get(account.profileId);
+      return status?.isOnline ?? false;
+    }).length;
+  }, [instanceInfo.profile.accounts, botStatus.bots]);
+
+  return (
+    <Badge variant="outline" className="w-fit">
+      {t("bots.onlineCount", {
+        online: onlineCount,
+        total: instanceInfo.profile.accounts.length,
+      })}
+    </Badge>
+  );
+}
+
+function BotGrid({ search }: { search: string }) {
+  const { t } = useTranslation("instance");
+  const { instanceInfoQueryOptions, botStatusQueryOptions } =
+    Route.useRouteContext();
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const { data: botStatus } = useSuspenseQuery(botStatusQueryOptions);
+
+  // Create status map for quick lookup
+  const statusMap = useMemo(() => {
+    const map = new Map<string, BotListEntry>();
+    for (const entry of botStatus.bots) {
+      map.set(entry.profileId, entry);
+    }
+    return map;
+  }, [botStatus.bots]);
+
+  // Filter accounts by search
+  const filteredAccounts = useMemo(() => {
+    const accounts = instanceInfo.profile.accounts;
+    if (!search.trim()) return accounts;
+    const searchLower = search.toLowerCase();
+    return accounts.filter((account) =>
+      account.lastKnownName.toLowerCase().includes(searchLower),
+    );
+  }, [instanceInfo.profile.accounts, search]);
+
+  // Create infinite query options for client-side pagination
+  const botsInfiniteQueryOptions = useMemo(
+    () =>
+      infiniteQueryOptions({
+        queryKey: [
+          "bots-paginated",
+          instanceInfo.id,
+          filteredAccounts.map((a) => a.profileId).join(","),
+        ],
+        queryFn: ({ pageParam }) => {
+          const start = pageParam * PAGE_SIZE;
+          const end = start + PAGE_SIZE;
+          const pageAccounts = filteredAccounts.slice(start, end);
+          return {
+            accounts: pageAccounts,
+            nextPage: end < filteredAccounts.length ? pageParam + 1 : undefined,
+            totalCount: filteredAccounts.length,
+          };
+        },
+        initialPageParam: 0,
+        getNextPageParam: (lastPage) => lastPage.nextPage,
+      }),
+    [instanceInfo.id, filteredAccounts],
+  );
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useSuspenseInfiniteQuery(botsInfiniteQueryOptions);
+
+  // Merge all pages into flat list with status
+  const botsWithStatus = useMemo(() => {
+    const allAccounts = data.pages.flatMap((page) => page.accounts);
+    return allAccounts.map((account): BotWithStatus => {
+      const status = statusMap.get(account.profileId);
+      return {
+        ...account,
+        isOnline: status?.isOnline ?? false,
+        liveState: status?.liveState,
+      };
+    });
+  }, [data.pages, statusMap]);
+
+  const totalCount = filteredAccounts.length;
+  const loadedCount = botsWithStatus.length;
+
+  // Intersection observer for infinite scroll
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+
+  const handleIntersection = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const [entry] = entries;
+      if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage],
+  );
+
+  useEffect(() => {
+    const element = loadMoreRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(handleIntersection, {
+      rootMargin: "100px",
+    });
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [handleIntersection]);
+
+  if (filteredAccounts.length === 0) {
+    return (
+      <div className="text-muted-foreground flex flex-1 items-center justify-center">
+        {instanceInfo.profile.accounts.length === 0
+          ? t("bots.noBots")
+          : t("bots.noBotsFound")}
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {botsWithStatus.map((bot) => (
+          <BotCard key={bot.profileId} bot={bot} instanceId={instanceInfo.id} />
+        ))}
+      </div>
+
+      {/* Load more trigger / status */}
+      <div ref={loadMoreRef} className="flex justify-center py-4">
+        {isFetchingNextPage ? (
+          <div className="text-muted-foreground flex items-center gap-2">
+            <LoaderCircleIcon className="size-4 animate-spin" />
+            <span>{t("bots.loadingMore")}</span>
+          </div>
+        ) : hasNextPage ? (
+          <span className="text-muted-foreground text-sm">
+            {t("bots.showingCount", {
+              loaded: loadedCount,
+              total: totalCount,
+            })}
+          </span>
+        ) : loadedCount > PAGE_SIZE ? (
+          <span className="text-muted-foreground text-sm">
+            {t("bots.allLoaded", { total: totalCount })}
+          </span>
+        ) : null}
+      </div>
+    </>
   );
 }
 
 // Helper to get the avatar URL based on skin texture hash
 function getHeadUrl(skinTextureHash?: string): string {
   if (skinTextureHash) {
-    // Use the skin texture hash for online bots with skins
     return `https://mc-heads.net/head/${skinTextureHash}/48`;
   }
-  // Default to Steve for offline bots or bots without skin data
   return "https://mc-heads.net/head/MHF_Steve/48";
 }
 
@@ -240,7 +371,6 @@ function BotCard({
       <Card className="hover:bg-muted/50 h-full cursor-pointer transition-colors">
         <CardHeader className="pb-2">
           <div className="flex items-start gap-3">
-            {/* Minecraft avatar */}
             <img
               src={getHeadUrl(bot.liveState?.skinTextureHash)}
               alt={bot.lastKnownName}
