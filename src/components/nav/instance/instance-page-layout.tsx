@@ -5,6 +5,7 @@ import { type ReactNode, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import { ErrorComponent } from "@/components/error-component.tsx";
 import { ExternalLink } from "@/components/external-link.tsx";
+import { GlobalQueryIndicator } from "@/components/global-query-indicator.tsx";
 import { LoadingComponent } from "@/components/loading-component.tsx";
 import {
   Breadcrumb,
@@ -102,6 +103,9 @@ export default function InstancePageLayout(props: {
               </BreadcrumbItem>
             </BreadcrumbList>
           </Breadcrumb>
+        </div>
+        <div className="ml-auto px-4">
+          <GlobalQueryIndicator />
         </div>
       </header>
       <ScrollArea className="h-[calc(100dvh-3rem)] w-full max-w-dvw">
