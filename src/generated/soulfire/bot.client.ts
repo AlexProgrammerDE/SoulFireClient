@@ -13,6 +13,8 @@ import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type {
   BotCloseContainerRequest,
   BotCloseContainerResponse,
+  BotContainerButtonClickRequest,
+  BotContainerButtonClickResponse,
   BotInfoRequest,
   BotInfoResponse,
   BotInventoryClickRequest,
@@ -117,6 +119,15 @@ export interface IBotServiceClient {
     input: BotMouseClickRequest,
     options?: RpcOptions,
   ): UnaryCall<BotMouseClickRequest, BotMouseClickResponse>;
+  /**
+   * Container button actions (enchanting, stonecutter, etc.)
+   *
+   * @generated from protobuf rpc: ClickContainerButton
+   */
+  clickContainerButton(
+    input: BotContainerButtonClickRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotContainerButtonClickRequest, BotContainerButtonClickResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.BotService
@@ -302,5 +313,24 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
       opt,
       input,
     );
+  }
+  /**
+   * Container button actions (enchanting, stonecutter, etc.)
+   *
+   * @generated from protobuf rpc: ClickContainerButton
+   */
+  clickContainerButton(
+    input: BotContainerButtonClickRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    BotContainerButtonClickRequest,
+    BotContainerButtonClickResponse
+  > {
+    const method = this.methods[10],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      BotContainerButtonClickRequest,
+      BotContainerButtonClickResponse
+    >("unary", this._transport, method, opt, input);
   }
 }

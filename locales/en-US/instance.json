@@ -174,7 +174,17 @@
       "dropAll": "Drop All",
       "closeContainer": "Close",
       "clickHint": "Left click: pick up/place | Right click: half/one | Shift+click: quick move",
-      "offline": "Bot is offline. Inventory is only available when the bot is connected."
+      "offline": "Bot is offline. Inventory is only available when the bot is connected.",
+      "buttons": {
+        "stonecutterRecipes": "Recipes",
+        "enchantments": "Enchantments",
+        "patterns": "Patterns",
+        "trades": "Trades",
+        "beaconEffects": "Beacon Effects",
+        "crafterSlots": "Slot Controls",
+        "lecternControls": "Book Controls",
+        "actions": "Actions"
+      }
     },
     "visualPanel": {
       "title": "Bot View",

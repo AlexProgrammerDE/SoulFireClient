@@ -360,6 +360,37 @@ export interface SlotRegion {
   type: SlotRegionType; // Affects rendering behavior
 }
 /**
+ * A clickable button in a container (e.g., enchantment options, stonecutter recipes)
+ *
+ * @generated from protobuf message soulfire.v1.ContainerButton
+ */
+export interface ContainerButton {
+  /**
+   * @generated from protobuf field: int32 button_id = 1
+   */
+  buttonId: number; // Button ID to send when clicking
+  /**
+   * @generated from protobuf field: string label = 2
+   */
+  label: string; // Display label (e.g., "Silk Touch I")
+  /**
+   * @generated from protobuf field: optional string icon_item_id = 3
+   */
+  iconItemId?: string; // Item ID for icon (e.g., "minecraft:stone_bricks")
+  /**
+   * @generated from protobuf field: optional string description = 4
+   */
+  description?: string; // Tooltip/description text
+  /**
+   * @generated from protobuf field: bool disabled = 5
+   */
+  disabled: boolean; // Whether the button is currently disabled
+  /**
+   * @generated from protobuf field: bool selected = 6
+   */
+  selected: boolean; // Whether this button is currently selected
+}
+/**
  * Describes the layout of an open container
  *
  * @generated from protobuf message soulfire.v1.ContainerLayout
@@ -377,6 +408,14 @@ export interface ContainerLayout {
    * @generated from protobuf field: int32 total_slots = 3
    */
   totalSlots: number; // Total number of slots
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.ContainerButton buttons = 4
+   */
+  buttons: ContainerButton[]; // Available action buttons (stonecutter recipes, enchants, etc.)
+  /**
+   * @generated from protobuf field: string container_type = 5
+   */
+  containerType: string; // Container type identifier for client-specific rendering
 }
 /**
  * @generated from protobuf message soulfire.v1.BotInventoryStateResponse
@@ -470,6 +509,38 @@ export interface BotMouseClickRequest {
  * @generated from protobuf message soulfire.v1.BotMouseClickResponse
  */
 export interface BotMouseClickResponse {
+  /**
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+  /**
+   * @generated from protobuf field: optional string error = 2
+   */
+  error?: string;
+}
+/**
+ * Click a container button (enchantment selection, stonecutter recipe, etc.)
+ *
+ * @generated from protobuf message soulfire.v1.BotContainerButtonClickRequest
+ */
+export interface BotContainerButtonClickRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+  /**
+   * @generated from protobuf field: int32 button_id = 3
+   */
+  buttonId: number;
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotContainerButtonClickResponse
+ */
+export interface BotContainerButtonClickResponse {
   /**
    * @generated from protobuf field: bool success = 1
    */
@@ -2318,6 +2389,125 @@ class SlotRegion$Type extends MessageType<SlotRegion> {
  */
 export const SlotRegion = new SlotRegion$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class ContainerButton$Type extends MessageType<ContainerButton> {
+  constructor() {
+    super("soulfire.v1.ContainerButton", [
+      { no: 1, name: "button_id", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "icon_item_id",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 4,
+        name: "description",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 5, name: "disabled", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 6, name: "selected", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(value?: PartialMessage<ContainerButton>): ContainerButton {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.buttonId = 0;
+    message.label = "";
+    message.disabled = false;
+    message.selected = false;
+    if (value !== undefined)
+      reflectionMergePartial<ContainerButton>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ContainerButton,
+  ): ContainerButton {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int32 button_id */ 1:
+          message.buttonId = reader.int32();
+          break;
+        case /* string label */ 2:
+          message.label = reader.string();
+          break;
+        case /* optional string icon_item_id */ 3:
+          message.iconItemId = reader.string();
+          break;
+        case /* optional string description */ 4:
+          message.description = reader.string();
+          break;
+        case /* bool disabled */ 5:
+          message.disabled = reader.bool();
+          break;
+        case /* bool selected */ 6:
+          message.selected = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ContainerButton,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int32 button_id = 1; */
+    if (message.buttonId !== 0)
+      writer.tag(1, WireType.Varint).int32(message.buttonId);
+    /* string label = 2; */
+    if (message.label !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.label);
+    /* optional string icon_item_id = 3; */
+    if (message.iconItemId !== undefined)
+      writer.tag(3, WireType.LengthDelimited).string(message.iconItemId);
+    /* optional string description = 4; */
+    if (message.description !== undefined)
+      writer.tag(4, WireType.LengthDelimited).string(message.description);
+    /* bool disabled = 5; */
+    if (message.disabled !== false)
+      writer.tag(5, WireType.Varint).bool(message.disabled);
+    /* bool selected = 6; */
+    if (message.selected !== false)
+      writer.tag(6, WireType.Varint).bool(message.selected);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ContainerButton
+ */
+export const ContainerButton = new ContainerButton$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class ContainerLayout$Type extends MessageType<ContainerLayout> {
   constructor() {
     super("soulfire.v1.ContainerLayout", [
@@ -2330,6 +2520,19 @@ class ContainerLayout$Type extends MessageType<ContainerLayout> {
         T: () => SlotRegion,
       },
       { no: 3, name: "total_slots", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      {
+        no: 4,
+        name: "buttons",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ContainerButton,
+      },
+      {
+        no: 5,
+        name: "container_type",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
     ]);
   }
   create(value?: PartialMessage<ContainerLayout>): ContainerLayout {
@@ -2337,6 +2540,8 @@ class ContainerLayout$Type extends MessageType<ContainerLayout> {
     message.title = "";
     message.regions = [];
     message.totalSlots = 0;
+    message.buttons = [];
+    message.containerType = "";
     if (value !== undefined)
       reflectionMergePartial<ContainerLayout>(this, message, value);
     return message;
@@ -2362,6 +2567,18 @@ class ContainerLayout$Type extends MessageType<ContainerLayout> {
           break;
         case /* int32 total_slots */ 3:
           message.totalSlots = reader.int32();
+          break;
+        case /* repeated soulfire.v1.ContainerButton buttons */ 4:
+          message.buttons.push(
+            ContainerButton.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        case /* string container_type */ 5:
+          message.containerType = reader.string();
           break;
         default:
           let u = options.readUnknownField;
@@ -2400,6 +2617,16 @@ class ContainerLayout$Type extends MessageType<ContainerLayout> {
     /* int32 total_slots = 3; */
     if (message.totalSlots !== 0)
       writer.tag(3, WireType.Varint).int32(message.totalSlots);
+    /* repeated soulfire.v1.ContainerButton buttons = 4; */
+    for (let i = 0; i < message.buttons.length; i++)
+      ContainerButton.internalBinaryWrite(
+        message.buttons[i],
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* string container_type = 5; */
+    if (message.containerType !== "")
+      writer.tag(5, WireType.LengthDelimited).string(message.containerType);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -3029,6 +3256,192 @@ class BotMouseClickResponse$Type extends MessageType<BotMouseClickResponse> {
  * @generated MessageType for protobuf message soulfire.v1.BotMouseClickResponse
  */
 export const BotMouseClickResponse = new BotMouseClickResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotContainerButtonClickRequest$Type extends MessageType<BotContainerButtonClickRequest> {
+  constructor() {
+    super("soulfire.v1.BotContainerButtonClickRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "button_id", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotContainerButtonClickRequest>,
+  ): BotContainerButtonClickRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    message.buttonId = 0;
+    if (value !== undefined)
+      reflectionMergePartial<BotContainerButtonClickRequest>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotContainerButtonClickRequest,
+  ): BotContainerButtonClickRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        case /* int32 button_id */ 3:
+          message.buttonId = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotContainerButtonClickRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    /* int32 button_id = 3; */
+    if (message.buttonId !== 0)
+      writer.tag(3, WireType.Varint).int32(message.buttonId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotContainerButtonClickRequest
+ */
+export const BotContainerButtonClickRequest =
+  new BotContainerButtonClickRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotContainerButtonClickResponse$Type extends MessageType<BotContainerButtonClickResponse> {
+  constructor() {
+    super("soulfire.v1.BotContainerButtonClickResponse", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 2,
+        name: "error",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotContainerButtonClickResponse>,
+  ): BotContainerButtonClickResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotContainerButtonClickResponse>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotContainerButtonClickResponse,
+  ): BotContainerButtonClickResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        case /* optional string error */ 2:
+          message.error = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotContainerButtonClickResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    /* optional string error = 2; */
+    if (message.error !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.error);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotContainerButtonClickResponse
+ */
+export const BotContainerButtonClickResponse =
+  new BotContainerButtonClickResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.BotService
  */
@@ -3082,5 +3495,11 @@ export const BotService = new ServiceType("soulfire.v1.BotService", [
     options: {},
     I: BotMouseClickRequest,
     O: BotMouseClickResponse,
+  },
+  {
+    name: "ClickContainerButton",
+    options: {},
+    I: BotContainerButtonClickRequest,
+    O: BotContainerButtonClickResponse,
   },
 ]);

@@ -45,11 +45,13 @@ import {
 } from "@/components/ui/card.tsx";
 import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
 import type {
+  BotContainerButtonClickRequest,
   BotInfoResponse,
   BotInventoryClickRequest,
   BotInventoryStateResponse,
   BotLiveState,
   BotMouseClickRequest,
+  ContainerButton,
   InventorySlot,
   SlotRegion,
 } from "@/generated/soulfire/bot.ts";
@@ -924,6 +926,32 @@ function BotInventoryPanel({
     },
   });
 
+  // Mutation for clicking container buttons (stonecutter recipes, etc.)
+  const buttonClickMutation = useMutation({
+    mutationFn: async (request: BotContainerButtonClickRequest) => {
+      const transport = createTransport();
+      if (transport === null) {
+        throw new Error("Not connected");
+      }
+      const botService = new BotServiceClient(transport);
+      return botService.clickContainerButton(request);
+    },
+    onSuccess: () => {
+      void refetch();
+    },
+  });
+
+  const handleButtonClick = useCallback(
+    (buttonId: number) => {
+      buttonClickMutation.mutate({
+        instanceId,
+        botId,
+        buttonId,
+      });
+    },
+    [buttonClickMutation, instanceId, botId],
+  );
+
   const handleSlotClick = useCallback(
     (slotIndex: number, clickType: ClickType) => {
       clickMutation.mutate({
@@ -955,6 +983,7 @@ function BotInventoryPanel({
   const carriedItem = inventoryState?.carriedItem;
   const selectedHotbarSlot = inventoryState?.selectedHotbarSlot ?? 0;
   const isPlayerInventory = layout?.title === "Inventory";
+  const buttons = layout?.buttons ?? [];
 
   return (
     <Card>
@@ -962,11 +991,19 @@ function BotInventoryPanel({
         <CardTitle className="flex items-center gap-2">
           <PackageIcon className="size-5" />
           {layout?.title || t("bots.inventoryPanel.title")}
-          {slots.length > 0 && (
-            <Badge variant="outline" className="ml-auto">
-              {slots.length} {t("bots.inventoryPanel.items")}
-            </Badge>
-          )}
+          <div className="ml-auto flex items-center gap-2">
+            {carriedItem && (
+              <Badge variant="default" className="gap-1">
+                <HandIcon className="size-3" />
+                {formatItemId(carriedItem.itemId)} x{carriedItem.count}
+              </Badge>
+            )}
+            {slots.length > 0 && (
+              <Badge variant="outline">
+                {slots.length} {t("bots.inventoryPanel.items")}
+              </Badge>
+            )}
+          </div>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -987,19 +1024,6 @@ function BotInventoryPanel({
               </div>
             )}
 
-            {/* Carried item indicator */}
-            {carriedItem && (
-              <div className="border-primary/50 bg-primary/10 flex items-center gap-2 rounded-lg border p-2">
-                <HandIcon className="text-primary size-4" />
-                <span className="text-sm">
-                  {t("bots.inventoryPanel.carrying")}:{" "}
-                  <span className="font-medium">
-                    {formatItemId(carriedItem.itemId)} x{carriedItem.count}
-                  </span>
-                </span>
-              </div>
-            )}
-
             {/* Render all slot regions from layout */}
             {layout.regions.map((region) => (
               <SlotRegionGrid
@@ -1010,6 +1034,16 @@ function BotInventoryPanel({
                 onSlotClick={handleSlotClick}
               />
             ))}
+
+            {/* Container action buttons (stonecutter recipes, trades, etc.) */}
+            {buttons.length > 0 && (
+              <ContainerButtonsPanel
+                buttons={buttons}
+                containerType={layout.containerType}
+                onButtonClick={handleButtonClick}
+                isPending={buttonClickMutation.isPending}
+              />
+            )}
 
             {/* Drop zone */}
             <div className="border-destructive/30 hover:border-destructive/50 hover:bg-destructive/5 flex items-center justify-center gap-2 rounded-lg border-2 border-dashed p-3 transition-colors">
@@ -1050,6 +1084,68 @@ function BotInventoryPanel({
         )}
       </CardContent>
     </Card>
+  );
+}
+
+function ContainerButtonsPanel({
+  buttons,
+  containerType,
+  onButtonClick,
+  isPending,
+}: {
+  buttons: ContainerButton[];
+  containerType: string;
+  onButtonClick: (buttonId: number) => void;
+  isPending: boolean;
+}) {
+  const { t } = useTranslation("instance");
+
+  // Get title based on container type
+  const title = (() => {
+    switch (containerType) {
+      case "stonecutter":
+        return t("bots.inventoryPanel.buttons.stonecutterRecipes");
+      case "enchanting":
+        return t("bots.inventoryPanel.buttons.enchantments");
+      case "loom":
+        return t("bots.inventoryPanel.buttons.patterns");
+      case "merchant":
+        return t("bots.inventoryPanel.buttons.trades");
+      case "beacon":
+        return t("bots.inventoryPanel.buttons.beaconEffects");
+      case "crafter":
+        return t("bots.inventoryPanel.buttons.crafterSlots");
+      case "lectern":
+        return t("bots.inventoryPanel.buttons.lecternControls");
+      default:
+        return t("bots.inventoryPanel.buttons.actions");
+    }
+  })();
+
+  return (
+    <div className="space-y-2">
+      <div className="text-muted-foreground text-sm font-medium">{title}</div>
+      <div className="flex max-h-48 flex-wrap gap-1.5 overflow-y-auto rounded-lg border p-2">
+        {buttons.map((button) => (
+          <Button
+            key={button.buttonId}
+            variant={button.selected ? "default" : "outline"}
+            size="sm"
+            className="h-auto min-w-0 flex-shrink-0 px-2 py-1 text-xs"
+            onClick={() => onButtonClick(button.buttonId)}
+            disabled={isPending || button.disabled}
+            title={button.description || undefined}
+          >
+            {button.iconItemId && (
+              <span className="mr-1 font-mono text-[10px] opacity-60">
+                {formatItemId(button.iconItemId)}
+              </span>
+            )}
+            {button.label}
+          </Button>
+        ))}
+      </div>
+    </div>
   );
 }
 
