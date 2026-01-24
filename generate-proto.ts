@@ -39,6 +39,10 @@ function compileProtos(): void {
       : process.env;
 
   execSync(command, { stdio: "inherit", env });
+
+  const biomeCommand = "pnpm biome check --write src/generated";
+  console.log(`Running: ${biomeCommand}`);
+  execSync(biomeCommand, { stdio: "inherit", env });
 }
 
 compileProtos();
