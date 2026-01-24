@@ -215,6 +215,24 @@
       "rightClickDescription": "Use item or interact",
       "offline": "Bot is offline. Actions are only available when the bot is connected."
     },
+    "movementPanel": {
+      "title": "Movement Control",
+      "movement": "Movement (WASD)",
+      "forward": "Move Forward (W)",
+      "backward": "Move Backward (S)",
+      "left": "Strafe Left (A)",
+      "right": "Strafe Right (D)",
+      "jump": "Jump",
+      "sneak": "Sneak",
+      "sprint": "Sprint",
+      "stop": "Stop",
+      "rotation": "Look Direction",
+      "lookUp": "Look Up",
+      "lookDown": "Look Down",
+      "lookLeft": "Look Left",
+      "lookRight": "Look Right",
+      "offline": "Bot is offline. Movement controls are only available when the bot is connected."
+    },
     "dialogPanel": {
       "title": "Server Dialog",
       "noDialog": "No server dialog is currently displayed.",

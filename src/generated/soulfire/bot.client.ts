@@ -35,10 +35,16 @@ import type {
   BotOpenInventoryResponse,
   BotRenderPovRequest,
   BotRenderPovResponse,
+  BotResetMovementRequest,
+  BotResetMovementResponse,
   BotSetContainerTextRequest,
   BotSetContainerTextResponse,
   BotSetHotbarSlotRequest,
   BotSetHotbarSlotResponse,
+  BotSetMovementStateRequest,
+  BotSetMovementStateResponse,
+  BotSetRotationRequest,
+  BotSetRotationResponse,
   BotSubmitDialogRequest,
   BotSubmitDialogResponse,
   BotUpdateConfigEntryRequest,
@@ -158,6 +164,31 @@ export interface IBotServiceClient {
     input: BotSetHotbarSlotRequest,
     options?: RpcOptions,
   ): UnaryCall<BotSetHotbarSlotRequest, BotSetHotbarSlotResponse>;
+  /**
+   * Movement control (WASD, jump, sneak, sprint)
+   *
+   * @generated from protobuf rpc: SetMovementState
+   */
+  setMovementState(
+    input: BotSetMovementStateRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotSetMovementStateRequest, BotSetMovementStateResponse>;
+  /**
+   * @generated from protobuf rpc: ResetMovement
+   */
+  resetMovement(
+    input: BotResetMovementRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotResetMovementRequest, BotResetMovementResponse>;
+  /**
+   * Rotation control (look direction)
+   *
+   * @generated from protobuf rpc: SetRotation
+   */
+  setRotation(
+    input: BotSetRotationRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotSetRotationRequest, BotSetRotationResponse>;
   /**
    * Server dialog management (Minecraft 1.21.6+)
    *
@@ -429,6 +460,58 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
+   * Movement control (WASD, jump, sneak, sprint)
+   *
+   * @generated from protobuf rpc: SetMovementState
+   */
+  setMovementState(
+    input: BotSetMovementStateRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotSetMovementStateRequest, BotSetMovementStateResponse> {
+    const method = this.methods[13],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      BotSetMovementStateRequest,
+      BotSetMovementStateResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: ResetMovement
+   */
+  resetMovement(
+    input: BotResetMovementRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotResetMovementRequest, BotResetMovementResponse> {
+    const method = this.methods[14],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<BotResetMovementRequest, BotResetMovementResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Rotation control (look direction)
+   *
+   * @generated from protobuf rpc: SetRotation
+   */
+  setRotation(
+    input: BotSetRotationRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotSetRotationRequest, BotSetRotationResponse> {
+    const method = this.methods[15],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<BotSetRotationRequest, BotSetRotationResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
    * Server dialog management (Minecraft 1.21.6+)
    *
    * @generated from protobuf rpc: GetDialog
@@ -437,7 +520,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotGetDialogRequest,
     options?: RpcOptions,
   ): UnaryCall<BotGetDialogRequest, BotGetDialogResponse> {
-    const method = this.methods[13],
+    const method = this.methods[16],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotGetDialogRequest, BotGetDialogResponse>(
       "unary",
@@ -454,7 +537,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotSubmitDialogRequest,
     options?: RpcOptions,
   ): UnaryCall<BotSubmitDialogRequest, BotSubmitDialogResponse> {
-    const method = this.methods[14],
+    const method = this.methods[17],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotSubmitDialogRequest, BotSubmitDialogResponse>(
       "unary",
@@ -471,7 +554,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotClickDialogButtonRequest,
     options?: RpcOptions,
   ): UnaryCall<BotClickDialogButtonRequest, BotClickDialogButtonResponse> {
-    const method = this.methods[15],
+    const method = this.methods[18],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<
       BotClickDialogButtonRequest,
@@ -485,7 +568,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotCloseDialogRequest,
     options?: RpcOptions,
   ): UnaryCall<BotCloseDialogRequest, BotCloseDialogResponse> {
-    const method = this.methods[16],
+    const method = this.methods[19],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotCloseDialogRequest, BotCloseDialogResponse>(
       "unary",

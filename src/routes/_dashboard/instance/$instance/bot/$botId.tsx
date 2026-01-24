@@ -5,13 +5,19 @@ import {
 } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
+  ArrowDownIcon,
   ArrowLeftIcon,
+  ArrowRightIcon,
+  ArrowUpIcon,
   BookOpenIcon,
   CameraIcon,
+  ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
+  ChevronUpIcon,
   CompassIcon,
   EyeIcon,
+  GamepadIcon,
   HandIcon,
   HeartIcon,
   KeyRoundIcon,
@@ -27,6 +33,7 @@ import {
   RotateCcwKeyIcon,
   ShieldIcon,
   SparklesIcon,
+  SquareIcon,
   TerminalIcon,
   Trash2Icon,
   UtensilsIcon,
@@ -288,6 +295,14 @@ function BotDetailContent({
             isOnline={isOnline}
             instanceId={instanceId}
             botId={account.profileId}
+          />
+
+          {/* Movement control panel */}
+          <BotMovementPanel
+            isOnline={isOnline}
+            instanceId={instanceId}
+            botId={account.profileId}
+            liveState={botInfo.liveState}
           />
 
           {/* Dialog panel */}
@@ -1496,6 +1511,275 @@ function BotActionsPanel({
           <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
             <p className="text-muted-foreground">
               {t("bots.actionsPanel.offline")}
+            </p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function BotMovementPanel({
+  isOnline,
+  instanceId,
+  botId,
+  liveState,
+}: {
+  isOnline: boolean;
+  instanceId: string;
+  botId: string;
+  liveState?: BotLiveState;
+}) {
+  const { t } = useTranslation("instance");
+  const [movementState, setMovementState] = useState({
+    forward: false,
+    backward: false,
+    left: false,
+    right: false,
+    jump: false,
+    sneak: false,
+    sprint: false,
+  });
+
+  // Mutation for setting movement state
+  const movementMutation = useMutation({
+    mutationFn: async (state: Partial<typeof movementState>) => {
+      const transport = createTransport();
+      if (transport === null) {
+        throw new Error("Not connected");
+      }
+      const botService = new BotServiceClient(transport);
+      return botService.setMovementState({
+        instanceId,
+        botId,
+        ...state,
+      });
+    },
+  });
+
+  // Mutation for resetting movement
+  const resetMutation = useMutation({
+    mutationFn: async () => {
+      const transport = createTransport();
+      if (transport === null) {
+        throw new Error("Not connected");
+      }
+      const botService = new BotServiceClient(transport);
+      return botService.resetMovement({ instanceId, botId });
+    },
+    onSuccess: () => {
+      setMovementState({
+        forward: false,
+        backward: false,
+        left: false,
+        right: false,
+        jump: false,
+        sneak: false,
+        sprint: false,
+      });
+    },
+  });
+
+  // Mutation for setting rotation
+  const rotationMutation = useMutation({
+    mutationFn: async (rotation: { yaw: number; pitch: number }) => {
+      const transport = createTransport();
+      if (transport === null) {
+        throw new Error("Not connected");
+      }
+      const botService = new BotServiceClient(transport);
+      return botService.setRotation({
+        instanceId,
+        botId,
+        ...rotation,
+      });
+    },
+  });
+
+  const toggleMovement = useCallback(
+    (key: keyof typeof movementState) => {
+      const newValue = !movementState[key];
+      setMovementState((prev) => ({ ...prev, [key]: newValue }));
+      movementMutation.mutate({ [key]: newValue });
+    },
+    [movementState, movementMutation],
+  );
+
+  const handleRotationChange = useCallback(
+    (deltaYaw: number, deltaPitch: number) => {
+      const currentYaw = liveState?.yRot ?? 0;
+      const currentPitch = liveState?.xRot ?? 0;
+      rotationMutation.mutate({
+        yaw: currentYaw + deltaYaw,
+        pitch: Math.max(-90, Math.min(90, currentPitch + deltaPitch)),
+      });
+    },
+    [liveState, rotationMutation],
+  );
+
+  const isPending =
+    movementMutation.isPending ||
+    resetMutation.isPending ||
+    rotationMutation.isPending;
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <GamepadIcon className="size-5" />
+          {t("bots.movementPanel.title")}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {isOnline ? (
+          <div className="space-y-4">
+            {/* WASD Controls */}
+            <div>
+              <p className="text-muted-foreground mb-2 text-xs font-medium">
+                {t("bots.movementPanel.movement")}
+              </p>
+              <div className="flex flex-col items-center gap-1">
+                {/* Forward */}
+                <Button
+                  variant={movementState.forward ? "default" : "outline"}
+                  size="sm"
+                  className="size-10"
+                  onClick={() => toggleMovement("forward")}
+                  disabled={isPending}
+                  title={t("bots.movementPanel.forward")}
+                >
+                  <ArrowUpIcon className="size-4" />
+                </Button>
+                {/* Left, Backward, Right */}
+                <div className="flex gap-1">
+                  <Button
+                    variant={movementState.left ? "default" : "outline"}
+                    size="sm"
+                    className="size-10"
+                    onClick={() => toggleMovement("left")}
+                    disabled={isPending}
+                    title={t("bots.movementPanel.left")}
+                  >
+                    <ArrowLeftIcon className="size-4" />
+                  </Button>
+                  <Button
+                    variant={movementState.backward ? "default" : "outline"}
+                    size="sm"
+                    className="size-10"
+                    onClick={() => toggleMovement("backward")}
+                    disabled={isPending}
+                    title={t("bots.movementPanel.backward")}
+                  >
+                    <ArrowDownIcon className="size-4" />
+                  </Button>
+                  <Button
+                    variant={movementState.right ? "default" : "outline"}
+                    size="sm"
+                    className="size-10"
+                    onClick={() => toggleMovement("right")}
+                    disabled={isPending}
+                    title={t("bots.movementPanel.right")}
+                  >
+                    <ArrowRightIcon className="size-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Action buttons */}
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant={movementState.jump ? "default" : "outline"}
+                size="sm"
+                onClick={() => toggleMovement("jump")}
+                disabled={isPending}
+              >
+                {t("bots.movementPanel.jump")}
+              </Button>
+              <Button
+                variant={movementState.sneak ? "default" : "outline"}
+                size="sm"
+                onClick={() => toggleMovement("sneak")}
+                disabled={isPending}
+              >
+                {t("bots.movementPanel.sneak")}
+              </Button>
+              <Button
+                variant={movementState.sprint ? "default" : "outline"}
+                size="sm"
+                onClick={() => toggleMovement("sprint")}
+                disabled={isPending}
+              >
+                {t("bots.movementPanel.sprint")}
+              </Button>
+              <Button
+                variant="destructive"
+                size="sm"
+                onClick={() => resetMutation.mutate()}
+                disabled={isPending}
+              >
+                <SquareIcon className="mr-1 size-3" />
+                {t("bots.movementPanel.stop")}
+              </Button>
+            </div>
+
+            {/* Rotation controls */}
+            <div>
+              <p className="text-muted-foreground mb-2 text-xs font-medium">
+                {t("bots.movementPanel.rotation")}
+              </p>
+              <div className="flex flex-col items-center gap-1">
+                {/* Look up */}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="size-10"
+                  onClick={() => handleRotationChange(0, -15)}
+                  disabled={isPending}
+                  title={t("bots.movementPanel.lookUp")}
+                >
+                  <ChevronUpIcon className="size-4" />
+                </Button>
+                {/* Look left, down, right */}
+                <div className="flex gap-1">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="size-10"
+                    onClick={() => handleRotationChange(-15, 0)}
+                    disabled={isPending}
+                    title={t("bots.movementPanel.lookLeft")}
+                  >
+                    <ChevronLeftIcon className="size-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="size-10"
+                    onClick={() => handleRotationChange(0, 15)}
+                    disabled={isPending}
+                    title={t("bots.movementPanel.lookDown")}
+                  >
+                    <ChevronDownIcon className="size-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="size-10"
+                    onClick={() => handleRotationChange(15, 0)}
+                    disabled={isPending}
+                    title={t("bots.movementPanel.lookRight")}
+                  >
+                    <ChevronRightIcon className="size-4" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+            <p className="text-muted-foreground">
+              {t("bots.movementPanel.offline")}
             </p>
           </div>
         )}

@@ -672,6 +672,136 @@ export interface BotSetHotbarSlotResponse {
    */
   error?: string;
 }
+// ============================================================================
+// Movement Control Messages
+// Control bot movement (WASD, jump, sneak, sprint)
+// ============================================================================
+
+/**
+ * Movement state - each field is optional to allow partial updates
+ *
+ * @generated from protobuf message soulfire.v1.BotSetMovementStateRequest
+ */
+export interface BotSetMovementStateRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+  /**
+   * @generated from protobuf field: optional bool forward = 3
+   */
+  forward?: boolean; // W key - move forward
+  /**
+   * @generated from protobuf field: optional bool backward = 4
+   */
+  backward?: boolean; // S key - move backward
+  /**
+   * @generated from protobuf field: optional bool left = 5
+   */
+  left?: boolean; // A key - strafe left
+  /**
+   * @generated from protobuf field: optional bool right = 6
+   */
+  right?: boolean; // D key - strafe right
+  /**
+   * @generated from protobuf field: optional bool jump = 7
+   */
+  jump?: boolean; // Space - jump
+  /**
+   * @generated from protobuf field: optional bool sneak = 8
+   */
+  sneak?: boolean; // Shift - sneak
+  /**
+   * @generated from protobuf field: optional bool sprint = 9
+   */
+  sprint?: boolean; // Ctrl - sprint
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotSetMovementStateResponse
+ */
+export interface BotSetMovementStateResponse {
+  /**
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+  /**
+   * @generated from protobuf field: optional string error = 2
+   */
+  error?: string;
+}
+/**
+ * Reset all movement to stopped state
+ *
+ * @generated from protobuf message soulfire.v1.BotResetMovementRequest
+ */
+export interface BotResetMovementRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotResetMovementResponse
+ */
+export interface BotResetMovementResponse {
+  /**
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+  /**
+   * @generated from protobuf field: optional string error = 2
+   */
+  error?: string;
+}
+// ============================================================================
+// Rotation Control Messages
+// Control bot view direction (yaw/pitch)
+// ============================================================================
+
+/**
+ * Set absolute rotation
+ *
+ * @generated from protobuf message soulfire.v1.BotSetRotationRequest
+ */
+export interface BotSetRotationRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+  /**
+   * @generated from protobuf field: float yaw = 3
+   */
+  yaw: number; // Horizontal rotation (-180 to 180, 0 = south)
+  /**
+   * @generated from protobuf field: float pitch = 4
+   */
+  pitch: number; // Vertical rotation (-90 to 90, negative = up)
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotSetRotationResponse
+ */
+export interface BotSetRotationResponse {
+  /**
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+  /**
+   * @generated from protobuf field: optional string error = 2
+   */
+  error?: string;
+}
 /**
  * Body element types
  *
@@ -4870,6 +5000,614 @@ class BotSetHotbarSlotResponse$Type extends MessageType<BotSetHotbarSlotResponse
  */
 export const BotSetHotbarSlotResponse = new BotSetHotbarSlotResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class BotSetMovementStateRequest$Type extends MessageType<BotSetMovementStateRequest> {
+  constructor() {
+    super("soulfire.v1.BotSetMovementStateRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "forward",
+        kind: "scalar",
+        opt: true,
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      {
+        no: 4,
+        name: "backward",
+        kind: "scalar",
+        opt: true,
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      {
+        no: 5,
+        name: "left",
+        kind: "scalar",
+        opt: true,
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      {
+        no: 6,
+        name: "right",
+        kind: "scalar",
+        opt: true,
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      {
+        no: 7,
+        name: "jump",
+        kind: "scalar",
+        opt: true,
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      {
+        no: 8,
+        name: "sneak",
+        kind: "scalar",
+        opt: true,
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      {
+        no: 9,
+        name: "sprint",
+        kind: "scalar",
+        opt: true,
+        T: 8 /*ScalarType.BOOL*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotSetMovementStateRequest>,
+  ): BotSetMovementStateRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    if (value !== undefined)
+      reflectionMergePartial<BotSetMovementStateRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotSetMovementStateRequest,
+  ): BotSetMovementStateRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        case /* optional bool forward */ 3:
+          message.forward = reader.bool();
+          break;
+        case /* optional bool backward */ 4:
+          message.backward = reader.bool();
+          break;
+        case /* optional bool left */ 5:
+          message.left = reader.bool();
+          break;
+        case /* optional bool right */ 6:
+          message.right = reader.bool();
+          break;
+        case /* optional bool jump */ 7:
+          message.jump = reader.bool();
+          break;
+        case /* optional bool sneak */ 8:
+          message.sneak = reader.bool();
+          break;
+        case /* optional bool sprint */ 9:
+          message.sprint = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotSetMovementStateRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    /* optional bool forward = 3; */
+    if (message.forward !== undefined)
+      writer.tag(3, WireType.Varint).bool(message.forward);
+    /* optional bool backward = 4; */
+    if (message.backward !== undefined)
+      writer.tag(4, WireType.Varint).bool(message.backward);
+    /* optional bool left = 5; */
+    if (message.left !== undefined)
+      writer.tag(5, WireType.Varint).bool(message.left);
+    /* optional bool right = 6; */
+    if (message.right !== undefined)
+      writer.tag(6, WireType.Varint).bool(message.right);
+    /* optional bool jump = 7; */
+    if (message.jump !== undefined)
+      writer.tag(7, WireType.Varint).bool(message.jump);
+    /* optional bool sneak = 8; */
+    if (message.sneak !== undefined)
+      writer.tag(8, WireType.Varint).bool(message.sneak);
+    /* optional bool sprint = 9; */
+    if (message.sprint !== undefined)
+      writer.tag(9, WireType.Varint).bool(message.sprint);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotSetMovementStateRequest
+ */
+export const BotSetMovementStateRequest = new BotSetMovementStateRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotSetMovementStateResponse$Type extends MessageType<BotSetMovementStateResponse> {
+  constructor() {
+    super("soulfire.v1.BotSetMovementStateResponse", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 2,
+        name: "error",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotSetMovementStateResponse>,
+  ): BotSetMovementStateResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotSetMovementStateResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotSetMovementStateResponse,
+  ): BotSetMovementStateResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        case /* optional string error */ 2:
+          message.error = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotSetMovementStateResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    /* optional string error = 2; */
+    if (message.error !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.error);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotSetMovementStateResponse
+ */
+export const BotSetMovementStateResponse =
+  new BotSetMovementStateResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotResetMovementRequest$Type extends MessageType<BotResetMovementRequest> {
+  constructor() {
+    super("soulfire.v1.BotResetMovementRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotResetMovementRequest>,
+  ): BotResetMovementRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    if (value !== undefined)
+      reflectionMergePartial<BotResetMovementRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotResetMovementRequest,
+  ): BotResetMovementRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotResetMovementRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotResetMovementRequest
+ */
+export const BotResetMovementRequest = new BotResetMovementRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotResetMovementResponse$Type extends MessageType<BotResetMovementResponse> {
+  constructor() {
+    super("soulfire.v1.BotResetMovementResponse", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 2,
+        name: "error",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotResetMovementResponse>,
+  ): BotResetMovementResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotResetMovementResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotResetMovementResponse,
+  ): BotResetMovementResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        case /* optional string error */ 2:
+          message.error = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotResetMovementResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    /* optional string error = 2; */
+    if (message.error !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.error);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotResetMovementResponse
+ */
+export const BotResetMovementResponse = new BotResetMovementResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotSetRotationRequest$Type extends MessageType<BotSetRotationRequest> {
+  constructor() {
+    super("soulfire.v1.BotSetRotationRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "yaw", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+      { no: 4, name: "pitch", kind: "scalar", T: 2 /*ScalarType.FLOAT*/ },
+    ]);
+  }
+  create(value?: PartialMessage<BotSetRotationRequest>): BotSetRotationRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    message.yaw = 0;
+    message.pitch = 0;
+    if (value !== undefined)
+      reflectionMergePartial<BotSetRotationRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotSetRotationRequest,
+  ): BotSetRotationRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        case /* float yaw */ 3:
+          message.yaw = reader.float();
+          break;
+        case /* float pitch */ 4:
+          message.pitch = reader.float();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotSetRotationRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    /* float yaw = 3; */
+    if (message.yaw !== 0) writer.tag(3, WireType.Bit32).float(message.yaw);
+    /* float pitch = 4; */
+    if (message.pitch !== 0) writer.tag(4, WireType.Bit32).float(message.pitch);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotSetRotationRequest
+ */
+export const BotSetRotationRequest = new BotSetRotationRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotSetRotationResponse$Type extends MessageType<BotSetRotationResponse> {
+  constructor() {
+    super("soulfire.v1.BotSetRotationResponse", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 2,
+        name: "error",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotSetRotationResponse>,
+  ): BotSetRotationResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotSetRotationResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotSetRotationResponse,
+  ): BotSetRotationResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        case /* optional string error */ 2:
+          message.error = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotSetRotationResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    /* optional string error = 2; */
+    if (message.error !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.error);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotSetRotationResponse
+ */
+export const BotSetRotationResponse = new BotSetRotationResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class DialogBodyElement$Type extends MessageType<DialogBodyElement> {
   constructor() {
     super("soulfire.v1.DialogBodyElement", [
@@ -7977,6 +8715,24 @@ export const BotService = new ServiceType("soulfire.v1.BotService", [
     options: {},
     I: BotSetHotbarSlotRequest,
     O: BotSetHotbarSlotResponse,
+  },
+  {
+    name: "SetMovementState",
+    options: {},
+    I: BotSetMovementStateRequest,
+    O: BotSetMovementStateResponse,
+  },
+  {
+    name: "ResetMovement",
+    options: {},
+    I: BotResetMovementRequest,
+    O: BotResetMovementResponse,
+  },
+  {
+    name: "SetRotation",
+    options: {},
+    I: BotSetRotationRequest,
+    O: BotSetRotationResponse,
   },
   {
     name: "GetDialog",
