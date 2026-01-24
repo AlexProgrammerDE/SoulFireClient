@@ -97,28 +97,28 @@
     "pause": "Fasilə",
     "stop": "Dayandır",
     "startToast": {
-      "loading": "Sessiya başlayır...",
-      "success": "Sessiya uğurla başladı",
-      "error": "Sessiyanı başlatmaq alınmadı"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Sessiya davam etdirilir...",
-      "success": "Sessiya uğurla davam etdirildi",
-      "error": "Sessiyanın davamını bərpa etmək mümkün olmadı"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Sessiya dayandırılır...",
-      "success": "Sessiya uğurla dayandırıldı",
-      "error": "Sessiyanı dayandırmaq mümkün olmadı"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Sessiya dayandırılır...",
-      "success": "Sessiya uğurla dayandırıldı",
-      "error": "Sessiyanı dayandırmaq alınmadı"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Heç bir hesab qurulmayıb",
-      "noAccountsDescription": "Sessiya başlatmazdan əvvəl hesabları əlavə etməlisiniz. Sizin {{required}} bot tələbiniz var.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "Kifayət qədər hesab yoxdur",
       "notEnoughDescription": "{{required}} bot istədiniz, amma yalnız {{available}} hesab əlavə olunub.",
       "hint": "Offline hesablar yarada və ya Hesab Ayarları səhifəsindən hesablar əlavə edə bilərsiniz.",
@@ -218,7 +218,7 @@
     "controlsGroup": "İdarəetmə",
     "overview": "İcmal",
     "terminal": "Terminal",
-    "bots": "",
+    "bots": "Botlar",
     "audit-log": "Audit Log",
     "settingsGroup": "Ayarlar",
     "pluginsGroup": "Pluginlər",
@@ -279,15 +279,15 @@
     "settings": "Ayarlar",
     "controls": "İdarəetmə",
     "plugins": "Pluginlər",
-    "bots": ""
+    "bots": "Botlar"
   },
   "noInstancesFound": "Instansiya tapılmadı",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Jurnalları",
     "audit-log": "Audit Log",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Botlar",
+    "botDetail": "Bot Təfərrüatları",
     "instances": "Instansiyalar",
     "access": "Giriş",
     "settings": "Ayarlar",
@@ -356,10 +356,10 @@
     "action": "Əməliyyat",
     "timestamp": "Zaman nöqtəsi",
     "executedCommand": "İcra edilmiş əmr: {{data}}",
-    "startedSession": "Sessiya başladıldı",
-    "resumedSession": "Sessiya davam etdirildi",
-    "pausedSession": "Sessiya dayandırıldı",
-    "stoppedSession": "Sessiya dayandırılıb"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Tarix seçin",
   "scripts": {

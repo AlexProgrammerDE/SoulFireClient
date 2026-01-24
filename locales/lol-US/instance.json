@@ -106,44 +106,82 @@
       "lastKnownName": "Usernamez"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "Configur teh {{name}}",
+      "description": "Configur pwoper bot settns fur dis account",
+      "openButton": "Configur accownt",
+      "pageTitle": "{{name}} - {{page}} Settnz",
+      "noSettings": "No settnz availabru fur dis page"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "Serch bots...",
+    "onlineCount": "{{online}} kittehs onlien / {{total}} totl kittehs",
+    "noBots": "No botz configgerd. Add acountz frum da Account Settin Page.",
+    "noBotsFound": "No botz match ur search, kthx.",
+    "online": "ONLIEN",
     "offline": "Offlyne",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "Bak 2 Botz",
+    "comingSoon": "CUHMIN SOONZ",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "Pozishun & Rotashun",
+      "position": "Pozishun",
+      "rotation": "Rotashun",
+      "offline": "Bot iz offlien. Pozishun data only availbul wen bot iz connekkted."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "Chat Meowsajes",
+      "description": "Chat meowsajes frum dis bot will appear heer in teh fuchur updat."
     },
     "commandPanel": {
+      "title": "Bot Commandses",
+      "placeholder": "Send command 2 dis bot...",
+      "description": "Bot-skoped commandz will b availbul in a fuchur updat."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "Inventoryz",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "Cloes",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

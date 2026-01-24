@@ -106,44 +106,82 @@
       "lastKnownName": "Nama Pengguna"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "Konfigurasi {{name}}",
+      "description": "Atur pengaturan per-bot untuk akun ini",
+      "openButton": "Konfigurasi akun",
+      "pageTitle": "{{name}} - Pengaturan {{page}}",
+      "noSettings": "Tidak ada pengaturan yang tersedia untuk halaman ini"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "Cari bot...",
+    "onlineCount": "{{online}} online / {{total}} total",
+    "noBots": "Belum ada bot yang dikonfigurasi. Tambahkan akun dari halaman Pengaturan Akun.",
+    "noBotsFound": "Tidak ada bot yang cocok dengan pencarian Anda.",
+    "online": "Online",
     "offline": "Luring",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "Kembali ke Bot",
+    "comingSoon": "Segera Hadir",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "Posisi & Rotasi",
+      "position": "Posisi",
+      "rotation": "Rotasi",
+      "offline": "Bot sedang offline. Data posisi hanya tersedia ketika bot terhubung."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "Pesan Chat",
+      "description": "Pesan chat dari bot ini akan muncul di sini pada pembaruan mendatang."
     },
     "commandPanel": {
+      "title": "Perintah Bot",
+      "placeholder": "Kirim perintah ke bot ini...",
+      "description": "Perintah khusus bot akan tersedia pada pembaruan mendatang."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "Inventaris",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "Tutup",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

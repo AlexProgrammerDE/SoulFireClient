@@ -97,28 +97,28 @@
     "pause": "Pozastaviť",
     "stop": "Zastaviť",
     "startToast": {
-      "loading": "Spúšťanie relácie...",
-      "success": "Relácia bola úspešne spustená",
-      "error": "Nepodarilo sa spustiť reláciu"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Pokračuje sa v relácii...",
-      "success": "Relácia bola úspešne obnovená",
-      "error": "Nepodarilo sa pokračovať v relácii"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Pozastavovanie relácie...",
-      "success": "Relácia bola úspešne pozastavená",
-      "error": "Nepodarilo sa pozastaviť reláciu"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Zastavovanie relácie...",
-      "success": "Relácia bola úspešne zastavená",
-      "error": "Nepodarilo sa zastaviť reláciu"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Žiadne účty nie sú nastavené",
-      "noAccountsDescription": "Pred spustením relácie musíte importovať účty. Požadovali ste {{required}} botov.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "Nedostatok účtov",
       "notEnoughDescription": "Požadovali ste {{required}} botov, ale máte importovaných len {{available}} účtov.",
       "hint": "Môžete vygenerovať offline účty alebo importovať účty na stránke nastavení účtov.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Ovládanie",
     "overview": "Prehľad",
     "terminal": "Terminál",
-    "bots": "",
+    "bots": "Boti",
     "audit-log": "Audit log",
     "settingsGroup": "Nastavenia",
     "pluginsGroup": "Doplnky",
@@ -279,15 +279,15 @@
     "settings": "Nastavenia",
     "controls": "Ovládanie",
     "plugins": "Doplnky",
-    "bots": ""
+    "bots": "Boti"
   },
   "noInstancesFound": "Neboli nájdené žiadne inštancie",
   "pageName": {
     "terminal": "Terminál",
     "logs": "Záznamy",
     "audit-log": "Audit log",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Boti",
+    "botDetail": "Podrobnosti bota",
     "instances": "Inštancie",
     "access": "Prístup",
     "settings": "Nastavenia",
@@ -356,10 +356,10 @@
     "action": "Akcia",
     "timestamp": "Časová značka",
     "executedCommand": "Vykonaný príkaz: {{data}}",
-    "startedSession": "Spustená relácia",
-    "resumedSession": "Obnovená relácia",
-    "pausedSession": "Relácia pozastavená",
-    "stoppedSession": "Relácia zastavená"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Vyberte dátum",
   "scripts": {

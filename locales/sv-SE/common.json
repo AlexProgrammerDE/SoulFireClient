@@ -97,28 +97,28 @@
     "pause": "Pausa",
     "stop": "Stoppa",
     "startToast": {
-      "loading": "Startar session...",
-      "success": "Sessionen startad",
-      "error": "Misslyckades med att starta session"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Återupptar session...",
-      "success": "Session återupptagen",
-      "error": "Misslyckades med att återuppta sessionen"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Pausar session...",
-      "success": "Session pausad",
-      "error": "Misslyckades med att pausa sessionen"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Stoppar session...",
-      "success": "Session stoppad",
-      "error": "Misslyckades med att stoppa sessionen"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Inga konton konfigurerade",
-      "noAccountsDescription": "Du måste importera konton innan du startar en session. Du begärde {{required}} bottar.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "För få konton",
       "notEnoughDescription": "Du begärde {{required}} bottar men har bara {{available}} konton importerade.",
       "hint": "Du kan generera offlinekonton eller importera konton från sidan för kontoinställningar.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Kontroller",
     "overview": "Översikt",
     "terminal": "Terminal",
-    "bots": "",
+    "bots": "Bottar",
     "audit-log": "Granskningslogg",
     "settingsGroup": "Inställningar",
     "pluginsGroup": "Plugins",
@@ -279,15 +279,15 @@
     "settings": "Inställningar",
     "controls": "Kontroller",
     "plugins": "Plugins",
-    "bots": ""
+    "bots": "Bottar"
   },
   "noInstancesFound": "Inga instanser hittades",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Loggar",
     "audit-log": "Granskningslogg",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Bottar",
+    "botDetail": "Botdetaljer",
     "instances": "Instanser",
     "access": "Åtkomst",
     "settings": "Inställningar",
@@ -356,10 +356,10 @@
     "action": "Åtgärd",
     "timestamp": "Tidsstämpel",
     "executedCommand": "Körde kommando: {{data}}",
-    "startedSession": "Startade en session",
-    "resumedSession": "Återupptog en session",
-    "pausedSession": "Pausade en session",
-    "stoppedSession": "Stoppade en session"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Välj ett datum",
   "scripts": {

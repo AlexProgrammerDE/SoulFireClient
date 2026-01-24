@@ -97,28 +97,28 @@
     "pause": "일시 정지",
     "stop": "중지",
     "startToast": {
-      "loading": "세션 시작 중...",
-      "success": "세션이 성공적으로 시작되었습니다",
-      "error": "세션 시작에 실패했습니다"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "세션 재개 중...",
-      "success": "세션이 성공적으로 재개되었습니다",
-      "error": "세션 재개에 실패했습니다"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "세션 일시 정지 중...",
-      "success": "세션이 성공적으로 일시 정지되었습니다",
-      "error": "세션 일시 정지에 실패했습니다"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "세션 중지 중...",
-      "success": "세션이 성공적으로 중지되었습니다",
-      "error": "세션 중지에 실패했습니다"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "계정이 구성되지 않음",
-      "noAccountsDescription": "세션을 시작하려면 먼저 계정을 가져와야 합니다. 요청한 봇 수: {{required}}",
+      "noAccountsDescription": "",
       "notEnoughTitle": "계정이 부족함",
       "notEnoughDescription": "{{required}}개의 봇이 요청되었으나, 가져온 계정은 {{available}}개입니다.",
       "hint": "오프라인 계정을 생성하거나 계정 설정 페이지에서 계정을 가져올 수 있습니다.",
@@ -218,7 +218,7 @@
     "controlsGroup": "컨트롤",
     "overview": "개요",
     "terminal": "터미널",
-    "bots": "",
+    "bots": "봇들",
     "audit-log": "감사 로그",
     "settingsGroup": "설정",
     "pluginsGroup": "플러그인",
@@ -279,15 +279,15 @@
     "settings": "설정",
     "controls": "컨트롤",
     "plugins": "플러그인",
-    "bots": ""
+    "bots": "봇들"
   },
   "noInstancesFound": "인스턴스를 찾을 수 없습니다",
   "pageName": {
     "terminal": "터미널",
     "logs": "로그",
     "audit-log": "감사 로그",
-    "bots": "",
-    "botDetail": "",
+    "bots": "봇들",
+    "botDetail": "봇 상세정보",
     "instances": "인스턴스",
     "access": "접근",
     "settings": "설정",
@@ -356,10 +356,10 @@
     "action": "동작",
     "timestamp": "타임스탬프",
     "executedCommand": "명령 실행됨: {{data}}",
-    "startedSession": "세션 시작함",
-    "resumedSession": "세션 재개함",
-    "pausedSession": "세션 일시정지함",
-    "stoppedSession": "세션 중지함"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "날짜 선택",
   "scripts": {

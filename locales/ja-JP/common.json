@@ -97,28 +97,28 @@
     "pause": "一時停止",
     "stop": "停止",
     "startToast": {
-      "loading": "セッションを開始しています...",
-      "success": "セッションが正常に開始されました",
-      "error": "セッションの開始に失敗しました"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "セッションを再開しています...",
-      "success": "セッションが正常に再開されました",
-      "error": "セッションの再開に失敗しました"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "セッションを一時停止しています...",
-      "success": "セッションが正常に一時停止されました",
-      "error": "セッションの一時停止に失敗しました"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "セッションを停止しています...",
-      "success": "セッションが正常に停止されました",
-      "error": "セッションの停止に失敗しました"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "アカウントが設定されていません",
-      "noAccountsDescription": "セッションを開始するにはアカウントをインポートする必要があります。リクエストしたボット数: {{required}}体。",
+      "noAccountsDescription": "",
       "notEnoughTitle": "アカウントが不足しています",
       "notEnoughDescription": "{{required}}体のボットをリクエストしましたが、インポート済みアカウントは{{available}}件のみです。",
       "hint": "オフラインアカウントを生成するか、アカウント設定ページからアカウントをインポートできます。",
@@ -218,7 +218,7 @@
     "controlsGroup": "コントロール",
     "overview": "概要",
     "terminal": "ターミナル",
-    "bots": "",
+    "bots": "ボットたち/ボット一覧（context: サイドバー、複数のボット管理）",
     "audit-log": "監査ログ",
     "settingsGroup": "設定",
     "pluginsGroup": "プラグイン",
@@ -279,15 +279,15 @@
     "settings": "設定",
     "controls": "コントロール",
     "plugins": "プラグイン",
-    "bots": ""
+    "bots": "ボットたち/ボット一覧（context: サイドバー、複数のボット管理）"
   },
   "noInstancesFound": "インスタンスが見つかりません",
   "pageName": {
     "terminal": "ターミナル",
     "logs": "ログ",
     "audit-log": "監査ログ",
-    "bots": "",
-    "botDetail": "",
+    "bots": "ボットたち/ボット一覧（context: サイドバー、複数のボット管理）",
+    "botDetail": "ボットの詳細",
     "instances": "インスタンス",
     "access": "アクセス",
     "settings": "設定",
@@ -356,10 +356,10 @@
     "action": "アクション",
     "timestamp": "タイムスタンプ",
     "executedCommand": "コマンドを実行: {{data}}",
-    "startedSession": "セッションを開始しました",
-    "resumedSession": "セッションを再開しました",
-    "pausedSession": "セッションを一時停止しました",
-    "stoppedSession": "セッションを停止しました"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "日付を選択",
   "scripts": {

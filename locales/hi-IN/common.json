@@ -97,28 +97,28 @@
     "pause": "रोकें",
     "stop": "बंद करें",
     "startToast": {
-      "loading": "सत्र शुरू हो रहा है...",
-      "success": "सत्र सफलतापूर्वक शुरू हुआ",
-      "error": "सत्र शुरू करने में विफल"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "सत्र फिर से शुरू हो रहा है...",
-      "success": "सत्र सफलतापूर्वक फिर से शुरू हुआ",
-      "error": "सत्र फिर से शुरू करने में विफल"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "सत्र को रोका जा रहा है...",
-      "success": "सत्र सफलतापूर्वक रोका गया",
-      "error": "सत्र रोकने में विफल"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "सत्र बंद किया जा रहा है...",
-      "success": "सत्र सफलतापूर्वक बंद हुआ",
-      "error": "सत्र बंद करने में विफल"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "कोई अकाउंट कॉन्फ़िगर नहीं किया गया",
-      "noAccountsDescription": "आपको सत्र प्रारंभ करने से पहले अकाउंट्स इंपोर्ट करने होंगे। आपने {{required}} बॉट्स का अनुरोध किया।",
+      "noAccountsDescription": "",
       "notEnoughTitle": "पर्याप्त अकाउंट्स नहीं",
       "notEnoughDescription": "आपने {{required}} बॉट्स का अनुरोध किया लेकिन केवल {{available}} अकाउंट्स इंपोर्ट किए गए हैं।",
       "hint": "आप ऑफ़लाइन अकाउंट्स जेनरेट कर सकते हैं या अकाउंट सेटिंग्स पेज से अकाउंट्स इंपोर्ट कर सकते हैं।",
@@ -218,7 +218,7 @@
     "controlsGroup": "नियंत्रण",
     "overview": "अवलोकन",
     "terminal": "टर्मिनल",
-    "bots": "",
+    "bots": "बॉट्स",
     "audit-log": "ऑडिट लॉग",
     "settingsGroup": "सेटिंग्स",
     "pluginsGroup": "प्लगइन्स",
@@ -279,15 +279,15 @@
     "settings": "सेटिंग्स",
     "controls": "नियंत्रण",
     "plugins": "प्लगइन्स",
-    "bots": ""
+    "bots": "बॉट्स"
   },
   "noInstancesFound": "कोई इंस्टेंस नहीं मिला",
   "pageName": {
     "terminal": "टर्मिनल",
     "logs": "लॉग्स",
     "audit-log": "ऑडिट लॉग",
-    "bots": "",
-    "botDetail": "",
+    "bots": "बॉट्स",
+    "botDetail": "बॉट विवरण",
     "instances": "इंस्टेंस",
     "access": "पहुँच",
     "settings": "सेटिंग्स",
@@ -356,10 +356,10 @@
     "action": "क्रिया",
     "timestamp": "टाइमस्टैम्प",
     "executedCommand": "कमांड निष्पादित: {{data}}",
-    "startedSession": "एक सत्र शुरू किया",
-    "resumedSession": "एक सत्र फिर से शुरू किया",
-    "pausedSession": "एक सत्र रोका",
-    "stoppedSession": "एक सत्र बंद किया"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "तारीख चुनें",
   "scripts": {

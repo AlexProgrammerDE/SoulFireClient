@@ -106,44 +106,82 @@
       "lastKnownName": "Tên đăng nhập"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "Cấu hình {{name}}",
+      "description": "Cấu hình cài đặt riêng cho từng bot cho tài khoản này",
+      "openButton": "Cấu hình tài khoản",
+      "pageTitle": "{{name}} - Cài đặt {{page}}",
+      "noSettings": "Không có cài đặt nào cho trang này"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "Tìm bot...",
+    "onlineCount": "{{online}} trực tuyến / {{total}} tổng cộng",
+    "noBots": "Chưa cấu hình bot nào. Thêm tài khoản từ trang Cài đặt Tài khoản.",
+    "noBotsFound": "Không có bot nào khớp với tìm kiếm của bạn.",
+    "online": "Trực tuyến",
     "offline": "Ngoại tuyến",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "Quay lại Bots",
+    "comingSoon": "Sắp ra mắt",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "Vị trí & Xoay",
+      "position": "Vị trí",
+      "rotation": "Xoay",
+      "offline": "Bot đang ngoại tuyến. Dữ liệu vị trí chỉ khả dụng khi bot được kết nối."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "Tin nhắn trò chuyện",
+      "description": "Tin nhắn trò chuyện từ bot này sẽ xuất hiện ở đây trong bản cập nhật sắp tới."
     },
     "commandPanel": {
+      "title": "Lệnh Bot",
+      "placeholder": "Gửi lệnh đến bot này...",
+      "description": "Các lệnh dành riêng cho bot sẽ có trong bản cập nhật sắp tới."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "Kho đồ",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "Đóng",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

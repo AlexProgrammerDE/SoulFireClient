@@ -106,44 +106,82 @@
       "lastKnownName": "İstifadəçi adı"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "{{name}}-i tənzimləyin",
+      "description": "Bu hesab üçün hər bot üçün ayarları tənzimləyin",
+      "openButton": "Hesabı tənzimləyin",
+      "pageTitle": "{{name}} - {{page}} Ayarları",
+      "noSettings": "Bu səhifə üçün heç bir ayar mövcud deyil"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "Botları axtar...",
+    "onlineCount": "{{online}} onlayn / {{total}} cəmi",
+    "noBots": "Heç bir bot qurulmayıb. Hesab Ayarları səhifəsindən hesab əlavə edin.",
+    "noBotsFound": "Axtarışınıza uyğun bot tapılmadı.",
+    "online": "Onlayn",
     "offline": "Offline",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "Botlara qayıt",
+    "comingSoon": "Tezliklə",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "Mövqe & Fırlanma",
+      "position": "Mövqe",
+      "rotation": "Fırlanma",
+      "offline": "Bot oflayndır. Mövqe məlumatları yalnız bot qoşulduqda mövcuddur."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "Çat Mesajları",
+      "description": "Bu botdan olan çat mesajları gələcək yeniləmədə burada görünəcək."
     },
     "commandPanel": {
+      "title": "Bot Əmrləri",
+      "placeholder": "Bu bota əmr göndərin...",
+      "description": "Bot-əhatəli əmrlər gələcək yeniləmədə mövcud olacaq."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "İnventar",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "Bağla",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

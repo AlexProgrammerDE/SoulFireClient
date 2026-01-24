@@ -97,28 +97,28 @@
     "pause": "Tauota",
     "stop": "Pysäytä",
     "startToast": {
-      "loading": "Istunto käynnistyy...",
-      "success": "Istunto käynnistyi onnistuneesti",
-      "error": "Istunnon käynnistäminen epäonnistui"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Istunto jatkuu...",
-      "success": "Istunto jatkui onnistuneesti",
-      "error": "Istunnon jatkaminen epäonnistui"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Tauotetaan istuntoa...",
-      "success": "Istunto tauotettu",
-      "error": "Istunnon tauottaminen epäonnistui"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Pysäytetään istunto...",
-      "success": "Istunto pysäytetty onnistuneesti",
-      "error": "Istunnon pysäyttäminen epäonnistui"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Yhtään tiliä ei ole asetettu",
-      "noAccountsDescription": "Sinulla täytyy olla tilejä tuotu ennen istunnon aloittamista. Pyysit {{required}} bottia.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "Tilejä ei tarpeeksi",
       "notEnoughDescription": "Pyysit {{required}} bottia, mutta vain {{available}} tili(ä) on tuotu.",
       "hint": "Voit luoda offline-tilejä tai tuoda tilejä Tili-asetukset -sivulta.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Ohjaimet",
     "overview": "Yleiskatsaus",
     "terminal": "Terminaali",
-    "bots": "",
+    "bots": "Botit",
     "audit-log": "Audit-loki",
     "settingsGroup": "Asetukset",
     "pluginsGroup": "Liitännäiset",
@@ -279,15 +279,15 @@
     "settings": "Asetukset",
     "controls": "Ohjaimet",
     "plugins": "Liitännäiset",
-    "bots": ""
+    "bots": "Botit"
   },
   "noInstancesFound": "Yhtään instanssia ei löytynyt",
   "pageName": {
     "terminal": "Terminaali",
     "logs": "Lokit",
     "audit-log": "Audit-loki",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Botit",
+    "botDetail": "Botin tiedot",
     "instances": "Instanssit",
     "access": "Pääsy",
     "settings": "Asetukset",
@@ -356,10 +356,10 @@
     "action": "Toiminto",
     "timestamp": "Aikaleima",
     "executedCommand": "Suoritettiin komento: {{data}}",
-    "startedSession": "Aloitti istunnon",
-    "resumedSession": "Jatkoi istuntoa",
-    "pausedSession": "Tauotti istunnon",
-    "stoppedSession": "Pysäytti istunnon"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Valitse päivämäärä",
   "scripts": {

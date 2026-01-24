@@ -97,28 +97,28 @@
     "pause": "Jeda",
     "stop": "Berhenti",
     "startToast": {
-      "loading": "Memulai sesi...",
-      "success": "Sesi berhasil dimulai",
-      "error": "Gagal memulai sesi"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Melanjutkan sesi...",
-      "success": "Sesi berhasil dilanjutkan",
-      "error": "Gagal melanjutkan sesi"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Menjeda sesi...",
-      "success": "Sesi berhasil dijeda",
-      "error": "Gagal menjeda sesi"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Menghentikan sesi...",
-      "success": "Sesi berhasil dihentikan",
-      "error": "Gagal menghentikan sesi"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Tidak Ada Akun yang Dikonfigurasi",
-      "noAccountsDescription": "Anda perlu mengimpor akun sebelum memulai sesi. Anda meminta {{required}} bot.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "Akun Tidak Cukup",
       "notEnoughDescription": "Anda meminta {{required}} bot namun hanya memiliki {{available}} akun diimpor.",
       "hint": "Anda dapat menghasilkan akun offline atau mengimpor akun dari halaman Pengaturan Akun.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Kontrol",
     "overview": "Ikhtisar",
     "terminal": "Terminal",
-    "bots": "",
+    "bots": "Bot",
     "audit-log": "Log Audit",
     "settingsGroup": "Pengaturan",
     "pluginsGroup": "Plugin",
@@ -279,15 +279,15 @@
     "settings": "Pengaturan",
     "controls": "Kontrol",
     "plugins": "Plugin",
-    "bots": ""
+    "bots": "Bot"
   },
   "noInstancesFound": "Tidak ada instansi ditemukan",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Log",
     "audit-log": "Log Audit",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Bot",
+    "botDetail": "Detail Bot",
     "instances": "Instansi",
     "access": "Akses",
     "settings": "Pengaturan",
@@ -356,10 +356,10 @@
     "action": "Aksi",
     "timestamp": "Waktu",
     "executedCommand": "Perintah dijalankan: {{data}}",
-    "startedSession": "Memulai sesi",
-    "resumedSession": "Melanjutkan sesi",
-    "pausedSession": "Menjeda sesi",
-    "stoppedSession": "Menghentikan sesi"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Pilih tanggal",
   "scripts": {

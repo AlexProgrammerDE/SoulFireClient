@@ -106,44 +106,82 @@
       "lastKnownName": "Gebruikersnaam"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "{{name}} configureren",
+      "description": "Stel per-bot instellingen in voor dit account",
+      "openButton": "Account configureren",
+      "pageTitle": "{{name}} - {{page}} Instellingen",
+      "noSettings": "Geen instellingen beschikbaar voor deze pagina"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "Bots zoeken...",
+    "onlineCount": "{{online}} online / {{total}} totaal",
+    "noBots": "Geen bots geconfigureerd. Voeg accounts toe via de pagina Accountinstellingen.",
+    "noBotsFound": "Geen bots gevonden die overeenkomen met je zoekopdracht.",
+    "online": "Online",
     "offline": "Offline",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "Terug naar Bots",
+    "comingSoon": "Binnenkort beschikbaar",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "Positie & Rotatie",
+      "position": "Positie",
+      "rotation": "Rotatie",
+      "offline": "Bot is offline. Positiegegevens zijn alleen beschikbaar wanneer de bot is verbonden."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "Chatberichten",
+      "description": "Chatberichten van deze bot verschijnen hier in een toekomstige update."
     },
     "commandPanel": {
+      "title": "Botcommando's",
+      "placeholder": "Stuur een commando naar deze bot...",
+      "description": "Bot-specifieke commando's zullen beschikbaar zijn in een toekomstige update."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "Inventaris",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "Sluiten",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

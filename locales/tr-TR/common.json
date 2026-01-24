@@ -97,28 +97,28 @@
     "pause": "Duraklat",
     "stop": "Durdur",
     "startToast": {
-      "loading": "Oturum başlatılıyor...",
-      "success": "Oturum başarıyla başlatıldı",
-      "error": "Oturum başlatılamadı"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Oturum devam ettiriliyor...",
-      "success": "Oturum başarıyla devam ettirildi",
-      "error": "Oturum devam ettirilemedi"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Oturum duraklatılıyor...",
-      "success": "Oturum başarıyla duraklatıldı",
-      "error": "Oturum duraklatılamadı"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Oturum durduruluyor...",
-      "success": "Oturum başarıyla durduruldu",
-      "error": "Oturum durdurulamadı"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Hiçbir Hesap Yapılandırılmadı",
-      "noAccountsDescription": "Bir oturum başlatmadan önce hesapları içe aktarmanız gerekir. {{required}} bot talep ettiniz.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "Yeterli Hesap Yok",
       "notEnoughDescription": "{{required}} bot talep ettiniz ama yalnızca {{available}} hesap içe aktardınız.",
       "hint": "Çevrimdışı hesaplar oluşturabilir veya Hesap Ayarları sayfasından hesapları içe aktarabilirsiniz.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Kontroller",
     "overview": "Genel Bakış",
     "terminal": "Terminal",
-    "bots": "",
+    "bots": "Botlar",
     "audit-log": "Denetim Günlüğü",
     "settingsGroup": "Ayarlar",
     "pluginsGroup": "Eklentiler",
@@ -279,15 +279,15 @@
     "settings": "Ayarlar",
     "controls": "Kontroller",
     "plugins": "Eklentiler",
-    "bots": ""
+    "bots": "Botlar"
   },
   "noInstancesFound": "Örnek bulunamadı",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Kayıtlar",
     "audit-log": "Denetim Günlüğü",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Botlar",
+    "botDetail": "Bot Ayrıntıları",
     "instances": "Örnekler",
     "access": "Erişim",
     "settings": "Ayarlar",
@@ -356,10 +356,10 @@
     "action": "Eylem",
     "timestamp": "Zaman damgası",
     "executedCommand": "Çalıştırılan komut: {{data}}",
-    "startedSession": "Bir oturum başlatıldı",
-    "resumedSession": "Bir oturum devam ettirildi",
-    "pausedSession": "Bir oturum duraklatıldı",
-    "stoppedSession": "Bir oturum durduruldu"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Bir tarih seçin",
   "scripts": {

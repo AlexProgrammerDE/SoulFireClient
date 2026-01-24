@@ -97,28 +97,28 @@
     "pause": "หยุดชั่วคราว",
     "stop": "หยุด",
     "startToast": {
-      "loading": "กำลังเริ่มเซสชัน...",
-      "success": "เริ่มเซสชันสำเร็จ",
-      "error": "เริ่มเซสชันไม่สำเร็จ"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "กำลังดำเนินการต่อเซสชัน...",
-      "success": "ดำเนินการต่อเซสชันสำเร็จ",
-      "error": "ดำเนินการต่อเซสชันไม่สำเร็จ"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "กำลังหยุดชั่วคราวเซสชัน...",
-      "success": "หยุดชั่วคราวเซสชันสำเร็จ",
-      "error": "หยุดชั่วคราวเซสชันไม่สำเร็จ"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "กำลังหยุดเซสชัน...",
-      "success": "หยุดเซสชันสำเร็จ",
-      "error": "หยุดเซสชันไม่สำเร็จ"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "ไม่มีบัญชีตั้งค่าไว้",
-      "noAccountsDescription": "คุณต้องนำเข้าบัญชีก่อนเริ่มเซสชัน คุณต้องการบอท {{required}} ตัว",
+      "noAccountsDescription": "",
       "notEnoughTitle": "บัญชีไม่เพียงพอ",
       "notEnoughDescription": "คุณต้องการบอท {{required}} ตัว แต่มีบัญชีที่นำเข้าเพียง {{available}} บัญชี",
       "hint": "คุณสามารถสร้างบัญชีออฟไลน์หรือ นำเข้าบัญชีได้จากหน้าตั้งค่าบัญชีผู้ใช้",
@@ -218,7 +218,7 @@
     "controlsGroup": "ส่วนควบคุม",
     "overview": "ภาพรวม",
     "terminal": "เทอร์มินัล",
-    "bots": "",
+    "bots": "บอท",
     "audit-log": "บันทึกตรวจสอบ",
     "settingsGroup": "การตั้งค่า",
     "pluginsGroup": "ปลั๊กอิน",
@@ -279,15 +279,15 @@
     "settings": "การตั้งค่า",
     "controls": "ส่วนควบคุม",
     "plugins": "ปลั๊กอิน",
-    "bots": ""
+    "bots": "บอท"
   },
   "noInstancesFound": "ไม่พบบัญชีอินสแตนซ์",
   "pageName": {
     "terminal": "เทอร์มินัล",
     "logs": "บันทึก",
     "audit-log": "บันทึกตรวจสอบ",
-    "bots": "",
-    "botDetail": "",
+    "bots": "บอท",
+    "botDetail": "รายละเอียดบอท",
     "instances": "อินสแตนซ์",
     "access": "การเข้าถึง",
     "settings": "การตั้งค่า",
@@ -356,10 +356,10 @@
     "action": "การกระทำ",
     "timestamp": "เวลาบันทึก",
     "executedCommand": "ดำเนินการคำสั่ง: {{data}}",
-    "startedSession": "เริ่มเซสชันแล้ว",
-    "resumedSession": "ดำเนินการเซสชันต่อแล้ว",
-    "pausedSession": "หยุดชั่วคราวเซสชันแล้ว",
-    "stoppedSession": "หยุดเซสชันแล้ว"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "เลือกวันที่",
   "scripts": {

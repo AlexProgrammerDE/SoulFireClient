@@ -97,28 +97,28 @@
     "pause": "Pausieren",
     "stop": "Stopp",
     "startToast": {
-      "loading": "Starte Sitzung...",
-      "success": "Sitzung erfolgreich gestartet",
-      "error": "Fehler beim Start der Sitzung"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Sitzung wird fortgesetzt...",
-      "success": "Sitzung erfolgreich fortgesetzt",
-      "error": "Fehler beim Fortsetzen der Sitzung"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Sitzung wird pausiert...",
-      "success": "Sitzung erfolgreich pausiert",
-      "error": "Fehler beim Pausieren der Sitzung"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Sitzung wird gestoppt...",
-      "success": "Sitzung erfolgreich gestoppt",
-      "error": "Fehler beim Stoppen der Sitzung"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Keine Konten konfiguriert",
-      "noAccountsDescription": "Sie müssen Konten importiert haben, bevor Sie eine Sitzung starten. Sie haben {{required}} Bots angefordert.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "Nicht genügend Konten",
       "notEnoughDescription": "Sie haben {{required}} Bots angefordert, aber nur {{available}} Konten importiert.",
       "hint": "Sie können Offline-Konten generieren oder Konten auf der Seite Kontoeinstellungen importieren.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Steuerung",
     "overview": "Übersicht",
     "terminal": "Terminal",
-    "bots": "",
+    "bots": "Bots",
     "audit-log": "Audit-Log",
     "settingsGroup": "Einstellungen",
     "pluginsGroup": "Plugins",
@@ -279,15 +279,15 @@
     "settings": "Einstellungen",
     "controls": "Steuerung",
     "plugins": "Plugins",
-    "bots": ""
+    "bots": "Bots"
   },
   "noInstancesFound": "Keine Instanzen gefunden",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Protokolle",
     "audit-log": "Audit-Log",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Bots",
+    "botDetail": "Botdetails",
     "instances": "Instanzen",
     "access": "Zugriff",
     "settings": "Einstellungen",
@@ -356,10 +356,10 @@
     "action": "Aktion",
     "timestamp": "Zeitstempel",
     "executedCommand": "Ausgeführter Befehl: {{data}}",
-    "startedSession": "Sitzung gestartet",
-    "resumedSession": "Sitzung fortgesetzt",
-    "pausedSession": "Sitzung pausiert",
-    "stoppedSession": "Sitzung gestoppt"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Datum auswählen",
   "scripts": {

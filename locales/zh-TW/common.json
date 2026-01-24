@@ -97,28 +97,28 @@
     "pause": "暫停",
     "stop": "停止",
     "startToast": {
-      "loading": "正在啟動工作階段...",
-      "success": "工作階段啟動成功",
-      "error": "啟動工作階段失敗"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "正在恢復工作階段...",
-      "success": "工作階段已成功恢復",
-      "error": "恢復工作階段失敗"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "正在暫停工作階段...",
-      "success": "工作階段暫停成功",
-      "error": "暫停工作階段失敗"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "正在停止工作階段...",
-      "success": "工作階段停止成功",
-      "error": "停止工作階段失敗"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "未設定帳戶",
-      "noAccountsDescription": "在啟動工作階段前，您需要先匯入帳戶。您要求了 {{required}} 個 bot。",
+      "noAccountsDescription": "",
       "notEnoughTitle": "帳戶數不足",
       "notEnoughDescription": "您要求了 {{required}} 個 bot，但僅匯入 {{available}} 個帳戶。",
       "hint": "您可以在帳戶設定頁面產生離線帳戶或匯入帳戶。",
@@ -218,7 +218,7 @@
     "controlsGroup": "控制項",
     "overview": "總覽",
     "terminal": "終端機",
-    "bots": "",
+    "bots": "機器人群組/機器人列表/機器人",
     "audit-log": "稽核日誌",
     "settingsGroup": "設定",
     "pluginsGroup": "插件",
@@ -279,15 +279,15 @@
     "settings": "設定",
     "controls": "控制項",
     "plugins": "插件",
-    "bots": ""
+    "bots": "機器人群組/機器人列表/機器人"
   },
   "noInstancesFound": "未找到任何實例",
   "pageName": {
     "terminal": "終端機",
     "logs": "日誌",
     "audit-log": "稽核日誌",
-    "bots": "",
-    "botDetail": "",
+    "bots": "機器人群組/機器人列表/機器人",
+    "botDetail": "機器人詳細資訊",
     "instances": "實例清單",
     "access": "存取權限",
     "settings": "設定",
@@ -356,10 +356,10 @@
     "action": "動作",
     "timestamp": "時間戳記",
     "executedCommand": "執行指令：{{data}}",
-    "startedSession": "已啟動工作階段",
-    "resumedSession": "已恢復工作階段",
-    "pausedSession": "已暫停工作階段",
-    "stoppedSession": "已停止工作階段"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "選擇日期",
   "scripts": {

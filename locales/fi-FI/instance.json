@@ -106,44 +106,82 @@
       "lastKnownName": "Käyttäjätunnus"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "Määritä {{name}}",
+      "description": "Määritä tämän tilin bottikohtaiset asetukset",
+      "openButton": "Määritä tili",
+      "pageTitle": "{{name}} - {{page}} asetukset",
+      "noSettings": "Tälle sivulle ei ole asetuksia saatavilla"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "Hae botteja...",
+    "onlineCount": "{{online}} online / {{total}} yhteensä",
+    "noBots": "Ei yhtään bottia asetettu. Lisää tilejä Tiliasetukset-sivulta.",
+    "noBotsFound": "Hakusi ei vastannut yhtään bottia.",
+    "online": "Paikalla",
     "offline": "Offline",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "Takaisin botteihin",
+    "comingSoon": "Tulossa pian",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "Sijainti & kääntö",
+      "position": "Sijainti",
+      "rotation": "Kääntö",
+      "offline": "Botti on offline-tilassa. Sijaintitiedot saatavilla vain, kun botti on yhdistetty."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "Viestit chatissa",
+      "description": "Tämän botin chat-viestit näkyvät täällä tulevassa päivityksessä."
     },
     "commandPanel": {
+      "title": "Bottikomennot",
+      "placeholder": "Lähetä komento tälle botille...",
+      "description": "Bottikohtaiset komennot ovat saatavilla tulevassa päivityksessä."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "Inventaario",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "Sulje",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

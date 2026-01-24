@@ -97,28 +97,28 @@
     "pause": "暂停",
     "stop": "停止",
     "startToast": {
-      "loading": "正在开始会话...",
-      "success": "会话已成功开始",
-      "error": "启动会话失败"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "正在恢复会话...",
-      "success": "会话已成功恢复",
-      "error": "恢复会话失败"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "正在暂停会话...",
-      "success": "会话已成功暂停",
-      "error": "暂停会话失败"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "正在停止会话...",
-      "success": "会话已成功停止",
-      "error": "停止会话失败"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "未配置账户",
-      "noAccountsDescription": "在开始会话前，您需要先导入账户。您请求了 {{required}} 个机器人。",
+      "noAccountsDescription": "",
       "notEnoughTitle": "账户数量不足",
       "notEnoughDescription": "您请求了 {{required}} 个机器人，但只导入了 {{available}} 个账户。",
       "hint": "您可以生成离线账户或在账户设置页面导入账户。",
@@ -218,7 +218,7 @@
     "controlsGroup": "控制",
     "overview": "概况",
     "terminal": "终端",
-    "bots": "",
+    "bots": "机器人",
     "audit-log": "审计日志",
     "settingsGroup": "设置",
     "pluginsGroup": "插件",
@@ -279,15 +279,15 @@
     "settings": "设置",
     "controls": "控制",
     "plugins": "插件",
-    "bots": ""
+    "bots": "机器人"
   },
   "noInstancesFound": "未找到实例",
   "pageName": {
     "terminal": "终端",
     "logs": "日志",
     "audit-log": "审计日志",
-    "bots": "",
-    "botDetail": "",
+    "bots": "机器人",
+    "botDetail": "机器人详情",
     "instances": "实例",
     "access": "访问权限",
     "settings": "设置",
@@ -356,10 +356,10 @@
     "action": "操作",
     "timestamp": "",
     "executedCommand": "执行的命令：{{data}}",
-    "startedSession": "发起了会话",
-    "resumedSession": "恢复了会话",
-    "pausedSession": "暂停了会话",
-    "stoppedSession": "停止了会话"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "选日期",
   "scripts": {

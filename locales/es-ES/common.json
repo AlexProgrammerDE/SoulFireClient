@@ -97,28 +97,28 @@
     "pause": "Pausar",
     "stop": "Detener",
     "startToast": {
-      "loading": "Iniciando sesión...",
-      "success": "Sesión iniciada correctamente",
-      "error": "Error al iniciar la sesión"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Reanudando sesión...",
-      "success": "Sesión reanudada con éxito",
-      "error": "Error al reanudar la sesión"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Pausando sesión...",
-      "success": "Sesión pausada correctamente",
-      "error": "Error al pausar la sesión"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Deteniendo sesión...",
-      "success": "Sesión detenida correctamente",
-      "error": "Error al detener la sesión"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "No hay cuentas configuradas",
-      "noAccountsDescription": "Debes importar cuentas antes de iniciar una sesión. Has solicitado {{required}} bots.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "No hay suficientes cuentas",
       "notEnoughDescription": "Has solicitado {{required}} bots pero solo tienes {{available}} cuentas importadas.",
       "hint": "Puedes generar cuentas offline o importar cuentas desde la página de Configuración de Cuenta.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Controles",
     "overview": "Resumen",
     "terminal": "Terminal",
-    "bots": "",
+    "bots": "Bots",
     "audit-log": "Registro de auditoría",
     "settingsGroup": "Configuraciones",
     "pluginsGroup": "Plugins",
@@ -279,15 +279,15 @@
     "settings": "Configuraciones",
     "controls": "Controles",
     "plugins": "Plugins",
-    "bots": ""
+    "bots": "Bots"
   },
   "noInstancesFound": "No se encontraron instancias",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Registros",
     "audit-log": "Registro de auditoría",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Bots",
+    "botDetail": "Detalles del bot",
     "instances": "Instancias",
     "access": "Acceso",
     "settings": "Configuraciones",
@@ -356,10 +356,10 @@
     "action": "Acción",
     "timestamp": "Marca de tiempo",
     "executedCommand": "Comando ejecutado: {{data}}",
-    "startedSession": "Sesión iniciada",
-    "resumedSession": "Sesión reanudada",
-    "pausedSession": "Sesión pausada",
-    "stoppedSession": "Sesión detenida"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Selecciona una fecha",
   "scripts": {

@@ -97,28 +97,28 @@
     "pause": "Pauser",
     "stop": "Arrêter",
     "startToast": {
-      "loading": "Démarrage de la session...",
-      "success": "La session a démarré avec succès",
-      "error": "Échec du lancement de la session"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Reprise de la session...",
-      "success": "La session a repris avec succès",
-      "error": "Échec de la reprise de la session"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Interruption de la session...",
-      "success": "La session a été interrompue avec succès",
-      "error": "Échec de l'interruption de la session"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Arrêt de la session...",
-      "success": "Session arrêtée avec succès",
-      "error": "Échec de l'arrêt de la session"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Aucun compte configuré",
-      "noAccountsDescription": "Vous devez importer des comptes avant de démarrer une session. Vous avez demandé {{required}} bots.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "Pas assez de comptes",
       "notEnoughDescription": "Vous avez demandé {{required}} bots, mais seulement {{available}} comptes sont importés.",
       "hint": "Vous pouvez générer des comptes hors ligne ou importer des comptes depuis la page de Configuration des comptes.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Contrôles",
     "overview": "Aperçu",
     "terminal": "Terminal",
-    "bots": "",
+    "bots": "Bots",
     "audit-log": "Logs du serveur",
     "settingsGroup": "Paramètres",
     "pluginsGroup": "Plugins",
@@ -279,15 +279,15 @@
     "settings": "Paramètres",
     "controls": "Contrôles",
     "plugins": "Plugins",
-    "bots": ""
+    "bots": "Bots"
   },
   "noInstancesFound": "Aucune instance n'a été trouvée",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Journaux",
     "audit-log": "Logs du serveur",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Bots",
+    "botDetail": "Détails du bot",
     "instances": "Instances",
     "access": "Accès",
     "settings": "Paramètres",
@@ -356,10 +356,10 @@
     "action": "Action",
     "timestamp": "Horodatage",
     "executedCommand": "Commande exécutée : {{data}}",
-    "startedSession": "Session démarrée",
-    "resumedSession": "Session reprise",
-    "pausedSession": "Session suspendue",
-    "stoppedSession": "Session arrêtée"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Choisir une date",
   "scripts": {

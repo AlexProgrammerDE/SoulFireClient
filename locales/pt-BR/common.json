@@ -97,28 +97,28 @@
     "pause": "Pausar",
     "stop": "Parar",
     "startToast": {
-      "loading": "Iniciando sessão...",
-      "success": "Sessão iniciada com sucesso",
-      "error": "Falha ao iniciar sessão"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Retomando sessão...",
-      "success": "Sessão retomada com sucesso",
-      "error": "Falha ao retomar a sessão"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Pausando sessão...",
-      "success": "Sessão pausada com sucesso",
-      "error": "Falha ao pausar a sessão"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Parando a sessão...",
-      "success": "Sessão interrompida com sucesso",
-      "error": "Falha ao interromper a sessão"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Nenhuma Conta Configurada",
-      "noAccountsDescription": "Você precisa importar contas antes de iniciar uma sessão. Você solicitou {{required}} bots.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "Contas Insuficientes",
       "notEnoughDescription": "Você solicitou {{required}} bots mas só tem {{available}} contas importadas.",
       "hint": "Você pode gerar contas offline ou importar contas na página de Configurações de Conta.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Controles",
     "overview": "Visão geral",
     "terminal": "Terminal",
-    "bots": "",
+    "bots": "Bots",
     "audit-log": "Registro de auditoria",
     "settingsGroup": "Configurações",
     "pluginsGroup": "Plugins",
@@ -279,15 +279,15 @@
     "settings": "Configurações",
     "controls": "Controles",
     "plugins": "Plugins",
-    "bots": ""
+    "bots": "Bots"
   },
   "noInstancesFound": "Nenhuma instância encontrada",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Logs",
     "audit-log": "Registro de auditoria",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Bots",
+    "botDetail": "Detalhes do Bot",
     "instances": "Instâncias",
     "access": "Acesso",
     "settings": "Configurações",
@@ -356,10 +356,10 @@
     "action": "Ação",
     "timestamp": "Data e hora",
     "executedCommand": "Comando executado: {{data}}",
-    "startedSession": "Iniciou uma sessão",
-    "resumedSession": "Retomou uma sessão",
-    "pausedSession": "Pausou uma sessão",
-    "stoppedSession": "Parou uma sessão"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Escolha uma data",
   "scripts": {
