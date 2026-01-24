@@ -29,6 +29,8 @@ import type {
   BotOpenInventoryResponse,
   BotRenderPovRequest,
   BotRenderPovResponse,
+  BotSetContainerTextRequest,
+  BotSetContainerTextResponse,
   BotUpdateConfigEntryRequest,
   BotUpdateConfigEntryResponse,
   BotUpdateConfigRequest,
@@ -128,6 +130,15 @@ export interface IBotServiceClient {
     input: BotContainerButtonClickRequest,
     options?: RpcOptions,
   ): UnaryCall<BotContainerButtonClickRequest, BotContainerButtonClickResponse>;
+  /**
+   * Set text input in container (anvil rename, etc.)
+   *
+   * @generated from protobuf rpc: SetContainerText
+   */
+  setContainerText(
+    input: BotSetContainerTextRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotSetContainerTextRequest, BotSetContainerTextResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.BotService
@@ -331,6 +342,22 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     return stackIntercept<
       BotContainerButtonClickRequest,
       BotContainerButtonClickResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * Set text input in container (anvil rename, etc.)
+   *
+   * @generated from protobuf rpc: SetContainerText
+   */
+  setContainerText(
+    input: BotSetContainerTextRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotSetContainerTextRequest, BotSetContainerTextResponse> {
+    const method = this.methods[11],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      BotSetContainerTextRequest,
+      BotSetContainerTextResponse
     >("unary", this._transport, method, opt, input);
   }
 }

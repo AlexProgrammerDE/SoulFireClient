@@ -391,6 +391,48 @@ export interface ContainerButton {
   selected: boolean; // Whether this button is currently selected
 }
 /**
+ * Text input field description for containers like anvil
+ *
+ * @generated from protobuf message soulfire.v1.ContainerTextInput
+ */
+export interface ContainerTextInput {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string; // Field identifier (e.g., "item_name" for anvil)
+  /**
+   * @generated from protobuf field: string label = 2
+   */
+  label: string; // Display label
+  /**
+   * @generated from protobuf field: string current_value = 3
+   */
+  currentValue: string; // Current text value
+  /**
+   * @generated from protobuf field: int32 max_length = 4
+   */
+  maxLength: number; // Maximum allowed characters (0 = no limit)
+  /**
+   * @generated from protobuf field: string placeholder = 5
+   */
+  placeholder: string; // Placeholder text
+}
+/**
+ * Book page for lectern display
+ *
+ * @generated from protobuf message soulfire.v1.BookPage
+ */
+export interface BookPage {
+  /**
+   * @generated from protobuf field: int32 page_number = 1
+   */
+  pageNumber: number; // 0-indexed page number
+  /**
+   * @generated from protobuf field: string content = 2
+   */
+  content: string; // Page content (may contain formatting codes)
+}
+/**
  * Describes the layout of an open container
  *
  * @generated from protobuf message soulfire.v1.ContainerLayout
@@ -416,6 +458,18 @@ export interface ContainerLayout {
    * @generated from protobuf field: string container_type = 5
    */
   containerType: string; // Container type identifier for client-specific rendering
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.ContainerTextInput text_inputs = 6
+   */
+  textInputs: ContainerTextInput[]; // Text input fields (anvil rename, etc.)
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.BookPage book_pages = 7
+   */
+  bookPages: BookPage[]; // Book pages for lectern
+  /**
+   * @generated from protobuf field: int32 current_book_page = 8
+   */
+  currentBookPage: number; // Current page being displayed (lectern)
 }
 /**
  * @generated from protobuf message soulfire.v1.BotInventoryStateResponse
@@ -541,6 +595,42 @@ export interface BotContainerButtonClickRequest {
  * @generated from protobuf message soulfire.v1.BotContainerButtonClickResponse
  */
 export interface BotContainerButtonClickResponse {
+  /**
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+  /**
+   * @generated from protobuf field: optional string error = 2
+   */
+  error?: string;
+}
+/**
+ * Set text input in a container (anvil rename, etc.)
+ *
+ * @generated from protobuf message soulfire.v1.BotSetContainerTextRequest
+ */
+export interface BotSetContainerTextRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+  /**
+   * @generated from protobuf field: string field_id = 3
+   */
+  fieldId: string; // Which field to set (e.g., "item_name")
+  /**
+   * @generated from protobuf field: string text = 4
+   */
+  text: string; // The text value to set
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotSetContainerTextResponse
+ */
+export interface BotSetContainerTextResponse {
   /**
    * @generated from protobuf field: bool success = 1
    */
@@ -2508,6 +2598,194 @@ class ContainerButton$Type extends MessageType<ContainerButton> {
  */
 export const ContainerButton = new ContainerButton$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class ContainerTextInput$Type extends MessageType<ContainerTextInput> {
+  constructor() {
+    super("soulfire.v1.ContainerTextInput", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "current_value",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 4, name: "max_length", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      {
+        no: 5,
+        name: "placeholder",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ContainerTextInput>): ContainerTextInput {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.label = "";
+    message.currentValue = "";
+    message.maxLength = 0;
+    message.placeholder = "";
+    if (value !== undefined)
+      reflectionMergePartial<ContainerTextInput>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ContainerTextInput,
+  ): ContainerTextInput {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string label */ 2:
+          message.label = reader.string();
+          break;
+        case /* string current_value */ 3:
+          message.currentValue = reader.string();
+          break;
+        case /* int32 max_length */ 4:
+          message.maxLength = reader.int32();
+          break;
+        case /* string placeholder */ 5:
+          message.placeholder = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ContainerTextInput,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string label = 2; */
+    if (message.label !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.label);
+    /* string current_value = 3; */
+    if (message.currentValue !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.currentValue);
+    /* int32 max_length = 4; */
+    if (message.maxLength !== 0)
+      writer.tag(4, WireType.Varint).int32(message.maxLength);
+    /* string placeholder = 5; */
+    if (message.placeholder !== "")
+      writer.tag(5, WireType.LengthDelimited).string(message.placeholder);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ContainerTextInput
+ */
+export const ContainerTextInput = new ContainerTextInput$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BookPage$Type extends MessageType<BookPage> {
+  constructor() {
+    super("soulfire.v1.BookPage", [
+      { no: 1, name: "page_number", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 2, name: "content", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<BookPage>): BookPage {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.pageNumber = 0;
+    message.content = "";
+    if (value !== undefined)
+      reflectionMergePartial<BookPage>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BookPage,
+  ): BookPage {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int32 page_number */ 1:
+          message.pageNumber = reader.int32();
+          break;
+        case /* string content */ 2:
+          message.content = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BookPage,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int32 page_number = 1; */
+    if (message.pageNumber !== 0)
+      writer.tag(1, WireType.Varint).int32(message.pageNumber);
+    /* string content = 2; */
+    if (message.content !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.content);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BookPage
+ */
+export const BookPage = new BookPage$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class ContainerLayout$Type extends MessageType<ContainerLayout> {
   constructor() {
     super("soulfire.v1.ContainerLayout", [
@@ -2533,6 +2811,26 @@ class ContainerLayout$Type extends MessageType<ContainerLayout> {
         kind: "scalar",
         T: 9 /*ScalarType.STRING*/,
       },
+      {
+        no: 6,
+        name: "text_inputs",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ContainerTextInput,
+      },
+      {
+        no: 7,
+        name: "book_pages",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => BookPage,
+      },
+      {
+        no: 8,
+        name: "current_book_page",
+        kind: "scalar",
+        T: 5 /*ScalarType.INT32*/,
+      },
     ]);
   }
   create(value?: PartialMessage<ContainerLayout>): ContainerLayout {
@@ -2542,6 +2840,9 @@ class ContainerLayout$Type extends MessageType<ContainerLayout> {
     message.totalSlots = 0;
     message.buttons = [];
     message.containerType = "";
+    message.textInputs = [];
+    message.bookPages = [];
+    message.currentBookPage = 0;
     if (value !== undefined)
       reflectionMergePartial<ContainerLayout>(this, message, value);
     return message;
@@ -2579,6 +2880,23 @@ class ContainerLayout$Type extends MessageType<ContainerLayout> {
           break;
         case /* string container_type */ 5:
           message.containerType = reader.string();
+          break;
+        case /* repeated soulfire.v1.ContainerTextInput text_inputs */ 6:
+          message.textInputs.push(
+            ContainerTextInput.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        case /* repeated soulfire.v1.BookPage book_pages */ 7:
+          message.bookPages.push(
+            BookPage.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* int32 current_book_page */ 8:
+          message.currentBookPage = reader.int32();
           break;
         default:
           let u = options.readUnknownField;
@@ -2627,6 +2945,23 @@ class ContainerLayout$Type extends MessageType<ContainerLayout> {
     /* string container_type = 5; */
     if (message.containerType !== "")
       writer.tag(5, WireType.LengthDelimited).string(message.containerType);
+    /* repeated soulfire.v1.ContainerTextInput text_inputs = 6; */
+    for (let i = 0; i < message.textInputs.length; i++)
+      ContainerTextInput.internalBinaryWrite(
+        message.textInputs[i],
+        writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.BookPage book_pages = 7; */
+    for (let i = 0; i < message.bookPages.length; i++)
+      BookPage.internalBinaryWrite(
+        message.bookPages[i],
+        writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* int32 current_book_page = 8; */
+    if (message.currentBookPage !== 0)
+      writer.tag(8, WireType.Varint).int32(message.currentBookPage);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -3442,6 +3777,191 @@ class BotContainerButtonClickResponse$Type extends MessageType<BotContainerButto
  */
 export const BotContainerButtonClickResponse =
   new BotContainerButtonClickResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotSetContainerTextRequest$Type extends MessageType<BotSetContainerTextRequest> {
+  constructor() {
+    super("soulfire.v1.BotSetContainerTextRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "field_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 4, name: "text", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotSetContainerTextRequest>,
+  ): BotSetContainerTextRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    message.fieldId = "";
+    message.text = "";
+    if (value !== undefined)
+      reflectionMergePartial<BotSetContainerTextRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotSetContainerTextRequest,
+  ): BotSetContainerTextRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        case /* string field_id */ 3:
+          message.fieldId = reader.string();
+          break;
+        case /* string text */ 4:
+          message.text = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotSetContainerTextRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    /* string field_id = 3; */
+    if (message.fieldId !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.fieldId);
+    /* string text = 4; */
+    if (message.text !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.text);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotSetContainerTextRequest
+ */
+export const BotSetContainerTextRequest = new BotSetContainerTextRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotSetContainerTextResponse$Type extends MessageType<BotSetContainerTextResponse> {
+  constructor() {
+    super("soulfire.v1.BotSetContainerTextResponse", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 2,
+        name: "error",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotSetContainerTextResponse>,
+  ): BotSetContainerTextResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotSetContainerTextResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotSetContainerTextResponse,
+  ): BotSetContainerTextResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        case /* optional string error */ 2:
+          message.error = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotSetContainerTextResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    /* optional string error = 2; */
+    if (message.error !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.error);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotSetContainerTextResponse
+ */
+export const BotSetContainerTextResponse =
+  new BotSetContainerTextResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.BotService
  */
@@ -3501,5 +4021,11 @@ export const BotService = new ServiceType("soulfire.v1.BotService", [
     options: {},
     I: BotContainerButtonClickRequest,
     O: BotContainerButtonClickResponse,
+  },
+  {
+    name: "SetContainerText",
+    options: {},
+    I: BotSetContainerTextRequest,
+    O: BotSetContainerTextResponse,
   },
 ]);

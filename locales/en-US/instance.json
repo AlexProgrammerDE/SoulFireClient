@@ -184,6 +184,15 @@
         "crafterSlots": "Slot Controls",
         "lecternControls": "Book Controls",
         "actions": "Actions"
+      },
+      "textInput": {
+        "title": "Text Input",
+        "anvilRename": "Rename Item"
+      },
+      "bookPages": {
+        "title": "Book Content",
+        "emptyPage": "(Empty page)",
+        "pageIndicator": "Page {{current}} of {{total}}"
       }
     },
     "visualPanel": {

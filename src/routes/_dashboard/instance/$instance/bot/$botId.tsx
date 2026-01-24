@@ -6,7 +6,10 @@ import {
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeftIcon,
+  BookOpenIcon,
   CameraIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
   CompassIcon,
   EyeIcon,
   HandIcon,
@@ -18,6 +21,7 @@ import {
   MousePointerClickIcon,
   PackageIcon,
   PauseIcon,
+  PencilIcon,
   PlayIcon,
   RefreshCwIcon,
   RotateCcwKeyIcon,
@@ -43,15 +47,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card.tsx";
+import { Input } from "@/components/ui/input.tsx";
 import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
 import type {
+  BookPage,
   BotContainerButtonClickRequest,
   BotInfoResponse,
   BotInventoryClickRequest,
   BotInventoryStateResponse,
   BotLiveState,
   BotMouseClickRequest,
+  BotSetContainerTextRequest,
   ContainerButton,
+  ContainerTextInput,
   InventorySlot,
   SlotRegion,
 } from "@/generated/soulfire/bot.ts";
@@ -941,6 +949,33 @@ function BotInventoryPanel({
     },
   });
 
+  // Mutation for setting container text (anvil rename, etc.)
+  const setTextMutation = useMutation({
+    mutationFn: async (request: BotSetContainerTextRequest) => {
+      const transport = createTransport();
+      if (transport === null) {
+        throw new Error("Not connected");
+      }
+      const botService = new BotServiceClient(transport);
+      return botService.setContainerText(request);
+    },
+    onSuccess: () => {
+      void refetch();
+    },
+  });
+
+  const handleSetText = useCallback(
+    (fieldId: string, text: string) => {
+      setTextMutation.mutate({
+        instanceId,
+        botId,
+        fieldId,
+        text,
+      });
+    },
+    [setTextMutation, instanceId, botId],
+  );
+
   const handleButtonClick = useCallback(
     (buttonId: number) => {
       buttonClickMutation.mutate({
@@ -984,6 +1019,9 @@ function BotInventoryPanel({
   const selectedHotbarSlot = inventoryState?.selectedHotbarSlot ?? 0;
   const isPlayerInventory = layout?.title === "Inventory";
   const buttons = layout?.buttons ?? [];
+  const textInputs = layout?.textInputs ?? [];
+  const bookPages = layout?.bookPages ?? [];
+  const currentBookPage = layout?.currentBookPage ?? 0;
 
   return (
     <Card>
@@ -1042,6 +1080,25 @@ function BotInventoryPanel({
                 containerType={layout.containerType}
                 onButtonClick={handleButtonClick}
                 isPending={buttonClickMutation.isPending}
+              />
+            )}
+
+            {/* Text inputs (anvil rename, etc.) */}
+            {textInputs.length > 0 && (
+              <ContainerTextInputPanel
+                textInputs={textInputs}
+                containerType={layout.containerType}
+                onSetText={handleSetText}
+                isPending={setTextMutation.isPending}
+              />
+            )}
+
+            {/* Book pages (lectern) */}
+            {bookPages.length > 0 && (
+              <BookPagesPanel
+                pages={bookPages}
+                currentPage={currentBookPage}
+                onPageChange={handleButtonClick}
               />
             )}
 
@@ -1144,6 +1201,158 @@ function ContainerButtonsPanel({
             {button.label}
           </Button>
         ))}
+      </div>
+    </div>
+  );
+}
+
+function ContainerTextInputPanel({
+  textInputs,
+  containerType,
+  onSetText,
+  isPending,
+}: {
+  textInputs: ContainerTextInput[];
+  containerType: string;
+  onSetText: (fieldId: string, text: string) => void;
+  isPending: boolean;
+}) {
+  const { t } = useTranslation("instance");
+  const [localValues, setLocalValues] = useState<Record<string, string>>({});
+
+  // Initialize local values from textInputs
+  useEffect(() => {
+    const initial: Record<string, string> = {};
+    for (const input of textInputs) {
+      if (!(input.id in localValues)) {
+        initial[input.id] = input.currentValue;
+      }
+    }
+    if (Object.keys(initial).length > 0) {
+      setLocalValues((prev) => ({ ...prev, ...initial }));
+    }
+  }, [textInputs, localValues]);
+
+  const handleSubmit = (fieldId: string) => {
+    const value = localValues[fieldId] ?? "";
+    onSetText(fieldId, value);
+  };
+
+  // Get title based on container type
+  const title =
+    containerType === "anvil"
+      ? t("bots.inventoryPanel.textInput.anvilRename")
+      : t("bots.inventoryPanel.textInput.title");
+
+  return (
+    <div className="space-y-2">
+      <div className="text-muted-foreground text-sm font-medium">{title}</div>
+      <div className="space-y-2 rounded-lg border p-2">
+        {textInputs.map((input) => (
+          <div key={input.id} className="flex items-center gap-2">
+            <Input
+              placeholder={input.placeholder || input.label}
+              value={localValues[input.id] ?? input.currentValue}
+              onChange={(e) =>
+                setLocalValues((prev) => ({
+                  ...prev,
+                  [input.id]: e.target.value,
+                }))
+              }
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSubmit(input.id);
+                }
+              }}
+              maxLength={input.maxLength > 0 ? input.maxLength : undefined}
+              className="h-8 text-sm"
+              disabled={isPending}
+            />
+            <Button
+              size="sm"
+              onClick={() => handleSubmit(input.id)}
+              disabled={isPending}
+              className="h-8"
+            >
+              <PencilIcon className="size-3" />
+            </Button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function BookPagesPanel({
+  pages,
+  currentPage,
+  onPageChange,
+}: {
+  pages: BookPage[];
+  currentPage: number;
+  onPageChange: (buttonId: number) => void;
+}) {
+  const { t } = useTranslation("instance");
+  const [displayPage, setDisplayPage] = useState(currentPage);
+
+  // Sync displayPage with currentPage from server
+  useEffect(() => {
+    setDisplayPage(currentPage);
+  }, [currentPage]);
+
+  const currentPageContent = pages.find((p) => p.pageNumber === displayPage);
+  const totalPages = pages.length;
+
+  const handlePrevPage = () => {
+    if (displayPage > 0) {
+      onPageChange(1); // Button ID 1 = previous page in lectern
+    }
+  };
+
+  const handleNextPage = () => {
+    if (displayPage < totalPages - 1) {
+      onPageChange(2); // Button ID 2 = next page in lectern
+    }
+  };
+
+  return (
+    <div className="space-y-2">
+      <div className="text-muted-foreground flex items-center gap-2 text-sm font-medium">
+        <BookOpenIcon className="size-4" />
+        {t("bots.inventoryPanel.bookPages.title")}
+      </div>
+      <div className="rounded-lg border p-3">
+        {/* Page content */}
+        <div className="bg-muted/30 mb-2 min-h-[100px] whitespace-pre-wrap rounded p-2 font-mono text-xs">
+          {currentPageContent?.content ||
+            t("bots.inventoryPanel.bookPages.emptyPage")}
+        </div>
+
+        {/* Navigation */}
+        <div className="flex items-center justify-between">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handlePrevPage}
+            disabled={displayPage <= 0}
+          >
+            <ChevronLeftIcon className="size-4" />
+          </Button>
+          <span className="text-muted-foreground text-xs">
+            {t("bots.inventoryPanel.bookPages.pageIndicator", {
+              current: displayPage + 1,
+              total: totalPages,
+            })}
+          </span>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleNextPage}
+            disabled={displayPage >= totalPages - 1}
+          >
+            <ChevronRightIcon className="size-4" />
+          </Button>
+        </div>
       </div>
     </div>
   );
