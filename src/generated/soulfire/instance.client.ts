@@ -11,6 +11,10 @@ import type {
 } from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type {
+  DeleteAccountMetadataEntryRequest,
+  DeleteAccountMetadataEntryResponse,
+  GetAccountMetadataRequest,
+  GetAccountMetadataResponse,
   InstanceAddAccountRequest,
   InstanceAddAccountResponse,
   InstanceAddAccountsBatchRequest,
@@ -49,6 +53,8 @@ import type {
   InstanceUpdateMetaResponse,
   InstanceUpdateProxyRequest,
   InstanceUpdateProxyResponse,
+  SetAccountMetadataEntryRequest,
+  SetAccountMetadataEntryResponse,
 } from "./instance";
 import { InstanceService } from "./instance";
 /**
@@ -212,6 +218,32 @@ export interface IInstanceServiceClient {
     input: InstanceAuditLogRequest,
     options?: RpcOptions,
   ): UnaryCall<InstanceAuditLogRequest, InstanceAuditLogResponse>;
+  /**
+   * Account metadata operations
+   *
+   * @generated from protobuf rpc: GetAccountMetadata
+   */
+  getAccountMetadata(
+    input: GetAccountMetadataRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetAccountMetadataRequest, GetAccountMetadataResponse>;
+  /**
+   * @generated from protobuf rpc: SetAccountMetadataEntry
+   */
+  setAccountMetadataEntry(
+    input: SetAccountMetadataEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<SetAccountMetadataEntryRequest, SetAccountMetadataEntryResponse>;
+  /**
+   * @generated from protobuf rpc: DeleteAccountMetadataEntry
+   */
+  deleteAccountMetadataEntry(
+    input: DeleteAccountMetadataEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    DeleteAccountMetadataEntryRequest,
+    DeleteAccountMetadataEntryResponse
+  >;
 }
 /**
  * @generated from protobuf service soulfire.v1.InstanceService
@@ -533,5 +565,55 @@ export class InstanceServiceClient
       opt,
       input,
     );
+  }
+  /**
+   * Account metadata operations
+   *
+   * @generated from protobuf rpc: GetAccountMetadata
+   */
+  getAccountMetadata(
+    input: GetAccountMetadataRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetAccountMetadataRequest, GetAccountMetadataResponse> {
+    const method = this.methods[19],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      GetAccountMetadataRequest,
+      GetAccountMetadataResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: SetAccountMetadataEntry
+   */
+  setAccountMetadataEntry(
+    input: SetAccountMetadataEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    SetAccountMetadataEntryRequest,
+    SetAccountMetadataEntryResponse
+  > {
+    const method = this.methods[20],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      SetAccountMetadataEntryRequest,
+      SetAccountMetadataEntryResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: DeleteAccountMetadataEntry
+   */
+  deleteAccountMetadataEntry(
+    input: DeleteAccountMetadataEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    DeleteAccountMetadataEntryRequest,
+    DeleteAccountMetadataEntryResponse
+  > {
+    const method = this.methods[21],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      DeleteAccountMetadataEntryRequest,
+      DeleteAccountMetadataEntryResponse
+    >("unary", this._transport, method, opt, input);
   }
 }

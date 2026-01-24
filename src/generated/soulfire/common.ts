@@ -99,6 +99,12 @@ export interface MinecraftAccountProto {
     | {
         oneofKind: undefined;
       };
+  /**
+   * Persistent metadata stored with the account (namespace -> key -> value)
+   *
+   * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace persistent_metadata = 8
+   */
+  persistentMetadata: SettingsNamespace[];
 }
 /**
  * @generated from protobuf message soulfire.v1.MinecraftAccountProto.OnlineChainJavaData
@@ -1001,6 +1007,13 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
         oneof: "accountData",
         T: () => MinecraftAccountProto_BedrockData,
       },
+      {
+        no: 8,
+        name: "persistent_metadata",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SettingsNamespace,
+      },
     ]);
   }
   create(value?: PartialMessage<MinecraftAccountProto>): MinecraftAccountProto {
@@ -1009,6 +1022,7 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
     message.profileId = "";
     message.lastKnownName = "";
     message.accountData = { oneofKind: undefined };
+    message.persistentMetadata = [];
     if (value !== undefined)
       reflectionMergePartial<MinecraftAccountProto>(this, message, value);
     return message;
@@ -1068,6 +1082,15 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
             ),
           };
           break;
+        case /* repeated soulfire.v1.SettingsNamespace persistent_metadata */ 8:
+          message.persistentMetadata.push(
+            SettingsNamespace.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
         default:
           let u = options.readUnknownField;
           if (u === "throw")
@@ -1119,6 +1142,13 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
       MinecraftAccountProto_BedrockData.internalBinaryWrite(
         message.accountData.bedrockData,
         writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.SettingsNamespace persistent_metadata = 8; */
+    for (let i = 0; i < message.persistentMetadata.length; i++)
+      SettingsNamespace.internalBinaryWrite(
+        message.persistentMetadata[i],
+        writer.tag(8, WireType.LengthDelimited).fork(),
         options,
       ).join();
     let u = options.writeUnknownFields;

@@ -111,6 +111,14 @@
       "openButton": "Configure account",
       "pageTitle": "{{name}} - {{page}} Settings",
       "noSettings": "No settings available for this page"
+    },
+    "metadata": {
+      "openButton": "Edit Metadata",
+      "title": "Metadata: {{name}}",
+      "description": "Edit raw JSON metadata for this account. This data persists across sessions.",
+      "saveSuccess": "Metadata saved",
+      "saveError": "Failed to save metadata",
+      "invalidJson": "Invalid JSON syntax"
     }
   },
   "bots": {

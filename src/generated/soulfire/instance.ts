@@ -529,6 +529,84 @@ export interface InstanceAuditLogRequest {
   id: string;
 }
 /**
+ * Account metadata operations
+ *
+ * @generated from protobuf message soulfire.v1.GetAccountMetadataRequest
+ */
+export interface GetAccountMetadataRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string account_id = 2
+   */
+  accountId: string; // profile_id of the account
+}
+/**
+ * @generated from protobuf message soulfire.v1.GetAccountMetadataResponse
+ */
+export interface GetAccountMetadataResponse {
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace metadata = 1
+   */
+  metadata: SettingsNamespace[];
+}
+/**
+ * @generated from protobuf message soulfire.v1.SetAccountMetadataEntryRequest
+ */
+export interface SetAccountMetadataEntryRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string account_id = 2
+   */
+  accountId: string;
+  /**
+   * @generated from protobuf field: string namespace = 3
+   */
+  namespace: string;
+  /**
+   * @generated from protobuf field: string key = 4
+   */
+  key: string;
+  /**
+   * @generated from protobuf field: google.protobuf.Value value = 5
+   */
+  value?: Value;
+}
+/**
+ * @generated from protobuf message soulfire.v1.SetAccountMetadataEntryResponse
+ */
+export interface SetAccountMetadataEntryResponse {}
+/**
+ * @generated from protobuf message soulfire.v1.DeleteAccountMetadataEntryRequest
+ */
+export interface DeleteAccountMetadataEntryRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string account_id = 2
+   */
+  accountId: string;
+  /**
+   * @generated from protobuf field: string namespace = 3
+   */
+  namespace: string;
+  /**
+   * @generated from protobuf field: string key = 4
+   */
+  key: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.DeleteAccountMetadataEntryResponse
+ */
+export interface DeleteAccountMetadataEntryResponse {}
+/**
  * @generated from protobuf message soulfire.v1.InstanceAuditLogResponse
  */
 export interface InstanceAuditLogResponse {
@@ -4231,6 +4309,537 @@ class InstanceAuditLogRequest$Type extends MessageType<InstanceAuditLogRequest> 
  */
 export const InstanceAuditLogRequest = new InstanceAuditLogRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class GetAccountMetadataRequest$Type extends MessageType<GetAccountMetadataRequest> {
+  constructor() {
+    super("soulfire.v1.GetAccountMetadataRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "account_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<GetAccountMetadataRequest>,
+  ): GetAccountMetadataRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.accountId = "";
+    if (value !== undefined)
+      reflectionMergePartial<GetAccountMetadataRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetAccountMetadataRequest,
+  ): GetAccountMetadataRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string account_id */ 2:
+          message.accountId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetAccountMetadataRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string account_id = 2; */
+    if (message.accountId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.accountId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GetAccountMetadataRequest
+ */
+export const GetAccountMetadataRequest = new GetAccountMetadataRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetAccountMetadataResponse$Type extends MessageType<GetAccountMetadataResponse> {
+  constructor() {
+    super("soulfire.v1.GetAccountMetadataResponse", [
+      {
+        no: 1,
+        name: "metadata",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SettingsNamespace,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<GetAccountMetadataResponse>,
+  ): GetAccountMetadataResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.metadata = [];
+    if (value !== undefined)
+      reflectionMergePartial<GetAccountMetadataResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetAccountMetadataResponse,
+  ): GetAccountMetadataResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* repeated soulfire.v1.SettingsNamespace metadata */ 1:
+          message.metadata.push(
+            SettingsNamespace.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetAccountMetadataResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* repeated soulfire.v1.SettingsNamespace metadata = 1; */
+    for (let i = 0; i < message.metadata.length; i++)
+      SettingsNamespace.internalBinaryWrite(
+        message.metadata[i],
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GetAccountMetadataResponse
+ */
+export const GetAccountMetadataResponse = new GetAccountMetadataResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SetAccountMetadataEntryRequest$Type extends MessageType<SetAccountMetadataEntryRequest> {
+  constructor() {
+    super("soulfire.v1.SetAccountMetadataEntryRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "account_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 4, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 5, name: "value", kind: "message", T: () => Value },
+    ]);
+  }
+  create(
+    value?: PartialMessage<SetAccountMetadataEntryRequest>,
+  ): SetAccountMetadataEntryRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.accountId = "";
+    message.namespace = "";
+    message.key = "";
+    if (value !== undefined)
+      reflectionMergePartial<SetAccountMetadataEntryRequest>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SetAccountMetadataEntryRequest,
+  ): SetAccountMetadataEntryRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string account_id */ 2:
+          message.accountId = reader.string();
+          break;
+        case /* string namespace */ 3:
+          message.namespace = reader.string();
+          break;
+        case /* string key */ 4:
+          message.key = reader.string();
+          break;
+        case /* google.protobuf.Value value */ 5:
+          message.value = Value.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.value,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SetAccountMetadataEntryRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string account_id = 2; */
+    if (message.accountId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.accountId);
+    /* string namespace = 3; */
+    if (message.namespace !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.namespace);
+    /* string key = 4; */
+    if (message.key !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.key);
+    /* google.protobuf.Value value = 5; */
+    if (message.value)
+      Value.internalBinaryWrite(
+        message.value,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.SetAccountMetadataEntryRequest
+ */
+export const SetAccountMetadataEntryRequest =
+  new SetAccountMetadataEntryRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SetAccountMetadataEntryResponse$Type extends MessageType<SetAccountMetadataEntryResponse> {
+  constructor() {
+    super("soulfire.v1.SetAccountMetadataEntryResponse", []);
+  }
+  create(
+    value?: PartialMessage<SetAccountMetadataEntryResponse>,
+  ): SetAccountMetadataEntryResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<SetAccountMetadataEntryResponse>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SetAccountMetadataEntryResponse,
+  ): SetAccountMetadataEntryResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SetAccountMetadataEntryResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.SetAccountMetadataEntryResponse
+ */
+export const SetAccountMetadataEntryResponse =
+  new SetAccountMetadataEntryResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DeleteAccountMetadataEntryRequest$Type extends MessageType<DeleteAccountMetadataEntryRequest> {
+  constructor() {
+    super("soulfire.v1.DeleteAccountMetadataEntryRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "account_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 4, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<DeleteAccountMetadataEntryRequest>,
+  ): DeleteAccountMetadataEntryRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.accountId = "";
+    message.namespace = "";
+    message.key = "";
+    if (value !== undefined)
+      reflectionMergePartial<DeleteAccountMetadataEntryRequest>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DeleteAccountMetadataEntryRequest,
+  ): DeleteAccountMetadataEntryRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string account_id */ 2:
+          message.accountId = reader.string();
+          break;
+        case /* string namespace */ 3:
+          message.namespace = reader.string();
+          break;
+        case /* string key */ 4:
+          message.key = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DeleteAccountMetadataEntryRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string account_id = 2; */
+    if (message.accountId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.accountId);
+    /* string namespace = 3; */
+    if (message.namespace !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.namespace);
+    /* string key = 4; */
+    if (message.key !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.key);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DeleteAccountMetadataEntryRequest
+ */
+export const DeleteAccountMetadataEntryRequest =
+  new DeleteAccountMetadataEntryRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DeleteAccountMetadataEntryResponse$Type extends MessageType<DeleteAccountMetadataEntryResponse> {
+  constructor() {
+    super("soulfire.v1.DeleteAccountMetadataEntryResponse", []);
+  }
+  create(
+    value?: PartialMessage<DeleteAccountMetadataEntryResponse>,
+  ): DeleteAccountMetadataEntryResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<DeleteAccountMetadataEntryResponse>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DeleteAccountMetadataEntryResponse,
+  ): DeleteAccountMetadataEntryResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DeleteAccountMetadataEntryResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DeleteAccountMetadataEntryResponse
+ */
+export const DeleteAccountMetadataEntryResponse =
+  new DeleteAccountMetadataEntryResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class InstanceAuditLogResponse$Type extends MessageType<InstanceAuditLogResponse> {
   constructor() {
     super("soulfire.v1.InstanceAuditLogResponse", [
@@ -4565,5 +5174,23 @@ export const InstanceService = new ServiceType("soulfire.v1.InstanceService", [
     options: {},
     I: InstanceAuditLogRequest,
     O: InstanceAuditLogResponse,
+  },
+  {
+    name: "GetAccountMetadata",
+    options: {},
+    I: GetAccountMetadataRequest,
+    O: GetAccountMetadataResponse,
+  },
+  {
+    name: "SetAccountMetadataEntry",
+    options: {},
+    I: SetAccountMetadataEntryRequest,
+    O: SetAccountMetadataEntryResponse,
+  },
+  {
+    name: "DeleteAccountMetadataEntry",
+    options: {},
+    I: DeleteAccountMetadataEntryRequest,
+    O: DeleteAccountMetadataEntryResponse,
   },
 ]);

@@ -1,6 +1,8 @@
 {
   "locale": "Locale",
   "cancel": "Cancel",
+  "save": "Save",
+  "saving": "Saving...",
   "error": {
     "noAddressOrToken": "No server address or token found",
     "page": {

@@ -7,6 +7,7 @@ import {
 import { createFileRoute } from "@tanstack/react-router";
 import type { ColumnDef, Table as ReactTable } from "@tanstack/react-table";
 import {
+  BracesIcon,
   KeyRoundIcon,
   MonitorSmartphoneIcon,
   PlusIcon,
@@ -35,6 +36,7 @@ import {
 import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
 import { AccountConfigDialog } from "@/components/dialog/account-config-dialog.tsx";
+import { AccountMetadataDialog } from "@/components/dialog/account-metadata-dialog.tsx";
 import GenerateAccountsDialog from "@/components/dialog/generate-accounts-dialog.tsx";
 import ImportDialog from "@/components/dialog/import-dialog.tsx";
 import { ExternalLink } from "@/components/external-link.tsx";
@@ -209,9 +211,10 @@ const accountTypeToIcon = (
 function ActionsCell({ account }: { account: ProfileAccount }) {
   const { t } = useTranslation("instance");
   const [configOpen, setConfigOpen] = useState(false);
+  const [metadataOpen, setMetadataOpen] = useState(false);
 
   return (
-    <>
+    <div className="flex items-center">
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
@@ -226,12 +229,31 @@ function ActionsCell({ account }: { account: ProfileAccount }) {
         </TooltipTrigger>
         <TooltipContent>{t("account.config.openButton")}</TooltipContent>
       </Tooltip>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-8"
+            onClick={() => setMetadataOpen(true)}
+          >
+            <BracesIcon className="size-4" />
+            <span className="sr-only">{t("account.metadata.openButton")}</span>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>{t("account.metadata.openButton")}</TooltipContent>
+      </Tooltip>
       <AccountConfigDialog
         account={account}
         open={configOpen}
         onOpenChange={setConfigOpen}
       />
-    </>
+      <AccountMetadataDialog
+        account={account}
+        open={metadataOpen}
+        onOpenChange={setMetadataOpen}
+      />
+    </div>
   );
 }
 
@@ -311,7 +333,7 @@ const columns: ColumnDef<ProfileAccount>[] = [
     id: "actions",
     header: () => <span className="sr-only">Actions</span>,
     cell: ({ row }) => <ActionsCell account={row.original} />,
-    size: 48,
+    size: 80,
     enableSorting: false,
     enableHiding: false,
   },
