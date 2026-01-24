@@ -106,44 +106,82 @@
       "lastKnownName": "Nom d´utilisateur"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "Configurer {{name}}",
+      "description": "Configurer les paramètres par bot pour ce compte",
+      "openButton": "Configurer le compte",
+      "pageTitle": "Paramètres {{name}} - {{page}}",
+      "noSettings": "Aucun paramètre disponible pour cette page"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "Rechercher des bots...",
+    "onlineCount": "{{online}} en ligne / {{total}} au total",
+    "noBots": "Aucun bot configuré. Ajoutez des comptes depuis la page Paramètres du compte.",
+    "noBotsFound": "Aucun bot ne correspond à votre recherche.",
+    "online": "En ligne",
     "offline": "Hors-ligne",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "Retour aux Bots",
+    "comingSoon": "Bientôt disponible",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "Position & Rotation",
+      "position": "Position",
+      "rotation": "Rotation",
+      "offline": "Le bot est hors ligne. Les données de position ne sont disponibles que lorsque le bot est connecté."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "Messages du chat",
+      "description": "Les messages de chat de ce bot apparaîtront ici lors d'une future mise à jour."
     },
     "commandPanel": {
+      "title": "Commandes du bot",
+      "placeholder": "Envoyer une commande à ce bot...",
+      "description": "Les commandes limitées à ce bot seront disponibles lors d'une prochaine mise à jour."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "Inventaire",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "Fermer",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

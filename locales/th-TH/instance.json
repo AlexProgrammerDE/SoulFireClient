@@ -106,44 +106,82 @@
       "lastKnownName": "ชื่อผู้ใช้"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "กำหนดค่า {{name}}",
+      "description": "กำหนดค่าบ็อตแต่ละตัวสำหรับบัญชีนี้",
+      "openButton": "กำหนดค่าบัญชี",
+      "pageTitle": "{{name}} - การตั้งค่า {{page}}",
+      "noSettings": "ไม่มีการตั้งค่าสำหรับหน้านี้"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "ค้นหาบ็อต...",
+    "onlineCount": "{{online}} ออนไลน์ / {{total}} ทั้งหมด",
+    "noBots": "ไม่มีบอทที่ถูกตั้งค่า เพิ่มบัญชีจากหน้าการตั้งค่าบัญชีผู้ใช้",
+    "noBotsFound": "ไม่พบบอทที่ตรงกับการค้นหาของคุณ",
+    "online": "ออนไลน์",
     "offline": "ออฟไลน์",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "กลับไปที่บอท",
+    "comingSoon": "เร็วๆ นี้",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "ตำแหน่ง & การหมุน",
+      "position": "ตำแหน่ง",
+      "rotation": "การหมุน",
+      "offline": "บอทออฟไลน์ ข้อมูลตำแหน่งจะแสดงเฉพาะเมื่อบอทเชื่อมต่อแล้วเท่านั้น"
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "ข้อความแชท",
+      "description": "ข้อความแชทจากบอทนี้จะแสดงที่นี่ในการอัปเดตถัดไป"
     },
     "commandPanel": {
+      "title": "คำสั่งบอท",
+      "placeholder": "ส่งคำสั่งไปยังบอทนี้...",
+      "description": "คำสั่งที่ใช้เฉพาะบอทนี้จะพร้อมใช้งานในการอัปเดตถัดไป"
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "อินเวนทอรี",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "ปิด",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

@@ -97,28 +97,28 @@
     "pause": "Pozastavit",
     "stop": "Zastavit",
     "startToast": {
-      "loading": "Spouštím relaci...",
-      "success": "Relace byla úspěšně spuštěna",
-      "error": "Nepodařilo se spustit relaci"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Pokračuji v relaci...",
-      "success": "Relace byla úspěšně obnovena",
-      "error": "Nepodařilo se pokračovat v relaci"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Pozastavuji relaci...",
-      "success": "Relace byla úspěšně pozastavena",
-      "error": "Nepodařilo se pozastavit relaci"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Zastavuji relaci...",
-      "success": "Relace byla úspěšně zastavena",
-      "error": "Nepodařilo se zastavit relaci"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Žádné účty nejsou nastaveny",
-      "noAccountsDescription": "Než zahájíte relaci, musíte mít importované účty. Požadováno: {{required}} botů.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "Nedostatek účtů",
       "notEnoughDescription": "Požadovali jste {{required}} botů, ale máte importováno pouze {{available}} účtů.",
       "hint": "Můžete vygenerovat offline účty nebo importovat účty na stránce Nastavení účtu.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Ovládací prvky",
     "overview": "Přehled",
     "terminal": "Terminál",
-    "bots": "",
+    "bots": "Boti",
     "audit-log": "Audit log",
     "settingsGroup": "Nastavení",
     "pluginsGroup": "Pluginy",
@@ -279,15 +279,15 @@
     "settings": "Nastavení",
     "controls": "Ovládací prvky",
     "plugins": "Pluginy",
-    "bots": ""
+    "bots": "Boti"
   },
   "noInstancesFound": "Nebyly nalezeny žádné instance",
   "pageName": {
     "terminal": "Terminál",
     "logs": "Logy",
     "audit-log": "Audit log",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Boti",
+    "botDetail": "Podrobnosti o botu",
     "instances": "Instance",
     "access": "Přístup",
     "settings": "Nastavení",
@@ -356,10 +356,10 @@
     "action": "Akce",
     "timestamp": "Časové razítko",
     "executedCommand": "Proveden příkaz: {{data}}",
-    "startedSession": "Zahájena relace",
-    "resumedSession": "Obnovena relace",
-    "pausedSession": "Pozastavena relace",
-    "stoppedSession": "Ukončena relace"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Vyberte datum",
   "scripts": {

@@ -106,44 +106,82 @@
       "lastKnownName": "Kullanıcı Adı"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "{{name}} Yapılandır",
+      "description": "Bu hesap için bot başına ayarları yapılandırın",
+      "openButton": "Hesabı yapılandır",
+      "pageTitle": "{{name}} - {{page}} Ayarları",
+      "noSettings": "Bu sayfa için ayar mevcut değil"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "Botlarda ara...",
+    "onlineCount": "{{online}} çevrim içi / {{total}} toplamı",
+    "noBots": "Hiç bot yapılandırılmadı. Hesaplarınızı Hesap Ayarları sayfasından ekleyin.",
+    "noBotsFound": "Aramanıza uyan bot bulunamadı.",
+    "online": "Çevrim içi",
     "offline": "Çevrimdışı",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "Botlara Geri Dön",
+    "comingSoon": "Çok Yakında",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "Konum ve Rotasyon",
+      "position": "Konum",
+      "rotation": "Rotasyon",
+      "offline": "Bot çevrim dışı. Konum verileri yalnızca bot bağlıyken görüntülenebilir."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "Sohbet Mesajları",
+      "description": "Bu bota ait sohbet mesajları gelecekteki bir güncellemede burada görünecek."
     },
     "commandPanel": {
+      "title": "Bot Komutları",
+      "placeholder": "Bu bota komut gönder...",
+      "description": "Bota özel komutlar gelecekteki bir güncellemede sunulacak."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "Envanter",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "Kapat",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

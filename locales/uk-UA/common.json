@@ -97,28 +97,28 @@
     "pause": "Призупинити",
     "stop": "Зупинити",
     "startToast": {
-      "loading": "Початок сесії...",
-      "success": "Сесію успішно розпочато",
-      "error": "Не вдалося почати сесію"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Відновлення сесії...",
-      "success": "Сесію успішно відновлено",
-      "error": "Не вдалося відновити сесію"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Призупинення сесії...",
-      "success": "Сесію успішно призупинено",
-      "error": "Не вдалося призупинити сесію"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Зупинка сесії...",
-      "success": "Сесію успішно зупинено",
-      "error": "Не вдалося зупинити сесію"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Облікові записи не налаштовано",
-      "noAccountsDescription": "Потрібно імпортувати облікові записи перед початком сесії. Ви запросили {{required}} ботів.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "Недостатньо облікових записів",
       "notEnoughDescription": "Ви запросили {{required}} ботів, але імпортовано лише {{available}} облікових записів.",
       "hint": "Ви можете згенерувати офлайн-акаунти або імпортувати облікові записи на сторінці налаштувань облікового запису.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Керування",
     "overview": "Огляд",
     "terminal": "Термінал",
-    "bots": "",
+    "bots": "Боти",
     "audit-log": "Аудит-лог",
     "settingsGroup": "Налаштування",
     "pluginsGroup": "Плагіни",
@@ -279,15 +279,15 @@
     "settings": "Налаштування",
     "controls": "Керування",
     "plugins": "Плагіни",
-    "bots": ""
+    "bots": "Боти"
   },
   "noInstancesFound": "Екземпляри не знайдено",
   "pageName": {
     "terminal": "Термінал",
     "logs": "Журнали відповідності діяльності або доступу користувачів",
     "audit-log": "Аудит-лог",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Боти",
+    "botDetail": "Деталі бота",
     "instances": "Екземпляри",
     "access": "Доступ",
     "settings": "Налаштування",
@@ -356,10 +356,10 @@
     "action": "Дія",
     "timestamp": "Час",
     "executedCommand": "Виконана команда: {{data}}",
-    "startedSession": "Запущено сесію",
-    "resumedSession": "Відновлено сесію",
-    "pausedSession": "Призупинено сесію",
-    "stoppedSession": "Зупинено сесію"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Оберіть дату",
   "scripts": {

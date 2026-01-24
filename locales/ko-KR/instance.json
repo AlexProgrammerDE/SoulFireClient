@@ -106,44 +106,82 @@
       "lastKnownName": "사용자 이름"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "{{name}} 설정하기",
+      "description": "이 계정의 봇별 설정을 구성하세요",
+      "openButton": "계정 설정",
+      "pageTitle": "{{name}} - {{page}} 설정",
+      "noSettings": "이 페이지에 사용할 수 있는 설정이 없습니다"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "봇 검색...",
+    "onlineCount": "{{online}}명 온라인 / 총 {{total}}명",
+    "noBots": "설정된 봇이 없습니다. 계정 설정 페이지에서 계정을 추가하세요.",
+    "noBotsFound": "검색 결과에 맞는 봇이 없습니다.",
+    "online": "온라인",
     "offline": "오프라인",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "봇 목록으로 돌아가기",
+    "comingSoon": "곧 출시 예정",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "위치 및 회전",
+      "position": "위치",
+      "rotation": "회전",
+      "offline": "봇이 오프라인입니다. 위치 데이터는 봇이 연결되어 있을 때만 볼 수 있습니다."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "채팅 메시지",
+      "description": "이 봇의 채팅 메시지는 향후 업데이트에서 여기 표시됩니다."
     },
     "commandPanel": {
+      "title": "봇 명령어",
+      "placeholder": "이 봇에 명령어 전송...",
+      "description": "봇 전용 명령어는 다음 업데이트에서 제공될 예정입니다."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "인벤토리",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "닫기",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

@@ -106,44 +106,82 @@
       "lastKnownName": "Uživatelské jméno"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "Nastavit {{name}}",
+      "description": "Nastavit nastavení pro jednotlivé boty tohoto účtu",
+      "openButton": "Nastavit účet",
+      "pageTitle": "Nastavení {{name}} – {{page}}",
+      "noSettings": "Pro tuto stránku nejsou k dispozici žádná nastavení"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "Vyhledat boty...",
+    "onlineCount": "{{online}} online / {{total}} celkem",
+    "noBots": "Žádné boty nejsou nastaveny. Přidejte účty na stránce Nastavení účtu.",
+    "noBotsFound": "Žádní boti neodpovídají vašemu hledání.",
+    "online": "Online",
     "offline": "Offline",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "Zpět na boty",
+    "comingSoon": "Již brzy",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "Pozice a rotace",
+      "position": "Pozice",
+      "rotation": "Rotace",
+      "offline": "Bot je offline. Údaje o pozici jsou k dispozici pouze, když je bot připojen."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "Zprávy chatu",
+      "description": "Zprávy chatu od tohoto bota se zde objeví v některé z příštích aktualizací."
     },
     "commandPanel": {
+      "title": "Příkazy bota",
+      "placeholder": "Odeslat příkaz tomuto botovi...",
+      "description": "Příkazy specifické pro bota budou dostupné v některé z příštích aktualizací."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "Inventář",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "Zavřít",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

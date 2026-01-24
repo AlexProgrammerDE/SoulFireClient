@@ -106,44 +106,82 @@
       "lastKnownName": "使用者名稱"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "設定 {{name}}",
+      "description": "為此帳號設定每個機器人專屬的設定",
+      "openButton": "設定帳號",
+      "pageTitle": "{{name}} - {{page}} 設定",
+      "noSettings": "此頁面沒有可用的設定"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "搜尋機器人...",
+    "onlineCount": "{{online}} 位在線 / 共 {{total}} 位",
+    "noBots": "沒有已設定的機器人。請至帳戶設定頁面新增帳號。",
+    "noBotsFound": "沒有符合搜尋條件的機器人。",
+    "online": "在線",
     "offline": "離線",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "返回機器人列表",
+    "comingSoon": "即將推出",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "位置與旋轉",
+      "position": "位置",
+      "rotation": "旋轉",
+      "offline": "機器人離線時僅能查看位置資料，僅在連線時可用。"
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "聊天訊息",
+      "description": "來自此機器人的聊天訊息將在後續更新中顯示於此。"
     },
     "commandPanel": {
+      "title": "機器人指令",
+      "placeholder": "傳送指令給此機器人...",
+      "description": "僅限機器人的指令將在後續更新中提供。"
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "物品欄",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "關閉",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

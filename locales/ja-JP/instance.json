@@ -106,44 +106,82 @@
       "lastKnownName": "ユーザー名"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "{{name}}の設定を構成する",
+      "description": "このアカウントのボットごとの設定を構成します",
+      "openButton": "アカウントを設定する",
+      "pageTitle": "{{name}} - {{page}}の設定",
+      "noSettings": "このページには設定がありません"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "ボットを検索...",
+    "onlineCount": "{{online}} 人がオンライン / 合計 {{total}} 人",
+    "noBots": "ボットが設定されていません。アカウント設定ページからアカウントを追加してください。",
+    "noBotsFound": "検索条件に一致するボットが見つかりません。",
+    "online": "オンライン",
     "offline": "オフライン",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "ボット一覧に戻る",
+    "comingSoon": "近日公開",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "位置 & 回転",
+      "position": "位置",
+      "rotation": "回転",
+      "offline": "ボットはオフラインです。位置データはボットが接続中のみ利用可能です。"
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "チャットメッセージ",
+      "description": "このボットのチャットメッセージは今後のアップデートでここに表示されます。"
     },
     "commandPanel": {
+      "title": "ボットコマンド",
+      "placeholder": "このボットにコマンドを送信...",
+      "description": "ボット専用コマンドは今後のアップデートで利用可能になります。"
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "インベントリ",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "閉じる",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

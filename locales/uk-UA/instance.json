@@ -106,44 +106,82 @@
       "lastKnownName": "Ім'я користувача"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "Налаштувати {{name}}",
+      "description": "Налаштуйте окремі параметри ботів для цього акаунта",
+      "openButton": "Налаштувати акаунт",
+      "pageTitle": "Налаштування {{name}} — {{page}}",
+      "noSettings": "Немає налаштувань для цієї сторінки"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "Пошук ботів...",
+    "onlineCount": "{{online}} онлайн / {{total}} всього",
+    "noBots": "Ботів не налаштовано. Додайте облікові записи на сторінці налаштувань акаунтів.",
+    "noBotsFound": "Жоден бот не відповідає вашому запиту.",
+    "online": "Онлайн",
     "offline": "Офлайн",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "Повернутися до ботів",
+    "comingSoon": "Незабаром",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "Позиція та обертання",
+      "position": "Позиція",
+      "rotation": "Обертання",
+      "offline": "Бот офлайн. Дані про позицію доступні лише коли бот підключений."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "Чат-повідомлення",
+      "description": "Чат-повідомлення від цього бота з’являться тут у майбутньому оновленні."
     },
     "commandPanel": {
+      "title": "Команди бота",
+      "placeholder": "Надіслати команду цьому боту...",
+      "description": "Команди з обмеженим доступом до бота будуть доступні у майбутньому оновленні."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "Інвентар",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "Закрити",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

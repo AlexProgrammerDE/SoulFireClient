@@ -97,28 +97,28 @@
     "pause": "Wstrzymaj",
     "stop": "Zatrzymaj",
     "startToast": {
-      "loading": "Rozpoczynanie sesji...",
-      "success": "Sesja rozpoczęta pomyślnie",
-      "error": "Nie udało się rozpocząć sesji"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Wznawiam sesję...",
-      "success": "Sesja wznowiona pomyślnie",
-      "error": "Nie udało się wznowić sesji"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Wstrzymywanie sesji...",
-      "success": "Sesja wstrzymana pomyślnie",
-      "error": "Nie udało się wstrzymać sesji"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Zatrzymywanie sesji...",
-      "success": "Sesja zatrzymana pomyślnie",
-      "error": "Nie udało się zatrzymać sesji"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Brak skonfigurowanych kont",
-      "noAccountsDescription": "Musisz zaimportować konta przed rozpoczęciem sesji. Poprosiłeś o {{required}} botów.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "Za mało kont",
       "notEnoughDescription": "Poprosiłeś o {{required}} botów, ale masz zaimportowane tylko {{available}} kont.",
       "hint": "Możesz wygenerować konta offline lub zaimportować konta na stronie Ustawienia konta.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Sterowanie",
     "overview": "Przegląd",
     "terminal": "Konsola",
-    "bots": "",
+    "bots": "Boty",
     "audit-log": "Dziennik zdarzeń",
     "settingsGroup": "Ustawienia",
     "pluginsGroup": "Wtyczki",
@@ -279,15 +279,15 @@
     "settings": "Ustawienia",
     "controls": "Sterowanie",
     "plugins": "Wtyczki",
-    "bots": ""
+    "bots": "Boty"
   },
   "noInstancesFound": "Nie znaleziono instancji",
   "pageName": {
     "terminal": "Konsola",
     "logs": "Logi",
     "audit-log": "Dziennik zdarzeń",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Boty",
+    "botDetail": "Szczegóły bota",
     "instances": "Instancje",
     "access": "Dostęp",
     "settings": "Ustawienia",
@@ -356,10 +356,10 @@
     "action": "Akcja",
     "timestamp": "Znacznik czasu",
     "executedCommand": "Wykonano polecenie: {{data}}",
-    "startedSession": "Rozpoczął sesję",
-    "resumedSession": "Wznowił sesję",
-    "pausedSession": "Wstrzymał sesję",
-    "stoppedSession": "Zatrzymał sesję"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Wybierz datę",
   "scripts": {

@@ -97,28 +97,28 @@
     "pause": "Pausa",
     "stop": "Ferma",
     "startToast": {
-      "loading": "Avvio sessione...",
-      "success": "Sessione avviata con successo",
-      "error": "Impossibile avviare la sessione"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Ripresa sessione...",
-      "success": "Sessione ripresa con successo",
-      "error": "Impossibile riprendere la sessione"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Messa in pausa della sessione...",
-      "success": "Sessione messa in pausa con successo",
-      "error": "Impossibile mettere in pausa la sessione"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Arresto della sessione...",
-      "success": "Sessione arrestata con successo",
-      "error": "Impossibile arrestare la sessione"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Nessun account configurato",
-      "noAccountsDescription": "Devi importare gli account prima di avviare una sessione. Hai richiesto {{required}} bot.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "Account insufficienti",
       "notEnoughDescription": "Hai richiesto {{required}} bot ma hai importato solo {{available}} account.",
       "hint": "Puoi generare account offline o importarli dalla pagina delle impostazioni account.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Controlli",
     "overview": "Panoramica",
     "terminal": "Terminale",
-    "bots": "",
+    "bots": "Bot",
     "audit-log": "Registro di audit",
     "settingsGroup": "Impostazioni",
     "pluginsGroup": "Plugin",
@@ -279,15 +279,15 @@
     "settings": "Impostazioni",
     "controls": "Controlli",
     "plugins": "Plugin",
-    "bots": ""
+    "bots": "Bot"
   },
   "noInstancesFound": "Nessuna istanza trovata",
   "pageName": {
     "terminal": "Terminale",
     "logs": "Log",
     "audit-log": "Registro di audit",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Bot",
+    "botDetail": "Dettagli Bot",
     "instances": "Istanze",
     "access": "Accesso",
     "settings": "Impostazioni",
@@ -356,10 +356,10 @@
     "action": "Azione",
     "timestamp": "Data e ora",
     "executedCommand": "Comando eseguito: {{data}}",
-    "startedSession": "Sessione avviata",
-    "resumedSession": "Sessione ripresa",
-    "pausedSession": "Sessione messa in pausa",
-    "stoppedSession": "Sessione arrestata"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Scegli una data",
   "scripts": {

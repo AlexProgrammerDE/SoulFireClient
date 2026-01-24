@@ -106,44 +106,82 @@
       "lastKnownName": "Benutzername"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "{{name}} konfigurieren",
+      "description": "Pro-Bot-Einstellungen für dieses Konto konfigurieren",
+      "openButton": "Konto konfigurieren",
+      "pageTitle": "{{name}} - {{page}} Einstellungen",
+      "noSettings": "Für diese Seite sind keine Einstellungen verfügbar"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "Bots suchen...",
+    "onlineCount": "{{online}} online / {{total}} gesamt",
+    "noBots": "Keine Bots konfiguriert. Fügen Sie Konten auf der Seite Kontoeinstellungen hinzu.",
+    "noBotsFound": "Keine Bots entsprechen Ihrer Suche.",
+    "online": "Online",
     "offline": "Offline",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "Zurück zu Bots",
+    "comingSoon": "Demnächst verfügbar",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "Position & Rotation",
+      "position": "Position",
+      "rotation": "Rotation",
+      "offline": "Bot ist offline. Positionsdaten sind nur verfügbar, wenn der Bot verbunden ist."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "Chat-Nachrichten",
+      "description": "Chat-Nachrichten dieses Bots werden in einem zukünftigen Update hier angezeigt."
     },
     "commandPanel": {
+      "title": "Bot-Befehle",
+      "placeholder": "Befehl an diesen Bot senden...",
+      "description": "Bot-spezifische Befehle werden in einem zukünftigen Update verfügbar sein."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "Inventar",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "Schließen",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

@@ -97,28 +97,28 @@
     "pause": "Pauzeren",
     "stop": "Stoppen",
     "startToast": {
-      "loading": "Sessie starten...",
-      "success": "Sessie succesvol gestart",
-      "error": "Starten van sessie mislukt"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "resumeToast": {
-      "loading": "Sessie hervatten...",
-      "success": "Sessie succesvol hervat",
-      "error": "Hervatten van sessie mislukt"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "pauseToast": {
-      "loading": "Sessie pauzeren...",
-      "success": "Sessie succesvol gepauzeerd",
-      "error": "Pauzeren van sessie mislukt"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "stopToast": {
-      "loading": "Sessie stoppen...",
-      "success": "Sessie succesvol gestopt",
-      "error": "Stoppen van sessie mislukt"
+      "loading": "",
+      "success": "",
+      "error": ""
     },
     "accountWarning": {
       "noAccountsTitle": "Geen accounts geconfigureerd",
-      "noAccountsDescription": "Je moet accounts geïmporteerd hebben voordat je een sessie kunt starten. Je hebt {{required}} bots aangevraagd.",
+      "noAccountsDescription": "",
       "notEnoughTitle": "Niet genoeg accounts",
       "notEnoughDescription": "Je hebt {{required}} bots aangevraagd maar slechts {{available}} accounts geïmporteerd.",
       "hint": "Je kunt offline accounts genereren of accounts importeren vanaf de pagina Accountinstellingen.",
@@ -218,7 +218,7 @@
     "controlsGroup": "Bediening",
     "overview": "Overzicht",
     "terminal": "Terminal",
-    "bots": "",
+    "bots": "Bots",
     "audit-log": "Auditlogboek",
     "settingsGroup": "Instellingen",
     "pluginsGroup": "Plug-ins",
@@ -279,15 +279,15 @@
     "settings": "Instellingen",
     "controls": "Bediening",
     "plugins": "Plug-ins",
-    "bots": ""
+    "bots": "Bots"
   },
   "noInstancesFound": "Geen instanties gevonden",
   "pageName": {
     "terminal": "Terminal",
     "logs": "Logs",
     "audit-log": "Auditlogboek",
-    "bots": "",
-    "botDetail": "",
+    "bots": "Bots",
+    "botDetail": "Botgegevens",
     "instances": "Instanties",
     "access": "Toegang",
     "settings": "Instellingen",
@@ -356,10 +356,10 @@
     "action": "Actie",
     "timestamp": "Tijdstempel",
     "executedCommand": "Uitgevoerd commando: {{data}}",
-    "startedSession": "Een sessie gestart",
-    "resumedSession": "Een sessie hervat",
-    "pausedSession": "Een sessie gepauzeerd",
-    "stoppedSession": "Een sessie gestopt"
+    "startedSession": "",
+    "resumedSession": "",
+    "pausedSession": "",
+    "stoppedSession": ""
   },
   "pickADate": "Selecteer een datum",
   "scripts": {

@@ -106,44 +106,82 @@
       "lastKnownName": "Nazwa użytkownika"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "Konfiguruj {{name}}",
+      "description": "Skonfiguruj ustawienia dla tego konta osobno dla każdego bota",
+      "openButton": "Skonfiguruj konto",
+      "pageTitle": "{{name}} - Ustawienia {{page}}",
+      "noSettings": "Brak dostępnych ustawień dla tej strony"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "Szukaj botów...",
+    "onlineCount": "{{online}} online / {{total}} ogółem",
+    "noBots": "Brak skonfigurowanych botów. Dodaj konta na stronie Ustawienia kont.",
+    "noBotsFound": "Brak botów pasujących do Twojego wyszukiwania.",
+    "online": "Online",
     "offline": "Niedostępny",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "Powrót do botów",
+    "comingSoon": "Wkrótce dostępne",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "Pozycja i obrót",
+      "position": "Pozycja",
+      "rotation": "Obrót",
+      "offline": "Bot jest offline. Dane o pozycji są dostępne tylko, gdy bot jest połączony."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "Wiadomości na czacie",
+      "description": "Wiadomości czatu od tego bota pojawią się tutaj w przyszłej aktualizacji."
     },
     "commandPanel": {
+      "title": "Polecenia bota",
+      "placeholder": "Wyślij polecenie do tego bota...",
+      "description": "Polecenia ograniczone do botów będą dostępne w przyszłej aktualizacji."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "Ekwipunek",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "Zamknij",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }

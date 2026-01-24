@@ -106,44 +106,82 @@
       "lastKnownName": "Användarnamn"
     },
     "config": {
-      "title": "",
-      "description": "",
-      "openButton": "",
-      "pageTitle": "",
-      "noSettings": ""
+      "title": "Konfigurera {{name}}",
+      "description": "Konfigurera inställningar per bot för detta konto",
+      "openButton": "Konfigurera konto",
+      "pageTitle": "{{name}} - {{page}} Inställningar",
+      "noSettings": "Inga inställningar tillgängliga för denna sida"
     }
   },
   "bots": {
-    "searchPlaceholder": "",
-    "onlineCount": "",
-    "noBots": "",
-    "noBotsFound": "",
-    "online": "",
+    "searchPlaceholder": "Sök bland botar...",
+    "onlineCount": "{{online}} online / {{total}} totalt",
+    "noBots": "Inga botar konfigurerade. Lägg till konton från sidan Kontoinställningar.",
+    "noBotsFound": "Inga botar matchar din sökning.",
+    "online": "Online",
     "offline": "Offline",
-    "backToBots": "",
-    "comingSoon": "",
+    "notJoined": "",
+    "backToBots": "Tillbaka till Botar",
+    "comingSoon": "Kommer snart",
+    "terminalPanel": {
+      "title": ""
+    },
     "positionPanel": {
-      "title": "",
-      "position": "",
-      "rotation": "",
-      "offline": ""
+      "title": "Position & Rotation",
+      "position": "Position",
+      "rotation": "Rotation",
+      "offline": "Bot är offline. Positionsdata är endast tillgänglig när boten är ansluten."
     },
     "chatPanel": {
-      "title": "",
-      "description": ""
+      "title": "Chattmeddelanden",
+      "description": "Chattmeddelanden från denna bot kommer att visas här i en framtida uppdatering."
     },
     "commandPanel": {
+      "title": "Botkommandon",
+      "placeholder": "Skicka kommando till denna bot...",
+      "description": "Kommandon med bot-omfattning kommer att vara tillgängliga i en framtida uppdatering."
+    },
+    "povPanel": {
       "title": "",
-      "placeholder": "",
-      "description": ""
+      "capture": "",
+      "refresh": "",
+      "clickToCapture": "",
+      "offline": ""
+    },
+    "statsPanel": {
+      "title": "",
+      "health": "",
+      "food": "",
+      "saturation": "",
+      "experience": "",
+      "level": "",
+      "toNextLevel": "",
+      "offline": ""
     },
     "inventoryPanel": {
-      "title": "",
-      "description": ""
+      "title": "Inventory",
+      "hotbar": "",
+      "main": "",
+      "items": "",
+      "carrying": "",
+      "dropOne": "",
+      "dropAll": "",
+      "closeContainer": "Stäng",
+      "openInventory": "",
+      "clickHint": "",
+      "offline": ""
     },
     "visualPanel": {
       "title": "",
-      "description": ""
+      "compass": "",
+      "lookDirection": "",
+      "lookingUp": "",
+      "lookingDown": "",
+      "lookingStraight": "",
+      "worldInfo": "",
+      "dimension": "",
+      "biome": "",
+      "offline": ""
     }
   }
 }
