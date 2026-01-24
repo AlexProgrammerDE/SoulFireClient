@@ -173,7 +173,7 @@
       "dropOne": "Drop One",
       "dropAll": "Drop All",
       "closeContainer": "Close",
-      "clickHint": "Left click: pick up/place | Right click: half/one | Shift+click: quick move",
+      "clickHint": "Left click: pick up/place | Right click: half/one | Shift+click: quick move | Middle click: select hotbar slot",
       "offline": "Bot is offline. Inventory is only available when the bot is connected.",
       "buttons": {
         "stonecutterRecipes": "Recipes",

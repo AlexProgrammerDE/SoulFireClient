@@ -641,6 +641,38 @@ export interface BotSetContainerTextResponse {
   error?: string;
 }
 /**
+ * Change the selected hotbar slot (0-8)
+ *
+ * @generated from protobuf message soulfire.v1.BotSetHotbarSlotRequest
+ */
+export interface BotSetHotbarSlotRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+  /**
+   * @generated from protobuf field: int32 slot = 3
+   */
+  slot: number; // Hotbar slot index (0-8)
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotSetHotbarSlotResponse
+ */
+export interface BotSetHotbarSlotResponse {
+  /**
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+  /**
+   * @generated from protobuf field: optional string error = 2
+   */
+  error?: string;
+}
+/**
  * Body element types
  *
  * @generated from protobuf message soulfire.v1.DialogBodyElement
@@ -4663,6 +4695,181 @@ class BotSetContainerTextResponse$Type extends MessageType<BotSetContainerTextRe
 export const BotSetContainerTextResponse =
   new BotSetContainerTextResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class BotSetHotbarSlotRequest$Type extends MessageType<BotSetHotbarSlotRequest> {
+  constructor() {
+    super("soulfire.v1.BotSetHotbarSlotRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "slot", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotSetHotbarSlotRequest>,
+  ): BotSetHotbarSlotRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    message.slot = 0;
+    if (value !== undefined)
+      reflectionMergePartial<BotSetHotbarSlotRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotSetHotbarSlotRequest,
+  ): BotSetHotbarSlotRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        case /* int32 slot */ 3:
+          message.slot = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotSetHotbarSlotRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    /* int32 slot = 3; */
+    if (message.slot !== 0) writer.tag(3, WireType.Varint).int32(message.slot);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotSetHotbarSlotRequest
+ */
+export const BotSetHotbarSlotRequest = new BotSetHotbarSlotRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotSetHotbarSlotResponse$Type extends MessageType<BotSetHotbarSlotResponse> {
+  constructor() {
+    super("soulfire.v1.BotSetHotbarSlotResponse", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 2,
+        name: "error",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotSetHotbarSlotResponse>,
+  ): BotSetHotbarSlotResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotSetHotbarSlotResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotSetHotbarSlotResponse,
+  ): BotSetHotbarSlotResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        case /* optional string error */ 2:
+          message.error = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotSetHotbarSlotResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    /* optional string error = 2; */
+    if (message.error !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.error);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotSetHotbarSlotResponse
+ */
+export const BotSetHotbarSlotResponse = new BotSetHotbarSlotResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class DialogBodyElement$Type extends MessageType<DialogBodyElement> {
   constructor() {
     super("soulfire.v1.DialogBodyElement", [
@@ -7764,6 +7971,12 @@ export const BotService = new ServiceType("soulfire.v1.BotService", [
     options: {},
     I: BotSetContainerTextRequest,
     O: BotSetContainerTextResponse,
+  },
+  {
+    name: "SetHotbarSlot",
+    options: {},
+    I: BotSetHotbarSlotRequest,
+    O: BotSetHotbarSlotResponse,
   },
   {
     name: "GetDialog",

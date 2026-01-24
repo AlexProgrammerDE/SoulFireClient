@@ -264,6 +264,18 @@ message BotSetContainerTextResponse {
   optional string error = 2;
 }
 
+// Change the selected hotbar slot (0-8)
+message BotSetHotbarSlotRequest {
+  string instance_id = 1;
+  string bot_id = 2;
+  int32 slot = 3;           // Hotbar slot index (0-8)
+}
+
+message BotSetHotbarSlotResponse {
+  bool success = 1;
+  optional string error = 2;
+}
+
 // ============================================================================
 // Server Dialog Messages (Minecraft 1.21.6+)
 // Dialogs are server-sent UI screens that can display information and gather input
@@ -508,6 +520,8 @@ service BotService {
   rpc ClickContainerButton (BotContainerButtonClickRequest) returns (BotContainerButtonClickResponse) {}
   // Set text input in container (anvil rename, etc.)
   rpc SetContainerText (BotSetContainerTextRequest) returns (BotSetContainerTextResponse) {}
+  // Hotbar slot selection
+  rpc SetHotbarSlot (BotSetHotbarSlotRequest) returns (BotSetHotbarSlotResponse) {}
   // Server dialog management (Minecraft 1.21.6+)
   rpc GetDialog (BotGetDialogRequest) returns (BotGetDialogResponse) {}
   rpc SubmitDialog (BotSubmitDialogRequest) returns (BotSubmitDialogResponse) {}

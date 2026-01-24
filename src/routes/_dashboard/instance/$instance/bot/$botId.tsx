@@ -762,6 +762,7 @@ function InventorySlotDisplay({
   onClick,
   onRightClick,
   onShiftClick,
+  onMiddleClick,
   isClickable,
 }: {
   item?: InventorySlot;
@@ -770,6 +771,7 @@ function InventorySlotDisplay({
   onClick?: () => void;
   onRightClick?: () => void;
   onShiftClick?: () => void;
+  onMiddleClick?: () => void;
   isClickable?: boolean;
 }) {
   const handleClick = (e: React.MouseEvent) => {
@@ -788,6 +790,14 @@ function InventorySlotDisplay({
     }
   };
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    // Middle click (button 1)
+    if (e.button === 1 && onMiddleClick) {
+      e.preventDefault();
+      onMiddleClick();
+    }
+  };
+
   const baseClasses = `flex size-8 items-center justify-center rounded border text-xs transition-colors ${
     isSelected ? "ring-primary ring-2" : ""
   } ${isClickable ? "cursor-pointer hover:border-primary/50" : ""}`;
@@ -799,6 +809,7 @@ function InventorySlotDisplay({
         className={`bg-muted/50 border-border ${baseClasses}`}
         onClick={handleClick}
         onContextMenu={handleContextMenu}
+        onMouseDown={handleMouseDown}
         disabled={!isClickable}
       >
         {slotNumber !== undefined && (
@@ -808,13 +819,26 @@ function InventorySlotDisplay({
     );
   }
 
+  const titleParts = [
+    `${item.displayName || formatItemId(item.itemId)} x${item.count}`,
+  ];
+  if (isClickable) {
+    titleParts.push("Left click: Pick up/place");
+    titleParts.push("Right click: Pick up half/place one");
+    titleParts.push("Shift+click: Quick move");
+  }
+  if (onMiddleClick) {
+    titleParts.push("Middle click: Select as active slot");
+  }
+
   return (
     <button
       type="button"
       className={`bg-muted border-border relative ${baseClasses}`}
       onClick={handleClick}
       onContextMenu={handleContextMenu}
-      title={`${item.displayName || formatItemId(item.itemId)} x${item.count}${isClickable ? "\nLeft click: Pick up/place\nRight click: Pick up half/place one\nShift+click: Quick move" : ""}`}
+      onMouseDown={handleMouseDown}
+      title={titleParts.join("\n")}
       disabled={!isClickable}
     >
       <span className="max-w-full truncate px-0.5 text-center text-[10px] leading-tight">
@@ -835,11 +859,13 @@ function SlotRegionGrid({
   slots,
   selectedHotbarSlot,
   onSlotClick,
+  onHotbarSlotSelect,
 }: {
   region: SlotRegion;
   slots: InventorySlot[];
   selectedHotbarSlot: number;
   onSlotClick: (slotIndex: number, clickType: ClickType) => void;
+  onHotbarSlotSelect?: (slot: number) => void;
 }) {
   const isHotbar = region.type === SlotRegionType.SLOT_REGION_HOTBAR;
   const isArmor = region.type === SlotRegionType.SLOT_REGION_ARMOR;
@@ -872,6 +898,11 @@ function SlotRegionGrid({
               onRightClick={() => onSlotClick(slotIndex, ClickType.RIGHT_CLICK)}
               onShiftClick={() =>
                 onSlotClick(slotIndex, ClickType.SHIFT_LEFT_CLICK)
+              }
+              onMiddleClick={
+                isHotbar && onHotbarSlotSelect
+                  ? () => onHotbarSlotSelect(i)
+                  : undefined
               }
             />
           );
@@ -971,6 +1002,21 @@ function BotInventoryPanel({
     },
   });
 
+  // Mutation for setting hotbar slot
+  const setHotbarSlotMutation = useMutation({
+    mutationFn: async (slot: number) => {
+      const transport = createTransport();
+      if (transport === null) {
+        throw new Error("Not connected");
+      }
+      const botService = new BotServiceClient(transport);
+      return botService.setHotbarSlot({ instanceId, botId, slot });
+    },
+    onSuccess: () => {
+      void refetch();
+    },
+  });
+
   const handleSetText = useCallback(
     (fieldId: string, text: string) => {
       setTextMutation.mutate({
@@ -1018,6 +1064,13 @@ function BotInventoryPanel({
       });
     },
     [clickMutation, instanceId, botId],
+  );
+
+  const handleHotbarSlotSelect = useCallback(
+    (slot: number) => {
+      setHotbarSlotMutation.mutate(slot);
+    },
+    [setHotbarSlotMutation],
   );
 
   const layout = inventoryState?.layout;
@@ -1077,6 +1130,7 @@ function BotInventoryPanel({
                 slots={slots}
                 selectedHotbarSlot={selectedHotbarSlot}
                 onSlotClick={handleSlotClick}
+                onHotbarSlotSelect={handleHotbarSlotSelect}
               />
             ))}
 
