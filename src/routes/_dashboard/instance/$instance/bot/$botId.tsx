@@ -224,13 +224,14 @@ function BotDetailContent({
   const commandScope = useMemo<CommandScope>(
     () => ({
       scope: {
-        oneofKind: "instance",
-        instance: {
+        oneofKind: "bot",
+        bot: {
           instanceId,
+          botId: account.profileId,
         },
       },
     }),
-    [instanceId],
+    [instanceId, account.profileId],
   );
 
   return (

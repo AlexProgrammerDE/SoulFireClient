@@ -32,6 +32,19 @@ export interface InstanceCommandScope {
   instanceId: string;
 }
 /**
+ * @generated from protobuf message soulfire.v1.BotCommandScope
+ */
+export interface BotCommandScope {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+}
+/**
  * @generated from protobuf message soulfire.v1.CommandScope
  */
 export interface CommandScope {
@@ -52,6 +65,13 @@ export interface CommandScope {
          * @generated from protobuf field: soulfire.v1.InstanceCommandScope instance = 2
          */
         instance: InstanceCommandScope;
+      }
+    | {
+        oneofKind: "bot";
+        /**
+         * @generated from protobuf field: soulfire.v1.BotCommandScope bot = 3
+         */
+        bot: BotCommandScope;
       }
     | {
         oneofKind: undefined;
@@ -253,6 +273,88 @@ class InstanceCommandScope$Type extends MessageType<InstanceCommandScope> {
  */
 export const InstanceCommandScope = new InstanceCommandScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class BotCommandScope$Type extends MessageType<BotCommandScope> {
+  constructor() {
+    super("soulfire.v1.BotCommandScope", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<BotCommandScope>): BotCommandScope {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    if (value !== undefined)
+      reflectionMergePartial<BotCommandScope>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotCommandScope,
+  ): BotCommandScope {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotCommandScope,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotCommandScope
+ */
+export const BotCommandScope = new BotCommandScope$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class CommandScope$Type extends MessageType<CommandScope> {
   constructor() {
     super("soulfire.v1.CommandScope", [
@@ -269,6 +371,13 @@ class CommandScope$Type extends MessageType<CommandScope> {
         kind: "message",
         oneof: "scope",
         T: () => InstanceCommandScope,
+      },
+      {
+        no: 3,
+        name: "bot",
+        kind: "message",
+        oneof: "scope",
+        T: () => BotCommandScope,
       },
     ]);
   }
@@ -312,6 +421,17 @@ class CommandScope$Type extends MessageType<CommandScope> {
             ),
           };
           break;
+        case /* soulfire.v1.BotCommandScope bot */ 3:
+          message.scope = {
+            oneofKind: "bot",
+            bot: BotCommandScope.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.scope as any).bot,
+            ),
+          };
+          break;
         default:
           let u = options.readUnknownField;
           if (u === "throw")
@@ -348,6 +468,13 @@ class CommandScope$Type extends MessageType<CommandScope> {
       InstanceCommandScope.internalBinaryWrite(
         message.scope.instance,
         writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.BotCommandScope bot = 3; */
+    if (message.scope.oneofKind === "bot")
+      BotCommandScope.internalBinaryWrite(
+        message.scope.bot,
+        writer.tag(3, WireType.LengthDelimited).fork(),
         options,
       ).join();
     let u = options.writeUnknownFields;
