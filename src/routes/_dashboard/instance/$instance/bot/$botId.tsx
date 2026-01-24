@@ -289,6 +289,13 @@ function BotDetailContent({
             instanceId={instanceId}
             botId={account.profileId}
           />
+
+          {/* Dialog panel */}
+          <BotDialogPanel
+            isOnline={isOnline}
+            instanceId={instanceId}
+            botId={account.profileId}
+          />
         </div>
 
         {/* Right column */}
@@ -1435,6 +1442,145 @@ function BotActionsPanel({
           <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
             <p className="text-muted-foreground">
               {t("bots.actionsPanel.offline")}
+            </p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function BotDialogPanel({
+  isOnline,
+  instanceId,
+  botId,
+}: {
+  isOnline: boolean;
+  instanceId: string;
+  botId: string;
+}) {
+  const { t } = useTranslation("instance");
+  const queryClient = Route.useRouteContext().queryClient;
+
+  // Query for dialog state
+  const dialogQueryOptions = queryOptions({
+    queryKey: ["bot-dialog", instanceId, botId],
+    queryFn: async (queryProps) => {
+      const transport = createTransport();
+      if (transport === null) {
+        return { dialog: undefined };
+      }
+      const botService = new BotServiceClient(transport);
+      const result = await botService.getDialog(
+        { instanceId, botId },
+        { abort: queryProps.signal },
+      );
+      return result.response;
+    },
+    refetchInterval: 2_000, // Poll for dialog updates
+    enabled: isOnline,
+  });
+
+  const { data: dialogData } = useSuspenseQuery(dialogQueryOptions);
+  const dialog = dialogData?.dialog;
+
+  // Mutation for dismissing dialog
+  const dismissMutation = useMutation({
+    mutationFn: async () => {
+      const transport = createTransport();
+      if (transport === null) {
+        throw new Error("Not connected");
+      }
+      const botService = new BotServiceClient(transport);
+      return botService.closeDialog({ instanceId, botId });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["bot-dialog", instanceId, botId],
+      });
+    },
+  });
+
+  const getDialogTypeName = (type: number) => {
+    switch (type) {
+      case 1:
+        return t("bots.dialogPanel.notice");
+      case 2:
+        return t("bots.dialogPanel.confirmation");
+      case 3:
+        return t("bots.dialogPanel.multiAction");
+      case 4:
+        return t("bots.dialogPanel.serverLinks");
+      case 5:
+        return t("bots.dialogPanel.dialogList");
+      default:
+        return t("bots.dialogPanel.unknownType");
+    }
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <MonitorIcon className="size-5" />
+          {t("bots.dialogPanel.title")}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {!isOnline ? (
+          <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+            <p className="text-muted-foreground">
+              {t("bots.dialogPanel.offline")}
+            </p>
+          </div>
+        ) : dialog ? (
+          <div className="space-y-4">
+            {/* Dialog info */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-muted-foreground text-sm">
+                  {t("bots.dialogPanel.dialogType")}:
+                </span>
+                <Badge variant="outline">
+                  {getDialogTypeName(dialog.type)}
+                </Badge>
+              </div>
+              {dialog.id && (
+                <div className="flex items-center justify-between">
+                  <span className="text-muted-foreground text-sm">
+                    {t("bots.dialogPanel.dialogId")}:
+                  </span>
+                  <code className="bg-muted rounded px-2 py-1 text-xs">
+                    {dialog.id}
+                  </code>
+                </div>
+              )}
+              {dialog.title && (
+                <div className="bg-muted/30 rounded-lg p-4">
+                  <p className="font-medium">{dialog.title}</p>
+                </div>
+              )}
+            </div>
+
+            {/* Dismiss button */}
+            <Button
+              variant="outline"
+              onClick={() => dismissMutation.mutate()}
+              disabled={dismissMutation.isPending}
+              className="w-full"
+            >
+              {dismissMutation.isPending ? (
+                <LoaderIcon className="mr-2 size-4 animate-spin" />
+              ) : (
+                <XIcon className="mr-2 size-4" />
+              )}
+              {t("bots.dialogPanel.dismiss")}
+            </Button>
+          </div>
+        ) : (
+          <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+            <p className="text-muted-foreground">
+              {t("bots.dialogPanel.noDialog")}
             </p>
           </div>
         )}

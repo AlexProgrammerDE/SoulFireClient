@@ -11,10 +11,16 @@ import type {
 } from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type {
+  BotClickDialogButtonRequest,
+  BotClickDialogButtonResponse,
   BotCloseContainerRequest,
   BotCloseContainerResponse,
+  BotCloseDialogRequest,
+  BotCloseDialogResponse,
   BotContainerButtonClickRequest,
   BotContainerButtonClickResponse,
+  BotGetDialogRequest,
+  BotGetDialogResponse,
   BotInfoRequest,
   BotInfoResponse,
   BotInventoryClickRequest,
@@ -31,6 +37,8 @@ import type {
   BotRenderPovResponse,
   BotSetContainerTextRequest,
   BotSetContainerTextResponse,
+  BotSubmitDialogRequest,
+  BotSubmitDialogResponse,
   BotUpdateConfigEntryRequest,
   BotUpdateConfigEntryResponse,
   BotUpdateConfigRequest,
@@ -139,6 +147,36 @@ export interface IBotServiceClient {
     input: BotSetContainerTextRequest,
     options?: RpcOptions,
   ): UnaryCall<BotSetContainerTextRequest, BotSetContainerTextResponse>;
+  /**
+   * Server dialog management (Minecraft 1.21.6+)
+   *
+   * @generated from protobuf rpc: GetDialog
+   */
+  getDialog(
+    input: BotGetDialogRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotGetDialogRequest, BotGetDialogResponse>;
+  /**
+   * @generated from protobuf rpc: SubmitDialog
+   */
+  submitDialog(
+    input: BotSubmitDialogRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotSubmitDialogRequest, BotSubmitDialogResponse>;
+  /**
+   * @generated from protobuf rpc: ClickDialogButton
+   */
+  clickDialogButton(
+    input: BotClickDialogButtonRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotClickDialogButtonRequest, BotClickDialogButtonResponse>;
+  /**
+   * @generated from protobuf rpc: CloseDialog
+   */
+  closeDialog(
+    input: BotCloseDialogRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotCloseDialogRequest, BotCloseDialogResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.BotService
@@ -359,5 +397,72 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
       BotSetContainerTextRequest,
       BotSetContainerTextResponse
     >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * Server dialog management (Minecraft 1.21.6+)
+   *
+   * @generated from protobuf rpc: GetDialog
+   */
+  getDialog(
+    input: BotGetDialogRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotGetDialogRequest, BotGetDialogResponse> {
+    const method = this.methods[12],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<BotGetDialogRequest, BotGetDialogResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: SubmitDialog
+   */
+  submitDialog(
+    input: BotSubmitDialogRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotSubmitDialogRequest, BotSubmitDialogResponse> {
+    const method = this.methods[13],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<BotSubmitDialogRequest, BotSubmitDialogResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * @generated from protobuf rpc: ClickDialogButton
+   */
+  clickDialogButton(
+    input: BotClickDialogButtonRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotClickDialogButtonRequest, BotClickDialogButtonResponse> {
+    const method = this.methods[14],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      BotClickDialogButtonRequest,
+      BotClickDialogButtonResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * @generated from protobuf rpc: CloseDialog
+   */
+  closeDialog(
+    input: BotCloseDialogRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotCloseDialogRequest, BotCloseDialogResponse> {
+    const method = this.methods[15],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<BotCloseDialogRequest, BotCloseDialogResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
   }
 }

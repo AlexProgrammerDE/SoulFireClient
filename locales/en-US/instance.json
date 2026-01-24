@@ -214,6 +214,21 @@
       "leftClickDescription": "Attack entity or break block",
       "rightClickDescription": "Use item or interact",
       "offline": "Bot is offline. Actions are only available when the bot is connected."
+    },
+    "dialogPanel": {
+      "title": "Server Dialog",
+      "noDialog": "No server dialog is currently displayed.",
+      "dialogType": "Type",
+      "dialogId": "Dialog ID",
+      "notice": "Notice",
+      "confirmation": "Confirmation",
+      "multiAction": "Multi Action",
+      "serverLinks": "Server Links",
+      "dialogList": "Dialog List",
+      "unknownType": "Unknown",
+      "dismiss": "Dismiss",
+      "submit": "Submit",
+      "offline": "Bot is offline. Dialogs are only available when the bot is connected."
     }
   },
   "scripts": {

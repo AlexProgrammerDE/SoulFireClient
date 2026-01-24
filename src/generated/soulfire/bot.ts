@@ -641,6 +641,631 @@ export interface BotSetContainerTextResponse {
   error?: string;
 }
 /**
+ * Body element types
+ *
+ * @generated from protobuf message soulfire.v1.DialogBodyElement
+ */
+export interface DialogBodyElement {
+  /**
+   * @generated from protobuf oneof: element
+   */
+  element:
+    | {
+        oneofKind: "plainMessage";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogPlainMessage plain_message = 1
+         */
+        plainMessage: DialogPlainMessage;
+      }
+    | {
+        oneofKind: "item";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogItem item = 2
+         */
+        item: DialogItem;
+      }
+    | {
+        oneofKind: undefined;
+      };
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogPlainMessage
+ */
+export interface DialogPlainMessage {
+  /**
+   * @generated from protobuf field: string contents = 1
+   */
+  contents: string; // Text content (JSON text component)
+  /**
+   * @generated from protobuf field: int32 width = 2
+   */
+  width: number; // Width (1-1024, default 200)
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogItem
+ */
+export interface DialogItem {
+  /**
+   * @generated from protobuf field: string item_id = 1
+   */
+  itemId: string; // e.g., "minecraft:diamond"
+  /**
+   * @generated from protobuf field: int32 count = 2
+   */
+  count: number; // Item count
+  /**
+   * @generated from protobuf field: optional string description = 3
+   */
+  description?: string; // Optional description text
+  /**
+   * @generated from protobuf field: bool show_decoration = 4
+   */
+  showDecoration: boolean; // Show item frame decoration (default true)
+  /**
+   * @generated from protobuf field: bool show_tooltip = 5
+   */
+  showTooltip: boolean; // Show item tooltip on hover (default true)
+  /**
+   * @generated from protobuf field: int32 width = 6
+   */
+  width: number; // Display width (1-256, default 16)
+  /**
+   * @generated from protobuf field: int32 height = 7
+   */
+  height: number; // Display height (1-256, default 16)
+}
+/**
+ * Input control types
+ *
+ * @generated from protobuf message soulfire.v1.DialogInput
+ */
+export interface DialogInput {
+  /**
+   * @generated from protobuf oneof: input
+   */
+  input:
+    | {
+        oneofKind: "text";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogTextInput text = 1
+         */
+        text: DialogTextInput;
+      }
+    | {
+        oneofKind: "boolean";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogBooleanInput boolean = 2
+         */
+        boolean: DialogBooleanInput;
+      }
+    | {
+        oneofKind: "singleOption";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogSingleOptionInput single_option = 3
+         */
+        singleOption: DialogSingleOptionInput;
+      }
+    | {
+        oneofKind: "numberRange";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogNumberRangeInput number_range = 4
+         */
+        numberRange: DialogNumberRangeInput;
+      }
+    | {
+        oneofKind: undefined;
+      };
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogTextInput
+ */
+export interface DialogTextInput {
+  /**
+   * @generated from protobuf field: string key = 1
+   */
+  key: string; // Identifier for submission
+  /**
+   * @generated from protobuf field: string label = 2
+   */
+  label: string; // Display label
+  /**
+   * @generated from protobuf field: int32 width = 3
+   */
+  width: number; // Width (1-1024, default 200)
+  /**
+   * @generated from protobuf field: bool label_visible = 4
+   */
+  labelVisible: boolean; // Show label (default true)
+  /**
+   * @generated from protobuf field: string initial = 5
+   */
+  initial: string; // Default value
+  /**
+   * @generated from protobuf field: int32 max_length = 6
+   */
+  maxLength: number; // Max chars (default 32)
+  /**
+   * @generated from protobuf field: bool multiline = 7
+   */
+  multiline: boolean; // Allow multiline input
+  /**
+   * @generated from protobuf field: int32 multiline_max_lines = 8
+   */
+  multilineMaxLines: number; // Max lines for multiline
+  /**
+   * @generated from protobuf field: int32 multiline_height = 9
+   */
+  multilineHeight: number; // Height for multiline
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogBooleanInput
+ */
+export interface DialogBooleanInput {
+  /**
+   * @generated from protobuf field: string key = 1
+   */
+  key: string; // Identifier for submission
+  /**
+   * @generated from protobuf field: string label = 2
+   */
+  label: string; // Display label
+  /**
+   * @generated from protobuf field: bool initial = 3
+   */
+  initial: boolean; // Default value (default false)
+  /**
+   * @generated from protobuf field: string on_true = 4
+   */
+  onTrue: string; // Value when checked (default "true")
+  /**
+   * @generated from protobuf field: string on_false = 5
+   */
+  onFalse: string; // Value when unchecked (default "false")
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogSingleOptionInput
+ */
+export interface DialogSingleOptionInput {
+  /**
+   * @generated from protobuf field: string key = 1
+   */
+  key: string; // Identifier for submission
+  /**
+   * @generated from protobuf field: string label = 2
+   */
+  label: string; // Display label
+  /**
+   * @generated from protobuf field: bool label_visible = 3
+   */
+  labelVisible: boolean; // Show label (default true)
+  /**
+   * @generated from protobuf field: int32 width = 4
+   */
+  width: number; // Width (1-1024, default 200)
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.DialogOption options = 5
+   */
+  options: DialogOption[]; // Available options
+  /**
+   * @generated from protobuf field: string initial_option_id = 6
+   */
+  initialOptionId: string; // Initially selected option ID
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogOption
+ */
+export interface DialogOption {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string; // Option identifier
+  /**
+   * @generated from protobuf field: string display = 2
+   */
+  display: string; // Display text (optional, uses id if not set)
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogNumberRangeInput
+ */
+export interface DialogNumberRangeInput {
+  /**
+   * @generated from protobuf field: string key = 1
+   */
+  key: string; // Identifier for submission
+  /**
+   * @generated from protobuf field: string label = 2
+   */
+  label: string; // Display label
+  /**
+   * @generated from protobuf field: string label_format = 3
+   */
+  labelFormat: string; // Translation key for label format
+  /**
+   * @generated from protobuf field: int32 width = 4
+   */
+  width: number; // Width (1-1024, default 200)
+  /**
+   * @generated from protobuf field: double start = 5
+   */
+  start: number; // Minimum value
+  /**
+   * @generated from protobuf field: double end = 6
+   */
+  end: number; // Maximum value
+  /**
+   * @generated from protobuf field: double step = 7
+   */
+  step: number; // Step size (optional)
+  /**
+   * @generated from protobuf field: double initial = 8
+   */
+  initial: number; // Default value
+}
+/**
+ * Action types for buttons
+ *
+ * @generated from protobuf message soulfire.v1.DialogAction
+ */
+export interface DialogAction {
+  /**
+   * @generated from protobuf oneof: action
+   */
+  action:
+    | {
+        oneofKind: "openUrl";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogOpenUrlAction open_url = 1
+         */
+        openUrl: DialogOpenUrlAction;
+      }
+    | {
+        oneofKind: "runCommand";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogRunCommandAction run_command = 2
+         */
+        runCommand: DialogRunCommandAction;
+      }
+    | {
+        oneofKind: "suggestCommand";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogSuggestCommandAction suggest_command = 3
+         */
+        suggestCommand: DialogSuggestCommandAction;
+      }
+    | {
+        oneofKind: "copyToClipboard";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogCopyToClipboardAction copy_to_clipboard = 4
+         */
+        copyToClipboard: DialogCopyToClipboardAction;
+      }
+    | {
+        oneofKind: "showDialog";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogShowDialogAction show_dialog = 5
+         */
+        showDialog: DialogShowDialogAction;
+      }
+    | {
+        oneofKind: "custom";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogCustomAction custom = 6
+         */
+        custom: DialogCustomAction;
+      }
+    | {
+        oneofKind: "dynamicRunCommand";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogDynamicRunCommandAction dynamic_run_command = 7
+         */
+        dynamicRunCommand: DialogDynamicRunCommandAction;
+      }
+    | {
+        oneofKind: "dynamicCustom";
+        /**
+         * @generated from protobuf field: soulfire.v1.DialogDynamicCustomAction dynamic_custom = 8
+         */
+        dynamicCustom: DialogDynamicCustomAction;
+      }
+    | {
+        oneofKind: undefined;
+      };
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogOpenUrlAction
+ */
+export interface DialogOpenUrlAction {
+  /**
+   * @generated from protobuf field: string url = 1
+   */
+  url: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogRunCommandAction
+ */
+export interface DialogRunCommandAction {
+  /**
+   * @generated from protobuf field: string command = 1
+   */
+  command: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogSuggestCommandAction
+ */
+export interface DialogSuggestCommandAction {
+  /**
+   * @generated from protobuf field: string command = 1
+   */
+  command: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogCopyToClipboardAction
+ */
+export interface DialogCopyToClipboardAction {
+  /**
+   * @generated from protobuf field: string value = 1
+   */
+  value: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogShowDialogAction
+ */
+export interface DialogShowDialogAction {
+  /**
+   * @generated from protobuf field: string dialog_id = 1
+   */
+  dialogId: string; // Dialog ID to show (or inline definition)
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogCustomAction
+ */
+export interface DialogCustomAction {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string; // Custom action identifier
+  /**
+   * @generated from protobuf field: string payload = 2
+   */
+  payload: string; // Optional JSON payload
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogDynamicRunCommandAction
+ */
+export interface DialogDynamicRunCommandAction {
+  /**
+   * @generated from protobuf field: string template = 1
+   */
+  template: string; // Macro template with input placeholders
+}
+/**
+ * @generated from protobuf message soulfire.v1.DialogDynamicCustomAction
+ */
+export interface DialogDynamicCustomAction {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string; // Custom action identifier
+  /**
+   * @generated from protobuf field: string additions = 2
+   */
+  additions: string; // Optional NBT additions as JSON
+}
+/**
+ * Button structure used across dialog types
+ *
+ * @generated from protobuf message soulfire.v1.DialogButton
+ */
+export interface DialogButton {
+  /**
+   * @generated from protobuf field: string label = 1
+   */
+  label: string; // Button text (JSON text component)
+  /**
+   * @generated from protobuf field: optional string tooltip = 2
+   */
+  tooltip?: string; // Tooltip on hover
+  /**
+   * @generated from protobuf field: int32 width = 3
+   */
+  width: number; // Button width (1-1024, default 150)
+  /**
+   * @generated from protobuf field: optional soulfire.v1.DialogAction action = 4
+   */
+  action?: DialogAction; // Action when clicked
+}
+/**
+ * Complete dialog definition
+ *
+ * @generated from protobuf message soulfire.v1.ServerDialog
+ */
+export interface ServerDialog {
+  /**
+   * @generated from protobuf field: string id = 1
+   */
+  id: string; // Dialog ID (from server)
+  /**
+   * @generated from protobuf field: soulfire.v1.DialogType type = 2
+   */
+  type: DialogType; // Dialog type
+  /**
+   * @generated from protobuf field: string title = 3
+   */
+  title: string; // Dialog title (JSON text component)
+  /**
+   * @generated from protobuf field: optional string external_title = 4
+   */
+  externalTitle?: string; // Button label when shown as external button
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.DialogBodyElement body = 5
+   */
+  body: DialogBodyElement[]; // Body elements
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.DialogInput inputs = 6
+   */
+  inputs: DialogInput[]; // Input controls
+  /**
+   * @generated from protobuf field: bool can_close_with_escape = 7
+   */
+  canCloseWithEscape: boolean; // Allow ESC to close (default true)
+  /**
+   * @generated from protobuf field: bool pause = 8
+   */
+  pause: boolean; // Pause game in singleplayer (default true)
+  /**
+   * @generated from protobuf field: soulfire.v1.DialogAfterAction after_action = 9
+   */
+  afterAction: DialogAfterAction; // Behavior after action
+  /**
+   * Type-specific fields
+   *
+   * @generated from protobuf field: optional soulfire.v1.DialogButton action = 10
+   */
+  action?: DialogButton; // For notice type - single action
+  /**
+   * @generated from protobuf field: optional soulfire.v1.DialogButton yes = 11
+   */
+  yes?: DialogButton; // For confirmation type
+  /**
+   * @generated from protobuf field: optional soulfire.v1.DialogButton no = 12
+   */
+  no?: DialogButton; // For confirmation type
+  /**
+   * @generated from protobuf field: repeated soulfire.v1.DialogButton actions = 13
+   */
+  actions: DialogButton[]; // For multi_action type
+  /**
+   * @generated from protobuf field: int32 columns = 14
+   */
+  columns: number; // For multi_action/dialog_list (default 2)
+  /**
+   * @generated from protobuf field: optional soulfire.v1.DialogButton exit_action = 15
+   */
+  exitAction?: DialogButton; // For multi_action/server_links/dialog_list
+  /**
+   * @generated from protobuf field: int32 button_width = 16
+   */
+  buttonWidth: number; // For server_links/dialog_list (default 150)
+}
+/**
+ * Get current dialog state
+ *
+ * @generated from protobuf message soulfire.v1.BotGetDialogRequest
+ */
+export interface BotGetDialogRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotGetDialogResponse
+ */
+export interface BotGetDialogResponse {
+  /**
+   * @generated from protobuf field: optional soulfire.v1.ServerDialog dialog = 1
+   */
+  dialog?: ServerDialog; // Current dialog, or null if none
+}
+/**
+ * Submit dialog response (for dialogs with inputs)
+ *
+ * @generated from protobuf message soulfire.v1.BotSubmitDialogRequest
+ */
+export interface BotSubmitDialogRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+  /**
+   * @generated from protobuf field: map<string, string> input_values = 3
+   */
+  inputValues: {
+    [key: string]: string;
+  }; // Input key -> value mappings
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotSubmitDialogResponse
+ */
+export interface BotSubmitDialogResponse {
+  /**
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+  /**
+   * @generated from protobuf field: optional string error = 2
+   */
+  error?: string;
+}
+/**
+ * Click a dialog button
+ *
+ * @generated from protobuf message soulfire.v1.BotClickDialogButtonRequest
+ */
+export interface BotClickDialogButtonRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+  /**
+   * @generated from protobuf field: int32 button_index = 3
+   */
+  buttonIndex: number; // Index of button to click (-1 for close/escape)
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotClickDialogButtonResponse
+ */
+export interface BotClickDialogButtonResponse {
+  /**
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+  /**
+   * @generated from protobuf field: optional string error = 2
+   */
+  error?: string;
+}
+/**
+ * Close/dismiss current dialog
+ *
+ * @generated from protobuf message soulfire.v1.BotCloseDialogRequest
+ */
+export interface BotCloseDialogRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotCloseDialogResponse
+ */
+export interface BotCloseDialogResponse {
+  /**
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+  /**
+   * @generated from protobuf field: optional string error = 2
+   */
+  error?: string;
+}
+/**
  * @generated from protobuf enum soulfire.v1.ClickType
  */
 export enum ClickType {
@@ -748,6 +1373,81 @@ export enum MouseButton {
    * @generated from protobuf enum value: RIGHT_BUTTON = 2;
    */
   RIGHT_BUTTON = 2,
+}
+// ============================================================================
+// Server Dialog Messages (Minecraft 1.21.6+)
+// Dialogs are server-sent UI screens that can display information and gather input
+// ============================================================================
+
+/**
+ * Dialog types matching Minecraft's registry
+ *
+ * @generated from protobuf enum soulfire.v1.DialogType
+ */
+export enum DialogType {
+  /**
+   * @generated from protobuf enum value: DIALOG_TYPE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+  /**
+   * Single action button in footer
+   *
+   * @generated from protobuf enum value: DIALOG_TYPE_NOTICE = 1;
+   */
+  NOTICE = 1,
+  /**
+   * Yes/No buttons in footer
+   *
+   * @generated from protobuf enum value: DIALOG_TYPE_CONFIRMATION = 2;
+   */
+  CONFIRMATION = 2,
+  /**
+   * Scrollable list of action buttons
+   *
+   * @generated from protobuf enum value: DIALOG_TYPE_MULTI_ACTION = 3;
+   */
+  MULTI_ACTION = 3,
+  /**
+   * Server links display
+   *
+   * @generated from protobuf enum value: DIALOG_TYPE_SERVER_LINKS = 4;
+   */
+  SERVER_LINKS = 4,
+  /**
+   * Buttons linking to other dialogs
+   *
+   * @generated from protobuf enum value: DIALOG_TYPE_DIALOG_LIST = 5;
+   */
+  DIALOG_LIST = 5,
+}
+/**
+ * After-action behavior
+ *
+ * @generated from protobuf enum soulfire.v1.DialogAfterAction
+ */
+export enum DialogAfterAction {
+  /**
+   * @generated from protobuf enum value: DIALOG_AFTER_ACTION_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+  /**
+   * Close dialog (default)
+   *
+   * @generated from protobuf enum value: DIALOG_AFTER_ACTION_CLOSE = 1;
+   */
+  CLOSE = 1,
+  /**
+   * Keep dialog open
+   *
+   * @generated from protobuf enum value: DIALOG_AFTER_ACTION_NONE = 2;
+   */
+  NONE = 2,
+  /**
+   * Show waiting screen
+   *
+   * @generated from protobuf enum value: DIALOG_AFTER_ACTION_WAIT_FOR_RESPONSE = 3;
+   */
+  WAIT_FOR_RESPONSE = 3,
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class BotConfig$Type extends MessageType<BotConfig> {
@@ -3962,6 +4662,3043 @@ class BotSetContainerTextResponse$Type extends MessageType<BotSetContainerTextRe
  */
 export const BotSetContainerTextResponse =
   new BotSetContainerTextResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogBodyElement$Type extends MessageType<DialogBodyElement> {
+  constructor() {
+    super("soulfire.v1.DialogBodyElement", [
+      {
+        no: 1,
+        name: "plain_message",
+        kind: "message",
+        oneof: "element",
+        T: () => DialogPlainMessage,
+      },
+      {
+        no: 2,
+        name: "item",
+        kind: "message",
+        oneof: "element",
+        T: () => DialogItem,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<DialogBodyElement>): DialogBodyElement {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.element = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<DialogBodyElement>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogBodyElement,
+  ): DialogBodyElement {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.DialogPlainMessage plain_message */ 1:
+          message.element = {
+            oneofKind: "plainMessage",
+            plainMessage: DialogPlainMessage.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.element as any).plainMessage,
+            ),
+          };
+          break;
+        case /* soulfire.v1.DialogItem item */ 2:
+          message.element = {
+            oneofKind: "item",
+            item: DialogItem.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.element as any).item,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogBodyElement,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.DialogPlainMessage plain_message = 1; */
+    if (message.element.oneofKind === "plainMessage")
+      DialogPlainMessage.internalBinaryWrite(
+        message.element.plainMessage,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.DialogItem item = 2; */
+    if (message.element.oneofKind === "item")
+      DialogItem.internalBinaryWrite(
+        message.element.item,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogBodyElement
+ */
+export const DialogBodyElement = new DialogBodyElement$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogPlainMessage$Type extends MessageType<DialogPlainMessage> {
+  constructor() {
+    super("soulfire.v1.DialogPlainMessage", [
+      { no: 1, name: "contents", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "width", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  create(value?: PartialMessage<DialogPlainMessage>): DialogPlainMessage {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.contents = "";
+    message.width = 0;
+    if (value !== undefined)
+      reflectionMergePartial<DialogPlainMessage>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogPlainMessage,
+  ): DialogPlainMessage {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string contents */ 1:
+          message.contents = reader.string();
+          break;
+        case /* int32 width */ 2:
+          message.width = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogPlainMessage,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string contents = 1; */
+    if (message.contents !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.contents);
+    /* int32 width = 2; */
+    if (message.width !== 0)
+      writer.tag(2, WireType.Varint).int32(message.width);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogPlainMessage
+ */
+export const DialogPlainMessage = new DialogPlainMessage$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogItem$Type extends MessageType<DialogItem> {
+  constructor() {
+    super("soulfire.v1.DialogItem", [
+      { no: 1, name: "item_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "count", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      {
+        no: 3,
+        name: "description",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 4,
+        name: "show_decoration",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      { no: 5, name: "show_tooltip", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 6, name: "width", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 7, name: "height", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  create(value?: PartialMessage<DialogItem>): DialogItem {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.itemId = "";
+    message.count = 0;
+    message.showDecoration = false;
+    message.showTooltip = false;
+    message.width = 0;
+    message.height = 0;
+    if (value !== undefined)
+      reflectionMergePartial<DialogItem>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogItem,
+  ): DialogItem {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string item_id */ 1:
+          message.itemId = reader.string();
+          break;
+        case /* int32 count */ 2:
+          message.count = reader.int32();
+          break;
+        case /* optional string description */ 3:
+          message.description = reader.string();
+          break;
+        case /* bool show_decoration */ 4:
+          message.showDecoration = reader.bool();
+          break;
+        case /* bool show_tooltip */ 5:
+          message.showTooltip = reader.bool();
+          break;
+        case /* int32 width */ 6:
+          message.width = reader.int32();
+          break;
+        case /* int32 height */ 7:
+          message.height = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogItem,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string item_id = 1; */
+    if (message.itemId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.itemId);
+    /* int32 count = 2; */
+    if (message.count !== 0)
+      writer.tag(2, WireType.Varint).int32(message.count);
+    /* optional string description = 3; */
+    if (message.description !== undefined)
+      writer.tag(3, WireType.LengthDelimited).string(message.description);
+    /* bool show_decoration = 4; */
+    if (message.showDecoration !== false)
+      writer.tag(4, WireType.Varint).bool(message.showDecoration);
+    /* bool show_tooltip = 5; */
+    if (message.showTooltip !== false)
+      writer.tag(5, WireType.Varint).bool(message.showTooltip);
+    /* int32 width = 6; */
+    if (message.width !== 0)
+      writer.tag(6, WireType.Varint).int32(message.width);
+    /* int32 height = 7; */
+    if (message.height !== 0)
+      writer.tag(7, WireType.Varint).int32(message.height);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogItem
+ */
+export const DialogItem = new DialogItem$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogInput$Type extends MessageType<DialogInput> {
+  constructor() {
+    super("soulfire.v1.DialogInput", [
+      {
+        no: 1,
+        name: "text",
+        kind: "message",
+        oneof: "input",
+        T: () => DialogTextInput,
+      },
+      {
+        no: 2,
+        name: "boolean",
+        kind: "message",
+        oneof: "input",
+        T: () => DialogBooleanInput,
+      },
+      {
+        no: 3,
+        name: "single_option",
+        kind: "message",
+        oneof: "input",
+        T: () => DialogSingleOptionInput,
+      },
+      {
+        no: 4,
+        name: "number_range",
+        kind: "message",
+        oneof: "input",
+        T: () => DialogNumberRangeInput,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<DialogInput>): DialogInput {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.input = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<DialogInput>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogInput,
+  ): DialogInput {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.DialogTextInput text */ 1:
+          message.input = {
+            oneofKind: "text",
+            text: DialogTextInput.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.input as any).text,
+            ),
+          };
+          break;
+        case /* soulfire.v1.DialogBooleanInput boolean */ 2:
+          message.input = {
+            oneofKind: "boolean",
+            boolean: DialogBooleanInput.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.input as any).boolean,
+            ),
+          };
+          break;
+        case /* soulfire.v1.DialogSingleOptionInput single_option */ 3:
+          message.input = {
+            oneofKind: "singleOption",
+            singleOption: DialogSingleOptionInput.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.input as any).singleOption,
+            ),
+          };
+          break;
+        case /* soulfire.v1.DialogNumberRangeInput number_range */ 4:
+          message.input = {
+            oneofKind: "numberRange",
+            numberRange: DialogNumberRangeInput.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.input as any).numberRange,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogInput,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.DialogTextInput text = 1; */
+    if (message.input.oneofKind === "text")
+      DialogTextInput.internalBinaryWrite(
+        message.input.text,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.DialogBooleanInput boolean = 2; */
+    if (message.input.oneofKind === "boolean")
+      DialogBooleanInput.internalBinaryWrite(
+        message.input.boolean,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.DialogSingleOptionInput single_option = 3; */
+    if (message.input.oneofKind === "singleOption")
+      DialogSingleOptionInput.internalBinaryWrite(
+        message.input.singleOption,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.DialogNumberRangeInput number_range = 4; */
+    if (message.input.oneofKind === "numberRange")
+      DialogNumberRangeInput.internalBinaryWrite(
+        message.input.numberRange,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogInput
+ */
+export const DialogInput = new DialogInput$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogTextInput$Type extends MessageType<DialogTextInput> {
+  constructor() {
+    super("soulfire.v1.DialogTextInput", [
+      { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "width", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      {
+        no: 4,
+        name: "label_visible",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      { no: 5, name: "initial", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 6, name: "max_length", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 7, name: "multiline", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 8,
+        name: "multiline_max_lines",
+        kind: "scalar",
+        T: 5 /*ScalarType.INT32*/,
+      },
+      {
+        no: 9,
+        name: "multiline_height",
+        kind: "scalar",
+        T: 5 /*ScalarType.INT32*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<DialogTextInput>): DialogTextInput {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.key = "";
+    message.label = "";
+    message.width = 0;
+    message.labelVisible = false;
+    message.initial = "";
+    message.maxLength = 0;
+    message.multiline = false;
+    message.multilineMaxLines = 0;
+    message.multilineHeight = 0;
+    if (value !== undefined)
+      reflectionMergePartial<DialogTextInput>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogTextInput,
+  ): DialogTextInput {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string key */ 1:
+          message.key = reader.string();
+          break;
+        case /* string label */ 2:
+          message.label = reader.string();
+          break;
+        case /* int32 width */ 3:
+          message.width = reader.int32();
+          break;
+        case /* bool label_visible */ 4:
+          message.labelVisible = reader.bool();
+          break;
+        case /* string initial */ 5:
+          message.initial = reader.string();
+          break;
+        case /* int32 max_length */ 6:
+          message.maxLength = reader.int32();
+          break;
+        case /* bool multiline */ 7:
+          message.multiline = reader.bool();
+          break;
+        case /* int32 multiline_max_lines */ 8:
+          message.multilineMaxLines = reader.int32();
+          break;
+        case /* int32 multiline_height */ 9:
+          message.multilineHeight = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogTextInput,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string key = 1; */
+    if (message.key !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.key);
+    /* string label = 2; */
+    if (message.label !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.label);
+    /* int32 width = 3; */
+    if (message.width !== 0)
+      writer.tag(3, WireType.Varint).int32(message.width);
+    /* bool label_visible = 4; */
+    if (message.labelVisible !== false)
+      writer.tag(4, WireType.Varint).bool(message.labelVisible);
+    /* string initial = 5; */
+    if (message.initial !== "")
+      writer.tag(5, WireType.LengthDelimited).string(message.initial);
+    /* int32 max_length = 6; */
+    if (message.maxLength !== 0)
+      writer.tag(6, WireType.Varint).int32(message.maxLength);
+    /* bool multiline = 7; */
+    if (message.multiline !== false)
+      writer.tag(7, WireType.Varint).bool(message.multiline);
+    /* int32 multiline_max_lines = 8; */
+    if (message.multilineMaxLines !== 0)
+      writer.tag(8, WireType.Varint).int32(message.multilineMaxLines);
+    /* int32 multiline_height = 9; */
+    if (message.multilineHeight !== 0)
+      writer.tag(9, WireType.Varint).int32(message.multilineHeight);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogTextInput
+ */
+export const DialogTextInput = new DialogTextInput$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogBooleanInput$Type extends MessageType<DialogBooleanInput> {
+  constructor() {
+    super("soulfire.v1.DialogBooleanInput", [
+      { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "initial", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 4, name: "on_true", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 5, name: "on_false", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<DialogBooleanInput>): DialogBooleanInput {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.key = "";
+    message.label = "";
+    message.initial = false;
+    message.onTrue = "";
+    message.onFalse = "";
+    if (value !== undefined)
+      reflectionMergePartial<DialogBooleanInput>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogBooleanInput,
+  ): DialogBooleanInput {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string key */ 1:
+          message.key = reader.string();
+          break;
+        case /* string label */ 2:
+          message.label = reader.string();
+          break;
+        case /* bool initial */ 3:
+          message.initial = reader.bool();
+          break;
+        case /* string on_true */ 4:
+          message.onTrue = reader.string();
+          break;
+        case /* string on_false */ 5:
+          message.onFalse = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogBooleanInput,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string key = 1; */
+    if (message.key !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.key);
+    /* string label = 2; */
+    if (message.label !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.label);
+    /* bool initial = 3; */
+    if (message.initial !== false)
+      writer.tag(3, WireType.Varint).bool(message.initial);
+    /* string on_true = 4; */
+    if (message.onTrue !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.onTrue);
+    /* string on_false = 5; */
+    if (message.onFalse !== "")
+      writer.tag(5, WireType.LengthDelimited).string(message.onFalse);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogBooleanInput
+ */
+export const DialogBooleanInput = new DialogBooleanInput$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogSingleOptionInput$Type extends MessageType<DialogSingleOptionInput> {
+  constructor() {
+    super("soulfire.v1.DialogSingleOptionInput", [
+      { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "label_visible",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      { no: 4, name: "width", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      {
+        no: 5,
+        name: "options",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => DialogOption,
+      },
+      {
+        no: 6,
+        name: "initial_option_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<DialogSingleOptionInput>,
+  ): DialogSingleOptionInput {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.key = "";
+    message.label = "";
+    message.labelVisible = false;
+    message.width = 0;
+    message.options = [];
+    message.initialOptionId = "";
+    if (value !== undefined)
+      reflectionMergePartial<DialogSingleOptionInput>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogSingleOptionInput,
+  ): DialogSingleOptionInput {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string key */ 1:
+          message.key = reader.string();
+          break;
+        case /* string label */ 2:
+          message.label = reader.string();
+          break;
+        case /* bool label_visible */ 3:
+          message.labelVisible = reader.bool();
+          break;
+        case /* int32 width */ 4:
+          message.width = reader.int32();
+          break;
+        case /* repeated soulfire.v1.DialogOption options */ 5:
+          message.options.push(
+            DialogOption.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* string initial_option_id */ 6:
+          message.initialOptionId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogSingleOptionInput,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string key = 1; */
+    if (message.key !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.key);
+    /* string label = 2; */
+    if (message.label !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.label);
+    /* bool label_visible = 3; */
+    if (message.labelVisible !== false)
+      writer.tag(3, WireType.Varint).bool(message.labelVisible);
+    /* int32 width = 4; */
+    if (message.width !== 0)
+      writer.tag(4, WireType.Varint).int32(message.width);
+    /* repeated soulfire.v1.DialogOption options = 5; */
+    for (let i = 0; i < message.options.length; i++)
+      DialogOption.internalBinaryWrite(
+        message.options[i],
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* string initial_option_id = 6; */
+    if (message.initialOptionId !== "")
+      writer.tag(6, WireType.LengthDelimited).string(message.initialOptionId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogSingleOptionInput
+ */
+export const DialogSingleOptionInput = new DialogSingleOptionInput$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogOption$Type extends MessageType<DialogOption> {
+  constructor() {
+    super("soulfire.v1.DialogOption", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "display", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<DialogOption>): DialogOption {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.display = "";
+    if (value !== undefined)
+      reflectionMergePartial<DialogOption>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogOption,
+  ): DialogOption {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string display */ 2:
+          message.display = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogOption,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string display = 2; */
+    if (message.display !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.display);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogOption
+ */
+export const DialogOption = new DialogOption$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogNumberRangeInput$Type extends MessageType<DialogNumberRangeInput> {
+  constructor() {
+    super("soulfire.v1.DialogNumberRangeInput", [
+      { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "label_format",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 4, name: "width", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 5, name: "start", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 6, name: "end", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 7, name: "step", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 8, name: "initial", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<DialogNumberRangeInput>,
+  ): DialogNumberRangeInput {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.key = "";
+    message.label = "";
+    message.labelFormat = "";
+    message.width = 0;
+    message.start = 0;
+    message.end = 0;
+    message.step = 0;
+    message.initial = 0;
+    if (value !== undefined)
+      reflectionMergePartial<DialogNumberRangeInput>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogNumberRangeInput,
+  ): DialogNumberRangeInput {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string key */ 1:
+          message.key = reader.string();
+          break;
+        case /* string label */ 2:
+          message.label = reader.string();
+          break;
+        case /* string label_format */ 3:
+          message.labelFormat = reader.string();
+          break;
+        case /* int32 width */ 4:
+          message.width = reader.int32();
+          break;
+        case /* double start */ 5:
+          message.start = reader.double();
+          break;
+        case /* double end */ 6:
+          message.end = reader.double();
+          break;
+        case /* double step */ 7:
+          message.step = reader.double();
+          break;
+        case /* double initial */ 8:
+          message.initial = reader.double();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogNumberRangeInput,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string key = 1; */
+    if (message.key !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.key);
+    /* string label = 2; */
+    if (message.label !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.label);
+    /* string label_format = 3; */
+    if (message.labelFormat !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.labelFormat);
+    /* int32 width = 4; */
+    if (message.width !== 0)
+      writer.tag(4, WireType.Varint).int32(message.width);
+    /* double start = 5; */
+    if (message.start !== 0)
+      writer.tag(5, WireType.Bit64).double(message.start);
+    /* double end = 6; */
+    if (message.end !== 0) writer.tag(6, WireType.Bit64).double(message.end);
+    /* double step = 7; */
+    if (message.step !== 0) writer.tag(7, WireType.Bit64).double(message.step);
+    /* double initial = 8; */
+    if (message.initial !== 0)
+      writer.tag(8, WireType.Bit64).double(message.initial);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogNumberRangeInput
+ */
+export const DialogNumberRangeInput = new DialogNumberRangeInput$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogAction$Type extends MessageType<DialogAction> {
+  constructor() {
+    super("soulfire.v1.DialogAction", [
+      {
+        no: 1,
+        name: "open_url",
+        kind: "message",
+        oneof: "action",
+        T: () => DialogOpenUrlAction,
+      },
+      {
+        no: 2,
+        name: "run_command",
+        kind: "message",
+        oneof: "action",
+        T: () => DialogRunCommandAction,
+      },
+      {
+        no: 3,
+        name: "suggest_command",
+        kind: "message",
+        oneof: "action",
+        T: () => DialogSuggestCommandAction,
+      },
+      {
+        no: 4,
+        name: "copy_to_clipboard",
+        kind: "message",
+        oneof: "action",
+        T: () => DialogCopyToClipboardAction,
+      },
+      {
+        no: 5,
+        name: "show_dialog",
+        kind: "message",
+        oneof: "action",
+        T: () => DialogShowDialogAction,
+      },
+      {
+        no: 6,
+        name: "custom",
+        kind: "message",
+        oneof: "action",
+        T: () => DialogCustomAction,
+      },
+      {
+        no: 7,
+        name: "dynamic_run_command",
+        kind: "message",
+        oneof: "action",
+        T: () => DialogDynamicRunCommandAction,
+      },
+      {
+        no: 8,
+        name: "dynamic_custom",
+        kind: "message",
+        oneof: "action",
+        T: () => DialogDynamicCustomAction,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<DialogAction>): DialogAction {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.action = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<DialogAction>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogAction,
+  ): DialogAction {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.DialogOpenUrlAction open_url */ 1:
+          message.action = {
+            oneofKind: "openUrl",
+            openUrl: DialogOpenUrlAction.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.action as any).openUrl,
+            ),
+          };
+          break;
+        case /* soulfire.v1.DialogRunCommandAction run_command */ 2:
+          message.action = {
+            oneofKind: "runCommand",
+            runCommand: DialogRunCommandAction.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.action as any).runCommand,
+            ),
+          };
+          break;
+        case /* soulfire.v1.DialogSuggestCommandAction suggest_command */ 3:
+          message.action = {
+            oneofKind: "suggestCommand",
+            suggestCommand: DialogSuggestCommandAction.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.action as any).suggestCommand,
+            ),
+          };
+          break;
+        case /* soulfire.v1.DialogCopyToClipboardAction copy_to_clipboard */ 4:
+          message.action = {
+            oneofKind: "copyToClipboard",
+            copyToClipboard: DialogCopyToClipboardAction.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.action as any).copyToClipboard,
+            ),
+          };
+          break;
+        case /* soulfire.v1.DialogShowDialogAction show_dialog */ 5:
+          message.action = {
+            oneofKind: "showDialog",
+            showDialog: DialogShowDialogAction.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.action as any).showDialog,
+            ),
+          };
+          break;
+        case /* soulfire.v1.DialogCustomAction custom */ 6:
+          message.action = {
+            oneofKind: "custom",
+            custom: DialogCustomAction.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.action as any).custom,
+            ),
+          };
+          break;
+        case /* soulfire.v1.DialogDynamicRunCommandAction dynamic_run_command */ 7:
+          message.action = {
+            oneofKind: "dynamicRunCommand",
+            dynamicRunCommand: DialogDynamicRunCommandAction.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.action as any).dynamicRunCommand,
+            ),
+          };
+          break;
+        case /* soulfire.v1.DialogDynamicCustomAction dynamic_custom */ 8:
+          message.action = {
+            oneofKind: "dynamicCustom",
+            dynamicCustom: DialogDynamicCustomAction.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.action as any).dynamicCustom,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogAction,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.DialogOpenUrlAction open_url = 1; */
+    if (message.action.oneofKind === "openUrl")
+      DialogOpenUrlAction.internalBinaryWrite(
+        message.action.openUrl,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.DialogRunCommandAction run_command = 2; */
+    if (message.action.oneofKind === "runCommand")
+      DialogRunCommandAction.internalBinaryWrite(
+        message.action.runCommand,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.DialogSuggestCommandAction suggest_command = 3; */
+    if (message.action.oneofKind === "suggestCommand")
+      DialogSuggestCommandAction.internalBinaryWrite(
+        message.action.suggestCommand,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.DialogCopyToClipboardAction copy_to_clipboard = 4; */
+    if (message.action.oneofKind === "copyToClipboard")
+      DialogCopyToClipboardAction.internalBinaryWrite(
+        message.action.copyToClipboard,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.DialogShowDialogAction show_dialog = 5; */
+    if (message.action.oneofKind === "showDialog")
+      DialogShowDialogAction.internalBinaryWrite(
+        message.action.showDialog,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.DialogCustomAction custom = 6; */
+    if (message.action.oneofKind === "custom")
+      DialogCustomAction.internalBinaryWrite(
+        message.action.custom,
+        writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.DialogDynamicRunCommandAction dynamic_run_command = 7; */
+    if (message.action.oneofKind === "dynamicRunCommand")
+      DialogDynamicRunCommandAction.internalBinaryWrite(
+        message.action.dynamicRunCommand,
+        writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.DialogDynamicCustomAction dynamic_custom = 8; */
+    if (message.action.oneofKind === "dynamicCustom")
+      DialogDynamicCustomAction.internalBinaryWrite(
+        message.action.dynamicCustom,
+        writer.tag(8, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogAction
+ */
+export const DialogAction = new DialogAction$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogOpenUrlAction$Type extends MessageType<DialogOpenUrlAction> {
+  constructor() {
+    super("soulfire.v1.DialogOpenUrlAction", [
+      { no: 1, name: "url", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<DialogOpenUrlAction>): DialogOpenUrlAction {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.url = "";
+    if (value !== undefined)
+      reflectionMergePartial<DialogOpenUrlAction>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogOpenUrlAction,
+  ): DialogOpenUrlAction {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string url */ 1:
+          message.url = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogOpenUrlAction,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string url = 1; */
+    if (message.url !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.url);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogOpenUrlAction
+ */
+export const DialogOpenUrlAction = new DialogOpenUrlAction$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogRunCommandAction$Type extends MessageType<DialogRunCommandAction> {
+  constructor() {
+    super("soulfire.v1.DialogRunCommandAction", [
+      { no: 1, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<DialogRunCommandAction>,
+  ): DialogRunCommandAction {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.command = "";
+    if (value !== undefined)
+      reflectionMergePartial<DialogRunCommandAction>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogRunCommandAction,
+  ): DialogRunCommandAction {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string command */ 1:
+          message.command = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogRunCommandAction,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string command = 1; */
+    if (message.command !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.command);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogRunCommandAction
+ */
+export const DialogRunCommandAction = new DialogRunCommandAction$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogSuggestCommandAction$Type extends MessageType<DialogSuggestCommandAction> {
+  constructor() {
+    super("soulfire.v1.DialogSuggestCommandAction", [
+      { no: 1, name: "command", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<DialogSuggestCommandAction>,
+  ): DialogSuggestCommandAction {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.command = "";
+    if (value !== undefined)
+      reflectionMergePartial<DialogSuggestCommandAction>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogSuggestCommandAction,
+  ): DialogSuggestCommandAction {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string command */ 1:
+          message.command = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogSuggestCommandAction,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string command = 1; */
+    if (message.command !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.command);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogSuggestCommandAction
+ */
+export const DialogSuggestCommandAction = new DialogSuggestCommandAction$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogCopyToClipboardAction$Type extends MessageType<DialogCopyToClipboardAction> {
+  constructor() {
+    super("soulfire.v1.DialogCopyToClipboardAction", [
+      { no: 1, name: "value", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<DialogCopyToClipboardAction>,
+  ): DialogCopyToClipboardAction {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.value = "";
+    if (value !== undefined)
+      reflectionMergePartial<DialogCopyToClipboardAction>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogCopyToClipboardAction,
+  ): DialogCopyToClipboardAction {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string value */ 1:
+          message.value = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogCopyToClipboardAction,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string value = 1; */
+    if (message.value !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.value);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogCopyToClipboardAction
+ */
+export const DialogCopyToClipboardAction =
+  new DialogCopyToClipboardAction$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogShowDialogAction$Type extends MessageType<DialogShowDialogAction> {
+  constructor() {
+    super("soulfire.v1.DialogShowDialogAction", [
+      { no: 1, name: "dialog_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<DialogShowDialogAction>,
+  ): DialogShowDialogAction {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.dialogId = "";
+    if (value !== undefined)
+      reflectionMergePartial<DialogShowDialogAction>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogShowDialogAction,
+  ): DialogShowDialogAction {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string dialog_id */ 1:
+          message.dialogId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogShowDialogAction,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string dialog_id = 1; */
+    if (message.dialogId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.dialogId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogShowDialogAction
+ */
+export const DialogShowDialogAction = new DialogShowDialogAction$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogCustomAction$Type extends MessageType<DialogCustomAction> {
+  constructor() {
+    super("soulfire.v1.DialogCustomAction", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "payload", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<DialogCustomAction>): DialogCustomAction {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.payload = "";
+    if (value !== undefined)
+      reflectionMergePartial<DialogCustomAction>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogCustomAction,
+  ): DialogCustomAction {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string payload */ 2:
+          message.payload = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogCustomAction,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string payload = 2; */
+    if (message.payload !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.payload);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogCustomAction
+ */
+export const DialogCustomAction = new DialogCustomAction$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogDynamicRunCommandAction$Type extends MessageType<DialogDynamicRunCommandAction> {
+  constructor() {
+    super("soulfire.v1.DialogDynamicRunCommandAction", [
+      { no: 1, name: "template", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<DialogDynamicRunCommandAction>,
+  ): DialogDynamicRunCommandAction {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.template = "";
+    if (value !== undefined)
+      reflectionMergePartial<DialogDynamicRunCommandAction>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogDynamicRunCommandAction,
+  ): DialogDynamicRunCommandAction {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string template */ 1:
+          message.template = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogDynamicRunCommandAction,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string template = 1; */
+    if (message.template !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.template);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogDynamicRunCommandAction
+ */
+export const DialogDynamicRunCommandAction =
+  new DialogDynamicRunCommandAction$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogDynamicCustomAction$Type extends MessageType<DialogDynamicCustomAction> {
+  constructor() {
+    super("soulfire.v1.DialogDynamicCustomAction", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "additions", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<DialogDynamicCustomAction>,
+  ): DialogDynamicCustomAction {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.additions = "";
+    if (value !== undefined)
+      reflectionMergePartial<DialogDynamicCustomAction>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogDynamicCustomAction,
+  ): DialogDynamicCustomAction {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string additions */ 2:
+          message.additions = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogDynamicCustomAction,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string additions = 2; */
+    if (message.additions !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.additions);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogDynamicCustomAction
+ */
+export const DialogDynamicCustomAction = new DialogDynamicCustomAction$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DialogButton$Type extends MessageType<DialogButton> {
+  constructor() {
+    super("soulfire.v1.DialogButton", [
+      { no: 1, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "tooltip",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 3, name: "width", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 4, name: "action", kind: "message", T: () => DialogAction },
+    ]);
+  }
+  create(value?: PartialMessage<DialogButton>): DialogButton {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.label = "";
+    message.width = 0;
+    if (value !== undefined)
+      reflectionMergePartial<DialogButton>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DialogButton,
+  ): DialogButton {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string label */ 1:
+          message.label = reader.string();
+          break;
+        case /* optional string tooltip */ 2:
+          message.tooltip = reader.string();
+          break;
+        case /* int32 width */ 3:
+          message.width = reader.int32();
+          break;
+        case /* optional soulfire.v1.DialogAction action */ 4:
+          message.action = DialogAction.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.action,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DialogButton,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string label = 1; */
+    if (message.label !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.label);
+    /* optional string tooltip = 2; */
+    if (message.tooltip !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.tooltip);
+    /* int32 width = 3; */
+    if (message.width !== 0)
+      writer.tag(3, WireType.Varint).int32(message.width);
+    /* optional soulfire.v1.DialogAction action = 4; */
+    if (message.action)
+      DialogAction.internalBinaryWrite(
+        message.action,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DialogButton
+ */
+export const DialogButton = new DialogButton$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ServerDialog$Type extends MessageType<ServerDialog> {
+  constructor() {
+    super("soulfire.v1.ServerDialog", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "type",
+        kind: "enum",
+        T: () => ["soulfire.v1.DialogType", DialogType, "DIALOG_TYPE_"],
+      },
+      { no: 3, name: "title", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 4,
+        name: "external_title",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 5,
+        name: "body",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => DialogBodyElement,
+      },
+      {
+        no: 6,
+        name: "inputs",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => DialogInput,
+      },
+      {
+        no: 7,
+        name: "can_close_with_escape",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      { no: 8, name: "pause", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 9,
+        name: "after_action",
+        kind: "enum",
+        T: () => [
+          "soulfire.v1.DialogAfterAction",
+          DialogAfterAction,
+          "DIALOG_AFTER_ACTION_",
+        ],
+      },
+      { no: 10, name: "action", kind: "message", T: () => DialogButton },
+      { no: 11, name: "yes", kind: "message", T: () => DialogButton },
+      { no: 12, name: "no", kind: "message", T: () => DialogButton },
+      {
+        no: 13,
+        name: "actions",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => DialogButton,
+      },
+      { no: 14, name: "columns", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+      { no: 15, name: "exit_action", kind: "message", T: () => DialogButton },
+      {
+        no: 16,
+        name: "button_width",
+        kind: "scalar",
+        T: 5 /*ScalarType.INT32*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ServerDialog>): ServerDialog {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.type = 0;
+    message.title = "";
+    message.body = [];
+    message.inputs = [];
+    message.canCloseWithEscape = false;
+    message.pause = false;
+    message.afterAction = 0;
+    message.actions = [];
+    message.columns = 0;
+    message.buttonWidth = 0;
+    if (value !== undefined)
+      reflectionMergePartial<ServerDialog>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ServerDialog,
+  ): ServerDialog {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* soulfire.v1.DialogType type */ 2:
+          message.type = reader.int32();
+          break;
+        case /* string title */ 3:
+          message.title = reader.string();
+          break;
+        case /* optional string external_title */ 4:
+          message.externalTitle = reader.string();
+          break;
+        case /* repeated soulfire.v1.DialogBodyElement body */ 5:
+          message.body.push(
+            DialogBodyElement.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        case /* repeated soulfire.v1.DialogInput inputs */ 6:
+          message.inputs.push(
+            DialogInput.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* bool can_close_with_escape */ 7:
+          message.canCloseWithEscape = reader.bool();
+          break;
+        case /* bool pause */ 8:
+          message.pause = reader.bool();
+          break;
+        case /* soulfire.v1.DialogAfterAction after_action */ 9:
+          message.afterAction = reader.int32();
+          break;
+        case /* optional soulfire.v1.DialogButton action */ 10:
+          message.action = DialogButton.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.action,
+          );
+          break;
+        case /* optional soulfire.v1.DialogButton yes */ 11:
+          message.yes = DialogButton.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.yes,
+          );
+          break;
+        case /* optional soulfire.v1.DialogButton no */ 12:
+          message.no = DialogButton.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.no,
+          );
+          break;
+        case /* repeated soulfire.v1.DialogButton actions */ 13:
+          message.actions.push(
+            DialogButton.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* int32 columns */ 14:
+          message.columns = reader.int32();
+          break;
+        case /* optional soulfire.v1.DialogButton exit_action */ 15:
+          message.exitAction = DialogButton.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.exitAction,
+          );
+          break;
+        case /* int32 button_width */ 16:
+          message.buttonWidth = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ServerDialog,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* soulfire.v1.DialogType type = 2; */
+    if (message.type !== 0) writer.tag(2, WireType.Varint).int32(message.type);
+    /* string title = 3; */
+    if (message.title !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.title);
+    /* optional string external_title = 4; */
+    if (message.externalTitle !== undefined)
+      writer.tag(4, WireType.LengthDelimited).string(message.externalTitle);
+    /* repeated soulfire.v1.DialogBodyElement body = 5; */
+    for (let i = 0; i < message.body.length; i++)
+      DialogBodyElement.internalBinaryWrite(
+        message.body[i],
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.DialogInput inputs = 6; */
+    for (let i = 0; i < message.inputs.length; i++)
+      DialogInput.internalBinaryWrite(
+        message.inputs[i],
+        writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* bool can_close_with_escape = 7; */
+    if (message.canCloseWithEscape !== false)
+      writer.tag(7, WireType.Varint).bool(message.canCloseWithEscape);
+    /* bool pause = 8; */
+    if (message.pause !== false)
+      writer.tag(8, WireType.Varint).bool(message.pause);
+    /* soulfire.v1.DialogAfterAction after_action = 9; */
+    if (message.afterAction !== 0)
+      writer.tag(9, WireType.Varint).int32(message.afterAction);
+    /* optional soulfire.v1.DialogButton action = 10; */
+    if (message.action)
+      DialogButton.internalBinaryWrite(
+        message.action,
+        writer.tag(10, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* optional soulfire.v1.DialogButton yes = 11; */
+    if (message.yes)
+      DialogButton.internalBinaryWrite(
+        message.yes,
+        writer.tag(11, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* optional soulfire.v1.DialogButton no = 12; */
+    if (message.no)
+      DialogButton.internalBinaryWrite(
+        message.no,
+        writer.tag(12, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.DialogButton actions = 13; */
+    for (let i = 0; i < message.actions.length; i++)
+      DialogButton.internalBinaryWrite(
+        message.actions[i],
+        writer.tag(13, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* int32 columns = 14; */
+    if (message.columns !== 0)
+      writer.tag(14, WireType.Varint).int32(message.columns);
+    /* optional soulfire.v1.DialogButton exit_action = 15; */
+    if (message.exitAction)
+      DialogButton.internalBinaryWrite(
+        message.exitAction,
+        writer.tag(15, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* int32 button_width = 16; */
+    if (message.buttonWidth !== 0)
+      writer.tag(16, WireType.Varint).int32(message.buttonWidth);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ServerDialog
+ */
+export const ServerDialog = new ServerDialog$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotGetDialogRequest$Type extends MessageType<BotGetDialogRequest> {
+  constructor() {
+    super("soulfire.v1.BotGetDialogRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<BotGetDialogRequest>): BotGetDialogRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    if (value !== undefined)
+      reflectionMergePartial<BotGetDialogRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotGetDialogRequest,
+  ): BotGetDialogRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotGetDialogRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotGetDialogRequest
+ */
+export const BotGetDialogRequest = new BotGetDialogRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotGetDialogResponse$Type extends MessageType<BotGetDialogResponse> {
+  constructor() {
+    super("soulfire.v1.BotGetDialogResponse", [
+      { no: 1, name: "dialog", kind: "message", T: () => ServerDialog },
+    ]);
+  }
+  create(value?: PartialMessage<BotGetDialogResponse>): BotGetDialogResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<BotGetDialogResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotGetDialogResponse,
+  ): BotGetDialogResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* optional soulfire.v1.ServerDialog dialog */ 1:
+          message.dialog = ServerDialog.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.dialog,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotGetDialogResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* optional soulfire.v1.ServerDialog dialog = 1; */
+    if (message.dialog)
+      ServerDialog.internalBinaryWrite(
+        message.dialog,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotGetDialogResponse
+ */
+export const BotGetDialogResponse = new BotGetDialogResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotSubmitDialogRequest$Type extends MessageType<BotSubmitDialogRequest> {
+  constructor() {
+    super("soulfire.v1.BotSubmitDialogRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "input_values",
+        kind: "map",
+        K: 9 /*ScalarType.STRING*/,
+        V: { kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotSubmitDialogRequest>,
+  ): BotSubmitDialogRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    message.inputValues = {};
+    if (value !== undefined)
+      reflectionMergePartial<BotSubmitDialogRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotSubmitDialogRequest,
+  ): BotSubmitDialogRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        case /* map<string, string> input_values */ 3:
+          this.binaryReadMap3(message.inputValues, reader, options);
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  private binaryReadMap3(
+    map: BotSubmitDialogRequest["inputValues"],
+    reader: IBinaryReader,
+    options: BinaryReadOptions,
+  ): void {
+    let len = reader.uint32(),
+      end = reader.pos + len,
+      key: keyof BotSubmitDialogRequest["inputValues"] | undefined,
+      val: BotSubmitDialogRequest["inputValues"][any] | undefined;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case 1:
+          key = reader.string();
+          break;
+        case 2:
+          val = reader.string();
+          break;
+        default:
+          throw new globalThis.Error(
+            "unknown map entry field for soulfire.v1.BotSubmitDialogRequest.input_values",
+          );
+      }
+    }
+    map[key ?? ""] = val ?? "";
+  }
+  internalBinaryWrite(
+    message: BotSubmitDialogRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    /* map<string, string> input_values = 3; */
+    for (let k of globalThis.Object.keys(message.inputValues))
+      writer
+        .tag(3, WireType.LengthDelimited)
+        .fork()
+        .tag(1, WireType.LengthDelimited)
+        .string(k)
+        .tag(2, WireType.LengthDelimited)
+        .string(message.inputValues[k])
+        .join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotSubmitDialogRequest
+ */
+export const BotSubmitDialogRequest = new BotSubmitDialogRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotSubmitDialogResponse$Type extends MessageType<BotSubmitDialogResponse> {
+  constructor() {
+    super("soulfire.v1.BotSubmitDialogResponse", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 2,
+        name: "error",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotSubmitDialogResponse>,
+  ): BotSubmitDialogResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotSubmitDialogResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotSubmitDialogResponse,
+  ): BotSubmitDialogResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        case /* optional string error */ 2:
+          message.error = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotSubmitDialogResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    /* optional string error = 2; */
+    if (message.error !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.error);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotSubmitDialogResponse
+ */
+export const BotSubmitDialogResponse = new BotSubmitDialogResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotClickDialogButtonRequest$Type extends MessageType<BotClickDialogButtonRequest> {
+  constructor() {
+    super("soulfire.v1.BotClickDialogButtonRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "button_index",
+        kind: "scalar",
+        T: 5 /*ScalarType.INT32*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotClickDialogButtonRequest>,
+  ): BotClickDialogButtonRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    message.buttonIndex = 0;
+    if (value !== undefined)
+      reflectionMergePartial<BotClickDialogButtonRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotClickDialogButtonRequest,
+  ): BotClickDialogButtonRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        case /* int32 button_index */ 3:
+          message.buttonIndex = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotClickDialogButtonRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    /* int32 button_index = 3; */
+    if (message.buttonIndex !== 0)
+      writer.tag(3, WireType.Varint).int32(message.buttonIndex);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotClickDialogButtonRequest
+ */
+export const BotClickDialogButtonRequest =
+  new BotClickDialogButtonRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotClickDialogButtonResponse$Type extends MessageType<BotClickDialogButtonResponse> {
+  constructor() {
+    super("soulfire.v1.BotClickDialogButtonResponse", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 2,
+        name: "error",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotClickDialogButtonResponse>,
+  ): BotClickDialogButtonResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotClickDialogButtonResponse>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotClickDialogButtonResponse,
+  ): BotClickDialogButtonResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        case /* optional string error */ 2:
+          message.error = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotClickDialogButtonResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    /* optional string error = 2; */
+    if (message.error !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.error);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotClickDialogButtonResponse
+ */
+export const BotClickDialogButtonResponse =
+  new BotClickDialogButtonResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotCloseDialogRequest$Type extends MessageType<BotCloseDialogRequest> {
+  constructor() {
+    super("soulfire.v1.BotCloseDialogRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<BotCloseDialogRequest>): BotCloseDialogRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    if (value !== undefined)
+      reflectionMergePartial<BotCloseDialogRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotCloseDialogRequest,
+  ): BotCloseDialogRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotCloseDialogRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotCloseDialogRequest
+ */
+export const BotCloseDialogRequest = new BotCloseDialogRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotCloseDialogResponse$Type extends MessageType<BotCloseDialogResponse> {
+  constructor() {
+    super("soulfire.v1.BotCloseDialogResponse", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 2,
+        name: "error",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<BotCloseDialogResponse>,
+  ): BotCloseDialogResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotCloseDialogResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotCloseDialogResponse,
+  ): BotCloseDialogResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        case /* optional string error */ 2:
+          message.error = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotCloseDialogResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    /* optional string error = 2; */
+    if (message.error !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.error);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotCloseDialogResponse
+ */
+export const BotCloseDialogResponse = new BotCloseDialogResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.BotService
  */
@@ -4027,5 +7764,29 @@ export const BotService = new ServiceType("soulfire.v1.BotService", [
     options: {},
     I: BotSetContainerTextRequest,
     O: BotSetContainerTextResponse,
+  },
+  {
+    name: "GetDialog",
+    options: {},
+    I: BotGetDialogRequest,
+    O: BotGetDialogResponse,
+  },
+  {
+    name: "SubmitDialog",
+    options: {},
+    I: BotSubmitDialogRequest,
+    O: BotSubmitDialogResponse,
+  },
+  {
+    name: "ClickDialogButton",
+    options: {},
+    I: BotClickDialogButtonRequest,
+    O: BotClickDialogButtonResponse,
+  },
+  {
+    name: "CloseDialog",
+    options: {},
+    I: BotCloseDialogRequest,
+    O: BotCloseDialogResponse,
   },
 ]);
