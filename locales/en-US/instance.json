@@ -170,7 +170,6 @@
       "dropOne": "Drop One",
       "dropAll": "Drop All",
       "closeContainer": "Close",
-      "openInventory": "Open Inventory",
       "clickHint": "Left click: pick up/place | Right click: half/one | Shift+click: quick move",
       "offline": "Bot is offline. Inventory is only available when the bot is connected."
     },
@@ -185,6 +184,14 @@
       "dimension": "Dimension",
       "biome": "Biome",
       "offline": "Bot is offline. Visual data is only available when the bot is connected."
+    },
+    "actionsPanel": {
+      "title": "Bot Actions",
+      "leftClick": "Left Click",
+      "rightClick": "Right Click",
+      "leftClickDescription": "Attack entity or break block",
+      "rightClickDescription": "Use item or interact",
+      "offline": "Bot is offline. Actions are only available when the bot is connected."
     }
   }
 }

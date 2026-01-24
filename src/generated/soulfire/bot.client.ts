@@ -21,6 +21,8 @@ import type {
   BotInventoryStateResponse,
   BotListRequest,
   BotListResponse,
+  BotMouseClickRequest,
+  BotMouseClickResponse,
   BotOpenInventoryRequest,
   BotOpenInventoryResponse,
   BotRenderPovRequest,
@@ -106,6 +108,15 @@ export interface IBotServiceClient {
     input: BotOpenInventoryRequest,
     options?: RpcOptions,
   ): UnaryCall<BotOpenInventoryRequest, BotOpenInventoryResponse>;
+  /**
+   * Mouse click actions
+   *
+   * @generated from protobuf rpc: MouseClick
+   */
+  mouseClick(
+    input: BotMouseClickRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotMouseClickRequest, BotMouseClickResponse>;
 }
 /**
  * @generated from protobuf service soulfire.v1.BotService
@@ -266,6 +277,25 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     const method = this.methods[8],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotOpenInventoryRequest, BotOpenInventoryResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Mouse click actions
+   *
+   * @generated from protobuf rpc: MouseClick
+   */
+  mouseClick(
+    input: BotMouseClickRequest,
+    options?: RpcOptions,
+  ): UnaryCall<BotMouseClickRequest, BotMouseClickResponse> {
+    const method = this.methods[9],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<BotMouseClickRequest, BotMouseClickResponse>(
       "unary",
       this._transport,
       method,

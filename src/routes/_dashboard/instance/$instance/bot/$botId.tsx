@@ -6,7 +6,6 @@ import {
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowLeftIcon,
-  BackpackIcon,
   CameraIcon,
   CompassIcon,
   EyeIcon,
@@ -16,6 +15,7 @@ import {
   LoaderIcon,
   MonitorIcon,
   MonitorSmartphoneIcon,
+  MousePointerClickIcon,
   PackageIcon,
   RefreshCwIcon,
   RotateCcwKeyIcon,
@@ -47,10 +47,15 @@ import type {
   BotInventoryClickRequest,
   BotInventoryStateResponse,
   BotLiveState,
+  BotMouseClickRequest,
   InventorySlot,
   SlotRegion,
 } from "@/generated/soulfire/bot.ts";
-import { ClickType, SlotRegionType } from "@/generated/soulfire/bot.ts";
+import {
+  ClickType,
+  MouseButton,
+  SlotRegionType,
+} from "@/generated/soulfire/bot.ts";
 import type { CommandScope } from "@/generated/soulfire/command.ts";
 import {
   InstancePermission,
@@ -261,6 +266,13 @@ function BotDetailContent({
 
           {/* Inventory panel */}
           <BotInventoryPanel
+            isOnline={isOnline}
+            instanceId={instanceId}
+            botId={account.profileId}
+          />
+
+          {/* Actions panel */}
+          <BotActionsPanel
             isOnline={isOnline}
             instanceId={instanceId}
             botId={account.profileId}
@@ -862,21 +874,6 @@ function BotInventoryPanel({
     },
   });
 
-  // Mutation for opening player inventory
-  const openInventoryMutation = useMutation({
-    mutationFn: async () => {
-      const transport = createTransport();
-      if (transport === null) {
-        throw new Error("Not connected");
-      }
-      const botService = new BotServiceClient(transport);
-      return botService.openInventory({ instanceId, botId });
-    },
-    onSuccess: () => {
-      void refetch();
-    },
-  });
-
   const handleSlotClick = useCallback(
     (slotIndex: number, clickType: ClickType) => {
       clickMutation.mutate({
@@ -926,8 +923,8 @@ function BotInventoryPanel({
         {isOnline && layout ? (
           <div className="space-y-3">
             {/* Container controls */}
-            <div className="flex gap-2">
-              {!isPlayerInventory && (
+            {!isPlayerInventory && (
+              <div className="flex gap-2">
                 <Button
                   variant="outline"
                   size="sm"
@@ -937,17 +934,8 @@ function BotInventoryPanel({
                   <XIcon className="mr-1 size-4" />
                   {t("bots.inventoryPanel.closeContainer")}
                 </Button>
-              )}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => openInventoryMutation.mutate()}
-                disabled={openInventoryMutation.isPending}
-              >
-                <BackpackIcon className="mr-1 size-4" />
-                {t("bots.inventoryPanel.openInventory")}
-              </Button>
-            </div>
+              </div>
+            )}
 
             {/* Carried item indicator */}
             {carriedItem && (
@@ -1007,6 +995,91 @@ function BotInventoryPanel({
           <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
             <p className="text-muted-foreground">
               {t("bots.inventoryPanel.offline")}
+            </p>
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function BotActionsPanel({
+  isOnline,
+  instanceId,
+  botId,
+}: {
+  isOnline: boolean;
+  instanceId: string;
+  botId: string;
+}) {
+  const { t } = useTranslation("instance");
+
+  // Mutation for mouse click actions
+  const clickMutation = useMutation({
+    mutationFn: async (request: BotMouseClickRequest) => {
+      const transport = createTransport();
+      if (transport === null) {
+        throw new Error("Not connected");
+      }
+      const botService = new BotServiceClient(transport);
+      return botService.mouseClick(request);
+    },
+  });
+
+  const handleLeftClick = useCallback(() => {
+    clickMutation.mutate({
+      instanceId,
+      botId,
+      button: MouseButton.LEFT_BUTTON,
+    });
+  }, [clickMutation, instanceId, botId]);
+
+  const handleRightClick = useCallback(() => {
+    clickMutation.mutate({
+      instanceId,
+      botId,
+      button: MouseButton.RIGHT_BUTTON,
+    });
+  }, [clickMutation, instanceId, botId]);
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <MousePointerClickIcon className="size-5" />
+          {t("bots.actionsPanel.title")}
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        {isOnline ? (
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="outline"
+              onClick={handleLeftClick}
+              disabled={clickMutation.isPending}
+              title={t("bots.actionsPanel.leftClickDescription")}
+            >
+              {clickMutation.isPending ? (
+                <LoaderIcon className="mr-2 size-4 animate-spin" />
+              ) : null}
+              {t("bots.actionsPanel.leftClick")}
+            </Button>
+            <Button
+              variant="outline"
+              onClick={handleRightClick}
+              disabled={clickMutation.isPending}
+              title={t("bots.actionsPanel.rightClickDescription")}
+            >
+              {clickMutation.isPending ? (
+                <LoaderIcon className="mr-2 size-4 animate-spin" />
+              ) : null}
+              {t("bots.actionsPanel.rightClick")}
+            </Button>
+          </div>
+        ) : (
+          <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+            <p className="text-muted-foreground">
+              {t("bots.actionsPanel.offline")}
             </p>
           </div>
         )}

@@ -448,6 +448,38 @@ export interface BotOpenInventoryResponse {
   success: boolean;
 }
 /**
+ * Mouse click actions - simulates left/right mouse button press
+ *
+ * @generated from protobuf message soulfire.v1.BotMouseClickRequest
+ */
+export interface BotMouseClickRequest {
+  /**
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * @generated from protobuf field: string bot_id = 2
+   */
+  botId: string;
+  /**
+   * @generated from protobuf field: soulfire.v1.MouseButton button = 3
+   */
+  button: MouseButton;
+}
+/**
+ * @generated from protobuf message soulfire.v1.BotMouseClickResponse
+ */
+export interface BotMouseClickResponse {
+  /**
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+  /**
+   * @generated from protobuf field: optional string error = 2
+   */
+  error?: string;
+}
+/**
  * @generated from protobuf enum soulfire.v1.ClickType
  */
 export enum ClickType {
@@ -534,6 +566,27 @@ export enum SlotRegionType {
    * @generated from protobuf enum value: SLOT_REGION_ARMOR = 4;
    */
   SLOT_REGION_ARMOR = 4,
+}
+/**
+ * @generated from protobuf enum soulfire.v1.MouseButton
+ */
+export enum MouseButton {
+  /**
+   * @generated from protobuf enum value: MOUSE_BUTTON_UNSPECIFIED = 0;
+   */
+  MOUSE_BUTTON_UNSPECIFIED = 0,
+  /**
+   * Attack entity / start breaking block
+   *
+   * @generated from protobuf enum value: LEFT_BUTTON = 1;
+   */
+  LEFT_BUTTON = 1,
+  /**
+   * Use item / interact with entity or block
+   *
+   * @generated from protobuf enum value: RIGHT_BUTTON = 2;
+   */
+  RIGHT_BUTTON = 2,
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class BotConfig$Type extends MessageType<BotConfig> {
@@ -2799,6 +2852,183 @@ class BotOpenInventoryResponse$Type extends MessageType<BotOpenInventoryResponse
  * @generated MessageType for protobuf message soulfire.v1.BotOpenInventoryResponse
  */
 export const BotOpenInventoryResponse = new BotOpenInventoryResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotMouseClickRequest$Type extends MessageType<BotMouseClickRequest> {
+  constructor() {
+    super("soulfire.v1.BotMouseClickRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "button",
+        kind: "enum",
+        T: () => ["soulfire.v1.MouseButton", MouseButton],
+      },
+    ]);
+  }
+  create(value?: PartialMessage<BotMouseClickRequest>): BotMouseClickRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.botId = "";
+    message.button = 0;
+    if (value !== undefined)
+      reflectionMergePartial<BotMouseClickRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotMouseClickRequest,
+  ): BotMouseClickRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string bot_id */ 2:
+          message.botId = reader.string();
+          break;
+        case /* soulfire.v1.MouseButton button */ 3:
+          message.button = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotMouseClickRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string bot_id = 2; */
+    if (message.botId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.botId);
+    /* soulfire.v1.MouseButton button = 3; */
+    if (message.button !== 0)
+      writer.tag(3, WireType.Varint).int32(message.button);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotMouseClickRequest
+ */
+export const BotMouseClickRequest = new BotMouseClickRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class BotMouseClickResponse$Type extends MessageType<BotMouseClickResponse> {
+  constructor() {
+    super("soulfire.v1.BotMouseClickResponse", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 2,
+        name: "error",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<BotMouseClickResponse>): BotMouseClickResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<BotMouseClickResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: BotMouseClickResponse,
+  ): BotMouseClickResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        case /* optional string error */ 2:
+          message.error = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: BotMouseClickResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    /* optional string error = 2; */
+    if (message.error !== undefined)
+      writer.tag(2, WireType.LengthDelimited).string(message.error);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.BotMouseClickResponse
+ */
+export const BotMouseClickResponse = new BotMouseClickResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.BotService
  */
@@ -2846,5 +3076,11 @@ export const BotService = new ServiceType("soulfire.v1.BotService", [
     options: {},
     I: BotOpenInventoryRequest,
     O: BotOpenInventoryResponse,
+  },
+  {
+    name: "MouseClick",
+    options: {},
+    I: BotMouseClickRequest,
+    O: BotMouseClickResponse,
   },
 ]);
