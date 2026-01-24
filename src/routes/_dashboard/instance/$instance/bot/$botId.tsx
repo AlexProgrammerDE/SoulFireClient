@@ -72,6 +72,7 @@ import type {
 } from "@/generated/soulfire/bot.ts";
 import {
   ClickType,
+  GameMode,
   MouseButton,
   SlotRegionType,
 } from "@/generated/soulfire/bot.ts";
@@ -593,6 +594,27 @@ function BotStatsPanel({
                 {(liveState.experienceProgress * 100).toFixed(0)}%{" "}
                 {t("bots.statsPanel.toNextLevel")}
               </p>
+            </div>
+
+            {/* Game Mode */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <GamepadIcon className="size-4 text-purple-500" />
+                <span className="text-sm font-medium">
+                  {t("bots.statsPanel.gameMode")}
+                </span>
+              </div>
+              <Badge variant="outline">
+                {liveState.gameMode === GameMode.SURVIVAL
+                  ? t("bots.statsPanel.survival")
+                  : liveState.gameMode === GameMode.CREATIVE
+                    ? t("bots.statsPanel.creative")
+                    : liveState.gameMode === GameMode.ADVENTURE
+                      ? t("bots.statsPanel.adventure")
+                      : liveState.gameMode === GameMode.SPECTATOR
+                        ? t("bots.statsPanel.spectator")
+                        : t("bots.statsPanel.unknown")}
+              </Badge>
             </div>
           </div>
         ) : (

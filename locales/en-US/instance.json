@@ -162,6 +162,12 @@
       "experience": "Experience",
       "level": "Level",
       "toNextLevel": "to next level",
+      "gameMode": "Game Mode",
+      "survival": "Survival",
+      "creative": "Creative",
+      "adventure": "Adventure",
+      "spectator": "Spectator",
+      "unknown": "Unknown",
       "offline": "Bot is offline. Stats are only available when the bot is connected."
     },
     "inventoryPanel": {

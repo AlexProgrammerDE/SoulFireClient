@@ -175,6 +175,12 @@ export interface BotLiveState {
    * @generated from protobuf field: optional string skin_texture_hash = 15
    */
   skinTextureHash?: string;
+  /**
+   * Game mode (survival, creative, adventure, spectator)
+   *
+   * @generated from protobuf field: soulfire.v1.GameMode game_mode = 16
+   */
+  gameMode: GameMode;
 }
 /**
  * @generated from protobuf message soulfire.v1.BotInfoResponse
@@ -1428,6 +1434,33 @@ export interface BotCloseDialogResponse {
   error?: string;
 }
 /**
+ * Minecraft game modes
+ *
+ * @generated from protobuf enum soulfire.v1.GameMode
+ */
+export enum GameMode {
+  /**
+   * @generated from protobuf enum value: GAME_MODE_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+  /**
+   * @generated from protobuf enum value: GAME_MODE_SURVIVAL = 1;
+   */
+  SURVIVAL = 1,
+  /**
+   * @generated from protobuf enum value: GAME_MODE_CREATIVE = 2;
+   */
+  CREATIVE = 2,
+  /**
+   * @generated from protobuf enum value: GAME_MODE_ADVENTURE = 3;
+   */
+  ADVENTURE = 3,
+  /**
+   * @generated from protobuf enum value: GAME_MODE_SPECTATOR = 4;
+   */
+  SPECTATOR = 4,
+}
+/**
  * @generated from protobuf enum soulfire.v1.ClickType
  */
 export enum ClickType {
@@ -2174,6 +2207,12 @@ class BotLiveState$Type extends MessageType<BotLiveState> {
         opt: true,
         T: 9 /*ScalarType.STRING*/,
       },
+      {
+        no: 16,
+        name: "game_mode",
+        kind: "enum",
+        T: () => ["soulfire.v1.GameMode", GameMode, "GAME_MODE_"],
+      },
     ]);
   }
   create(value?: PartialMessage<BotLiveState>): BotLiveState {
@@ -2192,6 +2231,7 @@ class BotLiveState$Type extends MessageType<BotLiveState> {
     message.dimension = "";
     message.experienceLevel = 0;
     message.experienceProgress = 0;
+    message.gameMode = 0;
     if (value !== undefined)
       reflectionMergePartial<BotLiveState>(this, message, value);
     return message;
@@ -2253,6 +2293,9 @@ class BotLiveState$Type extends MessageType<BotLiveState> {
           break;
         case /* optional string skin_texture_hash */ 15:
           message.skinTextureHash = reader.string();
+          break;
+        case /* soulfire.v1.GameMode game_mode */ 16:
+          message.gameMode = reader.int32();
           break;
         default:
           let u = options.readUnknownField;
@@ -2322,6 +2365,9 @@ class BotLiveState$Type extends MessageType<BotLiveState> {
     /* optional string skin_texture_hash = 15; */
     if (message.skinTextureHash !== undefined)
       writer.tag(15, WireType.LengthDelimited).string(message.skinTextureHash);
+    /* soulfire.v1.GameMode game_mode = 16; */
+    if (message.gameMode !== 0)
+      writer.tag(16, WireType.Varint).int32(message.gameMode);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
