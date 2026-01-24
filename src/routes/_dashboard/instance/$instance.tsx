@@ -45,6 +45,7 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
                   oneofKind: "offlineJavaData",
                   offlineJavaData: {},
                 },
+                persistentMetadata: [],
               },
             ],
             proxies: [

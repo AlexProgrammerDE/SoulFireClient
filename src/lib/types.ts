@@ -5,6 +5,7 @@ import type {
   MinecraftAccountProto,
   MinecraftAccountProto_AccountTypeProto,
   ProxyProto_Type,
+  SettingsNamespace,
 } from "@/generated/soulfire/common.ts";
 import {
   type InstanceConfig,
@@ -83,6 +84,7 @@ export type ProfileAccount = {
   profileId: string;
   lastKnownName: string;
   accountData: MinecraftAccountProto["accountData"];
+  persistentMetadata: SettingsNamespace[];
 };
 
 export type ProfileProxy = {
