@@ -38,7 +38,12 @@ export default defineConfig({
     APP_NAMESPACES: JSON.stringify(namespaces),
   },
   plugins: [
-    devtools(),
+    devtools({
+      eventBusConfig: {
+        // Disabled on Windows due to hang issue with ServerEventBus.start()
+        enabled: process.platform !== "win32",
+      },
+    }),
     tanstackRouter({
       target: "react",
       autoCodeSplitting: !isDev,
