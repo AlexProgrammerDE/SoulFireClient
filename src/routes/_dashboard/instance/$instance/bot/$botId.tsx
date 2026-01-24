@@ -1081,10 +1081,9 @@ function BotVisualPanel({
                 </span>
                 {/* Direction indicator */}
                 <div
-                  className="absolute left-1/2 top-1/2 h-12 w-1 origin-bottom -translate-x-1/2 -translate-y-full"
+                  className="absolute bottom-1/2 left-1/2 h-12 w-1 origin-bottom"
                   style={{
-                    transform: `translateX(-50%) translateY(-100%) rotate(${liveState.yRot + 180}deg)`,
-                    transformOrigin: "bottom center",
+                    transform: `translateX(-50%) rotate(${liveState.yRot + 180}deg)`,
                   }}
                 >
                   <div className="bg-primary h-full w-full rounded-full" />
