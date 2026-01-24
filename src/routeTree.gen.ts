@@ -21,7 +21,6 @@ import { Route as DashboardUserAdminIndexRouteImport } from './routes/_dashboard
 import { Route as DashboardInstanceInstanceIndexRouteImport } from './routes/_dashboard/instance/$instance/index'
 import { Route as DashboardUserAdminUsersRouteImport } from './routes/_dashboard/user/admin/users'
 import { Route as DashboardUserAdminTerminalRouteImport } from './routes/_dashboard/user/admin/terminal'
-import { Route as DashboardUserAdminScriptsRouteImport } from './routes/_dashboard/user/admin/scripts'
 import { Route as DashboardUserAdminLogsRouteImport } from './routes/_dashboard/user/admin/logs'
 import { Route as DashboardInstanceInstanceTerminalRouteImport } from './routes/_dashboard/instance/$instance/terminal'
 import { Route as DashboardInstanceInstanceScriptsRouteImport } from './routes/_dashboard/instance/$instance/scripts'
@@ -95,12 +94,6 @@ const DashboardUserAdminTerminalRoute =
   DashboardUserAdminTerminalRouteImport.update({
     id: '/terminal',
     path: '/terminal',
-    getParentRoute: () => DashboardUserAdminRoute,
-  } as any)
-const DashboardUserAdminScriptsRoute =
-  DashboardUserAdminScriptsRouteImport.update({
-    id: '/scripts',
-    path: '/scripts',
     getParentRoute: () => DashboardUserAdminRoute,
   } as any)
 const DashboardUserAdminLogsRoute = DashboardUserAdminLogsRouteImport.update({
@@ -192,7 +185,6 @@ export interface FileRoutesByFullPath {
   '/instance/$instance/scripts': typeof DashboardInstanceInstanceScriptsRoute
   '/instance/$instance/terminal': typeof DashboardInstanceInstanceTerminalRoute
   '/user/admin/logs': typeof DashboardUserAdminLogsRoute
-  '/user/admin/scripts': typeof DashboardUserAdminScriptsRoute
   '/user/admin/terminal': typeof DashboardUserAdminTerminalRoute
   '/user/admin/users': typeof DashboardUserAdminUsersRoute
   '/instance/$instance/': typeof DashboardInstanceInstanceIndexRoute
@@ -215,7 +207,6 @@ export interface FileRoutesByTo {
   '/instance/$instance/scripts': typeof DashboardInstanceInstanceScriptsRoute
   '/instance/$instance/terminal': typeof DashboardInstanceInstanceTerminalRoute
   '/user/admin/logs': typeof DashboardUserAdminLogsRoute
-  '/user/admin/scripts': typeof DashboardUserAdminScriptsRoute
   '/user/admin/terminal': typeof DashboardUserAdminTerminalRoute
   '/user/admin/users': typeof DashboardUserAdminUsersRoute
   '/instance/$instance': typeof DashboardInstanceInstanceIndexRoute
@@ -243,7 +234,6 @@ export interface FileRoutesById {
   '/_dashboard/instance/$instance/scripts': typeof DashboardInstanceInstanceScriptsRoute
   '/_dashboard/instance/$instance/terminal': typeof DashboardInstanceInstanceTerminalRoute
   '/_dashboard/user/admin/logs': typeof DashboardUserAdminLogsRoute
-  '/_dashboard/user/admin/scripts': typeof DashboardUserAdminScriptsRoute
   '/_dashboard/user/admin/terminal': typeof DashboardUserAdminTerminalRoute
   '/_dashboard/user/admin/users': typeof DashboardUserAdminUsersRoute
   '/_dashboard/instance/$instance/': typeof DashboardInstanceInstanceIndexRoute
@@ -271,7 +261,6 @@ export interface FileRouteTypes {
     | '/instance/$instance/scripts'
     | '/instance/$instance/terminal'
     | '/user/admin/logs'
-    | '/user/admin/scripts'
     | '/user/admin/terminal'
     | '/user/admin/users'
     | '/instance/$instance/'
@@ -294,7 +283,6 @@ export interface FileRouteTypes {
     | '/instance/$instance/scripts'
     | '/instance/$instance/terminal'
     | '/user/admin/logs'
-    | '/user/admin/scripts'
     | '/user/admin/terminal'
     | '/user/admin/users'
     | '/instance/$instance'
@@ -321,7 +309,6 @@ export interface FileRouteTypes {
     | '/_dashboard/instance/$instance/scripts'
     | '/_dashboard/instance/$instance/terminal'
     | '/_dashboard/user/admin/logs'
-    | '/_dashboard/user/admin/scripts'
     | '/_dashboard/user/admin/terminal'
     | '/_dashboard/user/admin/users'
     | '/_dashboard/instance/$instance/'
@@ -422,13 +409,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardUserAdminTerminalRouteImport
       parentRoute: typeof DashboardUserAdminRoute
     }
-    '/_dashboard/user/admin/scripts': {
-      id: '/_dashboard/user/admin/scripts'
-      path: '/scripts'
-      fullPath: '/user/admin/scripts'
-      preLoaderRoute: typeof DashboardUserAdminScriptsRouteImport
-      parentRoute: typeof DashboardUserAdminRoute
-    }
     '/_dashboard/user/admin/logs': {
       id: '/_dashboard/user/admin/logs'
       path: '/logs'
@@ -518,7 +498,6 @@ declare module '@tanstack/react-router' {
 
 interface DashboardUserAdminRouteChildren {
   DashboardUserAdminLogsRoute: typeof DashboardUserAdminLogsRoute
-  DashboardUserAdminScriptsRoute: typeof DashboardUserAdminScriptsRoute
   DashboardUserAdminTerminalRoute: typeof DashboardUserAdminTerminalRoute
   DashboardUserAdminUsersRoute: typeof DashboardUserAdminUsersRoute
   DashboardUserAdminIndexRoute: typeof DashboardUserAdminIndexRoute
@@ -527,7 +506,6 @@ interface DashboardUserAdminRouteChildren {
 
 const DashboardUserAdminRouteChildren: DashboardUserAdminRouteChildren = {
   DashboardUserAdminLogsRoute: DashboardUserAdminLogsRoute,
-  DashboardUserAdminScriptsRoute: DashboardUserAdminScriptsRoute,
   DashboardUserAdminTerminalRoute: DashboardUserAdminTerminalRoute,
   DashboardUserAdminUsersRoute: DashboardUserAdminUsersRoute,
   DashboardUserAdminIndexRoute: DashboardUserAdminIndexRoute,

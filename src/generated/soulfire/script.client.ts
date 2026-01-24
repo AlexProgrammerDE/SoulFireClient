@@ -3,67 +3,19 @@
 // @generated from protobuf file "soulfire/script.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
-import type {
-  RpcOptions,
-  RpcTransport,
-  ServiceInfo,
-  UnaryCall,
-} from "@protobuf-ts/runtime-rpc";
-import { stackIntercept } from "@protobuf-ts/runtime-rpc";
-import type {
-  CreateScriptRequest,
-  CreateScriptResponse,
-  DeleteScriptRequest,
-  DeleteScriptResponse,
-  RestartScriptRequest,
-  RestartScriptResponse,
-  ScriptListRequest,
-  ScriptListResponse,
-  UpdateScriptRequest,
-  UpdateScriptResponse,
-} from "./script";
+import type { RpcTransport, ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { ScriptService } from "./script";
 /**
+ * Script service is currently disabled while the visual script editor is under development.
+ * The service definition is kept for future use.
+ *
  * @generated from protobuf service soulfire.v1.ScriptService
  */
-export interface IScriptServiceClient {
-  /**
-   * @generated from protobuf rpc: CreateScript
-   */
-  createScript(
-    input: CreateScriptRequest,
-    options?: RpcOptions,
-  ): UnaryCall<CreateScriptRequest, CreateScriptResponse>;
-  /**
-   * @generated from protobuf rpc: DeleteScript
-   */
-  deleteScript(
-    input: DeleteScriptRequest,
-    options?: RpcOptions,
-  ): UnaryCall<DeleteScriptRequest, DeleteScriptResponse>;
-  /**
-   * @generated from protobuf rpc: RestartScript
-   */
-  restartScript(
-    input: RestartScriptRequest,
-    options?: RpcOptions,
-  ): UnaryCall<RestartScriptRequest, RestartScriptResponse>;
-  /**
-   * @generated from protobuf rpc: UpdateScript
-   */
-  updateScript(
-    input: UpdateScriptRequest,
-    options?: RpcOptions,
-  ): UnaryCall<UpdateScriptRequest, UpdateScriptResponse>;
-  /**
-   * @generated from protobuf rpc: ListScripts
-   */
-  listScripts(
-    input: ScriptListRequest,
-    options?: RpcOptions,
-  ): UnaryCall<ScriptListRequest, ScriptListResponse>;
-}
+export interface IScriptServiceClient {}
 /**
+ * Script service is currently disabled while the visual script editor is under development.
+ * The service definition is kept for future use.
+ *
  * @generated from protobuf service soulfire.v1.ScriptService
  */
 export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
@@ -71,89 +23,4 @@ export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
   methods = ScriptService.methods;
   options = ScriptService.options;
   constructor(private readonly _transport: RpcTransport) {}
-  /**
-   * @generated from protobuf rpc: CreateScript
-   */
-  createScript(
-    input: CreateScriptRequest,
-    options?: RpcOptions,
-  ): UnaryCall<CreateScriptRequest, CreateScriptResponse> {
-    const method = this.methods[0],
-      opt = this._transport.mergeOptions(options);
-    return stackIntercept<CreateScriptRequest, CreateScriptResponse>(
-      "unary",
-      this._transport,
-      method,
-      opt,
-      input,
-    );
-  }
-  /**
-   * @generated from protobuf rpc: DeleteScript
-   */
-  deleteScript(
-    input: DeleteScriptRequest,
-    options?: RpcOptions,
-  ): UnaryCall<DeleteScriptRequest, DeleteScriptResponse> {
-    const method = this.methods[1],
-      opt = this._transport.mergeOptions(options);
-    return stackIntercept<DeleteScriptRequest, DeleteScriptResponse>(
-      "unary",
-      this._transport,
-      method,
-      opt,
-      input,
-    );
-  }
-  /**
-   * @generated from protobuf rpc: RestartScript
-   */
-  restartScript(
-    input: RestartScriptRequest,
-    options?: RpcOptions,
-  ): UnaryCall<RestartScriptRequest, RestartScriptResponse> {
-    const method = this.methods[2],
-      opt = this._transport.mergeOptions(options);
-    return stackIntercept<RestartScriptRequest, RestartScriptResponse>(
-      "unary",
-      this._transport,
-      method,
-      opt,
-      input,
-    );
-  }
-  /**
-   * @generated from protobuf rpc: UpdateScript
-   */
-  updateScript(
-    input: UpdateScriptRequest,
-    options?: RpcOptions,
-  ): UnaryCall<UpdateScriptRequest, UpdateScriptResponse> {
-    const method = this.methods[3],
-      opt = this._transport.mergeOptions(options);
-    return stackIntercept<UpdateScriptRequest, UpdateScriptResponse>(
-      "unary",
-      this._transport,
-      method,
-      opt,
-      input,
-    );
-  }
-  /**
-   * @generated from protobuf rpc: ListScripts
-   */
-  listScripts(
-    input: ScriptListRequest,
-    options?: RpcOptions,
-  ): UnaryCall<ScriptListRequest, ScriptListResponse> {
-    const method = this.methods[4],
-      opt = this._transport.mergeOptions(options);
-    return stackIntercept<ScriptListRequest, ScriptListResponse>(
-      "unary",
-      this._transport,
-      method,
-      opt,
-      input,
-    );
-  }
 }

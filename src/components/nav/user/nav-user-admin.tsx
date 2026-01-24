@@ -6,7 +6,6 @@ import {
   BugIcon,
   ChartAreaIcon,
   LogsIcon,
-  ScrollTextIcon,
   ServerIcon,
   SquareTerminalIcon,
   UsersIcon,
@@ -71,14 +70,6 @@ export function NavUserAdmin() {
       icon: UsersIcon,
       linkProps: {
         to: "/user/admin/users",
-        params: {},
-      },
-    },
-    {
-      title: t("userSidebar.adminScripts"),
-      icon: ScrollTextIcon,
-      linkProps: {
-        to: "/user/admin/scripts",
         params: {},
       },
     },

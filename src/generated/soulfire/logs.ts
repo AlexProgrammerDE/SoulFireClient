@@ -95,15 +95,6 @@ export interface BotLogScope {
   botId: string;
 }
 /**
- * @generated from protobuf message soulfire.v1.GlobalScriptLogScope
- */
-export interface GlobalScriptLogScope {
-  /**
-   * @generated from protobuf field: string script_id = 1
-   */
-  scriptId: string;
-}
-/**
  * @generated from protobuf message soulfire.v1.InstanceScriptLogScope
  */
 export interface InstanceScriptLogScope {
@@ -125,6 +116,8 @@ export interface PersonalLogScope {}
  */
 export interface LogScope {
   /**
+   * Reserved for removed GlobalScriptLogScope (field 4)
+   *
    * @generated from protobuf oneof: scope
    */
   scope:
@@ -148,13 +141,6 @@ export interface LogScope {
          * @generated from protobuf field: soulfire.v1.BotLogScope bot = 3
          */
         bot: BotLogScope;
-      }
-    | {
-        oneofKind: "globalScript";
-        /**
-         * @generated from protobuf field: soulfire.v1.GlobalScriptLogScope global_script = 4
-         */
-        globalScript: GlobalScriptLogScope;
       }
     | {
         oneofKind: "instanceScript";
@@ -623,75 +609,6 @@ class BotLogScope$Type extends MessageType<BotLogScope> {
  */
 export const BotLogScope = new BotLogScope$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class GlobalScriptLogScope$Type extends MessageType<GlobalScriptLogScope> {
-  constructor() {
-    super("soulfire.v1.GlobalScriptLogScope", [
-      { no: 1, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-    ]);
-  }
-  create(value?: PartialMessage<GlobalScriptLogScope>): GlobalScriptLogScope {
-    const message = globalThis.Object.create(this.messagePrototype!);
-    message.scriptId = "";
-    if (value !== undefined)
-      reflectionMergePartial<GlobalScriptLogScope>(this, message, value);
-    return message;
-  }
-  internalBinaryRead(
-    reader: IBinaryReader,
-    length: number,
-    options: BinaryReadOptions,
-    target?: GlobalScriptLogScope,
-  ): GlobalScriptLogScope {
-    let message = target ?? this.create(),
-      end = reader.pos + length;
-    while (reader.pos < end) {
-      let [fieldNo, wireType] = reader.tag();
-      switch (fieldNo) {
-        case /* string script_id */ 1:
-          message.scriptId = reader.string();
-          break;
-        default:
-          let u = options.readUnknownField;
-          if (u === "throw")
-            throw new globalThis.Error(
-              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            );
-          let d = reader.skip(wireType);
-          if (u !== false)
-            (u === true ? UnknownFieldHandler.onRead : u)(
-              this.typeName,
-              message,
-              fieldNo,
-              wireType,
-              d,
-            );
-      }
-    }
-    return message;
-  }
-  internalBinaryWrite(
-    message: GlobalScriptLogScope,
-    writer: IBinaryWriter,
-    options: BinaryWriteOptions,
-  ): IBinaryWriter {
-    /* string script_id = 1; */
-    if (message.scriptId !== "")
-      writer.tag(1, WireType.LengthDelimited).string(message.scriptId);
-    let u = options.writeUnknownFields;
-    if (u !== false)
-      (u == true ? UnknownFieldHandler.onWrite : u)(
-        this.typeName,
-        message,
-        writer,
-      );
-    return writer;
-  }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.GlobalScriptLogScope
- */
-export const GlobalScriptLogScope = new GlobalScriptLogScope$Type();
-// @generated message type with reflection information, may provide speed optimized methods
 class InstanceScriptLogScope$Type extends MessageType<InstanceScriptLogScope> {
   constructor() {
     super("soulfire.v1.InstanceScriptLogScope", [
@@ -861,13 +778,6 @@ class LogScope$Type extends MessageType<LogScope> {
         T: () => BotLogScope,
       },
       {
-        no: 4,
-        name: "global_script",
-        kind: "message",
-        oneof: "scope",
-        T: () => GlobalScriptLogScope,
-      },
-      {
         no: 5,
         name: "instance_script",
         kind: "message",
@@ -931,17 +841,6 @@ class LogScope$Type extends MessageType<LogScope> {
               reader.uint32(),
               options,
               (message.scope as any).bot,
-            ),
-          };
-          break;
-        case /* soulfire.v1.GlobalScriptLogScope global_script */ 4:
-          message.scope = {
-            oneofKind: "globalScript",
-            globalScript: GlobalScriptLogScope.internalBinaryRead(
-              reader,
-              reader.uint32(),
-              options,
-              (message.scope as any).globalScript,
             ),
           };
           break;
@@ -1010,13 +909,6 @@ class LogScope$Type extends MessageType<LogScope> {
       BotLogScope.internalBinaryWrite(
         message.scope.bot,
         writer.tag(3, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
-    /* soulfire.v1.GlobalScriptLogScope global_script = 4; */
-    if (message.scope.oneofKind === "globalScript")
-      GlobalScriptLogScope.internalBinaryWrite(
-        message.scope.globalScript,
-        writer.tag(4, WireType.LengthDelimited).fork(),
         options,
       ).join();
     /* soulfire.v1.InstanceScriptLogScope instance_script = 5; */

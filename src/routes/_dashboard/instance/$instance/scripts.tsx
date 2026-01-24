@@ -1,65 +1,22 @@
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { ConstructionIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { GenericScripts } from "@/components/generic-scripts-page.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout";
-import { ScriptServiceClient } from "@/generated/soulfire/script.client.ts";
-import type { ScriptListResponse } from "@/generated/soulfire/script.ts";
-import { createTransport } from "@/lib/web-rpc.ts";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card.tsx";
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/scripts")({
-  beforeLoad: (props) => {
-    const { instance } = props.params;
-    const instanceScriptsQueryOptions = queryOptions({
-      queryKey: ["instance-scripts", instance],
-      queryFn: async (props): Promise<ScriptListResponse> => {
-        const transport = createTransport();
-        if (transport === null) {
-          return {
-            scripts: [],
-          };
-        }
-
-        const scriptService = new ScriptServiceClient(transport);
-        const result = await scriptService.listScripts(
-          {
-            scope: {
-              scope: {
-                oneofKind: "instanceScript",
-                instanceScript: {
-                  id: instance,
-                },
-              },
-            },
-          },
-          {
-            abort: props.signal,
-          },
-        );
-
-        return result.response;
-      },
-      refetchInterval: 3_000,
-    });
-    props.abortController.signal.addEventListener("abort", () => {
-      void props.context.queryClient.cancelQueries({
-        queryKey: instanceScriptsQueryOptions.queryKey,
-      });
-    });
-    return {
-      instanceScriptsQueryOptions,
-    };
-  },
-  loader: (props) => {
-    void props.context.queryClient.prefetchQuery(
-      props.context.instanceScriptsQueryOptions,
-    );
-  },
   component: InstanceScripts,
 });
 
 function InstanceScripts() {
   const { t } = useTranslation("common");
+  const { t: tInstance } = useTranslation("instance");
 
   return (
     <InstancePageLayout
@@ -71,28 +28,20 @@ function InstanceScripts() {
       ]}
       pageName={t("pageName.instanceScripts")}
     >
-      <Content />
+      <Card className="max-w-2xl mx-auto mt-8">
+        <CardHeader className="text-center">
+          <div className="flex justify-center mb-4">
+            <ConstructionIcon className="h-16 w-16 text-muted-foreground" />
+          </div>
+          <CardTitle>{tInstance("scripts.wipTitle")}</CardTitle>
+          <CardDescription>
+            {tInstance("scripts.wipDescription")}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="text-center text-sm text-muted-foreground">
+          {tInstance("scripts.wipDetails")}
+        </CardContent>
+      </Card>
     </InstancePageLayout>
-  );
-}
-
-function Content() {
-  const { instanceScriptsQueryOptions } = Route.useRouteContext();
-  const { instance } = Route.useParams();
-  const { data: scriptList } = useSuspenseQuery(instanceScriptsQueryOptions);
-
-  return (
-    <GenericScripts
-      queryKey={instanceScriptsQueryOptions.queryKey}
-      scope={{
-        scope: {
-          oneofKind: "instanceScript",
-          instanceScript: {
-            id: instance,
-          },
-        },
-      }}
-      scriptList={scriptList}
-    />
   );
 }

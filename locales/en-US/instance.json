@@ -196,5 +196,10 @@
       "rightClickDescription": "Use item or interact",
       "offline": "Bot is offline. Actions are only available when the bot is connected."
     }
+  },
+  "scripts": {
+    "wipTitle": "Visual Script Editor",
+    "wipDescription": "The script system is being redesigned with a visual node-based editor.",
+    "wipDetails": "This feature is currently under development. The new visual script editor will allow you to create powerful automation scripts using a drag-and-drop interface without writing code."
   }
 }
