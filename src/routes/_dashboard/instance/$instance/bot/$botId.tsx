@@ -211,14 +211,11 @@ function BotDetailContent({
   const logScope = useMemo<LogScope>(
     () => ({
       scope: {
-        oneofKind: "bot",
-        bot: {
-          instanceId,
-          botId: account.profileId,
-        },
+        oneofKind: "personal",
+        personal: {},
       },
     }),
-    [instanceId, account.profileId],
+    [],
   );
 
   const commandScope = useMemo<CommandScope>(
@@ -285,7 +282,7 @@ function BotDetailContent({
           {/* Visual panel with compass */}
           <BotVisualPanel liveState={botInfo.liveState} isOnline={isOnline} />
 
-          {/* Terminal panel with bot-scoped logs */}
+          {/* Terminal panel with personal logs */}
           <BotTerminalPanel
             logScope={logScope}
             commandScope={commandScope}
