@@ -64,6 +64,10 @@ export interface ServerInfo {
    * @generated from protobuf field: string public_docs_address = 6
    */
   publicDocsAddress: string;
+  /**
+   * @generated from protobuf field: string minecraft_version = 7
+   */
+  minecraftVersion: string;
 }
 /**
  * @generated from protobuf message soulfire.v1.ClientDataResponse
@@ -331,6 +335,12 @@ class ServerInfo$Type extends MessageType<ServerInfo> {
         kind: "scalar",
         T: 9 /*ScalarType.STRING*/,
       },
+      {
+        no: 7,
+        name: "minecraft_version",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
     ]);
   }
   create(value?: PartialMessage<ServerInfo>): ServerInfo {
@@ -341,6 +351,7 @@ class ServerInfo$Type extends MessageType<ServerInfo> {
     message.publicApiAddress = "";
     message.publicWebdavAddress = "";
     message.publicDocsAddress = "";
+    message.minecraftVersion = "";
     if (value !== undefined)
       reflectionMergePartial<ServerInfo>(this, message, value);
     return message;
@@ -373,6 +384,9 @@ class ServerInfo$Type extends MessageType<ServerInfo> {
           break;
         case /* string public_docs_address */ 6:
           message.publicDocsAddress = reader.string();
+          break;
+        case /* string minecraft_version */ 7:
+          message.minecraftVersion = reader.string();
           break;
         default:
           let u = options.readUnknownField;
@@ -418,6 +432,9 @@ class ServerInfo$Type extends MessageType<ServerInfo> {
     /* string public_docs_address = 6; */
     if (message.publicDocsAddress !== "")
       writer.tag(6, WireType.LengthDelimited).string(message.publicDocsAddress);
+    /* string minecraft_version = 7; */
+    if (message.minecraftVersion !== "")
+      writer.tag(7, WireType.LengthDelimited).string(message.minecraftVersion);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(

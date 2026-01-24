@@ -22,6 +22,7 @@ export const demoClientData: ClientDataResponse = {
     publicApiAddress: "https://demo.soulfiremc.com",
     publicWebdavAddress: "https://demo.soulfiremc.com/webdav",
     publicDocsAddress: "https://demo.soulfiremc.com/docs",
+    minecraftVersion: "1.21.11",
   },
 };
 
