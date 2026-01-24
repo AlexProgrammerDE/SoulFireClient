@@ -100,9 +100,15 @@ export interface MinecraftAccountProto {
         oneofKind: undefined;
       };
   /**
+   * Bot config stored with the account (namespace -> key -> value)
+   *
+   * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace config = 8
+   */
+  config: SettingsNamespace[];
+  /**
    * Persistent metadata stored with the account (namespace -> key -> value)
    *
-   * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace persistent_metadata = 8
+   * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace persistent_metadata = 9
    */
   persistentMetadata: SettingsNamespace[];
 }
@@ -158,19 +164,6 @@ export enum MinecraftAccountProto_AccountTypeProto {
   MICROSOFT_JAVA_REFRESH_TOKEN = 7,
 }
 /**
- * @generated from protobuf message soulfire.v1.SettingsEntry
- */
-export interface SettingsEntry {
-  /**
-   * @generated from protobuf field: string key = 1
-   */
-  key: string;
-  /**
-   * @generated from protobuf field: google.protobuf.Value value = 2
-   */
-  value?: Value;
-}
-/**
  * @generated from protobuf message soulfire.v1.SettingsNamespace
  */
 export interface SettingsNamespace {
@@ -179,9 +172,22 @@ export interface SettingsNamespace {
    */
   namespace: string;
   /**
-   * @generated from protobuf field: repeated soulfire.v1.SettingsEntry entries = 2
+   * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace.SettingsEntry entries = 2
    */
-  entries: SettingsEntry[];
+  entries: SettingsNamespace_SettingsEntry[];
+}
+/**
+ * @generated from protobuf message soulfire.v1.SettingsNamespace.SettingsEntry
+ */
+export interface SettingsNamespace_SettingsEntry {
+  /**
+   * @generated from protobuf field: string key = 1
+   */
+  key: string;
+  /**
+   * @generated from protobuf field: google.protobuf.Value value = 2
+   */
+  value?: Value;
 }
 /**
  * @generated from protobuf message soulfire.v1.SettingsEntryIdentifier
@@ -1009,6 +1015,13 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
       },
       {
         no: 8,
+        name: "config",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SettingsNamespace,
+      },
+      {
+        no: 9,
         name: "persistent_metadata",
         kind: "message",
         repeat: 2 /*RepeatType.UNPACKED*/,
@@ -1022,6 +1035,7 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
     message.profileId = "";
     message.lastKnownName = "";
     message.accountData = { oneofKind: undefined };
+    message.config = [];
     message.persistentMetadata = [];
     if (value !== undefined)
       reflectionMergePartial<MinecraftAccountProto>(this, message, value);
@@ -1082,7 +1096,16 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
             ),
           };
           break;
-        case /* repeated soulfire.v1.SettingsNamespace persistent_metadata */ 8:
+        case /* repeated soulfire.v1.SettingsNamespace config */ 8:
+          message.config.push(
+            SettingsNamespace.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        case /* repeated soulfire.v1.SettingsNamespace persistent_metadata */ 9:
           message.persistentMetadata.push(
             SettingsNamespace.internalBinaryRead(
               reader,
@@ -1144,11 +1167,18 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
         writer.tag(7, WireType.LengthDelimited).fork(),
         options,
       ).join();
-    /* repeated soulfire.v1.SettingsNamespace persistent_metadata = 8; */
+    /* repeated soulfire.v1.SettingsNamespace config = 8; */
+    for (let i = 0; i < message.config.length; i++)
+      SettingsNamespace.internalBinaryWrite(
+        message.config[i],
+        writer.tag(8, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.SettingsNamespace persistent_metadata = 9; */
     for (let i = 0; i < message.persistentMetadata.length; i++)
       SettingsNamespace.internalBinaryWrite(
         message.persistentMetadata[i],
-        writer.tag(8, WireType.LengthDelimited).fork(),
+        writer.tag(9, WireType.LengthDelimited).fork(),
         options,
       ).join();
     let u = options.writeUnknownFields;
@@ -1401,26 +1431,125 @@ class MinecraftAccountProto_BedrockData$Type extends MessageType<MinecraftAccoun
 export const MinecraftAccountProto_BedrockData =
   new MinecraftAccountProto_BedrockData$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class SettingsEntry$Type extends MessageType<SettingsEntry> {
+class SettingsNamespace$Type extends MessageType<SettingsNamespace> {
   constructor() {
-    super("soulfire.v1.SettingsEntry", [
-      { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-      { no: 2, name: "value", kind: "message", T: () => Value },
+    super("soulfire.v1.SettingsNamespace", [
+      { no: 1, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "entries",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => SettingsNamespace_SettingsEntry,
+      },
     ]);
   }
-  create(value?: PartialMessage<SettingsEntry>): SettingsEntry {
+  create(value?: PartialMessage<SettingsNamespace>): SettingsNamespace {
     const message = globalThis.Object.create(this.messagePrototype!);
-    message.key = "";
+    message.namespace = "";
+    message.entries = [];
     if (value !== undefined)
-      reflectionMergePartial<SettingsEntry>(this, message, value);
+      reflectionMergePartial<SettingsNamespace>(this, message, value);
     return message;
   }
   internalBinaryRead(
     reader: IBinaryReader,
     length: number,
     options: BinaryReadOptions,
-    target?: SettingsEntry,
-  ): SettingsEntry {
+    target?: SettingsNamespace,
+  ): SettingsNamespace {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string namespace */ 1:
+          message.namespace = reader.string();
+          break;
+        case /* repeated soulfire.v1.SettingsNamespace.SettingsEntry entries */ 2:
+          message.entries.push(
+            SettingsNamespace_SettingsEntry.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SettingsNamespace,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string namespace = 1; */
+    if (message.namespace !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.namespace);
+    /* repeated soulfire.v1.SettingsNamespace.SettingsEntry entries = 2; */
+    for (let i = 0; i < message.entries.length; i++)
+      SettingsNamespace_SettingsEntry.internalBinaryWrite(
+        message.entries[i],
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.SettingsNamespace
+ */
+export const SettingsNamespace = new SettingsNamespace$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SettingsNamespace_SettingsEntry$Type extends MessageType<SettingsNamespace_SettingsEntry> {
+  constructor() {
+    super("soulfire.v1.SettingsNamespace.SettingsEntry", [
+      { no: 1, name: "key", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "value", kind: "message", T: () => Value },
+    ]);
+  }
+  create(
+    value?: PartialMessage<SettingsNamespace_SettingsEntry>,
+  ): SettingsNamespace_SettingsEntry {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.key = "";
+    if (value !== undefined)
+      reflectionMergePartial<SettingsNamespace_SettingsEntry>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SettingsNamespace_SettingsEntry,
+  ): SettingsNamespace_SettingsEntry {
     let message = target ?? this.create(),
       end = reader.pos + length;
     while (reader.pos < end) {
@@ -1457,7 +1586,7 @@ class SettingsEntry$Type extends MessageType<SettingsEntry> {
     return message;
   }
   internalBinaryWrite(
-    message: SettingsEntry,
+    message: SettingsNamespace_SettingsEntry,
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
@@ -1482,98 +1611,10 @@ class SettingsEntry$Type extends MessageType<SettingsEntry> {
   }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.SettingsEntry
+ * @generated MessageType for protobuf message soulfire.v1.SettingsNamespace.SettingsEntry
  */
-export const SettingsEntry = new SettingsEntry$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class SettingsNamespace$Type extends MessageType<SettingsNamespace> {
-  constructor() {
-    super("soulfire.v1.SettingsNamespace", [
-      { no: 1, name: "namespace", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-      {
-        no: 2,
-        name: "entries",
-        kind: "message",
-        repeat: 2 /*RepeatType.UNPACKED*/,
-        T: () => SettingsEntry,
-      },
-    ]);
-  }
-  create(value?: PartialMessage<SettingsNamespace>): SettingsNamespace {
-    const message = globalThis.Object.create(this.messagePrototype!);
-    message.namespace = "";
-    message.entries = [];
-    if (value !== undefined)
-      reflectionMergePartial<SettingsNamespace>(this, message, value);
-    return message;
-  }
-  internalBinaryRead(
-    reader: IBinaryReader,
-    length: number,
-    options: BinaryReadOptions,
-    target?: SettingsNamespace,
-  ): SettingsNamespace {
-    let message = target ?? this.create(),
-      end = reader.pos + length;
-    while (reader.pos < end) {
-      let [fieldNo, wireType] = reader.tag();
-      switch (fieldNo) {
-        case /* string namespace */ 1:
-          message.namespace = reader.string();
-          break;
-        case /* repeated soulfire.v1.SettingsEntry entries */ 2:
-          message.entries.push(
-            SettingsEntry.internalBinaryRead(reader, reader.uint32(), options),
-          );
-          break;
-        default:
-          let u = options.readUnknownField;
-          if (u === "throw")
-            throw new globalThis.Error(
-              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            );
-          let d = reader.skip(wireType);
-          if (u !== false)
-            (u === true ? UnknownFieldHandler.onRead : u)(
-              this.typeName,
-              message,
-              fieldNo,
-              wireType,
-              d,
-            );
-      }
-    }
-    return message;
-  }
-  internalBinaryWrite(
-    message: SettingsNamespace,
-    writer: IBinaryWriter,
-    options: BinaryWriteOptions,
-  ): IBinaryWriter {
-    /* string namespace = 1; */
-    if (message.namespace !== "")
-      writer.tag(1, WireType.LengthDelimited).string(message.namespace);
-    /* repeated soulfire.v1.SettingsEntry entries = 2; */
-    for (let i = 0; i < message.entries.length; i++)
-      SettingsEntry.internalBinaryWrite(
-        message.entries[i],
-        writer.tag(2, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
-    let u = options.writeUnknownFields;
-    if (u !== false)
-      (u == true ? UnknownFieldHandler.onWrite : u)(
-        this.typeName,
-        message,
-        writer,
-      );
-    return writer;
-  }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.SettingsNamespace
- */
-export const SettingsNamespace = new SettingsNamespace$Type();
+export const SettingsNamespace_SettingsEntry =
+  new SettingsNamespace_SettingsEntry$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class SettingsEntryIdentifier$Type extends MessageType<SettingsEntryIdentifier> {
   constructor() {

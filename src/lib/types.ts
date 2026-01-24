@@ -84,6 +84,7 @@ export type ProfileAccount = {
   profileId: string;
   lastKnownName: string;
   accountData: MinecraftAccountProto["accountData"];
+  config: SettingsNamespace[];
   persistentMetadata: SettingsNamespace[];
 };
 
@@ -130,18 +131,6 @@ export function convertFromInstanceProto(data?: InstanceConfig): ProfileRoot {
     settings: settings,
     accounts: data.accounts,
     proxies: data.proxies,
-  };
-}
-
-export function convertToServerProto(data: BaseSettings): ServerConfig {
-  return {
-    settings: Object.entries(data.settings).map(([key, value]) => ({
-      namespace: key,
-      entries: Object.entries(value).map(([key, value]) => ({
-        key: key,
-        value: Value.fromJson(value),
-      })),
-    })),
   };
 }
 

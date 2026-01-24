@@ -11,7 +11,6 @@ import { twMerge } from "tailwind-merge";
 import { Value } from "@/generated/google/protobuf/struct.ts";
 import type { Timestamp } from "@/generated/google/protobuf/timestamp.ts";
 import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
-import type { BotInfoResponse } from "@/generated/soulfire/bot.ts";
 import { ClientServiceClient } from "@/generated/soulfire/client.client.ts";
 import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
 import type {
@@ -536,53 +535,70 @@ export async function updateBotConfigEntry(
   botId: string,
   transport: RpcTransport | null,
   queryClient: QueryClient,
-  botInfoQueryKey: QueryKey,
+  instanceInfoQueryKey: QueryKey,
 ) {
   if (transport === null) {
     return;
   }
 
   await queryClient.cancelQueries({
-    queryKey: botInfoQueryKey,
+    queryKey: instanceInfoQueryKey,
   });
-  // Update optimistically
-  queryClient.setQueryData<BotInfoResponse>(botInfoQueryKey, (old) => {
-    if (old === undefined) {
-      return;
-    }
-
-    const currentSettings = old.config?.settings ?? [];
-    const namespaceIndex = currentSettings.findIndex(
-      (ns) => ns.namespace === namespace,
-    );
-    const newSettings = [...currentSettings];
-    if (namespaceIndex >= 0) {
-      const entries = [...newSettings[namespaceIndex].entries];
-      const entryIndex = entries.findIndex((e) => e.key === key);
-      if (entryIndex >= 0) {
-        entries[entryIndex] = { key, value: Value.fromJson(value) };
-      } else {
-        entries.push({ key, value: Value.fromJson(value) });
+  // Update optimistically - config is now stored on the account in instance info
+  queryClient.setQueryData<InstanceInfoQueryData>(
+    instanceInfoQueryKey,
+    (old) => {
+      if (old === undefined) {
+        return;
       }
-      newSettings[namespaceIndex] = {
-        ...newSettings[namespaceIndex],
-        entries,
-      };
-    } else {
-      newSettings.push({
-        namespace,
-        entries: [{ key, value: Value.fromJson(value) }],
-      });
-    }
 
-    return {
-      ...old,
-      config: {
-        ...old.config,
-        settings: newSettings,
-      },
-    };
-  });
+      const accountIndex = old.profile.accounts.findIndex(
+        (a) => a.profileId === botId,
+      );
+      if (accountIndex < 0) {
+        return old;
+      }
+
+      const account = old.profile.accounts[accountIndex];
+      const currentSettings = account.config ?? [];
+      const namespaceIndex = currentSettings.findIndex(
+        (ns) => ns.namespace === namespace,
+      );
+      const newSettings = [...currentSettings];
+      if (namespaceIndex >= 0) {
+        const entries = [...newSettings[namespaceIndex].entries];
+        const entryIndex = entries.findIndex((e) => e.key === key);
+        if (entryIndex >= 0) {
+          entries[entryIndex] = { key, value: Value.fromJson(value) };
+        } else {
+          entries.push({ key, value: Value.fromJson(value) });
+        }
+        newSettings[namespaceIndex] = {
+          ...newSettings[namespaceIndex],
+          entries,
+        };
+      } else {
+        newSettings.push({
+          namespace,
+          entries: [{ key, value: Value.fromJson(value) }],
+        });
+      }
+
+      const newAccounts = [...old.profile.accounts];
+      newAccounts[accountIndex] = {
+        ...account,
+        config: newSettings,
+      };
+
+      return {
+        ...old,
+        profile: {
+          ...old.profile,
+          accounts: newAccounts,
+        },
+      };
+    },
+  );
 
   const botService = new BotServiceClient(transport);
   await botService.updateBotConfigEntry({

@@ -101,8 +101,7 @@ export const Route = createFileRoute(
       queryFn: async (queryProps): Promise<BotInfoResponse> => {
         const transport = createTransport();
         if (transport === null) {
-          // Demo mode - return empty config with no live state
-          return { config: { settings: [] } };
+          return {};
         }
         const botService = new BotServiceClient(transport);
         const result = await botService.getBotInfo(

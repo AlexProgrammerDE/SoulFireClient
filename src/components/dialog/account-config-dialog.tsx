@@ -1,6 +1,5 @@
 import type { JsonValue } from "@protobuf-ts/runtime";
 import {
-  queryOptions,
   useMutation,
   useQueryClient,
   useSuspenseQuery,
@@ -50,8 +49,6 @@ import {
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { Switch } from "@/components/ui/switch.tsx";
 import { Value } from "@/generated/google/protobuf/struct.ts";
-import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
-import type { BotInfoResponse } from "@/generated/soulfire/bot.ts";
 import {
   type ServerPlugin,
   type SettingsDefinition,
@@ -100,11 +97,11 @@ function getBotSettingsPages(
     .filter((page) => page.entries.length > 0);
 }
 
-function convertBotConfigToSettings(
-  botInfo: BotInfoResponse,
+function convertAccountConfigToSettings(
+  account: ProfileAccount,
 ): Record<string, Record<string, JsonValue>> {
   const settings: Record<string, Record<string, JsonValue>> = {};
-  for (const namespace of botInfo.config?.settings ?? []) {
+  for (const namespace of account.config) {
     const entries: Record<string, JsonValue> = {};
     for (const entry of namespace.entries) {
       entries[entry.key] = Value.toJson(entry.value as Value);
@@ -212,32 +209,6 @@ function DialogContentInner({
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const transport = use(TransportContext);
-
-  const botInfoQueryOptions = useMemo(
-    () =>
-      queryOptions({
-        queryKey: ["bot-info", instanceInfo.id, account.profileId],
-        queryFn: async (): Promise<BotInfoResponse> => {
-          if (transport === null) {
-            // Demo mode - return empty config
-            return {
-              config: { settings: [] },
-            };
-          }
-
-          const botService = new BotServiceClient(transport);
-          const result = await botService.getBotInfo({
-            instanceId: instanceInfo.id,
-            botId: account.profileId,
-          });
-          return result.response;
-        },
-      }),
-    [instanceInfo.id, account.profileId, transport],
-  );
-
-  const { data: botInfo } = useSuspenseQuery(botInfoQueryOptions);
 
   const botSettingsPages = useMemo(
     () =>
@@ -259,8 +230,8 @@ function DialogContentInner({
   );
 
   const botConfig = useMemo(
-    () => convertBotConfigToSettings(botInfo),
-    [botInfo],
+    () => convertAccountConfigToSettings(account),
+    [account],
   );
 
   // Auto-select first page if none selected
@@ -351,7 +322,7 @@ function DialogContentInner({
                 botConfig={botConfig}
                 instanceId={instanceInfo.id}
                 botId={account.profileId}
-                botInfoQueryKey={botInfoQueryOptions.queryKey}
+                instanceInfoQueryKey={instanceInfoQueryOptions.queryKey}
                 settingsDefinitions={instanceInfo.settingsDefinitions}
               />
             ) : (
@@ -372,7 +343,7 @@ function BotPluginInfoCard({
   botConfig,
   instanceId,
   botId,
-  botInfoQueryKey,
+  instanceInfoQueryKey,
   settingsDefinitions,
 }: {
   page: BotSettingsPage;
@@ -380,7 +351,7 @@ function BotPluginInfoCard({
   botConfig: Record<string, Record<string, JsonValue>>;
   instanceId: string;
   botId: string;
-  botInfoQueryKey: readonly unknown[];
+  instanceInfoQueryKey: readonly unknown[];
   settingsDefinitions: SettingsDefinition[];
 }) {
   const { t } = useTranslation("common");
@@ -431,7 +402,7 @@ function BotPluginInfoCard({
         botId,
         transport,
         queryClient,
-        botInfoQueryKey,
+        instanceInfoQueryKey,
       );
     },
   });
@@ -485,14 +456,14 @@ function BotSettingsPageContent({
   botConfig,
   instanceId,
   botId,
-  botInfoQueryKey,
+  instanceInfoQueryKey,
   settingsDefinitions,
 }: {
   page: BotSettingsPage;
   botConfig: Record<string, Record<string, JsonValue>>;
   instanceId: string;
   botId: string;
-  botInfoQueryKey: readonly unknown[];
+  instanceInfoQueryKey: readonly unknown[];
   settingsDefinitions: SettingsDefinition[];
 }) {
   // Filter out the enabled identifier from the entries list
@@ -517,7 +488,7 @@ function BotSettingsPageContent({
           botConfig={botConfig}
           instanceId={instanceId}
           botId={botId}
-          botInfoQueryKey={botInfoQueryKey}
+          instanceInfoQueryKey={instanceInfoQueryKey}
           settingsDefinitions={settingsDefinitions}
         />
       )}
@@ -528,7 +499,7 @@ function BotSettingsPageContent({
           botConfig={botConfig}
           instanceId={instanceId}
           botId={botId}
-          botInfoQueryKey={botInfoQueryKey}
+          instanceInfoQueryKey={instanceInfoQueryKey}
         />
       ))}
     </div>
@@ -540,13 +511,13 @@ function BotSettingField({
   botConfig,
   instanceId,
   botId,
-  botInfoQueryKey,
+  instanceInfoQueryKey,
 }: {
   settingId: SettingsEntryIdentifier;
   botConfig: Record<string, Record<string, JsonValue>>;
   instanceId: string;
   botId: string;
-  botInfoQueryKey: readonly unknown[];
+  instanceInfoQueryKey: readonly unknown[];
 }) {
   const transport = use(TransportContext);
   const queryClient = useQueryClient();
@@ -597,7 +568,7 @@ function BotSettingField({
         botId,
         transport,
         queryClient,
-        botInfoQueryKey,
+        instanceInfoQueryKey,
       );
     },
   });

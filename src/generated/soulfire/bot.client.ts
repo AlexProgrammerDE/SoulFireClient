@@ -49,8 +49,6 @@ import type {
   BotSubmitDialogResponse,
   BotUpdateConfigEntryRequest,
   BotUpdateConfigEntryResponse,
-  BotUpdateConfigRequest,
-  BotUpdateConfigResponse,
 } from "./bot";
 import { BotService } from "./bot";
 /**
@@ -71,15 +69,6 @@ export interface IBotServiceClient {
     input: BotInfoRequest,
     options?: RpcOptions,
   ): UnaryCall<BotInfoRequest, BotInfoResponse>;
-  /**
-   * Used only for profile import - sends entire config
-   *
-   * @generated from protobuf rpc: UpdateBotConfig
-   */
-  updateBotConfig(
-    input: BotUpdateConfigRequest,
-    options?: RpcOptions,
-  ): UnaryCall<BotUpdateConfigRequest, BotUpdateConfigResponse>;
   /**
    * Granular update for individual config entries
    *
@@ -263,25 +252,6 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
-   * Used only for profile import - sends entire config
-   *
-   * @generated from protobuf rpc: UpdateBotConfig
-   */
-  updateBotConfig(
-    input: BotUpdateConfigRequest,
-    options?: RpcOptions,
-  ): UnaryCall<BotUpdateConfigRequest, BotUpdateConfigResponse> {
-    const method = this.methods[2],
-      opt = this._transport.mergeOptions(options);
-    return stackIntercept<BotUpdateConfigRequest, BotUpdateConfigResponse>(
-      "unary",
-      this._transport,
-      method,
-      opt,
-      input,
-    );
-  }
-  /**
    * Granular update for individual config entries
    *
    * @generated from protobuf rpc: UpdateBotConfigEntry
@@ -290,7 +260,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotUpdateConfigEntryRequest,
     options?: RpcOptions,
   ): UnaryCall<BotUpdateConfigEntryRequest, BotUpdateConfigEntryResponse> {
-    const method = this.methods[3],
+    const method = this.methods[2],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<
       BotUpdateConfigEntryRequest,
@@ -306,7 +276,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotRenderPovRequest,
     options?: RpcOptions,
   ): UnaryCall<BotRenderPovRequest, BotRenderPovResponse> {
-    const method = this.methods[4],
+    const method = this.methods[3],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotRenderPovRequest, BotRenderPovResponse>(
       "unary",
@@ -325,7 +295,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotInventoryClickRequest,
     options?: RpcOptions,
   ): UnaryCall<BotInventoryClickRequest, BotInventoryClickResponse> {
-    const method = this.methods[5],
+    const method = this.methods[4],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotInventoryClickRequest, BotInventoryClickResponse>(
       "unary",
@@ -342,7 +312,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotInventoryStateRequest,
     options?: RpcOptions,
   ): UnaryCall<BotInventoryStateRequest, BotInventoryStateResponse> {
-    const method = this.methods[6],
+    const method = this.methods[5],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotInventoryStateRequest, BotInventoryStateResponse>(
       "unary",
@@ -359,7 +329,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotCloseContainerRequest,
     options?: RpcOptions,
   ): UnaryCall<BotCloseContainerRequest, BotCloseContainerResponse> {
-    const method = this.methods[7],
+    const method = this.methods[6],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotCloseContainerRequest, BotCloseContainerResponse>(
       "unary",
@@ -376,7 +346,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotOpenInventoryRequest,
     options?: RpcOptions,
   ): UnaryCall<BotOpenInventoryRequest, BotOpenInventoryResponse> {
-    const method = this.methods[8],
+    const method = this.methods[7],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotOpenInventoryRequest, BotOpenInventoryResponse>(
       "unary",
@@ -395,7 +365,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotMouseClickRequest,
     options?: RpcOptions,
   ): UnaryCall<BotMouseClickRequest, BotMouseClickResponse> {
-    const method = this.methods[9],
+    const method = this.methods[8],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotMouseClickRequest, BotMouseClickResponse>(
       "unary",
@@ -417,7 +387,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     BotContainerButtonClickRequest,
     BotContainerButtonClickResponse
   > {
-    const method = this.methods[10],
+    const method = this.methods[9],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<
       BotContainerButtonClickRequest,
@@ -433,7 +403,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotSetContainerTextRequest,
     options?: RpcOptions,
   ): UnaryCall<BotSetContainerTextRequest, BotSetContainerTextResponse> {
-    const method = this.methods[11],
+    const method = this.methods[10],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<
       BotSetContainerTextRequest,
@@ -449,7 +419,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotSetHotbarSlotRequest,
     options?: RpcOptions,
   ): UnaryCall<BotSetHotbarSlotRequest, BotSetHotbarSlotResponse> {
-    const method = this.methods[12],
+    const method = this.methods[11],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotSetHotbarSlotRequest, BotSetHotbarSlotResponse>(
       "unary",
@@ -468,7 +438,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotSetMovementStateRequest,
     options?: RpcOptions,
   ): UnaryCall<BotSetMovementStateRequest, BotSetMovementStateResponse> {
-    const method = this.methods[13],
+    const method = this.methods[12],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<
       BotSetMovementStateRequest,
@@ -482,7 +452,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotResetMovementRequest,
     options?: RpcOptions,
   ): UnaryCall<BotResetMovementRequest, BotResetMovementResponse> {
-    const method = this.methods[14],
+    const method = this.methods[13],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotResetMovementRequest, BotResetMovementResponse>(
       "unary",
@@ -501,7 +471,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotSetRotationRequest,
     options?: RpcOptions,
   ): UnaryCall<BotSetRotationRequest, BotSetRotationResponse> {
-    const method = this.methods[15],
+    const method = this.methods[14],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotSetRotationRequest, BotSetRotationResponse>(
       "unary",
@@ -520,7 +490,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotGetDialogRequest,
     options?: RpcOptions,
   ): UnaryCall<BotGetDialogRequest, BotGetDialogResponse> {
-    const method = this.methods[16],
+    const method = this.methods[15],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotGetDialogRequest, BotGetDialogResponse>(
       "unary",
@@ -537,7 +507,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotSubmitDialogRequest,
     options?: RpcOptions,
   ): UnaryCall<BotSubmitDialogRequest, BotSubmitDialogResponse> {
-    const method = this.methods[17],
+    const method = this.methods[16],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotSubmitDialogRequest, BotSubmitDialogResponse>(
       "unary",
@@ -554,7 +524,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotClickDialogButtonRequest,
     options?: RpcOptions,
   ): UnaryCall<BotClickDialogButtonRequest, BotClickDialogButtonResponse> {
-    const method = this.methods[18],
+    const method = this.methods[17],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<
       BotClickDialogButtonRequest,
@@ -568,7 +538,7 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     input: BotCloseDialogRequest,
     options?: RpcOptions,
   ): UnaryCall<BotCloseDialogRequest, BotCloseDialogResponse> {
-    const method = this.methods[19],
+    const method = this.methods[18],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<BotCloseDialogRequest, BotCloseDialogResponse>(
       "unary",

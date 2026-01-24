@@ -19,16 +19,6 @@ import {
 } from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { Value } from "../google/protobuf/struct";
-import { SettingsNamespace } from "./common";
-/**
- * @generated from protobuf message soulfire.v1.BotConfig
- */
-export interface BotConfig {
-  /**
-   * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace settings = 1
-   */
-  settings: SettingsNamespace[];
-}
 /**
  * @generated from protobuf message soulfire.v1.BotInfoRequest
  */
@@ -187,35 +177,10 @@ export interface BotLiveState {
  */
 export interface BotInfoResponse {
   /**
-   * @generated from protobuf field: soulfire.v1.BotConfig config = 1
-   */
-  config?: BotConfig;
-  /**
    * @generated from protobuf field: optional soulfire.v1.BotLiveState live_state = 2
    */
   liveState?: BotLiveState;
 }
-/**
- * @generated from protobuf message soulfire.v1.BotUpdateConfigRequest
- */
-export interface BotUpdateConfigRequest {
-  /**
-   * @generated from protobuf field: string instance_id = 1
-   */
-  instanceId: string;
-  /**
-   * @generated from protobuf field: string bot_id = 2
-   */
-  botId: string;
-  /**
-   * @generated from protobuf field: soulfire.v1.BotConfig config = 3
-   */
-  config?: BotConfig;
-}
-/**
- * @generated from protobuf message soulfire.v1.BotUpdateConfigResponse
- */
-export interface BotUpdateConfigResponse {}
 /**
  * Granular config entry update (single key-value)
  *
@@ -1645,91 +1610,6 @@ export enum DialogAfterAction {
   WAIT_FOR_RESPONSE = 3,
 }
 // @generated message type with reflection information, may provide speed optimized methods
-class BotConfig$Type extends MessageType<BotConfig> {
-  constructor() {
-    super("soulfire.v1.BotConfig", [
-      {
-        no: 1,
-        name: "settings",
-        kind: "message",
-        repeat: 2 /*RepeatType.UNPACKED*/,
-        T: () => SettingsNamespace,
-      },
-    ]);
-  }
-  create(value?: PartialMessage<BotConfig>): BotConfig {
-    const message = globalThis.Object.create(this.messagePrototype!);
-    message.settings = [];
-    if (value !== undefined)
-      reflectionMergePartial<BotConfig>(this, message, value);
-    return message;
-  }
-  internalBinaryRead(
-    reader: IBinaryReader,
-    length: number,
-    options: BinaryReadOptions,
-    target?: BotConfig,
-  ): BotConfig {
-    let message = target ?? this.create(),
-      end = reader.pos + length;
-    while (reader.pos < end) {
-      let [fieldNo, wireType] = reader.tag();
-      switch (fieldNo) {
-        case /* repeated soulfire.v1.SettingsNamespace settings */ 1:
-          message.settings.push(
-            SettingsNamespace.internalBinaryRead(
-              reader,
-              reader.uint32(),
-              options,
-            ),
-          );
-          break;
-        default:
-          let u = options.readUnknownField;
-          if (u === "throw")
-            throw new globalThis.Error(
-              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            );
-          let d = reader.skip(wireType);
-          if (u !== false)
-            (u === true ? UnknownFieldHandler.onRead : u)(
-              this.typeName,
-              message,
-              fieldNo,
-              wireType,
-              d,
-            );
-      }
-    }
-    return message;
-  }
-  internalBinaryWrite(
-    message: BotConfig,
-    writer: IBinaryWriter,
-    options: BinaryWriteOptions,
-  ): IBinaryWriter {
-    /* repeated soulfire.v1.SettingsNamespace settings = 1; */
-    for (let i = 0; i < message.settings.length; i++)
-      SettingsNamespace.internalBinaryWrite(
-        message.settings[i],
-        writer.tag(1, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
-    let u = options.writeUnknownFields;
-    if (u !== false)
-      (u == true ? UnknownFieldHandler.onWrite : u)(
-        this.typeName,
-        message,
-        writer,
-      );
-    return writer;
-  }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.BotConfig
- */
-export const BotConfig = new BotConfig$Type();
-// @generated message type with reflection information, may provide speed optimized methods
 class BotInfoRequest$Type extends MessageType<BotInfoRequest> {
   constructor() {
     super("soulfire.v1.BotInfoRequest", [
@@ -2386,7 +2266,6 @@ export const BotLiveState = new BotLiveState$Type();
 class BotInfoResponse$Type extends MessageType<BotInfoResponse> {
   constructor() {
     super("soulfire.v1.BotInfoResponse", [
-      { no: 1, name: "config", kind: "message", T: () => BotConfig },
       { no: 2, name: "live_state", kind: "message", T: () => BotLiveState },
     ]);
   }
@@ -2407,14 +2286,6 @@ class BotInfoResponse$Type extends MessageType<BotInfoResponse> {
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
-        case /* soulfire.v1.BotConfig config */ 1:
-          message.config = BotConfig.internalBinaryRead(
-            reader,
-            reader.uint32(),
-            options,
-            message.config,
-          );
-          break;
         case /* optional soulfire.v1.BotLiveState live_state */ 2:
           message.liveState = BotLiveState.internalBinaryRead(
             reader,
@@ -2447,13 +2318,6 @@ class BotInfoResponse$Type extends MessageType<BotInfoResponse> {
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    /* soulfire.v1.BotConfig config = 1; */
-    if (message.config)
-      BotConfig.internalBinaryWrite(
-        message.config,
-        writer.tag(1, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
     /* optional soulfire.v1.BotLiveState live_state = 2; */
     if (message.liveState)
       BotLiveState.internalBinaryWrite(
@@ -2475,168 +2339,6 @@ class BotInfoResponse$Type extends MessageType<BotInfoResponse> {
  * @generated MessageType for protobuf message soulfire.v1.BotInfoResponse
  */
 export const BotInfoResponse = new BotInfoResponse$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class BotUpdateConfigRequest$Type extends MessageType<BotUpdateConfigRequest> {
-  constructor() {
-    super("soulfire.v1.BotUpdateConfigRequest", [
-      {
-        no: 1,
-        name: "instance_id",
-        kind: "scalar",
-        T: 9 /*ScalarType.STRING*/,
-      },
-      { no: 2, name: "bot_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-      { no: 3, name: "config", kind: "message", T: () => BotConfig },
-    ]);
-  }
-  create(
-    value?: PartialMessage<BotUpdateConfigRequest>,
-  ): BotUpdateConfigRequest {
-    const message = globalThis.Object.create(this.messagePrototype!);
-    message.instanceId = "";
-    message.botId = "";
-    if (value !== undefined)
-      reflectionMergePartial<BotUpdateConfigRequest>(this, message, value);
-    return message;
-  }
-  internalBinaryRead(
-    reader: IBinaryReader,
-    length: number,
-    options: BinaryReadOptions,
-    target?: BotUpdateConfigRequest,
-  ): BotUpdateConfigRequest {
-    let message = target ?? this.create(),
-      end = reader.pos + length;
-    while (reader.pos < end) {
-      let [fieldNo, wireType] = reader.tag();
-      switch (fieldNo) {
-        case /* string instance_id */ 1:
-          message.instanceId = reader.string();
-          break;
-        case /* string bot_id */ 2:
-          message.botId = reader.string();
-          break;
-        case /* soulfire.v1.BotConfig config */ 3:
-          message.config = BotConfig.internalBinaryRead(
-            reader,
-            reader.uint32(),
-            options,
-            message.config,
-          );
-          break;
-        default:
-          let u = options.readUnknownField;
-          if (u === "throw")
-            throw new globalThis.Error(
-              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            );
-          let d = reader.skip(wireType);
-          if (u !== false)
-            (u === true ? UnknownFieldHandler.onRead : u)(
-              this.typeName,
-              message,
-              fieldNo,
-              wireType,
-              d,
-            );
-      }
-    }
-    return message;
-  }
-  internalBinaryWrite(
-    message: BotUpdateConfigRequest,
-    writer: IBinaryWriter,
-    options: BinaryWriteOptions,
-  ): IBinaryWriter {
-    /* string instance_id = 1; */
-    if (message.instanceId !== "")
-      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
-    /* string bot_id = 2; */
-    if (message.botId !== "")
-      writer.tag(2, WireType.LengthDelimited).string(message.botId);
-    /* soulfire.v1.BotConfig config = 3; */
-    if (message.config)
-      BotConfig.internalBinaryWrite(
-        message.config,
-        writer.tag(3, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
-    let u = options.writeUnknownFields;
-    if (u !== false)
-      (u == true ? UnknownFieldHandler.onWrite : u)(
-        this.typeName,
-        message,
-        writer,
-      );
-    return writer;
-  }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.BotUpdateConfigRequest
- */
-export const BotUpdateConfigRequest = new BotUpdateConfigRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class BotUpdateConfigResponse$Type extends MessageType<BotUpdateConfigResponse> {
-  constructor() {
-    super("soulfire.v1.BotUpdateConfigResponse", []);
-  }
-  create(
-    value?: PartialMessage<BotUpdateConfigResponse>,
-  ): BotUpdateConfigResponse {
-    const message = globalThis.Object.create(this.messagePrototype!);
-    if (value !== undefined)
-      reflectionMergePartial<BotUpdateConfigResponse>(this, message, value);
-    return message;
-  }
-  internalBinaryRead(
-    reader: IBinaryReader,
-    length: number,
-    options: BinaryReadOptions,
-    target?: BotUpdateConfigResponse,
-  ): BotUpdateConfigResponse {
-    let message = target ?? this.create(),
-      end = reader.pos + length;
-    while (reader.pos < end) {
-      let [fieldNo, wireType] = reader.tag();
-      switch (fieldNo) {
-        default:
-          let u = options.readUnknownField;
-          if (u === "throw")
-            throw new globalThis.Error(
-              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            );
-          let d = reader.skip(wireType);
-          if (u !== false)
-            (u === true ? UnknownFieldHandler.onRead : u)(
-              this.typeName,
-              message,
-              fieldNo,
-              wireType,
-              d,
-            );
-      }
-    }
-    return message;
-  }
-  internalBinaryWrite(
-    message: BotUpdateConfigResponse,
-    writer: IBinaryWriter,
-    options: BinaryWriteOptions,
-  ): IBinaryWriter {
-    let u = options.writeUnknownFields;
-    if (u !== false)
-      (u == true ? UnknownFieldHandler.onWrite : u)(
-        this.typeName,
-        message,
-        writer,
-      );
-    return writer;
-  }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.BotUpdateConfigResponse
- */
-export const BotUpdateConfigResponse = new BotUpdateConfigResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class BotUpdateConfigEntryRequest$Type extends MessageType<BotUpdateConfigEntryRequest> {
   constructor() {
@@ -8696,12 +8398,6 @@ export const BotCloseDialogResponse = new BotCloseDialogResponse$Type();
 export const BotService = new ServiceType("soulfire.v1.BotService", [
   { name: "GetBotList", options: {}, I: BotListRequest, O: BotListResponse },
   { name: "GetBotInfo", options: {}, I: BotInfoRequest, O: BotInfoResponse },
-  {
-    name: "UpdateBotConfig",
-    options: {},
-    I: BotUpdateConfigRequest,
-    O: BotUpdateConfigResponse,
-  },
   {
     name: "UpdateBotConfigEntry",
     options: {},
