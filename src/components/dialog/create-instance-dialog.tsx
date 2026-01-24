@@ -1,22 +1,18 @@
 import { useAptabase } from "@aptabase/react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useRouteContext } from "@tanstack/react-router";
 import { PlusIcon, XIcon } from "lucide-react";
 import { createContext, type ReactNode, use, useState } from "react";
-import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "@/components/ui/button.tsx";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
 } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
@@ -85,12 +81,6 @@ function CreateInstanceDialog({
         t("dialog.createInstance.form.friendlyName.regex"),
       ),
   });
-  const form = useForm<FormType>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      friendlyName: "",
-    },
-  });
   const addMutation = useMutation({
     mutationFn: async (values: FormType) => {
       if (transport === null) {
@@ -129,64 +119,81 @@ function CreateInstanceDialog({
       });
     },
   });
+  const form = useForm({
+    defaultValues: {
+      friendlyName: "",
+    },
+    validators: {
+      onSubmit: formSchema,
+    },
+    onSubmit: async ({ value }) => {
+      addMutation.mutate(value);
+    },
+  });
 
   return (
-    <Form {...form}>
-      <Credenza open={open} onOpenChange={setOpen}>
-        <CredenzaContent className="pb-4">
-          <form
-            className="flex flex-col gap-4"
-            onSubmit={(e) =>
-              void form.handleSubmit((data) => addMutation.mutate(data))(e)
-            }
-          >
-            <CredenzaHeader>
-              <CredenzaTitle>{t("dialog.createInstance.title")}</CredenzaTitle>
-              <CredenzaDescription>
-                {t("dialog.createInstance.description")}
-              </CredenzaDescription>
-            </CredenzaHeader>
-            <CredenzaBody>
-              <FormField
-                control={form.control}
-                name="friendlyName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
+    <Credenza open={open} onOpenChange={setOpen}>
+      <CredenzaContent className="pb-4">
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void form.handleSubmit();
+          }}
+        >
+          <CredenzaHeader>
+            <CredenzaTitle>{t("dialog.createInstance.title")}</CredenzaTitle>
+            <CredenzaDescription>
+              {t("dialog.createInstance.description")}
+            </CredenzaDescription>
+          </CredenzaHeader>
+          <CredenzaBody>
+            <form.Field name="friendlyName">
+              {(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>
                       {t("dialog.createInstance.form.friendlyName.label")}
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        autoFocus
-                        placeholder={t(
-                          "dialog.createInstance.form.friendlyName.placeholder",
-                        )}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>
+                    </FieldLabel>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      autoFocus
+                      placeholder={t(
+                        "dialog.createInstance.form.friendlyName.placeholder",
+                      )}
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      aria-invalid={isInvalid}
+                    />
+                    <FieldDescription>
                       {t("dialog.createInstance.form.friendlyName.description")}
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CredenzaBody>
-            <CredenzaFooter className="justify-between">
-              <CredenzaClose asChild>
-                <Button variant="outline">
-                  <XIcon />
-                  {t("dialog.createInstance.form.cancel")}
-                </Button>
-              </CredenzaClose>
-              <Button type="submit">
-                <PlusIcon />
-                {t("dialog.createInstance.form.create")}
+                    </FieldDescription>
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
+                  </Field>
+                );
+              }}
+            </form.Field>
+          </CredenzaBody>
+          <CredenzaFooter className="justify-between">
+            <CredenzaClose asChild>
+              <Button variant="outline">
+                <XIcon />
+                {t("dialog.createInstance.form.cancel")}
               </Button>
-            </CredenzaFooter>
-          </form>
-        </CredenzaContent>
-      </Credenza>
-    </Form>
+            </CredenzaClose>
+            <Button type="submit">
+              <PlusIcon />
+              {t("dialog.createInstance.form.create")}
+            </Button>
+          </CredenzaFooter>
+        </form>
+      </CredenzaContent>
+    </Credenza>
   );
 }

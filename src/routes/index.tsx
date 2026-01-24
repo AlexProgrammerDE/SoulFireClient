@@ -1,4 +1,4 @@
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "@tanstack/react-form";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { invoke } from "@tauri-apps/api/core";
 import { emit, listen } from "@tauri-apps/api/event";
@@ -21,7 +21,6 @@ import {
   ServerIcon,
 } from "lucide-react";
 import { use, useCallback, useEffect, useId, useState } from "react";
-import { useForm } from "react-hook-form";
 import { Trans, useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -49,13 +48,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
 } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import {
@@ -105,21 +101,13 @@ const tokenFormSchema = z.object({
   address: z.url(),
   token: z.jwt(),
 });
-type EmailFormSchemaType = z.infer<typeof emailFormSchema>;
-type TokenFormSchemaType = z.infer<typeof tokenFormSchema>;
 
 const integratedServerFormSchema = z.object({
   jvmArgs: z.string(),
 });
-type IntegratedServerFormSchemaType = z.infer<
-  typeof integratedServerFormSchema
->;
 const mobileIntegratedServerFormSchema = z.object({
   token: z.jwt(),
 });
-type MobileIntegratedServerFormSchemaType = z.infer<
-  typeof mobileIntegratedServerFormSchema
->;
 
 type LoginType = "INTEGRATED" | "DEDICATED" | "EMAIL_CODE" | null;
 
@@ -523,8 +511,7 @@ function IntegratedConfigureMenu({
 }) {
   const systemInfo = use(SystemInfoContext);
   const { t } = useTranslation("login");
-  const form = useForm<IntegratedServerFormSchemaType>({
-    resolver: zodResolver(integratedServerFormSchema),
+  const form = useForm({
     defaultValues: {
       jvmArgs:
         localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS) ??
@@ -532,94 +519,106 @@ function IntegratedConfigureMenu({
           ? DEFAULT_MOBILE_JVM_ARGS_STRING
           : DEFAULT_JVM_ARGS_STRING),
     },
+    validators: {
+      onSubmit: integratedServerFormSchema,
+    },
+    onSubmit: async ({ value }) => {
+      const jvmArgs = value.jvmArgs.trim();
+      localStorage.setItem(
+        LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
+        jvmArgs,
+      );
+
+      if (systemInfo?.mobile) {
+        setIntegratedState("mobile");
+      } else {
+        setIntegratedState("loading");
+        startIntegratedServer();
+      }
+    },
   });
 
-  function onSubmit(values: IntegratedServerFormSchemaType) {
-    const jvmArgs = values.jvmArgs.trim();
-    localStorage.setItem(
-      LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
-      jvmArgs,
-    );
-
-    if (systemInfo?.mobile) {
-      setIntegratedState("mobile");
-    } else {
-      setIntegratedState("loading");
-      startIntegratedServer();
-    }
-  }
-
   return (
-    <Form {...form}>
-      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
-        <Card>
-          <CardHeader className="text-center">
-            <LoginCardTitle />
-            <CardDescription>{t("integrated.description")}</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <FormField
-              control={form.control}
-              name="jvmArgs"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("integrated.form.jvmArgs.title")}</FormLabel>
-                  <FormControl>
-                    <div className="flex flex-row gap-2">
-                      <Input
-                        autoFocus
-                        type="text"
-                        inputMode="text"
-                        placeholder={t("integrated.form.jvmArgs.placeholder")}
-                        {...field}
-                      />
-                      <Button
-                        type="button"
-                        variant="secondary"
-                        disabled={field.value === DEFAULT_JVM_ARGS_STRING}
-                        onClick={() => {
-                          field.onChange("jvmArgs", DEFAULT_JVM_ARGS_STRING);
-                          localStorage.setItem(
-                            LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
-                            DEFAULT_JVM_ARGS_STRING,
-                          );
-                        }}
-                      >
-                        <RotateCcwIcon />
-                      </Button>
-                    </div>
-                  </FormControl>
-                  <FormDescription>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        void form.handleSubmit();
+      }}
+    >
+      <Card>
+        <CardHeader className="text-center">
+          <LoginCardTitle />
+          <CardDescription>{t("integrated.description")}</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <form.Field name="jvmArgs">
+            {(field) => {
+              const isInvalid =
+                field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    {t("integrated.form.jvmArgs.title")}
+                  </FieldLabel>
+                  <div className="flex flex-row gap-2">
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      autoFocus
+                      type="text"
+                      inputMode="text"
+                      placeholder={t("integrated.form.jvmArgs.placeholder")}
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      aria-invalid={isInvalid}
+                    />
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      disabled={field.state.value === DEFAULT_JVM_ARGS_STRING}
+                      onClick={() => {
+                        field.handleChange(DEFAULT_JVM_ARGS_STRING);
+                        localStorage.setItem(
+                          LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
+                          DEFAULT_JVM_ARGS_STRING,
+                        );
+                      }}
+                    >
+                      <RotateCcwIcon />
+                    </Button>
+                  </div>
+                  <FieldDescription>
                     <Trans
                       i18nKey="login:integrated.form.jvmArgs.description"
                       components={{ bold: <strong className="text-nowrap" /> }}
                     />
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button
-              variant="outline"
-              onClick={(e) => {
-                e.preventDefault();
-                setLoginType(null);
-              }}
-              type="button"
-            >
-              <ArrowLeftIcon />
-              {t("integrated.form.back")}
-            </Button>
-            <Button type="submit">
-              <PlayIcon />
-              {t("integrated.form.start")}
-            </Button>
-          </CardFooter>
-        </Card>
-      </form>
-    </Form>
+                  </FieldDescription>
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          </form.Field>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button
+            variant="outline"
+            onClick={(e) => {
+              e.preventDefault();
+              setLoginType(null);
+            }}
+            type="button"
+          >
+            <ArrowLeftIcon />
+            {t("integrated.form.back")}
+          </Button>
+          <Button type="submit">
+            <PlayIcon />
+            {t("integrated.form.start")}
+          </Button>
+        </CardFooter>
+      </Card>
+    </form>
   );
 }
 
@@ -665,130 +664,141 @@ function IntegratedMobileMenu({
   const systemInfo = use(SystemInfoContext);
   const { t } = useTranslation("login");
   const runCommand = `bash <(curl -s https://raw.githubusercontent.com/AlexProgrammerDE/SoulFireClient/refs/heads/main/scripts/termux_setup.sh) ${systemInfo?.sfServerVersion} "${localStorage.getItem(LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS)}"`;
-  const form = useForm<MobileIntegratedServerFormSchemaType>({
-    resolver: zodResolver(mobileIntegratedServerFormSchema),
+  const form = useForm({
     defaultValues: {
       token:
         localStorage.getItem(
           LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY,
         ) ?? "",
     },
+    validators: {
+      onSubmit: mobileIntegratedServerFormSchema,
+    },
+    onSubmit: async ({ value }) => {
+      const token = value.token.trim();
+      localStorage.setItem(
+        LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY,
+        token,
+      );
+      void redirectWithCredentials(
+        "integrated",
+        "http://localhost:38765",
+        token,
+      );
+    },
   });
 
-  function onSubmit(values: MobileIntegratedServerFormSchemaType) {
-    const token = values.token.trim();
-    localStorage.setItem(
-      LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY,
-      token,
-    );
-    void redirectWithCredentials("integrated", "http://localhost:38765", token);
-  }
-
   return (
-    <Form {...form}>
-      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
-        <Card>
-          <CardHeader className="text-center">
-            <LoginCardTitle />
-            <CardDescription>
-              {t("integrated.mobile.description")}
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <FormItem>
-              <FormLabel>
-                {t("integrated.mobile.form.termuxCommand.title")}
-              </FormLabel>
-              <div className="flex flex-row gap-2">
-                <Input
-                  autoFocus
-                  type="text"
-                  inputMode="text"
-                  readOnly
-                  value={runCommand}
-                />
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={() => {
-                    copyToClipboard(runCommand);
-                  }}
-                >
-                  <ClipboardIcon />
-                </Button>
-              </div>
-              <FormDescription>
-                <Trans
-                  i18nKey="login:integrated.mobile.form.termuxCommand.description"
-                  components={{
-                    a: (
-                      <ExternalLink
-                        href="https://wiki.termux.com/wiki/Installation"
-                        className="text-nowrap text-blue-500"
-                      />
-                    ),
-                    copy: (
-                      <button
-                        type="button"
-                        className="font-bold text-blue-500"
-                        onClick={() => {
-                          copyToClipboard("generate-token api");
-                        }}
-                      />
-                    ),
-                  }}
-                />
-              </FormDescription>
-            </FormItem>
-            <FormField
-              control={form.control}
-              name="token"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>
-                    {t("integrated.mobile.form.token.title")}
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      inputMode="text"
-                      placeholder={t(
-                        "integrated.mobile.form.token.placeholder",
-                      )}
-                      {...field}
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        void form.handleSubmit();
+      }}
+    >
+      <Card>
+        <CardHeader className="text-center">
+          <LoginCardTitle />
+          <CardDescription>
+            {t("integrated.mobile.description")}
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <Field>
+            <FieldLabel>
+              {t("integrated.mobile.form.termuxCommand.title")}
+            </FieldLabel>
+            <div className="flex flex-row gap-2">
+              <Input
+                autoFocus
+                type="text"
+                inputMode="text"
+                readOnly
+                value={runCommand}
+              />
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => {
+                  copyToClipboard(runCommand);
+                }}
+              >
+                <ClipboardIcon />
+              </Button>
+            </div>
+            <FieldDescription>
+              <Trans
+                i18nKey="login:integrated.mobile.form.termuxCommand.description"
+                components={{
+                  a: (
+                    <ExternalLink
+                      href="https://wiki.termux.com/wiki/Installation"
+                      className="text-nowrap text-blue-500"
                     />
-                  </FormControl>
-                  <FormDescription>
+                  ),
+                  copy: (
+                    <button
+                      type="button"
+                      className="font-bold text-blue-500"
+                      onClick={() => {
+                        copyToClipboard("generate-token api");
+                      }}
+                    />
+                  ),
+                }}
+              />
+            </FieldDescription>
+          </Field>
+          <form.Field name="token">
+            {(field) => {
+              const isInvalid =
+                field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    {t("integrated.mobile.form.token.title")}
+                  </FieldLabel>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    type="text"
+                    inputMode="text"
+                    placeholder={t("integrated.mobile.form.token.placeholder")}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    aria-invalid={isInvalid}
+                  />
+                  <FieldDescription>
                     <Trans
                       i18nKey="login:integrated.mobile.form.token.description"
                       components={{ bold: <strong className="text-nowrap" /> }}
                     />
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button
-              variant="outline"
-              onClick={(e) => {
-                e.preventDefault();
-                setIntegratedState("configure");
-              }}
-              type="button"
-            >
-              <ArrowLeftIcon />
-              {t("integrated.mobile.form.back")}
-            </Button>
-            <Button type="submit">
-              <PlugZapIcon />
-              {t("integrated.mobile.form.connect")}
-            </Button>
-          </CardFooter>
-        </Card>
-      </form>
-    </Form>
+                  </FieldDescription>
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          </form.Field>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button
+            variant="outline"
+            onClick={(e) => {
+              e.preventDefault();
+              setIntegratedState("configure");
+            }}
+            type="button"
+          >
+            <ArrowLeftIcon />
+            {t("integrated.mobile.form.back")}
+          </Button>
+          <Button type="submit">
+            <PlugZapIcon />
+            {t("integrated.mobile.form.connect")}
+          </Button>
+        </CardFooter>
+      </Card>
+    </form>
   );
 }
 
@@ -835,132 +845,150 @@ function EmailForm({
   setDedicatedType: (type: DedicatedType) => void;
 }) {
   const { t } = useTranslation("login");
-  const form = useForm<EmailFormSchemaType>({
-    resolver: zodResolver(emailFormSchema),
+  const form = useForm({
     defaultValues: {
       address:
         localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY) ?? "",
       email: localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY) ?? "",
     },
+    validators: {
+      onSubmit: emailFormSchema,
+    },
+    onSubmit: async ({ value }) => {
+      const address = value.address.trim();
+      localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY, address);
+
+      const email = value.email.trim();
+      localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY, email);
+      const loginService = new LoginServiceClient(
+        createAddressOnlyTransport(address),
+      );
+      toast.promise(
+        loginService
+          .login({
+            email: email,
+          })
+          .then((response) => {
+            setAuthFlowData({
+              email: email,
+              flowToken: response.response.authFlowToken,
+              address: address,
+            });
+            setLoginType("EMAIL_CODE");
+          }),
+        {
+          loading: t("dedicated.toast.loading"),
+          success: t("dedicated.toast.success"),
+          error: (e) => {
+            console.error(e);
+            return t("dedicated.toast.error");
+          },
+        },
+      );
+    },
   });
 
-  function onSubmit(values: EmailFormSchemaType) {
-    const address = values.address.trim();
-    localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY, address);
-
-    const email = values.email.trim();
-    localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY, email);
-    const loginService = new LoginServiceClient(
-      createAddressOnlyTransport(address),
-    );
-    toast.promise(
-      loginService
-        .login({
-          email: email,
-        })
-        .then((response) => {
-          setAuthFlowData({
-            email: email,
-            flowToken: response.response.authFlowToken,
-            address: address,
-          });
-          setLoginType("EMAIL_CODE");
-        }),
-      {
-        loading: t("dedicated.toast.loading"),
-        success: t("dedicated.toast.success"),
-        error: (e) => {
-          console.error(e);
-          return t("dedicated.toast.error");
-        },
-      },
-    );
-  }
-
   return (
-    <Form {...form}>
-      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
-        <Card>
-          <CardHeader className="text-center">
-            <LoginCardTitle />
-            <CardDescription>{t("dedicated.description")}</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("dedicated.form.address.title")}</FormLabel>
-                  <FormControl>
-                    <Input
-                      autoFocus
-                      type="url"
-                      inputMode="url"
-                      placeholder={t("dedicated.form.address.placeholder")}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        void form.handleSubmit();
+      }}
+    >
+      <Card>
+        <CardHeader className="text-center">
+          <LoginCardTitle />
+          <CardDescription>{t("dedicated.description")}</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <form.Field name="address">
+            {(field) => {
+              const isInvalid =
+                field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    {t("dedicated.form.address.title")}
+                  </FieldLabel>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    autoFocus
+                    type="url"
+                    inputMode="url"
+                    placeholder={t("dedicated.form.address.placeholder")}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    aria-invalid={isInvalid}
+                  />
+                  <FieldDescription>
                     {t("dedicated.form.address.description")}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("dedicated.form.email.title")}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="email"
-                      placeholder={t("dedicated.form.email.placeholder")}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
+                  </FieldDescription>
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          </form.Field>
+          <form.Field name="email">
+            {(field) => {
+              const isInvalid =
+                field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    {t("dedicated.form.email.title")}
+                  </FieldLabel>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    type="email"
+                    placeholder={t("dedicated.form.email.placeholder")}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    aria-invalid={isInvalid}
+                  />
+                  <FieldDescription>
                     {t("dedicated.form.email.description")}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-          <CardFooter className="flex flex-col gap-2 max-md:items-stretch md:flex-row">
-            <div className="flex grow flex-col justify-between gap-2 max-md:items-stretch md:flex-row">
-              <Button
-                variant="outline"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setLoginType(null);
-                }}
-                type="button"
-              >
-                <ArrowLeftIcon />
-                {t("dedicated.form.back")}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setDedicatedType("token");
-                }}
-                type="button"
-              >
-                <KeyRoundIcon />
-                {t("dedicated.form.useToken")}
-              </Button>
-            </div>
-            <Button type="submit">
-              <LogInIcon />
-              {t("dedicated.form.login")}
+                  </FieldDescription>
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          </form.Field>
+        </CardContent>
+        <CardFooter className="flex flex-col gap-2 max-md:items-stretch md:flex-row">
+          <div className="flex grow flex-col justify-between gap-2 max-md:items-stretch md:flex-row">
+            <Button
+              variant="outline"
+              onClick={(e) => {
+                e.preventDefault();
+                setLoginType(null);
+              }}
+              type="button"
+            >
+              <ArrowLeftIcon />
+              {t("dedicated.form.back")}
             </Button>
-          </CardFooter>
-        </Card>
-      </form>
-    </Form>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setDedicatedType("token");
+              }}
+              type="button"
+            >
+              <KeyRoundIcon />
+              {t("dedicated.form.useToken")}
+            </Button>
+          </div>
+          <Button type="submit">
+            <LogInIcon />
+            {t("dedicated.form.login")}
+          </Button>
+        </CardFooter>
+      </Card>
+    </form>
   );
 }
 
@@ -974,108 +1002,126 @@ function TokenForm({
   setDedicatedType: (type: DedicatedType) => void;
 }) {
   const { t } = useTranslation("login");
-  const form = useForm<TokenFormSchemaType>({
-    resolver: zodResolver(tokenFormSchema),
+  const form = useForm({
     defaultValues: {
       address:
         localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY) ?? "",
       token: localStorage.getItem(LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY) ?? "",
     },
+    validators: {
+      onSubmit: tokenFormSchema,
+    },
+    onSubmit: async ({ value }) => {
+      const address = value.address.trim();
+      localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY, address);
+
+      const token = value.token.trim();
+      localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY, token);
+      void redirectWithCredentials("dedicated", address, token);
+    },
   });
 
-  function onSubmit(values: TokenFormSchemaType) {
-    const address = values.address.trim();
-    localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY, address);
-
-    const token = values.token.trim();
-    localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY, token);
-    void redirectWithCredentials("dedicated", address, token);
-  }
-
   return (
-    <Form {...form}>
-      <form onSubmit={(e) => void form.handleSubmit(onSubmit)(e)}>
-        <Card>
-          <CardHeader className="text-center">
-            <LoginCardTitle />
-            <CardDescription>{t("dedicated.description")}</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-4">
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("dedicated.form.address.title")}</FormLabel>
-                  <FormControl>
-                    <Input
-                      autoFocus
-                      type="url"
-                      inputMode="url"
-                      placeholder={t("dedicated.form.address.placeholder")}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        void form.handleSubmit();
+      }}
+    >
+      <Card>
+        <CardHeader className="text-center">
+          <LoginCardTitle />
+          <CardDescription>{t("dedicated.description")}</CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <form.Field name="address">
+            {(field) => {
+              const isInvalid =
+                field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    {t("dedicated.form.address.title")}
+                  </FieldLabel>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    autoFocus
+                    type="url"
+                    inputMode="url"
+                    placeholder={t("dedicated.form.address.placeholder")}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    aria-invalid={isInvalid}
+                  />
+                  <FieldDescription>
                     {t("dedicated.form.address.description")}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="token"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>{t("dedicated.form.token.title")}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      placeholder={t("dedicated.form.token.placeholder")}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
+                  </FieldDescription>
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          </form.Field>
+          <form.Field name="token">
+            {(field) => {
+              const isInvalid =
+                field.state.meta.isTouched && !field.state.meta.isValid;
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    {t("dedicated.form.token.title")}
+                  </FieldLabel>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    type="password"
+                    placeholder={t("dedicated.form.token.placeholder")}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    aria-invalid={isInvalid}
+                  />
+                  <FieldDescription>
                     {t("dedicated.form.token.description")}
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </CardContent>
-          <CardFooter className="flex flex-col gap-2 max-md:items-stretch md:flex-row">
-            <div className="flex grow flex-col justify-between gap-2 max-md:items-stretch md:flex-row">
-              <Button
-                variant="outline"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setLoginType(null);
-                }}
-                type="button"
-              >
-                <ArrowLeftIcon />
-                {t("dedicated.form.back")}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setDedicatedType("email");
-                }}
-                type="button"
-              >
-                <MailIcon />
-                {t("dedicated.form.useEmail")}
-              </Button>
-            </div>
-            <Button type="submit">
-              <LogInIcon />
-              {t("dedicated.form.login")}
+                  </FieldDescription>
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
+                </Field>
+              );
+            }}
+          </form.Field>
+        </CardContent>
+        <CardFooter className="flex flex-col gap-2 max-md:items-stretch md:flex-row">
+          <div className="flex grow flex-col justify-between gap-2 max-md:items-stretch md:flex-row">
+            <Button
+              variant="outline"
+              onClick={(e) => {
+                e.preventDefault();
+                setLoginType(null);
+              }}
+              type="button"
+            >
+              <ArrowLeftIcon />
+              {t("dedicated.form.back")}
             </Button>
-          </CardFooter>
-        </Card>
-      </form>
-    </Form>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setDedicatedType("email");
+              }}
+              type="button"
+            >
+              <MailIcon />
+              {t("dedicated.form.useEmail")}
+            </Button>
+          </div>
+          <Button type="submit">
+            <LogInIcon />
+            {t("dedicated.form.login")}
+          </Button>
+        </CardFooter>
+      </Card>
+    </form>
   );
 }
 

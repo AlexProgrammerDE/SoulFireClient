@@ -1,22 +1,18 @@
 import { useAptabase } from "@aptabase/react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 import { PencilIcon, PlusIcon, XIcon } from "lucide-react";
 import { use } from "react";
-import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "@/components/ui/button.tsx";
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
 } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import {
@@ -76,14 +72,6 @@ export function ManageUserDialog({
     email: z.email(),
     role: z.enum(UserRole),
   });
-  const form = useForm<FormType>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: props.mode === "edit" ? props.user.username : "",
-      email: props.mode === "edit" ? props.user.email : "",
-      role: props.mode === "edit" ? props.user.role : UserRole.USER,
-    },
-  });
   const submitMutation = useMutation({
     mutationFn: async (values: FormType) => {
       if (transport === null) {
@@ -139,94 +127,123 @@ export function ManageUserDialog({
       });
     },
   });
+  const form = useForm({
+    defaultValues: {
+      username: props.mode === "edit" ? props.user.username : "",
+      email: props.mode === "edit" ? props.user.email : "",
+      role: props.mode === "edit" ? props.user.role : UserRole.USER,
+    },
+    validators: {
+      onSubmit: formSchema,
+    },
+    onSubmit: async ({ value }) => {
+      submitMutation.mutate(value);
+    },
+  });
 
   return (
-    <Form {...form}>
-      <Credenza open={open} onOpenChange={setOpen}>
-        <CredenzaContent className="pb-4">
-          <form
-            className="flex flex-col gap-4"
-            onSubmit={(e) =>
-              void form.handleSubmit((data) => submitMutation.mutate(data))(e)
-            }
-          >
-            <CredenzaHeader>
-              <CredenzaTitle>
-                {props.mode === "add"
-                  ? t("users.addUserDialog.title")
-                  : t("users.updateUserDialog.title")}
-              </CredenzaTitle>
-              <CredenzaDescription>
-                {props.mode === "add"
-                  ? t("users.addUserDialog.description")
-                  : t("users.updateUserDialog.description")}
-              </CredenzaDescription>
-            </CredenzaHeader>
-            <CredenzaBody className="flex flex-col gap-4">
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
+    <Credenza open={open} onOpenChange={setOpen}>
+      <CredenzaContent className="pb-4">
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void form.handleSubmit();
+          }}
+        >
+          <CredenzaHeader>
+            <CredenzaTitle>
+              {props.mode === "add"
+                ? t("users.addUserDialog.title")
+                : t("users.updateUserDialog.title")}
+            </CredenzaTitle>
+            <CredenzaDescription>
+              {props.mode === "add"
+                ? t("users.addUserDialog.description")
+                : t("users.updateUserDialog.description")}
+            </CredenzaDescription>
+          </CredenzaHeader>
+          <CredenzaBody className="flex flex-col gap-4">
+            <form.Field name="username">
+              {(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>
                       {t("users.baseUserDialog.form.username.label")}
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        autoFocus
-                        placeholder={t(
-                          "users.baseUserDialog.form.username.placeholder",
-                        )}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>
+                    </FieldLabel>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      autoFocus
+                      placeholder={t(
+                        "users.baseUserDialog.form.username.placeholder",
+                      )}
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      aria-invalid={isInvalid}
+                    />
+                    <FieldDescription>
                       {t("users.baseUserDialog.form.username.description")}
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
+                    </FieldDescription>
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
+                  </Field>
+                );
+              }}
+            </form.Field>
+            <form.Field name="email">
+              {(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>
                       {t("users.baseUserDialog.form.email.label")}
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder={t(
-                          "users.baseUserDialog.form.email.placeholder",
-                        )}
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>
+                    </FieldLabel>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      placeholder={t(
+                        "users.baseUserDialog.form.email.placeholder",
+                      )}
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      aria-invalid={isInvalid}
+                    />
+                    <FieldDescription>
                       {t("users.baseUserDialog.form.email.description")}
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="role"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
+                    </FieldDescription>
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
+                  </Field>
+                );
+              }}
+            </form.Field>
+            <form.Field name="role">
+              {(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>
                       {t("users.baseUserDialog.form.role.label")}
-                    </FormLabel>
+                    </FieldLabel>
                     <Select
-                      onValueChange={(value) => field.onChange(Number(value))}
-                      defaultValue={String(field.value)}
+                      name={field.name}
+                      value={String(field.state.value)}
+                      onValueChange={(value) =>
+                        field.handleChange(Number(value))
+                      }
                     >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select a role" />
-                        </SelectTrigger>
-                      </FormControl>
+                      <SelectTrigger id={field.name} aria-invalid={isInvalid}>
+                        <SelectValue placeholder="Select a role" />
+                      </SelectTrigger>
                       <SelectContent>
                         {getEnumEntries(UserRole).map((role) => (
                           <SelectItem
@@ -240,33 +257,35 @@ export function ManageUserDialog({
                         ))}
                       </SelectContent>
                     </Select>
-                    <FormDescription>
+                    <FieldDescription>
                       {t("users.baseUserDialog.form.role.description")}
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </CredenzaBody>
-            <CredenzaFooter className="justify-between">
-              <CredenzaClose asChild>
-                <Button variant="outline">
-                  <XIcon />
-                  {props.mode === "add"
-                    ? t("users.addUserDialog.form.cancel")
-                    : t("users.updateUserDialog.form.cancel")}
-                </Button>
-              </CredenzaClose>
-              <Button type="submit">
-                {props.mode === "add" ? <PlusIcon /> : <PencilIcon />}
+                    </FieldDescription>
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
+                  </Field>
+                );
+              }}
+            </form.Field>
+          </CredenzaBody>
+          <CredenzaFooter className="justify-between">
+            <CredenzaClose asChild>
+              <Button variant="outline">
+                <XIcon />
                 {props.mode === "add"
-                  ? t("users.addUserDialog.form.add")
-                  : t("users.updateUserDialog.form.update")}
+                  ? t("users.addUserDialog.form.cancel")
+                  : t("users.updateUserDialog.form.cancel")}
               </Button>
-            </CredenzaFooter>
-          </form>
-        </CredenzaContent>
-      </Credenza>
-    </Form>
+            </CredenzaClose>
+            <Button type="submit">
+              {props.mode === "add" ? <PlusIcon /> : <PencilIcon />}
+              {props.mode === "add"
+                ? t("users.addUserDialog.form.add")
+                : t("users.updateUserDialog.form.update")}
+            </Button>
+          </CredenzaFooter>
+        </form>
+      </CredenzaContent>
+    </Credenza>
   );
 }
