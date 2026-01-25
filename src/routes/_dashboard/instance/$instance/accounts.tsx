@@ -119,6 +119,7 @@ function GenerateAccountsButton() {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const { mutateAsync: applyGeneratedAccountsMutation } = useMutation({
+    mutationKey: ["instance", "accounts", "generate", instanceInfo.id],
     mutationFn: async ({
       newAccounts,
       mode,
@@ -352,6 +353,7 @@ function AddButton() {
   const { trackEvent } = useAptabase();
   // Batch add accounts mutation for bulk import
   const { mutateAsync: addAccountsBatchMutation } = useMutation({
+    mutationKey: ["instance", "accounts", "add-batch", instanceInfo.id],
     mutationFn: async (accounts: ProfileAccount[]) => {
       await addInstanceAccountsBatch(
         accounts,
@@ -369,6 +371,7 @@ function AddButton() {
   });
   // Granular account add mutation for single account (device code)
   const { mutateAsync: addAccountMutation } = useMutation({
+    mutationKey: ["instance", "accounts", "add", instanceInfo.id],
     mutationFn: async (account: ProfileAccount) => {
       await addInstanceAccount(
         account,
@@ -759,6 +762,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   const { trackEvent } = useAptabase();
   // Batch remove accounts mutation
   const { mutateAsync: removeAccountsBatchMutation } = useMutation({
+    mutationKey: ["instance", "accounts", "remove-batch", instanceInfo.id],
     mutationFn: async (profileIds: string[]) => {
       await removeInstanceAccountsBatch(
         profileIds,

@@ -73,6 +73,11 @@ export function ManageUserDialog({
     role: z.enum(UserRole),
   });
   const submitMutation = useMutation({
+    mutationKey: [
+      "user",
+      props.mode === "add" ? "create" : "update",
+      props.mode === "edit" ? props.user.id : undefined,
+    ],
     mutationFn: async (values: FormType) => {
       if (transport === null) {
         return;

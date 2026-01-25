@@ -159,6 +159,7 @@ function InstanceActionButtons() {
   const instanceProfileInputRef = useRef<HTMLInputElement>(null);
   // Using setInstanceConfigFull for profile import
   const setProfileMutation = useMutation({
+    mutationKey: ["instance", "profile", "import", instanceInfo.id],
     mutationFn: async (profile: ProfileRoot) => {
       await setInstanceConfigFull(
         profile,
@@ -463,6 +464,7 @@ function DeleteInstanceButton() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const deleteMutation = useMutation({
+    mutationKey: ["instance", "delete"],
     mutationFn: async (instanceId: string) => {
       if (transport === null) {
         return;

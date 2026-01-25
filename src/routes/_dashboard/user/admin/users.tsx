@@ -280,6 +280,7 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
   const transport = use(TransportContext);
   const { usersQueryOptions } = Route.useRouteContext();
   const { mutateAsync: deleteUsersMutation } = useMutation({
+    mutationKey: ["users", "delete-batch"],
     mutationFn: async (user: UserListResponse_User[]) => {
       if (transport === null) {
         return;
@@ -299,6 +300,7 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
     },
   });
   const { mutateAsync: invalidateUsersMutation } = useMutation({
+    mutationKey: ["users", "invalidate-sessions-batch"],
     mutationFn: async (user: UserListResponse_User[]) => {
       if (transport === null) {
         return;

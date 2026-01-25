@@ -149,6 +149,7 @@ function DialogContentInner({
   );
 
   const saveMutation = useMutation({
+    mutationKey: ["account", "metadata", "save", account.profileId],
     mutationFn: async () => {
       if (transport === null || jsonText === null || originalMetadata === null)
         return;

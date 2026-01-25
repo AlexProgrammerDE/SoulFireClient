@@ -82,6 +82,7 @@ function CreateInstanceDialog({
       ),
   });
   const addMutation = useMutation({
+    mutationKey: ["instance", "create"],
     mutationFn: async (values: FormType) => {
       if (transport === null) {
         return;

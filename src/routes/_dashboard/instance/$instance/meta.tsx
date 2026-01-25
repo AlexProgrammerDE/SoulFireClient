@@ -51,6 +51,7 @@ function Content() {
   const transport = use(TransportContext);
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const setFriendlyNameMutation = useMutation({
+    mutationKey: ["instance", "meta", "friendlyName", instanceInfo.id],
     mutationFn: async (value: JsonValue) => {
       await setInstanceFriendlyName(
         value as string,
@@ -73,6 +74,7 @@ function Content() {
     },
   });
   const setIconMutation = useMutation({
+    mutationKey: ["instance", "meta", "icon", instanceInfo.id],
     mutationFn: async (value: JsonValue) => {
       await setInstanceIcon(
         value as string,

@@ -980,6 +980,7 @@ function BotInventoryPanel({
 
   // Mutation for clicking inventory slots
   const clickMutation = useMutation({
+    mutationKey: ["bot", "inventory", "click", instanceId, botId],
     mutationFn: async (request: BotInventoryClickRequest) => {
       const transport = createTransport();
       if (transport === null) {
@@ -995,6 +996,7 @@ function BotInventoryPanel({
 
   // Mutation for closing container
   const closeContainerMutation = useMutation({
+    mutationKey: ["bot", "container", "close", instanceId, botId],
     mutationFn: async () => {
       const transport = createTransport();
       if (transport === null) {
@@ -1010,6 +1012,7 @@ function BotInventoryPanel({
 
   // Mutation for clicking container buttons (stonecutter recipes, etc.)
   const buttonClickMutation = useMutation({
+    mutationKey: ["bot", "container", "button", instanceId, botId],
     mutationFn: async (request: BotContainerButtonClickRequest) => {
       const transport = createTransport();
       if (transport === null) {
@@ -1025,6 +1028,7 @@ function BotInventoryPanel({
 
   // Mutation for setting container text (anvil rename, etc.)
   const setTextMutation = useMutation({
+    mutationKey: ["bot", "container", "text", instanceId, botId],
     mutationFn: async (request: BotSetContainerTextRequest) => {
       const transport = createTransport();
       if (transport === null) {
@@ -1040,6 +1044,7 @@ function BotInventoryPanel({
 
   // Mutation for setting hotbar slot
   const setHotbarSlotMutation = useMutation({
+    mutationKey: ["bot", "hotbar", "slot", instanceId, botId],
     mutationFn: async (slot: number) => {
       const transport = createTransport();
       if (transport === null) {
@@ -1468,6 +1473,7 @@ function BotActionsPanel({
 
   // Mutation for mouse click actions
   const clickMutation = useMutation({
+    mutationKey: ["bot", "mouse", "click", instanceId, botId],
     mutationFn: async (request: BotMouseClickRequest) => {
       const transport = createTransport();
       if (transport === null) {
@@ -1564,6 +1570,7 @@ function BotMovementPanel({
 
   // Mutation for setting movement state
   const movementMutation = useMutation({
+    mutationKey: ["bot", "movement", "state", instanceId, botId],
     mutationFn: async (state: Partial<typeof movementState>) => {
       const transport = createTransport();
       if (transport === null) {
@@ -1580,6 +1587,7 @@ function BotMovementPanel({
 
   // Mutation for resetting movement
   const resetMutation = useMutation({
+    mutationKey: ["bot", "movement", "reset", instanceId, botId],
     mutationFn: async () => {
       const transport = createTransport();
       if (transport === null) {
@@ -1603,6 +1611,7 @@ function BotMovementPanel({
 
   // Mutation for setting rotation
   const rotationMutation = useMutation({
+    mutationKey: ["bot", "rotation", instanceId, botId],
     mutationFn: async (rotation: { yaw: number; pitch: number }) => {
       const transport = createTransport();
       if (transport === null) {
@@ -1845,6 +1854,7 @@ function BotDialogPanel({
 
   // Mutation for dismissing dialog
   const dismissMutation = useMutation({
+    mutationKey: ["bot", "dialog", "dismiss", instanceId, botId],
     mutationFn: async () => {
       const transport = createTransport();
       if (transport === null) {

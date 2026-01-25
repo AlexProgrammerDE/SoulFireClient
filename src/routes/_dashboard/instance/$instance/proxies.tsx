@@ -283,6 +283,7 @@ function AddButton() {
   const { trackEvent } = useAptabase();
   // Batch add proxies mutation
   const { mutateAsync: addProxiesBatchMutation } = useMutation({
+    mutationKey: ["instance", "proxies", "add-batch", instanceInfo.id],
     mutationFn: async (proxies: ProfileProxy[]) => {
       await addInstanceProxiesBatch(
         proxies,
@@ -437,6 +438,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   const [checkDialogOpen, setCheckDialogOpen] = useState(false);
   // Batch remove proxies mutation
   const { mutateAsync: removeProxiesBatchMutation } = useMutation({
+    mutationKey: ["instance", "proxies", "remove-batch", instanceInfo.id],
     mutationFn: async (addresses: string[]) => {
       await removeInstanceProxiesBatch(
         addresses,

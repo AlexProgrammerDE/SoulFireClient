@@ -144,6 +144,13 @@ export function PluginInfoCard(props: {
   );
 
   const setEnabledMutation = useMutation({
+    mutationKey: [
+      "instance",
+      "plugin",
+      "enabled",
+      instanceInfo.id,
+      props.settingsEntry.id,
+    ],
     mutationFn: async (value: JsonValue) => {
       if (!enabledIdentifier) return;
       await updateInstanceConfigEntry(
@@ -208,6 +215,7 @@ export function ServerPluginInfoCard(props: {
   );
 
   const setEnabledMutation = useMutation({
+    mutationKey: ["server", "plugin", "enabled", props.settingsEntry.id],
     mutationFn: async (value: JsonValue) => {
       if (!enabledIdentifier) return;
       await updateServerConfigEntry(
