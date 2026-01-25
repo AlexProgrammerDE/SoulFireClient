@@ -266,6 +266,14 @@
   "scripts": {
     "wipTitle": "",
     "wipDescription": "",
-    "wipDetails": ""
+    "wipDetails": "",
+    "title": "Visual Scripts",
+    "description": "Create automation scripts using a visual node-based editor.",
+    "createSuccess": "Script created successfully",
+    "createError": "Failed to create script",
+    "deleteSuccess": "Script deleted successfully",
+    "deleteError": "Failed to delete script",
+    "startError": "Failed to start script",
+    "stopError": "Failed to stop script"
   }
 }

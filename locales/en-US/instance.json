@@ -271,6 +271,8 @@
     }
   },
   "scripts": {
+    "title": "Visual Scripts",
+    "description": "Create automation scripts using a visual node-based editor.",
     "wipTitle": "Visual Script Editor",
     "wipDescription": "Create automation scripts using a visual node-based editor.",
     "wipDetails": "This feature is currently under development. The new visual script editor will allow you to create powerful automation scripts using a drag-and-drop interface without writing code.",
@@ -282,6 +284,8 @@
     "scriptDescription": "Description",
     "scriptDescriptionPlaceholder": "Describe what this script does...",
     "create": "Create",
+    "createSuccess": "Script created successfully",
+    "createError": "Failed to create script",
     "noScripts": "No Scripts Yet",
     "noScriptsDescription": "Create your first script to automate bot actions using the visual node-based editor.",
     "createFirstScript": "Create Your First Script",
@@ -292,9 +296,13 @@
     "start": "Start",
     "stop": "Stop",
     "delete": "Delete",
+    "deleteSuccess": "Script deleted successfully",
+    "deleteError": "Failed to delete script",
     "saveSuccess": "Script saved successfully",
     "saveError": "Failed to save script",
     "startSuccess": "Script started",
-    "stopSuccess": "Script stopped"
+    "startError": "Failed to start script",
+    "stopSuccess": "Script stopped",
+    "stopError": "Failed to stop script"
   }
 }
