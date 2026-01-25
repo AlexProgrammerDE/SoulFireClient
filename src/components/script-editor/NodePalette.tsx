@@ -1,5 +1,6 @@
 import { ChevronDownIcon, GripVerticalIcon, SearchIcon } from "lucide-react";
 import { useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 import DynamicIcon from "@/components/dynamic-icon.tsx";
 import {
   Collapsible,
@@ -16,6 +17,7 @@ import {
   type NodeCategory,
   type NodeDefinition,
 } from "./nodes/types.ts";
+import { useNodeTranslations } from "./useNodeTranslations";
 
 interface NodePaletteProps {
   onNodeDragStart?: (nodeType: string) => void;
@@ -24,10 +26,15 @@ interface NodePaletteProps {
 
 interface DraggableNodeItemProps {
   node: NodeDefinition;
+  nodeLabel: string;
   onDragStart?: (nodeType: string) => void;
 }
 
-function DraggableNodeItem({ node, onDragStart }: DraggableNodeItemProps) {
+function DraggableNodeItem({
+  node,
+  nodeLabel,
+  onDragStart,
+}: DraggableNodeItemProps) {
   const handleDragStart = (e: React.DragEvent) => {
     e.dataTransfer.setData("application/script-node-type", node.type);
     e.dataTransfer.effectAllowed = "copy";
@@ -45,21 +52,25 @@ function DraggableNodeItem({ node, onDragStart }: DraggableNodeItemProps) {
     >
       <GripVerticalIcon className="size-3 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
       <DynamicIcon name={node.icon} className="size-4 shrink-0" />
-      <span className="truncate">{node.label}</span>
+      <span className="truncate">{nodeLabel}</span>
     </div>
   );
 }
 
 interface CategorySectionProps {
   category: NodeCategory;
+  categoryName: string;
   nodes: NodeDefinition[];
+  getNodeLabel: (node: NodeDefinition) => string;
   defaultOpen?: boolean;
   onNodeDragStart?: (nodeType: string) => void;
 }
 
 function CategorySection({
   category,
+  categoryName,
   nodes,
+  getNodeLabel,
   defaultOpen = true,
   onNodeDragStart,
 }: CategorySectionProps) {
@@ -83,7 +94,7 @@ function CategorySection({
           name={categoryInfo.icon}
           className="size-4 shrink-0 text-muted-foreground"
         />
-        <span className="flex-1 text-left">{categoryInfo.name}</span>
+        <span className="flex-1 text-left">{categoryName}</span>
         <span className="text-xs text-muted-foreground">{nodes.length}</span>
       </CollapsibleTrigger>
       <CollapsibleContent>
@@ -92,6 +103,7 @@ function CategorySection({
             <DraggableNodeItem
               key={node.type}
               node={node}
+              nodeLabel={getNodeLabel(node)}
               onDragStart={onNodeDragStart}
             />
           ))}
@@ -102,6 +114,8 @@ function CategorySection({
 }
 
 export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
+  const { t } = useTranslation("instance");
+  const { getNodeLabel, getCategoryName } = useNodeTranslations();
   const [searchQuery, setSearchQuery] = useState("");
 
   const categories: NodeCategory[] = [
@@ -130,7 +144,7 @@ export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
       if (query) {
         result[category] = nodes.filter(
           (node) =>
-            node.label.toLowerCase().includes(query) ||
+            getNodeLabel(node).toLowerCase().includes(query) ||
             node.type.toLowerCase().includes(query),
         );
       } else {
@@ -139,7 +153,7 @@ export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
     }
 
     return result;
-  }, [searchQuery]);
+  }, [searchQuery, getNodeLabel]);
 
   const totalFilteredNodes = useMemo(() => {
     return Object.values(filteredNodesByCategory).reduce(
@@ -156,12 +170,14 @@ export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
       )}
     >
       <div className="border-b border-border p-3">
-        <h2 className="mb-2 text-sm font-semibold">Node Palette</h2>
+        <h2 className="mb-2 text-sm font-semibold">
+          {t("scripts.editor.palette.title")}
+        </h2>
         <div className="relative">
           <SearchIcon className="absolute left-2.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             type="search"
-            placeholder="Search nodes..."
+            placeholder={t("scripts.editor.palette.search")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-8"
@@ -169,7 +185,7 @@ export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
         </div>
         {searchQuery && (
           <p className="mt-2 text-xs text-muted-foreground">
-            {totalFilteredNodes} node{totalFilteredNodes !== 1 ? "s" : ""} found
+            {t("scripts.nodes", { count: totalFilteredNodes })}
           </p>
         )}
       </div>
@@ -179,14 +195,19 @@ export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
             <CategorySection
               key={category}
               category={category}
+              categoryName={getCategoryName(category)}
               nodes={filteredNodesByCategory[category]}
+              getNodeLabel={getNodeLabel}
               defaultOpen={!searchQuery}
               onNodeDragStart={onNodeDragStart}
             />
           ))}
           {searchQuery && totalFilteredNodes === 0 && (
             <div className="py-8 text-center text-sm text-muted-foreground">
-              No nodes match your search
+              {t(
+                "scripts.editor.palette.noResults",
+                "No nodes match your search",
+              )}
             </div>
           )}
         </div>

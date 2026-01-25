@@ -303,6 +303,387 @@
     "startSuccess": "Script started",
     "startError": "Failed to start script",
     "stopSuccess": "Script stopped",
-    "stopError": "Failed to stop script"
+    "stopError": "Failed to stop script",
+    "untitledScript": "Untitled Script",
+    "saveFirstBeforeRunning": "Save the script first before running",
+    "executionStarting": "Starting script execution...",
+    "executionStarted": "Script started",
+    "executionCompleted": "Script completed",
+    "executionCompletedSuccess": "Script completed successfully",
+    "executionStopped": "Script stopped",
+    "executionStoppedByUser": "Script stopped by user",
+    "executionFailed": "Script execution failed",
+    "executionError": "Execution error: {{error}}",
+    "nodeStarted": "Node started: {{nodeId}}",
+    "nodeCompleted": "Node completed: {{nodeId}}",
+    "nodeError": "Node error: {{error}}",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "Back to Scripts",
+        "save": "Save",
+        "saveTooltip": "Save script (Ctrl+S)",
+        "run": "Run",
+        "runTooltip": "Run script (F5)",
+        "stop": "Stop",
+        "stopTooltip": "Stop script execution",
+        "autoStart": "Auto-start",
+        "autoStartTooltip": "Automatically run this script when the instance starts",
+        "unsaved": "Unsaved",
+        "clearCanvas": "Clear canvas",
+        "zoomIn": "Zoom in",
+        "zoomOut": "Zoom out",
+        "fit": "Fit"
+      },
+      "palette": {
+        "title": "Node Palette",
+        "search": "Search nodes...",
+        "categories": {
+          "trigger": "Triggers",
+          "action": "Actions",
+          "flow": "Flow Control",
+          "math": "Math",
+          "logic": "Logic",
+          "data": "Data",
+          "bot": "Bot",
+          "world": "World"
+        }
+      },
+      "inspector": {
+        "title": "Node Inspector",
+        "noSelection": "Select a node to view its properties",
+        "properties": "Properties",
+        "nodeId": "Node ID",
+        "inputs": "Inputs",
+        "outputs": "Outputs",
+        "selectPlaceholder": "Select..."
+      },
+      "logs": {
+        "title": "Execution Logs",
+        "clear": "Clear logs",
+        "clearTitle": "Clear logs",
+        "noLogs": "No logs yet. Run the script to see execution logs.",
+        "entries_one": "{{count}} entry",
+        "entries_other": "{{count}} entries"
+      },
+      "contextMenu": {
+        "duplicate": "Duplicate",
+        "disconnectAll": "Disconnect All",
+        "delete": "Delete"
+      },
+      "ports": {
+        "exec": "Exec",
+        "execIn": "Exec In",
+        "execOut": "Exec Out",
+        "execTrue": "True",
+        "execFalse": "False",
+        "execLoop": "Loop",
+        "execDone": "Done"
+      },
+      "fields": {
+        "value": "Value",
+        "interval": "Interval (ms)",
+        "variableName": "Variable Name",
+        "level": "Log Level",
+        "levelDebug": "Debug",
+        "levelInfo": "Info",
+        "levelWarn": "Warning",
+        "levelError": "Error",
+        "x": "X",
+        "y": "Y",
+        "z": "Z",
+        "min": "Min",
+        "max": "Max",
+        "degree": "Degree",
+        "operator": "Operator",
+        "operatorEqual": "Equal (==)",
+        "operatorNotEqual": "Not Equal (!=)",
+        "operatorLess": "Less Than (<)",
+        "operatorLessEqual": "Less or Equal (<=)",
+        "operatorGreater": "Greater Than (>)",
+        "operatorGreaterEqual": "Greater or Equal (>=)",
+        "comparison": "Comparison",
+        "comparisonEqual": "Equal (==)",
+        "comparisonNotEqual": "Not Equal (!=)",
+        "comparisonGreater": "Greater Than (>)",
+        "comparisonLess": "Less Than (<)",
+        "comparisonGreaterEqual": "Greater or Equal (>=)",
+        "comparisonLessEqual": "Less or Equal (<=)",
+        "formula": "Formula",
+        "message": "Message",
+        "iterations": "Iterations",
+        "minValue": "Min Value",
+        "maxValue": "Max Value",
+        "start": "Start",
+        "end": "End",
+        "amount": "Amount",
+        "blockType": "Block Type",
+        "radius": "Radius",
+        "timeout": "Timeout (ms)",
+        "slot": "Slot",
+        "count": "Count",
+        "entityType": "Entity Type",
+        "smooth": "Smooth",
+        "enabled": "Enabled",
+        "hand": "Hand",
+        "handMain": "Main Hand",
+        "handOff": "Off Hand",
+        "face": "Face",
+        "faceUp": "Up",
+        "faceDown": "Down",
+        "faceNorth": "North",
+        "faceSouth": "South",
+        "faceEast": "East",
+        "faceWest": "West",
+        "ticks": "Ticks",
+        "range": "Range",
+        "loopCount": "Loop Count",
+        "open": "Open",
+        "delay": "Delay (ms)"
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "On Tick",
+            "description": "Fires every game tick (20 times per second)"
+          },
+          "on_join": {
+            "label": "On Join",
+            "description": "Fires when the bot joins the server"
+          },
+          "on_chat": {
+            "label": "On Chat",
+            "description": "Fires when a chat message is received"
+          },
+          "on_damage": {
+            "label": "On Damage",
+            "description": "Fires when the bot takes damage"
+          },
+          "on_death": {
+            "label": "On Death",
+            "description": "Fires when the bot dies"
+          },
+          "on_health_change": {
+            "label": "On Health Change",
+            "description": "Fires when the bot's health changes"
+          },
+          "on_interval": {
+            "label": "On Interval",
+            "description": "Fires at a configurable time interval"
+          }
+        },
+        "math": {
+          "add": {
+            "label": "Add",
+            "description": "Adds two numbers together"
+          },
+          "subtract": {
+            "label": "Subtract",
+            "description": "Subtracts the second number from the first"
+          },
+          "multiply": {
+            "label": "Multiply",
+            "description": "Multiplies two numbers together"
+          },
+          "divide": {
+            "label": "Divide",
+            "description": "Divides the first number by the second"
+          },
+          "modulo": {
+            "label": "Modulo",
+            "description": "Returns the remainder of division"
+          },
+          "formula": {
+            "label": "Formula",
+            "description": "Evaluates a mathematical formula"
+          },
+          "random": {
+            "label": "Random",
+            "description": "Generates a random number between min and max"
+          },
+          "clamp": {
+            "label": "Clamp",
+            "description": "Clamps a value between min and max"
+          },
+          "lerp": {
+            "label": "Lerp",
+            "description": "Linear interpolation between two values"
+          },
+          "bspline": {
+            "label": "B-Spline",
+            "description": "Interpolates using B-spline curve"
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "Compare",
+            "description": "Compares two values"
+          },
+          "and": {
+            "label": "And",
+            "description": "Logical AND of two booleans"
+          },
+          "or": {
+            "label": "Or",
+            "description": "Logical OR of two booleans"
+          },
+          "not": {
+            "label": "Not",
+            "description": "Logical NOT of a boolean"
+          },
+          "xor": {
+            "label": "XOR",
+            "description": "Logical XOR of two booleans"
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "Branch",
+            "description": "Conditional branch based on a boolean"
+          },
+          "switch": {
+            "label": "Switch",
+            "description": "Multi-way branch based on a value"
+          },
+          "loop": {
+            "label": "Loop",
+            "description": "Repeats execution a number of times"
+          },
+          "for_each": {
+            "label": "For Each",
+            "description": "Iterates over a collection"
+          },
+          "sequence": {
+            "label": "Sequence",
+            "description": "Executes outputs in sequence"
+          },
+          "gate": {
+            "label": "Gate",
+            "description": "Controls flow based on a gate state"
+          },
+          "debounce": {
+            "label": "Debounce",
+            "description": "Prevents rapid repeated execution"
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "Set Rotation",
+            "description": "Sets the bot's rotation"
+          },
+          "look_at": {
+            "label": "Look At",
+            "description": "Looks at a position or entity"
+          },
+          "sneak": {
+            "label": "Sneak",
+            "description": "Toggles sneaking"
+          },
+          "sprint": {
+            "label": "Sprint",
+            "description": "Toggles sprinting"
+          },
+          "jump": {
+            "label": "Jump",
+            "description": "Makes the bot jump"
+          },
+          "attack": {
+            "label": "Attack",
+            "description": "Attacks an entity"
+          },
+          "use_item": {
+            "label": "Use Item",
+            "description": "Uses the item in the specified hand"
+          },
+          "pathfind_to": {
+            "label": "Pathfind To",
+            "description": "Pathfinds to a target position"
+          },
+          "break_block": {
+            "label": "Break Block",
+            "description": "Breaks a block at a position"
+          },
+          "place_block": {
+            "label": "Place Block",
+            "description": "Places a block at a position"
+          },
+          "select_slot": {
+            "label": "Select Slot",
+            "description": "Selects a hotbar slot"
+          },
+          "send_chat": {
+            "label": "Send Chat",
+            "description": "Sends a chat message"
+          },
+          "wait": {
+            "label": "Wait",
+            "description": "Waits for a number of ticks"
+          },
+          "print": {
+            "label": "Print",
+            "description": "Logs a message for debugging"
+          },
+          "set_variable": {
+            "label": "Set Variable",
+            "description": "Stores a value in a variable"
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "Get Position",
+            "description": "Gets the bot's current position"
+          },
+          "get_rotation": {
+            "label": "Get Rotation",
+            "description": "Gets the bot's current rotation"
+          },
+          "get_health": {
+            "label": "Get Health",
+            "description": "Gets the bot's current health"
+          },
+          "get_hunger": {
+            "label": "Get Hunger",
+            "description": "Gets the bot's current hunger level"
+          },
+          "get_inventory": {
+            "label": "Get Inventory",
+            "description": "Gets an item from the inventory"
+          },
+          "get_block": {
+            "label": "Get Block",
+            "description": "Gets the block at a position"
+          },
+          "find_entity": {
+            "label": "Find Entity",
+            "description": "Finds an entity of a specific type nearby"
+          },
+          "find_block": {
+            "label": "Find Block",
+            "description": "Finds a block of a specific type nearby"
+          },
+          "get_variable": {
+            "label": "Get Variable",
+            "description": "Retrieves a value from a variable"
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "Number",
+            "description": "A constant number value"
+          },
+          "string": {
+            "label": "String",
+            "description": "A constant text value"
+          },
+          "boolean": {
+            "label": "Boolean",
+            "description": "A constant true/false value"
+          },
+          "vector3": {
+            "label": "Vector3",
+            "description": "A constant 3D position (X, Y, Z)"
+          }
+        }
+      }
+    }
   }
 }

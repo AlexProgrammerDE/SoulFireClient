@@ -1,4 +1,5 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import DynamicIcon from "@/components/dynamic-icon.tsx";
 import {
   Card,
@@ -21,6 +22,7 @@ import { Textarea } from "@/components/ui/textarea.tsx";
 import { cn } from "@/lib/utils.tsx";
 import { getNodeDefinition } from "./nodes";
 import type { PortType } from "./nodes/types.ts";
+import { useNodeTranslations } from "./useNodeTranslations";
 
 interface ScriptNode {
   id: string;
@@ -37,9 +39,9 @@ interface NodeInspectorProps {
 
 interface FieldConfig {
   key: string;
-  label: string;
+  labelKey: string; // Translation key for label
   type: "number" | "string" | "boolean" | "select" | "textarea";
-  options?: { value: string; label: string }[];
+  options?: { value: string; labelKey: string }[]; // Translation key for option labels
   placeholder?: string;
   min?: number;
   max?: number;
@@ -47,12 +49,13 @@ interface FieldConfig {
 }
 
 // Field configurations for node types (keys must match node type names exactly)
+// Labels use translation keys that will be resolved at render time
 const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   // Trigger nodes
   "trigger.on_interval": [
     {
       key: "interval",
-      label: "Interval (ms)",
+      labelKey: "interval",
       type: "number",
       placeholder: "1000",
       min: 100,
@@ -64,13 +67,13 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "math.random": [
     {
       key: "min",
-      label: "Min",
+      labelKey: "min",
       type: "number",
       placeholder: "0",
     },
     {
       key: "max",
-      label: "Max",
+      labelKey: "max",
       type: "number",
       placeholder: "100",
     },
@@ -78,7 +81,7 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "math.formula": [
     {
       key: "formula",
-      label: "Formula",
+      labelKey: "formula",
       type: "textarea",
       placeholder: "a + b * 2",
     },
@@ -86,7 +89,7 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "math.bspline": [
     {
       key: "degree",
-      label: "Degree",
+      labelKey: "degree",
       type: "number",
       placeholder: "3",
       min: 1,
@@ -98,15 +101,15 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "logic.compare": [
     {
       key: "operator",
-      label: "Operator",
+      labelKey: "operator",
       type: "select",
       options: [
-        { value: "==", label: "Equal (==)" },
-        { value: "!=", label: "Not Equal (!=)" },
-        { value: "<", label: "Less Than (<)" },
-        { value: "<=", label: "Less or Equal (<=)" },
-        { value: ">", label: "Greater Than (>)" },
-        { value: ">=", label: "Greater or Equal (>=)" },
+        { value: "==", labelKey: "operatorEqual" },
+        { value: "!=", labelKey: "operatorNotEqual" },
+        { value: "<", labelKey: "operatorLess" },
+        { value: "<=", labelKey: "operatorLessEqual" },
+        { value: ">", labelKey: "operatorGreater" },
+        { value: ">=", labelKey: "operatorGreaterEqual" },
       ],
     },
   ],
@@ -115,61 +118,61 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "action.set_rotation": [
     {
       key: "smooth",
-      label: "Smooth",
+      labelKey: "smooth",
       type: "boolean",
     },
   ],
   "action.look_at": [
     {
       key: "smooth",
-      label: "Smooth",
+      labelKey: "smooth",
       type: "boolean",
     },
   ],
   "action.sneak": [
     {
       key: "enabled",
-      label: "Enabled",
+      labelKey: "enabled",
       type: "boolean",
     },
   ],
   "action.sprint": [
     {
       key: "enabled",
-      label: "Enabled",
+      labelKey: "enabled",
       type: "boolean",
     },
   ],
   "action.use_item": [
     {
       key: "hand",
-      label: "Hand",
+      labelKey: "hand",
       type: "select",
       options: [
-        { value: "main", label: "Main Hand" },
-        { value: "off", label: "Off Hand" },
+        { value: "main", labelKey: "handMain" },
+        { value: "off", labelKey: "handOff" },
       ],
     },
   ],
   "action.place_block": [
     {
       key: "face",
-      label: "Face",
+      labelKey: "face",
       type: "select",
       options: [
-        { value: "up", label: "Up" },
-        { value: "down", label: "Down" },
-        { value: "north", label: "North" },
-        { value: "south", label: "South" },
-        { value: "east", label: "East" },
-        { value: "west", label: "West" },
+        { value: "up", labelKey: "faceUp" },
+        { value: "down", labelKey: "faceDown" },
+        { value: "north", labelKey: "faceNorth" },
+        { value: "south", labelKey: "faceSouth" },
+        { value: "east", labelKey: "faceEast" },
+        { value: "west", labelKey: "faceWest" },
       ],
     },
   ],
   "action.select_slot": [
     {
       key: "slot",
-      label: "Slot",
+      labelKey: "slot",
       type: "number",
       placeholder: "0",
       min: 0,
@@ -179,7 +182,7 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "action.wait": [
     {
       key: "ticks",
-      label: "Ticks",
+      labelKey: "ticks",
       type: "number",
       placeholder: "20",
       min: 1,
@@ -188,20 +191,20 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "action.print": [
     {
       key: "level",
-      label: "Log Level",
+      labelKey: "level",
       type: "select",
       options: [
-        { value: "debug", label: "Debug" },
-        { value: "info", label: "Info" },
-        { value: "warn", label: "Warning" },
-        { value: "error", label: "Error" },
+        { value: "debug", labelKey: "levelDebug" },
+        { value: "info", labelKey: "levelInfo" },
+        { value: "warn", labelKey: "levelWarn" },
+        { value: "error", labelKey: "levelError" },
       ],
     },
   ],
   "action.set_variable": [
     {
       key: "variableName",
-      label: "Variable Name",
+      labelKey: "variableName",
       type: "string",
       placeholder: "myVar",
     },
@@ -211,7 +214,7 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "data.find_entity": [
     {
       key: "range",
-      label: "Range",
+      labelKey: "range",
       type: "number",
       placeholder: "16",
       min: 1,
@@ -220,7 +223,7 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "data.find_block": [
     {
       key: "range",
-      label: "Range",
+      labelKey: "range",
       type: "number",
       placeholder: "32",
       min: 1,
@@ -229,7 +232,7 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "data.get_variable": [
     {
       key: "variableName",
-      label: "Variable Name",
+      labelKey: "variableName",
       type: "string",
       placeholder: "myVar",
     },
@@ -239,7 +242,7 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "constant.number": [
     {
       key: "value",
-      label: "Value",
+      labelKey: "value",
       type: "number",
       placeholder: "0",
     },
@@ -247,7 +250,7 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "constant.string": [
     {
       key: "value",
-      label: "Value",
+      labelKey: "value",
       type: "textarea",
       placeholder: "Enter text...",
     },
@@ -255,26 +258,26 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "constant.boolean": [
     {
       key: "value",
-      label: "Value",
+      labelKey: "value",
       type: "boolean",
     },
   ],
   "constant.vector3": [
     {
       key: "x",
-      label: "X",
+      labelKey: "x",
       type: "number",
       placeholder: "0",
     },
     {
       key: "y",
-      label: "Y",
+      labelKey: "y",
       type: "number",
       placeholder: "0",
     },
     {
       key: "z",
-      label: "Z",
+      labelKey: "z",
       type: "number",
       placeholder: "0",
     },
@@ -284,7 +287,7 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "flow.loop": [
     {
       key: "count",
-      label: "Loop Count",
+      labelKey: "loopCount",
       type: "number",
       placeholder: "10",
       min: 1,
@@ -293,14 +296,14 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
   "flow.gate": [
     {
       key: "open",
-      label: "Open",
+      labelKey: "open",
       type: "boolean",
     },
   ],
   "flow.debounce": [
     {
       key: "delay",
-      label: "Delay (ms)",
+      labelKey: "delay",
       type: "number",
       placeholder: "100",
       min: 0,
@@ -334,16 +337,25 @@ interface FieldRendererProps {
   field: FieldConfig;
   value: unknown;
   onChange: (value: unknown) => void;
+  getFieldLabel: (key: string) => string;
+  selectPlaceholder: string;
 }
 
-function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
+function FieldRenderer({
+  field,
+  value,
+  onChange,
+  getFieldLabel,
+  selectPlaceholder,
+}: FieldRendererProps) {
   const id = `field-${field.key}`;
+  const label = getFieldLabel(field.labelKey);
 
   switch (field.type) {
     case "number":
       return (
         <div className="space-y-1.5">
-          <Label htmlFor={id}>{field.label}</Label>
+          <Label htmlFor={id}>{label}</Label>
           <Input
             id={id}
             type="number"
@@ -360,7 +372,7 @@ function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
     case "string":
       return (
         <div className="space-y-1.5">
-          <Label htmlFor={id}>{field.label}</Label>
+          <Label htmlFor={id}>{label}</Label>
           <Input
             id={id}
             type="text"
@@ -374,7 +386,7 @@ function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
     case "textarea":
       return (
         <div className="space-y-1.5">
-          <Label htmlFor={id}>{field.label}</Label>
+          <Label htmlFor={id}>{label}</Label>
           <Textarea
             id={id}
             value={(value as string) ?? ""}
@@ -388,7 +400,7 @@ function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
     case "boolean":
       return (
         <div className="flex items-center justify-between">
-          <Label htmlFor={id}>{field.label}</Label>
+          <Label htmlFor={id}>{label}</Label>
           <Switch
             id={id}
             checked={(value as boolean) ?? false}
@@ -400,18 +412,18 @@ function FieldRenderer({ field, value, onChange }: FieldRendererProps) {
     case "select":
       return (
         <div className="space-y-1.5">
-          <Label htmlFor={id}>{field.label}</Label>
+          <Label htmlFor={id}>{label}</Label>
           <Select
             value={(value as string) ?? field.options?.[0]?.value}
             onValueChange={onChange}
           >
             <SelectTrigger id={id} className="w-full">
-              <SelectValue placeholder="Select..." />
+              <SelectValue placeholder={selectPlaceholder} />
             </SelectTrigger>
             <SelectContent>
               {field.options?.map((option) => (
                 <SelectItem key={option.value} value={option.value}>
-                  {option.label}
+                  {getFieldLabel(option.labelKey)}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -429,6 +441,9 @@ export function NodeInspector({
   onNodeDataChange,
   className,
 }: NodeInspectorProps) {
+  const { t } = useTranslation("instance");
+  const { getNodeLabel, getFieldLabel, getPortLabel } = useNodeTranslations();
+
   const nodeDefinition = useMemo(() => {
     if (!selectedNode) return null;
     return getNodeDefinition(selectedNode.type);
@@ -456,11 +471,13 @@ export function NodeInspector({
         )}
       >
         <div className="border-b border-border p-3">
-          <h2 className="text-sm font-semibold">Node Inspector</h2>
+          <h2 className="text-sm font-semibold">
+            {t("scripts.editor.inspector.title")}
+          </h2>
         </div>
         <div className="flex flex-1 items-center justify-center p-4">
           <p className="text-center text-sm text-muted-foreground">
-            Select a node to view its properties
+            {t("scripts.editor.inspector.noSelection")}
           </p>
         </div>
       </div>
@@ -475,7 +492,9 @@ export function NodeInspector({
       )}
     >
       <div className="border-b border-border p-3">
-        <h2 className="text-sm font-semibold">Node Inspector</h2>
+        <h2 className="text-sm font-semibold">
+          {t("scripts.editor.inspector.title")}
+        </h2>
       </div>
       <ScrollArea className="min-h-0 flex-1">
         <div className="flex flex-col gap-4 p-3">
@@ -488,7 +507,7 @@ export function NodeInspector({
                   className="size-5 shrink-0"
                 />
                 <CardTitle className="text-base">
-                  {nodeDefinition.label}
+                  {getNodeLabel(nodeDefinition)}
                 </CardTitle>
               </div>
             </CardHeader>
@@ -501,7 +520,9 @@ export function NodeInspector({
 
           {/* Node ID */}
           <div className="space-y-1.5">
-            <Label className="text-xs text-muted-foreground">Node ID</Label>
+            <Label className="text-xs text-muted-foreground">
+              {t("scripts.editor.inspector.nodeId")}
+            </Label>
             <code className="block rounded bg-muted px-2 py-1 text-xs">
               {selectedNode.id}
             </code>
@@ -511,7 +532,9 @@ export function NodeInspector({
           {fieldConfigs.length > 0 && (
             <Card size="sm">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm">Properties</CardTitle>
+                <CardTitle className="text-sm">
+                  {t("scripts.editor.inspector.properties")}
+                </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-3">
                 {fieldConfigs.map((field) => (
@@ -520,6 +543,10 @@ export function NodeInspector({
                     field={field}
                     value={selectedNode.data[field.key]}
                     onChange={(value) => handleFieldChange(field.key, value)}
+                    getFieldLabel={getFieldLabel}
+                    selectPlaceholder={t(
+                      "scripts.editor.inspector.selectPlaceholder",
+                    )}
                   />
                 ))}
               </CardContent>
@@ -530,7 +557,9 @@ export function NodeInspector({
           {nodeDefinition.inputs.length > 0 && (
             <Card size="sm">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm">Inputs</CardTitle>
+                <CardTitle className="text-sm">
+                  {t("scripts.editor.inspector.inputs")}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="flex flex-col gap-1">
@@ -539,7 +568,7 @@ export function NodeInspector({
                       key={port.id}
                       className="flex items-center justify-between text-xs"
                     >
-                      <span>{port.label}</span>
+                      <span>{getPortLabel(port.id, port.label)}</span>
                       <span
                         className={cn("font-mono", getPortTypeColor(port.type))}
                       >
@@ -556,7 +585,9 @@ export function NodeInspector({
           {nodeDefinition.outputs.length > 0 && (
             <Card size="sm">
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm">Outputs</CardTitle>
+                <CardTitle className="text-sm">
+                  {t("scripts.editor.inspector.outputs")}
+                </CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="flex flex-col gap-1">
@@ -565,7 +596,7 @@ export function NodeInspector({
                       key={port.id}
                       className="flex items-center justify-between text-xs"
                     >
-                      <span>{port.label}</span>
+                      <span>{getPortLabel(port.id, port.label)}</span>
                       <span
                         className={cn("font-mono", getPortTypeColor(port.type))}
                       >

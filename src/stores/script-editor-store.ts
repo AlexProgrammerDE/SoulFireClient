@@ -158,7 +158,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       id: generateId(),
       type,
       position,
-      data: { ...data, label: type },
+      data: { ...data },
     };
     set({
       nodes: [...get().nodes, newNode],

@@ -1,6 +1,7 @@
 import { CopyIcon, TrashIcon, UnplugIcon } from "lucide-react";
 import { ContextMenu as ContextMenuPrimitive } from "radix-ui";
 import type { ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils.tsx";
 
 interface NodeContextMenuProps {
@@ -85,6 +86,8 @@ export function NodeContextMenu({
   onDuplicate,
   onDisconnectAll,
 }: NodeContextMenuProps) {
+  const { t } = useTranslation("instance");
+
   return (
     <ContextMenuPrimitive.Root>
       <ContextMenuPrimitive.Trigger asChild>
@@ -93,12 +96,12 @@ export function NodeContextMenu({
       <ContextMenuContent>
         <ContextMenuItem onClick={() => onDuplicate?.(nodeId)}>
           <CopyIcon />
-          Duplicate
+          {t("scripts.editor.contextMenu.duplicate")}
           <ContextMenuShortcut>Ctrl+D</ContextMenuShortcut>
         </ContextMenuItem>
         <ContextMenuItem onClick={() => onDisconnectAll?.(nodeId)}>
           <UnplugIcon />
-          Disconnect All
+          {t("scripts.editor.contextMenu.disconnectAll")}
         </ContextMenuItem>
         <ContextMenuSeparator />
         <ContextMenuItem
@@ -106,7 +109,7 @@ export function NodeContextMenu({
           onClick={() => onDelete?.(nodeId)}
         >
           <TrashIcon />
-          Delete
+          {t("scripts.editor.contextMenu.delete")}
           <ContextMenuShortcut>Del</ContextMenuShortcut>
         </ContextMenuItem>
       </ContextMenuContent>

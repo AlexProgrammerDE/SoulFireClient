@@ -75,11 +75,12 @@ function InstanceScripts() {
       const client = new ScriptServiceClient(transport);
       const result = await client.createScript({
         instanceId,
-        name: newScriptName.trim() || "Untitled Script",
+        name: newScriptName.trim() || tInstance("scripts.untitledScript"),
         description: newScriptDescription.trim(),
         scope: ScriptScope.INSTANCE,
         nodes: [],
         edges: [],
+        autoStart: false,
       });
       return result.response;
     },

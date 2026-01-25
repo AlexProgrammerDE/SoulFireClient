@@ -1,5 +1,6 @@
 import { Handle, type NodeProps, Position } from "@xyflow/react";
 import { memo } from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import {
   CATEGORY_COLORS,
@@ -23,10 +24,12 @@ function PortRow({
   port,
   type,
   position,
+  translatedLabel,
 }: {
   port: PortDefinition;
   type: "source" | "target";
   position: Position;
+  translatedLabel: string;
 }) {
   const color = PORT_COLORS[port.type];
   const isExecution = port.type === "execution";
@@ -48,19 +51,36 @@ function PortRow({
           background: color,
           width: isExecution ? 10 : 8,
           height: isExecution ? 10 : 8,
-          border: `2px solid var(--background)`,
+          border: "2px solid var(--background)",
           borderRadius: isExecution ? 2 : "50%",
         }}
       />
-      <span className="text-xs text-muted-foreground">{port.label}</span>
+      <span className="text-xs text-muted-foreground">{translatedLabel}</span>
     </div>
   );
 }
 
 function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
-  const { inputs, outputs, category, label } = definition;
-  const displayLabel = data.label ?? label;
+  const { t } = useTranslation("instance");
+  const { inputs, outputs, category, type, label } = definition;
+
+  // Get translated label, fall back to definition label
+  const translationKey = `scripts.editor.nodes.${type}.label`;
+  const translatedLabel = t(translationKey);
+  const displayLabel =
+    data.label ??
+    (translatedLabel !== translationKey ? translatedLabel : label);
   const isActive = data.isActive ?? false;
+
+  // Helper to get translated port label
+  const getPortLabel = (port: PortDefinition): string => {
+    // Try specific port translation
+    const parts = port.id.split("-");
+    const portName = parts.length > 1 ? parts.slice(1).join("-") : port.id;
+    const portKey = `scripts.editor.ports.${portName}`;
+    const translated = t(portKey);
+    return translated !== portKey ? translated : port.label;
+  };
 
   // Pair up inputs and outputs for aligned rows
   const maxPorts = Math.max(inputs.length, outputs.length);
@@ -99,6 +119,7 @@ function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
                   port={row.input}
                   type="target"
                   position={Position.Left}
+                  translatedLabel={getPortLabel(row.input)}
                 />
               ) : (
                 <div />
@@ -110,6 +131,7 @@ function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
                   port={row.output}
                   type="source"
                   position={Position.Right}
+                  translatedLabel={getPortLabel(row.output)}
                 />
               ) : (
                 <div />

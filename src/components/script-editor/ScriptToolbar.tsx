@@ -10,6 +10,7 @@ import {
   ZoomOutIcon,
 } from "lucide-react";
 import { useId, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
@@ -49,6 +50,7 @@ export function ScriptToolbar({
   isSaving = false,
   className,
 }: ScriptToolbarProps) {
+  const { t } = useTranslation("instance");
   const scriptName = useScriptEditorStore((state) => state.scriptName);
   const setScriptName = useScriptEditorStore((state) => state.setScriptName);
   const isDirty = useScriptEditorStore((state) => state.isDirty);
@@ -92,7 +94,9 @@ export function ScriptToolbar({
           params={{ instance: instanceId }}
         >
           <ArrowLeftIcon className="size-4" />
-          <span className="sr-only">Back to Scripts</span>
+          <span className="sr-only">
+            {t("scripts.editor.toolbar.backToScripts")}
+          </span>
         </Link>
       </Button>
 
@@ -128,7 +132,7 @@ export function ScriptToolbar({
         )}
         {isDirty && !isEditingName && (
           <Badge variant="secondary" className="shrink-0 text-xs">
-            Unsaved
+            {t("scripts.editor.toolbar.unsaved")}
           </Badge>
         )}
       </div>
@@ -150,11 +154,11 @@ export function ScriptToolbar({
             ) : (
               <SaveIcon className="size-4" />
             )}
-            Save
+            {t("scripts.editor.toolbar.save")}
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Save script (Ctrl+S)</p>
+          <p>{t("scripts.editor.toolbar.saveTooltip")}</p>
         </TooltipContent>
       </Tooltip>
 
@@ -173,16 +177,16 @@ export function ScriptToolbar({
                   className="gap-1.5"
                 >
                   <SquareIcon className="size-4" />
-                  Stop
+                  {t("scripts.editor.toolbar.stop")}
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>Stop script execution</p>
+                <p>{t("scripts.editor.toolbar.stopTooltip")}</p>
               </TooltipContent>
             </Tooltip>
             <Badge variant="default" className="gap-1.5 bg-green-600">
               <div className="size-2 animate-pulse rounded-full bg-white" />
-              Running
+              {t("scripts.running")}
             </Badge>
           </>
         ) : (
@@ -195,11 +199,11 @@ export function ScriptToolbar({
                 className="gap-1.5"
               >
                 <PlayIcon className="size-4" />
-                Run
+                {t("scripts.editor.toolbar.run")}
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Run script (F5)</p>
+              <p>{t("scripts.editor.toolbar.runTooltip")}</p>
             </TooltipContent>
           </Tooltip>
         )}
@@ -217,12 +221,12 @@ export function ScriptToolbar({
               onCheckedChange={setAutoStart}
             />
             <Label htmlFor={autoStartId} className="text-sm cursor-pointer">
-              Auto-start
+              {t("scripts.editor.toolbar.autoStart")}
             </Label>
           </div>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Automatically run this script when the instance starts</p>
+          <p>{t("scripts.editor.toolbar.autoStartTooltip")}</p>
         </TooltipContent>
       </Tooltip>
 
@@ -238,7 +242,7 @@ export function ScriptToolbar({
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>Clear canvas</p>
+              <p>{t("scripts.editor.toolbar.clearCanvas")}</p>
             </TooltipContent>
           </Tooltip>
           <Separator orientation="vertical" className="h-6 my-auto" />
@@ -251,11 +255,16 @@ export function ScriptToolbar({
           variant="ghost"
           size="icon"
           onClick={onZoomOut}
-          title="Zoom out"
+          title={t("scripts.editor.toolbar.zoomOut")}
         >
           <ZoomOutIcon className="size-4" />
         </Button>
-        <Button variant="ghost" size="icon" onClick={onZoomIn} title="Zoom in">
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={onZoomIn}
+          title={t("scripts.editor.toolbar.zoomIn")}
+        >
           <ZoomInIcon className="size-4" />
         </Button>
         <Button
@@ -264,7 +273,7 @@ export function ScriptToolbar({
           onClick={onFitView}
           className="text-xs"
         >
-          Fit
+          {t("scripts.editor.toolbar.fit")}
         </Button>
       </div>
     </div>

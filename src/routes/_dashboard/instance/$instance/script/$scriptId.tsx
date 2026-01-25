@@ -144,7 +144,7 @@ function ScriptEditorContent() {
       const client = new ScriptServiceClient(transport);
       const result = await client.createScript({
         instanceId,
-        name: scriptData.name || "Untitled Script",
+        name: scriptData.name || tInstance("scripts.untitledScript"),
         description: scriptData.description,
         scope: ScriptScope.INSTANCE,
         nodes: nodesToProto(nodes),
@@ -226,7 +226,7 @@ function ScriptEditorContent() {
   // Handle script execution start
   const handleStart = useCallback(async () => {
     if (!transport || scriptId === "new") {
-      toast.error("Save the script first before running");
+      toast.error(tInstance("scripts.saveFirstBeforeRunning"));
       return;
     }
 
@@ -247,7 +247,7 @@ function ScriptEditorContent() {
         timestamp: new Date(),
         level: "info",
         nodeId: null,
-        message: "Starting script execution...",
+        message: tInstance("scripts.executionStarting"),
       },
     ]);
 
@@ -267,7 +267,7 @@ function ScriptEditorContent() {
               timestamp: new Date(),
               level: "info",
               nodeId: null,
-              message: "Script started",
+              message: tInstance("scripts.executionStarted"),
             },
           ]);
           toast.success(tInstance("scripts.startSuccess"));
@@ -281,7 +281,7 @@ function ScriptEditorContent() {
               timestamp: new Date(),
               level: "debug",
               nodeId,
-              message: `Node started: ${nodeId}`,
+              message: tInstance("scripts.nodeStarted", { nodeId }),
             },
           ]);
         } else if (event.event.oneofKind === "nodeCompleted") {
@@ -293,7 +293,7 @@ function ScriptEditorContent() {
               timestamp: new Date(),
               level: "debug",
               nodeId,
-              message: `Node completed: ${nodeId}`,
+              message: tInstance("scripts.nodeCompleted", { nodeId }),
             },
           ]);
         } else if (event.event.oneofKind === "nodeError") {
@@ -305,7 +305,7 @@ function ScriptEditorContent() {
               timestamp: new Date(),
               level: "error",
               nodeId,
-              message: `Node error: ${errorMessage}`,
+              message: tInstance("scripts.nodeError", { error: errorMessage }),
             },
           ]);
         } else if (event.event.oneofKind === "scriptCompleted") {
@@ -320,12 +320,12 @@ function ScriptEditorContent() {
               level: success ? "info" : "warn",
               nodeId: null,
               message: success
-                ? "Script completed successfully"
-                : "Script stopped",
+                ? tInstance("scripts.executionCompletedSuccess")
+                : tInstance("scripts.executionStopped"),
             },
           ]);
           if (success) {
-            toast.success("Script completed");
+            toast.success(tInstance("scripts.executionCompleted"));
           }
         }
       });
@@ -342,10 +342,12 @@ function ScriptEditorContent() {
             timestamp: new Date(),
             level: "error",
             nodeId: null,
-            message: `Execution error: ${error.message}`,
+            message: tInstance("scripts.executionError", {
+              error: error.message,
+            }),
           },
         ]);
-        toast.error("Script execution failed");
+        toast.error(tInstance("scripts.executionFailed"));
       });
 
       responses.onComplete(() => {
@@ -357,7 +359,7 @@ function ScriptEditorContent() {
       if (abortController.signal.aborted) return;
       console.error("Failed to start script:", error);
       setRunning(false);
-      toast.error("Failed to start script");
+      toast.error(tInstance("scripts.startError"));
     }
   }, [transport, instanceId, scriptId, setRunning, setActiveNode, tInstance]);
 
@@ -383,7 +385,7 @@ function ScriptEditorContent() {
           timestamp: new Date(),
           level: "info",
           nodeId: null,
-          message: "Script stopped by user",
+          message: tInstance("scripts.executionStoppedByUser"),
         },
       ]);
       toast.success(tInstance("scripts.stopSuccess"));

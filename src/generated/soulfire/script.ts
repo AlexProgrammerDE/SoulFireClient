@@ -190,6 +190,13 @@ export interface ScriptData {
    * @generated from protobuf field: string instance_id = 7
    */
   instanceId: string;
+  /**
+   * Whether this script should automatically start when the instance starts.
+   * Auto-start scripts begin execution without manual intervention.
+   *
+   * @generated from protobuf field: bool auto_start = 8
+   */
+  autoStart: boolean;
 }
 /**
  * Summary information about a script for listing purposes.
@@ -242,6 +249,12 @@ export interface ScriptInfo {
    * @generated from protobuf field: google.protobuf.Timestamp updated_at = 7
    */
   updatedAt?: Timestamp;
+  /**
+   * Whether this script auto-starts when the instance starts.
+   *
+   * @generated from protobuf field: bool auto_start = 8
+   */
+  autoStart: boolean;
 }
 /**
  * Runtime status information for a script.
@@ -535,6 +548,12 @@ export interface CreateScriptRequest {
    * @generated from protobuf field: repeated soulfire.v1.ScriptEdge edges = 6
    */
   edges: ScriptEdge[];
+  /**
+   * Whether the script should auto-start when the instance starts.
+   *
+   * @generated from protobuf field: bool auto_start = 7
+   */
+  autoStart: boolean;
 }
 /**
  * Response after successfully creating a script.
@@ -652,6 +671,13 @@ export interface UpdateScriptRequest {
    * @generated from protobuf field: bool update_edges = 9
    */
   updateEdges: boolean;
+  /**
+   * Updated auto-start setting.
+   * If not set, the auto-start setting remains unchanged.
+   *
+   * @generated from protobuf field: optional bool auto_start = 10
+   */
+  autoStart?: boolean;
 }
 /**
  * Response after successfully updating a script.
@@ -1300,6 +1326,7 @@ class ScriptData$Type extends MessageType<ScriptData> {
         kind: "scalar",
         T: 9 /*ScalarType.STRING*/,
       },
+      { no: 8, name: "auto_start", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
     ]);
   }
   create(value?: PartialMessage<ScriptData>): ScriptData {
@@ -1311,6 +1338,7 @@ class ScriptData$Type extends MessageType<ScriptData> {
     message.edges = [];
     message.scope = 0;
     message.instanceId = "";
+    message.autoStart = false;
     if (value !== undefined)
       reflectionMergePartial<ScriptData>(this, message, value);
     return message;
@@ -1350,6 +1378,9 @@ class ScriptData$Type extends MessageType<ScriptData> {
           break;
         case /* string instance_id */ 7:
           message.instanceId = reader.string();
+          break;
+        case /* bool auto_start */ 8:
+          message.autoStart = reader.bool();
           break;
         default:
           let u = options.readUnknownField;
@@ -1404,6 +1435,9 @@ class ScriptData$Type extends MessageType<ScriptData> {
     /* string instance_id = 7; */
     if (message.instanceId !== "")
       writer.tag(7, WireType.LengthDelimited).string(message.instanceId);
+    /* bool auto_start = 8; */
+    if (message.autoStart !== false)
+      writer.tag(8, WireType.Varint).bool(message.autoStart);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -1444,6 +1478,7 @@ class ScriptInfo$Type extends MessageType<ScriptInfo> {
       },
       { no: 6, name: "created_at", kind: "message", T: () => Timestamp },
       { no: 7, name: "updated_at", kind: "message", T: () => Timestamp },
+      { no: 8, name: "auto_start", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
     ]);
   }
   create(value?: PartialMessage<ScriptInfo>): ScriptInfo {
@@ -1453,6 +1488,7 @@ class ScriptInfo$Type extends MessageType<ScriptInfo> {
     message.description = "";
     message.scope = 0;
     message.instanceId = "";
+    message.autoStart = false;
     if (value !== undefined)
       reflectionMergePartial<ScriptInfo>(this, message, value);
     return message;
@@ -1498,6 +1534,9 @@ class ScriptInfo$Type extends MessageType<ScriptInfo> {
             options,
             message.updatedAt,
           );
+          break;
+        case /* bool auto_start */ 8:
+          message.autoStart = reader.bool();
           break;
         default:
           let u = options.readUnknownField;
@@ -1552,6 +1591,9 @@ class ScriptInfo$Type extends MessageType<ScriptInfo> {
         writer.tag(7, WireType.LengthDelimited).fork(),
         options,
       ).join();
+    /* bool auto_start = 8; */
+    if (message.autoStart !== false)
+      writer.tag(8, WireType.Varint).bool(message.autoStart);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -2493,6 +2535,7 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
         repeat: 2 /*RepeatType.UNPACKED*/,
         T: () => ScriptEdge,
       },
+      { no: 7, name: "auto_start", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
     ]);
   }
   create(value?: PartialMessage<CreateScriptRequest>): CreateScriptRequest {
@@ -2503,6 +2546,7 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
     message.scope = 0;
     message.nodes = [];
     message.edges = [];
+    message.autoStart = false;
     if (value !== undefined)
       reflectionMergePartial<CreateScriptRequest>(this, message, value);
     return message;
@@ -2539,6 +2583,9 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
           message.edges.push(
             ScriptEdge.internalBinaryRead(reader, reader.uint32(), options),
           );
+          break;
+        case /* bool auto_start */ 7:
+          message.autoStart = reader.bool();
           break;
         default:
           let u = options.readUnknownField;
@@ -2590,6 +2637,9 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
         writer.tag(6, WireType.LengthDelimited).fork(),
         options,
       ).join();
+    /* bool auto_start = 7; */
+    if (message.autoStart !== false)
+      writer.tag(7, WireType.Varint).bool(message.autoStart);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -2888,6 +2938,13 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
       },
       { no: 8, name: "update_nodes", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
       { no: 9, name: "update_edges", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 10,
+        name: "auto_start",
+        kind: "scalar",
+        opt: true,
+        T: 8 /*ScalarType.BOOL*/,
+      },
     ]);
   }
   create(value?: PartialMessage<UpdateScriptRequest>): UpdateScriptRequest {
@@ -2943,6 +3000,9 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
           break;
         case /* bool update_edges */ 9:
           message.updateEdges = reader.bool();
+          break;
+        case /* optional bool auto_start */ 10:
+          message.autoStart = reader.bool();
           break;
         default:
           let u = options.readUnknownField;
@@ -3003,6 +3063,9 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
     /* bool update_edges = 9; */
     if (message.updateEdges !== false)
       writer.tag(9, WireType.Varint).bool(message.updateEdges);
+    /* optional bool auto_start = 10; */
+    if (message.autoStart !== undefined)
+      writer.tag(10, WireType.Varint).bool(message.autoStart);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(

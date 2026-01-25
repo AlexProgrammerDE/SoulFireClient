@@ -1,5 +1,6 @@
 import { TrashIcon } from "lucide-react";
 import { useEffect, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
@@ -73,6 +74,7 @@ export function ExecutionLogs({
   autoScroll = true,
   className,
 }: ExecutionLogsProps) {
+  const { t } = useTranslation("instance");
   const scrollViewportRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom when new logs are added
@@ -92,9 +94,11 @@ export function ExecutionLogs({
     >
       <div className="flex items-center justify-between border-b border-border px-3 py-2">
         <div className="flex items-center gap-2">
-          <h2 className="text-sm font-semibold">Execution Logs</h2>
+          <h2 className="text-sm font-semibold">
+            {t("scripts.editor.logs.title")}
+          </h2>
           <span className="text-xs text-muted-foreground">
-            ({logs.length} {logs.length === 1 ? "entry" : "entries"})
+            ({t("scripts.editor.logs.entries", { count: logs.length })})
           </span>
         </div>
         <Button
@@ -102,7 +106,7 @@ export function ExecutionLogs({
           size="icon-xs"
           onClick={onClearLogs}
           disabled={logs.length === 0}
-          title="Clear logs"
+          title={t("scripts.editor.logs.clearTitle")}
         >
           <TrashIcon className="size-3.5" />
         </Button>
@@ -111,7 +115,7 @@ export function ExecutionLogs({
         {logs.length === 0 ? (
           <div className="flex h-full items-center justify-center p-4">
             <p className="text-center text-xs text-muted-foreground">
-              No logs yet. Run the script to see execution logs.
+              {t("scripts.editor.logs.noLogs")}
             </p>
           </div>
         ) : (
