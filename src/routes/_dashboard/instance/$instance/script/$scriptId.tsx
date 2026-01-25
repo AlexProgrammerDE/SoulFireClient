@@ -5,8 +5,10 @@ import {
 } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ReactFlowProvider, useReactFlow } from "@xyflow/react";
+import { GripHorizontalIcon } from "lucide-react";
 import { use, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Separator } from "react-resizable-panels";
 import { toast } from "sonner";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { ExecutionLogs } from "@/components/script-editor/ExecutionLogs.tsx";
@@ -31,6 +33,17 @@ import {
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 
 import "@xyflow/react/dist/style.css";
+
+// Custom horizontal handle for vertical panel groups
+function HorizontalResizableHandle() {
+  return (
+    <Separator className="relative flex h-px w-full items-center justify-center bg-border after:absolute after:left-0 after:h-1 after:w-full after:-translate-y-1/2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1">
+      <div className="z-10 flex h-3 w-4 items-center justify-center rounded-sm border bg-border">
+        <GripHorizontalIcon className="size-2.5" />
+      </div>
+    </Separator>
+  );
+}
 
 interface LogEntry {
   id: string;
@@ -486,7 +499,7 @@ function ScriptEditorContent() {
               </div>
             </ResizablePanel>
 
-            <ResizableHandle withHandle />
+            <HorizontalResizableHandle />
 
             {/* Bottom - Execution Logs */}
             <ResizablePanel defaultSize={25} minSize="6.25rem" maxSize="25rem">
