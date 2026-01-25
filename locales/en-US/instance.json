@@ -115,10 +115,17 @@
     "metadata": {
       "openButton": "Edit Metadata",
       "title": "Metadata: {{name}}",
-      "description": "Edit raw JSON metadata for this account. This data persists across sessions.",
-      "saveSuccess": "Metadata saved",
-      "saveError": "Failed to save metadata",
-      "invalidJson": "Invalid JSON syntax"
+      "description": "Manage persistent metadata entries for this account. Each entry has a namespace, key, and JSON value.",
+      "namespacePlaceholder": "Namespace",
+      "keyPlaceholder": "Key",
+      "valuePlaceholder": "Value (JSON)",
+      "noEntries": "No metadata entries. Add one above.",
+      "addSuccess": "Entry added",
+      "addError": "Failed to add entry",
+      "updateError": "Failed to update entry",
+      "deleteSuccess": "Entry deleted",
+      "deleteError": "Failed to delete entry",
+      "duplicateError": "An entry with this namespace and key already exists"
     }
   },
   "bots": {
