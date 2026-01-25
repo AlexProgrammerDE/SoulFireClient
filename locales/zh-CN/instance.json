@@ -111,6 +111,14 @@
       "openButton": "配置账号",
       "pageTitle": "{{name}} - {{page}} 设置",
       "noSettings": "此页面暂无可用设置"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} 在线 / 共 {{total}} 个",
     "noBots": "未配置机器人。请在账户设置页面添加账户。",
     "noBotsFound": "没有与您的搜索匹配的机器人。",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "在线",
     "offline": "离线",
-    "notJoined": "",
+    "notJoined": "未加入",
     "backToBots": "返回机器人列表",
     "comingSoon": "即将上线",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "限定于机器人的指令将在未来的更新中提供。"
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "Bot视角",
+      "capture": "捕捉",
+      "refresh": "刷新",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "点击“捕捉”以渲染Bot的视角",
+      "offline": "Bot已离线。只有连接时才能渲染视角。"
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "Bot状态",
+      "health": "生命值",
+      "food": "食物值",
+      "saturation": "饱食度",
+      "experience": "经验值",
+      "level": "等级",
+      "toNextLevel": "距离下一级还需",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "Bot已离线。只有连接时才能显示状态。"
     },
     "inventoryPanel": {
       "title": "背包",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "快捷栏",
+      "main": "主物品栏",
+      "items": "物品",
+      "carrying": "携带中",
+      "dropOne": "丢弃一个",
+      "dropAll": "全部丢弃",
       "closeContainer": "关闭",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "Bot已离线。只有连接时才能管理物品栏。",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "操作"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "Bot视图",
+      "compass": "朝向",
+      "lookDirection": "视角角度",
+      "lookingUp": "向上看",
+      "lookingDown": "向下看",
+      "lookingStraight": "平视",
+      "worldInfo": "世界信息",
+      "dimension": "维度",
+      "biome": "生物群系",
+      "offline": "Bot已离线。只有连接时才能显示视觉数据。"
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "停止",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "类型",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

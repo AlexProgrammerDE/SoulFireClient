@@ -1,6 +1,8 @@
 {
   "locale": "Lokallaşdırma",
   "cancel": "Ləğv et",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Server ünvanı və ya token tapılmadı",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Fasilə",
     "stop": "Dayandır",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Sessiya başlanır...",
+      "success": "Sessiya uğurla başlandı",
+      "error": "Sessiyanı başlatmaq alınmadı"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Sessiya davam etdirilir...",
+      "success": "Sessiya uğurla davam etdirildi",
+      "error": "Sessiyanı davam etdirmək alınmadı"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Sessiya dayandırılır...",
+      "success": "Sessiya uğurla dayandırıldı.",
+      "error": "Sessiyanı dayandırmaq alınmadı."
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Sessiya dayandırılır...",
+      "success": "Sessiya uğurla dayandırıldı.",
+      "error": "Sessiyanı dayandırmaq mümkün olmadı."
     },
     "accountWarning": {
       "noAccountsTitle": "Heç bir hesab qurulmayıb",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Sessiyaya başlamazdan əvvəl hesabları əlavə etməlisiniz. Siz {{required}} bot tələb etdiniz.",
       "notEnoughTitle": "Kifayət qədər hesab yoxdur",
       "notEnoughDescription": "{{required}} bot istədiniz, amma yalnız {{available}} hesab əlavə olunub.",
       "hint": "Offline hesablar yarada və ya Hesab Ayarları səhifəsindən hesablar əlavə edə bilərsiniz.",
@@ -356,10 +358,10 @@
     "action": "Əməliyyat",
     "timestamp": "Zaman nöqtəsi",
     "executedCommand": "İcra edilmiş əmr: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Sessiya başladıldı",
+    "resumedSession": "Sessiya davam etdirildi",
+    "pausedSession": "Sessiya dayandırıldı",
+    "stoppedSession": "Sessiya bitirildi"
   },
   "pickADate": "Tarix seçin",
   "scripts": {

@@ -1,6 +1,8 @@
 {
   "locale": "ロケール",
   "cancel": "キャンセル",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "サーバーアドレスまたはトークンが見つかりません",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "一時停止",
     "stop": "停止",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "セッションを開始しています...",
+      "success": "セッションが正常に開始されました",
+      "error": "セッションの開始に失敗しました"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "セッションを再開しています...",
+      "success": "セッションが正常に再開されました",
+      "error": "セッションの再開に失敗しました"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "セッションを一時停止しています...",
+      "success": "セッションが一時停止されました。",
+      "error": "セッションの一時停止に失敗しました。"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "セッションを停止中...",
+      "success": "セッションが停止されました。",
+      "error": "セッションの停止に失敗しました。"
     },
     "accountWarning": {
       "noAccountsTitle": "アカウントが設定されていません",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "セッションを開始する前にアカウントをインポートする必要があります。要求されたボット数: {{required}}",
       "notEnoughTitle": "アカウントが不足しています",
       "notEnoughDescription": "{{required}}体のボットをリクエストしましたが、インポート済みアカウントは{{available}}件のみです。",
       "hint": "オフラインアカウントを生成するか、アカウント設定ページからアカウントをインポートできます。",
@@ -356,10 +358,10 @@
     "action": "アクション",
     "timestamp": "タイムスタンプ",
     "executedCommand": "コマンドを実行: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "セッションを開始しました。",
+    "resumedSession": "セッションを再開しました。",
+    "pausedSession": "セッションを一時停止しました。",
+    "stoppedSession": "セッションを停止しました。"
   },
   "pickADate": "日付を選択",
   "scripts": {

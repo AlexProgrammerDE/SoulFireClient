@@ -111,6 +111,14 @@
       "openButton": "Настроить учётную запись",
       "pageTitle": "{{name}} — настройки {{page}}",
       "noSettings": "Для этой страницы нет доступных настроек"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} в сети / {{total}} всего",
     "noBots": "Боты не настроены. Добавьте аккаунты на странице настроек аккаунта.",
     "noBotsFound": "Боты, соответствующие вашему запросу, не найдены.",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "В сети",
     "offline": "Офлайн",
-    "notJoined": "",
+    "notJoined": "Не присоединился",
     "backToBots": "Назад к ботам",
     "comingSoon": "Скоро будет",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "Команды, привязанные к боту, будут доступны в одном из следующих обновлений."
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "POV бота",
+      "capture": "Сделать снимок",
+      "refresh": "Обновить",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "Нажмите «Сделать снимок», чтобы отобразить точку зрения бота",
+      "offline": "Бот офлайн. Отображение точки зрения доступно только при подключении бота."
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "Статистика бота",
+      "health": "Здоровье",
+      "food": "Еда",
+      "saturation": "Сытость",
+      "experience": "Опыт",
+      "level": "Уровень",
+      "toNextLevel": "до следующего уровня",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "Бот офлайн. Статистика доступна только при подключении бота."
     },
     "inventoryPanel": {
       "title": "Инвентарь",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "Быстрый доступ",
+      "main": "Основной инвентарь",
+      "items": "предметы",
+      "carrying": "В руках",
+      "dropOne": "Выбросить один",
+      "dropAll": "Выбросить все",
       "closeContainer": "Закрыть",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "Бот офлайн. Инвентарь доступен только при подключении бота.",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "Действия"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "Вид от бота",
+      "compass": "Направление взгляда",
+      "lookDirection": "Угол обзора",
+      "lookingUp": "Смотрит вверх",
+      "lookingDown": "Смотрит вниз",
+      "lookingStraight": "Смотрит прямо",
+      "worldInfo": "Информация о мире",
+      "dimension": "Измерение",
+      "biome": "Биом",
+      "offline": "Бот офлайн. Визуальные данные доступны только при подключении бота."
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "Остановить",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "Тип",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

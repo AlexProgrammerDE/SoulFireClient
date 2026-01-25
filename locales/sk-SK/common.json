@@ -1,6 +1,8 @@
 {
   "locale": "Jazykové nastavenie",
   "cancel": "Zrušiť",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Nebola nájdená adresa servera alebo token",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Pozastaviť",
     "stop": "Zastaviť",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Spúšťa sa relácia...",
+      "success": "Relácia bola úspešne spustená",
+      "error": "Reláciu sa nepodarilo spustiť"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Obnovuje sa relácia...",
+      "success": "Relácia bola úspešne obnovená",
+      "error": "Reláciu sa nepodarilo obnoviť"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Pozastavuje sa relácia...",
+      "success": "Relácia bola úspešne pozastavená",
+      "error": "Reláciu sa nepodarilo pozastaviť"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Zastavuje sa relácia...",
+      "success": "Relácia bola úspešne zastavená",
+      "error": "Reláciu sa nepodarilo zastaviť"
     },
     "accountWarning": {
       "noAccountsTitle": "Žiadne účty nie sú nastavené",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Pred spustením relácie musíte mať importované účty. Požiadali ste o {{required}} botov.",
       "notEnoughTitle": "Nedostatok účtov",
       "notEnoughDescription": "Požadovali ste {{required}} botov, ale máte importovaných len {{available}} účtov.",
       "hint": "Môžete vygenerovať offline účty alebo importovať účty na stránke nastavení účtov.",
@@ -356,10 +358,10 @@
     "action": "Akcia",
     "timestamp": "Časová značka",
     "executedCommand": "Vykonaný príkaz: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Relácia spustená",
+    "resumedSession": "Relácia obnovená",
+    "pausedSession": "Relácia pozastavená",
+    "stoppedSession": "Relácia zastavená"
   },
   "pickADate": "Vyberte dátum",
   "scripts": {

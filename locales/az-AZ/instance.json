@@ -111,6 +111,14 @@
       "openButton": "Hesabı tənzimləyin",
       "pageTitle": "{{name}} - {{page}} Ayarları",
       "noSettings": "Bu səhifə üçün heç bir ayar mövcud deyil"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} onlayn / {{total}} cəmi",
     "noBots": "Heç bir bot qurulmayıb. Hesab Ayarları səhifəsindən hesab əlavə edin.",
     "noBotsFound": "Axtarışınıza uyğun bot tapılmadı.",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "Onlayn",
     "offline": "Offline",
-    "notJoined": "",
+    "notJoined": "Qoşulmayıb",
     "backToBots": "Botlara qayıt",
     "comingSoon": "Tezliklə",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "Bot-əhatəli əmrlər gələcək yeniləmədə mövcud olacaq."
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "Botun Baxışı",
+      "capture": "Çəkmək",
+      "refresh": "Yenilə",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "Botun baxış bucağını göstərmək üçün \"Çəkmək\" düyməsini klikləyin",
+      "offline": "Bot oflayndadır. Baxış bucağı yalnız bot qoşulduqda əlçatandır."
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "Bot Statistikası",
+      "health": "Sağlamlıq",
+      "food": "Yemək",
+      "saturation": "Doyğunluq",
+      "experience": "Təcrübə",
+      "level": "Səviyyə",
+      "toNextLevel": "növbəti səviyyəyə qədər",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "Bot oflayndadır. Statistikalar yalnız bot qoşulduqda əlçatandır."
     },
     "inventoryPanel": {
       "title": "İnventar",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "Qısa Panel",
+      "main": "Əsas Ehtiyat",
+      "items": "əşyalar",
+      "carrying": "Daşıyır",
+      "dropOne": "Birini At",
+      "dropAll": "Hamısını At",
       "closeContainer": "Bağla",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "Bot oflayndadır. Ehtiyat yalnız bot qoşulduqda əlçatandır.",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "Əməliyyatlar"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "Bot Görünüşü",
+      "compass": "Baxılan İstiqamət",
+      "lookDirection": "Baxış Buçağı",
+      "lookingUp": "Yuxarıya baxır",
+      "lookingDown": "Aşağıya baxır",
+      "lookingStraight": "Birbaşa baxır",
+      "worldInfo": "Dünya Məlumatı",
+      "dimension": "Ölçü",
+      "biome": "Biom",
+      "offline": "Bot oflayndadır. Vizual məlumatlar yalnız bot qoşulduqda əlçatandır."
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "Dayandır",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "Növ",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

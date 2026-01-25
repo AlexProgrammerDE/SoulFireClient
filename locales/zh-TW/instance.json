@@ -111,6 +111,14 @@
       "openButton": "設定帳號",
       "pageTitle": "{{name}} - {{page}} 設定",
       "noSettings": "此頁面沒有可用的設定"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} 位在線 / 共 {{total}} 位",
     "noBots": "沒有已設定的機器人。請至帳戶設定頁面新增帳號。",
     "noBotsFound": "沒有符合搜尋條件的機器人。",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "在線",
     "offline": "離線",
-    "notJoined": "",
+    "notJoined": "未加入",
     "backToBots": "返回機器人列表",
     "comingSoon": "即將推出",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "僅限機器人的指令將在後續更新中提供。"
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "機器人視角",
+      "capture": "截圖",
+      "refresh": "重新整理",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "點擊「截圖」以渲染機器人的視角",
+      "offline": "機器人離線。只有連線時才能渲染視角。"
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "機器人統計",
+      "health": "生命值",
+      "food": "飽食度",
+      "saturation": "飽和度",
+      "experience": "經驗值",
+      "level": "等級",
+      "toNextLevel": "距下個等級",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "機器人離線。只有連線時才能查看統計數據。"
     },
     "inventoryPanel": {
       "title": "物品欄",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "快捷欄",
+      "main": "主背包",
+      "items": "物品",
+      "carrying": "攜帶中",
+      "dropOne": "丟棄一個",
+      "dropAll": "全部丟棄",
       "closeContainer": "關閉",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "機器人離線。只有連線時才能使用背包。",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "動作"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "機器人視圖",
+      "compass": "朝向",
+      "lookDirection": "視角",
+      "lookingUp": "向上看",
+      "lookingDown": "向下看",
+      "lookingStraight": "平視",
+      "worldInfo": "世界資訊",
+      "dimension": "維度",
+      "biome": "生物群系",
+      "offline": "機器人離線。只有連線時才能查看視覺資料。"
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "停止",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "類型",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

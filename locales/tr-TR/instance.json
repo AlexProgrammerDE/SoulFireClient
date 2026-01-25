@@ -111,6 +111,14 @@
       "openButton": "Hesabı yapılandır",
       "pageTitle": "{{name}} - {{page}} Ayarları",
       "noSettings": "Bu sayfa için ayar mevcut değil"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} çevrim içi / {{total}} toplamı",
     "noBots": "Hiç bot yapılandırılmadı. Hesaplarınızı Hesap Ayarları sayfasından ekleyin.",
     "noBotsFound": "Aramanıza uyan bot bulunamadı.",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "Çevrim içi",
     "offline": "Çevrimdışı",
-    "notJoined": "",
+    "notJoined": "Katılmadı",
     "backToBots": "Botlara Geri Dön",
     "comingSoon": "Çok Yakında",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "Bota özel komutlar gelecekteki bir güncellemede sunulacak."
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "Bot Bakış Açısı",
+      "capture": "Yakala",
+      "refresh": "Yenile",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "Botun bakış açısını göstermek için Yakala'ya tıklayın",
+      "offline": "Bot çevrimdışı. Bakış açısı yalnızca bot bağlandığında kullanılabilir."
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "Bot İstatistikleri",
+      "health": "Can",
+      "food": "Yiyecek",
+      "saturation": "Doygunluk",
+      "experience": "Deneyim",
+      "level": "Seviye",
+      "toNextLevel": "sonraki seviyeye",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "Bot çevrimdışı. İstatistikler yalnızca bot bağlandığında görüntülenebilir."
     },
     "inventoryPanel": {
       "title": "Envanter",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "Kısayol Çubuğu",
+      "main": "Ana Envanter",
+      "items": "öğeler",
+      "carrying": "Taşınıyor",
+      "dropOne": "Birini Bırak",
+      "dropAll": "Hepsini Bırak",
       "closeContainer": "Kapat",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "Bot çevrimdışı. Envanter yalnızca bot bağlandığında kullanılabilir.",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "İşlemler"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "Bot Görünümü",
+      "compass": "Baktığı Yön",
+      "lookDirection": "Bakış Açısı",
+      "lookingUp": "Yukarı bakıyor",
+      "lookingDown": "Aşağı bakıyor",
+      "lookingStraight": "Düz bakıyor",
+      "worldInfo": "Dünya Bilgisi",
+      "dimension": "Boyut",
+      "biome": "Biyom",
+      "offline": "Bot çevrimdışı. Görsel veriler yalnızca bot bağlıyken kullanılabilir."
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "Durdur",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "Tip",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

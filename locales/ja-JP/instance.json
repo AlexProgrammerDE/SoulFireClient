@@ -111,6 +111,14 @@
       "openButton": "アカウントを設定する",
       "pageTitle": "{{name}} - {{page}}の設定",
       "noSettings": "このページには設定がありません"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} 人がオンライン / 合計 {{total}} 人",
     "noBots": "ボットが設定されていません。アカウント設定ページからアカウントを追加してください。",
     "noBotsFound": "検索条件に一致するボットが見つかりません。",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "オンライン",
     "offline": "オフライン",
-    "notJoined": "",
+    "notJoined": "未参加",
     "backToBots": "ボット一覧に戻る",
     "comingSoon": "近日公開",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "ボット専用コマンドは今後のアップデートで利用可能になります。"
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "ボット視点",
+      "capture": "キャプチャ",
+      "refresh": "更新",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "「キャプチャ」をクリックしてボットの視点を表示",
+      "offline": "ボットはオフラインです。視点表示はボットが接続中のみ利用できます。"
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "ボット統計",
+      "health": "体力",
+      "food": "食料",
+      "saturation": "満腹度",
+      "experience": "経験値",
+      "level": "レベル",
+      "toNextLevel": "次のレベルまで",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "ボットはオフラインです。統計はボットが接続中のみ利用できます。"
     },
     "inventoryPanel": {
       "title": "インベントリ",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "ホットバー",
+      "main": "メインインベントリー",
+      "items": "アイテム",
+      "carrying": "所持中",
+      "dropOne": "1つ捨てる",
+      "dropAll": "すべて捨てる",
       "closeContainer": "閉じる",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "ボットはオフラインです。インベントリーはボットが接続中のみ利用できます。",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "操作"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "ボットビュ―",
+      "compass": "向いている方角",
+      "lookDirection": "視線の角度",
+      "lookingUp": "上を見ている",
+      "lookingDown": "下を見ている",
+      "lookingStraight": "まっすぐ見ている",
+      "worldInfo": "ワールド情報",
+      "dimension": "ディメンション",
+      "biome": "バイオーム",
+      "offline": "ボットはオフラインです。ビジュアルデータはボットが接続中のみ利用できます。"
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "停止",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "種類",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

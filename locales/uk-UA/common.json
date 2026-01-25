@@ -1,6 +1,8 @@
 {
   "locale": "Мова інтерфейсу",
   "cancel": "Скасувати",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Не знайдено адресу сервера або токен",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Призупинити",
     "stop": "Зупинити",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Запуск сесії...",
+      "success": "Сесію успішно запущено",
+      "error": "Не вдалося запустити сесію"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Відновлення сесії...",
+      "success": "Сесію успішно відновлено",
+      "error": "Не вдалося відновити сесію"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Пауза сесії...",
+      "success": "Сесію призупинено успішно",
+      "error": "Не вдалося призупинити сесію"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Зупиняємо сесію...",
+      "success": "Сесію зупинено успішно",
+      "error": "Не вдалося зупинити сесію"
     },
     "accountWarning": {
       "noAccountsTitle": "Облікові записи не налаштовано",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Перш ніж почати сесію, потрібно імпортувати облікові записи. Ви запросили {{required}} ботів.",
       "notEnoughTitle": "Недостатньо облікових записів",
       "notEnoughDescription": "Ви запросили {{required}} ботів, але імпортовано лише {{available}} облікових записів.",
       "hint": "Ви можете згенерувати офлайн-акаунти або імпортувати облікові записи на сторінці налаштувань облікового запису.",
@@ -356,10 +358,10 @@
     "action": "Дія",
     "timestamp": "Час",
     "executedCommand": "Виконана команда: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Сесію розпочато",
+    "resumedSession": "Сесію відновлено",
+    "pausedSession": "Сесію призупинено",
+    "stoppedSession": "Сесію зупинено"
   },
   "pickADate": "Оберіть дату",
   "scripts": {

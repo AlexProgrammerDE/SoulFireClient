@@ -111,6 +111,14 @@
       "openButton": "계정 설정",
       "pageTitle": "{{name}} - {{page}} 설정",
       "noSettings": "이 페이지에 사용할 수 있는 설정이 없습니다"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}}명 온라인 / 총 {{total}}명",
     "noBots": "설정된 봇이 없습니다. 계정 설정 페이지에서 계정을 추가하세요.",
     "noBotsFound": "검색 결과에 맞는 봇이 없습니다.",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "온라인",
     "offline": "오프라인",
-    "notJoined": "",
+    "notJoined": "미참가",
     "backToBots": "봇 목록으로 돌아가기",
     "comingSoon": "곧 출시 예정",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "봇 전용 명령어는 다음 업데이트에서 제공될 예정입니다."
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "봇 시점",
+      "capture": "캡처",
+      "refresh": "새로고침",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "캡처를 클릭하면 봇의 시점을 렌더링합니다",
+      "offline": "봇이 오프라인입니다. 시점 렌더링은 봇이 연결되어 있을 때만 사용할 수 있습니다."
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "봇 통계",
+      "health": "체력",
+      "food": "음식",
+      "saturation": "포만감",
+      "experience": "경험치",
+      "level": "레벨",
+      "toNextLevel": "다음 레벨까지",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "봇이 오프라인입니다. 통계는 봇이 연결되어 있을 때만 볼 수 있습니다."
     },
     "inventoryPanel": {
       "title": "인벤토리",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "빠른바",
+      "main": "메인 인벤토리",
+      "items": "아이템",
+      "carrying": "소지 중",
+      "dropOne": "하나 버리기",
+      "dropAll": "모두 버리기",
       "closeContainer": "닫기",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "봇이 오프라인입니다. 인벤토리는 봇이 연결되어 있을 때만 사용할 수 있습니다.",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "동작"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "봇 뷰",
+      "compass": "보고 있는 방향",
+      "lookDirection": "시선 각도",
+      "lookingUp": "위쪽 보기",
+      "lookingDown": "아래쪽 보기",
+      "lookingStraight": "정면 보기",
+      "worldInfo": "월드 정보",
+      "dimension": "차원",
+      "biome": "생물 군계",
+      "offline": "봇이 오프라인입니다. 시각 데이터는 봇이 연결되어 있을 때만 사용할 수 있습니다."
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "중지",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "종류",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

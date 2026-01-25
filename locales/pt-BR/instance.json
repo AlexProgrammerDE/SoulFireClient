@@ -111,6 +111,14 @@
       "openButton": "Configurar conta",
       "pageTitle": "Configurações de {{name}} - {{page}}",
       "noSettings": "Nenhuma configuração disponível para esta página"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} online / {{total}} no total",
     "noBots": "Nenhum bot configurado. Adicione contas na página de Configurações de Conta.",
     "noBotsFound": "Nenhum bot corresponde à sua pesquisa.",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "Online",
     "offline": "Offline",
-    "notJoined": "",
+    "notJoined": "Não entrou ainda",
     "backToBots": "Voltar para Bots",
     "comingSoon": "Em breve",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "Comandos de escopo do bot estarão disponíveis em uma atualização futura."
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "POV do Bot",
+      "capture": "Capturar",
+      "refresh": "Atualizar",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "Clique em Capturar para renderizar a visão do bot",
+      "offline": "O bot está offline. A renderização da visão só está disponível quando o bot está conectado."
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "Estatísticas do Bot",
+      "health": "Saúde",
+      "food": "Comida",
+      "saturation": "Saturação",
+      "experience": "Experiência",
+      "level": "Nível",
+      "toNextLevel": "para o próximo nível",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "O bot está offline. As estatísticas só estão disponíveis quando o bot está conectado."
     },
     "inventoryPanel": {
       "title": "Inventário",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "Barra Rápida",
+      "main": "Inventário Principal",
+      "items": "itens",
+      "carrying": "Carregando",
+      "dropOne": "Soltar Um",
+      "dropAll": "Soltar Tudo",
       "closeContainer": "Fechar",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "O bot está offline. O inventário só está disponível quando o bot está conectado.",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "Ações"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "Visualização do Bot",
+      "compass": "Direção",
+      "lookDirection": "Ângulo de Visão",
+      "lookingUp": "Olhando para cima",
+      "lookingDown": "Olhando para baixo",
+      "lookingStraight": "Olhando para frente",
+      "worldInfo": "Informações do Mundo",
+      "dimension": "Dimensão",
+      "biome": "Bioma",
+      "offline": "O bot está offline. Os dados visuais só estão disponíveis quando o bot está conectado."
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "Parar",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "Tipo",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

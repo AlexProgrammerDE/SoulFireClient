@@ -111,6 +111,14 @@
       "openButton": "Cấu hình tài khoản",
       "pageTitle": "{{name}} - Cài đặt {{page}}",
       "noSettings": "Không có cài đặt nào cho trang này"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} trực tuyến / {{total}} tổng cộng",
     "noBots": "Chưa cấu hình bot nào. Thêm tài khoản từ trang Cài đặt Tài khoản.",
     "noBotsFound": "Không có bot nào khớp với tìm kiếm của bạn.",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "Trực tuyến",
     "offline": "Ngoại tuyến",
-    "notJoined": "",
+    "notJoined": "Chưa Tham Gia",
     "backToBots": "Quay lại Bots",
     "comingSoon": "Sắp ra mắt",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "Các lệnh dành riêng cho bot sẽ có trong bản cập nhật sắp tới."
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "Góc nhìn Bot",
+      "capture": "Chụp ảnh",
+      "refresh": "Làm mới",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "Nhấn Chụp ảnh để hiển thị góc nhìn của bot",
+      "offline": "Bot đang ngoại tuyến. Hiển thị góc nhìn chỉ khả dụng khi bot đã kết nối."
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "Chỉ số Bot",
+      "health": "Máu",
+      "food": "Thức ăn",
+      "saturation": "Độ bão hòa",
+      "experience": "Kinh nghiệm",
+      "level": "Cấp độ",
+      "toNextLevel": "đến cấp tiếp theo",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "Bot đang ngoại tuyến. Chỉ số chỉ khả dụng khi bot đã kết nối."
     },
     "inventoryPanel": {
       "title": "Kho đồ",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "Thanh nhanh",
+      "main": "Kho chính",
+      "items": "vật phẩm",
+      "carrying": "Đang cầm",
+      "dropOne": "Thả Một",
+      "dropAll": "Thả Tất Cả",
       "closeContainer": "Đóng",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "Bot đang ngoại tuyến. Kho chỉ khả dụng khi bot đã kết nối.",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "Hành động"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "Giao diện Bot",
+      "compass": "Hướng Đang Nhìn",
+      "lookDirection": "Góc Nhìn",
+      "lookingUp": "Đang nhìn lên",
+      "lookingDown": "Đang nhìn xuống",
+      "lookingStraight": "Đang nhìn thẳng",
+      "worldInfo": "Thông tin thế giới",
+      "dimension": "Chiều Không Gian",
+      "biome": "Sinh cảnh",
+      "offline": "Bot đang ngoại tuyến. Dữ liệu hình ảnh chỉ khả dụng khi bot đã kết nối."
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "Dừng lại",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "Loại",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

@@ -1,6 +1,8 @@
 {
   "locale": "Локализация",
   "cancel": "Отмена",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Адрес сервера или токен не найдены",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Пауза",
     "stop": "Остановить",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Запуск сессии...",
+      "success": "Сессия успешно запущена",
+      "error": "Не удалось запустить сессию"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Возобновление сессии...",
+      "success": "Сессия успешно возобновлена",
+      "error": "Не удалось возобновить сессию"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Приостановка сессии...",
+      "success": "Сессия успешно приостановлена",
+      "error": "Не удалось приостановить сессию"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Прекращение сессии...",
+      "success": "Сессия успешно остановлена",
+      "error": "Не удалось остановить сессию"
     },
     "accountWarning": {
       "noAccountsTitle": "Нет настроенных аккаунтов",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Перед началом сессии необходимо импортировать аккаунты. Вы запросили {{required}} ботов.",
       "notEnoughTitle": "Недостаточно аккаунтов",
       "notEnoughDescription": "Вы запросили {{required}} ботов, но импортировано только {{available}} аккаунтов.",
       "hint": "Вы можете сгенерировать офлайн-аккаунты или импортировать аккаунты на странице настроек аккаунта.",
@@ -356,10 +358,10 @@
     "action": "Действие",
     "timestamp": "Временная метка",
     "executedCommand": "Выполнена команда: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Сессия запущена",
+    "resumedSession": "Сессия возобновлена",
+    "pausedSession": "Сессия приостановлена",
+    "stoppedSession": "Сессия остановлена"
   },
   "pickADate": "Выберите дату",
   "scripts": {

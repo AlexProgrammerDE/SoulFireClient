@@ -111,6 +111,14 @@
       "openButton": "Konfigurera konto",
       "pageTitle": "{{name}} - {{page}} Inställningar",
       "noSettings": "Inga inställningar tillgängliga för denna sida"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} online / {{total}} totalt",
     "noBots": "Inga botar konfigurerade. Lägg till konton från sidan Kontoinställningar.",
     "noBotsFound": "Inga botar matchar din sökning.",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "Online",
     "offline": "Offline",
-    "notJoined": "",
+    "notJoined": "Inte ansluten",
     "backToBots": "Tillbaka till Botar",
     "comingSoon": "Kommer snart",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "Kommandon med bot-omfattning kommer att vara tillgängliga i en framtida uppdatering."
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "Botens vy",
+      "capture": "Fånga",
+      "refresh": "Uppdatera",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "Klicka på Fånga för att visa botens synvinkel",
+      "offline": "Bot är offline. Renderingen av POV är endast tillgänglig när boten är ansluten."
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "Botstatistik",
+      "health": "Hälsa",
+      "food": "Mat",
+      "saturation": "Mättnad",
+      "experience": "Erfarenhet",
+      "level": "Nivå",
+      "toNextLevel": "till nästa nivå",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "Bot är offline. Statistik är endast tillgänglig när boten är ansluten."
     },
     "inventoryPanel": {
       "title": "Inventory",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "Verktygsrad",
+      "main": "Huvudinventarie",
+      "items": "föremål",
+      "carrying": "Bär",
+      "dropOne": "Släpp en",
+      "dropAll": "Släpp alla",
       "closeContainer": "Stäng",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "Bot är offline. Inventariet är endast tillgängligt när boten är ansluten.",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "Åtgärder"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "Botvy",
+      "compass": "Riktning",
+      "lookDirection": "Vinkeln",
+      "lookingUp": "Tittar uppåt",
+      "lookingDown": "Tittar nedåt",
+      "lookingStraight": "Tittar rakt fram",
+      "worldInfo": "Världsinformation",
+      "dimension": "Dimension",
+      "biome": "Biom",
+      "offline": "Bot är offline. Visuella data är endast tillgängliga när boten är ansluten."
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "Stoppa",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "Typ",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

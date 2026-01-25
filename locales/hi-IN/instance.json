@@ -111,6 +111,14 @@
       "openButton": "खाता कॉन्फ़िगर करें",
       "pageTitle": "{{name}} - {{page}} सेटिंग्स",
       "noSettings": "इस पेज के लिए कोई सेटिंग्स उपलब्ध नहीं हैं"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} ऑनलाइन / {{total}} कुल",
     "noBots": "कोई बॉट कॉन्फ़िगर नहीं है। खाते जोड़ने के लिए खाता सेटिंग्स पृष्ठ पर जाएँ।",
     "noBotsFound": "आपकी खोज से कोई बॉट नहीं मिला।",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "ऑनलाइन",
     "offline": "ऑफ़लाइन",
-    "notJoined": "",
+    "notJoined": "शामिल नहीं हुआ",
     "backToBots": "बॉट्स पर वापस जाएं",
     "comingSoon": "जल्द आ रहा है",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "बॉट-स्कोप्ड कमांड्स भविष्य के अपडेट में उपलब्ध होंगे।"
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "बॉट दृष्टिकोण",
+      "capture": "कैप्चर करें",
+      "refresh": "रीफ्रेश करें",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "बॉट का दृष्टिकोण देखने के लिए कैप्चर पर क्लिक करें",
+      "offline": "बॉट ऑफलाइन है। दृष्टिकोण रेंडरिंग केवल तभी उपलब्ध है जब बॉट कनेक्टेड हो।"
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "बॉट की जानकारी",
+      "health": "स्वास्थ्य",
+      "food": "खाद्य",
+      "saturation": "संतृप्ति",
+      "experience": "अनुभव",
+      "level": "स्तर",
+      "toNextLevel": "अगले स्तर तक",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "बॉट ऑफलाइन है। आँकड़े केवल तभी उपलब्ध हैं जब बॉट कनेक्टेड हो।"
     },
     "inventoryPanel": {
       "title": "इन्वेंटरी",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "हॉटबार",
+      "main": "मुख्य इन्वेंटरी",
+      "items": "आइटम",
+      "carrying": "वह ले जा रहा है",
+      "dropOne": "एक छोड़ें",
+      "dropAll": "सभी छोड़ें",
       "closeContainer": "बंद करें",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "बॉट ऑफलाइन है। इन्वेंटरी केवल तभी उपलब्ध है जब बॉट कनेक्टेड हो।",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "क्रियाएँ"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "बॉट दृश्य",
+      "compass": "मुखि दिशा",
+      "lookDirection": "देखने का कोण",
+      "lookingUp": "ऊपर देख रहा है",
+      "lookingDown": "नीचे देख रहा है",
+      "lookingStraight": "सीधे देख रहा है",
+      "worldInfo": "दुनिया की जानकारी",
+      "dimension": "आयाम",
+      "biome": "जैवमंडल",
+      "offline": "बॉट ऑफलाइन है। दृश्य डेटा केवल तभी उपलब्ध है जब बॉट कनेक्टेड हो।"
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "बंद करें",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "प्रकार",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }
