@@ -5,7 +5,6 @@ import {
 } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ReactFlowProvider, useReactFlow } from "@xyflow/react";
-import { GripHorizontalIcon } from "lucide-react";
 import { use, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Separator } from "react-resizable-panels";
@@ -38,9 +37,7 @@ import "@xyflow/react/dist/style.css";
 function HorizontalResizableHandle() {
   return (
     <Separator className="relative flex h-px w-full items-center justify-center bg-border after:absolute after:left-0 after:h-1 after:w-full after:-translate-y-1/2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring focus-visible:ring-offset-1">
-      <div className="z-10 flex h-3 w-4 items-center justify-center rounded-sm border bg-border">
-        <GripHorizontalIcon className="size-2.5" />
-      </div>
+      <div className="bg-border h-6 w-1 rounded-lg z-10 flex shrink-0 rotate-90" />
     </Separator>
   );
 }
