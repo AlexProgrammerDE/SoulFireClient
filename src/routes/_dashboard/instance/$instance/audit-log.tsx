@@ -26,6 +26,7 @@ import {
   InstanceAuditLogResponse_AuditLogEntryType,
 } from "@/generated/soulfire/instance.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
+import { dataTableValidateSearch } from "@/lib/parsers.ts";
 import {
   getEnumEntries,
   getEnumKeyByValue,
@@ -37,6 +38,7 @@ import { createTransport } from "@/lib/web-rpc.ts";
 export const Route = createFileRoute(
   "/_dashboard/instance/$instance/audit-log",
 )({
+  validateSearch: dataTableValidateSearch,
   beforeLoad: (props) => {
     const { instance } = props.params;
     const auditLogQueryOptions = queryOptions({

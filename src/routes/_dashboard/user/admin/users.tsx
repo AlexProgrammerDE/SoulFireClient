@@ -48,6 +48,7 @@ import { UserRole } from "@/generated/soulfire/common.ts";
 import { UserServiceClient } from "@/generated/soulfire/user.client.ts";
 import type { UserListResponse_User } from "@/generated/soulfire/user.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
+import { dataTableValidateSearch } from "@/lib/parsers.ts";
 import {
   getEnumEntries,
   getEnumKeyByValue,
@@ -57,6 +58,7 @@ import { ROOT_USER_ID, runAsync, timestampToDate } from "@/lib/utils.tsx";
 import { startImpersonation } from "@/lib/web-rpc.ts";
 
 export const Route = createFileRoute("/_dashboard/user/admin/users")({
+  validateSearch: dataTableValidateSearch,
   component: Users,
 });
 

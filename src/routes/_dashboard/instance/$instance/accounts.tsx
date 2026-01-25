@@ -70,6 +70,7 @@ import {
 } from "@/generated/soulfire/common.ts";
 import { MCAuthServiceClient } from "@/generated/soulfire/mc-auth.client.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
+import { dataTableValidateSearch } from "@/lib/parsers.ts";
 import {
   type GenerateAccountsMode,
   getEnumEntries,
@@ -176,6 +177,7 @@ function GenerateAccountsButton() {
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/accounts")(
   {
+    validateSearch: dataTableValidateSearch,
     component: AccountSettings,
   },
 );

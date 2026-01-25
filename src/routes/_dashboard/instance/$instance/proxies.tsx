@@ -65,6 +65,7 @@ import { ProxyProto_Type } from "@/generated/soulfire/common.ts";
 import { ProxyCheckServiceClient } from "@/generated/soulfire/proxy-check.client.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
 import i18n from "@/lib/i18n.ts";
+import { dataTableValidateSearch } from "@/lib/parsers.ts";
 import {
   getEnumEntries,
   getEnumKeyByValue,
@@ -84,6 +85,7 @@ const PROXY_SETTINGS_DISABLED_IDS: DisabledSettingId[] = [
 ];
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/proxies")({
+  validateSearch: dataTableValidateSearch,
   component: ProxySettings,
 });
 

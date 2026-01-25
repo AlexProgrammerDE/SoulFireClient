@@ -1,4 +1,10 @@
-import { createParser } from "nuqs/server";
+import {
+  createParser,
+  createStandardSchemaV1,
+  parseAsInteger,
+  parseAsString,
+  parseAsStringLiteral,
+} from "nuqs/server";
 import { z } from "zod";
 
 import { dataTableConfig } from "@/config/data-table";
@@ -97,3 +103,32 @@ export const getFiltersStateParser = <TData>(
       ),
   });
 };
+
+/**
+ * Search params definition for data table routes.
+ * Used with TanStack Router's validateSearch for type-safe URL state.
+ */
+export const dataTableSearchParams = {
+  page: parseAsInteger,
+  perPage: parseAsInteger,
+  sort: parseAsString,
+  filters: parseAsString,
+  joinOperator: parseAsStringLiteral(dataTableConfig.joinOperators),
+};
+
+/**
+ * Standard Schema validator for data table search params.
+ * Use this with TanStack Router's validateSearch option.
+ *
+ * @example
+ * export const Route = createFileRoute('/my-route')({
+ *   validateSearch: dataTableValidateSearch,
+ *   component: MyComponent,
+ * })
+ */
+export const dataTableValidateSearch = createStandardSchemaV1(
+  dataTableSearchParams,
+  {
+    partialOutput: true,
+  },
+);
