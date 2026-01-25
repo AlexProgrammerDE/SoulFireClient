@@ -1,17 +1,20 @@
 import {
   Background,
   BackgroundVariant,
+  type ColorMode,
   Controls,
   MiniMap,
   ReactFlow,
   type ReactFlowInstance,
 } from "@xyflow/react";
+import { useTheme } from "next-themes";
 import { useCallback, useState } from "react";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 import { edgeTypes, isValidConnection } from "./edges";
 import { nodeTypes } from "./nodes";
 
 export function ScriptEditor() {
+  const { resolvedTheme } = useTheme();
   const [_reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance | null>(null);
 
@@ -63,7 +66,7 @@ export function ScriptEditor() {
         onInit={handleInit}
         onSelectionChange={handleSelectionChange}
         isValidConnection={isValidConnection}
-        colorMode="dark"
+        colorMode={(resolvedTheme as ColorMode) ?? "dark"}
         fitView
         snapToGrid
         snapGrid={[16, 16]}
