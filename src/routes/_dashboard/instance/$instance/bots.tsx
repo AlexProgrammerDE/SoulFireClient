@@ -14,14 +14,8 @@ import {
   SearchIcon,
   WifiOffIcon,
 } from "lucide-react";
-import {
-  Suspense,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { parseAsString, useQueryState } from "nuqs";
+import { Suspense, useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { LoadingComponent } from "@/components/loading-component.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
@@ -39,6 +33,7 @@ import type {
   BotListResponse,
 } from "@/generated/soulfire/bot.ts";
 import { MinecraftAccountProto_AccountTypeProto } from "@/generated/soulfire/common.ts";
+import { simpleSearchValidateSearch } from "@/lib/parsers.ts";
 import {
   getEnumKeyByValue,
   mapUnionToValue,
@@ -49,6 +44,7 @@ import { createTransport } from "@/lib/web-rpc.ts";
 const PAGE_SIZE = 50;
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/bots")({
+  validateSearch: simpleSearchValidateSearch,
   beforeLoad: (props) => {
     const { instance } = props.params;
     const botStatusQueryOptions = queryOptions({
@@ -142,7 +138,14 @@ function Bots() {
 
 function Content() {
   const { t } = useTranslation("instance");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useQueryState(
+    "search",
+    parseAsString.withDefault("").withOptions({
+      clearOnDefault: true,
+      shallow: true,
+      throttleMs: 300,
+    }),
+  );
 
   return (
     <div className="container flex h-full w-full grow flex-col gap-4 py-4">

@@ -132,3 +132,20 @@ export const dataTableValidateSearch = createStandardSchemaV1(
     partialOutput: true,
   },
 );
+
+/**
+ * Search params definition for simple search input routes.
+ */
+export const simpleSearchParams = {
+  search: parseAsString,
+};
+
+/**
+ * Standard Schema validator for simple search params.
+ */
+export const simpleSearchValidateSearch = createStandardSchemaV1(
+  simpleSearchParams,
+  {
+    partialOutput: true,
+  },
+);
