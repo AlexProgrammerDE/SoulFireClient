@@ -272,7 +272,29 @@
   },
   "scripts": {
     "wipTitle": "Visual Script Editor",
-    "wipDescription": "The script system is being redesigned with a visual node-based editor.",
-    "wipDetails": "This feature is currently under development. The new visual script editor will allow you to create powerful automation scripts using a drag-and-drop interface without writing code."
+    "wipDescription": "Create automation scripts using a visual node-based editor.",
+    "wipDetails": "This feature is currently under development. The new visual script editor will allow you to create powerful automation scripts using a drag-and-drop interface without writing code.",
+    "createScript": "Create Script",
+    "createScriptTitle": "Create New Script",
+    "createScriptDescription": "Create a new visual script for this instance. Scripts can automate bot actions and respond to events.",
+    "scriptName": "Script Name",
+    "scriptNamePlaceholder": "Enter script name...",
+    "scriptDescription": "Description",
+    "scriptDescriptionPlaceholder": "Describe what this script does...",
+    "create": "Create",
+    "noScripts": "No Scripts Yet",
+    "noScriptsDescription": "Create your first script to automate bot actions using the visual node-based editor.",
+    "createFirstScript": "Create Your First Script",
+    "running": "Running",
+    "nodes": "nodes",
+    "noDescription": "No description",
+    "edit": "Edit",
+    "start": "Start",
+    "stop": "Stop",
+    "delete": "Delete",
+    "saveSuccess": "Script saved successfully",
+    "saveError": "Failed to save script",
+    "startSuccess": "Script started",
+    "stopSuccess": "Script stopped"
   }
 }
