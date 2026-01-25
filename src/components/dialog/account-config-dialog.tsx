@@ -393,6 +393,7 @@ function BotPluginInfoCard({
 
   const setEnabledMutation = useMutation({
     mutationKey: ["bot", "config", "enabled", instanceId, botId],
+    scope: { id: `bot-config-enabled-${instanceId}-${botId}` },
     mutationFn: async (value: JsonValue) => {
       if (!enabledIdentifier) return;
       await updateBotConfigEntry(
@@ -568,6 +569,9 @@ function BotSettingField({
       instanceId,
       botId,
     ],
+    scope: {
+      id: `bot-config-${settingId.namespace}-${settingId.key}-${instanceId}-${botId}`,
+    },
     mutationFn: async (newValue: JsonValue) => {
       await updateBotConfigEntry(
         settingId.namespace,

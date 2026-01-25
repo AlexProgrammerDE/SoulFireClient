@@ -160,6 +160,7 @@ function InstanceActionButtons() {
   // Using setInstanceConfigFull for profile import
   const setProfileMutation = useMutation({
     mutationKey: ["instance", "profile", "import", instanceInfo.id],
+    scope: { id: `instance-profile-${instanceInfo.id}` },
     mutationFn: async (profile: ProfileRoot) => {
       await setInstanceConfigFull(
         profile,

@@ -47,6 +47,7 @@ function Content() {
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const setUsernameMutation = useMutation({
     mutationKey: ["user", "self", "username"],
+    scope: { id: "user-self-username" },
     mutationFn: async (value: JsonValue) => {
       await setSelfUsername(
         value as string,
@@ -63,6 +64,7 @@ function Content() {
   });
   const setEmailMutation = useMutation({
     mutationKey: ["user", "self", "email"],
+    scope: { id: "user-self-email" },
     mutationFn: async (value: JsonValue) => {
       await setSelfEmail(
         value as string,

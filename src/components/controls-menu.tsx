@@ -58,6 +58,7 @@ export default function ControlsMenu() {
 
   const { mutateAsync: applyGeneratedAccountsMutation } = useMutation({
     mutationKey: ["instance", "accounts", "generate", instanceInfo.id],
+    scope: { id: `instance-accounts-${instanceInfo.id}` },
     mutationFn: async ({
       newAccounts,
       mode,
@@ -108,6 +109,7 @@ export default function ControlsMenu() {
 
   const startMutation = useMutation({
     mutationKey: ["instance", "state", "start", instanceInfo.id],
+    scope: { id: `instance-state-${instanceInfo.id}` },
     mutationFn: async () => {
       // Get the bot amount from settings (default to 1)
       const botAmount = (profile.settings?.bot?.amount as number) ?? 1;
@@ -169,6 +171,7 @@ export default function ControlsMenu() {
 
   const toggleMutation = useMutation({
     mutationKey: ["instance", "state", "toggle", instanceInfo.id],
+    scope: { id: `instance-state-${instanceInfo.id}` },
     mutationFn: () => {
       if (transport === null) {
         return Promise.resolve() as never;
@@ -215,6 +218,7 @@ export default function ControlsMenu() {
   });
   const stopMutation = useMutation({
     mutationKey: ["instance", "state", "stop", instanceInfo.id],
+    scope: { id: `instance-state-${instanceInfo.id}` },
     mutationFn: () => {
       if (transport === null) {
         return Promise.resolve() as never;

@@ -284,6 +284,7 @@ function AddButton() {
   // Batch add proxies mutation
   const { mutateAsync: addProxiesBatchMutation } = useMutation({
     mutationKey: ["instance", "proxies", "add-batch", instanceInfo.id],
+    scope: { id: `instance-proxies-${instanceInfo.id}` },
     mutationFn: async (proxies: ProfileProxy[]) => {
       await addInstanceProxiesBatch(
         proxies,
@@ -439,6 +440,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   // Batch remove proxies mutation
   const { mutateAsync: removeProxiesBatchMutation } = useMutation({
     mutationKey: ["instance", "proxies", "remove-batch", instanceInfo.id],
+    scope: { id: `instance-proxies-${instanceInfo.id}` },
     mutationFn: async (addresses: string[]) => {
       await removeInstanceProxiesBatch(
         addresses,

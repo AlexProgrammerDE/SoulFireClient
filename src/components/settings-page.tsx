@@ -714,6 +714,7 @@ function SettingField<T extends BaseSettings>(props: {
   );
   const setValueMutation = useMutation({
     mutationKey: ["setting", namespace, key],
+    scope: { id: `setting-${namespace}-${key}` },
     mutationFn: async (value: JsonValue) => {
       await props.updateConfigEntry(namespace, key, value);
     },
@@ -788,6 +789,7 @@ function SettingFieldByKey<T extends BaseSettings>(props: {
   );
   const setValueMutation = useMutation({
     mutationKey: ["setting", props.namespace, props.settingKey],
+    scope: { id: `setting-${props.namespace}-${props.settingKey}` },
     mutationFn: async (value: JsonValue) => {
       await props.updateConfigEntry(props.namespace, props.settingKey, value);
     },
