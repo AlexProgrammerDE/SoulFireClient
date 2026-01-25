@@ -8,7 +8,7 @@ import {
 } from "@xyflow/react";
 import { useCallback, useState } from "react";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
-import { edgeTypes } from "./edges";
+import { edgeTypes, isValidConnection } from "./edges";
 import { nodeTypes } from "./nodes";
 
 export function ScriptEditor() {
@@ -62,13 +62,20 @@ export function ScriptEditor() {
         onConnect={onConnect}
         onInit={handleInit}
         onSelectionChange={handleSelectionChange}
+        isValidConnection={isValidConnection}
+        colorMode="dark"
         fitView
         snapToGrid
         snapGrid={[16, 16]}
         deleteKeyCode={null}
         proOptions={{ hideAttribution: true }}
       >
-        <Background variant={BackgroundVariant.Dots} gap={16} size={1} />
+        <Background
+          variant={BackgroundVariant.Dots}
+          gap={16}
+          size={1}
+          color="var(--muted-foreground)"
+        />
         <Controls />
         <MiniMap zoomable pannable />
       </ReactFlow>

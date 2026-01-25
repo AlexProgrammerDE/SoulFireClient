@@ -1,9 +1,11 @@
-import type { Connection } from "@xyflow/react";
+import type { Connection, Edge, IsValidConnection } from "@xyflow/react";
 
 /**
  * Extract port type from handle id format: "type-name" e.g., "number-a", "exec-out"
  */
-export function getPortType(handleId: string | null): string | null {
+export function getPortType(
+  handleId: string | null | undefined,
+): string | null {
   if (!handleId) return null;
   const parts = handleId.split("-");
   return parts[0] || null;
@@ -17,7 +19,9 @@ export function getPortType(handleId: string | null): string | null {
  * - Same types can connect
  * - Number/boolean can connect to string (implicit conversion)
  */
-export function isValidConnection(connection: Connection): boolean {
+export const isValidConnection: IsValidConnection = (
+  connection: Edge | Connection,
+): boolean => {
   const sourceType = getPortType(connection.sourceHandle);
   const targetType = getPortType(connection.targetHandle);
 
@@ -38,4 +42,4 @@ export function isValidConnection(connection: Connection): boolean {
   if (sourceType === "boolean" && targetType === "string") return true;
 
   return false;
-}
+};
