@@ -173,7 +173,7 @@ export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
           </p>
         )}
       </div>
-      <ScrollArea className="flex-1">
+      <ScrollArea className="min-h-0 flex-1">
         <div className="flex flex-col gap-1 p-2">
           {categories.map((category) => (
             <CategorySection

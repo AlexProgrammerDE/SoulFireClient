@@ -107,7 +107,7 @@ export function ExecutionLogs({
           <TrashIcon className="size-3.5" />
         </Button>
       </div>
-      <ScrollArea className="flex-1" viewportRef={scrollViewportRef}>
+      <ScrollArea className="min-h-0 flex-1" viewportRef={scrollViewportRef}>
         {logs.length === 0 ? (
           <div className="flex h-full items-center justify-center p-4">
             <p className="text-center text-xs text-muted-foreground">

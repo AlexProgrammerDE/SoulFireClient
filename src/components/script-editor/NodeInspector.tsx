@@ -352,7 +352,7 @@ export function NodeInspector({
       <div className="border-b border-border p-3">
         <h2 className="text-sm font-semibold">Node Inspector</h2>
       </div>
-      <ScrollArea className="flex-1">
+      <ScrollArea className="min-h-0 flex-1">
         <div className="flex flex-col gap-4 p-3">
           {/* Node Header */}
           <Card size="sm">
