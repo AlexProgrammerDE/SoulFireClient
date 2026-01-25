@@ -1,6 +1,5 @@
 import { Handle, type NodeProps, Position } from "@xyflow/react";
-import { memo, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { memo } from "react";
 import { cn } from "@/lib/utils";
 import {
   CATEGORY_COLORS,
@@ -20,65 +19,40 @@ interface BaseNodeProps extends NodeProps {
   definition: NodeDefinition;
 }
 
-function NodeHandle({
+function PortRow({
   port,
   type,
   position,
-  index,
 }: {
   port: PortDefinition;
   type: "source" | "target";
   position: Position;
-  index: number;
 }) {
   const color = PORT_COLORS[port.type];
   const isExecution = port.type === "execution";
-
-  // Calculate vertical position for handle
-  // Header is ~40px, content starts after, each port row is ~24px
-  const headerOffset = 44;
-  const portHeight = 24;
-  const topOffset = headerOffset + index * portHeight + portHeight / 2;
-
-  return (
-    <Handle
-      type={type}
-      position={position}
-      id={port.id}
-      style={{
-        top: `${topOffset}px`,
-        background: color,
-        width: isExecution ? 12 : 10,
-        height: isExecution ? 12 : 10,
-        border: "2px solid hsl(var(--background))",
-        borderRadius: isExecution ? 2 : "50%",
-      }}
-      className="transition-transform hover:scale-125"
-    />
-  );
-}
-
-function PortLabel({
-  port,
-  align,
-}: {
-  port: PortDefinition;
-  align: "left" | "right";
-}) {
-  const color = PORT_COLORS[port.type];
+  const isLeft = position === Position.Left;
 
   return (
     <div
       className={cn(
-        "flex items-center gap-1.5 text-xs",
-        align === "right" && "flex-row-reverse",
+        "relative flex items-center gap-2 py-1",
+        isLeft ? "pr-4" : "pl-4 flex-row-reverse",
       )}
     >
-      <div
-        className="size-2 shrink-0 rounded-full"
-        style={{ backgroundColor: color }}
+      <Handle
+        type={type}
+        position={position}
+        id={port.id}
+        className="!relative !top-0 !transform-none transition-transform hover:scale-125"
+        style={{
+          background: color,
+          width: isExecution ? 10 : 8,
+          height: isExecution ? 10 : 8,
+          border: `2px solid var(--background)`,
+          borderRadius: isExecution ? 2 : "50%",
+        }}
       />
-      <span className="text-muted-foreground">{port.label}</span>
+      <span className="text-xs text-muted-foreground">{port.label}</span>
     </div>
   );
 }
@@ -88,66 +62,63 @@ function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
   const displayLabel = data.label ?? label;
   const isActive = data.isActive ?? false;
 
-  const _maxPorts = useMemo(
-    () => Math.max(inputs.length, outputs.length),
-    [inputs.length, outputs.length],
-  );
+  // Pair up inputs and outputs for aligned rows
+  const maxPorts = Math.max(inputs.length, outputs.length);
+  const rows = Array.from({ length: maxPorts }, (_, i) => ({
+    input: inputs[i],
+    output: outputs[i],
+  }));
 
   return (
-    <Card
-      size="sm"
+    <div
       className={cn(
-        "min-w-[180px] border-l-4 transition-all",
+        "min-w-[160px] rounded-lg border-2 border-border bg-card shadow-md",
+        "border-l-4",
         CATEGORY_COLORS[category],
         selected && "ring-2 ring-primary ring-offset-2 ring-offset-background",
         isActive &&
           "ring-2 ring-green-500 ring-offset-2 ring-offset-background",
       )}
     >
-      <CardHeader className="border-b border-border/50 px-3 py-2">
-        <CardTitle className="text-sm font-medium">{displayLabel}</CardTitle>
-      </CardHeader>
+      {/* Header */}
+      <div className="border-b border-border/50 px-3 py-2">
+        <span className="text-sm font-medium">{displayLabel}</span>
+      </div>
 
-      <CardContent className="px-3 py-2">
-        <div className="flex justify-between gap-4">
-          {/* Input ports */}
-          <div className="flex flex-col gap-1">
-            {inputs.map((port) => (
-              <PortLabel key={port.id} port={port} align="left" />
-            ))}
-          </div>
+      {/* Ports */}
+      {rows.length > 0 && (
+        <div className="px-1 py-1">
+          {rows.map((row) => (
+            <div
+              key={`${row.input?.id ?? "empty"}-${row.output?.id ?? "empty"}`}
+              className="flex items-center justify-between"
+            >
+              {/* Input port */}
+              {row.input ? (
+                <PortRow
+                  port={row.input}
+                  type="target"
+                  position={Position.Left}
+                />
+              ) : (
+                <div />
+              )}
 
-          {/* Output ports */}
-          <div className="flex flex-col gap-1">
-            {outputs.map((port) => (
-              <PortLabel key={port.id} port={port} align="right" />
-            ))}
-          </div>
+              {/* Output port */}
+              {row.output ? (
+                <PortRow
+                  port={row.output}
+                  type="source"
+                  position={Position.Right}
+                />
+              ) : (
+                <div />
+              )}
+            </div>
+          ))}
         </div>
-      </CardContent>
-
-      {/* Input handles */}
-      {inputs.map((port, index) => (
-        <NodeHandle
-          key={port.id}
-          port={port}
-          type="target"
-          position={Position.Left}
-          index={index}
-        />
-      ))}
-
-      {/* Output handles */}
-      {outputs.map((port, index) => (
-        <NodeHandle
-          key={port.id}
-          port={port}
-          type="source"
-          position={Position.Right}
-          index={index}
-        />
-      ))}
-    </Card>
+      )}
+    </div>
   );
 }
 
