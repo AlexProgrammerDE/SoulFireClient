@@ -9,11 +9,13 @@ import {
   ZoomInIcon,
   ZoomOutIcon,
 } from "lucide-react";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import { Label } from "@/components/ui/label.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
+import { Switch } from "@/components/ui/switch.tsx";
 import {
   Tooltip,
   TooltipContent,
@@ -51,9 +53,12 @@ export function ScriptToolbar({
   const setScriptName = useScriptEditorStore((state) => state.setScriptName);
   const isDirty = useScriptEditorStore((state) => state.isDirty);
   const isRunning = useScriptEditorStore((state) => state.isRunning);
+  const autoStart = useScriptEditorStore((state) => state.autoStart);
+  const setAutoStart = useScriptEditorStore((state) => state.setAutoStart);
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState(scriptName);
+  const autoStartId = useId();
 
   const handleNameSubmit = () => {
     setIsEditingName(false);
@@ -199,6 +204,27 @@ export function ScriptToolbar({
           </Tooltip>
         )}
       </div>
+
+      <Separator orientation="vertical" className="h-6 my-auto" />
+
+      {/* Auto-start Toggle */}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="flex items-center gap-2">
+            <Switch
+              id={autoStartId}
+              checked={autoStart}
+              onCheckedChange={setAutoStart}
+            />
+            <Label htmlFor={autoStartId} className="text-sm cursor-pointer">
+              Auto-start
+            </Label>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Automatically run this script when the instance starts</p>
+        </TooltipContent>
+      </Tooltip>
 
       <div className="flex-1" />
 

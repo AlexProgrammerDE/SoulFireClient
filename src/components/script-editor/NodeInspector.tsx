@@ -46,9 +46,10 @@ interface FieldConfig {
   step?: number;
 }
 
-// Field configurations for node types
+// Field configurations for node types (keys must match node type names exactly)
 const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
-  "on-interval": [
+  // Trigger nodes
+  "trigger.on_interval": [
     {
       key: "interval",
       label: "Interval (ms)",
@@ -58,23 +59,9 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
       step: 100,
     },
   ],
-  "on-event": [
-    {
-      key: "eventType",
-      label: "Event Type",
-      type: "select",
-      options: [
-        { value: "player-join", label: "Player Join" },
-        { value: "player-leave", label: "Player Leave" },
-        { value: "chat-message", label: "Chat Message" },
-        { value: "block-break", label: "Block Break" },
-        { value: "block-place", label: "Block Place" },
-        { value: "entity-spawn", label: "Entity Spawn" },
-        { value: "damage", label: "Damage Received" },
-      ],
-    },
-  ],
-  random: [
+
+  // Math nodes
+  "math.random": [
     {
       key: "min",
       label: "Min",
@@ -88,15 +75,27 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
       placeholder: "100",
     },
   ],
-  formula: [
+  "math.formula": [
     {
       key: "formula",
       label: "Formula",
       type: "textarea",
-      placeholder: "x + y",
+      placeholder: "a + b * 2",
     },
   ],
-  compare: [
+  "math.bspline": [
+    {
+      key: "degree",
+      label: "Degree",
+      type: "number",
+      placeholder: "3",
+      min: 1,
+      max: 10,
+    },
+  ],
+
+  // Logic nodes
+  "logic.compare": [
     {
       key: "operator",
       label: "Operator",
@@ -111,7 +110,82 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
       ],
     },
   ],
-  log: [
+
+  // Action nodes
+  "action.set_rotation": [
+    {
+      key: "smooth",
+      label: "Smooth",
+      type: "boolean",
+    },
+  ],
+  "action.look_at": [
+    {
+      key: "smooth",
+      label: "Smooth",
+      type: "boolean",
+    },
+  ],
+  "action.sneak": [
+    {
+      key: "enabled",
+      label: "Enabled",
+      type: "boolean",
+    },
+  ],
+  "action.sprint": [
+    {
+      key: "enabled",
+      label: "Enabled",
+      type: "boolean",
+    },
+  ],
+  "action.use_item": [
+    {
+      key: "hand",
+      label: "Hand",
+      type: "select",
+      options: [
+        { value: "main", label: "Main Hand" },
+        { value: "off", label: "Off Hand" },
+      ],
+    },
+  ],
+  "action.place_block": [
+    {
+      key: "face",
+      label: "Face",
+      type: "select",
+      options: [
+        { value: "up", label: "Up" },
+        { value: "down", label: "Down" },
+        { value: "north", label: "North" },
+        { value: "south", label: "South" },
+        { value: "east", label: "East" },
+        { value: "west", label: "West" },
+      ],
+    },
+  ],
+  "action.select_slot": [
+    {
+      key: "slot",
+      label: "Slot",
+      type: "number",
+      placeholder: "0",
+      min: 0,
+      max: 8,
+    },
+  ],
+  "action.wait": [
+    {
+      key: "ticks",
+      label: "Ticks",
+      type: "number",
+      placeholder: "20",
+      min: 1,
+    },
+  ],
+  "action.print": [
     {
       key: "level",
       label: "Log Level",
@@ -124,17 +198,45 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
       ],
     },
   ],
-  wait: [
+  "action.set_variable": [
     {
-      key: "duration",
-      label: "Duration (ms)",
-      type: "number",
-      placeholder: "1000",
-      min: 0,
-      step: 100,
+      key: "variableName",
+      label: "Variable Name",
+      type: "string",
+      placeholder: "myVar",
     },
   ],
-  number: [
+
+  // Data nodes
+  "data.find_entity": [
+    {
+      key: "range",
+      label: "Range",
+      type: "number",
+      placeholder: "16",
+      min: 1,
+    },
+  ],
+  "data.find_block": [
+    {
+      key: "range",
+      label: "Range",
+      type: "number",
+      placeholder: "32",
+      min: 1,
+    },
+  ],
+  "data.get_variable": [
+    {
+      key: "variableName",
+      label: "Variable Name",
+      type: "string",
+      placeholder: "myVar",
+    },
+  ],
+
+  // Constant nodes
+  "constant.number": [
     {
       key: "value",
       label: "Value",
@@ -142,7 +244,7 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
       placeholder: "0",
     },
   ],
-  string: [
+  "constant.string": [
     {
       key: "value",
       label: "Value",
@@ -150,36 +252,59 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
       placeholder: "Enter text...",
     },
   ],
-  boolean: [
+  "constant.boolean": [
     {
       key: "value",
       label: "Value",
       type: "boolean",
     },
   ],
-  "get-variable": [
+  "constant.vector3": [
     {
-      key: "variableName",
-      label: "Variable Name",
-      type: "string",
-      placeholder: "myVariable",
+      key: "x",
+      label: "X",
+      type: "number",
+      placeholder: "0",
+    },
+    {
+      key: "y",
+      label: "Y",
+      type: "number",
+      placeholder: "0",
+    },
+    {
+      key: "z",
+      label: "Z",
+      type: "number",
+      placeholder: "0",
     },
   ],
-  "set-variable": [
-    {
-      key: "variableName",
-      label: "Variable Name",
-      type: "string",
-      placeholder: "myVariable",
-    },
-  ],
-  loop: [
+
+  // Flow control nodes
+  "flow.loop": [
     {
       key: "count",
       label: "Loop Count",
       type: "number",
       placeholder: "10",
       min: 1,
+    },
+  ],
+  "flow.gate": [
+    {
+      key: "open",
+      label: "Open",
+      type: "boolean",
+    },
+  ],
+  "flow.debounce": [
+    {
+      key: "delay",
+      label: "Delay (ms)",
+      type: "number",
+      placeholder: "100",
+      min: 0,
+      step: 10,
     },
   ],
 };

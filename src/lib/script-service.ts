@@ -257,6 +257,7 @@ export function scriptDataToStore(script: ScriptData) {
     id: script.id,
     name: script.name,
     description: script.description,
+    autoStart: script.autoStart,
     nodes: protoToNodes(script.nodes),
     edges: protoToEdges(script.edges),
   };

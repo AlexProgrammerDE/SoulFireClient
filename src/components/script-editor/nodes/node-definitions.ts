@@ -24,7 +24,7 @@ function port(
 // ============================================================================
 
 export const OnTickNode: NodeDefinition = {
-  type: "OnTick",
+  type: "trigger.on_tick",
   label: "On Tick",
   category: "trigger",
   icon: "Clock",
@@ -33,7 +33,7 @@ export const OnTickNode: NodeDefinition = {
 };
 
 export const OnJoinNode: NodeDefinition = {
-  type: "OnJoin",
+  type: "trigger.on_join",
   label: "On Join",
   category: "trigger",
   icon: "LogIn",
@@ -46,7 +46,7 @@ export const OnJoinNode: NodeDefinition = {
 };
 
 export const OnChatNode: NodeDefinition = {
-  type: "OnChat",
+  type: "trigger.on_chat",
   label: "On Chat",
   category: "trigger",
   icon: "MessageSquare",
@@ -60,7 +60,7 @@ export const OnChatNode: NodeDefinition = {
 };
 
 export const OnDamageNode: NodeDefinition = {
-  type: "OnDamage",
+  type: "trigger.on_damage",
   label: "On Damage",
   category: "trigger",
   icon: "Zap",
@@ -74,7 +74,7 @@ export const OnDamageNode: NodeDefinition = {
 };
 
 export const OnDeathNode: NodeDefinition = {
-  type: "OnDeath",
+  type: "trigger.on_death",
   label: "On Death",
   category: "trigger",
   icon: "Skull",
@@ -87,7 +87,7 @@ export const OnDeathNode: NodeDefinition = {
 };
 
 export const OnHealthChangeNode: NodeDefinition = {
-  type: "OnHealthChange",
+  type: "trigger.on_health_change",
   label: "On Health Change",
   category: "trigger",
   icon: "Heart",
@@ -101,7 +101,7 @@ export const OnHealthChangeNode: NodeDefinition = {
 };
 
 export const OnIntervalNode: NodeDefinition = {
-  type: "OnInterval",
+  type: "trigger.on_interval",
   label: "On Interval",
   category: "trigger",
   icon: "Timer",
@@ -119,7 +119,7 @@ export const OnIntervalNode: NodeDefinition = {
 // ============================================================================
 
 export const AddNode: NodeDefinition = {
-  type: "Add",
+  type: "math.add",
   label: "Add",
   category: "math",
   icon: "Plus",
@@ -128,7 +128,7 @@ export const AddNode: NodeDefinition = {
 };
 
 export const SubtractNode: NodeDefinition = {
-  type: "Subtract",
+  type: "math.subtract",
   label: "Subtract",
   category: "math",
   icon: "Minus",
@@ -137,7 +137,7 @@ export const SubtractNode: NodeDefinition = {
 };
 
 export const MultiplyNode: NodeDefinition = {
-  type: "Multiply",
+  type: "math.multiply",
   label: "Multiply",
   category: "math",
   icon: "X",
@@ -146,7 +146,7 @@ export const MultiplyNode: NodeDefinition = {
 };
 
 export const DivideNode: NodeDefinition = {
-  type: "Divide",
+  type: "math.divide",
   label: "Divide",
   category: "math",
   icon: "Divide",
@@ -155,7 +155,7 @@ export const DivideNode: NodeDefinition = {
 };
 
 export const ModuloNode: NodeDefinition = {
-  type: "Modulo",
+  type: "math.modulo",
   label: "Modulo",
   category: "math",
   icon: "Percent",
@@ -164,7 +164,7 @@ export const ModuloNode: NodeDefinition = {
 };
 
 export const FormulaNode: NodeDefinition = {
-  type: "Formula",
+  type: "math.formula",
   label: "Formula",
   category: "math",
   icon: "Calculator",
@@ -177,7 +177,7 @@ export const FormulaNode: NodeDefinition = {
 };
 
 export const RandomNode: NodeDefinition = {
-  type: "Random",
+  type: "math.random",
   label: "Random",
   category: "math",
   icon: "Shuffle",
@@ -187,7 +187,7 @@ export const RandomNode: NodeDefinition = {
 };
 
 export const ClampNode: NodeDefinition = {
-  type: "Clamp",
+  type: "math.clamp",
   label: "Clamp",
   category: "math",
   icon: "Minimize2",
@@ -200,7 +200,7 @@ export const ClampNode: NodeDefinition = {
 };
 
 export const LerpNode: NodeDefinition = {
-  type: "Lerp",
+  type: "math.lerp",
   label: "Lerp",
   category: "math",
   icon: "TrendingUp",
@@ -213,7 +213,7 @@ export const LerpNode: NodeDefinition = {
 };
 
 export const BSplineNode: NodeDefinition = {
-  type: "BSpline",
+  type: "math.bspline",
   label: "B-Spline",
   category: "math",
   icon: "Spline",
@@ -234,7 +234,7 @@ export const BSplineNode: NodeDefinition = {
 // ============================================================================
 
 export const CompareNode: NodeDefinition = {
-  type: "Compare",
+  type: "logic.compare",
   label: "Compare",
   category: "logic",
   icon: "Scale",
@@ -248,7 +248,7 @@ export const CompareNode: NodeDefinition = {
 };
 
 export const AndNode: NodeDefinition = {
-  type: "And",
+  type: "logic.and",
   label: "And",
   category: "logic",
   icon: "Circle",
@@ -257,7 +257,7 @@ export const AndNode: NodeDefinition = {
 };
 
 export const OrNode: NodeDefinition = {
-  type: "Or",
+  type: "logic.or",
   label: "Or",
   category: "logic",
   icon: "CircleDot",
@@ -266,7 +266,7 @@ export const OrNode: NodeDefinition = {
 };
 
 export const NotNode: NodeDefinition = {
-  type: "Not",
+  type: "logic.not",
   label: "Not",
   category: "logic",
   icon: "Ban",
@@ -279,7 +279,7 @@ export const NotNode: NodeDefinition = {
 // ============================================================================
 
 export const SetRotationNode: NodeDefinition = {
-  type: "SetRotation",
+  type: "action.set_rotation",
   label: "Set Rotation",
   category: "action",
   icon: "RotateCw",
@@ -294,7 +294,7 @@ export const SetRotationNode: NodeDefinition = {
 };
 
 export const LookAtNode: NodeDefinition = {
-  type: "LookAt",
+  type: "action.look_at",
   label: "Look At",
   category: "action",
   icon: "Eye",
@@ -310,7 +310,7 @@ export const LookAtNode: NodeDefinition = {
 };
 
 export const SneakNode: NodeDefinition = {
-  type: "Sneak",
+  type: "action.sneak",
   label: "Sneak",
   category: "action",
   icon: "ChevronDown",
@@ -320,7 +320,7 @@ export const SneakNode: NodeDefinition = {
 };
 
 export const SprintNode: NodeDefinition = {
-  type: "Sprint",
+  type: "action.sprint",
   label: "Sprint",
   category: "action",
   icon: "Zap",
@@ -330,7 +330,7 @@ export const SprintNode: NodeDefinition = {
 };
 
 export const JumpNode: NodeDefinition = {
-  type: "Jump",
+  type: "action.jump",
   label: "Jump",
   category: "action",
   icon: "ArrowUp",
@@ -339,7 +339,7 @@ export const JumpNode: NodeDefinition = {
 };
 
 export const AttackNode: NodeDefinition = {
-  type: "Attack",
+  type: "action.attack",
   label: "Attack",
   category: "action",
   icon: "Sword",
@@ -348,7 +348,7 @@ export const AttackNode: NodeDefinition = {
 };
 
 export const UseItemNode: NodeDefinition = {
-  type: "UseItem",
+  type: "action.use_item",
   label: "Use Item",
   category: "action",
   icon: "Hand",
@@ -358,7 +358,7 @@ export const UseItemNode: NodeDefinition = {
 };
 
 export const PathfindToNode: NodeDefinition = {
-  type: "PathfindTo",
+  type: "action.pathfind_to",
   label: "Pathfind To",
   category: "action",
   icon: "Navigation",
@@ -376,7 +376,7 @@ export const PathfindToNode: NodeDefinition = {
 };
 
 export const BreakBlockNode: NodeDefinition = {
-  type: "BreakBlock",
+  type: "action.break_block",
   label: "Break Block",
   category: "action",
   icon: "Pickaxe",
@@ -390,7 +390,7 @@ export const BreakBlockNode: NodeDefinition = {
 };
 
 export const PlaceBlockNode: NodeDefinition = {
-  type: "PlaceBlock",
+  type: "action.place_block",
   label: "Place Block",
   category: "action",
   icon: "Box",
@@ -406,7 +406,7 @@ export const PlaceBlockNode: NodeDefinition = {
 };
 
 export const SelectSlotNode: NodeDefinition = {
-  type: "SelectSlot",
+  type: "action.select_slot",
   label: "Select Slot",
   category: "action",
   icon: "Grid3X3",
@@ -416,7 +416,7 @@ export const SelectSlotNode: NodeDefinition = {
 };
 
 export const SendChatNode: NodeDefinition = {
-  type: "SendChat",
+  type: "action.send_chat",
   label: "Send Chat",
   category: "action",
   icon: "Send",
@@ -425,7 +425,7 @@ export const SendChatNode: NodeDefinition = {
 };
 
 export const WaitNode: NodeDefinition = {
-  type: "Wait",
+  type: "action.wait",
   label: "Wait",
   category: "action",
   icon: "Clock",
@@ -434,12 +434,32 @@ export const WaitNode: NodeDefinition = {
   defaultData: { ticks: 20 },
 };
 
+export const PrintNode: NodeDefinition = {
+  type: "action.print",
+  label: "Print",
+  category: "action",
+  icon: "MessageSquareText",
+  inputs: [execIn(), port("message", "Message", "any")],
+  outputs: [execOut()],
+  defaultData: { level: "info" },
+};
+
+export const SetVariableNode: NodeDefinition = {
+  type: "action.set_variable",
+  label: "Set Variable",
+  category: "action",
+  icon: "Upload",
+  inputs: [execIn(), port("value", "Value", "any")],
+  outputs: [execOut()],
+  defaultData: { variableName: "myVar" },
+};
+
 // ============================================================================
 // DATA NODES
 // ============================================================================
 
 export const GetPositionNode: NodeDefinition = {
-  type: "GetPosition",
+  type: "data.get_position",
   label: "Get Position",
   category: "data",
   icon: "MapPin",
@@ -452,7 +472,7 @@ export const GetPositionNode: NodeDefinition = {
 };
 
 export const GetRotationNode: NodeDefinition = {
-  type: "GetRotation",
+  type: "data.get_rotation",
   label: "Get Rotation",
   category: "data",
   icon: "Compass",
@@ -461,7 +481,7 @@ export const GetRotationNode: NodeDefinition = {
 };
 
 export const GetHealthNode: NodeDefinition = {
-  type: "GetHealth",
+  type: "data.get_health",
   label: "Get Health",
   category: "data",
   icon: "Heart",
@@ -473,7 +493,7 @@ export const GetHealthNode: NodeDefinition = {
 };
 
 export const GetHungerNode: NodeDefinition = {
-  type: "GetHunger",
+  type: "data.get_hunger",
   label: "Get Hunger",
   category: "data",
   icon: "Utensils",
@@ -485,7 +505,7 @@ export const GetHungerNode: NodeDefinition = {
 };
 
 export const GetInventoryNode: NodeDefinition = {
-  type: "GetInventory",
+  type: "data.get_inventory",
   label: "Get Inventory",
   category: "data",
   icon: "Package",
@@ -494,7 +514,7 @@ export const GetInventoryNode: NodeDefinition = {
 };
 
 export const GetBlockNode: NodeDefinition = {
-  type: "GetBlock",
+  type: "data.get_block",
   label: "Get Block",
   category: "data",
   icon: "Square",
@@ -510,7 +530,7 @@ export const GetBlockNode: NodeDefinition = {
 };
 
 export const FindEntityNode: NodeDefinition = {
-  type: "FindEntity",
+  type: "data.find_entity",
   label: "Find Entity",
   category: "data",
   icon: "Search",
@@ -527,7 +547,7 @@ export const FindEntityNode: NodeDefinition = {
 };
 
 export const FindBlockNode: NodeDefinition = {
-  type: "FindBlock",
+  type: "data.find_block",
   label: "Find Block",
   category: "data",
   icon: "Scan",
@@ -545,12 +565,70 @@ export const FindBlockNode: NodeDefinition = {
   defaultData: { range: 32 },
 };
 
+export const GetVariableNode: NodeDefinition = {
+  type: "data.get_variable",
+  label: "Get Variable",
+  category: "data",
+  icon: "Download",
+  inputs: [],
+  outputs: [port("value", "Value", "any")],
+  defaultData: { variableName: "myVar" },
+};
+
+// ============================================================================
+// CONSTANT NODES
+// ============================================================================
+
+export const NumberConstantNode: NodeDefinition = {
+  type: "constant.number",
+  label: "Number",
+  category: "data",
+  icon: "Hash",
+  inputs: [],
+  outputs: [port("value", "Value", "number")],
+  defaultData: { value: 0 },
+};
+
+export const StringConstantNode: NodeDefinition = {
+  type: "constant.string",
+  label: "String",
+  category: "data",
+  icon: "Type",
+  inputs: [],
+  outputs: [port("value", "Value", "string")],
+  defaultData: { value: "" },
+};
+
+export const BooleanConstantNode: NodeDefinition = {
+  type: "constant.boolean",
+  label: "Boolean",
+  category: "data",
+  icon: "ToggleLeft",
+  inputs: [],
+  outputs: [port("value", "Value", "boolean")],
+  defaultData: { value: false },
+};
+
+export const Vector3ConstantNode: NodeDefinition = {
+  type: "constant.vector3",
+  label: "Vector3",
+  category: "data",
+  icon: "Move3D",
+  inputs: [],
+  outputs: [
+    port("x", "X", "number"),
+    port("y", "Y", "number"),
+    port("z", "Z", "number"),
+  ],
+  defaultData: { x: 0, y: 0, z: 0 },
+};
+
 // ============================================================================
 // FLOW CONTROL NODES
 // ============================================================================
 
 export const BranchNode: NodeDefinition = {
-  type: "Branch",
+  type: "flow.branch",
   label: "Branch",
   category: "flow",
   icon: "GitBranch",
@@ -559,7 +637,7 @@ export const BranchNode: NodeDefinition = {
 };
 
 export const SwitchNode: NodeDefinition = {
-  type: "Switch",
+  type: "flow.switch",
   label: "Switch",
   category: "flow",
   icon: "GitMerge",
@@ -573,7 +651,7 @@ export const SwitchNode: NodeDefinition = {
 };
 
 export const LoopNode: NodeDefinition = {
-  type: "Loop",
+  type: "flow.loop",
   label: "Loop",
   category: "flow",
   icon: "Repeat",
@@ -587,7 +665,7 @@ export const LoopNode: NodeDefinition = {
 };
 
 export const ForEachNode: NodeDefinition = {
-  type: "ForEach",
+  type: "flow.for_each",
   label: "For Each",
   category: "flow",
   icon: "List",
@@ -601,7 +679,7 @@ export const ForEachNode: NodeDefinition = {
 };
 
 export const SequenceNode: NodeDefinition = {
-  type: "Sequence",
+  type: "flow.sequence",
   label: "Sequence",
   category: "flow",
   icon: "ListOrdered",
@@ -615,7 +693,7 @@ export const SequenceNode: NodeDefinition = {
 };
 
 export const GateNode: NodeDefinition = {
-  type: "Gate",
+  type: "flow.gate",
   label: "Gate",
   category: "flow",
   icon: "DoorOpen",
@@ -625,7 +703,7 @@ export const GateNode: NodeDefinition = {
 };
 
 export const DebounceNode: NodeDefinition = {
-  type: "Debounce",
+  type: "flow.debounce",
   label: "Debounce",
   category: "flow",
   icon: "Timer",
@@ -640,65 +718,74 @@ export const DebounceNode: NodeDefinition = {
 
 export const NODE_DEFINITIONS: Record<string, NodeDefinition> = {
   // Trigger nodes
-  OnTick: OnTickNode,
-  OnJoin: OnJoinNode,
-  OnChat: OnChatNode,
-  OnDamage: OnDamageNode,
-  OnDeath: OnDeathNode,
-  OnHealthChange: OnHealthChangeNode,
-  OnInterval: OnIntervalNode,
+  "trigger.on_tick": OnTickNode,
+  "trigger.on_join": OnJoinNode,
+  "trigger.on_chat": OnChatNode,
+  "trigger.on_damage": OnDamageNode,
+  "trigger.on_death": OnDeathNode,
+  "trigger.on_health_change": OnHealthChangeNode,
+  "trigger.on_interval": OnIntervalNode,
 
   // Math nodes
-  Add: AddNode,
-  Subtract: SubtractNode,
-  Multiply: MultiplyNode,
-  Divide: DivideNode,
-  Modulo: ModuloNode,
-  Formula: FormulaNode,
-  Random: RandomNode,
-  Clamp: ClampNode,
-  Lerp: LerpNode,
-  BSpline: BSplineNode,
+  "math.add": AddNode,
+  "math.subtract": SubtractNode,
+  "math.multiply": MultiplyNode,
+  "math.divide": DivideNode,
+  "math.modulo": ModuloNode,
+  "math.formula": FormulaNode,
+  "math.random": RandomNode,
+  "math.clamp": ClampNode,
+  "math.lerp": LerpNode,
+  "math.bspline": BSplineNode,
 
   // Logic nodes
-  Compare: CompareNode,
-  And: AndNode,
-  Or: OrNode,
-  Not: NotNode,
+  "logic.compare": CompareNode,
+  "logic.and": AndNode,
+  "logic.or": OrNode,
+  "logic.not": NotNode,
 
   // Action nodes
-  SetRotation: SetRotationNode,
-  LookAt: LookAtNode,
-  Sneak: SneakNode,
-  Sprint: SprintNode,
-  Jump: JumpNode,
-  Attack: AttackNode,
-  UseItem: UseItemNode,
-  PathfindTo: PathfindToNode,
-  BreakBlock: BreakBlockNode,
-  PlaceBlock: PlaceBlockNode,
-  SelectSlot: SelectSlotNode,
-  SendChat: SendChatNode,
-  Wait: WaitNode,
+  "action.set_rotation": SetRotationNode,
+  "action.look_at": LookAtNode,
+  "action.sneak": SneakNode,
+  "action.sprint": SprintNode,
+  "action.jump": JumpNode,
+  "action.attack": AttackNode,
+  "action.use_item": UseItemNode,
+  "action.pathfind_to": PathfindToNode,
+  "action.break_block": BreakBlockNode,
+  "action.place_block": PlaceBlockNode,
+  "action.select_slot": SelectSlotNode,
+  "action.send_chat": SendChatNode,
+  "action.wait": WaitNode,
+  "action.print": PrintNode,
+  "action.set_variable": SetVariableNode,
 
   // Data nodes
-  GetPosition: GetPositionNode,
-  GetRotation: GetRotationNode,
-  GetHealth: GetHealthNode,
-  GetHunger: GetHungerNode,
-  GetInventory: GetInventoryNode,
-  GetBlock: GetBlockNode,
-  FindEntity: FindEntityNode,
-  FindBlock: FindBlockNode,
+  "data.get_position": GetPositionNode,
+  "data.get_rotation": GetRotationNode,
+  "data.get_health": GetHealthNode,
+  "data.get_hunger": GetHungerNode,
+  "data.get_inventory": GetInventoryNode,
+  "data.get_block": GetBlockNode,
+  "data.find_entity": FindEntityNode,
+  "data.find_block": FindBlockNode,
+  "data.get_variable": GetVariableNode,
+
+  // Constant nodes
+  "constant.number": NumberConstantNode,
+  "constant.string": StringConstantNode,
+  "constant.boolean": BooleanConstantNode,
+  "constant.vector3": Vector3ConstantNode,
 
   // Flow control nodes
-  Branch: BranchNode,
-  Switch: SwitchNode,
-  Loop: LoopNode,
-  ForEach: ForEachNode,
-  Sequence: SequenceNode,
-  Gate: GateNode,
-  Debounce: DebounceNode,
+  "flow.branch": BranchNode,
+  "flow.switch": SwitchNode,
+  "flow.loop": LoopNode,
+  "flow.for_each": ForEachNode,
+  "flow.sequence": SequenceNode,
+  "flow.gate": GateNode,
+  "flow.debounce": DebounceNode,
 };
 
 // Group definitions by category for UI purposes

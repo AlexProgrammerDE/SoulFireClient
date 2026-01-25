@@ -149,6 +149,7 @@ function ScriptEditorContent() {
         scope: ScriptScope.INSTANCE,
         nodes: nodesToProto(nodes),
         edges: edgesToProto(edges),
+        autoStart: scriptData.autoStart,
       });
       return result.response;
     },
@@ -189,6 +190,7 @@ function ScriptEditorContent() {
         edges: edgesToProto(edges),
         updateNodes: true,
         updateEdges: true,
+        autoStart: scriptData.autoStart,
       });
       return result.response;
     },
