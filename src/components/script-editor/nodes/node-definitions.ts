@@ -1,20 +1,22 @@
 import type { NodeDefinition, PortDefinition } from "./types";
 
 // Helper functions to create port definitions
+// Port IDs use format "type-name" for connection validation (e.g., "number-a", "exec-out")
 function execIn(): PortDefinition {
   return { id: "exec-in", label: "Exec", type: "execution" };
 }
 
-function execOut(id = "exec-out", label = "Exec"): PortDefinition {
-  return { id, label, type: "execution" };
+function execOut(name = "out", label = "Exec"): PortDefinition {
+  return { id: `exec-${name}`, label, type: "execution" };
 }
 
 function port(
-  id: string,
+  name: string,
   label: string,
   type: PortDefinition["type"],
 ): PortDefinition {
-  return { id, label, type };
+  // Prefix ID with type for connection validation
+  return { id: `${type}-${name}`, label, type };
 }
 
 // ============================================================================
@@ -368,8 +370,8 @@ export const PathfindToNode: NodeDefinition = {
   ],
   outputs: [
     execOut(),
-    execOut("exec-completed", "Completed"),
-    execOut("exec-failed", "Failed"),
+    execOut("completed", "Completed"),
+    execOut("failed", "Failed"),
   ],
 };
 
@@ -384,7 +386,7 @@ export const BreakBlockNode: NodeDefinition = {
     port("y", "Y", "number"),
     port("z", "Z", "number"),
   ],
-  outputs: [execOut(), execOut("exec-completed", "Completed")],
+  outputs: [execOut(), execOut("completed", "Completed")],
 };
 
 export const PlaceBlockNode: NodeDefinition = {
@@ -399,7 +401,7 @@ export const PlaceBlockNode: NodeDefinition = {
     port("z", "Z", "number"),
     port("face", "Face", "string"),
   ],
-  outputs: [execOut(), execOut("exec-completed", "Completed")],
+  outputs: [execOut(), execOut("completed", "Completed")],
   defaultData: { face: "up" },
 };
 
@@ -553,7 +555,7 @@ export const BranchNode: NodeDefinition = {
   category: "flow",
   icon: "GitBranch",
   inputs: [execIn(), port("condition", "Condition", "boolean")],
-  outputs: [execOut("exec-true", "True"), execOut("exec-false", "False")],
+  outputs: [execOut("true", "True"), execOut("false", "False")],
 };
 
 export const SwitchNode: NodeDefinition = {
@@ -563,10 +565,10 @@ export const SwitchNode: NodeDefinition = {
   icon: "GitMerge",
   inputs: [execIn(), port("value", "Value", "any")],
   outputs: [
-    execOut("exec-default", "Default"),
-    execOut("exec-case1", "Case 1"),
-    execOut("exec-case2", "Case 2"),
-    execOut("exec-case3", "Case 3"),
+    execOut("default", "Default"),
+    execOut("case1", "Case 1"),
+    execOut("case2", "Case 2"),
+    execOut("case3", "Case 3"),
   ],
 };
 
@@ -577,8 +579,8 @@ export const LoopNode: NodeDefinition = {
   icon: "Repeat",
   inputs: [execIn(), port("count", "Count", "number")],
   outputs: [
-    execOut("exec-body", "Body"),
-    execOut("exec-completed", "Completed"),
+    execOut("body", "Body"),
+    execOut("completed", "Completed"),
     port("index", "Index", "number"),
   ],
   defaultData: { count: 10 },
@@ -591,8 +593,8 @@ export const ForEachNode: NodeDefinition = {
   icon: "List",
   inputs: [execIn(), port("items", "Items", "any")],
   outputs: [
-    execOut("exec-body", "Body"),
-    execOut("exec-completed", "Completed"),
+    execOut("body", "Body"),
+    execOut("completed", "Completed"),
     port("item", "Item", "any"),
     port("index", "Index", "number"),
   ],
@@ -605,10 +607,10 @@ export const SequenceNode: NodeDefinition = {
   icon: "ListOrdered",
   inputs: [execIn()],
   outputs: [
-    execOut("exec-1", "1"),
-    execOut("exec-2", "2"),
-    execOut("exec-3", "3"),
-    execOut("exec-4", "4"),
+    execOut("1", "1"),
+    execOut("2", "2"),
+    execOut("3", "3"),
+    execOut("4", "4"),
   ],
 };
 

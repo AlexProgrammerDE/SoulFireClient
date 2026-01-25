@@ -91,7 +91,7 @@ export function ScriptToolbar({
         </Link>
       </Button>
 
-      <Separator orientation="vertical" className="h-6" />
+      <Separator orientation="vertical" className="h-6 my-auto" />
 
       {/* Script Name */}
       <div className="flex items-center gap-2">
@@ -128,7 +128,7 @@ export function ScriptToolbar({
         )}
       </div>
 
-      <Separator orientation="vertical" className="h-6" />
+      <Separator orientation="vertical" className="h-6 my-auto" />
 
       {/* Save Button */}
       <Tooltip>
@@ -153,7 +153,7 @@ export function ScriptToolbar({
         </TooltipContent>
       </Tooltip>
 
-      <Separator orientation="vertical" className="h-6" />
+      <Separator orientation="vertical" className="h-6 my-auto" />
 
       {/* Execution Controls */}
       <div className="flex items-center gap-1">
@@ -215,7 +215,7 @@ export function ScriptToolbar({
               <p>Clear canvas</p>
             </TooltipContent>
           </Tooltip>
-          <Separator orientation="vertical" className="h-6" />
+          <Separator orientation="vertical" className="h-6 my-auto" />
         </>
       )}
 

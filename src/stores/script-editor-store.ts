@@ -3,6 +3,7 @@ import {
   applyEdgeChanges,
   applyNodeChanges,
   type Edge,
+  MarkerType,
   type Node,
   type OnConnect,
   type OnEdgesChange,
@@ -123,12 +124,24 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
 
   onConnect: (connection) => {
     // Add edge type based on handle types
-    const edgeType = connection.sourceHandle?.startsWith("exec")
-      ? "execution"
-      : "data";
+    const isExecution = connection.sourceHandle?.startsWith("exec");
+    const edgeType = isExecution ? "execution" : "data";
+
     set({
       edges: addEdge(
-        { ...connection, type: edgeType, data: { edgeType } },
+        {
+          ...connection,
+          type: edgeType,
+          data: { edgeType },
+          // Add arrow marker for execution edges
+          ...(isExecution && {
+            markerEnd: {
+              type: MarkerType.ArrowClosed,
+              width: 16,
+              height: 16,
+            },
+          }),
+        },
         get().edges,
       ),
       isDirty: true,
