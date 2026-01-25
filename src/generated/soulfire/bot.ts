@@ -19,626 +19,1002 @@ import {
 } from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { Value } from "../google/protobuf/struct";
+// ============================================================================
+// BotService - Minecraft Bot Control and Information Service
+// ============================================================================
+//
+// The BotService provides comprehensive control and monitoring capabilities for
+// Minecraft bots managed by the SoulFire server. It enables clients to:
+//
+// - Query bot status and live state (position, health, inventory, etc.)
+// - Control bot movement (WASD, jump, sneak, sprint)
+// - Control bot view direction (yaw/pitch rotation)
+// - Manage inventory interactions (clicking slots, opening/closing containers)
+// - Render the bot's point-of-view as images
+// - Interact with server dialogs (Minecraft 1.21.6+)
+// - Update bot-specific configuration
+//
+// All RPC methods require appropriate permissions checked via the user context.
+// Most methods require the bot to be online (connected to a Minecraft server)
+// for the operation to succeed.
+// ============================================================================
+
 /**
+ * Request message for retrieving detailed information about a specific bot.
+ * Used by the GetBotInfo RPC to fetch a single bot's live state with full inventory data.
+ *
  * @generated from protobuf message soulfire.v1.BotInfoRequest
  */
 export interface BotInfoRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   * Must be a valid UUID string format (e.g., "550e8400-e29b-41d4-a716-446655440000").
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot (Minecraft account UUID).
+   * Must be a valid UUID string format.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
 }
 /**
+ * Request message for listing all bots in an instance.
+ * Used by the GetBotList RPC to enumerate all configured bots.
+ *
  * @generated from protobuf message soulfire.v1.BotListRequest
  */
 export interface BotListRequest {
   /**
+   * The UUID of the SoulFire instance to list bots from.
+   * Must be a valid UUID string format.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
 }
 /**
+ * Entry representing a single bot in the bot list.
+ * Contains summary information suitable for display in a list view.
+ *
  * @generated from protobuf message soulfire.v1.BotListEntry
  */
 export interface BotListEntry {
   /**
+   * The Minecraft profile UUID of the bot.
+   * This uniquely identifies the bot within the instance.
+   *
    * @generated from protobuf field: string profile_id = 1
    */
   profileId: string;
   /**
+   * Whether the bot is currently connected to a Minecraft server.
+   * When false, the bot exists in configuration but is not active.
+   *
    * @generated from protobuf field: bool is_online = 2
    */
   isOnline: boolean;
   /**
+   * Live state of the bot if online and player data is available.
+   * Will be absent if the bot is offline or the player hasn't fully spawned.
+   * Note: For list views, inventory data is NOT included (too expensive).
+   *
    * @generated from protobuf field: optional soulfire.v1.BotLiveState live_state = 3
    */
   liveState?: BotLiveState;
 }
 /**
+ * Response containing the list of all bots in an instance.
+ *
  * @generated from protobuf message soulfire.v1.BotListResponse
  */
 export interface BotListResponse {
   /**
+   * All bots configured in the instance, both online and offline.
+   * The order is determined by the account configuration order.
+   *
    * @generated from protobuf field: repeated soulfire.v1.BotListEntry bots = 1
    */
   bots: BotListEntry[];
 }
 /**
- * Represents an item in an inventory slot
+ * Represents an item in an inventory slot.
+ * Used for both container slots and carried (cursor) items.
  *
  * @generated from protobuf message soulfire.v1.InventorySlot
  */
 export interface InventorySlot {
   /**
+   * The slot index within the container.
+   * - For container menus: 0 to (total_slots - 1)
+   * - For player inventory: 0-4 crafting, 5-8 armor, 9-35 main inventory, 36-44 hotbar, 45 offhand
+   * - For carried items (cursor): -1 is used as a special indicator
+   *
    * @generated from protobuf field: int32 slot = 1
    */
   slot: number;
   /**
+   * The Minecraft item identifier in namespaced format.
+   * Examples: "minecraft:diamond_sword", "minecraft:stone", "minecraft:enchanted_book"
+   *
    * @generated from protobuf field: string item_id = 2
    */
-  itemId: string; // e.g., "minecraft:diamond_sword"
+  itemId: string;
   /**
+   * The number of items in this stack.
+   * Range: 1 to the item's maximum stack size (typically 1, 16, or 64).
+   *
    * @generated from protobuf field: int32 count = 3
    */
   count: number;
   /**
+   * The custom display name of the item, if it has been renamed.
+   * Only present when the item has a custom name component (e.g., renamed in an anvil).
+   * Contains the plain text string, not JSON text components.
+   *
    * @generated from protobuf field: optional string display_name = 4
    */
-  displayName?: string; // Custom name if present
+  displayName?: string;
 }
 /**
+ * Real-time state of a connected bot.
+ * Contains position, health, inventory, and other live game data.
+ *
  * @generated from protobuf message soulfire.v1.BotLiveState
  */
 export interface BotLiveState {
   /**
+   * X coordinate in the Minecraft world (east/west axis).
+   * East is positive, West is negative.
+   *
    * @generated from protobuf field: double x = 1
    */
   x: number;
   /**
+   * Y coordinate in the Minecraft world (vertical axis).
+   * Increases upward. Sea level is typically around 63.
+   *
    * @generated from protobuf field: double y = 2
    */
   y: number;
   /**
+   * Z coordinate in the Minecraft world (north/south axis).
+   * South is positive, North is negative.
+   *
    * @generated from protobuf field: double z = 3
    */
   z: number;
   /**
+   * Vertical rotation (pitch) in degrees.
+   * Range: -90 (looking straight up) to 90 (looking straight down).
+   * 0 is looking at the horizon.
+   *
    * @generated from protobuf field: float xRot = 4
    */
   xRot: number;
   /**
+   * Horizontal rotation (yaw) in degrees.
+   * Range: -180 to 180. 0 = South, 90 = West, -90 = East, +/-180 = North.
+   *
    * @generated from protobuf field: float yRot = 5
    */
   yRot: number;
   /**
-   * Health and food
+   * Current health points.
+   * Range: 0 (dead) to max_health. 1 point = half a heart in the UI.
    *
    * @generated from protobuf field: float health = 6
    */
   health: number;
   /**
+   * Maximum health points the player can have.
+   * Default is 20 (10 hearts). Can be modified by effects or attributes.
+   *
    * @generated from protobuf field: float max_health = 7
    */
   maxHealth: number;
   /**
+   * Current hunger/food level.
+   * Range: 0 (starving) to 20 (full). 1 point = half a drumstick in the UI.
+   * Below 6, the player cannot sprint. At 0, health starts draining.
+   *
    * @generated from protobuf field: int32 food_level = 8
    */
   foodLevel: number;
   /**
+   * Current saturation level.
+   * Range: 0 to food_level. Acts as a buffer before hunger depletes.
+   * When saturation is above 0, hunger bar doesn't decrease while performing actions.
+   *
    * @generated from protobuf field: float saturation_level = 9
    */
   saturationLevel: number;
   /**
-   * Inventory (only non-empty slots)
+   * Inventory slots containing items (only non-empty slots are included).
+   * For list views (GetBotList), this will be empty for performance.
+   * For detail views (GetBotInfo), contains all non-empty slots from the player inventory.
    *
    * @generated from protobuf field: repeated soulfire.v1.InventorySlot inventory = 10
    */
   inventory: InventorySlot[];
   /**
+   * Currently selected hotbar slot index.
+   * Range: 0 to 8, corresponding to hotbar slots 1-9 in the UI.
+   *
    * @generated from protobuf field: int32 selected_hotbar_slot = 11
    */
   selectedHotbarSlot: number;
   /**
-   * World info
+   * The dimension the player is currently in.
+   * Format: namespaced identifier (e.g., "minecraft:overworld", "minecraft:the_nether", "minecraft:the_end").
+   * Custom dimensions will use their server-defined namespace.
    *
    * @generated from protobuf field: string dimension = 12
    */
-  dimension: string; // e.g., "minecraft:overworld"
+  dimension: string;
   /**
-   * Experience
+   * Player's current experience level (the number shown on the XP bar).
+   * Range: 0 to theoretically unlimited (typically 0-30+ for enchanting).
    *
    * @generated from protobuf field: int32 experience_level = 13
    */
   experienceLevel: number;
   /**
+   * Progress towards the next experience level.
+   * Range: 0.0 (just reached current level) to 1.0 (about to level up).
+   *
    * @generated from protobuf field: float experience_progress = 14
    */
-  experienceProgress: number; // 0.0 to 1.0
+  experienceProgress: number;
   /**
-   * Skin texture hash for avatar rendering (e.g., "abc123def456...")
-   * Use with https://mc-heads.net/body/<hash> for full body render
+   * Skin texture hash for avatar rendering.
+   * This is the hash extracted from the texture URL in the player's game profile.
+   * Can be used with services like mc-heads.net: https://mc-heads.net/body/<hash>
+   * Will be absent if the player has no custom skin or skin data is unavailable.
    *
    * @generated from protobuf field: optional string skin_texture_hash = 15
    */
   skinTextureHash?: string;
   /**
-   * Game mode (survival, creative, adventure, spectator)
+   * Current game mode of the player.
+   * Determines available actions (breaking blocks, flying, taking damage, etc.).
    *
    * @generated from protobuf field: soulfire.v1.GameMode game_mode = 16
    */
   gameMode: GameMode;
 }
 /**
+ * Response containing detailed information about a specific bot.
+ *
  * @generated from protobuf message soulfire.v1.BotInfoResponse
  */
 export interface BotInfoResponse {
   /**
+   * Live state of the bot including full inventory data.
+   * Will be absent if the bot is offline or player data is not available.
+   * When present, includes complete inventory slot information.
+   *
    * @generated from protobuf field: optional soulfire.v1.BotLiveState live_state = 2
    */
   liveState?: BotLiveState;
 }
 /**
- * Granular config entry update (single key-value)
+ * Request to update a single configuration entry for a specific bot.
+ * This allows granular updates without replacing the entire configuration.
  *
  * @generated from protobuf message soulfire.v1.BotUpdateConfigEntryRequest
  */
 export interface BotUpdateConfigEntryRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot to update configuration for.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
   /**
+   * The settings namespace (e.g., plugin ID or "bot" for core bot settings).
+   * Examples: "bot", "auto-reconnect", "chat-message-controller"
+   *
    * @generated from protobuf field: string namespace = 3
    */
   namespace: string;
   /**
+   * The key within the namespace to update.
+   * Must be a valid setting key defined for that namespace.
+   *
    * @generated from protobuf field: string key = 4
    */
   key: string;
   /**
+   * The new value to set for this configuration entry.
+   * Must be a valid protobuf Value (null, number, string, bool, list, or struct).
+   *
    * @generated from protobuf field: google.protobuf.Value value = 5
    */
   value?: Value;
 }
 /**
+ * Response for bot configuration entry update.
+ * Empty on success; errors are returned via gRPC status.
+ *
  * @generated from protobuf message soulfire.v1.BotUpdateConfigEntryResponse
  */
 export interface BotUpdateConfigEntryResponse {}
 /**
- * POV Rendering
+ * Request to render the bot's point-of-view as an image.
+ * Uses software rendering to generate a PNG image of what the bot "sees".
  *
  * @generated from protobuf message soulfire.v1.BotRenderPovRequest
  */
 export interface BotRenderPovRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot to render POV for.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
   /**
+   * Desired image width in pixels.
+   * Default: 854 (if 0 or not provided).
+   * Maximum: 1920 (values above this are clamped).
+   * Minimum: 1 (values below this are clamped).
+   *
    * @generated from protobuf field: int32 width = 3
    */
-  width: number; // Image width (default 854)
+  width: number;
   /**
+   * Desired image height in pixels.
+   * Default: 480 (if 0 or not provided).
+   * Maximum: 1080 (values above this are clamped).
+   * Minimum: 1 (values below this are clamped).
+   *
    * @generated from protobuf field: int32 height = 4
    */
-  height: number; // Image height (default 480)
+  height: number;
 }
 /**
+ * Response containing the rendered POV image.
+ *
  * @generated from protobuf message soulfire.v1.BotRenderPovResponse
  */
 export interface BotRenderPovResponse {
   /**
+   * Base64-encoded PNG image data.
+   * Decode with standard Base64 decoder to get raw PNG bytes.
+   * The image uses the bot's current render distance setting.
+   *
    * @generated from protobuf field: string image_base64 = 1
    */
-  imageBase64: string; // Base64 encoded PNG image
+  imageBase64: string;
 }
+// ============================================================================
+// Inventory Management Messages
+// ============================================================================
+
 /**
- * Inventory Actions - click on a slot to interact with it
+ * Request to perform a click action on an inventory slot.
+ * Simulates the various mouse click interactions available in Minecraft inventory UIs.
  *
  * @generated from protobuf message soulfire.v1.BotInventoryClickRequest
  */
 export interface BotInventoryClickRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot performing the inventory action.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
   /**
+   * The slot index to click.
+   * Valid range depends on the currently open container.
+   * Special value: -999 for clicking outside the inventory (dropping items).
+   *
    * @generated from protobuf field: int32 slot = 3
    */
-  slot: number; // Slot index (-999 for outside/drop)
+  slot: number;
   /**
+   * The type of click to perform.
+   * Different click types have different effects on items.
+   *
    * @generated from protobuf field: soulfire.v1.ClickType click_type = 4
    */
   clickType: ClickType;
   /**
+   * For SWAP_HOTBAR click type: which hotbar slot to swap with.
+   * Range: 0-8 (corresponding to hotbar slots 1-9).
+   * Ignored for other click types.
+   *
    * @generated from protobuf field: int32 hotbar_slot = 5
    */
-  hotbarSlot: number; // For SWAP_HOTBAR action (0-8)
+  hotbarSlot: number;
 }
 /**
+ * Response for inventory click action.
+ *
  * @generated from protobuf message soulfire.v1.BotInventoryClickResponse
  */
 export interface BotInventoryClickResponse {
   /**
+   * Whether the click action was successfully sent to the server.
+   * Note: This indicates the action was sent, not that the server accepted it.
+   *
    * @generated from protobuf field: bool success = 1
    */
   success: boolean;
   /**
+   * Error message if success is false.
+   * Possible errors: "Invalid click type"
+   *
    * @generated from protobuf field: optional string error = 2
    */
   error?: string;
 }
 /**
- * Get current inventory state including carried item
+ * Request to get the current state of the bot's open container/inventory.
  *
  * @generated from protobuf message soulfire.v1.BotInventoryStateRequest
  */
 export interface BotInventoryStateRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot to get inventory state for.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
 }
 /**
- * A group of slots that should be rendered together
+ * A group of slots that should be rendered together in the UI.
+ * Defines the layout grid for a section of the inventory.
  *
  * @generated from protobuf message soulfire.v1.SlotRegion
  */
 export interface SlotRegion {
   /**
+   * Unique identifier for this region within the container.
+   * Examples: "container", "player_inventory", "player_hotbar", "crafting_output"
+   *
    * @generated from protobuf field: string id = 1
    */
-  id: string; // Unique ID, e.g., "container", "player_hotbar"
+  id: string;
   /**
+   * Display label for this region.
+   * Examples: "Chest", "Inventory", "Hotbar", "Crafting Grid"
+   *
    * @generated from protobuf field: string label = 2
    */
-  label: string; // Display label, e.g., "Chest", "Hotbar"
+  label: string;
   /**
+   * First slot index belonging to this region.
+   * Slots are numbered sequentially from 0 across all regions.
+   *
    * @generated from protobuf field: int32 start_index = 3
    */
-  startIndex: number; // First slot index in this region
+  startIndex: number;
   /**
+   * Total number of slots in this region.
+   *
    * @generated from protobuf field: int32 slot_count = 4
    */
-  slotCount: number; // Number of slots in this region
+  slotCount: number;
   /**
+   * Number of columns for grid layout.
+   * Common values: 9 (standard inventory width), 3 (dispenser), 1 (armor column)
+   *
    * @generated from protobuf field: int32 columns = 5
    */
-  columns: number; // Grid columns for layout
+  columns: number;
   /**
+   * The type of region, affecting rendering behavior.
+   *
    * @generated from protobuf field: soulfire.v1.SlotRegionType type = 6
    */
-  type: SlotRegionType; // Affects rendering behavior
+  type: SlotRegionType;
 }
 /**
- * A clickable button in a container (e.g., enchantment options, stonecutter recipes)
+ * A clickable button in a container menu.
+ * Used for special interactions like enchantment selection, stonecutter recipes, trade offers, etc.
  *
  * @generated from protobuf message soulfire.v1.ContainerButton
  */
 export interface ContainerButton {
   /**
+   * Button ID to send to the server when clicking.
+   * The meaning depends on the container type.
+   *
    * @generated from protobuf field: int32 button_id = 1
    */
-  buttonId: number; // Button ID to send when clicking
+  buttonId: number;
   /**
+   * Display label for the button.
+   * Examples: "Enchant Slot 1", "Recipe 5", "8x Emerald -> 1x Diamond Pickaxe"
+   *
    * @generated from protobuf field: string label = 2
    */
-  label: string; // Display label (e.g., "Silk Touch I")
+  label: string;
   /**
+   * Optional item ID for displaying an icon.
+   * Example: "minecraft:enchanted_book", "minecraft:stone_bricks"
+   *
    * @generated from protobuf field: optional string icon_item_id = 3
    */
-  iconItemId?: string; // Item ID for icon (e.g., "minecraft:stone_bricks")
+  iconItemId?: string;
   /**
+   * Optional tooltip/description text with additional details.
+   * Examples: "Requires 3 lapis, 30 levels", "Out of stock"
+   *
    * @generated from protobuf field: optional string description = 4
    */
-  description?: string; // Tooltip/description text
+  description?: string;
   /**
+   * Whether the button is currently disabled (cannot be clicked).
+   * Reasons vary by container: missing materials, out of stock, insufficient levels, etc.
+   *
    * @generated from protobuf field: bool disabled = 5
    */
-  disabled: boolean; // Whether the button is currently disabled
+  disabled: boolean;
   /**
+   * Whether this button is currently selected/active.
+   * Used for toggle-style buttons or to show current selection.
+   *
    * @generated from protobuf field: bool selected = 6
    */
-  selected: boolean; // Whether this button is currently selected
+  selected: boolean;
 }
 /**
- * Text input field description for containers like anvil
+ * Text input field in a container menu.
+ * Currently only used by the anvil for item renaming.
  *
  * @generated from protobuf message soulfire.v1.ContainerTextInput
  */
 export interface ContainerTextInput {
   /**
+   * Field identifier for the SetContainerText RPC.
+   * Currently supported: "item_name" (anvil rename)
+   *
    * @generated from protobuf field: string id = 1
    */
-  id: string; // Field identifier (e.g., "item_name" for anvil)
+  id: string;
   /**
+   * Display label for the input field.
+   *
    * @generated from protobuf field: string label = 2
    */
-  label: string; // Display label
+  label: string;
   /**
+   * Current text value in the field.
+   * For anvil: the item's current custom name, or empty if none.
+   *
    * @generated from protobuf field: string current_value = 3
    */
-  currentValue: string; // Current text value
+  currentValue: string;
   /**
+   * Maximum allowed character length.
+   * For anvil: 50 characters.
+   * Value of 0 means no limit.
+   *
    * @generated from protobuf field: int32 max_length = 4
    */
-  maxLength: number; // Maximum allowed characters (0 = no limit)
+  maxLength: number;
   /**
+   * Placeholder text shown when field is empty.
+   *
    * @generated from protobuf field: string placeholder = 5
    */
-  placeholder: string; // Placeholder text
+  placeholder: string;
 }
 /**
- * Book page for lectern display
+ * A page from a book, used for lectern display.
  *
  * @generated from protobuf message soulfire.v1.BookPage
  */
 export interface BookPage {
   /**
+   * Zero-indexed page number.
+   *
    * @generated from protobuf field: int32 page_number = 1
    */
-  pageNumber: number; // 0-indexed page number
+  pageNumber: number;
   /**
+   * Page content text.
+   * May contain Minecraft formatting codes (section symbols).
+   *
    * @generated from protobuf field: string content = 2
    */
-  content: string; // Page content (may contain formatting codes)
+  content: string;
 }
 /**
- * Describes the layout of an open container
+ * Complete layout description for an open container menu.
+ * Provides all information needed to render the container UI.
  *
  * @generated from protobuf message soulfire.v1.ContainerLayout
  */
 export interface ContainerLayout {
   /**
+   * Container title/name displayed at the top.
+   * Examples: "Chest", "Crafting Table", "Inventory", custom container names.
+   *
    * @generated from protobuf field: string title = 1
    */
-  title: string; // Container title/name
+  title: string;
   /**
+   * Ordered list of slot regions defining the container layout.
+   * Regions are listed in rendering order (typically container slots first, then player inventory).
+   *
    * @generated from protobuf field: repeated soulfire.v1.SlotRegion regions = 2
    */
-  regions: SlotRegion[]; // Ordered list of slot regions to render
+  regions: SlotRegion[];
   /**
+   * Total number of slots in the container.
+   * Sum of all region slot_counts.
+   *
    * @generated from protobuf field: int32 total_slots = 3
    */
-  totalSlots: number; // Total number of slots
+  totalSlots: number;
   /**
+   * Available action buttons for this container.
+   * Present for: stonecutter (recipes), enchanting table (3 enchant options),
+   * loom (patterns), villager trading (trade offers), beacon (effects), etc.
+   *
    * @generated from protobuf field: repeated soulfire.v1.ContainerButton buttons = 4
    */
-  buttons: ContainerButton[]; // Available action buttons (stonecutter recipes, enchants, etc.)
+  buttons: ContainerButton[];
   /**
+   * Container type identifier for client-specific rendering.
+   * Values: "inventory", "chest", "dispenser", "hopper", "furnace", "crafting",
+   *         "anvil", "enchanting", "brewing", "beacon", "shulker", "grindstone",
+   *         "stonecutter", "loom", "cartography", "smithing", "merchant",
+   *         "crafter", "lectern", "generic"
+   *
    * @generated from protobuf field: string container_type = 5
    */
-  containerType: string; // Container type identifier for client-specific rendering
+  containerType: string;
   /**
+   * Text input fields available in this container.
+   * Currently only populated for anvil menus.
+   *
    * @generated from protobuf field: repeated soulfire.v1.ContainerTextInput text_inputs = 6
    */
-  textInputs: ContainerTextInput[]; // Text input fields (anvil rename, etc.)
+  textInputs: ContainerTextInput[];
   /**
+   * Book pages for lectern containers.
+   * Contains all pages of the book on the lectern.
+   *
    * @generated from protobuf field: repeated soulfire.v1.BookPage book_pages = 7
    */
-  bookPages: BookPage[]; // Book pages for lectern
+  bookPages: BookPage[];
   /**
+   * Current page being displayed (for lectern).
+   * Zero-indexed into book_pages.
+   *
    * @generated from protobuf field: int32 current_book_page = 8
    */
-  currentBookPage: number; // Current page being displayed (lectern)
+  currentBookPage: number;
 }
 /**
+ * Response containing the current inventory/container state.
+ *
  * @generated from protobuf message soulfire.v1.BotInventoryStateResponse
  */
 export interface BotInventoryStateResponse {
   /**
+   * Layout information describing the container structure.
+   *
    * @generated from protobuf field: soulfire.v1.ContainerLayout layout = 1
    */
-  layout?: ContainerLayout; // Container layout information
+  layout?: ContainerLayout;
   /**
+   * All slots containing items (empty slots are omitted).
+   *
    * @generated from protobuf field: repeated soulfire.v1.InventorySlot slots = 2
    */
-  slots: InventorySlot[]; // All inventory slots with items
+  slots: InventorySlot[];
   /**
+   * Item currently held on the cursor (being moved).
+   * Absent if cursor is empty.
+   *
    * @generated from protobuf field: optional soulfire.v1.InventorySlot carried_item = 3
    */
-  carriedItem?: InventorySlot; // Item currently on cursor
+  carriedItem?: InventorySlot;
   /**
+   * Currently selected hotbar slot index (0-8).
+   *
    * @generated from protobuf field: int32 selected_hotbar_slot = 4
    */
   selectedHotbarSlot: number;
 }
 /**
- * Close current container
+ * Request to close the currently open container.
  *
  * @generated from protobuf message soulfire.v1.BotCloseContainerRequest
  */
 export interface BotCloseContainerRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot to close container for.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
 }
 /**
+ * Response for container close action.
+ *
  * @generated from protobuf message soulfire.v1.BotCloseContainerResponse
  */
 export interface BotCloseContainerResponse {
   /**
+   * Whether the close action was successful.
+   *
    * @generated from protobuf field: bool success = 1
    */
   success: boolean;
 }
 /**
- * Open player inventory
+ * Request to open the player's inventory screen.
+ * This sends a packet to the server to open the inventory UI.
  *
  * @generated from protobuf message soulfire.v1.BotOpenInventoryRequest
  */
 export interface BotOpenInventoryRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot to open inventory for.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
 }
 /**
+ * Response for inventory open action.
+ *
  * @generated from protobuf message soulfire.v1.BotOpenInventoryResponse
  */
 export interface BotOpenInventoryResponse {
   /**
+   * Whether the open inventory action was successful.
+   *
    * @generated from protobuf field: bool success = 1
    */
   success: boolean;
 }
+// ============================================================================
+// Mouse Click Messages
+// ============================================================================
+
 /**
- * Mouse click actions - simulates left/right mouse button press
+ * Request to simulate a mouse click action in the game world.
+ * Used for attacking entities, breaking blocks, using items, and interacting with blocks/entities.
  *
  * @generated from protobuf message soulfire.v1.BotMouseClickRequest
  */
 export interface BotMouseClickRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot performing the click.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
   /**
+   * Which mouse button to simulate clicking.
+   *
    * @generated from protobuf field: soulfire.v1.MouseButton button = 3
    */
   button: MouseButton;
 }
 /**
+ * Response for mouse click action.
+ *
  * @generated from protobuf message soulfire.v1.BotMouseClickResponse
  */
 export interface BotMouseClickResponse {
   /**
+   * Whether the click action was successfully performed.
+   *
    * @generated from protobuf field: bool success = 1
    */
   success: boolean;
   /**
+   * Error message if success is false.
+   * Possible errors: "Invalid mouse button"
+   *
    * @generated from protobuf field: optional string error = 2
    */
   error?: string;
 }
 /**
- * Click a container button (enchantment selection, stonecutter recipe, etc.)
+ * Request to click a container-specific action button.
+ * Used for stonecutter recipes, enchantment selection, villager trades, beacon effects, etc.
  *
  * @generated from protobuf message soulfire.v1.BotContainerButtonClickRequest
  */
 export interface BotContainerButtonClickRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot clicking the button.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
   /**
+   * The button ID to click.
+   * Valid values depend on container type:
+   * - Stonecutter: 0-99 (recipe index)
+   * - Enchanting table: 0-2 (enchantment slot)
+   * - Loom: 0-99 (pattern index)
+   * - Villager: 0 to (offer count - 1)
+   * - Beacon: mob effect registry ID, -1 for confirm
+   * - Crafter: 0-8 (slot toggle index)
+   * - Lectern: 1=prev page, 2=next page, 3=take book
+   *
    * @generated from protobuf field: int32 button_id = 3
    */
   buttonId: number;
 }
 /**
+ * Response for container button click action.
+ *
  * @generated from protobuf message soulfire.v1.BotContainerButtonClickResponse
  */
 export interface BotContainerButtonClickResponse {
   /**
+   * Whether the button click was successfully queued.
+   *
    * @generated from protobuf field: bool success = 1
    */
   success: boolean;
   /**
+   * Error message if success is false.
+   * Possible errors: "Invalid button ID for this container type"
+   *
    * @generated from protobuf field: optional string error = 2
    */
   error?: string;
 }
 /**
- * Set text input in a container (anvil rename, etc.)
+ * Request to set text in a container text input field.
+ * Currently only supports anvil item renaming.
  *
  * @generated from protobuf message soulfire.v1.BotSetContainerTextRequest
  */
 export interface BotSetContainerTextRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot setting the text.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
   /**
+   * Which field to set the text for.
+   * Currently supported: "item_name" (anvil rename)
+   *
    * @generated from protobuf field: string field_id = 3
    */
-  fieldId: string; // Which field to set (e.g., "item_name")
+  fieldId: string;
   /**
+   * The text value to set.
+   * For anvil: max 50 characters for the item name.
+   *
    * @generated from protobuf field: string text = 4
    */
-  text: string; // The text value to set
+  text: string;
 }
 /**
+ * Response for container text input action.
+ *
  * @generated from protobuf message soulfire.v1.BotSetContainerTextResponse
  */
 export interface BotSetContainerTextResponse {
   /**
+   * Whether the text was successfully set.
+   *
    * @generated from protobuf field: bool success = 1
    */
   success: boolean;
   /**
+   * Error message if success is false.
+   * Possible errors: "Unsupported container or field ID: <type>/<field_id>"
+   *
    * @generated from protobuf field: optional string error = 2
    */
   error?: string;
 }
 /**
- * Change the selected hotbar slot (0-8)
+ * Request to change the selected hotbar slot.
  *
  * @generated from protobuf message soulfire.v1.BotSetHotbarSlotRequest
  */
 export interface BotSetHotbarSlotRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot to change hotbar selection for.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
   /**
+   * Hotbar slot index to select.
+   * Range: 0-8 (corresponding to slots 1-9 in the UI).
+   *
    * @generated from protobuf field: int32 slot = 3
    */
-  slot: number; // Hotbar slot index (0-8)
+  slot: number;
 }
 /**
+ * Response for hotbar slot selection.
+ *
  * @generated from protobuf message soulfire.v1.BotSetHotbarSlotResponse
  */
 export interface BotSetHotbarSlotResponse {
   /**
+   * Whether the hotbar slot was successfully changed.
+   *
    * @generated from protobuf field: bool success = 1
    */
   success: boolean;
   /**
+   * Error message if success is false.
+   * Possible errors: "Hotbar slot must be between 0 and 8, got: <slot>",
+   *                  "Player is not available"
+   *
    * @generated from protobuf field: optional string error = 2
    */
   error?: string;
@@ -649,85 +1025,132 @@ export interface BotSetHotbarSlotResponse {
 // ============================================================================
 
 /**
- * Movement state - each field is optional to allow partial updates
+ * Request to update the bot's movement state.
+ * Each field is optional to allow partial updates - only specified fields are changed.
+ * The movement state persists until explicitly changed or reset.
  *
  * @generated from protobuf message soulfire.v1.BotSetMovementStateRequest
  */
 export interface BotSetMovementStateRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot to control.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
   /**
+   * W key state - move forward.
+   * true = pressing W, false = not pressing W
+   *
    * @generated from protobuf field: optional bool forward = 3
    */
-  forward?: boolean; // W key - move forward
+  forward?: boolean;
   /**
+   * S key state - move backward.
+   * true = pressing S, false = not pressing S
+   *
    * @generated from protobuf field: optional bool backward = 4
    */
-  backward?: boolean; // S key - move backward
+  backward?: boolean;
   /**
+   * A key state - strafe left.
+   * true = pressing A, false = not pressing A
+   *
    * @generated from protobuf field: optional bool left = 5
    */
-  left?: boolean; // A key - strafe left
+  left?: boolean;
   /**
+   * D key state - strafe right.
+   * true = pressing D, false = not pressing D
+   *
    * @generated from protobuf field: optional bool right = 6
    */
-  right?: boolean; // D key - strafe right
+  right?: boolean;
   /**
+   * Space key state - jump.
+   * true = pressing Space, false = not pressing Space
+   * When held, the bot will jump repeatedly.
+   *
    * @generated from protobuf field: optional bool jump = 7
    */
-  jump?: boolean; // Space - jump
+  jump?: boolean;
   /**
+   * Shift key state - sneak/crouch.
+   * true = sneaking, false = not sneaking
+   * While sneaking: slower movement, won't fall off edges, crouching animation.
+   *
    * @generated from protobuf field: optional bool sneak = 8
    */
-  sneak?: boolean; // Shift - sneak
+  sneak?: boolean;
   /**
+   * Ctrl key state - sprint.
+   * true = sprinting, false = not sprinting
+   * Requires forward movement and sufficient hunger (food level >= 6).
+   *
    * @generated from protobuf field: optional bool sprint = 9
    */
-  sprint?: boolean; // Ctrl - sprint
+  sprint?: boolean;
 }
 /**
+ * Response for movement state update.
+ *
  * @generated from protobuf message soulfire.v1.BotSetMovementStateResponse
  */
 export interface BotSetMovementStateResponse {
   /**
+   * Whether the movement state was successfully updated.
+   *
    * @generated from protobuf field: bool success = 1
    */
   success: boolean;
   /**
+   * Error message if success is false.
+   *
    * @generated from protobuf field: optional string error = 2
    */
   error?: string;
 }
 /**
- * Reset all movement to stopped state
+ * Request to reset all movement to stopped state.
+ * Equivalent to releasing all movement keys (WASD, Space, Shift, Ctrl).
  *
  * @generated from protobuf message soulfire.v1.BotResetMovementRequest
  */
 export interface BotResetMovementRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot to stop movement for.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
 }
 /**
+ * Response for movement reset.
+ *
  * @generated from protobuf message soulfire.v1.BotResetMovementResponse
  */
 export interface BotResetMovementResponse {
   /**
+   * Whether the movement was successfully reset.
+   *
    * @generated from protobuf field: bool success = 1
    */
   success: boolean;
   /**
+   * Error message if success is false.
+   *
    * @generated from protobuf field: optional string error = 2
    */
   error?: string;
@@ -738,43 +1161,64 @@ export interface BotResetMovementResponse {
 // ============================================================================
 
 /**
- * Set absolute rotation
+ * Request to set the bot's view rotation (look direction).
+ * Used to aim the bot's view at specific targets or directions.
  *
  * @generated from protobuf message soulfire.v1.BotSetRotationRequest
  */
 export interface BotSetRotationRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot to rotate.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
   /**
+   * Horizontal rotation angle in degrees (yaw).
+   * Range: -180 to 180 (values outside this range are normalized).
+   * Direction mapping: 0 = South, 90 = West, -90 = East, +/-180 = North.
+   *
    * @generated from protobuf field: float yaw = 3
    */
-  yaw: number; // Horizontal rotation (-180 to 180, 0 = south)
+  yaw: number;
   /**
+   * Vertical rotation angle in degrees (pitch).
+   * Range: -90 to 90 (values outside this range are clamped).
+   * Direction mapping: -90 = looking up, 0 = horizon, 90 = looking down.
+   *
    * @generated from protobuf field: float pitch = 4
    */
-  pitch: number; // Vertical rotation (-90 to 90, negative = up)
+  pitch: number;
 }
 /**
+ * Response for rotation update.
+ *
  * @generated from protobuf message soulfire.v1.BotSetRotationResponse
  */
 export interface BotSetRotationResponse {
   /**
+   * Whether the rotation was successfully set.
+   *
    * @generated from protobuf field: bool success = 1
    */
   success: boolean;
   /**
+   * Error message if success is false.
+   * Possible errors: "Player is not available"
+   *
    * @generated from protobuf field: optional string error = 2
    */
   error?: string;
 }
 /**
- * Body element types
+ * Body element that can appear in a dialog.
+ * Dialogs can contain a mix of text and item displays.
  *
  * @generated from protobuf message soulfire.v1.DialogBodyElement
  */
@@ -786,6 +1230,8 @@ export interface DialogBodyElement {
     | {
         oneofKind: "plainMessage";
         /**
+         * Plain text message element.
+         *
          * @generated from protobuf field: soulfire.v1.DialogPlainMessage plain_message = 1
          */
         plainMessage: DialogPlainMessage;
@@ -793,6 +1239,8 @@ export interface DialogBodyElement {
     | {
         oneofKind: "item";
         /**
+         * Item display element (shows a Minecraft item).
+         *
          * @generated from protobuf field: soulfire.v1.DialogItem item = 2
          */
         item: DialogItem;
@@ -802,53 +1250,83 @@ export interface DialogBodyElement {
       };
 }
 /**
+ * Plain text message in a dialog body.
+ *
  * @generated from protobuf message soulfire.v1.DialogPlainMessage
  */
 export interface DialogPlainMessage {
   /**
+   * Text content, typically a JSON text component string.
+   * May contain formatting, colors, click events, etc.
+   *
    * @generated from protobuf field: string contents = 1
    */
-  contents: string; // Text content (JSON text component)
+  contents: string;
   /**
+   * Display width in pixels.
+   * Range: 1-1024, default: 200.
+   *
    * @generated from protobuf field: int32 width = 2
    */
-  width: number; // Width (1-1024, default 200)
+  width: number;
 }
 /**
+ * Item display element in a dialog body.
+ *
  * @generated from protobuf message soulfire.v1.DialogItem
  */
 export interface DialogItem {
   /**
+   * Minecraft item identifier.
+   * Example: "minecraft:diamond", "minecraft:netherite_sword"
+   *
    * @generated from protobuf field: string item_id = 1
    */
-  itemId: string; // e.g., "minecraft:diamond"
+  itemId: string;
   /**
+   * Item count/stack size to display.
+   *
    * @generated from protobuf field: int32 count = 2
    */
-  count: number; // Item count
+  count: number;
   /**
+   * Optional description text below the item.
+   *
    * @generated from protobuf field: optional string description = 3
    */
-  description?: string; // Optional description text
+  description?: string;
   /**
+   * Whether to show the item frame decoration around the item.
+   * Default: true.
+   *
    * @generated from protobuf field: bool show_decoration = 4
    */
-  showDecoration: boolean; // Show item frame decoration (default true)
+  showDecoration: boolean;
   /**
+   * Whether to show the item tooltip on hover.
+   * Default: true.
+   *
    * @generated from protobuf field: bool show_tooltip = 5
    */
-  showTooltip: boolean; // Show item tooltip on hover (default true)
+  showTooltip: boolean;
   /**
+   * Display width in pixels.
+   * Range: 1-256, default: 16.
+   *
    * @generated from protobuf field: int32 width = 6
    */
-  width: number; // Display width (1-256, default 16)
+  width: number;
   /**
+   * Display height in pixels.
+   * Range: 1-256, default: 16.
+   *
    * @generated from protobuf field: int32 height = 7
    */
-  height: number; // Display height (1-256, default 16)
+  height: number;
 }
 /**
- * Input control types
+ * Input control that can appear in a dialog.
+ * Allows dialogs to gather user input before submission.
  *
  * @generated from protobuf message soulfire.v1.DialogInput
  */
@@ -860,6 +1338,8 @@ export interface DialogInput {
     | {
         oneofKind: "text";
         /**
+         * Text input field (single or multi-line).
+         *
          * @generated from protobuf field: soulfire.v1.DialogTextInput text = 1
          */
         text: DialogTextInput;
@@ -867,6 +1347,8 @@ export interface DialogInput {
     | {
         oneofKind: "boolean";
         /**
+         * Boolean checkbox input.
+         *
          * @generated from protobuf field: soulfire.v1.DialogBooleanInput boolean = 2
          */
         boolean: DialogBooleanInput;
@@ -874,6 +1356,8 @@ export interface DialogInput {
     | {
         oneofKind: "singleOption";
         /**
+         * Dropdown/combo box for selecting one option.
+         *
          * @generated from protobuf field: soulfire.v1.DialogSingleOptionInput single_option = 3
          */
         singleOption: DialogSingleOptionInput;
@@ -881,6 +1365,8 @@ export interface DialogInput {
     | {
         oneofKind: "numberRange";
         /**
+         * Slider for selecting a number in a range.
+         *
          * @generated from protobuf field: soulfire.v1.DialogNumberRangeInput number_range = 4
          */
         numberRange: DialogNumberRangeInput;
@@ -890,152 +1376,233 @@ export interface DialogInput {
       };
 }
 /**
+ * Text input field in a dialog.
+ *
  * @generated from protobuf message soulfire.v1.DialogTextInput
  */
 export interface DialogTextInput {
   /**
+   * Identifier used when submitting the dialog.
+   *
    * @generated from protobuf field: string key = 1
    */
-  key: string; // Identifier for submission
+  key: string;
   /**
+   * Display label for the field.
+   *
    * @generated from protobuf field: string label = 2
    */
-  label: string; // Display label
+  label: string;
   /**
+   * Display width in pixels.
+   * Range: 1-1024, default: 200.
+   *
    * @generated from protobuf field: int32 width = 3
    */
-  width: number; // Width (1-1024, default 200)
+  width: number;
   /**
+   * Whether to show the label.
+   * Default: true.
+   *
    * @generated from protobuf field: bool label_visible = 4
    */
-  labelVisible: boolean; // Show label (default true)
+  labelVisible: boolean;
   /**
+   * Initial/default value.
+   *
    * @generated from protobuf field: string initial = 5
    */
-  initial: string; // Default value
+  initial: string;
   /**
+   * Maximum character length.
+   * Default: 32.
+   *
    * @generated from protobuf field: int32 max_length = 6
    */
-  maxLength: number; // Max chars (default 32)
+  maxLength: number;
   /**
+   * Whether to allow multi-line input.
+   *
    * @generated from protobuf field: bool multiline = 7
    */
-  multiline: boolean; // Allow multiline input
+  multiline: boolean;
   /**
+   * Maximum lines for multiline input.
+   *
    * @generated from protobuf field: int32 multiline_max_lines = 8
    */
-  multilineMaxLines: number; // Max lines for multiline
+  multilineMaxLines: number;
   /**
+   * Display height for multiline input in pixels.
+   *
    * @generated from protobuf field: int32 multiline_height = 9
    */
-  multilineHeight: number; // Height for multiline
+  multilineHeight: number;
 }
 /**
+ * Boolean checkbox input in a dialog.
+ *
  * @generated from protobuf message soulfire.v1.DialogBooleanInput
  */
 export interface DialogBooleanInput {
   /**
+   * Identifier used when submitting the dialog.
+   *
    * @generated from protobuf field: string key = 1
    */
-  key: string; // Identifier for submission
+  key: string;
   /**
+   * Display label for the checkbox.
+   *
    * @generated from protobuf field: string label = 2
    */
-  label: string; // Display label
+  label: string;
   /**
+   * Initial checked state.
+   * Default: false.
+   *
    * @generated from protobuf field: bool initial = 3
    */
-  initial: boolean; // Default value (default false)
+  initial: boolean;
   /**
+   * String value to submit when checked.
+   * Default: "true".
+   *
    * @generated from protobuf field: string on_true = 4
    */
-  onTrue: string; // Value when checked (default "true")
+  onTrue: string;
   /**
+   * String value to submit when unchecked.
+   * Default: "false".
+   *
    * @generated from protobuf field: string on_false = 5
    */
-  onFalse: string; // Value when unchecked (default "false")
+  onFalse: string;
 }
 /**
+ * Single option selection input (dropdown/combo box) in a dialog.
+ *
  * @generated from protobuf message soulfire.v1.DialogSingleOptionInput
  */
 export interface DialogSingleOptionInput {
   /**
+   * Identifier used when submitting the dialog.
+   *
    * @generated from protobuf field: string key = 1
    */
-  key: string; // Identifier for submission
+  key: string;
   /**
+   * Display label for the dropdown.
+   *
    * @generated from protobuf field: string label = 2
    */
-  label: string; // Display label
+  label: string;
   /**
+   * Whether to show the label.
+   * Default: true.
+   *
    * @generated from protobuf field: bool label_visible = 3
    */
-  labelVisible: boolean; // Show label (default true)
+  labelVisible: boolean;
   /**
+   * Display width in pixels.
+   * Range: 1-1024, default: 200.
+   *
    * @generated from protobuf field: int32 width = 4
    */
-  width: number; // Width (1-1024, default 200)
+  width: number;
   /**
+   * Available options to choose from.
+   *
    * @generated from protobuf field: repeated soulfire.v1.DialogOption options = 5
    */
-  options: DialogOption[]; // Available options
+  options: DialogOption[];
   /**
+   * ID of the initially selected option.
+   *
    * @generated from protobuf field: string initial_option_id = 6
    */
-  initialOptionId: string; // Initially selected option ID
+  initialOptionId: string;
 }
 /**
+ * An option in a single-option input.
+ *
  * @generated from protobuf message soulfire.v1.DialogOption
  */
 export interface DialogOption {
   /**
+   * Option identifier (submitted value).
+   *
    * @generated from protobuf field: string id = 1
    */
-  id: string; // Option identifier
+  id: string;
   /**
+   * Display text for the option.
+   * If empty, the id is used for display.
+   *
    * @generated from protobuf field: string display = 2
    */
-  display: string; // Display text (optional, uses id if not set)
+  display: string;
 }
 /**
+ * Number range slider input in a dialog.
+ *
  * @generated from protobuf message soulfire.v1.DialogNumberRangeInput
  */
 export interface DialogNumberRangeInput {
   /**
+   * Identifier used when submitting the dialog.
+   *
    * @generated from protobuf field: string key = 1
    */
-  key: string; // Identifier for submission
+  key: string;
   /**
+   * Display label for the slider.
+   *
    * @generated from protobuf field: string label = 2
    */
-  label: string; // Display label
+  label: string;
   /**
+   * Translation key for formatting the label with the current value.
+   *
    * @generated from protobuf field: string label_format = 3
    */
-  labelFormat: string; // Translation key for label format
+  labelFormat: string;
   /**
+   * Display width in pixels.
+   * Range: 1-1024, default: 200.
+   *
    * @generated from protobuf field: int32 width = 4
    */
-  width: number; // Width (1-1024, default 200)
+  width: number;
   /**
+   * Minimum value (left side of slider).
+   *
    * @generated from protobuf field: double start = 5
    */
-  start: number; // Minimum value
+  start: number;
   /**
+   * Maximum value (right side of slider).
+   *
    * @generated from protobuf field: double end = 6
    */
-  end: number; // Maximum value
+  end: number;
   /**
+   * Step size for discrete values.
+   * If 0, continuous values are allowed.
+   *
    * @generated from protobuf field: double step = 7
    */
-  step: number; // Step size (optional)
+  step: number;
   /**
+   * Initial/default value.
+   *
    * @generated from protobuf field: double initial = 8
    */
-  initial: number; // Default value
+  initial: number;
 }
 /**
- * Action types for buttons
+ * Action that can be triggered by a dialog button.
  *
  * @generated from protobuf message soulfire.v1.DialogAction
  */
@@ -1047,6 +1614,8 @@ export interface DialogAction {
     | {
         oneofKind: "openUrl";
         /**
+         * Open a URL in the browser.
+         *
          * @generated from protobuf field: soulfire.v1.DialogOpenUrlAction open_url = 1
          */
         openUrl: DialogOpenUrlAction;
@@ -1054,6 +1623,8 @@ export interface DialogAction {
     | {
         oneofKind: "runCommand";
         /**
+         * Run a chat command.
+         *
          * @generated from protobuf field: soulfire.v1.DialogRunCommandAction run_command = 2
          */
         runCommand: DialogRunCommandAction;
@@ -1061,6 +1632,8 @@ export interface DialogAction {
     | {
         oneofKind: "suggestCommand";
         /**
+         * Suggest a command (put in chat box without sending).
+         *
          * @generated from protobuf field: soulfire.v1.DialogSuggestCommandAction suggest_command = 3
          */
         suggestCommand: DialogSuggestCommandAction;
@@ -1068,6 +1641,8 @@ export interface DialogAction {
     | {
         oneofKind: "copyToClipboard";
         /**
+         * Copy text to clipboard.
+         *
          * @generated from protobuf field: soulfire.v1.DialogCopyToClipboardAction copy_to_clipboard = 4
          */
         copyToClipboard: DialogCopyToClipboardAction;
@@ -1075,6 +1650,8 @@ export interface DialogAction {
     | {
         oneofKind: "showDialog";
         /**
+         * Show another dialog.
+         *
          * @generated from protobuf field: soulfire.v1.DialogShowDialogAction show_dialog = 5
          */
         showDialog: DialogShowDialogAction;
@@ -1082,6 +1659,8 @@ export interface DialogAction {
     | {
         oneofKind: "custom";
         /**
+         * Custom server-defined action.
+         *
          * @generated from protobuf field: soulfire.v1.DialogCustomAction custom = 6
          */
         custom: DialogCustomAction;
@@ -1089,6 +1668,8 @@ export interface DialogAction {
     | {
         oneofKind: "dynamicRunCommand";
         /**
+         * Run a command with input placeholders.
+         *
          * @generated from protobuf field: soulfire.v1.DialogDynamicRunCommandAction dynamic_run_command = 7
          */
         dynamicRunCommand: DialogDynamicRunCommandAction;
@@ -1096,6 +1677,8 @@ export interface DialogAction {
     | {
         oneofKind: "dynamicCustom";
         /**
+         * Custom action with additional data.
+         *
          * @generated from protobuf field: soulfire.v1.DialogDynamicCustomAction dynamic_custom = 8
          */
         dynamicCustom: DialogDynamicCustomAction;
@@ -1105,430 +1688,607 @@ export interface DialogAction {
       };
 }
 /**
+ * Action to open a URL in the user's browser.
+ *
  * @generated from protobuf message soulfire.v1.DialogOpenUrlAction
  */
 export interface DialogOpenUrlAction {
   /**
+   * The URL to open.
+   *
    * @generated from protobuf field: string url = 1
    */
   url: string;
 }
 /**
+ * Action to execute a chat command.
+ *
  * @generated from protobuf message soulfire.v1.DialogRunCommandAction
  */
 export interface DialogRunCommandAction {
   /**
+   * The command to run (including the leading /).
+   *
    * @generated from protobuf field: string command = 1
    */
   command: string;
 }
 /**
+ * Action to suggest a command (place in chat input).
+ *
  * @generated from protobuf message soulfire.v1.DialogSuggestCommandAction
  */
 export interface DialogSuggestCommandAction {
   /**
+   * The command to suggest.
+   *
    * @generated from protobuf field: string command = 1
    */
   command: string;
 }
 /**
+ * Action to copy text to the clipboard.
+ *
  * @generated from protobuf message soulfire.v1.DialogCopyToClipboardAction
  */
 export interface DialogCopyToClipboardAction {
   /**
+   * The text to copy.
+   *
    * @generated from protobuf field: string value = 1
    */
   value: string;
 }
 /**
+ * Action to display another dialog.
+ *
  * @generated from protobuf message soulfire.v1.DialogShowDialogAction
  */
 export interface DialogShowDialogAction {
   /**
+   * Dialog ID to show (references a registered dialog).
+   *
    * @generated from protobuf field: string dialog_id = 1
    */
-  dialogId: string; // Dialog ID to show (or inline definition)
+  dialogId: string;
 }
 /**
+ * Custom server-defined action.
+ *
  * @generated from protobuf message soulfire.v1.DialogCustomAction
  */
 export interface DialogCustomAction {
   /**
+   * Action identifier known to the server.
+   *
    * @generated from protobuf field: string id = 1
    */
-  id: string; // Custom action identifier
+  id: string;
   /**
+   * Optional JSON payload for the action.
+   *
    * @generated from protobuf field: string payload = 2
    */
-  payload: string; // Optional JSON payload
+  payload: string;
 }
 /**
+ * Dynamic command action with input value substitution.
+ *
  * @generated from protobuf message soulfire.v1.DialogDynamicRunCommandAction
  */
 export interface DialogDynamicRunCommandAction {
   /**
+   * Command template with placeholders for input values.
+   * Placeholders are replaced with user input before execution.
+   *
    * @generated from protobuf field: string template = 1
    */
-  template: string; // Macro template with input placeholders
+  template: string;
 }
 /**
+ * Dynamic custom action with additional NBT data.
+ *
  * @generated from protobuf message soulfire.v1.DialogDynamicCustomAction
  */
 export interface DialogDynamicCustomAction {
   /**
+   * Custom action identifier.
+   *
    * @generated from protobuf field: string id = 1
    */
-  id: string; // Custom action identifier
+  id: string;
   /**
+   * Additional NBT data as JSON string.
+   *
    * @generated from protobuf field: string additions = 2
    */
-  additions: string; // Optional NBT additions as JSON
+  additions: string;
 }
 /**
- * Button structure used across dialog types
+ * Button that can appear in a dialog.
  *
  * @generated from protobuf message soulfire.v1.DialogButton
  */
 export interface DialogButton {
   /**
+   * Button text (may be a JSON text component).
+   *
    * @generated from protobuf field: string label = 1
    */
-  label: string; // Button text (JSON text component)
+  label: string;
   /**
+   * Optional tooltip shown on hover.
+   *
    * @generated from protobuf field: optional string tooltip = 2
    */
-  tooltip?: string; // Tooltip on hover
+  tooltip?: string;
   /**
+   * Button width in pixels.
+   * Range: 1-1024, default: 150.
+   *
    * @generated from protobuf field: int32 width = 3
    */
-  width: number; // Button width (1-1024, default 150)
+  width: number;
   /**
+   * Action to perform when clicked.
+   *
    * @generated from protobuf field: optional soulfire.v1.DialogAction action = 4
    */
-  action?: DialogAction; // Action when clicked
+  action?: DialogAction;
 }
 /**
- * Complete dialog definition
+ * Complete server dialog definition.
+ * Contains all information needed to render and interact with a dialog.
  *
  * @generated from protobuf message soulfire.v1.ServerDialog
  */
 export interface ServerDialog {
   /**
+   * Dialog identifier from the server.
+   * Format: namespaced identifier (e.g., "myserver:welcome_dialog").
+   *
    * @generated from protobuf field: string id = 1
    */
-  id: string; // Dialog ID (from server)
+  id: string;
   /**
+   * The type of dialog, determining overall structure.
+   *
    * @generated from protobuf field: soulfire.v1.DialogType type = 2
    */
-  type: DialogType; // Dialog type
+  type: DialogType;
   /**
+   * Dialog title (may be a JSON text component).
+   *
    * @generated from protobuf field: string title = 3
    */
-  title: string; // Dialog title (JSON text component)
+  title: string;
   /**
+   * Button label when shown as an external/minimized button.
+   *
    * @generated from protobuf field: optional string external_title = 4
    */
-  externalTitle?: string; // Button label when shown as external button
+  externalTitle?: string;
   /**
+   * Body elements (text and items) displayed in the dialog.
+   *
    * @generated from protobuf field: repeated soulfire.v1.DialogBodyElement body = 5
    */
-  body: DialogBodyElement[]; // Body elements
+  body: DialogBodyElement[];
   /**
+   * Input controls for gathering user data.
+   *
    * @generated from protobuf field: repeated soulfire.v1.DialogInput inputs = 6
    */
-  inputs: DialogInput[]; // Input controls
+  inputs: DialogInput[];
   /**
+   * Whether ESC key can close the dialog.
+   * Default: true.
+   *
    * @generated from protobuf field: bool can_close_with_escape = 7
    */
-  canCloseWithEscape: boolean; // Allow ESC to close (default true)
+  canCloseWithEscape: boolean;
   /**
+   * Whether to pause the game in singleplayer.
+   * Default: true. No effect in multiplayer.
+   *
    * @generated from protobuf field: bool pause = 8
    */
-  pause: boolean; // Pause game in singleplayer (default true)
+  pause: boolean;
   /**
+   * Behavior after an action button is clicked.
+   *
    * @generated from protobuf field: soulfire.v1.DialogAfterAction after_action = 9
    */
-  afterAction: DialogAfterAction; // Behavior after action
+  afterAction: DialogAfterAction;
   /**
-   * Type-specific fields
+   * For NOTICE type: the single action button.
    *
    * @generated from protobuf field: optional soulfire.v1.DialogButton action = 10
    */
-  action?: DialogButton; // For notice type - single action
+  action?: DialogButton;
   /**
+   * For CONFIRMATION type: the "yes" button.
+   *
    * @generated from protobuf field: optional soulfire.v1.DialogButton yes = 11
    */
-  yes?: DialogButton; // For confirmation type
+  yes?: DialogButton;
   /**
+   * For CONFIRMATION type: the "no" button.
+   *
    * @generated from protobuf field: optional soulfire.v1.DialogButton no = 12
    */
-  no?: DialogButton; // For confirmation type
+  no?: DialogButton;
   /**
+   * For MULTI_ACTION type: list of action buttons.
+   *
    * @generated from protobuf field: repeated soulfire.v1.DialogButton actions = 13
    */
-  actions: DialogButton[]; // For multi_action type
+  actions: DialogButton[];
   /**
+   * For MULTI_ACTION and DIALOG_LIST: number of button columns.
+   * Default: 2.
+   *
    * @generated from protobuf field: int32 columns = 14
    */
-  columns: number; // For multi_action/dialog_list (default 2)
+  columns: number;
   /**
+   * For MULTI_ACTION, SERVER_LINKS, DIALOG_LIST: exit/close button.
+   *
    * @generated from protobuf field: optional soulfire.v1.DialogButton exit_action = 15
    */
-  exitAction?: DialogButton; // For multi_action/server_links/dialog_list
+  exitAction?: DialogButton;
   /**
+   * For SERVER_LINKS and DIALOG_LIST: button width.
+   * Default: 150.
+   *
    * @generated from protobuf field: int32 button_width = 16
    */
-  buttonWidth: number; // For server_links/dialog_list (default 150)
+  buttonWidth: number;
 }
 /**
- * Get current dialog state
+ * Request to get the currently displayed dialog (if any).
  *
  * @generated from protobuf message soulfire.v1.BotGetDialogRequest
  */
 export interface BotGetDialogRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot to get dialog for.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
 }
 /**
+ * Response containing the current dialog state.
+ *
  * @generated from protobuf message soulfire.v1.BotGetDialogResponse
  */
 export interface BotGetDialogResponse {
   /**
+   * The currently displayed dialog.
+   * Absent if no dialog is being shown.
+   *
    * @generated from protobuf field: optional soulfire.v1.ServerDialog dialog = 1
    */
-  dialog?: ServerDialog; // Current dialog, or null if none
+  dialog?: ServerDialog;
 }
 /**
- * Submit dialog response (for dialogs with inputs)
+ * Request to submit a dialog with input values.
+ * Used for dialogs that have input fields requiring user data.
  *
  * @generated from protobuf message soulfire.v1.BotSubmitDialogRequest
  */
 export interface BotSubmitDialogRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot submitting the dialog.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
   /**
+   * Map of input key to value for each input field.
+   * Keys must match the `key` field of DialogInput elements.
+   *
    * @generated from protobuf field: map<string, string> input_values = 3
    */
   inputValues: {
     [key: string]: string;
-  }; // Input key -> value mappings
+  };
 }
 /**
+ * Response for dialog submission.
+ *
  * @generated from protobuf message soulfire.v1.BotSubmitDialogResponse
  */
 export interface BotSubmitDialogResponse {
   /**
+   * Whether the submission was processed successfully.
+   *
    * @generated from protobuf field: bool success = 1
    */
   success: boolean;
   /**
+   * Error message if success is false.
+   * Possible errors: "No dialog is currently displayed"
+   *
    * @generated from protobuf field: optional string error = 2
    */
   error?: string;
 }
 /**
- * Click a dialog button
+ * Request to click a button in the current dialog.
  *
  * @generated from protobuf message soulfire.v1.BotClickDialogButtonRequest
  */
 export interface BotClickDialogButtonRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot clicking the button.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
   /**
+   * Index of the button to click.
+   * For NOTICE: 0 for the action button
+   * For CONFIRMATION: 0 for yes, 1 for no
+   * For MULTI_ACTION: index into the actions list
+   * Special value: -1 to close/escape the dialog
+   *
    * @generated from protobuf field: int32 button_index = 3
    */
-  buttonIndex: number; // Index of button to click (-1 for close/escape)
+  buttonIndex: number;
 }
 /**
+ * Response for dialog button click.
+ *
  * @generated from protobuf message soulfire.v1.BotClickDialogButtonResponse
  */
 export interface BotClickDialogButtonResponse {
   /**
+   * Whether the button click was processed successfully.
+   *
    * @generated from protobuf field: bool success = 1
    */
   success: boolean;
   /**
+   * Error message if success is false.
+   * Possible errors: "No dialog is currently displayed"
+   *
    * @generated from protobuf field: optional string error = 2
    */
   error?: string;
 }
 /**
- * Close/dismiss current dialog
+ * Request to close/dismiss the current dialog.
  *
  * @generated from protobuf message soulfire.v1.BotCloseDialogRequest
  */
 export interface BotCloseDialogRequest {
   /**
+   * The UUID of the SoulFire instance containing the bot.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile UUID of the bot to close dialog for.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
 }
 /**
+ * Response for dialog close.
+ *
  * @generated from protobuf message soulfire.v1.BotCloseDialogResponse
  */
 export interface BotCloseDialogResponse {
   /**
+   * Whether the dialog was successfully closed.
+   *
    * @generated from protobuf field: bool success = 1
    */
   success: boolean;
   /**
+   * Error message if success is false.
+   *
    * @generated from protobuf field: optional string error = 2
    */
   error?: string;
 }
 /**
- * Minecraft game modes
+ * Minecraft game modes that determine player capabilities.
  *
  * @generated from protobuf enum soulfire.v1.GameMode
  */
 export enum GameMode {
   /**
+   * Unknown or not yet determined game mode.
+   *
    * @generated from protobuf enum value: GAME_MODE_UNSPECIFIED = 0;
    */
   UNSPECIFIED = 0,
   /**
+   * Survival mode: resource gathering, health/hunger management, mob combat.
+   *
    * @generated from protobuf enum value: GAME_MODE_SURVIVAL = 1;
    */
   SURVIVAL = 1,
   /**
+   * Creative mode: unlimited resources, instant block breaking, flying, invulnerability.
+   *
    * @generated from protobuf enum value: GAME_MODE_CREATIVE = 2;
    */
   CREATIVE = 2,
   /**
+   * Adventure mode: like survival but cannot break/place blocks without proper tools.
+   *
    * @generated from protobuf enum value: GAME_MODE_ADVENTURE = 3;
    */
   ADVENTURE = 3,
   /**
+   * Spectator mode: invisible, can fly through blocks, cannot interact with the world.
+   *
    * @generated from protobuf enum value: GAME_MODE_SPECTATOR = 4;
    */
   SPECTATOR = 4,
 }
 /**
+ * Types of inventory click actions available in Minecraft.
+ *
  * @generated from protobuf enum soulfire.v1.ClickType
  */
 export enum ClickType {
   /**
+   * Invalid/unspecified click type. Will result in an error.
+   *
    * @generated from protobuf enum value: CLICK_TYPE_UNSPECIFIED = 0;
    */
   CLICK_TYPE_UNSPECIFIED = 0,
   /**
-   * Pick up / place stack
+   * Left mouse click on a slot.
+   * - Empty cursor + item in slot: Pick up entire stack to cursor
+   * - Item on cursor + empty slot: Place entire stack in slot
+   * - Item on cursor + same item in slot: Combine stacks (up to max stack size)
+   * - Item on cursor + different item in slot: Swap cursor and slot items
    *
    * @generated from protobuf enum value: LEFT_CLICK = 1;
    */
   LEFT_CLICK = 1,
   /**
-   * Pick up half / place one
+   * Right mouse click on a slot.
+   * - Empty cursor + item in slot: Pick up half the stack (rounded up)
+   * - Item on cursor + empty slot: Place one item from cursor
+   * - Item on cursor + same item in slot: Place one item from cursor
+   * - Item on cursor + different item in slot: Swap cursor and slot items
    *
    * @generated from protobuf enum value: RIGHT_CLICK = 2;
    */
   RIGHT_CLICK = 2,
   /**
-   * Quick move to other inventory section
+   * Shift + left click on a slot.
+   * Quick-moves the item stack to the opposite inventory section.
+   * - From player inventory to container (chest, furnace, etc.)
+   * - From container to player inventory
+   * - Between hotbar and main inventory
    *
    * @generated from protobuf enum value: SHIFT_LEFT_CLICK = 3;
    */
   SHIFT_LEFT_CLICK = 3,
   /**
-   * Drop one item (Q key on slot)
+   * Drop one item from the slot (Q key while hovering over slot).
+   * Drops a single item from the stack, leaving the rest.
    *
    * @generated from protobuf enum value: DROP_ONE = 4;
    */
   DROP_ONE = 4,
   /**
-   * Drop entire stack (Ctrl+Q on slot)
+   * Drop entire stack from the slot (Ctrl+Q while hovering over slot).
+   * Drops all items from the stack at once.
    *
    * @generated from protobuf enum value: DROP_ALL = 5;
    */
   DROP_ALL = 5,
   /**
-   * Swap slot with hotbar (1-9 keys)
+   * Swap slot contents with a hotbar slot (number keys 1-9).
+   * Requires hotbar_slot field to specify which hotbar slot (0-8).
+   * Works regardless of what's in the cursor.
    *
    * @generated from protobuf enum value: SWAP_HOTBAR = 6;
    */
   SWAP_HOTBAR = 6,
   /**
-   * Clone item (creative mode)
+   * Middle mouse click (creative mode clone).
+   * In creative mode, clones the item to cursor without affecting the slot.
+   * No effect in survival mode.
    *
    * @generated from protobuf enum value: MIDDLE_CLICK = 7;
    */
   MIDDLE_CLICK = 7,
 }
 /**
- * Describes how a region of slots should be rendered
+ * Describes how a region of slots should be rendered in the UI.
+ * Different region types have different visual treatments.
  *
  * @generated from protobuf enum soulfire.v1.SlotRegionType
  */
 export enum SlotRegionType {
   /**
-   * Regular interactive slots
+   * Regular interactive slots that can accept most items.
    *
    * @generated from protobuf enum value: SLOT_REGION_NORMAL = 0;
    */
   SLOT_REGION_NORMAL = 0,
   /**
-   * Output-only (crafting result, furnace output)
+   * Output-only slots (crafting result, furnace output).
+   * Items can only be taken out, not placed in.
    *
    * @generated from protobuf enum value: SLOT_REGION_OUTPUT = 1;
    */
   SLOT_REGION_OUTPUT = 1,
   /**
-   * Display-only (lectern book, some special slots)
+   * Display-only slots (lectern book display, some special UIs).
+   * May not allow any direct interaction.
    *
    * @generated from protobuf enum value: SLOT_REGION_DISPLAY = 2;
    */
   SLOT_REGION_DISPLAY = 2,
   /**
-   * Player hotbar (show selection indicator)
+   * Player hotbar slots.
+   * Should show selection indicator for the currently selected slot.
    *
    * @generated from protobuf enum value: SLOT_REGION_HOTBAR = 3;
    */
   SLOT_REGION_HOTBAR = 3,
   /**
-   * Armor slots (show armor icons as placeholder)
+   * Armor slots in player inventory.
+   * May display placeholder armor icons when empty.
    *
    * @generated from protobuf enum value: SLOT_REGION_ARMOR = 4;
    */
   SLOT_REGION_ARMOR = 4,
 }
 /**
+ * Mouse buttons for world interaction.
+ *
  * @generated from protobuf enum soulfire.v1.MouseButton
  */
 export enum MouseButton {
   /**
+   * Invalid/unspecified button. Will result in an error.
+   *
    * @generated from protobuf enum value: MOUSE_BUTTON_UNSPECIFIED = 0;
    */
   MOUSE_BUTTON_UNSPECIFIED = 0,
   /**
-   * Attack entity / start breaking block
+   * Left mouse button.
+   * Actions: Attack entity (if looking at one), start breaking block (if looking at one).
    *
    * @generated from protobuf enum value: LEFT_BUTTON = 1;
    */
   LEFT_BUTTON = 1,
   /**
-   * Use item / interact with entity or block
+   * Right mouse button.
+   * Actions: Use held item, interact with entity (if looking at one),
+   *          interact with block (if looking at one, e.g., open chest, press button).
    *
    * @generated from protobuf enum value: RIGHT_BUTTON = 2;
    */
@@ -1536,74 +2296,86 @@ export enum MouseButton {
 }
 // ============================================================================
 // Server Dialog Messages (Minecraft 1.21.6+)
-// Dialogs are server-sent UI screens that can display information and gather input
+// Dialogs are server-sent UI screens that can display information and gather input.
+// They were introduced in Minecraft 1.21.6 as a way for servers to create custom UIs.
 // ============================================================================
 
 /**
- * Dialog types matching Minecraft's registry
+ * Dialog types matching Minecraft's dialog registry.
+ * Determines the overall structure and behavior of the dialog.
  *
  * @generated from protobuf enum soulfire.v1.DialogType
  */
 export enum DialogType {
   /**
+   * Unknown or unrecognized dialog type.
+   *
    * @generated from protobuf enum value: DIALOG_TYPE_UNSPECIFIED = 0;
    */
   UNSPECIFIED = 0,
   /**
-   * Single action button in footer
+   * Notice dialog with a single action button in the footer.
+   * Used for informational messages that require acknowledgment.
    *
    * @generated from protobuf enum value: DIALOG_TYPE_NOTICE = 1;
    */
   NOTICE = 1,
   /**
-   * Yes/No buttons in footer
+   * Confirmation dialog with Yes/No buttons in the footer.
+   * Used for binary choices.
    *
    * @generated from protobuf enum value: DIALOG_TYPE_CONFIRMATION = 2;
    */
   CONFIRMATION = 2,
   /**
-   * Scrollable list of action buttons
+   * Multi-action dialog with a scrollable list of action buttons.
+   * Used for menus with multiple options.
    *
    * @generated from protobuf enum value: DIALOG_TYPE_MULTI_ACTION = 3;
    */
   MULTI_ACTION = 3,
   /**
-   * Server links display
+   * Server links dialog displaying clickable links.
+   * Used to show server website, Discord, etc.
    *
    * @generated from protobuf enum value: DIALOG_TYPE_SERVER_LINKS = 4;
    */
   SERVER_LINKS = 4,
   /**
-   * Buttons linking to other dialogs
+   * Dialog list with buttons linking to other dialogs.
+   * Used for hierarchical menu navigation.
    *
    * @generated from protobuf enum value: DIALOG_TYPE_DIALOG_LIST = 5;
    */
   DIALOG_LIST = 5,
 }
 /**
- * After-action behavior
+ * Behavior after a dialog action is triggered.
  *
  * @generated from protobuf enum soulfire.v1.DialogAfterAction
  */
 export enum DialogAfterAction {
   /**
+   * Unspecified, use dialog default.
+   *
    * @generated from protobuf enum value: DIALOG_AFTER_ACTION_UNSPECIFIED = 0;
    */
   UNSPECIFIED = 0,
   /**
-   * Close dialog (default)
+   * Close the dialog after the action.
+   * This is the default behavior.
    *
    * @generated from protobuf enum value: DIALOG_AFTER_ACTION_CLOSE = 1;
    */
   CLOSE = 1,
   /**
-   * Keep dialog open
+   * Keep the dialog open after the action.
    *
    * @generated from protobuf enum value: DIALOG_AFTER_ACTION_NONE = 2;
    */
   NONE = 2,
   /**
-   * Show waiting screen
+   * Show a waiting/loading screen while action processes.
    *
    * @generated from protobuf enum value: DIALOG_AFTER_ACTION_WAIT_FOR_RESPONSE = 3;
    */

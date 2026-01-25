@@ -26,10 +26,22 @@ import type {
 } from "./client";
 import { ClientService } from "./client";
 /**
+ * Service for managing client/user-specific operations.
+ * All methods in this service operate on the currently authenticated user,
+ * identified via the JWT token in the Authorization header.
+ * Each method requires a specific GlobalPermission to be granted to the user.
+ *
  * @generated from protobuf service soulfire.v1.ClientService
  */
 export interface IClientServiceClient {
   /**
+   * Retrieves comprehensive data about the authenticated client and the server.
+   * Returns user profile information, granted permissions, and server metadata.
+   * Required permission: READ_CLIENT_DATA
+   * Error cases:
+   *   - PERMISSION_DENIED: User lacks READ_CLIENT_DATA permission
+   *   - INTERNAL: Server error while fetching client data
+   *
    * @generated from protobuf rpc: GetClientData
    */
   getClientData(
@@ -37,6 +49,13 @@ export interface IClientServiceClient {
     options?: RpcOptions,
   ): UnaryCall<ClientDataRequest, ClientDataResponse>;
   /**
+   * Generates a new JWT token specifically for WebDAV authentication.
+   * The generated token has the "webdav" audience and can only be used for WebDAV access.
+   * Required permission: GENERATE_SELF_WEBDAV_TOKEN
+   * Error cases:
+   *   - PERMISSION_DENIED: User lacks GENERATE_SELF_WEBDAV_TOKEN permission
+   *   - INTERNAL: Server error while generating token (e.g., user not found)
+   *
    * @generated from protobuf rpc: GenerateWebDAVToken
    */
   generateWebDAVToken(
@@ -44,6 +63,13 @@ export interface IClientServiceClient {
     options?: RpcOptions,
   ): UnaryCall<GenerateWebDAVTokenRequest, GenerateWebDAVTokenResponse>;
   /**
+   * Generates a new JWT token for API authentication.
+   * The generated token has the "api" audience and can be used for gRPC/HTTP API calls.
+   * Required permission: GENERATE_SELF_API_TOKEN
+   * Error cases:
+   *   - PERMISSION_DENIED: User lacks GENERATE_SELF_API_TOKEN permission
+   *   - INTERNAL: Server error while generating token (e.g., user not found)
+   *
    * @generated from protobuf rpc: GenerateAPIToken
    */
   generateAPIToken(
@@ -51,6 +77,13 @@ export interface IClientServiceClient {
     options?: RpcOptions,
   ): UnaryCall<GenerateAPITokenRequest, GenerateAPITokenResponse>;
   /**
+   * Updates the username of the currently authenticated user.
+   * The change is persisted to the database immediately.
+   * Required permission: UPDATE_SELF_USERNAME
+   * Error cases:
+   *   - PERMISSION_DENIED: User lacks UPDATE_SELF_USERNAME permission
+   *   - INTERNAL: Server error while updating (e.g., user not found in database)
+   *
    * @generated from protobuf rpc: UpdateSelfUsername
    */
   updateSelfUsername(
@@ -58,6 +91,13 @@ export interface IClientServiceClient {
     options?: RpcOptions,
   ): UnaryCall<UpdateSelfUsernameRequest, UpdateSelfUsernameResponse>;
   /**
+   * Updates the email address of the currently authenticated user.
+   * The change is persisted to the database immediately.
+   * Required permission: UPDATE_SELF_EMAIL
+   * Error cases:
+   *   - PERMISSION_DENIED: User lacks UPDATE_SELF_EMAIL permission
+   *   - INTERNAL: Server error while updating (e.g., user not found in database)
+   *
    * @generated from protobuf rpc: UpdateSelfEmail
    */
   updateSelfEmail(
@@ -65,6 +105,15 @@ export interface IClientServiceClient {
     options?: RpcOptions,
   ): UnaryCall<UpdateSelfEmailRequest, UpdateSelfEmailResponse>;
   /**
+   * Invalidates all existing sessions for the currently authenticated user.
+   * This is done by setting the user's minIssuedAt timestamp to the current time,
+   * which causes all previously issued JWT tokens to become invalid.
+   * After calling this method, the user will need to re-authenticate on all devices.
+   * Required permission: INVALIDATE_SELF_SESSIONS
+   * Error cases:
+   *   - PERMISSION_DENIED: User lacks INVALIDATE_SELF_SESSIONS permission
+   *   - INTERNAL: Server error while invalidating sessions (e.g., user not found)
+   *
    * @generated from protobuf rpc: InvalidateSelfSessions
    */
   invalidateSelfSessions(
@@ -73,6 +122,11 @@ export interface IClientServiceClient {
   ): UnaryCall<InvalidateSelfSessionsRequest, InvalidateSelfSessionsResponse>;
 }
 /**
+ * Service for managing client/user-specific operations.
+ * All methods in this service operate on the currently authenticated user,
+ * identified via the JWT token in the Authorization header.
+ * Each method requires a specific GlobalPermission to be granted to the user.
+ *
  * @generated from protobuf service soulfire.v1.ClientService
  */
 export class ClientServiceClient implements IClientServiceClient, ServiceInfo {
@@ -81,6 +135,13 @@ export class ClientServiceClient implements IClientServiceClient, ServiceInfo {
   options = ClientService.options;
   constructor(private readonly _transport: RpcTransport) {}
   /**
+   * Retrieves comprehensive data about the authenticated client and the server.
+   * Returns user profile information, granted permissions, and server metadata.
+   * Required permission: READ_CLIENT_DATA
+   * Error cases:
+   *   - PERMISSION_DENIED: User lacks READ_CLIENT_DATA permission
+   *   - INTERNAL: Server error while fetching client data
+   *
    * @generated from protobuf rpc: GetClientData
    */
   getClientData(
@@ -98,6 +159,13 @@ export class ClientServiceClient implements IClientServiceClient, ServiceInfo {
     );
   }
   /**
+   * Generates a new JWT token specifically for WebDAV authentication.
+   * The generated token has the "webdav" audience and can only be used for WebDAV access.
+   * Required permission: GENERATE_SELF_WEBDAV_TOKEN
+   * Error cases:
+   *   - PERMISSION_DENIED: User lacks GENERATE_SELF_WEBDAV_TOKEN permission
+   *   - INTERNAL: Server error while generating token (e.g., user not found)
+   *
    * @generated from protobuf rpc: GenerateWebDAVToken
    */
   generateWebDAVToken(
@@ -112,6 +180,13 @@ export class ClientServiceClient implements IClientServiceClient, ServiceInfo {
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Generates a new JWT token for API authentication.
+   * The generated token has the "api" audience and can be used for gRPC/HTTP API calls.
+   * Required permission: GENERATE_SELF_API_TOKEN
+   * Error cases:
+   *   - PERMISSION_DENIED: User lacks GENERATE_SELF_API_TOKEN permission
+   *   - INTERNAL: Server error while generating token (e.g., user not found)
+   *
    * @generated from protobuf rpc: GenerateAPIToken
    */
   generateAPIToken(
@@ -129,6 +204,13 @@ export class ClientServiceClient implements IClientServiceClient, ServiceInfo {
     );
   }
   /**
+   * Updates the username of the currently authenticated user.
+   * The change is persisted to the database immediately.
+   * Required permission: UPDATE_SELF_USERNAME
+   * Error cases:
+   *   - PERMISSION_DENIED: User lacks UPDATE_SELF_USERNAME permission
+   *   - INTERNAL: Server error while updating (e.g., user not found in database)
+   *
    * @generated from protobuf rpc: UpdateSelfUsername
    */
   updateSelfUsername(
@@ -143,6 +225,13 @@ export class ClientServiceClient implements IClientServiceClient, ServiceInfo {
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Updates the email address of the currently authenticated user.
+   * The change is persisted to the database immediately.
+   * Required permission: UPDATE_SELF_EMAIL
+   * Error cases:
+   *   - PERMISSION_DENIED: User lacks UPDATE_SELF_EMAIL permission
+   *   - INTERNAL: Server error while updating (e.g., user not found in database)
+   *
    * @generated from protobuf rpc: UpdateSelfEmail
    */
   updateSelfEmail(
@@ -160,6 +249,15 @@ export class ClientServiceClient implements IClientServiceClient, ServiceInfo {
     );
   }
   /**
+   * Invalidates all existing sessions for the currently authenticated user.
+   * This is done by setting the user's minIssuedAt timestamp to the current time,
+   * which causes all previously issued JWT tokens to become invalid.
+   * After calling this method, the user will need to re-authenticate on all devices.
+   * Required permission: INVALIDATE_SELF_SESSIONS
+   * Error cases:
+   *   - PERMISSION_DENIED: User lacks INVALIDATE_SELF_SESSIONS permission
+   *   - INTERNAL: Server error while invalidating sessions (e.g., user not found)
+   *
    * @generated from protobuf rpc: InvalidateSelfSessions
    */
   invalidateSelfSessions(

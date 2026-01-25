@@ -58,10 +58,31 @@ import type {
 } from "./instance";
 import { InstanceService } from "./instance";
 /**
+ * Service for managing SoulFire instances.
+ * An instance represents a collection of Minecraft bots that can be started,
+ * stopped, and configured together. Each instance has its own configuration
+ * including settings, Minecraft accounts, and proxies.
+ *
+ * All operations require appropriate permissions:
+ * - CREATE_INSTANCE (global): Required to create new instances
+ * - READ_INSTANCE: Required to list and view instance details
+ * - UPDATE_INSTANCE_META: Required to change instance name/icon
+ * - UPDATE_INSTANCE_CONFIG: Required to modify settings, accounts, and proxies
+ * - DELETE_INSTANCE: Required to delete an instance
+ * - CHANGE_INSTANCE_STATE: Required to start/stop/pause the instance
+ * - READ_INSTANCE_AUDIT_LOGS: Required to view audit logs
+ * - READ_BOT_INFO: Required to read account metadata
+ *
  * @generated from protobuf service soulfire.v1.InstanceService
  */
 export interface IInstanceServiceClient {
   /**
+   * Creates a new instance with the given friendly name.
+   * The instance starts in STOPPED state with default configuration.
+   * Requires: CREATE_INSTANCE global permission
+   * Returns: The UUID of the newly created instance
+   * Errors: INTERNAL if creation fails
+   *
    * @generated from protobuf rpc: CreateInstance
    */
   createInstance(
@@ -69,6 +90,12 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceCreateRequest, InstanceCreateResponse>;
   /**
+   * Permanently deletes an instance and all its data.
+   * If the instance is running, it will be stopped first.
+   * This operation cannot be undone.
+   * Requires: DELETE_INSTANCE permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: DeleteInstance
    */
   deleteInstance(
@@ -76,6 +103,10 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceDeleteRequest, InstanceDeleteResponse>;
   /**
+   * Lists all instances the current user has permission to view.
+   * Only instances where the user has READ_INSTANCE permission are returned.
+   * Returns summary information for each instance.
+   *
    * @generated from protobuf rpc: ListInstances
    */
   listInstances(
@@ -83,6 +114,12 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceListRequest, InstanceListResponse>;
   /**
+   * Gets detailed information about a specific instance.
+   * Supports conditional requests via if_modified_since to reduce bandwidth.
+   * Requires: READ_INSTANCE permission on the instance
+   * Returns: Full instance info or not_modified status
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: GetInstanceInfo
    */
   getInstanceInfo(
@@ -90,6 +127,11 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceInfoRequest, InstanceInfoResponse>;
   /**
+   * Updates instance metadata (friendly name or icon).
+   * Only one field can be updated per request.
+   * Requires: UPDATE_INSTANCE_META permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: UpdateInstanceMeta
    */
   updateInstanceMeta(
@@ -97,7 +139,11 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceUpdateMetaRequest, InstanceUpdateMetaResponse>;
   /**
-   * Used only for profile import - sends entire config
+   * Replaces the entire instance configuration.
+   * Used primarily for profile import operations.
+   * For individual setting changes, use UpdateInstanceConfigEntry instead.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
    *
    * @generated from protobuf rpc: UpdateInstanceConfig
    */
@@ -106,7 +152,10 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceUpdateConfigRequest, InstanceUpdateConfigResponse>;
   /**
-   * Granular update for individual config entries
+   * Updates a single configuration entry by namespace and key.
+   * More efficient than UpdateInstanceConfig for individual changes.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
    *
    * @generated from protobuf rpc: UpdateInstanceConfigEntry
    */
@@ -118,7 +167,10 @@ export interface IInstanceServiceClient {
     InstanceUpdateConfigEntryResponse
   >;
   /**
-   * Account operations
+   * Adds a Minecraft account to the instance.
+   * The account's profile_id must be unique within the instance.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
    *
    * @generated from protobuf rpc: AddInstanceAccount
    */
@@ -127,6 +179,10 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceAddAccountRequest, InstanceAddAccountResponse>;
   /**
+   * Removes a Minecraft account from the instance by profile_id.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: RemoveInstanceAccount
    */
   removeInstanceAccount(
@@ -134,6 +190,11 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceRemoveAccountRequest, InstanceRemoveAccountResponse>;
   /**
+   * Updates an existing Minecraft account in the instance.
+   * The account is matched by profile_id and replaced.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: UpdateInstanceAccount
    */
   updateInstanceAccount(
@@ -141,7 +202,10 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceUpdateAccountRequest, InstanceUpdateAccountResponse>;
   /**
-   * Batch account operations
+   * Adds multiple Minecraft accounts to the instance in a single operation.
+   * More efficient than multiple AddInstanceAccount calls.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
    *
    * @generated from protobuf rpc: AddInstanceAccountsBatch
    */
@@ -153,6 +217,11 @@ export interface IInstanceServiceClient {
     InstanceAddAccountsBatchResponse
   >;
   /**
+   * Removes multiple Minecraft accounts from the instance by their profile_ids.
+   * More efficient than multiple RemoveInstanceAccount calls.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: RemoveInstanceAccountsBatch
    */
   removeInstanceAccountsBatch(
@@ -163,7 +232,9 @@ export interface IInstanceServiceClient {
     InstanceRemoveAccountsBatchResponse
   >;
   /**
-   * Proxy operations
+   * Adds a proxy to the instance.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
    *
    * @generated from protobuf rpc: AddInstanceProxy
    */
@@ -172,6 +243,11 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceAddProxyRequest, InstanceAddProxyResponse>;
   /**
+   * Removes a proxy from the instance by its index.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   * Errors: INVALID_ARGUMENT if index is out of bounds
+   *
    * @generated from protobuf rpc: RemoveInstanceProxy
    */
   removeInstanceProxy(
@@ -179,6 +255,11 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceRemoveProxyRequest, InstanceRemoveProxyResponse>;
   /**
+   * Updates an existing proxy in the instance by its index.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   * Errors: INVALID_ARGUMENT if index is out of bounds
+   *
    * @generated from protobuf rpc: UpdateInstanceProxy
    */
   updateInstanceProxy(
@@ -186,7 +267,10 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceUpdateProxyRequest, InstanceUpdateProxyResponse>;
   /**
-   * Batch proxy operations
+   * Adds multiple proxies to the instance in a single operation.
+   * More efficient than multiple AddInstanceProxy calls.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
    *
    * @generated from protobuf rpc: AddInstanceProxiesBatch
    */
@@ -195,6 +279,11 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceAddProxiesBatchRequest, InstanceAddProxiesBatchResponse>;
   /**
+   * Removes multiple proxies from the instance by their addresses.
+   * More efficient than multiple RemoveInstanceProxy calls.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: RemoveInstanceProxiesBatch
    */
   removeInstanceProxiesBatch(
@@ -205,6 +294,12 @@ export interface IInstanceServiceClient {
     InstanceRemoveProxiesBatchResponse
   >;
   /**
+   * Changes the lifecycle state of an instance.
+   * Used to start, pause, resume, or stop bot sessions.
+   * The operation blocks until the state transition is complete.
+   * Requires: CHANGE_INSTANCE_STATE permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: ChangeInstanceState
    */
   changeInstanceState(
@@ -212,6 +307,11 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceStateChangeRequest, InstanceStateChangeResponse>;
   /**
+   * Retrieves the audit log for an instance.
+   * Returns a list of recorded actions ordered by timestamp (newest first).
+   * Requires: READ_INSTANCE_AUDIT_LOGS permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: GetAuditLog
    */
   getAuditLog(
@@ -219,7 +319,10 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InstanceAuditLogRequest, InstanceAuditLogResponse>;
   /**
-   * Account metadata operations
+   * Gets persistent metadata for a Minecraft account.
+   * Persistent metadata survives bot restarts and session changes.
+   * Requires: READ_BOT_INFO permission on the instance
+   * Errors: NOT_FOUND if instance or account does not exist
    *
    * @generated from protobuf rpc: GetAccountMetadata
    */
@@ -228,6 +331,11 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<GetAccountMetadataRequest, GetAccountMetadataResponse>;
   /**
+   * Sets a single persistent metadata entry for a Minecraft account.
+   * Creates the namespace and key if they don't exist, or updates if they do.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: SetAccountMetadataEntry
    */
   setAccountMetadataEntry(
@@ -235,6 +343,10 @@ export interface IInstanceServiceClient {
     options?: RpcOptions,
   ): UnaryCall<SetAccountMetadataEntryRequest, SetAccountMetadataEntryResponse>;
   /**
+   * Deletes a persistent metadata entry from a Minecraft account.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: DeleteAccountMetadataEntry
    */
   deleteAccountMetadataEntry(
@@ -246,6 +358,21 @@ export interface IInstanceServiceClient {
   >;
 }
 /**
+ * Service for managing SoulFire instances.
+ * An instance represents a collection of Minecraft bots that can be started,
+ * stopped, and configured together. Each instance has its own configuration
+ * including settings, Minecraft accounts, and proxies.
+ *
+ * All operations require appropriate permissions:
+ * - CREATE_INSTANCE (global): Required to create new instances
+ * - READ_INSTANCE: Required to list and view instance details
+ * - UPDATE_INSTANCE_META: Required to change instance name/icon
+ * - UPDATE_INSTANCE_CONFIG: Required to modify settings, accounts, and proxies
+ * - DELETE_INSTANCE: Required to delete an instance
+ * - CHANGE_INSTANCE_STATE: Required to start/stop/pause the instance
+ * - READ_INSTANCE_AUDIT_LOGS: Required to view audit logs
+ * - READ_BOT_INFO: Required to read account metadata
+ *
  * @generated from protobuf service soulfire.v1.InstanceService
  */
 export class InstanceServiceClient
@@ -256,6 +383,12 @@ export class InstanceServiceClient
   options = InstanceService.options;
   constructor(private readonly _transport: RpcTransport) {}
   /**
+   * Creates a new instance with the given friendly name.
+   * The instance starts in STOPPED state with default configuration.
+   * Requires: CREATE_INSTANCE global permission
+   * Returns: The UUID of the newly created instance
+   * Errors: INTERNAL if creation fails
+   *
    * @generated from protobuf rpc: CreateInstance
    */
   createInstance(
@@ -273,6 +406,12 @@ export class InstanceServiceClient
     );
   }
   /**
+   * Permanently deletes an instance and all its data.
+   * If the instance is running, it will be stopped first.
+   * This operation cannot be undone.
+   * Requires: DELETE_INSTANCE permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: DeleteInstance
    */
   deleteInstance(
@@ -290,6 +429,10 @@ export class InstanceServiceClient
     );
   }
   /**
+   * Lists all instances the current user has permission to view.
+   * Only instances where the user has READ_INSTANCE permission are returned.
+   * Returns summary information for each instance.
+   *
    * @generated from protobuf rpc: ListInstances
    */
   listInstances(
@@ -307,6 +450,12 @@ export class InstanceServiceClient
     );
   }
   /**
+   * Gets detailed information about a specific instance.
+   * Supports conditional requests via if_modified_since to reduce bandwidth.
+   * Requires: READ_INSTANCE permission on the instance
+   * Returns: Full instance info or not_modified status
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: GetInstanceInfo
    */
   getInstanceInfo(
@@ -324,6 +473,11 @@ export class InstanceServiceClient
     );
   }
   /**
+   * Updates instance metadata (friendly name or icon).
+   * Only one field can be updated per request.
+   * Requires: UPDATE_INSTANCE_META permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: UpdateInstanceMeta
    */
   updateInstanceMeta(
@@ -338,7 +492,11 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
-   * Used only for profile import - sends entire config
+   * Replaces the entire instance configuration.
+   * Used primarily for profile import operations.
+   * For individual setting changes, use UpdateInstanceConfigEntry instead.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
    *
    * @generated from protobuf rpc: UpdateInstanceConfig
    */
@@ -354,7 +512,10 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
-   * Granular update for individual config entries
+   * Updates a single configuration entry by namespace and key.
+   * More efficient than UpdateInstanceConfig for individual changes.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
    *
    * @generated from protobuf rpc: UpdateInstanceConfigEntry
    */
@@ -373,7 +534,10 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
-   * Account operations
+   * Adds a Minecraft account to the instance.
+   * The account's profile_id must be unique within the instance.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
    *
    * @generated from protobuf rpc: AddInstanceAccount
    */
@@ -389,6 +553,10 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Removes a Minecraft account from the instance by profile_id.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: RemoveInstanceAccount
    */
   removeInstanceAccount(
@@ -403,6 +571,11 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Updates an existing Minecraft account in the instance.
+   * The account is matched by profile_id and replaced.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: UpdateInstanceAccount
    */
   updateInstanceAccount(
@@ -417,7 +590,10 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
-   * Batch account operations
+   * Adds multiple Minecraft accounts to the instance in a single operation.
+   * More efficient than multiple AddInstanceAccount calls.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
    *
    * @generated from protobuf rpc: AddInstanceAccountsBatch
    */
@@ -436,6 +612,11 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Removes multiple Minecraft accounts from the instance by their profile_ids.
+   * More efficient than multiple RemoveInstanceAccount calls.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: RemoveInstanceAccountsBatch
    */
   removeInstanceAccountsBatch(
@@ -453,7 +634,9 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
-   * Proxy operations
+   * Adds a proxy to the instance.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
    *
    * @generated from protobuf rpc: AddInstanceProxy
    */
@@ -472,6 +655,11 @@ export class InstanceServiceClient
     );
   }
   /**
+   * Removes a proxy from the instance by its index.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   * Errors: INVALID_ARGUMENT if index is out of bounds
+   *
    * @generated from protobuf rpc: RemoveInstanceProxy
    */
   removeInstanceProxy(
@@ -486,6 +674,11 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Updates an existing proxy in the instance by its index.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   * Errors: INVALID_ARGUMENT if index is out of bounds
+   *
    * @generated from protobuf rpc: UpdateInstanceProxy
    */
   updateInstanceProxy(
@@ -500,7 +693,10 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
-   * Batch proxy operations
+   * Adds multiple proxies to the instance in a single operation.
+   * More efficient than multiple AddInstanceProxy calls.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
    *
    * @generated from protobuf rpc: AddInstanceProxiesBatch
    */
@@ -519,6 +715,11 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Removes multiple proxies from the instance by their addresses.
+   * More efficient than multiple RemoveInstanceProxy calls.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: RemoveInstanceProxiesBatch
    */
   removeInstanceProxiesBatch(
@@ -536,6 +737,12 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Changes the lifecycle state of an instance.
+   * Used to start, pause, resume, or stop bot sessions.
+   * The operation blocks until the state transition is complete.
+   * Requires: CHANGE_INSTANCE_STATE permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: ChangeInstanceState
    */
   changeInstanceState(
@@ -550,6 +757,11 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Retrieves the audit log for an instance.
+   * Returns a list of recorded actions ordered by timestamp (newest first).
+   * Requires: READ_INSTANCE_AUDIT_LOGS permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: GetAuditLog
    */
   getAuditLog(
@@ -567,7 +779,10 @@ export class InstanceServiceClient
     );
   }
   /**
-   * Account metadata operations
+   * Gets persistent metadata for a Minecraft account.
+   * Persistent metadata survives bot restarts and session changes.
+   * Requires: READ_BOT_INFO permission on the instance
+   * Errors: NOT_FOUND if instance or account does not exist
    *
    * @generated from protobuf rpc: GetAccountMetadata
    */
@@ -583,6 +798,11 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Sets a single persistent metadata entry for a Minecraft account.
+   * Creates the namespace and key if they don't exist, or updates if they do.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: SetAccountMetadataEntry
    */
   setAccountMetadataEntry(
@@ -600,6 +820,10 @@ export class InstanceServiceClient
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Deletes a persistent metadata entry from a Minecraft account.
+   * Requires: UPDATE_INSTANCE_CONFIG permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
    * @generated from protobuf rpc: DeleteAccountMetadataEntry
    */
   deleteAccountMetadataEntry(

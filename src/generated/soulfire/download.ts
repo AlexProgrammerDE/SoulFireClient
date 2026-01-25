@@ -20,52 +20,103 @@ import {
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { ProxyProto } from "./common";
 /**
+ * Represents a single HTTP header as a key-value pair.
+ * Used for both request headers (sent to the target server) and
+ * response headers (received from the target server).
+ *
  * @generated from protobuf message soulfire.v1.HeaderPair
  */
 export interface HeaderPair {
   /**
+   * The header name (e.g., "Content-Type", "Authorization", "Accept").
+   * Header names are case-insensitive per HTTP specification.
+   *
    * @generated from protobuf field: string key = 1
    */
   key: string;
   /**
+   * The header value (e.g., "application/json", "Bearer token123").
+   *
    * @generated from protobuf field: string value = 2
    */
   value: string;
 }
 /**
+ * Request message for downloading content from a URL through the SoulFire server.
+ * This allows clients to fetch remote resources using the server's network connection,
+ * optionally through a proxy, which is useful for accessing resources that may be
+ * blocked or rate-limited from the client's network.
+ *
  * @generated from protobuf message soulfire.v1.DownloadRequest
  */
 export interface DownloadRequest {
   /**
+   * The UUID of the SoulFire instance to associate this download with.
+   * Used for permission checking - the caller must have DOWNLOAD_URL permission
+   * for this instance. Must be a valid UUID string (e.g., "550e8400-e29b-41d4-a716-446655440000").
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The URI to download content from. Must be a valid, fully-formed URI
+   * (e.g., "https://example.com/resource.json"). The server will make an HTTP GET
+   * request to this URI.
+   *
    * @generated from protobuf field: string uri = 2
    */
   uri: string;
   /**
+   * Optional HTTP headers to include in the request to the target server.
+   * These headers are added on top of the default headers set by the server
+   * (Accept, Accept-Language, User-Agent). Custom headers can override defaults.
+   *
    * @generated from protobuf field: repeated soulfire.v1.HeaderPair headers = 3
    */
   headers: HeaderPair[];
   /**
+   * Optional proxy configuration for the download request.
+   * If not provided, the request will be made directly from the server.
+   * Supports HTTP, SOCKS4, and SOCKS5 proxies with optional authentication.
+   *
    * @generated from protobuf field: optional soulfire.v1.ProxyProto proxy = 4
    */
   proxy?: ProxyProto;
 }
 /**
+ * Response message containing the downloaded content and metadata.
+ * Returned after successfully fetching content from the requested URI.
+ *
  * @generated from protobuf message soulfire.v1.DownloadResponse
  */
 export interface DownloadResponse {
   /**
+   * The raw bytes of the downloaded content.
+   * This contains the complete response body from the target server.
+   * May be empty if the server returned no content (e.g., 204 No Content).
+   *
    * @generated from protobuf field: bytes data = 1
    */
   data: Uint8Array;
   /**
+   * All HTTP headers returned by the target server in its response.
+   * Includes standard headers like Content-Type, Content-Length, Cache-Control,
+   * as well as any custom headers set by the server.
+   *
    * @generated from protobuf field: repeated soulfire.v1.HeaderPair headers = 2
    */
   headers: HeaderPair[];
   /**
+   * The HTTP status code returned by the target server (e.g., 200, 404, 500).
+   * Common values:
+   * - 200: OK - Request succeeded
+   * - 301/302: Redirect (note: redirects may be followed automatically)
+   * - 400: Bad Request
+   * - 401: Unauthorized
+   * - 403: Forbidden
+   * - 404: Not Found
+   * - 500: Internal Server Error
+   *
    * @generated from protobuf field: int32 status_code = 3
    */
   statusCode: number;

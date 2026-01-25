@@ -51,11 +51,34 @@ import type {
   BotUpdateConfigEntryResponse,
 } from "./bot";
 import { BotService } from "./bot";
+// ============================================================================
+// BotService Definition
+// ============================================================================
+
 /**
+ * Service for managing and controlling Minecraft bots.
+ * Provides comprehensive APIs for bot monitoring, movement control,
+ * inventory management, and interaction with server dialogs.
+ *
+ * Permissions:
+ * - READ_BOT_INFO: Required for GetBotList, GetBotInfo, GetInventoryState,
+ *                  RenderBotPov, GetDialog
+ * - UPDATE_BOT_CONFIG: Required for all other operations that modify bot state
+ *
+ * Error Handling:
+ * - NOT_FOUND: Instance or bot does not exist
+ * - FAILED_PRECONDITION: Bot is not online or required game state is unavailable
+ * - INTERNAL: Unexpected server errors (check server logs for details)
+ *
  * @generated from protobuf service soulfire.v1.BotService
  */
 export interface IBotServiceClient {
   /**
+   * Returns a list of all bots configured in the specified instance.
+   * Includes both online and offline bots with their current status.
+   * For online bots, includes live state (position, health, etc.) but NOT full inventory data.
+   * Requires READ_BOT_INFO permission.
+   *
    * @generated from protobuf rpc: GetBotList
    */
   getBotList(
@@ -63,6 +86,10 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotListRequest, BotListResponse>;
   /**
+   * Returns detailed information about a specific bot.
+   * Includes full live state with complete inventory data when the bot is online.
+   * Requires READ_BOT_INFO permission.
+   *
    * @generated from protobuf rpc: GetBotInfo
    */
   getBotInfo(
@@ -70,7 +97,9 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotInfoRequest, BotInfoResponse>;
   /**
-   * Granular update for individual config entries
+   * Updates a single configuration entry for a specific bot.
+   * The configuration is persisted to the database immediately.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: UpdateBotConfigEntry
    */
@@ -79,7 +108,10 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotUpdateConfigEntryRequest, BotUpdateConfigEntryResponse>;
   /**
-   * Render the bot's point of view using software rendering
+   * Renders the bot's point-of-view as a PNG image using software rendering.
+   * The bot must be online with a valid player and level.
+   * Uses the bot's current render distance setting.
+   * Requires READ_BOT_INFO permission.
    *
    * @generated from protobuf rpc: RenderBotPov
    */
@@ -88,7 +120,10 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotRenderPovRequest, BotRenderPovResponse>;
   /**
-   * Inventory management
+   * Performs a click action on an inventory/container slot.
+   * Supports various click types (left, right, shift, drop, swap, middle).
+   * The bot must be online with a valid player and gameMode.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: ClickInventorySlot
    */
@@ -97,6 +132,11 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotInventoryClickRequest, BotInventoryClickResponse>;
   /**
+   * Returns the current state of the bot's open container/inventory.
+   * Includes layout information, slot contents, and carried item.
+   * The bot must be online with a valid player.
+   * Requires READ_BOT_INFO permission.
+   *
    * @generated from protobuf rpc: GetInventoryState
    */
   getInventoryState(
@@ -104,6 +144,11 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotInventoryStateRequest, BotInventoryStateResponse>;
   /**
+   * Closes the currently open container (chest, crafting table, etc.).
+   * Returns to the player inventory view.
+   * The bot must be online with a valid player.
+   * Requires UPDATE_BOT_CONFIG permission.
+   *
    * @generated from protobuf rpc: CloseContainer
    */
   closeContainer(
@@ -111,6 +156,11 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotCloseContainerRequest, BotCloseContainerResponse>;
   /**
+   * Opens the player's inventory screen.
+   * Sends a packet to the server to display the inventory UI.
+   * The bot must be online with a valid player.
+   * Requires UPDATE_BOT_CONFIG permission.
+   *
    * @generated from protobuf rpc: OpenInventory
    */
   openInventory(
@@ -118,7 +168,11 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotOpenInventoryRequest, BotOpenInventoryResponse>;
   /**
-   * Mouse click actions
+   * Simulates a mouse click in the game world.
+   * Left click: attack entity or start breaking block.
+   * Right click: use item or interact with entity/block.
+   * The bot must be online with valid player, level, and gameMode.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: MouseClick
    */
@@ -127,7 +181,11 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotMouseClickRequest, BotMouseClickResponse>;
   /**
-   * Container button actions (enchanting, stonecutter, etc.)
+   * Clicks a container-specific action button.
+   * Used for: stonecutter recipes, enchanting, loom patterns, villager trades,
+   * beacon effects, crafter slot toggles, lectern page navigation.
+   * The action is queued and executed on the next game tick.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: ClickContainerButton
    */
@@ -136,7 +194,10 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotContainerButtonClickRequest, BotContainerButtonClickResponse>;
   /**
-   * Set text input in container (anvil rename, etc.)
+   * Sets text in a container's text input field.
+   * Currently only supports anvil item renaming (field_id: "item_name").
+   * The action is queued and executed on the next game tick.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: SetContainerText
    */
@@ -145,7 +206,10 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotSetContainerTextRequest, BotSetContainerTextResponse>;
   /**
-   * Hotbar slot selection
+   * Changes the selected hotbar slot.
+   * Valid slot range: 0-8 (corresponding to slots 1-9 in the UI).
+   * The action is queued and executed on the next game tick.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: SetHotbarSlot
    */
@@ -154,7 +218,11 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotSetHotbarSlotRequest, BotSetHotbarSlotResponse>;
   /**
-   * Movement control (WASD, jump, sneak, sprint)
+   * Updates the bot's movement state (WASD, jump, sneak, sprint).
+   * Only specified fields are changed; omitted fields retain their current value.
+   * Movement persists until explicitly changed or reset.
+   * The action is queued and executed on the next game tick.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: SetMovementState
    */
@@ -163,6 +231,11 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotSetMovementStateRequest, BotSetMovementStateResponse>;
   /**
+   * Resets all movement to stopped state.
+   * Equivalent to releasing all movement keys.
+   * The action is queued and executed on the next game tick.
+   * Requires UPDATE_BOT_CONFIG permission.
+   *
    * @generated from protobuf rpc: ResetMovement
    */
   resetMovement(
@@ -170,7 +243,10 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotResetMovementRequest, BotResetMovementResponse>;
   /**
-   * Rotation control (look direction)
+   * Sets the bot's view rotation (look direction).
+   * Yaw is normalized to -180 to 180, pitch is clamped to -90 to 90.
+   * The action is queued and executed on the next game tick.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: SetRotation
    */
@@ -179,7 +255,11 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotSetRotationRequest, BotSetRotationResponse>;
   /**
-   * Server dialog management (Minecraft 1.21.6+)
+   * Returns the currently displayed server dialog (Minecraft 1.21.6+).
+   * Dialogs are server-sent UI screens for custom interactions.
+   * Returns empty response if no dialog is being shown.
+   * Does not require the bot to be online (but dialog will be absent).
+   * Requires READ_BOT_INFO permission.
    *
    * @generated from protobuf rpc: GetDialog
    */
@@ -188,6 +268,12 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotGetDialogRequest, BotGetDialogResponse>;
   /**
+   * Submits a dialog with input values.
+   * Used for dialogs containing text fields, checkboxes, dropdowns, or sliders.
+   * The dialog is closed after submission.
+   * Note: Full dialog response packets are not yet implemented; this clears local state.
+   * Requires UPDATE_BOT_CONFIG permission.
+   *
    * @generated from protobuf rpc: SubmitDialog
    */
   submitDialog(
@@ -195,6 +281,12 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotSubmitDialogRequest, BotSubmitDialogResponse>;
   /**
+   * Clicks a button in the current dialog.
+   * Button index depends on dialog type (see BotClickDialogButtonRequest).
+   * The dialog is typically closed after the button click.
+   * Note: Full dialog button packets are not yet implemented; this clears local state.
+   * Requires UPDATE_BOT_CONFIG permission.
+   *
    * @generated from protobuf rpc: ClickDialogButton
    */
   clickDialogButton(
@@ -202,6 +294,10 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotClickDialogButtonRequest, BotClickDialogButtonResponse>;
   /**
+   * Closes/dismisses the current dialog.
+   * Clears the local dialog state.
+   * Requires UPDATE_BOT_CONFIG permission.
+   *
    * @generated from protobuf rpc: CloseDialog
    */
   closeDialog(
@@ -209,7 +305,25 @@ export interface IBotServiceClient {
     options?: RpcOptions,
   ): UnaryCall<BotCloseDialogRequest, BotCloseDialogResponse>;
 }
+// ============================================================================
+// BotService Definition
+// ============================================================================
+
 /**
+ * Service for managing and controlling Minecraft bots.
+ * Provides comprehensive APIs for bot monitoring, movement control,
+ * inventory management, and interaction with server dialogs.
+ *
+ * Permissions:
+ * - READ_BOT_INFO: Required for GetBotList, GetBotInfo, GetInventoryState,
+ *                  RenderBotPov, GetDialog
+ * - UPDATE_BOT_CONFIG: Required for all other operations that modify bot state
+ *
+ * Error Handling:
+ * - NOT_FOUND: Instance or bot does not exist
+ * - FAILED_PRECONDITION: Bot is not online or required game state is unavailable
+ * - INTERNAL: Unexpected server errors (check server logs for details)
+ *
  * @generated from protobuf service soulfire.v1.BotService
  */
 export class BotServiceClient implements IBotServiceClient, ServiceInfo {
@@ -218,6 +332,11 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
   options = BotService.options;
   constructor(private readonly _transport: RpcTransport) {}
   /**
+   * Returns a list of all bots configured in the specified instance.
+   * Includes both online and offline bots with their current status.
+   * For online bots, includes live state (position, health, etc.) but NOT full inventory data.
+   * Requires READ_BOT_INFO permission.
+   *
    * @generated from protobuf rpc: GetBotList
    */
   getBotList(
@@ -235,6 +354,10 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
+   * Returns detailed information about a specific bot.
+   * Includes full live state with complete inventory data when the bot is online.
+   * Requires READ_BOT_INFO permission.
+   *
    * @generated from protobuf rpc: GetBotInfo
    */
   getBotInfo(
@@ -252,7 +375,9 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
-   * Granular update for individual config entries
+   * Updates a single configuration entry for a specific bot.
+   * The configuration is persisted to the database immediately.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: UpdateBotConfigEntry
    */
@@ -268,7 +393,10 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     >("unary", this._transport, method, opt, input);
   }
   /**
-   * Render the bot's point of view using software rendering
+   * Renders the bot's point-of-view as a PNG image using software rendering.
+   * The bot must be online with a valid player and level.
+   * Uses the bot's current render distance setting.
+   * Requires READ_BOT_INFO permission.
    *
    * @generated from protobuf rpc: RenderBotPov
    */
@@ -287,7 +415,10 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
-   * Inventory management
+   * Performs a click action on an inventory/container slot.
+   * Supports various click types (left, right, shift, drop, swap, middle).
+   * The bot must be online with a valid player and gameMode.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: ClickInventorySlot
    */
@@ -306,6 +437,11 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
+   * Returns the current state of the bot's open container/inventory.
+   * Includes layout information, slot contents, and carried item.
+   * The bot must be online with a valid player.
+   * Requires READ_BOT_INFO permission.
+   *
    * @generated from protobuf rpc: GetInventoryState
    */
   getInventoryState(
@@ -323,6 +459,11 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
+   * Closes the currently open container (chest, crafting table, etc.).
+   * Returns to the player inventory view.
+   * The bot must be online with a valid player.
+   * Requires UPDATE_BOT_CONFIG permission.
+   *
    * @generated from protobuf rpc: CloseContainer
    */
   closeContainer(
@@ -340,6 +481,11 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
+   * Opens the player's inventory screen.
+   * Sends a packet to the server to display the inventory UI.
+   * The bot must be online with a valid player.
+   * Requires UPDATE_BOT_CONFIG permission.
+   *
    * @generated from protobuf rpc: OpenInventory
    */
   openInventory(
@@ -357,7 +503,11 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
-   * Mouse click actions
+   * Simulates a mouse click in the game world.
+   * Left click: attack entity or start breaking block.
+   * Right click: use item or interact with entity/block.
+   * The bot must be online with valid player, level, and gameMode.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: MouseClick
    */
@@ -376,7 +526,11 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
-   * Container button actions (enchanting, stonecutter, etc.)
+   * Clicks a container-specific action button.
+   * Used for: stonecutter recipes, enchanting, loom patterns, villager trades,
+   * beacon effects, crafter slot toggles, lectern page navigation.
+   * The action is queued and executed on the next game tick.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: ClickContainerButton
    */
@@ -395,7 +549,10 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     >("unary", this._transport, method, opt, input);
   }
   /**
-   * Set text input in container (anvil rename, etc.)
+   * Sets text in a container's text input field.
+   * Currently only supports anvil item renaming (field_id: "item_name").
+   * The action is queued and executed on the next game tick.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: SetContainerText
    */
@@ -411,7 +568,10 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     >("unary", this._transport, method, opt, input);
   }
   /**
-   * Hotbar slot selection
+   * Changes the selected hotbar slot.
+   * Valid slot range: 0-8 (corresponding to slots 1-9 in the UI).
+   * The action is queued and executed on the next game tick.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: SetHotbarSlot
    */
@@ -430,7 +590,11 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
-   * Movement control (WASD, jump, sneak, sprint)
+   * Updates the bot's movement state (WASD, jump, sneak, sprint).
+   * Only specified fields are changed; omitted fields retain their current value.
+   * Movement persists until explicitly changed or reset.
+   * The action is queued and executed on the next game tick.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: SetMovementState
    */
@@ -446,6 +610,11 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Resets all movement to stopped state.
+   * Equivalent to releasing all movement keys.
+   * The action is queued and executed on the next game tick.
+   * Requires UPDATE_BOT_CONFIG permission.
+   *
    * @generated from protobuf rpc: ResetMovement
    */
   resetMovement(
@@ -463,7 +632,10 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
-   * Rotation control (look direction)
+   * Sets the bot's view rotation (look direction).
+   * Yaw is normalized to -180 to 180, pitch is clamped to -90 to 90.
+   * The action is queued and executed on the next game tick.
+   * Requires UPDATE_BOT_CONFIG permission.
    *
    * @generated from protobuf rpc: SetRotation
    */
@@ -482,7 +654,11 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
-   * Server dialog management (Minecraft 1.21.6+)
+   * Returns the currently displayed server dialog (Minecraft 1.21.6+).
+   * Dialogs are server-sent UI screens for custom interactions.
+   * Returns empty response if no dialog is being shown.
+   * Does not require the bot to be online (but dialog will be absent).
+   * Requires READ_BOT_INFO permission.
    *
    * @generated from protobuf rpc: GetDialog
    */
@@ -501,6 +677,12 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
+   * Submits a dialog with input values.
+   * Used for dialogs containing text fields, checkboxes, dropdowns, or sliders.
+   * The dialog is closed after submission.
+   * Note: Full dialog response packets are not yet implemented; this clears local state.
+   * Requires UPDATE_BOT_CONFIG permission.
+   *
    * @generated from protobuf rpc: SubmitDialog
    */
   submitDialog(
@@ -518,6 +700,12 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     );
   }
   /**
+   * Clicks a button in the current dialog.
+   * Button index depends on dialog type (see BotClickDialogButtonRequest).
+   * The dialog is typically closed after the button click.
+   * Note: Full dialog button packets are not yet implemented; this clears local state.
+   * Requires UPDATE_BOT_CONFIG permission.
+   *
    * @generated from protobuf rpc: ClickDialogButton
    */
   clickDialogButton(
@@ -532,6 +720,10 @@ export class BotServiceClient implements IBotServiceClient, ServiceInfo {
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Closes/dismisses the current dialog.
+   * Clears the local dialog state.
+   * Requires UPDATE_BOT_CONFIG permission.
+   *
    * @generated from protobuf rpc: CloseDialog
    */
   closeDialog(

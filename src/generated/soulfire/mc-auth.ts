@@ -24,46 +24,78 @@ import {
   MinecraftAccountProto,
 } from "./common";
 /**
+ * Request message for credentials-based Minecraft account authentication.
+ * Supports bulk authentication of multiple accounts in a single request.
+ *
  * @generated from protobuf message soulfire.v1.CredentialsAuthRequest
  */
 export interface CredentialsAuthRequest {
   /**
+   * The UUID of the SoulFire instance to authenticate accounts for.
+   * Must be a valid UUID string. The instance must exist and the caller
+   * must have AUTHENTICATE_MC_ACCOUNT permission for this instance.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The authentication service type to use.
+   * Determines how the payload strings are interpreted:
+   * - MICROSOFT_JAVA_CREDENTIALS: Payload format is "email:password"
+   * - MICROSOFT_BEDROCK_CREDENTIALS: Payload format is "email:password"
+   * - OFFLINE: Payload is the username to use (no authentication performed)
+   * - MICROSOFT_JAVA_REFRESH_TOKEN: Payload is a Microsoft refresh token
+   *
    * @generated from protobuf field: soulfire.v1.AccountTypeCredentials service = 2
    */
   service: AccountTypeCredentials;
   /**
+   * List of authentication credentials/data strings.
+   * Each string is processed according to the service type.
+   * Multiple payloads are authenticated concurrently (controlled by
+   * ACCOUNT_IMPORT_CONCURRENCY instance setting).
+   *
    * @generated from protobuf field: repeated string payload = 3
    */
   payload: string[];
 }
 /**
- * Full response of all accounts that were authenticated
+ * Final response containing all successfully authenticated accounts.
+ * Sent as the last message in the stream after all individual results.
  *
  * @generated from protobuf message soulfire.v1.CredentialsAuthFullList
  */
 export interface CredentialsAuthFullList {
   /**
+   * List of all successfully authenticated Minecraft accounts.
+   * Failed authentications are excluded from this list.
+   *
    * @generated from protobuf field: repeated soulfire.v1.MinecraftAccountProto account = 1
    */
   account: MinecraftAccountProto[];
 }
 /**
- * Used when an account is successfully authenticated
+ * Progress indicator sent when an individual account authentication succeeds.
+ * This is a streaming progress update, not the final result.
+ * The actual account data is included in the final CredentialsAuthFullList.
  *
  * @generated from protobuf message soulfire.v1.CredentialsAuthOneSuccess
  */
 export interface CredentialsAuthOneSuccess {}
 /**
- * Used when an account is not successfully authenticated
+ * Progress indicator sent when an individual account authentication fails.
+ * This is a streaming progress update indicating that one payload could not
+ * be authenticated. The failure is logged server-side with detailed error info.
  *
  * @generated from protobuf message soulfire.v1.CredentialsAuthOneFailure
  */
 export interface CredentialsAuthOneFailure {}
 /**
+ * Streaming response message for credentials-based authentication.
+ * The stream sends progress updates (one_success/one_failure) for each
+ * payload being processed, followed by a final full_list with all
+ * successfully authenticated accounts.
+ *
  * @generated from protobuf message soulfire.v1.CredentialsAuthResponse
  */
 export interface CredentialsAuthResponse {
@@ -74,6 +106,9 @@ export interface CredentialsAuthResponse {
     | {
         oneofKind: "fullList";
         /**
+         * Final response containing all successfully authenticated accounts.
+         * This is the last message in the stream.
+         *
          * @generated from protobuf field: soulfire.v1.CredentialsAuthFullList full_list = 1
          */
         fullList: CredentialsAuthFullList;
@@ -81,6 +116,9 @@ export interface CredentialsAuthResponse {
     | {
         oneofKind: "oneSuccess";
         /**
+         * Progress indicator: one account was successfully authenticated.
+         * Sent for each successful authentication as they complete.
+         *
          * @generated from protobuf field: soulfire.v1.CredentialsAuthOneSuccess one_success = 2
          */
         oneSuccess: CredentialsAuthOneSuccess;
@@ -88,6 +126,10 @@ export interface CredentialsAuthResponse {
     | {
         oneofKind: "oneFailure";
         /**
+         * Progress indicator: one account authentication failed.
+         * Sent for each failed authentication as they complete.
+         * Errors are logged server-side (e.g., invalid credentials, network issues).
+         *
          * @generated from protobuf field: soulfire.v1.CredentialsAuthOneFailure one_failure = 3
          */
         oneFailure: CredentialsAuthOneFailure;
@@ -97,40 +139,72 @@ export interface CredentialsAuthResponse {
       };
 }
 /**
+ * Request message for Microsoft OAuth device code authentication flow.
+ * This flow is interactive and requires user action in a web browser.
+ *
  * @generated from protobuf message soulfire.v1.DeviceCodeAuthRequest
  */
 export interface DeviceCodeAuthRequest {
   /**
+   * The UUID of the SoulFire instance to authenticate the account for.
+   * Must be a valid UUID string. The instance must exist and the caller
+   * must have AUTHENTICATE_MC_ACCOUNT permission for this instance.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The device code authentication service type to use:
+   * - MICROSOFT_JAVA_DEVICE_CODE: Microsoft Java Edition account
+   * - MICROSOFT_BEDROCK_DEVICE_CODE: Microsoft Bedrock Edition account
+   *
    * @generated from protobuf field: soulfire.v1.AccountTypeDeviceCode service = 2
    */
   service: AccountTypeDeviceCode;
 }
 /**
+ * Microsoft OAuth device code information for user authentication.
+ * The user must visit the verification URI and enter the user code
+ * to authorize the application.
+ *
  * @generated from protobuf message soulfire.v1.DeviceCode
  */
 export interface DeviceCode {
   /**
+   * The device code used internally for polling authentication status.
+   * This is not shown to the user.
+   *
    * @generated from protobuf field: string device_code = 1
    */
   deviceCode: string;
   /**
+   * The short alphanumeric code the user must enter at the verification URI.
+   * Typically displayed to the user for manual entry.
+   *
    * @generated from protobuf field: string user_code = 2
    */
   userCode: string;
   /**
+   * The URL where the user must go to enter the user_code.
+   * Example: "https://microsoft.com/devicelogin"
+   *
    * @generated from protobuf field: string verification_uri = 3
    */
   verificationUri: string;
   /**
+   * A URL that includes the user_code as a parameter for one-click verification.
+   * Users can visit this URL directly without manually entering the code.
+   * Example: "https://microsoft.com/devicelogin?otc=ABCD1234"
+   *
    * @generated from protobuf field: string direct_verification_uri = 4
    */
   directVerificationUri: string;
 }
 /**
+ * Streaming response message for device code authentication.
+ * First sends the device code for user interaction, then sends
+ * the authenticated account once the user completes authorization.
+ *
  * @generated from protobuf message soulfire.v1.DeviceCodeAuthResponse
  */
 export interface DeviceCodeAuthResponse {
@@ -141,6 +215,10 @@ export interface DeviceCodeAuthResponse {
     | {
         oneofKind: "account";
         /**
+         * The successfully authenticated Minecraft account.
+         * Sent after the user completes the device code authorization flow.
+         * This is the final message in the stream.
+         *
          * @generated from protobuf field: soulfire.v1.MinecraftAccountProto account = 1
          */
         account: MinecraftAccountProto;
@@ -148,6 +226,11 @@ export interface DeviceCodeAuthResponse {
     | {
         oneofKind: "deviceCode";
         /**
+         * The device code information for user authorization.
+         * Sent first in the stream. The client should display this to the user
+         * so they can complete authentication in their browser.
+         * The stream will wait (up to 15 minutes) for the user to authorize.
+         *
          * @generated from protobuf field: soulfire.v1.DeviceCode device_code = 2
          */
         deviceCode: DeviceCode;
@@ -157,23 +240,41 @@ export interface DeviceCodeAuthResponse {
       };
 }
 /**
+ * Request message for refreshing an existing Minecraft account's authentication tokens.
+ * Used to renew expired tokens without requiring the user to re-authenticate.
+ *
  * @generated from protobuf message soulfire.v1.RefreshRequest
  */
 export interface RefreshRequest {
   /**
+   * The UUID of the SoulFire instance context for the refresh operation.
+   * Must be a valid UUID string. The instance must exist and the caller
+   * must have AUTHENTICATE_MC_ACCOUNT permission for this instance.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The existing Minecraft account to refresh.
+   * Must include valid account data with refresh tokens.
+   * The account type determines which refresh mechanism is used.
+   * Offline accounts are returned unchanged (they never expire).
+   *
    * @generated from protobuf field: soulfire.v1.MinecraftAccountProto account = 2
    */
   account?: MinecraftAccountProto;
 }
 /**
+ * Response message containing the refreshed Minecraft account.
+ *
  * @generated from protobuf message soulfire.v1.RefreshResponse
  */
 export interface RefreshResponse {
   /**
+   * The refreshed Minecraft account with updated tokens.
+   * Contains new access tokens and updated expiration times.
+   * For offline accounts, returns the same account unchanged.
+   *
    * @generated from protobuf field: soulfire.v1.MinecraftAccountProto account = 1
    */
   account?: MinecraftAccountProto;

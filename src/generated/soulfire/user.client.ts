@@ -28,10 +28,25 @@ import type {
 } from "./user";
 import { UserService } from "./user";
 /**
+ * UserService provides user management functionality for the SoulFire system.
+ * All methods require authentication via JWT token in the request metadata.
+ * Most methods require specific global permissions (CREATE_USER, READ_USER, UPDATE_USER,
+ * DELETE_USER, INVALIDATE_SESSIONS, or GENERATE_API_TOKEN).
+ * Admin users automatically have all permissions.
+ * Note: The root user (ID: 00000000-0000-0000-0000-000000000000) cannot be modified or deleted.
+ * Note: Users cannot modify their own account through this service (use self-service endpoints instead).
+ *
  * @generated from protobuf service soulfire.v1.UserService
  */
 export interface IUserServiceClient {
   /**
+   * Creates a new user account in the system.
+   * Requires the CREATE_USER global permission.
+   * Returns the UUID of the newly created user.
+   * Error cases:
+   *   - INTERNAL: If username or email already exists, or validation fails
+   *   - PERMISSION_DENIED: If caller lacks CREATE_USER permission
+   *
    * @generated from protobuf rpc: CreateUser
    */
   createUser(
@@ -39,6 +54,14 @@ export interface IUserServiceClient {
     options?: RpcOptions,
   ): UnaryCall<UserCreateRequest, UserCreateResponse>;
   /**
+   * Deletes an existing user from the system.
+   * Requires the DELETE_USER global permission.
+   * Cascades to delete all owned instances and audit logs.
+   * Also disconnects the user from any active log subscriptions.
+   * Error cases:
+   *   - INTERNAL: If user not found, or attempting to delete self/root user
+   *   - PERMISSION_DENIED: If caller lacks DELETE_USER permission
+   *
    * @generated from protobuf rpc: DeleteUser
    */
   deleteUser(
@@ -46,6 +69,13 @@ export interface IUserServiceClient {
     options?: RpcOptions,
   ): UnaryCall<UserDeleteRequest, UserDeleteResponse>;
   /**
+   * Lists all users in the system.
+   * Requires the READ_USER global permission.
+   * Returns complete information for all users including timestamps.
+   * Error cases:
+   *   - INTERNAL: If database query fails
+   *   - PERMISSION_DENIED: If caller lacks READ_USER permission
+   *
    * @generated from protobuf rpc: ListUsers
    */
   listUsers(
@@ -53,6 +83,12 @@ export interface IUserServiceClient {
     options?: RpcOptions,
   ): UnaryCall<UserListRequest, UserListResponse>;
   /**
+   * Retrieves detailed information about a specific user.
+   * Requires the READ_USER global permission.
+   * Error cases:
+   *   - INTERNAL: If user not found
+   *   - PERMISSION_DENIED: If caller lacks READ_USER permission
+   *
    * @generated from protobuf rpc: GetUserInfo
    */
   getUserInfo(
@@ -60,6 +96,14 @@ export interface IUserServiceClient {
     options?: RpcOptions,
   ): UnaryCall<UserInfoRequest, UserInfoResponse>;
   /**
+   * Invalidates all active sessions for a user by updating their min_issued_at timestamp.
+   * Requires the INVALIDATE_SESSIONS global permission.
+   * After this call, all previously issued JWT tokens for the user become invalid,
+   * effectively logging them out of all devices.
+   * Error cases:
+   *   - INTERNAL: If user not found, or attempting to invalidate self/root user sessions
+   *   - PERMISSION_DENIED: If caller lacks INVALIDATE_SESSIONS permission
+   *
    * @generated from protobuf rpc: InvalidateSessions
    */
   invalidateSessions(
@@ -67,6 +111,13 @@ export interface IUserServiceClient {
     options?: RpcOptions,
   ): UnaryCall<InvalidateSessionsRequest, InvalidateSessionsResponse>;
   /**
+   * Updates an existing user's profile information.
+   * Requires the UPDATE_USER global permission.
+   * All profile fields (username, email, role) are updated to the provided values.
+   * Error cases:
+   *   - INTERNAL: If user not found, attempting to update self/root user, or validation fails
+   *   - PERMISSION_DENIED: If caller lacks UPDATE_USER permission
+   *
    * @generated from protobuf rpc: UpdateUser
    */
   updateUser(
@@ -74,6 +125,14 @@ export interface IUserServiceClient {
     options?: RpcOptions,
   ): UnaryCall<UpdateUserRequest, UpdateUserResponse>;
   /**
+   * Generates a new API token (JWT) for a specific user.
+   * Requires the GENERATE_API_TOKEN global permission.
+   * The generated token has the "api" audience and does not expire.
+   * The token can be invalidated by calling InvalidateSessions for the user.
+   * Error cases:
+   *   - INTERNAL: If user not found, or attempting to generate token for self/root user
+   *   - PERMISSION_DENIED: If caller lacks GENERATE_API_TOKEN permission
+   *
    * @generated from protobuf rpc: GenerateUserAPIToken
    */
   generateUserAPIToken(
@@ -82,6 +141,14 @@ export interface IUserServiceClient {
   ): UnaryCall<GenerateUserAPITokenRequest, GenerateUserAPITokenResponse>;
 }
 /**
+ * UserService provides user management functionality for the SoulFire system.
+ * All methods require authentication via JWT token in the request metadata.
+ * Most methods require specific global permissions (CREATE_USER, READ_USER, UPDATE_USER,
+ * DELETE_USER, INVALIDATE_SESSIONS, or GENERATE_API_TOKEN).
+ * Admin users automatically have all permissions.
+ * Note: The root user (ID: 00000000-0000-0000-0000-000000000000) cannot be modified or deleted.
+ * Note: Users cannot modify their own account through this service (use self-service endpoints instead).
+ *
  * @generated from protobuf service soulfire.v1.UserService
  */
 export class UserServiceClient implements IUserServiceClient, ServiceInfo {
@@ -90,6 +157,13 @@ export class UserServiceClient implements IUserServiceClient, ServiceInfo {
   options = UserService.options;
   constructor(private readonly _transport: RpcTransport) {}
   /**
+   * Creates a new user account in the system.
+   * Requires the CREATE_USER global permission.
+   * Returns the UUID of the newly created user.
+   * Error cases:
+   *   - INTERNAL: If username or email already exists, or validation fails
+   *   - PERMISSION_DENIED: If caller lacks CREATE_USER permission
+   *
    * @generated from protobuf rpc: CreateUser
    */
   createUser(
@@ -107,6 +181,14 @@ export class UserServiceClient implements IUserServiceClient, ServiceInfo {
     );
   }
   /**
+   * Deletes an existing user from the system.
+   * Requires the DELETE_USER global permission.
+   * Cascades to delete all owned instances and audit logs.
+   * Also disconnects the user from any active log subscriptions.
+   * Error cases:
+   *   - INTERNAL: If user not found, or attempting to delete self/root user
+   *   - PERMISSION_DENIED: If caller lacks DELETE_USER permission
+   *
    * @generated from protobuf rpc: DeleteUser
    */
   deleteUser(
@@ -124,6 +206,13 @@ export class UserServiceClient implements IUserServiceClient, ServiceInfo {
     );
   }
   /**
+   * Lists all users in the system.
+   * Requires the READ_USER global permission.
+   * Returns complete information for all users including timestamps.
+   * Error cases:
+   *   - INTERNAL: If database query fails
+   *   - PERMISSION_DENIED: If caller lacks READ_USER permission
+   *
    * @generated from protobuf rpc: ListUsers
    */
   listUsers(
@@ -141,6 +230,12 @@ export class UserServiceClient implements IUserServiceClient, ServiceInfo {
     );
   }
   /**
+   * Retrieves detailed information about a specific user.
+   * Requires the READ_USER global permission.
+   * Error cases:
+   *   - INTERNAL: If user not found
+   *   - PERMISSION_DENIED: If caller lacks READ_USER permission
+   *
    * @generated from protobuf rpc: GetUserInfo
    */
   getUserInfo(
@@ -158,6 +253,14 @@ export class UserServiceClient implements IUserServiceClient, ServiceInfo {
     );
   }
   /**
+   * Invalidates all active sessions for a user by updating their min_issued_at timestamp.
+   * Requires the INVALIDATE_SESSIONS global permission.
+   * After this call, all previously issued JWT tokens for the user become invalid,
+   * effectively logging them out of all devices.
+   * Error cases:
+   *   - INTERNAL: If user not found, or attempting to invalidate self/root user sessions
+   *   - PERMISSION_DENIED: If caller lacks INVALIDATE_SESSIONS permission
+   *
    * @generated from protobuf rpc: InvalidateSessions
    */
   invalidateSessions(
@@ -172,6 +275,13 @@ export class UserServiceClient implements IUserServiceClient, ServiceInfo {
     >("unary", this._transport, method, opt, input);
   }
   /**
+   * Updates an existing user's profile information.
+   * Requires the UPDATE_USER global permission.
+   * All profile fields (username, email, role) are updated to the provided values.
+   * Error cases:
+   *   - INTERNAL: If user not found, attempting to update self/root user, or validation fails
+   *   - PERMISSION_DENIED: If caller lacks UPDATE_USER permission
+   *
    * @generated from protobuf rpc: UpdateUser
    */
   updateUser(
@@ -189,6 +299,14 @@ export class UserServiceClient implements IUserServiceClient, ServiceInfo {
     );
   }
   /**
+   * Generates a new API token (JWT) for a specific user.
+   * Requires the GENERATE_API_TOKEN global permission.
+   * The generated token has the "api" audience and does not expire.
+   * The token can be invalidated by calling InvalidateSessions for the user.
+   * Error cases:
+   *   - INTERNAL: If user not found, or attempting to generate token for self/root user
+   *   - PERMISSION_DENIED: If caller lacks GENERATE_API_TOKEN permission
+   *
    * @generated from protobuf rpc: GenerateUserAPIToken
    */
   generateUserAPIToken(

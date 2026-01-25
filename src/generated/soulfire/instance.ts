@@ -30,193 +30,289 @@ import {
   SettingsPage,
 } from "./common";
 /**
+ * Represents a user associated with an instance, typically used in audit logs
+ * to track who performed an action.
+ *
  * @generated from protobuf message soulfire.v1.InstanceUser
  */
 export interface InstanceUser {
   /**
+   * Unique identifier for the user (UUID format).
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The username of the user.
+   *
    * @generated from protobuf field: string username = 2
    */
   username: string;
   /**
+   * The email address of the user.
+   *
    * @generated from protobuf field: string email = 3
    */
   email: string;
 }
 /**
+ * Contains the complete configuration for an instance, including settings,
+ * Minecraft accounts, and proxies.
+ *
  * @generated from protobuf message soulfire.v1.InstanceConfig
  */
 export interface InstanceConfig {
   /**
+   * Instance settings organized by namespace. Each namespace contains
+   * key-value pairs for configuration options.
+   *
    * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace settings = 1
    */
   settings: SettingsNamespace[];
   /**
+   * List of Minecraft accounts available to this instance for bot connections.
+   *
    * @generated from protobuf field: repeated soulfire.v1.MinecraftAccountProto accounts = 2
    */
   accounts: MinecraftAccountProto[];
   /**
+   * List of proxies available to this instance for routing bot connections.
+   *
    * @generated from protobuf field: repeated soulfire.v1.ProxyProto proxies = 3
    */
   proxies: ProxyProto[];
 }
 /**
+ * Request to create a new instance.
+ *
  * @generated from protobuf message soulfire.v1.InstanceCreateRequest
  */
 export interface InstanceCreateRequest {
   /**
+   * A human-readable name for the instance. This will be displayed in the UI
+   * and can be changed later via UpdateInstanceMeta.
+   *
    * @generated from protobuf field: string friendlyName = 1
    */
   friendlyName: string;
 }
 /**
+ * Response after successfully creating an instance.
+ *
  * @generated from protobuf message soulfire.v1.InstanceCreateResponse
  */
 export interface InstanceCreateResponse {
   /**
+   * The unique identifier (UUID) of the newly created instance.
+   * Use this ID for all subsequent operations on the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
 }
 /**
+ * Request to delete an existing instance.
+ *
  * @generated from protobuf message soulfire.v1.InstanceDeleteRequest
  */
 export interface InstanceDeleteRequest {
   /**
+   * The unique identifier (UUID) of the instance to delete.
+   * The instance will be stopped if running before deletion.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
 }
 /**
+ * Response after successfully deleting an instance.
+ * Empty response indicates successful deletion.
+ *
  * @generated from protobuf message soulfire.v1.InstanceDeleteResponse
  */
 export interface InstanceDeleteResponse {}
 /**
+ * Request to list all instances visible to the current user.
+ *
  * @generated from protobuf message soulfire.v1.InstanceListRequest
  */
 export interface InstanceListRequest {}
 /**
+ * Response containing a list of instances the current user has permission to view.
+ *
  * @generated from protobuf message soulfire.v1.InstanceListResponse
  */
 export interface InstanceListResponse {
   /**
+   * List of instances the user has READ_INSTANCE permission for.
+   *
    * @generated from protobuf field: repeated soulfire.v1.InstanceListResponse.Instance instances = 1
    */
   instances: InstanceListResponse_Instance[];
 }
 /**
+ * Summary information about a single instance.
+ *
  * @generated from protobuf message soulfire.v1.InstanceListResponse.Instance
  */
 export interface InstanceListResponse_Instance {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The human-readable name of the instance.
+   *
    * @generated from protobuf field: string friendly_name = 2
    */
   friendlyName: string;
   /**
+   * The icon identifier for the instance (used for UI display).
+   *
    * @generated from protobuf field: string icon = 5
    */
   icon: string;
   /**
+   * The current lifecycle state of the instance.
+   *
    * @generated from protobuf field: soulfire.v1.InstanceState state = 3
    */
   state: InstanceState;
   /**
+   * The permissions the current user has on this instance.
+   * Each permission indicates whether a specific action is allowed.
+   *
    * @generated from protobuf field: repeated soulfire.v1.InstancePermissionState instance_permissions = 4
    */
   instancePermissions: InstancePermissionState[];
 }
 /**
+ * Represents the grant status of a specific instance permission for the current user.
+ *
  * @generated from protobuf message soulfire.v1.InstancePermissionState
  */
 export interface InstancePermissionState {
   /**
+   * The permission being described.
+   *
    * @generated from protobuf field: soulfire.v1.InstancePermission instance_permission = 1
    */
   instancePermission: InstancePermission;
   /**
+   * Whether the current user has been granted this permission.
+   *
    * @generated from protobuf field: bool granted = 2
    */
   granted: boolean;
 }
 /**
+ * Request to get detailed information about a specific instance.
+ *
  * @generated from protobuf message soulfire.v1.InstanceInfoRequest
  */
 export interface InstanceInfoRequest {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
-   * Optional: if provided, returns NotModified if config hasn't changed since this timestamp
+   * Optional timestamp for conditional requests. If provided and the instance
+   * configuration has not been modified since this timestamp, the server returns
+   * InstanceNotModified instead of the full InstanceInfo. This helps reduce
+   * bandwidth for polling clients.
    *
    * @generated from protobuf field: optional google.protobuf.Timestamp if_modified_since = 2
    */
   ifModifiedSince?: Timestamp;
 }
 /**
+ * Contains comprehensive information about an instance including its
+ * configuration, state, permissions, and available settings.
+ *
  * @generated from protobuf message soulfire.v1.InstanceInfo
  */
 export interface InstanceInfo {
   /**
+   * The human-readable name of the instance.
+   *
    * @generated from protobuf field: string friendly_name = 1
    */
   friendlyName: string;
   /**
+   * The icon identifier for the instance (used for UI display).
+   *
    * @generated from protobuf field: string icon = 5
    */
   icon: string;
   /**
+   * The complete configuration of the instance including settings,
+   * accounts, and proxies.
+   *
    * @generated from protobuf field: soulfire.v1.InstanceConfig config = 2
    */
   config?: InstanceConfig;
   /**
+   * The current lifecycle state of the instance.
+   *
    * @generated from protobuf field: soulfire.v1.InstanceState state = 3
    */
   state: InstanceState;
   /**
+   * The permissions the current user has on this instance.
+   *
    * @generated from protobuf field: repeated soulfire.v1.InstancePermissionState instance_permissions = 4
    */
   instancePermissions: InstancePermissionState[];
   /**
-   * All available settings definitions that can be rendered by identifier
+   * All available settings definitions that can be rendered by identifier.
+   * These define the schema and UI configuration for each setting.
    *
    * @generated from protobuf field: repeated soulfire.v1.SettingsDefinition settings_definitions = 8
    */
   settingsDefinitions: SettingsDefinition[];
   /**
-   * Pages that group settings together (reference settings by identifier)
+   * Pages that group settings together for UI rendering.
+   * References settings by their identifiers from settings_definitions.
    *
    * @generated from protobuf field: repeated soulfire.v1.SettingsPage instance_settings = 6
    */
   instanceSettings: SettingsPage[];
   /**
+   * List of plugins registered with this instance.
+   *
    * @generated from protobuf field: repeated soulfire.v1.ServerPlugin plugins = 7
    */
   plugins: ServerPlugin[];
   /**
-   * When the config was last modified
+   * Timestamp of when the configuration was last modified.
+   * Used for conditional requests via if_modified_since.
    *
    * @generated from protobuf field: google.protobuf.Timestamp last_modified = 9
    */
   lastModified?: Timestamp;
 }
 /**
+ * Returned when the instance configuration has not changed since
+ * the if_modified_since timestamp provided in the request.
+ *
  * @generated from protobuf message soulfire.v1.InstanceNotModified
  */
 export interface InstanceNotModified {
   /**
+   * The current last_modified timestamp of the instance.
+   * Clients should use this for subsequent conditional requests.
+   *
    * @generated from protobuf field: google.protobuf.Timestamp last_modified = 1
    */
   lastModified?: Timestamp;
 }
 /**
+ * Response for GetInstanceInfo containing either full info or a not-modified status.
+ *
  * @generated from protobuf message soulfire.v1.InstanceInfoResponse
  */
 export interface InstanceInfoResponse {
@@ -227,6 +323,9 @@ export interface InstanceInfoResponse {
     | {
         oneofKind: "info";
         /**
+         * Full instance information when the config has been modified
+         * or no if_modified_since was provided.
+         *
          * @generated from protobuf field: soulfire.v1.InstanceInfo info = 1
          */
         info: InstanceInfo;
@@ -234,6 +333,8 @@ export interface InstanceInfoResponse {
     | {
         oneofKind: "notModified";
         /**
+         * Returned when the config has not changed since if_modified_since.
+         *
          * @generated from protobuf field: soulfire.v1.InstanceNotModified not_modified = 2
          */
         notModified: InstanceNotModified;
@@ -243,20 +344,28 @@ export interface InstanceInfoResponse {
       };
 }
 /**
+ * Request to update instance metadata (name or icon).
+ *
  * @generated from protobuf message soulfire.v1.InstanceUpdateMetaRequest
  */
 export interface InstanceUpdateMetaRequest {
   /**
+   * The unique identifier (UUID) of the instance to update.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The metadata field to update. Only one can be set per request.
+   *
    * @generated from protobuf oneof: meta
    */
   meta:
     | {
         oneofKind: "friendlyName";
         /**
+         * New human-readable name for the instance.
+         *
          * @generated from protobuf field: string friendly_name = 2
          */
         friendlyName: string;
@@ -264,6 +373,8 @@ export interface InstanceUpdateMetaRequest {
     | {
         oneofKind: "icon";
         /**
+         * New icon identifier for the instance.
+         *
          * @generated from protobuf field: string icon = 3
          */
         icon: string;
@@ -273,419 +384,648 @@ export interface InstanceUpdateMetaRequest {
       };
 }
 /**
+ * Response after successfully updating instance metadata.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceUpdateMetaResponse
  */
 export interface InstanceUpdateMetaResponse {}
 /**
+ * Request to replace the entire instance configuration.
+ * This is typically used for profile import operations.
+ * For individual setting changes, use UpdateInstanceConfigEntry instead.
+ *
  * @generated from protobuf message soulfire.v1.InstanceUpdateConfigRequest
  */
 export interface InstanceUpdateConfigRequest {
   /**
+   * The unique identifier (UUID) of the instance to update.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The complete new configuration to replace the existing one.
+   * Includes settings, accounts, and proxies.
+   *
    * @generated from protobuf field: soulfire.v1.InstanceConfig config = 2
    */
   config?: InstanceConfig;
 }
 /**
+ * Response after successfully updating instance configuration.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceUpdateConfigResponse
  */
 export interface InstanceUpdateConfigResponse {}
 /**
- * Granular config entry update (single key-value)
+ * Request to update a single configuration entry.
+ * This is the preferred method for individual setting changes as it
+ * is more efficient than replacing the entire configuration.
  *
  * @generated from protobuf message soulfire.v1.InstanceUpdateConfigEntryRequest
  */
 export interface InstanceUpdateConfigEntryRequest {
   /**
+   * The unique identifier (UUID) of the instance to update.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The namespace of the setting (e.g., "bot", "account", plugin ID).
+   *
    * @generated from protobuf field: string namespace = 2
    */
   namespace: string;
   /**
+   * The key of the setting within the namespace.
+   *
    * @generated from protobuf field: string key = 3
    */
   key: string;
   /**
+   * The new value for the setting. Supports JSON value types
+   * (string, number, boolean, null, array, object).
+   *
    * @generated from protobuf field: google.protobuf.Value value = 4
    */
   value?: Value;
 }
 /**
+ * Response after successfully updating a configuration entry.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceUpdateConfigEntryResponse
  */
 export interface InstanceUpdateConfigEntryResponse {}
 /**
- * Account operations
+ * Request to add a single Minecraft account to an instance.
  *
  * @generated from protobuf message soulfire.v1.InstanceAddAccountRequest
  */
 export interface InstanceAddAccountRequest {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The Minecraft account to add. The profile_id must be unique
+   * within the instance.
+   *
    * @generated from protobuf field: soulfire.v1.MinecraftAccountProto account = 2
    */
   account?: MinecraftAccountProto;
 }
 /**
+ * Response after successfully adding an account.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceAddAccountResponse
  */
 export interface InstanceAddAccountResponse {}
 /**
+ * Request to remove a Minecraft account from an instance.
+ *
  * @generated from protobuf message soulfire.v1.InstanceRemoveAccountRequest
  */
 export interface InstanceRemoveAccountRequest {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The profile_id (UUID) of the account to remove.
+   *
    * @generated from protobuf field: string profile_id = 2
    */
   profileId: string;
 }
 /**
+ * Response after successfully removing an account.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceRemoveAccountResponse
  */
 export interface InstanceRemoveAccountResponse {}
 /**
+ * Request to update an existing Minecraft account in an instance.
+ * The account is matched by profile_id and replaced with the new data.
+ *
  * @generated from protobuf message soulfire.v1.InstanceUpdateAccountRequest
  */
 export interface InstanceUpdateAccountRequest {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The updated account data. The profile_id must match an existing
+   * account in the instance.
+   *
    * @generated from protobuf field: soulfire.v1.MinecraftAccountProto account = 2
    */
   account?: MinecraftAccountProto;
 }
 /**
+ * Response after successfully updating an account.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceUpdateAccountResponse
  */
 export interface InstanceUpdateAccountResponse {}
 /**
- * Batch account operations
+ * Request to add multiple Minecraft accounts to an instance in a single operation.
+ * More efficient than multiple individual AddInstanceAccount calls.
  *
  * @generated from protobuf message soulfire.v1.InstanceAddAccountsBatchRequest
  */
 export interface InstanceAddAccountsBatchRequest {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * List of accounts to add. Each account's profile_id must be unique
+   * within the instance.
+   *
    * @generated from protobuf field: repeated soulfire.v1.MinecraftAccountProto accounts = 2
    */
   accounts: MinecraftAccountProto[];
 }
 /**
+ * Response after successfully adding accounts in batch.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceAddAccountsBatchResponse
  */
 export interface InstanceAddAccountsBatchResponse {}
 /**
+ * Request to remove multiple Minecraft accounts from an instance in a single operation.
+ * More efficient than multiple individual RemoveInstanceAccount calls.
+ *
  * @generated from protobuf message soulfire.v1.InstanceRemoveAccountsBatchRequest
  */
 export interface InstanceRemoveAccountsBatchRequest {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * List of profile_ids (UUIDs) of accounts to remove.
+   *
    * @generated from protobuf field: repeated string profile_ids = 2
    */
   profileIds: string[];
 }
 /**
+ * Response after successfully removing accounts in batch.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceRemoveAccountsBatchResponse
  */
 export interface InstanceRemoveAccountsBatchResponse {}
 /**
- * Proxy operations
+ * Request to add a single proxy to an instance.
  *
  * @generated from protobuf message soulfire.v1.InstanceAddProxyRequest
  */
 export interface InstanceAddProxyRequest {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The proxy configuration to add.
+   *
    * @generated from protobuf field: soulfire.v1.ProxyProto proxy = 2
    */
   proxy?: ProxyProto;
 }
 /**
+ * Response after successfully adding a proxy.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceAddProxyResponse
  */
 export interface InstanceAddProxyResponse {}
 /**
+ * Request to remove a proxy from an instance by its index.
+ *
  * @generated from protobuf message soulfire.v1.InstanceRemoveProxyRequest
  */
 export interface InstanceRemoveProxyRequest {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The zero-based index of the proxy to remove.
+   * Returns INVALID_ARGUMENT if index is out of bounds.
+   *
    * @generated from protobuf field: int32 index = 2
    */
   index: number;
 }
 /**
+ * Response after successfully removing a proxy.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceRemoveProxyResponse
  */
 export interface InstanceRemoveProxyResponse {}
 /**
+ * Request to update an existing proxy in an instance.
+ *
  * @generated from protobuf message soulfire.v1.InstanceUpdateProxyRequest
  */
 export interface InstanceUpdateProxyRequest {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The zero-based index of the proxy to update.
+   * Returns INVALID_ARGUMENT if index is out of bounds.
+   *
    * @generated from protobuf field: int32 index = 2
    */
   index: number;
   /**
+   * The new proxy configuration to replace the existing one.
+   *
    * @generated from protobuf field: soulfire.v1.ProxyProto proxy = 3
    */
   proxy?: ProxyProto;
 }
 /**
+ * Response after successfully updating a proxy.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceUpdateProxyResponse
  */
 export interface InstanceUpdateProxyResponse {}
 /**
- * Batch proxy operations
+ * Request to add multiple proxies to an instance in a single operation.
+ * More efficient than multiple individual AddInstanceProxy calls.
  *
  * @generated from protobuf message soulfire.v1.InstanceAddProxiesBatchRequest
  */
 export interface InstanceAddProxiesBatchRequest {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * List of proxy configurations to add.
+   *
    * @generated from protobuf field: repeated soulfire.v1.ProxyProto proxies = 2
    */
   proxies: ProxyProto[];
 }
 /**
+ * Response after successfully adding proxies in batch.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceAddProxiesBatchResponse
  */
 export interface InstanceAddProxiesBatchResponse {}
 /**
+ * Request to remove multiple proxies from an instance by their addresses.
+ *
  * @generated from protobuf message soulfire.v1.InstanceRemoveProxiesBatchRequest
  */
 export interface InstanceRemoveProxiesBatchRequest {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * List of proxy addresses to remove (in serialized format, e.g., "host:port").
+   * Proxies matching these addresses will be removed.
+   *
    * @generated from protobuf field: repeated string addresses = 2
    */
   addresses: string[];
 }
 /**
+ * Response after successfully removing proxies in batch.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceRemoveProxiesBatchResponse
  */
 export interface InstanceRemoveProxiesBatchResponse {}
 /**
+ * Request to change the lifecycle state of an instance.
+ * Used to start, pause, resume, or stop an instance.
+ *
  * @generated from protobuf message soulfire.v1.InstanceStateChangeRequest
  */
 export interface InstanceStateChangeRequest {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The target state for the instance. Valid transitions:
+   * - STOPPED -> RUNNING: Starts the instance
+   * - RUNNING -> PAUSED: Pauses bot ticking
+   * - PAUSED -> RUNNING: Resumes bot ticking
+   * - RUNNING/PAUSED -> STOPPED: Stops the instance
+   * The server will handle intermediate states (STARTING, STOPPING) automatically.
+   *
    * @generated from protobuf field: soulfire.v1.InstanceState state = 2
    */
   state: InstanceState;
 }
 /**
+ * Response after successfully changing instance state.
+ * The operation completes when the state transition is finished.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InstanceStateChangeResponse
  */
 export interface InstanceStateChangeResponse {}
 /**
+ * Request to retrieve the audit log for an instance.
+ *
  * @generated from protobuf message soulfire.v1.InstanceAuditLogRequest
  */
 export interface InstanceAuditLogRequest {
   /**
+   * The unique identifier (UUID) of the instance.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
 }
 /**
- * Account metadata operations
+ * Request to get persistent metadata for a specific Minecraft account.
+ * Persistent metadata survives bot restarts and is stored with the account.
  *
  * @generated from protobuf message soulfire.v1.GetAccountMetadataRequest
  */
 export interface GetAccountMetadataRequest {
   /**
+   * The unique identifier (UUID) of the instance containing the account.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile_id (UUID) of the Minecraft account.
+   *
    * @generated from protobuf field: string account_id = 2
    */
-  accountId: string; // profile_id of the account
+  accountId: string;
 }
 /**
+ * Response containing the persistent metadata for an account.
+ *
  * @generated from protobuf message soulfire.v1.GetAccountMetadataResponse
  */
 export interface GetAccountMetadataResponse {
   /**
+   * Metadata organized by namespace. Each namespace contains
+   * key-value pairs of metadata.
+   *
    * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace metadata = 1
    */
   metadata: SettingsNamespace[];
 }
 /**
+ * Request to set a single persistent metadata entry for an account.
+ *
  * @generated from protobuf message soulfire.v1.SetAccountMetadataEntryRequest
  */
 export interface SetAccountMetadataEntryRequest {
   /**
+   * The unique identifier (UUID) of the instance containing the account.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile_id (UUID) of the Minecraft account.
+   *
    * @generated from protobuf field: string account_id = 2
    */
   accountId: string;
   /**
+   * The namespace for the metadata entry.
+   *
    * @generated from protobuf field: string namespace = 3
    */
   namespace: string;
   /**
+   * The key for the metadata entry within the namespace.
+   *
    * @generated from protobuf field: string key = 4
    */
   key: string;
   /**
+   * The value to set. Supports JSON value types.
+   *
    * @generated from protobuf field: google.protobuf.Value value = 5
    */
   value?: Value;
 }
 /**
+ * Response after successfully setting a metadata entry.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.SetAccountMetadataEntryResponse
  */
 export interface SetAccountMetadataEntryResponse {}
 /**
+ * Request to delete a persistent metadata entry from an account.
+ *
  * @generated from protobuf message soulfire.v1.DeleteAccountMetadataEntryRequest
  */
 export interface DeleteAccountMetadataEntryRequest {
   /**
+   * The unique identifier (UUID) of the instance containing the account.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The profile_id (UUID) of the Minecraft account.
+   *
    * @generated from protobuf field: string account_id = 2
    */
   accountId: string;
   /**
+   * The namespace of the metadata entry to delete.
+   *
    * @generated from protobuf field: string namespace = 3
    */
   namespace: string;
   /**
+   * The key of the metadata entry to delete.
+   *
    * @generated from protobuf field: string key = 4
    */
   key: string;
 }
 /**
+ * Response after successfully deleting a metadata entry.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.DeleteAccountMetadataEntryResponse
  */
 export interface DeleteAccountMetadataEntryResponse {}
 /**
+ * Response containing the audit log entries for an instance.
+ *
  * @generated from protobuf message soulfire.v1.InstanceAuditLogResponse
  */
 export interface InstanceAuditLogResponse {
   /**
+   * List of audit log entries, ordered by timestamp descending (newest first).
+   *
    * @generated from protobuf field: repeated soulfire.v1.InstanceAuditLogResponse.AuditLogEntry entry = 1
    */
   entry: InstanceAuditLogResponse_AuditLogEntry[];
 }
 /**
+ * A single entry in the audit log.
+ *
  * @generated from protobuf message soulfire.v1.InstanceAuditLogResponse.AuditLogEntry
  */
 export interface InstanceAuditLogResponse_AuditLogEntry {
   /**
+   * Unique identifier for this audit log entry.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The user who performed the action.
+   *
    * @generated from protobuf field: soulfire.v1.InstanceUser user = 2
    */
   user?: InstanceUser;
   /**
+   * The type of action that was performed.
+   *
    * @generated from protobuf field: soulfire.v1.InstanceAuditLogResponse.AuditLogEntryType type = 3
    */
   type: InstanceAuditLogResponse_AuditLogEntryType;
   /**
+   * When the action was performed.
+   *
    * @generated from protobuf field: google.protobuf.Timestamp timestamp = 4
    */
   timestamp?: Timestamp;
   /**
+   * Additional data about the action (e.g., command text for EXECUTE_COMMAND).
+   * May be empty for some action types.
+   *
    * @generated from protobuf field: string data = 5
    */
   data: string;
 }
 /**
+ * Types of actions that are recorded in the audit log.
+ *
  * @generated from protobuf enum soulfire.v1.InstanceAuditLogResponse.AuditLogEntryType
  */
 export enum InstanceAuditLogResponse_AuditLogEntryType {
   /**
+   * A command was executed on the instance.
+   *
    * @generated from protobuf enum value: EXECUTE_COMMAND = 0;
    */
   EXECUTE_COMMAND = 0,
   /**
+   * The instance session was started.
+   *
    * @generated from protobuf enum value: START_SESSION = 1;
    */
   START_SESSION = 1,
   /**
+   * The instance session was paused.
+   *
    * @generated from protobuf enum value: PAUSE_SESSION = 2;
    */
   PAUSE_SESSION = 2,
   /**
+   * The instance session was resumed from paused state.
+   *
    * @generated from protobuf enum value: RESUME_SESSION = 3;
    */
   RESUME_SESSION = 3,
   /**
+   * The instance session was stopped.
+   *
    * @generated from protobuf enum value: STOP_SESSION = 4;
    */
   STOP_SESSION = 4,
 }
 /**
+ * Represents the lifecycle state of an instance session.
+ * State transitions follow a specific flow:
+ * STOPPED -> STARTING -> RUNNING <-> PAUSED -> STOPPING -> STOPPED
+ *
  * @generated from protobuf enum soulfire.v1.InstanceState
  */
 export enum InstanceState {
   /**
+   * The instance is currently starting up and initializing bots.
+   * This is a transitional state.
+   *
    * @generated from protobuf enum value: STARTING = 0;
    */
   STARTING = 0,
   /**
+   * The instance is fully running with active bot connections.
+   * Bots are ticking and processing game logic.
+   *
    * @generated from protobuf enum value: RUNNING = 1;
    */
   RUNNING = 1,
   /**
+   * The instance is paused. Bots maintain their connections but
+   * stop ticking and processing game logic.
+   *
    * @generated from protobuf enum value: PAUSED = 2;
    */
   PAUSED = 2,
   /**
+   * The instance is in the process of stopping.
+   * This is a transitional state while bots disconnect.
+   *
    * @generated from protobuf enum value: STOPPING = 3;
    */
   STOPPING = 3,
   /**
+   * The instance is fully stopped with no active bot connections.
+   * This is the initial state for new instances.
+   *
    * @generated from protobuf enum value: STOPPED = 4;
    */
   STOPPED = 4,

@@ -13,10 +13,43 @@ import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { ProxyCheckRequest, ProxyCheckResponse } from "./proxy-check";
 import { ProxyCheckService } from "./proxy-check";
 /**
+ * Service for validating proxy servers by testing their ability to connect
+ * to Minecraft servers. This is useful for filtering out dead or slow proxies
+ * before using them for bot connections.
+ *
+ * The service tests proxies by attempting to establish a Minecraft protocol
+ * connection through each proxy to a configurable target server and waiting
+ * for a status response packet. Results include whether the proxy works and
+ * its latency.
+ *
  * @generated from protobuf service soulfire.v1.ProxyCheckService
  */
 export interface IProxyCheckServiceClient {
   /**
+   * Checks the validity of one or more proxies by attempting to connect
+   * through them to a Minecraft server.
+   *
+   * The check process:
+   * 1. For each proxy in the request, a connection attempt is made through
+   *    the proxy to the Minecraft server configured in the instance settings
+   * 2. The connection uses the protocol version configured in the instance
+   * 3. A proxy is considered valid if it successfully connects and receives
+   *    a server status response within 30 seconds
+   * 4. Results are streamed back as each check completes
+   * 5. A ProxyCheckEnd message is sent when all checks are complete
+   *
+   * Concurrency is controlled by the instance's PROXY_CHECK_CONCURRENCY setting.
+   *
+   * Required permission: CHECK_PROXY on the specified instance.
+   *
+   * Error cases:
+   * - NOT_FOUND: The specified instance_id does not exist
+   * - PERMISSION_DENIED: The user lacks CHECK_PROXY permission on the instance
+   * - INTERNAL: An unexpected error occurred during proxy checking
+   *
+   * The stream can be cancelled by the client at any time, which will
+   * terminate any in-progress proxy checks.
+   *
    * @generated from protobuf rpc: Check
    */
   check(
@@ -25,6 +58,15 @@ export interface IProxyCheckServiceClient {
   ): ServerStreamingCall<ProxyCheckRequest, ProxyCheckResponse>;
 }
 /**
+ * Service for validating proxy servers by testing their ability to connect
+ * to Minecraft servers. This is useful for filtering out dead or slow proxies
+ * before using them for bot connections.
+ *
+ * The service tests proxies by attempting to establish a Minecraft protocol
+ * connection through each proxy to a configurable target server and waiting
+ * for a status response packet. Results include whether the proxy works and
+ * its latency.
+ *
  * @generated from protobuf service soulfire.v1.ProxyCheckService
  */
 export class ProxyCheckServiceClient
@@ -35,6 +77,30 @@ export class ProxyCheckServiceClient
   options = ProxyCheckService.options;
   constructor(private readonly _transport: RpcTransport) {}
   /**
+   * Checks the validity of one or more proxies by attempting to connect
+   * through them to a Minecraft server.
+   *
+   * The check process:
+   * 1. For each proxy in the request, a connection attempt is made through
+   *    the proxy to the Minecraft server configured in the instance settings
+   * 2. The connection uses the protocol version configured in the instance
+   * 3. A proxy is considered valid if it successfully connects and receives
+   *    a server status response within 30 seconds
+   * 4. Results are streamed back as each check completes
+   * 5. A ProxyCheckEnd message is sent when all checks are complete
+   *
+   * Concurrency is controlled by the instance's PROXY_CHECK_CONCURRENCY setting.
+   *
+   * Required permission: CHECK_PROXY on the specified instance.
+   *
+   * Error cases:
+   * - NOT_FOUND: The specified instance_id does not exist
+   * - PERMISSION_DENIED: The user lacks CHECK_PROXY permission on the instance
+   * - INTERNAL: An unexpected error occurred during proxy checking
+   *
+   * The stream can be cancelled by the client at any time, which will
+   * terminate any in-progress proxy checks.
+   *
    * @generated from protobuf rpc: Check
    */
   check(

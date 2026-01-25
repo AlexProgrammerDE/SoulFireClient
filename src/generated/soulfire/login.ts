@@ -19,29 +19,48 @@ import {
 } from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 /**
+ * Request message for initiating a login flow with an email address.
+ *
  * @generated from protobuf message soulfire.v1.LoginRequest
  */
 export interface LoginRequest {
   /**
+   * The email address of the user attempting to log in.
+   * If a user with this email exists, a six-digit verification code will be sent to this address.
+   * For security reasons, the response is the same whether or not the email is registered,
+   * preventing enumeration attacks.
+   *
    * @generated from protobuf field: string email = 1
    */
   email: string;
 }
 /**
+ * Response message representing the next step in the authentication flow.
+ * This is a polymorphic response that indicates what action should be taken next.
+ *
  * @generated from protobuf message soulfire.v1.NextAuthFlowResponse
  */
 export interface NextAuthFlowResponse {
   /**
+   * A unique token identifying this authentication flow session.
+   * This token must be included in subsequent requests (e.g., EmailCodeRequest) to continue the flow.
+   * The token is a UUID string and expires after 15 minutes of inactivity.
+   *
    * @generated from protobuf field: string auth_flow_token = 1
    */
   authFlowToken: string;
   /**
+   * The next step in the authentication flow. Exactly one of these will be set.
+   *
    * @generated from protobuf oneof: next
    */
   next:
     | {
         oneofKind: "emailCode";
         /**
+         * Set when the client should prompt the user to enter the email verification code.
+         * This is the response after a successful Login RPC call.
+         *
          * @generated from protobuf field: soulfire.v1.NextAuthFlowResponse.EmailCode email_code = 2
          */
         emailCode: NextAuthFlowResponse_EmailCode;
@@ -49,6 +68,9 @@ export interface NextAuthFlowResponse {
     | {
         oneofKind: "success";
         /**
+         * Set when authentication is complete and successful.
+         * Contains the JWT token for authenticated API access.
+         *
          * @generated from protobuf field: soulfire.v1.NextAuthFlowResponse.Success success = 3
          */
         success: NextAuthFlowResponse_Success;
@@ -56,6 +78,9 @@ export interface NextAuthFlowResponse {
     | {
         oneofKind: "failure";
         /**
+         * Set when authentication has failed.
+         * Contains the reason for the failure.
+         *
          * @generated from protobuf field: soulfire.v1.NextAuthFlowResponse.Failure failure = 4
          */
         failure: NextAuthFlowResponse_Failure;
@@ -65,45 +90,75 @@ export interface NextAuthFlowResponse {
       };
 }
 /**
+ * Indicates that an email verification code has been sent (if the email was registered).
+ * The client should prompt the user to enter the six-digit code from their email.
+ * This is an empty message as the presence itself is the signal; no additional data is needed.
+ *
  * @generated from protobuf message soulfire.v1.NextAuthFlowResponse.EmailCode
  */
 export interface NextAuthFlowResponse_EmailCode {}
 /**
+ * Indicates successful authentication.
+ * The client should store the JWT token and use it for subsequent authenticated requests.
+ *
  * @generated from protobuf message soulfire.v1.NextAuthFlowResponse.Success
  */
 export interface NextAuthFlowResponse_Success {
   /**
+   * A JWT (JSON Web Token) for authenticating subsequent API requests.
+   * This token should be included in the Authorization header for authenticated endpoints.
+   * The token is issued with the "api" audience claim.
+   *
    * @generated from protobuf field: string token = 1
    */
   token: string;
 }
 /**
+ * Indicates that the authentication flow has failed.
+ *
  * @generated from protobuf message soulfire.v1.NextAuthFlowResponse.Failure
  */
 export interface NextAuthFlowResponse_Failure {
   /**
+   * The specific reason for the authentication failure.
+   *
    * @generated from protobuf field: soulfire.v1.NextAuthFlowResponse.Failure.Reason reason = 1
    */
   reason: NextAuthFlowResponse_Failure_Reason;
 }
 /**
+ * Enumeration of possible failure reasons.
+ *
  * @generated from protobuf enum soulfire.v1.NextAuthFlowResponse.Failure.Reason
  */
 export enum NextAuthFlowResponse_Failure_Reason {
   /**
+   * The provided verification code was incorrect, expired, or the auth flow token was invalid.
+   * This is also returned when the auth flow token does not exist (e.g., expired after 15 minutes)
+   * to prevent timing attacks that could reveal valid flow tokens.
+   *
    * @generated from protobuf enum value: INVALID_CODE = 0;
    */
   INVALID_CODE = 0,
 }
 /**
+ * Request message for verifying an email verification code.
+ *
  * @generated from protobuf message soulfire.v1.EmailCodeRequest
  */
 export interface EmailCodeRequest {
   /**
+   * The authentication flow token received from the Login RPC response.
+   * This token links the code verification to the original login request.
+   * Must be a valid UUID string.
+   *
    * @generated from protobuf field: string auth_flow_token = 1
    */
   authFlowToken: string;
   /**
+   * The six-digit verification code that was sent to the user's email address.
+   * Must exactly match the code that was emailed to the user.
+   *
    * @generated from protobuf field: string code = 2
    */
   code: string;

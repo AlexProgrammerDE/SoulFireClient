@@ -18,66 +18,119 @@ import {
 } from "@protobuf-ts/runtime";
 import { Struct, Value } from "../google/protobuf/struct";
 /**
+ * Represents a network proxy configuration used for routing bot connections.
+ * Proxies can be used to mask the origin of bot traffic or to distribute connections
+ * across multiple IP addresses. Used in instance configuration and proxy checking services.
+ *
  * @generated from protobuf message soulfire.v1.ProxyProto
  */
 export interface ProxyProto {
   /**
+   * The proxy protocol type. Determines how the connection is established.
+   *
    * @generated from protobuf field: soulfire.v1.ProxyProto.Type type = 1
    */
   type: ProxyProto_Type;
   /**
+   * The proxy server address in "host:port" format (e.g., "proxy.example.com:8080").
+   * The address must be resolvable and the port must be valid (1-65535).
+   *
    * @generated from protobuf field: string address = 2
    */
   address: string;
   /**
+   * Optional username for proxy authentication.
+   * Required if the proxy server requires authentication.
+   * If password is set, username must also be set.
+   *
    * @generated from protobuf field: optional string username = 3
    */
   username?: string;
   /**
+   * Optional password for proxy authentication.
+   * Used with username for SOCKS5 or HTTP proxy authentication.
+   * Not supported for SOCKS4 proxies (will cause an error if set).
+   *
    * @generated from protobuf field: optional string password = 4
    */
   password?: string;
 }
 /**
+ * The type of proxy protocol to use for the connection.
+ *
  * @generated from protobuf enum soulfire.v1.ProxyProto.Type
  */
 export enum ProxyProto_Type {
   /**
+   * HTTP/HTTPS proxy using the CONNECT method.
+   * Does not support UDP traffic. Suitable for basic HTTP tunneling.
+   *
    * @generated from protobuf enum value: HTTP = 0;
    */
   HTTP = 0,
   /**
+   * SOCKS4 proxy protocol.
+   * Does not support UDP traffic or authentication passwords (username only via IDENT).
+   * Note: If a password is provided for SOCKS4, it will be rejected.
+   *
    * @generated from protobuf enum value: SOCKS4 = 1;
    */
   SOCKS4 = 1,
   /**
+   * SOCKS5 proxy protocol.
+   * Supports both TCP and UDP traffic, as well as full username/password authentication.
+   * Recommended for most use cases due to its flexibility.
+   *
    * @generated from protobuf enum value: SOCKS5 = 2;
    */
   SOCKS5 = 2,
 }
 /**
+ * Represents an authenticated Minecraft account that can be used by bots.
+ * This can be a premium Microsoft account (Java or Bedrock) or an offline account.
+ * The account contains authentication data, profile information, and per-account settings.
+ * Used throughout the system for instance configuration and bot management.
+ *
  * @generated from protobuf message soulfire.v1.MinecraftAccountProto
  */
 export interface MinecraftAccountProto {
   /**
+   * The authentication type used for this account.
+   * Determines which account_data field is populated.
+   *
    * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.AccountTypeProto type = 1
    */
   type: MinecraftAccountProto_AccountTypeProto;
   /**
+   * The unique profile identifier (UUID) for this account.
+   * For online accounts: The official Minecraft profile UUID from Microsoft.
+   * For offline accounts: A deterministic UUID derived from the username.
+   * Format: Standard UUID string (e.g., "550e8400-e29b-41d4-a716-446655440000").
+   *
    * @generated from protobuf field: string profile_id = 2
    */
   profileId: string;
   /**
+   * The last known username/gamertag for this account.
+   * Updated during authentication and refresh operations.
+   * For Java: The Minecraft username (up to 16 characters).
+   * For Bedrock: The Xbox gamertag.
+   *
    * @generated from protobuf field: string last_known_name = 3
    */
   lastKnownName: string;
   /**
+   * The platform-specific authentication data.
+   * Exactly one of these fields will be set based on the account type.
+   *
    * @generated from protobuf oneof: account_data
    */
   accountData:
     | {
         oneofKind: "onlineChainJavaData";
         /**
+         * Authentication chain for online Java accounts (Microsoft-authenticated).
+         *
          * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.OnlineChainJavaData online_chain_java_data = 5
          */
         onlineChainJavaData: MinecraftAccountProto_OnlineChainJavaData;
@@ -85,6 +138,8 @@ export interface MinecraftAccountProto {
     | {
         oneofKind: "offlineJavaData";
         /**
+         * Data for offline Java accounts (no authentication required).
+         *
          * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.OfflineJavaData offline_java_data = 6
          */
         offlineJavaData: MinecraftAccountProto_OfflineJavaData;
@@ -92,6 +147,8 @@ export interface MinecraftAccountProto {
     | {
         oneofKind: "bedrockData";
         /**
+         * Authentication chain for Bedrock accounts (Microsoft-authenticated).
+         *
          * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.BedrockData bedrock_data = 7
          */
         bedrockData: MinecraftAccountProto_BedrockData;
@@ -100,444 +157,709 @@ export interface MinecraftAccountProto {
         oneofKind: undefined;
       };
   /**
-   * Bot config stored with the account (namespace -> key -> value)
+   * Per-bot configuration settings stored with the account.
+   * Organized as namespace -> key -> value mappings.
+   * These settings override instance-level settings when the bot is running.
+   * Typically includes bot-specific behavior settings.
    *
    * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace config = 8
    */
   config: SettingsNamespace[];
   /**
-   * Persistent metadata stored with the account (namespace -> key -> value)
+   * Persistent metadata stored with the account across sessions.
+   * Organized as namespace -> key -> value mappings.
+   * Used by plugins and the system to store account-specific state
+   * that should persist across bot restarts (e.g., last position, inventory cache).
    *
    * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace persistent_metadata = 9
    */
   persistentMetadata: SettingsNamespace[];
 }
 /**
+ * Authentication chain data for online Java Edition accounts.
+ * Contains OAuth tokens, Minecraft profile data, and Xbox Live authentication details.
+ * Used for Microsoft-authenticated Java accounts to maintain session state.
+ *
  * @generated from protobuf message soulfire.v1.MinecraftAccountProto.OnlineChainJavaData
  */
 export interface MinecraftAccountProto_OnlineChainJavaData {
   /**
+   * JSON structure containing the complete authentication chain from minecraftauth library.
+   * Includes Microsoft OAuth tokens, Xbox Live tokens, and Minecraft access tokens.
+   * This data can be refreshed to obtain new tokens without re-authentication.
+   *
    * @generated from protobuf field: google.protobuf.Struct auth_chain = 3
    */
   authChain?: Struct;
 }
 /**
+ * Account data for offline mode Java accounts.
+ * Contains no authentication data since offline accounts don't require Microsoft auth.
+ * The profile UUID is derived deterministically from the username.
+ *
+ * Empty message - offline accounts have no persistent auth data.
+ * UUID is calculated as: UUID.nameUUIDFromBytes("OfflinePlayer:<username>")
+ *
  * @generated from protobuf message soulfire.v1.MinecraftAccountProto.OfflineJavaData
  */
 export interface MinecraftAccountProto_OfflineJavaData {}
 /**
+ * Authentication chain data for Bedrock Edition accounts.
+ * Contains Xbox Live and Bedrock-specific authentication details.
+ * Used for Microsoft-authenticated Bedrock accounts.
+ *
  * @generated from protobuf message soulfire.v1.MinecraftAccountProto.BedrockData
  */
 export interface MinecraftAccountProto_BedrockData {
   /**
+   * JSON structure containing the complete Bedrock authentication chain.
+   * Includes Xbox Live tokens and Bedrock-specific session data.
+   * Compatible with the ViaBedrock protocol implementation.
+   *
    * @generated from protobuf field: google.protobuf.Struct auth_chain = 7
    */
   authChain?: Struct;
 }
 /**
+ * The type of authentication that was used to create this account.
+ * Determines which account_data oneof field is populated and how the account
+ * can be refreshed or re-authenticated.
+ *
  * @generated from protobuf enum soulfire.v1.MinecraftAccountProto.AccountTypeProto
  */
 export enum MinecraftAccountProto_AccountTypeProto {
   /**
+   * Authenticated via Microsoft Java credentials (email/password).
+   * Account data stored in OnlineChainJavaData.
+   *
    * @generated from protobuf enum value: MICROSOFT_JAVA_CREDENTIALS = 0;
    */
   MICROSOFT_JAVA_CREDENTIALS = 0,
   /**
+   * Authenticated via Microsoft Bedrock credentials (email/password).
+   * Account data stored in BedrockData.
+   *
    * @generated from protobuf enum value: MICROSOFT_BEDROCK_CREDENTIALS = 1;
    */
   MICROSOFT_BEDROCK_CREDENTIALS = 1,
   /**
+   * Offline mode account (no Microsoft authentication).
+   * Account data stored in OfflineJavaData.
+   * UUID is derived from username, cannot join online-mode servers.
+   *
    * @generated from protobuf enum value: OFFLINE = 4;
    */
   OFFLINE = 4,
   /**
+   * Authenticated via Microsoft Java device code flow.
+   * Account data stored in OnlineChainJavaData.
+   *
    * @generated from protobuf enum value: MICROSOFT_JAVA_DEVICE_CODE = 5;
    */
   MICROSOFT_JAVA_DEVICE_CODE = 5,
   /**
+   * Authenticated via Microsoft Bedrock device code flow.
+   * Account data stored in BedrockData.
+   *
    * @generated from protobuf enum value: MICROSOFT_BEDROCK_DEVICE_CODE = 6;
    */
   MICROSOFT_BEDROCK_DEVICE_CODE = 6,
   /**
+   * Authenticated via Microsoft Java refresh token.
+   * Account data stored in OnlineChainJavaData.
+   *
    * @generated from protobuf enum value: MICROSOFT_JAVA_REFRESH_TOKEN = 7;
    */
   MICROSOFT_JAVA_REFRESH_TOKEN = 7,
 }
 /**
+ * A collection of settings entries grouped under a common namespace.
+ * Used to organize configuration values hierarchically, where each namespace
+ * represents a logical grouping (e.g., plugin name, feature area).
+ * Part of the instance configuration, server configuration, and account settings.
+ *
  * @generated from protobuf message soulfire.v1.SettingsNamespace
  */
 export interface SettingsNamespace {
   /**
+   * The namespace identifier that groups related settings together.
+   * Typically matches a plugin ID or internal system component name.
+   * Examples: "bot", "account", "auto-reconnect", "anti-afk".
+   *
    * @generated from protobuf field: string namespace = 1
    */
   namespace: string;
   /**
+   * The list of setting entries within this namespace.
+   * Each entry has a unique key within the namespace.
+   *
    * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace.SettingsEntry entries = 2
    */
   entries: SettingsNamespace_SettingsEntry[];
 }
 /**
+ * A single key-value setting entry within a namespace.
+ *
  * @generated from protobuf message soulfire.v1.SettingsNamespace.SettingsEntry
  */
 export interface SettingsNamespace_SettingsEntry {
   /**
+   * The unique key identifying this setting within its namespace.
+   * Should be a valid identifier (alphanumeric with underscores/dashes).
+   *
    * @generated from protobuf field: string key = 1
    */
   key: string;
   /**
+   * The value of this setting as a protobuf Value.
+   * Can be a string, number, boolean, list, or nested object.
+   * The expected type depends on the setting definition (see SettingsDefinition).
+   *
    * @generated from protobuf field: google.protobuf.Value value = 2
    */
   value?: Value;
 }
 /**
+ * Uniquely identifies a single setting entry by its namespace and key.
+ * Used to reference settings in page definitions and for granular updates.
+ * The combination of namespace + key must be unique within a configuration scope.
+ *
  * @generated from protobuf message soulfire.v1.SettingsEntryIdentifier
  */
 export interface SettingsEntryIdentifier {
   /**
+   * The namespace containing this setting.
+   * Must match a namespace from a registered SettingsNamespace.
+   *
    * @generated from protobuf field: string namespace = 1
    */
   namespace: string;
   /**
+   * The key of the setting within its namespace.
+   * Must match a key from a SettingsEntry in the corresponding namespace.
+   *
    * @generated from protobuf field: string key = 2
    */
   key: string;
 }
 /**
+ * UI definition for a string/text setting.
+ * Used to render text input fields in the client UI with appropriate validation
+ * and visual styling based on the input type.
+ *
  * @generated from protobuf message soulfire.v1.StringSetting
  */
 export interface StringSetting {
   /**
+   * The display name shown in the UI label for this setting.
+   *
    * @generated from protobuf field: string ui_name = 1
    */
   uiName: string;
   /**
+   * A longer description explaining what this setting does.
+   * Typically shown as a tooltip or help text.
+   *
    * @generated from protobuf field: string description = 2
    */
   description: string;
   /**
+   * The default value used when no value is configured.
+   *
    * @generated from protobuf field: string def = 3
    */
   def: string;
   /**
+   * The type of input field to render (affects keyboard, validation, and display).
+   *
    * @generated from protobuf field: soulfire.v1.StringSetting.InputType input_type = 10
    */
   inputType: StringSetting_InputType;
   /**
+   * Placeholder text shown when the input is empty.
+   * Provides a hint about expected format or content.
+   *
    * @generated from protobuf field: string placeholder = 6
    */
   placeholder: string;
   /**
+   * Minimum required string length (0 means no minimum).
+   *
    * @generated from protobuf field: int32 min_length = 7
    */
   minLength: number;
   /**
+   * Maximum allowed string length (0 means no maximum).
+   *
    * @generated from protobuf field: int32 max_length = 8
    */
   maxLength: number;
   /**
+   * Regular expression pattern for value validation.
+   * Empty string means no pattern validation.
+   *
    * @generated from protobuf field: string pattern = 9
    */
   pattern: string;
   /**
+   * Whether this setting is disabled (read-only) in the UI.
+   * Disabled settings display their value but cannot be modified.
+   *
    * @generated from protobuf field: bool disabled = 11
    */
   disabled: boolean;
 }
 /**
+ * The type of text input to render in the UI.
+ * Maps to HTML input types for appropriate keyboard and validation behavior.
+ *
  * @generated from protobuf enum soulfire.v1.StringSetting.InputType
  */
 export enum StringSetting_InputType {
   /**
+   * Standard single-line text input.
+   *
    * @generated from protobuf enum value: TEXT = 0;
    */
   TEXT = 0,
   /**
+   * Password input with masked characters.
+   * Value is hidden in the UI for security.
+   *
    * @generated from protobuf enum value: PASSWORD = 1;
    */
   PASSWORD = 1,
   /**
+   * Email address input with email validation.
+   *
    * @generated from protobuf enum value: EMAIL = 2;
    */
   EMAIL = 2,
   /**
+   * Search input, typically with a search icon and clear button.
+   *
    * @generated from protobuf enum value: SEARCH = 3;
    */
   SEARCH = 3,
   /**
+   * Telephone number input with numeric keyboard on mobile.
+   *
    * @generated from protobuf enum value: TEL = 4;
    */
   TEL = 4,
   /**
+   * URL input with URL validation.
+   *
    * @generated from protobuf enum value: URL = 5;
    */
   URL = 5,
   /**
+   * Multi-line text area for longer text content.
+   *
    * @generated from protobuf enum value: TEXTAREA = 6;
    */
   TEXTAREA = 6,
 }
 /**
+ * UI definition for an integer number setting.
+ * Used to render numeric input fields with validation constraints.
+ * Supports range limits, step increments, and locale-aware formatting.
+ *
  * @generated from protobuf message soulfire.v1.IntSetting
  */
 export interface IntSetting {
   /**
+   * The display name shown in the UI label for this setting.
+   *
    * @generated from protobuf field: string ui_name = 1
    */
   uiName: string;
   /**
+   * A longer description explaining what this setting does.
+   *
    * @generated from protobuf field: string description = 2
    */
   description: string;
   /**
+   * The default value used when no value is configured.
+   *
    * @generated from protobuf field: int32 def = 3
    */
   def: number;
   /**
+   * The minimum allowed value (inclusive).
+   *
    * @generated from protobuf field: int32 min = 4
    */
   min: number;
   /**
+   * The maximum allowed value (inclusive).
+   *
    * @generated from protobuf field: int32 max = 5
    */
   max: number;
   /**
+   * The step increment for value adjustments (e.g., for spinbox controls).
+   * A value of 0 means any integer is valid within the min/max range.
+   *
    * @generated from protobuf field: int32 step = 6
    */
   step: number;
   /**
+   * Placeholder text shown when the input is empty.
+   *
    * @generated from protobuf field: string placeholder = 7
    */
   placeholder: string;
   /**
+   * Whether to display the number with thousand separators (e.g., 1,000,000).
+   * Improves readability for large numbers.
+   *
    * @generated from protobuf field: bool thousand_separator = 8
    */
   thousandSeparator: boolean;
   /**
+   * Whether this setting is disabled (read-only) in the UI.
+   *
    * @generated from protobuf field: bool disabled = 9
    */
   disabled: boolean;
 }
 /**
+ * UI definition for a floating-point number setting.
+ * Used to render decimal number input fields with precision control.
+ * Supports range limits, step increments, and decimal formatting options.
+ *
  * @generated from protobuf message soulfire.v1.DoubleSetting
  */
 export interface DoubleSetting {
   /**
+   * The display name shown in the UI label for this setting.
+   *
    * @generated from protobuf field: string ui_name = 1
    */
   uiName: string;
   /**
+   * A longer description explaining what this setting does.
+   *
    * @generated from protobuf field: string description = 2
    */
   description: string;
   /**
+   * The default value used when no value is configured.
+   *
    * @generated from protobuf field: double def = 3
    */
   def: number;
   /**
+   * The minimum allowed value (inclusive).
+   *
    * @generated from protobuf field: double min = 4
    */
   min: number;
   /**
+   * The maximum allowed value (inclusive).
+   *
    * @generated from protobuf field: double max = 5
    */
   max: number;
   /**
+   * The step increment for value adjustments.
+   * A value of 0 means any decimal is valid within the min/max range.
+   *
    * @generated from protobuf field: double step = 6
    */
   step: number;
   /**
+   * Placeholder text shown when the input is empty.
+   *
    * @generated from protobuf field: string placeholder = 7
    */
   placeholder: string;
   /**
+   * Whether to display the integer part with thousand separators.
+   *
    * @generated from protobuf field: bool thousand_separator = 8
    */
   thousandSeparator: boolean;
   /**
+   * The number of decimal places to display/allow.
+   * Used for formatting and input validation.
+   *
    * @generated from protobuf field: int32 decimal_scale = 9
    */
   decimalScale: number;
   /**
+   * Whether to always show the exact number of decimal places specified by decimal_scale.
+   * If true, trailing zeros are preserved (e.g., 1.50 instead of 1.5).
+   *
    * @generated from protobuf field: bool fixed_decimal_scale = 10
    */
   fixedDecimalScale: boolean;
   /**
+   * Whether this setting is disabled (read-only) in the UI.
+   *
    * @generated from protobuf field: bool disabled = 11
    */
   disabled: boolean;
 }
 /**
+ * UI definition for a boolean toggle setting.
+ * Used to render checkbox or toggle switch controls in the UI.
+ * Commonly used for enabling/disabling features.
+ *
  * @generated from protobuf message soulfire.v1.BoolSetting
  */
 export interface BoolSetting {
   /**
+   * The display name shown in the UI label for this setting.
+   *
    * @generated from protobuf field: string ui_name = 1
    */
   uiName: string;
   /**
+   * A longer description explaining what this setting does.
+   *
    * @generated from protobuf field: string description = 2
    */
   description: string;
   /**
+   * The default value used when no value is configured.
+   *
    * @generated from protobuf field: bool def = 3
    */
   def: boolean;
   /**
+   * Whether this setting is disabled (read-only) in the UI.
+   *
    * @generated from protobuf field: bool disabled = 4
    */
   disabled: boolean;
 }
 /**
+ * UI definition for a dropdown/select setting with predefined options.
+ * Used to render combo boxes or dropdown menus where users select from a fixed list.
+ * Each option has an ID (stored value) and a display name (shown to user).
+ *
  * @generated from protobuf message soulfire.v1.ComboSetting
  */
 export interface ComboSetting {
   /**
+   * The display name shown in the UI label for this setting.
+   *
    * @generated from protobuf field: string ui_name = 1
    */
   uiName: string;
   /**
+   * A longer description explaining what this setting does.
+   *
    * @generated from protobuf field: string description = 2
    */
   description: string;
   /**
-   * List of options
+   * The list of available options to choose from.
+   * The order determines display order in the dropdown.
    *
    * @generated from protobuf field: repeated soulfire.v1.ComboSetting.Option options = 3
    */
   options: ComboSetting_Option[];
   /**
+   * The default option ID used when no value is configured.
+   * Must match one of the option IDs in the options list.
+   *
    * @generated from protobuf field: string def = 4
    */
   def: string;
   /**
+   * Whether this setting is disabled (read-only) in the UI.
+   *
    * @generated from protobuf field: bool disabled = 5
    */
   disabled: boolean;
 }
 /**
+ * A single selectable option in the combo box.
+ *
  * @generated from protobuf message soulfire.v1.ComboSetting.Option
  */
 export interface ComboSetting_Option {
   /**
-   * Sent to server
+   * The internal identifier for this option.
+   * This value is stored in the configuration when selected.
+   * Typically a machine-readable string (e.g., enum name, UUID).
    *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
-   * Displayed to user
+   * The human-readable name displayed to the user.
+   * Can include spaces and special characters for readability.
    *
    * @generated from protobuf field: string display_name = 2
    */
   displayName: string;
   /**
-   * May be used for an icon for an option
+   * Optional icon identifier to display next to the option.
+   * Uses lucide.dev icon IDs (e.g., "user", "settings", "shield").
    *
    * @generated from protobuf field: optional string icon_id = 3
    */
   iconId?: string;
   /**
-   * keywords to also use for filtering
+   * Additional keywords for filtering/searching options.
+   * Allows finding this option by typing related terms.
    *
    * @generated from protobuf field: repeated string keywords = 4
    */
   keywords: string[];
 }
 /**
+ * UI definition for a list of strings setting.
+ * Used to render a multi-value input where users can add/remove string items.
+ * Commonly used for lists of allowed values, server addresses, or tags.
+ *
  * @generated from protobuf message soulfire.v1.StringListSetting
  */
 export interface StringListSetting {
   /**
+   * The display name shown in the UI label for this setting.
+   *
    * @generated from protobuf field: string ui_name = 1
    */
   uiName: string;
   /**
+   * A longer description explaining what this setting does.
+   *
    * @generated from protobuf field: string description = 2
    */
   description: string;
   /**
+   * The default list of values used when no value is configured.
+   * Can be empty for an initially empty list.
+   *
    * @generated from protobuf field: repeated string def = 3
    */
   def: string[];
   /**
+   * Whether this setting is disabled (read-only) in the UI.
+   *
    * @generated from protobuf field: bool disabled = 4
    */
   disabled: boolean;
 }
 /**
+ * UI definition for a min/max range setting with two integer values.
+ * Used to render paired input fields for specifying a numeric range.
+ * Commonly used for delay ranges, count ranges, or any min/max pair.
+ * Values are stored as a JSON object with "min" and "max" properties.
+ *
  * @generated from protobuf message soulfire.v1.MinMaxSetting
  */
 export interface MinMaxSetting {
   /**
+   * The minimum allowed value for both entries (inclusive).
+   * Both min and max entries must be >= this value.
+   *
    * @generated from protobuf field: int32 min = 1
    */
   min: number;
   /**
+   * The maximum allowed value for both entries (inclusive).
+   * Both min and max entries must be <= this value.
+   *
    * @generated from protobuf field: int32 max = 2
    */
   max: number;
   /**
+   * The step increment for value adjustments.
+   *
    * @generated from protobuf field: int32 step = 3
    */
   step: number;
   /**
+   * Whether to display numbers with thousand separators.
+   *
    * @generated from protobuf field: bool thousand_separator = 4
    */
   thousandSeparator: boolean;
   /**
+   * Configuration for the minimum value input field.
+   * The actual value must be <= maxEntry value.
+   *
    * @generated from protobuf field: soulfire.v1.MinMaxSetting.Entry minEntry = 5
    */
   minEntry?: MinMaxSetting_Entry;
   /**
+   * Configuration for the maximum value input field.
+   * The actual value must be >= minEntry value.
+   *
    * @generated from protobuf field: soulfire.v1.MinMaxSetting.Entry maxEntry = 6
    */
   maxEntry?: MinMaxSetting_Entry;
   /**
+   * Whether this setting is disabled (read-only) in the UI.
+   *
    * @generated from protobuf field: bool disabled = 7
    */
   disabled: boolean;
 }
 /**
+ * Configuration for a single entry in the min/max pair.
+ *
  * @generated from protobuf message soulfire.v1.MinMaxSetting.Entry
  */
 export interface MinMaxSetting_Entry {
   /**
+   * The display name for this entry (e.g., "Minimum Delay").
+   *
    * @generated from protobuf field: string ui_name = 1
    */
   uiName: string;
   /**
+   * A description explaining what this entry represents.
+   *
    * @generated from protobuf field: string description = 2
    */
   description: string;
   /**
+   * The default value for this entry.
+   *
    * @generated from protobuf field: int32 def = 3
    */
   def: number;
   /**
+   * Placeholder text shown when the input is empty.
+   *
    * @generated from protobuf field: string placeholder = 4
    */
   placeholder: string;
 }
 /**
- * A setting definition that can be rendered anywhere by identifier
+ * A complete setting definition that describes a single configurable value.
+ * Contains all information needed for a client to render the setting UI,
+ * validate input, and store/retrieve values by identifier.
+ * Definitions are exported from the server and referenced by SettingsPage.
  *
  * @generated from protobuf message soulfire.v1.SettingsDefinition
  */
 export interface SettingsDefinition {
   /**
-   * Unique identifier for this setting (namespace + key)
+   * Unique identifier for this setting (namespace + key).
+   * Used to reference this setting from pages and to store/retrieve values.
    *
    * @generated from protobuf field: soulfire.v1.SettingsEntryIdentifier id = 1
    */
   id?: SettingsEntryIdentifier;
   /**
-   * Which scope this setting belongs to (SERVER, INSTANCE, BOT)
+   * The configuration scope where this setting applies (SERVER, INSTANCE, BOT).
+   * Determines where values are stored and how they cascade.
    *
    * @generated from protobuf field: soulfire.v1.SettingsPageEntryScopeType scope = 2
    */
   scope: SettingsPageEntryScopeType;
   /**
-   * The actual setting type and UI configuration
+   * The setting type and its UI configuration.
+   * Exactly one of these fields will be set based on the setting's data type.
    *
    * @generated from protobuf oneof: type
    */
@@ -545,6 +867,8 @@ export interface SettingsDefinition {
     | {
         oneofKind: "string";
         /**
+         * String/text setting with optional validation.
+         *
          * @generated from protobuf field: soulfire.v1.StringSetting string = 3
          */
         string: StringSetting;
@@ -552,6 +876,8 @@ export interface SettingsDefinition {
     | {
         oneofKind: "int";
         /**
+         * Integer number setting with range constraints.
+         *
          * @generated from protobuf field: soulfire.v1.IntSetting int = 4
          */
         int: IntSetting;
@@ -559,6 +885,8 @@ export interface SettingsDefinition {
     | {
         oneofKind: "double";
         /**
+         * Floating-point number setting with precision control.
+         *
          * @generated from protobuf field: soulfire.v1.DoubleSetting double = 5
          */
         double: DoubleSetting;
@@ -566,6 +894,8 @@ export interface SettingsDefinition {
     | {
         oneofKind: "bool";
         /**
+         * Boolean toggle setting.
+         *
          * @generated from protobuf field: soulfire.v1.BoolSetting bool = 6
          */
         bool: BoolSetting;
@@ -573,6 +903,8 @@ export interface SettingsDefinition {
     | {
         oneofKind: "combo";
         /**
+         * Dropdown/select setting with predefined options.
+         *
          * @generated from protobuf field: soulfire.v1.ComboSetting combo = 7
          */
         combo: ComboSetting;
@@ -580,6 +912,8 @@ export interface SettingsDefinition {
     | {
         oneofKind: "stringList";
         /**
+         * List of strings setting for multi-value input.
+         *
          * @generated from protobuf field: soulfire.v1.StringListSetting string_list = 8
          */
         stringList: StringListSetting;
@@ -587,6 +921,8 @@ export interface SettingsDefinition {
     | {
         oneofKind: "minMax";
         /**
+         * Min/max range setting with two paired integer values.
+         *
          * @generated from protobuf field: soulfire.v1.MinMaxSetting min_max = 9
          */
         minMax: MinMaxSetting;
@@ -596,271 +932,487 @@ export interface SettingsDefinition {
       };
 }
 /**
- * A page definition that references settings by their identifiers
+ * A settings page that groups related settings together for UI navigation.
+ * Pages provide a logical organization of settings with visual elements like
+ * icons and names. Each page references settings by their identifiers rather
+ * than embedding the definitions, allowing settings to be shared across pages.
  *
  * @generated from protobuf message soulfire.v1.SettingsPage
  */
 export interface SettingsPage {
   /**
-   * Unique page identifier (URL-safe, e.g., "bot", "account", "auto-reconnect")
+   * Unique page identifier, URL-safe for navigation.
+   * Examples: "bot", "account", "auto-reconnect", "anti-afk".
+   * Should be lowercase with hyphens for word separation.
    *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
-   * Plugin that owns this settings page (optional for internal pages)
+   * The ID of the plugin that owns this page (optional).
+   * Null/empty for internal SoulFire pages.
+   * Used to group pages by plugin in the UI navigation.
    *
    * @generated from protobuf field: optional string owning_plugin_id = 2
    */
   owningPluginId?: string;
   /**
-   * The display name of the page
+   * The human-readable display name shown in the UI navigation.
+   * Examples: "Bot Settings", "Account", "Auto Reconnect".
    *
    * @generated from protobuf field: string page_name = 3
    */
   pageName: string;
   /**
-   * Ordered list of setting identifiers to render on this page
+   * Ordered list of setting identifiers to display on this page.
+   * Settings are rendered in the order they appear in this list.
+   * Each identifier must correspond to a valid SettingsDefinition.
    *
    * @generated from protobuf field: repeated soulfire.v1.SettingsEntryIdentifier entries = 5
    */
   entries: SettingsEntryIdentifier[];
   /**
-   * https://lucide.dev icon id for this page (Usually rendered left of the page name)
+   * Icon identifier for visual representation of this page.
+   * Uses lucide.dev icon IDs (e.g., "bot", "user", "refresh-cw").
+   * Rendered next to the page name in navigation menus.
    *
    * @generated from protobuf field: string icon_id = 6
    */
   iconId: string;
   /**
-   * Setting identifier that controls whether this page/plugin is enabled
+   * Optional identifier for a boolean setting that controls whether
+   * this page/feature is enabled. Used primarily for plugin pages.
+   * When set, the page may show an enable/disable toggle.
    *
    * @generated from protobuf field: optional soulfire.v1.SettingsEntryIdentifier enabled_identifier = 7
    */
   enabledIdentifier?: SettingsEntryIdentifier;
 }
 /**
+ * Metadata about a registered server plugin.
+ * Plugins extend SoulFire functionality by adding new settings, commands,
+ * and bot behaviors. This information is displayed in the client UI.
+ * Returned as part of InstanceInfo and ServerInfoResponse.
+ *
  * @generated from protobuf message soulfire.v1.ServerPlugin
  */
 export interface ServerPlugin {
   /**
+   * The unique plugin identifier.
+   * Should be a lowercase, hyphenated string (e.g., "auto-reconnect", "chat-control").
+   * Used to reference the plugin in owning_plugin_id fields.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The semantic version of the plugin (e.g., "1.0.0", "2.1.3-beta").
+   * Follows semver conventions for compatibility tracking.
+   *
    * @generated from protobuf field: string version = 2
    */
   version: string;
   /**
+   * A brief description of what the plugin does.
+   * Shown in plugin lists and information panels.
+   *
    * @generated from protobuf field: string description = 3
    */
   description: string;
   /**
+   * The author or organization that created the plugin.
+   * Typically a name or organization identifier.
+   *
    * @generated from protobuf field: string author = 4
    */
   author: string;
   /**
+   * The software license under which the plugin is distributed.
+   * Examples: "MIT", "Apache-2.0", "GPL-3.0".
+   *
    * @generated from protobuf field: string license = 5
    */
   license: string;
   /**
+   * URL to the plugin's website, documentation, or repository.
+   * Allows users to find more information or report issues.
+   *
    * @generated from protobuf field: string website = 6
    */
   website: string;
 }
 /**
+ * Authentication service types that accept direct credentials (email/password or username).
+ * Used in the MCAuthService.LoginCredentials RPC to specify which authentication
+ * method should be used for batch account authentication.
+ *
  * @generated from protobuf enum soulfire.v1.AccountTypeCredentials
  */
 export enum AccountTypeCredentials {
   /**
+   * Microsoft Java Edition authentication using email and password.
+   * Authenticates against Microsoft's OAuth system to obtain a Minecraft Java profile.
+   * Payload format: ["email", "password"] pairs, one pair per account.
+   *
    * @generated from protobuf enum value: MICROSOFT_JAVA_CREDENTIALS = 0;
    */
   MICROSOFT_JAVA_CREDENTIALS = 0,
   /**
+   * Microsoft Bedrock Edition authentication using email and password.
+   * Authenticates against Microsoft's OAuth system to obtain a Minecraft Bedrock profile.
+   * Payload format: ["email", "password"] pairs, one pair per account.
+   *
    * @generated from protobuf enum value: MICROSOFT_BEDROCK_CREDENTIALS = 1;
    */
   MICROSOFT_BEDROCK_CREDENTIALS = 1,
   /**
+   * Offline mode authentication (no Microsoft account required).
+   * Creates a local-only account with a generated UUID based on the username.
+   * Payload format: ["username"] for each account.
+   * Note: Offline accounts cannot join online-mode servers.
+   *
    * @generated from protobuf enum value: OFFLINE = 4;
    */
   OFFLINE = 4,
   /**
+   * Microsoft Java Edition authentication using an existing refresh token.
+   * Useful for re-authenticating accounts without requiring credentials again.
+   * Payload format: ["refresh_token"] for each account.
+   *
    * @generated from protobuf enum value: MICROSOFT_JAVA_REFRESH_TOKEN = 5;
    */
   MICROSOFT_JAVA_REFRESH_TOKEN = 5,
 }
 /**
+ * Authentication service types that use the OAuth 2.0 Device Code flow.
+ * Used in the MCAuthService.LoginDeviceCode RPC for interactive authentication
+ * where the user must visit a URL and enter a code on another device.
+ *
  * @generated from protobuf enum soulfire.v1.AccountTypeDeviceCode
  */
 export enum AccountTypeDeviceCode {
   /**
+   * Microsoft Java Edition authentication via device code flow.
+   * Returns a device code that the user enters at microsoft.com/link.
+   * Produces an OnlineChainJavaData authentication chain upon success.
+   *
    * @generated from protobuf enum value: MICROSOFT_JAVA_DEVICE_CODE = 0;
    */
   MICROSOFT_JAVA_DEVICE_CODE = 0,
   /**
+   * Microsoft Bedrock Edition authentication via device code flow.
+   * Returns a device code that the user enters at microsoft.com/link.
+   * Produces a BedrockData authentication chain upon success.
+   *
    * @generated from protobuf enum value: MICROSOFT_BEDROCK_DEVICE_CODE = 1;
    */
   MICROSOFT_BEDROCK_DEVICE_CODE = 1,
 }
 /**
+ * Server-wide permissions that apply globally across all instances.
+ * These permissions control access to server administration, user management,
+ * and self-service operations. Checked via the PermissionContext.global() method.
+ * ADMIN role users have all global permissions by default.
+ *
  * @generated from protobuf enum soulfire.v1.GlobalPermission
  */
 export enum GlobalPermission {
   /**
+   * Permission to create new SoulFire instances.
+   * Required by InstanceService.CreateInstance RPC.
+   *
    * @generated from protobuf enum value: CREATE_INSTANCE = 0;
    */
   CREATE_INSTANCE = 0,
   /**
+   * Permission to subscribe to server-wide log streams.
+   * Allows receiving logs from all instances and system components.
+   *
    * @generated from protobuf enum value: GLOBAL_SUBSCRIBE_LOGS = 1;
    */
   GLOBAL_SUBSCRIBE_LOGS = 1,
   /**
+   * Permission to read the authenticated user's own client data.
+   * Required by ClientService.GetClientData RPC.
+   * Returns user profile, permissions, and server information.
+   *
    * @generated from protobuf enum value: READ_CLIENT_DATA = 2;
    */
   READ_CLIENT_DATA = 2,
   /**
+   * Permission to read the server configuration.
+   * Required by ServerService.GetServerInfo RPC.
+   *
    * @generated from protobuf enum value: READ_SERVER_CONFIG = 3;
    */
   READ_SERVER_CONFIG = 3,
   /**
+   * Permission to modify the server configuration.
+   * Required by ServerService.UpdateServerConfig and UpdateServerConfigEntry RPCs.
+   *
    * @generated from protobuf enum value: UPDATE_SERVER_CONFIG = 4;
    */
   UPDATE_SERVER_CONFIG = 4,
   /**
+   * Permission to create new user accounts.
+   * Required by UserService.CreateUser RPC.
+   *
    * @generated from protobuf enum value: CREATE_USER = 5;
    */
   CREATE_USER = 5,
   /**
+   * Permission to read information about other users.
+   * Required by UserService.ListUsers and GetUserInfo RPCs.
+   *
    * @generated from protobuf enum value: READ_USER = 6;
    */
   READ_USER = 6,
   /**
+   * Permission to modify other users' accounts.
+   * Required by UserService.UpdateUser RPC.
+   *
    * @generated from protobuf enum value: UPDATE_USER = 7;
    */
   UPDATE_USER = 7,
   /**
+   * Permission to delete user accounts.
+   * Required by UserService.DeleteUser RPC.
+   *
    * @generated from protobuf enum value: DELETE_USER = 8;
    */
   DELETE_USER = 8,
   /**
+   * Permission to execute commands at the global/server level.
+   * Required by CommandService for server-wide command execution.
+   *
    * @generated from protobuf enum value: GLOBAL_COMMAND_EXECUTION = 9;
    */
   GLOBAL_COMMAND_EXECUTION = 9,
   /**
+   * Permission to invalidate sessions for other users.
+   * Required by UserService.InvalidateSessions RPC.
+   * Forces other users to re-authenticate.
+   *
    * @generated from protobuf enum value: INVALIDATE_SESSIONS = 11;
    */
   INVALIDATE_SESSIONS = 11,
   /**
+   * Permission to generate a WebDAV authentication token for oneself.
+   * Required by ClientService.GenerateWebDAVToken RPC.
+   * WebDAV tokens provide file system access to instance data.
+   *
    * @generated from protobuf enum value: GENERATE_SELF_WEBDAV_TOKEN = 12;
    */
   GENERATE_SELF_WEBDAV_TOKEN = 12,
   /**
+   * Permission to generate an API token for oneself.
+   * Required by ClientService.GenerateAPIToken RPC.
+   * API tokens can be used for programmatic access.
+   *
    * @generated from protobuf enum value: GENERATE_SELF_API_TOKEN = 15;
    */
   GENERATE_SELF_API_TOKEN = 15,
   /**
+   * Permission to update one's own username.
+   * Required by ClientService.UpdateSelfUsername RPC.
+   *
    * @generated from protobuf enum value: UPDATE_SELF_USERNAME = 13;
    */
   UPDATE_SELF_USERNAME = 13,
   /**
+   * Permission to update one's own email address.
+   * Required by ClientService.UpdateSelfEmail RPC.
+   *
    * @generated from protobuf enum value: UPDATE_SELF_EMAIL = 14;
    */
   UPDATE_SELF_EMAIL = 14,
   /**
+   * Permission to generate API tokens for other users.
+   * Required by UserService.GenerateUserAPIToken RPC.
+   *
    * @generated from protobuf enum value: GENERATE_API_TOKEN = 16;
    */
   GENERATE_API_TOKEN = 16,
   /**
+   * Permission to invalidate one's own sessions.
+   * Required by ClientService.InvalidateSelfSessions RPC.
+   * Logs the user out of all devices.
+   *
    * @generated from protobuf enum value: INVALIDATE_SELF_SESSIONS = 17;
    */
   INVALIDATE_SELF_SESSIONS = 17,
 }
 /**
+ * Permissions that apply to a specific instance.
+ * These permissions are scoped to individual instances and control what operations
+ * a user can perform on that instance. Checked via PermissionContext.instance() method.
+ * Permission grants are stored per-user per-instance in the database.
+ *
  * @generated from protobuf enum soulfire.v1.InstancePermission
  */
 export enum InstancePermission {
   /**
+   * Permission to execute commands within this instance.
+   * Required by CommandService for instance-level command execution.
+   *
    * @generated from protobuf enum value: INSTANCE_COMMAND_EXECUTION = 0;
    */
   INSTANCE_COMMAND_EXECUTION = 0,
   /**
+   * Permission to read instance information and configuration.
+   * Required by InstanceService.GetInstanceInfo RPC.
+   * Also required to see the instance in InstanceService.ListInstances.
+   *
    * @generated from protobuf enum value: READ_INSTANCE = 2;
    */
   READ_INSTANCE = 2,
   /**
+   * Permission to update instance metadata (friendly name, icon).
+   * Required by InstanceService.UpdateInstanceMeta RPC.
+   *
    * @generated from protobuf enum value: UPDATE_INSTANCE_META = 3;
    */
   UPDATE_INSTANCE_META = 3,
   /**
+   * Permission to update instance configuration (settings, accounts, proxies).
+   * Required by InstanceService.UpdateInstanceConfig, UpdateInstanceConfigEntry,
+   * and all account/proxy add/remove/update RPCs.
+   *
    * @generated from protobuf enum value: UPDATE_INSTANCE_CONFIG = 14;
    */
   UPDATE_INSTANCE_CONFIG = 14,
   /**
+   * Permission to delete this instance entirely.
+   * Required by InstanceService.DeleteInstance RPC.
+   * This is a destructive operation that cannot be undone.
+   *
    * @generated from protobuf enum value: DELETE_INSTANCE = 4;
    */
   DELETE_INSTANCE = 4,
   /**
+   * Permission to change the instance state (start, stop, pause, resume).
+   * Required by InstanceService.ChangeInstanceState RPC.
+   * Controls the bot session lifecycle.
+   *
    * @generated from protobuf enum value: CHANGE_INSTANCE_STATE = 5;
    */
   CHANGE_INSTANCE_STATE = 5,
   /**
+   * Permission to authenticate Minecraft accounts for this instance.
+   * Required by MCAuthService RPCs (LoginCredentials, LoginDeviceCode, Refresh).
+   * Allows adding new accounts or refreshing existing account tokens.
+   *
    * @generated from protobuf enum value: AUTHENTICATE_MC_ACCOUNT = 6;
    */
   AUTHENTICATE_MC_ACCOUNT = 6,
   /**
+   * Permission to check proxy connectivity and latency for this instance.
+   * Required by ProxyCheckService.Check RPC.
+   *
    * @generated from protobuf enum value: CHECK_PROXY = 7;
    */
   CHECK_PROXY = 7,
   /**
+   * Permission to download files from URLs through the server.
+   * Required by DownloadService.Download RPC.
+   * Used for fetching remote resources through instance proxies.
+   *
    * @generated from protobuf enum value: DOWNLOAD_URL = 8;
    */
   DOWNLOAD_URL = 8,
   /**
+   * Permission to access WebDAV object storage for this instance.
+   * Required to read/write files in the instance's storage area via WebDAV.
+   *
    * @generated from protobuf enum value: ACCESS_OBJECT_STORAGE = 9;
    */
   ACCESS_OBJECT_STORAGE = 9,
   /**
+   * Permission to subscribe to log streams for this instance.
+   * Required by LogService for instance-specific log streaming.
+   *
    * @generated from protobuf enum value: INSTANCE_SUBSCRIBE_LOGS = 13;
    */
   INSTANCE_SUBSCRIBE_LOGS = 13,
   /**
+   * Permission to read the audit log for this instance.
+   * Required by InstanceService.GetAuditLog RPC.
+   * Shows command executions and state changes with user attribution.
+   *
    * @generated from protobuf enum value: READ_INSTANCE_AUDIT_LOGS = 15;
    */
   READ_INSTANCE_AUDIT_LOGS = 15,
   /**
+   * Permission to read information about individual bots in this instance.
+   * Required by BotService RPCs for reading bot state and live data.
+   * Also required by InstanceService.GetAccountMetadata RPC.
+   *
    * @generated from protobuf enum value: READ_BOT_INFO = 10;
    */
   READ_BOT_INFO = 10,
   /**
+   * Permission to update configuration for individual bots.
+   * Required by BotService RPCs for modifying bot settings.
+   * Also required for SetAccountMetadataEntry and DeleteAccountMetadataEntry.
+   *
    * @generated from protobuf enum value: UPDATE_BOT_CONFIG = 11;
    */
   UPDATE_BOT_CONFIG = 11,
 }
 /**
+ * The role assigned to a user account, determining their base permission level.
+ * Roles provide a coarse-grained permission model that is supplemented by
+ * specific permission grants at the global and instance levels.
+ *
  * @generated from protobuf enum soulfire.v1.UserRole
  */
 export enum UserRole {
   /**
+   * Administrator role with full access to all features.
+   * ADMIN users implicitly have all GlobalPermission and InstancePermission values granted.
+   * Only ADMIN users can manage other users and server configuration by default.
+   *
    * @generated from protobuf enum value: ADMIN = 0;
    */
   ADMIN = 0,
   /**
+   * Standard user role with limited default permissions.
+   * USER role accounts require explicit permission grants for most operations.
+   * Default permissions for USER role are controlled by server configuration.
+   *
    * @generated from protobuf enum value: USER = 1;
    */
   USER = 1,
 }
 /**
+ * The scope/level at which a setting applies.
+ * Determines where the setting value is stored and when it takes effect.
+ * Used in SettingsDefinition to indicate the setting's configuration scope.
+ *
  * @generated from protobuf enum soulfire.v1.SettingsPageEntryScopeType
  */
 export enum SettingsPageEntryScopeType {
   /**
+   * Server-level setting that applies globally to the entire SoulFire server.
+   * Stored in the server configuration (ServerConfig).
+   * Affects all instances and users on the server.
+   *
    * @generated from protobuf enum value: SERVER = 0;
    */
   SERVER = 0,
   /**
+   * Instance-level setting that applies to a specific instance.
+   * Stored in the instance configuration (InstanceConfig.settings).
+   * Affects all bots within that instance.
+   *
    * @generated from protobuf enum value: INSTANCE = 1;
    */
   INSTANCE = 1,
   /**
+   * Bot-level setting that applies to individual bot accounts.
+   * Stored per-account in MinecraftAccountProto.config.
+   * Overrides instance settings for that specific bot.
+   *
    * @generated from protobuf enum value: BOT = 2;
    */
   BOT = 2,

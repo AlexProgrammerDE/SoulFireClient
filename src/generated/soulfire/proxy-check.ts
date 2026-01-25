@@ -20,46 +20,85 @@ import {
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { ProxyProto } from "./common";
 /**
+ * Request message for checking the validity of one or more proxies.
+ * The check is performed by attempting to connect to a Minecraft server
+ * through each proxy and measuring the connection latency.
+ *
  * @generated from protobuf message soulfire.v1.ProxyCheckRequest
  */
 export interface ProxyCheckRequest {
   /**
+   * The UUID of the instance to use for proxy checking.
+   * The instance provides configuration such as the target Minecraft server address
+   * (configured via ProxySettings.PROXY_CHECK_ADDRESS, defaults to "mc.hypixel.net"),
+   * the protocol version, and concurrency settings.
+   * The user must have CHECK_PROXY permission on this instance.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * List of proxies to check. Each proxy will be tested by attempting to
+   * establish a connection to the configured Minecraft server through it.
+   * Proxies are checked concurrently based on the instance's PROXY_CHECK_CONCURRENCY
+   * setting (defaults to 10 concurrent checks).
+   *
    * @generated from protobuf field: repeated soulfire.v1.ProxyProto proxy = 2
    */
   proxy: ProxyProto[];
 }
 /**
+ * Result of checking a single proxy's validity and performance.
+ *
  * @generated from protobuf message soulfire.v1.ProxyCheckResponseSingle
  */
 export interface ProxyCheckResponseSingle {
   /**
+   * The proxy that was checked. This is echoed back from the request
+   * to allow correlation when checking multiple proxies.
+   *
    * @generated from protobuf field: soulfire.v1.ProxyProto proxy = 1
    */
   proxy?: ProxyProto;
   /**
+   * Whether the proxy check was successful. A proxy is considered valid if
+   * a connection through it to the Minecraft server was established successfully
+   * and a status response packet was received within the 30-second timeout.
+   * If false, the proxy failed to connect, timed out, or encountered an error.
+   *
    * @generated from protobuf field: bool valid = 2
    */
   valid: boolean;
   /**
+   * The time in milliseconds taken to complete the proxy check.
+   * This measures the total time from starting the connection attempt
+   * until receiving the server status response (or until failure/timeout).
+   * Useful for comparing proxy performance and choosing the fastest proxies.
+   *
    * @generated from protobuf field: int32 latency = 3
    */
   latency: number;
   /**
+   * The real IP address as seen by the target server (if available).
+   * This field may be empty if the IP could not be determined.
+   * Note: Currently not populated by the implementation.
+   *
    * @generated from protobuf field: string real_ip = 4
    */
   realIp: string;
 }
 /**
- * Marks the end of a proxy check stream
+ * Sentinel message indicating that all proxy checks have completed.
+ * This is the final message sent in the response stream, signaling
+ * that no more ProxyCheckResponseSingle messages will follow.
  *
  * @generated from protobuf message soulfire.v1.ProxyCheckEnd
  */
 export interface ProxyCheckEnd {}
 /**
+ * Response message for proxy checking, sent as a stream.
+ * Each message contains either a single proxy check result or an end marker.
+ *
  * @generated from protobuf message soulfire.v1.ProxyCheckResponse
  */
 export interface ProxyCheckResponse {
@@ -70,6 +109,10 @@ export interface ProxyCheckResponse {
     | {
         oneofKind: "single";
         /**
+         * A single proxy check result. Multiple of these will be streamed
+         * as each proxy check completes, allowing the client to process
+         * results incrementally rather than waiting for all checks to finish.
+         *
          * @generated from protobuf field: soulfire.v1.ProxyCheckResponseSingle single = 4
          */
         single: ProxyCheckResponseSingle;
@@ -77,6 +120,9 @@ export interface ProxyCheckResponse {
     | {
         oneofKind: "end";
         /**
+         * End-of-stream marker indicating all proxy checks are complete.
+         * This is always the last message in the stream before it closes.
+         *
          * @generated from protobuf field: soulfire.v1.ProxyCheckEnd end = 5
          */
         end: ProxyCheckEnd;

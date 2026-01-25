@@ -3,6 +3,17 @@
 // @generated from protobuf file "soulfire/server.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
+//
+// SoulFire Server Configuration Service Protocol
+//
+// This protocol defines the gRPC service for managing global server-level configuration
+// in SoulFire, a Minecraft bot automation framework. Server configuration includes
+// settings that affect the entire SoulFire server instance, such as debug logging levels,
+// plugin settings, and other server-wide preferences.
+//
+// The configuration is persisted in a database and changes trigger runtime updates
+// (e.g., adjusting log levels for various components like Minecraft, Netty, gRPC, Hibernate).
+//
 
 import type {
   BinaryReadOptions,
@@ -26,76 +37,146 @@ import {
   SettingsPage,
 } from "./common";
 /**
+ * ServerConfig represents the complete server-level configuration.
+ * It contains all settings organized by namespace, where each namespace groups
+ * related settings together (e.g., "dev" namespace for developer settings).
+ * This configuration is stored persistently and affects server-wide behavior.
+ *
  * @generated from protobuf message soulfire.v1.ServerConfig
  */
 export interface ServerConfig {
   /**
+   * Collection of settings organized by namespace.
+   * Each namespace contains key-value pairs representing individual settings.
+   * The structure allows for hierarchical organization of configuration values.
+   *
    * @generated from protobuf field: repeated soulfire.v1.SettingsNamespace settings = 1
    */
   settings: SettingsNamespace[];
 }
 /**
+ * Request message for GetServerInfo RPC.
+ * This is an empty request as no parameters are needed to retrieve server information.
+ * The server returns all available configuration and metadata.
+ *
  * @generated from protobuf message soulfire.v1.ServerInfoRequest
  */
 export interface ServerInfoRequest {}
 /**
+ * Response message for GetServerInfo RPC containing comprehensive server information.
+ * This response provides everything needed to render a settings UI, including:
+ * - Current configuration values
+ * - All available setting definitions with their types and constraints
+ * - Page layouts for organizing settings in the UI
+ * - Information about registered plugins
+ *
  * @generated from protobuf message soulfire.v1.ServerInfoResponse
  */
 export interface ServerInfoResponse {
   /**
+   * The current server configuration containing all persisted settings values.
+   * If no configuration has been saved yet, this will contain default/empty values.
+   *
    * @generated from protobuf field: soulfire.v1.ServerConfig config = 1
    */
   config?: ServerConfig;
   /**
-   * All available settings definitions that can be rendered by identifier
+   * All available settings definitions that can be rendered by identifier.
+   * Each definition includes the setting's type (string, int, bool, etc.),
+   * UI metadata (display name, description), constraints (min/max, patterns),
+   * and scope (SERVER, INSTANCE, or BOT level).
+   * These definitions are referenced by their identifier (namespace + key).
    *
    * @generated from protobuf field: repeated soulfire.v1.SettingsDefinition settings_definitions = 4
    */
   settingsDefinitions: SettingsDefinition[];
   /**
-   * Pages that group settings together (reference settings by identifier)
+   * Pages that group settings together for UI organization.
+   * Each page has an ID, display name, icon, and references settings by their identifiers.
+   * Pages may be associated with plugins and can have an "enabled" toggle setting.
    *
    * @generated from protobuf field: repeated soulfire.v1.SettingsPage server_settings = 2
    */
   serverSettings: SettingsPage[];
   /**
+   * List of registered plugins on the server.
+   * Each plugin includes metadata such as ID, version, description, author,
+   * license, and website URL. Plugins may own settings pages.
+   *
    * @generated from protobuf field: repeated soulfire.v1.ServerPlugin plugins = 3
    */
   plugins: ServerPlugin[];
 }
 /**
+ * Request message for UpdateServerConfig RPC.
+ * Used for bulk configuration updates, typically during profile import operations.
+ * This replaces the entire server configuration with the provided values.
+ *
  * @generated from protobuf message soulfire.v1.ServerUpdateConfigRequest
  */
 export interface ServerUpdateConfigRequest {
   /**
+   * The complete new server configuration to apply.
+   * This will replace the existing configuration entirely.
+   * All settings namespaces and their entries will be overwritten.
+   *
    * @generated from protobuf field: soulfire.v1.ServerConfig config = 1
    */
   config?: ServerConfig;
 }
 /**
+ * Response message for UpdateServerConfig RPC.
+ * An empty response indicates successful configuration update.
+ * The new configuration is persisted to the database and runtime hooks are triggered
+ * (e.g., log level adjustments take effect immediately).
+ *
  * @generated from protobuf message soulfire.v1.ServerUpdateConfigResponse
  */
 export interface ServerUpdateConfigResponse {}
 /**
- * Granular config entry update (single key-value)
+ * Request message for UpdateServerConfigEntry RPC.
+ * Used for granular updates of individual configuration entries.
+ * This is the preferred method for real-time UI updates as it only modifies
+ * a single setting without affecting other configuration values.
  *
  * @generated from protobuf message soulfire.v1.ServerUpdateConfigEntryRequest
  */
 export interface ServerUpdateConfigEntryRequest {
   /**
+   * The namespace of the setting to update.
+   * Namespaces group related settings together (e.g., "dev" for developer settings).
+   * Must match an existing namespace or a new namespace will be created.
+   *
    * @generated from protobuf field: string namespace = 1
    */
   namespace: string;
   /**
+   * The key identifying the specific setting within the namespace.
+   * Combined with namespace, this uniquely identifies the setting.
+   * Example: namespace="dev", key="soulfire-debug" for the SoulFire debug setting.
+   *
    * @generated from protobuf field: string key = 2
    */
   key: string;
   /**
+   * The new value for the setting.
+   * Uses google.protobuf.Value to support various JSON types:
+   * - string_value for text settings
+   * - number_value for int/double settings
+   * - bool_value for boolean settings
+   * - list_value for string list settings
+   * - struct_value for complex settings like min/max ranges
+   *
    * @generated from protobuf field: google.protobuf.Value value = 3
    */
   value?: Value;
 }
 /**
+ * Response message for UpdateServerConfigEntry RPC.
+ * An empty response indicates the setting was successfully updated.
+ * The change is persisted to the database and runtime hooks are triggered
+ * to apply the new value immediately where applicable.
+ *
  * @generated from protobuf message soulfire.v1.ServerUpdateConfigEntryResponse
  */
 export interface ServerUpdateConfigEntryResponse {}

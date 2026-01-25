@@ -21,190 +21,319 @@ import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { Timestamp } from "../google/protobuf/timestamp";
 import { UserRole } from "./common";
 /**
+ * Request message for creating a new user account in the SoulFire system.
+ * The created user will have no password; authentication is done via JWT tokens.
+ *
  * @generated from protobuf message soulfire.v1.UserCreateRequest
  */
 export interface UserCreateRequest {
   /**
+   * The username for the new user.
+   * Must be lowercase, between 3 and 32 characters.
+   * Must begin with an alphanumeric character, followed by alphanumeric characters or dashes,
+   * and end with an alphanumeric character.
+   * Must be unique across all users.
+   *
    * @generated from protobuf field: string username = 1
    */
   username: string;
   /**
+   * The role to assign to the user. Determines what permissions the user has.
+   * ADMIN users have all permissions, while USER role has limited permissions
+   * controlled by server settings.
+   *
    * @generated from protobuf field: soulfire.v1.UserRole role = 2
    */
   role: UserRole;
   /**
+   * The email address for the user.
+   * Must be a valid email format and unique across all users.
+   * Maximum length is 255 characters.
+   *
    * @generated from protobuf field: string email = 3
    */
   email: string;
 }
 /**
+ * Response message returned after successfully creating a new user.
+ *
  * @generated from protobuf message soulfire.v1.UserCreateResponse
  */
 export interface UserCreateResponse {
   /**
+   * The unique identifier (UUID) assigned to the newly created user.
+   * This ID should be used for all subsequent operations on this user.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
 }
 /**
+ * Request message for deleting an existing user from the system.
+ * Deleting a user will also cascade delete all related data (owned instances, audit logs).
+ *
  * @generated from protobuf message soulfire.v1.UserDeleteRequest
  */
 export interface UserDeleteRequest {
   /**
+   * The unique identifier (UUID) of the user to delete.
+   * Cannot be the ID of the requesting user (cannot delete self).
+   * Cannot be the root user ID (00000000-0000-0000-0000-000000000000).
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
 }
 /**
+ * Response message returned after successfully deleting a user.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.UserDeleteResponse
  */
 export interface UserDeleteResponse {}
 /**
+ * Request message for listing all users in the system.
+ * No parameters required; returns all users.
+ *
  * @generated from protobuf message soulfire.v1.UserListRequest
  */
 export interface UserListRequest {}
 /**
+ * Response message containing a list of all users in the system.
+ *
  * @generated from protobuf message soulfire.v1.UserListResponse
  */
 export interface UserListResponse {
   /**
+   * List of all users in the system.
+   *
    * @generated from protobuf field: repeated soulfire.v1.UserListResponse.User users = 1
    */
   users: UserListResponse_User[];
 }
 /**
+ * Represents a user in the list with all their profile information.
+ *
  * @generated from protobuf message soulfire.v1.UserListResponse.User
  */
 export interface UserListResponse_User {
   /**
+   * The unique identifier (UUID) of the user.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The username of the user (3-32 lowercase alphanumeric characters with dashes allowed).
+   *
    * @generated from protobuf field: string username = 2
    */
   username: string;
   /**
+   * The role of the user (ADMIN or USER).
+   *
    * @generated from protobuf field: soulfire.v1.UserRole role = 3
    */
   role: UserRole;
   /**
+   * The email address of the user.
+   *
    * @generated from protobuf field: string email = 4
    */
   email: string;
   /**
+   * Timestamp when the user account was created.
+   *
    * @generated from protobuf field: google.protobuf.Timestamp created_at = 5
    */
   createdAt?: Timestamp;
   /**
+   * Timestamp when the user account was last updated.
+   *
    * @generated from protobuf field: google.protobuf.Timestamp updated_at = 6
    */
   updatedAt?: Timestamp;
   /**
+   * Timestamp of the user's last successful authentication.
+   * Optional; may be absent if the user has never logged in.
+   *
    * @generated from protobuf field: optional google.protobuf.Timestamp last_login_at = 7
    */
   lastLoginAt?: Timestamp;
   /**
+   * Minimum issued-at timestamp for valid JWT tokens.
+   * Tokens issued before this timestamp are considered invalid.
+   * Used to invalidate all sessions by updating this value.
+   *
    * @generated from protobuf field: google.protobuf.Timestamp min_issued_at = 8
    */
   minIssuedAt?: Timestamp;
 }
 /**
+ * Request message for retrieving detailed information about a specific user.
+ *
  * @generated from protobuf message soulfire.v1.UserInfoRequest
  */
 export interface UserInfoRequest {
   /**
+   * The unique identifier (UUID) of the user to retrieve information for.
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
 }
 /**
+ * Response message containing detailed information about a specific user.
+ *
  * @generated from protobuf message soulfire.v1.UserInfoResponse
  */
 export interface UserInfoResponse {
   /**
+   * The username of the user (3-32 lowercase alphanumeric characters with dashes allowed).
+   *
    * @generated from protobuf field: string username = 1
    */
   username: string;
   /**
+   * The role of the user (ADMIN or USER).
+   *
    * @generated from protobuf field: soulfire.v1.UserRole role = 2
    */
   role: UserRole;
   /**
+   * The email address of the user.
+   *
    * @generated from protobuf field: string email = 3
    */
   email: string;
   /**
+   * Timestamp when the user account was created.
+   *
    * @generated from protobuf field: google.protobuf.Timestamp created_at = 4
    */
   createdAt?: Timestamp;
   /**
+   * Timestamp when the user account was last updated.
+   *
    * @generated from protobuf field: google.protobuf.Timestamp updated_at = 5
    */
   updatedAt?: Timestamp;
   /**
+   * Timestamp of the user's last successful authentication.
+   * Optional; may be absent if the user has never logged in.
+   *
    * @generated from protobuf field: optional google.protobuf.Timestamp last_login_at = 6
    */
   lastLoginAt?: Timestamp;
   /**
+   * Minimum issued-at timestamp for valid JWT tokens.
+   * Tokens issued before this timestamp are considered invalid.
+   * Used to invalidate all sessions by updating this value.
+   *
    * @generated from protobuf field: google.protobuf.Timestamp min_issued_at = 7
    */
   minIssuedAt?: Timestamp;
 }
 /**
- * Invalidate all sessions for a user, effectively logging them out of all devices.
+ * Request message for invalidating all sessions for a user.
+ * This effectively logs the user out of all devices by updating the min_issued_at
+ * timestamp, which causes all previously issued JWT tokens to become invalid.
  *
  * @generated from protobuf message soulfire.v1.InvalidateSessionsRequest
  */
 export interface InvalidateSessionsRequest {
   /**
+   * The unique identifier (UUID) of the user whose sessions should be invalidated.
+   * Cannot be the ID of the requesting user (cannot invalidate own sessions via this method).
+   * Cannot be the root user ID (00000000-0000-0000-0000-000000000000).
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
 }
 /**
+ * Response message returned after successfully invalidating all sessions.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.InvalidateSessionsResponse
  */
 export interface InvalidateSessionsResponse {}
 /**
+ * Request message for updating an existing user's profile information.
+ * All fields except ID will be updated to the provided values.
+ *
  * @generated from protobuf message soulfire.v1.UpdateUserRequest
  */
 export interface UpdateUserRequest {
   /**
+   * The unique identifier (UUID) of the user to update.
+   * Cannot be the ID of the requesting user (cannot update self via this method).
+   * Cannot be the root user ID (00000000-0000-0000-0000-000000000000).
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
   /**
+   * The new username for the user.
+   * Must be lowercase, between 3 and 32 characters.
+   * Must begin with an alphanumeric character, followed by alphanumeric characters or dashes,
+   * and end with an alphanumeric character.
+   * Must be unique across all users.
+   *
    * @generated from protobuf field: string username = 2
    */
   username: string;
   /**
+   * The new role to assign to the user.
+   * ADMIN users have all permissions, while USER role has limited permissions.
+   *
    * @generated from protobuf field: soulfire.v1.UserRole role = 3
    */
   role: UserRole;
   /**
+   * The new email address for the user.
+   * Must be a valid email format and unique across all users.
+   * Maximum length is 255 characters.
+   *
    * @generated from protobuf field: string email = 4
    */
   email: string;
 }
 /**
+ * Response message returned after successfully updating a user.
+ * Empty response indicates success.
+ *
  * @generated from protobuf message soulfire.v1.UpdateUserResponse
  */
 export interface UpdateUserResponse {}
 /**
+ * Request message for generating a new API token for a user.
+ * The generated token is a JWT that can be used for API authentication.
+ *
  * @generated from protobuf message soulfire.v1.GenerateUserAPITokenRequest
  */
 export interface GenerateUserAPITokenRequest {
   /**
+   * The unique identifier (UUID) of the user to generate a token for.
+   * Cannot be the ID of the requesting user (cannot generate token for self via this method).
+   * Cannot be the root user ID (00000000-0000-0000-0000-000000000000).
+   *
    * @generated from protobuf field: string id = 1
    */
   id: string;
 }
 /**
+ * Response message containing the newly generated API token.
+ *
  * @generated from protobuf message soulfire.v1.GenerateUserAPITokenResponse
  */
 export interface GenerateUserAPITokenResponse {
   /**
+   * The generated JWT token for API authentication.
+   * This token is signed with the server's secret key and has the "api" audience.
+   * The token does not expire but can be invalidated by updating the user's min_issued_at.
+   * Should be stored securely as it grants full access as the specified user.
+   *
    * @generated from protobuf field: string token = 1
    */
   token: string;

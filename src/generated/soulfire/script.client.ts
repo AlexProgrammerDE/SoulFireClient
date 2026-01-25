@@ -6,15 +6,61 @@
 import type { RpcTransport, ServiceInfo } from "@protobuf-ts/runtime-rpc";
 import { ScriptService } from "./script";
 /**
- * Script service is currently disabled while the visual script editor is under development.
- * The service definition is kept for future use.
+ * ScriptService provides management capabilities for automation scripts within SoulFire.
+ *
+ * STATUS: This service is currently DISABLED while a visual node-based script editor
+ * is under development. The service definition is preserved as a placeholder for the
+ * future implementation.
+ *
+ * HISTORY: This service previously supported JavaScript, Python, and TypeScript scripts
+ * that could be scoped either globally (affecting all instances) or per-instance.
+ * The text-based scripting system (using GraalVM Polyglot) was removed in favor of
+ * an upcoming visual script editor that will provide a more user-friendly,
+ * node-based approach to automation.
+ *
+ * PLANNED FUNCTIONALITY: When re-implemented, this service will likely provide:
+ * - Script creation, deletion, and modification through a visual editor
+ * - Script execution scoped to global or instance levels
+ * - Script lifecycle management (start, stop, restart)
+ * - Script listing and metadata retrieval
+ * - Integration with the logging system via InstanceScriptLogScope (see logs.proto)
+ *
+ * PERMISSIONS: Script-related permissions have been reserved in common.proto:
+ * - GlobalPermission fields 18-22 are reserved for global script permissions
+ * - InstancePermission fields 16-20 are reserved for instance script permissions
+ *
+ * LOGGING: Script execution logs can be filtered using InstanceScriptLogScope
+ * defined in logs.proto, which requires both an instance_id and script_id.
  *
  * @generated from protobuf service soulfire.v1.ScriptService
  */
 export interface IScriptServiceClient {}
 /**
- * Script service is currently disabled while the visual script editor is under development.
- * The service definition is kept for future use.
+ * ScriptService provides management capabilities for automation scripts within SoulFire.
+ *
+ * STATUS: This service is currently DISABLED while a visual node-based script editor
+ * is under development. The service definition is preserved as a placeholder for the
+ * future implementation.
+ *
+ * HISTORY: This service previously supported JavaScript, Python, and TypeScript scripts
+ * that could be scoped either globally (affecting all instances) or per-instance.
+ * The text-based scripting system (using GraalVM Polyglot) was removed in favor of
+ * an upcoming visual script editor that will provide a more user-friendly,
+ * node-based approach to automation.
+ *
+ * PLANNED FUNCTIONALITY: When re-implemented, this service will likely provide:
+ * - Script creation, deletion, and modification through a visual editor
+ * - Script execution scoped to global or instance levels
+ * - Script lifecycle management (start, stop, restart)
+ * - Script listing and metadata retrieval
+ * - Integration with the logging system via InstanceScriptLogScope (see logs.proto)
+ *
+ * PERMISSIONS: Script-related permissions have been reserved in common.proto:
+ * - GlobalPermission fields 18-22 are reserved for global script permissions
+ * - InstancePermission fields 16-20 are reserved for instance script permissions
+ *
+ * LOGGING: Script execution logs can be filtered using InstanceScriptLogScope
+ * defined in logs.proto, which requires both an instance_id and script_id.
  *
  * @generated from protobuf service soulfire.v1.ScriptService
  */

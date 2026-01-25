@@ -3,6 +3,17 @@
 // @generated from protobuf file "soulfire/server.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
+//
+// SoulFire Server Configuration Service Protocol
+//
+// This protocol defines the gRPC service for managing global server-level configuration
+// in SoulFire, a Minecraft bot automation framework. Server configuration includes
+// settings that affect the entire SoulFire server instance, such as debug logging levels,
+// plugin settings, and other server-wide preferences.
+//
+// The configuration is persisted in a database and changes trigger runtime updates
+// (e.g., adjusting log levels for various components like Minecraft, Netty, gRPC, Hibernate).
+//
 import type {
   RpcOptions,
   RpcTransport,
@@ -20,10 +31,43 @@ import type {
 } from "./server";
 import { ServerService } from "./server";
 /**
+ * ServerService provides gRPC methods for managing server-level configuration
+ * in SoulFire. This service handles global settings that affect the entire
+ * SoulFire server instance, including debug logging, plugin configurations,
+ * and other server-wide preferences.
+ *
+ * Configuration changes are persisted to a database and trigger runtime hooks
+ * to apply settings immediately (e.g., adjusting log levels for SoulFire,
+ * Minecraft, Netty, gRPC, Hibernate, and Via components).
+ *
+ * All methods require appropriate permissions:
+ * - GetServerInfo requires READ_SERVER_CONFIG permission
+ * - UpdateServerConfig requires UPDATE_SERVER_CONFIG permission
+ * - UpdateServerConfigEntry requires UPDATE_SERVER_CONFIG permission
+ *
+ * Errors:
+ * - PERMISSION_DENIED: If the caller lacks the required permission
+ * - INTERNAL: If a database or processing error occurs
+ *
  * @generated from protobuf service soulfire.v1.ServerService
  */
 export interface IServerServiceClient {
   /**
+   * Retrieves comprehensive server information including current configuration,
+   * all available settings definitions, settings page layouts, and registered plugins.
+   *
+   * This method is typically called when initializing a settings UI to obtain:
+   * 1. Current configuration values to populate form fields
+   * 2. Settings definitions describing each setting's type, constraints, and metadata
+   * 3. Page definitions for organizing settings into logical groups
+   * 4. Plugin information for displaying registered plugins
+   *
+   * Requires: READ_SERVER_CONFIG permission
+   *
+   * Returns: ServerInfoResponse with all server configuration and metadata
+   * Errors: PERMISSION_DENIED if caller lacks READ_SERVER_CONFIG permission
+   *         INTERNAL if a database error occurs while retrieving configuration
+   *
    * @generated from protobuf rpc: GetServerInfo
    */
   getServerInfo(
@@ -31,7 +75,21 @@ export interface IServerServiceClient {
     options?: RpcOptions,
   ): UnaryCall<ServerInfoRequest, ServerInfoResponse>;
   /**
-   * Used only for profile import - sends entire config
+   * Replaces the entire server configuration with the provided values.
+   * This is a bulk update operation primarily used for profile import functionality.
+   *
+   * Use this method when you need to apply a complete configuration snapshot,
+   * such as when importing settings from a saved profile or restoring a backup.
+   * For individual setting changes during normal operation, prefer UpdateServerConfigEntry.
+   *
+   * The new configuration is persisted to the database, and runtime hooks are
+   * triggered to apply changes immediately (e.g., log level adjustments).
+   *
+   * Requires: UPDATE_SERVER_CONFIG permission
+   *
+   * Returns: Empty ServerUpdateConfigResponse on success
+   * Errors: PERMISSION_DENIED if caller lacks UPDATE_SERVER_CONFIG permission
+   *         INTERNAL if a database error occurs while saving configuration
    *
    * @generated from protobuf rpc: UpdateServerConfig
    */
@@ -40,7 +98,24 @@ export interface IServerServiceClient {
     options?: RpcOptions,
   ): UnaryCall<ServerUpdateConfigRequest, ServerUpdateConfigResponse>;
   /**
-   * Granular update for individual config entries
+   * Updates a single configuration entry identified by namespace and key.
+   * This is a granular update operation for modifying individual settings.
+   *
+   * This is the preferred method for real-time UI interactions where users
+   * modify settings one at a time. It avoids overwriting unrelated settings
+   * and is more efficient than replacing the entire configuration.
+   *
+   * If the namespace doesn't exist, it will be created. If the key doesn't
+   * exist within the namespace, it will be added. Existing values are overwritten.
+   *
+   * The change is persisted to the database, and runtime hooks are triggered
+   * to apply the new value immediately where applicable.
+   *
+   * Requires: UPDATE_SERVER_CONFIG permission
+   *
+   * Returns: Empty ServerUpdateConfigEntryResponse on success
+   * Errors: PERMISSION_DENIED if caller lacks UPDATE_SERVER_CONFIG permission
+   *         INTERNAL if a database error occurs while saving the entry
    *
    * @generated from protobuf rpc: UpdateServerConfigEntry
    */
@@ -50,6 +125,24 @@ export interface IServerServiceClient {
   ): UnaryCall<ServerUpdateConfigEntryRequest, ServerUpdateConfigEntryResponse>;
 }
 /**
+ * ServerService provides gRPC methods for managing server-level configuration
+ * in SoulFire. This service handles global settings that affect the entire
+ * SoulFire server instance, including debug logging, plugin configurations,
+ * and other server-wide preferences.
+ *
+ * Configuration changes are persisted to a database and trigger runtime hooks
+ * to apply settings immediately (e.g., adjusting log levels for SoulFire,
+ * Minecraft, Netty, gRPC, Hibernate, and Via components).
+ *
+ * All methods require appropriate permissions:
+ * - GetServerInfo requires READ_SERVER_CONFIG permission
+ * - UpdateServerConfig requires UPDATE_SERVER_CONFIG permission
+ * - UpdateServerConfigEntry requires UPDATE_SERVER_CONFIG permission
+ *
+ * Errors:
+ * - PERMISSION_DENIED: If the caller lacks the required permission
+ * - INTERNAL: If a database or processing error occurs
+ *
  * @generated from protobuf service soulfire.v1.ServerService
  */
 export class ServerServiceClient implements IServerServiceClient, ServiceInfo {
@@ -58,6 +151,21 @@ export class ServerServiceClient implements IServerServiceClient, ServiceInfo {
   options = ServerService.options;
   constructor(private readonly _transport: RpcTransport) {}
   /**
+   * Retrieves comprehensive server information including current configuration,
+   * all available settings definitions, settings page layouts, and registered plugins.
+   *
+   * This method is typically called when initializing a settings UI to obtain:
+   * 1. Current configuration values to populate form fields
+   * 2. Settings definitions describing each setting's type, constraints, and metadata
+   * 3. Page definitions for organizing settings into logical groups
+   * 4. Plugin information for displaying registered plugins
+   *
+   * Requires: READ_SERVER_CONFIG permission
+   *
+   * Returns: ServerInfoResponse with all server configuration and metadata
+   * Errors: PERMISSION_DENIED if caller lacks READ_SERVER_CONFIG permission
+   *         INTERNAL if a database error occurs while retrieving configuration
+   *
    * @generated from protobuf rpc: GetServerInfo
    */
   getServerInfo(
@@ -75,7 +183,21 @@ export class ServerServiceClient implements IServerServiceClient, ServiceInfo {
     );
   }
   /**
-   * Used only for profile import - sends entire config
+   * Replaces the entire server configuration with the provided values.
+   * This is a bulk update operation primarily used for profile import functionality.
+   *
+   * Use this method when you need to apply a complete configuration snapshot,
+   * such as when importing settings from a saved profile or restoring a backup.
+   * For individual setting changes during normal operation, prefer UpdateServerConfigEntry.
+   *
+   * The new configuration is persisted to the database, and runtime hooks are
+   * triggered to apply changes immediately (e.g., log level adjustments).
+   *
+   * Requires: UPDATE_SERVER_CONFIG permission
+   *
+   * Returns: Empty ServerUpdateConfigResponse on success
+   * Errors: PERMISSION_DENIED if caller lacks UPDATE_SERVER_CONFIG permission
+   *         INTERNAL if a database error occurs while saving configuration
    *
    * @generated from protobuf rpc: UpdateServerConfig
    */
@@ -91,7 +213,24 @@ export class ServerServiceClient implements IServerServiceClient, ServiceInfo {
     >("unary", this._transport, method, opt, input);
   }
   /**
-   * Granular update for individual config entries
+   * Updates a single configuration entry identified by namespace and key.
+   * This is a granular update operation for modifying individual settings.
+   *
+   * This is the preferred method for real-time UI interactions where users
+   * modify settings one at a time. It avoids overwriting unrelated settings
+   * and is more efficient than replacing the entire configuration.
+   *
+   * If the namespace doesn't exist, it will be created. If the key doesn't
+   * exist within the namespace, it will be added. Existing values are overwritten.
+   *
+   * The change is persisted to the database, and runtime hooks are triggered
+   * to apply the new value immediately where applicable.
+   *
+   * Requires: UPDATE_SERVER_CONFIG permission
+   *
+   * Returns: Empty ServerUpdateConfigEntryResponse on success
+   * Errors: PERMISSION_DENIED if caller lacks UPDATE_SERVER_CONFIG permission
+   *         INTERNAL if a database error occurs while saving the entry
    *
    * @generated from protobuf rpc: UpdateServerConfigEntry
    */

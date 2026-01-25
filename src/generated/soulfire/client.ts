@@ -20,141 +20,226 @@ import {
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 import { GlobalPermission, UserRole } from "./common";
 /**
+ * Request message for retrieving client data.
+ * This is an empty message as the server identifies the client from the authentication context.
+ *
  * @generated from protobuf message soulfire.v1.ClientDataRequest
  */
 export interface ClientDataRequest {}
 /**
+ * Represents the grant status of a single global permission for the current user.
+ * Used to communicate which server-wide permissions the authenticated user has been granted.
+ *
  * @generated from protobuf message soulfire.v1.GlobalPermissionState
  */
 export interface GlobalPermissionState {
   /**
+   * The global permission being described.
+   *
    * @generated from protobuf field: soulfire.v1.GlobalPermission global_permission = 1
    */
   globalPermission: GlobalPermission;
   /**
+   * Whether this permission has been granted to the current user.
+   * True if the user has this permission, false otherwise.
+   *
    * @generated from protobuf field: bool granted = 2
    */
   granted: boolean;
 }
 /**
+ * Contains metadata about the SoulFire server instance.
+ * This information is useful for client compatibility checks and connecting to related services.
+ *
  * @generated from protobuf message soulfire.v1.ServerInfo
  */
 export interface ServerInfo {
   /**
+   * The semantic version of the SoulFire server (e.g., "1.0.0").
+   *
    * @generated from protobuf field: string version = 1
    */
   version: string;
   /**
+   * The git commit hash of the server build, useful for debugging and version tracking.
+   *
    * @generated from protobuf field: string commit_hash = 2
    */
   commitHash: string;
   /**
+   * The git branch name from which the server was built (e.g., "main", "develop").
+   *
    * @generated from protobuf field: string branch_name = 3
    */
   branchName: string;
   /**
+   * The public URL for the gRPC/HTTP API endpoint.
+   * This is the base address clients should use to connect to the server.
+   *
    * @generated from protobuf field: string public_api_address = 4
    */
   publicApiAddress: string;
   /**
+   * The public URL for the WebDAV file access endpoint.
+   * Derived from public_api_address with "/webdav" appended.
+   *
    * @generated from protobuf field: string public_webdav_address = 5
    */
   publicWebdavAddress: string;
   /**
+   * The public URL for the API documentation endpoint.
+   * Derived from public_api_address with "/docs" appended.
+   *
    * @generated from protobuf field: string public_docs_address = 6
    */
   publicDocsAddress: string;
   /**
+   * The native Minecraft protocol version supported by this server (e.g., "1.21.4").
+   *
    * @generated from protobuf field: string minecraft_version = 7
    */
   minecraftVersion: string;
 }
 /**
+ * Response containing comprehensive information about the authenticated client and server.
+ * This is typically called after authentication to populate the client UI with user details.
+ *
  * @generated from protobuf message soulfire.v1.ClientDataResponse
  */
 export interface ClientDataResponse {
   /**
+   * The unique identifier (UUID) of the authenticated user.
+   *
    * @generated from protobuf field: string id = 6
    */
   id: string;
   /**
+   * The display username of the authenticated user.
+   *
    * @generated from protobuf field: string username = 1
    */
   username: string;
   /**
+   * The role assigned to the user (ADMIN or USER), which determines base permission levels.
+   *
    * @generated from protobuf field: soulfire.v1.UserRole role = 7
    */
   role: UserRole;
   /**
+   * The email address associated with the user account.
+   *
    * @generated from protobuf field: string email = 8
    */
   email: string;
   /**
+   * A complete list of all global permissions and whether they are granted to this user.
+   * This allows the client to determine which features/actions are available.
+   *
    * @generated from protobuf field: repeated soulfire.v1.GlobalPermissionState server_permissions = 2
    */
   serverPermissions: GlobalPermissionState[];
   /**
+   * Metadata about the server instance the client is connected to.
+   *
    * @generated from protobuf field: soulfire.v1.ServerInfo server_info = 11
    */
   serverInfo?: ServerInfo;
 }
 /**
+ * Request message for generating a WebDAV authentication token.
+ * This is an empty message as the server identifies the user from the authentication context.
+ *
  * @generated from protobuf message soulfire.v1.GenerateWebDAVTokenRequest
  */
 export interface GenerateWebDAVTokenRequest {}
 /**
+ * Response containing a newly generated WebDAV authentication token.
+ *
  * @generated from protobuf message soulfire.v1.GenerateWebDAVTokenResponse
  */
 export interface GenerateWebDAVTokenResponse {
   /**
+   * A JWT token with "webdav" audience that can be used to authenticate WebDAV requests.
+   * This token should be included in the Authorization header when accessing the WebDAV endpoint.
+   *
    * @generated from protobuf field: string token = 1
    */
   token: string;
 }
 /**
+ * Request message for generating an API authentication token.
+ * This is an empty message as the server identifies the user from the authentication context.
+ *
  * @generated from protobuf message soulfire.v1.GenerateAPITokenRequest
  */
 export interface GenerateAPITokenRequest {}
 /**
+ * Response containing a newly generated API authentication token.
+ *
  * @generated from protobuf message soulfire.v1.GenerateAPITokenResponse
  */
 export interface GenerateAPITokenResponse {
   /**
+   * A JWT token with "api" audience that can be used to authenticate gRPC/HTTP API requests.
+   * This token should be included in the Authorization header for subsequent API calls.
+   *
    * @generated from protobuf field: string token = 1
    */
   token: string;
 }
 /**
+ * Request message for updating the authenticated user's username.
+ *
  * @generated from protobuf message soulfire.v1.UpdateSelfUsernameRequest
  */
 export interface UpdateSelfUsernameRequest {
   /**
+   * The new username to set for the current user.
+   * This will replace the existing username in the database.
+   *
    * @generated from protobuf field: string username = 1
    */
   username: string;
 }
 /**
+ * Response message for username update operation.
+ * An empty response indicates the operation completed successfully.
+ *
  * @generated from protobuf message soulfire.v1.UpdateSelfUsernameResponse
  */
 export interface UpdateSelfUsernameResponse {}
 /**
+ * Request message for updating the authenticated user's email address.
+ *
  * @generated from protobuf message soulfire.v1.UpdateSelfEmailRequest
  */
 export interface UpdateSelfEmailRequest {
   /**
+   * The new email address to set for the current user.
+   * This will replace the existing email in the database.
+   *
    * @generated from protobuf field: string email = 1
    */
   email: string;
 }
 /**
+ * Response message for email update operation.
+ * An empty response indicates the operation completed successfully.
+ *
  * @generated from protobuf message soulfire.v1.UpdateSelfEmailResponse
  */
 export interface UpdateSelfEmailResponse {}
 /**
+ * Request message for invalidating all sessions of the authenticated user.
+ * This is an empty message as the server identifies the user from the authentication context.
+ *
  * @generated from protobuf message soulfire.v1.InvalidateSelfSessionsRequest
  */
 export interface InvalidateSelfSessionsRequest {}
 /**
+ * Response message for session invalidation operation.
+ * An empty response indicates the operation completed successfully.
+ *
  * @generated from protobuf message soulfire.v1.InvalidateSelfSessionsResponse
  */
 export interface InvalidateSelfSessionsResponse {}

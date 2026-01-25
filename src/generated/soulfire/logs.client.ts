@@ -19,10 +19,28 @@ import type {
 } from "./logs";
 import { LogsService } from "./logs";
 /**
+ * Service for accessing SoulFire server logs.
+ * Provides both historical log retrieval and real-time log streaming capabilities.
+ * All methods require appropriate authentication and permissions based on the requested scope.
+ *
  * @generated from protobuf service soulfire.v1.LogsService
  */
 export interface ILogsServiceClient {
   /**
+   * Retrieves historical log entries from the server's in-memory log buffer.
+   * The server maintains a rolling buffer of the last 300 log entries.
+   * Only returns non-personal logs that match the specified scope.
+   *
+   * Permissions required:
+   * - GlobalLogScope: GLOBAL_SUBSCRIBE_LOGS
+   * - InstanceLogScope/BotLogScope/InstanceScriptLogScope: INSTANCE_SUBSCRIBE_LOGS for the instance
+   * - PersonalLogScope: No special permissions (but returns empty since personal logs are not stored)
+   *
+   * Errors:
+   * - PERMISSION_DENIED: User lacks required permission for the requested scope
+   * - INVALID_ARGUMENT: Scope not set or invalid UUID format
+   * - INTERNAL: Server error while retrieving logs
+   *
    * @generated from protobuf rpc: GetPrevious
    */
   getPrevious(
@@ -30,6 +48,23 @@ export interface ILogsServiceClient {
     options?: RpcOptions,
   ): UnaryCall<PreviousLogRequest, PreviousLogResponse>;
   /**
+   * Subscribes to a real-time stream of log entries matching the specified scope.
+   * The stream remains open until cancelled by the client or the connection is lost.
+   * Permissions are re-validated periodically (every 1 second) to handle permission changes.
+   *
+   * For PersonalLogScope: Receives personal messages directed to the authenticated user.
+   * Personal messages are transient and only delivered to active subscribers.
+   *
+   * Permissions required:
+   * - GlobalLogScope: GLOBAL_SUBSCRIBE_LOGS
+   * - InstanceLogScope/BotLogScope/InstanceScriptLogScope: INSTANCE_SUBSCRIBE_LOGS for the instance
+   * - PersonalLogScope: No special permissions required
+   *
+   * Errors:
+   * - PERMISSION_DENIED: User lacks required permission for the requested scope
+   * - INVALID_ARGUMENT: Scope not set or invalid UUID format
+   * - INTERNAL: Server error while setting up subscription
+   *
    * @generated from protobuf rpc: Subscribe
    */
   subscribe(
@@ -38,6 +73,10 @@ export interface ILogsServiceClient {
   ): ServerStreamingCall<LogRequest, LogResponse>;
 }
 /**
+ * Service for accessing SoulFire server logs.
+ * Provides both historical log retrieval and real-time log streaming capabilities.
+ * All methods require appropriate authentication and permissions based on the requested scope.
+ *
  * @generated from protobuf service soulfire.v1.LogsService
  */
 export class LogsServiceClient implements ILogsServiceClient, ServiceInfo {
@@ -46,6 +85,20 @@ export class LogsServiceClient implements ILogsServiceClient, ServiceInfo {
   options = LogsService.options;
   constructor(private readonly _transport: RpcTransport) {}
   /**
+   * Retrieves historical log entries from the server's in-memory log buffer.
+   * The server maintains a rolling buffer of the last 300 log entries.
+   * Only returns non-personal logs that match the specified scope.
+   *
+   * Permissions required:
+   * - GlobalLogScope: GLOBAL_SUBSCRIBE_LOGS
+   * - InstanceLogScope/BotLogScope/InstanceScriptLogScope: INSTANCE_SUBSCRIBE_LOGS for the instance
+   * - PersonalLogScope: No special permissions (but returns empty since personal logs are not stored)
+   *
+   * Errors:
+   * - PERMISSION_DENIED: User lacks required permission for the requested scope
+   * - INVALID_ARGUMENT: Scope not set or invalid UUID format
+   * - INTERNAL: Server error while retrieving logs
+   *
    * @generated from protobuf rpc: GetPrevious
    */
   getPrevious(
@@ -63,6 +116,23 @@ export class LogsServiceClient implements ILogsServiceClient, ServiceInfo {
     );
   }
   /**
+   * Subscribes to a real-time stream of log entries matching the specified scope.
+   * The stream remains open until cancelled by the client or the connection is lost.
+   * Permissions are re-validated periodically (every 1 second) to handle permission changes.
+   *
+   * For PersonalLogScope: Receives personal messages directed to the authenticated user.
+   * Personal messages are transient and only delivered to active subscribers.
+   *
+   * Permissions required:
+   * - GlobalLogScope: GLOBAL_SUBSCRIBE_LOGS
+   * - InstanceLogScope/BotLogScope/InstanceScriptLogScope: INSTANCE_SUBSCRIBE_LOGS for the instance
+   * - PersonalLogScope: No special permissions required
+   *
+   * Errors:
+   * - PERMISSION_DENIED: User lacks required permission for the requested scope
+   * - INVALID_ARGUMENT: Scope not set or invalid UUID format
+   * - INTERNAL: Server error while setting up subscription
+   *
    * @generated from protobuf rpc: Subscribe
    */
   subscribe(

@@ -17,10 +17,45 @@ import type {
 } from "./login";
 import { LoginService } from "./login";
 /**
+ * Service for authenticating users via email-based passwordless login.
+ *
+ * Authentication Flow:
+ * 1. Client calls Login with the user's email address
+ * 2. If the email is registered, a six-digit code is sent to that email
+ * 3. Client receives an auth_flow_token and EmailCode response
+ * 4. User enters the code from their email
+ * 5. Client calls EmailCode with the auth_flow_token and the code
+ * 6. If valid, client receives a JWT token; if invalid, receives a Failure
+ *
+ * Security Features:
+ * - Rate limited to 20 requests per 10 minutes per origin to prevent brute force attacks
+ * - Auth flow tokens expire after 15 minutes
+ * - Same response for registered and unregistered emails to prevent email enumeration
+ * - Invalid codes return the same error as expired/invalid flow tokens to prevent timing attacks
+ *
+ * Error Handling:
+ * - RESOURCE_EXHAUSTED: Rate limit exceeded (too many login attempts)
+ * - UNAUTHENTICATED: No origin header provided (required for rate limiting)
+ * - INTERNAL: Unexpected server error during processing
+ *
  * @generated from protobuf service soulfire.v1.LoginService
  */
 export interface ILoginServiceClient {
   /**
+   * Initiates a login flow for the specified email address.
+   *
+   * If the email is registered, a six-digit verification code is sent to that address.
+   * The response always indicates that an email code step is next, regardless of whether
+   * the email exists, to prevent email enumeration attacks.
+   *
+   * Returns:
+   * - NextAuthFlowResponse with email_code set and a new auth_flow_token
+   *
+   * Errors:
+   * - RESOURCE_EXHAUSTED: Too many login attempts from this origin
+   * - UNAUTHENTICATED: Missing origin header
+   * - INTERNAL: Server error (e.g., database or email sending failure)
+   *
    * @generated from protobuf rpc: Login
    */
   login(
@@ -28,6 +63,23 @@ export interface ILoginServiceClient {
     options?: RpcOptions,
   ): UnaryCall<LoginRequest, NextAuthFlowResponse>;
   /**
+   * Verifies an email verification code to complete authentication.
+   *
+   * The auth_flow_token must match a pending login flow, and the code must match
+   * the one that was sent to the user's email. On success, returns a JWT token.
+   * On failure, returns a Failure response with INVALID_CODE reason.
+   *
+   * After successful verification, the auth_flow_token is invalidated and cannot be reused.
+   *
+   * Returns:
+   * - NextAuthFlowResponse with success set (containing JWT token) if code is valid
+   * - NextAuthFlowResponse with failure set (INVALID_CODE reason) if code is invalid
+   *
+   * Errors:
+   * - RESOURCE_EXHAUSTED: Too many login attempts from this origin
+   * - UNAUTHENTICATED: Missing origin header
+   * - INTERNAL: Server error (e.g., JWT generation failure)
+   *
    * @generated from protobuf rpc: EmailCode
    */
   emailCode(
@@ -36,6 +88,27 @@ export interface ILoginServiceClient {
   ): UnaryCall<EmailCodeRequest, NextAuthFlowResponse>;
 }
 /**
+ * Service for authenticating users via email-based passwordless login.
+ *
+ * Authentication Flow:
+ * 1. Client calls Login with the user's email address
+ * 2. If the email is registered, a six-digit code is sent to that email
+ * 3. Client receives an auth_flow_token and EmailCode response
+ * 4. User enters the code from their email
+ * 5. Client calls EmailCode with the auth_flow_token and the code
+ * 6. If valid, client receives a JWT token; if invalid, receives a Failure
+ *
+ * Security Features:
+ * - Rate limited to 20 requests per 10 minutes per origin to prevent brute force attacks
+ * - Auth flow tokens expire after 15 minutes
+ * - Same response for registered and unregistered emails to prevent email enumeration
+ * - Invalid codes return the same error as expired/invalid flow tokens to prevent timing attacks
+ *
+ * Error Handling:
+ * - RESOURCE_EXHAUSTED: Rate limit exceeded (too many login attempts)
+ * - UNAUTHENTICATED: No origin header provided (required for rate limiting)
+ * - INTERNAL: Unexpected server error during processing
+ *
  * @generated from protobuf service soulfire.v1.LoginService
  */
 export class LoginServiceClient implements ILoginServiceClient, ServiceInfo {
@@ -44,6 +117,20 @@ export class LoginServiceClient implements ILoginServiceClient, ServiceInfo {
   options = LoginService.options;
   constructor(private readonly _transport: RpcTransport) {}
   /**
+   * Initiates a login flow for the specified email address.
+   *
+   * If the email is registered, a six-digit verification code is sent to that address.
+   * The response always indicates that an email code step is next, regardless of whether
+   * the email exists, to prevent email enumeration attacks.
+   *
+   * Returns:
+   * - NextAuthFlowResponse with email_code set and a new auth_flow_token
+   *
+   * Errors:
+   * - RESOURCE_EXHAUSTED: Too many login attempts from this origin
+   * - UNAUTHENTICATED: Missing origin header
+   * - INTERNAL: Server error (e.g., database or email sending failure)
+   *
    * @generated from protobuf rpc: Login
    */
   login(
@@ -61,6 +148,23 @@ export class LoginServiceClient implements ILoginServiceClient, ServiceInfo {
     );
   }
   /**
+   * Verifies an email verification code to complete authentication.
+   *
+   * The auth_flow_token must match a pending login flow, and the code must match
+   * the one that was sent to the user's email. On success, returns a JWT token.
+   * On failure, returns a Failure response with INVALID_CODE reason.
+   *
+   * After successful verification, the auth_flow_token is invalidated and cannot be reused.
+   *
+   * Returns:
+   * - NextAuthFlowResponse with success set (containing JWT token) if code is valid
+   * - NextAuthFlowResponse with failure set (INVALID_CODE reason) if code is invalid
+   *
+   * Errors:
+   * - RESOURCE_EXHAUSTED: Too many login attempts from this origin
+   * - UNAUTHENTICATED: Missing origin header
+   * - INTERNAL: Server error (e.g., JWT generation failure)
+   *
    * @generated from protobuf rpc: EmailCode
    */
   emailCode(

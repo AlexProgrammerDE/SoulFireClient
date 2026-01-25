@@ -13,10 +13,48 @@ import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type { DownloadRequest, DownloadResponse } from "./download";
 import { DownloadService } from "./download";
 /**
+ * Service for downloading content from remote URLs through the SoulFire server.
+ * This service acts as a proxy, allowing clients to fetch remote resources using
+ * the server's network connection and optionally through a configured proxy.
+ *
+ * Use cases include:
+ * - Downloading resources that may be blocked from the client's network
+ * - Fetching content through a specific proxy for anonymity or geo-unlocking
+ * - Centralizing external API calls through the server
+ *
+ * The service uses a Reactor Netty HTTP client with:
+ * - 5-second response timeout
+ * - Automatic compression support
+ * - Default Accept, Accept-Language, and User-Agent headers
+ *
+ * Authorization:
+ * - Requires a valid JWT token
+ * - Caller must have DOWNLOAD_URL permission for the specified instance
+ *
+ * Error handling:
+ * - Returns gRPC INTERNAL status on network errors, timeouts, or server failures
+ * - The error description contains details about the failure
+ *
  * @generated from protobuf service soulfire.v1.DownloadService
  */
 export interface IDownloadServiceClient {
   /**
+   * Downloads content from the specified URI and returns the response.
+   *
+   * Makes an HTTP GET request to the URI specified in the request, optionally
+   * routing through a proxy. Custom headers can be provided to customize the request.
+   *
+   * Parameters:
+   *   request - Contains the target URI, instance ID for permissions, optional headers,
+   *             and optional proxy configuration
+   *
+   * Returns:
+   *   The downloaded content as bytes, along with response headers and HTTP status code
+   *
+   * Errors:
+   *   PERMISSION_DENIED - Caller lacks DOWNLOAD_URL permission for the instance
+   *   INTERNAL - Network error, connection timeout, invalid URI, or other server error
+   *
    * @generated from protobuf rpc: Download
    */
   download(
@@ -25,6 +63,28 @@ export interface IDownloadServiceClient {
   ): UnaryCall<DownloadRequest, DownloadResponse>;
 }
 /**
+ * Service for downloading content from remote URLs through the SoulFire server.
+ * This service acts as a proxy, allowing clients to fetch remote resources using
+ * the server's network connection and optionally through a configured proxy.
+ *
+ * Use cases include:
+ * - Downloading resources that may be blocked from the client's network
+ * - Fetching content through a specific proxy for anonymity or geo-unlocking
+ * - Centralizing external API calls through the server
+ *
+ * The service uses a Reactor Netty HTTP client with:
+ * - 5-second response timeout
+ * - Automatic compression support
+ * - Default Accept, Accept-Language, and User-Agent headers
+ *
+ * Authorization:
+ * - Requires a valid JWT token
+ * - Caller must have DOWNLOAD_URL permission for the specified instance
+ *
+ * Error handling:
+ * - Returns gRPC INTERNAL status on network errors, timeouts, or server failures
+ * - The error description contains details about the failure
+ *
  * @generated from protobuf service soulfire.v1.DownloadService
  */
 export class DownloadServiceClient
@@ -35,6 +95,22 @@ export class DownloadServiceClient
   options = DownloadService.options;
   constructor(private readonly _transport: RpcTransport) {}
   /**
+   * Downloads content from the specified URI and returns the response.
+   *
+   * Makes an HTTP GET request to the URI specified in the request, optionally
+   * routing through a proxy. Custom headers can be provided to customize the request.
+   *
+   * Parameters:
+   *   request - Contains the target URI, instance ID for permissions, optional headers,
+   *             and optional proxy configuration
+   *
+   * Returns:
+   *   The downloaded content as bytes, along with response headers and HTTP status code
+   *
+   * Errors:
+   *   PERMISSION_DENIED - Caller lacks DOWNLOAD_URL permission for the instance
+   *   INTERNAL - Network error, connection timeout, invalid URI, or other server error
+   *
    * @generated from protobuf rpc: Download
    */
   download(

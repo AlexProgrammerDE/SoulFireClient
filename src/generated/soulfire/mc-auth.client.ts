@@ -21,10 +21,34 @@ import type {
 } from "./mc-auth";
 import { MCAuthService } from "./mc-auth";
 /**
+ * Service for authenticating Minecraft accounts for use with SoulFire bots.
+ * Supports multiple authentication methods including Microsoft OAuth (credentials
+ * and device code flows) and offline mode. All methods require the caller to
+ * have AUTHENTICATE_MC_ACCOUNT permission for the target instance.
+ *
+ * Authentication may optionally use proxies if configured in instance settings
+ * (USE_PROXIES_FOR_ACCOUNT_AUTH). All authentication operations have timeouts
+ * to prevent indefinite hangs (2 minutes for credentials/refresh, 15 minutes
+ * for device code flow).
+ *
  * @generated from protobuf service soulfire.v1.MCAuthService
  */
 export interface IMCAuthServiceClient {
   /**
+   * Authenticates one or more Minecraft accounts using credentials or tokens.
+   * Supports bulk authentication with concurrent processing.
+   *
+   * The stream sends progress updates (one_success/one_failure) as each
+   * account is processed, allowing clients to show real-time progress.
+   * The final message contains the full list of successfully authenticated accounts.
+   *
+   * Errors:
+   * - NOT_FOUND: The specified instance does not exist
+   * - PERMISSION_DENIED: Caller lacks AUTHENTICATE_MC_ACCOUNT permission
+   * - INTERNAL: Authentication error (logged server-side with details)
+   *
+   * Timeout: 2 minutes per account
+   *
    * @generated from protobuf rpc: LoginCredentials
    */
   loginCredentials(
@@ -32,6 +56,21 @@ export interface IMCAuthServiceClient {
     options?: RpcOptions,
   ): ServerStreamingCall<CredentialsAuthRequest, CredentialsAuthResponse>;
   /**
+   * Authenticates a Minecraft account using the Microsoft OAuth device code flow.
+   * This is an interactive flow that requires user action in a web browser.
+   *
+   * The stream first sends a DeviceCode message containing the verification
+   * URL and user code. The client should display this to the user. Once the
+   * user completes authorization in their browser, the stream sends the
+   * authenticated account and completes.
+   *
+   * Errors:
+   * - NOT_FOUND: The specified instance does not exist
+   * - PERMISSION_DENIED: Caller lacks AUTHENTICATE_MC_ACCOUNT permission
+   * - INTERNAL: Authentication error (e.g., user denied access, timeout)
+   *
+   * Timeout: 15 minutes (Microsoft device codes typically expire after this)
+   *
    * @generated from protobuf rpc: LoginDeviceCode
    */
   loginDeviceCode(
@@ -39,6 +78,20 @@ export interface IMCAuthServiceClient {
     options?: RpcOptions,
   ): ServerStreamingCall<DeviceCodeAuthRequest, DeviceCodeAuthResponse>;
   /**
+   * Refreshes the authentication tokens for an existing Minecraft account.
+   * Used to renew expired access tokens using stored refresh tokens.
+   *
+   * For Microsoft accounts, this refreshes the Minecraft token, profile,
+   * and player certificates. For offline accounts, returns the account
+   * unchanged (offline accounts never expire).
+   *
+   * Errors:
+   * - NOT_FOUND: The specified instance does not exist
+   * - PERMISSION_DENIED: Caller lacks AUTHENTICATE_MC_ACCOUNT permission
+   * - INTERNAL: Refresh error (e.g., refresh token expired or revoked)
+   *
+   * Timeout: 2 minutes
+   *
    * @generated from protobuf rpc: Refresh
    */
   refresh(
@@ -47,6 +100,16 @@ export interface IMCAuthServiceClient {
   ): UnaryCall<RefreshRequest, RefreshResponse>;
 }
 /**
+ * Service for authenticating Minecraft accounts for use with SoulFire bots.
+ * Supports multiple authentication methods including Microsoft OAuth (credentials
+ * and device code flows) and offline mode. All methods require the caller to
+ * have AUTHENTICATE_MC_ACCOUNT permission for the target instance.
+ *
+ * Authentication may optionally use proxies if configured in instance settings
+ * (USE_PROXIES_FOR_ACCOUNT_AUTH). All authentication operations have timeouts
+ * to prevent indefinite hangs (2 minutes for credentials/refresh, 15 minutes
+ * for device code flow).
+ *
  * @generated from protobuf service soulfire.v1.MCAuthService
  */
 export class MCAuthServiceClient implements IMCAuthServiceClient, ServiceInfo {
@@ -55,6 +118,20 @@ export class MCAuthServiceClient implements IMCAuthServiceClient, ServiceInfo {
   options = MCAuthService.options;
   constructor(private readonly _transport: RpcTransport) {}
   /**
+   * Authenticates one or more Minecraft accounts using credentials or tokens.
+   * Supports bulk authentication with concurrent processing.
+   *
+   * The stream sends progress updates (one_success/one_failure) as each
+   * account is processed, allowing clients to show real-time progress.
+   * The final message contains the full list of successfully authenticated accounts.
+   *
+   * Errors:
+   * - NOT_FOUND: The specified instance does not exist
+   * - PERMISSION_DENIED: Caller lacks AUTHENTICATE_MC_ACCOUNT permission
+   * - INTERNAL: Authentication error (logged server-side with details)
+   *
+   * Timeout: 2 minutes per account
+   *
    * @generated from protobuf rpc: LoginCredentials
    */
   loginCredentials(
@@ -72,6 +149,21 @@ export class MCAuthServiceClient implements IMCAuthServiceClient, ServiceInfo {
     );
   }
   /**
+   * Authenticates a Minecraft account using the Microsoft OAuth device code flow.
+   * This is an interactive flow that requires user action in a web browser.
+   *
+   * The stream first sends a DeviceCode message containing the verification
+   * URL and user code. The client should display this to the user. Once the
+   * user completes authorization in their browser, the stream sends the
+   * authenticated account and completes.
+   *
+   * Errors:
+   * - NOT_FOUND: The specified instance does not exist
+   * - PERMISSION_DENIED: Caller lacks AUTHENTICATE_MC_ACCOUNT permission
+   * - INTERNAL: Authentication error (e.g., user denied access, timeout)
+   *
+   * Timeout: 15 minutes (Microsoft device codes typically expire after this)
+   *
    * @generated from protobuf rpc: LoginDeviceCode
    */
   loginDeviceCode(
@@ -89,6 +181,20 @@ export class MCAuthServiceClient implements IMCAuthServiceClient, ServiceInfo {
     );
   }
   /**
+   * Refreshes the authentication tokens for an existing Minecraft account.
+   * Used to renew expired access tokens using stored refresh tokens.
+   *
+   * For Microsoft accounts, this refreshes the Minecraft token, profile,
+   * and player certificates. For offline accounts, returns the account
+   * unchanged (offline accounts never expire).
+   *
+   * Errors:
+   * - NOT_FOUND: The specified instance does not exist
+   * - PERMISSION_DENIED: Caller lacks AUTHENTICATE_MC_ACCOUNT permission
+   * - INTERNAL: Refresh error (e.g., refresh token expired or revoked)
+   *
+   * Timeout: 2 minutes
+   *
    * @generated from protobuf rpc: Refresh
    */
   refresh(

@@ -19,32 +19,56 @@ import {
 } from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
 /**
+ * Represents an unrestricted global command scope.
+ * Commands executed in this scope have access to all instances and bots.
+ * Requires the GLOBAL_COMMAND_EXECUTION permission.
+ *
  * @generated from protobuf message soulfire.v1.GlobalCommandScope
  */
 export interface GlobalCommandScope {}
 /**
+ * Represents a command scope restricted to a specific instance.
+ * Commands executed in this scope can only affect the specified instance and its bots.
+ * Requires the INSTANCE_COMMAND_EXECUTION permission for the specified instance.
+ *
  * @generated from protobuf message soulfire.v1.InstanceCommandScope
  */
 export interface InstanceCommandScope {
   /**
+   * The unique identifier (UUID) of the instance to scope commands to.
+   * Must be a valid UUID string.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
 }
 /**
+ * Represents a command scope restricted to a specific bot within an instance.
+ * Commands executed in this scope can only affect the specified bot.
+ * Requires the INSTANCE_COMMAND_EXECUTION permission for the parent instance.
+ *
  * @generated from protobuf message soulfire.v1.BotCommandScope
  */
 export interface BotCommandScope {
   /**
+   * The unique identifier (UUID) of the instance containing the bot.
+   * Must be a valid UUID string.
+   *
    * @generated from protobuf field: string instance_id = 1
    */
   instanceId: string;
   /**
+   * The unique identifier (UUID) of the bot (profile ID) to scope commands to.
+   * Must be a valid UUID string matching the bot's account profile ID.
+   *
    * @generated from protobuf field: string bot_id = 2
    */
   botId: string;
 }
 /**
+ * Defines the execution context for a command, determining which instances
+ * and bots the command can affect. The scope also determines required permissions.
+ *
  * @generated from protobuf message soulfire.v1.CommandScope
  */
 export interface CommandScope {
@@ -55,6 +79,8 @@ export interface CommandScope {
     | {
         oneofKind: "global";
         /**
+         * Execute command with global (unrestricted) access to all instances and bots.
+         *
          * @generated from protobuf field: soulfire.v1.GlobalCommandScope global = 1
          */
         global: GlobalCommandScope;
@@ -62,6 +88,8 @@ export interface CommandScope {
     | {
         oneofKind: "instance";
         /**
+         * Execute command restricted to a specific instance and its bots.
+         *
          * @generated from protobuf field: soulfire.v1.InstanceCommandScope instance = 2
          */
         instance: InstanceCommandScope;
@@ -69,6 +97,8 @@ export interface CommandScope {
     | {
         oneofKind: "bot";
         /**
+         * Execute command restricted to a specific bot within an instance.
+         *
          * @generated from protobuf field: soulfire.v1.BotCommandScope bot = 3
          */
         bot: BotCommandScope;
@@ -78,62 +108,107 @@ export interface CommandScope {
       };
 }
 /**
+ * Request message for executing a server command.
+ *
  * @generated from protobuf message soulfire.v1.CommandRequest
  */
 export interface CommandRequest {
   /**
+   * The execution scope that determines which instances/bots the command can affect
+   * and what permissions are required. Must be set to one of the scope options.
+   *
    * @generated from protobuf field: soulfire.v1.CommandScope scope = 4
    */
   scope?: CommandScope;
   /**
+   * The command string to execute. This follows the Brigadier command format,
+   * e.g., "help", "move 100 64 200", "say Hello world".
+   * Leading/trailing whitespace will be stripped before execution.
+   *
    * @generated from protobuf field: string command = 3
    */
   command: string;
 }
 /**
+ * Response message containing the result of command execution.
+ *
  * @generated from protobuf message soulfire.v1.CommandResponse
  */
 export interface CommandResponse {
   /**
+   * The exit code returned by the command.
+   * - 0: Command failed or had no effect (e.g., syntax error, no targets found)
+   * - 1 (Command.SINGLE_SUCCESS): Command executed successfully
+   * - >1: Command succeeded and affected multiple targets (count of affected items)
+   * Note: Syntax errors return 0 and error details are sent via the logging system.
+   *
    * @generated from protobuf field: int32 code = 1
    */
   code: number;
 }
 /**
+ * Request message for getting tab-completion suggestions for a partial command.
+ *
  * @generated from protobuf message soulfire.v1.CommandCompletionRequest
  */
 export interface CommandCompletionRequest {
   /**
+   * The execution scope that determines which instances/bots are visible
+   * for completion suggestions. Must be set to one of the scope options.
+   *
    * @generated from protobuf field: soulfire.v1.CommandScope scope = 5
    */
   scope?: CommandScope;
   /**
+   * The partial command string to complete. May be an incomplete command
+   * that the user is typing, e.g., "mov" or "move 100 ".
+   *
    * @generated from protobuf field: string command = 3
    */
   command: string;
   /**
+   * The cursor position within the command string (0-indexed).
+   * Completions will be generated for the token at this position.
+   * Typically this is the length of the command string for end-of-line completion.
+   *
    * @generated from protobuf field: int32 cursor = 4
    */
   cursor: number;
 }
 /**
+ * A single tab-completion suggestion.
+ *
  * @generated from protobuf message soulfire.v1.CommandCompletion
  */
 export interface CommandCompletion {
   /**
+   * The suggested text to insert at the cursor position.
+   * This is the actual completion value, not the full command.
+   *
    * @generated from protobuf field: string suggestion = 1
    */
   suggestion: string;
   /**
+   * Optional tooltip providing additional context about this suggestion.
+   * May contain formatted text explaining what the suggestion does.
+   * If not present, no tooltip should be displayed.
+   *
    * @generated from protobuf field: optional string tooltip = 2
    */
   tooltip?: string;
 }
 /**
+ * Response message containing tab-completion suggestions.
+ *
  * @generated from protobuf message soulfire.v1.CommandCompletionResponse
  */
 export interface CommandCompletionResponse {
   /**
+   * List of completion suggestions for the partial command.
+   * May be empty if no completions are available.
+   * Suggestions are generated based on the command's Brigadier definition
+   * and the current execution scope's visibility.
+   *
    * @generated from protobuf field: repeated soulfire.v1.CommandCompletion suggestions = 1
    */
   suggestions: CommandCompletion[];

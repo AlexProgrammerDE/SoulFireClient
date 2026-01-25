@@ -18,10 +18,31 @@ import type {
 } from "./command";
 import { CommandService } from "./command";
 /**
+ * Service for executing server commands and retrieving tab-completion suggestions.
+ * Commands are executed using the Brigadier command framework and support various
+ * operations including bot control, pathfinding, inventory management, and administration.
+ * All operations require appropriate permissions based on the specified command scope.
+ *
  * @generated from protobuf service soulfire.v1.CommandService
  */
 export interface ICommandServiceClient {
   /**
+   * Executes a command string within the specified scope.
+   * The command is parsed and executed using the Brigadier command dispatcher.
+   *
+   * Permission requirements depend on the scope:
+   * - Global scope: Requires GLOBAL_COMMAND_EXECUTION permission
+   * - Instance scope: Requires INSTANCE_COMMAND_EXECUTION for the instance
+   * - Bot scope: Requires INSTANCE_COMMAND_EXECUTION for the parent instance
+   *
+   * Returns:
+   * - CommandResponse with the command's exit code
+   *
+   * Errors:
+   * - INVALID_ARGUMENT: If the scope is not set
+   * - PERMISSION_DENIED: If the user lacks required permissions
+   * - INTERNAL: If an unexpected error occurs during execution
+   *
    * @generated from protobuf rpc: ExecuteCommand
    */
   executeCommand(
@@ -29,6 +50,20 @@ export interface ICommandServiceClient {
     options?: RpcOptions,
   ): UnaryCall<CommandRequest, CommandResponse>;
   /**
+   * Retrieves tab-completion suggestions for a partial command.
+   * Uses Brigadier's completion system to generate context-aware suggestions
+   * based on the command structure and current cursor position.
+   *
+   * Permission requirements depend on the scope (same as ExecuteCommand).
+   *
+   * Returns:
+   * - CommandCompletionResponse with a list of possible completions
+   *
+   * Errors:
+   * - INVALID_ARGUMENT: If the scope is not set
+   * - PERMISSION_DENIED: If the user lacks required permissions
+   * - INTERNAL: If an unexpected error occurs during completion
+   *
    * @generated from protobuf rpc: TabCompleteCommand
    */
   tabCompleteCommand(
@@ -37,6 +72,11 @@ export interface ICommandServiceClient {
   ): UnaryCall<CommandCompletionRequest, CommandCompletionResponse>;
 }
 /**
+ * Service for executing server commands and retrieving tab-completion suggestions.
+ * Commands are executed using the Brigadier command framework and support various
+ * operations including bot control, pathfinding, inventory management, and administration.
+ * All operations require appropriate permissions based on the specified command scope.
+ *
  * @generated from protobuf service soulfire.v1.CommandService
  */
 export class CommandServiceClient
@@ -47,6 +87,22 @@ export class CommandServiceClient
   options = CommandService.options;
   constructor(private readonly _transport: RpcTransport) {}
   /**
+   * Executes a command string within the specified scope.
+   * The command is parsed and executed using the Brigadier command dispatcher.
+   *
+   * Permission requirements depend on the scope:
+   * - Global scope: Requires GLOBAL_COMMAND_EXECUTION permission
+   * - Instance scope: Requires INSTANCE_COMMAND_EXECUTION for the instance
+   * - Bot scope: Requires INSTANCE_COMMAND_EXECUTION for the parent instance
+   *
+   * Returns:
+   * - CommandResponse with the command's exit code
+   *
+   * Errors:
+   * - INVALID_ARGUMENT: If the scope is not set
+   * - PERMISSION_DENIED: If the user lacks required permissions
+   * - INTERNAL: If an unexpected error occurs during execution
+   *
    * @generated from protobuf rpc: ExecuteCommand
    */
   executeCommand(
@@ -64,6 +120,20 @@ export class CommandServiceClient
     );
   }
   /**
+   * Retrieves tab-completion suggestions for a partial command.
+   * Uses Brigadier's completion system to generate context-aware suggestions
+   * based on the command structure and current cursor position.
+   *
+   * Permission requirements depend on the scope (same as ExecuteCommand).
+   *
+   * Returns:
+   * - CommandCompletionResponse with a list of possible completions
+   *
+   * Errors:
+   * - INVALID_ARGUMENT: If the scope is not set
+   * - PERMISSION_DENIED: If the user lacks required permissions
+   * - INTERNAL: If an unexpected error occurs during completion
+   *
    * @generated from protobuf rpc: TabCompleteCommand
    */
   tabCompleteCommand(
