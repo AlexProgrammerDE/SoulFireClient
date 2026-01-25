@@ -3,8 +3,3979 @@
 // @generated from protobuf file "soulfire/script.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
+
+import type {
+  BinaryReadOptions,
+  BinaryWriteOptions,
+  IBinaryReader,
+  IBinaryWriter,
+  PartialMessage,
+} from "@protobuf-ts/runtime";
+import {
+  MessageType,
+  reflectionMergePartial,
+  UnknownFieldHandler,
+  WireType,
+} from "@protobuf-ts/runtime";
 import { ServiceType } from "@protobuf-ts/runtime-rpc";
+import { Value } from "../google/protobuf/struct";
+import { Timestamp } from "../google/protobuf/timestamp";
+/**
+ * Represents the 2D position of a node in the visual script editor canvas.
+ * Used for rendering the node graph and preserving user layout preferences.
+ *
+ * @generated from protobuf message soulfire.v1.Position
+ */
+export interface Position {
+  /**
+   * The horizontal position in canvas coordinates.
+   * Positive values extend to the right.
+   *
+   * @generated from protobuf field: double x = 1
+   */
+  x: number;
+  /**
+   * The vertical position in canvas coordinates.
+   * Positive values extend downward.
+   *
+   * @generated from protobuf field: double y = 2
+   */
+  y: number;
+}
+/**
+ * Represents a single node in the visual script graph.
+ * Nodes are the building blocks of scripts, each performing a specific action
+ * or computation when executed.
+ *
+ * @generated from protobuf message soulfire.v1.ScriptNode
+ */
+export interface ScriptNode {
+  /**
+   * Unique identifier for this node within the script.
+   * Used to reference this node in edges and during execution tracking.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * The type identifier for this node, determining its behavior and available ports.
+   * Examples: "trigger.on_chat", "action.send_message", "control.delay", "logic.condition".
+   *
+   * @generated from protobuf field: string type = 2
+   */
+  type: string;
+  /**
+   * The visual position of this node on the editor canvas.
+   * Persisted to maintain the user's layout when reopening the script.
+   *
+   * @generated from protobuf field: soulfire.v1.Position position = 3
+   */
+  position?: Position;
+  /**
+   * Configuration data for this node instance.
+   * Contains node-specific settings and parameter values.
+   * The structure depends on the node type.
+   *
+   * @generated from protobuf field: map<string, google.protobuf.Value> data = 4
+   */
+  data: {
+    [key: string]: Value;
+  };
+}
+/**
+ * Represents a connection between two nodes in the visual script graph.
+ * Edges define how execution flows and how data passes between nodes.
+ *
+ * @generated from protobuf message soulfire.v1.ScriptEdge
+ */
+export interface ScriptEdge {
+  /**
+   * Unique identifier for this edge within the script.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * The ID of the source node where this edge originates.
+   * Must reference a valid node ID in the script's nodes list.
+   *
+   * @generated from protobuf field: string source = 2
+   */
+  source: string;
+  /**
+   * The handle/port identifier on the source node.
+   * Identifies which output port of the source node this edge connects from.
+   * Examples: "exec_out", "value", "true", "false".
+   *
+   * @generated from protobuf field: string source_handle = 3
+   */
+  sourceHandle: string;
+  /**
+   * The ID of the target node where this edge terminates.
+   * Must reference a valid node ID in the script's nodes list.
+   *
+   * @generated from protobuf field: string target = 4
+   */
+  target: string;
+  /**
+   * The handle/port identifier on the target node.
+   * Identifies which input port of the target node this edge connects to.
+   * Examples: "exec_in", "message", "condition".
+   *
+   * @generated from protobuf field: string target_handle = 5
+   */
+  targetHandle: string;
+  /**
+   * The type of this edge, determining whether it carries execution flow or data.
+   *
+   * @generated from protobuf field: soulfire.v1.EdgeType edge_type = 6
+   */
+  edgeType: EdgeType;
+}
+/**
+ * Complete data structure representing a visual script.
+ * Contains all nodes, edges, and metadata needed to render and execute the script.
+ *
+ * @generated from protobuf message soulfire.v1.ScriptData
+ */
+export interface ScriptData {
+  /**
+   * Unique identifier for this script.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * Human-readable name for the script.
+   * Displayed in the UI and used for identification.
+   *
+   * @generated from protobuf field: string name = 2
+   */
+  name: string;
+  /**
+   * Optional description explaining what the script does.
+   * Displayed in script listings and detail views.
+   *
+   * @generated from protobuf field: string description = 3
+   */
+  description: string;
+  /**
+   * The list of nodes that make up this script's graph.
+   * Nodes are executed based on execution edge connections.
+   *
+   * @generated from protobuf field: repeated soulfire.v1.ScriptNode nodes = 4
+   */
+  nodes: ScriptNode[];
+  /**
+   * The list of edges connecting nodes in this script.
+   * Defines both execution flow and data transfer between nodes.
+   *
+   * @generated from protobuf field: repeated soulfire.v1.ScriptEdge edges = 5
+   */
+  edges: ScriptEdge[];
+  /**
+   * The scope at which this script operates (instance or bot level).
+   *
+   * @generated from protobuf field: soulfire.v1.ScriptScope scope = 6
+   */
+  scope: ScriptScope;
+  /**
+   * The instance this script belongs to.
+   * Scripts are always associated with a specific instance.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string instance_id = 7
+   */
+  instanceId: string;
+}
+/**
+ * Summary information about a script for listing purposes.
+ * Contains metadata without the full node graph to reduce payload size.
+ *
+ * @generated from protobuf message soulfire.v1.ScriptInfo
+ */
+export interface ScriptInfo {
+  /**
+   * Unique identifier for this script.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * Human-readable name for the script.
+   *
+   * @generated from protobuf field: string name = 2
+   */
+  name: string;
+  /**
+   * Optional description of what the script does.
+   *
+   * @generated from protobuf field: string description = 3
+   */
+  description: string;
+  /**
+   * The scope at which this script operates.
+   *
+   * @generated from protobuf field: soulfire.v1.ScriptScope scope = 4
+   */
+  scope: ScriptScope;
+  /**
+   * The instance this script belongs to.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string instance_id = 5
+   */
+  instanceId: string;
+  /**
+   * Timestamp when the script was first created.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp created_at = 6
+   */
+  createdAt?: Timestamp;
+  /**
+   * Timestamp when the script was last modified.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp updated_at = 7
+   */
+  updatedAt?: Timestamp;
+}
+/**
+ * Runtime status information for a script.
+ * Provides information about current execution state and statistics.
+ *
+ * @generated from protobuf message soulfire.v1.ScriptStatus
+ */
+export interface ScriptStatus {
+  /**
+   * The script this status applies to.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string script_id = 1
+   */
+  scriptId: string;
+  /**
+   * Whether the script is currently executing.
+   *
+   * @generated from protobuf field: bool is_running = 2
+   */
+  isRunning: boolean;
+  /**
+   * The ID of the currently executing node, if any.
+   * Only present when is_running is true and a node is actively executing.
+   *
+   * @generated from protobuf field: optional string active_node_id = 3
+   */
+  activeNodeId?: string;
+  /**
+   * The total number of times this script has been executed.
+   * Incremented each time StartScript is called and execution begins.
+   *
+   * @generated from protobuf field: int64 execution_count = 4
+   */
+  executionCount: string;
+}
+/**
+ * A single log entry generated during script execution.
+ * Provides detailed information about script operations for debugging and monitoring.
+ *
+ * @generated from protobuf message soulfire.v1.ScriptLogEntry
+ */
+export interface ScriptLogEntry {
+  /**
+   * The script that generated this log entry.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string script_id = 1
+   */
+  scriptId: string;
+  /**
+   * The node that generated this log entry, if applicable.
+   * May be empty for script-level log entries.
+   *
+   * @generated from protobuf field: string node_id = 2
+   */
+  nodeId: string;
+  /**
+   * The severity level of this log entry.
+   *
+   * @generated from protobuf field: soulfire.v1.LogLevel level = 3
+   */
+  level: LogLevel;
+  /**
+   * The log message content.
+   *
+   * @generated from protobuf field: string message = 4
+   */
+  message: string;
+  /**
+   * When this log entry was created.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp timestamp = 5
+   */
+  timestamp?: Timestamp;
+}
+/**
+ * Event emitted when a node begins execution.
+ *
+ * @generated from protobuf message soulfire.v1.NodeStarted
+ */
+export interface NodeStarted {
+  /**
+   * The ID of the node that started executing.
+   *
+   * @generated from protobuf field: string node_id = 1
+   */
+  nodeId: string;
+  /**
+   * When the node started execution.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp timestamp = 2
+   */
+  timestamp?: Timestamp;
+}
+/**
+ * Event emitted when a node completes execution successfully.
+ *
+ * @generated from protobuf message soulfire.v1.NodeCompleted
+ */
+export interface NodeCompleted {
+  /**
+   * The ID of the node that completed execution.
+   *
+   * @generated from protobuf field: string node_id = 1
+   */
+  nodeId: string;
+  /**
+   * The output values produced by the node.
+   * Keys are output port names, values are the data produced.
+   *
+   * @generated from protobuf field: map<string, google.protobuf.Value> outputs = 2
+   */
+  outputs: {
+    [key: string]: Value;
+  };
+  /**
+   * When the node completed execution.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp timestamp = 3
+   */
+  timestamp?: Timestamp;
+}
+/**
+ * Event emitted when a node encounters an error during execution.
+ *
+ * @generated from protobuf message soulfire.v1.NodeError
+ */
+export interface NodeError {
+  /**
+   * The ID of the node that encountered the error.
+   *
+   * @generated from protobuf field: string node_id = 1
+   */
+  nodeId: string;
+  /**
+   * A description of what went wrong.
+   *
+   * @generated from protobuf field: string error_message = 2
+   */
+  errorMessage: string;
+  /**
+   * When the error occurred.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp timestamp = 3
+   */
+  timestamp?: Timestamp;
+}
+/**
+ * Event emitted when script execution begins.
+ *
+ * @generated from protobuf message soulfire.v1.ScriptStarted
+ */
+export interface ScriptStarted {
+  /**
+   * The ID of the script that started.
+   *
+   * @generated from protobuf field: string script_id = 1
+   */
+  scriptId: string;
+  /**
+   * When the script started execution.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp timestamp = 2
+   */
+  timestamp?: Timestamp;
+}
+/**
+ * Event emitted when script execution finishes.
+ *
+ * @generated from protobuf message soulfire.v1.ScriptCompleted
+ */
+export interface ScriptCompleted {
+  /**
+   * Whether the script completed successfully without errors.
+   *
+   * @generated from protobuf field: bool success = 1
+   */
+  success: boolean;
+  /**
+   * When the script completed execution.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp timestamp = 2
+   */
+  timestamp?: Timestamp;
+}
+/**
+ * Union type for all script execution events.
+ * Streamed to clients during script execution to provide real-time feedback.
+ *
+ * @generated from protobuf message soulfire.v1.ScriptEvent
+ */
+export interface ScriptEvent {
+  /**
+   * The specific event that occurred.
+   *
+   * @generated from protobuf oneof: event
+   */
+  event:
+    | {
+        oneofKind: "nodeStarted";
+        /**
+         * A node started executing.
+         *
+         * @generated from protobuf field: soulfire.v1.NodeStarted node_started = 1
+         */
+        nodeStarted: NodeStarted;
+      }
+    | {
+        oneofKind: "nodeCompleted";
+        /**
+         * A node completed execution successfully.
+         *
+         * @generated from protobuf field: soulfire.v1.NodeCompleted node_completed = 2
+         */
+        nodeCompleted: NodeCompleted;
+      }
+    | {
+        oneofKind: "nodeError";
+        /**
+         * A node encountered an error.
+         *
+         * @generated from protobuf field: soulfire.v1.NodeError node_error = 3
+         */
+        nodeError: NodeError;
+      }
+    | {
+        oneofKind: "scriptCompleted";
+        /**
+         * The script completed execution.
+         *
+         * @generated from protobuf field: soulfire.v1.ScriptCompleted script_completed = 4
+         */
+        scriptCompleted: ScriptCompleted;
+      }
+    | {
+        oneofKind: "scriptStarted";
+        /**
+         * The script started execution.
+         *
+         * @generated from protobuf field: soulfire.v1.ScriptStarted script_started = 5
+         */
+        scriptStarted: ScriptStarted;
+      }
+    | {
+        oneofKind: undefined;
+      };
+}
+/**
+ * Request to create a new script.
+ *
+ * @generated from protobuf message soulfire.v1.CreateScriptRequest
+ */
+export interface CreateScriptRequest {
+  /**
+   * The instance to create the script in.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * The human-readable name for the script.
+   *
+   * @generated from protobuf field: string name = 2
+   */
+  name: string;
+  /**
+   * Optional description of what the script does.
+   *
+   * @generated from protobuf field: string description = 3
+   */
+  description: string;
+  /**
+   * The scope at which this script operates.
+   *
+   * @generated from protobuf field: soulfire.v1.ScriptScope scope = 4
+   */
+  scope: ScriptScope;
+  /**
+   * Initial nodes for the script graph.
+   * Can be empty to create a blank script.
+   *
+   * @generated from protobuf field: repeated soulfire.v1.ScriptNode nodes = 5
+   */
+  nodes: ScriptNode[];
+  /**
+   * Initial edges for the script graph.
+   * Can be empty to create a blank script.
+   *
+   * @generated from protobuf field: repeated soulfire.v1.ScriptEdge edges = 6
+   */
+  edges: ScriptEdge[];
+}
+/**
+ * Response after successfully creating a script.
+ *
+ * @generated from protobuf message soulfire.v1.CreateScriptResponse
+ */
+export interface CreateScriptResponse {
+  /**
+   * The complete script data including the generated ID.
+   *
+   * @generated from protobuf field: soulfire.v1.ScriptData script = 1
+   */
+  script?: ScriptData;
+}
+/**
+ * Request to retrieve a specific script by ID.
+ *
+ * @generated from protobuf message soulfire.v1.GetScriptRequest
+ */
+export interface GetScriptRequest {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * The ID of the script to retrieve.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string script_id = 2
+   */
+  scriptId: string;
+}
+/**
+ * Response containing the requested script.
+ *
+ * @generated from protobuf message soulfire.v1.GetScriptResponse
+ */
+export interface GetScriptResponse {
+  /**
+   * The complete script data including all nodes and edges.
+   *
+   * @generated from protobuf field: soulfire.v1.ScriptData script = 1
+   */
+  script?: ScriptData;
+}
+/**
+ * Request to update an existing script.
+ *
+ * @generated from protobuf message soulfire.v1.UpdateScriptRequest
+ */
+export interface UpdateScriptRequest {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * The ID of the script to update.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string script_id = 2
+   */
+  scriptId: string;
+  /**
+   * Updated name for the script.
+   * If not set, the name remains unchanged.
+   *
+   * @generated from protobuf field: optional string name = 3
+   */
+  name?: string;
+  /**
+   * Updated description for the script.
+   * If not set, the description remains unchanged.
+   *
+   * @generated from protobuf field: optional string description = 4
+   */
+  description?: string;
+  /**
+   * Updated scope for the script.
+   * If not set, the scope remains unchanged.
+   *
+   * @generated from protobuf field: optional soulfire.v1.ScriptScope scope = 5
+   */
+  scope?: ScriptScope;
+  /**
+   * Updated list of nodes.
+   * If provided, replaces the entire node list.
+   * If not provided, nodes remain unchanged.
+   *
+   * @generated from protobuf field: repeated soulfire.v1.ScriptNode nodes = 6
+   */
+  nodes: ScriptNode[];
+  /**
+   * Updated list of edges.
+   * If provided, replaces the entire edge list.
+   * If not provided, edges remain unchanged.
+   *
+   * @generated from protobuf field: repeated soulfire.v1.ScriptEdge edges = 7
+   */
+  edges: ScriptEdge[];
+  /**
+   * Whether the nodes field should be updated (allows setting to empty list).
+   *
+   * @generated from protobuf field: bool update_nodes = 8
+   */
+  updateNodes: boolean;
+  /**
+   * Whether the edges field should be updated (allows setting to empty list).
+   *
+   * @generated from protobuf field: bool update_edges = 9
+   */
+  updateEdges: boolean;
+}
+/**
+ * Response after successfully updating a script.
+ *
+ * @generated from protobuf message soulfire.v1.UpdateScriptResponse
+ */
+export interface UpdateScriptResponse {
+  /**
+   * The updated script data.
+   *
+   * @generated from protobuf field: soulfire.v1.ScriptData script = 1
+   */
+  script?: ScriptData;
+}
+/**
+ * Request to delete a script.
+ *
+ * @generated from protobuf message soulfire.v1.DeleteScriptRequest
+ */
+export interface DeleteScriptRequest {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * The ID of the script to delete.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string script_id = 2
+   */
+  scriptId: string;
+}
+/**
+ * Response after successfully deleting a script.
+ * Empty response indicates success.
+ *
+ * @generated from protobuf message soulfire.v1.DeleteScriptResponse
+ */
+export interface DeleteScriptResponse {}
+/**
+ * Request to list all scripts in an instance.
+ *
+ * @generated from protobuf message soulfire.v1.ListScriptsRequest
+ */
+export interface ListScriptsRequest {
+  /**
+   * The instance to list scripts from.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+}
+/**
+ * Response containing the list of scripts.
+ *
+ * @generated from protobuf message soulfire.v1.ListScriptsResponse
+ */
+export interface ListScriptsResponse {
+  /**
+   * Summary information for each script in the instance.
+   * Does not include full node/edge data to reduce payload size.
+   *
+   * @generated from protobuf field: repeated soulfire.v1.ScriptInfo scripts = 1
+   */
+  scripts: ScriptInfo[];
+}
+/**
+ * Request to start executing a script.
+ *
+ * @generated from protobuf message soulfire.v1.StartScriptRequest
+ */
+export interface StartScriptRequest {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * The ID of the script to execute.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string script_id = 2
+   */
+  scriptId: string;
+  /**
+   * Optional initial input values for the script.
+   * Keys are input parameter names expected by trigger nodes.
+   *
+   * @generated from protobuf field: map<string, google.protobuf.Value> inputs = 3
+   */
+  inputs: {
+    [key: string]: Value;
+  };
+}
+/**
+ * Request to stop a running script.
+ *
+ * @generated from protobuf message soulfire.v1.StopScriptRequest
+ */
+export interface StopScriptRequest {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * The ID of the script to stop.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string script_id = 2
+   */
+  scriptId: string;
+}
+/**
+ * Response after successfully stopping a script.
+ * Empty response indicates success.
+ *
+ * @generated from protobuf message soulfire.v1.StopScriptResponse
+ */
+export interface StopScriptResponse {}
+/**
+ * Request to get the execution status of a script.
+ *
+ * @generated from protobuf message soulfire.v1.GetScriptStatusRequest
+ */
+export interface GetScriptStatusRequest {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * The ID of the script to check.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string script_id = 2
+   */
+  scriptId: string;
+}
+/**
+ * Response containing the script's execution status.
+ *
+ * @generated from protobuf message soulfire.v1.GetScriptStatusResponse
+ */
+export interface GetScriptStatusResponse {
+  /**
+   * The current status of the script.
+   *
+   * @generated from protobuf field: soulfire.v1.ScriptStatus status = 1
+   */
+  status?: ScriptStatus;
+}
+/**
+ * Request to subscribe to log entries from a script.
+ *
+ * @generated from protobuf message soulfire.v1.SubscribeScriptLogsRequest
+ */
+export interface SubscribeScriptLogsRequest {
+  /**
+   * The instance containing the script.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string instance_id = 1
+   */
+  instanceId: string;
+  /**
+   * The ID of the script to receive logs from.
+   * Format: UUID string.
+   *
+   * @generated from protobuf field: string script_id = 2
+   */
+  scriptId: string;
+  /**
+   * Minimum log level to receive.
+   * Only log entries at this level or higher severity will be streamed.
+   *
+   * @generated from protobuf field: soulfire.v1.LogLevel min_level = 3
+   */
+  minLevel: LogLevel;
+}
+/**
+ * The scope at which a script operates.
+ * Determines the execution context and what resources the script can access.
+ *
+ * @generated from protobuf enum soulfire.v1.ScriptScope
+ */
+export enum ScriptScope {
+  /**
+   * Script operates at the instance level, affecting all bots in the instance.
+   * Has access to instance-wide resources and can coordinate multiple bots.
+   *
+   * @generated from protobuf enum value: SCRIPT_SCOPE_INSTANCE = 0;
+   */
+  INSTANCE = 0,
+  /**
+   * Script operates at the individual bot level.
+   * Runs independently for each bot and has access to bot-specific resources.
+   *
+   * @generated from protobuf enum value: SCRIPT_SCOPE_BOT = 1;
+   */
+  BOT = 1,
+}
+/**
+ * The type of connection between nodes in the visual script editor.
+ * Determines how data and control flow between nodes.
+ *
+ * @generated from protobuf enum soulfire.v1.EdgeType
+ */
+export enum EdgeType {
+  /**
+   * Execution edge that controls the order of node execution.
+   * When a node completes, execution flows through its outgoing execution edges.
+   *
+   * @generated from protobuf enum value: EDGE_TYPE_EXECUTION = 0;
+   */
+  EXECUTION = 0,
+  /**
+   * Data edge that passes values between nodes.
+   * Data edges transfer output values from one node's output port to another node's input port.
+   *
+   * @generated from protobuf enum value: EDGE_TYPE_DATA = 1;
+   */
+  DATA = 1,
+}
+/**
+ * Log levels for script execution logging.
+ * Maps to standard logging severity levels for filtering and display.
+ *
+ * @generated from protobuf enum soulfire.v1.LogLevel
+ */
+export enum LogLevel {
+  /**
+   * Debug level for verbose diagnostic information.
+   * Typically only shown when troubleshooting scripts.
+   *
+   * @generated from protobuf enum value: LOG_LEVEL_DEBUG = 0;
+   */
+  DEBUG = 0,
+  /**
+   * Informational messages about script execution progress.
+   * Normal operational messages.
+   *
+   * @generated from protobuf enum value: LOG_LEVEL_INFO = 1;
+   */
+  INFO = 1,
+  /**
+   * Warning level for potentially problematic situations.
+   * Script continues execution but something unexpected occurred.
+   *
+   * @generated from protobuf enum value: LOG_LEVEL_WARN = 2;
+   */
+  WARN = 2,
+  /**
+   * Error level for failures that may affect script execution.
+   * Indicates a problem that needs attention.
+   *
+   * @generated from protobuf enum value: LOG_LEVEL_ERROR = 3;
+   */
+  ERROR = 3,
+}
+// @generated message type with reflection information, may provide speed optimized methods
+class Position$Type extends MessageType<Position> {
+  constructor() {
+    super("soulfire.v1.Position", [
+      { no: 1, name: "x", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 2, name: "y", kind: "scalar", T: 1 /*ScalarType.DOUBLE*/ },
+    ]);
+  }
+  create(value?: PartialMessage<Position>): Position {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.x = 0;
+    message.y = 0;
+    if (value !== undefined)
+      reflectionMergePartial<Position>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Position,
+  ): Position {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* double x */ 1:
+          message.x = reader.double();
+          break;
+        case /* double y */ 2:
+          message.y = reader.double();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: Position,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* double x = 1; */
+    if (message.x !== 0) writer.tag(1, WireType.Bit64).double(message.x);
+    /* double y = 2; */
+    if (message.y !== 0) writer.tag(2, WireType.Bit64).double(message.y);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.Position
+ */
+export const Position = new Position$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ScriptNode$Type extends MessageType<ScriptNode> {
+  constructor() {
+    super("soulfire.v1.ScriptNode", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "position", kind: "message", T: () => Position },
+      {
+        no: 4,
+        name: "data",
+        kind: "map",
+        K: 9 /*ScalarType.STRING*/,
+        V: { kind: "message", T: () => Value },
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ScriptNode>): ScriptNode {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.type = "";
+    message.data = {};
+    if (value !== undefined)
+      reflectionMergePartial<ScriptNode>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ScriptNode,
+  ): ScriptNode {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string type */ 2:
+          message.type = reader.string();
+          break;
+        case /* soulfire.v1.Position position */ 3:
+          message.position = Position.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.position,
+          );
+          break;
+        case /* map<string, google.protobuf.Value> data */ 4:
+          this.binaryReadMap4(message.data, reader, options);
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  private binaryReadMap4(
+    map: ScriptNode["data"],
+    reader: IBinaryReader,
+    options: BinaryReadOptions,
+  ): void {
+    let len = reader.uint32(),
+      end = reader.pos + len,
+      key: keyof ScriptNode["data"] | undefined,
+      val: ScriptNode["data"][any] | undefined;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case 1:
+          key = reader.string();
+          break;
+        case 2:
+          val = Value.internalBinaryRead(reader, reader.uint32(), options);
+          break;
+        default:
+          throw new globalThis.Error(
+            "unknown map entry field for soulfire.v1.ScriptNode.data",
+          );
+      }
+    }
+    map[key ?? ""] = val ?? Value.create();
+  }
+  internalBinaryWrite(
+    message: ScriptNode,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string type = 2; */
+    if (message.type !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.type);
+    /* soulfire.v1.Position position = 3; */
+    if (message.position)
+      Position.internalBinaryWrite(
+        message.position,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* map<string, google.protobuf.Value> data = 4; */
+    for (let k of globalThis.Object.keys(message.data)) {
+      writer
+        .tag(4, WireType.LengthDelimited)
+        .fork()
+        .tag(1, WireType.LengthDelimited)
+        .string(k);
+      writer.tag(2, WireType.LengthDelimited).fork();
+      Value.internalBinaryWrite(message.data[k], writer, options);
+      writer.join().join();
+    }
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ScriptNode
+ */
+export const ScriptNode = new ScriptNode$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ScriptEdge$Type extends MessageType<ScriptEdge> {
+  constructor() {
+    super("soulfire.v1.ScriptEdge", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "source", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "source_handle",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 4, name: "target", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 5,
+        name: "target_handle",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 6,
+        name: "edge_type",
+        kind: "enum",
+        T: () => ["soulfire.v1.EdgeType", EdgeType, "EDGE_TYPE_"],
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ScriptEdge>): ScriptEdge {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.source = "";
+    message.sourceHandle = "";
+    message.target = "";
+    message.targetHandle = "";
+    message.edgeType = 0;
+    if (value !== undefined)
+      reflectionMergePartial<ScriptEdge>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ScriptEdge,
+  ): ScriptEdge {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string source */ 2:
+          message.source = reader.string();
+          break;
+        case /* string source_handle */ 3:
+          message.sourceHandle = reader.string();
+          break;
+        case /* string target */ 4:
+          message.target = reader.string();
+          break;
+        case /* string target_handle */ 5:
+          message.targetHandle = reader.string();
+          break;
+        case /* soulfire.v1.EdgeType edge_type */ 6:
+          message.edgeType = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ScriptEdge,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string source = 2; */
+    if (message.source !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.source);
+    /* string source_handle = 3; */
+    if (message.sourceHandle !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.sourceHandle);
+    /* string target = 4; */
+    if (message.target !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.target);
+    /* string target_handle = 5; */
+    if (message.targetHandle !== "")
+      writer.tag(5, WireType.LengthDelimited).string(message.targetHandle);
+    /* soulfire.v1.EdgeType edge_type = 6; */
+    if (message.edgeType !== 0)
+      writer.tag(6, WireType.Varint).int32(message.edgeType);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ScriptEdge
+ */
+export const ScriptEdge = new ScriptEdge$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ScriptData$Type extends MessageType<ScriptData> {
+  constructor() {
+    super("soulfire.v1.ScriptData", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 4,
+        name: "nodes",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ScriptNode,
+      },
+      {
+        no: 5,
+        name: "edges",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ScriptEdge,
+      },
+      {
+        no: 6,
+        name: "scope",
+        kind: "enum",
+        T: () => ["soulfire.v1.ScriptScope", ScriptScope, "SCRIPT_SCOPE_"],
+      },
+      {
+        no: 7,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ScriptData>): ScriptData {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.name = "";
+    message.description = "";
+    message.nodes = [];
+    message.edges = [];
+    message.scope = 0;
+    message.instanceId = "";
+    if (value !== undefined)
+      reflectionMergePartial<ScriptData>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ScriptData,
+  ): ScriptData {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string name */ 2:
+          message.name = reader.string();
+          break;
+        case /* string description */ 3:
+          message.description = reader.string();
+          break;
+        case /* repeated soulfire.v1.ScriptNode nodes */ 4:
+          message.nodes.push(
+            ScriptNode.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* repeated soulfire.v1.ScriptEdge edges */ 5:
+          message.edges.push(
+            ScriptEdge.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* soulfire.v1.ScriptScope scope */ 6:
+          message.scope = reader.int32();
+          break;
+        case /* string instance_id */ 7:
+          message.instanceId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ScriptData,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string name = 2; */
+    if (message.name !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.name);
+    /* string description = 3; */
+    if (message.description !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.description);
+    /* repeated soulfire.v1.ScriptNode nodes = 4; */
+    for (let i = 0; i < message.nodes.length; i++)
+      ScriptNode.internalBinaryWrite(
+        message.nodes[i],
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.ScriptEdge edges = 5; */
+    for (let i = 0; i < message.edges.length; i++)
+      ScriptEdge.internalBinaryWrite(
+        message.edges[i],
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.ScriptScope scope = 6; */
+    if (message.scope !== 0)
+      writer.tag(6, WireType.Varint).int32(message.scope);
+    /* string instance_id = 7; */
+    if (message.instanceId !== "")
+      writer.tag(7, WireType.LengthDelimited).string(message.instanceId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ScriptData
+ */
+export const ScriptData = new ScriptData$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ScriptInfo$Type extends MessageType<ScriptInfo> {
+  constructor() {
+    super("soulfire.v1.ScriptInfo", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 4,
+        name: "scope",
+        kind: "enum",
+        T: () => ["soulfire.v1.ScriptScope", ScriptScope, "SCRIPT_SCOPE_"],
+      },
+      {
+        no: 5,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 6, name: "created_at", kind: "message", T: () => Timestamp },
+      { no: 7, name: "updated_at", kind: "message", T: () => Timestamp },
+    ]);
+  }
+  create(value?: PartialMessage<ScriptInfo>): ScriptInfo {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.name = "";
+    message.description = "";
+    message.scope = 0;
+    message.instanceId = "";
+    if (value !== undefined)
+      reflectionMergePartial<ScriptInfo>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ScriptInfo,
+  ): ScriptInfo {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string name */ 2:
+          message.name = reader.string();
+          break;
+        case /* string description */ 3:
+          message.description = reader.string();
+          break;
+        case /* soulfire.v1.ScriptScope scope */ 4:
+          message.scope = reader.int32();
+          break;
+        case /* string instance_id */ 5:
+          message.instanceId = reader.string();
+          break;
+        case /* google.protobuf.Timestamp created_at */ 6:
+          message.createdAt = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.createdAt,
+          );
+          break;
+        case /* google.protobuf.Timestamp updated_at */ 7:
+          message.updatedAt = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.updatedAt,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ScriptInfo,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string name = 2; */
+    if (message.name !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.name);
+    /* string description = 3; */
+    if (message.description !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.description);
+    /* soulfire.v1.ScriptScope scope = 4; */
+    if (message.scope !== 0)
+      writer.tag(4, WireType.Varint).int32(message.scope);
+    /* string instance_id = 5; */
+    if (message.instanceId !== "")
+      writer.tag(5, WireType.LengthDelimited).string(message.instanceId);
+    /* google.protobuf.Timestamp created_at = 6; */
+    if (message.createdAt)
+      Timestamp.internalBinaryWrite(
+        message.createdAt,
+        writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* google.protobuf.Timestamp updated_at = 7; */
+    if (message.updatedAt)
+      Timestamp.internalBinaryWrite(
+        message.updatedAt,
+        writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ScriptInfo
+ */
+export const ScriptInfo = new ScriptInfo$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ScriptStatus$Type extends MessageType<ScriptStatus> {
+  constructor() {
+    super("soulfire.v1.ScriptStatus", [
+      { no: 1, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "is_running", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 3,
+        name: "active_node_id",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 4,
+        name: "execution_count",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ScriptStatus>): ScriptStatus {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.scriptId = "";
+    message.isRunning = false;
+    message.executionCount = "0";
+    if (value !== undefined)
+      reflectionMergePartial<ScriptStatus>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ScriptStatus,
+  ): ScriptStatus {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string script_id */ 1:
+          message.scriptId = reader.string();
+          break;
+        case /* bool is_running */ 2:
+          message.isRunning = reader.bool();
+          break;
+        case /* optional string active_node_id */ 3:
+          message.activeNodeId = reader.string();
+          break;
+        case /* int64 execution_count */ 4:
+          message.executionCount = reader.int64().toString();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ScriptStatus,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string script_id = 1; */
+    if (message.scriptId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.scriptId);
+    /* bool is_running = 2; */
+    if (message.isRunning !== false)
+      writer.tag(2, WireType.Varint).bool(message.isRunning);
+    /* optional string active_node_id = 3; */
+    if (message.activeNodeId !== undefined)
+      writer.tag(3, WireType.LengthDelimited).string(message.activeNodeId);
+    /* int64 execution_count = 4; */
+    if (message.executionCount !== "0")
+      writer.tag(4, WireType.Varint).int64(message.executionCount);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ScriptStatus
+ */
+export const ScriptStatus = new ScriptStatus$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ScriptLogEntry$Type extends MessageType<ScriptLogEntry> {
+  constructor() {
+    super("soulfire.v1.ScriptLogEntry", [
+      { no: 1, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "node_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "level",
+        kind: "enum",
+        T: () => ["soulfire.v1.LogLevel", LogLevel, "LOG_LEVEL_"],
+      },
+      { no: 4, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 5, name: "timestamp", kind: "message", T: () => Timestamp },
+    ]);
+  }
+  create(value?: PartialMessage<ScriptLogEntry>): ScriptLogEntry {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.scriptId = "";
+    message.nodeId = "";
+    message.level = 0;
+    message.message = "";
+    if (value !== undefined)
+      reflectionMergePartial<ScriptLogEntry>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ScriptLogEntry,
+  ): ScriptLogEntry {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string script_id */ 1:
+          message.scriptId = reader.string();
+          break;
+        case /* string node_id */ 2:
+          message.nodeId = reader.string();
+          break;
+        case /* soulfire.v1.LogLevel level */ 3:
+          message.level = reader.int32();
+          break;
+        case /* string message */ 4:
+          message.message = reader.string();
+          break;
+        case /* google.protobuf.Timestamp timestamp */ 5:
+          message.timestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.timestamp,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ScriptLogEntry,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string script_id = 1; */
+    if (message.scriptId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.scriptId);
+    /* string node_id = 2; */
+    if (message.nodeId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.nodeId);
+    /* soulfire.v1.LogLevel level = 3; */
+    if (message.level !== 0)
+      writer.tag(3, WireType.Varint).int32(message.level);
+    /* string message = 4; */
+    if (message.message !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.message);
+    /* google.protobuf.Timestamp timestamp = 5; */
+    if (message.timestamp)
+      Timestamp.internalBinaryWrite(
+        message.timestamp,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ScriptLogEntry
+ */
+export const ScriptLogEntry = new ScriptLogEntry$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class NodeStarted$Type extends MessageType<NodeStarted> {
+  constructor() {
+    super("soulfire.v1.NodeStarted", [
+      { no: 1, name: "node_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "timestamp", kind: "message", T: () => Timestamp },
+    ]);
+  }
+  create(value?: PartialMessage<NodeStarted>): NodeStarted {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.nodeId = "";
+    if (value !== undefined)
+      reflectionMergePartial<NodeStarted>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: NodeStarted,
+  ): NodeStarted {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string node_id */ 1:
+          message.nodeId = reader.string();
+          break;
+        case /* google.protobuf.Timestamp timestamp */ 2:
+          message.timestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.timestamp,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: NodeStarted,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string node_id = 1; */
+    if (message.nodeId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.nodeId);
+    /* google.protobuf.Timestamp timestamp = 2; */
+    if (message.timestamp)
+      Timestamp.internalBinaryWrite(
+        message.timestamp,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.NodeStarted
+ */
+export const NodeStarted = new NodeStarted$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class NodeCompleted$Type extends MessageType<NodeCompleted> {
+  constructor() {
+    super("soulfire.v1.NodeCompleted", [
+      { no: 1, name: "node_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "outputs",
+        kind: "map",
+        K: 9 /*ScalarType.STRING*/,
+        V: { kind: "message", T: () => Value },
+      },
+      { no: 3, name: "timestamp", kind: "message", T: () => Timestamp },
+    ]);
+  }
+  create(value?: PartialMessage<NodeCompleted>): NodeCompleted {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.nodeId = "";
+    message.outputs = {};
+    if (value !== undefined)
+      reflectionMergePartial<NodeCompleted>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: NodeCompleted,
+  ): NodeCompleted {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string node_id */ 1:
+          message.nodeId = reader.string();
+          break;
+        case /* map<string, google.protobuf.Value> outputs */ 2:
+          this.binaryReadMap2(message.outputs, reader, options);
+          break;
+        case /* google.protobuf.Timestamp timestamp */ 3:
+          message.timestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.timestamp,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  private binaryReadMap2(
+    map: NodeCompleted["outputs"],
+    reader: IBinaryReader,
+    options: BinaryReadOptions,
+  ): void {
+    let len = reader.uint32(),
+      end = reader.pos + len,
+      key: keyof NodeCompleted["outputs"] | undefined,
+      val: NodeCompleted["outputs"][any] | undefined;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case 1:
+          key = reader.string();
+          break;
+        case 2:
+          val = Value.internalBinaryRead(reader, reader.uint32(), options);
+          break;
+        default:
+          throw new globalThis.Error(
+            "unknown map entry field for soulfire.v1.NodeCompleted.outputs",
+          );
+      }
+    }
+    map[key ?? ""] = val ?? Value.create();
+  }
+  internalBinaryWrite(
+    message: NodeCompleted,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string node_id = 1; */
+    if (message.nodeId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.nodeId);
+    /* map<string, google.protobuf.Value> outputs = 2; */
+    for (let k of globalThis.Object.keys(message.outputs)) {
+      writer
+        .tag(2, WireType.LengthDelimited)
+        .fork()
+        .tag(1, WireType.LengthDelimited)
+        .string(k);
+      writer.tag(2, WireType.LengthDelimited).fork();
+      Value.internalBinaryWrite(message.outputs[k], writer, options);
+      writer.join().join();
+    }
+    /* google.protobuf.Timestamp timestamp = 3; */
+    if (message.timestamp)
+      Timestamp.internalBinaryWrite(
+        message.timestamp,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.NodeCompleted
+ */
+export const NodeCompleted = new NodeCompleted$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class NodeError$Type extends MessageType<NodeError> {
+  constructor() {
+    super("soulfire.v1.NodeError", [
+      { no: 1, name: "node_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "error_message",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 3, name: "timestamp", kind: "message", T: () => Timestamp },
+    ]);
+  }
+  create(value?: PartialMessage<NodeError>): NodeError {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.nodeId = "";
+    message.errorMessage = "";
+    if (value !== undefined)
+      reflectionMergePartial<NodeError>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: NodeError,
+  ): NodeError {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string node_id */ 1:
+          message.nodeId = reader.string();
+          break;
+        case /* string error_message */ 2:
+          message.errorMessage = reader.string();
+          break;
+        case /* google.protobuf.Timestamp timestamp */ 3:
+          message.timestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.timestamp,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: NodeError,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string node_id = 1; */
+    if (message.nodeId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.nodeId);
+    /* string error_message = 2; */
+    if (message.errorMessage !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.errorMessage);
+    /* google.protobuf.Timestamp timestamp = 3; */
+    if (message.timestamp)
+      Timestamp.internalBinaryWrite(
+        message.timestamp,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.NodeError
+ */
+export const NodeError = new NodeError$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ScriptStarted$Type extends MessageType<ScriptStarted> {
+  constructor() {
+    super("soulfire.v1.ScriptStarted", [
+      { no: 1, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "timestamp", kind: "message", T: () => Timestamp },
+    ]);
+  }
+  create(value?: PartialMessage<ScriptStarted>): ScriptStarted {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.scriptId = "";
+    if (value !== undefined)
+      reflectionMergePartial<ScriptStarted>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ScriptStarted,
+  ): ScriptStarted {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string script_id */ 1:
+          message.scriptId = reader.string();
+          break;
+        case /* google.protobuf.Timestamp timestamp */ 2:
+          message.timestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.timestamp,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ScriptStarted,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string script_id = 1; */
+    if (message.scriptId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.scriptId);
+    /* google.protobuf.Timestamp timestamp = 2; */
+    if (message.timestamp)
+      Timestamp.internalBinaryWrite(
+        message.timestamp,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ScriptStarted
+ */
+export const ScriptStarted = new ScriptStarted$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ScriptCompleted$Type extends MessageType<ScriptCompleted> {
+  constructor() {
+    super("soulfire.v1.ScriptCompleted", [
+      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 2, name: "timestamp", kind: "message", T: () => Timestamp },
+    ]);
+  }
+  create(value?: PartialMessage<ScriptCompleted>): ScriptCompleted {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.success = false;
+    if (value !== undefined)
+      reflectionMergePartial<ScriptCompleted>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ScriptCompleted,
+  ): ScriptCompleted {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool success */ 1:
+          message.success = reader.bool();
+          break;
+        case /* google.protobuf.Timestamp timestamp */ 2:
+          message.timestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.timestamp,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ScriptCompleted,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool success = 1; */
+    if (message.success !== false)
+      writer.tag(1, WireType.Varint).bool(message.success);
+    /* google.protobuf.Timestamp timestamp = 2; */
+    if (message.timestamp)
+      Timestamp.internalBinaryWrite(
+        message.timestamp,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ScriptCompleted
+ */
+export const ScriptCompleted = new ScriptCompleted$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ScriptEvent$Type extends MessageType<ScriptEvent> {
+  constructor() {
+    super("soulfire.v1.ScriptEvent", [
+      {
+        no: 1,
+        name: "node_started",
+        kind: "message",
+        oneof: "event",
+        T: () => NodeStarted,
+      },
+      {
+        no: 2,
+        name: "node_completed",
+        kind: "message",
+        oneof: "event",
+        T: () => NodeCompleted,
+      },
+      {
+        no: 3,
+        name: "node_error",
+        kind: "message",
+        oneof: "event",
+        T: () => NodeError,
+      },
+      {
+        no: 4,
+        name: "script_completed",
+        kind: "message",
+        oneof: "event",
+        T: () => ScriptCompleted,
+      },
+      {
+        no: 5,
+        name: "script_started",
+        kind: "message",
+        oneof: "event",
+        T: () => ScriptStarted,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ScriptEvent>): ScriptEvent {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.event = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<ScriptEvent>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ScriptEvent,
+  ): ScriptEvent {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.NodeStarted node_started */ 1:
+          message.event = {
+            oneofKind: "nodeStarted",
+            nodeStarted: NodeStarted.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.event as any).nodeStarted,
+            ),
+          };
+          break;
+        case /* soulfire.v1.NodeCompleted node_completed */ 2:
+          message.event = {
+            oneofKind: "nodeCompleted",
+            nodeCompleted: NodeCompleted.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.event as any).nodeCompleted,
+            ),
+          };
+          break;
+        case /* soulfire.v1.NodeError node_error */ 3:
+          message.event = {
+            oneofKind: "nodeError",
+            nodeError: NodeError.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.event as any).nodeError,
+            ),
+          };
+          break;
+        case /* soulfire.v1.ScriptCompleted script_completed */ 4:
+          message.event = {
+            oneofKind: "scriptCompleted",
+            scriptCompleted: ScriptCompleted.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.event as any).scriptCompleted,
+            ),
+          };
+          break;
+        case /* soulfire.v1.ScriptStarted script_started */ 5:
+          message.event = {
+            oneofKind: "scriptStarted",
+            scriptStarted: ScriptStarted.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.event as any).scriptStarted,
+            ),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ScriptEvent,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.NodeStarted node_started = 1; */
+    if (message.event.oneofKind === "nodeStarted")
+      NodeStarted.internalBinaryWrite(
+        message.event.nodeStarted,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.NodeCompleted node_completed = 2; */
+    if (message.event.oneofKind === "nodeCompleted")
+      NodeCompleted.internalBinaryWrite(
+        message.event.nodeCompleted,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.NodeError node_error = 3; */
+    if (message.event.oneofKind === "nodeError")
+      NodeError.internalBinaryWrite(
+        message.event.nodeError,
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.ScriptCompleted script_completed = 4; */
+    if (message.event.oneofKind === "scriptCompleted")
+      ScriptCompleted.internalBinaryWrite(
+        message.event.scriptCompleted,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.ScriptStarted script_started = 5; */
+    if (message.event.oneofKind === "scriptStarted")
+      ScriptStarted.internalBinaryWrite(
+        message.event.scriptStarted,
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ScriptEvent
+ */
+export const ScriptEvent = new ScriptEvent$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
+  constructor() {
+    super("soulfire.v1.CreateScriptRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "name", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 4,
+        name: "scope",
+        kind: "enum",
+        T: () => ["soulfire.v1.ScriptScope", ScriptScope, "SCRIPT_SCOPE_"],
+      },
+      {
+        no: 5,
+        name: "nodes",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ScriptNode,
+      },
+      {
+        no: 6,
+        name: "edges",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ScriptEdge,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<CreateScriptRequest>): CreateScriptRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.name = "";
+    message.description = "";
+    message.scope = 0;
+    message.nodes = [];
+    message.edges = [];
+    if (value !== undefined)
+      reflectionMergePartial<CreateScriptRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: CreateScriptRequest,
+  ): CreateScriptRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string name */ 2:
+          message.name = reader.string();
+          break;
+        case /* string description */ 3:
+          message.description = reader.string();
+          break;
+        case /* soulfire.v1.ScriptScope scope */ 4:
+          message.scope = reader.int32();
+          break;
+        case /* repeated soulfire.v1.ScriptNode nodes */ 5:
+          message.nodes.push(
+            ScriptNode.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* repeated soulfire.v1.ScriptEdge edges */ 6:
+          message.edges.push(
+            ScriptEdge.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: CreateScriptRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string name = 2; */
+    if (message.name !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.name);
+    /* string description = 3; */
+    if (message.description !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.description);
+    /* soulfire.v1.ScriptScope scope = 4; */
+    if (message.scope !== 0)
+      writer.tag(4, WireType.Varint).int32(message.scope);
+    /* repeated soulfire.v1.ScriptNode nodes = 5; */
+    for (let i = 0; i < message.nodes.length; i++)
+      ScriptNode.internalBinaryWrite(
+        message.nodes[i],
+        writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.ScriptEdge edges = 6; */
+    for (let i = 0; i < message.edges.length; i++)
+      ScriptEdge.internalBinaryWrite(
+        message.edges[i],
+        writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.CreateScriptRequest
+ */
+export const CreateScriptRequest = new CreateScriptRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class CreateScriptResponse$Type extends MessageType<CreateScriptResponse> {
+  constructor() {
+    super("soulfire.v1.CreateScriptResponse", [
+      { no: 1, name: "script", kind: "message", T: () => ScriptData },
+    ]);
+  }
+  create(value?: PartialMessage<CreateScriptResponse>): CreateScriptResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<CreateScriptResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: CreateScriptResponse,
+  ): CreateScriptResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.ScriptData script */ 1:
+          message.script = ScriptData.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.script,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: CreateScriptResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.ScriptData script = 1; */
+    if (message.script)
+      ScriptData.internalBinaryWrite(
+        message.script,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.CreateScriptResponse
+ */
+export const CreateScriptResponse = new CreateScriptResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetScriptRequest$Type extends MessageType<GetScriptRequest> {
+  constructor() {
+    super("soulfire.v1.GetScriptRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<GetScriptRequest>): GetScriptRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.scriptId = "";
+    if (value !== undefined)
+      reflectionMergePartial<GetScriptRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetScriptRequest,
+  ): GetScriptRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string script_id */ 2:
+          message.scriptId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetScriptRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string script_id = 2; */
+    if (message.scriptId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.scriptId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GetScriptRequest
+ */
+export const GetScriptRequest = new GetScriptRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetScriptResponse$Type extends MessageType<GetScriptResponse> {
+  constructor() {
+    super("soulfire.v1.GetScriptResponse", [
+      { no: 1, name: "script", kind: "message", T: () => ScriptData },
+    ]);
+  }
+  create(value?: PartialMessage<GetScriptResponse>): GetScriptResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<GetScriptResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetScriptResponse,
+  ): GetScriptResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.ScriptData script */ 1:
+          message.script = ScriptData.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.script,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetScriptResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.ScriptData script = 1; */
+    if (message.script)
+      ScriptData.internalBinaryWrite(
+        message.script,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GetScriptResponse
+ */
+export const GetScriptResponse = new GetScriptResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
+  constructor() {
+    super("soulfire.v1.UpdateScriptRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "name",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 4,
+        name: "description",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 5,
+        name: "scope",
+        kind: "enum",
+        opt: true,
+        T: () => ["soulfire.v1.ScriptScope", ScriptScope, "SCRIPT_SCOPE_"],
+      },
+      {
+        no: 6,
+        name: "nodes",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ScriptNode,
+      },
+      {
+        no: 7,
+        name: "edges",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ScriptEdge,
+      },
+      { no: 8, name: "update_nodes", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 9, name: "update_edges", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+    ]);
+  }
+  create(value?: PartialMessage<UpdateScriptRequest>): UpdateScriptRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.scriptId = "";
+    message.nodes = [];
+    message.edges = [];
+    message.updateNodes = false;
+    message.updateEdges = false;
+    if (value !== undefined)
+      reflectionMergePartial<UpdateScriptRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: UpdateScriptRequest,
+  ): UpdateScriptRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string script_id */ 2:
+          message.scriptId = reader.string();
+          break;
+        case /* optional string name */ 3:
+          message.name = reader.string();
+          break;
+        case /* optional string description */ 4:
+          message.description = reader.string();
+          break;
+        case /* optional soulfire.v1.ScriptScope scope */ 5:
+          message.scope = reader.int32();
+          break;
+        case /* repeated soulfire.v1.ScriptNode nodes */ 6:
+          message.nodes.push(
+            ScriptNode.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* repeated soulfire.v1.ScriptEdge edges */ 7:
+          message.edges.push(
+            ScriptEdge.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* bool update_nodes */ 8:
+          message.updateNodes = reader.bool();
+          break;
+        case /* bool update_edges */ 9:
+          message.updateEdges = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: UpdateScriptRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string script_id = 2; */
+    if (message.scriptId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.scriptId);
+    /* optional string name = 3; */
+    if (message.name !== undefined)
+      writer.tag(3, WireType.LengthDelimited).string(message.name);
+    /* optional string description = 4; */
+    if (message.description !== undefined)
+      writer.tag(4, WireType.LengthDelimited).string(message.description);
+    /* optional soulfire.v1.ScriptScope scope = 5; */
+    if (message.scope !== undefined)
+      writer.tag(5, WireType.Varint).int32(message.scope);
+    /* repeated soulfire.v1.ScriptNode nodes = 6; */
+    for (let i = 0; i < message.nodes.length; i++)
+      ScriptNode.internalBinaryWrite(
+        message.nodes[i],
+        writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.ScriptEdge edges = 7; */
+    for (let i = 0; i < message.edges.length; i++)
+      ScriptEdge.internalBinaryWrite(
+        message.edges[i],
+        writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* bool update_nodes = 8; */
+    if (message.updateNodes !== false)
+      writer.tag(8, WireType.Varint).bool(message.updateNodes);
+    /* bool update_edges = 9; */
+    if (message.updateEdges !== false)
+      writer.tag(9, WireType.Varint).bool(message.updateEdges);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.UpdateScriptRequest
+ */
+export const UpdateScriptRequest = new UpdateScriptRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class UpdateScriptResponse$Type extends MessageType<UpdateScriptResponse> {
+  constructor() {
+    super("soulfire.v1.UpdateScriptResponse", [
+      { no: 1, name: "script", kind: "message", T: () => ScriptData },
+    ]);
+  }
+  create(value?: PartialMessage<UpdateScriptResponse>): UpdateScriptResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<UpdateScriptResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: UpdateScriptResponse,
+  ): UpdateScriptResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.ScriptData script */ 1:
+          message.script = ScriptData.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.script,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: UpdateScriptResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.ScriptData script = 1; */
+    if (message.script)
+      ScriptData.internalBinaryWrite(
+        message.script,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.UpdateScriptResponse
+ */
+export const UpdateScriptResponse = new UpdateScriptResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DeleteScriptRequest$Type extends MessageType<DeleteScriptRequest> {
+  constructor() {
+    super("soulfire.v1.DeleteScriptRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<DeleteScriptRequest>): DeleteScriptRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.scriptId = "";
+    if (value !== undefined)
+      reflectionMergePartial<DeleteScriptRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DeleteScriptRequest,
+  ): DeleteScriptRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string script_id */ 2:
+          message.scriptId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DeleteScriptRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string script_id = 2; */
+    if (message.scriptId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.scriptId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DeleteScriptRequest
+ */
+export const DeleteScriptRequest = new DeleteScriptRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DeleteScriptResponse$Type extends MessageType<DeleteScriptResponse> {
+  constructor() {
+    super("soulfire.v1.DeleteScriptResponse", []);
+  }
+  create(value?: PartialMessage<DeleteScriptResponse>): DeleteScriptResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<DeleteScriptResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DeleteScriptResponse,
+  ): DeleteScriptResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DeleteScriptResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DeleteScriptResponse
+ */
+export const DeleteScriptResponse = new DeleteScriptResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ListScriptsRequest$Type extends MessageType<ListScriptsRequest> {
+  constructor() {
+    super("soulfire.v1.ListScriptsRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ListScriptsRequest>): ListScriptsRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    if (value !== undefined)
+      reflectionMergePartial<ListScriptsRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ListScriptsRequest,
+  ): ListScriptsRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ListScriptsRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ListScriptsRequest
+ */
+export const ListScriptsRequest = new ListScriptsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ListScriptsResponse$Type extends MessageType<ListScriptsResponse> {
+  constructor() {
+    super("soulfire.v1.ListScriptsResponse", [
+      {
+        no: 1,
+        name: "scripts",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ScriptInfo,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ListScriptsResponse>): ListScriptsResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.scripts = [];
+    if (value !== undefined)
+      reflectionMergePartial<ListScriptsResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ListScriptsResponse,
+  ): ListScriptsResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* repeated soulfire.v1.ScriptInfo scripts */ 1:
+          message.scripts.push(
+            ScriptInfo.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ListScriptsResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* repeated soulfire.v1.ScriptInfo scripts = 1; */
+    for (let i = 0; i < message.scripts.length; i++)
+      ScriptInfo.internalBinaryWrite(
+        message.scripts[i],
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ListScriptsResponse
+ */
+export const ListScriptsResponse = new ListScriptsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StartScriptRequest$Type extends MessageType<StartScriptRequest> {
+  constructor() {
+    super("soulfire.v1.StartScriptRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "inputs",
+        kind: "map",
+        K: 9 /*ScalarType.STRING*/,
+        V: { kind: "message", T: () => Value },
+      },
+    ]);
+  }
+  create(value?: PartialMessage<StartScriptRequest>): StartScriptRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.scriptId = "";
+    message.inputs = {};
+    if (value !== undefined)
+      reflectionMergePartial<StartScriptRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: StartScriptRequest,
+  ): StartScriptRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string script_id */ 2:
+          message.scriptId = reader.string();
+          break;
+        case /* map<string, google.protobuf.Value> inputs */ 3:
+          this.binaryReadMap3(message.inputs, reader, options);
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  private binaryReadMap3(
+    map: StartScriptRequest["inputs"],
+    reader: IBinaryReader,
+    options: BinaryReadOptions,
+  ): void {
+    let len = reader.uint32(),
+      end = reader.pos + len,
+      key: keyof StartScriptRequest["inputs"] | undefined,
+      val: StartScriptRequest["inputs"][any] | undefined;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case 1:
+          key = reader.string();
+          break;
+        case 2:
+          val = Value.internalBinaryRead(reader, reader.uint32(), options);
+          break;
+        default:
+          throw new globalThis.Error(
+            "unknown map entry field for soulfire.v1.StartScriptRequest.inputs",
+          );
+      }
+    }
+    map[key ?? ""] = val ?? Value.create();
+  }
+  internalBinaryWrite(
+    message: StartScriptRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string script_id = 2; */
+    if (message.scriptId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.scriptId);
+    /* map<string, google.protobuf.Value> inputs = 3; */
+    for (let k of globalThis.Object.keys(message.inputs)) {
+      writer
+        .tag(3, WireType.LengthDelimited)
+        .fork()
+        .tag(1, WireType.LengthDelimited)
+        .string(k);
+      writer.tag(2, WireType.LengthDelimited).fork();
+      Value.internalBinaryWrite(message.inputs[k], writer, options);
+      writer.join().join();
+    }
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.StartScriptRequest
+ */
+export const StartScriptRequest = new StartScriptRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StopScriptRequest$Type extends MessageType<StopScriptRequest> {
+  constructor() {
+    super("soulfire.v1.StopScriptRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<StopScriptRequest>): StopScriptRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.scriptId = "";
+    if (value !== undefined)
+      reflectionMergePartial<StopScriptRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: StopScriptRequest,
+  ): StopScriptRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string script_id */ 2:
+          message.scriptId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: StopScriptRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string script_id = 2; */
+    if (message.scriptId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.scriptId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.StopScriptRequest
+ */
+export const StopScriptRequest = new StopScriptRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class StopScriptResponse$Type extends MessageType<StopScriptResponse> {
+  constructor() {
+    super("soulfire.v1.StopScriptResponse", []);
+  }
+  create(value?: PartialMessage<StopScriptResponse>): StopScriptResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<StopScriptResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: StopScriptResponse,
+  ): StopScriptResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: StopScriptResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.StopScriptResponse
+ */
+export const StopScriptResponse = new StopScriptResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetScriptStatusRequest$Type extends MessageType<GetScriptStatusRequest> {
+  constructor() {
+    super("soulfire.v1.GetScriptStatusRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(
+    value?: PartialMessage<GetScriptStatusRequest>,
+  ): GetScriptStatusRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.scriptId = "";
+    if (value !== undefined)
+      reflectionMergePartial<GetScriptStatusRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetScriptStatusRequest,
+  ): GetScriptStatusRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string script_id */ 2:
+          message.scriptId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetScriptStatusRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string script_id = 2; */
+    if (message.scriptId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.scriptId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GetScriptStatusRequest
+ */
+export const GetScriptStatusRequest = new GetScriptStatusRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetScriptStatusResponse$Type extends MessageType<GetScriptStatusResponse> {
+  constructor() {
+    super("soulfire.v1.GetScriptStatusResponse", [
+      { no: 1, name: "status", kind: "message", T: () => ScriptStatus },
+    ]);
+  }
+  create(
+    value?: PartialMessage<GetScriptStatusResponse>,
+  ): GetScriptStatusResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<GetScriptStatusResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetScriptStatusResponse,
+  ): GetScriptStatusResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.ScriptStatus status */ 1:
+          message.status = ScriptStatus.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.status,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetScriptStatusResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.ScriptStatus status = 1; */
+    if (message.status)
+      ScriptStatus.internalBinaryWrite(
+        message.status,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GetScriptStatusResponse
+ */
+export const GetScriptStatusResponse = new GetScriptStatusResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SubscribeScriptLogsRequest$Type extends MessageType<SubscribeScriptLogsRequest> {
+  constructor() {
+    super("soulfire.v1.SubscribeScriptLogsRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "min_level",
+        kind: "enum",
+        T: () => ["soulfire.v1.LogLevel", LogLevel, "LOG_LEVEL_"],
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<SubscribeScriptLogsRequest>,
+  ): SubscribeScriptLogsRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.scriptId = "";
+    message.minLevel = 0;
+    if (value !== undefined)
+      reflectionMergePartial<SubscribeScriptLogsRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SubscribeScriptLogsRequest,
+  ): SubscribeScriptLogsRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string script_id */ 2:
+          message.scriptId = reader.string();
+          break;
+        case /* soulfire.v1.LogLevel min_level */ 3:
+          message.minLevel = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: SubscribeScriptLogsRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string script_id = 2; */
+    if (message.scriptId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.scriptId);
+    /* soulfire.v1.LogLevel min_level = 3; */
+    if (message.minLevel !== 0)
+      writer.tag(3, WireType.Varint).int32(message.minLevel);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.SubscribeScriptLogsRequest
+ */
+export const SubscribeScriptLogsRequest = new SubscribeScriptLogsRequest$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.ScriptService
  */
-export const ScriptService = new ServiceType("soulfire.v1.ScriptService", []);
+export const ScriptService = new ServiceType("soulfire.v1.ScriptService", [
+  {
+    name: "CreateScript",
+    options: {},
+    I: CreateScriptRequest,
+    O: CreateScriptResponse,
+  },
+  { name: "GetScript", options: {}, I: GetScriptRequest, O: GetScriptResponse },
+  {
+    name: "UpdateScript",
+    options: {},
+    I: UpdateScriptRequest,
+    O: UpdateScriptResponse,
+  },
+  {
+    name: "DeleteScript",
+    options: {},
+    I: DeleteScriptRequest,
+    O: DeleteScriptResponse,
+  },
+  {
+    name: "ListScripts",
+    options: {},
+    I: ListScriptsRequest,
+    O: ListScriptsResponse,
+  },
+  {
+    name: "StartScript",
+    serverStreaming: true,
+    options: {},
+    I: StartScriptRequest,
+    O: ScriptEvent,
+  },
+  {
+    name: "StopScript",
+    options: {},
+    I: StopScriptRequest,
+    O: StopScriptResponse,
+  },
+  {
+    name: "GetScriptStatus",
+    options: {},
+    I: GetScriptStatusRequest,
+    O: GetScriptStatusResponse,
+  },
+  {
+    name: "SubscribeScriptLogs",
+    serverStreaming: true,
+    options: {},
+    I: SubscribeScriptLogsRequest,
+    O: ScriptLogEntry,
+  },
+]);

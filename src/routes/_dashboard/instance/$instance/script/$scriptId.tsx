@@ -1,15 +1,36 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ReactFlowProvider, useReactFlow } from "@xyflow/react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { use, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { ExecutionLogs } from "@/components/script-editor/ExecutionLogs.tsx";
 import { NodeInspector } from "@/components/script-editor/NodeInspector.tsx";
 import { NodePalette } from "@/components/script-editor/NodePalette.tsx";
 import { getNodeDefinition } from "@/components/script-editor/nodes";
 import { ScriptEditor } from "@/components/script-editor/ScriptEditor.tsx";
 import { ScriptToolbar } from "@/components/script-editor/ScriptToolbar.tsx";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable.tsx";
+import { ScriptServiceClient } from "@/generated/soulfire/script.client";
+import {
+  edgesToProto,
+  nodesToProto,
+  ScriptScope,
+  scriptDataToStore,
+  scriptQueryOptions,
+} from "@/lib/script-service.ts";
+import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
+
+import "@xyflow/react/dist/style.css";
 
 interface LogEntry {
   id: string;
@@ -25,15 +46,6 @@ interface ScriptNode {
   position: { x: number; y: number };
   data: Record<string, unknown>;
 }
-
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable.tsx";
-import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
-
-import "@xyflow/react/dist/style.css";
 
 export const Route = createFileRoute(
   "/_dashboard/instance/$instance/script/$scriptId",
@@ -53,28 +65,43 @@ function ScriptEditorContent() {
   const { t: tInstance } = useTranslation("instance");
   const { instance: instanceId, scriptId } = Route.useParams();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const transport = use(TransportContext);
+
   // Required for route context validation
   useSuspenseQuery(instanceInfoQueryOptions);
+
+  // Fetch script data from server (skip for new scripts)
+  const { data: serverScriptData } = useSuspenseQuery({
+    ...scriptQueryOptions(transport, instanceId, scriptId),
+    // For new scripts, return null without making a request
+    queryFn:
+      scriptId === "new"
+        ? () => Promise.resolve(null)
+        : scriptQueryOptions(transport, instanceId, scriptId).queryFn,
+  });
 
   const reactFlowInstance = useReactFlow();
 
   // Script editor store
   const nodes = useScriptEditorStore((state) => state.nodes);
+  const edges = useScriptEditorStore((state) => state.edges);
   const loadScript = useScriptEditorStore((state) => state.loadScript);
   const resetEditor = useScriptEditorStore((state) => state.resetEditor);
   const setDirty = useScriptEditorStore((state) => state.setDirty);
   const setRunning = useScriptEditorStore((state) => state.setRunning);
+  const setActiveNode = useScriptEditorStore((state) => state.setActiveNode);
   const addNode = useScriptEditorStore((state) => state.addNode);
-  const _setSelectedNode = useScriptEditorStore(
-    (state) => state.setSelectedNode,
-  );
   const selectedNodeId = useScriptEditorStore((state) => state.selectedNodeId);
   const updateNodeData = useScriptEditorStore((state) => state.updateNodeData);
+  const getScriptData = useScriptEditorStore((state) => state.getScriptData);
 
   // Local state
   const [isSaving, setIsSaving] = useState(false);
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
+  const executionAbortRef = useRef<AbortController | null>(null);
 
   // Get selected node for inspector
   const selectedNode = useMemo(() => {
@@ -89,47 +116,118 @@ function ScriptEditorContent() {
     } as ScriptNode;
   }, [nodes, selectedNodeId]);
 
-  // Load script on mount
+  // Load script into store when data changes
   useEffect(() => {
-    // In production, this would fetch from gRPC
-    // For now, we'll check if it's a new script or load demo data
     if (scriptId === "new") {
       resetEditor();
-    } else {
-      // Load demo script data
-      loadScript({
-        id: scriptId,
-        name: "Demo Script",
-        description: "A demo script for testing the editor",
-        nodes: [],
-        edges: [],
-      });
+    } else if (serverScriptData) {
+      loadScript(scriptDataToStore(serverScriptData));
     }
+  }, [scriptId, serverScriptData, loadScript, resetEditor]);
 
-    return () => {
-      // Clean up on unmount
-      resetEditor();
-    };
-  }, [scriptId, loadScript, resetEditor]);
+  // Create script mutation
+  const createMutation = useMutation({
+    mutationKey: ["script", "create", instanceId],
+    mutationFn: async () => {
+      if (!transport) throw new Error("No transport available");
+      const scriptData = getScriptData();
+      const client = new ScriptServiceClient(transport);
+      const result = await client.createScript({
+        instanceId,
+        name: scriptData.name || "Untitled Script",
+        description: scriptData.description,
+        scope: ScriptScope.INSTANCE,
+        nodes: nodesToProto(nodes),
+        edges: edgesToProto(edges),
+      });
+      return result.response;
+    },
+    onSuccess: (response) => {
+      setDirty(false);
+      toast.success(tInstance("scripts.saveSuccess"));
+      // Navigate to the real script ID
+      if (response.script) {
+        void navigate({
+          to: "/instance/$instance/script/$scriptId",
+          params: { instance: instanceId, scriptId: response.script.id },
+          replace: true,
+        });
+      }
+    },
+    onError: (error) => {
+      console.error("Failed to create script:", error);
+      toast.error(tInstance("scripts.saveError"));
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: ["scripts", instanceId] });
+    },
+  });
+
+  // Update script mutation
+  const updateMutation = useMutation({
+    mutationKey: ["script", "update", instanceId, scriptId],
+    mutationFn: async () => {
+      if (!transport) throw new Error("No transport available");
+      const scriptData = getScriptData();
+      const client = new ScriptServiceClient(transport);
+      const result = await client.updateScript({
+        instanceId,
+        scriptId,
+        name: scriptData.name,
+        description: scriptData.description,
+        nodes: nodesToProto(nodes),
+        edges: edgesToProto(edges),
+        updateNodes: true,
+        updateEdges: true,
+      });
+      return result.response;
+    },
+    onSuccess: () => {
+      setDirty(false);
+      toast.success(tInstance("scripts.saveSuccess"));
+    },
+    onError: (error) => {
+      console.error("Failed to update script:", error);
+      toast.error(tInstance("scripts.saveError"));
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({
+        queryKey: ["script", instanceId, scriptId],
+      });
+    },
+  });
 
   // Handle save
   const handleSave = useCallback(async () => {
     setIsSaving(true);
     try {
-      // In production, this would call gRPC to save
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      setDirty(false);
-      toast.success(tInstance("scripts.saveSuccess"));
-    } catch (_error) {
-      toast.error(tInstance("scripts.saveError"));
+      if (scriptId === "new") {
+        await createMutation.mutateAsync();
+      } else {
+        await updateMutation.mutateAsync();
+      }
     } finally {
       setIsSaving(false);
     }
-  }, [setDirty, tInstance]);
+  }, [scriptId, createMutation, updateMutation]);
 
-  // Handle start/stop
-  const handleStart = useCallback(() => {
+  // Handle script execution start
+  const handleStart = useCallback(async () => {
+    if (!transport || scriptId === "new") {
+      toast.error("Save the script first before running");
+      return;
+    }
+
+    // Abort any existing execution
+    if (executionAbortRef.current) {
+      executionAbortRef.current.abort();
+    }
+
+    const abortController = new AbortController();
+    executionAbortRef.current = abortController;
+
     setRunning(true);
+    setActiveNode(null);
     setLogs((prev) => [
       ...prev,
       {
@@ -137,26 +235,162 @@ function ScriptEditorContent() {
         timestamp: new Date(),
         level: "info",
         nodeId: null,
-        message: "Script started",
+        message: "Starting script execution...",
       },
     ]);
-    toast.success(tInstance("scripts.startSuccess"));
-  }, [setRunning, tInstance]);
 
-  const handleStop = useCallback(() => {
-    setRunning(false);
-    setLogs((prev) => [
-      ...prev,
-      {
-        id: crypto.randomUUID(),
-        timestamp: new Date(),
-        level: "info",
-        nodeId: null,
-        message: "Script stopped",
-      },
-    ]);
-    toast.success(tInstance("scripts.stopSuccess"));
-  }, [setRunning, tInstance]);
+    try {
+      const client = new ScriptServiceClient(transport);
+      const { responses } = client.startScript(
+        { instanceId, scriptId, inputs: {} },
+        { abort: abortController.signal },
+      );
+
+      responses.onMessage((event) => {
+        if (event.event.oneofKind === "scriptStarted") {
+          setLogs((prev) => [
+            ...prev,
+            {
+              id: crypto.randomUUID(),
+              timestamp: new Date(),
+              level: "info",
+              nodeId: null,
+              message: "Script started",
+            },
+          ]);
+          toast.success(tInstance("scripts.startSuccess"));
+        } else if (event.event.oneofKind === "nodeStarted") {
+          const nodeId = event.event.nodeStarted.nodeId;
+          setActiveNode(nodeId);
+          setLogs((prev) => [
+            ...prev,
+            {
+              id: crypto.randomUUID(),
+              timestamp: new Date(),
+              level: "debug",
+              nodeId,
+              message: `Node started: ${nodeId}`,
+            },
+          ]);
+        } else if (event.event.oneofKind === "nodeCompleted") {
+          const nodeId = event.event.nodeCompleted.nodeId;
+          setLogs((prev) => [
+            ...prev,
+            {
+              id: crypto.randomUUID(),
+              timestamp: new Date(),
+              level: "debug",
+              nodeId,
+              message: `Node completed: ${nodeId}`,
+            },
+          ]);
+        } else if (event.event.oneofKind === "nodeError") {
+          const { nodeId, errorMessage } = event.event.nodeError;
+          setLogs((prev) => [
+            ...prev,
+            {
+              id: crypto.randomUUID(),
+              timestamp: new Date(),
+              level: "error",
+              nodeId,
+              message: `Node error: ${errorMessage}`,
+            },
+          ]);
+        } else if (event.event.oneofKind === "scriptCompleted") {
+          const success = event.event.scriptCompleted.success;
+          setRunning(false);
+          setActiveNode(null);
+          setLogs((prev) => [
+            ...prev,
+            {
+              id: crypto.randomUUID(),
+              timestamp: new Date(),
+              level: success ? "info" : "warn",
+              nodeId: null,
+              message: success
+                ? "Script completed successfully"
+                : "Script stopped",
+            },
+          ]);
+          if (success) {
+            toast.success("Script completed");
+          }
+        }
+      });
+
+      responses.onError((error) => {
+        if (abortController.signal.aborted) return;
+        console.error("Script execution error:", error);
+        setRunning(false);
+        setActiveNode(null);
+        setLogs((prev) => [
+          ...prev,
+          {
+            id: crypto.randomUUID(),
+            timestamp: new Date(),
+            level: "error",
+            nodeId: null,
+            message: `Execution error: ${error.message}`,
+          },
+        ]);
+        toast.error("Script execution failed");
+      });
+
+      responses.onComplete(() => {
+        if (abortController.signal.aborted) return;
+        setRunning(false);
+        setActiveNode(null);
+      });
+    } catch (error) {
+      if (abortController.signal.aborted) return;
+      console.error("Failed to start script:", error);
+      setRunning(false);
+      toast.error("Failed to start script");
+    }
+  }, [transport, instanceId, scriptId, setRunning, setActiveNode, tInstance]);
+
+  // Handle script execution stop
+  const handleStop = useCallback(async () => {
+    // Abort the streaming connection
+    if (executionAbortRef.current) {
+      executionAbortRef.current.abort();
+      executionAbortRef.current = null;
+    }
+
+    if (!transport || scriptId === "new") return;
+
+    try {
+      const client = new ScriptServiceClient(transport);
+      await client.stopScript({ instanceId, scriptId });
+      setRunning(false);
+      setActiveNode(null);
+      setLogs((prev) => [
+        ...prev,
+        {
+          id: crypto.randomUUID(),
+          timestamp: new Date(),
+          level: "info",
+          nodeId: null,
+          message: "Script stopped by user",
+        },
+      ]);
+      toast.success(tInstance("scripts.stopSuccess"));
+    } catch (error) {
+      console.error("Failed to stop script:", error);
+      // Even if the RPC fails, mark as stopped locally
+      setRunning(false);
+      setActiveNode(null);
+    }
+  }, [transport, instanceId, scriptId, setRunning, setActiveNode, tInstance]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (executionAbortRef.current) {
+        executionAbortRef.current.abort();
+      }
+    };
+  }, []);
 
   // Handle zoom controls
   const handleZoomIn = useCallback(() => {

@@ -3,64 +3,210 @@
 // @generated from protobuf file "soulfire/script.proto" (package "soulfire.v1", syntax proto3)
 // tslint:disable
 // @ts-nocheck
-import type { RpcTransport, ServiceInfo } from "@protobuf-ts/runtime-rpc";
+import type {
+  RpcOptions,
+  RpcTransport,
+  ServerStreamingCall,
+  ServiceInfo,
+  UnaryCall,
+} from "@protobuf-ts/runtime-rpc";
+import { stackIntercept } from "@protobuf-ts/runtime-rpc";
+import type {
+  CreateScriptRequest,
+  CreateScriptResponse,
+  DeleteScriptRequest,
+  DeleteScriptResponse,
+  GetScriptRequest,
+  GetScriptResponse,
+  GetScriptStatusRequest,
+  GetScriptStatusResponse,
+  ListScriptsRequest,
+  ListScriptsResponse,
+  ScriptEvent,
+  ScriptLogEntry,
+  StartScriptRequest,
+  StopScriptRequest,
+  StopScriptResponse,
+  SubscribeScriptLogsRequest,
+  UpdateScriptRequest,
+  UpdateScriptResponse,
+} from "./script";
 import { ScriptService } from "./script";
 /**
- * ScriptService provides management capabilities for automation scripts within SoulFire.
+ * ScriptService provides management and execution capabilities for visual node-based
+ * automation scripts within SoulFire.
  *
- * STATUS: This service is currently DISABLED while a visual node-based script editor
- * is under development. The service definition is preserved as a placeholder for the
- * future implementation.
+ * The visual scripting system allows users to create automation workflows by connecting
+ * nodes in a graph. Each node represents an action, condition, or event trigger.
+ * Nodes are connected by edges that define execution flow and data transfer.
  *
- * HISTORY: This service previously supported JavaScript, Python, and TypeScript scripts
- * that could be scoped either globally (affecting all instances) or per-instance.
- * The text-based scripting system (using GraalVM Polyglot) was removed in favor of
- * an upcoming visual script editor that will provide a more user-friendly,
- * node-based approach to automation.
+ * SCRIPT LIFECYCLE:
+ * 1. Create a script using CreateScript with initial nodes/edges or empty graph
+ * 2. Edit the script using UpdateScript to modify the node graph
+ * 3. Execute the script using StartScript, which returns a stream of execution events
+ * 4. Monitor execution via the ScriptEvent stream or GetScriptStatus
+ * 5. Optionally stop early using StopScript
+ * 6. Delete unused scripts with DeleteScript
  *
- * PLANNED FUNCTIONALITY: When re-implemented, this service will likely provide:
- * - Script creation, deletion, and modification through a visual editor
- * - Script execution scoped to global or instance levels
- * - Script lifecycle management (start, stop, restart)
- * - Script listing and metadata retrieval
- * - Integration with the logging system via InstanceScriptLogScope (see logs.proto)
+ * PERMISSIONS: Script operations require appropriate instance permissions.
+ * The specific permissions are TBD but will likely include:
+ * - READ_SCRIPT: View script definitions and status
+ * - UPDATE_SCRIPT: Create, modify, and delete scripts
+ * - EXECUTE_SCRIPT: Start and stop script execution
  *
- * PERMISSIONS: Script-related permissions have been reserved in common.proto:
- * - GlobalPermission fields 18-22 are reserved for global script permissions
- * - InstancePermission fields 16-20 are reserved for instance script permissions
- *
- * LOGGING: Script execution logs can be filtered using InstanceScriptLogScope
- * defined in logs.proto, which requires both an instance_id and script_id.
+ * LOGGING: Script execution logs can be streamed via SubscribeScriptLogs or
+ * filtered using InstanceScriptLogScope in the LogsService (see logs.proto).
  *
  * @generated from protobuf service soulfire.v1.ScriptService
  */
-export interface IScriptServiceClient {}
+export interface IScriptServiceClient {
+  /**
+   * Creates a new script in the specified instance.
+   * The script can be created with initial nodes and edges, or as a blank script
+   * to be edited later.
+   * Returns: The complete script data including the generated ID
+   * Errors: NOT_FOUND if instance does not exist
+   * Errors: PERMISSION_DENIED if user lacks script creation permission
+   * Errors: INVALID_ARGUMENT if required fields are missing or invalid
+   *
+   * @generated from protobuf rpc: CreateScript
+   */
+  createScript(
+    input: CreateScriptRequest,
+    options?: RpcOptions,
+  ): UnaryCall<CreateScriptRequest, CreateScriptResponse>;
+  /**
+   * Retrieves a specific script by its ID.
+   * Returns the complete script data including all nodes and edges.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script read permission
+   *
+   * @generated from protobuf rpc: GetScript
+   */
+  getScript(
+    input: GetScriptRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetScriptRequest, GetScriptResponse>;
+  /**
+   * Updates an existing script's metadata and/or node graph.
+   * Only specified fields are updated; others remain unchanged.
+   * Use update_nodes/update_edges flags to explicitly set empty lists.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script update permission
+   * Errors: INVALID_ARGUMENT if update data is invalid
+   *
+   * @generated from protobuf rpc: UpdateScript
+   */
+  updateScript(
+    input: UpdateScriptRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UpdateScriptRequest, UpdateScriptResponse>;
+  /**
+   * Permanently deletes a script.
+   * If the script is currently running, it will be stopped first.
+   * This operation cannot be undone.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script delete permission
+   *
+   * @generated from protobuf rpc: DeleteScript
+   */
+  deleteScript(
+    input: DeleteScriptRequest,
+    options?: RpcOptions,
+  ): UnaryCall<DeleteScriptRequest, DeleteScriptResponse>;
+  /**
+   * Lists all scripts in the specified instance.
+   * Returns summary information (ScriptInfo) without full node/edge data
+   * to reduce response size.
+   * Errors: NOT_FOUND if instance does not exist
+   * Errors: PERMISSION_DENIED if user lacks script read permission
+   *
+   * @generated from protobuf rpc: ListScripts
+   */
+  listScripts(
+    input: ListScriptsRequest,
+    options?: RpcOptions,
+  ): UnaryCall<ListScriptsRequest, ListScriptsResponse>;
+  /**
+   * Starts executing a script and streams execution events.
+   * The stream provides real-time feedback about script execution including
+   * node start/complete events, errors, and final completion status.
+   * The stream remains open until the script completes or is stopped.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script execution permission
+   * Errors: FAILED_PRECONDITION if script is already running
+   * Errors: INVALID_ARGUMENT if script graph is invalid (e.g., no trigger nodes)
+   *
+   * @generated from protobuf rpc: StartScript
+   */
+  startScript(
+    input: StartScriptRequest,
+    options?: RpcOptions,
+  ): ServerStreamingCall<StartScriptRequest, ScriptEvent>;
+  /**
+   * Stops a currently running script.
+   * Execution is halted gracefully after the current node completes.
+   * A ScriptCompleted event with success=false will be emitted on the StartScript stream.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script execution permission
+   * Errors: FAILED_PRECONDITION if script is not running
+   *
+   * @generated from protobuf rpc: StopScript
+   */
+  stopScript(
+    input: StopScriptRequest,
+    options?: RpcOptions,
+  ): UnaryCall<StopScriptRequest, StopScriptResponse>;
+  /**
+   * Gets the current execution status of a script.
+   * Returns whether the script is running, which node is active, and execution count.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script read permission
+   *
+   * @generated from protobuf rpc: GetScriptStatus
+   */
+  getScriptStatus(
+    input: GetScriptStatusRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetScriptStatusRequest, GetScriptStatusResponse>;
+  /**
+   * Subscribes to log entries generated during script execution.
+   * Returns a stream of log entries at or above the specified minimum level.
+   * The stream remains open until cancelled by the client.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script log subscription permission
+   *
+   * @generated from protobuf rpc: SubscribeScriptLogs
+   */
+  subscribeScriptLogs(
+    input: SubscribeScriptLogsRequest,
+    options?: RpcOptions,
+  ): ServerStreamingCall<SubscribeScriptLogsRequest, ScriptLogEntry>;
+}
 /**
- * ScriptService provides management capabilities for automation scripts within SoulFire.
+ * ScriptService provides management and execution capabilities for visual node-based
+ * automation scripts within SoulFire.
  *
- * STATUS: This service is currently DISABLED while a visual node-based script editor
- * is under development. The service definition is preserved as a placeholder for the
- * future implementation.
+ * The visual scripting system allows users to create automation workflows by connecting
+ * nodes in a graph. Each node represents an action, condition, or event trigger.
+ * Nodes are connected by edges that define execution flow and data transfer.
  *
- * HISTORY: This service previously supported JavaScript, Python, and TypeScript scripts
- * that could be scoped either globally (affecting all instances) or per-instance.
- * The text-based scripting system (using GraalVM Polyglot) was removed in favor of
- * an upcoming visual script editor that will provide a more user-friendly,
- * node-based approach to automation.
+ * SCRIPT LIFECYCLE:
+ * 1. Create a script using CreateScript with initial nodes/edges or empty graph
+ * 2. Edit the script using UpdateScript to modify the node graph
+ * 3. Execute the script using StartScript, which returns a stream of execution events
+ * 4. Monitor execution via the ScriptEvent stream or GetScriptStatus
+ * 5. Optionally stop early using StopScript
+ * 6. Delete unused scripts with DeleteScript
  *
- * PLANNED FUNCTIONALITY: When re-implemented, this service will likely provide:
- * - Script creation, deletion, and modification through a visual editor
- * - Script execution scoped to global or instance levels
- * - Script lifecycle management (start, stop, restart)
- * - Script listing and metadata retrieval
- * - Integration with the logging system via InstanceScriptLogScope (see logs.proto)
+ * PERMISSIONS: Script operations require appropriate instance permissions.
+ * The specific permissions are TBD but will likely include:
+ * - READ_SCRIPT: View script definitions and status
+ * - UPDATE_SCRIPT: Create, modify, and delete scripts
+ * - EXECUTE_SCRIPT: Start and stop script execution
  *
- * PERMISSIONS: Script-related permissions have been reserved in common.proto:
- * - GlobalPermission fields 18-22 are reserved for global script permissions
- * - InstancePermission fields 16-20 are reserved for instance script permissions
- *
- * LOGGING: Script execution logs can be filtered using InstanceScriptLogScope
- * defined in logs.proto, which requires both an instance_id and script_id.
+ * LOGGING: Script execution logs can be streamed via SubscribeScriptLogs or
+ * filtered using InstanceScriptLogScope in the LogsService (see logs.proto).
  *
  * @generated from protobuf service soulfire.v1.ScriptService
  */
@@ -69,4 +215,216 @@ export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
   methods = ScriptService.methods;
   options = ScriptService.options;
   constructor(private readonly _transport: RpcTransport) {}
+  /**
+   * Creates a new script in the specified instance.
+   * The script can be created with initial nodes and edges, or as a blank script
+   * to be edited later.
+   * Returns: The complete script data including the generated ID
+   * Errors: NOT_FOUND if instance does not exist
+   * Errors: PERMISSION_DENIED if user lacks script creation permission
+   * Errors: INVALID_ARGUMENT if required fields are missing or invalid
+   *
+   * @generated from protobuf rpc: CreateScript
+   */
+  createScript(
+    input: CreateScriptRequest,
+    options?: RpcOptions,
+  ): UnaryCall<CreateScriptRequest, CreateScriptResponse> {
+    const method = this.methods[0],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<CreateScriptRequest, CreateScriptResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Retrieves a specific script by its ID.
+   * Returns the complete script data including all nodes and edges.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script read permission
+   *
+   * @generated from protobuf rpc: GetScript
+   */
+  getScript(
+    input: GetScriptRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetScriptRequest, GetScriptResponse> {
+    const method = this.methods[1],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<GetScriptRequest, GetScriptResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Updates an existing script's metadata and/or node graph.
+   * Only specified fields are updated; others remain unchanged.
+   * Use update_nodes/update_edges flags to explicitly set empty lists.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script update permission
+   * Errors: INVALID_ARGUMENT if update data is invalid
+   *
+   * @generated from protobuf rpc: UpdateScript
+   */
+  updateScript(
+    input: UpdateScriptRequest,
+    options?: RpcOptions,
+  ): UnaryCall<UpdateScriptRequest, UpdateScriptResponse> {
+    const method = this.methods[2],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<UpdateScriptRequest, UpdateScriptResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Permanently deletes a script.
+   * If the script is currently running, it will be stopped first.
+   * This operation cannot be undone.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script delete permission
+   *
+   * @generated from protobuf rpc: DeleteScript
+   */
+  deleteScript(
+    input: DeleteScriptRequest,
+    options?: RpcOptions,
+  ): UnaryCall<DeleteScriptRequest, DeleteScriptResponse> {
+    const method = this.methods[3],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<DeleteScriptRequest, DeleteScriptResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Lists all scripts in the specified instance.
+   * Returns summary information (ScriptInfo) without full node/edge data
+   * to reduce response size.
+   * Errors: NOT_FOUND if instance does not exist
+   * Errors: PERMISSION_DENIED if user lacks script read permission
+   *
+   * @generated from protobuf rpc: ListScripts
+   */
+  listScripts(
+    input: ListScriptsRequest,
+    options?: RpcOptions,
+  ): UnaryCall<ListScriptsRequest, ListScriptsResponse> {
+    const method = this.methods[4],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<ListScriptsRequest, ListScriptsResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Starts executing a script and streams execution events.
+   * The stream provides real-time feedback about script execution including
+   * node start/complete events, errors, and final completion status.
+   * The stream remains open until the script completes or is stopped.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script execution permission
+   * Errors: FAILED_PRECONDITION if script is already running
+   * Errors: INVALID_ARGUMENT if script graph is invalid (e.g., no trigger nodes)
+   *
+   * @generated from protobuf rpc: StartScript
+   */
+  startScript(
+    input: StartScriptRequest,
+    options?: RpcOptions,
+  ): ServerStreamingCall<StartScriptRequest, ScriptEvent> {
+    const method = this.methods[5],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<StartScriptRequest, ScriptEvent>(
+      "serverStreaming",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Stops a currently running script.
+   * Execution is halted gracefully after the current node completes.
+   * A ScriptCompleted event with success=false will be emitted on the StartScript stream.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script execution permission
+   * Errors: FAILED_PRECONDITION if script is not running
+   *
+   * @generated from protobuf rpc: StopScript
+   */
+  stopScript(
+    input: StopScriptRequest,
+    options?: RpcOptions,
+  ): UnaryCall<StopScriptRequest, StopScriptResponse> {
+    const method = this.methods[6],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<StopScriptRequest, StopScriptResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Gets the current execution status of a script.
+   * Returns whether the script is running, which node is active, and execution count.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script read permission
+   *
+   * @generated from protobuf rpc: GetScriptStatus
+   */
+  getScriptStatus(
+    input: GetScriptStatusRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetScriptStatusRequest, GetScriptStatusResponse> {
+    const method = this.methods[7],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<GetScriptStatusRequest, GetScriptStatusResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Subscribes to log entries generated during script execution.
+   * Returns a stream of log entries at or above the specified minimum level.
+   * The stream remains open until cancelled by the client.
+   * Errors: NOT_FOUND if instance or script does not exist
+   * Errors: PERMISSION_DENIED if user lacks script log subscription permission
+   *
+   * @generated from protobuf rpc: SubscribeScriptLogs
+   */
+  subscribeScriptLogs(
+    input: SubscribeScriptLogsRequest,
+    options?: RpcOptions,
+  ): ServerStreamingCall<SubscribeScriptLogsRequest, ScriptLogEntry> {
+    const method = this.methods[8],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<SubscribeScriptLogsRequest, ScriptLogEntry>(
+      "serverStreaming",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
 }

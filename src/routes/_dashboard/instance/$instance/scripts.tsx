@@ -1,5 +1,9 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
   EditIcon,
   PlayIcon,
@@ -8,9 +12,11 @@ import {
   Trash2Icon,
   WorkflowIcon,
 } from "lucide-react";
-import { useId, useState } from "react";
+import { use, useId, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import {
@@ -32,89 +38,151 @@ import {
 import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
+import type { ScriptInfo } from "@/generated/soulfire/script";
+import { ScriptServiceClient } from "@/generated/soulfire/script.client";
+import { ScriptScope, scriptListQueryOptions } from "@/lib/script-service.ts";
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/scripts")({
   component: InstanceScripts,
 });
 
-// Demo script data - in production this would come from gRPC
-interface Script {
-  id: string;
-  name: string;
-  description: string;
-  isRunning: boolean;
-  lastModified: Date;
-  nodeCount: number;
-}
-
-// Demo data for visual script editor preview
-const DEMO_SCRIPTS: Script[] = [
-  {
-    id: "demo-1",
-    name: "Auto Farm",
-    description: "Automatically farms crops in a designated area",
-    isRunning: false,
-    lastModified: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
-    nodeCount: 12,
-  },
-  {
-    id: "demo-2",
-    name: "Combat Bot",
-    description: "Automatically attacks nearby hostile mobs",
-    isRunning: true,
-    lastModified: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
-    nodeCount: 8,
-  },
-  {
-    id: "demo-3",
-    name: "Chat Responder",
-    description: "Responds to chat messages with predefined replies",
-    isRunning: false,
-    lastModified: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
-    nodeCount: 5,
-  },
-];
-
 function InstanceScripts() {
   const { t } = useTranslation("common");
   const { t: tInstance } = useTranslation("instance");
+  const { instance: instanceId } = Route.useParams();
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const transport = use(TransportContext);
+
+  // Fetch scripts from server
+  const { data: scriptsData } = useSuspenseQuery(
+    scriptListQueryOptions(transport, instanceId),
+  );
+  const scripts = scriptsData?.scripts ?? [];
 
   const formId = useId();
-  const [scripts, setScripts] = useState<Script[]>(DEMO_SCRIPTS);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [newScriptName, setNewScriptName] = useState("");
   const [newScriptDescription, setNewScriptDescription] = useState("");
 
+  // Create script mutation
+  const createMutation = useMutation({
+    mutationKey: ["script", "create", instanceId],
+    mutationFn: async () => {
+      if (!transport) throw new Error("No transport available");
+      const client = new ScriptServiceClient(transport);
+      const result = await client.createScript({
+        instanceId,
+        name: newScriptName.trim() || "Untitled Script",
+        description: newScriptDescription.trim(),
+        scope: ScriptScope.INSTANCE,
+        nodes: [],
+        edges: [],
+      });
+      return result.response;
+    },
+    onSuccess: (response) => {
+      toast.success(tInstance("scripts.createSuccess"));
+      setNewScriptName("");
+      setNewScriptDescription("");
+      setIsCreateDialogOpen(false);
+      // Navigate to the new script editor
+      if (response.script) {
+        void navigate({
+          to: "/instance/$instance/script/$scriptId",
+          params: { instance: instanceId, scriptId: response.script.id },
+        });
+      }
+    },
+    onError: (error) => {
+      console.error("Failed to create script:", error);
+      toast.error(tInstance("scripts.createError"));
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: ["scripts", instanceId] });
+    },
+  });
+
+  // Delete script mutation
+  const deleteMutation = useMutation({
+    mutationKey: ["script", "delete", instanceId],
+    mutationFn: async (scriptId: string) => {
+      if (!transport) throw new Error("No transport available");
+      const client = new ScriptServiceClient(transport);
+      await client.deleteScript({ instanceId, scriptId });
+    },
+    onSuccess: () => {
+      toast.success(tInstance("scripts.deleteSuccess"));
+    },
+    onError: (error) => {
+      console.error("Failed to delete script:", error);
+      toast.error(tInstance("scripts.deleteError"));
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: ["scripts", instanceId] });
+    },
+  });
+
+  // Start script mutation
+  const startMutation = useMutation({
+    mutationKey: ["script", "start", instanceId],
+    mutationFn: async (scriptId: string) => {
+      if (!transport) throw new Error("No transport available");
+      const client = new ScriptServiceClient(transport);
+      // Just start the script - we don't need to track the stream here
+      // since that's handled in the editor view
+      const { responses } = client.startScript({
+        instanceId,
+        scriptId,
+        inputs: {},
+      });
+      // Consume the stream in the background
+      responses.onMessage(() => {});
+      responses.onComplete(() => {});
+      responses.onError(() => {});
+    },
+    onSuccess: () => {
+      toast.success(tInstance("scripts.startSuccess"));
+    },
+    onError: (error) => {
+      console.error("Failed to start script:", error);
+      toast.error(tInstance("scripts.startError"));
+    },
+  });
+
+  // Stop script mutation
+  const stopMutation = useMutation({
+    mutationKey: ["script", "stop", instanceId],
+    mutationFn: async (scriptId: string) => {
+      if (!transport) throw new Error("No transport available");
+      const client = new ScriptServiceClient(transport);
+      await client.stopScript({ instanceId, scriptId });
+    },
+    onSuccess: () => {
+      toast.success(tInstance("scripts.stopSuccess"));
+    },
+    onError: (error) => {
+      console.error("Failed to stop script:", error);
+      toast.error(tInstance("scripts.stopError"));
+    },
+  });
+
   const handleCreateScript = () => {
-    if (!newScriptName.trim()) return;
-
-    const newScript: Script = {
-      id: crypto.randomUUID(),
-      name: newScriptName.trim(),
-      description: newScriptDescription.trim(),
-      isRunning: false,
-      lastModified: new Date(),
-      nodeCount: 0,
-    };
-
-    setScripts((prev) => [...prev, newScript]);
-    setNewScriptName("");
-    setNewScriptDescription("");
-    setIsCreateDialogOpen(false);
+    createMutation.mutate();
   };
 
   const handleDeleteScript = (scriptId: string) => {
-    setScripts((prev) => prev.filter((s) => s.id !== scriptId));
+    deleteMutation.mutate(scriptId);
   };
 
-  const handleToggleRunning = (scriptId: string) => {
-    setScripts((prev) =>
-      prev.map((s) =>
-        s.id === scriptId ? { ...s, isRunning: !s.isRunning } : s,
-      ),
-    );
+  const handleToggleRunning = (scriptId: string, isRunning: boolean) => {
+    if (isRunning) {
+      stopMutation.mutate(scriptId);
+    } else {
+      startMutation.mutate(scriptId);
+    }
   };
 
   return (
@@ -132,10 +200,10 @@ function InstanceScripts() {
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-1">
             <h1 className="text-2xl font-semibold">
-              {tInstance("scripts.wipTitle")}
+              {tInstance("scripts.title")}
             </h1>
             <p className="text-sm text-muted-foreground">
-              {tInstance("scripts.wipDescription")}
+              {tInstance("scripts.description")}
             </p>
           </div>
           <Dialog
@@ -193,7 +261,7 @@ function InstanceScripts() {
                 </Button>
                 <Button
                   onClick={handleCreateScript}
-                  disabled={!newScriptName.trim()}
+                  disabled={createMutation.isPending}
                 >
                   {tInstance("scripts.create")}
                 </Button>
@@ -232,7 +300,10 @@ function InstanceScripts() {
                 script={script}
                 instanceId={instanceInfo.id}
                 onDelete={() => handleDeleteScript(script.id)}
-                onToggleRunning={() => handleToggleRunning(script.id)}
+                onToggleRunning={(isRunning) =>
+                  handleToggleRunning(script.id, isRunning)
+                }
+                isDeleting={deleteMutation.isPending}
               />
             ))}
           </div>
@@ -243,10 +314,11 @@ function InstanceScripts() {
 }
 
 interface ScriptCardProps {
-  script: Script;
+  script: ScriptInfo;
   instanceId: string;
   onDelete: () => void;
-  onToggleRunning: () => void;
+  onToggleRunning: (isRunning: boolean) => void;
+  isDeleting: boolean;
 }
 
 function ScriptCard({
@@ -254,10 +326,37 @@ function ScriptCard({
   instanceId,
   onDelete,
   onToggleRunning,
+  isDeleting,
 }: ScriptCardProps) {
   const { t: tInstance } = useTranslation("instance");
+  const transport = use(TransportContext);
 
-  const formatLastModified = (date: Date) => {
+  // Query for script status to check if running
+  const { data: statusData } = useSuspenseQuery({
+    queryKey: ["script-status", instanceId, script.id],
+    queryFn: async () => {
+      if (!transport) return null;
+      try {
+        const client = new ScriptServiceClient(transport);
+        const result = await client.getScriptStatus({
+          instanceId,
+          scriptId: script.id,
+        });
+        return result.response.status;
+      } catch {
+        return null;
+      }
+    },
+    refetchInterval: 3_000,
+  });
+
+  const isRunning = statusData?.isRunning ?? false;
+
+  const formatLastModified = (
+    timestamp: { seconds: string; nanos: number } | undefined,
+  ) => {
+    if (!timestamp) return "";
+    const date = new Date(Number(timestamp.seconds) * 1000);
     const now = new Date();
     const diffMs = now.getTime() - date.getTime();
     const diffMins = Math.floor(diffMs / (1000 * 60));
@@ -281,7 +380,7 @@ function ScriptCard({
             <WorkflowIcon className="size-5 text-muted-foreground" />
             <CardTitle className="text-base">{script.name}</CardTitle>
           </div>
-          {script.isRunning && (
+          {isRunning && (
             <Badge variant="default" className="gap-1.5 bg-green-600">
               <div className="size-2 animate-pulse rounded-full bg-white" />
               {tInstance("scripts.running")}
@@ -294,10 +393,8 @@ function ScriptCard({
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <span>
-            {script.nodeCount} {tInstance("scripts.nodes")}
-          </span>
-          <span>{formatLastModified(script.lastModified)}</span>
+          <span>{script.scope === 0 ? "Instance" : "Bot"} scope</span>
+          <span>{formatLastModified(script.updatedAt)}</span>
         </div>
         <div className="mt-3 flex items-center gap-2">
           <Button
@@ -317,14 +414,12 @@ function ScriptCard({
           <Button
             variant="outline"
             size="icon"
-            onClick={onToggleRunning}
+            onClick={() => onToggleRunning(isRunning)}
             title={
-              script.isRunning
-                ? tInstance("scripts.stop")
-                : tInstance("scripts.start")
+              isRunning ? tInstance("scripts.stop") : tInstance("scripts.start")
             }
           >
-            {script.isRunning ? (
+            {isRunning ? (
               <SquareIcon className="size-4" />
             ) : (
               <PlayIcon className="size-4" />
@@ -334,6 +429,7 @@ function ScriptCard({
             variant="outline"
             size="icon"
             onClick={onDelete}
+            disabled={isDeleting}
             title={tInstance("scripts.delete")}
           >
             <Trash2Icon className="size-4" />
