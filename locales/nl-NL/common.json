@@ -1,6 +1,8 @@
 {
   "locale": "Taal",
   "cancel": "Annuleren",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Geen serveradres of token gevonden",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Pauzeren",
     "stop": "Stoppen",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Sessie starten...",
+      "success": "Sessie succesvol gestart",
+      "error": "Kon sessie niet starten"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Sessie hervatten...",
+      "success": "Sessie succesvol hervat",
+      "error": "Kon sessie niet hervatten"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Sessie pauzeren...",
+      "success": "Sessie succesvol gepauzeerd",
+      "error": "Pauzeren van sessie mislukt"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Bezig met stoppen van sessie...",
+      "success": "Sessie succesvol gestopt",
+      "error": "Stoppen van sessie mislukt"
     },
     "accountWarning": {
       "noAccountsTitle": "Geen accounts geconfigureerd",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Je moet accounts importeren voordat je een sessie kunt starten. Je hebt {{required}} bots aangevraagd.",
       "notEnoughTitle": "Niet genoeg accounts",
       "notEnoughDescription": "Je hebt {{required}} bots aangevraagd maar slechts {{available}} accounts geïmporteerd.",
       "hint": "Je kunt offline accounts genereren of accounts importeren vanaf de pagina Accountinstellingen.",
@@ -356,10 +358,10 @@
     "action": "Actie",
     "timestamp": "Tijdstempel",
     "executedCommand": "Uitgevoerd commando: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Sessie gestart",
+    "resumedSession": "Sessie hervat",
+    "pausedSession": "Sessie gepauzeerd",
+    "stoppedSession": "Sessie gestopt"
   },
   "pickADate": "Selecteer een datum",
   "scripts": {

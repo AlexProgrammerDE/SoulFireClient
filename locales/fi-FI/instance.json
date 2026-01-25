@@ -111,6 +111,14 @@
       "openButton": "Määritä tili",
       "pageTitle": "{{name}} - {{page}} asetukset",
       "noSettings": "Tälle sivulle ei ole asetuksia saatavilla"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} online / {{total}} yhteensä",
     "noBots": "Ei yhtään bottia asetettu. Lisää tilejä Tiliasetukset-sivulta.",
     "noBotsFound": "Hakusi ei vastannut yhtään bottia.",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "Paikalla",
     "offline": "Offline",
-    "notJoined": "",
+    "notJoined": "Ei liittynyt",
     "backToBots": "Takaisin botteihin",
     "comingSoon": "Tulossa pian",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "Bottikohtaiset komennot ovat saatavilla tulevassa päivityksessä."
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "Botin näkymä",
+      "capture": "Kaappaa",
+      "refresh": "Päivitä",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "Napsauta Kaappaa nähdäksesi botin näkymän",
+      "offline": "Botti on offline-tilassa. Näkymän renderöinti on käytettävissä vain, kun botti on yhdistettynä."
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "Botin tilastot",
+      "health": "Terveys",
+      "food": "Ruoka",
+      "saturation": "Kylläisyys",
+      "experience": "Kokemus",
+      "level": "Taso",
+      "toNextLevel": "seuraavaan tasoon",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "Botti on offline-tilassa. Tilastot ovat saatavilla vain, kun botti on yhdistetty."
     },
     "inventoryPanel": {
       "title": "Inventaario",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "Pikavalikko",
+      "main": "Päätavarasto",
+      "items": "esineet",
+      "carrying": "Kantamuksissa",
+      "dropOne": "Pudota yksi",
+      "dropAll": "Pudota kaikki",
       "closeContainer": "Sulje",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "Botti on offline-tilassa. Varasto on saatavilla vain, kun botti on yhdistetty.",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "Toiminnot"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "Botin näkymä",
+      "compass": "Suunta",
+      "lookDirection": "Katselukulma",
+      "lookingUp": "Katsoo ylös",
+      "lookingDown": "Katsoo alas",
+      "lookingStraight": "Katsoo suoraan",
+      "worldInfo": "Maailman tiedot",
+      "dimension": "Ulottuvuus",
+      "biome": "Biomi",
+      "offline": "Botti on offline-tilassa. Näkymätiedot ovat saatavilla vain, kun botti on yhdistetty."
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "Pysäytä",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "Tyyppi",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

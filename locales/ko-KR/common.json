@@ -1,6 +1,8 @@
 {
   "locale": "로케일",
   "cancel": "취소",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "서버 주소나 토큰을 찾을 수 없습니다",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "일시 정지",
     "stop": "중지",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "세션 시작 중...",
+      "success": "세션이 성공적으로 시작되었습니다",
+      "error": "세션 시작에 실패했습니다"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "세션 재개 중...",
+      "success": "세션이 성공적으로 재개되었습니다",
+      "error": "세션 재개에 실패했습니다"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "세션 일시 중지 중...",
+      "success": "세션이 일시 정지되었습니다.",
+      "error": "세션 일시 정지에 실패했습니다."
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "세션 중지 중...",
+      "success": "세션이 중지되었습니다.",
+      "error": "세션 중지에 실패했습니다."
     },
     "accountWarning": {
       "noAccountsTitle": "계정이 구성되지 않음",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "세션을 시작하기 전에 계정을 가져와야 합니다. 요청하신 봇: {{required}}개.",
       "notEnoughTitle": "계정이 부족함",
       "notEnoughDescription": "{{required}}개의 봇이 요청되었으나, 가져온 계정은 {{available}}개입니다.",
       "hint": "오프라인 계정을 생성하거나 계정 설정 페이지에서 계정을 가져올 수 있습니다.",
@@ -356,10 +358,10 @@
     "action": "동작",
     "timestamp": "타임스탬프",
     "executedCommand": "명령 실행됨: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "세션을 시작했습니다.",
+    "resumedSession": "세션을 다시 시작했습니다.",
+    "pausedSession": "세션을 일시 정지했습니다.",
+    "stoppedSession": "세션을 중지했습니다."
   },
   "pickADate": "날짜 선택",
   "scripts": {

@@ -1,6 +1,8 @@
 {
   "locale": "Linguagem",
   "cancel": "Cancelar",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Nenhum endereço de servidor ou token encontrado",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Pausar",
     "stop": "Parar",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Iniciando sessão...",
+      "success": "Sessão iniciada com sucesso",
+      "error": "Falha ao iniciar sessão"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Retomando sessão...",
+      "success": "Sessão retomada com sucesso",
+      "error": "Falha ao retomar sessão"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Pausando sessão...",
+      "success": "Sessão pausada com sucesso",
+      "error": "Falha ao pausar a sessão"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Parando a sessão...",
+      "success": "Sessão interrompida com sucesso",
+      "error": "Falha ao interromper a sessão"
     },
     "accountWarning": {
       "noAccountsTitle": "Nenhuma Conta Configurada",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Você precisa importar contas antes de iniciar uma sessão. Você solicitou {{required}} bots.",
       "notEnoughTitle": "Contas Insuficientes",
       "notEnoughDescription": "Você solicitou {{required}} bots mas só tem {{available}} contas importadas.",
       "hint": "Você pode gerar contas offline ou importar contas na página de Configurações de Conta.",
@@ -356,10 +358,10 @@
     "action": "Ação",
     "timestamp": "Data e hora",
     "executedCommand": "Comando executado: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Sessão iniciada",
+    "resumedSession": "Sessão retomada",
+    "pausedSession": "Sessão pausada",
+    "stoppedSession": "Sessão interrompida"
   },
   "pickADate": "Escolha uma data",
   "scripts": {

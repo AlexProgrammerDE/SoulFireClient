@@ -111,6 +111,14 @@
       "openButton": "Konfigurasi akun",
       "pageTitle": "{{name}} - Pengaturan {{page}}",
       "noSettings": "Tidak ada pengaturan yang tersedia untuk halaman ini"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} online / {{total}} total",
     "noBots": "Belum ada bot yang dikonfigurasi. Tambahkan akun dari halaman Pengaturan Akun.",
     "noBotsFound": "Tidak ada bot yang cocok dengan pencarian Anda.",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "Online",
     "offline": "Luring",
-    "notJoined": "",
+    "notJoined": "Belum Bergabung",
     "backToBots": "Kembali ke Bot",
     "comingSoon": "Segera Hadir",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "Perintah khusus bot akan tersedia pada pembaruan mendatang."
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "POV Bot",
+      "capture": "Tangkap",
+      "refresh": "Muat Ulang",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "Klik Tangkap untuk menampilkan sudut pandang bot",
+      "offline": "Bot sedang offline. Rendering POV hanya tersedia saat bot terhubung."
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "Statistik Bot",
+      "health": "Kesehatan",
+      "food": "Makanan",
+      "saturation": "Saturasi",
+      "experience": "Pengalaman",
+      "level": "Level",
+      "toNextLevel": "ke level berikutnya",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "Bot sedang offline. Statistik hanya tersedia saat bot terhubung."
     },
     "inventoryPanel": {
       "title": "Inventaris",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "Hotbar",
+      "main": "Inventaris Utama",
+      "items": "item",
+      "carrying": "Membawa",
+      "dropOne": "Buang Satu",
+      "dropAll": "Buang Semua",
       "closeContainer": "Tutup",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "Bot sedang offline. Inventaris hanya tersedia saat bot terhubung.",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "Aksi"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "Tampilan Bot",
+      "compass": "Arah Menghadap",
+      "lookDirection": "Sudut Pandang",
+      "lookingUp": "Melihat ke atas",
+      "lookingDown": "Melihat ke bawah",
+      "lookingStraight": "Melihat lurus",
+      "worldInfo": "Info Dunia",
+      "dimension": "Dimensi",
+      "biome": "Bioma",
+      "offline": "Bot sedang offline. Data visual hanya tersedia saat bot terhubung."
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "Berhenti",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "Tipe",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

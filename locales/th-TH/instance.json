@@ -111,6 +111,14 @@
       "openButton": "กำหนดค่าบัญชี",
       "pageTitle": "{{name}} - การตั้งค่า {{page}}",
       "noSettings": "ไม่มีการตั้งค่าสำหรับหน้านี้"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} ออนไลน์ / {{total}} ทั้งหมด",
     "noBots": "ไม่มีบอทที่ถูกตั้งค่า เพิ่มบัญชีจากหน้าการตั้งค่าบัญชีผู้ใช้",
     "noBotsFound": "ไม่พบบอทที่ตรงกับการค้นหาของคุณ",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "ออนไลน์",
     "offline": "ออฟไลน์",
-    "notJoined": "",
+    "notJoined": "ยังไม่ได้เข้าร่วม",
     "backToBots": "กลับไปที่บอท",
     "comingSoon": "เร็วๆ นี้",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "คำสั่งที่ใช้เฉพาะบอทนี้จะพร้อมใช้งานในการอัปเดตถัดไป"
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "มุมมองบอท",
+      "capture": "จับภาพ",
+      "refresh": "รีเฟรช",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "คลิกที่ปุ่มจับภาพเพื่อแสดงมุมมองของบอท",
+      "offline": "บอทออฟไลน์ การแสดงมุมมองจะสามารถใช้ได้เมื่อบอทเชื่อมต่อเท่านั้น"
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "สถิติบอท",
+      "health": "พลังชีวิต",
+      "food": "อาหาร",
+      "saturation": "ค่าความอิ่ม",
+      "experience": "ค่าประสบการณ์",
+      "level": "เลเวล",
+      "toNextLevel": "จนถึงเลเวลถัดไป",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "บอทออฟไลน์ สถิติจะสามารถดูได้เมื่อบอทเชื่อมต่อเท่านั้น"
     },
     "inventoryPanel": {
       "title": "อินเวนทอรี",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "แถบร้อน",
+      "main": "ช่องเก็บของหลัก",
+      "items": "ไอเทม",
+      "carrying": "ถืออยู่",
+      "dropOne": "ทิ้งทีละชิ้น",
+      "dropAll": "ทิ้งทั้งหมด",
       "closeContainer": "ปิด",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "บอทออฟไลน์ ช่องเก็บของจะเปิดได้เมื่อบอทเชื่อมต่อเท่านั้น",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "การดำเนินการ"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "มุมมองบอท",
+      "compass": "ทิศทางที่หันหน้า",
+      "lookDirection": "มุมมองที่มอง",
+      "lookingUp": "กำลังมองขึ้น",
+      "lookingDown": "กำลังมองลง",
+      "lookingStraight": "กำลังมองตรง",
+      "worldInfo": "ข้อมูลโลก",
+      "dimension": "มิติ",
+      "biome": "ไบโอม",
+      "offline": "บอทออฟไลน์ ข้อมูลภาพจะดูได้เมื่อบอทเชื่อมต่อเท่านั้น"
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "หยุด",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "ประเภท",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

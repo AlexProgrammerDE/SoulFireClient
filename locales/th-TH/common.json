@@ -1,6 +1,8 @@
 {
   "locale": "ภาษาโลแคล (Locale)",
   "cancel": "ยกเลิก",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "ไม่พบที่อยู่เซิร์ฟเวอร์หรือโทเค็น",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "หยุดชั่วคราว",
     "stop": "หยุด",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "กำลังเริ่มเซสชัน...",
+      "success": "เริ่มเซสชันสำเร็จ",
+      "error": "ไม่สามารถเริ่มเซสชันได้"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "กำลังดำเนินการต่อเซสชัน...",
+      "success": "ดำเนินการต่อเซสชันสำเร็จ",
+      "error": "ไม่สามารถดำเนินการต่อเซสชันได้"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "กำลังหยุดชั่วคราวเซสชัน...",
+      "success": "หยุดชั่วคราวเซสชันเรียบร้อยแล้ว",
+      "error": "หยุดชั่วคราวเซสชันไม่สำเร็จ"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "กำลังหยุดเซสชัน...",
+      "success": "หยุดเซสชันเรียบร้อยแล้ว",
+      "error": "หยุดเซสชันไม่สำเร็จ"
     },
     "accountWarning": {
       "noAccountsTitle": "ไม่มีบัญชีตั้งค่าไว้",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "คุณต้องนำเข้าบัญชีก่อนเริ่มเซสชัน คุณร้องขอ {{required}} บอท",
       "notEnoughTitle": "บัญชีไม่เพียงพอ",
       "notEnoughDescription": "คุณต้องการบอท {{required}} ตัว แต่มีบัญชีที่นำเข้าเพียง {{available}} บัญชี",
       "hint": "คุณสามารถสร้างบัญชีออฟไลน์หรือ นำเข้าบัญชีได้จากหน้าตั้งค่าบัญชีผู้ใช้",
@@ -356,10 +358,10 @@
     "action": "การกระทำ",
     "timestamp": "เวลาบันทึก",
     "executedCommand": "ดำเนินการคำสั่ง: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "เริ่มเซสชันแล้ว",
+    "resumedSession": "ดำเนินการเซสชันต่อแล้ว",
+    "pausedSession": "หยุดชั่วคราวเซสชันแล้ว",
+    "stoppedSession": "หยุดเซสชันแล้ว"
   },
   "pickADate": "เลือกวันที่",
   "scripts": {

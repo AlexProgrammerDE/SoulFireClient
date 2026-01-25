@@ -111,6 +111,14 @@
       "openButton": "Configur accownt",
       "pageTitle": "{{name}} - {{page}} Settnz",
       "noSettings": "No settnz availabru fur dis page"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} kittehs onlien / {{total}} totl kittehs",
     "noBots": "No botz configgerd. Add acountz frum da Account Settin Page.",
     "noBotsFound": "No botz match ur search, kthx.",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "ONLIEN",
     "offline": "Offlyne",
-    "notJoined": "",
+    "notJoined": "Nawt Joind",
     "backToBots": "Bak 2 Botz",
     "comingSoon": "CUHMIN SOONZ",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "Bot-skoped commandz will b availbul in a fuchur updat."
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "Bot POW!",
+      "capture": "CAPTURZ!",
+      "refresh": "REFRESH PLZ",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "Klik CAPTURZ tu see bot'z point ov viewz",
+      "offline": "Bot iz offlinez. U c'n only see POW when bot iz connekktid, kthx."
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "Bot Statzz",
+      "health": "Helth",
+      "food": "FOODS",
+      "saturation": "Nomz Levl (Saturashun)",
+      "experience": "Eksperiencez",
+      "level": "Levelz",
+      "toNextLevel": "to nexteh levelz",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "Bot iz offlinez. Statzz seez only when bot iz connekktid, kthx."
     },
     "inventoryPanel": {
       "title": "Inventoryz",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "Hotbar (Iz Hot!)",
+      "main": "Main Inventoree",
+      "items": "itemz",
+      "carrying": "Carryingz",
+      "dropOne": "Drop Onez",
+      "dropAll": "Drop All Teh Thingz",
       "closeContainer": "Cloes",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "Bot iz offlinez. Inventoree showz only when bot iz connekktid, kthx.",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "Akshuns"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "Bot Viewz",
+      "compass": "Facin Direkshun",
+      "lookDirection": "Look Anglez",
+      "lookingUp": "Lookz up",
+      "lookingDown": "Lookz downz",
+      "lookingStraight": "Lookz STR8 ahd",
+      "worldInfo": "Wurld Infoz",
+      "dimension": "Dimenshun",
+      "biome": "Biomez",
+      "offline": "Bot iz offlinez. Visual data onlyz wen bot iz connekktid, kthx."
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "Stawp",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "Tyep",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

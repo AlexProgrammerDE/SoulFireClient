@@ -1,6 +1,8 @@
 {
   "locale": "Lokalisointi",
   "cancel": "Peruuta",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Palvelimen osoitetta tai tokenia ei löytynyt",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Tauota",
     "stop": "Pysäytä",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Istunto käynnistyy...",
+      "success": "Istunto käynnistyi onnistuneesti",
+      "error": "Istunnon käynnistäminen epäonnistui"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Istuntoa jatketaan...",
+      "success": "Istuntoa jatkettiin onnistuneesti",
+      "error": "Istunnon jatkaminen epäonnistui"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Istunto keskeytetään...",
+      "success": "Istunto keskeytettiin onnistuneesti",
+      "error": "Istunnon keskeyttäminen epäonnistui"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Istuntoa pysäytetään...",
+      "success": "Istunto pysäytetty onnistuneesti",
+      "error": "Istunnon pysäyttäminen epäonnistui"
     },
     "accountWarning": {
       "noAccountsTitle": "Yhtään tiliä ei ole asetettu",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Sinun täytyy tuoda tilejä ennen istunnon aloittamista. Pyysit {{required}} bottia.",
       "notEnoughTitle": "Tilejä ei tarpeeksi",
       "notEnoughDescription": "Pyysit {{required}} bottia, mutta vain {{available}} tili(ä) on tuotu.",
       "hint": "Voit luoda offline-tilejä tai tuoda tilejä Tili-asetukset -sivulta.",
@@ -356,10 +358,10 @@
     "action": "Toiminto",
     "timestamp": "Aikaleima",
     "executedCommand": "Suoritettiin komento: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Istunto käynnistetty",
+    "resumedSession": "Istunto jatkettu",
+    "pausedSession": "Istunto keskeytetty",
+    "stoppedSession": "Istunto pysäytetty"
   },
   "pickADate": "Valitse päivämäärä",
   "scripts": {

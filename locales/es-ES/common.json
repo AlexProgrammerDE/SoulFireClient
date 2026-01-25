@@ -1,6 +1,8 @@
 {
   "locale": "Configuración regional",
   "cancel": "Cancelar",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "No se ha encontrado ninguna dirección de servidor o token",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Pausar",
     "stop": "Detener",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Iniciando sesión...",
+      "success": "Sesión iniciada correctamente",
+      "error": "Error al iniciar la sesión"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Reanudando sesión...",
+      "success": "Sesión reanudada con éxito",
+      "error": "Error al reanudar la sesión"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Pausando sesión...",
+      "success": "Sesión pausada correctamente.",
+      "error": "Error al pausar la sesión."
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Deteniendo sesión...",
+      "success": "Sesión detenida correctamente.",
+      "error": "Error al detener la sesión."
     },
     "accountWarning": {
       "noAccountsTitle": "No hay cuentas configuradas",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Debes importar cuentas antes de iniciar una sesión. Has solicitado {{required}} bots.",
       "notEnoughTitle": "No hay suficientes cuentas",
       "notEnoughDescription": "Has solicitado {{required}} bots pero solo tienes {{available}} cuentas importadas.",
       "hint": "Puedes generar cuentas offline o importar cuentas desde la página de Configuración de Cuenta.",
@@ -356,10 +358,10 @@
     "action": "Acción",
     "timestamp": "Marca de tiempo",
     "executedCommand": "Comando ejecutado: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Se inició una sesión",
+    "resumedSession": "Se reanudó una sesión",
+    "pausedSession": "Se pausó una sesión",
+    "stoppedSession": "Se detuvo una sesión"
   },
   "pickADate": "Selecciona una fecha",
   "scripts": {

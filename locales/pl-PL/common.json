@@ -1,6 +1,8 @@
 {
   "locale": "Język i region",
   "cancel": "Anuluj",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Nie znaleziono adresu serwera ani tokena",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Wstrzymaj",
     "stop": "Zatrzymaj",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Rozpoczynanie sesji...",
+      "success": "Sesja została rozpoczęta pomyślnie",
+      "error": "Nie udało się rozpocząć sesji"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Wznawianie sesji...",
+      "success": "Sesja została wznowiona pomyślnie",
+      "error": "Nie udało się wznowić sesji"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Wstrzymywanie sesji...",
+      "success": "Sesja została wstrzymana pomyślnie",
+      "error": "Nie udało się wstrzymać sesji"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Zatrzymywanie sesji...",
+      "success": "Sesja została zatrzymana pomyślnie",
+      "error": "Nie udało się zatrzymać sesji"
     },
     "accountWarning": {
       "noAccountsTitle": "Brak skonfigurowanych kont",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Musisz zaimportować konta, zanim rozpoczniesz sesję. Zażądano {{required}} botów.",
       "notEnoughTitle": "Za mało kont",
       "notEnoughDescription": "Poprosiłeś o {{required}} botów, ale masz zaimportowane tylko {{available}} kont.",
       "hint": "Możesz wygenerować konta offline lub zaimportować konta na stronie Ustawienia konta.",
@@ -356,10 +358,10 @@
     "action": "Akcja",
     "timestamp": "Znacznik czasu",
     "executedCommand": "Wykonano polecenie: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Rozpoczęto sesję",
+    "resumedSession": "Wznowiono sesję",
+    "pausedSession": "Wstrzymano sesję",
+    "stoppedSession": "Zatrzymano sesję"
   },
   "pickADate": "Wybierz datę",
   "scripts": {

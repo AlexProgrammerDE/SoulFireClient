@@ -111,6 +111,14 @@
       "openButton": "Nastavit účet",
       "pageTitle": "Nastavení {{name}} – {{page}}",
       "noSettings": "Pro tuto stránku nejsou k dispozici žádná nastavení"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} online / {{total}} celkem",
     "noBots": "Žádné boty nejsou nastaveny. Přidejte účty na stránce Nastavení účtu.",
     "noBotsFound": "Žádní boti neodpovídají vašemu hledání.",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "Online",
     "offline": "Offline",
-    "notJoined": "",
+    "notJoined": "Nepřipojený",
     "backToBots": "Zpět na boty",
     "comingSoon": "Již brzy",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "Příkazy specifické pro bota budou dostupné v některé z příštích aktualizací."
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "Pohled bota",
+      "capture": "Zachytit",
+      "refresh": "Obnovit",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "Kliknutím na Zachytit zobrazíte pohled bota",
+      "offline": "Bot je offline. Zobrazení pohledu je dostupné pouze když je bot připojen."
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "Statistiky bota",
+      "health": "Zdraví",
+      "food": "Jídlo",
+      "saturation": "Nasycení",
+      "experience": "Zkušenosti",
+      "level": "Úroveň",
+      "toNextLevel": "do další úrovně",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "Bot je offline. Statistiky jsou dostupné pouze když je bot připojen."
     },
     "inventoryPanel": {
       "title": "Inventář",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "Rychlá lišta",
+      "main": "Hlavní inventář",
+      "items": "položky",
+      "carrying": "Nese",
+      "dropOne": "Vyhodit jednu",
+      "dropAll": "Vyhodit vše",
       "closeContainer": "Zavřít",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "Bot je offline. Inventář je dostupný pouze když je bot připojen.",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "Akce"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "Pohled bota",
+      "compass": "Směr pohledu",
+      "lookDirection": "Úhel pohledu",
+      "lookingUp": "Dívá se nahoru",
+      "lookingDown": "Dívá se dolů",
+      "lookingStraight": "Dívá se přímo",
+      "worldInfo": "Informace o světě",
+      "dimension": "Dimenze",
+      "biome": "Biom",
+      "offline": "Bot je offline. Vizuální data jsou dostupná pouze když je bot připojen."
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "Zastavit",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "Typ",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }

@@ -1,6 +1,8 @@
 {
   "locale": "Locael",
   "cancel": "cancel k?",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "No servr addres or token findz",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Pawse",
     "stop": "Stawp",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Startin seshun...",
+      "success": "Seshun strated succesfully!",
+      "error": "Fialed tu strat seshun"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Resoomin seshun...",
+      "success": "Seshun resoomed pawfectly!",
+      "error": "Fialed tu resoom seshun"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Pawsin seshun...",
+      "success": "Seshun pawzed, gud job!",
+      "error": "Oops, can no pawz seshun :("
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Stoppin seshun...",
+      "success": "Seshun stopped, yaaay!",
+      "error": "Can no stop seshun, halp!"
     },
     "accountWarning": {
       "noAccountsTitle": "No Akownz Setted Up",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "U needz tu import accountz b4 startin seshun. U asked for {{required}} kittehbotz.",
       "notEnoughTitle": "Not Enuf Akownz",
       "notEnoughDescription": "U wantd {{required}} botz but hav only {{available}} akownz imported.",
       "hint": "U can make offlain akownz or import frum teh Akown Settin'z page.",
@@ -356,10 +358,10 @@
     "action": "Akshun",
     "timestamp": "Timestamp",
     "executedCommand": "Did command: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Seshun startd!",
+    "resumedSession": "Seshun rezumed!",
+    "pausedSession": "Seshun pawzed!",
+    "stoppedSession": "Seshun stoppd!"
   },
   "pickADate": "Pickz a datez",
   "scripts": {

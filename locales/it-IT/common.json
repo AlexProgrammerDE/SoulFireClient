@@ -1,6 +1,8 @@
 {
   "locale": "Lingua",
   "cancel": "Annulla",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Nessun indirizzo server o token trovato",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Pausa",
     "stop": "Ferma",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Avvio della sessione...",
+      "success": "Sessione avviata con successo",
+      "error": "Impossibile avviare la sessione"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Ripresa della sessione...",
+      "success": "Sessione ripresa con successo",
+      "error": "Impossibile riprendere la sessione"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Pausa della sessione...",
+      "success": "Sessione messa in pausa con successo",
+      "error": "Impossibile mettere in pausa la sessione"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Interruzione della sessione in corso...",
+      "success": "Sessione interrotta con successo",
+      "error": "Impossibile interrompere la sessione"
     },
     "accountWarning": {
       "noAccountsTitle": "Nessun account configurato",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Devi importare gli account prima di avviare una sessione. Hai richiesto {{required}} bot.",
       "notEnoughTitle": "Account insufficienti",
       "notEnoughDescription": "Hai richiesto {{required}} bot ma hai importato solo {{available}} account.",
       "hint": "Puoi generare account offline o importarli dalla pagina delle impostazioni account.",
@@ -356,10 +358,10 @@
     "action": "Azione",
     "timestamp": "Data e ora",
     "executedCommand": "Comando eseguito: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Sessione avviata",
+    "resumedSession": "Sessione ripresa",
+    "pausedSession": "Sessione messa in pausa",
+    "stoppedSession": "Sessione interrotta"
   },
   "pickADate": "Scegli una data",
   "scripts": {

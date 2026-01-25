@@ -1,6 +1,8 @@
 {
   "locale": "Ngôn ngữ",
   "cancel": "Hủy",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Không tìm thấy địa chỉ máy chủ hoặc mã thông báo",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Tạm dừng",
     "stop": "Dừng lại",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang bắt đầu phiên...",
+      "success": "Phiên đã được bắt đầu thành công",
+      "error": "Không thể bắt đầu phiên"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang tiếp tục phiên...",
+      "success": "Phiên đã được tiếp tục thành công",
+      "error": "Không thể tiếp tục phiên"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang tạm dừng phiên...",
+      "success": "Tạm dừng phiên thành công",
+      "error": "Không thể tạm dừng phiên"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Đang dừng phiên...",
+      "success": "Dừng phiên thành công",
+      "error": "Không thể dừng phiên"
     },
     "accountWarning": {
       "noAccountsTitle": "Chưa cấu hình tài khoản nào cả.",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Bạn cần nhập tài khoản trước khi bắt đầu phiên. Bạn đã yêu cầu {{required}} bot.",
       "notEnoughTitle": "Không đủ tài khoản",
       "notEnoughDescription": "Bạn đã yêu cầu {{required}} bot nhưng chỉ có {{available}} tài khoản được nhập.",
       "hint": "Bạn có thể tạo tài khoản ngoại tuyến hoặc nhập tài khoản từ trang Cài đặt tài khoản.",
@@ -356,10 +358,10 @@
     "action": "Hành động",
     "timestamp": "Dấu thời gian",
     "executedCommand": "Đã thực thi lệnh: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Đã bắt đầu một phiên",
+    "resumedSession": "Đã tiếp tục một phiên",
+    "pausedSession": "Đã tạm dừng một phiên",
+    "stoppedSession": "Đã dừng một phiên"
   },
   "pickADate": "Chọn ngày",
   "scripts": {

@@ -1,6 +1,8 @@
 {
   "locale": "लोकैल",
   "cancel": "रद्द करें",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "कोई सर्वर पता या टोकन नहीं मिला",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "रोकें",
     "stop": "बंद करें",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "सत्र शुरू हो रहा है...",
+      "success": "सत्र सफलतापूर्वक शुरू हुआ",
+      "error": "सत्र शुरू करने में विफल"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "सत्र फिर से चालू हो रहा है...",
+      "success": "सत्र सफलतापूर्वक फिर से चालू हुआ",
+      "error": "सत्र फिर से चालू करने में विफल"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "सत्र रोक रहा है...",
+      "success": "सत्र सफलतापूर्वक रोक दिया गया है",
+      "error": "सत्र को रोकने में विफल"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "सत्र को रोका जा रहा है...",
+      "success": "सत्र सफलतापूर्वक बंद किया गया",
+      "error": "सत्र बंद करने में विफल"
     },
     "accountWarning": {
       "noAccountsTitle": "कोई अकाउंट कॉन्फ़िगर नहीं किया गया",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "सत्र शुरू करने से पहले आपको खाते आयात करने होंगे। आपने {{required}} बॉट्स का अनुरोध किया है।",
       "notEnoughTitle": "पर्याप्त अकाउंट्स नहीं",
       "notEnoughDescription": "आपने {{required}} बॉट्स का अनुरोध किया लेकिन केवल {{available}} अकाउंट्स इंपोर्ट किए गए हैं।",
       "hint": "आप ऑफ़लाइन अकाउंट्स जेनरेट कर सकते हैं या अकाउंट सेटिंग्स पेज से अकाउंट्स इंपोर्ट कर सकते हैं।",
@@ -356,10 +358,10 @@
     "action": "क्रिया",
     "timestamp": "टाइमस्टैम्प",
     "executedCommand": "कमांड निष्पादित: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "सत्र शुरू किया गया",
+    "resumedSession": "सत्र फिर से शुरू किया गया",
+    "pausedSession": "सत्र रोक दिया गया",
+    "stoppedSession": "सत्र बंद कर दिया गया"
   },
   "pickADate": "तारीख चुनें",
   "scripts": {

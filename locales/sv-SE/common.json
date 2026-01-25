@@ -1,6 +1,8 @@
 {
   "locale": "Språkval",
   "cancel": "Avbryt",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Ingen serveradress eller token hittades",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Pausa",
     "stop": "Stoppa",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Startar session...",
+      "success": "Sessionen startades framgångsrikt",
+      "error": "Misslyckades med att starta sessionen"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Återupptar session...",
+      "success": "Sessionen återupptogs framgångsrikt",
+      "error": "Misslyckades med att återuppta sessionen"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Pausar session...",
+      "success": "Sessionen pausades framgångsrikt.",
+      "error": "Det gick inte att pausa sessionen."
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Stoppar session...",
+      "success": "Sessionen stoppades framgångsrikt.",
+      "error": "Det gick inte att stoppa sessionen."
     },
     "accountWarning": {
       "noAccountsTitle": "Inga konton konfigurerade",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Du måste importera konton innan du startar en session. Du begärde {{required}} botar.",
       "notEnoughTitle": "För få konton",
       "notEnoughDescription": "Du begärde {{required}} bottar men har bara {{available}} konton importerade.",
       "hint": "Du kan generera offlinekonton eller importera konton från sidan för kontoinställningar.",
@@ -356,10 +358,10 @@
     "action": "Åtgärd",
     "timestamp": "Tidsstämpel",
     "executedCommand": "Körde kommando: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Startade en session",
+    "resumedSession": "Återupptog en session",
+    "pausedSession": "Pausade en session",
+    "stoppedSession": "Stoppade en session"
   },
   "pickADate": "Välj ett datum",
   "scripts": {

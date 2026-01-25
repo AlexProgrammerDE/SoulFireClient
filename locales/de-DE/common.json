@@ -1,6 +1,8 @@
 {
   "locale": "Sprache",
   "cancel": "Abbrechen",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Keine Serveradresse oder Token gefunden",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Pausieren",
     "stop": "Stopp",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Starte Sitzung...",
+      "success": "Sitzung erfolgreich gestartet",
+      "error": "Fehler beim Starten der Sitzung"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Sitzung wird fortgesetzt...",
+      "success": "Sitzung erfolgreich fortgesetzt",
+      "error": "Fehler beim Fortsetzen der Sitzung"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Sitzung wird pausiert...",
+      "success": "Sitzung erfolgreich pausiert",
+      "error": "Fehler beim Pausieren der Sitzung"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Sitzung wird gestoppt...",
+      "success": "Sitzung erfolgreich gestoppt",
+      "error": "Fehler beim Stoppen der Sitzung"
     },
     "accountWarning": {
       "noAccountsTitle": "Keine Konten konfiguriert",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Sie müssen Konten importieren, bevor Sie eine Sitzung starten. Sie haben {{required}} Bots angefordert.",
       "notEnoughTitle": "Nicht genügend Konten",
       "notEnoughDescription": "Sie haben {{required}} Bots angefordert, aber nur {{available}} Konten importiert.",
       "hint": "Sie können Offline-Konten generieren oder Konten auf der Seite Kontoeinstellungen importieren.",
@@ -356,10 +358,10 @@
     "action": "Aktion",
     "timestamp": "Zeitstempel",
     "executedCommand": "Ausgeführter Befehl: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Eine Sitzung gestartet",
+    "resumedSession": "Eine Sitzung fortgesetzt",
+    "pausedSession": "Eine Sitzung pausiert",
+    "stoppedSession": "Eine Sitzung gestoppt"
   },
   "pickADate": "Datum auswählen",
   "scripts": {

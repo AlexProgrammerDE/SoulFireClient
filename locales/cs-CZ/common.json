@@ -1,6 +1,8 @@
 {
   "locale": "Místní nastavení",
   "cancel": "Zrušit",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Nenalezena adresa serveru ani token",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Pozastavit",
     "stop": "Zastavit",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Spouštím relaci...",
+      "success": "Relace byla úspěšně spuštěna",
+      "error": "Relaci se nepodařilo spustit"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Obnovuji relaci...",
+      "success": "Relace byla úspěšně obnovena",
+      "error": "Relaci se nepodařilo obnovit"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Pozastavuji relaci...",
+      "success": "Relace byla úspěšně pozastavena.",
+      "error": "Nepodařilo se pozastavit relaci."
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Zastavování relace...",
+      "success": "Relace byla úspěšně zastavena.",
+      "error": "Nepodařilo se zastavit relaci."
     },
     "accountWarning": {
       "noAccountsTitle": "Žádné účty nejsou nastaveny",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Pro zahájení relace musíte nejprve importovat účty. Požadováno: {{required}} botů.",
       "notEnoughTitle": "Nedostatek účtů",
       "notEnoughDescription": "Požadovali jste {{required}} botů, ale máte importováno pouze {{available}} účtů.",
       "hint": "Můžete vygenerovat offline účty nebo importovat účty na stránce Nastavení účtu.",
@@ -356,10 +358,10 @@
     "action": "Akce",
     "timestamp": "Časové razítko",
     "executedCommand": "Proveden příkaz: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Byla spuštěna relace",
+    "resumedSession": "Relace byla obnovena",
+    "pausedSession": "Relace byla pozastavena",
+    "stoppedSession": "Relace byla zastavena"
   },
   "pickADate": "Vyberte datum",
   "scripts": {

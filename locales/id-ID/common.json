@@ -1,6 +1,8 @@
 {
   "locale": "Lokal",
   "cancel": "Batal",
+  "save": "",
+  "saving": "",
   "error": {
     "noAddressOrToken": "Alamat server atau token tidak ditemukan",
     "page": {
@@ -97,28 +99,28 @@
     "pause": "Jeda",
     "stop": "Berhenti",
     "startToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Memulai sesi...",
+      "success": "Sesi berhasil dimulai",
+      "error": "Gagal memulai sesi"
     },
     "resumeToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Melanjutkan sesi...",
+      "success": "Sesi berhasil dilanjutkan",
+      "error": "Gagal melanjutkan sesi"
     },
     "pauseToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Menjeda sesi...",
+      "success": "Sesi dijeda dengan sukses",
+      "error": "Gagal menjeda sesi"
     },
     "stopToast": {
-      "loading": "",
-      "success": "",
-      "error": ""
+      "loading": "Menghentikan sesi...",
+      "success": "Sesi telah dihentikan dengan sukses",
+      "error": "Gagal menghentikan sesi"
     },
     "accountWarning": {
       "noAccountsTitle": "Tidak Ada Akun yang Dikonfigurasi",
-      "noAccountsDescription": "",
+      "noAccountsDescription": "Anda perlu mengimpor akun sebelum memulai sesi. Anda meminta {{required}} bot.",
       "notEnoughTitle": "Akun Tidak Cukup",
       "notEnoughDescription": "Anda meminta {{required}} bot namun hanya memiliki {{available}} akun diimpor.",
       "hint": "Anda dapat menghasilkan akun offline atau mengimpor akun dari halaman Pengaturan Akun.",
@@ -356,10 +358,10 @@
     "action": "Aksi",
     "timestamp": "Waktu",
     "executedCommand": "Perintah dijalankan: {{data}}",
-    "startedSession": "",
-    "resumedSession": "",
-    "pausedSession": "",
-    "stoppedSession": ""
+    "startedSession": "Memulai sesi",
+    "resumedSession": "Melanjutkan sesi",
+    "pausedSession": "Menjeda sesi",
+    "stoppedSession": "Menghentikan sesi"
   },
   "pickADate": "Pilih tanggal",
   "scripts": {

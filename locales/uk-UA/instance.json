@@ -111,6 +111,14 @@
       "openButton": "Налаштувати акаунт",
       "pageTitle": "Налаштування {{name}} — {{page}}",
       "noSettings": "Немає налаштувань для цієї сторінки"
+    },
+    "metadata": {
+      "openButton": "",
+      "title": "",
+      "description": "",
+      "saveSuccess": "",
+      "saveError": "",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -118,9 +126,12 @@
     "onlineCount": "{{online}} онлайн / {{total}} всього",
     "noBots": "Ботів не налаштовано. Додайте облікові записи на сторінці налаштувань акаунтів.",
     "noBotsFound": "Жоден бот не відповідає вашому запиту.",
+    "loadingMore": "",
+    "showingCount": "",
+    "allLoaded": "",
     "online": "Онлайн",
     "offline": "Офлайн",
-    "notJoined": "",
+    "notJoined": "Не приєднався",
     "backToBots": "Повернутися до ботів",
     "comingSoon": "Незабаром",
     "terminalPanel": {
@@ -142,46 +153,119 @@
       "description": "Команди з обмеженим доступом до бота будуть доступні у майбутньому оновленні."
     },
     "povPanel": {
-      "title": "",
-      "capture": "",
-      "refresh": "",
-      "clickToCapture": "",
-      "offline": ""
+      "title": "POV бота",
+      "capture": "Захопити",
+      "refresh": "Оновити",
+      "auto": "",
+      "startAutoRefresh": "",
+      "stopAutoRefresh": "",
+      "clickToCapture": "Натисніть \"Захопити\", щоб відобразити точку зору бота",
+      "offline": "Бот офлайн. Відображення POV доступне тільки коли бот підключений."
     },
     "statsPanel": {
-      "title": "",
-      "health": "",
-      "food": "",
-      "saturation": "",
-      "experience": "",
-      "level": "",
-      "toNextLevel": "",
-      "offline": ""
+      "title": "Статистика бота",
+      "health": "Здоровʼя",
+      "food": "Їжа",
+      "saturation": "Насичення",
+      "experience": "Досвід",
+      "level": "Рівень",
+      "toNextLevel": "до наступного рівня",
+      "gameMode": "",
+      "survival": "",
+      "creative": "",
+      "adventure": "",
+      "spectator": "",
+      "unknown": "",
+      "offline": "Бот офлайн. Статистика доступна лише під час підключення бота."
     },
     "inventoryPanel": {
       "title": "Інвентар",
-      "hotbar": "",
-      "main": "",
-      "items": "",
-      "carrying": "",
-      "dropOne": "",
-      "dropAll": "",
+      "hotbar": "Гаряча панель",
+      "main": "Основний інвентар",
+      "items": "предмети",
+      "carrying": "Несе",
+      "dropOne": "Викинути один",
+      "dropAll": "Викинути все",
       "closeContainer": "Закрити",
-      "openInventory": "",
       "clickHint": "",
-      "offline": ""
+      "offline": "Бот офлайн. Інвентар доступний лише при підключенні бота.",
+      "buttons": {
+        "stonecutterRecipes": "",
+        "enchantments": "",
+        "patterns": "",
+        "trades": "",
+        "beaconEffects": "",
+        "crafterSlots": "",
+        "lecternControls": "",
+        "actions": "Дії"
+      },
+      "textInput": {
+        "title": "",
+        "anvilRename": ""
+      },
+      "bookPages": {
+        "title": "",
+        "emptyPage": "",
+        "pageIndicator": ""
+      }
     },
     "visualPanel": {
+      "title": "Вигляд бота",
+      "compass": "Напрямок погляду",
+      "lookDirection": "Кут погляду",
+      "lookingUp": "Дивиться вгору",
+      "lookingDown": "Дивиться вниз",
+      "lookingStraight": "Дивиться прямо",
+      "worldInfo": "Інформація про світ",
+      "dimension": "Вимір",
+      "biome": "Біом",
+      "offline": "Бот офлайн. Візуальні дані доступні лише при підключенні бота."
+    },
+    "actionsPanel": {
       "title": "",
-      "compass": "",
-      "lookDirection": "",
-      "lookingUp": "",
-      "lookingDown": "",
-      "lookingStraight": "",
-      "worldInfo": "",
-      "dimension": "",
-      "biome": "",
+      "leftClick": "",
+      "rightClick": "",
+      "leftClickDescription": "",
+      "rightClickDescription": "",
+      "offline": ""
+    },
+    "movementPanel": {
+      "title": "",
+      "movement": "",
+      "forward": "",
+      "backward": "",
+      "left": "",
+      "right": "",
+      "jump": "",
+      "sneak": "",
+      "sprint": "",
+      "stop": "Зупинити",
+      "rotation": "",
+      "lookUp": "",
+      "lookDown": "",
+      "lookLeft": "",
+      "lookRight": "",
+      "offline": ""
+    },
+    "dialogPanel": {
+      "title": "",
+      "noDialog": "",
+      "dialogType": "Тип",
+      "dialogId": "",
+      "notice": "",
+      "confirmation": "",
+      "multiAction": "",
+      "serverLinks": "",
+      "dialogList": "",
+      "unknownType": "",
+      "dismiss": "",
+      "submit": "",
       "offline": ""
     }
+  },
+  "scripts": {
+    "wipTitle": "",
+    "wipDescription": "",
+    "wipDetails": ""
   }
 }
