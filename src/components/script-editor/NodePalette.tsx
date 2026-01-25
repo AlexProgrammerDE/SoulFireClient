@@ -9,12 +9,13 @@ import {
 import { Input } from "@/components/ui/input.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { cn } from "@/lib/utils.tsx";
+import { NODE_DEFINITIONS } from "./nodes/node-definitions.ts";
 import {
   CATEGORY_INFO,
   getNodesByCategory,
   type NodeCategory,
   type NodeDefinition,
-} from "./types.ts";
+} from "./nodes/types.ts";
 
 interface NodePaletteProps {
   onNodeDragStart?: (nodeType: string) => void;
@@ -44,7 +45,7 @@ function DraggableNodeItem({ node, onDragStart }: DraggableNodeItemProps) {
     >
       <GripVerticalIcon className="size-3 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
       <DynamicIcon name={node.icon} className="size-4 shrink-0" />
-      <span className="truncate">{node.name}</span>
+      <span className="truncate">{node.label}</span>
     </div>
   );
 }
@@ -104,33 +105,32 @@ export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const categories: NodeCategory[] = [
-    "triggers",
+    "trigger",
     "math",
     "logic",
-    "actions",
+    "action",
     "data",
-    "flow-control",
+    "flow",
   ];
 
   const filteredNodesByCategory = useMemo(() => {
     const result: Record<NodeCategory, NodeDefinition[]> = {
-      triggers: [],
+      trigger: [],
       math: [],
       logic: [],
-      actions: [],
+      action: [],
       data: [],
-      "flow-control": [],
+      flow: [],
     };
 
     const query = searchQuery.toLowerCase().trim();
 
     for (const category of categories) {
-      const nodes = getNodesByCategory(category);
+      const nodes = getNodesByCategory(NODE_DEFINITIONS, category);
       if (query) {
         result[category] = nodes.filter(
           (node) =>
-            node.name.toLowerCase().includes(query) ||
-            node.description.toLowerCase().includes(query) ||
+            node.label.toLowerCase().includes(query) ||
             node.type.toLowerCase().includes(query),
         );
       } else {

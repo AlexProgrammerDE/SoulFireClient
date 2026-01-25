@@ -7,13 +7,25 @@ import { toast } from "sonner";
 import { ExecutionLogs } from "@/components/script-editor/ExecutionLogs.tsx";
 import { NodeInspector } from "@/components/script-editor/NodeInspector.tsx";
 import { NodePalette } from "@/components/script-editor/NodePalette.tsx";
+import { getNodeDefinition } from "@/components/script-editor/nodes";
 import { ScriptEditor } from "@/components/script-editor/ScriptEditor.tsx";
 import { ScriptToolbar } from "@/components/script-editor/ScriptToolbar.tsx";
-import {
-  getNodeDefinition,
-  type LogEntry,
-  type ScriptNode,
-} from "@/components/script-editor/types.ts";
+
+interface LogEntry {
+  id: string;
+  timestamp: Date;
+  level: "debug" | "info" | "warn" | "error";
+  nodeId: string | null;
+  message: string;
+}
+
+interface ScriptNode {
+  id: string;
+  type: string;
+  position: { x: number; y: number };
+  data: Record<string, unknown>;
+}
+
 import {
   ResizableHandle,
   ResizablePanel,
@@ -24,7 +36,7 @@ import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 import "@xyflow/react/dist/style.css";
 
 export const Route = createFileRoute(
-  "/_dashboard/instance/$instance/scripts/$scriptId",
+  "/_dashboard/instance/$instance/script/$scriptId",
 )({
   component: ScriptEditorPage,
 });
@@ -218,14 +230,14 @@ function ScriptEditorContent() {
       {/* Main content area */}
       <ResizablePanelGroup orientation="horizontal" className="flex-1">
         {/* Left sidebar - Node Palette */}
-        <ResizablePanel defaultSize={15} minSize={10} maxSize={25}>
+        <ResizablePanel defaultSize={18} minSize={15} maxSize={30}>
           <NodePalette />
         </ResizablePanel>
 
         <ResizableHandle withHandle />
 
         {/* Center - Script Editor */}
-        <ResizablePanel defaultSize={60} minSize={40}>
+        <ResizablePanel defaultSize={57} minSize={35}>
           <ResizablePanelGroup orientation="vertical">
             {/* Canvas */}
             <ResizablePanel defaultSize={75} minSize={50}>
@@ -252,7 +264,7 @@ function ScriptEditorContent() {
         <ResizableHandle withHandle />
 
         {/* Right sidebar - Node Inspector */}
-        <ResizablePanel defaultSize={20} minSize={15} maxSize={30}>
+        <ResizablePanel defaultSize={25} minSize={18} maxSize={35}>
           <NodeInspector
             selectedNode={selectedNode}
             onNodeDataChange={handleNodeDataChange}

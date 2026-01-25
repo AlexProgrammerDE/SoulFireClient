@@ -8,6 +8,14 @@ export type PortType =
   | "bot"
   | "any";
 
+export type NodeCategory =
+  | "trigger"
+  | "math"
+  | "logic"
+  | "action"
+  | "data"
+  | "flow";
+
 export interface PortDefinition {
   id: string;
   label: string;
@@ -17,7 +25,8 @@ export interface PortDefinition {
 export interface NodeDefinition {
   type: string;
   label: string;
-  category: "trigger" | "math" | "logic" | "action" | "data" | "flow";
+  category: NodeCategory;
+  icon: string;
   inputs: PortDefinition[];
   outputs: PortDefinition[];
   defaultData?: Record<string, unknown>;
@@ -43,7 +52,7 @@ export const CATEGORY_COLORS: Record<NodeDefinition["category"], string> = {
   flow: "border-l-orange-500",
 };
 
-export const CATEGORY_LABELS: Record<NodeDefinition["category"], string> = {
+export const CATEGORY_LABELS: Record<NodeCategory, string> = {
   trigger: "Trigger",
   math: "Math",
   logic: "Logic",
@@ -51,3 +60,47 @@ export const CATEGORY_LABELS: Record<NodeDefinition["category"], string> = {
   data: "Data",
   flow: "Flow Control",
 };
+
+export const CATEGORY_INFO: Record<
+  NodeCategory,
+  { name: string; icon: string; description: string }
+> = {
+  trigger: {
+    name: "Triggers",
+    icon: "Zap",
+    description: "Events that start script execution",
+  },
+  math: {
+    name: "Math",
+    icon: "Calculator",
+    description: "Mathematical operations",
+  },
+  logic: {
+    name: "Logic",
+    icon: "GitBranch",
+    description: "Boolean logic operations",
+  },
+  action: {
+    name: "Actions",
+    icon: "Play",
+    description: "Actions the bot can perform",
+  },
+  data: {
+    name: "Data",
+    icon: "Database",
+    description: "Data values and variables",
+  },
+  flow: {
+    name: "Flow Control",
+    icon: "Workflow",
+    description: "Control script execution flow",
+  },
+};
+
+// Helper to get nodes by category from definitions record
+export function getNodesByCategory(
+  definitions: Record<string, NodeDefinition>,
+  category: NodeCategory,
+): NodeDefinition[] {
+  return Object.values(definitions).filter((def) => def.category === category);
+}

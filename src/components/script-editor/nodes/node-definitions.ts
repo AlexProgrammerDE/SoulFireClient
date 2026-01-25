@@ -25,6 +25,7 @@ export const OnTickNode: NodeDefinition = {
   type: "OnTick",
   label: "On Tick",
   category: "trigger",
+  icon: "Clock",
   inputs: [],
   outputs: [execOut(), port("bot", "Bot", "bot")],
 };
@@ -33,6 +34,7 @@ export const OnJoinNode: NodeDefinition = {
   type: "OnJoin",
   label: "On Join",
   category: "trigger",
+  icon: "LogIn",
   inputs: [],
   outputs: [
     execOut(),
@@ -45,6 +47,7 @@ export const OnChatNode: NodeDefinition = {
   type: "OnChat",
   label: "On Chat",
   category: "trigger",
+  icon: "MessageSquare",
   inputs: [],
   outputs: [
     execOut(),
@@ -58,6 +61,7 @@ export const OnDamageNode: NodeDefinition = {
   type: "OnDamage",
   label: "On Damage",
   category: "trigger",
+  icon: "Zap",
   inputs: [],
   outputs: [
     execOut(),
@@ -71,6 +75,7 @@ export const OnDeathNode: NodeDefinition = {
   type: "OnDeath",
   label: "On Death",
   category: "trigger",
+  icon: "Skull",
   inputs: [],
   outputs: [
     execOut(),
@@ -83,6 +88,7 @@ export const OnHealthChangeNode: NodeDefinition = {
   type: "OnHealthChange",
   label: "On Health Change",
   category: "trigger",
+  icon: "Heart",
   inputs: [],
   outputs: [
     execOut(),
@@ -96,6 +102,7 @@ export const OnIntervalNode: NodeDefinition = {
   type: "OnInterval",
   label: "On Interval",
   category: "trigger",
+  icon: "Timer",
   inputs: [port("interval", "Interval (ms)", "number")],
   outputs: [
     execOut(),
@@ -113,6 +120,7 @@ export const AddNode: NodeDefinition = {
   type: "Add",
   label: "Add",
   category: "math",
+  icon: "Plus",
   inputs: [port("a", "A", "number"), port("b", "B", "number")],
   outputs: [port("result", "Result", "number")],
 };
@@ -121,6 +129,7 @@ export const SubtractNode: NodeDefinition = {
   type: "Subtract",
   label: "Subtract",
   category: "math",
+  icon: "Minus",
   inputs: [port("a", "A", "number"), port("b", "B", "number")],
   outputs: [port("result", "Result", "number")],
 };
@@ -129,6 +138,7 @@ export const MultiplyNode: NodeDefinition = {
   type: "Multiply",
   label: "Multiply",
   category: "math",
+  icon: "X",
   inputs: [port("a", "A", "number"), port("b", "B", "number")],
   outputs: [port("result", "Result", "number")],
 };
@@ -137,6 +147,7 @@ export const DivideNode: NodeDefinition = {
   type: "Divide",
   label: "Divide",
   category: "math",
+  icon: "Divide",
   inputs: [port("a", "A", "number"), port("b", "B", "number")],
   outputs: [port("result", "Result", "number")],
 };
@@ -145,6 +156,7 @@ export const ModuloNode: NodeDefinition = {
   type: "Modulo",
   label: "Modulo",
   category: "math",
+  icon: "Percent",
   inputs: [port("a", "A", "number"), port("b", "B", "number")],
   outputs: [port("result", "Result", "number")],
 };
@@ -153,6 +165,7 @@ export const FormulaNode: NodeDefinition = {
   type: "Formula",
   label: "Formula",
   category: "math",
+  icon: "Calculator",
   inputs: [
     port("formula", "Formula", "string"),
     port("vars", "Variables", "any"),
@@ -165,6 +178,7 @@ export const RandomNode: NodeDefinition = {
   type: "Random",
   label: "Random",
   category: "math",
+  icon: "Shuffle",
   inputs: [port("min", "Min", "number"), port("max", "Max", "number")],
   outputs: [port("result", "Result", "number")],
   defaultData: { min: 0, max: 100 },
@@ -174,6 +188,7 @@ export const ClampNode: NodeDefinition = {
   type: "Clamp",
   label: "Clamp",
   category: "math",
+  icon: "Minimize2",
   inputs: [
     port("value", "Value", "number"),
     port("min", "Min", "number"),
@@ -186,6 +201,7 @@ export const LerpNode: NodeDefinition = {
   type: "Lerp",
   label: "Lerp",
   category: "math",
+  icon: "TrendingUp",
   inputs: [
     port("a", "A", "number"),
     port("b", "B", "number"),
@@ -198,6 +214,7 @@ export const BSplineNode: NodeDefinition = {
   type: "BSpline",
   label: "B-Spline",
   category: "math",
+  icon: "Spline",
   inputs: [
     port("points", "Points", "any"),
     port("t", "T", "number"),
@@ -218,6 +235,7 @@ export const CompareNode: NodeDefinition = {
   type: "Compare",
   label: "Compare",
   category: "logic",
+  icon: "Scale",
   inputs: [
     port("a", "A", "any"),
     port("b", "B", "any"),
@@ -231,6 +249,7 @@ export const AndNode: NodeDefinition = {
   type: "And",
   label: "And",
   category: "logic",
+  icon: "Circle",
   inputs: [port("a", "A", "boolean"), port("b", "B", "boolean")],
   outputs: [port("result", "Result", "boolean")],
 };
@@ -239,6 +258,7 @@ export const OrNode: NodeDefinition = {
   type: "Or",
   label: "Or",
   category: "logic",
+  icon: "CircleDot",
   inputs: [port("a", "A", "boolean"), port("b", "B", "boolean")],
   outputs: [port("result", "Result", "boolean")],
 };
@@ -247,6 +267,7 @@ export const NotNode: NodeDefinition = {
   type: "Not",
   label: "Not",
   category: "logic",
+  icon: "Ban",
   inputs: [port("value", "Value", "boolean")],
   outputs: [port("result", "Result", "boolean")],
 };
@@ -259,6 +280,7 @@ export const SetRotationNode: NodeDefinition = {
   type: "SetRotation",
   label: "Set Rotation",
   category: "action",
+  icon: "RotateCw",
   inputs: [
     execIn(),
     port("yaw", "Yaw", "number"),
@@ -273,6 +295,7 @@ export const LookAtNode: NodeDefinition = {
   type: "LookAt",
   label: "Look At",
   category: "action",
+  icon: "Eye",
   inputs: [
     execIn(),
     port("x", "X", "number"),
@@ -288,6 +311,7 @@ export const SneakNode: NodeDefinition = {
   type: "Sneak",
   label: "Sneak",
   category: "action",
+  icon: "ChevronDown",
   inputs: [execIn(), port("enabled", "Enabled", "boolean")],
   outputs: [execOut()],
   defaultData: { enabled: true },
@@ -297,6 +321,7 @@ export const SprintNode: NodeDefinition = {
   type: "Sprint",
   label: "Sprint",
   category: "action",
+  icon: "Zap",
   inputs: [execIn(), port("enabled", "Enabled", "boolean")],
   outputs: [execOut()],
   defaultData: { enabled: true },
@@ -306,6 +331,7 @@ export const JumpNode: NodeDefinition = {
   type: "Jump",
   label: "Jump",
   category: "action",
+  icon: "ArrowUp",
   inputs: [execIn()],
   outputs: [execOut()],
 };
@@ -314,6 +340,7 @@ export const AttackNode: NodeDefinition = {
   type: "Attack",
   label: "Attack",
   category: "action",
+  icon: "Sword",
   inputs: [execIn(), port("entity", "Entity", "entity")],
   outputs: [execOut()],
 };
@@ -322,6 +349,7 @@ export const UseItemNode: NodeDefinition = {
   type: "UseItem",
   label: "Use Item",
   category: "action",
+  icon: "Hand",
   inputs: [execIn(), port("hand", "Hand", "string")],
   outputs: [execOut()],
   defaultData: { hand: "main" },
@@ -331,6 +359,7 @@ export const PathfindToNode: NodeDefinition = {
   type: "PathfindTo",
   label: "Pathfind To",
   category: "action",
+  icon: "Navigation",
   inputs: [
     execIn(),
     port("x", "X", "number"),
@@ -348,6 +377,7 @@ export const BreakBlockNode: NodeDefinition = {
   type: "BreakBlock",
   label: "Break Block",
   category: "action",
+  icon: "Pickaxe",
   inputs: [
     execIn(),
     port("x", "X", "number"),
@@ -361,6 +391,7 @@ export const PlaceBlockNode: NodeDefinition = {
   type: "PlaceBlock",
   label: "Place Block",
   category: "action",
+  icon: "Box",
   inputs: [
     execIn(),
     port("x", "X", "number"),
@@ -376,6 +407,7 @@ export const SelectSlotNode: NodeDefinition = {
   type: "SelectSlot",
   label: "Select Slot",
   category: "action",
+  icon: "Grid3X3",
   inputs: [execIn(), port("slot", "Slot", "number")],
   outputs: [execOut()],
   defaultData: { slot: 0 },
@@ -385,6 +417,7 @@ export const SendChatNode: NodeDefinition = {
   type: "SendChat",
   label: "Send Chat",
   category: "action",
+  icon: "Send",
   inputs: [execIn(), port("message", "Message", "string")],
   outputs: [execOut()],
 };
@@ -393,6 +426,7 @@ export const WaitNode: NodeDefinition = {
   type: "Wait",
   label: "Wait",
   category: "action",
+  icon: "Clock",
   inputs: [execIn(), port("ticks", "Ticks", "number")],
   outputs: [execOut()],
   defaultData: { ticks: 20 },
@@ -406,6 +440,7 @@ export const GetPositionNode: NodeDefinition = {
   type: "GetPosition",
   label: "Get Position",
   category: "data",
+  icon: "MapPin",
   inputs: [port("bot", "Bot", "bot")],
   outputs: [
     port("x", "X", "number"),
@@ -418,6 +453,7 @@ export const GetRotationNode: NodeDefinition = {
   type: "GetRotation",
   label: "Get Rotation",
   category: "data",
+  icon: "Compass",
   inputs: [port("bot", "Bot", "bot")],
   outputs: [port("yaw", "Yaw", "number"), port("pitch", "Pitch", "number")],
 };
@@ -426,6 +462,7 @@ export const GetHealthNode: NodeDefinition = {
   type: "GetHealth",
   label: "Get Health",
   category: "data",
+  icon: "Heart",
   inputs: [port("bot", "Bot", "bot")],
   outputs: [
     port("health", "Health", "number"),
@@ -437,6 +474,7 @@ export const GetHungerNode: NodeDefinition = {
   type: "GetHunger",
   label: "Get Hunger",
   category: "data",
+  icon: "Utensils",
   inputs: [port("bot", "Bot", "bot")],
   outputs: [
     port("food", "Food", "number"),
@@ -448,6 +486,7 @@ export const GetInventoryNode: NodeDefinition = {
   type: "GetInventory",
   label: "Get Inventory",
   category: "data",
+  icon: "Package",
   inputs: [port("bot", "Bot", "bot"), port("slot", "Slot", "number")],
   outputs: [port("item", "Item", "any"), port("count", "Count", "number")],
 };
@@ -456,6 +495,7 @@ export const GetBlockNode: NodeDefinition = {
   type: "GetBlock",
   label: "Get Block",
   category: "data",
+  icon: "Square",
   inputs: [
     port("x", "X", "number"),
     port("y", "Y", "number"),
@@ -471,6 +511,7 @@ export const FindEntityNode: NodeDefinition = {
   type: "FindEntity",
   label: "Find Entity",
   category: "data",
+  icon: "Search",
   inputs: [
     port("bot", "Bot", "bot"),
     port("type", "Type", "string"),
@@ -487,6 +528,7 @@ export const FindBlockNode: NodeDefinition = {
   type: "FindBlock",
   label: "Find Block",
   category: "data",
+  icon: "Scan",
   inputs: [
     port("bot", "Bot", "bot"),
     port("type", "Type", "string"),
@@ -509,6 +551,7 @@ export const BranchNode: NodeDefinition = {
   type: "Branch",
   label: "Branch",
   category: "flow",
+  icon: "GitBranch",
   inputs: [execIn(), port("condition", "Condition", "boolean")],
   outputs: [execOut("exec-true", "True"), execOut("exec-false", "False")],
 };
@@ -517,6 +560,7 @@ export const SwitchNode: NodeDefinition = {
   type: "Switch",
   label: "Switch",
   category: "flow",
+  icon: "GitMerge",
   inputs: [execIn(), port("value", "Value", "any")],
   outputs: [
     execOut("exec-default", "Default"),
@@ -530,6 +574,7 @@ export const LoopNode: NodeDefinition = {
   type: "Loop",
   label: "Loop",
   category: "flow",
+  icon: "Repeat",
   inputs: [execIn(), port("count", "Count", "number")],
   outputs: [
     execOut("exec-body", "Body"),
@@ -543,6 +588,7 @@ export const ForEachNode: NodeDefinition = {
   type: "ForEach",
   label: "For Each",
   category: "flow",
+  icon: "List",
   inputs: [execIn(), port("items", "Items", "any")],
   outputs: [
     execOut("exec-body", "Body"),
@@ -556,6 +602,7 @@ export const SequenceNode: NodeDefinition = {
   type: "Sequence",
   label: "Sequence",
   category: "flow",
+  icon: "ListOrdered",
   inputs: [execIn()],
   outputs: [
     execOut("exec-1", "1"),
@@ -569,6 +616,7 @@ export const GateNode: NodeDefinition = {
   type: "Gate",
   label: "Gate",
   category: "flow",
+  icon: "DoorOpen",
   inputs: [execIn(), port("open", "Open", "boolean")],
   outputs: [execOut()],
   defaultData: { open: true },
@@ -578,6 +626,7 @@ export const DebounceNode: NodeDefinition = {
   type: "Debounce",
   label: "Debounce",
   category: "flow",
+  icon: "Timer",
   inputs: [execIn(), port("delay", "Delay (ms)", "number")],
   outputs: [execOut()],
   defaultData: { delay: 100 },

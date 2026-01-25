@@ -307,7 +307,7 @@ function ScriptCard({
             asChild
           >
             <Link
-              to="/instance/$instance/scripts/$scriptId"
+              to="/instance/$instance/script/$scriptId"
               params={{ instance: instanceId, scriptId: script.id }}
             >
               <EditIcon className="size-3.5" />

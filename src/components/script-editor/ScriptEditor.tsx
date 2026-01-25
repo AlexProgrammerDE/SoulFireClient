@@ -8,8 +8,8 @@ import {
 } from "@xyflow/react";
 import { useCallback, useState } from "react";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
-
-import "@xyflow/react/dist/style.css";
+import { edgeTypes } from "./edges";
+import { nodeTypes } from "./nodes";
 
 export function ScriptEditor() {
   const [_reactFlowInstance, setReactFlowInstance] =
@@ -55,6 +55,8 @@ export function ScriptEditor() {
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}

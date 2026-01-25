@@ -19,7 +19,15 @@ import {
 import { Switch } from "@/components/ui/switch.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
 import { cn } from "@/lib/utils.tsx";
-import { getNodeDefinition, type PortType, type ScriptNode } from "./types.ts";
+import { getNodeDefinition } from "./nodes";
+import type { PortType } from "./nodes/types.ts";
+
+interface ScriptNode {
+  id: string;
+  type: string;
+  position: { x: number; y: number };
+  data: Record<string, unknown>;
+}
 
 interface NodeInspectorProps {
   selectedNode: ScriptNode | null;
@@ -178,14 +186,20 @@ const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
 
 function getPortTypeColor(type: PortType): string {
   switch (type) {
+    case "execution":
+      return "text-white";
     case "number":
-      return "text-blue-500";
-    case "string":
       return "text-green-500";
     case "boolean":
+      return "text-red-500";
+    case "string":
       return "text-yellow-500";
-    case "trigger":
+    case "vector3":
+      return "text-blue-500";
+    case "entity":
       return "text-purple-500";
+    case "bot":
+      return "text-orange-500";
     default:
       return "text-muted-foreground";
   }
@@ -349,13 +363,13 @@ export function NodeInspector({
                   className="size-5 shrink-0"
                 />
                 <CardTitle className="text-base">
-                  {nodeDefinition.name}
+                  {nodeDefinition.label}
                 </CardTitle>
               </div>
             </CardHeader>
             <CardContent>
               <p className="text-xs text-muted-foreground">
-                {nodeDefinition.description}
+                {nodeDefinition.type}
               </p>
             </CardContent>
           </Card>
@@ -400,7 +414,7 @@ export function NodeInspector({
                       key={port.id}
                       className="flex items-center justify-between text-xs"
                     >
-                      <span>{port.name}</span>
+                      <span>{port.label}</span>
                       <span
                         className={cn("font-mono", getPortTypeColor(port.type))}
                       >
@@ -426,7 +440,7 @@ export function NodeInspector({
                       key={port.id}
                       className="flex items-center justify-between text-xs"
                     >
-                      <span>{port.name}</span>
+                      <span>{port.label}</span>
                       <span
                         className={cn("font-mono", getPortTypeColor(port.type))}
                       >

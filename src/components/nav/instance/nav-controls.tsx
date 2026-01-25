@@ -7,7 +7,6 @@ import {
   SquareTerminalIcon,
   TextSearchIcon,
   UsersIcon,
-  WorkflowIcon,
 } from "lucide-react";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
@@ -63,14 +62,6 @@ export function NavControls() {
       icon: TextSearchIcon,
       linkProps: {
         to: "/instance/$instance/audit-log",
-        params: { instance: instanceInfo.id },
-      },
-    },
-    {
-      title: t("instanceSidebar.instanceScripts"),
-      icon: WorkflowIcon,
-      linkProps: {
-        to: "/instance/$instance/scripts",
         params: { instance: instanceInfo.id },
       },
     },
