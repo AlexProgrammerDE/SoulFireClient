@@ -113,12 +113,19 @@
       "noSettings": "Tidak ada pengaturan yang tersedia untuk halaman ini"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "Edit Metadata",
+      "title": "Metadata: {{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} online / {{total}} total",
     "noBots": "Belum ada bot yang dikonfigurasi. Tambahkan akun dari halaman Pengaturan Akun.",
     "noBotsFound": "Tidak ada bot yang cocok dengan pencarian Anda.",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "Memuat lebih banyak...",
+    "showingCount": "Menampilkan {{loaded}} dari {{total}}",
+    "allLoaded": "Semua {{total}} bot dimuat",
     "online": "Online",
     "offline": "Luring",
     "notJoined": "Belum Bergabung",
     "backToBots": "Kembali ke Bot",
     "comingSoon": "Segera Hadir",
     "terminalPanel": {
-      "title": ""
+      "title": "Terminal Bot"
     },
     "positionPanel": {
       "title": "Posisi & Rotasi",
@@ -156,9 +163,9 @@
       "title": "POV Bot",
       "capture": "Tangkap",
       "refresh": "Muat Ulang",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "Otomatis",
+      "startAutoRefresh": "Mulai penyegaran otomatis (interval 1 detik)",
+      "stopAutoRefresh": "Hentikan penyegaran otomatis",
       "clickToCapture": "Klik Tangkap untuk menampilkan sudut pandang bot",
       "offline": "Bot sedang offline. Rendering POV hanya tersedia saat bot terhubung."
     },
@@ -170,12 +177,12 @@
       "experience": "Pengalaman",
       "level": "Level",
       "toNextLevel": "ke level berikutnya",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "Mode Permainan",
+      "survival": "Bertahan Hidup",
+      "creative": "Kreatif",
+      "adventure": "Petualangan",
+      "spectator": "Penonton",
+      "unknown": "Tidak diketahui",
       "offline": "Bot sedang offline. Statistik hanya tersedia saat bot terhubung."
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "Buang Satu",
       "dropAll": "Buang Semua",
       "closeContainer": "Tutup",
-      "clickHint": "",
+      "clickHint": "Klik kiri: ambil/tempatkan | Klik kanan: setengah/satu | Shift+klik: pindahkan cepat | Klik tengah: pilih slot hotbar",
       "offline": "Bot sedang offline. Inventaris hanya tersedia saat bot terhubung.",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "Resep",
+        "enchantments": "Enchantment",
+        "patterns": "Pola",
+        "trades": "Perdagangan",
+        "beaconEffects": "Efek Suar",
+        "crafterSlots": "Kontrol Slot",
+        "lecternControls": "Kontrol Buku",
         "actions": "Aksi"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "Input Teks",
+        "anvilRename": "Ganti Nama Item"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "Isi Buku",
+        "emptyPage": "(Halaman kosong)",
+        "pageIndicator": "Halaman {{current}} dari {{total}}"
       }
     },
     "visualPanel": {
@@ -222,58 +229,460 @@
       "offline": "Bot sedang offline. Data visual hanya tersedia saat bot terhubung."
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "Aksi Bot",
+      "leftClick": "Klik Kiri",
+      "rightClick": "Klik Kanan",
+      "leftClickDescription": "Serang entitas atau hancurkan blok",
+      "rightClickDescription": "Gunakan item atau berinteraksi",
+      "offline": "Bot sedang offline. Aksi hanya tersedia saat bot terhubung."
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "Kontrol Gerakan",
+      "movement": "Gerakan (WASD)",
+      "forward": "Maju (W)",
+      "backward": "Mundur (S)",
+      "left": "Bergerak ke Kiri (A)",
+      "right": "Bergerak ke Kanan (D)",
+      "jump": "Lompat",
+      "sneak": "Mengendap",
+      "sprint": "Sprint",
       "stop": "Berhenti",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "Arah Pandangan",
+      "lookUp": "Lihat Atas",
+      "lookDown": "Lihat Bawah",
+      "lookLeft": "Lihat Kiri",
+      "lookRight": "Lihat Kanan",
+      "offline": "Bot sedang offline. Kontrol gerakan hanya tersedia saat bot terhubung."
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "Dialog Server",
+      "noDialog": "Tidak ada dialog server yang sedang ditampilkan.",
       "dialogType": "Tipe",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "ID Dialog",
+      "notice": "Pemberitahuan",
+      "confirmation": "Konfirmasi",
+      "multiAction": "Aksi Ganda",
+      "serverLinks": "Tautan Server",
+      "dialogList": "Daftar Dialog",
+      "unknownType": "Tidak diketahui",
+      "dismiss": "Tutup",
+      "submit": "Kirim",
+      "offline": "Bot sedang offline. Dialog hanya tersedia saat bot terhubung."
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "Editor Skrip Visual",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "Fitur ini sedang dalam pengembangan. Editor skrip visual yang baru akan memungkinkan Anda membuat skrip otomatisasi yang kuat menggunakan antarmuka tarik dan lepas tanpa menulis kode.",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "Buat",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "Berjalan",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "Mulai",
+    "stop": "Berhenti",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "Simpan",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "Berhenti",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "Aksi",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "Nilai",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "Kesalahan",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "Mulai",
+        "end": "",
+        "amount": "Jumlah",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "Tambah",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "Mengendap",
+            "description": ""
+          },
+          "sprint": {
+            "label": "Sprint",
+            "description": ""
+          },
+          "jump": {
+            "label": "Lompat",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

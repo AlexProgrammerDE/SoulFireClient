@@ -113,12 +113,19 @@
       "noSettings": "ไม่มีการตั้งค่าสำหรับหน้านี้"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "แก้ไข Metadata",
+      "title": "Metadata: {{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} ออนไลน์ / {{total}} ทั้งหมด",
     "noBots": "ไม่มีบอทที่ถูกตั้งค่า เพิ่มบัญชีจากหน้าการตั้งค่าบัญชีผู้ใช้",
     "noBotsFound": "ไม่พบบอทที่ตรงกับการค้นหาของคุณ",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "กำลังโหลดเพิ่มเติม...",
+    "showingCount": "แสดง {{loaded}} จากทั้งหมด {{total}} ",
+    "allLoaded": "บอท {{total}} ทั้งหมดถูกโหลดแล้ว",
     "online": "ออนไลน์",
     "offline": "ออฟไลน์",
     "notJoined": "ยังไม่ได้เข้าร่วม",
     "backToBots": "กลับไปที่บอท",
     "comingSoon": "เร็วๆ นี้",
     "terminalPanel": {
-      "title": ""
+      "title": "เทอร์มินัลบอท"
     },
     "positionPanel": {
       "title": "ตำแหน่ง & การหมุน",
@@ -156,9 +163,9 @@
       "title": "มุมมองบอท",
       "capture": "จับภาพ",
       "refresh": "รีเฟรช",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "อัตโนมัติ",
+      "startAutoRefresh": "เริ่มรีเฟรชอัตโนมัติ (ทุก 1 วินาที)",
+      "stopAutoRefresh": "หยุดรีเฟรชอัตโนมัติ",
       "clickToCapture": "คลิกที่ปุ่มจับภาพเพื่อแสดงมุมมองของบอท",
       "offline": "บอทออฟไลน์ การแสดงมุมมองจะสามารถใช้ได้เมื่อบอทเชื่อมต่อเท่านั้น"
     },
@@ -170,12 +177,12 @@
       "experience": "ค่าประสบการณ์",
       "level": "เลเวล",
       "toNextLevel": "จนถึงเลเวลถัดไป",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "โหมดเกม",
+      "survival": "เอาชีวิตรอด",
+      "creative": "โหมดสร้างสรรค์",
+      "adventure": "ผจญภัย",
+      "spectator": "ผู้ชม",
+      "unknown": "ไม่ทราบ",
       "offline": "บอทออฟไลน์ สถิติจะสามารถดูได้เมื่อบอทเชื่อมต่อเท่านั้น"
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "ทิ้งทีละชิ้น",
       "dropAll": "ทิ้งทั้งหมด",
       "closeContainer": "ปิด",
-      "clickHint": "",
+      "clickHint": "คลิกซ้าย: หยิบ/วาง | คลิกขวา: ครึ่ง/หนึ่ง | Shift+คลิก: ย้ายเร็ว | คลิกกลาง: เลือกช่องด่วน",
       "offline": "บอทออฟไลน์ ช่องเก็บของจะเปิดได้เมื่อบอทเชื่อมต่อเท่านั้น",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "สูตรคราฟต์",
+        "enchantments": "เวทมนตร์เสริม",
+        "patterns": "ลวดลาย",
+        "trades": "การค้า",
+        "beaconEffects": "เอฟเฟกต์บีคอน",
+        "crafterSlots": "ควบคุมช่อง",
+        "lecternControls": "ควบคุมหนังสือ",
         "actions": "การดำเนินการ"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "กรอกข้อความ",
+        "anvilRename": "เปลี่ยนชื่อไอเทม"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "เนื้อหาหนังสือ",
+        "emptyPage": "(หน้าว่าง)",
+        "pageIndicator": "หน้า {{current}} จาก {{total}}"
       }
     },
     "visualPanel": {
@@ -222,58 +229,460 @@
       "offline": "บอทออฟไลน์ ข้อมูลภาพจะดูได้เมื่อบอทเชื่อมต่อเท่านั้น"
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "การกระทำของบอท",
+      "leftClick": "คลิกซ้าย",
+      "rightClick": "คลิกขวา",
+      "leftClickDescription": "โจมตีเอนทิตี้หรือทำลายบล็อก",
+      "rightClickDescription": "ใช้ไอเทมหรือโต้ตอบ",
+      "offline": "บอทออฟไลน์ การกระทำจะใช้ได้ต่อเมื่อบอทเชื่อมต่ออยู่เท่านั้น"
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "การควบคุมการเคลื่อนไหว",
+      "movement": "การเคลื่อนไหว (WASD)",
+      "forward": "เดินหน้า (W)",
+      "backward": "ถอยหลัง (S)",
+      "left": "เลื่อนไปทางซ้าย (A)",
+      "right": "เลื่อนไปทางขวา (D)",
+      "jump": "กระโดด",
+      "sneak": "ย่อง",
+      "sprint": "วิ่งเร็ว",
       "stop": "หยุด",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "ปรับมุมมอง",
+      "lookUp": "มองขึ้น",
+      "lookDown": "มองลง",
+      "lookLeft": "มองซ้าย",
+      "lookRight": "มองขวา",
+      "offline": "บอทออฟไลน์ การควบคุมการเคลื่อนไหวจะใช้ได้ต่อเมื่อบอทเชื่อมต่ออยู่เท่านั้น"
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "หน้าต่างโต้ตอบเซิร์ฟเวอร์",
+      "noDialog": "ขณะนี้ไม่มีหน้าต่างโต้ตอบเซิร์ฟเวอร์แสดงอยู่",
       "dialogType": "ประเภท",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "รหัสการสนทนา",
+      "notice": "แจ้งเตือน",
+      "confirmation": "ยืนยัน",
+      "multiAction": "การกระทำหลายรายการ",
+      "serverLinks": "ลิงก์เซิร์ฟเวอร์",
+      "dialogList": "รายการสนทนา",
+      "unknownType": "ไม่ทราบ",
+      "dismiss": "ปิดหน้าต่าง",
+      "submit": "ส่ง",
+      "offline": "บอทออฟไลน์ หน้าต่างโต้ตอบจะใช้ได้ต่อเมื่อบอทเชื่อมต่ออยู่เท่านั้น"
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "เครื่องมือแก้ไขสคริปต์แบบภาพ",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "ฟีเจอร์นี้กำลังอยู่ในระหว่างการพัฒนา ตัวแก้ไขสคริปต์แบบภาพใหม่นี้จะช่วยให้คุณสร้างสคริปต์อัตโนมัติที่ทรงพลังได้โดยใช้การลากและวางโดยไม่ต้องเขียนโค้ด",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "สร้าง",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "กำลังทำงาน",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "เริ่มต้น",
+    "stop": "หยุด",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "บันทึก",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "หยุด",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "การดำเนินการ",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "ค่า",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "ข้อผิดพลาด",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "เริ่มต้น",
+        "end": "",
+        "amount": "จำนวน",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "เพิ่ม",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "ย่อง",
+            "description": ""
+          },
+          "sprint": {
+            "label": "วิ่งเร็ว",
+            "description": ""
+          },
+          "jump": {
+            "label": "กระโดด",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

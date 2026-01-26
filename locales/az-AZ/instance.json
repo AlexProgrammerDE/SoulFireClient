@@ -113,12 +113,19 @@
       "noSettings": "Bu səhifə üçün heç bir ayar mövcud deyil"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "Metadatanı redaktə et",
+      "title": "Metadata: {{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} onlayn / {{total}} cəmi",
     "noBots": "Heç bir bot qurulmayıb. Hesab Ayarları səhifəsindən hesab əlavə edin.",
     "noBotsFound": "Axtarışınıza uyğun bot tapılmadı.",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "Daha çox yüklənir...",
+    "showingCount": "{{total}}-dən {{loaded}} göstərilir",
+    "allLoaded": "Bütün {{total}} bot yükləndi",
     "online": "Onlayn",
     "offline": "Offline",
     "notJoined": "Qoşulmayıb",
     "backToBots": "Botlara qayıt",
     "comingSoon": "Tezliklə",
     "terminalPanel": {
-      "title": ""
+      "title": "Bot Terminalı"
     },
     "positionPanel": {
       "title": "Mövqe & Fırlanma",
@@ -156,9 +163,9 @@
       "title": "Botun Baxışı",
       "capture": "Çəkmək",
       "refresh": "Yenilə",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "Avto",
+      "startAutoRefresh": "Avto-yeniləməni başlat (1 saniyəlik interval)",
+      "stopAutoRefresh": "Avto-yeniləməni dayandır",
       "clickToCapture": "Botun baxış bucağını göstərmək üçün \"Çəkmək\" düyməsini klikləyin",
       "offline": "Bot oflayndadır. Baxış bucağı yalnız bot qoşulduqda əlçatandır."
     },
@@ -170,12 +177,12 @@
       "experience": "Təcrübə",
       "level": "Səviyyə",
       "toNextLevel": "növbəti səviyyəyə qədər",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "Oyun Rejimi",
+      "survival": "Sağ qalma",
+      "creative": "Yaradıcı",
+      "adventure": "Macəra",
+      "spectator": "Nəzarətçi",
+      "unknown": "Naməlum",
       "offline": "Bot oflayndadır. Statistikalar yalnız bot qoşulduqda əlçatandır."
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "Birini At",
       "dropAll": "Hamısını At",
       "closeContainer": "Bağla",
-      "clickHint": "",
+      "clickHint": "Sol klik: götür/burax | Sağ klik: yarı/bir | Shift+klik: tez hərəkət | Orta klik: isti panel slotunu seç",
       "offline": "Bot oflayndadır. Ehtiyat yalnız bot qoşulduqda əlçatandır.",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "Reseptlər",
+        "enchantments": "Sehrləmələr",
+        "patterns": "Naxışlar",
+        "trades": "Ticarətlər",
+        "beaconEffects": "Mayak Effektləri",
+        "crafterSlots": "Slot İdarəetməsi",
+        "lecternControls": "Kitab İdarəetməsi",
         "actions": "Əməliyyatlar"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "Mətn Girişi",
+        "anvilRename": "Əşyaya ad ver"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "Kitab Məzmunu",
+        "emptyPage": "(Boş səhifə)",
+        "pageIndicator": "Səhifə {{current}} / {{total}}"
       }
     },
     "visualPanel": {
@@ -222,58 +229,461 @@
       "offline": "Bot oflayndadır. Vizual məlumatlar yalnız bot qoşulduqda əlçatandır."
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "Bot Fəaliyyətləri",
+      "leftClick": "Sol Klik",
+      "rightClick": "Sağ Klik",
+      "leftClickDescription": "Obyekti hücum et və ya bloku sındır",
+      "rightClickDescription": "Əşyadan istifadə et və ya qarşılıqlı təsir et",
+      "offline": "Bot oflayndır. Fəaliyyətlər yalnız bot qoşulu olduqda mövcuddur."
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "Hərəkət İdarəetməsi",
+      "movement": "Hərəkət (WASD)",
+      "forward": "İrəli Hərəkət et (W)",
+      "backward": "Geriyə Hərəkət et (S)",
+      "left": "Sola Yanla (A)",
+      "right": "Sağa Yanla (D)",
+      "jump": "Tullan",
+      "sneak": "Sürün",
+      "sprint": "Qaç",
       "stop": "Dayandır",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "Baxış İstiqaməti",
+      "lookUp": "Yuxarıya bax",
+      "lookDown": "Aşağı bax",
+      "lookLeft": "Sola bax",
+      "lookRight": "Sağa bax",
+      "offline": "Bot oflayndır. Hərəkət idarəetməsi yalnız bot qoşulu olduqda mövcuddur."
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "Server Dialoqu",
+      "noDialog": "Hazırda heç bir server dialoqu göstərilmir.",
       "dialogType": "Növ",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "Dialoq İD-si",
+      "notice": "Bildiriş",
+      "confirmation": "Təsdiq",
+      "multiAction": "Çoxsaylı Fəaliyyət",
+      "serverLinks": "Server Keçidləri",
+      "dialogList": "Dialoq Siyahısı",
+      "unknownType": "Naməlum",
+      "dismiss": "Bağla",
+      "submit": "Təsdiqlə",
+      "offline": "Bot oflayndır. Dialoqlar yalnız bot qoşulu olduqda mövcuddur."
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "Vizual Skript Redaktoru",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "Bu funksiya hal-hazırda işlənir. Yeni vizual skript redaktoru sizə heç bir kod yazmadan drag-and-drop interfeysi ilə güclü avtomatlaşdırma skriptləri yaratmağa imkan verəcək.",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "Yarat",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "İşləyir",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "Başla",
+    "stop": "Dayandır",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "Yadda saxla",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "Dayandır",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "Əməliyyatlar",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_one": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "Dəyər",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "Xəta",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "Başla",
+        "end": "",
+        "amount": "Miqdar",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "Əlavə et",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "Sürün",
+            "description": ""
+          },
+          "sprint": {
+            "label": "Qaç",
+            "description": ""
+          },
+          "jump": {
+            "label": "Tullan",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

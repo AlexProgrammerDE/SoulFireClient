@@ -1,8 +1,8 @@
 {
   "locale": "Configuración regional",
   "cancel": "Cancelar",
-  "save": "",
-  "saving": "",
+  "save": "Guardar",
+  "saving": "Guardando...",
   "error": {
     "noAddressOrToken": "No se ha encontrado ninguna dirección de servidor o token",
     "page": {

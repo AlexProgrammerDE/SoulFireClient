@@ -1,8 +1,8 @@
 {
   "locale": "Språkval",
   "cancel": "Avbryt",
-  "save": "",
-  "saving": "",
+  "save": "Spara",
+  "saving": "Sparar...",
   "error": {
     "noAddressOrToken": "Ingen serveradress eller token hittades",
     "page": {

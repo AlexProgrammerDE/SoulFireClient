@@ -113,12 +113,19 @@
       "noSettings": "इस पेज के लिए कोई सेटिंग्स उपलब्ध नहीं हैं"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "मेटाडेटा संपादित करें",
+      "title": "मेटाडेटा: {{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} ऑनलाइन / {{total}} कुल",
     "noBots": "कोई बॉट कॉन्फ़िगर नहीं है। खाते जोड़ने के लिए खाता सेटिंग्स पृष्ठ पर जाएँ।",
     "noBotsFound": "आपकी खोज से कोई बॉट नहीं मिला।",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "अधिक लोड हो रहा है...",
+    "showingCount": "{{loaded}} में से {{total}} दिखा रहे हैं",
+    "allLoaded": "सभी {{total}} बॉट्स लोड किए गए",
     "online": "ऑनलाइन",
     "offline": "ऑफ़लाइन",
     "notJoined": "शामिल नहीं हुआ",
     "backToBots": "बॉट्स पर वापस जाएं",
     "comingSoon": "जल्द आ रहा है",
     "terminalPanel": {
-      "title": ""
+      "title": "बॉट टर्मिनल"
     },
     "positionPanel": {
       "title": "स्थिति और घूर्णन",
@@ -156,9 +163,9 @@
       "title": "बॉट दृष्टिकोण",
       "capture": "कैप्चर करें",
       "refresh": "रीफ्रेश करें",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "ऑटो",
+      "startAutoRefresh": "ऑटो-रीफ्रेश प्रारंभ करें (1 सेकंड का अंतराल)",
+      "stopAutoRefresh": "ऑटो-रीफ्रेश रोकें",
       "clickToCapture": "बॉट का दृष्टिकोण देखने के लिए कैप्चर पर क्लिक करें",
       "offline": "बॉट ऑफलाइन है। दृष्टिकोण रेंडरिंग केवल तभी उपलब्ध है जब बॉट कनेक्टेड हो।"
     },
@@ -170,12 +177,12 @@
       "experience": "अनुभव",
       "level": "स्तर",
       "toNextLevel": "अगले स्तर तक",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "गेम मोड",
+      "survival": "सर्वाइवल",
+      "creative": "क्रिएटिव",
+      "adventure": "एडवेंचर",
+      "spectator": "स्पेकटेटर",
+      "unknown": "अज्ञात",
       "offline": "बॉट ऑफलाइन है। आँकड़े केवल तभी उपलब्ध हैं जब बॉट कनेक्टेड हो।"
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "एक छोड़ें",
       "dropAll": "सभी छोड़ें",
       "closeContainer": "बंद करें",
-      "clickHint": "",
+      "clickHint": "बाएं क्लिक करें: उठाएँ/रखें | दाएं क्लिक करें: आधा/एक | शिफ्ट+क्लिक: तुरंत स्थानांतरित करें | मिडल क्लिक: हॉटबार स्लॉट चुनें",
       "offline": "बॉट ऑफलाइन है। इन्वेंटरी केवल तभी उपलब्ध है जब बॉट कनेक्टेड हो।",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "रेसिपीज़",
+        "enchantments": "जादू-टोने",
+        "patterns": "पैटर्न",
+        "trades": "व्यापार",
+        "beaconEffects": "बीकन इफेक्ट्स",
+        "crafterSlots": "स्लॉट नियंत्रण",
+        "lecternControls": "पुस्तक नियंत्रण",
         "actions": "क्रियाएँ"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "पाठ इनपुट",
+        "anvilRename": "आइटम का नाम बदलें"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "पुस्तक सामग्री",
+        "emptyPage": "(खाली पृष्ठ)",
+        "pageIndicator": "पृष्ठ {{current}} में से {{total}}"
       }
     },
     "visualPanel": {
@@ -222,58 +229,461 @@
       "offline": "बॉट ऑफलाइन है। दृश्य डेटा केवल तभी उपलब्ध है जब बॉट कनेक्टेड हो।"
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "बॉट क्रियाएँ",
+      "leftClick": "बाएं क्लिक",
+      "rightClick": "दाएं क्लिक",
+      "leftClickDescription": "इकाई पर हमला करें या ब्लॉक तोड़ें",
+      "rightClickDescription": "आइटम का उपयोग करें या इंटरैक्ट करें",
+      "offline": "बॉट ऑफ़लाइन है। क्रियाएँ केवल तभी उपलब्ध हैं जब बॉट कनेक्टेड हो।"
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "गतिविधि नियंत्रण",
+      "movement": "गतिविधि (WASD)",
+      "forward": "आगे बढ़ें (W)",
+      "backward": "पीछे जाएं (S)",
+      "left": "बाएँ स्ट्रेफ करें (A)",
+      "right": "दाएँ स्ट्रेफ करें (D)",
+      "jump": "जंप करें",
+      "sneak": "दबे रहें",
+      "sprint": "स्प्रिंट करें",
       "stop": "बंद करें",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "दृष्टि दिशा",
+      "lookUp": "ऊपर देखें",
+      "lookDown": "नीचे देखें",
+      "lookLeft": "बाएँ देखें",
+      "lookRight": "दाएँ देखें",
+      "offline": "बॉट ऑफ़लाइन है। गतिविधि नियंत्रण केवल तभी उपलब्ध हैं जब बॉट कनेक्टेड हो।"
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "सर्वर संवाद",
+      "noDialog": "फिलहाल कोई सर्वर संवाद प्रदर्शित नहीं है।",
       "dialogType": "प्रकार",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "संवाद आईडी",
+      "notice": "नोटिस",
+      "confirmation": "पुष्टि",
+      "multiAction": "मल्टी एक्शन",
+      "serverLinks": "सर्वर लिंक",
+      "dialogList": "संवाद सूची",
+      "unknownType": "अज्ञात",
+      "dismiss": "निरस्त करें",
+      "submit": "प्रस्तुत करें",
+      "offline": "बॉट ऑफ़लाइन है। संवाद केवल तभी उपलब्ध हैं जब बॉट कनेक्टेड हो।"
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "विज़ुअल स्क्रिप्ट एडिटर",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "यह फीचर वर्तमान में विकासाधीन है। नया विज़ुअल स्क्रिप्ट एडिटर आपको ड्रैग-एंड-ड्रॉप इंटरफेस का उपयोग कर बिना कोड लिखे शक्तिशाली ऑटोमेशन स्क्रिप्ट्स बनाने की अनुमति देगा।",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "बनाएँ",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "चल रहा है",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "प्रारंभ करें",
+    "stop": "बंद करें",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "सहेजें",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "बंद करें",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "क्रियाएँ",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_one": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "मान",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "त्रुटि",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "प्रारंभ करें",
+        "end": "",
+        "amount": "संख्या",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "जोड़ें",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "दबे रहें",
+            "description": ""
+          },
+          "sprint": {
+            "label": "स्प्रिंट करें",
+            "description": ""
+          },
+          "jump": {
+            "label": "जंप करें",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

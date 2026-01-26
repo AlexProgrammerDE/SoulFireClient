@@ -113,12 +113,19 @@
       "noSettings": "Pre túto stránku nie sú k dispozícii žiadne nastavenia"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "Upraviť metadáta",
+      "title": "Metadáta: {{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} online / {{total}} celkom",
     "noBots": "Nie sú nakonfigurované žiadne boty. Pridajte účty na stránke Nastavenia účtu.",
     "noBotsFound": "Žiadny bot nezodpovedá vášmu vyhľadávaniu.",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "Načítavajú sa ďalšie...",
+    "showingCount": "Zobrazuje sa {{loaded}} z {{total}}",
+    "allLoaded": "Všetkých {{total}} botov načítaných",
     "online": "Online",
     "offline": "Offline",
     "notJoined": "Nepripojený",
     "backToBots": "Späť na botov",
     "comingSoon": "Už čoskoro",
     "terminalPanel": {
-      "title": ""
+      "title": "Terminál bota"
     },
     "positionPanel": {
       "title": "Pozícia a rotácia",
@@ -156,9 +163,9 @@
       "title": "Pohľad bota",
       "capture": "Snímať",
       "refresh": "Obnoviť",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "Auto",
+      "startAutoRefresh": "Spustiť automatické obnovenie (interval 1 sekunda)",
+      "stopAutoRefresh": "Zastaviť automatické obnovenie",
       "clickToCapture": "Kliknite na Snímať pre zobrazenie pohľadu bota",
       "offline": "Bot je offline. Zobrazenie pohľadu je dostupné len keď je bot pripojený."
     },
@@ -170,12 +177,12 @@
       "experience": "Skúsenosti",
       "level": "Úroveň",
       "toNextLevel": "do ďalšej úrovne",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "Herný režim",
+      "survival": "Prežitie",
+      "creative": "Kreatívny",
+      "adventure": "Dobrodružstvo",
+      "spectator": "Divák",
+      "unknown": "Neznámy",
       "offline": "Bot je offline. Štatistiky sú dostupné len keď je bot pripojený."
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "Vyhodiť jednu",
       "dropAll": "Vyhodiť všetko",
       "closeContainer": "Zavrieť",
-      "clickHint": "",
+      "clickHint": "Ľavé kliknutie: zdvihnúť/umiestniť | Pravé kliknutie: polovica/jeden | Shift+klik: rýchly presun | Stredné kliknutie: výber slotu rýchleho panela",
       "offline": "Bot je offline. Inventár je dostupný len keď je bot pripojený.",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "Recepty",
+        "enchantments": "Očarovania",
+        "patterns": "Vzory",
+        "trades": "Obchody",
+        "beaconEffects": "Efekty majáka",
+        "crafterSlots": "Ovládanie slotov",
+        "lecternControls": "Ovládanie knihy",
         "actions": "Akcie"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "Textové pole",
+        "anvilRename": "Premenovať predmet"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "Obsah knihy",
+        "emptyPage": "(Prázdna stránka)",
+        "pageIndicator": "Strana {{current}} z {{total}}"
       }
     },
     "visualPanel": {
@@ -222,58 +229,463 @@
       "offline": "Bot je offline. Zobrazovanie vizuálnych dát je dostupné len keď je bot pripojený."
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "Akcie bota",
+      "leftClick": "Ľavé kliknutie",
+      "rightClick": "Pravé kliknutie",
+      "leftClickDescription": "Zaútočiť na entitu alebo zničiť blok",
+      "rightClickDescription": "Použiť predmet alebo interagovať",
+      "offline": "Bot je offline. Akcie sú dostupné len keď je bot pripojený."
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "Ovládanie pohybu",
+      "movement": "Pohyb (WASD)",
+      "forward": "Pohyb vpred (W)",
+      "backward": "Pohyb vzad (S)",
+      "left": "Pohyb doľava (A)",
+      "right": "Pohyb doprava (D)",
+      "jump": "Skok",
+      "sneak": "Plíženie",
+      "sprint": "Šprint",
       "stop": "Zastaviť",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "Smer pohľadu",
+      "lookUp": "Pozrieť hore",
+      "lookDown": "Pozrieť dole",
+      "lookLeft": "Pozrieť doľava",
+      "lookRight": "Pozrieť doprava",
+      "offline": "Bot je offline. Ovládanie pohybu je k dispozícii len keď je bot pripojený."
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "Serverový dialóg",
+      "noDialog": "Momentálne nie je zobrazený žiadny serverový dialóg.",
       "dialogType": "Typ",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "ID dialógu",
+      "notice": "Oznámenie",
+      "confirmation": "Potvrdenie",
+      "multiAction": "Viacnásobná akcia",
+      "serverLinks": "Odkazy na server",
+      "dialogList": "Zoznam dialógov",
+      "unknownType": "Neznámy",
+      "dismiss": "Zavrieť",
+      "submit": "Odoslať",
+      "offline": "Bot je offline. Dialógy sú dostupné len keď je bot pripojený."
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "Vizuálny editor skriptov",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "Táto funkcia je momentálne vo vývoji. Nový vizuálny editor skriptov vám umožní vytvárať výkonné automatizačné skripty pomocou rozhrania drag-and-drop bez potreby písania kódu.",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "Vytvoriť",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "Beží",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "Spustiť",
+    "stop": "Zastaviť",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "Uložiť",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "Zastaviť",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "Akcie",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_one": "",
+        "entries_few": "",
+        "entries_many": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "Hodnota",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "Chyba",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "Spustiť",
+        "end": "",
+        "amount": "Množstvo",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "Pridať",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "Plíženie",
+            "description": ""
+          },
+          "sprint": {
+            "label": "Šprint",
+            "description": ""
+          },
+          "jump": {
+            "label": "Skok",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

@@ -1,8 +1,8 @@
 {
   "locale": "ロケール",
   "cancel": "キャンセル",
-  "save": "",
-  "saving": "",
+  "save": "保存する",
+  "saving": "保存中...",
   "error": {
     "noAddressOrToken": "サーバーアドレスまたはトークンが見つかりません",
     "page": {

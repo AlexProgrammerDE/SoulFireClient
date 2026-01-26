@@ -113,12 +113,19 @@
       "noSettings": "Không có cài đặt nào cho trang này"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "Chỉnh sửa Metadata",
+      "title": "Metadata: {{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} trực tuyến / {{total}} tổng cộng",
     "noBots": "Chưa cấu hình bot nào. Thêm tài khoản từ trang Cài đặt Tài khoản.",
     "noBotsFound": "Không có bot nào khớp với tìm kiếm của bạn.",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "Đang tải thêm...",
+    "showingCount": "Đang hiển thị {{loaded}} trên tổng số {{total}}.",
+    "allLoaded": "Tất cả {{total}} bot đã được tải.",
     "online": "Trực tuyến",
     "offline": "Ngoại tuyến",
     "notJoined": "Chưa Tham Gia",
     "backToBots": "Quay lại Bots",
     "comingSoon": "Sắp ra mắt",
     "terminalPanel": {
-      "title": ""
+      "title": "Bot Terminal"
     },
     "positionPanel": {
       "title": "Vị trí & Xoay",
@@ -156,9 +163,9 @@
       "title": "Góc nhìn Bot",
       "capture": "Chụp ảnh",
       "refresh": "Làm mới",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "Tự động",
+      "startAutoRefresh": "Bắt đầu tự động làm mới (khoảng thời gian 1 giây)",
+      "stopAutoRefresh": "Dừng tự động làm mới",
       "clickToCapture": "Nhấn Chụp ảnh để hiển thị góc nhìn của bot",
       "offline": "Bot đang ngoại tuyến. Hiển thị góc nhìn chỉ khả dụng khi bot đã kết nối."
     },
@@ -170,12 +177,12 @@
       "experience": "Kinh nghiệm",
       "level": "Cấp độ",
       "toNextLevel": "đến cấp tiếp theo",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "Chế độ chơi",
+      "survival": "Sinh tồn",
+      "creative": "Sáng tạo",
+      "adventure": "Phiêu lưu",
+      "spectator": "Khán giả",
+      "unknown": "Không xác định",
       "offline": "Bot đang ngoại tuyến. Chỉ số chỉ khả dụng khi bot đã kết nối."
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "Thả Một",
       "dropAll": "Thả Tất Cả",
       "closeContainer": "Đóng",
-      "clickHint": "",
+      "clickHint": "Nhấp chuột trái: nhặt/đặt | Nhấp phải: chia đôi/một | Shift+nhấp: di chuyển nhanh | Nhấp giữa: chọn ô thanh nhanh",
       "offline": "Bot đang ngoại tuyến. Kho chỉ khả dụng khi bot đã kết nối.",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "Công thức",
+        "enchantments": "Phù phép",
+        "patterns": "Hoa văn",
+        "trades": "Giao dịch",
+        "beaconEffects": "Hiệu ứng beacon",
+        "crafterSlots": "Điều khiển ô",
+        "lecternControls": "Điều khiển sách",
         "actions": "Hành động"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "Nhập văn bản",
+        "anvilRename": "Đổi tên vật phẩm"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "Nội dung sách",
+        "emptyPage": "(Trang trống)",
+        "pageIndicator": "Trang {{current}} trên tổng số {{total}}"
       }
     },
     "visualPanel": {
@@ -222,58 +229,460 @@
       "offline": "Bot đang ngoại tuyến. Dữ liệu hình ảnh chỉ khả dụng khi bot đã kết nối."
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "Hành động của bot",
+      "leftClick": "Nhấp Chuột Trái",
+      "rightClick": "Nhấp Chuột Phải",
+      "leftClickDescription": "Tấn công thực thể hoặc phá block",
+      "rightClickDescription": "Sử dụng vật phẩm hoặc tương tác",
+      "offline": "Bot đang ngoại tuyến. Các hành động chỉ khả dụng khi bot đang kết nối."
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "Điều khiển di chuyển",
+      "movement": "Di chuyển (WASD)",
+      "forward": "Tiến lên (W)",
+      "backward": "Lùi lại (S)",
+      "left": "Đi ngang trái (A)",
+      "right": "Đi ngang phải (D)",
+      "jump": "Nhảy",
+      "sneak": "Cúi",
+      "sprint": "Chạy nước rút",
       "stop": "Dừng lại",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "Hướng nhìn",
+      "lookUp": "Nhìn lên",
+      "lookDown": "Nhìn xuống",
+      "lookLeft": "Nhìn trái",
+      "lookRight": "Nhìn phải",
+      "offline": "Bot đang ngoại tuyến. Điều khiển di chuyển chỉ khả dụng khi bot đang kết nối."
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "Hộp thoại máy chủ",
+      "noDialog": "Hiện không có hộp thoại máy chủ nào được hiển thị.",
       "dialogType": "Loại",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "ID hộp thoại",
+      "notice": "Thông báo",
+      "confirmation": "Xác nhận",
+      "multiAction": "Hành động nhiều",
+      "serverLinks": "Liên kết máy chủ",
+      "dialogList": "Danh sách hộp thoại",
+      "unknownType": "Không xác định",
+      "dismiss": "Tắt",
+      "submit": "Gửi",
+      "offline": "Bot đang ngoại tuyến. Hộp thoại chỉ khả dụng khi bot đang kết nối."
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "Trình chỉnh sửa Script trực quan",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "Tính năng này hiện đang phát triển. Trình chỉnh sửa script trực quan mới sẽ cho phép bạn tạo các script tự động mạnh mẽ bằng giao diện kéo thả mà không cần viết mã.",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "Tạo",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "Đang chạy",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "Bắt đầu",
+    "stop": "Dừng lại",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "Lưu",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "Dừng lại",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "Hành động",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "Giá trị",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "Lỗi",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "Bắt đầu",
+        "end": "",
+        "amount": "Số lượng",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "Thêm",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "Cúi",
+            "description": ""
+          },
+          "sprint": {
+            "label": "Chạy nước rút",
+            "description": ""
+          },
+          "jump": {
+            "label": "Nhảy",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

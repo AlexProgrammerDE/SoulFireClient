@@ -1,8 +1,8 @@
 {
   "locale": "Lokallaşdırma",
   "cancel": "Ləğv et",
-  "save": "",
-  "saving": "",
+  "save": "Yadda saxla",
+  "saving": "Yadda saxlanılır...",
   "error": {
     "noAddressOrToken": "Server ünvanı və ya token tapılmadı",
     "page": {

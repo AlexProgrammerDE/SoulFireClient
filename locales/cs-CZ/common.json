@@ -1,8 +1,8 @@
 {
   "locale": "Místní nastavení",
   "cancel": "Zrušit",
-  "save": "",
-  "saving": "",
+  "save": "Uložit",
+  "saving": "Ukládání...",
   "error": {
     "noAddressOrToken": "Nenalezena adresa serveru ani token",
     "page": {

@@ -1,8 +1,8 @@
 {
   "locale": "लोकैल",
   "cancel": "रद्द करें",
-  "save": "",
-  "saving": "",
+  "save": "सहेजें",
+  "saving": "सहेजा जा रहा है...",
   "error": {
     "noAddressOrToken": "कोई सर्वर पता या टोकन नहीं मिला",
     "page": {

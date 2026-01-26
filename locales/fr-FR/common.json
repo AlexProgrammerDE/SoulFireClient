@@ -1,8 +1,8 @@
 {
   "locale": "Langue",
   "cancel": "Annuler",
-  "save": "",
-  "saving": "",
+  "save": "Enregistrer",
+  "saving": "Enregistrement...",
   "error": {
     "noAddressOrToken": "Aucune adresse ou token de serveur trouvé",
     "page": {
