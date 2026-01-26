@@ -10,18 +10,16 @@ import {
 import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select.tsx";
 import { Switch } from "@/components/ui/switch.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
 import { cn } from "@/lib/utils.tsx";
 import { useNodeTypes } from "./NodeTypesContext";
-import type { PortType } from "./nodes/types.ts";
+import {
+  getPortColor,
+  type NodeDefinition,
+  type PortDefinition,
+  type PortType,
+} from "./nodes/types";
 import { useNodeTranslations } from "./useNodeTranslations";
 
 interface ScriptNode {
@@ -37,411 +35,204 @@ interface NodeInspectorProps {
   className?: string;
 }
 
-interface FieldConfig {
+/**
+ * Derive editable field info from a port definition.
+ * Only ports with defaultValue are considered editable.
+ */
+interface EditableField {
   key: string;
-  labelKey: string; // Translation key for label
-  type: "number" | "string" | "boolean" | "select" | "textarea";
-  options?: { value: string; labelKey: string }[]; // Translation key for option labels
-  placeholder?: string;
-  min?: number;
-  max?: number;
-  step?: number;
+  label: string;
+  portType: PortType;
+  defaultValue: unknown;
+  description?: string;
 }
 
-// Field configurations for node types (keys must match node type names exactly)
-// Labels use translation keys that will be resolved at render time
-const NODE_FIELD_CONFIGS: Record<string, FieldConfig[]> = {
-  // Trigger nodes
-  "trigger.on_interval": [
-    {
-      key: "interval",
-      labelKey: "interval",
-      type: "number",
-      placeholder: "1000",
-      min: 100,
-      step: 100,
-    },
-  ],
+function getEditableFields(definition: NodeDefinition): EditableField[] {
+  const fields: EditableField[] = [];
 
-  // Math nodes
-  "math.random": [
-    {
-      key: "min",
-      labelKey: "min",
-      type: "number",
-      placeholder: "0",
-    },
-    {
-      key: "max",
-      labelKey: "max",
-      type: "number",
-      placeholder: "100",
-    },
-  ],
-  "math.formula": [
-    {
-      key: "formula",
-      labelKey: "formula",
-      type: "textarea",
-      placeholder: "a + b * 2",
-    },
-  ],
-  "math.bspline": [
-    {
-      key: "degree",
-      labelKey: "degree",
-      type: "number",
-      placeholder: "3",
-      min: 1,
-      max: 10,
-    },
-  ],
+  for (const input of definition.inputs) {
+    // Skip execution ports - they're not data fields
+    if (input.type === "execution") continue;
 
-  // Logic nodes
-  "logic.compare": [
-    {
-      key: "operator",
-      labelKey: "operator",
-      type: "select",
-      options: [
-        { value: "==", labelKey: "operatorEqual" },
-        { value: "!=", labelKey: "operatorNotEqual" },
-        { value: "<", labelKey: "operatorLess" },
-        { value: "<=", labelKey: "operatorLessEqual" },
-        { value: ">", labelKey: "operatorGreater" },
-        { value: ">=", labelKey: "operatorGreaterEqual" },
-      ],
-    },
-  ],
+    // Only include ports that have a default value (meaning they're configurable)
+    if (input.defaultValue !== undefined) {
+      // Extract field key from port id (e.g., "number-interval" -> "interval")
+      const key = input.id.includes("-")
+        ? input.id.split("-").slice(1).join("-")
+        : input.id;
 
-  // Action nodes
-  "action.set_rotation": [
-    {
-      key: "smooth",
-      labelKey: "smooth",
-      type: "boolean",
-    },
-  ],
-  "action.look_at": [
-    {
-      key: "smooth",
-      labelKey: "smooth",
-      type: "boolean",
-    },
-  ],
-  "action.sneak": [
-    {
-      key: "enabled",
-      labelKey: "enabled",
-      type: "boolean",
-    },
-  ],
-  "action.sprint": [
-    {
-      key: "enabled",
-      labelKey: "enabled",
-      type: "boolean",
-    },
-  ],
-  "action.use_item": [
-    {
-      key: "hand",
-      labelKey: "hand",
-      type: "select",
-      options: [
-        { value: "main", labelKey: "handMain" },
-        { value: "off", labelKey: "handOff" },
-      ],
-    },
-  ],
-  "action.place_block": [
-    {
-      key: "face",
-      labelKey: "face",
-      type: "select",
-      options: [
-        { value: "up", labelKey: "faceUp" },
-        { value: "down", labelKey: "faceDown" },
-        { value: "north", labelKey: "faceNorth" },
-        { value: "south", labelKey: "faceSouth" },
-        { value: "east", labelKey: "faceEast" },
-        { value: "west", labelKey: "faceWest" },
-      ],
-    },
-  ],
-  "action.select_slot": [
-    {
-      key: "slot",
-      labelKey: "slot",
-      type: "number",
-      placeholder: "0",
-      min: 0,
-      max: 8,
-    },
-  ],
-  "action.wait": [
-    {
-      key: "ticks",
-      labelKey: "ticks",
-      type: "number",
-      placeholder: "20",
-      min: 1,
-    },
-  ],
-  "action.print": [
-    {
-      key: "level",
-      labelKey: "level",
-      type: "select",
-      options: [
-        { value: "debug", labelKey: "levelDebug" },
-        { value: "info", labelKey: "levelInfo" },
-        { value: "warn", labelKey: "levelWarn" },
-        { value: "error", labelKey: "levelError" },
-      ],
-    },
-  ],
-  "action.set_variable": [
-    {
-      key: "variableName",
-      labelKey: "variableName",
-      type: "string",
-      placeholder: "myVar",
-    },
-  ],
+      // Parse the default value
+      let defaultValue: unknown;
+      try {
+        defaultValue = JSON.parse(input.defaultValue);
+      } catch {
+        defaultValue = input.defaultValue;
+      }
 
-  // Data nodes
-  "data.find_entity": [
-    {
-      key: "range",
-      labelKey: "range",
-      type: "number",
-      placeholder: "16",
-      min: 1,
-    },
-  ],
-  "data.find_block": [
-    {
-      key: "range",
-      labelKey: "range",
-      type: "number",
-      placeholder: "32",
-      min: 1,
-    },
-  ],
-  "data.get_variable": [
-    {
-      key: "variableName",
-      labelKey: "variableName",
-      type: "string",
-      placeholder: "myVar",
-    },
-  ],
-
-  // Constant nodes
-  "constant.number": [
-    {
-      key: "value",
-      labelKey: "value",
-      type: "number",
-      placeholder: "0",
-    },
-  ],
-  "constant.string": [
-    {
-      key: "value",
-      labelKey: "value",
-      type: "textarea",
-      placeholder: "Enter text...",
-    },
-  ],
-  "constant.boolean": [
-    {
-      key: "value",
-      labelKey: "value",
-      type: "boolean",
-    },
-  ],
-  "constant.vector3": [
-    {
-      key: "x",
-      labelKey: "x",
-      type: "number",
-      placeholder: "0",
-    },
-    {
-      key: "y",
-      labelKey: "y",
-      type: "number",
-      placeholder: "0",
-    },
-    {
-      key: "z",
-      labelKey: "z",
-      type: "number",
-      placeholder: "0",
-    },
-  ],
-
-  // Flow control nodes
-  "flow.loop": [
-    {
-      key: "count",
-      labelKey: "loopCount",
-      type: "number",
-      placeholder: "10",
-      min: 1,
-    },
-  ],
-  "flow.gate": [
-    {
-      key: "open",
-      labelKey: "open",
-      type: "boolean",
-    },
-  ],
-  "flow.debounce": [
-    {
-      key: "delay",
-      labelKey: "delay",
-      type: "number",
-      placeholder: "100",
-      min: 0,
-      step: 10,
-    },
-  ],
-};
-
-function getPortTypeColor(type: PortType): string {
-  switch (type) {
-    case "execution":
-      return "text-white";
-    case "number":
-      return "text-green-500";
-    case "boolean":
-      return "text-red-500";
-    case "string":
-      return "text-yellow-500";
-    case "vector3":
-      return "text-blue-500";
-    case "entity":
-      return "text-purple-500";
-    case "bot":
-      return "text-orange-500";
-    case "block":
-      return "text-cyan-500";
-    case "item":
-      return "text-pink-500";
-    case "list":
-      return "text-violet-500";
-    case "any":
-      return "text-gray-500";
-    default:
-      return "text-muted-foreground";
+      fields.push({
+        key,
+        label: input.label,
+        portType: input.type,
+        defaultValue,
+        description: input.description,
+      });
+    }
   }
+
+  return fields;
 }
 
-interface FieldRendererProps {
-  field: FieldConfig;
+interface FieldEditorProps {
+  field: EditableField;
   value: unknown;
   onChange: (value: unknown) => void;
-  getFieldLabel: (key: string) => string;
-  selectPlaceholder: string;
 }
 
-function FieldRenderer({
-  field,
-  value,
-  onChange,
-  getFieldLabel,
-  selectPlaceholder,
-}: FieldRendererProps) {
+function FieldEditor({ field, value, onChange }: FieldEditorProps) {
   const id = `field-${field.key}`;
-  const label = getFieldLabel(field.labelKey);
 
-  switch (field.type) {
+  // Determine the actual value (use current value or default)
+  const currentValue = value ?? field.defaultValue;
+
+  switch (field.portType) {
     case "number":
       return (
         <div className="space-y-1.5">
-          <Label htmlFor={id}>{label}</Label>
+          <Label htmlFor={id}>{field.label}</Label>
           <Input
             id={id}
             type="number"
-            value={(value as number) ?? ""}
-            onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
-            placeholder={field.placeholder}
-            min={field.min}
-            max={field.max}
-            step={field.step}
+            value={(currentValue as number) ?? ""}
+            onChange={(e) => {
+              const num = parseFloat(e.target.value);
+              onChange(Number.isNaN(num) ? 0 : num);
+            }}
+            placeholder={String(field.defaultValue ?? "")}
           />
+          {field.description && (
+            <p className="text-xs text-muted-foreground">{field.description}</p>
+          )}
         </div>
       );
 
-    case "string":
+    case "string": {
+      // Use textarea for longer strings, input for shorter ones
+      const isLongText =
+        typeof field.defaultValue === "string" &&
+        (field.defaultValue.length > 30 || field.defaultValue.includes("\n"));
+
+      if (isLongText) {
+        return (
+          <div className="space-y-1.5">
+            <Label htmlFor={id}>{field.label}</Label>
+            <Textarea
+              id={id}
+              value={(currentValue as string) ?? ""}
+              onChange={(e) => onChange(e.target.value)}
+              placeholder={String(field.defaultValue ?? "")}
+              className="min-h-20 resize-none font-mono text-xs"
+            />
+            {field.description && (
+              <p className="text-xs text-muted-foreground">
+                {field.description}
+              </p>
+            )}
+          </div>
+        );
+      }
+
       return (
         <div className="space-y-1.5">
-          <Label htmlFor={id}>{label}</Label>
+          <Label htmlFor={id}>{field.label}</Label>
           <Input
             id={id}
             type="text"
-            value={(value as string) ?? ""}
+            value={(currentValue as string) ?? ""}
             onChange={(e) => onChange(e.target.value)}
-            placeholder={field.placeholder}
+            placeholder={String(field.defaultValue ?? "")}
           />
+          {field.description && (
+            <p className="text-xs text-muted-foreground">{field.description}</p>
+          )}
         </div>
       );
-
-    case "textarea":
-      return (
-        <div className="space-y-1.5">
-          <Label htmlFor={id}>{label}</Label>
-          <Textarea
-            id={id}
-            value={(value as string) ?? ""}
-            onChange={(e) => onChange(e.target.value)}
-            placeholder={field.placeholder}
-            className="min-h-20 resize-none font-mono text-xs"
-          />
-        </div>
-      );
+    }
 
     case "boolean":
       return (
-        <div className="flex items-center justify-between">
-          <Label htmlFor={id}>{label}</Label>
-          <Switch
-            id={id}
-            checked={(value as boolean) ?? false}
-            onCheckedChange={onChange}
-          />
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between">
+            <Label htmlFor={id}>{field.label}</Label>
+            <Switch
+              id={id}
+              checked={(currentValue as boolean) ?? false}
+              onCheckedChange={onChange}
+            />
+          </div>
+          {field.description && (
+            <p className="text-xs text-muted-foreground">{field.description}</p>
+          )}
         </div>
       );
 
-    case "select":
+    case "vector3":
+      // Vector3 fields are typically split into x, y, z
+      // This handles a single component; the full vector is usually 3 separate fields
       return (
         <div className="space-y-1.5">
-          <Label htmlFor={id}>{label}</Label>
-          <Select
-            value={(value as string) ?? field.options?.[0]?.value}
-            onValueChange={onChange}
-          >
-            <SelectTrigger id={id} className="w-full">
-              <SelectValue placeholder={selectPlaceholder} />
-            </SelectTrigger>
-            <SelectContent>
-              {field.options?.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {getFieldLabel(option.labelKey)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Label htmlFor={id}>{field.label}</Label>
+          <Input
+            id={id}
+            type="number"
+            value={(currentValue as number) ?? ""}
+            onChange={(e) => {
+              const num = parseFloat(e.target.value);
+              onChange(Number.isNaN(num) ? 0 : num);
+            }}
+            placeholder={String(field.defaultValue ?? "0")}
+          />
+          {field.description && (
+            <p className="text-xs text-muted-foreground">{field.description}</p>
+          )}
         </div>
       );
 
     default:
-      return null;
+      // For other types (entity, bot, block, item, list, any), show as text input
+      return (
+        <div className="space-y-1.5">
+          <Label htmlFor={id}>{field.label}</Label>
+          <Input
+            id={id}
+            type="text"
+            value={String(currentValue ?? "")}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder={String(field.defaultValue ?? "")}
+          />
+          {field.description && (
+            <p className="text-xs text-muted-foreground">{field.description}</p>
+          )}
+        </div>
+      );
   }
+}
+
+interface PortListItemProps {
+  port: PortDefinition;
+  portLabel: string;
+}
+
+function PortListItem({ port, portLabel }: PortListItemProps) {
+  const color = getPortColor(port.type);
+
+  return (
+    <li className="flex items-center justify-between text-xs">
+      <span>{portLabel}</span>
+      <span className="font-mono" style={{ color }}>
+        {port.type}
+      </span>
+    </li>
+  );
 }
 
 export function NodeInspector({
@@ -450,7 +241,7 @@ export function NodeInspector({
   className,
 }: NodeInspectorProps) {
   const { t } = useTranslation("instance");
-  const { getNodeLabel, getFieldLabel, getPortLabel } = useNodeTranslations();
+  const { getNodeLabel, getPortLabel } = useNodeTranslations();
   const { getDefinition } = useNodeTypes();
 
   const nodeDefinition = useMemo(() => {
@@ -458,10 +249,11 @@ export function NodeInspector({
     return getDefinition(selectedNode.type);
   }, [selectedNode, getDefinition]);
 
-  const fieldConfigs = useMemo(() => {
-    if (!selectedNode) return [];
-    return NODE_FIELD_CONFIGS[selectedNode.type] ?? [];
-  }, [selectedNode]);
+  // Derive editable fields from port definitions
+  const editableFields = useMemo(() => {
+    if (!nodeDefinition) return [];
+    return getEditableFields(nodeDefinition);
+  }, [nodeDefinition]);
 
   const handleFieldChange = (key: string, value: unknown) => {
     if (!selectedNode || !onNodeDataChange) return;
@@ -524,6 +316,11 @@ export function NodeInspector({
               <p className="text-xs text-muted-foreground">
                 {nodeDefinition.type}
               </p>
+              {nodeDefinition.description && (
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {nodeDefinition.description}
+                </p>
+              )}
             </CardContent>
           </Card>
 
@@ -537,8 +334,8 @@ export function NodeInspector({
             </code>
           </div>
 
-          {/* Editable Fields */}
-          {fieldConfigs.length > 0 && (
+          {/* Editable Fields (derived from port definitions) */}
+          {editableFields.length > 0 && (
             <Card size="sm">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm">
@@ -546,16 +343,12 @@ export function NodeInspector({
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-3">
-                {fieldConfigs.map((field) => (
-                  <FieldRenderer
+                {editableFields.map((field) => (
+                  <FieldEditor
                     key={field.key}
                     field={field}
                     value={selectedNode.data[field.key]}
                     onChange={(value) => handleFieldChange(field.key, value)}
-                    getFieldLabel={getFieldLabel}
-                    selectPlaceholder={t(
-                      "scripts.editor.inspector.selectPlaceholder",
-                    )}
                   />
                 ))}
               </CardContent>
@@ -573,17 +366,11 @@ export function NodeInspector({
               <CardContent>
                 <ul className="flex flex-col gap-1">
                   {nodeDefinition.inputs.map((port) => (
-                    <li
+                    <PortListItem
                       key={port.id}
-                      className="flex items-center justify-between text-xs"
-                    >
-                      <span>{getPortLabel(port.id, port.label)}</span>
-                      <span
-                        className={cn("font-mono", getPortTypeColor(port.type))}
-                      >
-                        {port.type}
-                      </span>
-                    </li>
+                      port={port}
+                      portLabel={getPortLabel(port.id, port.label)}
+                    />
                   ))}
                 </ul>
               </CardContent>
@@ -601,17 +388,11 @@ export function NodeInspector({
               <CardContent>
                 <ul className="flex flex-col gap-1">
                   {nodeDefinition.outputs.map((port) => (
-                    <li
+                    <PortListItem
                       key={port.id}
-                      className="flex items-center justify-between text-xs"
-                    >
-                      <span>{getPortLabel(port.id, port.label)}</span>
-                      <span
-                        className={cn("font-mono", getPortTypeColor(port.type))}
-                      >
-                        {port.type}
-                      </span>
-                    </li>
+                      port={port}
+                      portLabel={getPortLabel(port.id, port.label)}
+                    />
                   ))}
                 </ul>
               </CardContent>

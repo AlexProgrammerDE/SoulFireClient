@@ -11,19 +11,28 @@ import {
 import { TransportContext } from "@/components/providers/transport-context";
 import { nodeTypesQueryOptions } from "@/lib/script-service";
 import { createNodeComponent } from "./nodes/BaseNode";
-import { type NodeDefinition, protoNodeTypeToLocal } from "./nodes/types";
+import {
+  type CategoryInfo,
+  deriveCategoryInfo,
+  type NodeDefinition,
+  protoNodeTypeToLocal,
+} from "./nodes/types";
 
 export interface NodeTypesContextValue {
   /** All node definitions keyed by type */
   definitions: Record<string, NodeDefinition>;
   /** React Flow node type components */
   nodeTypes: NodeTypes;
-  /** All available categories */
+  /** All available categories (from server) */
   categories: string[];
+  /** Category info derived from nodes */
+  categoryInfo: Record<string, CategoryInfo>;
   /** Get a node definition by type */
   getDefinition: (type: string) => NodeDefinition | undefined;
   /** Get nodes by category */
   getNodesByCategory: (category: string) => NodeDefinition[];
+  /** Get category info */
+  getCategoryInfo: (category: string) => CategoryInfo;
   /** Create default data for a node type */
   createNodeData: (
     type: string,
@@ -71,8 +80,35 @@ export function NodeTypesProvider({
 
   // Get categories from server response
   const categories = useMemo(() => {
-    return data.categories.map((c) => c.toLowerCase());
+    return data.categories;
   }, [data.categories]);
+
+  // Group nodes by category for deriving category info
+  const nodesByCategory = useMemo(() => {
+    const result: Record<string, NodeDefinition[]> = {};
+    for (const category of categories) {
+      result[category] = [];
+    }
+    for (const node of Object.values(definitions)) {
+      if (!result[node.category]) {
+        result[node.category] = [];
+      }
+      result[node.category].push(node);
+    }
+    return result;
+  }, [definitions, categories]);
+
+  // Derive category info from nodes in each category
+  const categoryInfo = useMemo(() => {
+    const result: Record<string, CategoryInfo> = {};
+    for (const category of categories) {
+      result[category] = deriveCategoryInfo(
+        category,
+        nodesByCategory[category] ?? [],
+      );
+    }
+    return result;
+  }, [categories, nodesByCategory]);
 
   const getDefinition = useCallback(
     (type: string) => definitions[type],
@@ -81,12 +117,21 @@ export function NodeTypesProvider({
 
   const getNodesByCategory = useCallback(
     (category: string) => {
-      const normalizedCategory = category.toLowerCase();
-      return Object.values(definitions).filter(
-        (def) => def.category.toLowerCase() === normalizedCategory,
+      return nodesByCategory[category] ?? [];
+    },
+    [nodesByCategory],
+  );
+
+  const getCategoryInfo = useCallback(
+    (category: string): CategoryInfo => {
+      return (
+        categoryInfo[category] ?? {
+          name: category,
+          icon: "Circle",
+        }
       );
     },
-    [definitions],
+    [categoryInfo],
   );
 
   const createNodeData = useCallback(
@@ -109,8 +154,10 @@ export function NodeTypesProvider({
       definitions,
       nodeTypes,
       categories,
+      categoryInfo,
       getDefinition,
       getNodesByCategory,
+      getCategoryInfo,
       createNodeData,
       isLoading,
     }),
@@ -118,8 +165,10 @@ export function NodeTypesProvider({
       definitions,
       nodeTypes,
       categories,
+      categoryInfo,
       getDefinition,
       getNodesByCategory,
+      getCategoryInfo,
       createNodeData,
       isLoading,
     ],

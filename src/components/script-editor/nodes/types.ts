@@ -45,6 +45,12 @@ export interface NodeDefinition {
   color?: string;
 }
 
+export interface CategoryInfo {
+  name: string;
+  icon: string;
+  color?: string;
+}
+
 /**
  * Convert proto PortType enum to local string type
  */
@@ -124,7 +130,7 @@ export function protoNodeTypeToLocal(
   return {
     type: proto.type,
     label: proto.displayName,
-    category: proto.category.toLowerCase(),
+    category: proto.category,
     icon: proto.icon || "Circle",
     inputs: proto.inputs.map(protoPortToLocal),
     outputs: proto.outputs.map(protoPortToLocal),
@@ -138,6 +144,10 @@ export function protoNodeTypeToLocal(
   };
 }
 
+/**
+ * Port type colors - based on PortType enum from protocol.
+ * These are UI presentation colors for distinguishing port types visually.
+ */
 export const PORT_COLORS: Record<PortType, string> = {
   execution: "#ffffff",
   number: "#22c55e",
@@ -152,136 +162,47 @@ export const PORT_COLORS: Record<PortType, string> = {
   any: "#6b7280",
 };
 
-const CATEGORY_COLOR_MAP: Record<string, string> = {
-  trigger: "border-l-purple-500",
-  triggers: "border-l-purple-500",
-  math: "border-l-green-500",
-  logic: "border-l-red-500",
-  action: "border-l-blue-500",
-  actions: "border-l-blue-500",
-  data: "border-l-yellow-500",
-  flow: "border-l-orange-500",
-  "flow control": "border-l-orange-500",
-  constant: "border-l-cyan-500",
-  constants: "border-l-cyan-500",
-};
-
-const DEFAULT_CATEGORY_COLOR = "border-l-gray-500";
-
 /**
- * Get the border color class for a category
+ * Get the color for a port type
  */
-export function getCategoryColor(category: string): string {
-  return CATEGORY_COLOR_MAP[category.toLowerCase()] ?? DEFAULT_CATEGORY_COLOR;
+export function getPortColor(type: PortType): string {
+  return PORT_COLORS[type] ?? PORT_COLORS.any;
 }
 
-// Keep for backward compatibility
-export const CATEGORY_COLORS: Record<string, string> = new Proxy(
-  CATEGORY_COLOR_MAP,
-  {
-    get(target, prop: string) {
-      return target[prop.toLowerCase()] ?? DEFAULT_CATEGORY_COLOR;
-    },
-  },
-);
-
-const CATEGORY_INFO_MAP: Record<
-  string,
-  { name: string; icon: string; description: string }
-> = {
-  trigger: {
-    name: "Triggers",
-    icon: "Zap",
-    description: "Events that start script execution",
-  },
-  triggers: {
-    name: "Triggers",
-    icon: "Zap",
-    description: "Events that start script execution",
-  },
-  math: {
-    name: "Math",
-    icon: "Calculator",
-    description: "Mathematical operations",
-  },
-  logic: {
-    name: "Logic",
-    icon: "GitBranch",
-    description: "Boolean logic operations",
-  },
-  action: {
-    name: "Actions",
-    icon: "Play",
-    description: "Actions the bot can perform",
-  },
-  actions: {
-    name: "Actions",
-    icon: "Play",
-    description: "Actions the bot can perform",
-  },
-  data: {
-    name: "Data",
-    icon: "Database",
-    description: "Data values and variables",
-  },
-  flow: {
-    name: "Flow Control",
-    icon: "Workflow",
-    description: "Control script execution flow",
-  },
-  "flow control": {
-    name: "Flow Control",
-    icon: "Workflow",
-    description: "Control script execution flow",
-  },
-  constant: {
-    name: "Constants",
-    icon: "Hash",
-    description: "Constant values",
-  },
-  constants: {
-    name: "Constants",
-    icon: "Hash",
-    description: "Constant values",
-  },
-};
-
-const DEFAULT_CATEGORY_INFO = {
-  name: "Other",
-  icon: "Circle",
-  description: "Other nodes",
-};
-
 /**
- * Get category info for a category name
+ * Derive category info from the nodes in that category.
+ * Uses the first node's icon and color as representative of the category.
  */
-export function getCategoryInfo(category: string): {
-  name: string;
-  icon: string;
-  description: string;
-} {
-  return (
-    CATEGORY_INFO_MAP[category.toLowerCase()] ?? {
-      ...DEFAULT_CATEGORY_INFO,
-      name: category.charAt(0).toUpperCase() + category.slice(1),
-    }
-  );
+export function deriveCategoryInfo(
+  category: string,
+  nodes: NodeDefinition[],
+): CategoryInfo {
+  const firstNode = nodes[0];
+  return {
+    name: category,
+    icon: firstNode?.icon ?? "Circle",
+    color: firstNode?.color,
+  };
 }
 
-// Keep for backward compatibility
-export const CATEGORY_INFO: Record<
-  string,
-  { name: string; icon: string; description: string }
-> = new Proxy(CATEGORY_INFO_MAP, {
-  get(_target, prop: string) {
-    return getCategoryInfo(prop);
-  },
-});
+/**
+ * Get the border color style for a node based on its color property.
+ * Falls back to a default gray if no color is specified.
+ */
+export function getNodeBorderStyle(color?: string): string {
+  if (!color) {
+    return "border-l-gray-500";
+  }
+  // Use inline style for dynamic colors from server
+  return "";
+}
 
-// Helper to get nodes by category from definitions record
-export function getNodesByCategory(
-  definitions: Record<string, NodeDefinition>,
-  category: NodeCategory,
-): NodeDefinition[] {
-  return Object.values(definitions).filter((def) => def.category === category);
+/**
+ * Get inline border color style for a node
+ */
+export function getNodeBorderColor(color?: string): React.CSSProperties {
+  if (!color) {
+    return {};
+  }
+  return { borderLeftColor: color };
 }

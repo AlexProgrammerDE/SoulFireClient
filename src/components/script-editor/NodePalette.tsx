@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { cn } from "@/lib/utils.tsx";
 import { useNodeTypes } from "./NodeTypesContext";
-import { getCategoryInfo, type NodeDefinition } from "./nodes/types.ts";
+import type { CategoryInfo, NodeDefinition } from "./nodes/types.ts";
 import { useNodeTranslations } from "./useNodeTranslations";
 
 interface NodePaletteProps {
@@ -53,8 +53,8 @@ function DraggableNodeItem({
 }
 
 interface CategorySectionProps {
-  category: string;
   categoryName: string;
+  categoryInfo: CategoryInfo;
   nodes: NodeDefinition[];
   getNodeLabel: (node: NodeDefinition) => string;
   defaultOpen?: boolean;
@@ -62,15 +62,14 @@ interface CategorySectionProps {
 }
 
 function CategorySection({
-  category,
   categoryName,
+  categoryInfo,
   nodes,
   getNodeLabel,
   defaultOpen = true,
   onNodeDragStart,
 }: CategorySectionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const categoryInfo = getCategoryInfo(category);
 
   if (nodes.length === 0) {
     return null;
@@ -111,7 +110,11 @@ function CategorySection({
 export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
   const { t } = useTranslation("instance");
   const { getNodeLabel, getCategoryName } = useNodeTranslations();
-  const { categories, getNodesByCategory } = useNodeTypes();
+  const {
+    categories,
+    getNodesByCategory,
+    getCategoryInfo: getContextCategoryInfo,
+  } = useNodeTypes();
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredNodesByCategory = useMemo(() => {
@@ -175,8 +178,8 @@ export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
           {categories.map((category) => (
             <CategorySection
               key={category}
-              category={category}
               categoryName={getCategoryName(category)}
+              categoryInfo={getContextCategoryInfo(category)}
               nodes={filteredNodesByCategory[category] ?? []}
               getNodeLabel={getNodeLabel}
               defaultOpen={!searchQuery}

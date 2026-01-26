@@ -3,9 +3,8 @@ import { memo } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import {
-  CATEGORY_COLORS,
+  getPortColor,
   type NodeDefinition,
-  PORT_COLORS,
   type PortDefinition,
 } from "./types";
 
@@ -31,7 +30,7 @@ function PortRow({
   position: Position;
   translatedLabel: string;
 }) {
-  const color = PORT_COLORS[port.type];
+  const color = getPortColor(port.type);
   const isExecution = port.type === "execution";
   const isLeft = position === Position.Left;
 
@@ -62,7 +61,7 @@ function PortRow({
 
 function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
   const { t } = useTranslation("instance");
-  const { inputs, outputs, category, type, label } = definition;
+  const { inputs, outputs, type, label, color } = definition;
 
   // Get translated label, fall back to definition label
   const translationKey = `scripts.editor.nodes.${type}.label`;
@@ -89,16 +88,21 @@ function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
     output: outputs[i],
   }));
 
+  // Use node color from server, or fall back to default gray
+  const borderStyle = color ? { borderLeftColor: color } : undefined;
+  const borderClass = color ? "" : "border-l-gray-500";
+
   return (
     <div
       className={cn(
         "min-w-[160px] rounded-lg border-2 border-border bg-card shadow-md",
         "border-l-4",
-        CATEGORY_COLORS[category],
+        borderClass,
         selected && "ring-2 ring-primary ring-offset-2 ring-offset-background",
         isActive &&
           "ring-2 ring-green-500 ring-offset-2 ring-offset-background",
       )}
+      style={borderStyle}
     >
       {/* Header */}
       <div className="border-b border-border/50 px-3 py-2">
