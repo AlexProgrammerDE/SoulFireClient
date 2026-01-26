@@ -177,12 +177,6 @@ export interface ScriptData {
    */
   edges: ScriptEdge[];
   /**
-   * The scope at which this script operates (instance or bot level).
-   *
-   * @generated from protobuf field: soulfire.v1.ScriptScope scope = 6
-   */
-  scope: ScriptScope;
-  /**
    * The instance this script belongs to.
    * Scripts are always associated with a specific instance.
    * Format: UUID string.
@@ -225,12 +219,6 @@ export interface ScriptInfo {
    */
   description: string;
   /**
-   * The scope at which this script operates.
-   *
-   * @generated from protobuf field: soulfire.v1.ScriptScope scope = 4
-   */
-  scope: ScriptScope;
-  /**
    * The instance this script belongs to.
    * Format: UUID string.
    *
@@ -258,7 +246,7 @@ export interface ScriptInfo {
 }
 /**
  * Runtime status information for a script.
- * Provides information about current execution state and statistics.
+ * Provides information about current activation state and statistics.
  *
  * @generated from protobuf message soulfire.v1.ScriptStatus
  */
@@ -271,25 +259,25 @@ export interface ScriptStatus {
    */
   scriptId: string;
   /**
-   * Whether the script is currently executing.
+   * Whether the script is currently active (listening for triggers).
    *
-   * @generated from protobuf field: bool is_running = 2
+   * @generated from protobuf field: bool is_active = 2
    */
-  isRunning: boolean;
+  isActive: boolean;
   /**
    * The ID of the currently executing node, if any.
-   * Only present when is_running is true and a node is actively executing.
+   * Only present when a node is actively executing.
    *
    * @generated from protobuf field: optional string active_node_id = 3
    */
   activeNodeId?: string;
   /**
-   * The total number of times this script has been executed.
-   * Incremented each time StartScript is called and execution begins.
+   * The total number of times this script has been activated.
+   * Incremented each time ActivateScript is called.
    *
-   * @generated from protobuf field: int64 execution_count = 4
+   * @generated from protobuf field: int64 activation_count = 4
    */
-  executionCount: string;
+  activationCount: string;
 }
 /**
  * A single log entry generated during script execution.
@@ -529,12 +517,6 @@ export interface CreateScriptRequest {
    */
   description: string;
   /**
-   * The scope at which this script operates.
-   *
-   * @generated from protobuf field: soulfire.v1.ScriptScope scope = 4
-   */
-  scope: ScriptScope;
-  /**
    * Initial nodes for the script graph.
    * Can be empty to create a blank script.
    *
@@ -549,7 +531,7 @@ export interface CreateScriptRequest {
    */
   edges: ScriptEdge[];
   /**
-   * Whether the script should auto-start when the instance starts.
+   * Whether the script should auto-activate when the instance starts.
    *
    * @generated from protobuf field: bool auto_start = 7
    */
@@ -636,13 +618,6 @@ export interface UpdateScriptRequest {
    * @generated from protobuf field: optional string description = 4
    */
   description?: string;
-  /**
-   * Updated scope for the script.
-   * If not set, the scope remains unchanged.
-   *
-   * @generated from protobuf field: optional soulfire.v1.ScriptScope scope = 5
-   */
-  scope?: ScriptScope;
   /**
    * Updated list of nodes.
    * If provided, replaces the entire node list.
@@ -749,11 +724,11 @@ export interface ListScriptsResponse {
   scripts: ScriptInfo[];
 }
 /**
- * Request to start executing a script.
+ * Request to activate a script (register its event listeners).
  *
- * @generated from protobuf message soulfire.v1.StartScriptRequest
+ * @generated from protobuf message soulfire.v1.ActivateScriptRequest
  */
-export interface StartScriptRequest {
+export interface ActivateScriptRequest {
   /**
    * The instance containing the script.
    * Format: UUID string.
@@ -762,28 +737,19 @@ export interface StartScriptRequest {
    */
   instanceId: string;
   /**
-   * The ID of the script to execute.
+   * The ID of the script to activate.
    * Format: UUID string.
    *
    * @generated from protobuf field: string script_id = 2
    */
   scriptId: string;
-  /**
-   * Optional initial input values for the script.
-   * Keys are input parameter names expected by trigger nodes.
-   *
-   * @generated from protobuf field: map<string, google.protobuf.Value> inputs = 3
-   */
-  inputs: {
-    [key: string]: Value;
-  };
 }
 /**
- * Request to stop a running script.
+ * Request to deactivate an active script.
  *
- * @generated from protobuf message soulfire.v1.StopScriptRequest
+ * @generated from protobuf message soulfire.v1.DeactivateScriptRequest
  */
-export interface StopScriptRequest {
+export interface DeactivateScriptRequest {
   /**
    * The instance containing the script.
    * Format: UUID string.
@@ -792,7 +758,7 @@ export interface StopScriptRequest {
    */
   instanceId: string;
   /**
-   * The ID of the script to stop.
+   * The ID of the script to deactivate.
    * Format: UUID string.
    *
    * @generated from protobuf field: string script_id = 2
@@ -800,12 +766,12 @@ export interface StopScriptRequest {
   scriptId: string;
 }
 /**
- * Response after successfully stopping a script.
+ * Response after successfully deactivating a script.
  * Empty response indicates success.
  *
- * @generated from protobuf message soulfire.v1.StopScriptResponse
+ * @generated from protobuf message soulfire.v1.DeactivateScriptResponse
  */
-export interface StopScriptResponse {}
+export interface DeactivateScriptResponse {}
 /**
  * Request to get the execution status of a script.
  *
@@ -867,28 +833,6 @@ export interface SubscribeScriptLogsRequest {
    * @generated from protobuf field: soulfire.v1.LogLevel min_level = 3
    */
   minLevel: LogLevel;
-}
-/**
- * The scope at which a script operates.
- * Determines the execution context and what resources the script can access.
- *
- * @generated from protobuf enum soulfire.v1.ScriptScope
- */
-export enum ScriptScope {
-  /**
-   * Script operates at the instance level, affecting all bots in the instance.
-   * Has access to instance-wide resources and can coordinate multiple bots.
-   *
-   * @generated from protobuf enum value: SCRIPT_SCOPE_INSTANCE = 0;
-   */
-  INSTANCE = 0,
-  /**
-   * Script operates at the individual bot level.
-   * Runs independently for each bot and has access to bot-specific resources.
-   *
-   * @generated from protobuf enum value: SCRIPT_SCOPE_BOT = 1;
-   */
-  BOT = 1,
 }
 /**
  * The type of connection between nodes in the visual script editor.
@@ -1315,12 +1259,6 @@ class ScriptData$Type extends MessageType<ScriptData> {
         T: () => ScriptEdge,
       },
       {
-        no: 6,
-        name: "scope",
-        kind: "enum",
-        T: () => ["soulfire.v1.ScriptScope", ScriptScope, "SCRIPT_SCOPE_"],
-      },
-      {
         no: 7,
         name: "instance_id",
         kind: "scalar",
@@ -1336,7 +1274,6 @@ class ScriptData$Type extends MessageType<ScriptData> {
     message.description = "";
     message.nodes = [];
     message.edges = [];
-    message.scope = 0;
     message.instanceId = "";
     message.autoStart = false;
     if (value !== undefined)
@@ -1372,9 +1309,6 @@ class ScriptData$Type extends MessageType<ScriptData> {
           message.edges.push(
             ScriptEdge.internalBinaryRead(reader, reader.uint32(), options),
           );
-          break;
-        case /* soulfire.v1.ScriptScope scope */ 6:
-          message.scope = reader.int32();
           break;
         case /* string instance_id */ 7:
           message.instanceId = reader.string();
@@ -1429,9 +1363,6 @@ class ScriptData$Type extends MessageType<ScriptData> {
         writer.tag(5, WireType.LengthDelimited).fork(),
         options,
       ).join();
-    /* soulfire.v1.ScriptScope scope = 6; */
-    if (message.scope !== 0)
-      writer.tag(6, WireType.Varint).int32(message.scope);
     /* string instance_id = 7; */
     if (message.instanceId !== "")
       writer.tag(7, WireType.LengthDelimited).string(message.instanceId);
@@ -1465,12 +1396,6 @@ class ScriptInfo$Type extends MessageType<ScriptInfo> {
         T: 9 /*ScalarType.STRING*/,
       },
       {
-        no: 4,
-        name: "scope",
-        kind: "enum",
-        T: () => ["soulfire.v1.ScriptScope", ScriptScope, "SCRIPT_SCOPE_"],
-      },
-      {
         no: 5,
         name: "instance_id",
         kind: "scalar",
@@ -1486,7 +1411,6 @@ class ScriptInfo$Type extends MessageType<ScriptInfo> {
     message.id = "";
     message.name = "";
     message.description = "";
-    message.scope = 0;
     message.instanceId = "";
     message.autoStart = false;
     if (value !== undefined)
@@ -1512,9 +1436,6 @@ class ScriptInfo$Type extends MessageType<ScriptInfo> {
           break;
         case /* string description */ 3:
           message.description = reader.string();
-          break;
-        case /* soulfire.v1.ScriptScope scope */ 4:
-          message.scope = reader.int32();
           break;
         case /* string instance_id */ 5:
           message.instanceId = reader.string();
@@ -1571,9 +1492,6 @@ class ScriptInfo$Type extends MessageType<ScriptInfo> {
     /* string description = 3; */
     if (message.description !== "")
       writer.tag(3, WireType.LengthDelimited).string(message.description);
-    /* soulfire.v1.ScriptScope scope = 4; */
-    if (message.scope !== 0)
-      writer.tag(4, WireType.Varint).int32(message.scope);
     /* string instance_id = 5; */
     if (message.instanceId !== "")
       writer.tag(5, WireType.LengthDelimited).string(message.instanceId);
@@ -1613,7 +1531,7 @@ class ScriptStatus$Type extends MessageType<ScriptStatus> {
   constructor() {
     super("soulfire.v1.ScriptStatus", [
       { no: 1, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-      { no: 2, name: "is_running", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 2, name: "is_active", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
       {
         no: 3,
         name: "active_node_id",
@@ -1623,7 +1541,7 @@ class ScriptStatus$Type extends MessageType<ScriptStatus> {
       },
       {
         no: 4,
-        name: "execution_count",
+        name: "activation_count",
         kind: "scalar",
         T: 3 /*ScalarType.INT64*/,
       },
@@ -1632,8 +1550,8 @@ class ScriptStatus$Type extends MessageType<ScriptStatus> {
   create(value?: PartialMessage<ScriptStatus>): ScriptStatus {
     const message = globalThis.Object.create(this.messagePrototype!);
     message.scriptId = "";
-    message.isRunning = false;
-    message.executionCount = "0";
+    message.isActive = false;
+    message.activationCount = "0";
     if (value !== undefined)
       reflectionMergePartial<ScriptStatus>(this, message, value);
     return message;
@@ -1652,14 +1570,14 @@ class ScriptStatus$Type extends MessageType<ScriptStatus> {
         case /* string script_id */ 1:
           message.scriptId = reader.string();
           break;
-        case /* bool is_running */ 2:
-          message.isRunning = reader.bool();
+        case /* bool is_active */ 2:
+          message.isActive = reader.bool();
           break;
         case /* optional string active_node_id */ 3:
           message.activeNodeId = reader.string();
           break;
-        case /* int64 execution_count */ 4:
-          message.executionCount = reader.int64().toString();
+        case /* int64 activation_count */ 4:
+          message.activationCount = reader.int64().toString();
           break;
         default:
           let u = options.readUnknownField;
@@ -1688,15 +1606,15 @@ class ScriptStatus$Type extends MessageType<ScriptStatus> {
     /* string script_id = 1; */
     if (message.scriptId !== "")
       writer.tag(1, WireType.LengthDelimited).string(message.scriptId);
-    /* bool is_running = 2; */
-    if (message.isRunning !== false)
-      writer.tag(2, WireType.Varint).bool(message.isRunning);
+    /* bool is_active = 2; */
+    if (message.isActive !== false)
+      writer.tag(2, WireType.Varint).bool(message.isActive);
     /* optional string active_node_id = 3; */
     if (message.activeNodeId !== undefined)
       writer.tag(3, WireType.LengthDelimited).string(message.activeNodeId);
-    /* int64 execution_count = 4; */
-    if (message.executionCount !== "0")
-      writer.tag(4, WireType.Varint).int64(message.executionCount);
+    /* int64 activation_count = 4; */
+    if (message.activationCount !== "0")
+      writer.tag(4, WireType.Varint).int64(message.activationCount);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -2516,12 +2434,6 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
         T: 9 /*ScalarType.STRING*/,
       },
       {
-        no: 4,
-        name: "scope",
-        kind: "enum",
-        T: () => ["soulfire.v1.ScriptScope", ScriptScope, "SCRIPT_SCOPE_"],
-      },
-      {
         no: 5,
         name: "nodes",
         kind: "message",
@@ -2543,7 +2455,6 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
     message.instanceId = "";
     message.name = "";
     message.description = "";
-    message.scope = 0;
     message.nodes = [];
     message.edges = [];
     message.autoStart = false;
@@ -2570,9 +2481,6 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
           break;
         case /* string description */ 3:
           message.description = reader.string();
-          break;
-        case /* soulfire.v1.ScriptScope scope */ 4:
-          message.scope = reader.int32();
           break;
         case /* repeated soulfire.v1.ScriptNode nodes */ 5:
           message.nodes.push(
@@ -2620,9 +2528,6 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
     /* string description = 3; */
     if (message.description !== "")
       writer.tag(3, WireType.LengthDelimited).string(message.description);
-    /* soulfire.v1.ScriptScope scope = 4; */
-    if (message.scope !== 0)
-      writer.tag(4, WireType.Varint).int32(message.scope);
     /* repeated soulfire.v1.ScriptNode nodes = 5; */
     for (let i = 0; i < message.nodes.length; i++)
       ScriptNode.internalBinaryWrite(
@@ -2916,13 +2821,6 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
         T: 9 /*ScalarType.STRING*/,
       },
       {
-        no: 5,
-        name: "scope",
-        kind: "enum",
-        opt: true,
-        T: () => ["soulfire.v1.ScriptScope", ScriptScope, "SCRIPT_SCOPE_"],
-      },
-      {
         no: 6,
         name: "nodes",
         kind: "message",
@@ -2982,9 +2880,6 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
         case /* optional string description */ 4:
           message.description = reader.string();
           break;
-        case /* optional soulfire.v1.ScriptScope scope */ 5:
-          message.scope = reader.int32();
-          break;
         case /* repeated soulfire.v1.ScriptNode nodes */ 6:
           message.nodes.push(
             ScriptNode.internalBinaryRead(reader, reader.uint32(), options),
@@ -3040,9 +2935,6 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
     /* optional string description = 4; */
     if (message.description !== undefined)
       writer.tag(4, WireType.LengthDelimited).string(message.description);
-    /* optional soulfire.v1.ScriptScope scope = 5; */
-    if (message.scope !== undefined)
-      writer.tag(5, WireType.Varint).int32(message.scope);
     /* repeated soulfire.v1.ScriptNode nodes = 6; */
     for (let i = 0; i < message.nodes.length; i++)
       ScriptNode.internalBinaryWrite(
@@ -3455,139 +3347,9 @@ class ListScriptsResponse$Type extends MessageType<ListScriptsResponse> {
  */
 export const ListScriptsResponse = new ListScriptsResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StartScriptRequest$Type extends MessageType<StartScriptRequest> {
+class ActivateScriptRequest$Type extends MessageType<ActivateScriptRequest> {
   constructor() {
-    super("soulfire.v1.StartScriptRequest", [
-      {
-        no: 1,
-        name: "instance_id",
-        kind: "scalar",
-        T: 9 /*ScalarType.STRING*/,
-      },
-      { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
-      {
-        no: 3,
-        name: "inputs",
-        kind: "map",
-        K: 9 /*ScalarType.STRING*/,
-        V: { kind: "message", T: () => Value },
-      },
-    ]);
-  }
-  create(value?: PartialMessage<StartScriptRequest>): StartScriptRequest {
-    const message = globalThis.Object.create(this.messagePrototype!);
-    message.instanceId = "";
-    message.scriptId = "";
-    message.inputs = {};
-    if (value !== undefined)
-      reflectionMergePartial<StartScriptRequest>(this, message, value);
-    return message;
-  }
-  internalBinaryRead(
-    reader: IBinaryReader,
-    length: number,
-    options: BinaryReadOptions,
-    target?: StartScriptRequest,
-  ): StartScriptRequest {
-    let message = target ?? this.create(),
-      end = reader.pos + length;
-    while (reader.pos < end) {
-      let [fieldNo, wireType] = reader.tag();
-      switch (fieldNo) {
-        case /* string instance_id */ 1:
-          message.instanceId = reader.string();
-          break;
-        case /* string script_id */ 2:
-          message.scriptId = reader.string();
-          break;
-        case /* map<string, google.protobuf.Value> inputs */ 3:
-          this.binaryReadMap3(message.inputs, reader, options);
-          break;
-        default:
-          let u = options.readUnknownField;
-          if (u === "throw")
-            throw new globalThis.Error(
-              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            );
-          let d = reader.skip(wireType);
-          if (u !== false)
-            (u === true ? UnknownFieldHandler.onRead : u)(
-              this.typeName,
-              message,
-              fieldNo,
-              wireType,
-              d,
-            );
-      }
-    }
-    return message;
-  }
-  private binaryReadMap3(
-    map: StartScriptRequest["inputs"],
-    reader: IBinaryReader,
-    options: BinaryReadOptions,
-  ): void {
-    let len = reader.uint32(),
-      end = reader.pos + len,
-      key: keyof StartScriptRequest["inputs"] | undefined,
-      val: StartScriptRequest["inputs"][any] | undefined;
-    while (reader.pos < end) {
-      let [fieldNo, wireType] = reader.tag();
-      switch (fieldNo) {
-        case 1:
-          key = reader.string();
-          break;
-        case 2:
-          val = Value.internalBinaryRead(reader, reader.uint32(), options);
-          break;
-        default:
-          throw new globalThis.Error(
-            "unknown map entry field for soulfire.v1.StartScriptRequest.inputs",
-          );
-      }
-    }
-    map[key ?? ""] = val ?? Value.create();
-  }
-  internalBinaryWrite(
-    message: StartScriptRequest,
-    writer: IBinaryWriter,
-    options: BinaryWriteOptions,
-  ): IBinaryWriter {
-    /* string instance_id = 1; */
-    if (message.instanceId !== "")
-      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
-    /* string script_id = 2; */
-    if (message.scriptId !== "")
-      writer.tag(2, WireType.LengthDelimited).string(message.scriptId);
-    /* map<string, google.protobuf.Value> inputs = 3; */
-    for (let k of globalThis.Object.keys(message.inputs)) {
-      writer
-        .tag(3, WireType.LengthDelimited)
-        .fork()
-        .tag(1, WireType.LengthDelimited)
-        .string(k);
-      writer.tag(2, WireType.LengthDelimited).fork();
-      Value.internalBinaryWrite(message.inputs[k], writer, options);
-      writer.join().join();
-    }
-    let u = options.writeUnknownFields;
-    if (u !== false)
-      (u == true ? UnknownFieldHandler.onWrite : u)(
-        this.typeName,
-        message,
-        writer,
-      );
-    return writer;
-  }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.StartScriptRequest
- */
-export const StartScriptRequest = new StartScriptRequest$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class StopScriptRequest$Type extends MessageType<StopScriptRequest> {
-  constructor() {
-    super("soulfire.v1.StopScriptRequest", [
+    super("soulfire.v1.ActivateScriptRequest", [
       {
         no: 1,
         name: "instance_id",
@@ -3597,20 +3359,20 @@ class StopScriptRequest$Type extends MessageType<StopScriptRequest> {
       { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
     ]);
   }
-  create(value?: PartialMessage<StopScriptRequest>): StopScriptRequest {
+  create(value?: PartialMessage<ActivateScriptRequest>): ActivateScriptRequest {
     const message = globalThis.Object.create(this.messagePrototype!);
     message.instanceId = "";
     message.scriptId = "";
     if (value !== undefined)
-      reflectionMergePartial<StopScriptRequest>(this, message, value);
+      reflectionMergePartial<ActivateScriptRequest>(this, message, value);
     return message;
   }
   internalBinaryRead(
     reader: IBinaryReader,
     length: number,
     options: BinaryReadOptions,
-    target?: StopScriptRequest,
-  ): StopScriptRequest {
+    target?: ActivateScriptRequest,
+  ): ActivateScriptRequest {
     let message = target ?? this.create(),
       end = reader.pos + length;
     while (reader.pos < end) {
@@ -3642,7 +3404,7 @@ class StopScriptRequest$Type extends MessageType<StopScriptRequest> {
     return message;
   }
   internalBinaryWrite(
-    message: StopScriptRequest,
+    message: ActivateScriptRequest,
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
@@ -3663,26 +3425,112 @@ class StopScriptRequest$Type extends MessageType<StopScriptRequest> {
   }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.StopScriptRequest
+ * @generated MessageType for protobuf message soulfire.v1.ActivateScriptRequest
  */
-export const StopScriptRequest = new StopScriptRequest$Type();
+export const ActivateScriptRequest = new ActivateScriptRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class StopScriptResponse$Type extends MessageType<StopScriptResponse> {
+class DeactivateScriptRequest$Type extends MessageType<DeactivateScriptRequest> {
   constructor() {
-    super("soulfire.v1.StopScriptResponse", []);
+    super("soulfire.v1.DeactivateScriptRequest", [
+      {
+        no: 1,
+        name: "instance_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
   }
-  create(value?: PartialMessage<StopScriptResponse>): StopScriptResponse {
+  create(
+    value?: PartialMessage<DeactivateScriptRequest>,
+  ): DeactivateScriptRequest {
     const message = globalThis.Object.create(this.messagePrototype!);
+    message.instanceId = "";
+    message.scriptId = "";
     if (value !== undefined)
-      reflectionMergePartial<StopScriptResponse>(this, message, value);
+      reflectionMergePartial<DeactivateScriptRequest>(this, message, value);
     return message;
   }
   internalBinaryRead(
     reader: IBinaryReader,
     length: number,
     options: BinaryReadOptions,
-    target?: StopScriptResponse,
-  ): StopScriptResponse {
+    target?: DeactivateScriptRequest,
+  ): DeactivateScriptRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string instance_id */ 1:
+          message.instanceId = reader.string();
+          break;
+        case /* string script_id */ 2:
+          message.scriptId = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: DeactivateScriptRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string instance_id = 1; */
+    if (message.instanceId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.instanceId);
+    /* string script_id = 2; */
+    if (message.scriptId !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.scriptId);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.DeactivateScriptRequest
+ */
+export const DeactivateScriptRequest = new DeactivateScriptRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class DeactivateScriptResponse$Type extends MessageType<DeactivateScriptResponse> {
+  constructor() {
+    super("soulfire.v1.DeactivateScriptResponse", []);
+  }
+  create(
+    value?: PartialMessage<DeactivateScriptResponse>,
+  ): DeactivateScriptResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<DeactivateScriptResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: DeactivateScriptResponse,
+  ): DeactivateScriptResponse {
     let message = target ?? this.create(),
       end = reader.pos + length;
     while (reader.pos < end) {
@@ -3708,7 +3556,7 @@ class StopScriptResponse$Type extends MessageType<StopScriptResponse> {
     return message;
   }
   internalBinaryWrite(
-    message: StopScriptResponse,
+    message: DeactivateScriptResponse,
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
@@ -3723,9 +3571,9 @@ class StopScriptResponse$Type extends MessageType<StopScriptResponse> {
   }
 }
 /**
- * @generated MessageType for protobuf message soulfire.v1.StopScriptResponse
+ * @generated MessageType for protobuf message soulfire.v1.DeactivateScriptResponse
  */
-export const StopScriptResponse = new StopScriptResponse$Type();
+export const DeactivateScriptResponse = new DeactivateScriptResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class GetScriptStatusRequest$Type extends MessageType<GetScriptStatusRequest> {
   constructor() {
@@ -4016,17 +3864,17 @@ export const ScriptService = new ServiceType("soulfire.v1.ScriptService", [
     O: ListScriptsResponse,
   },
   {
-    name: "StartScript",
+    name: "ActivateScript",
     serverStreaming: true,
     options: {},
-    I: StartScriptRequest,
+    I: ActivateScriptRequest,
     O: ScriptEvent,
   },
   {
-    name: "StopScript",
+    name: "DeactivateScript",
     options: {},
-    I: StopScriptRequest,
-    O: StopScriptResponse,
+    I: DeactivateScriptRequest,
+    O: DeactivateScriptResponse,
   },
   {
     name: "GetScriptStatus",

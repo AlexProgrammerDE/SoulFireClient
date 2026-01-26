@@ -40,7 +40,7 @@ import { Label } from "@/components/ui/label.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
 import type { ScriptInfo } from "@/generated/soulfire/script";
 import { ScriptServiceClient } from "@/generated/soulfire/script.client";
-import { ScriptScope, scriptListQueryOptions } from "@/lib/script-service.ts";
+import { scriptListQueryOptions } from "@/lib/script-service.ts";
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/scripts")({
   component: InstanceScripts,
@@ -77,7 +77,6 @@ function InstanceScripts() {
         instanceId,
         name: newScriptName.trim() || tInstance("scripts.untitledScript"),
         description: newScriptDescription.trim(),
-        scope: ScriptScope.INSTANCE,
         nodes: [],
         edges: [],
         autoStart: false,
@@ -126,18 +125,17 @@ function InstanceScripts() {
     },
   });
 
-  // Start script mutation
-  const startMutation = useMutation({
-    mutationKey: ["script", "start", instanceId],
+  // Activate script mutation
+  const activateMutation = useMutation({
+    mutationKey: ["script", "activate", instanceId],
     mutationFn: async (scriptId: string) => {
       if (!transport) throw new Error("No transport available");
       const client = new ScriptServiceClient(transport);
-      // Just start the script - we don't need to track the stream here
+      // Just activate the script - we don't need to track the stream here
       // since that's handled in the editor view
-      const { responses } = client.startScript({
+      const { responses } = client.activateScript({
         instanceId,
         scriptId,
-        inputs: {},
       });
       // Consume the stream in the background
       responses.onMessage(() => {});
@@ -145,28 +143,28 @@ function InstanceScripts() {
       responses.onError(() => {});
     },
     onSuccess: () => {
-      toast.success(tInstance("scripts.startSuccess"));
+      toast.success(tInstance("scripts.activateSuccess"));
     },
     onError: (error) => {
-      console.error("Failed to start script:", error);
-      toast.error(tInstance("scripts.startError"));
+      console.error("Failed to activate script:", error);
+      toast.error(tInstance("scripts.activateError"));
     },
   });
 
-  // Stop script mutation
-  const stopMutation = useMutation({
-    mutationKey: ["script", "stop", instanceId],
+  // Deactivate script mutation
+  const deactivateMutation = useMutation({
+    mutationKey: ["script", "deactivate", instanceId],
     mutationFn: async (scriptId: string) => {
       if (!transport) throw new Error("No transport available");
       const client = new ScriptServiceClient(transport);
-      await client.stopScript({ instanceId, scriptId });
+      await client.deactivateScript({ instanceId, scriptId });
     },
     onSuccess: () => {
-      toast.success(tInstance("scripts.stopSuccess"));
+      toast.success(tInstance("scripts.deactivateSuccess"));
     },
     onError: (error) => {
-      console.error("Failed to stop script:", error);
-      toast.error(tInstance("scripts.stopError"));
+      console.error("Failed to deactivate script:", error);
+      toast.error(tInstance("scripts.deactivateError"));
     },
   });
 
@@ -178,11 +176,11 @@ function InstanceScripts() {
     deleteMutation.mutate(scriptId);
   };
 
-  const handleToggleRunning = (scriptId: string, isRunning: boolean) => {
-    if (isRunning) {
-      stopMutation.mutate(scriptId);
+  const handleToggleActive = (scriptId: string, isActive: boolean) => {
+    if (isActive) {
+      deactivateMutation.mutate(scriptId);
     } else {
-      startMutation.mutate(scriptId);
+      activateMutation.mutate(scriptId);
     }
   };
 
@@ -301,8 +299,8 @@ function InstanceScripts() {
                 script={script}
                 instanceId={instanceInfo.id}
                 onDelete={() => handleDeleteScript(script.id)}
-                onToggleRunning={(isRunning) =>
-                  handleToggleRunning(script.id, isRunning)
+                onToggleActive={(isActive) =>
+                  handleToggleActive(script.id, isActive)
                 }
                 isDeleting={deleteMutation.isPending}
               />
@@ -318,7 +316,7 @@ interface ScriptCardProps {
   script: ScriptInfo;
   instanceId: string;
   onDelete: () => void;
-  onToggleRunning: (isRunning: boolean) => void;
+  onToggleActive: (isActive: boolean) => void;
   isDeleting: boolean;
 }
 
@@ -326,7 +324,7 @@ function ScriptCard({
   script,
   instanceId,
   onDelete,
-  onToggleRunning,
+  onToggleActive,
   isDeleting,
 }: ScriptCardProps) {
   const { t: tInstance } = useTranslation("instance");
@@ -351,7 +349,7 @@ function ScriptCard({
     refetchInterval: 3_000,
   });
 
-  const isRunning = statusData?.isRunning ?? false;
+  const isActive = statusData?.isActive ?? false;
 
   const formatLastModified = (
     timestamp: { seconds: string; nanos: number } | undefined,
@@ -381,10 +379,10 @@ function ScriptCard({
             <WorkflowIcon className="size-5 text-muted-foreground" />
             <CardTitle className="text-base">{script.name}</CardTitle>
           </div>
-          {isRunning && (
+          {isActive && (
             <Badge variant="default" className="gap-1.5 bg-green-600">
               <div className="size-2 animate-pulse rounded-full bg-white" />
-              {tInstance("scripts.running")}
+              {tInstance("scripts.active")}
             </Badge>
           )}
         </div>
@@ -394,7 +392,6 @@ function ScriptCard({
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-between text-xs text-muted-foreground">
-          <span>{script.scope === 0 ? "Instance" : "Bot"} scope</span>
           <span>{formatLastModified(script.updatedAt)}</span>
         </div>
         <div className="mt-3 flex items-center gap-2">
@@ -415,12 +412,14 @@ function ScriptCard({
           <Button
             variant="outline"
             size="icon"
-            onClick={() => onToggleRunning(isRunning)}
+            onClick={() => onToggleActive(isActive)}
             title={
-              isRunning ? tInstance("scripts.stop") : tInstance("scripts.start")
+              isActive
+                ? tInstance("scripts.deactivate")
+                : tInstance("scripts.activate")
             }
           >
-            {isRunning ? (
+            {isActive ? (
               <SquareIcon className="size-4" />
             ) : (
               <PlayIcon className="size-4" />

@@ -54,7 +54,7 @@ export function ScriptToolbar({
   const scriptName = useScriptEditorStore((state) => state.scriptName);
   const setScriptName = useScriptEditorStore((state) => state.setScriptName);
   const isDirty = useScriptEditorStore((state) => state.isDirty);
-  const isRunning = useScriptEditorStore((state) => state.isRunning);
+  const isActive = useScriptEditorStore((state) => state.isActive);
   const autoStart = useScriptEditorStore((state) => state.autoStart);
   const setAutoStart = useScriptEditorStore((state) => state.setAutoStart);
 
@@ -166,7 +166,7 @@ export function ScriptToolbar({
 
       {/* Execution Controls */}
       <div className="flex items-center gap-1">
-        {isRunning ? (
+        {isActive ? (
           <>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -177,16 +177,16 @@ export function ScriptToolbar({
                   className="gap-1.5"
                 >
                   <SquareIcon className="size-4" />
-                  {t("scripts.editor.toolbar.stop")}
+                  {t("scripts.editor.toolbar.deactivate")}
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{t("scripts.editor.toolbar.stopTooltip")}</p>
+                <p>{t("scripts.editor.toolbar.deactivateTooltip")}</p>
               </TooltipContent>
             </Tooltip>
             <Badge variant="default" className="gap-1.5 bg-green-600">
               <div className="size-2 animate-pulse rounded-full bg-white" />
-              {t("scripts.running")}
+              {t("scripts.active")}
             </Badge>
           </>
         ) : (

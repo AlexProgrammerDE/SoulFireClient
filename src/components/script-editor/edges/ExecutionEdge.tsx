@@ -9,7 +9,7 @@ import {
 import { cn } from "@/lib/utils";
 
 export type ExecutionEdgeData = {
-  isRunning?: boolean;
+  isActive?: boolean;
 };
 
 export type ExecutionEdgeType = Edge<ExecutionEdgeData, "execution">;
@@ -35,7 +35,7 @@ function ExecutionEdge({
     borderRadius: 8,
   });
 
-  const isRunning = data?.isRunning ?? false;
+  const isActive = data?.isActive ?? false;
 
   return (
     <BaseEdge
@@ -43,12 +43,12 @@ function ExecutionEdge({
       markerEnd={markerEnd}
       className={cn(
         "!stroke-muted-foreground",
-        isRunning && "animate-pulse",
+        isActive && "animate-pulse",
         selected && "!stroke-foreground",
       )}
       style={{
         strokeWidth: 2.5,
-        strokeDasharray: isRunning ? "5 5" : undefined,
+        strokeDasharray: isActive ? "5 5" : undefined,
       }}
     />
   );

@@ -35,7 +35,7 @@ export interface ScriptEditorState {
   isDirty: boolean;
 
   // Execution state
-  isRunning: boolean;
+  isActive: boolean;
   activeNodeId: string | null;
   executionLogs: Array<{
     nodeId: string;
@@ -67,7 +67,7 @@ export interface ScriptEditorState {
   setDirty: (dirty: boolean) => void;
 
   // Execution actions
-  setRunning: (running: boolean) => void;
+  setActive: (active: boolean) => void;
   setActiveNode: (nodeId: string | null) => void;
   addExecutionLog: (log: {
     nodeId: string;
@@ -107,7 +107,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   scriptDescription: "",
   autoStart: false,
   isDirty: false,
-  isRunning: false,
+  isActive: false,
   activeNodeId: null,
   executionLogs: [],
   selectedNodeId: null,
@@ -195,7 +195,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   setDirty: (dirty) => set({ isDirty: dirty }),
 
   // Execution actions
-  setRunning: (running) => set({ isRunning: running }),
+  setActive: (active) => set({ isActive: active }),
   setActiveNode: (nodeId) => set({ activeNodeId: nodeId }),
   addExecutionLog: (log) =>
     set({
@@ -228,7 +228,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       scriptDescription: "",
       autoStart: false,
       isDirty: false,
-      isRunning: false,
+      isActive: false,
       activeNodeId: null,
       executionLogs: [],
       selectedNodeId: null,

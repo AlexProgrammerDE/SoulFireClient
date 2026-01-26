@@ -12,8 +12,11 @@ import type {
 } from "@protobuf-ts/runtime-rpc";
 import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type {
+  ActivateScriptRequest,
   CreateScriptRequest,
   CreateScriptResponse,
+  DeactivateScriptRequest,
+  DeactivateScriptResponse,
   DeleteScriptRequest,
   DeleteScriptResponse,
   GetScriptRequest,
@@ -24,9 +27,6 @@ import type {
   ListScriptsResponse,
   ScriptEvent,
   ScriptLogEntry,
-  StartScriptRequest,
-  StopScriptRequest,
-  StopScriptResponse,
   SubscribeScriptLogsRequest,
   UpdateScriptRequest,
   UpdateScriptResponse,
@@ -43,16 +43,20 @@ import { ScriptService } from "./script";
  * SCRIPT LIFECYCLE:
  * 1. Create a script using CreateScript with initial nodes/edges or empty graph
  * 2. Edit the script using UpdateScript to modify the node graph
- * 3. Execute the script using StartScript, which returns a stream of execution events
- * 4. Monitor execution via the ScriptEvent stream or GetScriptStatus
- * 5. Optionally stop early using StopScript
+ * 3. Activate the script using ActivateScript to register event listeners
+ * 4. Monitor execution via SubscribeScriptEvents or GetScriptStatus
+ * 5. Deactivate using DeactivateScript when done
  * 6. Delete unused scripts with DeleteScript
+ *
+ * Scripts are reactive state machines - they don't "run" but rather listen for
+ * trigger events and execute node chains in response. Activation registers the
+ * listeners, deactivation removes them and cancels any pending async operations.
  *
  * PERMISSIONS: Script operations require appropriate instance permissions.
  * The specific permissions are TBD but will likely include:
  * - READ_SCRIPT: View script definitions and status
  * - UPDATE_SCRIPT: Create, modify, and delete scripts
- * - EXECUTE_SCRIPT: Start and stop script execution
+ * - EXECUTE_SCRIPT: Activate and deactivate scripts
  *
  * LOGGING: Script execution logs can be streamed via SubscribeScriptLogs or
  * filtered using InstanceScriptLogScope in the LogsService (see logs.proto).
@@ -103,7 +107,7 @@ export interface IScriptServiceClient {
   ): UnaryCall<UpdateScriptRequest, UpdateScriptResponse>;
   /**
    * Permanently deletes a script.
-   * If the script is currently running, it will be stopped first.
+   * If the script is currently active, it will be deactivated first.
    * This operation cannot be undone.
    * Errors: NOT_FOUND if instance or script does not exist
    * Errors: PERMISSION_DENIED if user lacks script delete permission
@@ -128,38 +132,37 @@ export interface IScriptServiceClient {
     options?: RpcOptions,
   ): UnaryCall<ListScriptsRequest, ListScriptsResponse>;
   /**
-   * Starts executing a script and streams execution events.
-   * The stream provides real-time feedback about script execution including
-   * node start/complete events, errors, and final completion status.
-   * The stream remains open until the script completes or is stopped.
+   * Activates a script by registering its trigger event listeners.
+   * The script will begin responding to trigger events (tick, chat, etc.).
+   * Returns a stream of execution events as triggers fire and nodes execute.
+   * The stream remains open until the script is deactivated.
    * Errors: NOT_FOUND if instance or script does not exist
    * Errors: PERMISSION_DENIED if user lacks script execution permission
-   * Errors: FAILED_PRECONDITION if script is already running
+   * Errors: FAILED_PRECONDITION if script is already active
    * Errors: INVALID_ARGUMENT if script graph is invalid (e.g., no trigger nodes)
    *
-   * @generated from protobuf rpc: StartScript
+   * @generated from protobuf rpc: ActivateScript
    */
-  startScript(
-    input: StartScriptRequest,
+  activateScript(
+    input: ActivateScriptRequest,
     options?: RpcOptions,
-  ): ServerStreamingCall<StartScriptRequest, ScriptEvent>;
+  ): ServerStreamingCall<ActivateScriptRequest, ScriptEvent>;
   /**
-   * Stops a currently running script.
-   * Execution is halted gracefully after the current node completes.
-   * A ScriptCompleted event with success=false will be emitted on the StartScript stream.
+   * Deactivates an active script.
+   * Unregisters all event listeners and cancels any pending async operations.
    * Errors: NOT_FOUND if instance or script does not exist
    * Errors: PERMISSION_DENIED if user lacks script execution permission
-   * Errors: FAILED_PRECONDITION if script is not running
+   * Errors: FAILED_PRECONDITION if script is not active
    *
-   * @generated from protobuf rpc: StopScript
+   * @generated from protobuf rpc: DeactivateScript
    */
-  stopScript(
-    input: StopScriptRequest,
+  deactivateScript(
+    input: DeactivateScriptRequest,
     options?: RpcOptions,
-  ): UnaryCall<StopScriptRequest, StopScriptResponse>;
+  ): UnaryCall<DeactivateScriptRequest, DeactivateScriptResponse>;
   /**
-   * Gets the current execution status of a script.
-   * Returns whether the script is running, which node is active, and execution count.
+   * Gets the current status of a script.
+   * Returns whether the script is active, which node is executing, and activation count.
    * Errors: NOT_FOUND if instance or script does not exist
    * Errors: PERMISSION_DENIED if user lacks script read permission
    *
@@ -194,16 +197,20 @@ export interface IScriptServiceClient {
  * SCRIPT LIFECYCLE:
  * 1. Create a script using CreateScript with initial nodes/edges or empty graph
  * 2. Edit the script using UpdateScript to modify the node graph
- * 3. Execute the script using StartScript, which returns a stream of execution events
- * 4. Monitor execution via the ScriptEvent stream or GetScriptStatus
- * 5. Optionally stop early using StopScript
+ * 3. Activate the script using ActivateScript to register event listeners
+ * 4. Monitor execution via SubscribeScriptEvents or GetScriptStatus
+ * 5. Deactivate using DeactivateScript when done
  * 6. Delete unused scripts with DeleteScript
+ *
+ * Scripts are reactive state machines - they don't "run" but rather listen for
+ * trigger events and execute node chains in response. Activation registers the
+ * listeners, deactivation removes them and cancels any pending async operations.
  *
  * PERMISSIONS: Script operations require appropriate instance permissions.
  * The specific permissions are TBD but will likely include:
  * - READ_SCRIPT: View script definitions and status
  * - UPDATE_SCRIPT: Create, modify, and delete scripts
- * - EXECUTE_SCRIPT: Start and stop script execution
+ * - EXECUTE_SCRIPT: Activate and deactivate scripts
  *
  * LOGGING: Script execution logs can be streamed via SubscribeScriptLogs or
  * filtered using InstanceScriptLogScope in the LogsService (see logs.proto).
@@ -288,7 +295,7 @@ export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
   }
   /**
    * Permanently deletes a script.
-   * If the script is currently running, it will be stopped first.
+   * If the script is currently active, it will be deactivated first.
    * This operation cannot be undone.
    * Errors: NOT_FOUND if instance or script does not exist
    * Errors: PERMISSION_DENIED if user lacks script delete permission
@@ -333,24 +340,24 @@ export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
     );
   }
   /**
-   * Starts executing a script and streams execution events.
-   * The stream provides real-time feedback about script execution including
-   * node start/complete events, errors, and final completion status.
-   * The stream remains open until the script completes or is stopped.
+   * Activates a script by registering its trigger event listeners.
+   * The script will begin responding to trigger events (tick, chat, etc.).
+   * Returns a stream of execution events as triggers fire and nodes execute.
+   * The stream remains open until the script is deactivated.
    * Errors: NOT_FOUND if instance or script does not exist
    * Errors: PERMISSION_DENIED if user lacks script execution permission
-   * Errors: FAILED_PRECONDITION if script is already running
+   * Errors: FAILED_PRECONDITION if script is already active
    * Errors: INVALID_ARGUMENT if script graph is invalid (e.g., no trigger nodes)
    *
-   * @generated from protobuf rpc: StartScript
+   * @generated from protobuf rpc: ActivateScript
    */
-  startScript(
-    input: StartScriptRequest,
+  activateScript(
+    input: ActivateScriptRequest,
     options?: RpcOptions,
-  ): ServerStreamingCall<StartScriptRequest, ScriptEvent> {
+  ): ServerStreamingCall<ActivateScriptRequest, ScriptEvent> {
     const method = this.methods[5],
       opt = this._transport.mergeOptions(options);
-    return stackIntercept<StartScriptRequest, ScriptEvent>(
+    return stackIntercept<ActivateScriptRequest, ScriptEvent>(
       "serverStreaming",
       this._transport,
       method,
@@ -359,22 +366,21 @@ export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
     );
   }
   /**
-   * Stops a currently running script.
-   * Execution is halted gracefully after the current node completes.
-   * A ScriptCompleted event with success=false will be emitted on the StartScript stream.
+   * Deactivates an active script.
+   * Unregisters all event listeners and cancels any pending async operations.
    * Errors: NOT_FOUND if instance or script does not exist
    * Errors: PERMISSION_DENIED if user lacks script execution permission
-   * Errors: FAILED_PRECONDITION if script is not running
+   * Errors: FAILED_PRECONDITION if script is not active
    *
-   * @generated from protobuf rpc: StopScript
+   * @generated from protobuf rpc: DeactivateScript
    */
-  stopScript(
-    input: StopScriptRequest,
+  deactivateScript(
+    input: DeactivateScriptRequest,
     options?: RpcOptions,
-  ): UnaryCall<StopScriptRequest, StopScriptResponse> {
+  ): UnaryCall<DeactivateScriptRequest, DeactivateScriptResponse> {
     const method = this.methods[6],
       opt = this._transport.mergeOptions(options);
-    return stackIntercept<StopScriptRequest, StopScriptResponse>(
+    return stackIntercept<DeactivateScriptRequest, DeactivateScriptResponse>(
       "unary",
       this._transport,
       method,
@@ -383,8 +389,8 @@ export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
     );
   }
   /**
-   * Gets the current execution status of a script.
-   * Returns whether the script is running, which node is active, and execution count.
+   * Gets the current status of a script.
+   * Returns whether the script is active, which node is executing, and activation count.
    * Errors: NOT_FOUND if instance or script does not exist
    * Errors: PERMISSION_DENIED if user lacks script read permission
    *

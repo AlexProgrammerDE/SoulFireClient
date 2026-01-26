@@ -7,12 +7,11 @@ import {
   type ScriptData,
   type ScriptEdge,
   type ScriptNode,
-  ScriptScope,
 } from "@/generated/soulfire/script";
 import { ScriptServiceClient } from "@/generated/soulfire/script.client";
 
 // Re-export for convenience
-export { ScriptScope, EdgeType };
+export { EdgeType };
 export type { ScriptData, ScriptNode, ScriptEdge };
 
 /**

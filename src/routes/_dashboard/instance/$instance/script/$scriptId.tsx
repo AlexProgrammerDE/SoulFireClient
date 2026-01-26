@@ -25,7 +25,6 @@ import { ScriptServiceClient } from "@/generated/soulfire/script.client";
 import {
   edgesToProto,
   nodesToProto,
-  ScriptScope,
   scriptDataToStore,
   scriptQueryOptions,
 } from "@/lib/script-service.ts";
@@ -100,7 +99,7 @@ function ScriptEditorContent() {
   const loadScript = useScriptEditorStore((state) => state.loadScript);
   const resetEditor = useScriptEditorStore((state) => state.resetEditor);
   const setDirty = useScriptEditorStore((state) => state.setDirty);
-  const setRunning = useScriptEditorStore((state) => state.setRunning);
+  const setActive = useScriptEditorStore((state) => state.setActive);
   const setActiveNode = useScriptEditorStore((state) => state.setActiveNode);
   const addNode = useScriptEditorStore((state) => state.addNode);
   const selectedNodeId = useScriptEditorStore((state) => state.selectedNodeId);
@@ -146,7 +145,6 @@ function ScriptEditorContent() {
         instanceId,
         name: scriptData.name || tInstance("scripts.untitledScript"),
         description: scriptData.description,
-        scope: ScriptScope.INSTANCE,
         nodes: nodesToProto(nodes),
         edges: edgesToProto(edges),
         autoStart: scriptData.autoStart,
@@ -223,10 +221,10 @@ function ScriptEditorContent() {
     }
   }, [scriptId, createMutation, updateMutation]);
 
-  // Handle script execution start
+  // Handle script activation
   const handleStart = useCallback(async () => {
     if (!transport || scriptId === "new") {
-      toast.error(tInstance("scripts.saveFirstBeforeRunning"));
+      toast.error(tInstance("scripts.saveFirstBeforeActivating"));
       return;
     }
 
@@ -238,7 +236,7 @@ function ScriptEditorContent() {
     const abortController = new AbortController();
     executionAbortRef.current = abortController;
 
-    setRunning(true);
+    setActive(true);
     setActiveNode(null);
     setLogs((prev) => [
       ...prev,
@@ -247,14 +245,14 @@ function ScriptEditorContent() {
         timestamp: new Date(),
         level: "info",
         nodeId: null,
-        message: tInstance("scripts.executionStarting"),
+        message: tInstance("scripts.activating"),
       },
     ]);
 
     try {
       const client = new ScriptServiceClient(transport);
-      const { responses } = client.startScript(
-        { instanceId, scriptId, inputs: {} },
+      const { responses } = client.activateScript(
+        { instanceId, scriptId },
         { abort: abortController.signal },
       );
 
@@ -267,10 +265,10 @@ function ScriptEditorContent() {
               timestamp: new Date(),
               level: "info",
               nodeId: null,
-              message: tInstance("scripts.executionStarted"),
+              message: tInstance("scripts.activated"),
             },
           ]);
-          toast.success(tInstance("scripts.startSuccess"));
+          toast.success(tInstance("scripts.activateSuccess"));
         } else if (event.event.oneofKind === "nodeStarted") {
           const nodeId = event.event.nodeStarted.nodeId;
           setActiveNode(nodeId);
@@ -310,7 +308,7 @@ function ScriptEditorContent() {
           ]);
         } else if (event.event.oneofKind === "scriptCompleted") {
           const success = event.event.scriptCompleted.success;
-          setRunning(false);
+          setActive(false);
           setActiveNode(null);
           setLogs((prev) => [
             ...prev,
@@ -321,7 +319,7 @@ function ScriptEditorContent() {
               nodeId: null,
               message: success
                 ? tInstance("scripts.executionCompletedSuccess")
-                : tInstance("scripts.executionStopped"),
+                : tInstance("scripts.deactivated"),
             },
           ]);
           if (success) {
@@ -333,7 +331,7 @@ function ScriptEditorContent() {
       responses.onError((error) => {
         if (abortController.signal.aborted) return;
         console.error("Script execution error:", error);
-        setRunning(false);
+        setActive(false);
         setActiveNode(null);
         setLogs((prev) => [
           ...prev,
@@ -352,18 +350,18 @@ function ScriptEditorContent() {
 
       responses.onComplete(() => {
         if (abortController.signal.aborted) return;
-        setRunning(false);
+        setActive(false);
         setActiveNode(null);
       });
     } catch (error) {
       if (abortController.signal.aborted) return;
-      console.error("Failed to start script:", error);
-      setRunning(false);
-      toast.error(tInstance("scripts.startError"));
+      console.error("Failed to activate script:", error);
+      setActive(false);
+      toast.error(tInstance("scripts.activateError"));
     }
-  }, [transport, instanceId, scriptId, setRunning, setActiveNode, tInstance]);
+  }, [transport, instanceId, scriptId, setActive, setActiveNode, tInstance]);
 
-  // Handle script execution stop
+  // Handle script deactivation
   const handleStop = useCallback(async () => {
     // Abort the streaming connection
     if (executionAbortRef.current) {
@@ -375,8 +373,8 @@ function ScriptEditorContent() {
 
     try {
       const client = new ScriptServiceClient(transport);
-      await client.stopScript({ instanceId, scriptId });
-      setRunning(false);
+      await client.deactivateScript({ instanceId, scriptId });
+      setActive(false);
       setActiveNode(null);
       setLogs((prev) => [
         ...prev,
@@ -385,17 +383,17 @@ function ScriptEditorContent() {
           timestamp: new Date(),
           level: "info",
           nodeId: null,
-          message: tInstance("scripts.executionStoppedByUser"),
+          message: tInstance("scripts.deactivatedByUser"),
         },
       ]);
-      toast.success(tInstance("scripts.stopSuccess"));
+      toast.success(tInstance("scripts.deactivateSuccess"));
     } catch (error) {
-      console.error("Failed to stop script:", error);
-      // Even if the RPC fails, mark as stopped locally
-      setRunning(false);
+      console.error("Failed to deactivate script:", error);
+      // Even if the RPC fails, mark as deactivated locally
+      setActive(false);
       setActiveNode(null);
     }
-  }, [transport, instanceId, scriptId, setRunning, setActiveNode, tInstance]);
+  }, [transport, instanceId, scriptId, setActive, setActiveNode, tInstance]);
 
   // Cleanup on unmount
   useEffect(() => {
