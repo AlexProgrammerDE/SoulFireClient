@@ -10,13 +10,8 @@ import {
 import { Input } from "@/components/ui/input.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { cn } from "@/lib/utils.tsx";
-import { NODE_DEFINITIONS } from "./nodes/node-definitions.ts";
-import {
-  CATEGORY_INFO,
-  getNodesByCategory,
-  type NodeCategory,
-  type NodeDefinition,
-} from "./nodes/types.ts";
+import { useNodeTypes } from "./NodeTypesContext";
+import { getCategoryInfo, type NodeDefinition } from "./nodes/types.ts";
 import { useNodeTranslations } from "./useNodeTranslations";
 
 interface NodePaletteProps {
@@ -58,7 +53,7 @@ function DraggableNodeItem({
 }
 
 interface CategorySectionProps {
-  category: NodeCategory;
+  category: string;
   categoryName: string;
   nodes: NodeDefinition[];
   getNodeLabel: (node: NodeDefinition) => string;
@@ -75,7 +70,7 @@ function CategorySection({
   onNodeDragStart,
 }: CategorySectionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const categoryInfo = CATEGORY_INFO[category];
+  const categoryInfo = getCategoryInfo(category);
 
   if (nodes.length === 0) {
     return null;
@@ -116,36 +111,22 @@ function CategorySection({
 export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
   const { t } = useTranslation("instance");
   const { getNodeLabel, getCategoryName } = useNodeTranslations();
+  const { categories, getNodesByCategory } = useNodeTypes();
   const [searchQuery, setSearchQuery] = useState("");
 
-  const categories: NodeCategory[] = [
-    "trigger",
-    "math",
-    "logic",
-    "action",
-    "data",
-    "flow",
-  ];
-
   const filteredNodesByCategory = useMemo(() => {
-    const result: Record<NodeCategory, NodeDefinition[]> = {
-      trigger: [],
-      math: [],
-      logic: [],
-      action: [],
-      data: [],
-      flow: [],
-    };
+    const result: Record<string, NodeDefinition[]> = {};
 
     const query = searchQuery.toLowerCase().trim();
 
     for (const category of categories) {
-      const nodes = getNodesByCategory(NODE_DEFINITIONS, category);
+      const nodes = getNodesByCategory(category);
       if (query) {
         result[category] = nodes.filter(
           (node) =>
             getNodeLabel(node).toLowerCase().includes(query) ||
-            node.type.toLowerCase().includes(query),
+            node.type.toLowerCase().includes(query) ||
+            node.keywords?.some((kw) => kw.toLowerCase().includes(query)),
         );
       } else {
         result[category] = nodes;
@@ -153,7 +134,7 @@ export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
     }
 
     return result;
-  }, [searchQuery, getNodeLabel]);
+  }, [searchQuery, getNodeLabel, categories, getNodesByCategory]);
 
   const totalFilteredNodes = useMemo(() => {
     return Object.values(filteredNodesByCategory).reduce(
@@ -196,7 +177,7 @@ export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
               key={category}
               category={category}
               categoryName={getCategoryName(category)}
-              nodes={filteredNodesByCategory[category]}
+              nodes={filteredNodesByCategory[category] ?? []}
               getNodeLabel={getNodeLabel}
               defaultOpen={!searchQuery}
               onNodeDragStart={onNodeDragStart}

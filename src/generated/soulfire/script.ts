@@ -43,6 +43,152 @@ export interface Position {
   y: number;
 }
 /**
+ * Definition of a port (input or output) on a node type.
+ * Describes the port's type, constraints, and display properties.
+ *
+ * @generated from protobuf message soulfire.v1.PortDefinition
+ */
+export interface PortDefinition {
+  /**
+   * The identifier for this port.
+   * Used in edge connections (source_handle/target_handle).
+   * Examples: "value", "target", "bot", "exec_in", "exec_out".
+   *
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * Human-readable name displayed in the UI.
+   * Examples: "Target Position", "Bot", "Message".
+   *
+   * @generated from protobuf field: string display_name = 2
+   */
+  displayName: string;
+  /**
+   * The data type this port accepts or produces.
+   *
+   * @generated from protobuf field: soulfire.v1.PortType port_type = 3
+   */
+  portType: PortType;
+  /**
+   * Whether this input is required for the node to execute.
+   * Only applicable for input ports.
+   *
+   * @generated from protobuf field: bool required = 4
+   */
+  required: boolean;
+  /**
+   * Default value for this port when not connected (JSON-encoded).
+   * Only applicable for input ports.
+   *
+   * @generated from protobuf field: optional string default_value = 5
+   */
+  defaultValue?: string;
+  /**
+   * Optional description explaining what this port is for.
+   *
+   * @generated from protobuf field: string description = 6
+   */
+  description: string;
+  /**
+   * For list ports, the type of elements in the list.
+   * Only applicable when port_type is PORT_TYPE_LIST.
+   *
+   * @generated from protobuf field: optional soulfire.v1.PortType element_type = 7
+   */
+  elementType?: PortType;
+}
+/**
+ * Complete definition of a node type.
+ * Contains all metadata needed to render the node in an editor
+ * and validate its connections without hardcoded client knowledge.
+ *
+ * @generated from protobuf message soulfire.v1.NodeTypeDefinition
+ */
+export interface NodeTypeDefinition {
+  /**
+   * The unique type identifier for this node.
+   * Examples: "trigger.on_tick", "action.pathfind", "math.add".
+   *
+   * @generated from protobuf field: string type = 1
+   */
+  type: string;
+  /**
+   * Human-readable name displayed in the UI.
+   * Examples: "On Tick", "Pathfind To", "Add".
+   *
+   * @generated from protobuf field: string display_name = 2
+   */
+  displayName: string;
+  /**
+   * Description of what this node does.
+   * Displayed in tooltips and node palettes.
+   *
+   * @generated from protobuf field: string description = 3
+   */
+  description: string;
+  /**
+   * Category for organizing nodes in the palette.
+   * Examples: "Triggers", "Actions", "Math", "Logic", "Flow Control".
+   *
+   * @generated from protobuf field: string category = 4
+   */
+  category: string;
+  /**
+   * Whether this is a trigger node (entry point for execution).
+   * Trigger nodes have no execution input and start script flows.
+   *
+   * @generated from protobuf field: bool is_trigger = 5
+   */
+  isTrigger: boolean;
+  /**
+   * The input ports for this node type.
+   * Includes both data inputs and execution inputs.
+   *
+   * @generated from protobuf field: repeated soulfire.v1.PortDefinition inputs = 6
+   */
+  inputs: PortDefinition[];
+  /**
+   * The output ports for this node type.
+   * Includes both data outputs and execution outputs.
+   *
+   * @generated from protobuf field: repeated soulfire.v1.PortDefinition outputs = 7
+   */
+  outputs: PortDefinition[];
+  /**
+   * Optional icon identifier for rendering.
+   * Can be an icon name or emoji.
+   *
+   * @generated from protobuf field: string icon = 8
+   */
+  icon: string;
+  /**
+   * Optional color hint for the node (hex color code).
+   * Used for visual distinction between node categories.
+   *
+   * @generated from protobuf field: string color = 9
+   */
+  color: string;
+  /**
+   * Keywords for searching/filtering nodes in the palette.
+   *
+   * @generated from protobuf field: repeated string keywords = 10
+   */
+  keywords: string[];
+  /**
+   * Whether this node is deprecated and should be avoided.
+   *
+   * @generated from protobuf field: bool deprecated = 11
+   */
+  deprecated: boolean;
+  /**
+   * If deprecated, message explaining what to use instead.
+   *
+   * @generated from protobuf field: string deprecation_message = 12
+   */
+  deprecationMessage: string;
+}
+/**
  * Represents a single node in the visual script graph.
  * Nodes are the building blocks of scripts, each performing a specific action
  * or computation when executed.
@@ -835,6 +981,49 @@ export interface SubscribeScriptLogsRequest {
   minLevel: LogLevel;
 }
 /**
+ * Request to get all available node types.
+ * This enables clients to render nodes without hardcoded knowledge.
+ *
+ * @generated from protobuf message soulfire.v1.GetNodeTypesRequest
+ */
+export interface GetNodeTypesRequest {
+  /**
+   * Optional filter by category.
+   * If empty, returns all node types.
+   *
+   * @generated from protobuf field: optional string category = 1
+   */
+  category?: string;
+  /**
+   * Whether to include deprecated node types.
+   * Default is false.
+   *
+   * @generated from protobuf field: bool include_deprecated = 2
+   */
+  includeDeprecated: boolean;
+}
+/**
+ * Response containing all available node types.
+ *
+ * @generated from protobuf message soulfire.v1.GetNodeTypesResponse
+ */
+export interface GetNodeTypesResponse {
+  /**
+   * List of all node type definitions.
+   * Clients can use this to render any node and validate connections.
+   *
+   * @generated from protobuf field: repeated soulfire.v1.NodeTypeDefinition node_types = 1
+   */
+  nodeTypes: NodeTypeDefinition[];
+  /**
+   * List of distinct categories present in the node types.
+   * Useful for building category filters in the UI.
+   *
+   * @generated from protobuf field: repeated string categories = 2
+   */
+  categories: string[];
+}
+/**
  * The type of connection between nodes in the visual script editor.
  * Determines how data and control flow between nodes.
  *
@@ -855,6 +1044,80 @@ export enum EdgeType {
    * @generated from protobuf enum value: EDGE_TYPE_DATA = 1;
    */
   DATA = 1,
+}
+/**
+ * The data type of a node port.
+ * Used for validation and UI rendering of connections.
+ *
+ * @generated from protobuf enum soulfire.v1.PortType
+ */
+export enum PortType {
+  /**
+   * Any type - accepts all values. Used for generic nodes.
+   *
+   * @generated from protobuf enum value: PORT_TYPE_ANY = 0;
+   */
+  ANY = 0,
+  /**
+   * Numeric value (integer or floating point).
+   *
+   * @generated from protobuf enum value: PORT_TYPE_NUMBER = 1;
+   */
+  NUMBER = 1,
+  /**
+   * Text string value.
+   *
+   * @generated from protobuf enum value: PORT_TYPE_STRING = 2;
+   */
+  STRING = 2,
+  /**
+   * Boolean true/false value.
+   *
+   * @generated from protobuf enum value: PORT_TYPE_BOOLEAN = 3;
+   */
+  BOOLEAN = 3,
+  /**
+   * 3D vector with x, y, z components.
+   *
+   * @generated from protobuf enum value: PORT_TYPE_VECTOR3 = 4;
+   */
+  VECTOR3 = 4,
+  /**
+   * Reference to a bot connection.
+   *
+   * @generated from protobuf enum value: PORT_TYPE_BOT = 5;
+   */
+  BOT = 5,
+  /**
+   * List/array of values.
+   *
+   * @generated from protobuf enum value: PORT_TYPE_LIST = 6;
+   */
+  LIST = 6,
+  /**
+   * Execution flow port (not data).
+   *
+   * @generated from protobuf enum value: PORT_TYPE_EXEC = 7;
+   */
+  EXEC = 7,
+  /**
+   * Block type identifier.
+   *
+   * @generated from protobuf enum value: PORT_TYPE_BLOCK = 8;
+   */
+  BLOCK = 8,
+  /**
+   * Entity reference.
+   *
+   * @generated from protobuf enum value: PORT_TYPE_ENTITY = 9;
+   */
+  ENTITY = 9,
+  /**
+   * Item stack reference.
+   *
+   * @generated from protobuf enum value: PORT_TYPE_ITEM = 10;
+   */
+  ITEM = 10,
 }
 /**
  * Log levels for script execution logging.
@@ -967,6 +1230,352 @@ class Position$Type extends MessageType<Position> {
  * @generated MessageType for protobuf message soulfire.v1.Position
  */
 export const Position = new Position$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortDefinition$Type extends MessageType<PortDefinition> {
+  constructor() {
+    super("soulfire.v1.PortDefinition", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "display_name",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 3,
+        name: "port_type",
+        kind: "enum",
+        T: () => ["soulfire.v1.PortType", PortType, "PORT_TYPE_"],
+      },
+      { no: 4, name: "required", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 5,
+        name: "default_value",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 6,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 7,
+        name: "element_type",
+        kind: "enum",
+        opt: true,
+        T: () => ["soulfire.v1.PortType", PortType, "PORT_TYPE_"],
+      },
+    ]);
+  }
+  create(value?: PartialMessage<PortDefinition>): PortDefinition {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.displayName = "";
+    message.portType = 0;
+    message.required = false;
+    message.description = "";
+    if (value !== undefined)
+      reflectionMergePartial<PortDefinition>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: PortDefinition,
+  ): PortDefinition {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string display_name */ 2:
+          message.displayName = reader.string();
+          break;
+        case /* soulfire.v1.PortType port_type */ 3:
+          message.portType = reader.int32();
+          break;
+        case /* bool required */ 4:
+          message.required = reader.bool();
+          break;
+        case /* optional string default_value */ 5:
+          message.defaultValue = reader.string();
+          break;
+        case /* string description */ 6:
+          message.description = reader.string();
+          break;
+        case /* optional soulfire.v1.PortType element_type */ 7:
+          message.elementType = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: PortDefinition,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string display_name = 2; */
+    if (message.displayName !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.displayName);
+    /* soulfire.v1.PortType port_type = 3; */
+    if (message.portType !== 0)
+      writer.tag(3, WireType.Varint).int32(message.portType);
+    /* bool required = 4; */
+    if (message.required !== false)
+      writer.tag(4, WireType.Varint).bool(message.required);
+    /* optional string default_value = 5; */
+    if (message.defaultValue !== undefined)
+      writer.tag(5, WireType.LengthDelimited).string(message.defaultValue);
+    /* string description = 6; */
+    if (message.description !== "")
+      writer.tag(6, WireType.LengthDelimited).string(message.description);
+    /* optional soulfire.v1.PortType element_type = 7; */
+    if (message.elementType !== undefined)
+      writer.tag(7, WireType.Varint).int32(message.elementType);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.PortDefinition
+ */
+export const PortDefinition = new PortDefinition$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class NodeTypeDefinition$Type extends MessageType<NodeTypeDefinition> {
+  constructor() {
+    super("soulfire.v1.NodeTypeDefinition", [
+      { no: 1, name: "type", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "display_name",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 3,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 4, name: "category", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 5, name: "is_trigger", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 6,
+        name: "inputs",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => PortDefinition,
+      },
+      {
+        no: 7,
+        name: "outputs",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => PortDefinition,
+      },
+      { no: 8, name: "icon", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 9, name: "color", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 10,
+        name: "keywords",
+        kind: "scalar",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 11, name: "deprecated", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 12,
+        name: "deprecation_message",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<NodeTypeDefinition>): NodeTypeDefinition {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.type = "";
+    message.displayName = "";
+    message.description = "";
+    message.category = "";
+    message.isTrigger = false;
+    message.inputs = [];
+    message.outputs = [];
+    message.icon = "";
+    message.color = "";
+    message.keywords = [];
+    message.deprecated = false;
+    message.deprecationMessage = "";
+    if (value !== undefined)
+      reflectionMergePartial<NodeTypeDefinition>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: NodeTypeDefinition,
+  ): NodeTypeDefinition {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string type */ 1:
+          message.type = reader.string();
+          break;
+        case /* string display_name */ 2:
+          message.displayName = reader.string();
+          break;
+        case /* string description */ 3:
+          message.description = reader.string();
+          break;
+        case /* string category */ 4:
+          message.category = reader.string();
+          break;
+        case /* bool is_trigger */ 5:
+          message.isTrigger = reader.bool();
+          break;
+        case /* repeated soulfire.v1.PortDefinition inputs */ 6:
+          message.inputs.push(
+            PortDefinition.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* repeated soulfire.v1.PortDefinition outputs */ 7:
+          message.outputs.push(
+            PortDefinition.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* string icon */ 8:
+          message.icon = reader.string();
+          break;
+        case /* string color */ 9:
+          message.color = reader.string();
+          break;
+        case /* repeated string keywords */ 10:
+          message.keywords.push(reader.string());
+          break;
+        case /* bool deprecated */ 11:
+          message.deprecated = reader.bool();
+          break;
+        case /* string deprecation_message */ 12:
+          message.deprecationMessage = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: NodeTypeDefinition,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string type = 1; */
+    if (message.type !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.type);
+    /* string display_name = 2; */
+    if (message.displayName !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.displayName);
+    /* string description = 3; */
+    if (message.description !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.description);
+    /* string category = 4; */
+    if (message.category !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.category);
+    /* bool is_trigger = 5; */
+    if (message.isTrigger !== false)
+      writer.tag(5, WireType.Varint).bool(message.isTrigger);
+    /* repeated soulfire.v1.PortDefinition inputs = 6; */
+    for (let i = 0; i < message.inputs.length; i++)
+      PortDefinition.internalBinaryWrite(
+        message.inputs[i],
+        writer.tag(6, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.PortDefinition outputs = 7; */
+    for (let i = 0; i < message.outputs.length; i++)
+      PortDefinition.internalBinaryWrite(
+        message.outputs[i],
+        writer.tag(7, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* string icon = 8; */
+    if (message.icon !== "")
+      writer.tag(8, WireType.LengthDelimited).string(message.icon);
+    /* string color = 9; */
+    if (message.color !== "")
+      writer.tag(9, WireType.LengthDelimited).string(message.color);
+    /* repeated string keywords = 10; */
+    for (let i = 0; i < message.keywords.length; i++)
+      writer.tag(10, WireType.LengthDelimited).string(message.keywords[i]);
+    /* bool deprecated = 11; */
+    if (message.deprecated !== false)
+      writer.tag(11, WireType.Varint).bool(message.deprecated);
+    /* string deprecation_message = 12; */
+    if (message.deprecationMessage !== "")
+      writer
+        .tag(12, WireType.LengthDelimited)
+        .string(message.deprecationMessage);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.NodeTypeDefinition
+ */
+export const NodeTypeDefinition = new NodeTypeDefinition$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class ScriptNode$Type extends MessageType<ScriptNode> {
   constructor() {
@@ -3834,6 +4443,192 @@ class SubscribeScriptLogsRequest$Type extends MessageType<SubscribeScriptLogsReq
  * @generated MessageType for protobuf message soulfire.v1.SubscribeScriptLogsRequest
  */
 export const SubscribeScriptLogsRequest = new SubscribeScriptLogsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetNodeTypesRequest$Type extends MessageType<GetNodeTypesRequest> {
+  constructor() {
+    super("soulfire.v1.GetNodeTypesRequest", [
+      {
+        no: 1,
+        name: "category",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 2,
+        name: "include_deprecated",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<GetNodeTypesRequest>): GetNodeTypesRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.includeDeprecated = false;
+    if (value !== undefined)
+      reflectionMergePartial<GetNodeTypesRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetNodeTypesRequest,
+  ): GetNodeTypesRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* optional string category */ 1:
+          message.category = reader.string();
+          break;
+        case /* bool include_deprecated */ 2:
+          message.includeDeprecated = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetNodeTypesRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* optional string category = 1; */
+    if (message.category !== undefined)
+      writer.tag(1, WireType.LengthDelimited).string(message.category);
+    /* bool include_deprecated = 2; */
+    if (message.includeDeprecated !== false)
+      writer.tag(2, WireType.Varint).bool(message.includeDeprecated);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GetNodeTypesRequest
+ */
+export const GetNodeTypesRequest = new GetNodeTypesRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetNodeTypesResponse$Type extends MessageType<GetNodeTypesResponse> {
+  constructor() {
+    super("soulfire.v1.GetNodeTypesResponse", [
+      {
+        no: 1,
+        name: "node_types",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => NodeTypeDefinition,
+      },
+      {
+        no: 2,
+        name: "categories",
+        kind: "scalar",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<GetNodeTypesResponse>): GetNodeTypesResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.nodeTypes = [];
+    message.categories = [];
+    if (value !== undefined)
+      reflectionMergePartial<GetNodeTypesResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetNodeTypesResponse,
+  ): GetNodeTypesResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* repeated soulfire.v1.NodeTypeDefinition node_types */ 1:
+          message.nodeTypes.push(
+            NodeTypeDefinition.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        case /* repeated string categories */ 2:
+          message.categories.push(reader.string());
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetNodeTypesResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* repeated soulfire.v1.NodeTypeDefinition node_types = 1; */
+    for (let i = 0; i < message.nodeTypes.length; i++)
+      NodeTypeDefinition.internalBinaryWrite(
+        message.nodeTypes[i],
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated string categories = 2; */
+    for (let i = 0; i < message.categories.length; i++)
+      writer.tag(2, WireType.LengthDelimited).string(message.categories[i]);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GetNodeTypesResponse
+ */
+export const GetNodeTypesResponse = new GetNodeTypesResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.ScriptService
  */
@@ -3888,5 +4683,11 @@ export const ScriptService = new ServiceType("soulfire.v1.ScriptService", [
     options: {},
     I: SubscribeScriptLogsRequest,
     O: ScriptLogEntry,
+  },
+  {
+    name: "GetNodeTypes",
+    options: {},
+    I: GetNodeTypesRequest,
+    O: GetNodeTypesResponse,
   },
 ]);

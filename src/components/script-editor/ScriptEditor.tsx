@@ -11,12 +11,13 @@ import { useTheme } from "next-themes";
 import { useCallback, useState } from "react";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 import { edgeTypes, isValidConnection } from "./edges";
-import { nodeTypes } from "./nodes";
+import { useNodeTypes } from "./NodeTypesContext";
 
 export function ScriptEditor() {
   const { resolvedTheme } = useTheme();
   const [_reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance | null>(null);
+  const { nodeTypes } = useNodeTypes();
 
   const nodes = useScriptEditorStore((state) => state.nodes);
   const edges = useScriptEditorStore((state) => state.edges);

@@ -20,7 +20,7 @@ import {
 import { Switch } from "@/components/ui/switch.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
 import { cn } from "@/lib/utils.tsx";
-import { getNodeDefinition } from "./nodes";
+import { useNodeTypes } from "./NodeTypesContext";
 import type { PortType } from "./nodes/types.ts";
 import { useNodeTranslations } from "./useNodeTranslations";
 
@@ -328,6 +328,14 @@ function getPortTypeColor(type: PortType): string {
       return "text-purple-500";
     case "bot":
       return "text-orange-500";
+    case "block":
+      return "text-cyan-500";
+    case "item":
+      return "text-pink-500";
+    case "list":
+      return "text-violet-500";
+    case "any":
+      return "text-gray-500";
     default:
       return "text-muted-foreground";
   }
@@ -443,11 +451,12 @@ export function NodeInspector({
 }: NodeInspectorProps) {
   const { t } = useTranslation("instance");
   const { getNodeLabel, getFieldLabel, getPortLabel } = useNodeTranslations();
+  const { getDefinition } = useNodeTypes();
 
   const nodeDefinition = useMemo(() => {
     if (!selectedNode) return null;
-    return getNodeDefinition(selectedNode.type);
-  }, [selectedNode]);
+    return getDefinition(selectedNode.type);
+  }, [selectedNode, getDefinition]);
 
   const fieldConfigs = useMemo(() => {
     if (!selectedNode) return [];

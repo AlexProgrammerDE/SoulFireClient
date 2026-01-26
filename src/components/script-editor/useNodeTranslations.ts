@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import type { NodeCategory, NodeDefinition } from "./nodes/types";
+import type { NodeDefinition } from "./nodes/types";
 
 /**
  * Hook that provides translation functions for script editor nodes and categories.
@@ -29,7 +29,7 @@ export function useNodeTranslations() {
   /**
    * Get the translated name for a node category.
    */
-  const getCategoryName = (category: NodeCategory): string => {
+  const getCategoryName = (category: string): string => {
     return t(`scripts.editor.palette.categories.${category}`);
   };
 

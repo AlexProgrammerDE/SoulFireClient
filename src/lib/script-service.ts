@@ -4,6 +4,11 @@ import type { Edge, MarkerType, Node } from "@xyflow/react";
 import type { Value } from "@/generated/google/protobuf/struct";
 import {
   EdgeType,
+  type GetNodeTypesRequest,
+  type GetNodeTypesResponse,
+  type NodeTypeDefinition,
+  PortType,
+  type PortDefinition as ProtoPortDefinition,
   type ScriptData,
   type ScriptEdge,
   type ScriptNode,
@@ -11,8 +16,16 @@ import {
 import { ScriptServiceClient } from "@/generated/soulfire/script.client";
 
 // Re-export for convenience
-export { EdgeType };
-export type { ScriptData, ScriptNode, ScriptEdge };
+export { EdgeType, PortType };
+export type {
+  GetNodeTypesRequest,
+  GetNodeTypesResponse,
+  NodeTypeDefinition,
+  ProtoPortDefinition,
+  ScriptData,
+  ScriptNode,
+  ScriptEdge,
+};
 
 /**
  * Query options for listing all scripts in an instance
@@ -86,6 +99,43 @@ export function scriptStatusQueryOptions(
     },
     enabled: scriptId !== "new",
     refetchInterval: 2_000,
+  });
+}
+
+/**
+ * Query options for getting all available node types.
+ * Node types are cacheable - they only change between server versions.
+ */
+export function nodeTypesQueryOptions(
+  transport: RpcTransport | null,
+  options?: {
+    category?: string;
+    includeDeprecated?: boolean;
+  },
+) {
+  return queryOptions({
+    queryKey: [
+      "node-types",
+      options?.category ?? null,
+      options?.includeDeprecated ?? false,
+    ],
+    queryFn: async ({ signal }) => {
+      if (!transport) {
+        return { nodeTypes: [], categories: [] };
+      }
+      const client = new ScriptServiceClient(transport);
+      const result = await client.getNodeTypes(
+        {
+          category: options?.category,
+          includeDeprecated: options?.includeDeprecated ?? false,
+        },
+        { abort: signal },
+      );
+      return result.response;
+    },
+    // Node types rarely change, so use a long stale time
+    staleTime: 1000 * 60 * 60, // 1 hour
+    gcTime: 1000 * 60 * 60 * 24, // 24 hours
   });
 }
 

@@ -13,7 +13,10 @@ import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { ExecutionLogs } from "@/components/script-editor/ExecutionLogs.tsx";
 import { NodeInspector } from "@/components/script-editor/NodeInspector.tsx";
 import { NodePalette } from "@/components/script-editor/NodePalette.tsx";
-import { getNodeDefinition } from "@/components/script-editor/nodes";
+import {
+  NodeTypesProvider,
+  useNodeTypes,
+} from "@/components/script-editor/NodeTypesContext.tsx";
 import { ScriptEditor } from "@/components/script-editor/ScriptEditor.tsx";
 import { ScriptToolbar } from "@/components/script-editor/ScriptToolbar.tsx";
 import {
@@ -65,7 +68,9 @@ export const Route = createFileRoute(
 function ScriptEditorPage() {
   return (
     <ReactFlowProvider>
-      <ScriptEditorContent />
+      <NodeTypesProvider>
+        <ScriptEditorContent />
+      </NodeTypesProvider>
     </ReactFlowProvider>
   );
 }
@@ -77,6 +82,7 @@ function ScriptEditorContent() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
+  const { getDefinition } = useNodeTypes();
 
   // Required for route context validation
   useSuspenseQuery(instanceInfoQueryOptions);
@@ -445,7 +451,7 @@ function ScriptEditorContent() {
       );
       if (!nodeType || !reactFlowWrapper.current) return;
 
-      const definition = getNodeDefinition(nodeType);
+      const definition = getDefinition(nodeType);
       if (!definition) return;
 
       const bounds = reactFlowWrapper.current.getBoundingClientRect();
@@ -456,7 +462,7 @@ function ScriptEditorContent() {
 
       addNode(nodeType, position, definition.defaultData);
     },
-    [reactFlowInstance, addNode],
+    [reactFlowInstance, addNode, getDefinition],
   );
 
   return (

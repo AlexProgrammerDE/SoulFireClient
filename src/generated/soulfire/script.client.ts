@@ -19,6 +19,8 @@ import type {
   DeactivateScriptResponse,
   DeleteScriptRequest,
   DeleteScriptResponse,
+  GetNodeTypesRequest,
+  GetNodeTypesResponse,
   GetScriptRequest,
   GetScriptResponse,
   GetScriptStatusRequest,
@@ -185,6 +187,19 @@ export interface IScriptServiceClient {
     input: SubscribeScriptLogsRequest,
     options?: RpcOptions,
   ): ServerStreamingCall<SubscribeScriptLogsRequest, ScriptLogEntry>;
+  /**
+   * Gets all available node types with their metadata.
+   * This enables clients to render the node editor without hardcoded knowledge
+   * of specific node types. The response includes port definitions, categories,
+   * display names, and all other information needed to render and validate nodes.
+   * This endpoint is cacheable - node types only change between server versions.
+   *
+   * @generated from protobuf rpc: GetNodeTypes
+   */
+  getNodeTypes(
+    input: GetNodeTypesRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetNodeTypesRequest, GetNodeTypesResponse>;
 }
 /**
  * ScriptService provides management and execution capabilities for visual node-based
@@ -427,6 +442,29 @@ export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
       opt = this._transport.mergeOptions(options);
     return stackIntercept<SubscribeScriptLogsRequest, ScriptLogEntry>(
       "serverStreaming",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Gets all available node types with their metadata.
+   * This enables clients to render the node editor without hardcoded knowledge
+   * of specific node types. The response includes port definitions, categories,
+   * display names, and all other information needed to render and validate nodes.
+   * This endpoint is cacheable - node types only change between server versions.
+   *
+   * @generated from protobuf rpc: GetNodeTypes
+   */
+  getNodeTypes(
+    input: GetNodeTypesRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetNodeTypesRequest, GetNodeTypesResponse> {
+    const method = this.methods[9],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<GetNodeTypesRequest, GetNodeTypesResponse>(
+      "unary",
       this._transport,
       method,
       opt,
