@@ -113,12 +113,19 @@
       "noSettings": "No settnz availabru fur dis page"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "Edit Metadaterz",
+      "title": "Metadaterz: {{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} kittehs onlien / {{total}} totl kittehs",
     "noBots": "No botz configgerd. Add acountz frum da Account Settin Page.",
     "noBotsFound": "No botz match ur search, kthx.",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "Loadin moar...",
+    "showingCount": "Showin {{loaded}} uv {{total}}",
+    "allLoaded": "All {{total}} botz loaded",
     "online": "ONLIEN",
     "offline": "Offlyne",
     "notJoined": "Nawt Joind",
     "backToBots": "Bak 2 Botz",
     "comingSoon": "CUHMIN SOONZ",
     "terminalPanel": {
-      "title": ""
+      "title": "Bot Termynal"
     },
     "positionPanel": {
       "title": "Pozishun & Rotashun",
@@ -156,9 +163,9 @@
       "title": "Bot POW!",
       "capture": "CAPTURZ!",
       "refresh": "REFRESH PLZ",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "Auto",
+      "startAutoRefresh": "Start auto-refresh (1 sekond interval)",
+      "stopAutoRefresh": "Stop auto-refresh",
       "clickToCapture": "Klik CAPTURZ tu see bot'z point ov viewz",
       "offline": "Bot iz offlinez. U c'n only see POW when bot iz connekktid, kthx."
     },
@@ -170,12 +177,12 @@
       "experience": "Eksperiencez",
       "level": "Levelz",
       "toNextLevel": "to nexteh levelz",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "Game Mode",
+      "survival": "Survival",
+      "creative": "Creative",
+      "adventure": "Adventure",
+      "spectator": "Spectator",
+      "unknown": "Unkownz",
       "offline": "Bot iz offlinez. Statzz seez only when bot iz connekktid, kthx."
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "Drop Onez",
       "dropAll": "Drop All Teh Thingz",
       "closeContainer": "Cloes",
-      "clickHint": "",
+      "clickHint": "Left clik: pik up/places | Rite clik: half/one | Shift+clik: kwik mov | Middle clik: seleckt hotbar slot",
       "offline": "Bot iz offlinez. Inventoree showz only when bot iz connekktid, kthx.",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "Recipiez",
+        "enchantments": "Enchantmintz",
+        "patterns": "Patternz",
+        "trades": "Tradez",
+        "beaconEffects": "Beacon Effecktz",
+        "crafterSlots": "Slot Kontrolz",
+        "lecternControls": "Buk Kontrolz",
         "actions": "Akshuns"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "Text Inpoot",
+        "anvilRename": "Rename Itum"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "Buk Kontentz",
+        "emptyPage": "(Emptiez page)",
+        "pageIndicator": "Page {{current}} uv {{total}}"
       }
     },
     "visualPanel": {
@@ -222,58 +229,461 @@
       "offline": "Bot iz offlinez. Visual data onlyz wen bot iz connekktid, kthx."
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "Bot Actshunz",
+      "leftClick": "Left Clik",
+      "rightClick": "Rite Clik",
+      "leftClickDescription": "Attack entitee or brek blok",
+      "rightClickDescription": "Uze itum or interakt",
+      "offline": "Bot iz offline. Actshunz only avaylbul wen bot iz connectd."
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "Moovmunt Kontrol",
+      "movement": "Moovmunt (WASD)",
+      "forward": "Moov Forward (W)",
+      "backward": "Moov Backward (S)",
+      "left": "Strafe Left (A)",
+      "right": "Strafe Rite (D)",
+      "jump": "Jumpz",
+      "sneak": "Sneekz",
+      "sprint": "Sprintz",
       "stop": "Stawp",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "Look Direkshun",
+      "lookUp": "Lookz Up",
+      "lookDown": "Lookz Down",
+      "lookLeft": "Lookz Left",
+      "lookRight": "Lookz Rite",
+      "offline": "Bot iz offline. Moovmunt kontrolz onli avaylbl wen bot iz connectd."
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "Server Dialogz",
+      "noDialog": "No server dialogz iz showin nao.",
       "dialogType": "Tyep",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "Dialog ID",
+      "notice": "Notis",
+      "confirmation": "Confirmashun",
+      "multiAction": "Multi Actshun",
+      "serverLinks": "Server Linkz",
+      "dialogList": "Dialog Listz",
+      "unknownType": "Unkownz",
+      "dismiss": "Dismizz",
+      "submit": "Submitz",
+      "offline": "Bot iz offline. Dialogz only avaylbul wen bot iz connectd."
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "Vizhul Skript Editur",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "Dis feechur iz undur develawmint. New vizhul skript editur wil let yu make pawfur automatisation skriptz usin drag-n-drop wiffout writin codez.",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "Makee Makee",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "Runnin",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "Strat",
+    "stop": "Stawp",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "SAEV",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "Stawp",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "Akshuns",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_one": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "Value",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "Ewwow",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "Strat",
+        "end": "",
+        "amount": "Amownt",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "Put stuff",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "Sneekz",
+            "description": ""
+          },
+          "sprint": {
+            "label": "Sprintz",
+            "description": ""
+          },
+          "jump": {
+            "label": "Jumpz",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

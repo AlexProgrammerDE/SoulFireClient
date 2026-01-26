@@ -1,8 +1,8 @@
 {
   "locale": "Taal",
   "cancel": "Annuleren",
-  "save": "",
-  "saving": "",
+  "save": "Opslaan",
+  "saving": "Bezig met opslaan...",
   "error": {
     "noAddressOrToken": "Geen serveradres of token gevonden",
     "page": {

@@ -1,8 +1,8 @@
 {
   "locale": "Lokalisointi",
   "cancel": "Peruuta",
-  "save": "",
-  "saving": "",
+  "save": "Tallenna",
+  "saving": "Tallennetaan...",
   "error": {
     "noAddressOrToken": "Palvelimen osoitetta tai tokenia ei löytynyt",
     "page": {

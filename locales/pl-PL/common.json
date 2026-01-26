@@ -1,8 +1,8 @@
 {
   "locale": "Język i region",
   "cancel": "Anuluj",
-  "save": "",
-  "saving": "",
+  "save": "Zapisz",
+  "saving": "Zapisywanie...",
   "error": {
     "noAddressOrToken": "Nie znaleziono adresu serwera ani tokena",
     "page": {

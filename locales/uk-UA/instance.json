@@ -113,12 +113,19 @@
       "noSettings": "Немає налаштувань для цієї сторінки"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "Редагувати метадані",
+      "title": "Метадані: {{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} онлайн / {{total}} всього",
     "noBots": "Ботів не налаштовано. Додайте облікові записи на сторінці налаштувань акаунтів.",
     "noBotsFound": "Жоден бот не відповідає вашому запиту.",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "Завантаження ще...",
+    "showingCount": "Показано {{loaded}} із {{total}}",
+    "allLoaded": "Усі {{total}} ботів завантажено",
     "online": "Онлайн",
     "offline": "Офлайн",
     "notJoined": "Не приєднався",
     "backToBots": "Повернутися до ботів",
     "comingSoon": "Незабаром",
     "terminalPanel": {
-      "title": ""
+      "title": "Термінал бота"
     },
     "positionPanel": {
       "title": "Позиція та обертання",
@@ -156,9 +163,9 @@
       "title": "POV бота",
       "capture": "Захопити",
       "refresh": "Оновити",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "Авто",
+      "startAutoRefresh": "Запустити автооновлення (інтервал 1 секунда)",
+      "stopAutoRefresh": "Зупинити автооновлення",
       "clickToCapture": "Натисніть \"Захопити\", щоб відобразити точку зору бота",
       "offline": "Бот офлайн. Відображення POV доступне тільки коли бот підключений."
     },
@@ -170,12 +177,12 @@
       "experience": "Досвід",
       "level": "Рівень",
       "toNextLevel": "до наступного рівня",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "Режим гри",
+      "survival": "Виживання",
+      "creative": "Творчий",
+      "adventure": "Пригода",
+      "spectator": "Спостерігач",
+      "unknown": "Невідомо",
       "offline": "Бот офлайн. Статистика доступна лише під час підключення бота."
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "Викинути один",
       "dropAll": "Викинути все",
       "closeContainer": "Закрити",
-      "clickHint": "",
+      "clickHint": "Лівий клік: взяти/поставити | Правий клік: половина/один | Shift+клік: швидке переміщення | Середній клік: вибрати слот швидкого доступу",
       "offline": "Бот офлайн. Інвентар доступний лише при підключенні бота.",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "Рецепти",
+        "enchantments": "Чари",
+        "patterns": "Візерунки",
+        "trades": "Торги",
+        "beaconEffects": "Ефекти маяка",
+        "crafterSlots": "Управління слотами",
+        "lecternControls": "Управління книгою",
         "actions": "Дії"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "Ввід тексту",
+        "anvilRename": "Перейменувати предмет"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "Вміст книги",
+        "emptyPage": "(Порожня сторінка)",
+        "pageIndicator": "Сторінка {{current}} з {{total}}"
       }
     },
     "visualPanel": {
@@ -222,58 +229,463 @@
       "offline": "Бот офлайн. Візуальні дані доступні лише при підключенні бота."
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "Дії бота",
+      "leftClick": "Лівий клік",
+      "rightClick": "Правий клік",
+      "leftClickDescription": "Атакувати сутність або зламати блок",
+      "rightClickDescription": "Використати предмет або взаємодіяти",
+      "offline": "Бот офлайн. Дії доступні лише коли бот підключений."
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "Управління рухом",
+      "movement": "Рух (WASD)",
+      "forward": "Рухатися вперед (W)",
+      "backward": "Рухатися назад (S)",
+      "left": "Рух вліво (A)",
+      "right": "Рух вправо (D)",
+      "jump": "Стрибок",
+      "sneak": "Крастися",
+      "sprint": "Бігти",
       "stop": "Зупинити",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "Напрямок погляду",
+      "lookUp": "Дивитися вгору",
+      "lookDown": "Дивитися вниз",
+      "lookLeft": "Дивитися ліворуч",
+      "lookRight": "Дивитися праворуч",
+      "offline": "Бот офлайн. Управління рухом доступно лише коли бот підключений."
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "Діалог сервера",
+      "noDialog": "Зараз діалог сервера не відображається.",
       "dialogType": "Тип",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "ID діалогу",
+      "notice": "Повідомлення",
+      "confirmation": "Підтвердження",
+      "multiAction": "Мультидія",
+      "serverLinks": "Посилання сервера",
+      "dialogList": "Список діалогів",
+      "unknownType": "Невідомо",
+      "dismiss": "Закрити",
+      "submit": "Відправити",
+      "offline": "Бот офлайн. Діалоги доступні лише коли бот підключений."
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "Візуальний редактор скриптів",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "Ця функція наразі в розробці. Новий візуальний редактор скриптів дозволить вам створювати потужні автоматизаційні скрипти за допомогою інтерфейсу drag-and-drop без написання коду.",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "Створити",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "Працює",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "Почати",
+    "stop": "Зупинити",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "Зберегти",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "Зупинити",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "Дії",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_one": "",
+        "entries_few": "",
+        "entries_many": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "Значення",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "Помилка",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "Почати",
+        "end": "",
+        "amount": "Кількість",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "Додати",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "Крастися",
+            "description": ""
+          },
+          "sprint": {
+            "label": "Бігти",
+            "description": ""
+          },
+          "jump": {
+            "label": "Стрибок",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

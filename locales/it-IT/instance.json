@@ -113,12 +113,19 @@
       "noSettings": "Nessuna impostazione disponibile per questa pagina"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "Modifica Metadati",
+      "title": "Metadati: {{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} online / {{total}} totale",
     "noBots": "Nessun bot configurato. Aggiungi account dalla pagina Impostazioni Account.",
     "noBotsFound": "Nessun bot corrisponde alla tua ricerca.",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "Caricamento in corso...",
+    "showingCount": "Mostrando {{loaded}} di {{total}}",
+    "allLoaded": "Tutti i {{total}} bot caricati",
     "online": "Online",
     "offline": "Offline",
     "notJoined": "Non unito",
     "backToBots": "Torna ai Bot",
     "comingSoon": "Prossimamente",
     "terminalPanel": {
-      "title": ""
+      "title": "Terminale Bot"
     },
     "positionPanel": {
       "title": "Posizione e Rotazione",
@@ -156,9 +163,9 @@
       "title": "POV Bot",
       "capture": "Cattura",
       "refresh": "Aggiorna",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "Auto",
+      "startAutoRefresh": "Avvia auto-aggiornamento (intervallo di 1 secondo)",
+      "stopAutoRefresh": "Ferma auto-aggiornamento",
       "clickToCapture": "Fai clic su Cattura per mostrare il punto di vista del bot",
       "offline": "Il bot è offline. La visualizzazione POV è disponibile solo quando il bot è connesso."
     },
@@ -170,12 +177,12 @@
       "experience": "Esperienza",
       "level": "Livello",
       "toNextLevel": "al prossimo livello",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "Modalità di Gioco",
+      "survival": "Sopravvivenza",
+      "creative": "Creativa",
+      "adventure": "Avventura",
+      "spectator": "Spettatore",
+      "unknown": "Sconosciuto",
       "offline": "Il bot è offline. Le statistiche sono disponibili solo quando il bot è connesso."
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "Lascia uno",
       "dropAll": "Lascia tutto",
       "closeContainer": "Chiudi",
-      "clickHint": "",
+      "clickHint": "Click sinistro: prendi/posa | Click destro: metà/uno | Shift+click: sposta velocemente | Click centrale: seleziona slot barra rapida",
       "offline": "Il bot è offline. L'inventario è disponibile solo quando il bot è connesso.",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "Ricette",
+        "enchantments": "Incantamenti",
+        "patterns": "Motivi",
+        "trades": "Scambi",
+        "beaconEffects": "Effetti del Faro",
+        "crafterSlots": "Controlli Slot",
+        "lecternControls": "Controlli Libro",
         "actions": "Azioni"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "Input di Testo",
+        "anvilRename": "Rinomina Oggetto"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "Contenuto del Libro",
+        "emptyPage": "(Pagina vuota)",
+        "pageIndicator": "Pagina {{current}} di {{total}}"
       }
     },
     "visualPanel": {
@@ -222,58 +229,461 @@
       "offline": "Il bot è offline. I dati visivi sono disponibili solo quando il bot è connesso."
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "Azioni Bot",
+      "leftClick": "Click Sinistro",
+      "rightClick": "Click Destro",
+      "leftClickDescription": "Attacca entità o distruggi blocco",
+      "rightClickDescription": "Usa oggetto o interagisci",
+      "offline": "Il bot è offline. Le azioni sono disponibili solo quando il bot è connesso."
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "Controllo Movimento",
+      "movement": "Movimento (WASD)",
+      "forward": "Avanti (W)",
+      "backward": "Indietro (S)",
+      "left": "Verso Sinistra (A)",
+      "right": "Verso Destra (D)",
+      "jump": "Salta",
+      "sneak": "Accovacciati",
+      "sprint": "Scatta",
       "stop": "Ferma",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "Direzione dello Sguardo",
+      "lookUp": "Guarda in Alto",
+      "lookDown": "Guarda in Basso",
+      "lookLeft": "Guarda a Sinistra",
+      "lookRight": "Guarda a Destra",
+      "offline": "Il bot è offline. I controlli di movimento sono disponibili solo quando il bot è connesso."
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "Dialogo Server",
+      "noDialog": "Nessun dialogo del server attualmente visualizzato.",
       "dialogType": "Tipo",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "ID Dialogo",
+      "notice": "Avviso",
+      "confirmation": "Conferma",
+      "multiAction": "Azione Multipla",
+      "serverLinks": "Link Server",
+      "dialogList": "Lista Dialoghi",
+      "unknownType": "Sconosciuto",
+      "dismiss": "Chiudi",
+      "submit": "Invia",
+      "offline": "Il bot è offline. I dialoghi sono disponibili solo quando il bot è connesso."
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "Editor Script Visivo",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "Questa funzione è attualmente in sviluppo. Il nuovo editor visuale di script ti permetterà di creare potenti script di automazione utilizzando un'interfaccia drag-and-drop senza dover scrivere codice.",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "Crea",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "In esecuzione",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "Avvia",
+    "stop": "Ferma",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "Salva",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "Ferma",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "Azioni",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_one": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "Valore",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "Errore",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "Avvia",
+        "end": "",
+        "amount": "Quantità",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "Aggiungi",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "Accovacciati",
+            "description": ""
+          },
+          "sprint": {
+            "label": "Scatta",
+            "description": ""
+          },
+          "jump": {
+            "label": "Salta",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

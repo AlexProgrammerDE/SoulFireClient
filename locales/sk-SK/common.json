@@ -1,8 +1,8 @@
 {
   "locale": "Jazykové nastavenie",
   "cancel": "Zrušiť",
-  "save": "",
-  "saving": "",
+  "save": "Uložiť",
+  "saving": "Ukladá sa...",
   "error": {
     "noAddressOrToken": "Nebola nájdená adresa servera alebo token",
     "page": {

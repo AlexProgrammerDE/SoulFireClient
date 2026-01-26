@@ -113,12 +113,19 @@
       "noSettings": "Inga inställningar tillgängliga för denna sida"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "Redigera metadata",
+      "title": "Metadata: {{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} online / {{total}} totalt",
     "noBots": "Inga botar konfigurerade. Lägg till konton från sidan Kontoinställningar.",
     "noBotsFound": "Inga botar matchar din sökning.",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "Laddar mer...",
+    "showingCount": "Visar {{loaded}} av {{total}}",
+    "allLoaded": "Alla {{total}} bots laddade",
     "online": "Online",
     "offline": "Offline",
     "notJoined": "Inte ansluten",
     "backToBots": "Tillbaka till Botar",
     "comingSoon": "Kommer snart",
     "terminalPanel": {
-      "title": ""
+      "title": "Botterminal"
     },
     "positionPanel": {
       "title": "Position & Rotation",
@@ -156,9 +163,9 @@
       "title": "Botens vy",
       "capture": "Fånga",
       "refresh": "Uppdatera",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "Auto",
+      "startAutoRefresh": "Starta auto-uppdatering (1 sekunds intervall)",
+      "stopAutoRefresh": "Stoppa auto-uppdatering",
       "clickToCapture": "Klicka på Fånga för att visa botens synvinkel",
       "offline": "Bot är offline. Renderingen av POV är endast tillgänglig när boten är ansluten."
     },
@@ -170,12 +177,12 @@
       "experience": "Erfarenhet",
       "level": "Nivå",
       "toNextLevel": "till nästa nivå",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "Spelläge",
+      "survival": "Överlevnad",
+      "creative": "Kreativ",
+      "adventure": "Äventyr",
+      "spectator": "Åskådare",
+      "unknown": "Okänd",
       "offline": "Bot är offline. Statistik är endast tillgänglig när boten är ansluten."
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "Släpp en",
       "dropAll": "Släpp alla",
       "closeContainer": "Stäng",
-      "clickHint": "",
+      "clickHint": "Vänsterklick: plocka upp/placera | Högerklick: halva/en | Skift+klick: snabbflytta | Mittenklick: välj snabbfältsplats",
       "offline": "Bot är offline. Inventariet är endast tillgängligt när boten är ansluten.",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "Recept",
+        "enchantments": "Förtrollningar",
+        "patterns": "Mönster",
+        "trades": "Byten",
+        "beaconEffects": "Fyrkanseffekter",
+        "crafterSlots": "Slotkontroller",
+        "lecternControls": "Bokkontroller",
         "actions": "Åtgärder"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "Textinmatning",
+        "anvilRename": "Byt namn på föremål"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "Bokinnehåll",
+        "emptyPage": "(Tom sida)",
+        "pageIndicator": "Sida {{current}} av {{total}}"
       }
     },
     "visualPanel": {
@@ -222,58 +229,461 @@
       "offline": "Bot är offline. Visuella data är endast tillgängliga när boten är ansluten."
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "Botåtgärder",
+      "leftClick": "Vänsterklick",
+      "rightClick": "Högerklick",
+      "leftClickDescription": "Attackera enhet eller bryt block",
+      "rightClickDescription": "Använd föremål eller interagera",
+      "offline": "Bot är offline. Åtgärder är endast tillgängliga när boten är ansluten."
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "Rörelsekontroll",
+      "movement": "Rörelse (WASD)",
+      "forward": "Gå framåt (W)",
+      "backward": "Gå bakåt (S)",
+      "left": "Strafe vänster (A)",
+      "right": "Strafe höger (D)",
+      "jump": "Hoppa",
+      "sneak": "Smyg",
+      "sprint": "Spring",
       "stop": "Stoppa",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "Tittariktning",
+      "lookUp": "Titta upp",
+      "lookDown": "Titta ner",
+      "lookLeft": "Titta vänster",
+      "lookRight": "Titta höger",
+      "offline": "Bot är offline. Rörelsekontrollerna är bara tillgängliga när boten är ansluten."
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "Serverdialog",
+      "noDialog": "Ingen serverdialog visas för närvarande.",
       "dialogType": "Typ",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "Dialog ID",
+      "notice": "Meddelande",
+      "confirmation": "Bekräftelse",
+      "multiAction": "Flera åtgärder",
+      "serverLinks": "Serverlänkar",
+      "dialogList": "Dialoglista",
+      "unknownType": "Okänd",
+      "dismiss": "Avvisa",
+      "submit": "Skicka",
+      "offline": "Bot är offline. Dialoger är endast tillgängliga när boten är ansluten."
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "Visuell skriptredigerare",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "Denna funktion är under utveckling. Den nya visuella skriptredigeraren gör det möjligt att skapa kraftfulla automationsscript med en dra-och-släpp-gränssnitt utan att skriva kod.",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "Skapa",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "Kör",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "Starta",
+    "stop": "Stoppa",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "Spara",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "Stoppa",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "Åtgärder",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_one": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "Värde",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "Fel",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "Starta",
+        "end": "",
+        "amount": "Antal",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "Lägg till",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "Smyg",
+            "description": ""
+          },
+          "sprint": {
+            "label": "Spring",
+            "description": ""
+          },
+          "jump": {
+            "label": "Hoppa",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

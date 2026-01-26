@@ -1,8 +1,8 @@
 {
   "locale": "Locael",
   "cancel": "cancel k?",
-  "save": "",
-  "saving": "",
+  "save": "SAEV",
+  "saving": "SAEVIN...",
   "error": {
     "noAddressOrToken": "No servr addres or token findz",
     "page": {

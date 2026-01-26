@@ -113,12 +113,19 @@
       "noSettings": "Geen instellingen beschikbaar voor deze pagina"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "Metadata bewerken",
+      "title": "Metadata: {{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} online / {{total}} totaal",
     "noBots": "Geen bots geconfigureerd. Voeg accounts toe via de pagina Accountinstellingen.",
     "noBotsFound": "Geen bots gevonden die overeenkomen met je zoekopdracht.",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "Meer laden...",
+    "showingCount": "Toont {{loaded}} van {{total}}",
+    "allLoaded": "Alle {{total}} bots geladen",
     "online": "Online",
     "offline": "Offline",
     "notJoined": "Niet Deelnomen",
     "backToBots": "Terug naar Bots",
     "comingSoon": "Binnenkort beschikbaar",
     "terminalPanel": {
-      "title": ""
+      "title": "Bot Terminal"
     },
     "positionPanel": {
       "title": "Positie & Rotatie",
@@ -156,9 +163,9 @@
       "title": "Bot POV",
       "capture": "Vastleggen",
       "refresh": "Vernieuwen",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "Auto",
+      "startAutoRefresh": "Automatisch vernieuwen starten (interval van 1 seconde)",
+      "stopAutoRefresh": "Automatisch vernieuwen stoppen",
       "clickToCapture": "Klik op Vastleggen om het perspectief van de bot weer te geven",
       "offline": "Bot is offline. POV-weergave is alleen beschikbaar wanneer de bot is verbonden."
     },
@@ -170,12 +177,12 @@
       "experience": "Ervaring",
       "level": "Niveau",
       "toNextLevel": "tot volgend niveau",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "Spelmodus",
+      "survival": "Overleven",
+      "creative": "Creatief",
+      "adventure": "Avontuur",
+      "spectator": "Toeschouwer",
+      "unknown": "Onbekend",
       "offline": "Bot is offline. Statistieken zijn alleen beschikbaar wanneer de bot is verbonden."
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "Laat Eén Vallen",
       "dropAll": "Laat Alles Vallen",
       "closeContainer": "Sluiten",
-      "clickHint": "",
+      "clickHint": "Linkermuisklik: oppakken/plaatsen | Rechtermuisklik: helft/één | Shift+klik: snel verplaatsen | Middelste muisklik: hotbar-slot selecteren",
       "offline": "Bot is offline. Inventaris is alleen beschikbaar wanneer de bot is verbonden.",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "Recepten",
+        "enchantments": "Betoveringen",
+        "patterns": "Patronen",
+        "trades": "Handelen",
+        "beaconEffects": "Baken-effecten",
+        "crafterSlots": "Slotbediening",
+        "lecternControls": "Boekbediening",
         "actions": "Acties"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "Tekstinvoer",
+        "anvilRename": "Item hernoemen"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "Boekinhoud",
+        "emptyPage": "(Lege pagina)",
+        "pageIndicator": "Pagina {{current}} van {{total}}"
       }
     },
     "visualPanel": {
@@ -222,58 +229,461 @@
       "offline": "Bot is offline. Visuele data is alleen beschikbaar wanneer de bot is verbonden."
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "Botacties",
+      "leftClick": "Linkermuisklik",
+      "rightClick": "Rechtermuisklik",
+      "leftClickDescription": "Entiteit aanvallen of blok breken",
+      "rightClickDescription": "Item gebruiken of interactie",
+      "offline": "Bot is offline. Acties zijn alleen beschikbaar wanneer de bot is verbonden."
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "Bewegingsbediening",
+      "movement": "Beweging (WASD)",
+      "forward": "Vooruit gaan (W)",
+      "backward": "Achteruit gaan (S)",
+      "left": "Opzij naar links (A)",
+      "right": "Opzij naar rechts (D)",
+      "jump": "Springen",
+      "sneak": "Sluipen",
+      "sprint": "Rennen",
       "stop": "Stoppen",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "Kijkrichting",
+      "lookUp": "Omhoog kijken",
+      "lookDown": "Omlaag kijken",
+      "lookLeft": "Links kijken",
+      "lookRight": "Rechts kijken",
+      "offline": "Bot is offline. Bewegingsbediening is alleen beschikbaar wanneer de bot is verbonden."
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "Serverdialoog",
+      "noDialog": "Er wordt momenteel geen serverdialoog weergegeven.",
       "dialogType": "Type",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "Dialoog-ID",
+      "notice": "Melding",
+      "confirmation": "Bevestiging",
+      "multiAction": "Meervoudige actie",
+      "serverLinks": "Serverlinks",
+      "dialogList": "Dialooglijst",
+      "unknownType": "Onbekend",
+      "dismiss": "Sluiten",
+      "submit": "Verzenden",
+      "offline": "Bot is offline. Dialogen zijn alleen beschikbaar wanneer de bot is verbonden."
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "Visuele Scripteditor",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "Deze functie is momenteel in ontwikkeling. De nieuwe visuele scripteditor stelt je in staat krachtige automatismescripts te maken met een drag-and-drop-interface zonder zelf code te hoeven schrijven.",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "Aanmaken",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "Draait",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "Start",
+    "stop": "Stoppen",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "Opslaan",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "Stoppen",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "Acties",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_one": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "Waarde",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "Fout",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "Start",
+        "end": "",
+        "amount": "Aantal",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "Toevoegen",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "Sluipen",
+            "description": ""
+          },
+          "sprint": {
+            "label": "Rennen",
+            "description": ""
+          },
+          "jump": {
+            "label": "Springen",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

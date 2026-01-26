@@ -113,12 +113,19 @@
       "noSettings": "Tälle sivulle ei ole asetuksia saatavilla"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "Muokkaa metatietoja",
+      "title": "Metatiedot: {{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} online / {{total}} yhteensä",
     "noBots": "Ei yhtään bottia asetettu. Lisää tilejä Tiliasetukset-sivulta.",
     "noBotsFound": "Hakusi ei vastannut yhtään bottia.",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "Ladataan lisää...",
+    "showingCount": "Näytetään {{loaded}} / {{total}}:sta",
+    "allLoaded": "Kaikki {{total}} bottia ladattu",
     "online": "Paikalla",
     "offline": "Offline",
     "notJoined": "Ei liittynyt",
     "backToBots": "Takaisin botteihin",
     "comingSoon": "Tulossa pian",
     "terminalPanel": {
-      "title": ""
+      "title": "Botti-terminaali"
     },
     "positionPanel": {
       "title": "Sijainti & kääntö",
@@ -156,9 +163,9 @@
       "title": "Botin näkymä",
       "capture": "Kaappaa",
       "refresh": "Päivitä",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "Auto",
+      "startAutoRefresh": "Aloita automaattinen päivitys (1 sekunnin välein)",
+      "stopAutoRefresh": "Lopeta automaattinen päivitys",
       "clickToCapture": "Napsauta Kaappaa nähdäksesi botin näkymän",
       "offline": "Botti on offline-tilassa. Näkymän renderöinti on käytettävissä vain, kun botti on yhdistettynä."
     },
@@ -170,12 +177,12 @@
       "experience": "Kokemus",
       "level": "Taso",
       "toNextLevel": "seuraavaan tasoon",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "Pelitila",
+      "survival": "Selviytyminen",
+      "creative": "Luova",
+      "adventure": "Seikkailu",
+      "spectator": "Katselija",
+      "unknown": "Tuntematon",
       "offline": "Botti on offline-tilassa. Tilastot ovat saatavilla vain, kun botti on yhdistetty."
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "Pudota yksi",
       "dropAll": "Pudota kaikki",
       "closeContainer": "Sulje",
-      "clickHint": "",
+      "clickHint": "Vasen klikkaus: nosta/sijoita | Oikea klikkaus: puolet/yksi | Shift+klikkaus: nopea siirto | Keskimmäinen klikkaus: valitse pikanäppäin",
       "offline": "Botti on offline-tilassa. Varasto on saatavilla vain, kun botti on yhdistetty.",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "Reseptit",
+        "enchantments": "Lumoukset",
+        "patterns": "Kuviot",
+        "trades": "Kaupat",
+        "beaconEffects": "Majakan efektit",
+        "crafterSlots": "Paikkaohjaimet",
+        "lecternControls": "Kirjaohjaimet",
         "actions": "Toiminnot"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "Tekstisyöte",
+        "anvilRename": "Nimeä esine uudelleen"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "Kirjan sisältö",
+        "emptyPage": "(Tyhjä sivu)",
+        "pageIndicator": "Sivu {{current}} / {{total}}"
       }
     },
     "visualPanel": {
@@ -222,58 +229,461 @@
       "offline": "Botti on offline-tilassa. Näkymätiedot ovat saatavilla vain, kun botti on yhdistetty."
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "Botin toiminnot",
+      "leftClick": "Vasen klikkaus",
+      "rightClick": "Oikea klikkaus",
+      "leftClickDescription": "Hyökkää olentoon tai riko lohko",
+      "rightClickDescription": "Käytä esinettä tai käytä toimintoa",
+      "offline": "Botti on offline-tilassa. Toiminnot ovat käytettävissä vain, kun botti on yhdistetty."
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "Liikeohjaus",
+      "movement": "Liikkuminen (WASD)",
+      "forward": "Liiku eteenpäin (W)",
+      "backward": "Liiku taaksepäin (S)",
+      "left": "Siirry vasemmalle (A)",
+      "right": "Siirry oikealle (D)",
+      "jump": "Hyppää",
+      "sneak": "Kyykisty",
+      "sprint": "Juokse",
       "stop": "Pysäytä",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "Katselusuunta",
+      "lookUp": "Katso ylös",
+      "lookDown": "Katso alas",
+      "lookLeft": "Katso vasemmalle",
+      "lookRight": "Katso oikealle",
+      "offline": "Botti on offline-tilassa. Liikeohjaimet ovat käytettävissä vain, kun botti on yhdistetty."
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "Palvelimen dialogi",
+      "noDialog": "Palvelimen dialogia ei näytetä tällä hetkellä.",
       "dialogType": "Tyyppi",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "Dialogin tunniste",
+      "notice": "Huomautus",
+      "confirmation": "Vahvistus",
+      "multiAction": "Monitoiminto",
+      "serverLinks": "Palvelimen linkit",
+      "dialogList": "Dialogilista",
+      "unknownType": "Tuntematon",
+      "dismiss": "Hylkää",
+      "submit": "Lähetä",
+      "offline": "Botti on offline-tilassa. Dialogit ovat käytettävissä vain, kun botti on yhdistetty."
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "Visuaalinen skriptieditori",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "Tämä ominaisuus on parhaillaan kehitteillä. Uusi visuaalinen skriptieditori antaa sinun luoda tehokkaita automaatioskriptejä vetämällä ja pudottamalla ilman, että sinun tarvitsee kirjoittaa koodia.",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "Luo",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "Käynnissä",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "Aloita",
+    "stop": "Pysäytä",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "Tallenna",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "Pysäytä",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "Toiminnot",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_one": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "Arvo",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "Virhe",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "Aloita",
+        "end": "",
+        "amount": "Määrä",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "Lisää",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "Kyykisty",
+            "description": ""
+          },
+          "sprint": {
+            "label": "Juokse",
+            "description": ""
+          },
+          "jump": {
+            "label": "Hyppää",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

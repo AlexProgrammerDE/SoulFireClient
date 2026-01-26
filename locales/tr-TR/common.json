@@ -1,8 +1,8 @@
 {
   "locale": "Yerel",
   "cancel": "İptal",
-  "save": "",
-  "saving": "",
+  "save": "Kaydet",
+  "saving": "Kaydediliyor...",
   "error": {
     "noAddressOrToken": "Sunucu adresi veya jeton bulunamadı",
     "page": {

@@ -113,12 +113,19 @@
       "noSettings": "このページには設定がありません"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "メタデータを編集する",
+      "title": "メタデータ: {{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} 人がオンライン / 合計 {{total}} 人",
     "noBots": "ボットが設定されていません。アカウント設定ページからアカウントを追加してください。",
     "noBotsFound": "検索条件に一致するボットが見つかりません。",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "さらに読み込み中...",
+    "showingCount": "{{loaded}}／{{total}}件を表示中",
+    "allLoaded": "すべての{{total}}体のボットが読み込まれました",
     "online": "オンライン",
     "offline": "オフライン",
     "notJoined": "未参加",
     "backToBots": "ボット一覧に戻る",
     "comingSoon": "近日公開",
     "terminalPanel": {
-      "title": ""
+      "title": "ボット端末"
     },
     "positionPanel": {
       "title": "位置 & 回転",
@@ -156,9 +163,9 @@
       "title": "ボット視点",
       "capture": "キャプチャ",
       "refresh": "更新",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "自動",
+      "startAutoRefresh": "自動更新を開始（1秒間隔）",
+      "stopAutoRefresh": "自動更新を停止",
       "clickToCapture": "「キャプチャ」をクリックしてボットの視点を表示",
       "offline": "ボットはオフラインです。視点表示はボットが接続中のみ利用できます。"
     },
@@ -170,12 +177,12 @@
       "experience": "経験値",
       "level": "レベル",
       "toNextLevel": "次のレベルまで",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "ゲームモード",
+      "survival": "サバイバル",
+      "creative": "クリエイティブ",
+      "adventure": "アドベンチャー",
+      "spectator": "スペクテイター",
+      "unknown": "不明",
       "offline": "ボットはオフラインです。統計はボットが接続中のみ利用できます。"
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "1つ捨てる",
       "dropAll": "すべて捨てる",
       "closeContainer": "閉じる",
-      "clickHint": "",
+      "clickHint": "左クリック：取得／配置 ｜ 右クリック：半分／1つ ｜ Shift+クリック：すばやく移動 ｜ 中クリック：ホットバーのスロット選択",
       "offline": "ボットはオフラインです。インベントリーはボットが接続中のみ利用できます。",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "レシピ",
+        "enchantments": "エンチャント",
+        "patterns": "パターン",
+        "trades": "取引",
+        "beaconEffects": "ビーコン効果",
+        "crafterSlots": "スロット操作",
+        "lecternControls": "本の操作",
         "actions": "操作"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "テキスト入力",
+        "anvilRename": "アイテム名を変更"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "本の内容",
+        "emptyPage": "（空のページ）",
+        "pageIndicator": "{{total}}ページ中{{current}}ページ"
       }
     },
     "visualPanel": {
@@ -222,58 +229,460 @@
       "offline": "ボットはオフラインです。ビジュアルデータはボットが接続中のみ利用できます。"
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "ボットのアクション",
+      "leftClick": "左クリック",
+      "rightClick": "右クリック",
+      "leftClickDescription": "エンティティ攻撃またはブロックを壊す",
+      "rightClickDescription": "アイテム使用または操作",
+      "offline": "ボットはオフラインです。アクションはボットが接続されている時のみ可能です。"
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "移動コントロール",
+      "movement": "移動（WASD）",
+      "forward": "前進（W）",
+      "backward": "後退（S）",
+      "left": "左に移動（A）",
+      "right": "右に移動（D）",
+      "jump": "ジャンプ",
+      "sneak": "スニーク",
+      "sprint": "スプリント",
       "stop": "停止",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "視点方向",
+      "lookUp": "上を見る",
+      "lookDown": "下を見る",
+      "lookLeft": "左を見る",
+      "lookRight": "右を見る",
+      "offline": "ボットはオフラインです。移動コントロールはボットが接続されている時のみ使用できます。"
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "サーバーダイアログ",
+      "noDialog": "現在表示されているサーバーダイアログはありません。",
       "dialogType": "種類",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "ダイアログID",
+      "notice": "通知",
+      "confirmation": "確認",
+      "multiAction": "マルチアクション",
+      "serverLinks": "サーバーリンク",
+      "dialogList": "ダイアログ一覧",
+      "unknownType": "不明",
+      "dismiss": "閉じる",
+      "submit": "送信",
+      "offline": "ボットはオフラインです。ダイアログはボットが接続されている時のみ利用できます。"
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "ビジュアルスクリプトエディター",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "この機能は現在開発中です。新しいビジュアルスクリプトエディターでは、コードを書かずにドラッグ＆ドロップ操作で強力な自動化スクリプトを作成できます。",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "作成",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "稼働中",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "開始",
+    "stop": "停止",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "保存する",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "停止",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "操作",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "値",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "エラー",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "開始",
+        "end": "",
+        "amount": "件数",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "追加",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "スニーク",
+            "description": ""
+          },
+          "sprint": {
+            "label": "スプリント",
+            "description": ""
+          },
+          "jump": {
+            "label": "ジャンプ",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

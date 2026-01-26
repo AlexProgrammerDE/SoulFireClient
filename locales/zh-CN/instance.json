@@ -113,12 +113,19 @@
       "noSettings": "此页面暂无可用设置"
     },
     "metadata": {
-      "openButton": "",
-      "title": "",
+      "openButton": "编辑元数据",
+      "title": "元数据：{{name}}",
       "description": "",
-      "saveSuccess": "",
-      "saveError": "",
-      "invalidJson": ""
+      "namespacePlaceholder": "",
+      "keyPlaceholder": "",
+      "valuePlaceholder": "",
+      "noEntries": "",
+      "addSuccess": "",
+      "addError": "",
+      "updateError": "",
+      "deleteSuccess": "",
+      "deleteError": "",
+      "duplicateError": ""
     }
   },
   "bots": {
@@ -126,16 +133,16 @@
     "onlineCount": "{{online}} 在线 / 共 {{total}} 个",
     "noBots": "未配置机器人。请在账户设置页面添加账户。",
     "noBotsFound": "没有与您的搜索匹配的机器人。",
-    "loadingMore": "",
-    "showingCount": "",
-    "allLoaded": "",
+    "loadingMore": "正在加载更多...",
+    "showingCount": "已显示 {{loaded}} / {{total}}",
+    "allLoaded": "已加载全部 {{total}} 个机器人",
     "online": "在线",
     "offline": "离线",
     "notJoined": "未加入",
     "backToBots": "返回机器人列表",
     "comingSoon": "即将上线",
     "terminalPanel": {
-      "title": ""
+      "title": "机器人终端"
     },
     "positionPanel": {
       "title": "位置与朝向",
@@ -156,9 +163,9 @@
       "title": "Bot视角",
       "capture": "捕捉",
       "refresh": "刷新",
-      "auto": "",
-      "startAutoRefresh": "",
-      "stopAutoRefresh": "",
+      "auto": "自动",
+      "startAutoRefresh": "启动自动刷新（1秒间隔）",
+      "stopAutoRefresh": "停止自动刷新",
       "clickToCapture": "点击“捕捉”以渲染Bot的视角",
       "offline": "Bot已离线。只有连接时才能渲染视角。"
     },
@@ -170,12 +177,12 @@
       "experience": "经验值",
       "level": "等级",
       "toNextLevel": "距离下一级还需",
-      "gameMode": "",
-      "survival": "",
-      "creative": "",
-      "adventure": "",
-      "spectator": "",
-      "unknown": "",
+      "gameMode": "游戏模式",
+      "survival": "生存模式",
+      "creative": "创造模式",
+      "adventure": "冒险模式",
+      "spectator": "旁观者模式",
+      "unknown": "未知",
       "offline": "Bot已离线。只有连接时才能显示状态。"
     },
     "inventoryPanel": {
@@ -187,26 +194,26 @@
       "dropOne": "丢弃一个",
       "dropAll": "全部丢弃",
       "closeContainer": "关闭",
-      "clickHint": "",
+      "clickHint": "左键：拾取/放置 | 右键：分半/单个 | Shift+点击：快速移动 | 中键：选择快捷栏格",
       "offline": "Bot已离线。只有连接时才能管理物品栏。",
       "buttons": {
-        "stonecutterRecipes": "",
-        "enchantments": "",
-        "patterns": "",
-        "trades": "",
-        "beaconEffects": "",
-        "crafterSlots": "",
-        "lecternControls": "",
+        "stonecutterRecipes": "配方",
+        "enchantments": "附魔",
+        "patterns": "图案",
+        "trades": "交易",
+        "beaconEffects": "信标效果",
+        "crafterSlots": "槽位控制",
+        "lecternControls": "书本控制",
         "actions": "操作"
       },
       "textInput": {
-        "title": "",
-        "anvilRename": ""
+        "title": "文本输入",
+        "anvilRename": "重命名物品"
       },
       "bookPages": {
-        "title": "",
-        "emptyPage": "",
-        "pageIndicator": ""
+        "title": "书本内容",
+        "emptyPage": "（空白页）",
+        "pageIndicator": "第 {{current}} 页，共 {{total}} 页"
       }
     },
     "visualPanel": {
@@ -222,58 +229,460 @@
       "offline": "Bot已离线。只有连接时才能显示视觉数据。"
     },
     "actionsPanel": {
-      "title": "",
-      "leftClick": "",
-      "rightClick": "",
-      "leftClickDescription": "",
-      "rightClickDescription": "",
-      "offline": ""
+      "title": "机器人操作",
+      "leftClick": "左键点击",
+      "rightClick": "右键点击",
+      "leftClickDescription": "攻击实体或破坏方块",
+      "rightClickDescription": "使用物品或交互",
+      "offline": "机器人离线。仅在机器人连接时可用操作。"
     },
     "movementPanel": {
-      "title": "",
-      "movement": "",
-      "forward": "",
-      "backward": "",
-      "left": "",
-      "right": "",
-      "jump": "",
-      "sneak": "",
-      "sprint": "",
+      "title": "移动控制",
+      "movement": "移动（WASD）",
+      "forward": "前进（W）",
+      "backward": "后退（S）",
+      "left": "左移（A）",
+      "right": "右移（D）",
+      "jump": "跳跃",
+      "sneak": "潜行",
+      "sprint": "疾跑",
       "stop": "停止",
-      "rotation": "",
-      "lookUp": "",
-      "lookDown": "",
-      "lookLeft": "",
-      "lookRight": "",
-      "offline": ""
+      "rotation": "视角方向",
+      "lookUp": "向上看",
+      "lookDown": "向下看",
+      "lookLeft": "向左看",
+      "lookRight": "向右看",
+      "offline": "机器人离线。只有当机器人已连接时，移动控制可用。"
     },
     "dialogPanel": {
-      "title": "",
-      "noDialog": "",
+      "title": "服务器对话框",
+      "noDialog": "当前没有显示服务器对话框。",
       "dialogType": "类型",
-      "dialogId": "",
-      "notice": "",
-      "confirmation": "",
-      "multiAction": "",
-      "serverLinks": "",
-      "dialogList": "",
-      "unknownType": "",
-      "dismiss": "",
-      "submit": "",
-      "offline": ""
+      "dialogId": "对话框ID",
+      "notice": "通知",
+      "confirmation": "确认",
+      "multiAction": "多重操作",
+      "serverLinks": "服务器链接",
+      "dialogList": "对话框列表",
+      "unknownType": "未知",
+      "dismiss": "关闭",
+      "submit": "提交",
+      "offline": "机器人离线。只有当机器人已连接时对话框可用。"
     }
   },
   "scripts": {
-    "wipTitle": "",
+    "title": "",
+    "description": "",
+    "wipTitle": "可视化脚本编辑器",
     "wipDescription": "",
-    "wipDetails": "",
-    "title": "Visual Scripts",
-    "description": "Create automation scripts using a visual node-based editor.",
-    "createSuccess": "Script created successfully",
-    "createError": "Failed to create script",
-    "deleteSuccess": "Script deleted successfully",
-    "deleteError": "Failed to delete script",
-    "startError": "Failed to start script",
-    "stopError": "Failed to stop script"
+    "wipDetails": "该功能正在开发中。全新的可视化脚本编辑器将允许您通过拖拽操作创建强大的自动化脚本，无需编写代码。",
+    "createScript": "",
+    "createScriptTitle": "",
+    "createScriptDescription": "",
+    "scriptName": "",
+    "scriptNamePlaceholder": "",
+    "scriptDescription": "",
+    "scriptDescriptionPlaceholder": "",
+    "create": "创建",
+    "createSuccess": "",
+    "createError": "",
+    "noScripts": "",
+    "noScriptsDescription": "",
+    "createFirstScript": "",
+    "running": "正在运行",
+    "nodes": "",
+    "noDescription": "",
+    "edit": "",
+    "start": "开始",
+    "stop": "停止",
+    "delete": "",
+    "deleteSuccess": "",
+    "deleteError": "",
+    "saveSuccess": "",
+    "saveError": "",
+    "startSuccess": "",
+    "startError": "",
+    "stopSuccess": "",
+    "stopError": "",
+    "untitledScript": "",
+    "saveFirstBeforeRunning": "",
+    "executionStarting": "",
+    "executionStarted": "",
+    "executionCompleted": "",
+    "executionCompletedSuccess": "",
+    "executionStopped": "",
+    "executionStoppedByUser": "",
+    "executionFailed": "",
+    "executionError": "",
+    "nodeStarted": "",
+    "nodeCompleted": "",
+    "nodeError": "",
+    "editor": {
+      "toolbar": {
+        "backToScripts": "",
+        "save": "保存",
+        "saveTooltip": "",
+        "run": "",
+        "runTooltip": "",
+        "stop": "停止",
+        "stopTooltip": "",
+        "autoStart": "",
+        "autoStartTooltip": "",
+        "unsaved": "",
+        "clearCanvas": "",
+        "zoomIn": "",
+        "zoomOut": "",
+        "fit": ""
+      },
+      "palette": {
+        "title": "",
+        "search": "",
+        "categories": {
+          "trigger": "",
+          "action": "操作",
+          "flow": "",
+          "math": "",
+          "logic": "",
+          "data": "",
+          "bot": "",
+          "world": ""
+        }
+      },
+      "inspector": {
+        "title": "",
+        "noSelection": "",
+        "properties": "",
+        "nodeId": "",
+        "inputs": "",
+        "outputs": "",
+        "selectPlaceholder": ""
+      },
+      "logs": {
+        "title": "",
+        "clear": "",
+        "clearTitle": "",
+        "noLogs": "",
+        "entries_other": ""
+      },
+      "contextMenu": {
+        "duplicate": "",
+        "disconnectAll": "",
+        "delete": ""
+      },
+      "ports": {
+        "exec": "",
+        "execIn": "",
+        "execOut": "",
+        "execTrue": "",
+        "execFalse": "",
+        "execLoop": "",
+        "execDone": ""
+      },
+      "fields": {
+        "value": "值",
+        "interval": "",
+        "variableName": "",
+        "level": "",
+        "levelDebug": "",
+        "levelInfo": "",
+        "levelWarn": "",
+        "levelError": "出错",
+        "x": "",
+        "y": "",
+        "z": "",
+        "min": "",
+        "max": "",
+        "degree": "",
+        "operator": "",
+        "operatorEqual": "",
+        "operatorNotEqual": "",
+        "operatorLess": "",
+        "operatorLessEqual": "",
+        "operatorGreater": "",
+        "operatorGreaterEqual": "",
+        "comparison": "",
+        "comparisonEqual": "",
+        "comparisonNotEqual": "",
+        "comparisonGreater": "",
+        "comparisonLess": "",
+        "comparisonGreaterEqual": "",
+        "comparisonLessEqual": "",
+        "formula": "",
+        "message": "",
+        "iterations": "",
+        "minValue": "",
+        "maxValue": "",
+        "start": "开始",
+        "end": "",
+        "amount": "数量",
+        "blockType": "",
+        "radius": "",
+        "timeout": "",
+        "slot": "",
+        "count": "",
+        "entityType": "",
+        "smooth": "",
+        "enabled": "",
+        "hand": "",
+        "handMain": "",
+        "handOff": "",
+        "face": "",
+        "faceUp": "",
+        "faceDown": "",
+        "faceNorth": "",
+        "faceSouth": "",
+        "faceEast": "",
+        "faceWest": "",
+        "ticks": "",
+        "range": "",
+        "loopCount": "",
+        "open": "",
+        "delay": ""
+      },
+      "nodes": {
+        "trigger": {
+          "on_tick": {
+            "label": "",
+            "description": ""
+          },
+          "on_join": {
+            "label": "",
+            "description": ""
+          },
+          "on_chat": {
+            "label": "",
+            "description": ""
+          },
+          "on_damage": {
+            "label": "",
+            "description": ""
+          },
+          "on_death": {
+            "label": "",
+            "description": ""
+          },
+          "on_health_change": {
+            "label": "",
+            "description": ""
+          },
+          "on_interval": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "math": {
+          "add": {
+            "label": "添加",
+            "description": ""
+          },
+          "subtract": {
+            "label": "",
+            "description": ""
+          },
+          "multiply": {
+            "label": "",
+            "description": ""
+          },
+          "divide": {
+            "label": "",
+            "description": ""
+          },
+          "modulo": {
+            "label": "",
+            "description": ""
+          },
+          "formula": {
+            "label": "",
+            "description": ""
+          },
+          "random": {
+            "label": "",
+            "description": ""
+          },
+          "clamp": {
+            "label": "",
+            "description": ""
+          },
+          "lerp": {
+            "label": "",
+            "description": ""
+          },
+          "bspline": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "logic": {
+          "compare": {
+            "label": "",
+            "description": ""
+          },
+          "and": {
+            "label": "",
+            "description": ""
+          },
+          "or": {
+            "label": "",
+            "description": ""
+          },
+          "not": {
+            "label": "",
+            "description": ""
+          },
+          "xor": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "flow": {
+          "branch": {
+            "label": "",
+            "description": ""
+          },
+          "switch": {
+            "label": "",
+            "description": ""
+          },
+          "loop": {
+            "label": "",
+            "description": ""
+          },
+          "for_each": {
+            "label": "",
+            "description": ""
+          },
+          "sequence": {
+            "label": "",
+            "description": ""
+          },
+          "gate": {
+            "label": "",
+            "description": ""
+          },
+          "debounce": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "action": {
+          "set_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "look_at": {
+            "label": "",
+            "description": ""
+          },
+          "sneak": {
+            "label": "潜行",
+            "description": ""
+          },
+          "sprint": {
+            "label": "疾跑",
+            "description": ""
+          },
+          "jump": {
+            "label": "跳跃",
+            "description": ""
+          },
+          "attack": {
+            "label": "",
+            "description": ""
+          },
+          "use_item": {
+            "label": "",
+            "description": ""
+          },
+          "pathfind_to": {
+            "label": "",
+            "description": ""
+          },
+          "break_block": {
+            "label": "",
+            "description": ""
+          },
+          "place_block": {
+            "label": "",
+            "description": ""
+          },
+          "select_slot": {
+            "label": "",
+            "description": ""
+          },
+          "send_chat": {
+            "label": "",
+            "description": ""
+          },
+          "wait": {
+            "label": "",
+            "description": ""
+          },
+          "print": {
+            "label": "",
+            "description": ""
+          },
+          "set_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "data": {
+          "get_position": {
+            "label": "",
+            "description": ""
+          },
+          "get_rotation": {
+            "label": "",
+            "description": ""
+          },
+          "get_health": {
+            "label": "",
+            "description": ""
+          },
+          "get_hunger": {
+            "label": "",
+            "description": ""
+          },
+          "get_inventory": {
+            "label": "",
+            "description": ""
+          },
+          "get_block": {
+            "label": "",
+            "description": ""
+          },
+          "find_entity": {
+            "label": "",
+            "description": ""
+          },
+          "find_block": {
+            "label": "",
+            "description": ""
+          },
+          "get_variable": {
+            "label": "",
+            "description": ""
+          }
+        },
+        "constant": {
+          "number": {
+            "label": "",
+            "description": ""
+          },
+          "string": {
+            "label": "",
+            "description": ""
+          },
+          "boolean": {
+            "label": "",
+            "description": ""
+          },
+          "vector3": {
+            "label": "",
+            "description": ""
+          }
+        }
+      }
+    }
   }
 }

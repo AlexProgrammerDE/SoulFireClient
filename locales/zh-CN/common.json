@@ -1,8 +1,8 @@
 {
   "locale": "语言",
   "cancel": "取消",
-  "save": "",
-  "saving": "",
+  "save": "保存",
+  "saving": "正在保存...",
   "error": {
     "noAddressOrToken": "未找到服务器地址或令牌",
     "page": {

@@ -1,8 +1,8 @@
 {
   "locale": "Ngôn ngữ",
   "cancel": "Hủy",
-  "save": "",
-  "saving": "",
+  "save": "Lưu",
+  "saving": "Đang lưu...",
   "error": {
     "noAddressOrToken": "Không tìm thấy địa chỉ máy chủ hoặc mã thông báo",
     "page": {

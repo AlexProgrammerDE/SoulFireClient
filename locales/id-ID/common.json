@@ -1,8 +1,8 @@
 {
   "locale": "Lokal",
   "cancel": "Batal",
-  "save": "",
-  "saving": "",
+  "save": "Simpan",
+  "saving": "Menyimpan...",
   "error": {
     "noAddressOrToken": "Alamat server atau token tidak ditemukan",
     "page": {

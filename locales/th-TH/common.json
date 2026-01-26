@@ -1,8 +1,8 @@
 {
   "locale": "ภาษาโลแคล (Locale)",
   "cancel": "ยกเลิก",
-  "save": "",
-  "saving": "",
+  "save": "บันทึก",
+  "saving": "กำลังบันทึก...",
   "error": {
     "noAddressOrToken": "ไม่พบที่อยู่เซิร์ฟเวอร์หรือโทเค็น",
     "page": {

@@ -1,8 +1,8 @@
 {
   "locale": "語言環境",
   "cancel": "取消",
-  "save": "",
-  "saving": "",
+  "save": "儲存",
+  "saving": "正在儲存...",
   "error": {
     "noAddressOrToken": "找不到伺服器地址或權杖",
     "page": {
