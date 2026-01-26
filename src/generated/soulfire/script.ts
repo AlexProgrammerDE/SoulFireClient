@@ -128,8 +128,9 @@ export interface NodeTypeDefinition {
    */
   description: string;
   /**
-   * Category for organizing nodes in the palette.
-   * Examples: "Triggers", "Actions", "Math", "Logic", "Flow Control".
+   * Category ID for organizing nodes in the palette.
+   * References CategoryDefinition.id from GetNodeTypesResponse.
+   * Examples: "triggers", "actions", "math", "logic", "flow".
    *
    * @generated from protobuf field: string category = 4
    */
@@ -538,46 +539,57 @@ export interface NodeError {
   timestamp?: Timestamp;
 }
 /**
- * Event emitted when script execution begins.
+ * Event emitted when a trigger fires and begins executing a node chain.
+ * Note: Scripts are reactive - this indicates a trigger event occurred,
+ * not that the script "started running" in the traditional sense.
  *
  * @generated from protobuf message soulfire.v1.ScriptStarted
  */
 export interface ScriptStarted {
   /**
-   * The ID of the script that started.
+   * The ID of the script containing the triggered chain.
    *
    * @generated from protobuf field: string script_id = 1
    */
   scriptId: string;
   /**
-   * When the script started execution.
+   * When the trigger fired and execution began.
    *
    * @generated from protobuf field: google.protobuf.Timestamp timestamp = 2
    */
   timestamp?: Timestamp;
 }
 /**
- * Event emitted when script execution finishes.
+ * Event emitted when a triggered node chain finishes executing.
+ * Note: This indicates one trigger chain completed, not that the script
+ * is done - the script remains active and will respond to future triggers.
  *
  * @generated from protobuf message soulfire.v1.ScriptCompleted
  */
 export interface ScriptCompleted {
   /**
-   * Whether the script completed successfully without errors.
+   * The ID of the script that completed the chain.
    *
-   * @generated from protobuf field: bool success = 1
+   * @generated from protobuf field: string script_id = 1
+   */
+  scriptId: string;
+  /**
+   * Whether the chain completed successfully without errors.
+   *
+   * @generated from protobuf field: bool success = 2
    */
   success: boolean;
   /**
-   * When the script completed execution.
+   * When the chain completed execution.
    *
-   * @generated from protobuf field: google.protobuf.Timestamp timestamp = 2
+   * @generated from protobuf field: google.protobuf.Timestamp timestamp = 3
    */
   timestamp?: Timestamp;
 }
 /**
  * Union type for all script execution events.
- * Streamed to clients during script execution to provide real-time feedback.
+ * Streamed to clients during script activation to provide real-time feedback.
+ * Events represent individual trigger chain executions, not script lifecycle.
  *
  * @generated from protobuf message soulfire.v1.ScriptEvent
  */
@@ -618,7 +630,7 @@ export interface ScriptEvent {
     | {
         oneofKind: "scriptCompleted";
         /**
-         * The script completed execution.
+         * A trigger chain finished executing.
          *
          * @generated from protobuf field: soulfire.v1.ScriptCompleted script_completed = 4
          */
@@ -627,7 +639,7 @@ export interface ScriptEvent {
     | {
         oneofKind: "scriptStarted";
         /**
-         * The script started execution.
+         * A trigger fired and began executing a chain.
          *
          * @generated from protobuf field: soulfire.v1.ScriptStarted script_started = 5
          */
@@ -988,7 +1000,8 @@ export interface SubscribeScriptLogsRequest {
  */
 export interface GetNodeTypesRequest {
   /**
-   * Optional filter by category.
+   * Optional filter by category ID (references CategoryDefinition.id).
+   * Examples: "triggers", "actions", "math".
    * If empty, returns all node types.
    *
    * @generated from protobuf field: optional string category = 1
@@ -2797,12 +2810,14 @@ export const ScriptStarted = new ScriptStarted$Type();
 class ScriptCompleted$Type extends MessageType<ScriptCompleted> {
   constructor() {
     super("soulfire.v1.ScriptCompleted", [
-      { no: 1, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
-      { no: 2, name: "timestamp", kind: "message", T: () => Timestamp },
+      { no: 1, name: "script_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: "success", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 3, name: "timestamp", kind: "message", T: () => Timestamp },
     ]);
   }
   create(value?: PartialMessage<ScriptCompleted>): ScriptCompleted {
     const message = globalThis.Object.create(this.messagePrototype!);
+    message.scriptId = "";
     message.success = false;
     if (value !== undefined)
       reflectionMergePartial<ScriptCompleted>(this, message, value);
@@ -2819,10 +2834,13 @@ class ScriptCompleted$Type extends MessageType<ScriptCompleted> {
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
-        case /* bool success */ 1:
+        case /* string script_id */ 1:
+          message.scriptId = reader.string();
+          break;
+        case /* bool success */ 2:
           message.success = reader.bool();
           break;
-        case /* google.protobuf.Timestamp timestamp */ 2:
+        case /* google.protobuf.Timestamp timestamp */ 3:
           message.timestamp = Timestamp.internalBinaryRead(
             reader,
             reader.uint32(),
@@ -2854,14 +2872,17 @@ class ScriptCompleted$Type extends MessageType<ScriptCompleted> {
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    /* bool success = 1; */
+    /* string script_id = 1; */
+    if (message.scriptId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.scriptId);
+    /* bool success = 2; */
     if (message.success !== false)
-      writer.tag(1, WireType.Varint).bool(message.success);
-    /* google.protobuf.Timestamp timestamp = 2; */
+      writer.tag(2, WireType.Varint).bool(message.success);
+    /* google.protobuf.Timestamp timestamp = 3; */
     if (message.timestamp)
       Timestamp.internalBinaryWrite(
         message.timestamp,
-        writer.tag(2, WireType.LengthDelimited).fork(),
+        writer.tag(3, WireType.LengthDelimited).fork(),
         options,
       ).join();
     let u = options.writeUnknownFields;
