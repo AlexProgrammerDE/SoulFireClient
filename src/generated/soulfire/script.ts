@@ -1003,6 +1003,46 @@ export interface GetNodeTypesRequest {
   includeDeprecated: boolean;
 }
 /**
+ * Definition of a node category for organizing the node palette.
+ *
+ * @generated from protobuf message soulfire.v1.CategoryDefinition
+ */
+export interface CategoryDefinition {
+  /**
+   * The unique identifier for this category.
+   * Examples: "triggers", "actions", "math", "logic".
+   *
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * Human-readable name displayed in the UI.
+   * Examples: "Triggers", "Actions", "Math", "Logic".
+   *
+   * @generated from protobuf field: string display_name = 2
+   */
+  displayName: string;
+  /**
+   * Icon identifier for the category.
+   * Examples: "zap", "play", "calculator", "git-branch".
+   *
+   * @generated from protobuf field: string icon = 3
+   */
+  icon: string;
+  /**
+   * Optional description of this category.
+   *
+   * @generated from protobuf field: string description = 4
+   */
+  description: string;
+  /**
+   * Sort order for displaying categories (lower = earlier).
+   *
+   * @generated from protobuf field: int32 sort_order = 5
+   */
+  sortOrder: number;
+}
+/**
  * Response containing all available node types.
  *
  * @generated from protobuf message soulfire.v1.GetNodeTypesResponse
@@ -1016,12 +1056,12 @@ export interface GetNodeTypesResponse {
    */
   nodeTypes: NodeTypeDefinition[];
   /**
-   * List of distinct categories present in the node types.
-   * Useful for building category filters in the UI.
+   * List of all categories with their metadata.
+   * Useful for building category filters and palette sections in the UI.
    *
-   * @generated from protobuf field: repeated string categories = 2
+   * @generated from protobuf field: repeated soulfire.v1.CategoryDefinition categories = 2
    */
-  categories: string[];
+  categories: CategoryDefinition[];
 }
 /**
  * The type of connection between nodes in the visual script editor.
@@ -4531,6 +4571,117 @@ class GetNodeTypesRequest$Type extends MessageType<GetNodeTypesRequest> {
  */
 export const GetNodeTypesRequest = new GetNodeTypesRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class CategoryDefinition$Type extends MessageType<CategoryDefinition> {
+  constructor() {
+    super("soulfire.v1.CategoryDefinition", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "display_name",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 3, name: "icon", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 4,
+        name: "description",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 5, name: "sort_order", kind: "scalar", T: 5 /*ScalarType.INT32*/ },
+    ]);
+  }
+  create(value?: PartialMessage<CategoryDefinition>): CategoryDefinition {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.displayName = "";
+    message.icon = "";
+    message.description = "";
+    message.sortOrder = 0;
+    if (value !== undefined)
+      reflectionMergePartial<CategoryDefinition>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: CategoryDefinition,
+  ): CategoryDefinition {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string display_name */ 2:
+          message.displayName = reader.string();
+          break;
+        case /* string icon */ 3:
+          message.icon = reader.string();
+          break;
+        case /* string description */ 4:
+          message.description = reader.string();
+          break;
+        case /* int32 sort_order */ 5:
+          message.sortOrder = reader.int32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: CategoryDefinition,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string display_name = 2; */
+    if (message.displayName !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.displayName);
+    /* string icon = 3; */
+    if (message.icon !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.icon);
+    /* string description = 4; */
+    if (message.description !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.description);
+    /* int32 sort_order = 5; */
+    if (message.sortOrder !== 0)
+      writer.tag(5, WireType.Varint).int32(message.sortOrder);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.CategoryDefinition
+ */
+export const CategoryDefinition = new CategoryDefinition$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class GetNodeTypesResponse$Type extends MessageType<GetNodeTypesResponse> {
   constructor() {
     super("soulfire.v1.GetNodeTypesResponse", [
@@ -4544,9 +4695,9 @@ class GetNodeTypesResponse$Type extends MessageType<GetNodeTypesResponse> {
       {
         no: 2,
         name: "categories",
-        kind: "scalar",
+        kind: "message",
         repeat: 2 /*RepeatType.UNPACKED*/,
-        T: 9 /*ScalarType.STRING*/,
+        T: () => CategoryDefinition,
       },
     ]);
   }
@@ -4578,8 +4729,14 @@ class GetNodeTypesResponse$Type extends MessageType<GetNodeTypesResponse> {
             ),
           );
           break;
-        case /* repeated string categories */ 2:
-          message.categories.push(reader.string());
+        case /* repeated soulfire.v1.CategoryDefinition categories */ 2:
+          message.categories.push(
+            CategoryDefinition.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
           break;
         default:
           let u = options.readUnknownField;
@@ -4612,9 +4769,13 @@ class GetNodeTypesResponse$Type extends MessageType<GetNodeTypesResponse> {
         writer.tag(1, WireType.LengthDelimited).fork(),
         options,
       ).join();
-    /* repeated string categories = 2; */
+    /* repeated soulfire.v1.CategoryDefinition categories = 2; */
     for (let i = 0; i < message.categories.length; i++)
-      writer.tag(2, WireType.LengthDelimited).string(message.categories[i]);
+      CategoryDefinition.internalBinaryWrite(
+        message.categories[i],
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(

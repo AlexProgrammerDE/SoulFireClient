@@ -175,17 +175,20 @@ export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
       </div>
       <ScrollArea className="min-h-0 flex-1">
         <div className="flex flex-col gap-1 p-2">
-          {categories.map((category) => (
-            <CategorySection
-              key={category}
-              categoryName={getCategoryName(category)}
-              categoryInfo={getContextCategoryInfo(category)}
-              nodes={filteredNodesByCategory[category] ?? []}
-              getNodeLabel={getNodeLabel}
-              defaultOpen={!searchQuery}
-              onNodeDragStart={onNodeDragStart}
-            />
-          ))}
+          {categories.map((category) => {
+            const info = getContextCategoryInfo(category);
+            return (
+              <CategorySection
+                key={category}
+                categoryName={getCategoryName(category, info.name)}
+                categoryInfo={info}
+                nodes={filteredNodesByCategory[category] ?? []}
+                getNodeLabel={getNodeLabel}
+                defaultOpen={!searchQuery}
+                onNodeDragStart={onNodeDragStart}
+              />
+            );
+          })}
           {searchQuery && totalFilteredNodes === 0 && (
             <div className="py-8 text-center text-sm text-muted-foreground">
               {t(

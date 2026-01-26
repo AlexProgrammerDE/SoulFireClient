@@ -13,8 +13,8 @@ import { nodeTypesQueryOptions } from "@/lib/script-service";
 import { createNodeComponent } from "./nodes/BaseNode";
 import {
   type CategoryInfo,
-  deriveCategoryInfo,
   type NodeDefinition,
+  protoCategoryToLocal,
   protoNodeTypeToLocal,
 } from "./nodes/types";
 
@@ -78,12 +78,24 @@ export function NodeTypesProvider({
     return result;
   }, [definitions]);
 
-  // Get categories from server response
-  const categories = useMemo(() => {
-    return data.categories;
+  // Convert and sort categories from server response
+  const categoryInfo = useMemo(() => {
+    const result: Record<string, CategoryInfo> = {};
+    for (const proto of data.categories) {
+      const local = protoCategoryToLocal(proto);
+      result[local.id] = local;
+    }
+    return result;
   }, [data.categories]);
 
-  // Group nodes by category for deriving category info
+  // Get sorted category IDs
+  const categories = useMemo(() => {
+    return [...data.categories]
+      .sort((a, b) => a.sortOrder - b.sortOrder)
+      .map((c) => c.id);
+  }, [data.categories]);
+
+  // Group nodes by category
   const nodesByCategory = useMemo(() => {
     const result: Record<string, NodeDefinition[]> = {};
     for (const category of categories) {
@@ -97,18 +109,6 @@ export function NodeTypesProvider({
     }
     return result;
   }, [definitions, categories]);
-
-  // Derive category info from nodes in each category
-  const categoryInfo = useMemo(() => {
-    const result: Record<string, CategoryInfo> = {};
-    for (const category of categories) {
-      result[category] = deriveCategoryInfo(
-        category,
-        nodesByCategory[category] ?? [],
-      );
-    }
-    return result;
-  }, [categories, nodesByCategory]);
 
   const getDefinition = useCallback(
     (type: string) => definitions[type],
@@ -126,8 +126,10 @@ export function NodeTypesProvider({
     (category: string): CategoryInfo => {
       return (
         categoryInfo[category] ?? {
+          id: category,
           name: category,
           icon: "Circle",
+          sortOrder: 999,
         }
       );
     },

@@ -28,9 +28,13 @@ export function useNodeTranslations() {
 
   /**
    * Get the translated name for a node category.
+   * Falls back to the provided fallback (e.g., server displayName) if translation is missing.
    */
-  const getCategoryName = (category: string): string => {
-    return t(`scripts.editor.palette.categories.${category}`);
+  const getCategoryName = (category: string, fallback?: string): string => {
+    const key = `scripts.editor.palette.categories.${category}`;
+    const translated = t(key);
+    // If translation key returns the key itself, use fallback
+    return translated === key ? (fallback ?? category) : translated;
   };
 
   /**

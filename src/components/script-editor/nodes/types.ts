@@ -1,4 +1,5 @@
 import {
+  type CategoryDefinition as ProtoCategoryDefinition,
   type NodeTypeDefinition as ProtoNodeTypeDefinition,
   type PortDefinition as ProtoPortDefinition,
   PortType as ProtoPortType,
@@ -46,9 +47,11 @@ export interface NodeDefinition {
 }
 
 export interface CategoryInfo {
+  id: string;
   name: string;
   icon: string;
-  color?: string;
+  description?: string;
+  sortOrder: number;
 }
 
 /**
@@ -170,18 +173,17 @@ export function getPortColor(type: PortType): string {
 }
 
 /**
- * Derive category info from the nodes in that category.
- * Uses the first node's icon and color as representative of the category.
+ * Convert proto CategoryDefinition to local CategoryInfo
  */
-export function deriveCategoryInfo(
-  category: string,
-  nodes: NodeDefinition[],
+export function protoCategoryToLocal(
+  proto: ProtoCategoryDefinition,
 ): CategoryInfo {
-  const firstNode = nodes[0];
   return {
-    name: category,
-    icon: firstNode?.icon ?? "Circle",
-    color: firstNode?.color,
+    id: proto.id,
+    name: proto.displayName,
+    icon: proto.icon || "Circle",
+    description: proto.description || undefined,
+    sortOrder: proto.sortOrder,
   };
 }
 
