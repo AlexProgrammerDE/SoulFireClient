@@ -34,6 +34,10 @@ import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 
 import "@xyflow/react/dist/style.css";
 
+// Default node dimensions for centering on drop (matches min-w-[160px] in BaseNode)
+const DEFAULT_NODE_WIDTH = 160;
+const DEFAULT_NODE_HEIGHT = 80;
+
 // Custom horizontal handle for vertical panel groups
 function HorizontalResizableHandle() {
   return (
@@ -428,7 +432,13 @@ function ScriptEditorContent() {
         y: event.clientY,
       });
 
-      addNode(nodeType, position, definition.defaultData);
+      // Center the node under the cursor
+      const centeredPosition = {
+        x: position.x - DEFAULT_NODE_WIDTH / 2,
+        y: position.y - DEFAULT_NODE_HEIGHT / 2,
+      };
+
+      addNode(nodeType, centeredPosition, definition.defaultData);
     },
     [reactFlowInstance, addNode, getDefinition],
   );
