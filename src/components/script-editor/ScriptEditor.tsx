@@ -9,6 +9,7 @@ import {
 } from "@xyflow/react";
 import { useTheme } from "next-themes";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { handleNativeCopy, handleNativePaste } from "@/lib/script-clipboard";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 import { edgeTypes, isValidConnection } from "./edges";
 import { GroupBreadcrumb } from "./GroupBreadcrumb";
@@ -114,9 +115,11 @@ export function ScriptEditor() {
   );
 
   // Clipboard actions
-  const copySelected = useScriptEditorStore((state) => state.copySelected);
-  const pasteFromClipboard = useScriptEditorStore(
-    (state) => state.pasteFromClipboard,
+  const getSelectedForClipboard = useScriptEditorStore(
+    (state) => state.getSelectedForClipboard,
+  );
+  const pasteClipboardData = useScriptEditorStore(
+    (state) => state.pasteClipboardData,
   );
 
   // Alignment actions
@@ -339,36 +342,8 @@ export function ScriptEditor() {
         return;
       }
 
-      // Ctrl+C - Copy selected
-      if (
-        (event.key === "c" || event.key === "C") &&
-        (event.ctrlKey || event.metaKey) &&
-        !event.shiftKey
-      ) {
-        event.preventDefault();
-        void copySelected();
-        return;
-      }
-
-      // Ctrl+V - Paste from clipboard
-      if (
-        (event.key === "v" || event.key === "V") &&
-        (event.ctrlKey || event.metaKey) &&
-        !event.shiftKey
-      ) {
-        event.preventDefault();
-        if (reactFlowInstance && containerRef.current) {
-          const rect = containerRef.current.getBoundingClientRect();
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          const flowPosition = reactFlowInstance.screenToFlowPosition({
-            x: centerX,
-            y: centerY,
-          });
-          void pasteFromClipboard(flowPosition);
-        }
-        return;
-      }
+      // Note: Ctrl+C and Ctrl+V are handled via native onCopy/onPaste events
+      // to avoid Firefox's clipboard permission prompts
 
       // Shift+L - Select linked (both directions)
       if (
@@ -465,14 +440,57 @@ export function ScriptEditor() {
       groupEditStack,
       enterGroup,
       exitGroup,
-      copySelected,
-      pasteFromClipboard,
       selectAll,
       selectLinked,
       selectSimilar,
       alignNodes,
       distributeNodes,
     ],
+  );
+
+  // Native copy handler - uses ClipboardEvent for cross-browser support without permission prompts
+  const handleCopy = useCallback(
+    (event: React.ClipboardEvent) => {
+      // Ignore if typing in an input
+      if (
+        event.target instanceof HTMLInputElement ||
+        event.target instanceof HTMLTextAreaElement
+      ) {
+        return;
+      }
+
+      const clipboardData = getSelectedForClipboard();
+      if (clipboardData) {
+        handleNativeCopy(event.nativeEvent, clipboardData);
+      }
+    },
+    [getSelectedForClipboard],
+  );
+
+  // Native paste handler - uses ClipboardEvent for cross-browser support without permission prompts
+  const handlePaste = useCallback(
+    (event: React.ClipboardEvent) => {
+      // Ignore if typing in an input
+      if (
+        event.target instanceof HTMLInputElement ||
+        event.target instanceof HTMLTextAreaElement
+      ) {
+        return;
+      }
+
+      const clipboardData = handleNativePaste(event.nativeEvent);
+      if (clipboardData && reactFlowInstance && containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const flowPosition = reactFlowInstance.screenToFlowPosition({
+          x: centerX,
+          y: centerY,
+        });
+        pasteClipboardData(clipboardData, flowPosition);
+      }
+    },
+    [reactFlowInstance, pasteClipboardData],
   );
 
   // Handle right-click on canvas for quick add or quick reroute
@@ -584,6 +602,8 @@ export function ScriptEditor() {
       ref={containerRef}
       className="h-full w-full relative outline-none"
       onKeyDown={handleKeyDown}
+      onCopy={handleCopy}
+      onPaste={handlePaste}
       onContextMenu={handleContextMenu}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}

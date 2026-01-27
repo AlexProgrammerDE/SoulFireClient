@@ -11,62 +11,63 @@ export interface ScriptClipboardData {
   sourceScriptId: string | null;
 }
 
-async function writeToSystemClipboard(text: string): Promise<void> {
-  if (isTauri()) {
-    return clipboard.writeText(text);
-  } else {
-    return navigator.clipboard.writeText(text);
-  }
-}
-
-async function readFromSystemClipboard(): Promise<string> {
-  if (isTauri()) {
-    return clipboard.readText();
-  } else {
-    return navigator.clipboard.readText();
-  }
+/**
+ * Serialize clipboard data for storage/transfer.
+ */
+function serializeClipboardData(data: ScriptClipboardData): string {
+  return CLIPBOARD_PREFIX + JSON.stringify(data);
 }
 
 /**
- * Copy script nodes/edges to both system clipboard and localStorage.
- * System clipboard enables cross-browser/cross-app paste.
- * localStorage serves as fallback when clipboard access is denied.
+ * Parse clipboard text into ScriptClipboardData if valid.
  */
-export async function copyToScriptClipboard(
-  data: ScriptClipboardData,
-): Promise<void> {
-  const jsonData = JSON.stringify(data);
+function parseClipboardText(text: string): ScriptClipboardData | null {
+  if (!text.startsWith(CLIPBOARD_PREFIX)) return null;
 
-  // Always save to localStorage as fallback
-  localStorage.setItem(LOCAL_STORAGE_KEY, jsonData);
-
-  // Try to write to system clipboard
   try {
-    await writeToSystemClipboard(CLIPBOARD_PREFIX + jsonData);
-  } catch (error) {
-    // Clipboard access denied - localStorage fallback is already in place
-    console.warn("Could not write to system clipboard:", error);
-  }
-}
-
-/**
- * Read script clipboard data from system clipboard or localStorage.
- * Prioritizes system clipboard for cross-browser support.
- */
-export async function readFromScriptClipboard(): Promise<ScriptClipboardData | null> {
-  // Try system clipboard first
-  try {
-    const text = await readFromSystemClipboard();
-    if (text.startsWith(CLIPBOARD_PREFIX)) {
-      const jsonData = text.slice(CLIPBOARD_PREFIX.length);
-      const parsed = JSON.parse(jsonData) as ScriptClipboardData;
-      if (parsed.nodes && parsed.edges) {
-        return parsed;
-      }
+    const jsonData = text.slice(CLIPBOARD_PREFIX.length);
+    const parsed = JSON.parse(jsonData) as ScriptClipboardData;
+    if (parsed.nodes && parsed.edges) {
+      return parsed;
     }
-  } catch (error) {
-    // Clipboard access denied or invalid data
-    console.warn("Could not read from system clipboard:", error);
+  } catch {
+    // Invalid JSON
+  }
+  return null;
+}
+
+/**
+ * Handle native copy event - write to clipboard without permission prompt.
+ * Call this from a 'copy' event handler.
+ */
+export function handleNativeCopy(
+  event: ClipboardEvent,
+  data: ScriptClipboardData,
+): void {
+  const serialized = serializeClipboardData(data);
+
+  // Write to native clipboard via the event (no permission needed)
+  event.clipboardData?.setData("text/plain", serialized);
+  event.preventDefault();
+
+  // Also save to localStorage as fallback
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+}
+
+/**
+ * Handle native paste event - read from clipboard without permission prompt.
+ * Call this from a 'paste' event handler.
+ */
+export function handleNativePaste(
+  event: ClipboardEvent,
+): ScriptClipboardData | null {
+  const text = event.clipboardData?.getData("text/plain") ?? "";
+
+  // Try to parse from clipboard
+  const fromClipboard = parseClipboardText(text);
+  if (fromClipboard) {
+    event.preventDefault();
+    return fromClipboard;
   }
 
   // Fallback to localStorage
@@ -75,6 +76,7 @@ export async function readFromScriptClipboard(): Promise<ScriptClipboardData | n
     try {
       const parsed = JSON.parse(stored) as ScriptClipboardData;
       if (parsed.nodes && parsed.edges) {
+        event.preventDefault();
         return parsed;
       }
     } catch {
@@ -86,9 +88,82 @@ export async function readFromScriptClipboard(): Promise<ScriptClipboardData | n
 }
 
 /**
- * Check if there's valid script data in the clipboard.
+ * Copy to clipboard using Tauri native API (for non-event contexts).
+ * Only use this for Tauri, as browser requires user gesture.
  */
-export async function hasScriptClipboardData(): Promise<boolean> {
-  const data = await readFromScriptClipboard();
-  return data !== null && data.nodes.length > 0;
+export async function copyToClipboardTauri(
+  data: ScriptClipboardData,
+): Promise<void> {
+  if (!isTauri()) {
+    // For browser, just save to localStorage - actual clipboard write
+    // should happen via handleNativeCopy in a copy event
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+    return;
+  }
+
+  const serialized = serializeClipboardData(data);
+  await clipboard.writeText(serialized);
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+}
+
+/**
+ * Read from clipboard using Tauri native API (for non-event contexts).
+ * Only use this for Tauri, as browser requires user gesture.
+ */
+export async function readFromClipboardTauri(): Promise<ScriptClipboardData | null> {
+  if (!isTauri()) {
+    // For browser, read from localStorage - actual clipboard read
+    // should happen via handleNativePaste in a paste event
+    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored) as ScriptClipboardData;
+        if (parsed.nodes && parsed.edges) {
+          return parsed;
+        }
+      } catch {
+        // Invalid data
+      }
+    }
+    return null;
+  }
+
+  try {
+    const text = await clipboard.readText();
+    const fromClipboard = parseClipboardText(text);
+    if (fromClipboard) return fromClipboard;
+  } catch {
+    // Clipboard read failed
+  }
+
+  // Fallback to localStorage
+  const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored) as ScriptClipboardData;
+      if (parsed.nodes && parsed.edges) {
+        return parsed;
+      }
+    } catch {
+      // Invalid data
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Check if there's valid script data available (localStorage check only).
+ */
+export function hasScriptClipboardData(): boolean {
+  const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored) as ScriptClipboardData;
+      return parsed?.nodes?.length > 0;
+    } catch {
+      return false;
+    }
+  }
+  return false;
 }

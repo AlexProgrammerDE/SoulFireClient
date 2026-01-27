@@ -16,11 +16,7 @@ import {
   isTypeCompatible,
   type PortType,
 } from "@/components/script-editor/nodes/types";
-import {
-  copyToScriptClipboard,
-  hasScriptClipboardData,
-  readFromScriptClipboard,
-} from "@/lib/script-clipboard";
+import { hasScriptClipboardData } from "@/lib/script-clipboard";
 
 export type { PortType };
 
@@ -132,9 +128,16 @@ export interface ScriptEditorState {
   selectShortestPath: (fromNodeId: string, toNodeId: string) => void;
 
   // Clipboard actions
-  copySelected: () => Promise<void>;
-  pasteFromClipboard: (position: XYPosition) => Promise<void>;
-  canPaste: () => Promise<boolean>;
+  getSelectedForClipboard: () => {
+    nodes: Node[];
+    edges: Edge[];
+    sourceScriptId: string | null;
+  } | null;
+  pasteClipboardData: (
+    data: { nodes: Node[]; edges: Edge[] },
+    position: XYPosition,
+  ) => void;
+  canPaste: () => boolean;
 
   // Alignment actions
   alignNodes: (
@@ -1299,7 +1302,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   },
 
   // Clipboard actions
-  copySelected: async () => {
+  getSelectedForClipboard: () => {
     const { nodes, edges, scriptId, groupEditStack } = get();
     const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
 
@@ -1310,7 +1313,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       return nodeGroupId === currentGroupId;
     });
 
-    if (selectedNodes.length === 0) return;
+    if (selectedNodes.length === 0) return null;
 
     const selectedIds = new Set(selectedNodes.map((n) => n.id));
 
@@ -1319,45 +1322,36 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       (e) => selectedIds.has(e.source) && selectedIds.has(e.target),
     );
 
-    const clipboardData = {
+    return {
       nodes: selectedNodes,
       edges: selectedEdges,
       sourceScriptId: scriptId,
     };
-
-    // Save to store for immediate access
-    set({ clipboard: clipboardData });
-
-    // Save to system clipboard (and localStorage as fallback)
-    await copyToScriptClipboard(clipboardData);
   },
 
-  pasteFromClipboard: async (position) => {
+  pasteClipboardData: (clipboardData, position) => {
     const { nodes, edges, groupEditStack } = get();
 
-    // Read from system clipboard (falls back to localStorage)
-    const clipboard = await readFromScriptClipboard();
-
-    if (!clipboard || clipboard.nodes.length === 0) return;
+    if (!clipboardData || clipboardData.nodes.length === 0) return;
 
     const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
 
     // Calculate centroid of copied nodes
     const centerX =
-      clipboard.nodes.reduce((sum, n) => sum + n.position.x, 0) /
-      clipboard.nodes.length;
+      clipboardData.nodes.reduce((sum, n) => sum + n.position.x, 0) /
+      clipboardData.nodes.length;
     const centerY =
-      clipboard.nodes.reduce((sum, n) => sum + n.position.y, 0) /
-      clipboard.nodes.length;
+      clipboardData.nodes.reduce((sum, n) => sum + n.position.y, 0) /
+      clipboardData.nodes.length;
 
     // Create ID mapping
     const idMap = new Map<string, string>();
-    for (const node of clipboard.nodes) {
+    for (const node of clipboardData.nodes) {
       idMap.set(node.id, generateId());
     }
 
     // Create new nodes at target position
-    const newNodes: Node[] = clipboard.nodes.map((node) => ({
+    const newNodes: Node[] = clipboardData.nodes.map((node) => ({
       ...node,
       id: idMap.get(node.id) ?? generateId(),
       position: {
@@ -1372,7 +1366,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     }));
 
     // Create new edges with remapped IDs
-    const newEdges: Edge[] = clipboard.edges.map((edge) => ({
+    const newEdges: Edge[] = clipboardData.edges.map((edge) => ({
       ...edge,
       id: generateId(),
       source: idMap.get(edge.source) ?? edge.source,
@@ -1389,7 +1383,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     });
   },
 
-  canPaste: async () => {
+  canPaste: () => {
     return hasScriptClipboardData();
   },
 
