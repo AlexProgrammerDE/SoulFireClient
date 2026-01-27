@@ -3,7 +3,9 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
+import { useScriptEditorStore } from "@/stores/script-editor-store";
 import { useNodeEditing } from "../NodeEditingContext";
+import { NodePreview } from "../NodePreview";
 import { InlineEditor } from "./InlineEditor";
 import {
   getPortColor,
@@ -18,6 +20,8 @@ export interface BaseNodeData {
   muted?: boolean;
   /** Whether this node is collapsed (showing only header) */
   collapsed?: boolean;
+  /** Hidden socket IDs or special flag for hiding unconnected */
+  hiddenSockets?: string[];
   [key: string]: unknown;
 }
 
@@ -162,6 +166,14 @@ function BaseNodeComponent({
   const { t } = useTranslation("instance");
   const { inputs, outputs, type, label, color, supportsMuting } = definition;
 
+  // Preview state from store
+  const previewEnabled = useScriptEditorStore((s) =>
+    s.previewEnabledNodes.has(id),
+  );
+  const previewValues = useScriptEditorStore(
+    (s) => s.previewValues.get(id) ?? {},
+  );
+
   // Get translated label, fall back to definition label
   const translationKey = `scripts.editor.nodes.${type}.label`;
   const translatedLabel = t(translationKey);
@@ -171,6 +183,8 @@ function BaseNodeComponent({
   const isActive = data.isActive ?? false;
   const isMuted = data.muted ?? false;
   const isCollapsed = data.collapsed ?? false;
+  const hiddenSockets = data.hiddenSockets ?? [];
+  const hideUnconnected = hiddenSockets.includes("__hide_unconnected__");
 
   // Compute which input ports are connected
   const connectedInputs = useMemo(() => {
@@ -194,6 +208,32 @@ function BaseNodeComponent({
     return connected;
   }, [edges, id]);
 
+  // Filter inputs based on socket visibility
+  const visibleInputs = useMemo(() => {
+    return inputs.filter((input) => {
+      // Always show connected sockets
+      if (connectedInputs.has(input.id)) return true;
+      // Hide if explicitly hidden
+      if (hiddenSockets.includes(input.id)) return false;
+      // Hide unconnected if flag is set
+      if (hideUnconnected) return false;
+      return true;
+    });
+  }, [inputs, connectedInputs, hiddenSockets, hideUnconnected]);
+
+  // Filter outputs based on socket visibility
+  const visibleOutputs = useMemo(() => {
+    return outputs.filter((output) => {
+      // Always show connected sockets
+      if (connectedOutputs.has(output.id)) return true;
+      // Hide if explicitly hidden
+      if (hiddenSockets.includes(output.id)) return false;
+      // Hide unconnected if flag is set
+      if (hideUnconnected) return false;
+      return true;
+    });
+  }, [outputs, connectedOutputs, hiddenSockets, hideUnconnected]);
+
   // Helper to get translated port label
   const getPortLabel = (port: PortDefinition): string => {
     // Try specific port translation
@@ -214,11 +254,11 @@ function BaseNodeComponent({
     [onDataChange],
   );
 
-  // Pair up inputs and outputs for aligned rows
-  const maxPorts = Math.max(inputs.length, outputs.length);
+  // Pair up visible inputs and outputs for aligned rows
+  const maxPorts = Math.max(visibleInputs.length, visibleOutputs.length);
   const rows = Array.from({ length: maxPorts }, (_, i) => ({
-    input: inputs[i],
-    output: outputs[i],
+    input: visibleInputs[i],
+    output: visibleOutputs[i],
   }));
 
   // Use node color from server, or fall back to default gray
@@ -267,7 +307,7 @@ function BaseNodeComponent({
       {isCollapsed ? (
         // When collapsed, render handles positioned at edges
         <div className="relative h-4">
-          {inputs.map((input) => (
+          {visibleInputs.map((input) => (
             <PortRow
               key={input.id}
               port={input}
@@ -278,7 +318,7 @@ function BaseNodeComponent({
               isConnected={connectedInputs.has(input.id)}
             />
           ))}
-          {outputs.map((output) => (
+          {visibleOutputs.map((output) => (
             <PortRow
               key={output.id}
               port={output}
@@ -331,6 +371,11 @@ function BaseNodeComponent({
             ))}
           </div>
         )
+      )}
+
+      {/* Node Preview - shows output values during execution */}
+      {!isCollapsed && (
+        <NodePreview values={previewValues} enabled={previewEnabled} />
       )}
 
       {/* Muted pass-through indicator */}

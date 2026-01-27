@@ -1,0 +1,85 @@
+import { memo } from "react";
+
+interface NodePreviewProps {
+  /** The preview values to display (output port ID -> value) */
+  values: Record<string, unknown>;
+  /** Whether the preview is enabled */
+  enabled: boolean;
+}
+
+/**
+ * NodePreview - Blender-style inline output preview
+ * Shows computed output values directly on the node during execution.
+ */
+function NodePreviewComponent({ values, enabled }: NodePreviewProps) {
+  if (!enabled || Object.keys(values).length === 0) return null;
+
+  return (
+    <div className="border-t border-border/50 px-2 py-1 bg-muted/30">
+      <div className="text-xs text-muted-foreground mb-1">Preview</div>
+      <div className="space-y-0.5">
+        {Object.entries(values).map(([key, value]) => (
+          <div key={key} className="flex items-center gap-2 text-xs">
+            <span className="text-muted-foreground">
+              {formatPortName(key)}:
+            </span>
+            <span className="font-mono truncate max-w-[120px]">
+              {formatValue(value)}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Format a port ID into a readable name
+ */
+function formatPortName(portId: string): string {
+  // Port IDs have format "type-name", extract the name part
+  const parts = portId.split("-");
+  const name = parts.length > 1 ? parts.slice(1).join("-") : portId;
+  // Convert to title case
+  return name
+    .split(/[-_]/)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+/**
+ * Format a value for display in the preview
+ */
+function formatValue(value: unknown): string {
+  if (value === null) return "null";
+  if (value === undefined) return "undefined";
+
+  if (typeof value === "number") {
+    // Format numbers nicely
+    if (Number.isInteger(value)) return value.toString();
+    return value.toFixed(3);
+  }
+
+  if (typeof value === "boolean") {
+    return value ? "true" : "false";
+  }
+
+  if (typeof value === "string") {
+    if (value.length > 20) {
+      return `"${value.slice(0, 17)}..."`;
+    }
+    return `"${value}"`;
+  }
+
+  if (Array.isArray(value)) {
+    return `[${value.length} items]`;
+  }
+
+  if (typeof value === "object") {
+    return "{...}";
+  }
+
+  return String(value);
+}
+
+export const NodePreview = memo(NodePreviewComponent);

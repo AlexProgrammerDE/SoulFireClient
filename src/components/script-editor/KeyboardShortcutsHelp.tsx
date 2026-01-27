@@ -9,11 +9,17 @@ import {
 
 const SHORTCUTS = [
   { keys: "Shift + A", action: "Quick add menu" },
+  { keys: "Tab", action: "Enter/Exit group" },
   { keys: "M", action: "Toggle mute node" },
   { keys: "H", action: "Toggle collapse node" },
+  { keys: "Ctrl + H", action: "Hide unconnected sockets" },
+  { keys: "Shift + H", action: "Toggle node preview" },
+  { keys: "Ctrl + G", action: "Create group from selection" },
+  { keys: "Ctrl + Shift + G", action: "Ungroup selected" },
   { keys: "Ctrl + J", action: "Create frame from selection" },
   { keys: "Ctrl + D", action: "Duplicate selection" },
   { keys: "Ctrl + Drag", action: "Cut links" },
+  { keys: "Shift + Right Click", action: "Quick reroute on edge" },
   { keys: "Right Click", action: "Quick add menu at cursor" },
   { keys: "Delete / Backspace", action: "Delete selection" },
 ];

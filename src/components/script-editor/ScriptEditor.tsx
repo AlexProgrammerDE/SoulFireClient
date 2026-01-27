@@ -11,9 +11,45 @@ import { useTheme } from "next-themes";
 import { useCallback, useRef, useState } from "react";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 import { edgeTypes, isValidConnection } from "./edges";
+import { GroupBreadcrumb } from "./GroupBreadcrumb";
 import { NodeEditingProvider } from "./NodeEditingContext";
 import { useNodeTypes } from "./NodeTypesContext";
 import { QuickAddMenu } from "./QuickAddMenu";
+
+// Calculate distance from point to line segment (pure function, no dependencies)
+function pointToLineDistance(
+  point: { x: number; y: number },
+  lineStart: { x: number; y: number },
+  lineEnd: { x: number; y: number },
+): number {
+  const A = point.x - lineStart.x;
+  const B = point.y - lineStart.y;
+  const C = lineEnd.x - lineStart.x;
+  const D = lineEnd.y - lineStart.y;
+
+  const dot = A * C + B * D;
+  const lenSq = C * C + D * D;
+  let param = -1;
+  if (lenSq !== 0) param = dot / lenSq;
+
+  let xx: number;
+  let yy: number;
+
+  if (param < 0) {
+    xx = lineStart.x;
+    yy = lineStart.y;
+  } else if (param > 1) {
+    xx = lineEnd.x;
+    yy = lineEnd.y;
+  } else {
+    xx = lineStart.x + param * C;
+    yy = lineStart.y + param * D;
+  }
+
+  const dx = point.x - xx;
+  const dy = point.y - yy;
+  return Math.sqrt(dx * dx + dy * dy);
+}
 
 export function ScriptEditor() {
   const { resolvedTheme } = useTheme();
@@ -36,6 +72,10 @@ export function ScriptEditor() {
   // Blender-style actions
   const toggleMute = useScriptEditorStore((state) => state.toggleMute);
   const toggleCollapse = useScriptEditorStore((state) => state.toggleCollapse);
+  const toggleSocketVisibility = useScriptEditorStore(
+    (state) => state.toggleSocketVisibility,
+  );
+  const togglePreview = useScriptEditorStore((state) => state.togglePreview);
   const createFrame = useScriptEditorStore((state) => state.createFrame);
   const duplicateSelected = useScriptEditorStore(
     (state) => state.duplicateSelected,
@@ -44,6 +84,26 @@ export function ScriptEditor() {
     (state) => state.openQuickAddMenu,
   );
   const selectedNodeId = useScriptEditorStore((state) => state.selectedNodeId);
+
+  // Group actions
+  const groupEditStack = useScriptEditorStore((state) => state.groupEditStack);
+  const enterGroup = useScriptEditorStore((state) => state.enterGroup);
+  const exitGroup = useScriptEditorStore((state) => state.exitGroup);
+  const createGroupFromSelection = useScriptEditorStore(
+    (state) => state.createGroupFromSelection,
+  );
+  const ungroupSelected = useScriptEditorStore(
+    (state) => state.ungroupSelected,
+  );
+  const getVisibleNodes = useScriptEditorStore(
+    (state) => state.getVisibleNodes,
+  );
+  const getVisibleEdges = useScriptEditorStore(
+    (state) => state.getVisibleEdges,
+  );
+
+  // Reroute action
+  const insertReroute = useScriptEditorStore((state) => state.insertReroute);
 
   // Link cutting
   const linkCutting = useScriptEditorStore((state) => state.linkCutting);
@@ -88,6 +148,22 @@ export function ScriptEditor() {
         return;
       }
 
+      // Tab - Enter/Exit group
+      if (event.key === "Tab") {
+        event.preventDefault();
+        if (groupEditStack.length > 0) {
+          // If inside a group, exit
+          exitGroup();
+        } else if (selectedNodeId) {
+          // If a group node is selected, enter it
+          const selectedNode = nodes.find((n) => n.id === selectedNodeId);
+          if (selectedNode?.type === "layout.group") {
+            enterGroup(selectedNodeId);
+          }
+        }
+        return;
+      }
+
       // Shift+A - Quick add menu
       if (
         event.key === "A" &&
@@ -114,18 +190,79 @@ export function ScriptEditor() {
       }
 
       // M - Toggle mute on selected node
-      if (event.key === "m" || event.key === "M") {
+      if (
+        event.key === "m" &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.shiftKey
+      ) {
         if (selectedNodeId) {
           toggleMute(selectedNodeId);
         }
         return;
       }
 
-      // H - Toggle collapse on selected node
-      if (event.key === "h" || event.key === "H") {
+      // H - Toggle collapse on selected node (without modifiers)
+      if (
+        event.key === "h" &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.shiftKey
+      ) {
         if (selectedNodeId) {
           toggleCollapse(selectedNodeId);
         }
+        return;
+      }
+
+      // Ctrl+H - Toggle socket visibility (hide unconnected)
+      if (
+        event.key === "h" &&
+        (event.ctrlKey || event.metaKey) &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+        if (selectedNodeId) {
+          toggleSocketVisibility(selectedNodeId);
+        }
+        return;
+      }
+
+      // Shift+H - Toggle preview on selected node
+      if (
+        (event.key === "H" || event.key === "h") &&
+        event.shiftKey &&
+        !event.ctrlKey &&
+        !event.metaKey
+      ) {
+        event.preventDefault();
+        if (selectedNodeId) {
+          togglePreview(selectedNodeId);
+        }
+        return;
+      }
+
+      // Ctrl+G - Create group from selected nodes
+      if (
+        event.key === "g" &&
+        (event.ctrlKey || event.metaKey) &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+        if (selectedNodes.length > 0) {
+          createGroupFromSelection();
+        }
+        return;
+      }
+
+      // Ctrl+Shift+G - Ungroup selected group node
+      if (
+        event.key === "G" &&
+        (event.ctrlKey || event.metaKey) &&
+        event.shiftKey
+      ) {
+        event.preventDefault();
+        ungroupSelected();
         return;
       }
 
@@ -159,24 +296,79 @@ export function ScriptEditor() {
       selectedNodeId,
       toggleMute,
       toggleCollapse,
+      toggleSocketVisibility,
+      togglePreview,
       createFrame,
+      createGroupFromSelection,
+      ungroupSelected,
       duplicateSelected,
+      groupEditStack,
+      enterGroup,
+      exitGroup,
     ],
   );
 
-  // Handle right-click on canvas for quick add
+  // Handle right-click on canvas for quick add or quick reroute
   const handleContextMenu = useCallback(
     (event: React.MouseEvent) => {
       event.preventDefault();
-      if (reactFlowInstance) {
-        const flowPosition = reactFlowInstance.screenToFlowPosition({
-          x: event.clientX,
-          y: event.clientY,
-        });
-        openQuickAddMenu(flowPosition, { x: event.clientX, y: event.clientY });
+      if (!reactFlowInstance) return;
+
+      const flowPosition = reactFlowInstance.screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
+
+      // Shift+RMB on an edge = quick reroute
+      if (event.shiftKey) {
+        // Find the nearest edge to the click position
+        // This is a simplified approach - ideally we'd use edge hit detection
+        const visibleEdges = getVisibleEdges();
+        const visibleNodes = getVisibleNodes();
+        const nodePositions = new Map(
+          visibleNodes.map((n) => [n.id, n.position]),
+        );
+
+        // Find edge closest to click position
+        let nearestEdge: { id: string; distance: number } | null = null;
+        for (const edge of visibleEdges) {
+          const sourcePos = nodePositions.get(edge.source);
+          const targetPos = nodePositions.get(edge.target);
+          if (!sourcePos || !targetPos) continue;
+
+          // Simple distance check to edge line segment
+          const edgeStart = { x: sourcePos.x + 80, y: sourcePos.y + 40 };
+          const edgeEnd = { x: targetPos.x, y: targetPos.y + 40 };
+          const distance = pointToLineDistance(
+            flowPosition,
+            edgeStart,
+            edgeEnd,
+          );
+
+          if (
+            distance < 30 &&
+            (!nearestEdge || distance < nearestEdge.distance)
+          ) {
+            nearestEdge = { id: edge.id, distance };
+          }
+        }
+
+        if (nearestEdge) {
+          insertReroute(nearestEdge.id, flowPosition);
+          return;
+        }
       }
+
+      // Regular RMB = quick add menu
+      openQuickAddMenu(flowPosition, { x: event.clientX, y: event.clientY });
     },
-    [reactFlowInstance, openQuickAddMenu],
+    [
+      reactFlowInstance,
+      openQuickAddMenu,
+      getVisibleEdges,
+      getVisibleNodes,
+      insertReroute,
+    ],
   );
 
   // Handle mouse down for link cutting (Ctrl+drag)
@@ -215,6 +407,10 @@ export function ScriptEditor() {
     }
   }, [linkCutting.active, endLinkCutting]);
 
+  // Get visible nodes and edges based on current group context
+  const visibleNodes = groupEditStack.length > 0 ? getVisibleNodes() : nodes;
+  const visibleEdges = groupEditStack.length > 0 ? getVisibleEdges() : edges;
+
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: ReactFlow canvas wrapper requires keyboard handling for operations
     <div
@@ -226,10 +422,10 @@ export function ScriptEditor() {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
-      <NodeEditingProvider edges={edges} updateNodeData={updateNodeData}>
+      <NodeEditingProvider edges={visibleEdges} updateNodeData={updateNodeData}>
         <ReactFlow
-          nodes={nodes}
-          edges={edges}
+          nodes={visibleNodes}
+          edges={visibleEdges}
           nodeTypes={nodeTypes}
           edgeTypes={edgeTypes}
           onNodesChange={onNodesChange}
@@ -255,6 +451,10 @@ export function ScriptEditor() {
           <MiniMap zoomable pannable />
         </ReactFlow>
       </NodeEditingProvider>
+
+      {/* Group breadcrumb navigation */}
+      <GroupBreadcrumb />
+
       <QuickAddMenu />
 
       {/* Link cutting visual indicator */}

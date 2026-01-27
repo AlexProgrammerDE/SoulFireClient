@@ -58,6 +58,13 @@ export interface ScriptEditorState {
     };
   } | null;
 
+  // Group editing state
+  groupEditStack: string[]; // Stack of group node IDs we're editing inside
+
+  // Node preview state
+  previewEnabledNodes: Set<string>; // Node IDs with preview enabled
+  previewValues: Map<string, Record<string, unknown>>; // Node ID -> output values
+
   // Actions
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
@@ -66,7 +73,7 @@ export interface ScriptEditorState {
     type: string,
     position: XYPosition,
     data?: Record<string, unknown>,
-  ) => void;
+  ) => string;
   updateNodeData: (nodeId: string, data: Record<string, unknown>) => void;
   deleteSelected: () => void;
   setSelectedNode: (nodeId: string | null) => void;
@@ -74,10 +81,29 @@ export interface ScriptEditorState {
   // Blender-style node actions
   toggleMute: (nodeId: string) => void;
   toggleCollapse: (nodeId: string) => void;
+  toggleSocketVisibility: (nodeId: string) => void;
+  togglePreview: (nodeId: string) => void;
+  updatePreviewValue: (
+    nodeId: string,
+    outputs: Record<string, unknown>,
+  ) => void;
   createFrame: (nodeIds: string[], label?: string) => void;
   removeFromFrame: (nodeId: string) => void;
   insertReroute: (edgeId: string, position: XYPosition) => void;
   duplicateSelected: () => void;
+
+  // Group actions
+  enterGroup: (groupNodeId: string) => void;
+  exitGroup: () => void;
+  exitToRoot: () => void;
+  createGroupFromSelection: () => void;
+  ungroupSelected: () => void;
+  getCurrentGroupId: () => string | null;
+  getVisibleNodes: () => Node[];
+  getVisibleEdges: () => Edge[];
+
+  // Auto-insert on edge
+  insertNodeOnEdge: (nodeId: string, edgeId: string) => void;
 
   // Quick add menu actions
   openQuickAddMenu: (
@@ -140,6 +166,26 @@ export interface ScriptEditorState {
 // Generate unique IDs
 const generateId = () => crypto.randomUUID();
 
+// Helper to get port type from handle ID
+const getPortType = (handleId: string | null | undefined): string => {
+  if (!handleId) return "any";
+  const parts = handleId.split("-");
+  return parts[0] || "any";
+};
+
+// Helper to check type compatibility
+const isTypeCompatible = (sourceType: string, targetType: string): boolean => {
+  if (sourceType === "any" || targetType === "any") return true;
+  if (sourceType === targetType) return true;
+  // Allow some implicit conversions
+  const conversions: Record<string, string[]> = {
+    number: ["string", "boolean"],
+    boolean: ["string", "number"],
+    string: ["number", "boolean"],
+  };
+  return conversions[sourceType]?.includes(targetType) ?? false;
+};
+
 export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   // Initial state
   nodes: [],
@@ -154,6 +200,9 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   executionLogs: [],
   selectedNodeId: null,
   quickAddMenu: null,
+  groupEditStack: [],
+  previewEnabledNodes: new Set<string>(),
+  previewValues: new Map<string, Record<string, unknown>>(),
   linkCutting: {
     active: false,
     startPoint: null,
@@ -218,16 +267,21 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   },
 
   addNode: (type, position, data = {}) => {
+    const currentGroupId = get().getCurrentGroupId();
     const newNode: Node = {
       id: generateId(),
       type,
       position,
-      data: { ...data },
+      data: {
+        ...data,
+        ...(currentGroupId && { parentGroupId: currentGroupId }),
+      },
     };
     set({
       nodes: [...get().nodes, newNode],
       isDirty: true,
     });
+    return newNode.id;
   },
 
   updateNodeData: (nodeId, data) => {
@@ -242,9 +296,26 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   },
 
   deleteSelected: () => {
+    const { nodes, edges, groupEditStack } = get();
+    const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
+
+    // Only delete nodes in the current view
+    const nodesToDelete = nodes.filter((n) => {
+      if (!n.selected) return false;
+      const nodeGroupId = (n.data.parentGroupId as string) ?? null;
+      return nodeGroupId === currentGroupId;
+    });
+
+    const nodeIdsToDelete = new Set(nodesToDelete.map((n) => n.id));
+
     set({
-      nodes: get().nodes.filter((node) => !node.selected),
-      edges: get().edges.filter((edge) => !edge.selected),
+      nodes: nodes.filter((node) => !nodeIdsToDelete.has(node.id)),
+      edges: edges.filter(
+        (edge) =>
+          !edge.selected &&
+          !nodeIdsToDelete.has(edge.source) &&
+          !nodeIdsToDelete.has(edge.target),
+      ),
       isDirty: true,
     });
   },
@@ -274,6 +345,58 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     });
   },
 
+  toggleSocketVisibility: (nodeId) => {
+    const { nodes, edges } = get();
+    const node = nodes.find((n) => n.id === nodeId);
+    if (!node) return;
+
+    // Get connected socket handles for this node
+    const connectedHandles = new Set<string>();
+    for (const edge of edges) {
+      if (edge.source === nodeId && edge.sourceHandle) {
+        connectedHandles.add(edge.sourceHandle);
+      }
+      if (edge.target === nodeId && edge.targetHandle) {
+        connectedHandles.add(edge.targetHandle);
+      }
+    }
+
+    // Current hidden sockets
+    const currentHidden = (node.data.hiddenSockets as string[]) || [];
+
+    // Toggle: if any hidden, show all; otherwise we'll hide unconnected
+    // Note: We can't know all sockets here without the definition,
+    // so we just toggle the hiddenSockets flag
+    const newHidden = currentHidden.length > 0 ? [] : ["__hide_unconnected__"];
+
+    set({
+      nodes: nodes.map((n) =>
+        n.id === nodeId
+          ? { ...n, data: { ...n.data, hiddenSockets: newHidden } }
+          : n,
+      ),
+      isDirty: true,
+    });
+  },
+
+  togglePreview: (nodeId) => {
+    const current = get().previewEnabledNodes;
+    const next = new Set(current);
+    if (next.has(nodeId)) {
+      next.delete(nodeId);
+    } else {
+      next.add(nodeId);
+    }
+    set({ previewEnabledNodes: next });
+  },
+
+  updatePreviewValue: (nodeId, outputs) => {
+    const current = get().previewValues;
+    const next = new Map(current);
+    next.set(nodeId, outputs);
+    set({ previewValues: next });
+  },
+
   createFrame: (nodeIds, label = "Frame") => {
     if (nodeIds.length === 0) return;
 
@@ -295,6 +418,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       ) + padding;
 
     const frameId = generateId();
+    const currentGroupId = get().getCurrentGroupId();
     const frameNode: Node = {
       id: frameId,
       type: "layout.frame",
@@ -302,6 +426,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       data: {
         label,
         containedNodes: nodeIds,
+        ...(currentGroupId && { parentGroupId: currentGroupId }),
       },
       style: {
         width: maxX - minX,
@@ -360,11 +485,14 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     if (!edge) return;
 
     const rerouteId = generateId();
+    const currentGroupId = get().getCurrentGroupId();
     const rerouteNode: Node = {
       id: rerouteId,
       type: "layout.reroute",
       position,
-      data: {},
+      data: {
+        ...(currentGroupId && { parentGroupId: currentGroupId }),
+      },
     };
 
     // Get the edge type from the source handle
@@ -392,15 +520,29 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     };
 
     set({
-      nodes: [...nodes, { ...rerouteNode, data: { resolvedType: sourceType } }],
+      nodes: [
+        ...nodes,
+        {
+          ...rerouteNode,
+          data: { ...rerouteNode.data, resolvedType: sourceType },
+        },
+      ],
       edges: [...edges.filter((e) => e.id !== edgeId), newEdge1, newEdge2],
       isDirty: true,
     });
   },
 
   duplicateSelected: () => {
-    const { nodes, edges } = get();
-    const selectedNodes = nodes.filter((n) => n.selected);
+    const { nodes, edges, groupEditStack } = get();
+    const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
+
+    // Only duplicate nodes in the current view
+    const selectedNodes = nodes.filter((n) => {
+      if (!n.selected) return false;
+      const nodeGroupId = (n.data.parentGroupId as string) ?? null;
+      return nodeGroupId === currentGroupId;
+    });
+
     if (selectedNodes.length === 0) return;
 
     // Create mapping from old IDs to new IDs
@@ -437,6 +579,481 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     set({
       nodes: [...updatedNodes, ...newNodes],
       edges: [...edges, ...newEdges],
+      isDirty: true,
+    });
+  },
+
+  // Group actions
+  enterGroup: (groupNodeId) => {
+    const node = get().nodes.find((n) => n.id === groupNodeId);
+    if (!node || node.type !== "layout.group") return;
+
+    set({
+      groupEditStack: [...get().groupEditStack, groupNodeId],
+      selectedNodeId: null,
+    });
+  },
+
+  exitGroup: () => {
+    const stack = get().groupEditStack;
+    if (stack.length === 0) return;
+
+    set({
+      groupEditStack: stack.slice(0, -1),
+      selectedNodeId: null,
+    });
+  },
+
+  exitToRoot: () => {
+    set({
+      groupEditStack: [],
+      selectedNodeId: null,
+    });
+  },
+
+  getCurrentGroupId: () => {
+    const stack = get().groupEditStack;
+    return stack.length > 0 ? stack[stack.length - 1] : null;
+  },
+
+  getVisibleNodes: () => {
+    const { nodes, groupEditStack } = get();
+    const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
+
+    return nodes.filter((n) => {
+      const nodeGroupId = (n.data.parentGroupId as string) ?? null;
+      return nodeGroupId === currentGroupId;
+    });
+  },
+
+  getVisibleEdges: () => {
+    const { edges } = get();
+    const visibleNodeIds = new Set(
+      get()
+        .getVisibleNodes()
+        .map((n) => n.id),
+    );
+
+    return edges.filter(
+      (e) => visibleNodeIds.has(e.source) && visibleNodeIds.has(e.target),
+    );
+  },
+
+  createGroupFromSelection: () => {
+    const { nodes, edges, groupEditStack } = get();
+    const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
+
+    // Get selected nodes in current view
+    const selectedNodes = nodes.filter((n) => {
+      if (!n.selected) return false;
+      const nodeGroupId = (n.data.parentGroupId as string) ?? null;
+      return nodeGroupId === currentGroupId;
+    });
+
+    if (selectedNodes.length === 0) return;
+
+    const selectedIds = new Set(selectedNodes.map((n) => n.id));
+
+    // Find edges that cross the selection boundary
+    const incomingEdges = edges.filter(
+      (e) => !selectedIds.has(e.source) && selectedIds.has(e.target),
+    );
+    const outgoingEdges = edges.filter(
+      (e) => selectedIds.has(e.source) && !selectedIds.has(e.target),
+    );
+    // Internal edges (between selected nodes) are automatically preserved
+    // since we only remove incoming/outgoing crossing edges
+
+    // Create group input/output sockets based on crossing edges
+    const groupInputs = incomingEdges.map((e, i) => ({
+      id: `group-in-${i}`,
+      type: getPortType(e.sourceHandle),
+      label: e.targetHandle?.split("-").slice(1).join("-") || `Input ${i + 1}`,
+      originalTarget: e.target,
+      originalTargetHandle: e.targetHandle,
+    }));
+
+    const groupOutputs = outgoingEdges.map((e, i) => ({
+      id: `group-out-${i}`,
+      type: getPortType(e.sourceHandle),
+      label: e.sourceHandle?.split("-").slice(1).join("-") || `Output ${i + 1}`,
+      originalSource: e.source,
+      originalSourceHandle: e.sourceHandle,
+    }));
+
+    // Calculate group position (center of selected nodes)
+    const centerX =
+      selectedNodes.reduce((sum, n) => sum + n.position.x, 0) /
+      selectedNodes.length;
+    const centerY =
+      selectedNodes.reduce((sum, n) => sum + n.position.y, 0) /
+      selectedNodes.length;
+
+    const groupId = generateId();
+
+    // Create group node
+    const groupNode: Node = {
+      id: groupId,
+      type: "layout.group",
+      position: { x: centerX - 80, y: centerY - 40 },
+      data: {
+        label: "Group",
+        inputs: groupInputs.map((i) => ({
+          id: i.id,
+          type: i.type,
+          label: i.label,
+        })),
+        outputs: groupOutputs.map((o) => ({
+          id: o.id,
+          type: o.type,
+          label: o.label,
+        })),
+        ...(currentGroupId && { parentGroupId: currentGroupId }),
+      },
+    };
+
+    // Create GroupInput and GroupOutput nodes inside the group
+    const groupInputNode: Node = {
+      id: generateId(),
+      type: "layout.group_input",
+      position: { x: -200, y: 0 },
+      data: {
+        parentGroupId: groupId,
+        outputs: groupInputs.map((i) => ({
+          id: i.id,
+          type: i.type,
+          label: i.label,
+        })),
+      },
+    };
+
+    const groupOutputNode: Node = {
+      id: generateId(),
+      type: "layout.group_output",
+      position: { x: 200, y: 0 },
+      data: {
+        parentGroupId: groupId,
+        inputs: groupOutputs.map((o) => ({
+          id: o.id,
+          type: o.type,
+          label: o.label,
+        })),
+      },
+    };
+
+    // Update selected nodes to be inside group
+    const updatedNodes = nodes.map((n) => {
+      if (selectedIds.has(n.id)) {
+        // Adjust position relative to group center
+        return {
+          ...n,
+          data: { ...n.data, parentGroupId: groupId },
+          position: {
+            x: n.position.x - centerX,
+            y: n.position.y - centerY,
+          },
+          selected: false,
+        };
+      }
+      return n;
+    });
+
+    // Create new edges:
+    // 1. External edges now connect to group node
+    // 2. Internal edges from GroupInput to original targets
+    // 3. Internal edges from original sources to GroupOutput
+    const newExternalEdges: Edge[] = [];
+    const newInternalEdges: Edge[] = [];
+
+    // Rewire incoming edges to group
+    for (let i = 0; i < incomingEdges.length; i++) {
+      const e = incomingEdges[i];
+      const input = groupInputs[i];
+
+      // External: source -> group
+      newExternalEdges.push({
+        ...e,
+        id: generateId(),
+        target: groupId,
+        targetHandle: input.id,
+      });
+
+      // Internal: GroupInput -> original target
+      newInternalEdges.push({
+        id: generateId(),
+        source: groupInputNode.id,
+        sourceHandle: input.id,
+        target: input.originalTarget,
+        targetHandle: input.originalTargetHandle,
+        type: e.type,
+        data: e.data,
+      });
+    }
+
+    // Rewire outgoing edges from group
+    for (let i = 0; i < outgoingEdges.length; i++) {
+      const e = outgoingEdges[i];
+      const output = groupOutputs[i];
+
+      // External: group -> target
+      newExternalEdges.push({
+        ...e,
+        id: generateId(),
+        source: groupId,
+        sourceHandle: output.id,
+      });
+
+      // Internal: original source -> GroupOutput
+      newInternalEdges.push({
+        id: generateId(),
+        source: output.originalSource,
+        sourceHandle: output.originalSourceHandle,
+        target: groupOutputNode.id,
+        targetHandle: output.id,
+        type: e.type,
+        data: e.data,
+      });
+    }
+
+    // Remove old crossing edges, keep internal edges
+    const edgesToRemove = new Set([
+      ...incomingEdges.map((e) => e.id),
+      ...outgoingEdges.map((e) => e.id),
+    ]);
+
+    set({
+      nodes: [
+        ...updatedNodes.filter(
+          (n) => !selectedIds.has(n.id) || n.data.parentGroupId === groupId,
+        ),
+        ...selectedNodes.map((n) => ({
+          ...n,
+          data: { ...n.data, parentGroupId: groupId },
+          position: {
+            x: n.position.x - centerX,
+            y: n.position.y - centerY,
+          },
+          selected: false,
+        })),
+        groupNode,
+        groupInputNode,
+        groupOutputNode,
+      ],
+      edges: [
+        ...edges.filter((e) => !edgesToRemove.has(e.id)),
+        ...newExternalEdges,
+        ...newInternalEdges,
+      ],
+      isDirty: true,
+    });
+  },
+
+  ungroupSelected: () => {
+    const { nodes, edges, selectedNodeId, groupEditStack } = get();
+    const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
+
+    const groupNode = nodes.find(
+      (n) => n.id === selectedNodeId && n.type === "layout.group",
+    );
+    if (!groupNode) return;
+
+    const groupId = groupNode.id;
+
+    // Find nodes inside this group
+    const innerNodes = nodes.filter((n) => n.data.parentGroupId === groupId);
+
+    // Find GroupInput and GroupOutput nodes
+    const groupInputNode = innerNodes.find(
+      (n) => n.type === "layout.group_input",
+    );
+    const groupOutputNode = innerNodes.find(
+      (n) => n.type === "layout.group_output",
+    );
+
+    // Get position offset to move inner nodes back to parent level
+    const offsetX = groupNode.position.x;
+    const offsetY = groupNode.position.y;
+
+    // Nodes to keep (inner nodes minus GroupInput/GroupOutput, with adjusted positions)
+    const nodesFromGroup = innerNodes
+      .filter(
+        (n) =>
+          n.type !== "layout.group_input" && n.type !== "layout.group_output",
+      )
+      .map((n) => ({
+        ...n,
+        data: {
+          ...n.data,
+          parentGroupId: currentGroupId ?? undefined,
+        },
+        position: {
+          x: n.position.x + offsetX,
+          y: n.position.y + offsetY,
+        },
+      }));
+
+    // Find edges to/from group node and rewire them
+    const edgesToGroup = edges.filter((e) => e.target === groupId);
+    const edgesFromGroup = edges.filter((e) => e.source === groupId);
+
+    // Find internal edges from GroupInput and to GroupOutput
+    const edgesFromGroupInput = edges.filter(
+      (e) => e.source === groupInputNode?.id,
+    );
+    const edgesToGroupOutput = edges.filter(
+      (e) => e.target === groupOutputNode?.id,
+    );
+
+    // Rewire external edges
+    const rewiredEdges: Edge[] = [];
+
+    for (const externalEdge of edgesToGroup) {
+      // Find the internal edge from GroupInput with matching handle
+      const internalEdge = edgesFromGroupInput.find(
+        (e) => e.sourceHandle === externalEdge.targetHandle,
+      );
+      if (internalEdge) {
+        rewiredEdges.push({
+          ...externalEdge,
+          id: generateId(),
+          target: internalEdge.target,
+          targetHandle: internalEdge.targetHandle,
+        });
+      }
+    }
+
+    for (const externalEdge of edgesFromGroup) {
+      // Find the internal edge to GroupOutput with matching handle
+      const internalEdge = edgesToGroupOutput.find(
+        (e) => e.targetHandle === externalEdge.sourceHandle,
+      );
+      if (internalEdge) {
+        rewiredEdges.push({
+          ...externalEdge,
+          id: generateId(),
+          source: internalEdge.source,
+          sourceHandle: internalEdge.sourceHandle,
+        });
+      }
+    }
+
+    // Internal edges between regular nodes (not GroupInput/GroupOutput)
+    const innerEdges = edges.filter(
+      (e) =>
+        e.source !== groupInputNode?.id &&
+        e.target !== groupOutputNode?.id &&
+        innerNodes.some((n) => n.id === e.source) &&
+        innerNodes.some((n) => n.id === e.target),
+    );
+
+    // Remove group node and its special nodes, remove edges to/from them
+    const nodesToRemove = new Set([
+      groupId,
+      groupInputNode?.id,
+      groupOutputNode?.id,
+    ]);
+    const edgesToRemove = new Set([
+      ...edgesToGroup.map((e) => e.id),
+      ...edgesFromGroup.map((e) => e.id),
+      ...edgesFromGroupInput.map((e) => e.id),
+      ...edgesToGroupOutput.map((e) => e.id),
+    ]);
+
+    set({
+      nodes: [
+        ...nodes.filter(
+          (n) => !nodesToRemove.has(n.id) && n.data.parentGroupId !== groupId,
+        ),
+        ...nodesFromGroup,
+      ],
+      edges: [
+        ...edges.filter((e) => !edgesToRemove.has(e.id)),
+        ...rewiredEdges,
+        ...innerEdges,
+      ],
+      selectedNodeId: null,
+      isDirty: true,
+    });
+  },
+
+  // Auto-insert on edge
+  insertNodeOnEdge: (nodeId, edgeId) => {
+    const { nodes, edges } = get();
+    const edge = edges.find((e) => e.id === edgeId);
+    const node = nodes.find((n) => n.id === nodeId);
+    if (!edge || !node) return;
+
+    // We need node definition to find compatible sockets
+    // Since we don't have access to definitions here, we'll use a simple heuristic:
+    // Find first non-execution input and output that might match
+
+    const sourceType = getPortType(edge.sourceHandle);
+    const targetType = getPortType(edge.targetHandle);
+
+    // Look for compatible sockets in node data if available
+    // This is a simplified version - in practice, we'd need the node definition
+    const nodeData = node.data as Record<string, unknown>;
+    const nodeInputs =
+      (nodeData.inputs as Array<{ id: string; type: string }>) || [];
+    const nodeOutputs =
+      (nodeData.outputs as Array<{ id: string; type: string }>) || [];
+
+    // Try to find compatible input socket
+    let inputSocket = nodeInputs.find(
+      (p) => p.type !== "execution" && isTypeCompatible(sourceType, p.type),
+    );
+
+    // Try to find compatible output socket
+    let outputSocket = nodeOutputs.find(
+      (p) => p.type !== "execution" && isTypeCompatible(p.type, targetType),
+    );
+
+    // If no matching sockets found in data, try common patterns
+    if (!inputSocket) {
+      // Common input handle patterns
+      const commonInputs = [
+        `${sourceType}-in`,
+        `${sourceType}-input`,
+        `${sourceType}-value`,
+        "any-in",
+      ];
+      inputSocket = { id: commonInputs[0], type: sourceType };
+    }
+
+    if (!outputSocket) {
+      // Common output handle patterns
+      const commonOutputs = [
+        `${targetType}-out`,
+        `${targetType}-output`,
+        `${targetType}-result`,
+        "any-out",
+      ];
+      outputSocket = { id: commonOutputs[0], type: targetType };
+    }
+
+    // Create new edges
+    const newEdge1: Edge = {
+      id: generateId(),
+      source: edge.source,
+      sourceHandle: edge.sourceHandle,
+      target: nodeId,
+      targetHandle: inputSocket.id,
+      type: edge.type,
+      data: edge.data,
+    };
+
+    const newEdge2: Edge = {
+      id: generateId(),
+      source: nodeId,
+      sourceHandle: outputSocket.id,
+      target: edge.target,
+      targetHandle: edge.targetHandle,
+      type: edge.type,
+      data: edge.data,
+    };
+
+    set({
+      edges: [...edges.filter((e) => e.id !== edgeId), newEdge1, newEdge2],
       isDirty: true,
     });
   },
@@ -584,6 +1201,9 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       edges: data.edges,
       isDirty: false,
       selectedNodeId: null,
+      groupEditStack: [],
+      previewEnabledNodes: new Set<string>(),
+      previewValues: new Map<string, Record<string, unknown>>(),
     }),
 
   resetEditor: () =>
@@ -600,6 +1220,9 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       executionLogs: [],
       selectedNodeId: null,
       quickAddMenu: null,
+      groupEditStack: [],
+      previewEnabledNodes: new Set<string>(),
+      previewValues: new Map<string, Record<string, unknown>>(),
       linkCutting: {
         active: false,
         startPoint: null,
