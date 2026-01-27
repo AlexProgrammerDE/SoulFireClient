@@ -2,7 +2,7 @@ import { Handle, type NodeProps, Position } from "@xyflow/react";
 import { ArrowLeftFromLine } from "lucide-react";
 import { memo } from "react";
 import { cn } from "@/lib/utils";
-import { getPortColor, type PortType } from "./types";
+import { getHandleShape, getPortColor, type PortType } from "./types";
 
 export interface GroupOutputNodeData {
   /** Input sockets that map to the group's external outputs */
@@ -38,26 +38,31 @@ function GroupOutputNodeComponent({ data, selected }: GroupOutputNodeProps) {
       {/* Input ports */}
       {inputs.length > 0 && (
         <div className="px-1 py-1">
-          {inputs.map((input) => (
-            <div key={input.id} className="flex items-center gap-2 py-1 pr-4">
-              <Handle
-                type="target"
-                position={Position.Left}
-                id={input.id}
-                className="!relative !top-0 !transform-none transition-transform hover:scale-125"
-                style={{
-                  background: getPortColor(input.type),
-                  width: input.type === "execution" ? 10 : 8,
-                  height: input.type === "execution" ? 10 : 8,
-                  border: "2px solid var(--background)",
-                  borderRadius: input.type === "execution" ? 2 : "50%",
-                }}
-              />
-              <span className="text-xs text-muted-foreground">
-                {input.label}
-              </span>
-            </div>
-          ))}
+          {inputs.map((input) => {
+            const handleShape = getHandleShape(input.type);
+            const isSquareOrDiamond =
+              handleShape === "square" || handleShape === "diamond";
+            return (
+              <div key={input.id} className="flex items-center gap-2 py-1 pr-4">
+                <Handle
+                  type="target"
+                  position={Position.Left}
+                  id={input.id}
+                  className="!relative !top-0 !transform-none transition-transform hover:scale-125"
+                  style={{
+                    background: getPortColor(input.type),
+                    width: isSquareOrDiamond ? 10 : 8,
+                    height: isSquareOrDiamond ? 10 : 8,
+                    border: "2px solid var(--background)",
+                    borderRadius: isSquareOrDiamond ? 2 : "50%",
+                  }}
+                />
+                <span className="text-xs text-muted-foreground">
+                  {input.label}
+                </span>
+              </div>
+            );
+          })}
         </div>
       )}
 

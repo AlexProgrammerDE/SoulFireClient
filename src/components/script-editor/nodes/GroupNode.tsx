@@ -2,7 +2,7 @@ import { Handle, type NodeProps, Position } from "@xyflow/react";
 import { Layers } from "lucide-react";
 import { memo } from "react";
 import { cn } from "@/lib/utils";
-import { getPortColor, type PortType } from "./types";
+import { getHandleShape, getPortColor, type PortType } from "./types";
 
 export interface GroupNodeData {
   /** The name of the group */
@@ -32,8 +32,15 @@ function PortRow({
   position: Position;
 }) {
   const color = getPortColor(port.type);
-  const isExecution = port.type === "execution";
+  const handleShape = getHandleShape(port.type);
   const isLeft = position === Position.Left;
+
+  // Calculate handle dimensions based on shape (data-driven)
+  const isSquareOrDiamond =
+    handleShape === "square" || handleShape === "diamond";
+  const handleWidth = isSquareOrDiamond ? 10 : 8;
+  const handleHeight = isSquareOrDiamond ? 10 : 8;
+  const handleBorderRadius = isSquareOrDiamond ? 2 : "50%";
 
   return (
     <div
@@ -49,10 +56,10 @@ function PortRow({
         className="!relative !top-0 !transform-none transition-transform hover:scale-125"
         style={{
           background: color,
-          width: isExecution ? 10 : 8,
-          height: isExecution ? 10 : 8,
+          width: handleWidth,
+          height: handleHeight,
           border: "2px solid var(--background)",
-          borderRadius: isExecution ? 2 : "50%",
+          borderRadius: handleBorderRadius,
         }}
       />
       <span className="text-xs text-muted-foreground">{port.label}</span>

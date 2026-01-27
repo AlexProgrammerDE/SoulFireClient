@@ -1211,6 +1211,18 @@ export interface PortTypeMetadata {
    * @generated from protobuf field: repeated soulfire.v1.PortType compatible_from = 4
    */
   compatibleFrom: PortType[];
+  /**
+   * Shape of the handle for this port type in the visual editor.
+   *
+   * @generated from protobuf field: soulfire.v1.HandleShape handle_shape = 5
+   */
+  handleShape: HandleShape;
+  /**
+   * Visual style for edges of this port type.
+   *
+   * @generated from protobuf field: soulfire.v1.EdgeStyle edge_style = 6
+   */
+  edgeStyle: EdgeStyle;
 }
 /**
  * Request to get Minecraft registry data for autocomplete and validation.
@@ -1419,6 +1431,56 @@ export enum LogLevel {
    * @generated from protobuf enum value: LOG_LEVEL_ERROR = 3;
    */
   ERROR = 3,
+}
+/**
+ * Shape of the port handle in the visual editor.
+ *
+ * @generated from protobuf enum soulfire.v1.HandleShape
+ */
+export enum HandleShape {
+  /**
+   * Circular handle, default for data ports.
+   *
+   * @generated from protobuf enum value: HANDLE_SHAPE_CIRCLE = 0;
+   */
+  CIRCLE = 0,
+  /**
+   * Square handle, typically used for execution/flow ports.
+   *
+   * @generated from protobuf enum value: HANDLE_SHAPE_SQUARE = 1;
+   */
+  SQUARE = 1,
+  /**
+   * Diamond-shaped handle, for special port types.
+   *
+   * @generated from protobuf enum value: HANDLE_SHAPE_DIAMOND = 2;
+   */
+  DIAMOND = 2,
+}
+/**
+ * Visual style for edges connected to this port type.
+ *
+ * @generated from protobuf enum soulfire.v1.EdgeStyle
+ */
+export enum EdgeStyle {
+  /**
+   * Default bezier curve style.
+   *
+   * @generated from protobuf enum value: EDGE_STYLE_DEFAULT = 0;
+   */
+  DEFAULT = 0,
+  /**
+   * Animated flow style with moving dashes, typically for execution edges.
+   *
+   * @generated from protobuf enum value: EDGE_STYLE_ANIMATED = 1;
+   */
+  ANIMATED = 1,
+  /**
+   * Dashed line style.
+   *
+   * @generated from protobuf enum value: EDGE_STYLE_DASHED = 2;
+   */
+  DASHED = 2,
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class Position$Type extends MessageType<Position> {
@@ -5242,6 +5304,18 @@ class PortTypeMetadata$Type extends MessageType<PortTypeMetadata> {
         repeat: 1 /*RepeatType.PACKED*/,
         T: () => ["soulfire.v1.PortType", PortType, "PORT_TYPE_"],
       },
+      {
+        no: 5,
+        name: "handle_shape",
+        kind: "enum",
+        T: () => ["soulfire.v1.HandleShape", HandleShape, "HANDLE_SHAPE_"],
+      },
+      {
+        no: 6,
+        name: "edge_style",
+        kind: "enum",
+        T: () => ["soulfire.v1.EdgeStyle", EdgeStyle, "EDGE_STYLE_"],
+      },
     ]);
   }
   create(value?: PartialMessage<PortTypeMetadata>): PortTypeMetadata {
@@ -5250,6 +5324,8 @@ class PortTypeMetadata$Type extends MessageType<PortTypeMetadata> {
     message.color = "";
     message.displayName = "";
     message.compatibleFrom = [];
+    message.handleShape = 0;
+    message.edgeStyle = 0;
     if (value !== undefined)
       reflectionMergePartial<PortTypeMetadata>(this, message, value);
     return message;
@@ -5279,6 +5355,12 @@ class PortTypeMetadata$Type extends MessageType<PortTypeMetadata> {
             for (let e = reader.int32() + reader.pos; reader.pos < e; )
               message.compatibleFrom.push(reader.int32());
           else message.compatibleFrom.push(reader.int32());
+          break;
+        case /* soulfire.v1.HandleShape handle_shape */ 5:
+          message.handleShape = reader.int32();
+          break;
+        case /* soulfire.v1.EdgeStyle edge_style */ 6:
+          message.edgeStyle = reader.int32();
           break;
         default:
           let u = options.readUnknownField;
@@ -5320,6 +5402,12 @@ class PortTypeMetadata$Type extends MessageType<PortTypeMetadata> {
         writer.int32(message.compatibleFrom[i]);
       writer.join();
     }
+    /* soulfire.v1.HandleShape handle_shape = 5; */
+    if (message.handleShape !== 0)
+      writer.tag(5, WireType.Varint).int32(message.handleShape);
+    /* soulfire.v1.EdgeStyle edge_style = 6; */
+    if (message.edgeStyle !== 0)
+      writer.tag(6, WireType.Varint).int32(message.edgeStyle);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(

@@ -1,5 +1,7 @@
 import {
   type CategoryDefinition as ProtoCategoryDefinition,
+  EdgeStyle as ProtoEdgeStyle,
+  HandleShape as ProtoHandleShape,
   type NodeTypeDefinition as ProtoNodeTypeDefinition,
   type PortDefinition as ProtoPortDefinition,
   PortType as ProtoPortType,
@@ -169,6 +171,16 @@ export function protoNodeTypeToLocal(
 }
 
 /**
+ * Handle shape for port handles - data-driven from server.
+ */
+export type HandleShape = "circle" | "square" | "diamond";
+
+/**
+ * Edge style for connections - data-driven from server.
+ */
+export type EdgeStyle = "default" | "animated" | "dashed";
+
+/**
  * Default port type colors - used as fallback when server data is unavailable.
  * These are overridden by server-provided colors via PortTypeMetadata.
  */
@@ -184,6 +196,40 @@ export const DEFAULT_PORT_COLORS: Record<PortType, string> = {
   item: "#ec4899",
   list: "#8b5cf6",
   any: "#6b7280",
+};
+
+/**
+ * Default handle shapes - used as fallback when server data is unavailable.
+ */
+export const DEFAULT_HANDLE_SHAPES: Record<PortType, HandleShape> = {
+  execution: "square",
+  number: "circle",
+  boolean: "circle",
+  string: "circle",
+  vector3: "circle",
+  entity: "circle",
+  bot: "circle",
+  block: "circle",
+  item: "circle",
+  list: "circle",
+  any: "circle",
+};
+
+/**
+ * Default edge styles - used as fallback when server data is unavailable.
+ */
+export const DEFAULT_EDGE_STYLES: Record<PortType, EdgeStyle> = {
+  execution: "animated",
+  number: "default",
+  boolean: "default",
+  string: "default",
+  vector3: "default",
+  entity: "default",
+  bot: "default",
+  block: "default",
+  item: "default",
+  list: "default",
+  any: "default",
 };
 
 /**
@@ -211,6 +257,40 @@ export const DEFAULT_TYPE_COMPATIBILITY: Partial<Record<PortType, PortType[]>> =
 // Runtime store for server-provided port metadata
 let serverPortColors: Record<string, string> = {};
 let serverTypeCompatibility: Record<string, string[]> = {};
+let serverHandleShapes: Record<string, HandleShape> = {};
+let serverEdgeStyles: Record<string, EdgeStyle> = {};
+
+/**
+ * Convert proto HandleShape enum to local string type
+ */
+function protoHandleShapeToLocal(protoShape: ProtoHandleShape): HandleShape {
+  switch (protoShape) {
+    case ProtoHandleShape.CIRCLE:
+      return "circle";
+    case ProtoHandleShape.SQUARE:
+      return "square";
+    case ProtoHandleShape.DIAMOND:
+      return "diamond";
+    default:
+      return "circle";
+  }
+}
+
+/**
+ * Convert proto EdgeStyle enum to local string type
+ */
+function protoEdgeStyleToLocal(protoStyle: ProtoEdgeStyle): EdgeStyle {
+  switch (protoStyle) {
+    case ProtoEdgeStyle.DEFAULT:
+      return "default";
+    case ProtoEdgeStyle.ANIMATED:
+      return "animated";
+    case ProtoEdgeStyle.DASHED:
+      return "dashed";
+    default:
+      return "default";
+  }
+}
 
 /**
  * Initialize port metadata from server response.
@@ -221,10 +301,14 @@ export function initPortMetadata(
     portType: ProtoPortType;
     color: string;
     compatibleFrom: ProtoPortType[];
+    handleShape: ProtoHandleShape;
+    edgeStyle: ProtoEdgeStyle;
   }>,
 ): void {
   serverPortColors = {};
   serverTypeCompatibility = {};
+  serverHandleShapes = {};
+  serverEdgeStyles = {};
 
   for (const meta of metadata) {
     const portType = protoPortTypeToLocal(meta.portType);
@@ -235,6 +319,9 @@ export function initPortMetadata(
       serverTypeCompatibility[portType] =
         meta.compatibleFrom.map(protoPortTypeToLocal);
     }
+    // Always set handle shape and edge style (proto provides defaults)
+    serverHandleShapes[portType] = protoHandleShapeToLocal(meta.handleShape);
+    serverEdgeStyles[portType] = protoEdgeStyleToLocal(meta.edgeStyle);
   }
 }
 
@@ -247,6 +334,30 @@ export function getPortColor(type: PortType): string {
     serverPortColors[type] ??
     DEFAULT_PORT_COLORS[type] ??
     DEFAULT_PORT_COLORS.any
+  );
+}
+
+/**
+ * Get the handle shape for a port type.
+ * Uses server-provided shape if available, falls back to default.
+ */
+export function getHandleShape(type: PortType): HandleShape {
+  return (
+    serverHandleShapes[type] ??
+    DEFAULT_HANDLE_SHAPES[type] ??
+    DEFAULT_HANDLE_SHAPES.any
+  );
+}
+
+/**
+ * Get the edge style for a port type.
+ * Uses server-provided style if available, falls back to default.
+ */
+export function getEdgeStyle(type: PortType): EdgeStyle {
+  return (
+    serverEdgeStyles[type] ??
+    DEFAULT_EDGE_STYLES[type] ??
+    DEFAULT_EDGE_STYLES.any
   );
 }
 

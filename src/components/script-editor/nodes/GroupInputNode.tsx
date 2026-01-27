@@ -2,7 +2,7 @@ import { Handle, type NodeProps, Position } from "@xyflow/react";
 import { ArrowRightFromLine } from "lucide-react";
 import { memo } from "react";
 import { cn } from "@/lib/utils";
-import { getPortColor, type PortType } from "./types";
+import { getHandleShape, getPortColor, type PortType } from "./types";
 
 export interface GroupInputNodeData {
   /** Output sockets that map to the group's external inputs */
@@ -38,29 +38,34 @@ function GroupInputNodeComponent({ data, selected }: GroupInputNodeProps) {
       {/* Output ports */}
       {outputs.length > 0 && (
         <div className="px-1 py-1">
-          {outputs.map((output) => (
-            <div
-              key={output.id}
-              className="flex items-center justify-end gap-2 py-1 pl-4"
-            >
-              <span className="text-xs text-muted-foreground">
-                {output.label}
-              </span>
-              <Handle
-                type="source"
-                position={Position.Right}
-                id={output.id}
-                className="!relative !top-0 !transform-none transition-transform hover:scale-125"
-                style={{
-                  background: getPortColor(output.type),
-                  width: output.type === "execution" ? 10 : 8,
-                  height: output.type === "execution" ? 10 : 8,
-                  border: "2px solid var(--background)",
-                  borderRadius: output.type === "execution" ? 2 : "50%",
-                }}
-              />
-            </div>
-          ))}
+          {outputs.map((output) => {
+            const handleShape = getHandleShape(output.type);
+            const isSquareOrDiamond =
+              handleShape === "square" || handleShape === "diamond";
+            return (
+              <div
+                key={output.id}
+                className="flex items-center justify-end gap-2 py-1 pl-4"
+              >
+                <span className="text-xs text-muted-foreground">
+                  {output.label}
+                </span>
+                <Handle
+                  type="source"
+                  position={Position.Right}
+                  id={output.id}
+                  className="!relative !top-0 !transform-none transition-transform hover:scale-125"
+                  style={{
+                    background: getPortColor(output.type),
+                    width: isSquareOrDiamond ? 10 : 8,
+                    height: isSquareOrDiamond ? 10 : 8,
+                    border: "2px solid var(--background)",
+                    borderRadius: isSquareOrDiamond ? 2 : "50%",
+                  }}
+                />
+              </div>
+            );
+          })}
         </div>
       )}
 

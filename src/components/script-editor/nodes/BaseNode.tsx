@@ -8,6 +8,7 @@ import { useNodeEditing } from "../NodeEditingContext";
 import { NodePreview } from "../NodePreview";
 import { InlineEditor } from "./InlineEditor";
 import {
+  getHandleShape,
   getPortColor,
   type NodeDefinition,
   type PortDefinition,
@@ -65,19 +66,31 @@ function PortRow({
   onValueChange,
 }: PortRowProps) {
   const color = getPortColor(port.type);
-  const isExecution = port.type === "execution";
+  const handleShape = getHandleShape(port.type);
   const isMultiInput = port.multiInput;
   const isLeft = position === Position.Left;
   const hasDefault = port.defaultValue !== undefined;
   const isInput = type === "target";
 
+  // Calculate handle dimensions based on shape (data-driven)
+  // Square/diamond handles are larger than circular ones
+  const isSquareOrDiamond =
+    handleShape === "square" || handleShape === "diamond";
+  const handleWidth = isMultiInput ? 16 : isSquareOrDiamond ? 10 : 8;
+  const handleHeight = isSquareOrDiamond ? 10 : 8;
+  const handleBorderRadius = isMultiInput ? 4 : isSquareOrDiamond ? 2 : "50%";
+
   // Show inline editor for inputs that:
   // 1. Have a default value (are configurable)
   // 2. Are not connected (no incoming wire)
-  // 3. Are not execution ports
+  // 3. Are not execution/flow ports (square handles)
   // 4. Are not collapsed
   const showInlineEditor =
-    isInput && hasDefault && !isConnected && !isExecution && !collapsed;
+    isInput &&
+    hasDefault &&
+    !isConnected &&
+    handleShape !== "square" &&
+    !collapsed;
 
   // When collapsed, render handles at the edges without labels
   if (collapsed) {
@@ -89,10 +102,10 @@ function PortRow({
         className="!absolute transition-transform hover:scale-125"
         style={{
           background: color,
-          width: isMultiInput ? 16 : isExecution ? 10 : 8,
-          height: isExecution ? 10 : 8,
+          width: handleWidth,
+          height: handleHeight,
           border: "2px solid var(--background)",
-          borderRadius: isMultiInput ? 4 : isExecution ? 2 : "50%",
+          borderRadius: handleBorderRadius,
           top: "50%",
           transform: "translateY(-50%)",
           ...(isLeft ? { left: -4 } : { right: -4 }),
@@ -115,12 +128,12 @@ function PortRow({
         className="!relative !top-0 !transform-none transition-transform hover:scale-125"
         style={{
           background: color,
-          // Multi-input sockets are pill-shaped (wider)
-          width: isMultiInput ? 16 : isExecution ? 10 : 8,
-          height: isExecution ? 10 : 8,
+          // Dimensions are data-driven based on handle shape
+          width: handleWidth,
+          height: handleHeight,
           border: "2px solid var(--background)",
-          // Multi-input has rounded corners, execution is square-ish, data is circle
-          borderRadius: isMultiInput ? 4 : isExecution ? 2 : "50%",
+          // Shape determines border radius: circle = 50%, square/diamond = 2
+          borderRadius: handleBorderRadius,
         }}
         title={
           isMultiInput ? "Multi-input: accepts multiple connections" : undefined

@@ -12,6 +12,7 @@ import {
 } from "@xyflow/react";
 import { create } from "zustand";
 import {
+  getEdgeStyle,
   isTypeCompatible,
   type PortType,
 } from "@/components/script-editor/nodes/types";
@@ -261,18 +262,22 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   },
 
   onConnect: (connection) => {
-    // Add edge type based on handle types
-    const isExecution = connection.sourceHandle?.startsWith("exec");
-    const edgeType = isExecution ? "execution" : "data";
+    // Get port type from handle and determine edge style (data-driven)
+    const sourcePortType = getPortType(connection.sourceHandle) as PortType;
+    const edgeStyle = getEdgeStyle(sourcePortType);
+
+    // Execution edges use "animated" style, data edges use "default"
+    const isExecutionStyle = edgeStyle === "animated";
+    const edgeType = isExecutionStyle ? "execution" : "data";
 
     set({
       edges: addEdge(
         {
           ...connection,
           type: edgeType,
-          data: { edgeType },
-          // Add arrow marker for execution edges
-          ...(isExecution && {
+          data: { edgeType, edgeStyle },
+          // Add arrow marker for animated (execution) edges
+          ...(isExecutionStyle && {
             markerEnd: {
               type: MarkerType.ArrowClosed,
               width: 16,
@@ -1020,12 +1025,16 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
 
     // Try to find compatible input socket
     let inputSocket = nodeInputs.find(
-      (p) => p.type !== "execution" && isTypeCompatible(sourceType, p.type),
+      (p) =>
+        p.type !== "execution" &&
+        isTypeCompatible(sourceType as PortType, p.type as PortType),
     );
 
     // Try to find compatible output socket
     let outputSocket = nodeOutputs.find(
-      (p) => p.type !== "execution" && isTypeCompatible(p.type, targetType),
+      (p) =>
+        p.type !== "execution" &&
+        isTypeCompatible(p.type as PortType, targetType as PortType),
     );
 
     // If no matching sockets found in data, try common patterns
