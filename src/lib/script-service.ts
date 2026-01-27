@@ -121,7 +121,7 @@ export function nodeTypesQueryOptions(
     ],
     queryFn: async ({ signal }) => {
       if (!transport) {
-        return { nodeTypes: [], categories: [] };
+        return { nodeTypes: [], categories: [], portTypeMetadata: [] };
       }
       const client = new ScriptServiceClient(transport);
       const result = await client.getNodeTypes(
@@ -134,6 +134,33 @@ export function nodeTypesQueryOptions(
       return result.response;
     },
     // Node types rarely change, so use a long stale time
+    staleTime: 1000 * 60 * 60, // 1 hour
+    gcTime: 1000 * 60 * 60 * 24, // 24 hours
+  });
+}
+
+/**
+ * Query options for getting Minecraft registry data.
+ * Registry data is cacheable - it only changes between server versions.
+ */
+export function registryDataQueryOptions(
+  transport: RpcTransport | null,
+  registry?: string,
+) {
+  return queryOptions({
+    queryKey: ["registry-data", registry ?? "all"],
+    queryFn: async ({ signal }) => {
+      if (!transport) {
+        return { blocks: [], entities: [], items: [], biomes: [] };
+      }
+      const client = new ScriptServiceClient(transport);
+      const result = await client.getRegistryData(
+        { registry },
+        { abort: signal },
+      );
+      return result.response;
+    },
+    // Registry data rarely changes, so use a long stale time
     staleTime: 1000 * 60 * 60, // 1 hour
     gcTime: 1000 * 60 * 60 * 24, // 24 hours
   });

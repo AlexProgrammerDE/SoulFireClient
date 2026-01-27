@@ -169,10 +169,10 @@ export function protoNodeTypeToLocal(
 }
 
 /**
- * Port type colors - based on PortType enum from protocol.
- * These are UI presentation colors for distinguishing port types visually.
+ * Default port type colors - used as fallback when server data is unavailable.
+ * These are overridden by server-provided colors via PortTypeMetadata.
  */
-export const PORT_COLORS: Record<PortType, string> = {
+export const DEFAULT_PORT_COLORS: Record<PortType, string> = {
   execution: "#ffffff",
   number: "#22c55e",
   boolean: "#ef4444",
@@ -187,10 +187,93 @@ export const PORT_COLORS: Record<PortType, string> = {
 };
 
 /**
- * Get the color for a port type
+ * Default type compatibility rules - used as fallback when server data is unavailable.
+ * Maps target types to source types that can be implicitly converted.
+ */
+export const DEFAULT_TYPE_COMPATIBILITY: Partial<Record<PortType, PortType[]>> =
+  {
+    number: ["string", "boolean"],
+    boolean: ["number", "string"],
+    string: ["number", "boolean"],
+    any: [
+      "number",
+      "string",
+      "boolean",
+      "vector3",
+      "entity",
+      "bot",
+      "block",
+      "item",
+      "list",
+    ],
+  };
+
+// Runtime store for server-provided port metadata
+let serverPortColors: Record<string, string> = {};
+let serverTypeCompatibility: Record<string, string[]> = {};
+
+/**
+ * Initialize port metadata from server response.
+ * Call this when GetNodeTypesResponse is received.
+ */
+export function initPortMetadata(
+  metadata: Array<{
+    portType: ProtoPortType;
+    color: string;
+    compatibleFrom: ProtoPortType[];
+  }>,
+): void {
+  serverPortColors = {};
+  serverTypeCompatibility = {};
+
+  for (const meta of metadata) {
+    const portType = protoPortTypeToLocal(meta.portType);
+    if (meta.color) {
+      serverPortColors[portType] = meta.color;
+    }
+    if (meta.compatibleFrom && meta.compatibleFrom.length > 0) {
+      serverTypeCompatibility[portType] =
+        meta.compatibleFrom.map(protoPortTypeToLocal);
+    }
+  }
+}
+
+/**
+ * Get the color for a port type.
+ * Uses server-provided color if available, falls back to default.
  */
 export function getPortColor(type: PortType): string {
-  return PORT_COLORS[type] ?? PORT_COLORS.any;
+  return (
+    serverPortColors[type] ??
+    DEFAULT_PORT_COLORS[type] ??
+    DEFAULT_PORT_COLORS.any
+  );
+}
+
+/**
+ * Check if a source type can be connected to a target type.
+ * Uses server-provided compatibility rules if available.
+ */
+export function isTypeCompatible(
+  sourceType: PortType,
+  targetType: PortType,
+): boolean {
+  // Exact match is always compatible
+  if (sourceType === targetType) return true;
+
+  // Any accepts everything
+  if (targetType === "any") return true;
+  if (sourceType === "any") return true;
+
+  // Check server-provided compatibility
+  const serverCompat = serverTypeCompatibility[targetType];
+  if (serverCompat) {
+    return serverCompat.includes(sourceType);
+  }
+
+  // Fall back to default compatibility
+  const defaultCompat = DEFAULT_TYPE_COMPATIBILITY[targetType];
+  return defaultCompat?.includes(sourceType) ?? false;
 }
 
 /**

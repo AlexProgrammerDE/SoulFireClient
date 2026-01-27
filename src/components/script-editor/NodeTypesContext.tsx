@@ -6,6 +6,7 @@ import {
   use,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
 } from "react";
 import { TransportContext } from "@/components/providers/transport-context";
@@ -19,6 +20,7 @@ import { GroupOutputNode } from "./nodes/GroupOutputNode";
 import { RerouteNode } from "./nodes/RerouteNode";
 import {
   type CategoryInfo,
+  initPortMetadata,
   type NodeDefinition,
   protoCategoryToLocal,
   protoNodeTypeToLocal,
@@ -143,6 +145,13 @@ export function NodeTypesProvider({
   const { data, isLoading } = useSuspenseQuery(
     nodeTypesQueryOptions(transport, { includeDeprecated }),
   );
+
+  // Initialize port metadata from server response
+  useEffect(() => {
+    if (data.portTypeMetadata && data.portTypeMetadata.length > 0) {
+      initPortMetadata(data.portTypeMetadata);
+    }
+  }, [data.portTypeMetadata]);
 
   // Convert proto definitions to local format and add layout nodes
   const definitions = useMemo(() => {

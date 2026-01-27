@@ -11,16 +11,12 @@ import {
   type XYPosition,
 } from "@xyflow/react";
 import { create } from "zustand";
+import {
+  isTypeCompatible,
+  type PortType,
+} from "@/components/script-editor/nodes/types";
 
-export type PortType =
-  | "execution"
-  | "number"
-  | "boolean"
-  | "string"
-  | "vector3"
-  | "entity"
-  | "bot"
-  | "any";
+export type { PortType };
 
 export interface ScriptEditorState {
   // React Flow state
@@ -203,19 +199,6 @@ const getPortType = (handleId: string | null | undefined): string => {
   if (!handleId) return "any";
   const parts = handleId.split("-");
   return parts[0] || "any";
-};
-
-// Helper to check type compatibility
-const isTypeCompatible = (sourceType: string, targetType: string): boolean => {
-  if (sourceType === "any" || targetType === "any") return true;
-  if (sourceType === targetType) return true;
-  // Allow some implicit conversions
-  const conversions: Record<string, string[]> = {
-    number: ["string", "boolean"],
-    boolean: ["string", "number"],
-    string: ["number", "boolean"],
-  };
-  return conversions[sourceType]?.includes(targetType) ?? false;
 };
 
 export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
