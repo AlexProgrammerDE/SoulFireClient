@@ -8,7 +8,7 @@ import { readTextFile } from "@tauri-apps/plugin-fs";
 import { ClipboardIcon, FileIcon, GlobeIcon, TextIcon } from "lucide-react";
 import MimeMatcher from "mime-matcher";
 import type { ReactNode } from "react";
-import { use, useRef, useState } from "react";
+import { use, useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { SystemInfoContext } from "@/components/providers/system-info-context.tsx";
@@ -155,151 +155,184 @@ function MainDialog(
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { trackEvent } = useAptabase();
 
+  // Handle Ctrl+V paste - uses native event to avoid permission prompts
+  const handlePaste = useCallback(
+    (event: React.ClipboardEvent) => {
+      // Ignore if typing in an input or textarea
+      if (
+        event.target instanceof HTMLInputElement ||
+        event.target instanceof HTMLTextAreaElement
+      ) {
+        return;
+      }
+
+      const text = event.clipboardData?.getData("text/plain");
+      if (text) {
+        event.preventDefault();
+        void trackEvent("import_from_clipboard");
+        props.listener(text);
+      }
+    },
+    [props, trackEvent],
+  );
+
   return (
     <Credenza open={true} onOpenChange={props.closer}>
       <CredenzaContent>
-        <CredenzaHeader>
-          <CredenzaTitle>{props.title}</CredenzaTitle>
-          <CredenzaDescription>{props.description}</CredenzaDescription>
-        </CredenzaHeader>
-        <CredenzaBody className="pb-4 md:pb-0">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-wrap justify-between gap-4">
-              {!isTauri() && (
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept={props.filters.map((f) => f.mimeType).join(",")}
-                  multiple={props.allowMultiple}
-                  className="hidden"
-                  onChange={(e) => {
-                    const target = e.target as HTMLInputElement;
-                    if (!target.files) {
-                      return;
-                    }
-
-                    for (let i = 0; i < target.files.length; i++) {
-                      const file = target.files.item(i);
-                      if (!file) {
-                        continue;
-                      }
-
-                      const reader = new FileReader();
-                      reader.onload = () => {
-                        const data = reader.result as string;
-                        props.listener(data);
-                      };
-                      reader.readAsText(file);
-                    }
-                  }}
-                />
-              )}
-              <Button
-                variant="secondary"
-                className="flex-auto"
-                onClick={() => {
-                  void trackEvent("import_from_file");
-                  if (isTauri()) {
-                    runAsync(async () => {
-                      const downloadsDir = await downloadDir();
-                      const input = await open({
-                        title: props.title,
-                        filters: systemInfo?.mobile ? undefined : props.filters,
-                        defaultPath: downloadsDir,
-                        multiple: props.allowMultiple,
-                        directory: false,
-                      });
-                      if (input === null) {
+        {/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: Ctrl+V paste handler */}
+        <div role="dialog" onPaste={handlePaste}>
+          <CredenzaHeader>
+            <CredenzaTitle>{props.title}</CredenzaTitle>
+            <CredenzaDescription>{props.description}</CredenzaDescription>
+          </CredenzaHeader>
+          <CredenzaBody className="pb-4 md:pb-0">
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-wrap justify-between gap-4">
+                {!isTauri() && (
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept={props.filters.map((f) => f.mimeType).join(",")}
+                    multiple={props.allowMultiple}
+                    className="hidden"
+                    onChange={(e) => {
+                      const target = e.target as HTMLInputElement;
+                      if (!target.files) {
                         return;
                       }
 
-                      const toParse: string[] = Array.isArray(input)
-                        ? input
-                        : [input];
-                      for (const file of toParse) {
-                        const data = await readTextFile(file);
+                      for (let i = 0; i < target.files.length; i++) {
+                        const file = target.files.item(i);
+                        if (!file) {
+                          continue;
+                        }
 
-                        props.listener(data);
+                        const reader = new FileReader();
+                        reader.onload = () => {
+                          const data = reader.result as string;
+                          props.listener(data);
+                        };
+                        reader.readAsText(file);
                       }
-                    });
-                  } else {
-                    fileInputRef.current?.click();
-                  }
-                }}
-              >
-                <FileIcon />
-                <span>{t("dialog.import.main.fromFile")}</span>
-              </Button>
-              {hasInstancePermission(
-                instanceInfo,
-                InstancePermission.DOWNLOAD_URL,
-              ) && (
+                    }}
+                  />
+                )}
                 <Button
                   variant="secondary"
                   className="flex-auto"
-                  onClick={props.openUrlDialog}
-                >
-                  <GlobeIcon />
-                  <span>{t("dialog.import.main.fromUrl")}</span>
-                </Button>
-              )}
-              <Button
-                variant="secondary"
-                className="flex-auto"
-                onClick={() => {
-                  void trackEvent("import_from_clipboard");
-                  runAsync(async () => {
+                  onClick={() => {
+                    void trackEvent("import_from_file");
                     if (isTauri()) {
-                      props.listener((await clipboard.readText()) ?? "");
-                    } else {
-                      const mimeTypes = props.filters.map((f) => f.mimeType);
-                      const matcher = new MimeMatcher(...mimeTypes);
-                      let clipboardEntries = (await navigator.clipboard.read())
-                        .map((item) => ({
-                          item,
-                          firstSupportedType: item.types.find((t) =>
-                            matcher.match(t),
-                          ),
-                        }))
-                        .filter(
-                          (
-                            e,
-                          ): e is typeof e & { firstSupportedType: string } => {
-                            return e.firstSupportedType !== undefined;
-                          },
-                        );
-                      if (!props.allowMultiple && clipboardEntries.length > 1) {
-                        toast.warning(
-                          t("dialog.import.main.firstClipboardItem"),
-                        );
-                        clipboardEntries = [clipboardEntries[0]];
-                      }
+                      runAsync(async () => {
+                        const downloadsDir = await downloadDir();
+                        const input = await open({
+                          title: props.title,
+                          filters: systemInfo?.mobile
+                            ? undefined
+                            : props.filters,
+                          defaultPath: downloadsDir,
+                          multiple: props.allowMultiple,
+                          directory: false,
+                        });
+                        if (input === null) {
+                          return;
+                        }
 
-                      for (const entry of clipboardEntries) {
-                        const blob = await entry.item.getType(
-                          entry.firstSupportedType,
-                        );
-                        props.listener(await blob.text());
-                      }
+                        const toParse: string[] = Array.isArray(input)
+                          ? input
+                          : [input];
+                        for (const file of toParse) {
+                          const data = await readTextFile(file);
+
+                          props.listener(data);
+                        }
+                      });
+                    } else {
+                      fileInputRef.current?.click();
                     }
-                  });
-                }}
-              >
-                <ClipboardIcon />
-                <span>{t("dialog.import.main.fromClipboard")}</span>
-              </Button>
+                  }}
+                >
+                  <FileIcon />
+                  <span>{t("dialog.import.main.fromFile")}</span>
+                </Button>
+                {hasInstancePermission(
+                  instanceInfo,
+                  InstancePermission.DOWNLOAD_URL,
+                ) && (
+                  <Button
+                    variant="secondary"
+                    className="flex-auto"
+                    onClick={props.openUrlDialog}
+                  >
+                    <GlobeIcon />
+                    <span>{t("dialog.import.main.fromUrl")}</span>
+                  </Button>
+                )}
+                <Button
+                  variant="secondary"
+                  className="flex-auto"
+                  onClick={() => {
+                    void trackEvent("import_from_clipboard");
+                    runAsync(async () => {
+                      if (isTauri()) {
+                        props.listener((await clipboard.readText()) ?? "");
+                      } else {
+                        const mimeTypes = props.filters.map((f) => f.mimeType);
+                        const matcher = new MimeMatcher(...mimeTypes);
+                        let clipboardEntries = (
+                          await navigator.clipboard.read()
+                        )
+                          .map((item) => ({
+                            item,
+                            firstSupportedType: item.types.find((t) =>
+                              matcher.match(t),
+                            ),
+                          }))
+                          .filter(
+                            (
+                              e,
+                            ): e is typeof e & {
+                              firstSupportedType: string;
+                            } => {
+                              return e.firstSupportedType !== undefined;
+                            },
+                          );
+                        if (
+                          !props.allowMultiple &&
+                          clipboardEntries.length > 1
+                        ) {
+                          toast.warning(
+                            t("dialog.import.main.firstClipboardItem"),
+                          );
+                          clipboardEntries = [clipboardEntries[0]];
+                        }
+
+                        for (const entry of clipboardEntries) {
+                          const blob = await entry.item.getType(
+                            entry.firstSupportedType,
+                          );
+                          props.listener(await blob.text());
+                        }
+                      }
+                    });
+                  }}
+                >
+                  <ClipboardIcon />
+                  <span>{t("dialog.import.main.fromClipboard")}</span>
+                </Button>
+              </div>
+              {props.textInput !== null && (
+                <TextInput {...props} textInput={props.textInput} />
+              )}
+              {props.extraContent && (
+                <>
+                  <Separator orientation="horizontal" />
+                  {props.extraContent}
+                </>
+              )}
             </div>
-            {props.textInput !== null && (
-              <TextInput {...props} textInput={props.textInput} />
-            )}
-            {props.extraContent && (
-              <>
-                <Separator orientation="horizontal" />
-                {props.extraContent}
-              </>
-            )}
-          </div>
-        </CredenzaBody>
+          </CredenzaBody>
+        </div>
       </CredenzaContent>
     </Credenza>
   );
