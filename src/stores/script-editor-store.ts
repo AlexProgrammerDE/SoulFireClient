@@ -114,16 +114,32 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
 
   // React Flow handlers
   onNodesChange: (changes) => {
+    // Only mark as dirty for actual content changes, not internal React Flow events
+    // like selection changes or dimension recalculations
+    const hasMeaningfulChange = changes.some(
+      (change) =>
+        change.type === "position" ||
+        change.type === "remove" ||
+        change.type === "add" ||
+        change.type === "replace",
+    );
     set({
       nodes: applyNodeChanges(changes, get().nodes),
-      isDirty: true,
+      ...(hasMeaningfulChange && { isDirty: true }),
     });
   },
 
   onEdgesChange: (changes) => {
+    // Only mark as dirty for actual content changes, not selection changes
+    const hasMeaningfulChange = changes.some(
+      (change) =>
+        change.type === "remove" ||
+        change.type === "add" ||
+        change.type === "replace",
+    );
     set({
       edges: applyEdgeChanges(changes, get().edges),
-      isDirty: true,
+      ...(hasMeaningfulChange && { isDirty: true }),
     });
   },
 
