@@ -418,15 +418,14 @@ function ScriptEditorContent() {
       const nodeType = event.dataTransfer.getData(
         "application/script-node-type",
       );
-      if (!nodeType || !reactFlowWrapper.current) return;
+      if (!nodeType) return;
 
       const definition = getDefinition(nodeType);
       if (!definition) return;
 
-      const bounds = reactFlowWrapper.current.getBoundingClientRect();
       const position = reactFlowInstance.screenToFlowPosition({
-        x: event.clientX - bounds.left,
-        y: event.clientY - bounds.top,
+        x: event.clientX,
+        y: event.clientY,
       });
 
       addNode(nodeType, position, definition.defaultData);
