@@ -97,6 +97,29 @@ export interface PortDefinition {
    * @generated from protobuf field: optional soulfire.v1.PortType element_type = 7
    */
   elementType?: PortType;
+  /**
+   * Whether this input accepts multiple connections (Blender-style multi-input).
+   * When true, all connected values are collected into a list.
+   * Visually rendered as a pill/ellipsis shaped socket.
+   *
+   * @generated from protobuf field: bool multi_input = 8
+   */
+  multiInput: boolean;
+  /**
+   * For polymorphic ports, the list of accepted types.
+   * If non-empty, this port can accept any of these types and will
+   * adapt its behavior based on the connected type.
+   *
+   * @generated from protobuf field: repeated soulfire.v1.PortType accepted_types = 9
+   */
+  acceptedTypes: PortType[];
+  /**
+   * For dynamic output ports, the ID of the input port to inherit type from.
+   * Used for polymorphic nodes where output type depends on input type.
+   *
+   * @generated from protobuf field: string infer_type_from = 10
+   */
+  inferTypeFrom: string;
 }
 /**
  * Complete definition of a node type.
@@ -188,6 +211,26 @@ export interface NodeTypeDefinition {
    * @generated from protobuf field: string deprecation_message = 12
    */
   deprecationMessage: string;
+  /**
+   * Whether this is a layout node (reroute, frame, etc.).
+   * Layout nodes have special minimal rendering and don't execute logic.
+   *
+   * @generated from protobuf field: bool is_layout_node = 13
+   */
+  isLayoutNode: boolean;
+  /**
+   * Whether this node can be muted (bypassed during execution).
+   * When muted, inputs pass through to outputs unchanged.
+   *
+   * @generated from protobuf field: bool supports_muting = 14
+   */
+  supportsMuting: boolean;
+  /**
+   * Whether this node supports inline preview of its output.
+   *
+   * @generated from protobuf field: bool supports_preview = 15
+   */
+  supportsPreview: boolean;
 }
 /**
  * Represents a single node in the visual script graph.
@@ -229,6 +272,60 @@ export interface ScriptNode {
   data: {
     [key: string]: Value;
   };
+  /**
+   * Whether this node is muted (bypassed during execution).
+   * When muted, the node passes inputs directly to outputs without processing.
+   * Visually shown as grayed out with pass-through indicator.
+   *
+   * @generated from protobuf field: bool muted = 5
+   */
+  muted: boolean;
+  /**
+   * Whether this node is collapsed (showing only header).
+   * Collapsed nodes still function normally but take less visual space.
+   *
+   * @generated from protobuf field: bool collapsed = 6
+   */
+  collapsed: boolean;
+  /**
+   * For frame nodes: the width of the frame.
+   *
+   * @generated from protobuf field: optional double width = 7
+   */
+  width?: number;
+  /**
+   * For frame nodes: the height of the frame.
+   *
+   * @generated from protobuf field: optional double height = 8
+   */
+  height?: number;
+  /**
+   * For frame nodes: IDs of nodes contained within this frame.
+   * Updated automatically based on node positions.
+   *
+   * @generated from protobuf field: repeated string contained_nodes = 9
+   */
+  containedNodes: string[];
+  /**
+   * Optional label override for this node instance.
+   * If set, displayed instead of the node type's default label.
+   *
+   * @generated from protobuf field: string label = 10
+   */
+  label: string;
+  /**
+   * For reroute nodes: the resolved port type based on connections.
+   * Dynamically updated when connections change.
+   *
+   * @generated from protobuf field: optional soulfire.v1.PortType resolved_type = 11
+   */
+  resolvedType?: PortType;
+  /**
+   * Parent frame node ID, if this node is inside a frame.
+   *
+   * @generated from protobuf field: string parent_frame_id = 12
+   */
+  parentFrameId: string;
 }
 /**
  * Represents a connection between two nodes in the visual script graph.
@@ -1321,6 +1418,20 @@ class PortDefinition$Type extends MessageType<PortDefinition> {
         opt: true,
         T: () => ["soulfire.v1.PortType", PortType, "PORT_TYPE_"],
       },
+      { no: 8, name: "multi_input", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 9,
+        name: "accepted_types",
+        kind: "enum",
+        repeat: 1 /*RepeatType.PACKED*/,
+        T: () => ["soulfire.v1.PortType", PortType, "PORT_TYPE_"],
+      },
+      {
+        no: 10,
+        name: "infer_type_from",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
     ]);
   }
   create(value?: PartialMessage<PortDefinition>): PortDefinition {
@@ -1330,6 +1441,9 @@ class PortDefinition$Type extends MessageType<PortDefinition> {
     message.portType = 0;
     message.required = false;
     message.description = "";
+    message.multiInput = false;
+    message.acceptedTypes = [];
+    message.inferTypeFrom = "";
     if (value !== undefined)
       reflectionMergePartial<PortDefinition>(this, message, value);
     return message;
@@ -1365,6 +1479,18 @@ class PortDefinition$Type extends MessageType<PortDefinition> {
           break;
         case /* optional soulfire.v1.PortType element_type */ 7:
           message.elementType = reader.int32();
+          break;
+        case /* bool multi_input */ 8:
+          message.multiInput = reader.bool();
+          break;
+        case /* repeated soulfire.v1.PortType accepted_types */ 9:
+          if (wireType === WireType.LengthDelimited)
+            for (let e = reader.int32() + reader.pos; reader.pos < e; )
+              message.acceptedTypes.push(reader.int32());
+          else message.acceptedTypes.push(reader.int32());
+          break;
+        case /* string infer_type_from */ 10:
+          message.inferTypeFrom = reader.string();
           break;
         default:
           let u = options.readUnknownField;
@@ -1411,6 +1537,19 @@ class PortDefinition$Type extends MessageType<PortDefinition> {
     /* optional soulfire.v1.PortType element_type = 7; */
     if (message.elementType !== undefined)
       writer.tag(7, WireType.Varint).int32(message.elementType);
+    /* bool multi_input = 8; */
+    if (message.multiInput !== false)
+      writer.tag(8, WireType.Varint).bool(message.multiInput);
+    /* repeated soulfire.v1.PortType accepted_types = 9; */
+    if (message.acceptedTypes.length) {
+      writer.tag(9, WireType.LengthDelimited).fork();
+      for (let i = 0; i < message.acceptedTypes.length; i++)
+        writer.int32(message.acceptedTypes[i]);
+      writer.join();
+    }
+    /* string infer_type_from = 10; */
+    if (message.inferTypeFrom !== "")
+      writer.tag(10, WireType.LengthDelimited).string(message.inferTypeFrom);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -1474,6 +1613,24 @@ class NodeTypeDefinition$Type extends MessageType<NodeTypeDefinition> {
         kind: "scalar",
         T: 9 /*ScalarType.STRING*/,
       },
+      {
+        no: 13,
+        name: "is_layout_node",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      {
+        no: 14,
+        name: "supports_muting",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
+      {
+        no: 15,
+        name: "supports_preview",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
     ]);
   }
   create(value?: PartialMessage<NodeTypeDefinition>): NodeTypeDefinition {
@@ -1490,6 +1647,9 @@ class NodeTypeDefinition$Type extends MessageType<NodeTypeDefinition> {
     message.keywords = [];
     message.deprecated = false;
     message.deprecationMessage = "";
+    message.isLayoutNode = false;
+    message.supportsMuting = false;
+    message.supportsPreview = false;
     if (value !== undefined)
       reflectionMergePartial<NodeTypeDefinition>(this, message, value);
     return message;
@@ -1544,6 +1704,15 @@ class NodeTypeDefinition$Type extends MessageType<NodeTypeDefinition> {
           break;
         case /* string deprecation_message */ 12:
           message.deprecationMessage = reader.string();
+          break;
+        case /* bool is_layout_node */ 13:
+          message.isLayoutNode = reader.bool();
+          break;
+        case /* bool supports_muting */ 14:
+          message.supportsMuting = reader.bool();
+          break;
+        case /* bool supports_preview */ 15:
+          message.supportsPreview = reader.bool();
           break;
         default:
           let u = options.readUnknownField;
@@ -1615,6 +1784,15 @@ class NodeTypeDefinition$Type extends MessageType<NodeTypeDefinition> {
       writer
         .tag(12, WireType.LengthDelimited)
         .string(message.deprecationMessage);
+    /* bool is_layout_node = 13; */
+    if (message.isLayoutNode !== false)
+      writer.tag(13, WireType.Varint).bool(message.isLayoutNode);
+    /* bool supports_muting = 14; */
+    if (message.supportsMuting !== false)
+      writer.tag(14, WireType.Varint).bool(message.supportsMuting);
+    /* bool supports_preview = 15; */
+    if (message.supportsPreview !== false)
+      writer.tag(15, WireType.Varint).bool(message.supportsPreview);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -1643,6 +1821,43 @@ class ScriptNode$Type extends MessageType<ScriptNode> {
         K: 9 /*ScalarType.STRING*/,
         V: { kind: "message", T: () => Value },
       },
+      { no: 5, name: "muted", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 6, name: "collapsed", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      {
+        no: 7,
+        name: "width",
+        kind: "scalar",
+        opt: true,
+        T: 1 /*ScalarType.DOUBLE*/,
+      },
+      {
+        no: 8,
+        name: "height",
+        kind: "scalar",
+        opt: true,
+        T: 1 /*ScalarType.DOUBLE*/,
+      },
+      {
+        no: 9,
+        name: "contained_nodes",
+        kind: "scalar",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 10, name: "label", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 11,
+        name: "resolved_type",
+        kind: "enum",
+        opt: true,
+        T: () => ["soulfire.v1.PortType", PortType, "PORT_TYPE_"],
+      },
+      {
+        no: 12,
+        name: "parent_frame_id",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
     ]);
   }
   create(value?: PartialMessage<ScriptNode>): ScriptNode {
@@ -1650,6 +1865,11 @@ class ScriptNode$Type extends MessageType<ScriptNode> {
     message.id = "";
     message.type = "";
     message.data = {};
+    message.muted = false;
+    message.collapsed = false;
+    message.containedNodes = [];
+    message.label = "";
+    message.parentFrameId = "";
     if (value !== undefined)
       reflectionMergePartial<ScriptNode>(this, message, value);
     return message;
@@ -1681,6 +1901,30 @@ class ScriptNode$Type extends MessageType<ScriptNode> {
           break;
         case /* map<string, google.protobuf.Value> data */ 4:
           this.binaryReadMap4(message.data, reader, options);
+          break;
+        case /* bool muted */ 5:
+          message.muted = reader.bool();
+          break;
+        case /* bool collapsed */ 6:
+          message.collapsed = reader.bool();
+          break;
+        case /* optional double width */ 7:
+          message.width = reader.double();
+          break;
+        case /* optional double height */ 8:
+          message.height = reader.double();
+          break;
+        case /* repeated string contained_nodes */ 9:
+          message.containedNodes.push(reader.string());
+          break;
+        case /* string label */ 10:
+          message.label = reader.string();
+          break;
+        case /* optional soulfire.v1.PortType resolved_type */ 11:
+          message.resolvedType = reader.int32();
+          break;
+        case /* string parent_frame_id */ 12:
+          message.parentFrameId = reader.string();
           break;
         default:
           let u = options.readUnknownField;
@@ -1756,6 +2000,30 @@ class ScriptNode$Type extends MessageType<ScriptNode> {
       Value.internalBinaryWrite(message.data[k], writer, options);
       writer.join().join();
     }
+    /* bool muted = 5; */
+    if (message.muted !== false)
+      writer.tag(5, WireType.Varint).bool(message.muted);
+    /* bool collapsed = 6; */
+    if (message.collapsed !== false)
+      writer.tag(6, WireType.Varint).bool(message.collapsed);
+    /* optional double width = 7; */
+    if (message.width !== undefined)
+      writer.tag(7, WireType.Bit64).double(message.width);
+    /* optional double height = 8; */
+    if (message.height !== undefined)
+      writer.tag(8, WireType.Bit64).double(message.height);
+    /* repeated string contained_nodes = 9; */
+    for (let i = 0; i < message.containedNodes.length; i++)
+      writer.tag(9, WireType.LengthDelimited).string(message.containedNodes[i]);
+    /* string label = 10; */
+    if (message.label !== "")
+      writer.tag(10, WireType.LengthDelimited).string(message.label);
+    /* optional soulfire.v1.PortType resolved_type = 11; */
+    if (message.resolvedType !== undefined)
+      writer.tag(11, WireType.Varint).int32(message.resolvedType);
+    /* string parent_frame_id = 12; */
+    if (message.parentFrameId !== "")
+      writer.tag(12, WireType.LengthDelimited).string(message.parentFrameId);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
