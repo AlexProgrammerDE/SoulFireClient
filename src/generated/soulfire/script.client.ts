@@ -21,6 +21,8 @@ import type {
   DeleteScriptResponse,
   GetNodeTypesRequest,
   GetNodeTypesResponse,
+  GetRegistryDataRequest,
+  GetRegistryDataResponse,
   GetScriptRequest,
   GetScriptResponse,
   GetScriptStatusRequest,
@@ -200,6 +202,17 @@ export interface IScriptServiceClient {
     input: GetNodeTypesRequest,
     options?: RpcOptions,
   ): UnaryCall<GetNodeTypesRequest, GetNodeTypesResponse>;
+  /**
+   * Gets Minecraft registry data for autocomplete and validation.
+   * Returns blocks, entities, items, and biomes that can be used in scripts.
+   * This endpoint is cacheable - registry data only changes between server versions.
+   *
+   * @generated from protobuf rpc: GetRegistryData
+   */
+  getRegistryData(
+    input: GetRegistryDataRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetRegistryDataRequest, GetRegistryDataResponse>;
 }
 /**
  * ScriptService provides management and execution capabilities for visual node-based
@@ -464,6 +477,27 @@ export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
     const method = this.methods[9],
       opt = this._transport.mergeOptions(options);
     return stackIntercept<GetNodeTypesRequest, GetNodeTypesResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Gets Minecraft registry data for autocomplete and validation.
+   * Returns blocks, entities, items, and biomes that can be used in scripts.
+   * This endpoint is cacheable - registry data only changes between server versions.
+   *
+   * @generated from protobuf rpc: GetRegistryData
+   */
+  getRegistryData(
+    input: GetRegistryDataRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetRegistryDataRequest, GetRegistryDataResponse> {
+    const method = this.methods[10],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<GetRegistryDataRequest, GetRegistryDataResponse>(
       "unary",
       this._transport,
       method,

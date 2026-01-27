@@ -1172,6 +1172,121 @@ export interface GetNodeTypesResponse {
    * @generated from protobuf field: repeated soulfire.v1.CategoryDefinition categories = 2
    */
   categories: CategoryDefinition[];
+  /**
+   * Metadata for each port type including colors and compatibility.
+   * Clients should use this instead of hardcoded port type info.
+   *
+   * @generated from protobuf field: repeated soulfire.v1.PortTypeMetadata port_type_metadata = 3
+   */
+  portTypeMetadata: PortTypeMetadata[];
+}
+/**
+ * Metadata for a port type, enabling data-driven port rendering.
+ *
+ * @generated from protobuf message soulfire.v1.PortTypeMetadata
+ */
+export interface PortTypeMetadata {
+  /**
+   * The port type this metadata applies to.
+   *
+   * @generated from protobuf field: soulfire.v1.PortType port_type = 1
+   */
+  portType: PortType;
+  /**
+   * Display color for this port type (hex color code, e.g., "#22c55e").
+   *
+   * @generated from protobuf field: string color = 2
+   */
+  color: string;
+  /**
+   * Human-readable name for this port type.
+   *
+   * @generated from protobuf field: string display_name = 3
+   */
+  displayName: string;
+  /**
+   * List of port types that can be implicitly converted to this type.
+   * Used for connection validation. Empty means only exact matches allowed.
+   *
+   * @generated from protobuf field: repeated soulfire.v1.PortType compatible_from = 4
+   */
+  compatibleFrom: PortType[];
+}
+/**
+ * Request to get Minecraft registry data for autocomplete and validation.
+ *
+ * @generated from protobuf message soulfire.v1.GetRegistryDataRequest
+ */
+export interface GetRegistryDataRequest {
+  /**
+   * Optional: specific registry to fetch. If empty, returns all registries.
+   * Valid values: "blocks", "entities", "items", "biomes"
+   *
+   * @generated from protobuf field: optional string registry = 1
+   */
+  registry?: string;
+}
+/**
+ * A single registry entry (block, entity, item, or biome).
+ *
+ * @generated from protobuf message soulfire.v1.RegistryEntry
+ */
+export interface RegistryEntry {
+  /**
+   * The namespaced identifier (e.g., "minecraft:diamond_ore").
+   *
+   * @generated from protobuf field: string id = 1
+   */
+  id: string;
+  /**
+   * Human-readable display name.
+   *
+   * @generated from protobuf field: string display_name = 2
+   */
+  displayName: string;
+  /**
+   * Optional icon or texture identifier.
+   *
+   * @generated from protobuf field: string icon = 3
+   */
+  icon: string;
+  /**
+   * Optional category/group for organizing in UI.
+   *
+   * @generated from protobuf field: string category = 4
+   */
+  category: string;
+}
+/**
+ * Response containing Minecraft registry data.
+ *
+ * @generated from protobuf message soulfire.v1.GetRegistryDataResponse
+ */
+export interface GetRegistryDataResponse {
+  /**
+   * Block types (e.g., "minecraft:stone", "minecraft:diamond_ore").
+   *
+   * @generated from protobuf field: repeated soulfire.v1.RegistryEntry blocks = 1
+   */
+  blocks: RegistryEntry[];
+  /**
+   * Entity types (e.g., "minecraft:zombie", "minecraft:player").
+   *
+   * @generated from protobuf field: repeated soulfire.v1.RegistryEntry entities = 2
+   */
+  entities: RegistryEntry[];
+  /**
+   * Item types (e.g., "minecraft:diamond", "minecraft:stick").
+   *
+   * @generated from protobuf field: repeated soulfire.v1.RegistryEntry items = 3
+   */
+  items: RegistryEntry[];
+  /**
+   * Biome types (e.g., "minecraft:plains", "minecraft:forest").
+   *
+   * @generated from protobuf field: repeated soulfire.v1.RegistryEntry biomes = 4
+   */
+  biomes: RegistryEntry[];
 }
 /**
  * The type of connection between nodes in the visual script editor.
@@ -4988,12 +5103,20 @@ class GetNodeTypesResponse$Type extends MessageType<GetNodeTypesResponse> {
         repeat: 2 /*RepeatType.UNPACKED*/,
         T: () => CategoryDefinition,
       },
+      {
+        no: 3,
+        name: "port_type_metadata",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => PortTypeMetadata,
+      },
     ]);
   }
   create(value?: PartialMessage<GetNodeTypesResponse>): GetNodeTypesResponse {
     const message = globalThis.Object.create(this.messagePrototype!);
     message.nodeTypes = [];
     message.categories = [];
+    message.portTypeMetadata = [];
     if (value !== undefined)
       reflectionMergePartial<GetNodeTypesResponse>(this, message, value);
     return message;
@@ -5021,6 +5144,15 @@ class GetNodeTypesResponse$Type extends MessageType<GetNodeTypesResponse> {
         case /* repeated soulfire.v1.CategoryDefinition categories */ 2:
           message.categories.push(
             CategoryDefinition.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        case /* repeated soulfire.v1.PortTypeMetadata port_type_metadata */ 3:
+          message.portTypeMetadata.push(
+            PortTypeMetadata.internalBinaryRead(
               reader,
               reader.uint32(),
               options,
@@ -5065,6 +5197,13 @@ class GetNodeTypesResponse$Type extends MessageType<GetNodeTypesResponse> {
         writer.tag(2, WireType.LengthDelimited).fork(),
         options,
       ).join();
+    /* repeated soulfire.v1.PortTypeMetadata port_type_metadata = 3; */
+    for (let i = 0; i < message.portTypeMetadata.length; i++)
+      PortTypeMetadata.internalBinaryWrite(
+        message.portTypeMetadata[i],
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -5079,6 +5218,439 @@ class GetNodeTypesResponse$Type extends MessageType<GetNodeTypesResponse> {
  * @generated MessageType for protobuf message soulfire.v1.GetNodeTypesResponse
  */
 export const GetNodeTypesResponse = new GetNodeTypesResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class PortTypeMetadata$Type extends MessageType<PortTypeMetadata> {
+  constructor() {
+    super("soulfire.v1.PortTypeMetadata", [
+      {
+        no: 1,
+        name: "port_type",
+        kind: "enum",
+        T: () => ["soulfire.v1.PortType", PortType, "PORT_TYPE_"],
+      },
+      { no: 2, name: "color", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 3,
+        name: "display_name",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 4,
+        name: "compatible_from",
+        kind: "enum",
+        repeat: 1 /*RepeatType.PACKED*/,
+        T: () => ["soulfire.v1.PortType", PortType, "PORT_TYPE_"],
+      },
+    ]);
+  }
+  create(value?: PartialMessage<PortTypeMetadata>): PortTypeMetadata {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.portType = 0;
+    message.color = "";
+    message.displayName = "";
+    message.compatibleFrom = [];
+    if (value !== undefined)
+      reflectionMergePartial<PortTypeMetadata>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: PortTypeMetadata,
+  ): PortTypeMetadata {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.PortType port_type */ 1:
+          message.portType = reader.int32();
+          break;
+        case /* string color */ 2:
+          message.color = reader.string();
+          break;
+        case /* string display_name */ 3:
+          message.displayName = reader.string();
+          break;
+        case /* repeated soulfire.v1.PortType compatible_from */ 4:
+          if (wireType === WireType.LengthDelimited)
+            for (let e = reader.int32() + reader.pos; reader.pos < e; )
+              message.compatibleFrom.push(reader.int32());
+          else message.compatibleFrom.push(reader.int32());
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: PortTypeMetadata,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.PortType port_type = 1; */
+    if (message.portType !== 0)
+      writer.tag(1, WireType.Varint).int32(message.portType);
+    /* string color = 2; */
+    if (message.color !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.color);
+    /* string display_name = 3; */
+    if (message.displayName !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.displayName);
+    /* repeated soulfire.v1.PortType compatible_from = 4; */
+    if (message.compatibleFrom.length) {
+      writer.tag(4, WireType.LengthDelimited).fork();
+      for (let i = 0; i < message.compatibleFrom.length; i++)
+        writer.int32(message.compatibleFrom[i]);
+      writer.join();
+    }
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.PortTypeMetadata
+ */
+export const PortTypeMetadata = new PortTypeMetadata$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetRegistryDataRequest$Type extends MessageType<GetRegistryDataRequest> {
+  constructor() {
+    super("soulfire.v1.GetRegistryDataRequest", [
+      {
+        no: 1,
+        name: "registry",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<GetRegistryDataRequest>,
+  ): GetRegistryDataRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<GetRegistryDataRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetRegistryDataRequest,
+  ): GetRegistryDataRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* optional string registry */ 1:
+          message.registry = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetRegistryDataRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* optional string registry = 1; */
+    if (message.registry !== undefined)
+      writer.tag(1, WireType.LengthDelimited).string(message.registry);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GetRegistryDataRequest
+ */
+export const GetRegistryDataRequest = new GetRegistryDataRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class RegistryEntry$Type extends MessageType<RegistryEntry> {
+  constructor() {
+    super("soulfire.v1.RegistryEntry", [
+      { no: 1, name: "id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "display_name",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 3, name: "icon", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 4, name: "category", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  create(value?: PartialMessage<RegistryEntry>): RegistryEntry {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.id = "";
+    message.displayName = "";
+    message.icon = "";
+    message.category = "";
+    if (value !== undefined)
+      reflectionMergePartial<RegistryEntry>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: RegistryEntry,
+  ): RegistryEntry {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string id */ 1:
+          message.id = reader.string();
+          break;
+        case /* string display_name */ 2:
+          message.displayName = reader.string();
+          break;
+        case /* string icon */ 3:
+          message.icon = reader.string();
+          break;
+        case /* string category */ 4:
+          message.category = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: RegistryEntry,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string id = 1; */
+    if (message.id !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.id);
+    /* string display_name = 2; */
+    if (message.displayName !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.displayName);
+    /* string icon = 3; */
+    if (message.icon !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.icon);
+    /* string category = 4; */
+    if (message.category !== "")
+      writer.tag(4, WireType.LengthDelimited).string(message.category);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.RegistryEntry
+ */
+export const RegistryEntry = new RegistryEntry$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetRegistryDataResponse$Type extends MessageType<GetRegistryDataResponse> {
+  constructor() {
+    super("soulfire.v1.GetRegistryDataResponse", [
+      {
+        no: 1,
+        name: "blocks",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => RegistryEntry,
+      },
+      {
+        no: 2,
+        name: "entities",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => RegistryEntry,
+      },
+      {
+        no: 3,
+        name: "items",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => RegistryEntry,
+      },
+      {
+        no: 4,
+        name: "biomes",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => RegistryEntry,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<GetRegistryDataResponse>,
+  ): GetRegistryDataResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.blocks = [];
+    message.entities = [];
+    message.items = [];
+    message.biomes = [];
+    if (value !== undefined)
+      reflectionMergePartial<GetRegistryDataResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetRegistryDataResponse,
+  ): GetRegistryDataResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* repeated soulfire.v1.RegistryEntry blocks */ 1:
+          message.blocks.push(
+            RegistryEntry.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* repeated soulfire.v1.RegistryEntry entities */ 2:
+          message.entities.push(
+            RegistryEntry.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* repeated soulfire.v1.RegistryEntry items */ 3:
+          message.items.push(
+            RegistryEntry.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        case /* repeated soulfire.v1.RegistryEntry biomes */ 4:
+          message.biomes.push(
+            RegistryEntry.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetRegistryDataResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* repeated soulfire.v1.RegistryEntry blocks = 1; */
+    for (let i = 0; i < message.blocks.length; i++)
+      RegistryEntry.internalBinaryWrite(
+        message.blocks[i],
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.RegistryEntry entities = 2; */
+    for (let i = 0; i < message.entities.length; i++)
+      RegistryEntry.internalBinaryWrite(
+        message.entities[i],
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.RegistryEntry items = 3; */
+    for (let i = 0; i < message.items.length; i++)
+      RegistryEntry.internalBinaryWrite(
+        message.items[i],
+        writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* repeated soulfire.v1.RegistryEntry biomes = 4; */
+    for (let i = 0; i < message.biomes.length; i++)
+      RegistryEntry.internalBinaryWrite(
+        message.biomes[i],
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GetRegistryDataResponse
+ */
+export const GetRegistryDataResponse = new GetRegistryDataResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.ScriptService
  */
@@ -5139,5 +5711,11 @@ export const ScriptService = new ServiceType("soulfire.v1.ScriptService", [
     options: {},
     I: GetNodeTypesRequest,
     O: GetNodeTypesResponse,
+  },
+  {
+    name: "GetRegistryData",
+    options: {},
+    I: GetRegistryDataRequest,
+    O: GetRegistryDataResponse,
   },
 ]);
