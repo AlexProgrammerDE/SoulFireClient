@@ -14,6 +14,9 @@ import {
   type PortDefinition,
 } from "./types";
 
+// Stable empty object to avoid creating new references in selectors
+const EMPTY_PREVIEW_VALUES: Record<string, unknown> = {};
+
 export interface BaseNodeData {
   label?: string;
   isActive?: boolean;
@@ -184,7 +187,7 @@ function BaseNodeComponent({
     s.previewEnabledNodes.has(id),
   );
   const previewValues = useScriptEditorStore(
-    (s) => s.previewValues.get(id) ?? {},
+    (s) => s.previewValues.get(id) ?? EMPTY_PREVIEW_VALUES,
   );
 
   // Get translated label, fall back to definition label
