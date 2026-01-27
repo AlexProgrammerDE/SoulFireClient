@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 
 const SHORTCUTS = [
+  { keys: "Ctrl + A", action: "Select all nodes" },
   { keys: "Shift + A", action: "Quick add menu" },
   { keys: "Tab", action: "Enter/Exit group" },
   { keys: "M", action: "Toggle mute node" },

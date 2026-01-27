@@ -106,6 +106,7 @@ export function ScriptEditor() {
   const insertReroute = useScriptEditorStore((state) => state.insertReroute);
 
   // Selection actions
+  const selectAll = useScriptEditorStore((state) => state.selectAll);
   const selectLinked = useScriptEditorStore((state) => state.selectLinked);
   const selectSimilar = useScriptEditorStore((state) => state.selectSimilar);
 
@@ -157,6 +158,17 @@ export function ScriptEditor() {
       }
 
       const selectedNodes = nodes.filter((n) => n.selected);
+
+      // Ctrl+A - Select all nodes
+      if (
+        (event.key === "a" || event.key === "A") &&
+        (event.ctrlKey || event.metaKey) &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+        selectAll();
+        return;
+      }
 
       // Delete/Backspace - Delete selected
       if (event.key === "Delete" || event.key === "Backspace") {
@@ -311,7 +323,7 @@ export function ScriptEditor() {
         !event.shiftKey
       ) {
         event.preventDefault();
-        copySelected();
+        void copySelected();
         return;
       }
 
@@ -330,7 +342,7 @@ export function ScriptEditor() {
             x: centerX,
             y: centerY,
           });
-          pasteFromClipboard(flowPosition);
+          void pasteFromClipboard(flowPosition);
         }
         return;
       }
@@ -432,6 +444,7 @@ export function ScriptEditor() {
       exitGroup,
       copySelected,
       pasteFromClipboard,
+      selectAll,
       selectLinked,
       selectSimilar,
       alignNodes,

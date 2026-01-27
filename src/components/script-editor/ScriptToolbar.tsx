@@ -1,16 +1,19 @@
 import { Link } from "@tanstack/react-router";
 import {
   ArrowLeftIcon,
+  DownloadIcon,
   LoaderCircleIcon,
   PlayIcon,
   SaveIcon,
   SquareIcon,
   Trash2Icon,
+  UploadIcon,
   ZoomInIcon,
   ZoomOutIcon,
 } from "lucide-react";
-import { useId, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
@@ -53,14 +56,82 @@ export function ScriptToolbar({
   const { t } = useTranslation("instance");
   const scriptName = useScriptEditorStore((state) => state.scriptName);
   const setScriptName = useScriptEditorStore((state) => state.setScriptName);
+  const scriptDescription = useScriptEditorStore(
+    (state) => state.scriptDescription,
+  );
   const isDirty = useScriptEditorStore((state) => state.isDirty);
   const isActive = useScriptEditorStore((state) => state.isActive);
   const autoStart = useScriptEditorStore((state) => state.autoStart);
   const setAutoStart = useScriptEditorStore((state) => state.setAutoStart);
+  const nodes = useScriptEditorStore((state) => state.nodes);
+  const edges = useScriptEditorStore((state) => state.edges);
+  const loadScriptData = useScriptEditorStore((state) => state.loadScriptData);
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState(scriptName);
   const autoStartId = useId();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleExport = () => {
+    const exportData = {
+      version: 1,
+      name: scriptName,
+      description: scriptDescription,
+      autoStart,
+      nodes,
+      edges,
+      exportedAt: new Date().toISOString(),
+    };
+
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${scriptName.replace(/[^a-z0-9]/gi, "_")}.soulfire-script.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    toast.success(t("scripts.editor.toolbar.exportSuccess"));
+  };
+
+  const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const content = e.target?.result as string;
+        const importData = JSON.parse(content);
+
+        if (!importData.nodes || !importData.edges) {
+          throw new Error("Invalid script file format");
+        }
+
+        loadScriptData({
+          nodes: importData.nodes,
+          edges: importData.edges,
+          name: importData.name ?? scriptName,
+          description: importData.description ?? scriptDescription,
+          autoStart: importData.autoStart ?? false,
+        });
+
+        toast.success(t("scripts.editor.toolbar.importSuccess"));
+      } catch {
+        toast.error(t("scripts.editor.toolbar.importError"));
+      }
+    };
+    reader.readAsText(file);
+
+    // Reset file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   const handleNameSubmit = () => {
     setIsEditingName(false);
@@ -231,6 +302,43 @@ export function ScriptToolbar({
       </Tooltip>
 
       <div className="flex-1" />
+
+      {/* Export/Import */}
+      <div className="flex items-center gap-1">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant="ghost" size="icon" onClick={handleExport}>
+              <DownloadIcon className="size-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{t("scripts.editor.toolbar.export")}</p>
+          </TooltipContent>
+        </Tooltip>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => fileInputRef.current?.click()}
+            >
+              <UploadIcon className="size-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>{t("scripts.editor.toolbar.import")}</p>
+          </TooltipContent>
+        </Tooltip>
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".json,.soulfire-script.json"
+          onChange={handleImport}
+          className="hidden"
+        />
+      </div>
+
+      <Separator orientation="vertical" className="h-6 my-auto" />
 
       {/* Clear Button */}
       {onClear && (

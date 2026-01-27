@@ -332,7 +332,12 @@
         "clearCanvas": "Clear canvas",
         "zoomIn": "Zoom in",
         "zoomOut": "Zoom out",
-        "fit": "Fit"
+        "fit": "Fit",
+        "export": "Export script",
+        "import": "Import script",
+        "exportSuccess": "Script exported successfully",
+        "importSuccess": "Script imported successfully",
+        "importError": "Failed to import script"
       },
       "palette": {
         "title": "Node Palette",

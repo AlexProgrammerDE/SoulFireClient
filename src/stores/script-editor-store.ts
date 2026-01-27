@@ -16,6 +16,11 @@ import {
   isTypeCompatible,
   type PortType,
 } from "@/components/script-editor/nodes/types";
+import {
+  copyToScriptClipboard,
+  hasScriptClipboardData,
+  readFromScriptClipboard,
+} from "@/lib/script-clipboard";
 
 export type { PortType };
 
@@ -120,13 +125,16 @@ export interface ScriptEditorState {
   ) => Array<{ value: unknown; timestamp: Date }>;
 
   // Selection actions
+  selectAll: () => void;
+  deselectAll: () => void;
   selectLinked: (direction: "upstream" | "downstream" | "both") => void;
   selectSimilar: () => void;
+  selectShortestPath: (fromNodeId: string, toNodeId: string) => void;
 
   // Clipboard actions
-  copySelected: () => void;
-  pasteFromClipboard: (position: XYPosition) => void;
-  canPaste: () => boolean;
+  copySelected: () => Promise<void>;
+  pasteFromClipboard: (position: XYPosition) => Promise<void>;
+  canPaste: () => Promise<boolean>;
 
   // Alignment actions
   alignNodes: (
@@ -181,6 +189,13 @@ export interface ScriptEditorState {
     autoStart: boolean;
     nodes: Node[];
     edges: Edge[];
+  }) => void;
+  loadScriptData: (data: {
+    nodes: Node[];
+    edges: Edge[];
+    name?: string;
+    description?: string;
+    autoStart?: boolean;
   }) => void;
   resetEditor: () => void;
   getScriptData: () => {
@@ -1113,6 +1128,88 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   },
 
   // Selection actions
+  selectAll: () => {
+    const { nodes, groupEditStack } = get();
+    const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
+
+    // Select all nodes in current view
+    set({
+      nodes: nodes.map((n) => {
+        const nodeGroupId = (n.data.parentGroupId as string) ?? null;
+        if (nodeGroupId !== currentGroupId) return n;
+        return { ...n, selected: true };
+      }),
+    });
+  },
+
+  deselectAll: () => {
+    const { nodes } = get();
+    set({
+      nodes: nodes.map((n) => ({ ...n, selected: false })),
+    });
+  },
+
+  selectShortestPath: (fromNodeId, toNodeId) => {
+    const { nodes, edges, groupEditStack } = get();
+    const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
+
+    // Build undirected adjacency list (treat edges as bidirectional for path finding)
+    const adjacency = new Map<string, string[]>();
+    for (const edge of edges) {
+      if (!adjacency.has(edge.source)) adjacency.set(edge.source, []);
+      if (!adjacency.has(edge.target)) adjacency.set(edge.target, []);
+      adjacency.get(edge.source)?.push(edge.target);
+      adjacency.get(edge.target)?.push(edge.source);
+    }
+
+    // BFS to find shortest path
+    const visited = new Set<string>();
+    const parent = new Map<string, string>();
+    const queue: string[] = [fromNodeId];
+    visited.add(fromNodeId);
+
+    while (queue.length > 0) {
+      const current = queue.shift();
+      if (!current) continue;
+
+      if (current === toNodeId) break;
+
+      for (const neighbor of adjacency.get(current) ?? []) {
+        if (!visited.has(neighbor)) {
+          visited.add(neighbor);
+          parent.set(neighbor, current);
+          queue.push(neighbor);
+        }
+      }
+    }
+
+    // Reconstruct path
+    const pathNodes = new Set<string>();
+    if (visited.has(toNodeId)) {
+      let current: string | undefined = toNodeId;
+      while (current) {
+        pathNodes.add(current);
+        current = parent.get(current);
+      }
+    }
+
+    // If no path found, just select both nodes
+    if (pathNodes.size === 0) {
+      pathNodes.add(fromNodeId);
+      pathNodes.add(toNodeId);
+    }
+
+    // Update selection (add path nodes to current selection)
+    set({
+      nodes: nodes.map((n) => {
+        const nodeGroupId = (n.data.parentGroupId as string) ?? null;
+        if (nodeGroupId !== currentGroupId) return n;
+        if (pathNodes.has(n.id)) return { ...n, selected: true };
+        return n;
+      }),
+    });
+  },
+
   selectLinked: (direction) => {
     const { nodes, edges, groupEditStack } = get();
     const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
@@ -1202,7 +1299,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   },
 
   // Clipboard actions
-  copySelected: () => {
+  copySelected: async () => {
     const { nodes, edges, scriptId, groupEditStack } = get();
     const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
 
@@ -1222,17 +1319,25 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       (e) => selectedIds.has(e.source) && selectedIds.has(e.target),
     );
 
-    set({
-      clipboard: {
-        nodes: selectedNodes,
-        edges: selectedEdges,
-        sourceScriptId: scriptId,
-      },
-    });
+    const clipboardData = {
+      nodes: selectedNodes,
+      edges: selectedEdges,
+      sourceScriptId: scriptId,
+    };
+
+    // Save to store for immediate access
+    set({ clipboard: clipboardData });
+
+    // Save to system clipboard (and localStorage as fallback)
+    await copyToScriptClipboard(clipboardData);
   },
 
-  pasteFromClipboard: (position) => {
-    const { clipboard, nodes, edges, groupEditStack } = get();
+  pasteFromClipboard: async (position) => {
+    const { nodes, edges, groupEditStack } = get();
+
+    // Read from system clipboard (falls back to localStorage)
+    const clipboard = await readFromScriptClipboard();
+
     if (!clipboard || clipboard.nodes.length === 0) return;
 
     const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
@@ -1284,9 +1389,8 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     });
   },
 
-  canPaste: () => {
-    const { clipboard } = get();
-    return clipboard !== null && clipboard.nodes.length > 0;
+  canPaste: async () => {
+    return hasScriptClipboardData();
   },
 
   // Alignment actions
@@ -1587,6 +1691,26 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
         Array<{ value: unknown; timestamp: Date }>
       >(),
     }),
+
+  loadScriptData: (data) => {
+    const current = get();
+    set({
+      nodes: data.nodes,
+      edges: data.edges,
+      scriptName: data.name ?? current.scriptName,
+      scriptDescription: data.description ?? current.scriptDescription,
+      autoStart: data.autoStart ?? current.autoStart,
+      isDirty: true,
+      selectedNodeId: null,
+      groupEditStack: [],
+      previewEnabledNodes: new Set<string>(),
+      previewValues: new Map<string, Record<string, unknown>>(),
+      debugNodeValues: new Map<
+        string,
+        Array<{ value: unknown; timestamp: Date }>
+      >(),
+    });
+  },
 
   resetEditor: () =>
     set({
