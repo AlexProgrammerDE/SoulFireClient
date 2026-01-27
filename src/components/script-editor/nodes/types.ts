@@ -28,6 +28,12 @@ export interface PortDefinition {
   defaultValue?: string;
   description?: string;
   elementType?: PortType;
+  /** Whether this input accepts multiple connections (Blender-style multi-input) */
+  multiInput?: boolean;
+  /** For polymorphic ports, the list of accepted types */
+  acceptedTypes?: PortType[];
+  /** For dynamic output ports, the ID of the input port to inherit type from */
+  inferTypeFrom?: string;
 }
 
 export interface NodeDefinition {
@@ -44,6 +50,12 @@ export interface NodeDefinition {
   deprecated?: boolean;
   deprecationMessage?: string;
   color?: string;
+  /** Whether this is a layout node (reroute, frame, etc.) with special rendering */
+  isLayoutNode?: boolean;
+  /** Whether this node can be muted (bypassed during execution) */
+  supportsMuting?: boolean;
+  /** Whether this node supports inline preview of its output */
+  supportsPreview?: boolean;
 }
 
 export interface CategoryInfo {
@@ -101,6 +113,12 @@ export function protoPortToLocal(proto: ProtoPortDefinition): PortDefinition {
       proto.elementType !== undefined
         ? protoPortTypeToLocal(proto.elementType)
         : undefined,
+    multiInput: proto.multiInput || undefined,
+    acceptedTypes:
+      proto.acceptedTypes && proto.acceptedTypes.length > 0
+        ? proto.acceptedTypes.map(protoPortTypeToLocal)
+        : undefined,
+    inferTypeFrom: proto.inferTypeFrom || undefined,
   };
 }
 
@@ -144,6 +162,9 @@ export function protoNodeTypeToLocal(
     deprecated: proto.deprecated || undefined,
     deprecationMessage: proto.deprecationMessage || undefined,
     color: proto.color || undefined,
+    isLayoutNode: proto.isLayoutNode || undefined,
+    supportsMuting: proto.supportsMuting || undefined,
+    supportsPreview: proto.supportsPreview || undefined,
   };
 }
 

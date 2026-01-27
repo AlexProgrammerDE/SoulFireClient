@@ -12,12 +12,54 @@ export function getPortType(
 }
 
 /**
+ * Type conversion rules - Blender-style implicit conversions.
+ * Maps source type to array of compatible target types.
+ */
+const TYPE_CONVERSIONS: Record<string, string[]> = {
+  // Number can convert to string, boolean, vector3 (all components same)
+  number: ["string", "boolean"],
+  // Boolean can convert to string, number (0/1)
+  boolean: ["string", "number"],
+  // String can convert to number (parse), boolean (truthy check)
+  string: ["number", "boolean"],
+  // Vector3 can convert to list
+  vector3: ["list"],
+  // List can convert to string (join)
+  list: ["string"],
+  // Bot, entity, block, item have no implicit conversions
+  bot: [],
+  entity: [],
+  block: [],
+  item: [],
+};
+
+/**
+ * Check if a source type can be converted to a target type.
+ */
+export function canConvertType(
+  sourceType: string,
+  targetType: string,
+): boolean {
+  // Same type always works
+  if (sourceType === targetType) return true;
+
+  // Any type is universal
+  if (sourceType === "any" || targetType === "any") return true;
+
+  // Check explicit conversion rules
+  const conversions = TYPE_CONVERSIONS[sourceType];
+  if (conversions?.includes(targetType)) return true;
+
+  return false;
+}
+
+/**
  * Validates whether a connection between two handles is allowed based on their types.
  * Rules:
  * - Execution ports only connect to execution ports
  * - Any type can connect to anything (except execution)
  * - Same types can connect
- * - Number/boolean can connect to string (implicit conversion)
+ * - Implicit type conversions are supported (Blender-style)
  */
 export const isValidConnection: IsValidConnection = (
   connection: Edge | Connection,
@@ -31,15 +73,6 @@ export const isValidConnection: IsValidConnection = (
   if (sourceType === "exec" && targetType === "exec") return true;
   if (sourceType === "exec" || targetType === "exec") return false;
 
-  // Any type can connect to anything (except execution)
-  if (sourceType === "any" || targetType === "any") return true;
-
-  // Same types can connect
-  if (sourceType === targetType) return true;
-
-  // Number can connect to string (implicit conversion)
-  if (sourceType === "number" && targetType === "string") return true;
-  if (sourceType === "boolean" && targetType === "string") return true;
-
-  return false;
+  // Use the enhanced type conversion check
+  return canConvertType(sourceType, targetType);
 };

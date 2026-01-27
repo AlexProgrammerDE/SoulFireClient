@@ -11,12 +11,85 @@ import {
 import { TransportContext } from "@/components/providers/transport-context";
 import { nodeTypesQueryOptions } from "@/lib/script-service";
 import { createNodeComponent } from "./nodes/BaseNode";
+import { FrameNode } from "./nodes/FrameNode";
+import { GroupInputNode } from "./nodes/GroupInputNode";
+import { GroupNode } from "./nodes/GroupNode";
+import { GroupOutputNode } from "./nodes/GroupOutputNode";
+import { RerouteNode } from "./nodes/RerouteNode";
 import {
   type CategoryInfo,
   type NodeDefinition,
   protoCategoryToLocal,
   protoNodeTypeToLocal,
 } from "./nodes/types";
+
+// Client-side layout node definitions (not from server)
+const LAYOUT_NODE_DEFINITIONS: NodeDefinition[] = [
+  {
+    type: "layout.reroute",
+    label: "Reroute",
+    category: "layout",
+    icon: "Circle",
+    inputs: [{ id: "any-in", label: "", type: "any" }],
+    outputs: [{ id: "any-out", label: "", type: "any" }],
+    description: "A pass-through node for organizing connections",
+    isLayoutNode: true,
+    keywords: ["reroute", "redirect", "organize", "passthrough"],
+  },
+  {
+    type: "layout.frame",
+    label: "Frame",
+    category: "layout",
+    icon: "Square",
+    inputs: [],
+    outputs: [],
+    description: "A visual container for grouping related nodes",
+    isLayoutNode: true,
+    keywords: ["frame", "group", "organize", "container"],
+  },
+  {
+    type: "layout.group",
+    label: "Node Group",
+    category: "layout",
+    icon: "Layers",
+    inputs: [],
+    outputs: [],
+    description: "A reusable composite node containing a sub-graph",
+    isLayoutNode: true,
+    keywords: ["group", "subgraph", "reusable", "composite"],
+  },
+  {
+    type: "layout.group_input",
+    label: "Group Input",
+    category: "layout",
+    icon: "ArrowRightFromLine",
+    inputs: [],
+    outputs: [],
+    description: "Defines inputs for a node group (inside the group)",
+    isLayoutNode: true,
+    keywords: ["input", "group"],
+  },
+  {
+    type: "layout.group_output",
+    label: "Group Output",
+    category: "layout",
+    icon: "ArrowLeftFromLine",
+    inputs: [],
+    outputs: [],
+    description: "Defines outputs for a node group (inside the group)",
+    isLayoutNode: true,
+    keywords: ["output", "group"],
+  },
+];
+
+// Layout category info
+const LAYOUT_CATEGORY_INFO: CategoryInfo = {
+  id: "layout",
+  name: "Layout",
+  icon: "Layout",
+  description: "Nodes for organizing your script visually",
+  sortOrder: 1000, // Put at the end
+};
 
 export interface NodeTypesContextValue {
   /** All node definitions keyed by type */
@@ -59,12 +132,17 @@ export function NodeTypesProvider({
     nodeTypesQueryOptions(transport, { includeDeprecated }),
   );
 
-  // Convert proto definitions to local format
+  // Convert proto definitions to local format and add layout nodes
   const definitions = useMemo(() => {
     const result: Record<string, NodeDefinition> = {};
+    // Add server-provided node types
     for (const proto of data.nodeTypes) {
       const local = protoNodeTypeToLocal(proto);
       result[local.type] = local;
+    }
+    // Add client-side layout node types
+    for (const layoutNode of LAYOUT_NODE_DEFINITIONS) {
+      result[layoutNode.type] = layoutNode;
     }
     return result;
   }, [data.nodeTypes]);
@@ -73,26 +151,43 @@ export function NodeTypesProvider({
   const nodeTypes = useMemo(() => {
     const result: NodeTypes = {};
     for (const [type, definition] of Object.entries(definitions)) {
-      result[type] = createNodeComponent(definition);
+      // Use special components for layout nodes
+      if (type === "layout.reroute") {
+        result[type] = RerouteNode;
+      } else if (type === "layout.frame") {
+        result[type] = FrameNode;
+      } else if (type === "layout.group") {
+        result[type] = GroupNode;
+      } else if (type === "layout.group_input") {
+        result[type] = GroupInputNode;
+      } else if (type === "layout.group_output") {
+        result[type] = GroupOutputNode;
+      } else {
+        result[type] = createNodeComponent(definition);
+      }
     }
     return result;
   }, [definitions]);
 
-  // Convert and sort categories from server response
+  // Convert and sort categories from server response, add layout category
   const categoryInfo = useMemo(() => {
     const result: Record<string, CategoryInfo> = {};
     for (const proto of data.categories) {
       const local = protoCategoryToLocal(proto);
       result[local.id] = local;
     }
+    // Add layout category
+    result[LAYOUT_CATEGORY_INFO.id] = LAYOUT_CATEGORY_INFO;
     return result;
   }, [data.categories]);
 
   // Get sorted category IDs
   const categories = useMemo(() => {
-    return [...data.categories]
+    const serverCategories = [...data.categories]
       .sort((a, b) => a.sortOrder - b.sortOrder)
       .map((c) => c.id);
+    // Add layout category at the end
+    return [...serverCategories, LAYOUT_CATEGORY_INFO.id];
   }, [data.categories]);
 
   // Group nodes by category
