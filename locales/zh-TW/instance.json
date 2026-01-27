@@ -115,17 +115,17 @@
     "metadata": {
       "openButton": "編輯中繼資料",
       "title": "中繼資料：{{name}}",
-      "description": "",
-      "namespacePlaceholder": "",
-      "keyPlaceholder": "",
-      "valuePlaceholder": "",
-      "noEntries": "",
-      "addSuccess": "",
-      "addError": "",
-      "updateError": "",
-      "deleteSuccess": "",
-      "deleteError": "",
-      "duplicateError": ""
+      "description": "管理此帳戶的持久化中繼資料條目。每個條目都有命名空間、鍵和值（JSON 格式）。",
+      "namespacePlaceholder": "命名空間",
+      "keyPlaceholder": "鍵",
+      "valuePlaceholder": "值（JSON）",
+      "noEntries": "沒有中繼資料條目。請在上方新增一個。",
+      "addSuccess": "已新增條目",
+      "addError": "新增條目失敗",
+      "updateError": "更新條目失敗",
+      "deleteSuccess": "條目已刪除",
+      "deleteError": "刪除條目失敗",
+      "duplicateError": "具有相同命名空間和鍵的條目已存在"
     }
   },
   "bots": {
@@ -271,415 +271,415 @@
     }
   },
   "scripts": {
-    "title": "",
-    "description": "",
+    "title": "視覺腳本",
+    "description": "使用可視化節點編輯器建立自動化腳本。",
     "wipTitle": "視覺化腳本編輯器",
-    "wipDescription": "",
+    "wipDescription": "使用可視化節點編輯器建立自動化腳本。",
     "wipDetails": "此功能目前開發中，全新視覺化腳本編輯器將允許您使用拖放介面建立自動化腳本，無需撰寫任何程式碼。",
-    "createScript": "",
-    "createScriptTitle": "",
-    "createScriptDescription": "",
-    "scriptName": "",
-    "scriptNamePlaceholder": "",
-    "scriptDescription": "",
-    "scriptDescriptionPlaceholder": "",
+    "createScript": "建立腳本",
+    "createScriptTitle": "建立新腳本",
+    "createScriptDescription": "為此實例建立新的視覺腳本。腳本可自動化機器人行為並回應事件。",
+    "scriptName": "腳本名稱",
+    "scriptNamePlaceholder": "輸入腳本名稱...",
+    "scriptDescription": "描述",
+    "scriptDescriptionPlaceholder": "描述此腳本的功能...",
     "create": "建立",
-    "createSuccess": "",
-    "createError": "",
-    "noScripts": "",
-    "noScriptsDescription": "",
-    "createFirstScript": "",
-    "running": "執行中",
-    "nodes": "",
-    "noDescription": "",
-    "edit": "",
-    "start": "開始",
-    "stop": "停止",
-    "delete": "",
-    "deleteSuccess": "",
-    "deleteError": "",
-    "saveSuccess": "",
-    "saveError": "",
-    "startSuccess": "",
-    "startError": "",
-    "stopSuccess": "",
-    "stopError": "",
-    "untitledScript": "",
-    "saveFirstBeforeRunning": "",
-    "executionStarting": "",
-    "executionStarted": "",
-    "executionCompleted": "",
-    "executionCompletedSuccess": "",
-    "executionStopped": "",
-    "executionStoppedByUser": "",
-    "executionFailed": "",
-    "executionError": "",
-    "nodeStarted": "",
-    "nodeCompleted": "",
-    "nodeError": "",
+    "createSuccess": "腳本建立成功",
+    "createError": "腳本建立失敗",
+    "noScripts": "尚無腳本",
+    "noScriptsDescription": "建立您的第一個腳本，透過可視化節點編輯器自動化機器人動作。",
+    "createFirstScript": "建立您的第一個腳本",
+    "active": "啟用中",
+    "nodes": "節點",
+    "noDescription": "無描述",
+    "edit": "編輯",
+    "activate": "",
+    "deactivate": "",
+    "delete": "刪除",
+    "deleteSuccess": "腳本刪除成功",
+    "deleteError": "腳本刪除失敗",
+    "saveSuccess": "腳本儲存成功",
+    "saveError": "腳本儲存失敗",
+    "activateSuccess": "",
+    "activateError": "",
+    "deactivateSuccess": "",
+    "deactivateError": "",
+    "untitledScript": "未命名腳本",
+    "saveFirstBeforeActivating": "",
+    "activating": "",
+    "activated": "",
+    "executionCompleted": "腳本完成",
+    "executionCompletedSuccess": "腳本順利完成",
+    "deactivated": "",
+    "deactivatedByUser": "",
+    "executionFailed": "腳本執行失敗",
+    "executionError": "執行錯誤：{{error}}",
+    "nodeStarted": "節點已啟動：{{nodeId}}",
+    "nodeCompleted": "節點完成：{{nodeId}}",
+    "nodeError": "節點錯誤：{{error}}",
     "editor": {
       "toolbar": {
-        "backToScripts": "",
+        "backToScripts": "返回腳本",
         "save": "儲存",
-        "saveTooltip": "",
+        "saveTooltip": "儲存腳本（Ctrl+S）",
         "run": "",
         "runTooltip": "",
-        "stop": "停止",
-        "stopTooltip": "",
-        "autoStart": "",
+        "deactivate": "",
+        "deactivateTooltip": "",
+        "autoStart": "自動啟動",
         "autoStartTooltip": "",
-        "unsaved": "",
-        "clearCanvas": "",
-        "zoomIn": "",
-        "zoomOut": "",
-        "fit": ""
+        "unsaved": "未儲存",
+        "clearCanvas": "清除畫布",
+        "zoomIn": "放大",
+        "zoomOut": "縮小",
+        "fit": "適合"
       },
       "palette": {
-        "title": "",
-        "search": "",
+        "title": "節點面板",
+        "search": "搜尋節點...",
         "categories": {
-          "trigger": "",
+          "trigger": "觸發器",
           "action": "動作",
-          "flow": "",
-          "math": "",
-          "logic": "",
-          "data": "",
-          "bot": "",
-          "world": ""
+          "flow": "流程控制",
+          "math": "數學",
+          "logic": "邏輯",
+          "data": "資料",
+          "bot": "機器人",
+          "world": "世界"
         }
       },
       "inspector": {
-        "title": "",
-        "noSelection": "",
-        "properties": "",
-        "nodeId": "",
-        "inputs": "",
-        "outputs": "",
-        "selectPlaceholder": ""
+        "title": "節點檢查器",
+        "noSelection": "選擇節點以查看其屬性",
+        "properties": "屬性",
+        "nodeId": "節點 ID",
+        "inputs": "輸入",
+        "outputs": "輸出",
+        "selectPlaceholder": "選擇..."
       },
       "logs": {
-        "title": "",
-        "clear": "",
-        "clearTitle": "",
-        "noLogs": "",
-        "entries_other": ""
+        "title": "執行紀錄",
+        "clear": "清除紀錄",
+        "clearTitle": "清除紀錄",
+        "noLogs": "尚無紀錄。執行腳本以查看執行紀錄。",
+        "entries_other": "{{count}} 筆紀錄"
       },
       "contextMenu": {
-        "duplicate": "",
-        "disconnectAll": "",
-        "delete": ""
+        "duplicate": "複製",
+        "disconnectAll": "全部斷開連線",
+        "delete": "刪除"
       },
       "ports": {
-        "exec": "",
-        "execIn": "",
-        "execOut": "",
-        "execTrue": "",
-        "execFalse": "",
-        "execLoop": "",
-        "execDone": ""
+        "exec": "執行",
+        "execIn": "執行輸入",
+        "execOut": "執行輸出",
+        "execTrue": "為真",
+        "execFalse": "為假",
+        "execLoop": "循環",
+        "execDone": "完成"
       },
       "fields": {
         "value": "數值",
-        "interval": "",
-        "variableName": "",
-        "level": "",
-        "levelDebug": "",
-        "levelInfo": "",
-        "levelWarn": "",
+        "interval": "間隔 (毫秒)",
+        "variableName": "變數名稱",
+        "level": "日誌等級",
+        "levelDebug": "除錯",
+        "levelInfo": "資訊",
+        "levelWarn": "警告",
         "levelError": "錯誤",
-        "x": "",
-        "y": "",
-        "z": "",
-        "min": "",
-        "max": "",
-        "degree": "",
-        "operator": "",
-        "operatorEqual": "",
-        "operatorNotEqual": "",
-        "operatorLess": "",
-        "operatorLessEqual": "",
-        "operatorGreater": "",
-        "operatorGreaterEqual": "",
-        "comparison": "",
-        "comparisonEqual": "",
-        "comparisonNotEqual": "",
-        "comparisonGreater": "",
-        "comparisonLess": "",
-        "comparisonGreaterEqual": "",
-        "comparisonLessEqual": "",
-        "formula": "",
-        "message": "",
-        "iterations": "",
-        "minValue": "",
-        "maxValue": "",
+        "x": "X",
+        "y": "Y",
+        "z": "Z",
+        "min": "最小值",
+        "max": "最大值",
+        "degree": "度數",
+        "operator": "運算子",
+        "operatorEqual": "等於（==）",
+        "operatorNotEqual": "不等於（!=）",
+        "operatorLess": "小於（<）",
+        "operatorLessEqual": "小於等於（<=）",
+        "operatorGreater": "大於（>）",
+        "operatorGreaterEqual": "大於等於（>=）",
+        "comparison": "比較",
+        "comparisonEqual": "等於（==）",
+        "comparisonNotEqual": "不等於（!=）",
+        "comparisonGreater": "大於（>）",
+        "comparisonLess": "小於（<）",
+        "comparisonGreaterEqual": "大於等於（>=）",
+        "comparisonLessEqual": "小於等於（<=）",
+        "formula": "公式",
+        "message": "訊息",
+        "iterations": "迭代次數",
+        "minValue": "最小值",
+        "maxValue": "最大值",
         "start": "開始",
-        "end": "",
+        "end": "結束",
         "amount": "數量",
-        "blockType": "",
-        "radius": "",
-        "timeout": "",
-        "slot": "",
-        "count": "",
-        "entityType": "",
-        "smooth": "",
-        "enabled": "",
-        "hand": "",
-        "handMain": "",
-        "handOff": "",
-        "face": "",
-        "faceUp": "",
-        "faceDown": "",
-        "faceNorth": "",
-        "faceSouth": "",
-        "faceEast": "",
-        "faceWest": "",
-        "ticks": "",
-        "range": "",
-        "loopCount": "",
-        "open": "",
-        "delay": ""
+        "blockType": "方塊類型",
+        "radius": "半徑",
+        "timeout": "逾時 (毫秒)",
+        "slot": "欄位",
+        "count": "數量",
+        "entityType": "實體類型",
+        "smooth": "平滑",
+        "enabled": "啟用",
+        "hand": "手",
+        "handMain": "主手",
+        "handOff": "副手",
+        "face": "面",
+        "faceUp": "上",
+        "faceDown": "下",
+        "faceNorth": "北",
+        "faceSouth": "南",
+        "faceEast": "東",
+        "faceWest": "西",
+        "ticks": "刻",
+        "range": "範圍",
+        "loopCount": "循環次數",
+        "open": "開啟",
+        "delay": "延遲 (毫秒)"
       },
       "nodes": {
         "trigger": {
           "on_tick": {
-            "label": "",
-            "description": ""
+            "label": "每刻執行",
+            "description": "每個遊戲刻都會觸發（每秒 20 次）"
           },
           "on_join": {
-            "label": "",
-            "description": ""
+            "label": "加入時",
+            "description": "當機器人進入伺服器時觸發"
           },
           "on_chat": {
-            "label": "",
-            "description": ""
+            "label": "聊天時",
+            "description": "收到聊天訊息時觸發"
           },
           "on_damage": {
-            "label": "",
-            "description": ""
+            "label": "受傷時",
+            "description": "當機器人受到傷害時觸發"
           },
           "on_death": {
-            "label": "",
-            "description": ""
+            "label": "死亡時",
+            "description": "當機器人死亡時觸發"
           },
           "on_health_change": {
-            "label": "",
-            "description": ""
+            "label": "生命值變化時",
+            "description": "當機器人生命值變化時觸發"
           },
           "on_interval": {
-            "label": "",
-            "description": ""
+            "label": "間隔時",
+            "description": "每到可設定的時間間隔時觸發"
           }
         },
         "math": {
           "add": {
             "label": "新增",
-            "description": ""
+            "description": "將兩個數字相加"
           },
           "subtract": {
-            "label": "",
-            "description": ""
+            "label": "減法",
+            "description": "用第一個數字減去第二個數字"
           },
           "multiply": {
-            "label": "",
-            "description": ""
+            "label": "乘法",
+            "description": "將兩個數字相乘"
           },
           "divide": {
-            "label": "",
-            "description": ""
+            "label": "除法",
+            "description": "用第一個數字除以第二個數字"
           },
           "modulo": {
-            "label": "",
-            "description": ""
+            "label": "取餘數",
+            "description": "返回除法的餘數"
           },
           "formula": {
-            "label": "",
-            "description": ""
+            "label": "公式",
+            "description": "計算數學公式"
           },
           "random": {
-            "label": "",
-            "description": ""
+            "label": "隨機",
+            "description": "生成介於最小值和最大值之間的隨機數"
           },
           "clamp": {
-            "label": "",
-            "description": ""
+            "label": "限制值",
+            "description": "限制值在最小值和最大值之間"
           },
           "lerp": {
-            "label": "",
-            "description": ""
+            "label": "線性插值",
+            "description": "在兩個數值間進行線性插值"
           },
           "bspline": {
-            "label": "",
-            "description": ""
+            "label": "B-樣條曲線",
+            "description": "以 B-樣條曲線進行插值"
           }
         },
         "logic": {
           "compare": {
-            "label": "",
-            "description": ""
+            "label": "比較",
+            "description": "比較兩個數值"
           },
           "and": {
-            "label": "",
-            "description": ""
+            "label": "且（And）",
+            "description": "對兩個布林值進行邏輯 AND"
           },
           "or": {
-            "label": "",
-            "description": ""
+            "label": "或（Or）",
+            "description": "對兩個布林值進行邏輯 OR"
           },
           "not": {
-            "label": "",
-            "description": ""
+            "label": "非（Not）",
+            "description": "對布林值進行邏輯 NOT"
           },
           "xor": {
-            "label": "",
-            "description": ""
+            "label": "異或（XOR）",
+            "description": "對兩個布林值進行邏輯 XOR"
           }
         },
         "flow": {
           "branch": {
-            "label": "",
-            "description": ""
+            "label": "分支",
+            "description": "根據布林值判斷分支"
           },
           "switch": {
-            "label": "",
-            "description": ""
+            "label": "切換",
+            "description": "根據數值進行多路分支"
           },
           "loop": {
-            "label": "",
-            "description": ""
+            "label": "循環",
+            "description": "重複執行指定次數"
           },
           "for_each": {
-            "label": "",
-            "description": ""
+            "label": "逐一遍歷",
+            "description": "遍歷一個集合"
           },
           "sequence": {
-            "label": "",
-            "description": ""
+            "label": "序列",
+            "description": "按序執行所有輸出"
           },
           "gate": {
-            "label": "",
-            "description": ""
+            "label": "閘門",
+            "description": "根據閘門狀態控制流程"
           },
           "debounce": {
-            "label": "",
-            "description": ""
+            "label": "抗抖動",
+            "description": "防止過快重複執行"
           }
         },
         "action": {
           "set_rotation": {
-            "label": "",
-            "description": ""
+            "label": "設置旋轉",
+            "description": "設置機器人旋轉"
           },
           "look_at": {
-            "label": "",
-            "description": ""
+            "label": "看向",
+            "description": "看向某個位置或實體"
           },
           "sneak": {
             "label": "潛行",
-            "description": ""
+            "description": "切換潛行狀態"
           },
           "sprint": {
             "label": "疾跑",
-            "description": ""
+            "description": "切換衝刺狀態"
           },
           "jump": {
             "label": "跳躍",
-            "description": ""
+            "description": "使機器人跳躍"
           },
           "attack": {
-            "label": "",
-            "description": ""
+            "label": "攻擊",
+            "description": "攻擊實體"
           },
           "use_item": {
-            "label": "",
-            "description": ""
+            "label": "使用物品",
+            "description": "使用指定手中的物品"
           },
           "pathfind_to": {
-            "label": "",
-            "description": ""
+            "label": "路徑尋找",
+            "description": "尋找至目標位置的路徑"
           },
           "break_block": {
-            "label": "",
-            "description": ""
+            "label": "破壞方塊",
+            "description": "在指定位置破壞方塊"
           },
           "place_block": {
-            "label": "",
-            "description": ""
+            "label": "放置方塊",
+            "description": "在指定位置放置方塊"
           },
           "select_slot": {
-            "label": "",
-            "description": ""
+            "label": "選擇欄位",
+            "description": "選擇快捷欄位"
           },
           "send_chat": {
-            "label": "",
-            "description": ""
+            "label": "發送聊天",
+            "description": "發送聊天訊息"
           },
           "wait": {
-            "label": "",
-            "description": ""
+            "label": "等待",
+            "description": "等待指定刻數"
           },
           "print": {
-            "label": "",
-            "description": ""
+            "label": "列印/打印",
+            "description": "記錄訊息以進行除錯"
           },
           "set_variable": {
-            "label": "",
-            "description": ""
+            "label": "設定變數",
+            "description": "將值儲存至變數中"
           }
         },
         "data": {
           "get_position": {
-            "label": "",
-            "description": ""
+            "label": "取得位置",
+            "description": "獲取機器人目前的位置"
           },
           "get_rotation": {
-            "label": "",
-            "description": ""
+            "label": "取得旋轉",
+            "description": "獲取機器人目前的旋轉狀態"
           },
           "get_health": {
-            "label": "",
-            "description": ""
+            "label": "取得生命值",
+            "description": "獲取機器人目前的生命值"
           },
           "get_hunger": {
-            "label": "",
-            "description": ""
+            "label": "取得飢餓值",
+            "description": "獲取機器人目前的飢餓程度"
           },
           "get_inventory": {
-            "label": "",
-            "description": ""
+            "label": "取得物品欄",
+            "description": "從物品欄中取得一項物品"
           },
           "get_block": {
-            "label": "",
-            "description": ""
+            "label": "取得方塊",
+            "description": "獲取某個位置的方塊"
           },
           "find_entity": {
-            "label": "",
-            "description": ""
+            "label": "尋找實體",
+            "description": "在附近尋找特定類型的實體"
           },
           "find_block": {
-            "label": "",
-            "description": ""
+            "label": "尋找方塊",
+            "description": "在附近尋找特定類型的方塊"
           },
           "get_variable": {
-            "label": "",
-            "description": ""
+            "label": "取得變數",
+            "description": "從變數中檢索值"
           }
         },
         "constant": {
           "number": {
-            "label": "",
-            "description": ""
+            "label": "數字",
+            "description": "常數數值"
           },
           "string": {
-            "label": "",
-            "description": ""
+            "label": "字串",
+            "description": "常數文字值"
           },
           "boolean": {
-            "label": "",
-            "description": ""
+            "label": "布林值",
+            "description": "常數真/假值"
           },
           "vector3": {
-            "label": "",
-            "description": ""
+            "label": "三維向量 (Vector3)",
+            "description": "常數三維座標（X, Y, Z）"
           }
         }
       }

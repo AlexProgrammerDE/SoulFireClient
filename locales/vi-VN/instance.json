@@ -115,17 +115,17 @@
     "metadata": {
       "openButton": "Chỉnh sửa Metadata",
       "title": "Metadata: {{name}}",
-      "description": "",
-      "namespacePlaceholder": "",
-      "keyPlaceholder": "",
-      "valuePlaceholder": "",
-      "noEntries": "",
-      "addSuccess": "",
-      "addError": "",
-      "updateError": "",
-      "deleteSuccess": "",
-      "deleteError": "",
-      "duplicateError": ""
+      "description": "Quản lý các mục siêu dữ liệu bền vững cho tài khoản này. Mỗi mục có một không gian tên, khóa và giá trị JSON.",
+      "namespacePlaceholder": "Không gian tên",
+      "keyPlaceholder": "Khóa",
+      "valuePlaceholder": "Giá trị (JSON)",
+      "noEntries": "Không có mục siêu dữ liệu nào. Thêm một mục ở trên.",
+      "addSuccess": "Đã thêm mục",
+      "addError": "Không thể thêm mục",
+      "updateError": "Không thể cập nhật mục",
+      "deleteSuccess": "Mục đã được xóa",
+      "deleteError": "Xóa mục thất bại",
+      "duplicateError": "Đã tồn tại một mục với namespace và khóa này"
     }
   },
   "bots": {
@@ -271,415 +271,415 @@
     }
   },
   "scripts": {
-    "title": "",
-    "description": "",
+    "title": "Visual Scripts",
+    "description": "Tạo script tự động hóa bằng trình chỉnh sửa dạng nút trực quan.",
     "wipTitle": "Trình chỉnh sửa Script trực quan",
-    "wipDescription": "",
+    "wipDescription": "Tạo script tự động hóa bằng trình chỉnh sửa dạng nút trực quan.",
     "wipDetails": "Tính năng này hiện đang phát triển. Trình chỉnh sửa script trực quan mới sẽ cho phép bạn tạo các script tự động mạnh mẽ bằng giao diện kéo thả mà không cần viết mã.",
-    "createScript": "",
-    "createScriptTitle": "",
-    "createScriptDescription": "",
-    "scriptName": "",
-    "scriptNamePlaceholder": "",
-    "scriptDescription": "",
-    "scriptDescriptionPlaceholder": "",
+    "createScript": "Tạo Script",
+    "createScriptTitle": "Tạo Script Mới",
+    "createScriptDescription": "Tạo một script trực quan mới cho phiên bản này. Script có thể tự động hóa hành động bot và phản hồi các sự kiện.",
+    "scriptName": "Tên Script",
+    "scriptNamePlaceholder": "Nhập tên script...",
+    "scriptDescription": "Mô tả",
+    "scriptDescriptionPlaceholder": "Mô tả về những gì script này làm...",
     "create": "Tạo",
-    "createSuccess": "",
-    "createError": "",
-    "noScripts": "",
-    "noScriptsDescription": "",
-    "createFirstScript": "",
-    "running": "Đang chạy",
-    "nodes": "",
-    "noDescription": "",
-    "edit": "",
-    "start": "Bắt đầu",
-    "stop": "Dừng lại",
-    "delete": "",
-    "deleteSuccess": "",
-    "deleteError": "",
-    "saveSuccess": "",
-    "saveError": "",
-    "startSuccess": "",
-    "startError": "",
-    "stopSuccess": "",
-    "stopError": "",
-    "untitledScript": "",
-    "saveFirstBeforeRunning": "",
-    "executionStarting": "",
-    "executionStarted": "",
-    "executionCompleted": "",
-    "executionCompletedSuccess": "",
-    "executionStopped": "",
-    "executionStoppedByUser": "",
-    "executionFailed": "",
-    "executionError": "",
-    "nodeStarted": "",
-    "nodeCompleted": "",
-    "nodeError": "",
+    "createSuccess": "Tạo script thành công",
+    "createError": "Tạo script thất bại",
+    "noScripts": "Chưa có Script nào",
+    "noScriptsDescription": "Tạo script đầu tiên của bạn để tự động hóa hành động bot bằng trình chỉnh sửa dạng nút trực quan.",
+    "createFirstScript": "Tạo Script Đầu Tiên Của Bạn",
+    "active": "Đang hoạt động",
+    "nodes": "nút",
+    "noDescription": "Không có mô tả",
+    "edit": "Chỉnh sửa",
+    "activate": "",
+    "deactivate": "",
+    "delete": "Xóa",
+    "deleteSuccess": "Xóa script thành công",
+    "deleteError": "Xóa script thất bại",
+    "saveSuccess": "Lưu script thành công",
+    "saveError": "Lưu script thất bại",
+    "activateSuccess": "",
+    "activateError": "",
+    "deactivateSuccess": "",
+    "deactivateError": "",
+    "untitledScript": "Script chưa đặt tên",
+    "saveFirstBeforeActivating": "",
+    "activating": "",
+    "activated": "",
+    "executionCompleted": "Script đã hoàn thành",
+    "executionCompletedSuccess": "Script hoàn thành thành công",
+    "deactivated": "",
+    "deactivatedByUser": "",
+    "executionFailed": "Thực thi script thất bại",
+    "executionError": "Lỗi thực thi: {{error}}",
+    "nodeStarted": "Node đã bắt đầu: {{nodeId}}",
+    "nodeCompleted": "Node đã hoàn thành: {{nodeId}}",
+    "nodeError": "Lỗi Node: {{error}}",
     "editor": {
       "toolbar": {
-        "backToScripts": "",
+        "backToScripts": "Quay lại Scripts",
         "save": "Lưu",
-        "saveTooltip": "",
+        "saveTooltip": "Lưu script (Ctrl+S)",
         "run": "",
         "runTooltip": "",
-        "stop": "Dừng lại",
-        "stopTooltip": "",
-        "autoStart": "",
+        "deactivate": "",
+        "deactivateTooltip": "",
+        "autoStart": "Tự động chạy",
         "autoStartTooltip": "",
-        "unsaved": "",
-        "clearCanvas": "",
-        "zoomIn": "",
-        "zoomOut": "",
-        "fit": ""
+        "unsaved": "Chưa lưu",
+        "clearCanvas": "Xóa canvas",
+        "zoomIn": "Phóng to",
+        "zoomOut": "Thu nhỏ",
+        "fit": "Căn khít"
       },
       "palette": {
-        "title": "",
-        "search": "",
+        "title": "Bảng Node",
+        "search": "Tìm kiếm node...",
         "categories": {
-          "trigger": "",
+          "trigger": "Triggers",
           "action": "Hành động",
-          "flow": "",
-          "math": "",
-          "logic": "",
-          "data": "",
-          "bot": "",
-          "world": ""
+          "flow": "Điều khiển luồng",
+          "math": "Toán học",
+          "logic": "Logic",
+          "data": "Dữ liệu",
+          "bot": "Bot",
+          "world": "Thế giới"
         }
       },
       "inspector": {
-        "title": "",
-        "noSelection": "",
-        "properties": "",
-        "nodeId": "",
-        "inputs": "",
-        "outputs": "",
-        "selectPlaceholder": ""
+        "title": "Kiểm tra Node",
+        "noSelection": "Chọn node để xem thuộc tính",
+        "properties": "Thuộc tính",
+        "nodeId": "ID Node",
+        "inputs": "Đầu vào",
+        "outputs": "Đầu ra",
+        "selectPlaceholder": "Chọn..."
       },
       "logs": {
-        "title": "",
-        "clear": "",
-        "clearTitle": "",
-        "noLogs": "",
-        "entries_other": ""
+        "title": "Nhật ký thực thi",
+        "clear": "Xóa nhật ký",
+        "clearTitle": "Xóa nhật ký",
+        "noLogs": "Chưa có nhật ký. Chạy script để xem nhật ký thực thi.",
+        "entries_other": "{{count}} mục ghi"
       },
       "contextMenu": {
-        "duplicate": "",
-        "disconnectAll": "",
-        "delete": ""
+        "duplicate": "Nhân bản",
+        "disconnectAll": "Ngắt kết nối tất cả",
+        "delete": "Xóa"
       },
       "ports": {
-        "exec": "",
-        "execIn": "",
-        "execOut": "",
-        "execTrue": "",
-        "execFalse": "",
-        "execLoop": "",
-        "execDone": ""
+        "exec": "Exec",
+        "execIn": "Exec In",
+        "execOut": "Exec Out",
+        "execTrue": "Đúng",
+        "execFalse": "Sai",
+        "execLoop": "Lặp",
+        "execDone": "Xong"
       },
       "fields": {
         "value": "Giá trị",
-        "interval": "",
-        "variableName": "",
-        "level": "",
-        "levelDebug": "",
-        "levelInfo": "",
-        "levelWarn": "",
+        "interval": "Khoảng thời gian (ms)",
+        "variableName": "Tên biến",
+        "level": "Mức nhật ký",
+        "levelDebug": "Gỡ lỗi",
+        "levelInfo": "Thông tin",
+        "levelWarn": "Cảnh báo",
         "levelError": "Lỗi",
-        "x": "",
-        "y": "",
-        "z": "",
-        "min": "",
-        "max": "",
-        "degree": "",
-        "operator": "",
-        "operatorEqual": "",
-        "operatorNotEqual": "",
-        "operatorLess": "",
-        "operatorLessEqual": "",
-        "operatorGreater": "",
-        "operatorGreaterEqual": "",
-        "comparison": "",
-        "comparisonEqual": "",
-        "comparisonNotEqual": "",
-        "comparisonGreater": "",
-        "comparisonLess": "",
-        "comparisonGreaterEqual": "",
-        "comparisonLessEqual": "",
-        "formula": "",
-        "message": "",
-        "iterations": "",
-        "minValue": "",
-        "maxValue": "",
+        "x": "X",
+        "y": "Y",
+        "z": "Z",
+        "min": "Min",
+        "max": "Tối đa",
+        "degree": "Độ",
+        "operator": "Toán tử",
+        "operatorEqual": "Bằng (==)",
+        "operatorNotEqual": "Không bằng (!=)",
+        "operatorLess": "Nhỏ hơn (<)",
+        "operatorLessEqual": "Nhỏ hơn hoặc bằng (<=)",
+        "operatorGreater": "Lớn hơn (>)",
+        "operatorGreaterEqual": "Lớn hơn hoặc bằng (>=)",
+        "comparison": "So sánh",
+        "comparisonEqual": "Bằng (==)",
+        "comparisonNotEqual": "Không bằng (!=)",
+        "comparisonGreater": "Lớn hơn (>)",
+        "comparisonLess": "Nhỏ hơn (<)",
+        "comparisonGreaterEqual": "Lớn hơn hoặc bằng (>=)",
+        "comparisonLessEqual": "Nhỏ hơn hoặc bằng (<=)",
+        "formula": "Công thức",
+        "message": "Tin nhắn",
+        "iterations": "Số lần lặp",
+        "minValue": "Giá trị nhỏ nhất",
+        "maxValue": "Giá trị lớn nhất",
         "start": "Bắt đầu",
-        "end": "",
+        "end": "Kết thúc",
         "amount": "Số lượng",
-        "blockType": "",
-        "radius": "",
-        "timeout": "",
-        "slot": "",
-        "count": "",
-        "entityType": "",
-        "smooth": "",
-        "enabled": "",
-        "hand": "",
-        "handMain": "",
-        "handOff": "",
-        "face": "",
-        "faceUp": "",
-        "faceDown": "",
-        "faceNorth": "",
-        "faceSouth": "",
-        "faceEast": "",
-        "faceWest": "",
-        "ticks": "",
-        "range": "",
-        "loopCount": "",
-        "open": "",
-        "delay": ""
+        "blockType": "Loại khối",
+        "radius": "Bán kính",
+        "timeout": "Thời gian chờ (ms)",
+        "slot": "Ô",
+        "count": "Số lượng",
+        "entityType": "Loại thực thể",
+        "smooth": "Mượt",
+        "enabled": "Bật",
+        "hand": "Tay",
+        "handMain": "Tay chính",
+        "handOff": "Tay phụ",
+        "face": "Mặt",
+        "faceUp": "Lên",
+        "faceDown": "Xuống",
+        "faceNorth": "Bắc",
+        "faceSouth": "Nam",
+        "faceEast": "Đông",
+        "faceWest": "Tây",
+        "ticks": "Ticks",
+        "range": "Khoảng",
+        "loopCount": "Số lần lặp vòng",
+        "open": "Mở",
+        "delay": "Độ trễ (ms)"
       },
       "nodes": {
         "trigger": {
           "on_tick": {
-            "label": "",
-            "description": ""
+            "label": "Khi Tick",
+            "description": "Kích hoạt mỗi tick trò chơi (20 lần mỗi giây)"
           },
           "on_join": {
-            "label": "",
-            "description": ""
+            "label": "Khi Tham Gia",
+            "description": "Kích hoạt khi bot tham gia máy chủ"
           },
           "on_chat": {
-            "label": "",
-            "description": ""
+            "label": "Khi Chat",
+            "description": "Kích hoạt khi nhận được tin nhắn chat"
           },
           "on_damage": {
-            "label": "",
-            "description": ""
+            "label": "Khi Bị Thương",
+            "description": "Kích hoạt khi bot bị thương"
           },
           "on_death": {
-            "label": "",
-            "description": ""
+            "label": "Khi Chết",
+            "description": "Kích hoạt khi bot chết"
           },
           "on_health_change": {
-            "label": "",
-            "description": ""
+            "label": "Khi Thay Đổi Máu",
+            "description": "Kích hoạt khi máu của bot thay đổi"
           },
           "on_interval": {
-            "label": "",
-            "description": ""
+            "label": "Theo Khoảng Thời Gian",
+            "description": "Kích hoạt theo khoảng thời gian có thể cấu hình"
           }
         },
         "math": {
           "add": {
             "label": "Thêm",
-            "description": ""
+            "description": "Cộng hai số lại với nhau"
           },
           "subtract": {
-            "label": "",
-            "description": ""
+            "label": "Trừ",
+            "description": "Trừ số thứ hai khỏi số đầu tiên"
           },
           "multiply": {
-            "label": "",
-            "description": ""
+            "label": "Nhân",
+            "description": "Nhân hai số lại với nhau"
           },
           "divide": {
-            "label": "",
-            "description": ""
+            "label": "Chia",
+            "description": "Chia số đầu tiên cho số thứ hai"
           },
           "modulo": {
-            "label": "",
-            "description": ""
+            "label": "Modulo",
+            "description": "Trả về phần dư của phép chia"
           },
           "formula": {
-            "label": "",
-            "description": ""
+            "label": "Công thức",
+            "description": "Đánh giá một công thức toán học"
           },
           "random": {
-            "label": "",
-            "description": ""
+            "label": "Ngẫu nhiên",
+            "description": "Tạo một số ngẫu nhiên giữa giá trị nhỏ nhất và lớn nhất"
           },
           "clamp": {
-            "label": "",
-            "description": ""
+            "label": "Giới hạn",
+            "description": "Giới hạn giá trị giữa nhỏ nhất và lớn nhất"
           },
           "lerp": {
-            "label": "",
-            "description": ""
+            "label": "Nội suy tuyến tính",
+            "description": "Nội suy tuyến tính giữa hai giá trị"
           },
           "bspline": {
-            "label": "",
-            "description": ""
+            "label": "B-Spline",
+            "description": "Nội suy sử dụng đường cong B-spline"
           }
         },
         "logic": {
           "compare": {
-            "label": "",
-            "description": ""
+            "label": "So sánh",
+            "description": "So sánh hai giá trị"
           },
           "and": {
-            "label": "",
-            "description": ""
+            "label": "Và",
+            "description": "AND logic giữa hai giá trị boolean"
           },
           "or": {
-            "label": "",
-            "description": ""
+            "label": "Hoặc",
+            "description": "OR logic giữa hai giá trị boolean"
           },
           "not": {
-            "label": "",
-            "description": ""
+            "label": "Phủ định",
+            "description": "NOT logic của một giá trị boolean"
           },
           "xor": {
-            "label": "",
-            "description": ""
+            "label": "XOR",
+            "description": "XOR logic của hai giá trị boolean"
           }
         },
         "flow": {
           "branch": {
-            "label": "",
-            "description": ""
+            "label": "Nhánh",
+            "description": "Nhánh điều kiện dựa trên giá trị boolean"
           },
           "switch": {
-            "label": "",
-            "description": ""
+            "label": "Chuyển đổi",
+            "description": "Nhánh nhiều hướng dựa trên một giá trị"
           },
           "loop": {
-            "label": "",
-            "description": ""
+            "label": "Lặp",
+            "description": "Lặp lại thực thi nhiều lần"
           },
           "for_each": {
-            "label": "",
-            "description": ""
+            "label": "For Each",
+            "description": "Lặp qua một bộ sưu tập"
           },
           "sequence": {
-            "label": "",
-            "description": ""
+            "label": "Chuỗi",
+            "description": "Thực thi đầu ra lần lượt"
           },
           "gate": {
-            "label": "",
-            "description": ""
+            "label": "Cổng",
+            "description": "Điều khiển luồng dựa trên trạng thái cổng"
           },
           "debounce": {
-            "label": "",
-            "description": ""
+            "label": "Giảm nhiễu",
+            "description": "Ngăn chặn thực thi lặp lại nhanh"
           }
         },
         "action": {
           "set_rotation": {
-            "label": "",
-            "description": ""
+            "label": "Đặt hướng quay",
+            "description": "Đặt hướng quay cho bot"
           },
           "look_at": {
-            "label": "",
-            "description": ""
+            "label": "Nhìn vào",
+            "description": "Nhìn vào một vị trí hoặc thực thể"
           },
           "sneak": {
             "label": "Cúi",
-            "description": ""
+            "description": "Chuyển đổi trạng thái đi khom"
           },
           "sprint": {
             "label": "Chạy nước rút",
-            "description": ""
+            "description": "Chuyển đổi trạng thái chạy nhanh"
           },
           "jump": {
             "label": "Nhảy",
-            "description": ""
+            "description": "Làm cho bot nhảy"
           },
           "attack": {
-            "label": "",
-            "description": ""
+            "label": "Tấn công",
+            "description": "Tấn công một thực thể"
           },
           "use_item": {
-            "label": "",
-            "description": ""
+            "label": "Sử dụng vật phẩm",
+            "description": "Sử dụng vật phẩm ở tay được chỉ định"
           },
           "pathfind_to": {
-            "label": "",
-            "description": ""
+            "label": "Tìm đường tới",
+            "description": "Tìm đường đến một vị trí mục tiêu"
           },
           "break_block": {
-            "label": "",
-            "description": ""
+            "label": "Phá khối",
+            "description": "Phá một khối tại vị trí"
           },
           "place_block": {
-            "label": "",
-            "description": ""
+            "label": "Đặt khối",
+            "description": "Đặt một khối tại vị trí"
           },
           "select_slot": {
-            "label": "",
-            "description": ""
+            "label": "Chọn ô",
+            "description": "Chọn một ô hotbar"
           },
           "send_chat": {
-            "label": "",
-            "description": ""
+            "label": "Gửi chat",
+            "description": "Gửi một tin nhắn chat"
           },
           "wait": {
-            "label": "",
-            "description": ""
+            "label": "Đợi",
+            "description": "Đợi một số tick"
           },
           "print": {
-            "label": "",
-            "description": ""
+            "label": "In ra",
+            "description": "Ghi nhật ký một thông báo để gỡ lỗi"
           },
           "set_variable": {
-            "label": "",
-            "description": ""
+            "label": "Đặt Biến",
+            "description": "Lưu một giá trị vào biến"
           }
         },
         "data": {
           "get_position": {
-            "label": "",
-            "description": ""
+            "label": "Lấy Vị trí",
+            "description": "Lấy vị trí hiện tại của bot"
           },
           "get_rotation": {
-            "label": "",
-            "description": ""
+            "label": "Lấy Góc quay",
+            "description": "Lấy góc quay hiện tại của bot"
           },
           "get_health": {
-            "label": "",
-            "description": ""
+            "label": "Lấy Máu",
+            "description": "Lấy lượng máu hiện tại của bot"
           },
           "get_hunger": {
-            "label": "",
-            "description": ""
+            "label": "Lấy Đói",
+            "description": "Lấy mức độ đói hiện tại của bot"
           },
           "get_inventory": {
-            "label": "",
-            "description": ""
+            "label": "Lấy Kho đồ",
+            "description": "Lấy một vật phẩm từ kho đồ"
           },
           "get_block": {
-            "label": "",
-            "description": ""
+            "label": "Lấy Khối",
+            "description": "Lấy khối tại một vị trí"
           },
           "find_entity": {
-            "label": "",
-            "description": ""
+            "label": "Tìm Thực thể",
+            "description": "Tìm một thực thể thuộc loại cụ thể ở gần"
           },
           "find_block": {
-            "label": "",
-            "description": ""
+            "label": "Tìm Khối",
+            "description": "Tìm một khối thuộc loại cụ thể ở gần"
           },
           "get_variable": {
-            "label": "",
-            "description": ""
+            "label": "Lấy Biến",
+            "description": "Lấy giá trị từ một biến"
           }
         },
         "constant": {
           "number": {
-            "label": "",
-            "description": ""
+            "label": "Số",
+            "description": "Một giá trị số hằng số"
           },
           "string": {
-            "label": "",
-            "description": ""
+            "label": "Chuỗi",
+            "description": "Một giá trị văn bản hằng số"
           },
           "boolean": {
-            "label": "",
-            "description": ""
+            "label": "Boolean",
+            "description": "Một giá trị đúng/sai hằng số"
           },
           "vector3": {
-            "label": "",
-            "description": ""
+            "label": "Vector3",
+            "description": "Một vị trí 3D hằng số (X, Y, Z)"
           }
         }
       }
