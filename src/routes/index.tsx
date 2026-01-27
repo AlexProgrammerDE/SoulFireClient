@@ -522,13 +522,7 @@ function IntegratedConfigureMenu({
     validators: {
       onSubmit: integratedServerFormSchema,
     },
-    onSubmit: async ({ value }) => {
-      const jvmArgs = value.jvmArgs.trim();
-      localStorage.setItem(
-        LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
-        jvmArgs,
-      );
-
+    onSubmit: async () => {
       if (systemInfo?.mobile) {
         setIntegratedState("mobile");
       } else {
@@ -570,7 +564,13 @@ function IntegratedConfigureMenu({
                       placeholder={t("integrated.form.jvmArgs.placeholder")}
                       value={field.state.value}
                       onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
+                      onChange={(e) => {
+                        field.handleChange(e.target.value);
+                        localStorage.setItem(
+                          LOCAL_STORAGE_FORM_INTEGRATED_SERVER_JVM_ARGS,
+                          e.target.value,
+                        );
+                      }}
                       aria-invalid={isInvalid}
                     />
                     <Button
@@ -676,10 +676,6 @@ function IntegratedMobileMenu({
     },
     onSubmit: async ({ value }) => {
       const token = value.token.trim();
-      localStorage.setItem(
-        LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY,
-        token,
-      );
       void redirectWithCredentials(
         "integrated",
         "http://localhost:38765",
@@ -765,7 +761,13 @@ function IntegratedMobileMenu({
                     placeholder={t("integrated.mobile.form.token.placeholder")}
                     value={field.state.value}
                     onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
+                    onChange={(e) => {
+                      field.handleChange(e.target.value);
+                      localStorage.setItem(
+                        LOCAL_STORAGE_FORM_MOBILE_INTEGRATED_SERVER_TOKEN_KEY,
+                        e.target.value,
+                      );
+                    }}
                     aria-invalid={isInvalid}
                   />
                   <FieldDescription>
@@ -856,10 +858,7 @@ function EmailForm({
     },
     onSubmit: async ({ value }) => {
       const address = value.address.trim();
-      localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY, address);
-
       const email = value.email.trim();
-      localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY, email);
       const loginService = new LoginServiceClient(
         createAddressOnlyTransport(address),
       );
@@ -919,7 +918,13 @@ function EmailForm({
                     placeholder={t("dedicated.form.address.placeholder")}
                     value={field.state.value}
                     onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
+                    onChange={(e) => {
+                      field.handleChange(e.target.value);
+                      localStorage.setItem(
+                        LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY,
+                        e.target.value,
+                      );
+                    }}
                     aria-invalid={isInvalid}
                   />
                   <FieldDescription>
@@ -946,7 +951,13 @@ function EmailForm({
                     placeholder={t("dedicated.form.email.placeholder")}
                     value={field.state.value}
                     onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
+                    onChange={(e) => {
+                      field.handleChange(e.target.value);
+                      localStorage.setItem(
+                        LOCAL_STORAGE_FORM_SERVER_EMAIL_KEY,
+                        e.target.value,
+                      );
+                    }}
                     aria-invalid={isInvalid}
                   />
                   <FieldDescription>
@@ -1013,10 +1024,7 @@ function TokenForm({
     },
     onSubmit: async ({ value }) => {
       const address = value.address.trim();
-      localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY, address);
-
       const token = value.token.trim();
-      localStorage.setItem(LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY, token);
       void redirectWithCredentials("dedicated", address, token);
     },
   });
@@ -1052,7 +1060,13 @@ function TokenForm({
                     placeholder={t("dedicated.form.address.placeholder")}
                     value={field.state.value}
                     onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
+                    onChange={(e) => {
+                      field.handleChange(e.target.value);
+                      localStorage.setItem(
+                        LOCAL_STORAGE_FORM_SERVER_ADDRESS_KEY,
+                        e.target.value,
+                      );
+                    }}
                     aria-invalid={isInvalid}
                   />
                   <FieldDescription>
@@ -1079,7 +1093,13 @@ function TokenForm({
                     placeholder={t("dedicated.form.token.placeholder")}
                     value={field.state.value}
                     onBlur={field.handleBlur}
-                    onChange={(e) => field.handleChange(e.target.value)}
+                    onChange={(e) => {
+                      field.handleChange(e.target.value);
+                      localStorage.setItem(
+                        LOCAL_STORAGE_FORM_SERVER_TOKEN_KEY,
+                        e.target.value,
+                      );
+                    }}
                     aria-invalid={isInvalid}
                   />
                   <FieldDescription>
