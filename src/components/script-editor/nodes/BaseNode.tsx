@@ -1,7 +1,6 @@
 import { type Edge, Handle, type NodeProps, Position } from "@xyflow/react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { memo, useCallback, useMemo } from "react";
-import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
 import { useNodeEditing } from "../NodeEditingContext";
@@ -179,8 +178,7 @@ function BaseNodeComponent({
   edges = [],
   onDataChange,
 }: BaseNodeProps) {
-  const { t } = useTranslation("instance");
-  const { inputs, outputs, type, label, color, supportsMuting } = definition;
+  const { inputs, outputs, label, color, supportsMuting } = definition;
 
   // Preview state from store
   const previewEnabled = useScriptEditorStore((s) =>
@@ -190,12 +188,8 @@ function BaseNodeComponent({
     (s) => s.previewValues.get(id) ?? EMPTY_PREVIEW_VALUES,
   );
 
-  // Get translated label, fall back to definition label
-  const translationKey = `scripts.editor.nodes.${type}.label`;
-  const translatedLabel = t(translationKey);
-  const displayLabel =
-    data.label ??
-    (translatedLabel !== translationKey ? translatedLabel : label);
+  // Use data.label override or server-provided label
+  const displayLabel = data.label ?? label;
   const isActive = data.isActive ?? false;
   const isMuted = data.muted ?? false;
   const isCollapsed = data.collapsed ?? false;
@@ -250,14 +244,9 @@ function BaseNodeComponent({
     });
   }, [outputs, connectedOutputs, hiddenSockets, hideUnconnected]);
 
-  // Helper to get translated port label
+  // Get port label from server-provided definition
   const getPortLabel = (port: PortDefinition): string => {
-    // Try specific port translation
-    const parts = port.id.split("-");
-    const portName = parts.length > 1 ? parts.slice(1).join("-") : port.id;
-    const portKey = `scripts.editor.ports.${portName}`;
-    const translated = t(portKey);
-    return translated !== portKey ? translated : port.label;
+    return port.label;
   };
 
   // Handler for inline value changes

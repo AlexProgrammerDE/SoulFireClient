@@ -1,62 +1,48 @@
-import { useTranslation } from "react-i18next";
 import type { NodeDefinition } from "./nodes/types";
 
 /**
- * Hook that provides translation functions for script editor nodes and categories.
- * Uses translation keys from instance.json under scripts.editor
+ * Hook that provides label functions for script editor nodes and categories.
+ * Uses server-provided displayNames directly (server-sent i18n planned for future).
  */
 export function useNodeTranslations() {
-  const { t } = useTranslation("instance");
-
   /**
-   * Get the translated label for a node type.
-   * Falls back to the node's label property if translation is missing.
+   * Get the label for a node type.
+   * Uses server-provided displayName.
    */
   const getNodeLabel = (node: NodeDefinition): string => {
-    const key = `scripts.editor.nodes.${node.type}.label`;
-    const translated = t(key);
-    // If translation key returns the key itself, use fallback
-    return translated === key ? node.label : translated;
+    return node.label;
   };
 
   /**
-   * Get the translated description for a node type.
+   * Get the description for a node type.
+   * Uses server-provided description.
    */
   const getNodeDescription = (node: NodeDefinition): string => {
-    return t(`scripts.editor.nodes.${node.type}.description`, "");
+    return node.description ?? "";
   };
 
   /**
-   * Get the translated name for a node category.
-   * Falls back to the provided fallback (e.g., server displayName) if translation is missing.
+   * Get the name for a node category.
+   * Uses server-provided displayName (fallback parameter).
    */
-  const getCategoryName = (category: string, fallback?: string): string => {
-    const key = `scripts.editor.palette.categories.${category}`;
-    const translated = t(key);
-    // If translation key returns the key itself, use fallback
-    return translated === key ? (fallback ?? category) : translated;
+  const getCategoryName = (_categoryId: string, fallback: string): string => {
+    return fallback;
   };
 
   /**
-   * Get the translated label for an inspector field.
+   * Get the label for an inspector field.
+   * Returns the field key as-is (server-sent i18n planned for future).
    */
   const getFieldLabel = (fieldKey: string): string => {
-    return t(`scripts.editor.fields.${fieldKey}`, fieldKey);
+    return fieldKey;
   };
 
   /**
-   * Get translated port label.
-   * Port labels use a simplified key structure.
+   * Get port label.
+   * Uses server-provided label.
    */
-  const getPortLabel = (portId: string, fallback: string): string => {
-    // Extract the port name from IDs like "exec-in", "number-a"
-    const parts = portId.split("-");
-    const portName = parts.length > 1 ? parts.slice(1).join("-") : portId;
-
-    // Try specific port key first
-    const specificKey = `scripts.editor.ports.${portName}`;
-    const translated = t(specificKey);
-    return translated === specificKey ? fallback : translated;
+  const getPortLabel = (_portId: string, fallback: string): string => {
+    return fallback;
   };
 
   return {
@@ -65,6 +51,5 @@ export function useNodeTranslations() {
     getCategoryName,
     getFieldLabel,
     getPortLabel,
-    t,
   };
 }
