@@ -5,13 +5,12 @@ import {
 } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ReactFlowProvider, useReactFlow } from "@xyflow/react";
-import { use, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { use, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Separator } from "react-resizable-panels";
 import { toast } from "sonner";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { ExecutionLogs } from "@/components/script-editor/ExecutionLogs.tsx";
-import { NodeInspector } from "@/components/script-editor/NodeInspector.tsx";
 import { NodePalette } from "@/components/script-editor/NodePalette.tsx";
 import {
   NodeTypesProvider,
@@ -50,13 +49,6 @@ interface LogEntry {
   level: "debug" | "info" | "warn" | "error";
   nodeId: string | null;
   message: string;
-}
-
-interface ScriptNode {
-  id: string;
-  type: string;
-  position: { x: number; y: number };
-  data: Record<string, unknown>;
 }
 
 export const Route = createFileRoute(
@@ -108,8 +100,6 @@ function ScriptEditorContent() {
   const setActive = useScriptEditorStore((state) => state.setActive);
   const setActiveNode = useScriptEditorStore((state) => state.setActiveNode);
   const addNode = useScriptEditorStore((state) => state.addNode);
-  const selectedNodeId = useScriptEditorStore((state) => state.selectedNodeId);
-  const updateNodeData = useScriptEditorStore((state) => state.updateNodeData);
   const getScriptData = useScriptEditorStore((state) => state.getScriptData);
 
   // Local state
@@ -117,19 +107,6 @@ function ScriptEditorContent() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const executionAbortRef = useRef<AbortController | null>(null);
-
-  // Get selected node for inspector
-  const selectedNode = useMemo(() => {
-    if (!selectedNodeId) return null;
-    const node = nodes.find((n) => n.id === selectedNodeId);
-    if (!node) return null;
-    return {
-      id: node.id,
-      type: node.type,
-      position: node.position,
-      data: node.data as Record<string, unknown>,
-    } as ScriptNode;
-  }, [nodes, selectedNodeId]);
 
   // Load script into store when data changes
   useEffect(() => {
@@ -428,14 +405,6 @@ function ScriptEditorContent() {
     setLogs([]);
   }, []);
 
-  // Handle node data change from inspector
-  const handleNodeDataChange = useCallback(
-    (nodeId: string, data: Record<string, unknown>) => {
-      updateNodeData(nodeId, data);
-    },
-    [updateNodeData],
-  );
-
   // Handle drag & drop from palette
   const handleDragOver = useCallback((event: React.DragEvent) => {
     event.preventDefault();
@@ -488,8 +457,8 @@ function ScriptEditorContent() {
 
         <ResizableHandle withHandle />
 
-        {/* Center - Script Editor */}
-        <ResizablePanel defaultSize={55} minSize="18.75rem">
+        {/* Center - Script Editor & Logs */}
+        <ResizablePanel defaultSize={80} minSize="18.75rem">
           <ResizablePanelGroup orientation="vertical">
             {/* Canvas */}
             <ResizablePanel defaultSize={75} minSize="12.5rem">
@@ -511,16 +480,6 @@ function ScriptEditorContent() {
               <ExecutionLogs logs={logs} onClearLogs={handleClearLogs} />
             </ResizablePanel>
           </ResizablePanelGroup>
-        </ResizablePanel>
-
-        <ResizableHandle withHandle />
-
-        {/* Right sidebar - Node Inspector */}
-        <ResizablePanel defaultSize={25} minSize="15.625rem" maxSize="31.25rem">
-          <NodeInspector
-            selectedNode={selectedNode}
-            onNodeDataChange={handleNodeDataChange}
-          />
         </ResizablePanel>
       </ResizablePanelGroup>
     </div>

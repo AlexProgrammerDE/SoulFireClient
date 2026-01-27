@@ -189,7 +189,6 @@ export function QuickAddMenu() {
       <div className="fixed inset-0 z-50" onClick={closeQuickAddMenu} />
 
       {/* Menu */}
-      {/* biome-ignore lint/a11y/noStaticElementInteractions: Menu has keyboard handling */}
       <div
         className="fixed z-50 w-72 rounded-lg border bg-popover shadow-lg"
         style={{

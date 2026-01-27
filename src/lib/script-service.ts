@@ -211,8 +211,22 @@ function fromProtoValue(value: Value): unknown {
 export function nodesToProto(nodes: Node[]): ScriptNode[] {
   return nodes.map((node) => {
     const data: { [key: string]: Value } = {};
-    if (node.data && typeof node.data === "object") {
-      for (const [key, value] of Object.entries(node.data)) {
+    const nodeData = node.data as Record<string, unknown>;
+    if (nodeData && typeof nodeData === "object") {
+      for (const [key, value] of Object.entries(nodeData)) {
+        // Skip internal fields that are handled separately
+        if (
+          [
+            "muted",
+            "collapsed",
+            "label",
+            "containedNodes",
+            "resolvedType",
+            "parentFrameId",
+          ].includes(key)
+        ) {
+          continue;
+        }
         data[key] = toProtoValue(value);
       }
     }
@@ -224,6 +238,14 @@ export function nodesToProto(nodes: Node[]): ScriptNode[] {
         y: node.position.y,
       },
       data,
+      muted: (nodeData?.muted as boolean) ?? false,
+      collapsed: (nodeData?.collapsed as boolean) ?? false,
+      label: (nodeData?.label as string) ?? "",
+      containedNodes: (nodeData?.containedNodes as string[]) ?? [],
+      parentFrameId: (nodeData?.parentFrameId as string) ?? "",
+      width: node.measured?.width,
+      height: node.measured?.height,
+      resolvedType: nodeData?.resolvedType as PortType | undefined,
     };
   });
 }

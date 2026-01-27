@@ -1,8 +1,10 @@
-import { Handle, type NodeProps, Position } from "@xyflow/react";
+import { type Edge, Handle, type NodeProps, Position } from "@xyflow/react";
 import { ChevronDown, ChevronRight } from "lucide-react";
-import { memo } from "react";
+import { memo, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
+import { useNodeEditing } from "../NodeEditingContext";
+import { InlineEditor } from "./InlineEditor";
 import {
   getPortColor,
   type NodeDefinition,
@@ -22,6 +24,30 @@ export interface BaseNodeData {
 interface BaseNodeProps extends NodeProps {
   data: BaseNodeData;
   definition: NodeDefinition;
+  /** Current edges in the graph - used to determine connected ports */
+  edges?: Edge[];
+  /** Callback to update node data */
+  onDataChange?: (data: Record<string, unknown>) => void;
+}
+
+/**
+ * Extract the field key from a port ID.
+ * Port IDs have format "type-fieldname" e.g. "number-interval" -> "interval"
+ */
+function getFieldKey(portId: string): string {
+  const parts = portId.split("-");
+  return parts.length > 1 ? parts.slice(1).join("-") : portId;
+}
+
+interface PortRowProps {
+  port: PortDefinition;
+  type: "source" | "target";
+  position: Position;
+  translatedLabel: string;
+  collapsed?: boolean;
+  isConnected?: boolean;
+  value?: unknown;
+  onValueChange?: (value: unknown) => void;
 }
 
 function PortRow({
@@ -30,17 +56,24 @@ function PortRow({
   position,
   translatedLabel,
   collapsed,
-}: {
-  port: PortDefinition;
-  type: "source" | "target";
-  position: Position;
-  translatedLabel: string;
-  collapsed?: boolean;
-}) {
+  isConnected,
+  value,
+  onValueChange,
+}: PortRowProps) {
   const color = getPortColor(port.type);
   const isExecution = port.type === "execution";
   const isMultiInput = port.multiInput;
   const isLeft = position === Position.Left;
+  const hasDefault = port.defaultValue !== undefined;
+  const isInput = type === "target";
+
+  // Show inline editor for inputs that:
+  // 1. Have a default value (are configurable)
+  // 2. Are not connected (no incoming wire)
+  // 3. Are not execution ports
+  // 4. Are not collapsed
+  const showInlineEditor =
+    isInput && hasDefault && !isConnected && !isExecution && !collapsed;
 
   // When collapsed, render handles at the edges without labels
   if (collapsed) {
@@ -68,7 +101,7 @@ function PortRow({
     <div
       className={cn(
         "relative flex items-center gap-2 py-1",
-        isLeft ? "pr-4" : "pl-4 flex-row-reverse",
+        isLeft ? "pr-2" : "pl-2 flex-row-reverse",
       )}
     >
       <Handle
@@ -89,12 +122,43 @@ function PortRow({
           isMultiInput ? "Multi-input: accepts multiple connections" : undefined
         }
       />
-      <span className="text-xs text-muted-foreground">{translatedLabel}</span>
+
+      {showInlineEditor && onValueChange ? (
+        <div className="flex items-center gap-1.5 flex-1 min-w-0">
+          <span className="text-xs text-muted-foreground shrink-0">
+            {translatedLabel}
+          </span>
+          <InlineEditor
+            type={port.type}
+            value={value}
+            defaultValue={
+              port.defaultValue ? JSON.parse(port.defaultValue) : undefined
+            }
+            onChange={onValueChange}
+          />
+        </div>
+      ) : (
+        <span
+          className={cn(
+            "text-xs",
+            isConnected ? "text-foreground" : "text-muted-foreground",
+          )}
+        >
+          {translatedLabel}
+        </span>
+      )}
     </div>
   );
 }
 
-function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
+function BaseNodeComponent({
+  id,
+  data,
+  definition,
+  selected,
+  edges = [],
+  onDataChange,
+}: BaseNodeProps) {
   const { t } = useTranslation("instance");
   const { inputs, outputs, type, label, color, supportsMuting } = definition;
 
@@ -108,6 +172,28 @@ function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
   const isMuted = data.muted ?? false;
   const isCollapsed = data.collapsed ?? false;
 
+  // Compute which input ports are connected
+  const connectedInputs = useMemo(() => {
+    const connected = new Set<string>();
+    for (const edge of edges) {
+      if (edge.target === id && edge.targetHandle) {
+        connected.add(edge.targetHandle);
+      }
+    }
+    return connected;
+  }, [edges, id]);
+
+  // Compute which output ports are connected
+  const connectedOutputs = useMemo(() => {
+    const connected = new Set<string>();
+    for (const edge of edges) {
+      if (edge.source === id && edge.sourceHandle) {
+        connected.add(edge.sourceHandle);
+      }
+    }
+    return connected;
+  }, [edges, id]);
+
   // Helper to get translated port label
   const getPortLabel = (port: PortDefinition): string => {
     // Try specific port translation
@@ -117,6 +203,16 @@ function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
     const translated = t(portKey);
     return translated !== portKey ? translated : port.label;
   };
+
+  // Handler for inline value changes
+  const handleValueChange = useCallback(
+    (portId: string, value: unknown) => {
+      if (!onDataChange) return;
+      const fieldKey = getFieldKey(portId);
+      onDataChange({ [fieldKey]: value });
+    },
+    [onDataChange],
+  );
 
   // Pair up inputs and outputs for aligned rows
   const maxPorts = Math.max(inputs.length, outputs.length);
@@ -179,6 +275,7 @@ function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
               position={Position.Left}
               translatedLabel=""
               collapsed
+              isConnected={connectedInputs.has(input.id)}
             />
           ))}
           {outputs.map((output) => (
@@ -189,6 +286,7 @@ function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
               position={Position.Right}
               translatedLabel=""
               collapsed
+              isConnected={connectedOutputs.has(output.id)}
             />
           ))}
         </div>
@@ -207,6 +305,11 @@ function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
                     type="target"
                     position={Position.Left}
                     translatedLabel={getPortLabel(row.input)}
+                    isConnected={connectedInputs.has(row.input.id)}
+                    value={data[getFieldKey(row.input.id)]}
+                    onValueChange={(val) =>
+                      handleValueChange(row.input.id, val)
+                    }
                   />
                 ) : (
                   <div />
@@ -219,6 +322,7 @@ function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
                     type="source"
                     position={Position.Right}
                     translatedLabel={getPortLabel(row.output)}
+                    isConnected={connectedOutputs.has(row.output.id)}
                   />
                 ) : (
                   <div />
@@ -243,14 +347,28 @@ function BaseNodeComponent({ data, definition, selected }: BaseNodeProps) {
 export const BaseNode = memo(BaseNodeComponent);
 
 // Factory function to create node components from definitions
+// Uses NodeEditingContext for inline editing capabilities
 export function createNodeComponent(definition: NodeDefinition) {
-  const NodeComponent = (props: NodeProps) => (
-    <BaseNode
-      {...props}
-      definition={definition}
-      data={props.data as BaseNodeData}
-    />
-  );
+  const NodeComponent = (props: NodeProps) => {
+    const { edges, updateNodeData } = useNodeEditing();
+
+    const handleDataChange = useCallback(
+      (data: Record<string, unknown>) => {
+        updateNodeData(props.id, data);
+      },
+      [props.id, updateNodeData],
+    );
+
+    return (
+      <BaseNode
+        {...props}
+        definition={definition}
+        data={props.data as BaseNodeData}
+        edges={edges}
+        onDataChange={handleDataChange}
+      />
+    );
+  };
   NodeComponent.displayName = `${definition.type}Node`;
   return memo(NodeComponent);
 }

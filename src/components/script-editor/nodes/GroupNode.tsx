@@ -15,6 +15,7 @@ export interface GroupNodeData {
   outputs?: Array<{ id: string; type: PortType; label: string }>;
   /** Whether the group is collapsed */
   collapsed?: boolean;
+  [key: string]: unknown;
 }
 
 interface GroupNodeProps extends NodeProps {

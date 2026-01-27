@@ -7,6 +7,7 @@ import { getPortColor, type PortType } from "./types";
 export interface GroupOutputNodeData {
   /** Input sockets that map to the group's external outputs */
   inputs?: Array<{ id: string; type: PortType; label: string }>;
+  [key: string]: unknown;
 }
 
 interface GroupOutputNodeProps extends NodeProps {

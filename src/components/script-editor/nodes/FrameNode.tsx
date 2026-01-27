@@ -9,6 +9,7 @@ export interface FrameNodeData {
   color?: string;
   /** Whether the frame is locked (children can't be moved) */
   locked?: boolean;
+  [key: string]: unknown;
 }
 
 interface FrameNodeProps extends NodeProps {

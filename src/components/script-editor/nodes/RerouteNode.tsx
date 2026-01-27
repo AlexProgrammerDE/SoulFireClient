@@ -8,6 +8,7 @@ export interface RerouteNodeData {
   resolvedType?: PortType;
   /** Optional label for the reroute */
   label?: string;
+  [key: string]: unknown;
 }
 
 interface RerouteNodeProps extends NodeProps {

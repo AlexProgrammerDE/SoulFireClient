@@ -11,6 +11,7 @@ import { useTheme } from "next-themes";
 import { useCallback, useRef, useState } from "react";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 import { edgeTypes, isValidConnection } from "./edges";
+import { NodeEditingProvider } from "./NodeEditingContext";
 import { useNodeTypes } from "./NodeTypesContext";
 import { QuickAddMenu } from "./QuickAddMenu";
 
@@ -26,6 +27,7 @@ export function ScriptEditor() {
   const onNodesChange = useScriptEditorStore((state) => state.onNodesChange);
   const onEdgesChange = useScriptEditorStore((state) => state.onEdgesChange);
   const onConnect = useScriptEditorStore((state) => state.onConnect);
+  const updateNodeData = useScriptEditorStore((state) => state.updateNodeData);
   const setSelectedNode = useScriptEditorStore(
     (state) => state.setSelectedNode,
   );
@@ -224,33 +226,35 @@ export function ScriptEditor() {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        nodeTypes={nodeTypes}
-        edgeTypes={edgeTypes}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onInit={handleInit}
-        onSelectionChange={handleSelectionChange}
-        isValidConnection={isValidConnection}
-        colorMode={(resolvedTheme as ColorMode) ?? "dark"}
-        fitView
-        snapToGrid
-        snapGrid={[16, 16]}
-        deleteKeyCode={null}
-        proOptions={{ hideAttribution: true }}
-      >
-        <Background
-          variant={BackgroundVariant.Dots}
-          gap={16}
-          size={1}
-          color="var(--muted-foreground)"
-        />
-        <Controls />
-        <MiniMap zoomable pannable />
-      </ReactFlow>
+      <NodeEditingProvider edges={edges} updateNodeData={updateNodeData}>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          nodeTypes={nodeTypes}
+          edgeTypes={edgeTypes}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          onInit={handleInit}
+          onSelectionChange={handleSelectionChange}
+          isValidConnection={isValidConnection}
+          colorMode={(resolvedTheme as ColorMode) ?? "dark"}
+          fitView
+          snapToGrid
+          snapGrid={[16, 16]}
+          deleteKeyCode={null}
+          proOptions={{ hideAttribution: true }}
+        >
+          <Background
+            variant={BackgroundVariant.Dots}
+            gap={16}
+            size={1}
+            color="var(--muted-foreground)"
+          />
+          <Controls />
+          <MiniMap zoomable pannable />
+        </ReactFlow>
+      </NodeEditingProvider>
       <QuickAddMenu />
 
       {/* Link cutting visual indicator */}
