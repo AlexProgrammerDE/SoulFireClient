@@ -8,7 +8,7 @@ import {
   type ReactFlowInstance,
 } from "@xyflow/react";
 import { useTheme } from "next-themes";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 import { edgeTypes, isValidConnection } from "./edges";
 import { GroupBreadcrumb } from "./GroupBreadcrumb";
@@ -109,6 +109,9 @@ export function ScriptEditor() {
   const selectAll = useScriptEditorStore((state) => state.selectAll);
   const selectLinked = useScriptEditorStore((state) => state.selectLinked);
   const selectSimilar = useScriptEditorStore((state) => state.selectSimilar);
+  const selectShortestPath = useScriptEditorStore(
+    (state) => state.selectShortestPath,
+  );
 
   // Clipboard actions
   const copySelected = useScriptEditorStore((state) => state.copySelected);
@@ -136,6 +139,11 @@ export function ScriptEditor() {
     setReactFlowInstance(instance);
   }, []);
 
+  // Auto-focus the container so keyboard shortcuts work immediately
+  useEffect(() => {
+    containerRef.current?.focus();
+  }, []);
+
   const handleSelectionChange = useCallback(
     ({ nodes: selectedNodes }: { nodes: Array<{ id: string }> }) => {
       if (selectedNodes.length === 1) {
@@ -145,6 +153,21 @@ export function ScriptEditor() {
       }
     },
     [setSelectedNode],
+  );
+
+  // Handle Shift+click for shortest path selection (Blender-style)
+  const handleNodeClick = useCallback(
+    (event: React.MouseEvent, node: { id: string }) => {
+      if (event.shiftKey) {
+        // Find the currently selected node (if any)
+        const currentlySelected = nodes.find((n) => n.selected);
+        if (currentlySelected && currentlySelected.id !== node.id) {
+          event.preventDefault();
+          selectShortestPath(currentlySelected.id, node.id);
+        }
+      }
+    },
+    [nodes, selectShortestPath],
   );
 
   const handleKeyDown = useCallback(
@@ -559,7 +582,7 @@ export function ScriptEditor() {
     // biome-ignore lint/a11y/noStaticElementInteractions: ReactFlow canvas wrapper requires keyboard handling for operations
     <div
       ref={containerRef}
-      className="h-full w-full relative"
+      className="h-full w-full relative outline-none"
       onKeyDown={handleKeyDown}
       onContextMenu={handleContextMenu}
       onMouseDown={handleMouseDown}
@@ -576,6 +599,7 @@ export function ScriptEditor() {
           onEdgesChange={onEdgesChange}
           onConnect={onConnect}
           onInit={handleInit}
+          onNodeClick={handleNodeClick}
           onSelectionChange={handleSelectionChange}
           isValidConnection={isValidConnection}
           colorMode={(resolvedTheme as ColorMode) ?? "dark"}
