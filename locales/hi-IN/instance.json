@@ -115,17 +115,17 @@
     "metadata": {
       "openButton": "मेटाडेटा संपादित करें",
       "title": "मेटाडेटा: {{name}}",
-      "description": "",
-      "namespacePlaceholder": "",
-      "keyPlaceholder": "",
-      "valuePlaceholder": "",
-      "noEntries": "",
-      "addSuccess": "",
-      "addError": "",
-      "updateError": "",
-      "deleteSuccess": "",
-      "deleteError": "",
-      "duplicateError": ""
+      "description": "इस खाते के लिए स्थायी मेटाडेटा प्रविष्टियों का प्रबंधन करें। प्रत्येक प्रविष्टि में एक namespace, कुंजी, और JSON मान होता है।",
+      "namespacePlaceholder": "नेमस्पेस",
+      "keyPlaceholder": "कुंजी",
+      "valuePlaceholder": "मान (JSON)",
+      "noEntries": "कोई मेटाडेटा प्रविष्टियाँ नहीं हैं। ऊपर एक जोड़ें।",
+      "addSuccess": "प्रविष्टि जोड़ी गई",
+      "addError": "प्रविष्टि जोड़ने में विफल",
+      "updateError": "प्रविष्टि अपडेट करने में विफल",
+      "deleteSuccess": "प्रविष्टि हटाई गई",
+      "deleteError": "प्रविष्टि हटाने में विफल",
+      "duplicateError": "इस नेमस्पेस और कुंजी के साथ एक प्रविष्टि पहले से मौजूद है"
     }
   },
   "bots": {
@@ -271,416 +271,416 @@
     }
   },
   "scripts": {
-    "title": "",
-    "description": "",
+    "title": "विजुअल स्क्रिप्ट्स",
+    "description": "विजुअल नोड-आधारित संपादक का उपयोग करके ऑटोमेशन स्क्रिप्ट्स बनाएँ।",
     "wipTitle": "विज़ुअल स्क्रिप्ट एडिटर",
-    "wipDescription": "",
+    "wipDescription": "विजुअल नोड-आधारित संपादक का उपयोग करके ऑटोमेशन स्क्रिप्ट्स बनाएँ।",
     "wipDetails": "यह फीचर वर्तमान में विकासाधीन है। नया विज़ुअल स्क्रिप्ट एडिटर आपको ड्रैग-एंड-ड्रॉप इंटरफेस का उपयोग कर बिना कोड लिखे शक्तिशाली ऑटोमेशन स्क्रिप्ट्स बनाने की अनुमति देगा।",
-    "createScript": "",
-    "createScriptTitle": "",
-    "createScriptDescription": "",
-    "scriptName": "",
-    "scriptNamePlaceholder": "",
-    "scriptDescription": "",
-    "scriptDescriptionPlaceholder": "",
+    "createScript": "स्क्रिप्ट बनाएँ",
+    "createScriptTitle": "नई स्क्रिप्ट बनाएँ",
+    "createScriptDescription": "इस उदाहरण के लिए एक नई विजुअल स्क्रिप्ट बनाएँ। स्क्रिप्ट्स बॉट की क्रियाओं को स्वचालित कर सकती हैं और घटनाओं पर प्रतिक्रिया दे सकती हैं।",
+    "scriptName": "स्क्रिप्ट का नाम",
+    "scriptNamePlaceholder": "स्क्रिप्ट का नाम दर्ज करें...",
+    "scriptDescription": "विवरण",
+    "scriptDescriptionPlaceholder": "बताएँ कि यह स्क्रिप्ट क्या करती है...",
     "create": "बनाएँ",
-    "createSuccess": "",
-    "createError": "",
-    "noScripts": "",
-    "noScriptsDescription": "",
-    "createFirstScript": "",
-    "running": "चल रहा है",
-    "nodes": "",
-    "noDescription": "",
-    "edit": "",
-    "start": "प्रारंभ करें",
-    "stop": "बंद करें",
-    "delete": "",
-    "deleteSuccess": "",
-    "deleteError": "",
-    "saveSuccess": "",
-    "saveError": "",
-    "startSuccess": "",
-    "startError": "",
-    "stopSuccess": "",
-    "stopError": "",
-    "untitledScript": "",
-    "saveFirstBeforeRunning": "",
-    "executionStarting": "",
-    "executionStarted": "",
-    "executionCompleted": "",
-    "executionCompletedSuccess": "",
-    "executionStopped": "",
-    "executionStoppedByUser": "",
-    "executionFailed": "",
-    "executionError": "",
-    "nodeStarted": "",
-    "nodeCompleted": "",
-    "nodeError": "",
+    "createSuccess": "स्क्रिप्ट सफलतापूर्वक बनाई गई",
+    "createError": "स्क्रिप्ट बनाने में विफल",
+    "noScripts": "अभी तक कोई स्क्रिप्ट नहीं",
+    "noScriptsDescription": "विजुअल नोड-आधारित संपादक का उपयोग कर अपने पहले बॉट ऑटोमेशन के लिए स्क्रिप्ट बनाएँ।",
+    "createFirstScript": "अपनी पहली स्क्रिप्ट बनाएँ",
+    "active": "सक्रिय",
+    "nodes": "नोड्स",
+    "noDescription": "कोई विवरण नहीं",
+    "edit": "संपादित करें",
+    "activate": "",
+    "deactivate": "",
+    "delete": "हटाएँ",
+    "deleteSuccess": "स्क्रिप्ट सफलतापूर्वक हटाई गई",
+    "deleteError": "स्क्रिप्ट हटाने में विफल",
+    "saveSuccess": "स्क्रिप्ट सफलतापूर्वक सेव की गई",
+    "saveError": "स्क्रिप्ट सेव करने में विफल",
+    "activateSuccess": "",
+    "activateError": "",
+    "deactivateSuccess": "",
+    "deactivateError": "",
+    "untitledScript": "शीर्षकहीन स्क्रिप्ट",
+    "saveFirstBeforeActivating": "",
+    "activating": "",
+    "activated": "",
+    "executionCompleted": "स्क्रिप्ट पूर्ण",
+    "executionCompletedSuccess": "स्क्रिप्ट सफलतापूर्वक पूर्ण हुई",
+    "deactivated": "",
+    "deactivatedByUser": "",
+    "executionFailed": "स्क्रिप्ट निष्पादन विफल हुआ",
+    "executionError": "निष्पादन त्रुटि: {{error}}",
+    "nodeStarted": "नोड शुरू: {{nodeId}}",
+    "nodeCompleted": "नोड पूर्ण: {{nodeId}}",
+    "nodeError": "नोड त्रुटि: {{error}}",
     "editor": {
       "toolbar": {
-        "backToScripts": "",
+        "backToScripts": "स्क्रिप्ट्स पर वापस जाएँ",
         "save": "सहेजें",
-        "saveTooltip": "",
+        "saveTooltip": "स्क्रिप्ट सेव करें (Ctrl+S)",
         "run": "",
         "runTooltip": "",
-        "stop": "बंद करें",
-        "stopTooltip": "",
-        "autoStart": "",
+        "deactivate": "",
+        "deactivateTooltip": "",
+        "autoStart": "स्वचालित प्रारंभ",
         "autoStartTooltip": "",
-        "unsaved": "",
-        "clearCanvas": "",
-        "zoomIn": "",
-        "zoomOut": "",
-        "fit": ""
+        "unsaved": "असुरक्षित",
+        "clearCanvas": "कैनवास साफ़ करें",
+        "zoomIn": "ज़ूम इन",
+        "zoomOut": "ज़ूम आउट",
+        "fit": "फिट करें"
       },
       "palette": {
-        "title": "",
-        "search": "",
+        "title": "नोड पैलेट",
+        "search": "नोड खोजें...",
         "categories": {
-          "trigger": "",
+          "trigger": "ट्रिगर्स",
           "action": "क्रियाएँ",
-          "flow": "",
-          "math": "",
-          "logic": "",
-          "data": "",
-          "bot": "",
-          "world": ""
+          "flow": "फ्लो नियंत्रण",
+          "math": "गणित",
+          "logic": "तर्क",
+          "data": "डेटा",
+          "bot": "बॉट",
+          "world": "वर्ल्ड"
         }
       },
       "inspector": {
-        "title": "",
-        "noSelection": "",
-        "properties": "",
-        "nodeId": "",
-        "inputs": "",
-        "outputs": "",
-        "selectPlaceholder": ""
+        "title": "नोड इंस्पेक्टर",
+        "noSelection": "गुण देखने के लिए नोड चुनें",
+        "properties": "गुण",
+        "nodeId": "नोड आईडी",
+        "inputs": "इनपुट्स",
+        "outputs": "आउटपुट्स",
+        "selectPlaceholder": "चुनें..."
       },
       "logs": {
-        "title": "",
-        "clear": "",
-        "clearTitle": "",
-        "noLogs": "",
-        "entries_one": "",
-        "entries_other": ""
+        "title": "निष्पादन लॉग्स",
+        "clear": "लॉग्स साफ़ करें",
+        "clearTitle": "लॉग्स साफ़ करें",
+        "noLogs": "अभी तक कोई लॉग नहीं। निष्पादन लॉग्स देखने के लिए स्क्रिप्ट चलाएँ।",
+        "entries_one": "{{count}} प्रविष्टि",
+        "entries_other": "{{count}} प्रविष्टियाँ"
       },
       "contextMenu": {
-        "duplicate": "",
-        "disconnectAll": "",
-        "delete": ""
+        "duplicate": "डुप्लिकेट करें",
+        "disconnectAll": "सभी डिस्कनेक्ट करें",
+        "delete": "हटाएँ"
       },
       "ports": {
-        "exec": "",
-        "execIn": "",
-        "execOut": "",
-        "execTrue": "",
-        "execFalse": "",
-        "execLoop": "",
-        "execDone": ""
+        "exec": "एक्सिक",
+        "execIn": "एक्सिक इन",
+        "execOut": "एक्सिक आउट",
+        "execTrue": "सत्य",
+        "execFalse": "असत्य",
+        "execLoop": "लूप",
+        "execDone": "पूर्ण"
       },
       "fields": {
         "value": "मान",
-        "interval": "",
-        "variableName": "",
-        "level": "",
-        "levelDebug": "",
-        "levelInfo": "",
-        "levelWarn": "",
+        "interval": "अंतराल (मि.से.)",
+        "variableName": "वेरिएबल नाम",
+        "level": "लॉग स्तर",
+        "levelDebug": "डीबग",
+        "levelInfo": "सूचना",
+        "levelWarn": "चेतावनी",
         "levelError": "त्रुटि",
-        "x": "",
-        "y": "",
-        "z": "",
-        "min": "",
-        "max": "",
-        "degree": "",
-        "operator": "",
-        "operatorEqual": "",
-        "operatorNotEqual": "",
-        "operatorLess": "",
-        "operatorLessEqual": "",
-        "operatorGreater": "",
-        "operatorGreaterEqual": "",
-        "comparison": "",
-        "comparisonEqual": "",
-        "comparisonNotEqual": "",
-        "comparisonGreater": "",
-        "comparisonLess": "",
-        "comparisonGreaterEqual": "",
-        "comparisonLessEqual": "",
-        "formula": "",
-        "message": "",
-        "iterations": "",
-        "minValue": "",
-        "maxValue": "",
+        "x": "X",
+        "y": "Y",
+        "z": "Z",
+        "min": "न्यूनतम",
+        "max": "अधिकतम",
+        "degree": "डिग्री",
+        "operator": "ऑपरेटर",
+        "operatorEqual": "समान (==)",
+        "operatorNotEqual": "असमान (!=)",
+        "operatorLess": "कम (<)",
+        "operatorLessEqual": "कम या बराबर (<=)",
+        "operatorGreater": "अधिक (>)",
+        "operatorGreaterEqual": "अधिक या बराबर (>=)",
+        "comparison": "तुलना",
+        "comparisonEqual": "समान (==)",
+        "comparisonNotEqual": "असमान (!=)",
+        "comparisonGreater": "अधिक (>)",
+        "comparisonLess": "कम (<)",
+        "comparisonGreaterEqual": "अधिक या बराबर (>=)",
+        "comparisonLessEqual": "कम या बराबर (<=)",
+        "formula": "सूत्र",
+        "message": "संदेश",
+        "iterations": "पूर्णांक",
+        "minValue": "न्यूनतम मान",
+        "maxValue": "अधिकतम मान",
         "start": "प्रारंभ करें",
-        "end": "",
+        "end": "समाप्त",
         "amount": "संख्या",
-        "blockType": "",
-        "radius": "",
-        "timeout": "",
-        "slot": "",
-        "count": "",
-        "entityType": "",
-        "smooth": "",
-        "enabled": "",
-        "hand": "",
-        "handMain": "",
-        "handOff": "",
-        "face": "",
-        "faceUp": "",
-        "faceDown": "",
-        "faceNorth": "",
-        "faceSouth": "",
-        "faceEast": "",
-        "faceWest": "",
-        "ticks": "",
-        "range": "",
-        "loopCount": "",
-        "open": "",
-        "delay": ""
+        "blockType": "ब्लॉक प्रकार",
+        "radius": "त्रिज्या",
+        "timeout": "टाइमआउट (मि.से.)",
+        "slot": "स्लॉट",
+        "count": "गिनती",
+        "entityType": "इकाई प्रकार",
+        "smooth": "स्मूथ",
+        "enabled": "सक्षम",
+        "hand": "हाथ",
+        "handMain": "मुख्य हाथ",
+        "handOff": "दूसरा हाथ",
+        "face": "चेहरा",
+        "faceUp": "ऊपर",
+        "faceDown": "नीचे",
+        "faceNorth": "उत्तर",
+        "faceSouth": "दक्षिण",
+        "faceEast": "पूरब",
+        "faceWest": "पश्चिम",
+        "ticks": "टिक्स",
+        "range": "रेंज",
+        "loopCount": "लूप गिनती",
+        "open": "खोलें",
+        "delay": "विलंब (मि.से.)"
       },
       "nodes": {
         "trigger": {
           "on_tick": {
-            "label": "",
-            "description": ""
+            "label": "टिक पर",
+            "description": "हर गेम टिक पर सक्रिय (20 बार प्रति सेकंड)"
           },
           "on_join": {
-            "label": "",
-            "description": ""
+            "label": "जॉइन पर",
+            "description": "जब बॉट सर्वर में शामिल होता है तब सक्रिय होता है"
           },
           "on_chat": {
-            "label": "",
-            "description": ""
+            "label": "चैट पर",
+            "description": "जब चैट संदेश प्राप्त होता है तब सक्रिय होता है"
           },
           "on_damage": {
-            "label": "",
-            "description": ""
+            "label": "डैमेज पर",
+            "description": "जब बॉट को डैमेज पहुँचता है तब सक्रिय होता है"
           },
           "on_death": {
-            "label": "",
-            "description": ""
+            "label": "डेथ पर",
+            "description": "जब बॉट मरता है तब सक्रिय होता है"
           },
           "on_health_change": {
-            "label": "",
-            "description": ""
+            "label": "हेल्थ परिवर्तन पर",
+            "description": "जब बॉट की हेल्थ बदलती है तब सक्रिय होता है"
           },
           "on_interval": {
-            "label": "",
-            "description": ""
+            "label": "इंटरवल पर",
+            "description": "निर्धारित समयान्तराल पर सक्रिय होता है"
           }
         },
         "math": {
           "add": {
             "label": "जोड़ें",
-            "description": ""
+            "description": "दो संख्याएँ जोड़ता है"
           },
           "subtract": {
-            "label": "",
-            "description": ""
+            "label": "घटाएँ",
+            "description": "पहली संख्या में से दूसरी संख्या घटाता है"
           },
           "multiply": {
-            "label": "",
-            "description": ""
+            "label": "गुणा",
+            "description": "दोनों संख्याओं को गुणा करता है"
           },
           "divide": {
-            "label": "",
-            "description": ""
+            "label": "भाग",
+            "description": "पहली संख्या को दूसरी से भाग करता है"
           },
           "modulo": {
-            "label": "",
-            "description": ""
+            "label": "मॉड्यूलो",
+            "description": "भागफल का शेषफल लौटाता है"
           },
           "formula": {
-            "label": "",
-            "description": ""
+            "label": "सूत्र",
+            "description": "गणितीय सूत्र का मूल्यांकन करता है"
           },
           "random": {
-            "label": "",
-            "description": ""
+            "label": "रैंडम",
+            "description": "न्यूनतम और अधिकतम के बीच एक यादृच्छिक संख्या बनाता है"
           },
           "clamp": {
-            "label": "",
-            "description": ""
+            "label": "क्लैम्प",
+            "description": "न्यूनतम और अधिकतम के बीच एक मान को सीमित करता है"
           },
           "lerp": {
-            "label": "",
-            "description": ""
+            "label": "लर्प",
+            "description": "दो मानों के बीच रैखिक इंटरपोलेशन करता है"
           },
           "bspline": {
-            "label": "",
-            "description": ""
+            "label": "बी-स्प्लाइन",
+            "description": "बी-स्प्लाइन वक्र का उपयोग करके इंटरपोलेट करता है"
           }
         },
         "logic": {
           "compare": {
-            "label": "",
-            "description": ""
+            "label": "तुलना करें",
+            "description": "दो मानों की तुलना करता है"
           },
           "and": {
-            "label": "",
-            "description": ""
+            "label": "और",
+            "description": "दो बूलियन का तार्किक AND"
           },
           "or": {
-            "label": "",
-            "description": ""
+            "label": "या",
+            "description": "दो बूलियन का तार्किक OR"
           },
           "not": {
-            "label": "",
-            "description": ""
+            "label": "नॉट",
+            "description": "बूलियन का तार्किक NOT"
           },
           "xor": {
-            "label": "",
-            "description": ""
+            "label": "XOR",
+            "description": "दो बूलियन का तार्किक XOR"
           }
         },
         "flow": {
           "branch": {
-            "label": "",
-            "description": ""
+            "label": "ब्रांच",
+            "description": "बूलियन के आधार पर सशर्त ब्रांच"
           },
           "switch": {
-            "label": "",
-            "description": ""
+            "label": "स्विच",
+            "description": "मान के आधार पर बहु-मार्ग ब्रांच"
           },
           "loop": {
-            "label": "",
-            "description": ""
+            "label": "लूप",
+            "description": "एक निर्धारित बार निष्पादन दोहराता है"
           },
           "for_each": {
-            "label": "",
-            "description": ""
+            "label": "प्रत्येक के लिए",
+            "description": "संग्रह पर पुनरावृत्ति करता है"
           },
           "sequence": {
-            "label": "",
-            "description": ""
+            "label": "अनुक्रम",
+            "description": "सीक़्वेंस में आउटपुट्स को निष्पादित करता है"
           },
           "gate": {
-            "label": "",
-            "description": ""
+            "label": "गेट",
+            "description": "गेट स्थिति के आधार पर फ्लो नियंत्रित करता है"
           },
           "debounce": {
-            "label": "",
-            "description": ""
+            "label": "डीबाउंस",
+            "description": "तेजी से दोहराए गए निष्पादन को रोकता है"
           }
         },
         "action": {
           "set_rotation": {
-            "label": "",
-            "description": ""
+            "label": "रोटेशन सेट करें",
+            "description": "बॉट की रोटेशन सेट करता है"
           },
           "look_at": {
-            "label": "",
-            "description": ""
+            "label": "देखें",
+            "description": "किसी स्थान या इकाई को देखता है"
           },
           "sneak": {
             "label": "दबे रहें",
-            "description": ""
+            "description": "स्नीक को टॉगल करता है"
           },
           "sprint": {
             "label": "स्प्रिंट करें",
-            "description": ""
+            "description": "स्प्रिंटिंग को टॉगल करता है"
           },
           "jump": {
             "label": "जंप करें",
-            "description": ""
+            "description": "बॉट को कूदने के लिए बनाता है"
           },
           "attack": {
-            "label": "",
-            "description": ""
+            "label": "हमला",
+            "description": "एक इकाई पर हमला करता है"
           },
           "use_item": {
-            "label": "",
-            "description": ""
+            "label": "आइटम का उपयोग करें",
+            "description": "निर्दिष्ट हाथ में आइटम का उपयोग करता है"
           },
           "pathfind_to": {
-            "label": "",
-            "description": ""
+            "label": "पाथफाइंड टू",
+            "description": "लक्ष्य स्थान तक पाथफाइंड करता है"
           },
           "break_block": {
-            "label": "",
-            "description": ""
+            "label": "ब्लॉक तोड़ें",
+            "description": "किसी स्थान पर ब्लॉक तोड़ता है"
           },
           "place_block": {
-            "label": "",
-            "description": ""
+            "label": "ब्लॉक रखें",
+            "description": "किसी स्थान पर ब्लॉक रखता है"
           },
           "select_slot": {
-            "label": "",
-            "description": ""
+            "label": "स्लॉट चुनें",
+            "description": "हॉटबार स्लॉट चुनता है"
           },
           "send_chat": {
-            "label": "",
-            "description": ""
+            "label": "चैट भेजें",
+            "description": "चैट संदेश भेजता है"
           },
           "wait": {
-            "label": "",
-            "description": ""
+            "label": "रुकें",
+            "description": "निश्चित टिक्स तक प्रतीक्षा करता है"
           },
           "print": {
-            "label": "",
-            "description": ""
+            "label": "प्रिंट",
+            "description": "डीबगिंग के लिए एक संदेश लॉग करता है"
           },
           "set_variable": {
-            "label": "",
-            "description": ""
+            "label": "वेरिएबल सेट करें",
+            "description": "एक वेरिएबल में मान संग्रहीत करता है"
           }
         },
         "data": {
           "get_position": {
-            "label": "",
-            "description": ""
+            "label": "स्थिति प्राप्त करें",
+            "description": "बॉट की वर्तमान स्थिति प्राप्त करता है"
           },
           "get_rotation": {
-            "label": "",
-            "description": ""
+            "label": "रोटेशन प्राप्त करें",
+            "description": "बॉट का वर्तमान रोटेशन प्राप्त करता है"
           },
           "get_health": {
-            "label": "",
-            "description": ""
+            "label": "स्वास्थ्य प्राप्त करें",
+            "description": "बॉट का वर्तमान स्वास्थ्य प्राप्त करता है"
           },
           "get_hunger": {
-            "label": "",
-            "description": ""
+            "label": "भूख प्राप्त करें",
+            "description": "बॉट के वर्तमान भूख स्तर को प्राप्त करता है"
           },
           "get_inventory": {
-            "label": "",
-            "description": ""
+            "label": "इन्वेंटरी प्राप्त करें",
+            "description": "इन्वेंटरी से कोई आइटम प्राप्त करता है"
           },
           "get_block": {
-            "label": "",
-            "description": ""
+            "label": "ब्लॉक प्राप्त करें",
+            "description": "एक स्थिति में ब्लॉक प्राप्त करता है"
           },
           "find_entity": {
-            "label": "",
-            "description": ""
+            "label": "एंटिटी खोजें",
+            "description": "पास में किसी विशेष प्रकार की एंटिटी खोजता है"
           },
           "find_block": {
-            "label": "",
-            "description": ""
+            "label": "ब्लॉक खोजें",
+            "description": "पास में किसी विशेष प्रकार का ब्लॉक खोजता है"
           },
           "get_variable": {
-            "label": "",
-            "description": ""
+            "label": "वेरिएबल प्राप्त करें",
+            "description": "वेरिएबल से मान निकालता है"
           }
         },
         "constant": {
           "number": {
-            "label": "",
-            "description": ""
+            "label": "संख्या",
+            "description": "एक निश्चित संख्या का मान"
           },
           "string": {
-            "label": "",
-            "description": ""
+            "label": "स्ट्रिंग",
+            "description": "एक निश्चित टेक्स्ट मान"
           },
           "boolean": {
-            "label": "",
-            "description": ""
+            "label": "बूलियन",
+            "description": "एक निश्चित सच/झूठ मान"
           },
           "vector3": {
-            "label": "",
-            "description": ""
+            "label": "वेक्टर3",
+            "description": "एक निश्चित 3D स्थिति (X, Y, Z)"
           }
         }
       }

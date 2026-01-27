@@ -115,17 +115,17 @@
     "metadata": {
       "openButton": "Metadata bewerken",
       "title": "Metadata: {{name}}",
-      "description": "",
-      "namespacePlaceholder": "",
-      "keyPlaceholder": "",
-      "valuePlaceholder": "",
-      "noEntries": "",
-      "addSuccess": "",
-      "addError": "",
-      "updateError": "",
-      "deleteSuccess": "",
-      "deleteError": "",
-      "duplicateError": ""
+      "description": "Beheer persistente metadata-items voor dit account. Elk item heeft een namespace, sleutel en JSON-waarde.",
+      "namespacePlaceholder": "Namespace",
+      "keyPlaceholder": "Sleutel",
+      "valuePlaceholder": "Waarde (JSON)",
+      "noEntries": "Geen metadata-items. Voeg er hierboven één toe.",
+      "addSuccess": "Item toegevoegd",
+      "addError": "Toevoegen van item mislukt",
+      "updateError": "Bijwerken van item mislukt",
+      "deleteSuccess": "Item verwijderd",
+      "deleteError": "Verwijderen van item mislukt",
+      "duplicateError": "Er bestaat al een item met deze namespace en sleutel"
     }
   },
   "bots": {
@@ -271,416 +271,416 @@
     }
   },
   "scripts": {
-    "title": "",
-    "description": "",
+    "title": "Visuele scripts",
+    "description": "Maak automatiseringsscripts met behulp van een visuele, op knooppunten gebaseerde editor.",
     "wipTitle": "Visuele Scripteditor",
-    "wipDescription": "",
+    "wipDescription": "Maak automatiseringsscripts met behulp van een visuele, op knooppunten gebaseerde editor.",
     "wipDetails": "Deze functie is momenteel in ontwikkeling. De nieuwe visuele scripteditor stelt je in staat krachtige automatismescripts te maken met een drag-and-drop-interface zonder zelf code te hoeven schrijven.",
-    "createScript": "",
-    "createScriptTitle": "",
-    "createScriptDescription": "",
-    "scriptName": "",
-    "scriptNamePlaceholder": "",
-    "scriptDescription": "",
-    "scriptDescriptionPlaceholder": "",
+    "createScript": "Script aanmaken",
+    "createScriptTitle": "Nieuw script aanmaken",
+    "createScriptDescription": "Maak een nieuw visueel script voor deze instantie. Scripts kunnen botacties automatiseren en reageren op gebeurtenissen.",
+    "scriptName": "Scriptnaam",
+    "scriptNamePlaceholder": "Voer scriptnaam in...",
+    "scriptDescription": "Beschrijving",
+    "scriptDescriptionPlaceholder": "Beschrijf wat dit script doet...",
     "create": "Aanmaken",
-    "createSuccess": "",
-    "createError": "",
-    "noScripts": "",
-    "noScriptsDescription": "",
-    "createFirstScript": "",
-    "running": "Draait",
-    "nodes": "",
-    "noDescription": "",
-    "edit": "",
-    "start": "Start",
-    "stop": "Stoppen",
-    "delete": "",
-    "deleteSuccess": "",
-    "deleteError": "",
-    "saveSuccess": "",
-    "saveError": "",
-    "startSuccess": "",
-    "startError": "",
-    "stopSuccess": "",
-    "stopError": "",
-    "untitledScript": "",
-    "saveFirstBeforeRunning": "",
-    "executionStarting": "",
-    "executionStarted": "",
-    "executionCompleted": "",
-    "executionCompletedSuccess": "",
-    "executionStopped": "",
-    "executionStoppedByUser": "",
-    "executionFailed": "",
-    "executionError": "",
-    "nodeStarted": "",
-    "nodeCompleted": "",
-    "nodeError": "",
+    "createSuccess": "Script succesvol aangemaakt",
+    "createError": "Aanmaken van script mislukt",
+    "noScripts": "Nog geen scripts",
+    "noScriptsDescription": "Maak je eerste script om botacties te automatiseren met de visuele knooppunteneditor.",
+    "createFirstScript": "Maak je eerste script",
+    "active": "Actief",
+    "nodes": "knooppunten",
+    "noDescription": "Geen beschrijving",
+    "edit": "Bewerken",
+    "activate": "",
+    "deactivate": "",
+    "delete": "Verwijderen",
+    "deleteSuccess": "Script succesvol verwijderd",
+    "deleteError": "Verwijderen van script mislukt",
+    "saveSuccess": "Script succesvol opgeslagen",
+    "saveError": "Opslaan van script mislukt",
+    "activateSuccess": "",
+    "activateError": "",
+    "deactivateSuccess": "",
+    "deactivateError": "",
+    "untitledScript": "Naamloos script",
+    "saveFirstBeforeActivating": "",
+    "activating": "",
+    "activated": "",
+    "executionCompleted": "Script voltooid",
+    "executionCompletedSuccess": "Script succesvol voltooid",
+    "deactivated": "",
+    "deactivatedByUser": "",
+    "executionFailed": "Scriptuitvoering mislukt",
+    "executionError": "Uitvoeringsfout: {{error}}",
+    "nodeStarted": "Knooppunt gestart: {{nodeId}}",
+    "nodeCompleted": "Knooppunt voltooid: {{nodeId}}",
+    "nodeError": "Knooppuntfout: {{error}}",
     "editor": {
       "toolbar": {
-        "backToScripts": "",
+        "backToScripts": "Terug naar scripts",
         "save": "Opslaan",
-        "saveTooltip": "",
+        "saveTooltip": "Script opslaan (Ctrl+S)",
         "run": "",
         "runTooltip": "",
-        "stop": "Stoppen",
-        "stopTooltip": "",
-        "autoStart": "",
+        "deactivate": "",
+        "deactivateTooltip": "",
+        "autoStart": "Automatisch starten",
         "autoStartTooltip": "",
-        "unsaved": "",
-        "clearCanvas": "",
-        "zoomIn": "",
-        "zoomOut": "",
-        "fit": ""
+        "unsaved": "Niet opgeslagen",
+        "clearCanvas": "Canvas wissen",
+        "zoomIn": "Inzoomen",
+        "zoomOut": "Uitzoomen",
+        "fit": "Passend maken"
       },
       "palette": {
-        "title": "",
-        "search": "",
+        "title": "Knooppuntpalet",
+        "search": "Zoek knooppunten...",
         "categories": {
-          "trigger": "",
+          "trigger": "Triggers",
           "action": "Acties",
-          "flow": "",
-          "math": "",
-          "logic": "",
-          "data": "",
-          "bot": "",
-          "world": ""
+          "flow": "Stroomregeling",
+          "math": "Wiskunde",
+          "logic": "Logica",
+          "data": "Gegevens",
+          "bot": "Bot",
+          "world": "Wereld"
         }
       },
       "inspector": {
-        "title": "",
-        "noSelection": "",
-        "properties": "",
-        "nodeId": "",
-        "inputs": "",
-        "outputs": "",
-        "selectPlaceholder": ""
+        "title": "Knooppuntinspecteur",
+        "noSelection": "Selecteer een knooppunt om de eigenschappen te bekijken",
+        "properties": "Eigenschappen",
+        "nodeId": "Knooppunt-ID",
+        "inputs": "Ingangen",
+        "outputs": "Uitgangen",
+        "selectPlaceholder": "Selecteer..."
       },
       "logs": {
-        "title": "",
-        "clear": "",
-        "clearTitle": "",
-        "noLogs": "",
-        "entries_one": "",
-        "entries_other": ""
+        "title": "Uitvoeringslogboeken",
+        "clear": "Logboeken wissen",
+        "clearTitle": "Logboeken wissen",
+        "noLogs": "Nog geen logboeken. Voer het script uit om uitvoeringslogboeken te zien.",
+        "entries_one": "{{count}} item",
+        "entries_other": "{{count}} items"
       },
       "contextMenu": {
-        "duplicate": "",
-        "disconnectAll": "",
-        "delete": ""
+        "duplicate": "Dupliceren",
+        "disconnectAll": "Alles loskoppelen",
+        "delete": "Verwijderen"
       },
       "ports": {
-        "exec": "",
-        "execIn": "",
-        "execOut": "",
-        "execTrue": "",
-        "execFalse": "",
-        "execLoop": "",
-        "execDone": ""
+        "exec": "Uitvoeren",
+        "execIn": "Input uitvoeren",
+        "execOut": "Output uitvoeren",
+        "execTrue": "Waar",
+        "execFalse": "Onwaar",
+        "execLoop": "Lus",
+        "execDone": "Klaar"
       },
       "fields": {
         "value": "Waarde",
-        "interval": "",
-        "variableName": "",
-        "level": "",
-        "levelDebug": "",
-        "levelInfo": "",
-        "levelWarn": "",
+        "interval": "Interval (ms)",
+        "variableName": "Variabelenaam",
+        "level": "Logniveau",
+        "levelDebug": "Debuggen",
+        "levelInfo": "Info",
+        "levelWarn": "Waarschuwing",
         "levelError": "Fout",
-        "x": "",
-        "y": "",
-        "z": "",
-        "min": "",
-        "max": "",
-        "degree": "",
-        "operator": "",
-        "operatorEqual": "",
-        "operatorNotEqual": "",
-        "operatorLess": "",
-        "operatorLessEqual": "",
-        "operatorGreater": "",
-        "operatorGreaterEqual": "",
-        "comparison": "",
-        "comparisonEqual": "",
-        "comparisonNotEqual": "",
-        "comparisonGreater": "",
-        "comparisonLess": "",
-        "comparisonGreaterEqual": "",
-        "comparisonLessEqual": "",
-        "formula": "",
-        "message": "",
-        "iterations": "",
-        "minValue": "",
-        "maxValue": "",
+        "x": "X",
+        "y": "Y",
+        "z": "Z",
+        "min": "Min",
+        "max": "Max",
+        "degree": "Graad",
+        "operator": "Operator",
+        "operatorEqual": "Gelijk (==)",
+        "operatorNotEqual": "Niet gelijk (!=)",
+        "operatorLess": "Kleiner dan (<)",
+        "operatorLessEqual": "Kleiner of gelijk (<=)",
+        "operatorGreater": "Groter dan (>)",
+        "operatorGreaterEqual": "Groter of gelijk (>=)",
+        "comparison": "Vergelijking",
+        "comparisonEqual": "Gelijk (==)",
+        "comparisonNotEqual": "Niet gelijk (!=)",
+        "comparisonGreater": "Groter dan (>)",
+        "comparisonLess": "Kleiner dan (<)",
+        "comparisonGreaterEqual": "Groter of gelijk (>=)",
+        "comparisonLessEqual": "Kleiner of gelijk (<=)",
+        "formula": "Formule",
+        "message": "Bericht",
+        "iterations": "Iteraties",
+        "minValue": "Minimale waarde",
+        "maxValue": "Maximale waarde",
         "start": "Start",
-        "end": "",
+        "end": "Einde",
         "amount": "Aantal",
-        "blockType": "",
-        "radius": "",
-        "timeout": "",
-        "slot": "",
-        "count": "",
-        "entityType": "",
-        "smooth": "",
-        "enabled": "",
-        "hand": "",
-        "handMain": "",
-        "handOff": "",
-        "face": "",
-        "faceUp": "",
-        "faceDown": "",
-        "faceNorth": "",
-        "faceSouth": "",
-        "faceEast": "",
-        "faceWest": "",
-        "ticks": "",
-        "range": "",
-        "loopCount": "",
-        "open": "",
-        "delay": ""
+        "blockType": "Bloktype",
+        "radius": "Straal",
+        "timeout": "Timeout (ms)",
+        "slot": "Slot",
+        "count": "Aantal",
+        "entityType": "Entiteitstype",
+        "smooth": "Vloeiend",
+        "enabled": "Ingeschakeld",
+        "hand": "Hand",
+        "handMain": "Hoofdhand",
+        "handOff": "Bijhand",
+        "face": "Vlak",
+        "faceUp": "Omhoog",
+        "faceDown": "Omlaag",
+        "faceNorth": "Noord",
+        "faceSouth": "Zuid",
+        "faceEast": "Oost",
+        "faceWest": "West",
+        "ticks": "Ticks",
+        "range": "Bereik",
+        "loopCount": "Aantal herhalingen",
+        "open": "Openen",
+        "delay": "Vertraging (ms)"
       },
       "nodes": {
         "trigger": {
           "on_tick": {
-            "label": "",
-            "description": ""
+            "label": "Bij tick",
+            "description": "Wordt geactiveerd bij elke gametick (20 keer per seconde)"
           },
           "on_join": {
-            "label": "",
-            "description": ""
+            "label": "Bij join",
+            "description": "Wordt geactiveerd wanneer de bot de server betreedt"
           },
           "on_chat": {
-            "label": "",
-            "description": ""
+            "label": "Bij chat",
+            "description": "Wordt geactiveerd wanneer een chatbericht binnenkomt"
           },
           "on_damage": {
-            "label": "",
-            "description": ""
+            "label": "Bij schade",
+            "description": "Wordt geactiveerd wanneer de bot schade oploopt"
           },
           "on_death": {
-            "label": "",
-            "description": ""
+            "label": "Bij dood",
+            "description": "Wordt geactiveerd wanneer de bot sterft"
           },
           "on_health_change": {
-            "label": "",
-            "description": ""
+            "label": "Bij verandering van gezondheid",
+            "description": "Wordt geactiveerd als de gezondheid van de bot verandert"
           },
           "on_interval": {
-            "label": "",
-            "description": ""
+            "label": "Bij interval",
+            "description": "Wordt geactiveerd op een instelbaar tijdsinterval"
           }
         },
         "math": {
           "add": {
             "label": "Toevoegen",
-            "description": ""
+            "description": "Voegt twee getallen samen"
           },
           "subtract": {
-            "label": "",
-            "description": ""
+            "label": "Aftrekken",
+            "description": "Trekt het tweede getal af van het eerste"
           },
           "multiply": {
-            "label": "",
-            "description": ""
+            "label": "Vermenigvuldigen",
+            "description": "Vermenigvuldigt twee getallen"
           },
           "divide": {
-            "label": "",
-            "description": ""
+            "label": "Delen",
+            "description": "Deelt het eerste getal door het tweede"
           },
           "modulo": {
-            "label": "",
-            "description": ""
+            "label": "Modulo",
+            "description": "Geeft het restant van een deling terug"
           },
           "formula": {
-            "label": "",
-            "description": ""
+            "label": "Formule",
+            "description": "Evalueert een wiskundige formule"
           },
           "random": {
-            "label": "",
-            "description": ""
+            "label": "Willekeurig",
+            "description": "Genereert een willekeurig getal tussen min en max"
           },
           "clamp": {
-            "label": "",
-            "description": ""
+            "label": "Limiteer",
+            "description": "Beperkt een waarde tussen min en max"
           },
           "lerp": {
-            "label": "",
-            "description": ""
+            "label": "Lineair interpoleren",
+            "description": "Lineaire interpolatie tussen twee waarden"
           },
           "bspline": {
-            "label": "",
-            "description": ""
+            "label": "B-spline",
+            "description": "Interpoleert met behulp van een B-spline-curve"
           }
         },
         "logic": {
           "compare": {
-            "label": "",
-            "description": ""
+            "label": "Vergelijken",
+            "description": "Vergelijkt twee waarden"
           },
           "and": {
-            "label": "",
-            "description": ""
+            "label": "En",
+            "description": "Logische EN van twee booleans"
           },
           "or": {
-            "label": "",
-            "description": ""
+            "label": "Of",
+            "description": "Logische OF van twee booleans"
           },
           "not": {
-            "label": "",
-            "description": ""
+            "label": "Niet",
+            "description": "Logische NIET van een boolean"
           },
           "xor": {
-            "label": "",
-            "description": ""
+            "label": "XOR",
+            "description": "Logische XOR van twee booleans"
           }
         },
         "flow": {
           "branch": {
-            "label": "",
-            "description": ""
+            "label": "Vertakking",
+            "description": "Conditionele vertakking op basis van een boolean"
           },
           "switch": {
-            "label": "",
-            "description": ""
+            "label": "Schakelaar",
+            "description": "Meervoudige vertakking op basis van een waarde"
           },
           "loop": {
-            "label": "",
-            "description": ""
+            "label": "Lus",
+            "description": "Herhaalt uitvoering een aantal keren"
           },
           "for_each": {
-            "label": "",
-            "description": ""
+            "label": "Voor elk",
+            "description": "Itereert over een verzameling"
           },
           "sequence": {
-            "label": "",
-            "description": ""
+            "label": "Reeks",
+            "description": "Voert uitgangen na elkaar uit"
           },
           "gate": {
-            "label": "",
-            "description": ""
+            "label": "Poort",
+            "description": "Regelt de stroom op basis van de poortstatus"
           },
           "debounce": {
-            "label": "",
-            "description": ""
+            "label": "Debouncer",
+            "description": "Voorkomt snelle herhaalde uitvoering"
           }
         },
         "action": {
           "set_rotation": {
-            "label": "",
-            "description": ""
+            "label": "Rotatie instellen",
+            "description": "Stelt de rotatie van de bot in"
           },
           "look_at": {
-            "label": "",
-            "description": ""
+            "label": "Kijken naar",
+            "description": "Kijkt naar een positie of entiteit"
           },
           "sneak": {
             "label": "Sluipen",
-            "description": ""
+            "description": "Schakelt sluipen in/uit"
           },
           "sprint": {
             "label": "Rennen",
-            "description": ""
+            "description": "Schakelt sprinten in/uit"
           },
           "jump": {
             "label": "Springen",
-            "description": ""
+            "description": "Laat de bot springen"
           },
           "attack": {
-            "label": "",
-            "description": ""
+            "label": "Aanvallen",
+            "description": "Valt een entiteit aan"
           },
           "use_item": {
-            "label": "",
-            "description": ""
+            "label": "Item gebruiken",
+            "description": "Gebruikt het item in de opgegeven hand"
           },
           "pathfind_to": {
-            "label": "",
-            "description": ""
+            "label": "Pad vinden naar",
+            "description": "Vindt een pad naar een doelpositie"
           },
           "break_block": {
-            "label": "",
-            "description": ""
+            "label": "Blok breken",
+            "description": "Breekt een blok op een positie"
           },
           "place_block": {
-            "label": "",
-            "description": ""
+            "label": "Blok plaatsen",
+            "description": "Plaats een blok op een positie"
           },
           "select_slot": {
-            "label": "",
-            "description": ""
+            "label": "Slot selecteren",
+            "description": "Selecteert een hotbarslot"
           },
           "send_chat": {
-            "label": "",
-            "description": ""
+            "label": "Chat verzenden",
+            "description": "Verstuurt een chatbericht"
           },
           "wait": {
-            "label": "",
-            "description": ""
+            "label": "Wachten",
+            "description": "Wacht een aantal ticks"
           },
           "print": {
-            "label": "",
-            "description": ""
+            "label": "Printen",
+            "description": "Schrijft een bericht naar het logboek voor foutopsporing"
           },
           "set_variable": {
-            "label": "",
-            "description": ""
+            "label": "Variabele instellen",
+            "description": "Slaat een waarde op in een variabele"
           }
         },
         "data": {
           "get_position": {
-            "label": "",
-            "description": ""
+            "label": "Positie ophalen",
+            "description": "Haalt de huidige positie van de bot op"
           },
           "get_rotation": {
-            "label": "",
-            "description": ""
+            "label": "Rotatie ophalen",
+            "description": "Haalt de huidige rotatie van de bot op"
           },
           "get_health": {
-            "label": "",
-            "description": ""
+            "label": "Gezondheid ophalen",
+            "description": "Haalt de huidige gezondheid van de bot op"
           },
           "get_hunger": {
-            "label": "",
-            "description": ""
+            "label": "Honger ophalen",
+            "description": "Haalt het huidige hongerniveau van de bot op"
           },
           "get_inventory": {
-            "label": "",
-            "description": ""
+            "label": "Inventaris ophalen",
+            "description": "Haalt een item uit de inventaris"
           },
           "get_block": {
-            "label": "",
-            "description": ""
+            "label": "Blok ophalen",
+            "description": "Haalt het blok op op een positie"
           },
           "find_entity": {
-            "label": "",
-            "description": ""
+            "label": "Entiteit zoeken",
+            "description": "Zoekt een entiteit van een specifiek type in de buurt"
           },
           "find_block": {
-            "label": "",
-            "description": ""
+            "label": "Blok zoeken",
+            "description": "Zoekt een blok van een specifiek type in de buurt"
           },
           "get_variable": {
-            "label": "",
-            "description": ""
+            "label": "Variabele ophalen",
+            "description": "Haalt een waarde op uit een variabele"
           }
         },
         "constant": {
           "number": {
-            "label": "",
-            "description": ""
+            "label": "Getal",
+            "description": "Een constante numerieke waarde"
           },
           "string": {
-            "label": "",
-            "description": ""
+            "label": "Tekenreeks",
+            "description": "Een constante tekstwaarde"
           },
           "boolean": {
-            "label": "",
-            "description": ""
+            "label": "Boolean",
+            "description": "Een constante waar/onwaar waarde"
           },
           "vector3": {
-            "label": "",
-            "description": ""
+            "label": "Vector3",
+            "description": "Een constante 3D-positie (X, Y, Z)"
           }
         }
       }

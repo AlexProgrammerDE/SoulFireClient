@@ -115,17 +115,17 @@
     "metadata": {
       "openButton": "Metaveriyi Düzenle",
       "title": "Metaveri: {{name}}",
-      "description": "",
-      "namespacePlaceholder": "",
-      "keyPlaceholder": "",
-      "valuePlaceholder": "",
-      "noEntries": "",
-      "addSuccess": "",
-      "addError": "",
-      "updateError": "",
-      "deleteSuccess": "",
-      "deleteError": "",
-      "duplicateError": ""
+      "description": "Bu hesap için kalıcı metadata girişlerini yönetin. Her giriş bir ad alanı, anahtar ve JSON değeri içerir.",
+      "namespacePlaceholder": "Ad Alanı",
+      "keyPlaceholder": "Anahtar",
+      "valuePlaceholder": "Değer (JSON)",
+      "noEntries": "Metadata girişi yok. Yukarıdan bir tane ekleyin.",
+      "addSuccess": "Giriş eklendi",
+      "addError": "Giriş eklenemedi",
+      "updateError": "Giriş güncellenemedi",
+      "deleteSuccess": "Girdi silindi",
+      "deleteError": "Girdi silinemedi",
+      "duplicateError": "Bu ad alanı ve anahtara sahip bir giriş zaten mevcut"
     }
   },
   "bots": {
@@ -271,416 +271,416 @@
     }
   },
   "scripts": {
-    "title": "",
-    "description": "",
+    "title": "Görsel Scriptler",
+    "description": "Görsel bir düğüm tabanlı düzenleyici kullanarak otomasyon scriptleri oluşturun.",
     "wipTitle": "Görsel Script Editörü",
-    "wipDescription": "",
+    "wipDescription": "Görsel bir düğüm tabanlı düzenleyici kullanarak otomasyon scriptleri oluşturun.",
     "wipDetails": "Bu özellik şu anda geliştirme aşamasında. Yeni görsel script editörüyle, kod yazmadan sürükle-bırak arayüzüyle güçlü otomasyon scriptleri oluşturabileceksiniz.",
-    "createScript": "",
-    "createScriptTitle": "",
-    "createScriptDescription": "",
-    "scriptName": "",
-    "scriptNamePlaceholder": "",
-    "scriptDescription": "",
-    "scriptDescriptionPlaceholder": "",
+    "createScript": "Script Oluştur",
+    "createScriptTitle": "Yeni Script Oluştur",
+    "createScriptDescription": "Bu örnek için yeni bir görsel script oluşturun. Scriptler, botun eylemlerini otomatikleştirebilir ve olaylara yanıt verebilir.",
+    "scriptName": "Script Adı",
+    "scriptNamePlaceholder": "Script adını girin...",
+    "scriptDescription": "Açıklama",
+    "scriptDescriptionPlaceholder": "Bu scriptin ne yaptığını açıklayın...",
     "create": "Oluştur",
-    "createSuccess": "",
-    "createError": "",
-    "noScripts": "",
-    "noScriptsDescription": "",
-    "createFirstScript": "",
-    "running": "Çalışıyor",
-    "nodes": "",
-    "noDescription": "",
-    "edit": "",
-    "start": "Başlat",
-    "stop": "Durdur",
-    "delete": "",
-    "deleteSuccess": "",
-    "deleteError": "",
-    "saveSuccess": "",
-    "saveError": "",
-    "startSuccess": "",
-    "startError": "",
-    "stopSuccess": "",
-    "stopError": "",
-    "untitledScript": "",
-    "saveFirstBeforeRunning": "",
-    "executionStarting": "",
-    "executionStarted": "",
-    "executionCompleted": "",
-    "executionCompletedSuccess": "",
-    "executionStopped": "",
-    "executionStoppedByUser": "",
-    "executionFailed": "",
-    "executionError": "",
-    "nodeStarted": "",
-    "nodeCompleted": "",
-    "nodeError": "",
+    "createSuccess": "Script başarıyla oluşturuldu",
+    "createError": "Script oluşturulamadı",
+    "noScripts": "Henüz Script Yok",
+    "noScriptsDescription": "Görsel düğüm tabanlı düzenleyiciyi kullanarak bot eylemlerini otomatikleştirmek için ilk scriptinizi oluşturun.",
+    "createFirstScript": "İlk Scriptinizi Oluşturun",
+    "active": "Aktif",
+    "nodes": "düğümler",
+    "noDescription": "Açıklama yok",
+    "edit": "Düzenle",
+    "activate": "",
+    "deactivate": "",
+    "delete": "Sil",
+    "deleteSuccess": "Script başarıyla silindi",
+    "deleteError": "Script silinemedi",
+    "saveSuccess": "Script başarıyla kaydedildi",
+    "saveError": "Script kaydedilemedi",
+    "activateSuccess": "",
+    "activateError": "",
+    "deactivateSuccess": "",
+    "deactivateError": "",
+    "untitledScript": "Başlıksız Script",
+    "saveFirstBeforeActivating": "",
+    "activating": "",
+    "activated": "",
+    "executionCompleted": "Script tamamlandı",
+    "executionCompletedSuccess": "Script başarıyla tamamlandı",
+    "deactivated": "",
+    "deactivatedByUser": "",
+    "executionFailed": "Script yürütme başarısız oldu",
+    "executionError": "Yürütme hatası: {{error}}",
+    "nodeStarted": "Düğüm başlatıldı: {{nodeId}}",
+    "nodeCompleted": "Düğüm tamamlandı: {{nodeId}}",
+    "nodeError": "Düğüm hatası: {{error}}",
     "editor": {
       "toolbar": {
-        "backToScripts": "",
+        "backToScripts": "Scriptlere Geri Dön",
         "save": "Kaydet",
-        "saveTooltip": "",
+        "saveTooltip": "Scripti kaydet (Ctrl+S)",
         "run": "",
         "runTooltip": "",
-        "stop": "Durdur",
-        "stopTooltip": "",
-        "autoStart": "",
+        "deactivate": "",
+        "deactivateTooltip": "",
+        "autoStart": "Otomatik başlat",
         "autoStartTooltip": "",
-        "unsaved": "",
-        "clearCanvas": "",
-        "zoomIn": "",
-        "zoomOut": "",
-        "fit": ""
+        "unsaved": "Kaydedilmedi",
+        "clearCanvas": "Tuvali temizle",
+        "zoomIn": "Yakınlaştır",
+        "zoomOut": "Uzaklaştır",
+        "fit": "Sığdır"
       },
       "palette": {
-        "title": "",
-        "search": "",
+        "title": "Düğüm Paleti",
+        "search": "Düğüm ara...",
         "categories": {
-          "trigger": "",
+          "trigger": "Tetikleyiciler",
           "action": "İşlemler",
-          "flow": "",
-          "math": "",
-          "logic": "",
-          "data": "",
-          "bot": "",
-          "world": ""
+          "flow": "Akış Kontrolü",
+          "math": "Matematik",
+          "logic": "Mantık",
+          "data": "Veri",
+          "bot": "Bot",
+          "world": "Dünya"
         }
       },
       "inspector": {
-        "title": "",
-        "noSelection": "",
-        "properties": "",
-        "nodeId": "",
-        "inputs": "",
-        "outputs": "",
-        "selectPlaceholder": ""
+        "title": "Düğüm Denetçisi",
+        "noSelection": "Özelliklerini görmek için bir düğüm seçin",
+        "properties": "Özellikler",
+        "nodeId": "Düğüm Kimliği",
+        "inputs": "Girdiler",
+        "outputs": "Çıktılar",
+        "selectPlaceholder": "Seç..."
       },
       "logs": {
-        "title": "",
-        "clear": "",
-        "clearTitle": "",
-        "noLogs": "",
-        "entries_one": "",
-        "entries_other": ""
+        "title": "Yürütme Günlükleri",
+        "clear": "Günlükleri temizle",
+        "clearTitle": "Günlükleri temizle",
+        "noLogs": "Henüz günlük yok. Yürütme günlüklerini görmek için scripti çalıştırın.",
+        "entries_one": "{{count}} giriş",
+        "entries_other": "{{count}} giriş"
       },
       "contextMenu": {
-        "duplicate": "",
-        "disconnectAll": "",
-        "delete": ""
+        "duplicate": "Çoğalt",
+        "disconnectAll": "Tüm bağlantıları kes",
+        "delete": "Sil"
       },
       "ports": {
-        "exec": "",
-        "execIn": "",
-        "execOut": "",
-        "execTrue": "",
-        "execFalse": "",
-        "execLoop": "",
-        "execDone": ""
+        "exec": "Yürüt",
+        "execIn": "Yürüt Girişi",
+        "execOut": "Yürüt Çıkışı",
+        "execTrue": "Doğru",
+        "execFalse": "Yanlış",
+        "execLoop": "Döngü",
+        "execDone": "Bitti"
       },
       "fields": {
         "value": "Değer",
-        "interval": "",
-        "variableName": "",
-        "level": "",
-        "levelDebug": "",
-        "levelInfo": "",
-        "levelWarn": "",
+        "interval": "Aralık (ms)",
+        "variableName": "Değişken Adı",
+        "level": "Günlük Seviyesi",
+        "levelDebug": "Hata Ayıklama",
+        "levelInfo": "Bilgi",
+        "levelWarn": "Uyarı",
         "levelError": "Hata",
-        "x": "",
-        "y": "",
-        "z": "",
-        "min": "",
-        "max": "",
-        "degree": "",
-        "operator": "",
-        "operatorEqual": "",
-        "operatorNotEqual": "",
-        "operatorLess": "",
-        "operatorLessEqual": "",
-        "operatorGreater": "",
-        "operatorGreaterEqual": "",
-        "comparison": "",
-        "comparisonEqual": "",
-        "comparisonNotEqual": "",
-        "comparisonGreater": "",
-        "comparisonLess": "",
-        "comparisonGreaterEqual": "",
-        "comparisonLessEqual": "",
-        "formula": "",
-        "message": "",
-        "iterations": "",
-        "minValue": "",
-        "maxValue": "",
+        "x": "X",
+        "y": "Y",
+        "z": "Z",
+        "min": "Min",
+        "max": "Maks",
+        "degree": "Derece",
+        "operator": "Operatör",
+        "operatorEqual": "Eşit (==)",
+        "operatorNotEqual": "Eşit Değil (!=)",
+        "operatorLess": "Küçüktür (<)",
+        "operatorLessEqual": "Küçük veya Eşit (<=)",
+        "operatorGreater": "Büyüktür (>)",
+        "operatorGreaterEqual": "Büyük veya Eşit (>=)",
+        "comparison": "Karşılaştırma",
+        "comparisonEqual": "Eşit (==)",
+        "comparisonNotEqual": "Eşit Değil (!=)",
+        "comparisonGreater": "Büyüktür (>)",
+        "comparisonLess": "Küçüktür (<)",
+        "comparisonGreaterEqual": "Büyük veya Eşit (>=)",
+        "comparisonLessEqual": "Küçük veya Eşit (<=)",
+        "formula": "Formül",
+        "message": "Mesaj",
+        "iterations": "İterasyonlar",
+        "minValue": "Minimum Değer",
+        "maxValue": "Maksimum Değer",
         "start": "Başlat",
-        "end": "",
+        "end": "Bitiş",
         "amount": "Miktar",
-        "blockType": "",
-        "radius": "",
-        "timeout": "",
-        "slot": "",
-        "count": "",
-        "entityType": "",
-        "smooth": "",
-        "enabled": "",
-        "hand": "",
-        "handMain": "",
-        "handOff": "",
-        "face": "",
-        "faceUp": "",
-        "faceDown": "",
-        "faceNorth": "",
-        "faceSouth": "",
-        "faceEast": "",
-        "faceWest": "",
-        "ticks": "",
-        "range": "",
-        "loopCount": "",
-        "open": "",
-        "delay": ""
+        "blockType": "Blok Türü",
+        "radius": "Yarıçap",
+        "timeout": "Zaman Aşımı (ms)",
+        "slot": "Yuva",
+        "count": "Sayı",
+        "entityType": "Varlık Türü",
+        "smooth": "Yumuşak",
+        "enabled": "Etkin",
+        "hand": "El",
+        "handMain": "Ana El",
+        "handOff": "Diğer El",
+        "face": "Yüz",
+        "faceUp": "Yukarı",
+        "faceDown": "Aşağı",
+        "faceNorth": "Kuzey",
+        "faceSouth": "Güney",
+        "faceEast": "Doğu",
+        "faceWest": "Batı",
+        "ticks": "Tik",
+        "range": "Menzil",
+        "loopCount": "Döngü Sayısı",
+        "open": "Açık",
+        "delay": "Gecikme (ms)"
       },
       "nodes": {
         "trigger": {
           "on_tick": {
-            "label": "",
-            "description": ""
+            "label": "Tik Başlatıldı",
+            "description": "Her oyun tikinde tetiklenir (saniyede 20 kez)"
           },
           "on_join": {
-            "label": "",
-            "description": ""
+            "label": "Katıldığında",
+            "description": "Bot sunucuya katıldığında tetiklenir"
           },
           "on_chat": {
-            "label": "",
-            "description": ""
+            "label": "Sohbet",
+            "description": "Bir sohbet mesajı alındığında tetiklenir"
           },
           "on_damage": {
-            "label": "",
-            "description": ""
+            "label": "Hasar Alındı",
+            "description": "Bot hasar aldığında tetiklenir"
           },
           "on_death": {
-            "label": "",
-            "description": ""
+            "label": "Öldüğünde",
+            "description": "Bot öldüğünde tetiklenir"
           },
           "on_health_change": {
-            "label": "",
-            "description": ""
+            "label": "Can Değişimi",
+            "description": "Botun canı değiştiğinde tetiklenir"
           },
           "on_interval": {
-            "label": "",
-            "description": ""
+            "label": "Aralıklı",
+            "description": "Ayarlanabilir zaman aralığında tetiklenir"
           }
         },
         "math": {
           "add": {
             "label": "Ekle",
-            "description": ""
+            "description": "İki sayıyı toplar"
           },
           "subtract": {
-            "label": "",
-            "description": ""
+            "label": "Çıkar",
+            "description": "İkinci sayıyı ilk sayıdan çıkarır"
           },
           "multiply": {
-            "label": "",
-            "description": ""
+            "label": "Çarp",
+            "description": "İki sayıyı çarpar"
           },
           "divide": {
-            "label": "",
-            "description": ""
+            "label": "Böl",
+            "description": "İlk sayıyı ikinci sayıya böler"
           },
           "modulo": {
-            "label": "",
-            "description": ""
+            "label": "Modül",
+            "description": "Bölme işleminin kalanını döndürür"
           },
           "formula": {
-            "label": "",
-            "description": ""
+            "label": "Formül",
+            "description": "Matematiksel bir formülü değerlendirir"
           },
           "random": {
-            "label": "",
-            "description": ""
+            "label": "Rastgele",
+            "description": "Min ve maks arasında rastgele bir sayı üretir"
           },
           "clamp": {
-            "label": "",
-            "description": ""
+            "label": "Kısıtla",
+            "description": "Bir değeri min ve maks arasında kısıtlar"
           },
           "lerp": {
-            "label": "",
-            "description": ""
+            "label": "Doğrusal aralık",
+            "description": "İki değer arasında doğrusal aralık"
           },
           "bspline": {
-            "label": "",
-            "description": ""
+            "label": "B-Spline",
+            "description": "B-spline eğrisi kullanılarak aralıklanır"
           }
         },
         "logic": {
           "compare": {
-            "label": "",
-            "description": ""
+            "label": "Karşılaştır",
+            "description": "İki değeri karşılaştırır"
           },
           "and": {
-            "label": "",
-            "description": ""
+            "label": "Ve",
+            "description": "İki boolean değerin mantıksal VE'si"
           },
           "or": {
-            "label": "",
-            "description": ""
+            "label": "Veya",
+            "description": "İki boolean değerin mantıksal VEYA'sı"
           },
           "not": {
-            "label": "",
-            "description": ""
+            "label": "Değil",
+            "description": "Bir boolean değerin mantıksal DEĞİL'i"
           },
           "xor": {
-            "label": "",
-            "description": ""
+            "label": "XOR",
+            "description": "İki boolean değerin mantıksal XOR'u"
           }
         },
         "flow": {
           "branch": {
-            "label": "",
-            "description": ""
+            "label": "Dallanma",
+            "description": "Bir boolean değerine göre koşullu dallanma"
           },
           "switch": {
-            "label": "",
-            "description": ""
+            "label": "Anahtar",
+            "description": "Bir değere göre çoklu yol dallanması"
           },
           "loop": {
-            "label": "",
-            "description": ""
+            "label": "Döngü",
+            "description": "Birden fazla kez yürütmeyi tekrarlar"
           },
           "for_each": {
-            "label": "",
-            "description": ""
+            "label": "Her Biri İçin",
+            "description": "Bir koleksiyon üzerinde yineleme yapar"
           },
           "sequence": {
-            "label": "",
-            "description": ""
+            "label": "Sıralama",
+            "description": "Çıktıları sırayla yürütür"
           },
           "gate": {
-            "label": "",
-            "description": ""
+            "label": "Kapı",
+            "description": "Bir kapı durumu temelinde akışı kontrol eder"
           },
           "debounce": {
-            "label": "",
-            "description": ""
+            "label": "Yineleme Engelleme",
+            "description": "Hızlı tekrar yürütmeyi önler"
           }
         },
         "action": {
           "set_rotation": {
-            "label": "",
-            "description": ""
+            "label": "Rotasyonu Ayarla",
+            "description": "Botun rotasyonunu ayarlar"
           },
           "look_at": {
-            "label": "",
-            "description": ""
+            "label": "Bak",
+            "description": "Bir konuma veya varlığa bakar"
           },
           "sneak": {
             "label": "Yavaşla",
-            "description": ""
+            "description": "Sürünmeyi değiştirir"
           },
           "sprint": {
             "label": "Koş",
-            "description": ""
+            "description": "Koşmayı değiştirir"
           },
           "jump": {
             "label": "Zıpla",
-            "description": ""
+            "description": "Botun zıplamasını sağlar"
           },
           "attack": {
-            "label": "",
-            "description": ""
+            "label": "Saldır",
+            "description": "Bir varlığa saldırır"
           },
           "use_item": {
-            "label": "",
-            "description": ""
+            "label": "Eşyayı Kullan",
+            "description": "Belirtilen eldeki eşyayı kullanır"
           },
           "pathfind_to": {
-            "label": "",
-            "description": ""
+            "label": "Yola Git",
+            "description": "Hedef pozisyona yol bulur"
           },
           "break_block": {
-            "label": "",
-            "description": ""
+            "label": "Blok Kır",
+            "description": "Bir pozisyondaki bloğu kırar"
           },
           "place_block": {
-            "label": "",
-            "description": ""
+            "label": "Blok Koy",
+            "description": "Bir pozisyona blok koyar"
           },
           "select_slot": {
-            "label": "",
-            "description": ""
+            "label": "Yuva Seç",
+            "description": "Sıcak çubuk yuvası seçer"
           },
           "send_chat": {
-            "label": "",
-            "description": ""
+            "label": "Sohbet Gönder",
+            "description": "Bir sohbet mesajı gönderir"
           },
           "wait": {
-            "label": "",
-            "description": ""
+            "label": "Bekle",
+            "description": "Belirli bir süre boyunca bekler"
           },
           "print": {
-            "label": "",
-            "description": ""
+            "label": "Yazdır",
+            "description": "Hata ayıklama için bir mesaj kaydeder"
           },
           "set_variable": {
-            "label": "",
-            "description": ""
+            "label": "Değişken Ayarla",
+            "description": "Bir değeri bir değişkende saklar"
           }
         },
         "data": {
           "get_position": {
-            "label": "",
-            "description": ""
+            "label": "Konum Al",
+            "description": "Botun mevcut konumunu alır"
           },
           "get_rotation": {
-            "label": "",
-            "description": ""
+            "label": "Dönüş Al",
+            "description": "Botun mevcut dönüşünü alır"
           },
           "get_health": {
-            "label": "",
-            "description": ""
+            "label": "Canı Al",
+            "description": "Botun mevcut canını alır"
           },
           "get_hunger": {
-            "label": "",
-            "description": ""
+            "label": "Açlık Al",
+            "description": "Botun mevcut açlık seviyesini alır"
           },
           "get_inventory": {
-            "label": "",
-            "description": ""
+            "label": "Envanteri Al",
+            "description": "Envanterden bir eşya alır"
           },
           "get_block": {
-            "label": "",
-            "description": ""
+            "label": "Blok Al",
+            "description": "Bir konumdaki bloğu alır"
           },
           "find_entity": {
-            "label": "",
-            "description": ""
+            "label": "Varlık Bul",
+            "description": "Yakındaki belirli bir türdeki bir varlığı bulur"
           },
           "find_block": {
-            "label": "",
-            "description": ""
+            "label": "Blok Bul",
+            "description": "Yakındaki belirli bir türdeki bir bloğu bulur"
           },
           "get_variable": {
-            "label": "",
-            "description": ""
+            "label": "Değişken Al",
+            "description": "Bir değişkenden bir değer alır"
           }
         },
         "constant": {
           "number": {
-            "label": "",
-            "description": ""
+            "label": "Sayı",
+            "description": "Sabit bir sayı değeri"
           },
           "string": {
-            "label": "",
-            "description": ""
+            "label": "Metin",
+            "description": "Sabit bir metin değeri"
           },
           "boolean": {
-            "label": "",
-            "description": ""
+            "label": "Mantıksal",
+            "description": "Sabit bir doğru/yanlış değeri"
           },
           "vector3": {
-            "label": "",
-            "description": ""
+            "label": "Vektör3",
+            "description": "Sabit bir 3B konum (X, Y, Z)"
           }
         }
       }

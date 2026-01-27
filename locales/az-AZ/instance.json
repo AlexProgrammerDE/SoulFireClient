@@ -115,17 +115,17 @@
     "metadata": {
       "openButton": "Metadatanı redaktə et",
       "title": "Metadata: {{name}}",
-      "description": "",
-      "namespacePlaceholder": "",
-      "keyPlaceholder": "",
-      "valuePlaceholder": "",
-      "noEntries": "",
-      "addSuccess": "",
-      "addError": "",
-      "updateError": "",
-      "deleteSuccess": "",
-      "deleteError": "",
-      "duplicateError": ""
+      "description": "Bu hesab üçün davamlı metadataya girişləri idarə edin. Hər bir girişdə məkan (namespace), açar (key) və JSON dəyəri var.",
+      "namespacePlaceholder": "Məkan (Namespace)",
+      "keyPlaceholder": "Açar",
+      "valuePlaceholder": "Dəyər (JSON)",
+      "noEntries": "Heç bir metadata girişi yoxdur. Yuxarıdan birini əlavə edin.",
+      "addSuccess": "Giriş əlavə olundu",
+      "addError": "Girişi əlavə etmək mümkün olmadı",
+      "updateError": "Girişi yeniləmək mümkün olmadı",
+      "deleteSuccess": "Qeyd silindi",
+      "deleteError": "Qeydi silmək mümkün olmadı",
+      "duplicateError": "Bu ad sahəsi və açarla giriş artıq mövcuddur"
     }
   },
   "bots": {
@@ -271,416 +271,416 @@
     }
   },
   "scripts": {
-    "title": "",
-    "description": "",
+    "title": "Vizual Skriptlər",
+    "description": "Vizual düyün əsaslı redaktor vasitəsi ilə avtomatlaşdırma skriptləri yaradın.",
     "wipTitle": "Vizual Skript Redaktoru",
-    "wipDescription": "",
+    "wipDescription": "Vizual düyün əsaslı redaktor vasitəsi ilə avtomatlaşdırma skriptləri yaradın.",
     "wipDetails": "Bu funksiya hal-hazırda işlənir. Yeni vizual skript redaktoru sizə heç bir kod yazmadan drag-and-drop interfeysi ilə güclü avtomatlaşdırma skriptləri yaratmağa imkan verəcək.",
-    "createScript": "",
-    "createScriptTitle": "",
-    "createScriptDescription": "",
-    "scriptName": "",
-    "scriptNamePlaceholder": "",
-    "scriptDescription": "",
-    "scriptDescriptionPlaceholder": "",
+    "createScript": "Skript Yarat",
+    "createScriptTitle": "Yeni Skript Yarat",
+    "createScriptDescription": "Bu instansiya üçün yeni vizual skript yaradın. Skriptlər bot fəaliyyətlərini avtomatlaşdıra və hadisələrə cavab verə bilər.",
+    "scriptName": "Skript Adı",
+    "scriptNamePlaceholder": "Skript adını daxil edin...",
+    "scriptDescription": "Təsvir",
+    "scriptDescriptionPlaceholder": "Bu skriptin nə etdiyini təsvir edin...",
     "create": "Yarat",
-    "createSuccess": "",
-    "createError": "",
-    "noScripts": "",
-    "noScriptsDescription": "",
-    "createFirstScript": "",
-    "running": "İşləyir",
-    "nodes": "",
-    "noDescription": "",
-    "edit": "",
-    "start": "Başla",
-    "stop": "Dayandır",
-    "delete": "",
-    "deleteSuccess": "",
-    "deleteError": "",
-    "saveSuccess": "",
-    "saveError": "",
-    "startSuccess": "",
-    "startError": "",
-    "stopSuccess": "",
-    "stopError": "",
-    "untitledScript": "",
-    "saveFirstBeforeRunning": "",
-    "executionStarting": "",
-    "executionStarted": "",
-    "executionCompleted": "",
-    "executionCompletedSuccess": "",
-    "executionStopped": "",
-    "executionStoppedByUser": "",
-    "executionFailed": "",
-    "executionError": "",
-    "nodeStarted": "",
-    "nodeCompleted": "",
-    "nodeError": "",
+    "createSuccess": "Skript uğurla yaradıldı",
+    "createError": "Skript yaratmaq uğursuz oldu",
+    "noScripts": "Hələ Skript yoxdur",
+    "noScriptsDescription": "Vizual düyün əsaslı redaktor vasitəsi ilə bot hərəkətlərini avtomatlaşdırmaq üçün ilk skriptinizi yaradın.",
+    "createFirstScript": "İlk Skriptini Yarat",
+    "active": "Aktiv",
+    "nodes": "düyünlər",
+    "noDescription": "Təsvir yoxdur",
+    "edit": "Redaktə et",
+    "activate": "",
+    "deactivate": "",
+    "delete": "Sil",
+    "deleteSuccess": "Skript uğurla silindi",
+    "deleteError": "Skriptin silinməsi mümkün olmadı",
+    "saveSuccess": "Skript uğurla yadda saxlanıldı",
+    "saveError": "Skriptin yadda saxlanılması mümkün olmadı",
+    "activateSuccess": "",
+    "activateError": "",
+    "deactivateSuccess": "",
+    "deactivateError": "",
+    "untitledScript": "Adsız Skript",
+    "saveFirstBeforeActivating": "",
+    "activating": "",
+    "activated": "",
+    "executionCompleted": "Skript tamamlandı",
+    "executionCompletedSuccess": "Skript uğurla tamamlandı",
+    "deactivated": "",
+    "deactivatedByUser": "",
+    "executionFailed": "Skriptin icrası uğursuz oldu",
+    "executionError": "İcra xətası: {{error}}",
+    "nodeStarted": "Düyün başlandı: {{nodeId}}",
+    "nodeCompleted": "Düyün tamamlandı: {{nodeId}}",
+    "nodeError": "Düyün xətası: {{error}}",
     "editor": {
       "toolbar": {
-        "backToScripts": "",
+        "backToScripts": "Skriptlərə Qayıt",
         "save": "Yadda saxla",
-        "saveTooltip": "",
+        "saveTooltip": "Skripti yadda saxla (Ctrl+S)",
         "run": "",
         "runTooltip": "",
-        "stop": "Dayandır",
-        "stopTooltip": "",
-        "autoStart": "",
+        "deactivate": "",
+        "deactivateTooltip": "",
+        "autoStart": "Avtomatik başla",
         "autoStartTooltip": "",
-        "unsaved": "",
-        "clearCanvas": "",
-        "zoomIn": "",
-        "zoomOut": "",
-        "fit": ""
+        "unsaved": "Yadda saxlanılmayıb",
+        "clearCanvas": "Kanvası təmizlə",
+        "zoomIn": "Yaxınlaşdır",
+        "zoomOut": "Uzaqlaşdır",
+        "fit": "Sığdır"
       },
       "palette": {
-        "title": "",
-        "search": "",
+        "title": "Düyün Palitrası",
+        "search": "Düyünləri axtarın...",
         "categories": {
-          "trigger": "",
+          "trigger": "Tətiklər",
           "action": "Əməliyyatlar",
-          "flow": "",
-          "math": "",
-          "logic": "",
-          "data": "",
-          "bot": "",
-          "world": ""
+          "flow": "Axın İdarəsi",
+          "math": "Riyaziyyat",
+          "logic": "Məntiq",
+          "data": "Məlumat",
+          "bot": "Bot",
+          "world": "Dünya"
         }
       },
       "inspector": {
-        "title": "",
-        "noSelection": "",
-        "properties": "",
-        "nodeId": "",
-        "inputs": "",
-        "outputs": "",
-        "selectPlaceholder": ""
+        "title": "Düyün İnspektoru",
+        "noSelection": "Xassələrini görmək üçün bir düyünü seçin",
+        "properties": "Xüsusiyyətlər",
+        "nodeId": "Düyün ID-si",
+        "inputs": "Girişlər",
+        "outputs": "Çıxışlar",
+        "selectPlaceholder": "Seç..."
       },
       "logs": {
-        "title": "",
-        "clear": "",
-        "clearTitle": "",
-        "noLogs": "",
-        "entries_one": "",
-        "entries_other": ""
+        "title": "İcra Jurnalları",
+        "clear": "Jurnalları təmizlə",
+        "clearTitle": "Jurnalları təmizlə",
+        "noLogs": "Hələ jurnal yoxdur. İcra jurnallarını görmək üçün skripti işə salın.",
+        "entries_one": "{{count}} qeyd",
+        "entries_other": "{{count}} qeyd"
       },
       "contextMenu": {
-        "duplicate": "",
-        "disconnectAll": "",
-        "delete": ""
+        "duplicate": "Dublikat",
+        "disconnectAll": "Hamısını ayır",
+        "delete": "Sil"
       },
       "ports": {
-        "exec": "",
-        "execIn": "",
-        "execOut": "",
-        "execTrue": "",
-        "execFalse": "",
-        "execLoop": "",
-        "execDone": ""
+        "exec": "İcra",
+        "execIn": "İcra Girişi",
+        "execOut": "İcra Çıxışı",
+        "execTrue": "Doğru",
+        "execFalse": "Yalan",
+        "execLoop": "Dövrə",
+        "execDone": "Bitdi"
       },
       "fields": {
         "value": "Dəyər",
-        "interval": "",
-        "variableName": "",
-        "level": "",
-        "levelDebug": "",
-        "levelInfo": "",
-        "levelWarn": "",
+        "interval": "Aralıq (ms)",
+        "variableName": "Dəyişən Adı",
+        "level": "Jurnal Səviyyəsi",
+        "levelDebug": "Diaqnostika",
+        "levelInfo": "Məlumat",
+        "levelWarn": "Xəbərdarlıq",
         "levelError": "Xəta",
-        "x": "",
-        "y": "",
-        "z": "",
-        "min": "",
-        "max": "",
-        "degree": "",
-        "operator": "",
-        "operatorEqual": "",
-        "operatorNotEqual": "",
-        "operatorLess": "",
-        "operatorLessEqual": "",
-        "operatorGreater": "",
-        "operatorGreaterEqual": "",
-        "comparison": "",
-        "comparisonEqual": "",
-        "comparisonNotEqual": "",
-        "comparisonGreater": "",
-        "comparisonLess": "",
-        "comparisonGreaterEqual": "",
-        "comparisonLessEqual": "",
-        "formula": "",
-        "message": "",
-        "iterations": "",
-        "minValue": "",
-        "maxValue": "",
+        "x": "X",
+        "y": "Y",
+        "z": "Z",
+        "min": "Minimum",
+        "max": "Maksimum",
+        "degree": "Dərəcə",
+        "operator": "Operator",
+        "operatorEqual": "Bərabərdir (==)",
+        "operatorNotEqual": "Bərabər deyil (!=)",
+        "operatorLess": "Kiçikdir (<)",
+        "operatorLessEqual": "Kiçik və ya Bərabərdir (<=)",
+        "operatorGreater": "Böyükdür (>)",
+        "operatorGreaterEqual": "Böyük və ya Bərabərdir (>=)",
+        "comparison": "Müqayisə",
+        "comparisonEqual": "Bərabərdir (==)",
+        "comparisonNotEqual": "Bərabər deyil (!=)",
+        "comparisonGreater": "Böyükdür (>)",
+        "comparisonLess": "Kiçikdir (<)",
+        "comparisonGreaterEqual": "Böyük və ya Bərabərdir (>=)",
+        "comparisonLessEqual": "Kiçik və ya Bərabərdir (<=)",
+        "formula": "Formula",
+        "message": "İsmarış",
+        "iterations": "İterasiya",
+        "minValue": "Minimal Dəyər",
+        "maxValue": "Maksimum Dəyər",
         "start": "Başla",
-        "end": "",
+        "end": "Son",
         "amount": "Miqdar",
-        "blockType": "",
-        "radius": "",
-        "timeout": "",
-        "slot": "",
-        "count": "",
-        "entityType": "",
-        "smooth": "",
-        "enabled": "",
-        "hand": "",
-        "handMain": "",
-        "handOff": "",
-        "face": "",
-        "faceUp": "",
-        "faceDown": "",
-        "faceNorth": "",
-        "faceSouth": "",
-        "faceEast": "",
-        "faceWest": "",
-        "ticks": "",
-        "range": "",
-        "loopCount": "",
-        "open": "",
-        "delay": ""
+        "blockType": "Blok Növü",
+        "radius": "Radius",
+        "timeout": "Taimaut (ms)",
+        "slot": "Slot",
+        "count": "Say",
+        "entityType": "Varliq Növü",
+        "smooth": "Hamarlanmış",
+        "enabled": "Aktivdir",
+        "hand": "Əl",
+        "handMain": "Əsas Əl",
+        "handOff": "Yan Əl",
+        "face": "Üz",
+        "faceUp": "Yuxarı",
+        "faceDown": "Aşağı",
+        "faceNorth": "Şimal",
+        "faceSouth": "Cənub",
+        "faceEast": "Şərq",
+        "faceWest": "Qərb",
+        "ticks": "Tiks",
+        "range": "Aralıq",
+        "loopCount": "Dövr sayı",
+        "open": "Açıq",
+        "delay": "Gecikmə (ms)"
       },
       "nodes": {
         "trigger": {
           "on_tick": {
-            "label": "",
-            "description": ""
+            "label": "Tiksdə",
+            "description": "Hər oyun tikində (saniyədə 20 dəfə) baş verir"
           },
           "on_join": {
-            "label": "",
-            "description": ""
+            "label": "Qoşulmada",
+            "description": "Bot serverə qoşulan zaman baş verir"
           },
           "on_chat": {
-            "label": "",
-            "description": ""
+            "label": "Çatda",
+            "description": "Söhbət mesajı alındıqda baş verir"
           },
           "on_damage": {
-            "label": "",
-            "description": ""
+            "label": "Zərər alanda",
+            "description": "Bot zədələndikdə baş verir"
           },
           "on_death": {
-            "label": "",
-            "description": ""
+            "label": "Ölüm zamanı",
+            "description": "Bot öldükdə baş verir"
           },
           "on_health_change": {
-            "label": "",
-            "description": ""
+            "label": "Can dəyişikliyi",
+            "description": "Botun canı dəyişdikdə baş verir"
           },
           "on_interval": {
-            "label": "",
-            "description": ""
+            "label": "Aralıqda",
+            "description": "Konfiqurasiya edilə bilən zaman aralığında baş verir"
           }
         },
         "math": {
           "add": {
             "label": "Əlavə et",
-            "description": ""
+            "description": "İki rəqəmin cəmini alır"
           },
           "subtract": {
-            "label": "",
-            "description": ""
+            "label": "Çıxma",
+            "description": "İkinci rəqəmi birincidən çıxır"
           },
           "multiply": {
-            "label": "",
-            "description": ""
+            "label": "Vurma",
+            "description": "İki rəqəmi bir-birinə vurur"
           },
           "divide": {
-            "label": "",
-            "description": ""
+            "label": "Bölmə",
+            "description": "Birinci rəqəmi ikinciyə bölür"
           },
           "modulo": {
-            "label": "",
-            "description": ""
+            "label": "Modulo",
+            "description": "Bölmədən qalıq qaytarır"
           },
           "formula": {
-            "label": "",
-            "description": ""
+            "label": "Formula",
+            "description": "Riyazi formulu qiymətləndirir"
           },
           "random": {
-            "label": "",
-            "description": ""
+            "label": "Təsadüfi",
+            "description": "Minimal və maksimal arasında təsadüfi rəqəm yaradır"
           },
           "clamp": {
-            "label": "",
-            "description": ""
+            "label": "Sıxışdır",
+            "description": "Bir dəyəri minimal və maksimal arasında sıxışdırır"
           },
           "lerp": {
-            "label": "",
-            "description": ""
+            "label": "Lineer İnterpolasiya",
+            "description": "İki dəyər arasında xətti interpolasiya"
           },
           "bspline": {
-            "label": "",
-            "description": ""
+            "label": "B-Spline",
+            "description": "B-spline əyrisi ilə interpolasiya edir"
           }
         },
         "logic": {
           "compare": {
-            "label": "",
-            "description": ""
+            "label": "Müqayisə et",
+            "description": "İki dəyəri müqayisə edir"
           },
           "and": {
-            "label": "",
-            "description": ""
+            "label": "Və",
+            "description": "İki boolean-ın məntiqi VƏ-si"
           },
           "or": {
-            "label": "",
-            "description": ""
+            "label": "Və ya",
+            "description": "İki boolean-ın məntiqi VƏ YA-sı"
           },
           "not": {
-            "label": "",
-            "description": ""
+            "label": "De",
+            "description": "Bir boolean-ın məntiqi DE-si"
           },
           "xor": {
-            "label": "",
-            "description": ""
+            "label": "XOR",
+            "description": "İki boolean-ın məntiqi XOR-u"
           }
         },
         "flow": {
           "branch": {
-            "label": "",
-            "description": ""
+            "label": "Filial",
+            "description": "Boolean-a əsaslanaraq şərti bölmə"
           },
           "switch": {
-            "label": "",
-            "description": ""
+            "label": "Switch",
+            "description": "Bir dəyərə əsaslanan çoxyollu filial"
           },
           "loop": {
-            "label": "",
-            "description": ""
+            "label": "Dövrə",
+            "description": "İcranı bir neçə dəfə təkrar edir"
           },
           "for_each": {
-            "label": "",
-            "description": ""
+            "label": "Hər biri üçün",
+            "description": "Toplu üzərində iterasiya edir"
           },
           "sequence": {
-            "label": "",
-            "description": ""
+            "label": "Ardıcıl",
+            "description": "Çıxışları ardıcıllıqla icra edir"
           },
           "gate": {
-            "label": "",
-            "description": ""
+            "label": "Qapı",
+            "description": "Qapı vəziyyətinə əsaslanaraq axını idarə edir"
           },
           "debounce": {
-            "label": "",
-            "description": ""
+            "label": "Debounce",
+            "description": "Tez-tez təkrar olunan icranın qarşısını alır"
           }
         },
         "action": {
           "set_rotation": {
-            "label": "",
-            "description": ""
+            "label": "Dönmə təyin et",
+            "description": "Botun dönməsini təyin edir"
           },
           "look_at": {
-            "label": "",
-            "description": ""
+            "label": "Baxış nöqtəsi",
+            "description": "Mövqedə və ya obyektdə baxışı müəyyən edir"
           },
           "sneak": {
             "label": "Sürün",
-            "description": ""
+            "description": "Sürünü gizlədib/görünür edir"
           },
           "sprint": {
             "label": "Qaç",
-            "description": ""
+            "description": "Cəld yeriməni aktivləşdirir/deaktivləşdirir"
           },
           "jump": {
             "label": "Tullan",
-            "description": ""
+            "description": "Botu tullanmağa məcbur edir"
           },
           "attack": {
-            "label": "",
-            "description": ""
+            "label": "Hücum et",
+            "description": "Obyektə hücum edir"
           },
           "use_item": {
-            "label": "",
-            "description": ""
+            "label": "Əşyanı istifadə et",
+            "description": "Göstərilən əldədə olan əşyanı istifadə edir"
           },
           "pathfind_to": {
-            "label": "",
-            "description": ""
+            "label": "Yola tap",
+            "description": "Hədəf mövqeyə yol tapır"
           },
           "break_block": {
-            "label": "",
-            "description": ""
+            "label": "Bloku sındır",
+            "description": "Mövqedə bloku sındırır"
           },
           "place_block": {
-            "label": "",
-            "description": ""
+            "label": "Blok yerləşdir",
+            "description": "Mövqedə blok yerləşdirir"
           },
           "select_slot": {
-            "label": "",
-            "description": ""
+            "label": "Slot seç",
+            "description": "Qaynarbar slotunu seçir"
           },
           "send_chat": {
-            "label": "",
-            "description": ""
+            "label": "Chat göndər",
+            "description": "Söhbət mesajı göndərir"
           },
           "wait": {
-            "label": "",
-            "description": ""
+            "label": "Gözlə",
+            "description": "Bir neçə tik gözləyir"
           },
           "print": {
-            "label": "",
-            "description": ""
+            "label": "Çap et",
+            "description": "Sazlama üçün mesajı loglaşdırır"
           },
           "set_variable": {
-            "label": "",
-            "description": ""
+            "label": "Dəyişəni təyin et",
+            "description": "Dəyişəndə bir dəyər saxlayır"
           }
         },
         "data": {
           "get_position": {
-            "label": "",
-            "description": ""
+            "label": "Mövqeni al",
+            "description": "Botun hazırkı mövqeyini alır"
           },
           "get_rotation": {
-            "label": "",
-            "description": ""
+            "label": "Fırlanmanı al",
+            "description": "Botun hazırkı fırlanmasını alır"
           },
           "get_health": {
-            "label": "",
-            "description": ""
+            "label": "Sağlamlıq dəyərini al",
+            "description": "Botun indiki sağlamlığını alır"
           },
           "get_hunger": {
-            "label": "",
-            "description": ""
+            "label": "Aclıq dəyərini al",
+            "description": "Botun hazırkı aclıq səviyyəsini alır"
           },
           "get_inventory": {
-            "label": "",
-            "description": ""
+            "label": "İnventarı al",
+            "description": "İnventardan bir əşyanı alır"
           },
           "get_block": {
-            "label": "",
-            "description": ""
+            "label": "Bloku al",
+            "description": "Mövqedə olan bloku alır"
           },
           "find_entity": {
-            "label": "",
-            "description": ""
+            "label": "Obyekti tap",
+            "description": "Ətrafdakı müəyyən tip obyektləri tapır"
           },
           "find_block": {
-            "label": "",
-            "description": ""
+            "label": "Bloku tap",
+            "description": "Ətrafdakı müəyyən tip blokları tapır"
           },
           "get_variable": {
-            "label": "",
-            "description": ""
+            "label": "Dəyişəni al",
+            "description": "Dəyişəndən bir dəyər götürür"
           }
         },
         "constant": {
           "number": {
-            "label": "",
-            "description": ""
+            "label": "Ədəd",
+            "description": "Sabit ədəd dəyəri"
           },
           "string": {
-            "label": "",
-            "description": ""
+            "label": "Sətir",
+            "description": "Sabit mətn dəyəri"
           },
           "boolean": {
-            "label": "",
-            "description": ""
+            "label": "Boolean",
+            "description": "Sabit doğru/səhv dəyəri"
           },
           "vector3": {
-            "label": "",
-            "description": ""
+            "label": "Vector3",
+            "description": "Sabit 3D mövqe (X, Y, Z)"
           }
         }
       }

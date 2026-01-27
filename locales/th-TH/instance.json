@@ -115,17 +115,17 @@
     "metadata": {
       "openButton": "แก้ไข Metadata",
       "title": "Metadata: {{name}}",
-      "description": "",
-      "namespacePlaceholder": "",
-      "keyPlaceholder": "",
-      "valuePlaceholder": "",
-      "noEntries": "",
-      "addSuccess": "",
-      "addError": "",
-      "updateError": "",
-      "deleteSuccess": "",
-      "deleteError": "",
-      "duplicateError": ""
+      "description": "จัดการรายการข้อมูลเมตาที่ถาวรสำหรับบัญชีนี้ แต่ละรายการมี namespace, คีย์ และค่าเป็น JSON.",
+      "namespacePlaceholder": "เนมสเปซ",
+      "keyPlaceholder": "คีย์",
+      "valuePlaceholder": "ค่า (JSON)",
+      "noEntries": "ไม่มีรายการข้อมูลเมตา กรุณาเพิ่มรายการด้านบน",
+      "addSuccess": "เพิ่มรายการแล้ว",
+      "addError": "ไม่สามารถเพิ่มรายการได้",
+      "updateError": "ไม่สามารถอัปเดตรายการได้",
+      "deleteSuccess": "ลบรายการเรียบร้อยแล้ว",
+      "deleteError": "ลบรายการไม่สำเร็จ",
+      "duplicateError": "มีรายการที่ใช้ namespace และคีย์นี้อยู่แล้ว"
     }
   },
   "bots": {
@@ -271,415 +271,415 @@
     }
   },
   "scripts": {
-    "title": "",
-    "description": "",
+    "title": "สคริปต์แบบภาพ",
+    "description": "สร้างสคริปต์อัตโนมัติด้วยตัวแก้ไขแบบโหนดภาพ",
     "wipTitle": "เครื่องมือแก้ไขสคริปต์แบบภาพ",
-    "wipDescription": "",
+    "wipDescription": "สร้างสคริปต์อัตโนมัติด้วยตัวแก้ไขแบบโหนดภาพ",
     "wipDetails": "ฟีเจอร์นี้กำลังอยู่ในระหว่างการพัฒนา ตัวแก้ไขสคริปต์แบบภาพใหม่นี้จะช่วยให้คุณสร้างสคริปต์อัตโนมัติที่ทรงพลังได้โดยใช้การลากและวางโดยไม่ต้องเขียนโค้ด",
-    "createScript": "",
-    "createScriptTitle": "",
-    "createScriptDescription": "",
-    "scriptName": "",
-    "scriptNamePlaceholder": "",
-    "scriptDescription": "",
-    "scriptDescriptionPlaceholder": "",
+    "createScript": "สร้างสคริปต์",
+    "createScriptTitle": "สร้างสคริปต์ใหม่",
+    "createScriptDescription": "สร้างสคริปต์ภาพใหม่สำหรับอินสแตนซ์นี้ สคริปต์สามารถทำให้อัตโนมัติและตอบสนองต่อเหตุการณ์",
+    "scriptName": "ชื่อสคริปต์",
+    "scriptNamePlaceholder": "ใส่ชื่อสคริปต์...",
+    "scriptDescription": "คำอธิบาย",
+    "scriptDescriptionPlaceholder": "อธิบายว่าสคริปต์นี้ทำอะไร...",
     "create": "สร้าง",
-    "createSuccess": "",
-    "createError": "",
-    "noScripts": "",
-    "noScriptsDescription": "",
-    "createFirstScript": "",
-    "running": "กำลังทำงาน",
-    "nodes": "",
-    "noDescription": "",
-    "edit": "",
-    "start": "เริ่มต้น",
-    "stop": "หยุด",
-    "delete": "",
-    "deleteSuccess": "",
-    "deleteError": "",
-    "saveSuccess": "",
-    "saveError": "",
-    "startSuccess": "",
-    "startError": "",
-    "stopSuccess": "",
-    "stopError": "",
-    "untitledScript": "",
-    "saveFirstBeforeRunning": "",
-    "executionStarting": "",
-    "executionStarted": "",
-    "executionCompleted": "",
-    "executionCompletedSuccess": "",
-    "executionStopped": "",
-    "executionStoppedByUser": "",
-    "executionFailed": "",
-    "executionError": "",
-    "nodeStarted": "",
-    "nodeCompleted": "",
-    "nodeError": "",
+    "createSuccess": "สร้างสคริปต์สำเร็จ",
+    "createError": "สร้างสคริปต์ไม่สำเร็จ",
+    "noScripts": "ยังไม่มีสคริปต์",
+    "noScriptsDescription": "สร้างสคริปต์แรกของคุณเพื่อทำให้งานบอทเป็นอัตโนมัติด้วยตัวแก้ไขแบบโหนดภาพ",
+    "createFirstScript": "สร้างสคริปต์แรกของคุณ",
+    "active": "ใช้งานอยู่",
+    "nodes": "โหนด",
+    "noDescription": "ไม่มีคำอธิบาย",
+    "edit": "แก้ไข",
+    "activate": "",
+    "deactivate": "",
+    "delete": "ลบ",
+    "deleteSuccess": "ลบสคริปต์เรียบร้อยแล้ว",
+    "deleteError": "ลบสคริปต์ไม่สำเร็จ",
+    "saveSuccess": "บันทึกสคริปต์สำเร็จ",
+    "saveError": "บันทึกสคริปต์ไม่สำเร็จ",
+    "activateSuccess": "",
+    "activateError": "",
+    "deactivateSuccess": "",
+    "deactivateError": "",
+    "untitledScript": "สคริปต์ไม่มีชื่อ",
+    "saveFirstBeforeActivating": "",
+    "activating": "",
+    "activated": "",
+    "executionCompleted": "สคริปต์เสร็จสิ้นแล้ว",
+    "executionCompletedSuccess": "สคริปต์เสร็จสิ้นสำเร็จ",
+    "deactivated": "",
+    "deactivatedByUser": "",
+    "executionFailed": "การทำงานของสคริปต์ล้มเหลว",
+    "executionError": "ข้อผิดพลาดขณะรัน: {{error}}",
+    "nodeStarted": "เริ่มโหนด: {{nodeId}}",
+    "nodeCompleted": "โหนดเสร็จสิ้น: {{nodeId}}",
+    "nodeError": "ข้อผิดพลาดโหนด: {{error}}",
     "editor": {
       "toolbar": {
-        "backToScripts": "",
+        "backToScripts": "กลับไปที่สคริปต์",
         "save": "บันทึก",
-        "saveTooltip": "",
+        "saveTooltip": "บันทึกสคริปต์ (Ctrl+S)",
         "run": "",
         "runTooltip": "",
-        "stop": "หยุด",
-        "stopTooltip": "",
-        "autoStart": "",
+        "deactivate": "",
+        "deactivateTooltip": "",
+        "autoStart": "เริ่มโดยอัตโนมัติ",
         "autoStartTooltip": "",
-        "unsaved": "",
-        "clearCanvas": "",
-        "zoomIn": "",
-        "zoomOut": "",
-        "fit": ""
+        "unsaved": "ยังไม่ได้บันทึก",
+        "clearCanvas": "ล้างผืนผ้าใบ",
+        "zoomIn": "ขยายเข้า",
+        "zoomOut": "ย่อออก",
+        "fit": "พอดีหน้าจอ"
       },
       "palette": {
-        "title": "",
-        "search": "",
+        "title": "พาเลตต์โหนด",
+        "search": "ค้นหาโหนด...",
         "categories": {
-          "trigger": "",
+          "trigger": "ทริกเกอร์",
           "action": "การดำเนินการ",
-          "flow": "",
-          "math": "",
-          "logic": "",
-          "data": "",
-          "bot": "",
-          "world": ""
+          "flow": "ควบคุมการไหล",
+          "math": "เลขคณิต",
+          "logic": "ตรรกะ",
+          "data": "ข้อมูล",
+          "bot": "บอท",
+          "world": "โลก"
         }
       },
       "inspector": {
-        "title": "",
-        "noSelection": "",
-        "properties": "",
-        "nodeId": "",
-        "inputs": "",
-        "outputs": "",
-        "selectPlaceholder": ""
+        "title": "ตัวตรวจสอบโหนด",
+        "noSelection": "เลือกโหนดเพื่อดูคุณสมบัติ",
+        "properties": "คุณสมบัติ",
+        "nodeId": "รหัสโหนด",
+        "inputs": "อินพุต",
+        "outputs": "เอาต์พุต",
+        "selectPlaceholder": "เลือก..."
       },
       "logs": {
-        "title": "",
-        "clear": "",
-        "clearTitle": "",
-        "noLogs": "",
-        "entries_other": ""
+        "title": "บันทึกการทำงาน",
+        "clear": "ล้างบันทึก",
+        "clearTitle": "ล้างบันทึก",
+        "noLogs": "ยังไม่มีบันทึก รันสคริปต์เพื่อดูบันทึก",
+        "entries_other": "{{count}} รายการ"
       },
       "contextMenu": {
-        "duplicate": "",
-        "disconnectAll": "",
-        "delete": ""
+        "duplicate": "ทำซ้ำ",
+        "disconnectAll": "ตัดการเชื่อมต่อทั้งหมด",
+        "delete": "ลบ"
       },
       "ports": {
-        "exec": "",
-        "execIn": "",
-        "execOut": "",
-        "execTrue": "",
-        "execFalse": "",
-        "execLoop": "",
-        "execDone": ""
+        "exec": "คำสั่ง",
+        "execIn": "รับคำสั่งเข้า",
+        "execOut": "ส่งคำสั่งออก",
+        "execTrue": "จริง",
+        "execFalse": "เท็จ",
+        "execLoop": "วนลูป",
+        "execDone": "เสร็จสิ้น"
       },
       "fields": {
         "value": "ค่า",
-        "interval": "",
-        "variableName": "",
-        "level": "",
-        "levelDebug": "",
-        "levelInfo": "",
-        "levelWarn": "",
+        "interval": "ช่วงเวลา (ms)",
+        "variableName": "ชื่อของตัวแปร",
+        "level": "ระดับบันทึก",
+        "levelDebug": "ดีบัก",
+        "levelInfo": "ข้อมูล",
+        "levelWarn": "คำเตือน",
         "levelError": "ข้อผิดพลาด",
-        "x": "",
-        "y": "",
-        "z": "",
-        "min": "",
-        "max": "",
-        "degree": "",
-        "operator": "",
-        "operatorEqual": "",
-        "operatorNotEqual": "",
-        "operatorLess": "",
-        "operatorLessEqual": "",
-        "operatorGreater": "",
-        "operatorGreaterEqual": "",
-        "comparison": "",
-        "comparisonEqual": "",
-        "comparisonNotEqual": "",
-        "comparisonGreater": "",
-        "comparisonLess": "",
-        "comparisonGreaterEqual": "",
-        "comparisonLessEqual": "",
-        "formula": "",
-        "message": "",
-        "iterations": "",
-        "minValue": "",
-        "maxValue": "",
+        "x": "X",
+        "y": "Y",
+        "z": "Z",
+        "min": "ค่าต่ำสุด",
+        "max": "ค่าสูงสุด",
+        "degree": "องศา",
+        "operator": "ตัวดำเนินการ",
+        "operatorEqual": "เท่ากับ (==)",
+        "operatorNotEqual": "ไม่เท่ากับ (!=)",
+        "operatorLess": "น้อยกว่า (<)",
+        "operatorLessEqual": "น้อยกว่าหรือเท่ากับ (<=)",
+        "operatorGreater": "มากกว่า (>)",
+        "operatorGreaterEqual": "มากกว่าหรือเท่ากับ (>=)",
+        "comparison": "การเปรียบเทียบ",
+        "comparisonEqual": "เท่ากับ (==)",
+        "comparisonNotEqual": "ไม่เท่ากับ (!=)",
+        "comparisonGreater": "มากกว่า (>)",
+        "comparisonLess": "น้อยกว่า (<)",
+        "comparisonGreaterEqual": "มากกว่าหรือเท่ากับ (>=)",
+        "comparisonLessEqual": "น้อยกว่าหรือเท่ากับ (<=)",
+        "formula": "สูตรคำนวณ",
+        "message": "ข้อความ",
+        "iterations": "จำนวนรอบ",
+        "minValue": "ค่าขั้นต่ำ",
+        "maxValue": "ค่าสูงสุด",
         "start": "เริ่มต้น",
-        "end": "",
+        "end": "จบ",
         "amount": "จำนวน",
-        "blockType": "",
-        "radius": "",
-        "timeout": "",
-        "slot": "",
-        "count": "",
-        "entityType": "",
-        "smooth": "",
-        "enabled": "",
-        "hand": "",
-        "handMain": "",
-        "handOff": "",
-        "face": "",
-        "faceUp": "",
-        "faceDown": "",
-        "faceNorth": "",
-        "faceSouth": "",
-        "faceEast": "",
-        "faceWest": "",
-        "ticks": "",
-        "range": "",
-        "loopCount": "",
-        "open": "",
-        "delay": ""
+        "blockType": "ชนิดบล็อก",
+        "radius": "รัศมี",
+        "timeout": "หมดเวลา (ms)",
+        "slot": "ช่อง",
+        "count": "จำนวน",
+        "entityType": "ชนิดเอนทิตี",
+        "smooth": "เรียบ",
+        "enabled": "เปิดใช้งาน",
+        "hand": "มือ",
+        "handMain": "มือหลัก",
+        "handOff": "มือรอง",
+        "face": "ด้านหน้า",
+        "faceUp": "ขึ้น",
+        "faceDown": "ลง",
+        "faceNorth": "เหนือ",
+        "faceSouth": "ใต้",
+        "faceEast": "ตะวันออก",
+        "faceWest": "ตก",
+        "ticks": "ทิกส์",
+        "range": "ระยะ",
+        "loopCount": "จำนวนรอบลูป",
+        "open": "เปิด",
+        "delay": "ดีเลย์ (ms)"
       },
       "nodes": {
         "trigger": {
           "on_tick": {
-            "label": "",
-            "description": ""
+            "label": "เมื่อ Tick",
+            "description": "ส่งสัญญาณทุก game tick (20 ครั้งต่อวินาที)"
           },
           "on_join": {
-            "label": "",
-            "description": ""
+            "label": "เมื่อเข้า",
+            "description": "ส่งสัญญาณเมื่อบอทเข้าร่วมเซิร์ฟเวอร์"
           },
           "on_chat": {
-            "label": "",
-            "description": ""
+            "label": "เมื่อแชท",
+            "description": "ส่งสัญญาณเมื่อมีข้อความแชทเข้ามา"
           },
           "on_damage": {
-            "label": "",
-            "description": ""
+            "label": "เมื่อได้รับความเสียหาย",
+            "description": "ส่งสัญญาณเมื่อบอทได้รับความเสียหาย"
           },
           "on_death": {
-            "label": "",
-            "description": ""
+            "label": "เมื่อเสียชีวิต",
+            "description": "ส่งสัญญาณเมื่อบอทตาย"
           },
           "on_health_change": {
-            "label": "",
-            "description": ""
+            "label": "เมื่อเลือดเปลี่ยน",
+            "description": "ส่งสัญญาณเมื่อเลือดของบอทเปลี่ยนแปลง"
           },
           "on_interval": {
-            "label": "",
-            "description": ""
+            "label": "เมื่อครบช่วงเวลา",
+            "description": "ส่งสัญญาณตามช่วงเวลาที่ตั้งค่าไว้"
           }
         },
         "math": {
           "add": {
             "label": "เพิ่ม",
-            "description": ""
+            "description": "บวกสองตัวเลขเข้าด้วยกัน"
           },
           "subtract": {
-            "label": "",
-            "description": ""
+            "label": "ลบ",
+            "description": "ลบตัวเลขที่สองออกจากตัวแรก"
           },
           "multiply": {
-            "label": "",
-            "description": ""
+            "label": "คูณ",
+            "description": "คูณตัวเลขสองจำนวนเข้าด้วยกัน"
           },
           "divide": {
-            "label": "",
-            "description": ""
+            "label": "หาร",
+            "description": "หารตัวเลขตัวแรกด้วยตัวที่สอง"
           },
           "modulo": {
-            "label": "",
-            "description": ""
+            "label": "โมดูโล",
+            "description": "คืนค่าที่เหลือจากการหาร"
           },
           "formula": {
-            "label": "",
-            "description": ""
+            "label": "สูตรคำนวณ",
+            "description": "ประเมินสูตรคณิตศาสตร์"
           },
           "random": {
-            "label": "",
-            "description": ""
+            "label": "สุ่ม",
+            "description": "สร้างตัวเลขสุ่มระหว่างค่าต่ำสุดและสูงสุด"
           },
           "clamp": {
-            "label": "",
-            "description": ""
+            "label": "หน่วงค่า",
+            "description": "จำกัดค่าให้อยู่ในช่วงต่ำสุดถึงสูงสุด"
           },
           "lerp": {
-            "label": "",
-            "description": ""
+            "label": "LERP",
+            "description": "อินเตอร์โพเลตรเชิงเส้นระหว่างสองค่า"
           },
           "bspline": {
-            "label": "",
-            "description": ""
+            "label": "B-Spline",
+            "description": "อินเตอร์โพเลตด้วยเส้นโค้ง B-spline"
           }
         },
         "logic": {
           "compare": {
-            "label": "",
-            "description": ""
+            "label": "เปรียบเทียบ",
+            "description": "เปรียบเทียบค่าสองค่า"
           },
           "and": {
-            "label": "",
-            "description": ""
+            "label": "And",
+            "description": "ตรรกะ AND ของค่าบูลีนสองค่า"
           },
           "or": {
-            "label": "",
-            "description": ""
+            "label": "Or",
+            "description": "ตรรกะ OR ของค่าบูลีนสองค่า"
           },
           "not": {
-            "label": "",
-            "description": ""
+            "label": "Not",
+            "description": "NOT ตรรกะของค่าบูลีนหนึ่งค่า"
           },
           "xor": {
-            "label": "",
-            "description": ""
+            "label": "XOR",
+            "description": "ตรรกะ XOR ของค่าบูลีนสองค่า"
           }
         },
         "flow": {
           "branch": {
-            "label": "",
-            "description": ""
+            "label": "สาขา",
+            "description": "แบ่งเงื่อนไขตามค่าบูลีน"
           },
           "switch": {
-            "label": "",
-            "description": ""
+            "label": "สวิตช์",
+            "description": "แบ่งหลายทางตามค่า"
           },
           "loop": {
-            "label": "",
-            "description": ""
+            "label": "วนลูป",
+            "description": "ทำซ้ำการทำงานตามจำนวนที่กำหนด"
           },
           "for_each": {
-            "label": "",
-            "description": ""
+            "label": "วนแต่ละค่า",
+            "description": "วนรอบในคอลเลกชัน"
           },
           "sequence": {
-            "label": "",
-            "description": ""
+            "label": "กลุ่มลำดับ",
+            "description": "ดำเนินการเอาต์พุตตามลำดับ"
           },
           "gate": {
-            "label": "",
-            "description": ""
+            "label": "เกต",
+            "description": "ควบคุมการไหลตามสถานะเกต"
           },
           "debounce": {
-            "label": "",
-            "description": ""
+            "label": "ดีบาวซ์",
+            "description": "ป้องกันการทำงานซ้ำๆ อย่างรวดเร็ว"
           }
         },
         "action": {
           "set_rotation": {
-            "label": "",
-            "description": ""
+            "label": "ตั้งค่าการหมุน",
+            "description": "กำหนดการหมุนของบอท"
           },
           "look_at": {
-            "label": "",
-            "description": ""
+            "label": "มองไปที่",
+            "description": "มองไปยังตำแหน่งหรือเอนทิตี"
           },
           "sneak": {
             "label": "ย่อง",
-            "description": ""
+            "description": "สลับการหมอบ"
           },
           "sprint": {
             "label": "วิ่งเร็ว",
-            "description": ""
+            "description": "สลับการวิ่งเร็ว"
           },
           "jump": {
             "label": "กระโดด",
-            "description": ""
+            "description": "บอทกระโดด"
           },
           "attack": {
-            "label": "",
-            "description": ""
+            "label": "โจมตี",
+            "description": "โจมตีเอนทิตี"
           },
           "use_item": {
-            "label": "",
-            "description": ""
+            "label": "ใช้ไอเท็ม",
+            "description": "ใช้ไอเท็มในมือที่ระบุ"
           },
           "pathfind_to": {
-            "label": "",
-            "description": ""
+            "label": "ค้นหาเส้นทางไปยัง",
+            "description": "ค้นหาเส้นทางไปยังตำแหน่งเป้าหมาย"
           },
           "break_block": {
-            "label": "",
-            "description": ""
+            "label": "ทุบ/ทำลายบล็อก",
+            "description": "ทุบ/ทำลายบล็อกที่ตำแหน่ง"
           },
           "place_block": {
-            "label": "",
-            "description": ""
+            "label": "วางบล็อก",
+            "description": "วางบล็อกที่ตำแหน่ง"
           },
           "select_slot": {
-            "label": "",
-            "description": ""
+            "label": "เลือกช่อง",
+            "description": "เลือกช่องฮอตบาร์"
           },
           "send_chat": {
-            "label": "",
-            "description": ""
+            "label": "ส่งแชท",
+            "description": "ส่งข้อความแชท"
           },
           "wait": {
-            "label": "",
-            "description": ""
+            "label": "รอ",
+            "description": "รอจำนวนทิกส์ที่กำหนด"
           },
           "print": {
-            "label": "",
-            "description": ""
+            "label": "พิมพ์ออกมา",
+            "description": "บันทึกข้อความสำหรับการดีบัก"
           },
           "set_variable": {
-            "label": "",
-            "description": ""
+            "label": "กำหนดตัวแปร",
+            "description": "จัดเก็บค่าไว้ในตัวแปร"
           }
         },
         "data": {
           "get_position": {
-            "label": "",
-            "description": ""
+            "label": "รับตำแหน่ง",
+            "description": "รับตำแหน่งปัจจุบันของบอท"
           },
           "get_rotation": {
-            "label": "",
-            "description": ""
+            "label": "รับการหมุน",
+            "description": "รับค่าการหมุนปัจจุบันของบอท"
           },
           "get_health": {
-            "label": "",
-            "description": ""
+            "label": "รับสุขภาพ",
+            "description": "รับค่าพลังชีวิตปัจจุบันของบอท"
           },
           "get_hunger": {
-            "label": "",
-            "description": ""
+            "label": "รับค่าความหิว",
+            "description": "รับระดับความหิวปัจจุบันของบอท"
           },
           "get_inventory": {
-            "label": "",
-            "description": ""
+            "label": "รับช่องเก็บของ",
+            "description": "รับไอเท็มจากคลังเก็บของ"
           },
           "get_block": {
-            "label": "",
-            "description": ""
+            "label": "รับบล็อก",
+            "description": "รับบล็อกที่ตำแหน่งที่กำหนด"
           },
           "find_entity": {
-            "label": "",
-            "description": ""
+            "label": "ค้นหา Entity",
+            "description": "ค้นหาเอนทิตี้ประเภทที่ต้องการที่อยู่ใกล้เคียง"
           },
           "find_block": {
-            "label": "",
-            "description": ""
+            "label": "ค้นหาบล็อก",
+            "description": "ค้นหาบล็อกประเภทที่ต้องการที่อยู่ใกล้เคียง"
           },
           "get_variable": {
-            "label": "",
-            "description": ""
+            "label": "รับตัวแปร",
+            "description": "ดึงค่าจากตัวแปร"
           }
         },
         "constant": {
           "number": {
-            "label": "",
-            "description": ""
+            "label": "ตัวเลข",
+            "description": "ค่าตัวเลขคงที่"
           },
           "string": {
-            "label": "",
-            "description": ""
+            "label": "ข้อความ",
+            "description": "ค่าข้อความคงที่"
           },
           "boolean": {
-            "label": "",
-            "description": ""
+            "label": "บูลีน",
+            "description": "ค่าจริง/เท็จคงที่"
           },
           "vector3": {
-            "label": "",
-            "description": ""
+            "label": "เวกเตอร์3",
+            "description": "ตำแหน่ง 3 มิติ (X, Y, Z) คงที่"
           }
         }
       }

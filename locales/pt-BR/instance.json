@@ -115,17 +115,17 @@
     "metadata": {
       "openButton": "Editar Metadados",
       "title": "Metadados: {{name}}",
-      "description": "",
-      "namespacePlaceholder": "",
-      "keyPlaceholder": "",
-      "valuePlaceholder": "",
-      "noEntries": "",
-      "addSuccess": "",
-      "addError": "",
-      "updateError": "",
-      "deleteSuccess": "",
-      "deleteError": "",
-      "duplicateError": ""
+      "description": "Gerencie entradas de metadados persistentes para esta conta. Cada entrada possui um namespace, uma chave e um valor em JSON.",
+      "namespacePlaceholder": "Namespace",
+      "keyPlaceholder": "Chave",
+      "valuePlaceholder": "Valor (JSON)",
+      "noEntries": "Nenhuma entrada de metadados. Adicione uma acima.",
+      "addSuccess": "Entrada adicionada",
+      "addError": "Falha ao adicionar entrada",
+      "updateError": "Falha ao atualizar entrada",
+      "deleteSuccess": "Entrada excluída",
+      "deleteError": "Falha ao excluir entrada",
+      "duplicateError": "Já existe uma entrada com este namespace e chave"
     }
   },
   "bots": {
@@ -271,416 +271,416 @@
     }
   },
   "scripts": {
-    "title": "",
-    "description": "",
+    "title": "Scripts Visuais",
+    "description": "Crie scripts automáticos usando um editor visual baseado em nós.",
     "wipTitle": "Editor Visual de Script",
-    "wipDescription": "",
+    "wipDescription": "Crie scripts automáticos usando um editor visual baseado em nós.",
     "wipDetails": "Este recurso está atualmente em desenvolvimento. O novo editor visual de scripts permitirá criar poderosos scripts de automação usando uma interface de arrastar e soltar, sem precisar escrever código.",
-    "createScript": "",
-    "createScriptTitle": "",
-    "createScriptDescription": "",
-    "scriptName": "",
-    "scriptNamePlaceholder": "",
-    "scriptDescription": "",
-    "scriptDescriptionPlaceholder": "",
+    "createScript": "Criar Script",
+    "createScriptTitle": "Criar Novo Script",
+    "createScriptDescription": "Crie um novo script visual para esta instância. Scripts podem automatizar ações do bot e responder a eventos.",
+    "scriptName": "Nome do Script",
+    "scriptNamePlaceholder": "Digite o nome do script...",
+    "scriptDescription": "Descrição",
+    "scriptDescriptionPlaceholder": "Descreva o que este script faz...",
     "create": "Criar",
-    "createSuccess": "",
-    "createError": "",
-    "noScripts": "",
-    "noScriptsDescription": "",
-    "createFirstScript": "",
-    "running": "Em execução",
-    "nodes": "",
-    "noDescription": "",
-    "edit": "",
-    "start": "Iniciar",
-    "stop": "Parar",
-    "delete": "",
-    "deleteSuccess": "",
-    "deleteError": "",
-    "saveSuccess": "",
-    "saveError": "",
-    "startSuccess": "",
-    "startError": "",
-    "stopSuccess": "",
-    "stopError": "",
-    "untitledScript": "",
-    "saveFirstBeforeRunning": "",
-    "executionStarting": "",
-    "executionStarted": "",
-    "executionCompleted": "",
-    "executionCompletedSuccess": "",
-    "executionStopped": "",
-    "executionStoppedByUser": "",
-    "executionFailed": "",
-    "executionError": "",
-    "nodeStarted": "",
-    "nodeCompleted": "",
-    "nodeError": "",
+    "createSuccess": "Script criado com sucesso",
+    "createError": "Falha ao criar script",
+    "noScripts": "Nenhum Script Ainda",
+    "noScriptsDescription": "Crie seu primeiro script para automatizar ações do bot usando o editor visual baseado em nós.",
+    "createFirstScript": "Crie Seu Primeiro Script",
+    "active": "Ativo",
+    "nodes": "nós",
+    "noDescription": "Sem descrição",
+    "edit": "Editar",
+    "activate": "",
+    "deactivate": "",
+    "delete": "Excluir",
+    "deleteSuccess": "Script excluído com sucesso",
+    "deleteError": "Falha ao excluir script",
+    "saveSuccess": "Script salvo com sucesso",
+    "saveError": "Falha ao salvar script",
+    "activateSuccess": "",
+    "activateError": "",
+    "deactivateSuccess": "",
+    "deactivateError": "",
+    "untitledScript": "Script sem título",
+    "saveFirstBeforeActivating": "",
+    "activating": "",
+    "activated": "",
+    "executionCompleted": "Script concluído",
+    "executionCompletedSuccess": "Script concluído com sucesso",
+    "deactivated": "",
+    "deactivatedByUser": "",
+    "executionFailed": "Falha na execução do script",
+    "executionError": "Erro de execução: {{error}}",
+    "nodeStarted": "Nó iniciado: {{nodeId}}",
+    "nodeCompleted": "Nó concluído: {{nodeId}}",
+    "nodeError": "Erro no nó: {{error}}",
     "editor": {
       "toolbar": {
-        "backToScripts": "",
+        "backToScripts": "Voltar para Scripts",
         "save": "Salvar",
-        "saveTooltip": "",
+        "saveTooltip": "Salvar script (Ctrl+S)",
         "run": "",
         "runTooltip": "",
-        "stop": "Parar",
-        "stopTooltip": "",
-        "autoStart": "",
+        "deactivate": "",
+        "deactivateTooltip": "",
+        "autoStart": "Início automático",
         "autoStartTooltip": "",
-        "unsaved": "",
-        "clearCanvas": "",
-        "zoomIn": "",
-        "zoomOut": "",
-        "fit": ""
+        "unsaved": "Não salvo",
+        "clearCanvas": "Limpar tela",
+        "zoomIn": "Aumentar zoom",
+        "zoomOut": "Diminuir zoom",
+        "fit": "Ajustar"
       },
       "palette": {
-        "title": "",
-        "search": "",
+        "title": "Paleta de Nós",
+        "search": "Pesquisar nós...",
         "categories": {
-          "trigger": "",
+          "trigger": "Gatilhos",
           "action": "Ações",
-          "flow": "",
-          "math": "",
-          "logic": "",
-          "data": "",
-          "bot": "",
-          "world": ""
+          "flow": "Controle de Fluxo",
+          "math": "Matemática",
+          "logic": "Lógica",
+          "data": "Dados",
+          "bot": "Bot",
+          "world": "Mundo"
         }
       },
       "inspector": {
-        "title": "",
-        "noSelection": "",
-        "properties": "",
-        "nodeId": "",
-        "inputs": "",
-        "outputs": "",
-        "selectPlaceholder": ""
+        "title": "Inspetor de Nó",
+        "noSelection": "Selecione um nó para ver suas propriedades",
+        "properties": "Propriedades",
+        "nodeId": "ID do Nó",
+        "inputs": "Entradas",
+        "outputs": "Saídas",
+        "selectPlaceholder": "Selecionar..."
       },
       "logs": {
-        "title": "",
-        "clear": "",
-        "clearTitle": "",
-        "noLogs": "",
-        "entries_one": "",
-        "entries_other": ""
+        "title": "Logs de Execução",
+        "clear": "Limpar logs",
+        "clearTitle": "Limpar logs",
+        "noLogs": "Nenhum log ainda. Execute o script para ver os logs de execução.",
+        "entries_one": "{{count}} entrada",
+        "entries_other": "{{count}} entradas"
       },
       "contextMenu": {
-        "duplicate": "",
-        "disconnectAll": "",
-        "delete": ""
+        "duplicate": "Duplicar",
+        "disconnectAll": "Desconectar Tudo",
+        "delete": "Excluir"
       },
       "ports": {
-        "exec": "",
-        "execIn": "",
-        "execOut": "",
-        "execTrue": "",
-        "execFalse": "",
-        "execLoop": "",
-        "execDone": ""
+        "exec": "Exec",
+        "execIn": "Exec Entrar",
+        "execOut": "Exec Sair",
+        "execTrue": "Verdadeiro",
+        "execFalse": "Falso",
+        "execLoop": "Loop",
+        "execDone": "Concluído"
       },
       "fields": {
         "value": "Valor",
-        "interval": "",
-        "variableName": "",
-        "level": "",
-        "levelDebug": "",
-        "levelInfo": "",
-        "levelWarn": "",
+        "interval": "Intervalo (ms)",
+        "variableName": "Nome da Variável",
+        "level": "Nível de Log",
+        "levelDebug": "Depuração",
+        "levelInfo": "Informação",
+        "levelWarn": "Aviso",
         "levelError": "Erro",
-        "x": "",
-        "y": "",
-        "z": "",
-        "min": "",
-        "max": "",
-        "degree": "",
-        "operator": "",
-        "operatorEqual": "",
-        "operatorNotEqual": "",
-        "operatorLess": "",
-        "operatorLessEqual": "",
-        "operatorGreater": "",
-        "operatorGreaterEqual": "",
-        "comparison": "",
-        "comparisonEqual": "",
-        "comparisonNotEqual": "",
-        "comparisonGreater": "",
-        "comparisonLess": "",
-        "comparisonGreaterEqual": "",
-        "comparisonLessEqual": "",
-        "formula": "",
-        "message": "",
-        "iterations": "",
-        "minValue": "",
-        "maxValue": "",
+        "x": "X",
+        "y": "Y",
+        "z": "Z",
+        "min": "Mín",
+        "max": "Máx",
+        "degree": "Grau",
+        "operator": "Operador",
+        "operatorEqual": "Igual (==)",
+        "operatorNotEqual": "Diferente (!=)",
+        "operatorLess": "Menor que (<)",
+        "operatorLessEqual": "Menor ou igual (<=)",
+        "operatorGreater": "Maior que (>)",
+        "operatorGreaterEqual": "Maior ou igual (>=)",
+        "comparison": "Comparação",
+        "comparisonEqual": "Igual (==)",
+        "comparisonNotEqual": "Diferente (!=)",
+        "comparisonGreater": "Maior que (>)",
+        "comparisonLess": "Menor que (<)",
+        "comparisonGreaterEqual": "Maior ou igual (>=)",
+        "comparisonLessEqual": "Menor ou igual (<=)",
+        "formula": "Fórmula",
+        "message": "Mensagem",
+        "iterations": "Iterações",
+        "minValue": "Valor Mínimo",
+        "maxValue": "Valor Máximo",
         "start": "Iniciar",
-        "end": "",
+        "end": "Fim",
         "amount": "Quantidade",
-        "blockType": "",
-        "radius": "",
-        "timeout": "",
-        "slot": "",
-        "count": "",
-        "entityType": "",
-        "smooth": "",
-        "enabled": "",
-        "hand": "",
-        "handMain": "",
-        "handOff": "",
-        "face": "",
-        "faceUp": "",
-        "faceDown": "",
-        "faceNorth": "",
-        "faceSouth": "",
-        "faceEast": "",
-        "faceWest": "",
-        "ticks": "",
-        "range": "",
-        "loopCount": "",
-        "open": "",
-        "delay": ""
+        "blockType": "Tipo de Bloco",
+        "radius": "Raio",
+        "timeout": "Timeout (ms)",
+        "slot": "Slot",
+        "count": "Contagem",
+        "entityType": "Tipo de Entidade",
+        "smooth": "Suave",
+        "enabled": "Ativado",
+        "hand": "Mão",
+        "handMain": "Mão Principal",
+        "handOff": "Mão Secundária",
+        "face": "Face",
+        "faceUp": "Cima",
+        "faceDown": "Baixo",
+        "faceNorth": "Norte",
+        "faceSouth": "Sul",
+        "faceEast": "Leste",
+        "faceWest": "Oeste",
+        "ticks": "Ticks",
+        "range": "Alcance",
+        "loopCount": "Contagem de Loop",
+        "open": "Abrir",
+        "delay": "Atraso (ms)"
       },
       "nodes": {
         "trigger": {
           "on_tick": {
-            "label": "",
-            "description": ""
+            "label": "Ao Tic",
+            "description": "Dispara a cada tic do jogo (20 vezes por segundo)"
           },
           "on_join": {
-            "label": "",
-            "description": ""
+            "label": "Ao Entrar",
+            "description": "Dispara quando o bot entra no servidor"
           },
           "on_chat": {
-            "label": "",
-            "description": ""
+            "label": "Ao Chat",
+            "description": "Dispara quando uma mensagem de chat é recebida"
           },
           "on_damage": {
-            "label": "",
-            "description": ""
+            "label": "Ao Dano",
+            "description": "Dispara quando o bot recebe dano"
           },
           "on_death": {
-            "label": "",
-            "description": ""
+            "label": "Ao Morrer",
+            "description": "Dispara quando o bot morre"
           },
           "on_health_change": {
-            "label": "",
-            "description": ""
+            "label": "Ao Alterar Vida",
+            "description": "Dispara quando a vida do bot muda"
           },
           "on_interval": {
-            "label": "",
-            "description": ""
+            "label": "Em Intervalo",
+            "description": "Dispara em um intervalo de tempo configurável"
           }
         },
         "math": {
           "add": {
             "label": "Adicionar",
-            "description": ""
+            "description": "Adiciona dois números"
           },
           "subtract": {
-            "label": "",
-            "description": ""
+            "label": "Subtrair",
+            "description": "Subtrai o segundo número do primeiro"
           },
           "multiply": {
-            "label": "",
-            "description": ""
+            "label": "Multiplicar",
+            "description": "Multiplica dois números"
           },
           "divide": {
-            "label": "",
-            "description": ""
+            "label": "Dividir",
+            "description": "Divide o primeiro número pelo segundo"
           },
           "modulo": {
-            "label": "",
-            "description": ""
+            "label": "Módulo",
+            "description": "Retorna o resto da divisão"
           },
           "formula": {
-            "label": "",
-            "description": ""
+            "label": "Fórmula",
+            "description": "Avalia uma fórmula matemática"
           },
           "random": {
-            "label": "",
-            "description": ""
+            "label": "Aleatório",
+            "description": "Gera um número aleatório entre mín e máx"
           },
           "clamp": {
-            "label": "",
-            "description": ""
+            "label": "Limitar",
+            "description": "Limita um valor entre mín e máx"
           },
           "lerp": {
-            "label": "",
-            "description": ""
+            "label": "Lerp",
+            "description": "Interpolação linear entre dois valores"
           },
           "bspline": {
-            "label": "",
-            "description": ""
+            "label": "B-Spline",
+            "description": "Interpola usando curva B-spline"
           }
         },
         "logic": {
           "compare": {
-            "label": "",
-            "description": ""
+            "label": "Comparar",
+            "description": "Compara dois valores"
           },
           "and": {
-            "label": "",
-            "description": ""
+            "label": "E",
+            "description": "E lógico de dois booleanos"
           },
           "or": {
-            "label": "",
-            "description": ""
+            "label": "Ou",
+            "description": "OU lógico de dois booleanos"
           },
           "not": {
-            "label": "",
-            "description": ""
+            "label": "Não",
+            "description": "NÃO lógico de um booleano"
           },
           "xor": {
-            "label": "",
-            "description": ""
+            "label": "XOR",
+            "description": "XOR lógico de dois booleanos"
           }
         },
         "flow": {
           "branch": {
-            "label": "",
-            "description": ""
+            "label": "Desvio",
+            "description": "Desvio condicional baseado em um booleano"
           },
           "switch": {
-            "label": "",
-            "description": ""
+            "label": "Switch",
+            "description": "Desvio de múltiplas vias baseado em um valor"
           },
           "loop": {
-            "label": "",
-            "description": ""
+            "label": "Loop",
+            "description": "Repete a execução um determinado número de vezes"
           },
           "for_each": {
-            "label": "",
-            "description": ""
+            "label": "Para Cada",
+            "description": "Itera sobre uma coleção"
           },
           "sequence": {
-            "label": "",
-            "description": ""
+            "label": "Sequência",
+            "description": "Executa saídas em sequência"
           },
           "gate": {
-            "label": "",
-            "description": ""
+            "label": "Porta",
+            "description": "Controla o fluxo com base no estado da porta"
           },
           "debounce": {
-            "label": "",
-            "description": ""
+            "label": "Debounce",
+            "description": "Previne execução rápida e repetida"
           }
         },
         "action": {
           "set_rotation": {
-            "label": "",
-            "description": ""
+            "label": "Definir Rotação",
+            "description": "Define a rotação do bot"
           },
           "look_at": {
-            "label": "",
-            "description": ""
+            "label": "Olhar Para",
+            "description": "Olha para uma posição ou entidade"
           },
           "sneak": {
             "label": "Agachar",
-            "description": ""
+            "description": "Alterna modo agachado"
           },
           "sprint": {
             "label": "Correr",
-            "description": ""
+            "description": "Alterna correndo"
           },
           "jump": {
             "label": "Pular",
-            "description": ""
+            "description": "Faz o bot pular"
           },
           "attack": {
-            "label": "",
-            "description": ""
+            "label": "Atacar",
+            "description": "Ataca uma entidade"
           },
           "use_item": {
-            "label": "",
-            "description": ""
+            "label": "Usar Item",
+            "description": "Usa o item na mão especificada"
           },
           "pathfind_to": {
-            "label": "",
-            "description": ""
+            "label": "Caminhar Até",
+            "description": "Caminha até uma posição-alvo"
           },
           "break_block": {
-            "label": "",
-            "description": ""
+            "label": "Quebrar Bloco",
+            "description": "Quebra um bloco em uma posição"
           },
           "place_block": {
-            "label": "",
-            "description": ""
+            "label": "Colocar Bloco",
+            "description": "Coloca um bloco em uma posição"
           },
           "select_slot": {
-            "label": "",
-            "description": ""
+            "label": "Selecionar Slot",
+            "description": "Seleciona um slot da hotbar"
           },
           "send_chat": {
-            "label": "",
-            "description": ""
+            "label": "Enviar Chat",
+            "description": "Envia uma mensagem de chat"
           },
           "wait": {
-            "label": "",
-            "description": ""
+            "label": "Aguardar",
+            "description": "Aguarda por um número de ticks"
           },
           "print": {
-            "label": "",
-            "description": ""
+            "label": "Imprimir",
+            "description": "Registra uma mensagem para depuração"
           },
           "set_variable": {
-            "label": "",
-            "description": ""
+            "label": "Definir Variável",
+            "description": "Armazena um valor em uma variável"
           }
         },
         "data": {
           "get_position": {
-            "label": "",
-            "description": ""
+            "label": "Obter Posição",
+            "description": "Obtém a posição atual do bot"
           },
           "get_rotation": {
-            "label": "",
-            "description": ""
+            "label": "Obter Rotação",
+            "description": "Obtém a rotação atual do bot"
           },
           "get_health": {
-            "label": "",
-            "description": ""
+            "label": "Obter Vida",
+            "description": "Obtém a vida atual do bot"
           },
           "get_hunger": {
-            "label": "",
-            "description": ""
+            "label": "Obter Fome",
+            "description": "Obtém o nível de fome atual do bot"
           },
           "get_inventory": {
-            "label": "",
-            "description": ""
+            "label": "Obter Inventário",
+            "description": "Obtém um item do inventário"
           },
           "get_block": {
-            "label": "",
-            "description": ""
+            "label": "Obter Bloco",
+            "description": "Obtém o bloco em uma posição"
           },
           "find_entity": {
-            "label": "",
-            "description": ""
+            "label": "Encontrar Entidade",
+            "description": "Encontra uma entidade de um tipo específico nas proximidades"
           },
           "find_block": {
-            "label": "",
-            "description": ""
+            "label": "Encontrar Bloco",
+            "description": "Encontra um bloco de um tipo específico nas proximidades"
           },
           "get_variable": {
-            "label": "",
-            "description": ""
+            "label": "Obter Variável",
+            "description": "Recupera um valor de uma variável"
           }
         },
         "constant": {
           "number": {
-            "label": "",
-            "description": ""
+            "label": "Número",
+            "description": "Um valor numérico constante"
           },
           "string": {
-            "label": "",
-            "description": ""
+            "label": "Texto",
+            "description": "Um valor de texto constante"
           },
           "boolean": {
-            "label": "",
-            "description": ""
+            "label": "Booleano",
+            "description": "Um valor verdadeiro/falso constante"
           },
           "vector3": {
-            "label": "",
-            "description": ""
+            "label": "Vetor3",
+            "description": "Uma posição 3D constante (X, Y, Z)"
           }
         }
       }

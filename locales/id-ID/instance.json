@@ -115,17 +115,17 @@
     "metadata": {
       "openButton": "Edit Metadata",
       "title": "Metadata: {{name}}",
-      "description": "",
-      "namespacePlaceholder": "",
-      "keyPlaceholder": "",
-      "valuePlaceholder": "",
-      "noEntries": "",
-      "addSuccess": "",
-      "addError": "",
-      "updateError": "",
-      "deleteSuccess": "",
-      "deleteError": "",
-      "duplicateError": ""
+      "description": "Kelola entri metadata persisten untuk akun ini. Setiap entri memiliki namespace, kunci, dan nilai JSON.",
+      "namespacePlaceholder": "Namespace",
+      "keyPlaceholder": "Kunci",
+      "valuePlaceholder": "Nilai (JSON)",
+      "noEntries": "Tidak ada entri metadata. Tambahkan satu di atas.",
+      "addSuccess": "Entri berhasil ditambahkan",
+      "addError": "Gagal menambahkan entri",
+      "updateError": "Gagal memperbarui entri",
+      "deleteSuccess": "Entri dihapus",
+      "deleteError": "Gagal menghapus entri",
+      "duplicateError": "Entri dengan namespace dan kunci ini sudah ada"
     }
   },
   "bots": {
@@ -271,415 +271,415 @@
     }
   },
   "scripts": {
-    "title": "",
-    "description": "",
+    "title": "Skrip Visual",
+    "description": "Buat skrip otomatisasi menggunakan editor node visual.",
     "wipTitle": "Editor Skrip Visual",
-    "wipDescription": "",
+    "wipDescription": "Buat skrip otomatisasi menggunakan editor node visual.",
     "wipDetails": "Fitur ini sedang dalam pengembangan. Editor skrip visual yang baru akan memungkinkan Anda membuat skrip otomatisasi yang kuat menggunakan antarmuka tarik dan lepas tanpa menulis kode.",
-    "createScript": "",
-    "createScriptTitle": "",
-    "createScriptDescription": "",
-    "scriptName": "",
-    "scriptNamePlaceholder": "",
-    "scriptDescription": "",
-    "scriptDescriptionPlaceholder": "",
+    "createScript": "Buat Skrip",
+    "createScriptTitle": "Buat Skrip Baru",
+    "createScriptDescription": "Buat skrip visual baru untuk instance ini. Skrip dapat mengotomatisasi aksi bot dan merespons kejadian.",
+    "scriptName": "Nama Skrip",
+    "scriptNamePlaceholder": "Masukkan nama skrip...",
+    "scriptDescription": "Deskripsi",
+    "scriptDescriptionPlaceholder": "Jelaskan apa yang dilakukan skrip ini...",
     "create": "Buat",
-    "createSuccess": "",
-    "createError": "",
-    "noScripts": "",
-    "noScriptsDescription": "",
-    "createFirstScript": "",
-    "running": "Berjalan",
-    "nodes": "",
-    "noDescription": "",
-    "edit": "",
-    "start": "Mulai",
-    "stop": "Berhenti",
-    "delete": "",
-    "deleteSuccess": "",
-    "deleteError": "",
-    "saveSuccess": "",
-    "saveError": "",
-    "startSuccess": "",
-    "startError": "",
-    "stopSuccess": "",
-    "stopError": "",
-    "untitledScript": "",
-    "saveFirstBeforeRunning": "",
-    "executionStarting": "",
-    "executionStarted": "",
-    "executionCompleted": "",
-    "executionCompletedSuccess": "",
-    "executionStopped": "",
-    "executionStoppedByUser": "",
-    "executionFailed": "",
-    "executionError": "",
-    "nodeStarted": "",
-    "nodeCompleted": "",
-    "nodeError": "",
+    "createSuccess": "Skrip berhasil dibuat",
+    "createError": "Gagal membuat skrip",
+    "noScripts": "Belum Ada Skrip",
+    "noScriptsDescription": "Buat skrip pertama Anda untuk mengotomatisasi aksi bot menggunakan editor node visual.",
+    "createFirstScript": "Buat Skrip Pertama Anda",
+    "active": "Aktif",
+    "nodes": "node",
+    "noDescription": "Tidak ada deskripsi",
+    "edit": "Edit",
+    "activate": "",
+    "deactivate": "",
+    "delete": "Hapus",
+    "deleteSuccess": "Skrip berhasil dihapus",
+    "deleteError": "Gagal menghapus skrip",
+    "saveSuccess": "Skrip berhasil disimpan",
+    "saveError": "Gagal menyimpan skrip",
+    "activateSuccess": "",
+    "activateError": "",
+    "deactivateSuccess": "",
+    "deactivateError": "",
+    "untitledScript": "Skrip Tanpa Judul",
+    "saveFirstBeforeActivating": "",
+    "activating": "",
+    "activated": "",
+    "executionCompleted": "Skrip selesai",
+    "executionCompletedSuccess": "Skrip selesai dengan sukses",
+    "deactivated": "",
+    "deactivatedByUser": "",
+    "executionFailed": "Eksekusi skrip gagal",
+    "executionError": "Kesalahan eksekusi: {{error}}",
+    "nodeStarted": "Node dimulai: {{nodeId}}",
+    "nodeCompleted": "Node selesai: {{nodeId}}",
+    "nodeError": "Kesalahan node: {{error}}",
     "editor": {
       "toolbar": {
-        "backToScripts": "",
+        "backToScripts": "Kembali ke Skrip",
         "save": "Simpan",
-        "saveTooltip": "",
+        "saveTooltip": "Simpan skrip (Ctrl+S)",
         "run": "",
         "runTooltip": "",
-        "stop": "Berhenti",
-        "stopTooltip": "",
-        "autoStart": "",
+        "deactivate": "",
+        "deactivateTooltip": "",
+        "autoStart": "Mulai otomatis",
         "autoStartTooltip": "",
-        "unsaved": "",
-        "clearCanvas": "",
-        "zoomIn": "",
-        "zoomOut": "",
-        "fit": ""
+        "unsaved": "Belum disimpan",
+        "clearCanvas": "Bersihkan kanvas",
+        "zoomIn": "Perbesar",
+        "zoomOut": "Perkecil",
+        "fit": "Sesuaikan"
       },
       "palette": {
-        "title": "",
-        "search": "",
+        "title": "Palet Node",
+        "search": "Cari node...",
         "categories": {
-          "trigger": "",
+          "trigger": "Pemicu",
           "action": "Aksi",
-          "flow": "",
-          "math": "",
-          "logic": "",
-          "data": "",
-          "bot": "",
-          "world": ""
+          "flow": "Kontrol Alur",
+          "math": "Matematika",
+          "logic": "Logika",
+          "data": "Data",
+          "bot": "Bot",
+          "world": "Dunia"
         }
       },
       "inspector": {
-        "title": "",
-        "noSelection": "",
-        "properties": "",
-        "nodeId": "",
-        "inputs": "",
-        "outputs": "",
-        "selectPlaceholder": ""
+        "title": "Inspector Node",
+        "noSelection": "Pilih node untuk melihat propertinya",
+        "properties": "Properti",
+        "nodeId": "ID Node",
+        "inputs": "Input",
+        "outputs": "Output",
+        "selectPlaceholder": "Pilih..."
       },
       "logs": {
-        "title": "",
-        "clear": "",
-        "clearTitle": "",
-        "noLogs": "",
-        "entries_other": ""
+        "title": "Log Eksekusi",
+        "clear": "Bersihkan log",
+        "clearTitle": "Bersihkan log",
+        "noLogs": "Belum ada log. Jalankan skrip untuk melihat log eksekusi.",
+        "entries_other": "{{count}} entri"
       },
       "contextMenu": {
-        "duplicate": "",
-        "disconnectAll": "",
-        "delete": ""
+        "duplicate": "Duplikat",
+        "disconnectAll": "Putuskan Semua",
+        "delete": "Hapus"
       },
       "ports": {
-        "exec": "",
-        "execIn": "",
-        "execOut": "",
-        "execTrue": "",
-        "execFalse": "",
-        "execLoop": "",
-        "execDone": ""
+        "exec": "Eksekusi",
+        "execIn": "Eksekusi Masuk",
+        "execOut": "Eksekusi Keluar",
+        "execTrue": "Benar",
+        "execFalse": "Salah",
+        "execLoop": "Loop",
+        "execDone": "Selesai"
       },
       "fields": {
         "value": "Nilai",
-        "interval": "",
-        "variableName": "",
-        "level": "",
-        "levelDebug": "",
-        "levelInfo": "",
-        "levelWarn": "",
+        "interval": "Interval (ms)",
+        "variableName": "Nama Variabel",
+        "level": "Level Log",
+        "levelDebug": "Debug",
+        "levelInfo": "Info",
+        "levelWarn": "Peringatan",
         "levelError": "Kesalahan",
-        "x": "",
-        "y": "",
-        "z": "",
-        "min": "",
-        "max": "",
-        "degree": "",
-        "operator": "",
-        "operatorEqual": "",
-        "operatorNotEqual": "",
-        "operatorLess": "",
-        "operatorLessEqual": "",
-        "operatorGreater": "",
-        "operatorGreaterEqual": "",
-        "comparison": "",
-        "comparisonEqual": "",
-        "comparisonNotEqual": "",
-        "comparisonGreater": "",
-        "comparisonLess": "",
-        "comparisonGreaterEqual": "",
-        "comparisonLessEqual": "",
-        "formula": "",
-        "message": "",
-        "iterations": "",
-        "minValue": "",
-        "maxValue": "",
+        "x": "X",
+        "y": "Y",
+        "z": "Z",
+        "min": "Min",
+        "max": "Maks",
+        "degree": "Derajat",
+        "operator": "Operator",
+        "operatorEqual": "Sama Dengan (==)",
+        "operatorNotEqual": "Tidak Sama Dengan (!=)",
+        "operatorLess": "Kurang Dari (<)",
+        "operatorLessEqual": "Kurang atau Sama Dengan (<=)",
+        "operatorGreater": "Lebih Dari (>)",
+        "operatorGreaterEqual": "Lebih atau Sama Dengan (>=)",
+        "comparison": "Perbandingan",
+        "comparisonEqual": "Sama Dengan (==)",
+        "comparisonNotEqual": "Tidak Sama Dengan (!=)",
+        "comparisonGreater": "Lebih Dari (>)",
+        "comparisonLess": "Kurang Dari (<)",
+        "comparisonGreaterEqual": "Lebih atau Sama Dengan (>=)",
+        "comparisonLessEqual": "Kurang atau Sama Dengan (<=)",
+        "formula": "Rumus",
+        "message": "Pesan",
+        "iterations": "Iterasi",
+        "minValue": "Nilai Minimum",
+        "maxValue": "Nilai Maksimum",
         "start": "Mulai",
-        "end": "",
+        "end": "Akhir",
         "amount": "Jumlah",
-        "blockType": "",
-        "radius": "",
-        "timeout": "",
-        "slot": "",
-        "count": "",
-        "entityType": "",
-        "smooth": "",
-        "enabled": "",
-        "hand": "",
-        "handMain": "",
-        "handOff": "",
-        "face": "",
-        "faceUp": "",
-        "faceDown": "",
-        "faceNorth": "",
-        "faceSouth": "",
-        "faceEast": "",
-        "faceWest": "",
-        "ticks": "",
-        "range": "",
-        "loopCount": "",
-        "open": "",
-        "delay": ""
+        "blockType": "Tipe Blok",
+        "radius": "Radius",
+        "timeout": "Timeout (ms)",
+        "slot": "Slot",
+        "count": "Jumlah",
+        "entityType": "Tipe Entitas",
+        "smooth": "Halus",
+        "enabled": "Aktif",
+        "hand": "Tangan",
+        "handMain": "Tangan Utama",
+        "handOff": "Tangan Kedua",
+        "face": "Sisi",
+        "faceUp": "Atas",
+        "faceDown": "Bawah",
+        "faceNorth": "Utara",
+        "faceSouth": "Selatan",
+        "faceEast": "Timur",
+        "faceWest": "Barat",
+        "ticks": "Tick",
+        "range": "Jangkauan",
+        "loopCount": "Jumlah Loop",
+        "open": "Buka",
+        "delay": "Tunda (ms)"
       },
       "nodes": {
         "trigger": {
           "on_tick": {
-            "label": "",
-            "description": ""
+            "label": "Pada Tick",
+            "description": "Aktif setiap tick game (20 kali per detik)"
           },
           "on_join": {
-            "label": "",
-            "description": ""
+            "label": "Pada Gabung",
+            "description": "Aktif saat bot bergabung ke server"
           },
           "on_chat": {
-            "label": "",
-            "description": ""
+            "label": "Pada Chat",
+            "description": "Aktif saat pesan chat diterima"
           },
           "on_damage": {
-            "label": "",
-            "description": ""
+            "label": "Pada Kerusakan",
+            "description": "Aktif saat bot menerima kerusakan"
           },
           "on_death": {
-            "label": "",
-            "description": ""
+            "label": "Pada Kematian",
+            "description": "Aktif saat bot mati"
           },
           "on_health_change": {
-            "label": "",
-            "description": ""
+            "label": "Pada Perubahan Kesehatan",
+            "description": "Aktif saat kesehatan bot berubah"
           },
           "on_interval": {
-            "label": "",
-            "description": ""
+            "label": "Pada Interval",
+            "description": "Aktif pada interval waktu yang dapat diatur"
           }
         },
         "math": {
           "add": {
             "label": "Tambah",
-            "description": ""
+            "description": "Menambahkan dua angka"
           },
           "subtract": {
-            "label": "",
-            "description": ""
+            "label": "Kurangi",
+            "description": "Mengurangkan angka kedua dari yang pertama"
           },
           "multiply": {
-            "label": "",
-            "description": ""
+            "label": "Perkalian",
+            "description": "Mengalikan dua angka"
           },
           "divide": {
-            "label": "",
-            "description": ""
+            "label": "Bagi",
+            "description": "Membagi angka pertama dengan angka kedua"
           },
           "modulo": {
-            "label": "",
-            "description": ""
+            "label": "Modulo",
+            "description": "Mengembalikan sisa dari pembagian"
           },
           "formula": {
-            "label": "",
-            "description": ""
+            "label": "Rumus",
+            "description": "Mengevaluasi rumus matematika"
           },
           "random": {
-            "label": "",
-            "description": ""
+            "label": "Acak",
+            "description": "Menghasilkan angka acak antara min dan maks"
           },
           "clamp": {
-            "label": "",
-            "description": ""
+            "label": "Clamp",
+            "description": "Menjepit nilai antara min dan maks"
           },
           "lerp": {
-            "label": "",
-            "description": ""
+            "label": "Lerp",
+            "description": "Interpolasi linier antara dua nilai"
           },
           "bspline": {
-            "label": "",
-            "description": ""
+            "label": "B-Spline",
+            "description": "Interpolasi menggunakan kurva B-spline"
           }
         },
         "logic": {
           "compare": {
-            "label": "",
-            "description": ""
+            "label": "Bandingkan",
+            "description": "Membandingkan dua nilai"
           },
           "and": {
-            "label": "",
-            "description": ""
+            "label": "Dan",
+            "description": "AND logika dari dua boolean"
           },
           "or": {
-            "label": "",
-            "description": ""
+            "label": "Atau",
+            "description": "OR logika dari dua boolean"
           },
           "not": {
-            "label": "",
-            "description": ""
+            "label": "Bukan",
+            "description": "NOT logika dari sebuah boolean"
           },
           "xor": {
-            "label": "",
-            "description": ""
+            "label": "XOR",
+            "description": "XOR logika dari dua boolean"
           }
         },
         "flow": {
           "branch": {
-            "label": "",
-            "description": ""
+            "label": "Cabang",
+            "description": "Cabang kondisional berdasarkan boolean"
           },
           "switch": {
-            "label": "",
-            "description": ""
+            "label": "Switch",
+            "description": "Cabang multi-arah berdasarkan nilai"
           },
           "loop": {
-            "label": "",
-            "description": ""
+            "label": "Loop",
+            "description": "Mengulang eksekusi sejumlah kali"
           },
           "for_each": {
-            "label": "",
-            "description": ""
+            "label": "Untuk Setiap",
+            "description": "Melakukan iterasi pada sebuah koleksi"
           },
           "sequence": {
-            "label": "",
-            "description": ""
+            "label": "Urutan",
+            "description": "Menjalankan output secara berurutan"
           },
           "gate": {
-            "label": "",
-            "description": ""
+            "label": "Gerbang",
+            "description": "Mengontrol alur berdasarkan status gerbang"
           },
           "debounce": {
-            "label": "",
-            "description": ""
+            "label": "Debounce",
+            "description": "Mencegah eksekusi berulang dengan cepat"
           }
         },
         "action": {
           "set_rotation": {
-            "label": "",
-            "description": ""
+            "label": "Atur Rotasi",
+            "description": "Mengatur rotasi bot"
           },
           "look_at": {
-            "label": "",
-            "description": ""
+            "label": "Lihat Pada",
+            "description": "Melihat ke posisi atau entitas"
           },
           "sneak": {
             "label": "Mengendap",
-            "description": ""
+            "description": "Mengaktifkan atau menonaktifkan sneaking"
           },
           "sprint": {
             "label": "Sprint",
-            "description": ""
+            "description": "Mengaktifkan atau menonaktifkan sprinting"
           },
           "jump": {
             "label": "Lompat",
-            "description": ""
+            "description": "Membuat bot melompat"
           },
           "attack": {
-            "label": "",
-            "description": ""
+            "label": "Serang",
+            "description": "Menyerang entitas"
           },
           "use_item": {
-            "label": "",
-            "description": ""
+            "label": "Gunakan Item",
+            "description": "Menggunakan item di tangan yang ditentukan"
           },
           "pathfind_to": {
-            "label": "",
-            "description": ""
+            "label": "Pathfind Ke",
+            "description": "Menemukan jalur ke posisi target"
           },
           "break_block": {
-            "label": "",
-            "description": ""
+            "label": "Hancurkan Blok",
+            "description": "Menghancurkan blok di posisi tertentu"
           },
           "place_block": {
-            "label": "",
-            "description": ""
+            "label": "Tempatkan Blok",
+            "description": "Menempatkan blok di posisi tertentu"
           },
           "select_slot": {
-            "label": "",
-            "description": ""
+            "label": "Pilih Slot",
+            "description": "Memilih slot hotbar"
           },
           "send_chat": {
-            "label": "",
-            "description": ""
+            "label": "Kirim Chat",
+            "description": "Mengirim pesan chat"
           },
           "wait": {
-            "label": "",
-            "description": ""
+            "label": "Tunggu",
+            "description": "Menunggu sejumlah tick"
           },
           "print": {
-            "label": "",
-            "description": ""
+            "label": "Cetak",
+            "description": "Mencatat pesan untuk debug"
           },
           "set_variable": {
-            "label": "",
-            "description": ""
+            "label": "Setel Variabel",
+            "description": "Menyimpan nilai ke dalam variabel"
           }
         },
         "data": {
           "get_position": {
-            "label": "",
-            "description": ""
+            "label": "Dapatkan Posisi",
+            "description": "Mengambil posisi bot saat ini"
           },
           "get_rotation": {
-            "label": "",
-            "description": ""
+            "label": "Dapatkan Rotasi",
+            "description": "Mengambil rotasi bot saat ini"
           },
           "get_health": {
-            "label": "",
-            "description": ""
+            "label": "Dapatkan Kesehatan",
+            "description": "Mengambil kesehatan bot saat ini"
           },
           "get_hunger": {
-            "label": "",
-            "description": ""
+            "label": "Dapatkan Kelaparan",
+            "description": "Mengambil tingkat kelaparan bot saat ini"
           },
           "get_inventory": {
-            "label": "",
-            "description": ""
+            "label": "Dapatkan Inventaris",
+            "description": "Mengambil item dari inventaris"
           },
           "get_block": {
-            "label": "",
-            "description": ""
+            "label": "Dapatkan Blok",
+            "description": "Mengambil blok pada posisi tertentu"
           },
           "find_entity": {
-            "label": "",
-            "description": ""
+            "label": "Cari Entitas",
+            "description": "Mencari entitas dengan tipe tertentu di sekitar"
           },
           "find_block": {
-            "label": "",
-            "description": ""
+            "label": "Cari Blok",
+            "description": "Mencari blok dengan tipe tertentu di sekitar"
           },
           "get_variable": {
-            "label": "",
-            "description": ""
+            "label": "Dapatkan Variabel",
+            "description": "Mengambil nilai dari variabel"
           }
         },
         "constant": {
           "number": {
-            "label": "",
-            "description": ""
+            "label": "Angka",
+            "description": "Nilai angka konstan"
           },
           "string": {
-            "label": "",
-            "description": ""
+            "label": "Teks",
+            "description": "Nilai teks konstan"
           },
           "boolean": {
-            "label": "",
-            "description": ""
+            "label": "Boolean",
+            "description": "Nilai benar/salah konstan"
           },
           "vector3": {
-            "label": "",
-            "description": ""
+            "label": "Vektor3",
+            "description": "Posisi 3D konstan (X, Y, Z)"
           }
         }
       }
