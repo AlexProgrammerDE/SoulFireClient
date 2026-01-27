@@ -105,6 +105,22 @@ export function ScriptEditor() {
   // Reroute action
   const insertReroute = useScriptEditorStore((state) => state.insertReroute);
 
+  // Selection actions
+  const selectLinked = useScriptEditorStore((state) => state.selectLinked);
+  const selectSimilar = useScriptEditorStore((state) => state.selectSimilar);
+
+  // Clipboard actions
+  const copySelected = useScriptEditorStore((state) => state.copySelected);
+  const pasteFromClipboard = useScriptEditorStore(
+    (state) => state.pasteFromClipboard,
+  );
+
+  // Alignment actions
+  const alignNodes = useScriptEditorStore((state) => state.alignNodes);
+  const distributeNodes = useScriptEditorStore(
+    (state) => state.distributeNodes,
+  );
+
   // Link cutting
   const linkCutting = useScriptEditorStore((state) => state.linkCutting);
   const startLinkCutting = useScriptEditorStore(
@@ -287,6 +303,115 @@ export function ScriptEditor() {
         duplicateSelected();
         return;
       }
+
+      // Ctrl+C - Copy selected
+      if (
+        (event.key === "c" || event.key === "C") &&
+        (event.ctrlKey || event.metaKey) &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+        copySelected();
+        return;
+      }
+
+      // Ctrl+V - Paste from clipboard
+      if (
+        (event.key === "v" || event.key === "V") &&
+        (event.ctrlKey || event.metaKey) &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+        if (reactFlowInstance && containerRef.current) {
+          const rect = containerRef.current.getBoundingClientRect();
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const flowPosition = reactFlowInstance.screenToFlowPosition({
+            x: centerX,
+            y: centerY,
+          });
+          pasteFromClipboard(flowPosition);
+        }
+        return;
+      }
+
+      // Shift+L - Select linked (both directions)
+      if (
+        event.key === "L" &&
+        event.shiftKey &&
+        !event.ctrlKey &&
+        !event.metaKey
+      ) {
+        event.preventDefault();
+        selectLinked("both");
+        return;
+      }
+
+      // Ctrl+Shift+L - Select upstream only
+      if (
+        event.key === "L" &&
+        event.shiftKey &&
+        (event.ctrlKey || event.metaKey)
+      ) {
+        event.preventDefault();
+        selectLinked("upstream");
+        return;
+      }
+
+      // Alt+Shift+L - Select downstream only
+      if (event.key === "L" && event.shiftKey && event.altKey) {
+        event.preventDefault();
+        selectLinked("downstream");
+        return;
+      }
+
+      // Shift+S - Select similar (same node type)
+      if (
+        event.key === "S" &&
+        event.shiftKey &&
+        !event.ctrlKey &&
+        !event.metaKey
+      ) {
+        event.preventDefault();
+        selectSimilar();
+        return;
+      }
+
+      // Alignment shortcuts (Ctrl+Shift+Arrow)
+      if (event.ctrlKey && event.shiftKey && selectedNodes.length >= 2) {
+        switch (event.key) {
+          case "ArrowLeft":
+            event.preventDefault();
+            alignNodes("left");
+            return;
+          case "ArrowRight":
+            event.preventDefault();
+            alignNodes("right");
+            return;
+          case "ArrowUp":
+            event.preventDefault();
+            alignNodes("top");
+            return;
+          case "ArrowDown":
+            event.preventDefault();
+            alignNodes("bottom");
+            return;
+        }
+      }
+
+      // Distribute shortcuts
+      if (event.altKey && event.shiftKey && selectedNodes.length >= 3) {
+        if (event.key === "H" || event.key === "h") {
+          event.preventDefault();
+          distributeNodes("horizontal");
+          return;
+        }
+        if (event.key === "V" || event.key === "v") {
+          event.preventDefault();
+          distributeNodes("vertical");
+          return;
+        }
+      }
     },
     [
       nodes,
@@ -305,6 +430,12 @@ export function ScriptEditor() {
       groupEditStack,
       enterGroup,
       exitGroup,
+      copySelected,
+      pasteFromClipboard,
+      selectLinked,
+      selectSimilar,
+      alignNodes,
+      distributeNodes,
     ],
   );
 

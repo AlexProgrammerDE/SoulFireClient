@@ -65,6 +65,16 @@ export interface ScriptEditorState {
   previewEnabledNodes: Set<string>; // Node IDs with preview enabled
   previewValues: Map<string, Record<string, unknown>>; // Node ID -> output values
 
+  // Debug node state
+  debugNodeValues: Map<string, Array<{ value: unknown; timestamp: Date }>>; // Node ID -> value history
+
+  // Clipboard state
+  clipboard: {
+    nodes: Node[];
+    edges: Edge[];
+    sourceScriptId: string | null;
+  } | null;
+
   // Actions
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
@@ -104,6 +114,28 @@ export interface ScriptEditorState {
 
   // Auto-insert on edge
   insertNodeOnEdge: (nodeId: string, edgeId: string) => void;
+
+  // Debug node actions
+  updateDebugValue: (nodeId: string, value: unknown) => void;
+  clearDebugValues: (nodeId: string) => void;
+  getDebugHistory: (
+    nodeId: string,
+  ) => Array<{ value: unknown; timestamp: Date }>;
+
+  // Selection actions
+  selectLinked: (direction: "upstream" | "downstream" | "both") => void;
+  selectSimilar: () => void;
+
+  // Clipboard actions
+  copySelected: () => void;
+  pasteFromClipboard: (position: XYPosition) => void;
+  canPaste: () => boolean;
+
+  // Alignment actions
+  alignNodes: (
+    direction: "left" | "right" | "top" | "bottom" | "centerH" | "centerV",
+  ) => void;
+  distributeNodes: (direction: "horizontal" | "vertical") => void;
 
   // Quick add menu actions
   openQuickAddMenu: (
@@ -203,6 +235,11 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   groupEditStack: [],
   previewEnabledNodes: new Set<string>(),
   previewValues: new Map<string, Record<string, unknown>>(),
+  debugNodeValues: new Map<
+    string,
+    Array<{ value: unknown; timestamp: Date }>
+  >(),
+  clipboard: null,
   linkCutting: {
     active: false,
     startPoint: null,
@@ -1058,6 +1095,355 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     });
   },
 
+  // Debug node actions
+  updateDebugValue: (nodeId, value) => {
+    const current = get().debugNodeValues;
+    const next = new Map(current);
+    const history = next.get(nodeId) ?? [];
+    // Keep last 50 values
+    const newHistory = [
+      ...history.slice(-49),
+      { value, timestamp: new Date() },
+    ];
+    next.set(nodeId, newHistory);
+    set({ debugNodeValues: next });
+  },
+
+  clearDebugValues: (nodeId) => {
+    const current = get().debugNodeValues;
+    const next = new Map(current);
+    next.delete(nodeId);
+    set({ debugNodeValues: next });
+  },
+
+  getDebugHistory: (nodeId) => {
+    return get().debugNodeValues.get(nodeId) ?? [];
+  },
+
+  // Selection actions
+  selectLinked: (direction) => {
+    const { nodes, edges, groupEditStack } = get();
+    const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
+
+    // Get currently selected nodes in current view
+    const selectedNodes = nodes.filter((n) => {
+      if (!n.selected) return false;
+      const nodeGroupId = (n.data.parentGroupId as string) ?? null;
+      return nodeGroupId === currentGroupId;
+    });
+
+    if (selectedNodes.length === 0) return;
+
+    const selectedIds = new Set(selectedNodes.map((n) => n.id));
+    const toSelect = new Set(selectedIds);
+
+    // Build adjacency lists
+    const upstream = new Map<string, string[]>();
+    const downstream = new Map<string, string[]>();
+    for (const edge of edges) {
+      if (!downstream.has(edge.source)) downstream.set(edge.source, []);
+      downstream.get(edge.source)?.push(edge.target);
+      if (!upstream.has(edge.target)) upstream.set(edge.target, []);
+      upstream.get(edge.target)?.push(edge.source);
+    }
+
+    // BFS traversal
+    const queue = [...selectedIds];
+    while (queue.length > 0) {
+      const current = queue.shift();
+      if (!current) continue;
+
+      if (direction === "upstream" || direction === "both") {
+        for (const source of upstream.get(current) ?? []) {
+          if (!toSelect.has(source)) {
+            toSelect.add(source);
+            queue.push(source);
+          }
+        }
+      }
+
+      if (direction === "downstream" || direction === "both") {
+        for (const target of downstream.get(current) ?? []) {
+          if (!toSelect.has(target)) {
+            toSelect.add(target);
+            queue.push(target);
+          }
+        }
+      }
+    }
+
+    // Update selection (only nodes in current view)
+    set({
+      nodes: nodes.map((n) => {
+        const nodeGroupId = (n.data.parentGroupId as string) ?? null;
+        if (nodeGroupId !== currentGroupId) return n;
+        return { ...n, selected: toSelect.has(n.id) };
+      }),
+    });
+  },
+
+  selectSimilar: () => {
+    const { nodes, groupEditStack } = get();
+    const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
+
+    // Get types of selected nodes
+    const selectedTypes = new Set(
+      nodes
+        .filter((n) => {
+          if (!n.selected) return false;
+          const nodeGroupId = (n.data.parentGroupId as string) ?? null;
+          return nodeGroupId === currentGroupId;
+        })
+        .map((n) => n.type),
+    );
+
+    if (selectedTypes.size === 0) return;
+
+    // Select all nodes of the same types in current view
+    set({
+      nodes: nodes.map((n) => {
+        const nodeGroupId = (n.data.parentGroupId as string) ?? null;
+        if (nodeGroupId !== currentGroupId) return n;
+        return { ...n, selected: selectedTypes.has(n.type) };
+      }),
+    });
+  },
+
+  // Clipboard actions
+  copySelected: () => {
+    const { nodes, edges, scriptId, groupEditStack } = get();
+    const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
+
+    // Get selected nodes in current view
+    const selectedNodes = nodes.filter((n) => {
+      if (!n.selected) return false;
+      const nodeGroupId = (n.data.parentGroupId as string) ?? null;
+      return nodeGroupId === currentGroupId;
+    });
+
+    if (selectedNodes.length === 0) return;
+
+    const selectedIds = new Set(selectedNodes.map((n) => n.id));
+
+    // Get edges between selected nodes
+    const selectedEdges = edges.filter(
+      (e) => selectedIds.has(e.source) && selectedIds.has(e.target),
+    );
+
+    set({
+      clipboard: {
+        nodes: selectedNodes,
+        edges: selectedEdges,
+        sourceScriptId: scriptId,
+      },
+    });
+  },
+
+  pasteFromClipboard: (position) => {
+    const { clipboard, nodes, edges, groupEditStack } = get();
+    if (!clipboard || clipboard.nodes.length === 0) return;
+
+    const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
+
+    // Calculate centroid of copied nodes
+    const centerX =
+      clipboard.nodes.reduce((sum, n) => sum + n.position.x, 0) /
+      clipboard.nodes.length;
+    const centerY =
+      clipboard.nodes.reduce((sum, n) => sum + n.position.y, 0) /
+      clipboard.nodes.length;
+
+    // Create ID mapping
+    const idMap = new Map<string, string>();
+    for (const node of clipboard.nodes) {
+      idMap.set(node.id, generateId());
+    }
+
+    // Create new nodes at target position
+    const newNodes: Node[] = clipboard.nodes.map((node) => ({
+      ...node,
+      id: idMap.get(node.id) ?? generateId(),
+      position: {
+        x: position.x + (node.position.x - centerX),
+        y: position.y + (node.position.y - centerY),
+      },
+      data: {
+        ...node.data,
+        parentGroupId: currentGroupId ?? undefined,
+      },
+      selected: true,
+    }));
+
+    // Create new edges with remapped IDs
+    const newEdges: Edge[] = clipboard.edges.map((edge) => ({
+      ...edge,
+      id: generateId(),
+      source: idMap.get(edge.source) ?? edge.source,
+      target: idMap.get(edge.target) ?? edge.target,
+    }));
+
+    // Deselect existing nodes
+    const updatedNodes = nodes.map((n) => ({ ...n, selected: false }));
+
+    set({
+      nodes: [...updatedNodes, ...newNodes],
+      edges: [...edges, ...newEdges],
+      isDirty: true,
+    });
+  },
+
+  canPaste: () => {
+    const { clipboard } = get();
+    return clipboard !== null && clipboard.nodes.length > 0;
+  },
+
+  // Alignment actions
+  alignNodes: (direction) => {
+    const { nodes, groupEditStack } = get();
+    const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
+
+    // Get selected nodes in current view
+    const selectedNodes = nodes.filter((n) => {
+      if (!n.selected) return false;
+      const nodeGroupId = (n.data.parentGroupId as string) ?? null;
+      return nodeGroupId === currentGroupId;
+    });
+
+    if (selectedNodes.length < 2) return;
+
+    const selectedIds = new Set(selectedNodes.map((n) => n.id));
+
+    // Calculate reference values
+    const positions = selectedNodes.map((n) => ({
+      x: n.position.x,
+      y: n.position.y,
+      width: n.measured?.width ?? 160,
+      height: n.measured?.height ?? 100,
+    }));
+
+    let targetValue: number;
+    switch (direction) {
+      case "left":
+        targetValue = Math.min(...positions.map((p) => p.x));
+        break;
+      case "right":
+        targetValue = Math.max(...positions.map((p) => p.x + p.width));
+        break;
+      case "top":
+        targetValue = Math.min(...positions.map((p) => p.y));
+        break;
+      case "bottom":
+        targetValue = Math.max(...positions.map((p) => p.y + p.height));
+        break;
+      case "centerH":
+        targetValue =
+          positions.reduce((sum, p) => sum + p.x + p.width / 2, 0) /
+          positions.length;
+        break;
+      case "centerV":
+        targetValue =
+          positions.reduce((sum, p) => sum + p.y + p.height / 2, 0) /
+          positions.length;
+        break;
+    }
+
+    set({
+      nodes: nodes.map((n) => {
+        if (!selectedIds.has(n.id)) return n;
+
+        const width = n.measured?.width ?? 160;
+        const height = n.measured?.height ?? 100;
+
+        const newPosition = { ...n.position };
+        switch (direction) {
+          case "left":
+            newPosition.x = targetValue;
+            break;
+          case "right":
+            newPosition.x = targetValue - width;
+            break;
+          case "top":
+            newPosition.y = targetValue;
+            break;
+          case "bottom":
+            newPosition.y = targetValue - height;
+            break;
+          case "centerH":
+            newPosition.x = targetValue - width / 2;
+            break;
+          case "centerV":
+            newPosition.y = targetValue - height / 2;
+            break;
+        }
+
+        return { ...n, position: newPosition };
+      }),
+      isDirty: true,
+    });
+  },
+
+  distributeNodes: (direction) => {
+    const { nodes, groupEditStack } = get();
+    const currentGroupId = groupEditStack[groupEditStack.length - 1] ?? null;
+
+    // Get selected nodes in current view
+    const selectedNodes = nodes.filter((n) => {
+      if (!n.selected) return false;
+      const nodeGroupId = (n.data.parentGroupId as string) ?? null;
+      return nodeGroupId === currentGroupId;
+    });
+
+    if (selectedNodes.length < 3) return;
+
+    const selectedIds = new Set(selectedNodes.map((n) => n.id));
+
+    // Sort by position
+    const sorted = [...selectedNodes].sort((a, b) =>
+      direction === "horizontal"
+        ? a.position.x - b.position.x
+        : a.position.y - b.position.y,
+    );
+
+    // Calculate spacing
+    const first = sorted[0];
+    const last = sorted[sorted.length - 1];
+    const _firstSize =
+      direction === "horizontal"
+        ? (first.measured?.width ?? 160)
+        : (first.measured?.height ?? 100);
+    const lastPos =
+      direction === "horizontal" ? last.position.x : last.position.y;
+    const firstPos =
+      direction === "horizontal" ? first.position.x : first.position.y;
+
+    const totalSpace = lastPos - firstPos;
+    const step = totalSpace / (sorted.length - 1);
+
+    // Create position map
+    const positionMap = new Map<string, number>();
+    for (let i = 0; i < sorted.length; i++) {
+      positionMap.set(sorted[i].id, firstPos + i * step);
+    }
+
+    set({
+      nodes: nodes.map((n) => {
+        if (!selectedIds.has(n.id)) return n;
+
+        const newPos = positionMap.get(n.id);
+        if (newPos === undefined) return n;
+
+        return {
+          ...n,
+          position:
+            direction === "horizontal"
+              ? { ...n.position, x: newPos }
+              : { ...n.position, y: newPos },
+        };
+      }),
+      isDirty: true,
+    });
+  },
+
   // Quick add menu actions
   openQuickAddMenu: (position, screenPosition, sourceSocket) => {
     set({
@@ -1204,6 +1590,10 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       groupEditStack: [],
       previewEnabledNodes: new Set<string>(),
       previewValues: new Map<string, Record<string, unknown>>(),
+      debugNodeValues: new Map<
+        string,
+        Array<{ value: unknown; timestamp: Date }>
+      >(),
     }),
 
   resetEditor: () =>
@@ -1223,6 +1613,11 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       groupEditStack: [],
       previewEnabledNodes: new Set<string>(),
       previewValues: new Map<string, Record<string, unknown>>(),
+      debugNodeValues: new Map<
+        string,
+        Array<{ value: unknown; timestamp: Date }>
+      >(),
+      clipboard: null,
       linkCutting: {
         active: false,
         startPoint: null,

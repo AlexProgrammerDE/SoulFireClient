@@ -11,6 +11,7 @@ import {
 import { TransportContext } from "@/components/providers/transport-context";
 import { nodeTypesQueryOptions } from "@/lib/script-service";
 import { createNodeComponent } from "./nodes/BaseNode";
+import { DebugNode } from "./nodes/DebugNode";
 import { FrameNode } from "./nodes/FrameNode";
 import { GroupInputNode } from "./nodes/GroupInputNode";
 import { GroupNode } from "./nodes/GroupNode";
@@ -79,6 +80,17 @@ const LAYOUT_NODE_DEFINITIONS: NodeDefinition[] = [
     description: "Defines outputs for a node group (inside the group)",
     isLayoutNode: true,
     keywords: ["output", "group"],
+  },
+  {
+    type: "layout.debug",
+    label: "Debug",
+    category: "layout",
+    icon: "Bug",
+    inputs: [{ id: "any-in", label: "In", type: "any" }],
+    outputs: [{ id: "any-out", label: "Out", type: "any" }],
+    description: "Debug node for inspecting values during execution",
+    isLayoutNode: true,
+    keywords: ["debug", "viewer", "inspect", "watch", "log"],
   },
 ];
 
@@ -162,6 +174,8 @@ export function NodeTypesProvider({
         result[type] = GroupInputNode;
       } else if (type === "layout.group_output") {
         result[type] = GroupOutputNode;
+      } else if (type === "layout.debug") {
+        result[type] = DebugNode;
       } else {
         result[type] = createNodeComponent(definition);
       }
