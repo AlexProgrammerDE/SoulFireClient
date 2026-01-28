@@ -644,57 +644,68 @@ export function ScriptEditor() {
 
       {/* Node context menu (React Flow idiomatic pattern) */}
       {nodeContextMenu && (
-        <NodeContextMenu
-          nodeId={nodeContextMenu.nodeId}
-          isMuted={
-            (
-              visibleNodes.find((n) => n.id === nodeContextMenu.nodeId)?.data as
-                | { muted?: boolean }
-                | undefined
-            )?.muted ?? false
-          }
-          isCollapsed={
-            (
-              visibleNodes.find((n) => n.id === nodeContextMenu.nodeId)?.data as
-                | { collapsed?: boolean }
-                | undefined
-            )?.collapsed ?? false
-          }
-          previewEnabled={previewEnabledNodes.has(nodeContextMenu.nodeId)}
-          onDelete={() => {
-            deleteSelected();
-            setNodeContextMenu(null);
-          }}
-          onDuplicate={() => {
-            duplicateSelected();
-            setNodeContextMenu(null);
-          }}
-          onDisconnectAll={(nodeId) => {
-            disconnectNode(nodeId);
-            setNodeContextMenu(null);
-          }}
-          onToggleMute={(nodeId) => {
-            toggleMute(nodeId);
-            setNodeContextMenu(null);
-          }}
-          onToggleCollapse={(nodeId) => {
-            toggleCollapse(nodeId);
-            setNodeContextMenu(null);
-          }}
-          onTogglePreview={(nodeId) => {
-            togglePreview(nodeId);
-            setNodeContextMenu(null);
-          }}
-          onClose={() => setNodeContextMenu(null)}
-          style={{
-            position: "absolute",
-            top: nodeContextMenu.top || undefined,
-            left: nodeContextMenu.left || undefined,
-            right: nodeContextMenu.right || undefined,
-            bottom: nodeContextMenu.bottom || undefined,
-            zIndex: 100,
-          }}
-        />
+        <>
+          {/* Backdrop - closes menu on click, prevents native context menu on right-click */}
+          {/* biome-ignore lint/a11y/useKeyWithClickEvents: Backdrop dismissal doesn't need keyboard */}
+          {/* biome-ignore lint/a11y/noStaticElementInteractions: Backdrop is not focusable */}
+          <div
+            className="fixed inset-0 z-[99]"
+            onClick={() => setNodeContextMenu(null)}
+            onContextMenu={(e) => {
+              e.preventDefault();
+              setNodeContextMenu(null);
+            }}
+          />
+          <NodeContextMenu
+            nodeId={nodeContextMenu.nodeId}
+            isMuted={
+              (
+                visibleNodes.find((n) => n.id === nodeContextMenu.nodeId)
+                  ?.data as { muted?: boolean } | undefined
+              )?.muted ?? false
+            }
+            isCollapsed={
+              (
+                visibleNodes.find((n) => n.id === nodeContextMenu.nodeId)
+                  ?.data as { collapsed?: boolean } | undefined
+              )?.collapsed ?? false
+            }
+            previewEnabled={previewEnabledNodes.has(nodeContextMenu.nodeId)}
+            onDelete={() => {
+              deleteSelected();
+              setNodeContextMenu(null);
+            }}
+            onDuplicate={() => {
+              duplicateSelected();
+              setNodeContextMenu(null);
+            }}
+            onDisconnectAll={(nodeId) => {
+              disconnectNode(nodeId);
+              setNodeContextMenu(null);
+            }}
+            onToggleMute={(nodeId) => {
+              toggleMute(nodeId);
+              setNodeContextMenu(null);
+            }}
+            onToggleCollapse={(nodeId) => {
+              toggleCollapse(nodeId);
+              setNodeContextMenu(null);
+            }}
+            onTogglePreview={(nodeId) => {
+              togglePreview(nodeId);
+              setNodeContextMenu(null);
+            }}
+            onClose={() => setNodeContextMenu(null)}
+            style={{
+              position: "absolute",
+              top: nodeContextMenu.top || undefined,
+              left: nodeContextMenu.left || undefined,
+              right: nodeContextMenu.right || undefined,
+              bottom: nodeContextMenu.bottom || undefined,
+              zIndex: 100,
+            }}
+          />
+        </>
       )}
 
       {/* Link cutting visual indicator */}

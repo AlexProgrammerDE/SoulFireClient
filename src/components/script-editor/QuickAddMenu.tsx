@@ -196,10 +196,17 @@ export function QuickAddMenu() {
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Backdrop - closes menu on click, prevents native context menu on right-click */}
       {/* biome-ignore lint/a11y/useKeyWithClickEvents: Backdrop dismissal doesn't need keyboard */}
       {/* biome-ignore lint/a11y/noStaticElementInteractions: Backdrop is not focusable */}
-      <div className="fixed inset-0 z-50" onClick={closeQuickAddMenu} />
+      <div
+        className="fixed inset-0 z-50"
+        onClick={closeQuickAddMenu}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          closeQuickAddMenu();
+        }}
+      />
 
       {/* Menu */}
       <div
