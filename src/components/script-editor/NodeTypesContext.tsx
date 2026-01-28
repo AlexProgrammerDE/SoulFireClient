@@ -20,6 +20,7 @@ import { GroupOutputNode } from "./nodes/GroupOutputNode";
 import { RerouteNode } from "./nodes/RerouteNode";
 import {
   type CategoryInfo,
+  initNodeDefinitions,
   initPortMetadata,
   type NodeDefinition,
   protoCategoryToLocal,
@@ -27,14 +28,15 @@ import {
 } from "./nodes/types";
 
 // Client-side layout node definitions (not from server)
+// Port IDs are simple names - type is stored separately
 const LAYOUT_NODE_DEFINITIONS: NodeDefinition[] = [
   {
     type: "layout.reroute",
     label: "Reroute",
     category: "layout",
     icon: "Circle",
-    inputs: [{ id: "any-in", label: "", type: "any" }],
-    outputs: [{ id: "any-out", label: "", type: "any" }],
+    inputs: [{ id: "in", label: "", type: "any" }],
+    outputs: [{ id: "out", label: "", type: "any" }],
     description: "A pass-through node for organizing connections",
     isLayoutNode: true,
     keywords: ["reroute", "redirect", "organize", "passthrough"],
@@ -88,8 +90,8 @@ const LAYOUT_NODE_DEFINITIONS: NodeDefinition[] = [
     label: "Debug",
     category: "layout",
     icon: "Bug",
-    inputs: [{ id: "any-in", label: "In", type: "any" }],
-    outputs: [{ id: "any-out", label: "Out", type: "any" }],
+    inputs: [{ id: "in", label: "In", type: "any" }],
+    outputs: [{ id: "out", label: "Out", type: "any" }],
     description: "Debug node for inspecting values during execution",
     isLayoutNode: true,
     keywords: ["debug", "viewer", "inspect", "watch", "log"],
@@ -167,6 +169,11 @@ export function NodeTypesProvider({
     }
     return result;
   }, [data.nodeTypes]);
+
+  // Initialize node definitions for port type lookup
+  useEffect(() => {
+    initNodeDefinitions(Object.values(definitions));
+  }, [definitions]);
 
   // Create React Flow node types from definitions
   const nodeTypes = useMemo(() => {

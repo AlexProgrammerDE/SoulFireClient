@@ -38,12 +38,12 @@ interface BaseNodeProps extends NodeProps {
 }
 
 /**
- * Extract the field key from a port ID.
- * Port IDs have format "type-fieldname" e.g. "number-interval" -> "interval"
+ * Get the field key from a port ID.
+ * Port IDs are now simple names (e.g., "interval", "message"),
+ * so we just return the port ID directly.
  */
 function getFieldKey(portId: string): string {
-  const parts = portId.split("-");
-  return parts.length > 1 ? parts.slice(1).join("-") : portId;
+  return portId;
 }
 
 interface PortRowProps {

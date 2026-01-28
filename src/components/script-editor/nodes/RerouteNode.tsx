@@ -44,7 +44,7 @@ function RerouteNodeComponent({ data, selected }: RerouteNodeProps) {
       <Handle
         type="target"
         position={Position.Left}
-        id="any-in"
+        id="in"
         className="!absolute !w-full !h-full !top-0 !left-0 !transform-none !bg-transparent !border-none"
       />
 
@@ -53,7 +53,7 @@ function RerouteNodeComponent({ data, selected }: RerouteNodeProps) {
       <Handle
         type="source"
         position={Position.Right}
-        id="any-out"
+        id="out"
         className="!absolute !w-full !h-full !top-0 !left-0 !transform-none !bg-transparent !border-none"
       />
 

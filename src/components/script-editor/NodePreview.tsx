@@ -34,14 +34,12 @@ function NodePreviewComponent({ values, enabled }: NodePreviewProps) {
 }
 
 /**
- * Format a port ID into a readable name
+ * Format a port ID into a readable name.
+ * Port IDs are now simple names (e.g., "interval", "message").
  */
 function formatPortName(portId: string): string {
-  // Port IDs have format "type-name", extract the name part
-  const parts = portId.split("-");
-  const name = parts.length > 1 ? parts.slice(1).join("-") : portId;
-  // Convert to title case
-  return name
+  // Convert to title case (handle snake_case and kebab-case)
+  return portId
     .split(/[-_]/)
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");

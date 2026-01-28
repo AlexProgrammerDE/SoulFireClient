@@ -302,14 +302,16 @@ export function protoToNodes(nodes: ScriptNode[]): Node[] {
 
 /**
  * Convert React Flow edges to proto ScriptEdges
+ * Edge type is determined from the edge's type or data fields,
+ * which are set when the edge is created based on port type lookup.
  */
 export function edgesToProto(edges: Edge[]): ScriptEdge[] {
   return edges.map((edge) => {
     // Determine edge type from the edge's type or data
+    // Port IDs are now simple names, so we rely on edge metadata
     const isExecution =
       edge.type === "execution" ||
-      (edge.data as { edgeType?: string })?.edgeType === "execution" ||
-      edge.sourceHandle?.startsWith("exec");
+      (edge.data as { edgeType?: string })?.edgeType === "execution";
 
     return {
       id: edge.id,

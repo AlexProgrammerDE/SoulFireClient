@@ -13,6 +13,7 @@ import {
 import { create } from "zustand";
 import {
   getEdgeStyle,
+  getPortTypeFromDefinition,
   isTypeCompatible,
   type PortType,
 } from "@/components/script-editor/nodes/types";
@@ -213,11 +214,37 @@ export interface ScriptEditorState {
 // Generate unique IDs
 const generateId = () => crypto.randomUUID();
 
-// Helper to get port type from handle ID
-const getPortType = (handleId: string | null | undefined): string => {
+// Helper to get port type from node definition
+// Primary method: look up port type from node definitions
+// Fallback: for layout nodes (reroute, group) that use dynamic port types
+const getPortTypeForNode = (
+  nodes: Node[],
+  nodeId: string,
+  handleId: string | null | undefined,
+): PortType => {
   if (!handleId) return "any";
-  const parts = handleId.split("-");
-  return parts[0] || "any";
+
+  const node = nodes.find((n) => n.id === nodeId);
+  if (!node) return "any";
+
+  // Try to look up from node definition
+  const portType = getPortTypeFromDefinition(node.type ?? "", handleId);
+  if (portType) return portType;
+
+  // Fallback for layout nodes (reroute, group) that store resolved type in data
+  const nodeData = node.data as { resolvedType?: PortType } | undefined;
+  if (nodeData?.resolvedType) return nodeData.resolvedType;
+
+  return "any";
+};
+
+// Simplified helper for cases where we only have handle ID
+// Used when we don't have node context (e.g., for group creation)
+const _getPortType = (handleId: string | null | undefined): string => {
+  if (!handleId) return "any";
+  // For simple IDs, there's no type prefix - return "any" as fallback
+  // The actual type should be looked up from node definitions
+  return "any";
 };
 
 export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
@@ -280,8 +307,13 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   },
 
   onConnect: (connection) => {
-    // Get port type from handle and determine edge style (data-driven)
-    const sourcePortType = getPortType(connection.sourceHandle) as PortType;
+    // Look up port type from node definition
+    const { nodes } = get();
+    const sourcePortType = getPortTypeForNode(
+      nodes,
+      connection.source,
+      connection.sourceHandle,
+    );
     const edgeStyle = getEdgeStyle(sourcePortType);
 
     // Execution edges use "animated" style, data edges use "default"
@@ -538,16 +570,20 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       },
     };
 
-    // Get the edge type from the source handle
-    const sourceType = edge.sourceHandle?.split("-")[0] ?? "any";
+    // Get the port type from node definition
+    const sourceType = getPortTypeForNode(
+      nodes,
+      edge.source,
+      edge.sourceHandle,
+    );
 
-    // Create new edges
+    // Create new edges with simple port IDs
     const newEdge1: Edge = {
       id: generateId(),
       source: edge.source,
       sourceHandle: edge.sourceHandle,
       target: rerouteId,
-      targetHandle: "any-in",
+      targetHandle: "in",
       type: edge.type,
       data: edge.data,
     };
@@ -555,7 +591,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     const newEdge2: Edge = {
       id: generateId(),
       source: rerouteId,
-      sourceHandle: "any-out",
+      sourceHandle: "out",
       target: edge.target,
       targetHandle: edge.targetHandle,
       type: edge.type,
@@ -708,18 +744,19 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     // since we only remove incoming/outgoing crossing edges
 
     // Create group input/output sockets based on crossing edges
+    // Port IDs are now simple names, so use them directly as labels
     const groupInputs = incomingEdges.map((e, i) => ({
       id: `group-in-${i}`,
-      type: getPortType(e.sourceHandle),
-      label: e.targetHandle?.split("-").slice(1).join("-") || `Input ${i + 1}`,
+      type: getPortTypeForNode(nodes, e.source, e.sourceHandle),
+      label: e.targetHandle || `Input ${i + 1}`,
       originalTarget: e.target,
       originalTargetHandle: e.targetHandle,
     }));
 
     const groupOutputs = outgoingEdges.map((e, i) => ({
       id: `group-out-${i}`,
-      type: getPortType(e.sourceHandle),
-      label: e.sourceHandle?.split("-").slice(1).join("-") || `Output ${i + 1}`,
+      type: getPortTypeForNode(nodes, e.source, e.sourceHandle),
+      label: e.sourceHandle || `Output ${i + 1}`,
       originalSource: e.source,
       originalSourceHandle: e.sourceHandle,
     }));
@@ -1026,12 +1063,16 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     const node = nodes.find((n) => n.id === nodeId);
     if (!edge || !node) return;
 
-    // We need node definition to find compatible sockets
-    // Since we don't have access to definitions here, we'll use a simple heuristic:
-    // Find first non-execution input and output that might match
+    // Get port types from the source and target nodes via definitions
+    const sourceNode = nodes.find((n) => n.id === edge.source);
+    const targetNode = nodes.find((n) => n.id === edge.target);
 
-    const sourceType = getPortType(edge.sourceHandle);
-    const targetType = getPortType(edge.targetHandle);
+    const sourceType = sourceNode
+      ? getPortTypeForNode(nodes, edge.source, edge.sourceHandle)
+      : "any";
+    const targetType = targetNode
+      ? getPortTypeForNode(nodes, edge.target, edge.targetHandle)
+      : "any";
 
     // Look for compatible sockets in node data if available
     // This is a simplified version - in practice, we'd need the node definition
@@ -1045,36 +1086,27 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     let inputSocket = nodeInputs.find(
       (p) =>
         p.type !== "execution" &&
-        isTypeCompatible(sourceType as PortType, p.type as PortType),
+        isTypeCompatible(sourceType, p.type as PortType),
     );
 
     // Try to find compatible output socket
     let outputSocket = nodeOutputs.find(
       (p) =>
         p.type !== "execution" &&
-        isTypeCompatible(p.type as PortType, targetType as PortType),
+        isTypeCompatible(p.type as PortType, targetType),
     );
 
     // If no matching sockets found in data, try common patterns
+    // Port IDs are now simple names without type prefix
     if (!inputSocket) {
-      // Common input handle patterns
-      const commonInputs = [
-        `${sourceType}-in`,
-        `${sourceType}-input`,
-        `${sourceType}-value`,
-        "any-in",
-      ];
+      // Common input handle patterns (simple names)
+      const commonInputs = ["in", "input", "value", "a"];
       inputSocket = { id: commonInputs[0], type: sourceType };
     }
 
     if (!outputSocket) {
-      // Common output handle patterns
-      const commonOutputs = [
-        `${targetType}-out`,
-        `${targetType}-output`,
-        `${targetType}-result`,
-        "any-out",
-      ];
+      // Common output handle patterns (simple names)
+      const commonOutputs = ["out", "output", "result"];
       outputSocket = { id: commonOutputs[0], type: targetType };
     }
 

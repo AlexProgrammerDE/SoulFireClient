@@ -8,10 +8,10 @@ import {
   type ReactFlowInstance,
 } from "@xyflow/react";
 import { useTheme } from "next-themes";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { handleNativeCopy, handleNativePaste } from "@/lib/script-clipboard";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
-import { edgeTypes, isValidConnection } from "./edges";
+import { createConnectionValidator, edgeTypes } from "./edges";
 import { GroupBreadcrumb } from "./GroupBreadcrumb";
 import { NodeEditingProvider } from "./NodeEditingContext";
 import { useNodeTypes } from "./NodeTypesContext";
@@ -596,6 +596,12 @@ export function ScriptEditor() {
   const visibleNodes = groupEditStack.length > 0 ? getVisibleNodes() : nodes;
   const visibleEdges = groupEditStack.length > 0 ? getVisibleEdges() : edges;
 
+  // Create connection validator with current nodes
+  const connectionValidator = useMemo(
+    () => createConnectionValidator(visibleNodes),
+    [visibleNodes],
+  );
+
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: ReactFlow canvas wrapper requires keyboard handling for operations
     <div
@@ -621,7 +627,7 @@ export function ScriptEditor() {
           onInit={handleInit}
           onNodeClick={handleNodeClick}
           onSelectionChange={handleSelectionChange}
-          isValidConnection={isValidConnection}
+          isValidConnection={connectionValidator}
           colorMode={(resolvedTheme as ColorMode) ?? "dark"}
           fitView
           snapToGrid

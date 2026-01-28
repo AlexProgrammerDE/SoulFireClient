@@ -147,7 +147,7 @@ function DebugNodeComponent({ id, data, selected }: DebugNodeProps) {
             <Handle
               type="target"
               position={Position.Left}
-              id="any-in"
+              id="in"
               className="!relative !top-0 !transform-none transition-transform hover:scale-125"
               style={{
                 background: color,
@@ -166,7 +166,7 @@ function DebugNodeComponent({ id, data, selected }: DebugNodeProps) {
             <Handle
               type="source"
               position={Position.Right}
-              id="any-out"
+              id="out"
               className="!relative !top-0 !transform-none transition-transform hover:scale-125"
               style={{
                 background: color,

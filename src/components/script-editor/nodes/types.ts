@@ -20,6 +20,18 @@ export type PortType =
   | "list"
   | "any";
 
+/**
+ * Standard port names - must match backend StandardPorts.java
+ */
+export const StandardPorts = {
+  EXEC_IN: "in",
+  EXEC_OUT: "out",
+  EXEC_TRUE: "true",
+  EXEC_FALSE: "false",
+  EXEC_LOOP: "loop",
+  EXEC_DONE: "done",
+} as const;
+
 export type NodeCategory = string;
 
 export interface PortDefinition {
@@ -131,21 +143,15 @@ export function protoNodeTypeToLocal(
   proto: ProtoNodeTypeDefinition,
 ): NodeDefinition {
   // Parse default values from port definitions
+  // Port IDs are now simple names (e.g., "interval", "message")
   const defaultData: Record<string, unknown> = {};
   for (const input of proto.inputs) {
     if (input.defaultValue) {
       try {
-        // Extract port name from id (e.g., "number-interval" -> "interval")
-        const portName = input.id.includes("-")
-          ? input.id.split("-").slice(1).join("-")
-          : input.id;
-        defaultData[portName] = JSON.parse(input.defaultValue);
+        defaultData[input.id] = JSON.parse(input.defaultValue);
       } catch {
         // If JSON parsing fails, use the raw string value
-        const portName = input.id.includes("-")
-          ? input.id.split("-").slice(1).join("-")
-          : input.id;
-        defaultData[portName] = input.defaultValue;
+        defaultData[input.id] = input.defaultValue;
       }
     }
   }
@@ -259,6 +265,53 @@ let serverPortColors: Record<string, string> = {};
 let serverTypeCompatibility: Record<string, string[]> = {};
 let serverHandleShapes: Record<string, HandleShape> = {};
 let serverEdgeStyles: Record<string, EdgeStyle> = {};
+
+// Runtime store for node definitions (for port type lookup)
+let nodeDefinitionsByType: Map<string, NodeDefinition> = new Map();
+
+/**
+ * Initialize node definitions for port type lookup.
+ * Call this when GetNodeTypesResponse is received.
+ */
+export function initNodeDefinitions(definitions: NodeDefinition[]): void {
+  nodeDefinitionsByType = new Map(definitions.map((d) => [d.type, d]));
+}
+
+/**
+ * Get a node definition by type.
+ */
+export function getNodeDefinition(
+  nodeType: string,
+): NodeDefinition | undefined {
+  return nodeDefinitionsByType.get(nodeType);
+}
+
+/**
+ * Look up the port type for a given node type and port ID.
+ * Returns null if the node type or port is not found.
+ */
+export function getPortTypeFromDefinition(
+  nodeType: string,
+  portId: string,
+): PortType | null {
+  const def = nodeDefinitionsByType.get(nodeType);
+  if (!def) return null;
+
+  const input = def.inputs.find((p) => p.id === portId);
+  if (input) return input.type;
+
+  const output = def.outputs.find((p) => p.id === portId);
+  if (output) return output.type;
+
+  return null;
+}
+
+/**
+ * Check if a port is an execution port.
+ */
+export function isExecutionPort(nodeType: string, portId: string): boolean {
+  return getPortTypeFromDefinition(nodeType, portId) === "execution";
+}
 
 /**
  * Convert proto HandleShape enum to local string type

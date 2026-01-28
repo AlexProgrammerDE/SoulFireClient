@@ -1,15 +1,8 @@
-import type { Connection, Edge, IsValidConnection } from "@xyflow/react";
-
-/**
- * Extract port type from handle id format: "type-name" e.g., "number-a", "exec-out"
- */
-export function getPortType(
-  handleId: string | null | undefined,
-): string | null {
-  if (!handleId) return null;
-  const parts = handleId.split("-");
-  return parts[0] || null;
-}
+import type { Connection, Edge, IsValidConnection, Node } from "@xyflow/react";
+import {
+  getPortTypeFromDefinition,
+  type PortType,
+} from "@/components/script-editor/nodes/types";
 
 /**
  * Type conversion rules - Blender-style implicit conversions.
@@ -54,25 +47,55 @@ export function canConvertType(
 }
 
 /**
- * Validates whether a connection between two handles is allowed based on their types.
- * Rules:
- * - Execution ports only connect to execution ports
- * - Any type can connect to anything (except execution)
- * - Same types can connect
- * - Implicit type conversions are supported (Blender-style)
+ * Get port type from node definition.
+ * Returns the port type or "any" if not found.
  */
-export const isValidConnection: IsValidConnection = (
-  connection: Edge | Connection,
-): boolean => {
-  const sourceType = getPortType(connection.sourceHandle);
-  const targetType = getPortType(connection.targetHandle);
+function getPortType(
+  nodes: Node[],
+  nodeId: string,
+  handleId: string | null | undefined,
+): PortType {
+  if (!handleId) return "any";
 
-  if (!sourceType || !targetType) return false;
+  const node = nodes.find((n) => n.id === nodeId);
+  if (!node) return "any";
 
-  // Execution ports only connect to execution ports
-  if (sourceType === "exec" && targetType === "exec") return true;
-  if (sourceType === "exec" || targetType === "exec") return false;
+  // Try to look up from node definition
+  const portType = getPortTypeFromDefinition(node.type ?? "", handleId);
+  if (portType) return portType;
 
-  // Use the enhanced type conversion check
-  return canConvertType(sourceType, targetType);
-};
+  // Fallback for layout nodes (reroute, group) that store resolved type in data
+  const nodeData = node.data as { resolvedType?: PortType } | undefined;
+  if (nodeData?.resolvedType) return nodeData.resolvedType;
+
+  return "any";
+}
+
+/**
+ * Creates a connection validator that uses node definitions to determine port types.
+ * This is the primary validation method that should be used.
+ *
+ * @param nodes The current nodes in the graph
+ * @returns An IsValidConnection function for React Flow
+ */
+export function createConnectionValidator(nodes: Node[]): IsValidConnection {
+  return (connection: Edge | Connection): boolean => {
+    const sourceType = getPortType(
+      nodes,
+      connection.source,
+      connection.sourceHandle,
+    );
+    const targetType = getPortType(
+      nodes,
+      connection.target,
+      connection.targetHandle,
+    );
+
+    // Execution ports only connect to execution ports
+    if (sourceType === "execution" && targetType === "execution") return true;
+    if (sourceType === "execution" || targetType === "execution") return false;
+
+    // Use the enhanced type conversion check
+    return canConvertType(sourceType, targetType);
+  };
+}
