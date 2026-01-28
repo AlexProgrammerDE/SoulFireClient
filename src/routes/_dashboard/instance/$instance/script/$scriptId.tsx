@@ -5,10 +5,11 @@ import {
 } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ReactFlowProvider, useReactFlow } from "@xyflow/react";
-import { use, useCallback, useEffect, useRef, useState } from "react";
+import { Suspense, use, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Separator } from "react-resizable-panels";
 import { toast } from "sonner";
+import { LoadingComponent } from "@/components/loading-component.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { ExecutionLogs } from "@/components/script-editor/ExecutionLogs.tsx";
 import { NodePalette } from "@/components/script-editor/NodePalette.tsx";
@@ -65,7 +66,9 @@ function ScriptEditorPage() {
   return (
     <ReactFlowProvider>
       <NodeTypesProvider>
-        <ScriptEditorContent />
+        <Suspense fallback={<LoadingComponent />}>
+          <ScriptEditorContent />
+        </Suspense>
       </NodeTypesProvider>
     </ReactFlowProvider>
   );
