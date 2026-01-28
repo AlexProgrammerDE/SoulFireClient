@@ -1,6 +1,12 @@
-import { Search, X } from "lucide-react";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  SearchIcon,
+  XIcon,
+} from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
@@ -208,9 +214,9 @@ export function QuickAddMenu() {
         aria-label="Quick add node menu"
       >
         {/* Search input */}
-        <div className="flex items-center gap-2 border-b p-2">
-          <Search className="h-4 w-4 text-muted-foreground" />
-          <Input
+        <div className="flex items-center gap-2 p-2">
+          <SearchIcon className="size-4 shrink-0 text-muted-foreground" />
+          <input
             ref={inputRef}
             value={search}
             onChange={(e) => {
@@ -218,14 +224,14 @@ export function QuickAddMenu() {
               setSelectedIndex(0);
             }}
             placeholder="Search nodes..."
-            className="h-8 border-none bg-transparent p-0 focus-visible:ring-0"
+            className="h-6 flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
           />
           <button
             type="button"
             onClick={closeQuickAddMenu}
-            className="rounded p-1 hover:bg-accent"
+            className="rounded p-0.5 text-muted-foreground hover:bg-accent hover:text-foreground"
           >
-            <X className="h-4 w-4" />
+            <XIcon className="size-4" />
           </button>
         </div>
 
@@ -256,7 +262,11 @@ export function QuickAddMenu() {
                         setExpandedCategory(isExpanded ? null : item.id)
                       }
                     >
-                      <span className="text-xs">{isExpanded ? "▼" : "▶"}</span>
+                      {isExpanded ? (
+                        <ChevronDownIcon className="size-4" />
+                      ) : (
+                        <ChevronRightIcon className="size-4" />
+                      )}
                       <span>{info.name}</span>
                       <span className="ml-auto text-xs text-muted-foreground">
                         {nodesByCategory[item.id]?.length ?? 0}
@@ -293,8 +303,14 @@ export function QuickAddMenu() {
         </ScrollArea>
 
         {/* Footer hint */}
-        <div className="border-t px-2 py-1 text-xs text-muted-foreground">
-          ↑↓ Navigate • Enter Select • Esc Close
+        <div className="flex items-center gap-1 border-t px-2 py-1.5 text-xs text-muted-foreground">
+          <ArrowUpIcon className="size-3" />
+          <ArrowDownIcon className="size-3" />
+          <span>Navigate</span>
+          <span className="mx-1">•</span>
+          <span>Enter Select</span>
+          <span className="mx-1">•</span>
+          <span>Esc Close</span>
         </div>
       </div>
     </>

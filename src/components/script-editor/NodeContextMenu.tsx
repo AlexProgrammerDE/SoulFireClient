@@ -9,13 +9,11 @@ import {
   VolumeIcon,
   VolumeOffIcon,
 } from "lucide-react";
-import { ContextMenu as ContextMenuPrimitive } from "radix-ui";
-import type { ReactNode } from "react";
+import type { CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils.tsx";
 
 interface NodeContextMenuProps {
-  children: ReactNode;
   nodeId: string;
   isMuted?: boolean;
   isCollapsed?: boolean;
@@ -28,85 +26,61 @@ interface NodeContextMenuProps {
   onToggleMute?: (nodeId: string) => void;
   onToggleCollapse?: (nodeId: string) => void;
   onTogglePreview?: (nodeId: string) => void;
+  onClose?: () => void;
+  style?: CSSProperties;
+  className?: string;
 }
 
-function ContextMenuContent({
-  className,
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.Content>) {
-  return (
-    <ContextMenuPrimitive.Portal>
-      <ContextMenuPrimitive.Content
-        data-slot="context-menu-content"
-        className={cn(
-          "data-open:animate-in data-closed:animate-out data-closed:fade-out-0 data-open:fade-in-0 data-closed:zoom-out-95 data-open:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 ring-foreground/10 bg-popover text-popover-foreground min-w-32 rounded-md p-1 shadow-md ring-1 duration-100 z-50 overflow-hidden",
-          className,
-        )}
-        {...props}
-      />
-    </ContextMenuPrimitive.Portal>
-  );
-}
-
-function ContextMenuItem({
+function MenuItem({
   className,
   variant = "default",
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.Item> & {
+  onClick,
+  children,
+}: {
+  className?: string;
   variant?: "default" | "destructive";
+  onClick?: () => void;
+  children: React.ReactNode;
 }) {
   return (
-    <ContextMenuPrimitive.Item
-      data-slot="context-menu-item"
+    <button
+      type="button"
       data-variant={variant}
       className={cn(
-        "focus:bg-accent focus:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:focus:text-destructive gap-2 rounded-sm px-2 py-1.5 text-sm [&_svg:not([class*='size-'])]:size-4 relative flex cursor-default items-center outline-hidden select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+        "hover:bg-accent hover:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:hover:bg-destructive/10 dark:data-[variant=destructive]:hover:bg-destructive/20 data-[variant=destructive]:hover:text-destructive gap-2 rounded-sm px-2 py-1.5 text-sm [&_svg:not([class*='size-'])]:size-4 relative flex w-full cursor-default items-center outline-hidden select-none [&_svg]:pointer-events-none [&_svg]:shrink-0",
         className,
       )}
-      {...props}
-    />
+      onClick={onClick}
+    >
+      {children}
+    </button>
   );
 }
 
-function ContextMenuGroup({
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.Group>) {
-  return (
-    <ContextMenuPrimitive.Group data-slot="context-menu-group" {...props} />
-  );
+function MenuSeparator({ className }: { className?: string }) {
+  return <div className={cn("bg-border -mx-1 my-1 h-px", className)} />;
 }
 
-function ContextMenuSeparator({
+function MenuShortcut({
   className,
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.Separator>) {
-  return (
-    <ContextMenuPrimitive.Separator
-      data-slot="context-menu-separator"
-      className={cn("bg-border -mx-1 my-1 h-px", className)}
-      {...props}
-    />
-  );
-}
-
-function ContextMenuShortcut({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) {
   return (
     <span
-      data-slot="context-menu-shortcut"
       className={cn(
         "text-muted-foreground ml-auto text-xs tracking-widest",
         className,
       )}
-      {...props}
-    />
+    >
+      {children}
+    </span>
   );
 }
 
 export function NodeContextMenu({
-  children,
   nodeId,
   isMuted = false,
   isCollapsed = false,
@@ -119,66 +93,102 @@ export function NodeContextMenu({
   onToggleMute,
   onToggleCollapse,
   onTogglePreview,
+  onClose,
+  style,
+  className,
 }: NodeContextMenuProps) {
   const { t } = useTranslation("instance");
 
   return (
-    <ContextMenuPrimitive.Root>
-      <ContextMenuPrimitive.Trigger asChild>
-        {children}
-      </ContextMenuPrimitive.Trigger>
-      <ContextMenuContent>
-        <ContextMenuGroup>
-          <ContextMenuItem onClick={() => onDuplicate?.(nodeId)}>
-            <CopyIcon />
-            {t("scripts.editor.contextMenu.duplicate")}
-            <ContextMenuShortcut>Ctrl+D</ContextMenuShortcut>
-          </ContextMenuItem>
-          <ContextMenuItem onClick={() => onDisconnectAll?.(nodeId)}>
-            <UnplugIcon />
-            {t("scripts.editor.contextMenu.disconnectAll")}
-          </ContextMenuItem>
-        </ContextMenuGroup>
-        <ContextMenuSeparator />
-        <ContextMenuGroup>
-          <ContextMenuItem onClick={() => onToggleCollapse?.(nodeId)}>
-            {isCollapsed ? <ChevronDownIcon /> : <ChevronRightIcon />}
-            {isCollapsed
-              ? t("scripts.editor.contextMenu.expand")
-              : t("scripts.editor.contextMenu.collapse")}
-            <ContextMenuShortcut>H</ContextMenuShortcut>
-          </ContextMenuItem>
-          {supportsMuting && (
-            <ContextMenuItem onClick={() => onToggleMute?.(nodeId)}>
-              {isMuted ? <VolumeIcon /> : <VolumeOffIcon />}
-              {isMuted
-                ? t("scripts.editor.contextMenu.unmute")
-                : t("scripts.editor.contextMenu.mute")}
-              <ContextMenuShortcut>M</ContextMenuShortcut>
-            </ContextMenuItem>
-          )}
-          {supportsPreview && (
-            <ContextMenuItem onClick={() => onTogglePreview?.(nodeId)}>
-              {previewEnabled ? <EyeOffIcon /> : <EyeIcon />}
-              {previewEnabled
-                ? t("scripts.editor.contextMenu.hidePreview")
-                : t("scripts.editor.contextMenu.showPreview")}
-              <ContextMenuShortcut>Shift+H</ContextMenuShortcut>
-            </ContextMenuItem>
-          )}
-        </ContextMenuGroup>
-        <ContextMenuSeparator />
-        <ContextMenuGroup>
-          <ContextMenuItem
-            variant="destructive"
-            onClick={() => onDelete?.(nodeId)}
+    // biome-ignore lint/a11y/useKeyWithClickEvents: context menu is mouse-triggered
+    // biome-ignore lint/a11y/noStaticElementInteractions: context menu container
+    <div
+      style={style}
+      className={cn(
+        "animate-in fade-in-0 zoom-in-95 ring-foreground/10 bg-popover text-popover-foreground min-w-32 rounded-md p-1 shadow-md ring-1",
+        className,
+      )}
+      onClick={(e) => e.stopPropagation()}
+      onContextMenu={(e) => e.preventDefault()}
+    >
+      <div>
+        <MenuItem
+          onClick={() => {
+            onDuplicate?.(nodeId);
+            onClose?.();
+          }}
+        >
+          <CopyIcon />
+          {t("scripts.editor.contextMenu.duplicate")}
+          <MenuShortcut>Ctrl+D</MenuShortcut>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            onDisconnectAll?.(nodeId);
+            onClose?.();
+          }}
+        >
+          <UnplugIcon />
+          {t("scripts.editor.contextMenu.disconnectAll")}
+        </MenuItem>
+      </div>
+      <MenuSeparator />
+      <div>
+        <MenuItem
+          onClick={() => {
+            onToggleCollapse?.(nodeId);
+            onClose?.();
+          }}
+        >
+          {isCollapsed ? <ChevronDownIcon /> : <ChevronRightIcon />}
+          {isCollapsed
+            ? t("scripts.editor.contextMenu.expand")
+            : t("scripts.editor.contextMenu.collapse")}
+          <MenuShortcut>H</MenuShortcut>
+        </MenuItem>
+        {supportsMuting && (
+          <MenuItem
+            onClick={() => {
+              onToggleMute?.(nodeId);
+              onClose?.();
+            }}
           >
-            <TrashIcon />
-            {t("scripts.editor.contextMenu.delete")}
-            <ContextMenuShortcut>Del</ContextMenuShortcut>
-          </ContextMenuItem>
-        </ContextMenuGroup>
-      </ContextMenuContent>
-    </ContextMenuPrimitive.Root>
+            {isMuted ? <VolumeIcon /> : <VolumeOffIcon />}
+            {isMuted
+              ? t("scripts.editor.contextMenu.unmute")
+              : t("scripts.editor.contextMenu.mute")}
+            <MenuShortcut>M</MenuShortcut>
+          </MenuItem>
+        )}
+        {supportsPreview && (
+          <MenuItem
+            onClick={() => {
+              onTogglePreview?.(nodeId);
+              onClose?.();
+            }}
+          >
+            {previewEnabled ? <EyeOffIcon /> : <EyeIcon />}
+            {previewEnabled
+              ? t("scripts.editor.contextMenu.hidePreview")
+              : t("scripts.editor.contextMenu.showPreview")}
+            <MenuShortcut>Shift+H</MenuShortcut>
+          </MenuItem>
+        )}
+      </div>
+      <MenuSeparator />
+      <div>
+        <MenuItem
+          variant="destructive"
+          onClick={() => {
+            onDelete?.(nodeId);
+            onClose?.();
+          }}
+        >
+          <TrashIcon />
+          {t("scripts.editor.contextMenu.delete")}
+          <MenuShortcut>Del</MenuShortcut>
+        </MenuItem>
+      </div>
+    </div>
   );
 }

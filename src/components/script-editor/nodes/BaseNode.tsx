@@ -3,7 +3,6 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { memo, useCallback, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
-import { NodeContextMenu } from "../NodeContextMenu";
 import { useNodeEditing } from "../NodeEditingContext";
 import { NodePreview } from "../NodePreview";
 import { InlineEditor } from "./InlineEditor";
@@ -420,17 +419,6 @@ export function createNodeComponent(definition: NodeDefinition) {
   const NodeComponent = (props: NodeProps) => {
     const { edges, updateNodeData } = useNodeEditing();
 
-    // Get store actions for context menu
-    const deleteSelected = useScriptEditorStore((s) => s.deleteSelected);
-    const duplicateSelected = useScriptEditorStore((s) => s.duplicateSelected);
-    const disconnectNode = useScriptEditorStore((s) => s.disconnectNode);
-    const toggleMute = useScriptEditorStore((s) => s.toggleMute);
-    const toggleCollapse = useScriptEditorStore((s) => s.toggleCollapse);
-    const togglePreview = useScriptEditorStore((s) => s.togglePreview);
-    const previewEnabled = useScriptEditorStore((s) =>
-      s.previewEnabledNodes.has(props.id),
-    );
-
     const handleDataChange = useCallback(
       (data: Record<string, unknown>) => {
         updateNodeData(props.id, data);
@@ -438,46 +426,16 @@ export function createNodeComponent(definition: NodeDefinition) {
       [props.id, updateNodeData],
     );
 
-    const handleDelete = useCallback(() => {
-      deleteSelected();
-    }, [deleteSelected]);
-
-    const handleDuplicate = useCallback(() => {
-      duplicateSelected();
-    }, [duplicateSelected]);
-
-    const handleDisconnectAll = useCallback(
-      (nodeId: string) => {
-        disconnectNode(nodeId);
-      },
-      [disconnectNode],
-    );
-
     const nodeData = props.data as BaseNodeData;
 
     return (
-      <NodeContextMenu
-        nodeId={props.id}
-        isMuted={nodeData.muted ?? false}
-        isCollapsed={nodeData.collapsed ?? false}
-        previewEnabled={previewEnabled}
-        supportsMuting={definition.supportsMuting ?? true}
-        supportsPreview={definition.supportsPreview ?? true}
-        onDelete={handleDelete}
-        onDuplicate={handleDuplicate}
-        onDisconnectAll={handleDisconnectAll}
-        onToggleMute={toggleMute}
-        onToggleCollapse={toggleCollapse}
-        onTogglePreview={togglePreview}
-      >
-        <BaseNode
-          {...props}
-          definition={definition}
-          data={nodeData}
-          edges={edges}
-          onDataChange={handleDataChange}
-        />
-      </NodeContextMenu>
+      <BaseNode
+        {...props}
+        definition={definition}
+        data={nodeData}
+        edges={edges}
+        onDataChange={handleDataChange}
+      />
     );
   };
   NodeComponent.displayName = `${definition.type}Node`;

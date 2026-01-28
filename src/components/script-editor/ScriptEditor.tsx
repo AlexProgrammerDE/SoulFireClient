@@ -3,7 +3,9 @@ import {
   BackgroundVariant,
   type ColorMode,
   Controls,
+  type Edge,
   MiniMap,
+  type Node,
   ReactFlow,
   type ReactFlowInstance,
 } from "@xyflow/react";
@@ -13,43 +15,18 @@ import { handleNativeCopy, handleNativePaste } from "@/lib/script-clipboard";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 import { createConnectionValidator, edgeTypes } from "./edges";
 import { GroupBreadcrumb } from "./GroupBreadcrumb";
+import { NodeContextMenu } from "./NodeContextMenu";
 import { NodeEditingProvider } from "./NodeEditingContext";
 import { useNodeTypes } from "./NodeTypesContext";
 import { QuickAddMenu } from "./QuickAddMenu";
 
-// Calculate distance from point to line segment (pure function, no dependencies)
-function pointToLineDistance(
-  point: { x: number; y: number },
-  lineStart: { x: number; y: number },
-  lineEnd: { x: number; y: number },
-): number {
-  const A = point.x - lineStart.x;
-  const B = point.y - lineStart.y;
-  const C = lineEnd.x - lineStart.x;
-  const D = lineEnd.y - lineStart.y;
-
-  const dot = A * C + B * D;
-  const lenSq = C * C + D * D;
-  let param = -1;
-  if (lenSq !== 0) param = dot / lenSq;
-
-  let xx: number;
-  let yy: number;
-
-  if (param < 0) {
-    xx = lineStart.x;
-    yy = lineStart.y;
-  } else if (param > 1) {
-    xx = lineEnd.x;
-    yy = lineEnd.y;
-  } else {
-    xx = lineStart.x + param * C;
-    yy = lineStart.y + param * D;
-  }
-
-  const dx = point.x - xx;
-  const dy = point.y - yy;
-  return Math.sqrt(dx * dx + dy * dy);
+// State for node context menu (React Flow idiomatic pattern)
+interface NodeContextMenuState {
+  nodeId: string;
+  top?: number | false;
+  left?: number | false;
+  right?: number | false;
+  bottom?: number | false;
 }
 
 export function ScriptEditor() {
@@ -57,6 +34,8 @@ export function ScriptEditor() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [reactFlowInstance, setReactFlowInstance] =
     useState<ReactFlowInstance | null>(null);
+  const [nodeContextMenu, setNodeContextMenu] =
+    useState<NodeContextMenuState | null>(null);
   const { nodeTypes } = useNodeTypes();
 
   const nodes = useScriptEditorStore((state) => state.nodes);
@@ -137,6 +116,12 @@ export function ScriptEditor() {
     (state) => state.updateLinkCutting,
   );
   const endLinkCutting = useScriptEditorStore((state) => state.endLinkCutting);
+
+  // Node context menu actions
+  const disconnectNode = useScriptEditorStore((state) => state.disconnectNode);
+  const previewEnabledNodes = useScriptEditorStore(
+    (state) => state.previewEnabledNodes,
+  );
 
   const handleInit = useCallback((instance: ReactFlowInstance) => {
     setReactFlowInstance(instance);
@@ -493,9 +478,9 @@ export function ScriptEditor() {
     [reactFlowInstance, pasteClipboardData],
   );
 
-  // Handle right-click on canvas for quick add or quick reroute
-  const handleContextMenu = useCallback(
-    (event: React.MouseEvent) => {
+  // Handle right-click on canvas for quick add menu
+  const handlePaneContextMenu = useCallback(
+    (event: MouseEvent | React.MouseEvent) => {
       event.preventDefault();
       if (!reactFlowInstance) return;
 
@@ -504,59 +489,62 @@ export function ScriptEditor() {
         y: event.clientY,
       });
 
-      // Shift+RMB on an edge = quick reroute
-      if (event.shiftKey) {
-        // Find the nearest edge to the click position
-        // This is a simplified approach - ideally we'd use edge hit detection
-        const visibleEdges = getVisibleEdges();
-        const visibleNodes = getVisibleNodes();
-        const nodePositions = new Map(
-          visibleNodes.map((n) => [n.id, n.position]),
-        );
-
-        // Find edge closest to click position
-        let nearestEdge: { id: string; distance: number } | null = null;
-        for (const edge of visibleEdges) {
-          const sourcePos = nodePositions.get(edge.source);
-          const targetPos = nodePositions.get(edge.target);
-          if (!sourcePos || !targetPos) continue;
-
-          // Simple distance check to edge line segment
-          const edgeStart = { x: sourcePos.x + 80, y: sourcePos.y + 40 };
-          const edgeEnd = { x: targetPos.x, y: targetPos.y + 40 };
-          const distance = pointToLineDistance(
-            flowPosition,
-            edgeStart,
-            edgeEnd,
-          );
-
-          if (
-            distance < 30 &&
-            (!nearestEdge || distance < nearestEdge.distance)
-          ) {
-            nearestEdge = { id: edge.id, distance };
-          }
-        }
-
-        if (nearestEdge) {
-          insertReroute(nearestEdge.id, flowPosition);
-          return;
-        }
-      }
-
       // Regular RMB = quick add menu
       openQuickAddMenu(flowPosition, { x: event.clientX, y: event.clientY });
     },
-    [
-      reactFlowInstance,
-      openQuickAddMenu,
-      getVisibleEdges,
-      getVisibleNodes,
-      insertReroute,
-    ],
+    [reactFlowInstance, openQuickAddMenu],
   );
 
+  // Handle right-click on edge for quick reroute (Shift+RMB)
+  const handleEdgeContextMenu = useCallback(
+    (event: React.MouseEvent, edge: Edge) => {
+      if (!reactFlowInstance) return;
+
+      // Shift+RMB on an edge = quick reroute
+      if (event.shiftKey) {
+        event.preventDefault();
+        const flowPosition = reactFlowInstance.screenToFlowPosition({
+          x: event.clientX,
+          y: event.clientY,
+        });
+        insertReroute(edge.id, flowPosition);
+      }
+      // Without shift, let the default context menu appear (or could add edge-specific menu later)
+    },
+    [reactFlowInstance, insertReroute],
+  );
+
+  // Handle right-click on node (React Flow idiomatic pattern)
+  const handleNodeContextMenu = useCallback(
+    (event: React.MouseEvent, node: Node) => {
+      event.preventDefault();
+
+      if (!containerRef.current) return;
+
+      // Calculate position, ensuring menu stays within bounds
+      const pane = containerRef.current.getBoundingClientRect();
+      setNodeContextMenu({
+        nodeId: node.id,
+        top: event.clientY < pane.height - 200 && event.clientY - pane.top,
+        left: event.clientX < pane.width - 200 && event.clientX - pane.left,
+        right:
+          event.clientX >= pane.width - 200 &&
+          pane.width - (event.clientX - pane.left),
+        bottom:
+          event.clientY >= pane.height - 200 &&
+          pane.height - (event.clientY - pane.top),
+      });
+    },
+    [],
+  );
+
+  // Close node context menu on pane click
+  const handlePaneClick = useCallback(() => {
+    setNodeContextMenu(null);
+  }, []);
+
   // Handle mouse down for link cutting (Ctrl+drag)
+  // Note: React Flow doesn't provide onPaneMouseDown, so we use the wrapper div
   const handleMouseDown = useCallback(
     (event: React.MouseEvent) => {
       if (event.ctrlKey && event.button === 0 && reactFlowInstance) {
@@ -603,14 +591,13 @@ export function ScriptEditor() {
   );
 
   return (
-    // biome-ignore lint/a11y/noStaticElementInteractions: ReactFlow canvas wrapper requires keyboard handling for operations
+    // biome-ignore lint/a11y/noStaticElementInteractions: ReactFlow canvas wrapper requires keyboard and mouse handling for operations
     <div
       ref={containerRef}
       className="h-full w-full relative outline-none"
       onKeyDown={handleKeyDown}
       onCopy={handleCopy}
       onPaste={handlePaste}
-      onContextMenu={handleContextMenu}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -627,6 +614,10 @@ export function ScriptEditor() {
           onInit={handleInit}
           onNodeClick={handleNodeClick}
           onSelectionChange={handleSelectionChange}
+          onNodeContextMenu={handleNodeContextMenu}
+          onPaneContextMenu={handlePaneContextMenu}
+          onEdgeContextMenu={handleEdgeContextMenu}
+          onPaneClick={handlePaneClick}
           isValidConnection={connectionValidator}
           colorMode={(resolvedTheme as ColorMode) ?? "dark"}
           fitView
@@ -650,6 +641,61 @@ export function ScriptEditor() {
       <GroupBreadcrumb />
 
       <QuickAddMenu />
+
+      {/* Node context menu (React Flow idiomatic pattern) */}
+      {nodeContextMenu && (
+        <NodeContextMenu
+          nodeId={nodeContextMenu.nodeId}
+          isMuted={
+            (
+              visibleNodes.find((n) => n.id === nodeContextMenu.nodeId)?.data as
+                | { muted?: boolean }
+                | undefined
+            )?.muted ?? false
+          }
+          isCollapsed={
+            (
+              visibleNodes.find((n) => n.id === nodeContextMenu.nodeId)?.data as
+                | { collapsed?: boolean }
+                | undefined
+            )?.collapsed ?? false
+          }
+          previewEnabled={previewEnabledNodes.has(nodeContextMenu.nodeId)}
+          onDelete={() => {
+            deleteSelected();
+            setNodeContextMenu(null);
+          }}
+          onDuplicate={() => {
+            duplicateSelected();
+            setNodeContextMenu(null);
+          }}
+          onDisconnectAll={(nodeId) => {
+            disconnectNode(nodeId);
+            setNodeContextMenu(null);
+          }}
+          onToggleMute={(nodeId) => {
+            toggleMute(nodeId);
+            setNodeContextMenu(null);
+          }}
+          onToggleCollapse={(nodeId) => {
+            toggleCollapse(nodeId);
+            setNodeContextMenu(null);
+          }}
+          onTogglePreview={(nodeId) => {
+            togglePreview(nodeId);
+            setNodeContextMenu(null);
+          }}
+          onClose={() => setNodeContextMenu(null)}
+          style={{
+            position: "absolute",
+            top: nodeContextMenu.top || undefined,
+            left: nodeContextMenu.left || undefined,
+            right: nodeContextMenu.right || undefined,
+            bottom: nodeContextMenu.bottom || undefined,
+            zIndex: 100,
+          }}
+        />
+      )}
 
       {/* Link cutting visual indicator */}
       {linkCutting.active &&
