@@ -68,6 +68,14 @@ function ContextMenuItem({
   );
 }
 
+function ContextMenuGroup({
+  ...props
+}: React.ComponentProps<typeof ContextMenuPrimitive.Group>) {
+  return (
+    <ContextMenuPrimitive.Group data-slot="context-menu-group" {...props} />
+  );
+}
+
 function ContextMenuSeparator({
   className,
   ...props
@@ -120,50 +128,56 @@ export function NodeContextMenu({
         {children}
       </ContextMenuPrimitive.Trigger>
       <ContextMenuContent>
-        <ContextMenuItem onClick={() => onDuplicate?.(nodeId)}>
-          <CopyIcon />
-          {t("scripts.editor.contextMenu.duplicate")}
-          <ContextMenuShortcut>Ctrl+D</ContextMenuShortcut>
-        </ContextMenuItem>
-        <ContextMenuItem onClick={() => onDisconnectAll?.(nodeId)}>
-          <UnplugIcon />
-          {t("scripts.editor.contextMenu.disconnectAll")}
-        </ContextMenuItem>
-        <ContextMenuSeparator />
-        <ContextMenuItem onClick={() => onToggleCollapse?.(nodeId)}>
-          {isCollapsed ? <ChevronDownIcon /> : <ChevronRightIcon />}
-          {isCollapsed
-            ? t("scripts.editor.contextMenu.expand")
-            : t("scripts.editor.contextMenu.collapse")}
-          <ContextMenuShortcut>H</ContextMenuShortcut>
-        </ContextMenuItem>
-        {supportsMuting && (
-          <ContextMenuItem onClick={() => onToggleMute?.(nodeId)}>
-            {isMuted ? <VolumeIcon /> : <VolumeOffIcon />}
-            {isMuted
-              ? t("scripts.editor.contextMenu.unmute")
-              : t("scripts.editor.contextMenu.mute")}
-            <ContextMenuShortcut>M</ContextMenuShortcut>
+        <ContextMenuGroup>
+          <ContextMenuItem onClick={() => onDuplicate?.(nodeId)}>
+            <CopyIcon />
+            {t("scripts.editor.contextMenu.duplicate")}
+            <ContextMenuShortcut>Ctrl+D</ContextMenuShortcut>
           </ContextMenuItem>
-        )}
-        {supportsPreview && (
-          <ContextMenuItem onClick={() => onTogglePreview?.(nodeId)}>
-            {previewEnabled ? <EyeOffIcon /> : <EyeIcon />}
-            {previewEnabled
-              ? t("scripts.editor.contextMenu.hidePreview")
-              : t("scripts.editor.contextMenu.showPreview")}
-            <ContextMenuShortcut>Shift+H</ContextMenuShortcut>
+          <ContextMenuItem onClick={() => onDisconnectAll?.(nodeId)}>
+            <UnplugIcon />
+            {t("scripts.editor.contextMenu.disconnectAll")}
           </ContextMenuItem>
-        )}
+        </ContextMenuGroup>
         <ContextMenuSeparator />
-        <ContextMenuItem
-          variant="destructive"
-          onClick={() => onDelete?.(nodeId)}
-        >
-          <TrashIcon />
-          {t("scripts.editor.contextMenu.delete")}
-          <ContextMenuShortcut>Del</ContextMenuShortcut>
-        </ContextMenuItem>
+        <ContextMenuGroup>
+          <ContextMenuItem onClick={() => onToggleCollapse?.(nodeId)}>
+            {isCollapsed ? <ChevronDownIcon /> : <ChevronRightIcon />}
+            {isCollapsed
+              ? t("scripts.editor.contextMenu.expand")
+              : t("scripts.editor.contextMenu.collapse")}
+            <ContextMenuShortcut>H</ContextMenuShortcut>
+          </ContextMenuItem>
+          {supportsMuting && (
+            <ContextMenuItem onClick={() => onToggleMute?.(nodeId)}>
+              {isMuted ? <VolumeIcon /> : <VolumeOffIcon />}
+              {isMuted
+                ? t("scripts.editor.contextMenu.unmute")
+                : t("scripts.editor.contextMenu.mute")}
+              <ContextMenuShortcut>M</ContextMenuShortcut>
+            </ContextMenuItem>
+          )}
+          {supportsPreview && (
+            <ContextMenuItem onClick={() => onTogglePreview?.(nodeId)}>
+              {previewEnabled ? <EyeOffIcon /> : <EyeIcon />}
+              {previewEnabled
+                ? t("scripts.editor.contextMenu.hidePreview")
+                : t("scripts.editor.contextMenu.showPreview")}
+              <ContextMenuShortcut>Shift+H</ContextMenuShortcut>
+            </ContextMenuItem>
+          )}
+        </ContextMenuGroup>
+        <ContextMenuSeparator />
+        <ContextMenuGroup>
+          <ContextMenuItem
+            variant="destructive"
+            onClick={() => onDelete?.(nodeId)}
+          >
+            <TrashIcon />
+            {t("scripts.editor.contextMenu.delete")}
+            <ContextMenuShortcut>Del</ContextMenuShortcut>
+          </ContextMenuItem>
+        </ContextMenuGroup>
       </ContextMenuContent>
     </ContextMenuPrimitive.Root>
   );
