@@ -296,6 +296,18 @@ function ScriptEditorContent() {
               message: tInstance("scripts.nodeError", { error: errorMessage }),
             },
           ]);
+        } else if (event.event.oneofKind === "scriptLog") {
+          const { nodeId, level, message } = event.event.scriptLog;
+          setLogs((prev) => [
+            ...prev,
+            {
+              id: crypto.randomUUID(),
+              timestamp: new Date(),
+              level: (level as "debug" | "info" | "warn" | "error") || "info",
+              nodeId: nodeId ?? null,
+              message,
+            },
+          ]);
         } else if (event.event.oneofKind === "scriptCompleted") {
           const success = event.event.scriptCompleted.success;
           setActive(false);

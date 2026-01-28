@@ -636,6 +636,37 @@ export interface NodeError {
   timestamp?: Timestamp;
 }
 /**
+ * Event emitted when a script logs a message (e.g., from Print node).
+ *
+ * @generated from protobuf message soulfire.v1.ScriptLog
+ */
+export interface ScriptLog {
+  /**
+   * The ID of the node that produced the log (if applicable).
+   *
+   * @generated from protobuf field: optional string node_id = 1
+   */
+  nodeId?: string;
+  /**
+   * The log level (debug, info, warn, error).
+   *
+   * @generated from protobuf field: string level = 2
+   */
+  level: string;
+  /**
+   * The log message content.
+   *
+   * @generated from protobuf field: string message = 3
+   */
+  message: string;
+  /**
+   * When the log was produced.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp timestamp = 4
+   */
+  timestamp?: Timestamp;
+}
+/**
  * Event emitted when a trigger fires and begins executing a node chain.
  * Note: Scripts are reactive - this indicates a trigger event occurred,
  * not that the script "started running" in the traditional sense.
@@ -741,6 +772,15 @@ export interface ScriptEvent {
          * @generated from protobuf field: soulfire.v1.ScriptStarted script_started = 5
          */
         scriptStarted: ScriptStarted;
+      }
+    | {
+        oneofKind: "scriptLog";
+        /**
+         * A script logged a message.
+         *
+         * @generated from protobuf field: soulfire.v1.ScriptLog script_log = 6
+         */
+        scriptLog: ScriptLog;
       }
     | {
         oneofKind: undefined;
@@ -3167,6 +3207,112 @@ class NodeError$Type extends MessageType<NodeError> {
  */
 export const NodeError = new NodeError$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class ScriptLog$Type extends MessageType<ScriptLog> {
+  constructor() {
+    super("soulfire.v1.ScriptLog", [
+      {
+        no: 1,
+        name: "node_id",
+        kind: "scalar",
+        opt: true,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 2, name: "level", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 3, name: "message", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      { no: 4, name: "timestamp", kind: "message", T: () => Timestamp },
+    ]);
+  }
+  create(value?: PartialMessage<ScriptLog>): ScriptLog {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.level = "";
+    message.message = "";
+    if (value !== undefined)
+      reflectionMergePartial<ScriptLog>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ScriptLog,
+  ): ScriptLog {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* optional string node_id */ 1:
+          message.nodeId = reader.string();
+          break;
+        case /* string level */ 2:
+          message.level = reader.string();
+          break;
+        case /* string message */ 3:
+          message.message = reader.string();
+          break;
+        case /* google.protobuf.Timestamp timestamp */ 4:
+          message.timestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.timestamp,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ScriptLog,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* optional string node_id = 1; */
+    if (message.nodeId !== undefined)
+      writer.tag(1, WireType.LengthDelimited).string(message.nodeId);
+    /* string level = 2; */
+    if (message.level !== "")
+      writer.tag(2, WireType.LengthDelimited).string(message.level);
+    /* string message = 3; */
+    if (message.message !== "")
+      writer.tag(3, WireType.LengthDelimited).string(message.message);
+    /* google.protobuf.Timestamp timestamp = 4; */
+    if (message.timestamp)
+      Timestamp.internalBinaryWrite(
+        message.timestamp,
+        writer.tag(4, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ScriptLog
+ */
+export const ScriptLog = new ScriptLog$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class ScriptStarted$Type extends MessageType<ScriptStarted> {
   constructor() {
     super("soulfire.v1.ScriptStarted", [
@@ -3383,6 +3529,13 @@ class ScriptEvent$Type extends MessageType<ScriptEvent> {
         oneof: "event",
         T: () => ScriptStarted,
       },
+      {
+        no: 6,
+        name: "script_log",
+        kind: "message",
+        oneof: "event",
+        T: () => ScriptLog,
+      },
     ]);
   }
   create(value?: PartialMessage<ScriptEvent>): ScriptEvent {
@@ -3458,6 +3611,17 @@ class ScriptEvent$Type extends MessageType<ScriptEvent> {
             ),
           };
           break;
+        case /* soulfire.v1.ScriptLog script_log */ 6:
+          message.event = {
+            oneofKind: "scriptLog",
+            scriptLog: ScriptLog.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.event as any).scriptLog,
+            ),
+          };
+          break;
         default:
           let u = options.readUnknownField;
           if (u === "throw")
@@ -3515,6 +3679,13 @@ class ScriptEvent$Type extends MessageType<ScriptEvent> {
       ScriptStarted.internalBinaryWrite(
         message.event.scriptStarted,
         writer.tag(5, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.ScriptLog script_log = 6; */
+    if (message.event.oneofKind === "scriptLog")
+      ScriptLog.internalBinaryWrite(
+        message.event.scriptLog,
+        writer.tag(6, WireType.LengthDelimited).fork(),
         options,
       ).join();
     let u = options.writeUnknownFields;
