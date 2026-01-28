@@ -3,6 +3,7 @@ import { ChevronDown, ChevronRight } from "lucide-react";
 import { memo, useCallback, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
+import { NodeContextMenu } from "../NodeContextMenu";
 import { useNodeEditing } from "../NodeEditingContext";
 import { NodePreview } from "../NodePreview";
 import { InlineEditor } from "./InlineEditor";
@@ -180,6 +181,17 @@ function BaseNodeComponent({
 }: BaseNodeProps) {
   const { inputs, outputs, label, color, supportsMuting } = definition;
 
+  // Handler for toggling collapsed state
+  const handleToggleCollapse = useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      e.preventDefault();
+      if (!onDataChange) return;
+      onDataChange({ collapsed: !data.collapsed });
+    },
+    [onDataChange, data.collapsed],
+  );
+
   // Preview state from store
   const previewEnabled = useScriptEditorStore((s) =>
     s.previewEnabledNodes.has(id),
@@ -290,15 +302,21 @@ function BaseNodeComponent({
           !isCollapsed && "border-b border-border/50",
         )}
       >
-        {/* Collapse indicator */}
+        {/* Collapse toggle button */}
         {rows.length > 0 && (
-          <span className="text-muted-foreground">
+          <button
+            type="button"
+            onClick={handleToggleCollapse}
+            onMouseDown={(e) => e.stopPropagation()}
+            className="nodrag nopan text-muted-foreground hover:text-foreground transition-colors p-0.5 -m-0.5 rounded hover:bg-muted/50"
+            title={isCollapsed ? "Expand node" : "Collapse node"}
+          >
             {isCollapsed ? (
               <ChevronRight className="h-3 w-3" />
             ) : (
               <ChevronDown className="h-3 w-3" />
             )}
-          </span>
+          </button>
         )}
         <span className={cn("text-sm font-medium", isMuted && "line-through")}>
           {displayLabel}
@@ -402,6 +420,17 @@ export function createNodeComponent(definition: NodeDefinition) {
   const NodeComponent = (props: NodeProps) => {
     const { edges, updateNodeData } = useNodeEditing();
 
+    // Get store actions for context menu
+    const deleteSelected = useScriptEditorStore((s) => s.deleteSelected);
+    const duplicateSelected = useScriptEditorStore((s) => s.duplicateSelected);
+    const disconnectNode = useScriptEditorStore((s) => s.disconnectNode);
+    const toggleMute = useScriptEditorStore((s) => s.toggleMute);
+    const toggleCollapse = useScriptEditorStore((s) => s.toggleCollapse);
+    const togglePreview = useScriptEditorStore((s) => s.togglePreview);
+    const previewEnabled = useScriptEditorStore((s) =>
+      s.previewEnabledNodes.has(props.id),
+    );
+
     const handleDataChange = useCallback(
       (data: Record<string, unknown>) => {
         updateNodeData(props.id, data);
@@ -409,14 +438,46 @@ export function createNodeComponent(definition: NodeDefinition) {
       [props.id, updateNodeData],
     );
 
+    const handleDelete = useCallback(() => {
+      deleteSelected();
+    }, [deleteSelected]);
+
+    const handleDuplicate = useCallback(() => {
+      duplicateSelected();
+    }, [duplicateSelected]);
+
+    const handleDisconnectAll = useCallback(
+      (nodeId: string) => {
+        disconnectNode(nodeId);
+      },
+      [disconnectNode],
+    );
+
+    const nodeData = props.data as BaseNodeData;
+
     return (
-      <BaseNode
-        {...props}
-        definition={definition}
-        data={props.data as BaseNodeData}
-        edges={edges}
-        onDataChange={handleDataChange}
-      />
+      <NodeContextMenu
+        nodeId={props.id}
+        isMuted={nodeData.muted ?? false}
+        isCollapsed={nodeData.collapsed ?? false}
+        previewEnabled={previewEnabled}
+        supportsMuting={definition.supportsMuting ?? true}
+        supportsPreview={definition.supportsPreview ?? true}
+        onDelete={handleDelete}
+        onDuplicate={handleDuplicate}
+        onDisconnectAll={handleDisconnectAll}
+        onToggleMute={toggleMute}
+        onToggleCollapse={toggleCollapse}
+        onTogglePreview={togglePreview}
+      >
+        <BaseNode
+          {...props}
+          definition={definition}
+          data={nodeData}
+          edges={edges}
+          onDataChange={handleDataChange}
+        />
+      </NodeContextMenu>
     );
   };
   NodeComponent.displayName = `${definition.type}Node`;

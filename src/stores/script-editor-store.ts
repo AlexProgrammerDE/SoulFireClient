@@ -85,6 +85,7 @@ export interface ScriptEditorState {
   ) => string;
   updateNodeData: (nodeId: string, data: Record<string, unknown>) => void;
   deleteSelected: () => void;
+  disconnectNode: (nodeId: string) => void;
   setSelectedNode: (nodeId: string | null) => void;
 
   // Blender-style node actions
@@ -390,6 +391,16 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
           !edge.selected &&
           !nodeIdsToDelete.has(edge.source) &&
           !nodeIdsToDelete.has(edge.target),
+      ),
+      isDirty: true,
+    });
+  },
+
+  disconnectNode: (nodeId) => {
+    const { edges } = get();
+    set({
+      edges: edges.filter(
+        (edge) => edge.source !== nodeId && edge.target !== nodeId,
       ),
       isDirty: true,
     });

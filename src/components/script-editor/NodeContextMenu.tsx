@@ -1,4 +1,14 @@
-import { CopyIcon, TrashIcon, UnplugIcon } from "lucide-react";
+import {
+  ChevronDownIcon,
+  ChevronRightIcon,
+  CopyIcon,
+  EyeIcon,
+  EyeOffIcon,
+  TrashIcon,
+  UnplugIcon,
+  VolumeIcon,
+  VolumeOffIcon,
+} from "lucide-react";
 import { ContextMenu as ContextMenuPrimitive } from "radix-ui";
 import type { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
@@ -7,9 +17,17 @@ import { cn } from "@/lib/utils.tsx";
 interface NodeContextMenuProps {
   children: ReactNode;
   nodeId: string;
+  isMuted?: boolean;
+  isCollapsed?: boolean;
+  previewEnabled?: boolean;
+  supportsMuting?: boolean;
+  supportsPreview?: boolean;
   onDelete?: (nodeId: string) => void;
   onDuplicate?: (nodeId: string) => void;
   onDisconnectAll?: (nodeId: string) => void;
+  onToggleMute?: (nodeId: string) => void;
+  onToggleCollapse?: (nodeId: string) => void;
+  onTogglePreview?: (nodeId: string) => void;
 }
 
 function ContextMenuContent({
@@ -82,9 +100,17 @@ function ContextMenuShortcut({
 export function NodeContextMenu({
   children,
   nodeId,
+  isMuted = false,
+  isCollapsed = false,
+  previewEnabled = false,
+  supportsMuting = true,
+  supportsPreview = true,
   onDelete,
   onDuplicate,
   onDisconnectAll,
+  onToggleMute,
+  onToggleCollapse,
+  onTogglePreview,
 }: NodeContextMenuProps) {
   const { t } = useTranslation("instance");
 
@@ -103,6 +129,32 @@ export function NodeContextMenu({
           <UnplugIcon />
           {t("scripts.editor.contextMenu.disconnectAll")}
         </ContextMenuItem>
+        <ContextMenuSeparator />
+        <ContextMenuItem onClick={() => onToggleCollapse?.(nodeId)}>
+          {isCollapsed ? <ChevronDownIcon /> : <ChevronRightIcon />}
+          {isCollapsed
+            ? t("scripts.editor.contextMenu.expand")
+            : t("scripts.editor.contextMenu.collapse")}
+          <ContextMenuShortcut>H</ContextMenuShortcut>
+        </ContextMenuItem>
+        {supportsMuting && (
+          <ContextMenuItem onClick={() => onToggleMute?.(nodeId)}>
+            {isMuted ? <VolumeIcon /> : <VolumeOffIcon />}
+            {isMuted
+              ? t("scripts.editor.contextMenu.unmute")
+              : t("scripts.editor.contextMenu.mute")}
+            <ContextMenuShortcut>M</ContextMenuShortcut>
+          </ContextMenuItem>
+        )}
+        {supportsPreview && (
+          <ContextMenuItem onClick={() => onTogglePreview?.(nodeId)}>
+            {previewEnabled ? <EyeOffIcon /> : <EyeIcon />}
+            {previewEnabled
+              ? t("scripts.editor.contextMenu.hidePreview")
+              : t("scripts.editor.contextMenu.showPreview")}
+            <ContextMenuShortcut>Shift+H</ContextMenuShortcut>
+          </ContextMenuItem>
+        )}
         <ContextMenuSeparator />
         <ContextMenuItem
           variant="destructive"

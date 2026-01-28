@@ -352,6 +352,12 @@
       "contextMenu": {
         "duplicate": "Duplicate",
         "disconnectAll": "Disconnect All",
+        "collapse": "Collapse",
+        "expand": "Expand",
+        "mute": "Mute",
+        "unmute": "Unmute",
+        "showPreview": "Show Preview",
+        "hidePreview": "Hide Preview",
         "delete": "Delete"
       }
     }

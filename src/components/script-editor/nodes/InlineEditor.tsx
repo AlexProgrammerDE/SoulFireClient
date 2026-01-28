@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import type { PortType } from "./types";
 
@@ -67,14 +68,13 @@ function InlineEditorComponent({
 
     case "boolean":
       return (
-        <input
-          type="checkbox"
+        <Checkbox
           checked={(currentValue as boolean) ?? false}
-          onChange={(e) => onChange(e.target.checked)}
-          {...inputProps}
-          className={cn(
-            "nodrag nopan w-4 h-4 rounded border-border accent-primary cursor-pointer",
-          )}
+          onCheckedChange={(checked) => onChange(checked === true)}
+          onClick={(e) => e.stopPropagation()}
+          onMouseDown={(e) => e.stopPropagation()}
+          onKeyDown={(e) => e.stopPropagation()}
+          className="nodrag nopan"
         />
       );
 
