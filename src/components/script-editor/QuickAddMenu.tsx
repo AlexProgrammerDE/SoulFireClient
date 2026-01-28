@@ -4,9 +4,8 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
-import { getPortType } from "./edges/connection-validation";
 import { useNodeTypes } from "./NodeTypesContext";
-import type { NodeDefinition } from "./nodes/types";
+import { getPortTypeFromDefinition, type NodeDefinition } from "./nodes/types";
 
 /**
  * QuickAddMenu - Blender-style quick add menu (Shift+A)
@@ -21,6 +20,7 @@ export function QuickAddMenu() {
   const quickAddMenu = useScriptEditorStore((s) => s.quickAddMenu);
   const closeQuickAddMenu = useScriptEditorStore((s) => s.closeQuickAddMenu);
   const addNode = useScriptEditorStore((s) => s.addNode);
+  const nodes = useScriptEditorStore((s) => s.nodes);
 
   const { definitions, categories, getCategoryInfo, createNodeData } =
     useNodeTypes();
@@ -40,12 +40,12 @@ export function QuickAddMenu() {
     if (!quickAddMenu) return [];
 
     const sourceSocket = quickAddMenu.sourceSocket;
-    let nodes = Object.values(definitions);
+    let nodeDefinitions = Object.values(definitions);
 
     // Filter by search term
     if (search.trim()) {
       const searchLower = search.toLowerCase();
-      nodes = nodes.filter(
+      nodeDefinitions = nodeDefinitions.filter(
         (node) =>
           node.label.toLowerCase().includes(searchLower) ||
           node.description?.toLowerCase().includes(searchLower) ||
@@ -55,9 +55,16 @@ export function QuickAddMenu() {
 
     // Filter by socket compatibility if connecting from a socket
     if (sourceSocket) {
-      const sourceType = getPortType(sourceSocket.handleId);
+      // Look up the source node type from the store nodes
+      const sourceNode = nodes.find((n) => n.id === sourceSocket.nodeId);
+      const sourceNodeType = sourceNode?.type ?? "";
+      const sourceType = getPortTypeFromDefinition(
+        sourceNodeType,
+        sourceSocket.handleId,
+      );
+
       if (sourceType) {
-        nodes = nodes.filter((node) => {
+        nodeDefinitions = nodeDefinitions.filter((node) => {
           if (sourceSocket.handleType === "source") {
             // Looking for nodes with compatible inputs
             return node.inputs.some((input) => {
@@ -83,8 +90,8 @@ export function QuickAddMenu() {
       }
     }
 
-    return nodes;
-  }, [quickAddMenu, definitions, search]);
+    return nodeDefinitions;
+  }, [quickAddMenu, definitions, search, nodes]);
 
   // Group filtered nodes by category
   const nodesByCategory = useMemo(() => {
