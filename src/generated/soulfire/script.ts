@@ -429,12 +429,13 @@ export interface ScriptData {
    */
   instanceId: string;
   /**
-   * Whether this script should automatically start when the instance starts.
-   * Auto-start scripts begin execution without manual intervention.
+   * Whether this script is paused (not running).
+   * Scripts run by default. When paused, they won't be started on server startup
+   * or when created/updated.
    *
-   * @generated from protobuf field: bool auto_start = 8
+   * @generated from protobuf field: bool paused = 8
    */
-  autoStart: boolean;
+  paused: boolean;
 }
 /**
  * Summary information about a script for listing purposes.
@@ -482,11 +483,11 @@ export interface ScriptInfo {
    */
   updatedAt?: Timestamp;
   /**
-   * Whether this script auto-starts when the instance starts.
+   * Whether this script is paused (not running).
    *
-   * @generated from protobuf field: bool auto_start = 8
+   * @generated from protobuf field: bool paused = 8
    */
-  autoStart: boolean;
+  paused: boolean;
 }
 /**
  * Runtime status information for a script.
@@ -826,11 +827,12 @@ export interface CreateScriptRequest {
    */
   edges: ScriptEdge[];
   /**
-   * Whether the script should auto-activate when the instance starts.
+   * Whether the script should be created in paused state.
+   * If false (default), the script starts running immediately after creation.
    *
-   * @generated from protobuf field: bool auto_start = 7
+   * @generated from protobuf field: bool paused = 7
    */
-  autoStart: boolean;
+  paused: boolean;
 }
 /**
  * Response after successfully creating a script.
@@ -942,12 +944,13 @@ export interface UpdateScriptRequest {
    */
   updateEdges: boolean;
   /**
-   * Updated auto-start setting.
-   * If not set, the auto-start setting remains unchanged.
+   * Updated paused setting.
+   * If not set, the paused setting remains unchanged.
+   * If set to false and script was paused, the script will be restarted.
    *
-   * @generated from protobuf field: optional bool auto_start = 10
+   * @generated from protobuf field: optional bool paused = 10
    */
-  autoStart?: boolean;
+  paused?: boolean;
 }
 /**
  * Response after successfully updating a script.
@@ -2411,7 +2414,7 @@ class ScriptData$Type extends MessageType<ScriptData> {
         kind: "scalar",
         T: 9 /*ScalarType.STRING*/,
       },
-      { no: 8, name: "auto_start", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 8, name: "paused", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
     ]);
   }
   create(value?: PartialMessage<ScriptData>): ScriptData {
@@ -2422,7 +2425,7 @@ class ScriptData$Type extends MessageType<ScriptData> {
     message.nodes = [];
     message.edges = [];
     message.instanceId = "";
-    message.autoStart = false;
+    message.paused = false;
     if (value !== undefined)
       reflectionMergePartial<ScriptData>(this, message, value);
     return message;
@@ -2460,8 +2463,8 @@ class ScriptData$Type extends MessageType<ScriptData> {
         case /* string instance_id */ 7:
           message.instanceId = reader.string();
           break;
-        case /* bool auto_start */ 8:
-          message.autoStart = reader.bool();
+        case /* bool paused */ 8:
+          message.paused = reader.bool();
           break;
         default:
           let u = options.readUnknownField;
@@ -2513,9 +2516,9 @@ class ScriptData$Type extends MessageType<ScriptData> {
     /* string instance_id = 7; */
     if (message.instanceId !== "")
       writer.tag(7, WireType.LengthDelimited).string(message.instanceId);
-    /* bool auto_start = 8; */
-    if (message.autoStart !== false)
-      writer.tag(8, WireType.Varint).bool(message.autoStart);
+    /* bool paused = 8; */
+    if (message.paused !== false)
+      writer.tag(8, WireType.Varint).bool(message.paused);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -2550,7 +2553,7 @@ class ScriptInfo$Type extends MessageType<ScriptInfo> {
       },
       { no: 6, name: "created_at", kind: "message", T: () => Timestamp },
       { no: 7, name: "updated_at", kind: "message", T: () => Timestamp },
-      { no: 8, name: "auto_start", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 8, name: "paused", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
     ]);
   }
   create(value?: PartialMessage<ScriptInfo>): ScriptInfo {
@@ -2559,7 +2562,7 @@ class ScriptInfo$Type extends MessageType<ScriptInfo> {
     message.name = "";
     message.description = "";
     message.instanceId = "";
-    message.autoStart = false;
+    message.paused = false;
     if (value !== undefined)
       reflectionMergePartial<ScriptInfo>(this, message, value);
     return message;
@@ -2603,8 +2606,8 @@ class ScriptInfo$Type extends MessageType<ScriptInfo> {
             message.updatedAt,
           );
           break;
-        case /* bool auto_start */ 8:
-          message.autoStart = reader.bool();
+        case /* bool paused */ 8:
+          message.paused = reader.bool();
           break;
         default:
           let u = options.readUnknownField;
@@ -2656,9 +2659,9 @@ class ScriptInfo$Type extends MessageType<ScriptInfo> {
         writer.tag(7, WireType.LengthDelimited).fork(),
         options,
       ).join();
-    /* bool auto_start = 8; */
-    if (message.autoStart !== false)
-      writer.tag(8, WireType.Varint).bool(message.autoStart);
+    /* bool paused = 8; */
+    if (message.paused !== false)
+      writer.tag(8, WireType.Varint).bool(message.paused);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -3733,7 +3736,7 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
         repeat: 2 /*RepeatType.UNPACKED*/,
         T: () => ScriptEdge,
       },
-      { no: 7, name: "auto_start", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 7, name: "paused", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
     ]);
   }
   create(value?: PartialMessage<CreateScriptRequest>): CreateScriptRequest {
@@ -3743,7 +3746,7 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
     message.description = "";
     message.nodes = [];
     message.edges = [];
-    message.autoStart = false;
+    message.paused = false;
     if (value !== undefined)
       reflectionMergePartial<CreateScriptRequest>(this, message, value);
     return message;
@@ -3778,8 +3781,8 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
             ScriptEdge.internalBinaryRead(reader, reader.uint32(), options),
           );
           break;
-        case /* bool auto_start */ 7:
-          message.autoStart = reader.bool();
+        case /* bool paused */ 7:
+          message.paused = reader.bool();
           break;
         default:
           let u = options.readUnknownField;
@@ -3828,9 +3831,9 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
         writer.tag(6, WireType.LengthDelimited).fork(),
         options,
       ).join();
-    /* bool auto_start = 7; */
-    if (message.autoStart !== false)
-      writer.tag(7, WireType.Varint).bool(message.autoStart);
+    /* bool paused = 7; */
+    if (message.paused !== false)
+      writer.tag(7, WireType.Varint).bool(message.paused);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -4124,7 +4127,7 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
       { no: 9, name: "update_edges", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
       {
         no: 10,
-        name: "auto_start",
+        name: "paused",
         kind: "scalar",
         opt: true,
         T: 8 /*ScalarType.BOOL*/,
@@ -4182,8 +4185,8 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
         case /* bool update_edges */ 9:
           message.updateEdges = reader.bool();
           break;
-        case /* optional bool auto_start */ 10:
-          message.autoStart = reader.bool();
+        case /* optional bool paused */ 10:
+          message.paused = reader.bool();
           break;
         default:
           let u = options.readUnknownField;
@@ -4241,9 +4244,9 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
     /* bool update_edges = 9; */
     if (message.updateEdges !== false)
       writer.tag(9, WireType.Varint).bool(message.updateEdges);
-    /* optional bool auto_start = 10; */
-    if (message.autoStart !== undefined)
-      writer.tag(10, WireType.Varint).bool(message.autoStart);
+    /* optional bool paused = 10; */
+    if (message.paused !== undefined)
+      writer.tag(10, WireType.Varint).bool(message.paused);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(

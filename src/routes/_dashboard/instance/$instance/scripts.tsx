@@ -97,7 +97,7 @@ function Content() {
         description: newScriptDescription.trim(),
         nodes: [],
         edges: [],
-        autoStart: false,
+        paused: false, // Scripts start running immediately by default
       });
       return result.response;
     },
@@ -143,13 +143,13 @@ function Content() {
     },
   });
 
-  // Activate script mutation
-  const activateMutation = useMutation({
-    mutationKey: ["script", "activate", instanceId],
+  // Resume script mutation (unpause)
+  const resumeMutation = useMutation({
+    mutationKey: ["script", "resume", instanceId],
     mutationFn: async (scriptId: string) => {
       if (!transport) throw new Error("No transport available");
       const client = new ScriptServiceClient(transport);
-      // Just activate the script - we don't need to track the stream here
+      // Resume the script - we don't need to track the stream here
       // since that's handled in the editor view
       const { responses } = client.activateScript({
         instanceId,
@@ -161,28 +161,34 @@ function Content() {
       responses.onError(() => {});
     },
     onSuccess: () => {
-      toast.success(tInstance("scripts.activateSuccess"));
+      toast.success(tInstance("scripts.resumeSuccess"));
     },
     onError: (error) => {
-      console.error("Failed to activate script:", error);
-      toast.error(tInstance("scripts.activateError"));
+      console.error("Failed to resume script:", error);
+      toast.error(tInstance("scripts.resumeError"));
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: ["scripts", instanceId] });
     },
   });
 
-  // Deactivate script mutation
-  const deactivateMutation = useMutation({
-    mutationKey: ["script", "deactivate", instanceId],
+  // Pause script mutation
+  const pauseMutation = useMutation({
+    mutationKey: ["script", "pause", instanceId],
     mutationFn: async (scriptId: string) => {
       if (!transport) throw new Error("No transport available");
       const client = new ScriptServiceClient(transport);
       await client.deactivateScript({ instanceId, scriptId });
     },
     onSuccess: () => {
-      toast.success(tInstance("scripts.deactivateSuccess"));
+      toast.success(tInstance("scripts.pauseSuccess"));
     },
     onError: (error) => {
-      console.error("Failed to deactivate script:", error);
-      toast.error(tInstance("scripts.deactivateError"));
+      console.error("Failed to pause script:", error);
+      toast.error(tInstance("scripts.pauseError"));
+    },
+    onSettled: () => {
+      void queryClient.invalidateQueries({ queryKey: ["scripts", instanceId] });
     },
   });
 
@@ -194,11 +200,11 @@ function Content() {
     deleteMutation.mutate(scriptId);
   };
 
-  const handleToggleActive = (scriptId: string, isActive: boolean) => {
-    if (isActive) {
-      deactivateMutation.mutate(scriptId);
+  const handleTogglePaused = (scriptId: string, isPaused: boolean) => {
+    if (isPaused) {
+      resumeMutation.mutate(scriptId);
     } else {
-      activateMutation.mutate(scriptId);
+      pauseMutation.mutate(scriptId);
     }
   };
 
@@ -308,8 +314,8 @@ function Content() {
                 script={script}
                 instanceId={instanceInfo.id}
                 onDelete={() => handleDeleteScript(script.id)}
-                onToggleActive={(isActive) =>
-                  handleToggleActive(script.id, isActive)
+                onTogglePaused={(isPaused) =>
+                  handleTogglePaused(script.id, isPaused)
                 }
                 isDeleting={deleteMutation.isPending}
               />
@@ -387,7 +393,7 @@ interface ScriptCardProps {
   script: ScriptInfo;
   instanceId: string;
   onDelete: () => void;
-  onToggleActive: (isActive: boolean) => void;
+  onTogglePaused: (isPaused: boolean) => void;
   isDeleting: boolean;
 }
 
@@ -395,32 +401,13 @@ function ScriptCard({
   script,
   instanceId,
   onDelete,
-  onToggleActive,
+  onTogglePaused,
   isDeleting,
 }: ScriptCardProps) {
   const { t: tInstance } = useTranslation("instance");
-  const transport = use(TransportContext);
 
-  // Query for script status to check if running
-  const { data: statusData } = useSuspenseQuery({
-    queryKey: ["script-status", instanceId, script.id],
-    queryFn: async () => {
-      if (!transport) return null;
-      try {
-        const client = new ScriptServiceClient(transport);
-        const result = await client.getScriptStatus({
-          instanceId,
-          scriptId: script.id,
-        });
-        return result.response.status;
-      } catch {
-        return null;
-      }
-    },
-    refetchInterval: 3_000,
-  });
-
-  const isActive = statusData?.isActive ?? false;
+  // Get paused state from script entity
+  const isPaused = script.paused;
 
   const formatLastModified = (
     timestamp: { seconds: string; nanos: number } | undefined,
@@ -450,10 +437,14 @@ function ScriptCard({
             <WorkflowIcon className="size-5 text-muted-foreground" />
             <CardTitle className="text-base">{script.name}</CardTitle>
           </div>
-          {isActive && (
+          {isPaused ? (
+            <Badge variant="secondary" className="gap-1.5">
+              {tInstance("scripts.paused")}
+            </Badge>
+          ) : (
             <Badge variant="default" className="gap-1.5 bg-green-600">
               <div className="size-2 animate-pulse rounded-full bg-white" />
-              {tInstance("scripts.active")}
+              {tInstance("scripts.running")}
             </Badge>
           )}
         </div>
@@ -483,17 +474,17 @@ function ScriptCard({
           <Button
             variant="outline"
             size="icon"
-            onClick={() => onToggleActive(isActive)}
+            onClick={() => onTogglePaused(isPaused)}
             title={
-              isActive
-                ? tInstance("scripts.deactivate")
-                : tInstance("scripts.activate")
+              isPaused
+                ? tInstance("scripts.resume")
+                : tInstance("scripts.pause")
             }
           >
-            {isActive ? (
-              <SquareIcon className="size-4" />
-            ) : (
+            {isPaused ? (
               <PlayIcon className="size-4" />
+            ) : (
+              <SquareIcon className="size-4" />
             )}
           </Button>
           <Button

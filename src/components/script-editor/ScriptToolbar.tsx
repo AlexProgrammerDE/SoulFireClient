@@ -3,23 +3,21 @@ import {
   ArrowLeftIcon,
   DownloadIcon,
   LoaderCircleIcon,
+  PauseIcon,
   PlayIcon,
   SaveIcon,
-  SquareIcon,
   Trash2Icon,
   UploadIcon,
   ZoomInIcon,
   ZoomOutIcon,
 } from "lucide-react";
-import { useId, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import { Label } from "@/components/ui/label.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
-import { Switch } from "@/components/ui/switch.tsx";
 import {
   Tooltip,
   TooltipContent,
@@ -60,16 +58,13 @@ export function ScriptToolbar({
     (state) => state.scriptDescription,
   );
   const isDirty = useScriptEditorStore((state) => state.isDirty);
-  const isActive = useScriptEditorStore((state) => state.isActive);
-  const autoStart = useScriptEditorStore((state) => state.autoStart);
-  const setAutoStart = useScriptEditorStore((state) => state.setAutoStart);
+  const paused = useScriptEditorStore((state) => state.paused);
   const nodes = useScriptEditorStore((state) => state.nodes);
   const edges = useScriptEditorStore((state) => state.edges);
   const loadScriptData = useScriptEditorStore((state) => state.loadScriptData);
 
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState(scriptName);
-  const autoStartId = useId();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleExport = () => {
@@ -77,7 +72,7 @@ export function ScriptToolbar({
       version: 1,
       name: scriptName,
       description: scriptDescription,
-      autoStart,
+      paused,
       nodes,
       edges,
       exportedAt: new Date().toISOString(),
@@ -117,7 +112,7 @@ export function ScriptToolbar({
           edges: importData.edges,
           name: importData.name ?? scriptName,
           description: importData.description ?? scriptDescription,
-          autoStart: importData.autoStart ?? false,
+          paused: importData.paused ?? importData.autoStart ?? false, // Support both old and new format
         });
 
         toast.success(t("scripts.editor.toolbar.importSuccess"));
@@ -237,30 +232,7 @@ export function ScriptToolbar({
 
       {/* Execution Controls */}
       <div className="flex items-center gap-1">
-        {isActive ? (
-          <>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={onStop}
-                  className="gap-1.5"
-                >
-                  <SquareIcon className="size-4" />
-                  {t("scripts.editor.toolbar.deactivate")}
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{t("scripts.editor.toolbar.deactivateTooltip")}</p>
-              </TooltipContent>
-            </Tooltip>
-            <Badge variant="default" className="gap-1.5 bg-green-600">
-              <div className="size-2 animate-pulse rounded-full bg-white" />
-              {t("scripts.active")}
-            </Badge>
-          </>
-        ) : (
+        {paused ? (
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -270,36 +242,38 @@ export function ScriptToolbar({
                 className="gap-1.5"
               >
                 <PlayIcon className="size-4" />
-                {t("scripts.editor.toolbar.run")}
+                {t("scripts.editor.toolbar.resume")}
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>{t("scripts.editor.toolbar.runTooltip")}</p>
+              <p>{t("scripts.editor.toolbar.resumeTooltip")}</p>
             </TooltipContent>
           </Tooltip>
+        ) : (
+          <>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={onStop}
+                  className="gap-1.5"
+                >
+                  <PauseIcon className="size-4" />
+                  {t("scripts.editor.toolbar.pause")}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("scripts.editor.toolbar.pauseTooltip")}</p>
+              </TooltipContent>
+            </Tooltip>
+            <Badge variant="default" className="gap-1.5 bg-green-600">
+              <div className="size-2 animate-pulse rounded-full bg-white" />
+              {t("scripts.running")}
+            </Badge>
+          </>
         )}
       </div>
-
-      <Separator orientation="vertical" className="h-6 my-auto" />
-
-      {/* Auto-start Toggle */}
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="flex items-center gap-2">
-            <Switch
-              id={autoStartId}
-              checked={autoStart}
-              onCheckedChange={setAutoStart}
-            />
-            <Label htmlFor={autoStartId} className="text-sm cursor-pointer">
-              {t("scripts.editor.toolbar.autoStart")}
-            </Label>
-          </div>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{t("scripts.editor.toolbar.autoStartTooltip")}</p>
-        </TooltipContent>
-      </Tooltip>
 
       <div className="flex-1" />
 

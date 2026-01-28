@@ -30,7 +30,7 @@ export interface ScriptEditorState {
   scriptId: string | null;
   scriptName: string;
   scriptDescription: string;
-  autoStart: boolean;
+  paused: boolean;
   isDirty: boolean;
 
   // Execution state
@@ -172,7 +172,7 @@ export interface ScriptEditorState {
   // Script metadata actions
   setScriptName: (name: string) => void;
   setScriptDescription: (description: string) => void;
-  setAutoStart: (autoStart: boolean) => void;
+  setPaused: (paused: boolean) => void;
   setDirty: (dirty: boolean) => void;
 
   // Execution actions
@@ -190,7 +190,7 @@ export interface ScriptEditorState {
     id: string;
     name: string;
     description: string;
-    autoStart: boolean;
+    paused: boolean;
     nodes: Node[];
     edges: Edge[];
   }) => void;
@@ -199,7 +199,7 @@ export interface ScriptEditorState {
     edges: Edge[];
     name?: string;
     description?: string;
-    autoStart?: boolean;
+    paused?: boolean;
   }) => void;
   resetEditor: () => void;
   getScriptData: () => {
@@ -207,7 +207,7 @@ export interface ScriptEditorState {
     edges: Edge[];
     name: string;
     description: string;
-    autoStart: boolean;
+    paused: boolean;
   };
 }
 
@@ -254,7 +254,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   scriptId: null,
   scriptName: "Untitled Script",
   scriptDescription: "",
-  autoStart: false,
+  paused: false,
   isDirty: false,
   isActive: false,
   activeNodeId: null,
@@ -1683,7 +1683,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   setScriptName: (name) => set({ scriptName: name, isDirty: true }),
   setScriptDescription: (description) =>
     set({ scriptDescription: description, isDirty: true }),
-  setAutoStart: (autoStart) => set({ autoStart, isDirty: true }),
+  setPaused: (paused) => set({ paused, isDirty: true }),
   setDirty: (dirty) => set({ isDirty: dirty }),
 
   // Execution actions
@@ -1704,7 +1704,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       scriptId: data.id,
       scriptName: data.name,
       scriptDescription: data.description,
-      autoStart: data.autoStart,
+      paused: data.paused,
       nodes: data.nodes,
       edges: data.edges,
       isDirty: false,
@@ -1725,7 +1725,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       edges: data.edges,
       scriptName: data.name ?? current.scriptName,
       scriptDescription: data.description ?? current.scriptDescription,
-      autoStart: data.autoStart ?? current.autoStart,
+      paused: data.paused ?? current.paused,
       isDirty: true,
       selectedNodeId: null,
       groupEditStack: [],
@@ -1745,7 +1745,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       scriptId: null,
       scriptName: "Untitled Script",
       scriptDescription: "",
-      autoStart: false,
+      paused: false,
       isDirty: false,
       isActive: false,
       activeNodeId: null,
@@ -1772,6 +1772,6 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     edges: get().edges,
     name: get().scriptName,
     description: get().scriptDescription,
-    autoStart: get().autoStart,
+    paused: get().paused,
   }),
 }));

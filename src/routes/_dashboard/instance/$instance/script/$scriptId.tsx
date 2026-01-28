@@ -137,7 +137,7 @@ function ScriptEditorContent() {
         description: scriptData.description,
         nodes: nodesToProto(nodes),
         edges: edgesToProto(edges),
-        autoStart: scriptData.autoStart,
+        paused: scriptData.paused,
       });
       return result.response;
     },
@@ -178,7 +178,7 @@ function ScriptEditorContent() {
         edges: edgesToProto(edges),
         updateNodes: true,
         updateEdges: true,
-        autoStart: scriptData.autoStart,
+        paused: scriptData.paused,
       });
       return result.response;
     },
