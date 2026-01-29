@@ -273,9 +273,6 @@
   "scripts": {
     "title": "Визуальные скрипты",
     "description": "Создавайте скрипты автоматизации, используя визуальный редактор на узлах.",
-    "wipTitle": "Визуальный редактор скриптов",
-    "wipDescription": "Создавайте скрипты автоматизации, используя визуальный редактор на узлах.",
-    "wipDetails": "Эта функция находится в разработке. Новый визуальный редактор скриптов позволит создавать мощные автоматизационные скрипты с помощью интерфейса \"перетащи-и-отпусти\" без написания кода.",
     "createScript": "Создать скрипт",
     "createScriptTitle": "Создать новый скрипт",
     "createScriptDescription": "Создайте новый визуальный скрипт для этого экземпляра. Скрипты могут автоматизировать действия бота и реагировать на события.",
@@ -289,12 +286,17 @@
     "noScripts": "Скриптов пока нет",
     "noScriptsDescription": "Создайте свой первый скрипт для автоматизации действий бота с помощью визуального редактора на узлах.",
     "createFirstScript": "Создать свой первый скрипт",
-    "active": "Активен",
+    "running": "Запущен",
+    "paused": "Приостановлено",
     "nodes": "узлы",
     "noDescription": "Нет описания",
     "edit": "Редактировать",
-    "activate": "Активировать",
-    "deactivate": "Деактивировать",
+    "pause": "Пауза",
+    "pauseSuccess": "",
+    "pauseError": "",
+    "resume": "Возобновить",
+    "resumeSuccess": "",
+    "resumeError": "",
     "delete": "Удалить",
     "deleteSuccess": "Скрипт успешно удален",
     "deleteError": "Не удалось удалить скрипт",
@@ -303,7 +305,6 @@
     "activateSuccess": "Скрипт активирован",
     "activateError": "Не удалось активировать скрипт",
     "deactivateSuccess": "Скрипт деактивирован",
-    "deactivateError": "Не удалось деактивировать скрипт",
     "untitledScript": "Безымянный скрипт",
     "saveFirstBeforeActivating": "Сначала сохраните скрипт, прежде чем активировать",
     "activating": "Активация скрипта...",
@@ -322,49 +323,27 @@
         "backToScripts": "Назад к скриптам",
         "save": "Сохранить",
         "saveTooltip": "Сохранить скрипт (Ctrl+S)",
-        "run": "Активировать",
-        "runTooltip": "Активировать скрипт (F5)",
-        "deactivate": "Деактивировать",
-        "deactivateTooltip": "Деактивировать скрипт",
-        "autoStart": "Автозапуск",
-        "autoStartTooltip": "Автоматически активировать этот скрипт при запуске инстанса",
+        "resume": "Возобновить",
+        "resumeTooltip": "",
+        "pause": "Пауза",
+        "pauseTooltip": "",
         "unsaved": "Не сохранено",
         "clearCanvas": "Очистить полотно",
         "zoomIn": "Приблизить",
         "zoomOut": "Отдалить",
         "fit": "Вписать",
-        "export": "",
-        "import": "",
-        "exportSuccess": "",
-        "importSuccess": "",
-        "importError": ""
+        "export": "Экспортировать скрипт",
+        "import": "Импортировать скрипт",
+        "exportSuccess": "Скрипт успешно экспортирован",
+        "importSuccess": "Скрипт успешно импортирован",
+        "importError": "Не удалось импортировать скрипт"
       },
       "palette": {
         "title": "Палитра узлов",
-        "search": "Поиск по узлам...",
-        "categories": {
-          "trigger": "Триггеры",
-          "action": "Действия",
-          "flow": "Управление потоком",
-          "math": "Математика",
-          "logic": "Логика",
-          "data": "Данные",
-          "bot": "Бот",
-          "world": "Мир"
-        }
-      },
-      "inspector": {
-        "title": "Инспектор узла",
-        "noSelection": "Выберите узел, чтобы увидеть его свойства",
-        "properties": "Свойства",
-        "nodeId": "ID узла",
-        "inputs": "Входы",
-        "outputs": "Выходы",
-        "selectPlaceholder": "Выбрать..."
+        "search": "Поиск по узлам..."
       },
       "logs": {
         "title": "Журналы выполнения",
-        "clear": "Очистить журналы",
         "clearTitle": "Очистить журналы",
         "noLogs": "Журналов пока нет. Запустите скрипт, чтобы посмотреть журналы выполнения.",
         "entries_one": "{{count}} запись",
@@ -375,321 +354,13 @@
       "contextMenu": {
         "duplicate": "Дублировать",
         "disconnectAll": "Отключить всё",
+        "collapse": "",
+        "expand": "",
+        "mute": "",
+        "unmute": "",
+        "showPreview": "",
+        "hidePreview": "",
         "delete": "Удалить"
-      },
-      "ports": {
-        "exec": "Exec",
-        "execIn": "Exec In",
-        "execOut": "Exec Out",
-        "execTrue": "Истина",
-        "execFalse": "Ложь",
-        "execLoop": "Цикл",
-        "execDone": "Готово"
-      },
-      "fields": {
-        "value": "Значение",
-        "interval": "Интервал (мс)",
-        "variableName": "Имя переменной",
-        "level": "Уровень журнала",
-        "levelDebug": "Отладка",
-        "levelInfo": "Информация",
-        "levelWarn": "Предупреждение",
-        "levelError": "Ошибка",
-        "x": "X",
-        "y": "Y",
-        "z": "Z",
-        "min": "Минимум",
-        "max": "Максимум",
-        "degree": "Градус",
-        "operator": "Оператор",
-        "operatorEqual": "Равно (==)",
-        "operatorNotEqual": "Не равно (!=)",
-        "operatorLess": "Меньше (<)",
-        "operatorLessEqual": "Меньше или равно (<=)",
-        "operatorGreater": "Больше (>)",
-        "operatorGreaterEqual": "Больше или равно (>=)",
-        "comparison": "Сравнение",
-        "comparisonEqual": "Равно (==)",
-        "comparisonNotEqual": "Не равно (!=)",
-        "comparisonGreater": "Больше (>)",
-        "comparisonLess": "Меньше (<)",
-        "comparisonGreaterEqual": "Больше или равно (>=)",
-        "comparisonLessEqual": "Меньше или равно (<=)",
-        "formula": "Формула",
-        "message": "Сообщение",
-        "iterations": "Число итераций",
-        "minValue": "Минимальное значение",
-        "maxValue": "Максимальное значение",
-        "start": "Запуск",
-        "end": "Конец",
-        "amount": "Количество",
-        "blockType": "Тип блока",
-        "radius": "Радиус",
-        "timeout": "Таймаут (мс)",
-        "slot": "Слот",
-        "count": "Количество",
-        "entityType": "Тип сущности",
-        "smooth": "Плавно",
-        "enabled": "Включено",
-        "hand": "Рука",
-        "handMain": "Основная рука",
-        "handOff": "Вторая рука",
-        "face": "Грань",
-        "faceUp": "Вверх",
-        "faceDown": "Вниз",
-        "faceNorth": "Север",
-        "faceSouth": "Юг",
-        "faceEast": "Восток",
-        "faceWest": "Запад",
-        "ticks": "Тики",
-        "range": "Диапазон",
-        "loopCount": "Число циклов",
-        "open": "Открыть",
-        "delay": "Задержка (мс)"
-      },
-      "nodes": {
-        "trigger": {
-          "on_tick": {
-            "label": "По тикам",
-            "description": "Срабатывает каждую игровую долю (20 раз в секунду)"
-          },
-          "on_join": {
-            "label": "При входе",
-            "description": "Срабатывает, когда бот заходит на сервер"
-          },
-          "on_chat": {
-            "label": "На чат",
-            "description": "Срабатывает при получении сообщения в чате"
-          },
-          "on_damage": {
-            "label": "При получении урона",
-            "description": "Срабатывает, когда бот получает урон"
-          },
-          "on_death": {
-            "label": "При смерти",
-            "description": "Срабатывает, когда бот умирает"
-          },
-          "on_health_change": {
-            "label": "При изменении здоровья",
-            "description": "Срабатывает при изменении здоровья бота"
-          },
-          "on_interval": {
-            "label": "По интервалу",
-            "description": "Срабатывает через настраиваемый интервал времени"
-          }
-        },
-        "math": {
-          "add": {
-            "label": "Добавить",
-            "description": "Складывает два числа"
-          },
-          "subtract": {
-            "label": "Вычитание",
-            "description": "Вычитает второе число из первого"
-          },
-          "multiply": {
-            "label": "Умножение",
-            "description": "Умножает два числа"
-          },
-          "divide": {
-            "label": "Деление",
-            "description": "Делит первое число на второе"
-          },
-          "modulo": {
-            "label": "Остаток",
-            "description": "Возвращает остаток от деления"
-          },
-          "formula": {
-            "label": "Формула",
-            "description": "Вычисляет математическую формулу"
-          },
-          "random": {
-            "label": "Случайное",
-            "description": "Генерирует случайное число между min и max"
-          },
-          "clamp": {
-            "label": "Ограничение",
-            "description": "Ограничивает значение между min и max"
-          },
-          "lerp": {
-            "label": "Lerp",
-            "description": "Линейная интерполяция между двумя значениями"
-          },
-          "bspline": {
-            "label": "B-сплайн",
-            "description": "Интерполирует по кривой B-сплайн"
-          }
-        },
-        "logic": {
-          "compare": {
-            "label": "Сравнить",
-            "description": "Сравнивает два значения"
-          },
-          "and": {
-            "label": "И",
-            "description": "Логическое И для двух булевых значений"
-          },
-          "or": {
-            "label": "ИЛИ",
-            "description": "Логическое ИЛИ для двух булевых значений"
-          },
-          "not": {
-            "label": "НЕ",
-            "description": "Логическое НЕ для булевого значения"
-          },
-          "xor": {
-            "label": "XOR",
-            "description": "Логическое XOR для двух булевых значений"
-          }
-        },
-        "flow": {
-          "branch": {
-            "label": "Ветвление",
-            "description": "Условное ветвление на основе булевого значения"
-          },
-          "switch": {
-            "label": "Switch",
-            "description": "Многопутевое ветвление на основе значения"
-          },
-          "loop": {
-            "label": "Цикл",
-            "description": "Повторяет выполнение заданное количество раз"
-          },
-          "for_each": {
-            "label": "Для каждого",
-            "description": "Перебирает коллекцию"
-          },
-          "sequence": {
-            "label": "Последовательность",
-            "description": "Выполняет выходы последовательно"
-          },
-          "gate": {
-            "label": "Ворота",
-            "description": "Управляет потоком на основе состояния ворот"
-          },
-          "debounce": {
-            "label": "Debounce",
-            "description": "Предотвращает быстрое повторное выполнение"
-          }
-        },
-        "action": {
-          "set_rotation": {
-            "label": "Задать вращение",
-            "description": "Задает вращение бота"
-          },
-          "look_at": {
-            "label": "Посмотреть на",
-            "description": "Смотрит на позицию или сущность"
-          },
-          "sneak": {
-            "label": "Красться",
-            "description": "Включает/выключает красться"
-          },
-          "sprint": {
-            "label": "Бежать",
-            "description": "Включает/выключает бег"
-          },
-          "jump": {
-            "label": "Прыжок",
-            "description": "Заставляет бота прыгнуть"
-          },
-          "attack": {
-            "label": "Атака",
-            "description": "Атакует сущность"
-          },
-          "use_item": {
-            "label": "Использовать предмет",
-            "description": "Использует предмет в заданной руке"
-          },
-          "pathfind_to": {
-            "label": "Путь к",
-            "description": "Находит путь к целевой позиции"
-          },
-          "break_block": {
-            "label": "Сломать блок",
-            "description": "Ломает блок по позиции"
-          },
-          "place_block": {
-            "label": "Поставить блок",
-            "description": "Ставит блок по позиции"
-          },
-          "select_slot": {
-            "label": "Выбрать слот",
-            "description": "Выбирает слот хотбара"
-          },
-          "send_chat": {
-            "label": "Отправить сообщение в чат",
-            "description": "Отправляет сообщение в чат"
-          },
-          "wait": {
-            "label": "Ожидание",
-            "description": "Ждет несколько тиков"
-          },
-          "print": {
-            "label": "Печать/",
-            "description": "Логирует сообщение для отладки"
-          },
-          "set_variable": {
-            "label": "Установить переменную",
-            "description": "Сохраняет значение в переменную"
-          }
-        },
-        "data": {
-          "get_position": {
-            "label": "Получить позицию",
-            "description": "Получает текущую позицию бота"
-          },
-          "get_rotation": {
-            "label": "Получить вращение",
-            "description": "Получает текущее вращение бота"
-          },
-          "get_health": {
-            "label": "Получить здоровье",
-            "description": "Получает текущее здоровье бота"
-          },
-          "get_hunger": {
-            "label": "Получить голод",
-            "description": "Получает текущий уровень голода бота"
-          },
-          "get_inventory": {
-            "label": "Получить инвентарь",
-            "description": "Получает предмет из инвентаря"
-          },
-          "get_block": {
-            "label": "Получить блок",
-            "description": "Получает блок на позиции"
-          },
-          "find_entity": {
-            "label": "Найти сущность",
-            "description": "Находит сущность определённого типа поблизости"
-          },
-          "find_block": {
-            "label": "Найти блок",
-            "description": "Находит блок определённого типа поблизости"
-          },
-          "get_variable": {
-            "label": "Получить переменную",
-            "description": "Получает значение из переменной"
-          }
-        },
-        "constant": {
-          "number": {
-            "label": "Число",
-            "description": "Постоянное числовое значение"
-          },
-          "string": {
-            "label": "Строка",
-            "description": "Постоянное текстовое значение"
-          },
-          "boolean": {
-            "label": "Булево",
-            "description": "Постоянное значение истина/ложь"
-          },
-          "vector3": {
-            "label": "Вектор3",
-            "description": "Постоянная 3D позиция (X, Y, Z)"
-          }
-        }
       }
     }
   }

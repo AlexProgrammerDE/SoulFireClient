@@ -273,9 +273,6 @@
   "scripts": {
     "title": "Vizhul Skriptz",
     "description": "Mak awtomaet skript using funneh nodez editor, kthx.",
-    "wipTitle": "Vizhul Skript Editur",
-    "wipDescription": "Mak awtomaet skript using funneh nodez editor, kthx.",
-    "wipDetails": "Dis feechur iz undur develawmint. New vizhul skript editur wil let yu make pawfur automatisation skriptz usin drag-n-drop wiffout writin codez.",
     "createScript": "Make Skript",
     "createScriptTitle": "Make Nu Skript",
     "createScriptDescription": "Mak nub vizhul skript 4 diz instanz. Skriptz do teh bot stuf an respawn to evnts.",
@@ -289,12 +286,17 @@
     "noScripts": "No Skriptz Yetz",
     "noScriptsDescription": "Mak ur first skript 2 automate bot stuf wit vizhul nodez editorz!",
     "createFirstScript": "Make Ur First Skript",
-    "active": "Actiev",
+    "running": "Runnin",
+    "paused": "Pawzed",
     "nodes": "nodez",
     "noDescription": "No has deskripshun",
     "edit": "Editsie",
-    "activate": "Activaet",
-    "deactivate": "Deactivaet",
+    "pause": "Pawse",
+    "pauseSuccess": "",
+    "pauseError": "",
+    "resume": "Resoome",
+    "resumeSuccess": "",
+    "resumeError": "",
     "delete": "DELEET",
     "deleteSuccess": "Skript get deletd suksessleh, YAY!",
     "deleteError": "NOOO! Skript not deletd!",
@@ -303,7 +305,6 @@
     "activateSuccess": "Skript activ8d",
     "activateError": "Oh noes, kan haz aktivaet skript",
     "deactivateSuccess": "Skript deactiv8d",
-    "deactivateError": "Oh noes, kan haz deactivaet skript",
     "untitledScript": "Untitled Skriptz",
     "saveFirstBeforeActivating": "Save teh skript furst b4 aktivaetin",
     "activating": "Aktivatin scripty...",
@@ -322,49 +323,27 @@
         "backToScripts": "Bak to Skriptz",
         "save": "SAEV",
         "saveTooltip": "Save skript (Ctrl+S, so pro)",
-        "run": "Activaet",
-        "runTooltip": "Aktivate scripty (F5)",
-        "deactivate": "Deactivaet",
-        "deactivateTooltip": "Deaktivate scripty",
-        "autoStart": "Auto-go!",
-        "autoStartTooltip": "Aktumatiklee aktivate dis scripty wen instanz startz",
+        "resume": "Resoome",
+        "resumeTooltip": "",
+        "pause": "Pawse",
+        "pauseTooltip": "",
         "unsaved": "UNSAVEZ",
         "clearCanvas": "Cleer doodle pad",
         "zoomIn": "ZOOMZ IN",
         "zoomOut": "ZOOMZ OWT",
         "fit": "Fit ded!",
-        "export": "",
-        "import": "",
-        "exportSuccess": "",
-        "importSuccess": "",
-        "importError": ""
+        "export": "XPORT SKRIPT!",
+        "import": "IMPORT SKRIPT!",
+        "exportSuccess": "Skript has bin xported, kthx!",
+        "importSuccess": "Skript has bin importd, kthx!",
+        "importError": "Oh noes, failed 2 import skript!"
       },
       "palette": {
         "title": "Node Kitteh",
-        "search": "Sersch nodez...",
-        "categories": {
-          "trigger": "Trigerrz",
-          "action": "Akshuns",
-          "flow": "Flow Kontrol",
-          "math": "MAFS",
-          "logic": "Logik",
-          "data": "Dataz",
-          "bot": "BOT",
-          "world": "Werldz"
-        }
-      },
-      "inspector": {
-        "title": "Node Inspectorz",
-        "noSelection": "Selekt a node to sees its stoof",
-        "properties": "Props",
-        "nodeId": "Node IDz",
-        "inputs": "Inpootz",
-        "outputs": "Ootputz",
-        "selectPlaceholder": "Selekt..."
+        "search": "Sersch nodez..."
       },
       "logs": {
         "title": "Execushun Logz",
-        "clear": "Cleer logz",
         "clearTitle": "Cleer logz",
         "noLogs": "No logz yet! Run skript 2 sees what happuns.",
         "entries_one": "{{count}} entry",
@@ -373,321 +352,13 @@
       "contextMenu": {
         "duplicate": "Copy dat",
         "disconnectAll": "ALL DISCONNECT",
+        "collapse": "",
+        "expand": "",
+        "mute": "",
+        "unmute": "",
+        "showPreview": "",
+        "hidePreview": "",
         "delete": "DELEET"
-      },
-      "ports": {
-        "exec": "Executsie!",
-        "execIn": "Exec Inz",
-        "execOut": "Exec Owtz",
-        "execTrue": "TRU!",
-        "execFalse": "FAEK!",
-        "execLoop": "LOOPZ",
-        "execDone": "DUN"
-      },
-      "fields": {
-        "value": "Value",
-        "interval": "Inturval (ms)",
-        "variableName": "Var Naym",
-        "level": "Log Levl",
-        "levelDebug": "Dbg",
-        "levelInfo": "Infoz",
-        "levelWarn": "Warnin",
-        "levelError": "Ewwow",
-        "x": "X",
-        "y": "Y",
-        "z": "Z",
-        "min": "Smallest",
-        "max": "Biggest",
-        "degree": "Deegree",
-        "operator": "Opurrater",
-        "operatorEqual": "Eqwals (==)",
-        "operatorNotEqual": "Not Eqwals (!=)",
-        "operatorLess": "Less (<)",
-        "operatorLessEqual": "Less or Eqwal (<=)",
-        "operatorGreater": "Morez Than (>)",
-        "operatorGreaterEqual": "Biggr or Eqwal (>=)",
-        "comparison": "Comparzun",
-        "comparisonEqual": "Eqwals (==)",
-        "comparisonNotEqual": "Not Eqwals (!=)",
-        "comparisonGreater": "Morez Than (>)",
-        "comparisonLess": "Less (<)",
-        "comparisonGreaterEqual": "Biggr or Eqwal (>=)",
-        "comparisonLessEqual": "Less or Eqwal (<=)",
-        "formula": "For-mewla",
-        "message": "Messaj",
-        "iterations": "Iterashunz",
-        "minValue": "Smallest Vew",
-        "maxValue": "Highest Vew",
-        "start": "Strat",
-        "end": "StoPZ",
-        "amount": "Amownt",
-        "blockType": "Blok Typez",
-        "radius": "Raddius",
-        "timeout": "Wait Time (ms)",
-        "slot": "Slotz",
-        "count": "Countz",
-        "entityType": "Entitee Type",
-        "smooth": "Smoof",
-        "enabled": "Is Enabld",
-        "hand": "Hando",
-        "handMain": "Main Hando",
-        "handOff": "Off Hando",
-        "face": "Facez",
-        "faceUp": "UPZ",
-        "faceDown": "DOWNZ",
-        "faceNorth": "NORTHZ",
-        "faceSouth": "SOWFZ",
-        "faceEast": "EESTZ",
-        "faceWest": "WESTZ",
-        "ticks": "Tickz",
-        "range": "Ranj",
-        "loopCount": "Loop To Count",
-        "open": "OPENZ",
-        "delay": "Waitz (ms)"
-      },
-      "nodes": {
-        "trigger": {
-          "on_tick": {
-            "label": "On Tek",
-            "description": "Goes off evereh game tek (20x/sec)"
-          },
-          "on_join": {
-            "label": "On Joins",
-            "description": "When bot joins server, YAY!"
-          },
-          "on_chat": {
-            "label": "On Chatz",
-            "description": "Wen chat message got!"
-          },
-          "on_damage": {
-            "label": "On Gettin Hurtz",
-            "description": "Fires wen da bot getz damaj"
-          },
-          "on_death": {
-            "label": "On DED",
-            "description": "Bot ded now ono"
-          },
-          "on_health_change": {
-            "label": "On Helseh Change",
-            "description": "When bot has new helthz"
-          },
-          "on_interval": {
-            "label": "On Intravul",
-            "description": "Fires at confyurable time intravulz"
-          }
-        },
-        "math": {
-          "add": {
-            "label": "Put stuff",
-            "description": "Adds two numbrz"
-          },
-          "subtract": {
-            "label": "Subtrak",
-            "description": "Takez numbr 2 away from numbr 1"
-          },
-          "multiply": {
-            "label": "Multyply",
-            "description": "Multis two numbrz"
-          },
-          "divide": {
-            "label": "Divyd",
-            "description": "Dividez numbr 1 by numbr 2"
-          },
-          "modulo": {
-            "label": "Moduloz",
-            "description": "Givez da leftovers from division"
-          },
-          "formula": {
-            "label": "For-mewla",
-            "description": "Maek maths happenz"
-          },
-          "random": {
-            "label": "RANDOM!",
-            "description": "Makz random numbr between smol an big"
-          },
-          "clamp": {
-            "label": "CLAMPZ",
-            "description": "Clamps valu between smol an big"
-          },
-          "lerp": {
-            "label": "LERPZ",
-            "description": "Strate betwen two valu!"
-          },
-          "bspline": {
-            "label": "B-Splinez",
-            "description": "Do curve magik B-spline"
-          }
-        },
-        "logic": {
-          "compare": {
-            "label": "Comparez",
-            "description": "Compare two valuez pls"
-          },
-          "and": {
-            "label": "AND",
-            "description": "AND logik for two bools"
-          },
-          "or": {
-            "label": "OR",
-            "description": "OR logik for two bools"
-          },
-          "not": {
-            "label": "NOT",
-            "description": "NOT logik for bool, wow"
-          },
-          "xor": {
-            "label": "XOR",
-            "description": "XOR logik for two boolz"
-          }
-        },
-        "flow": {
-          "branch": {
-            "label": "Bransh",
-            "description": "Branch go based on boolz"
-          },
-          "switch": {
-            "label": "Swotch",
-            "description": "Branch in many from value"
-          },
-          "loop": {
-            "label": "LOOPZ",
-            "description": "Do loopz numbr times"
-          },
-          "for_each": {
-            "label": "For Eech",
-            "description": "Loopey over collectionz"
-          },
-          "sequence": {
-            "label": "Seequince",
-            "description": "Do da outputz in ordur"
-          },
-          "gate": {
-            "label": "Gatez",
-            "description": "Control flow with gate, k?"
-          },
-          "debounce": {
-            "label": "Debownce",
-            "description": "Stopz spammy execute, srsly"
-          }
-        },
-        "action": {
-          "set_rotation": {
-            "label": "Set Rotayshun",
-            "description": "Makz bot twistz an turnz"
-          },
-          "look_at": {
-            "label": "LOOKZ AT",
-            "description": "LOOK at posishun or entitee"
-          },
-          "sneak": {
-            "label": "Sneekz",
-            "description": "Toggl sneakyn aroundz"
-          },
-          "sprint": {
-            "label": "Sprintz",
-            "description": "Toggl runnin fastz"
-          },
-          "jump": {
-            "label": "Jumpz",
-            "description": "Mak bot jump!"
-          },
-          "attack": {
-            "label": "ATTAK!",
-            "description": "Smak dat entitee"
-          },
-          "use_item": {
-            "label": "Usez Iteam",
-            "description": "Bot uses item what in hand, k?"
-          },
-          "pathfind_to": {
-            "label": "Pathfindz To",
-            "description": "Bot findz path 2 da point"
-          },
-          "break_block": {
-            "label": "Brake Blok",
-            "description": "Smashez blok at posishun"
-          },
-          "place_block": {
-            "label": "Put Blok",
-            "description": "Put blok at posishun!"
-          },
-          "select_slot": {
-            "label": "Selekt Slotz",
-            "description": "Chooz da hotbar slotz pls"
-          },
-          "send_chat": {
-            "label": "Send Chatz",
-            "description": "Sendz da chat messaj"
-          },
-          "wait": {
-            "label": "WAITZ",
-            "description": "Wait fer number uv tickz, ok?"
-          },
-          "print": {
-            "label": "PRNTZ!",
-            "description": "Logs msg fur deebuggin, kthx."
-          },
-          "set_variable": {
-            "label": "SET VARIABULZ!!",
-            "description": "Stor a valooes in variabul, kthx!"
-          }
-        },
-        "data": {
-          "get_position": {
-            "label": "GET POSISHUN!",
-            "description": "Getz bot\\'z currunt posishun, k?"
-          },
-          "get_rotation": {
-            "label": "GET ROTASHUN!",
-            "description": "Getz bot\\'z currunt rotashun, yum."
-          },
-          "get_health": {
-            "label": "GET HAWLTH!",
-            "description": "Getz bot\\'z currunt hawlth, kthx."
-          },
-          "get_hunger": {
-            "label": "GET HUNGRIEZ!",
-            "description": "Getz bot\\'z currunt hungur lvlz!"
-          },
-          "get_inventory": {
-            "label": "GET INVENTORYZ",
-            "description": "Getz item frum inventoree, kthxbai!"
-          },
-          "get_block": {
-            "label": "GET BLOK!",
-            "description": "Getz da blok at dat posishun, meow."
-          },
-          "find_entity": {
-            "label": "FIND ENTITY!!",
-            "description": "Findz specshul entitee nearbai!"
-          },
-          "find_block": {
-            "label": "FIND BLOK!",
-            "description": "Findz speshal blok nearbai!"
-          },
-          "get_variable": {
-            "label": "GET VARIABUL!",
-            "description": "Retreavz valoo frum variabulz, kthx."
-          }
-        },
-        "constant": {
-          "number": {
-            "label": "NUMBUR!",
-            "description": "A consunt numburr valoo, lol."
-          },
-          "string": {
-            "label": "STRINGZ!",
-            "description": "A consunt tekst valoo!"
-          },
-          "boolean": {
-            "label": "BOOLIANZ!",
-            "description": "A consunt tru/failz valooz, kthx!"
-          },
-          "vector3": {
-            "label": "VEKTOR3!",
-            "description": "A consunt 3D posishun (X, Y, Z), meow!"
-          }
-        }
       }
     }
   }

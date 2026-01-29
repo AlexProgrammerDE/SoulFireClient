@@ -273,9 +273,6 @@
   "scripts": {
     "title": "Visuella skript",
     "description": "Skapa automationsskript med en visuell nodbaserad editor.",
-    "wipTitle": "Visuell skriptredigerare",
-    "wipDescription": "Skapa automationsskript med en visuell nodbaserad editor.",
-    "wipDetails": "Denna funktion är under utveckling. Den nya visuella skriptredigeraren gör det möjligt att skapa kraftfulla automationsscript med en dra-och-släpp-gränssnitt utan att skriva kod.",
     "createScript": "Skapa skript",
     "createScriptTitle": "Skapa nytt skript",
     "createScriptDescription": "Skapa ett nytt visuellt skript för denna instans. Skript kan automatisera bottåtgärder och svara på händelser.",
@@ -289,12 +286,17 @@
     "noScripts": "Inga skript än",
     "noScriptsDescription": "Skapa ditt första skript för att automatisera bottåtgärder med den visuella nodbaserade editorn.",
     "createFirstScript": "Skapa ditt första skript",
-    "active": "Aktiv",
+    "running": "Kör",
+    "paused": "Pausad",
     "nodes": "noder",
     "noDescription": "Ingen beskrivning",
     "edit": "Redigera",
-    "activate": "Aktivera",
-    "deactivate": "Inaktivera",
+    "pause": "Pausa",
+    "pauseSuccess": "",
+    "pauseError": "",
+    "resume": "Återuppta",
+    "resumeSuccess": "",
+    "resumeError": "",
     "delete": "Ta bort",
     "deleteSuccess": "Skriptet har tagits bort",
     "deleteError": "Misslyckades med att ta bort skriptet",
@@ -303,7 +305,6 @@
     "activateSuccess": "Skript aktiverat",
     "activateError": "Det gick inte att aktivera skriptet",
     "deactivateSuccess": "Skript inaktiverat",
-    "deactivateError": "Det gick inte att inaktivera skriptet",
     "untitledScript": "Namnlöst skript",
     "saveFirstBeforeActivating": "Spara skriptet först innan du aktiverar",
     "activating": "Aktiverar skript...",
@@ -322,49 +323,27 @@
         "backToScripts": "Tillbaka till skript",
         "save": "Spara",
         "saveTooltip": "Spara skript (Ctrl+S)",
-        "run": "Aktivera",
-        "runTooltip": "Aktivera skript (F5)",
-        "deactivate": "Inaktivera",
-        "deactivateTooltip": "Avaktivera skript",
-        "autoStart": "Autostart",
-        "autoStartTooltip": "Aktivera detta skript automatiskt när instansen startar",
+        "resume": "Återuppta",
+        "resumeTooltip": "",
+        "pause": "Pausa",
+        "pauseTooltip": "",
         "unsaved": "Ej sparad",
         "clearCanvas": "Rensa arbetsyta",
         "zoomIn": "Zooma in",
         "zoomOut": "Zooma ut",
         "fit": "Anpassa",
-        "export": "",
-        "import": "",
-        "exportSuccess": "",
-        "importSuccess": "",
-        "importError": ""
+        "export": "Exportera skriptet",
+        "import": "Importera skriptet",
+        "exportSuccess": "Skriptet har exporterats",
+        "importSuccess": "Skriptet har importerats",
+        "importError": "Det gick inte att importera skriptet"
       },
       "palette": {
         "title": "Nodpalett",
-        "search": "Sök noder...",
-        "categories": {
-          "trigger": "Utlösare",
-          "action": "Åtgärder",
-          "flow": "Flödeskontroll",
-          "math": "Matematik",
-          "logic": "Logik",
-          "data": "Data",
-          "bot": "Bot",
-          "world": "Värld"
-        }
-      },
-      "inspector": {
-        "title": "Nodinspektör",
-        "noSelection": "Välj en nod för att visa dess egenskaper",
-        "properties": "Egenskaper",
-        "nodeId": "Nod-ID",
-        "inputs": "Ingångar",
-        "outputs": "Utgångar",
-        "selectPlaceholder": "Välj..."
+        "search": "Sök noder..."
       },
       "logs": {
         "title": "Körloggar",
-        "clear": "Rensa loggar",
         "clearTitle": "Rensa loggar",
         "noLogs": "Inga loggar än. Kör skriptet för att se körloggar.",
         "entries_one": "{{count}} post",
@@ -373,321 +352,13 @@
       "contextMenu": {
         "duplicate": "Duplicera",
         "disconnectAll": "Koppla från alla",
+        "collapse": "",
+        "expand": "",
+        "mute": "",
+        "unmute": "",
+        "showPreview": "",
+        "hidePreview": "",
         "delete": "Ta bort"
-      },
-      "ports": {
-        "exec": "Exec",
-        "execIn": "Exec In",
-        "execOut": "Exec Ut",
-        "execTrue": "Sant",
-        "execFalse": "Falskt",
-        "execLoop": "Loop",
-        "execDone": "Klar"
-      },
-      "fields": {
-        "value": "Värde",
-        "interval": "Intervall (ms)",
-        "variableName": "Variabelnamn",
-        "level": "Loggnivå",
-        "levelDebug": "Felsökning",
-        "levelInfo": "Info",
-        "levelWarn": "Varning",
-        "levelError": "Fel",
-        "x": "X",
-        "y": "Y",
-        "z": "Z",
-        "min": "Min",
-        "max": "Max",
-        "degree": "Grad",
-        "operator": "Operator",
-        "operatorEqual": "Lika med (==)",
-        "operatorNotEqual": "Inte lika med (!=)",
-        "operatorLess": "Mindre än (<)",
-        "operatorLessEqual": "Mindre än eller lika med (<=)",
-        "operatorGreater": "Större än (>)",
-        "operatorGreaterEqual": "Större än eller lika med (>=)",
-        "comparison": "Jämförelse",
-        "comparisonEqual": "Lika med (==)",
-        "comparisonNotEqual": "Inte lika med (!=)",
-        "comparisonGreater": "Större än (>)",
-        "comparisonLess": "Mindre än (<)",
-        "comparisonGreaterEqual": "Större än eller lika med (>=)",
-        "comparisonLessEqual": "Mindre än eller lika med (<=)",
-        "formula": "Formel",
-        "message": "Meddelande",
-        "iterations": "Iterationer",
-        "minValue": "Minimumvärde",
-        "maxValue": "Maximumvärde",
-        "start": "Starta",
-        "end": "Slut",
-        "amount": "Antal",
-        "blockType": "Blocktyp",
-        "radius": "Radie",
-        "timeout": "Tidsgräns (ms)",
-        "slot": "Slot",
-        "count": "Antal",
-        "entityType": "Enhetstyp",
-        "smooth": "Jämn",
-        "enabled": "Aktiverad",
-        "hand": "Hand",
-        "handMain": "Huvudhand",
-        "handOff": "Bihand",
-        "face": "Sida",
-        "faceUp": "Upp",
-        "faceDown": "Ner",
-        "faceNorth": "Norr",
-        "faceSouth": "Söder",
-        "faceEast": "Öst",
-        "faceWest": "Väst",
-        "ticks": "Ticks",
-        "range": "Räckvidd",
-        "loopCount": "Loopräkning",
-        "open": "Öppna",
-        "delay": "Fördröjning (ms)"
-      },
-      "nodes": {
-        "trigger": {
-          "on_tick": {
-            "label": "Vid Tick",
-            "description": "Aktiveras vid varje speltick (20 gånger i sekunden)"
-          },
-          "on_join": {
-            "label": "Vid anslutning",
-            "description": "Aktiveras när boten ansluter till servern"
-          },
-          "on_chat": {
-            "label": "Vid chat",
-            "description": "Aktiveras när ett chattmeddelande tas emot"
-          },
-          "on_damage": {
-            "label": "Vid skada",
-            "description": "Aktiveras när boten tar skada"
-          },
-          "on_death": {
-            "label": "Vid död",
-            "description": "Aktiveras när boten dör"
-          },
-          "on_health_change": {
-            "label": "Vid ändrad hälsa",
-            "description": "Aktiveras när botens hälsa förändras"
-          },
-          "on_interval": {
-            "label": "Vid intervall",
-            "description": "Aktiveras med konfigurerbart tidsintervall"
-          }
-        },
-        "math": {
-          "add": {
-            "label": "Lägg till",
-            "description": "Adderar två tal"
-          },
-          "subtract": {
-            "label": "Subtrahera",
-            "description": "Subtraherar det andra talet från det första"
-          },
-          "multiply": {
-            "label": "Multiplicera",
-            "description": "Multiplicerar två tal"
-          },
-          "divide": {
-            "label": "Dividera",
-            "description": "Dividerar det första talet med det andra"
-          },
-          "modulo": {
-            "label": "Modulo",
-            "description": "Returnerar resten av divisionen"
-          },
-          "formula": {
-            "label": "Formel",
-            "description": "Utvärderar en matematisk formel"
-          },
-          "random": {
-            "label": "Slumpmässig",
-            "description": "Genererar ett slumpmässigt tal mellan min och max"
-          },
-          "clamp": {
-            "label": "Begränsa",
-            "description": "Begränsar ett värde mellan min och max"
-          },
-          "lerp": {
-            "label": "Lerp",
-            "description": "Linjär interpolation mellan två värden"
-          },
-          "bspline": {
-            "label": "B-spline",
-            "description": "Interpolerar med B-splinekurva"
-          }
-        },
-        "logic": {
-          "compare": {
-            "label": "Jämför",
-            "description": "Jämför två värden"
-          },
-          "and": {
-            "label": "Och",
-            "description": "Logiskt OCH mellan två booleska värden"
-          },
-          "or": {
-            "label": "Eller",
-            "description": "Logiskt ELLER av två booleska värden"
-          },
-          "not": {
-            "label": "Inte",
-            "description": "Logiskt INTE av ett booleskt värde"
-          },
-          "xor": {
-            "label": "XOR",
-            "description": "Logiskt XOR av två booleska värden"
-          }
-        },
-        "flow": {
-          "branch": {
-            "label": "Gren",
-            "description": "Villkorsgren baserat på ett booleskt värde"
-          },
-          "switch": {
-            "label": "Väljare",
-            "description": "Flervägsgren baserat på ett värde"
-          },
-          "loop": {
-            "label": "Loop",
-            "description": "Upprepar körning ett antal gånger"
-          },
-          "for_each": {
-            "label": "För varje",
-            "description": "Itererar över en samling"
-          },
-          "sequence": {
-            "label": "Sekvens",
-            "description": "Kör utgångar i följd"
-          },
-          "gate": {
-            "label": "Grind",
-            "description": "Kontrollerar flödet baserat på grindens tillstånd"
-          },
-          "debounce": {
-            "label": "Debounce",
-            "description": "Förhindrar snabb upprepad körning"
-          }
-        },
-        "action": {
-          "set_rotation": {
-            "label": "Ställ in rotation",
-            "description": "Ställer in botens rotation"
-          },
-          "look_at": {
-            "label": "Titta på",
-            "description": "Tittar på en position eller enhet"
-          },
-          "sneak": {
-            "label": "Smyg",
-            "description": "Växlar smygande"
-          },
-          "sprint": {
-            "label": "Spring",
-            "description": "Växlar sprint"
-          },
-          "jump": {
-            "label": "Hoppa",
-            "description": "Får boten att hoppa"
-          },
-          "attack": {
-            "label": "Attackera",
-            "description": "Attackerar en enhet"
-          },
-          "use_item": {
-            "label": "Använd föremål",
-            "description": "Använder föremålet i den angivna handen"
-          },
-          "pathfind_to": {
-            "label": "Vägfinn till",
-            "description": "Söker väg till en målposition"
-          },
-          "break_block": {
-            "label": "Slå sönder block",
-            "description": "Slår sönder ett block på en position"
-          },
-          "place_block": {
-            "label": "Placera block",
-            "description": "Placerar ett block på en position"
-          },
-          "select_slot": {
-            "label": "Välj slot",
-            "description": "Väljer en snabbtillgångs-slot"
-          },
-          "send_chat": {
-            "label": "Skicka chat",
-            "description": "Skickar ett chattmeddelande"
-          },
-          "wait": {
-            "label": "Vänta",
-            "description": "Väntar ett antal ticks"
-          },
-          "print": {
-            "label": "Skriv ut",
-            "description": "Loggar ett meddelande för felsökning"
-          },
-          "set_variable": {
-            "label": "Ställ in variabel",
-            "description": "Sparar ett värde i en variabel"
-          }
-        },
-        "data": {
-          "get_position": {
-            "label": "Hämta position",
-            "description": "Hämtar bottens nuvarande position"
-          },
-          "get_rotation": {
-            "label": "Hämta rotation",
-            "description": "Hämtar bottens nuvarande rotation"
-          },
-          "get_health": {
-            "label": "Hämta hälsa",
-            "description": "Hämtar bottens nuvarande hälsa"
-          },
-          "get_hunger": {
-            "label": "Hämta hunger",
-            "description": "Hämtar bottens nuvarande hungernivå"
-          },
-          "get_inventory": {
-            "label": "Hämta inventarie",
-            "description": "Hämtar ett objekt från inventariet"
-          },
-          "get_block": {
-            "label": "Hämta block",
-            "description": "Hämtar blocket på en position"
-          },
-          "find_entity": {
-            "label": "Hitta entitet",
-            "description": "Hittar en entitet av en viss typ i närheten"
-          },
-          "find_block": {
-            "label": "Hitta block",
-            "description": "Hittar ett block av en viss typ i närheten"
-          },
-          "get_variable": {
-            "label": "Hämta variabel",
-            "description": "Hämtar ett värde från en variabel"
-          }
-        },
-        "constant": {
-          "number": {
-            "label": "Nummer",
-            "description": "Ett konstant talvärde"
-          },
-          "string": {
-            "label": "Sträng",
-            "description": "Ett konstant textvärde"
-          },
-          "boolean": {
-            "label": "Boolean",
-            "description": "Ett konstant sann/falsk-värde"
-          },
-          "vector3": {
-            "label": "Vektor3",
-            "description": "En konstant 3D-position (X, Y, Z)"
-          }
-        }
       }
     }
   }

@@ -273,9 +273,6 @@
   "scripts": {
     "title": "Script Visuali",
     "description": "Crea script di automazione usando un editor visuale basato su nodi.",
-    "wipTitle": "Editor Script Visivo",
-    "wipDescription": "Crea script di automazione usando un editor visuale basato su nodi.",
-    "wipDetails": "Questa funzione è attualmente in sviluppo. Il nuovo editor visuale di script ti permetterà di creare potenti script di automazione utilizzando un'interfaccia drag-and-drop senza dover scrivere codice.",
     "createScript": "Crea Script",
     "createScriptTitle": "Crea Nuovo Script",
     "createScriptDescription": "Crea un nuovo script visuale per questa istanza. Gli script possono automatizzare le azioni del bot e rispondere agli eventi.",
@@ -289,12 +286,17 @@
     "noScripts": "Nessuno Script",
     "noScriptsDescription": "Crea il tuo primo script per automatizzare le azioni del bot usando l'editor visuale basato su nodi.",
     "createFirstScript": "Crea il tuo Primo Script",
-    "active": "Attivo",
+    "running": "In esecuzione",
+    "paused": "In pausa",
     "nodes": "nodi",
     "noDescription": "Nessuna descrizione",
     "edit": "Modifica",
-    "activate": "Attiva",
-    "deactivate": "Disattiva",
+    "pause": "Pausa",
+    "pauseSuccess": "",
+    "pauseError": "",
+    "resume": "Riprendi",
+    "resumeSuccess": "",
+    "resumeError": "",
     "delete": "Elimina",
     "deleteSuccess": "Script eliminato con successo",
     "deleteError": "Impossibile eliminare lo script",
@@ -303,7 +305,6 @@
     "activateSuccess": "Script attivato",
     "activateError": "Impossibile attivare lo script",
     "deactivateSuccess": "Script disattivato",
-    "deactivateError": "Impossibile disattivare lo script",
     "untitledScript": "Script senza titolo",
     "saveFirstBeforeActivating": "Salva prima lo script prima di attivarlo",
     "activating": "Attivazione script in corso...",
@@ -322,49 +323,27 @@
         "backToScripts": "Torna agli Script",
         "save": "Salva",
         "saveTooltip": "Salva script (Ctrl+S)",
-        "run": "Attiva",
-        "runTooltip": "Attiva script (F5)",
-        "deactivate": "Disattiva",
-        "deactivateTooltip": "Disattiva script",
-        "autoStart": "Avvio automatico",
-        "autoStartTooltip": "Attiva automaticamente questo script all'avvio dell'istanza",
+        "resume": "Riprendi",
+        "resumeTooltip": "",
+        "pause": "Pausa",
+        "pauseTooltip": "",
         "unsaved": "Non salvato",
         "clearCanvas": "Pulisci area di lavoro",
         "zoomIn": "Ingrandisci",
         "zoomOut": "Riduci",
         "fit": "Adatta",
-        "export": "",
-        "import": "",
-        "exportSuccess": "",
-        "importSuccess": "",
-        "importError": ""
+        "export": "Esporta script",
+        "import": "Importa script",
+        "exportSuccess": "Script esportato con successo",
+        "importSuccess": "Script importato con successo",
+        "importError": "Importazione dello script non riuscita"
       },
       "palette": {
         "title": "Palette Nodi",
-        "search": "Cerca nodi...",
-        "categories": {
-          "trigger": "Trigger",
-          "action": "Azioni",
-          "flow": "Controllo Flusso",
-          "math": "Matematica",
-          "logic": "Logica",
-          "data": "Dati",
-          "bot": "Bot",
-          "world": "Mondo"
-        }
-      },
-      "inspector": {
-        "title": "Ispettore Nodo",
-        "noSelection": "Seleziona un nodo per visualizzare le sue proprietà",
-        "properties": "Proprietà",
-        "nodeId": "ID Nodo",
-        "inputs": "Ingressi",
-        "outputs": "Uscite",
-        "selectPlaceholder": "Seleziona..."
+        "search": "Cerca nodi..."
       },
       "logs": {
         "title": "Log di Esecuzione",
-        "clear": "Pulisci log",
         "clearTitle": "Pulisci log",
         "noLogs": "Nessun log presente. Esegui lo script per vedere i log di esecuzione.",
         "entries_one": "{{count}} voce",
@@ -373,321 +352,13 @@
       "contextMenu": {
         "duplicate": "Duplica",
         "disconnectAll": "Disconnetti Tutto",
+        "collapse": "",
+        "expand": "",
+        "mute": "",
+        "unmute": "",
+        "showPreview": "",
+        "hidePreview": "",
         "delete": "Elimina"
-      },
-      "ports": {
-        "exec": "Exec",
-        "execIn": "Exec In",
-        "execOut": "Exec Out",
-        "execTrue": "Vero",
-        "execFalse": "Falso",
-        "execLoop": "Ciclo",
-        "execDone": "Fatto"
-      },
-      "fields": {
-        "value": "Valore",
-        "interval": "Intervallo (ms)",
-        "variableName": "Nome Variabile",
-        "level": "Livello di Log",
-        "levelDebug": "Debug",
-        "levelInfo": "Info",
-        "levelWarn": "Avviso",
-        "levelError": "Errore",
-        "x": "X",
-        "y": "Y",
-        "z": "Z",
-        "min": "Min",
-        "max": "Max",
-        "degree": "Grado",
-        "operator": "Operatore",
-        "operatorEqual": "Uguale (==)",
-        "operatorNotEqual": "Diverso (!=)",
-        "operatorLess": "Minore (<)",
-        "operatorLessEqual": "Minore o Uguale (<=)",
-        "operatorGreater": "Maggiore (>)",
-        "operatorGreaterEqual": "Maggiore o Uguale (>=)",
-        "comparison": "Confronto",
-        "comparisonEqual": "Uguale (==)",
-        "comparisonNotEqual": "Diverso (!=)",
-        "comparisonGreater": "Maggiore (>)",
-        "comparisonLess": "Minore (<)",
-        "comparisonGreaterEqual": "Maggiore o Uguale (>=)",
-        "comparisonLessEqual": "Minore o Uguale (<=)",
-        "formula": "Formula",
-        "message": "Messaggio",
-        "iterations": "Iterazioni",
-        "minValue": "Valore Min",
-        "maxValue": "Valore Max",
-        "start": "Avvia",
-        "end": "Fine",
-        "amount": "Quantità",
-        "blockType": "Tipo di Blocco",
-        "radius": "Raggio",
-        "timeout": "Timeout (ms)",
-        "slot": "Slot",
-        "count": "Conteggio",
-        "entityType": "Tipo Entità",
-        "smooth": "Liscio",
-        "enabled": "Abilitato",
-        "hand": "Mano",
-        "handMain": "Mano Principale",
-        "handOff": "Seconda Mano",
-        "face": "Faccia",
-        "faceUp": "Su",
-        "faceDown": "Giù",
-        "faceNorth": "Nord",
-        "faceSouth": "Sud",
-        "faceEast": "Est",
-        "faceWest": "Ovest",
-        "ticks": "Tick",
-        "range": "Raggio",
-        "loopCount": "Conteggio Cicli",
-        "open": "Apri",
-        "delay": "Ritardo (ms)"
-      },
-      "nodes": {
-        "trigger": {
-          "on_tick": {
-            "label": "Allo Scatto",
-            "description": "Si attiva ad ogni tick di gioco (20 volte al secondo)"
-          },
-          "on_join": {
-            "label": "All'ingresso",
-            "description": "Si attiva quando il bot si connette al server"
-          },
-          "on_chat": {
-            "label": "In Chat",
-            "description": "Si attiva quando si riceve un messaggio in chat"
-          },
-          "on_damage": {
-            "label": "Quando Danni",
-            "description": "Si attiva quando il bot subisce danni"
-          },
-          "on_death": {
-            "label": "Alla Morte",
-            "description": "Si attiva quando il bot muore"
-          },
-          "on_health_change": {
-            "label": "Al Cambio Salute",
-            "description": "Si attiva quando la salute del bot cambia"
-          },
-          "on_interval": {
-            "label": "A Intervallo",
-            "description": "Si attiva a un intervallo di tempo configurabile"
-          }
-        },
-        "math": {
-          "add": {
-            "label": "Aggiungi",
-            "description": "Somma due numeri"
-          },
-          "subtract": {
-            "label": "Sottrai",
-            "description": "Sottrae il secondo numero dal primo"
-          },
-          "multiply": {
-            "label": "Moltiplica",
-            "description": "Moltiplica due numeri tra loro"
-          },
-          "divide": {
-            "label": "Dividi",
-            "description": "Divide il primo numero per il secondo"
-          },
-          "modulo": {
-            "label": "Modulo",
-            "description": "Restituisce il resto della divisione"
-          },
-          "formula": {
-            "label": "Formula",
-            "description": "Valuta una formula matematica"
-          },
-          "random": {
-            "label": "Casuale",
-            "description": "Genera un numero casuale tra minimo e massimo"
-          },
-          "clamp": {
-            "label": "Clamp",
-            "description": "Limita un valore tra minimo e massimo"
-          },
-          "lerp": {
-            "label": "Interpolazione lineare",
-            "description": "Interpolazione lineare tra due valori"
-          },
-          "bspline": {
-            "label": "B-Spline",
-            "description": "Interpola usando la curva B-spline"
-          }
-        },
-        "logic": {
-          "compare": {
-            "label": "Confronta",
-            "description": "Confronta due valori"
-          },
-          "and": {
-            "label": "E",
-            "description": "AND logico di due booleani"
-          },
-          "or": {
-            "label": "O",
-            "description": "OR logico di due booleani"
-          },
-          "not": {
-            "label": "Non",
-            "description": "NOT logico di un booleano"
-          },
-          "xor": {
-            "label": "XOR",
-            "description": "XOR logico di due booleani"
-          }
-        },
-        "flow": {
-          "branch": {
-            "label": "Diramazione",
-            "description": "Diramazione condizionale basata su un booleano"
-          },
-          "switch": {
-            "label": "Switch",
-            "description": "Diramazione multipla basata su un valore"
-          },
-          "loop": {
-            "label": "Ciclo",
-            "description": "Ripete l'esecuzione un certo numero di volte"
-          },
-          "for_each": {
-            "label": "Per Ognuno",
-            "description": "Itera su una collezione"
-          },
-          "sequence": {
-            "label": "Sequenza",
-            "description": "Esegue le uscite in sequenza"
-          },
-          "gate": {
-            "label": "Cancello",
-            "description": "Controlla il flusso in base allo stato del cancello"
-          },
-          "debounce": {
-            "label": "Debounce",
-            "description": "Previene esecuzioni rapide ripetute"
-          }
-        },
-        "action": {
-          "set_rotation": {
-            "label": "Imposta Rotazione",
-            "description": "Imposta la rotazione del bot"
-          },
-          "look_at": {
-            "label": "Guarda verso",
-            "description": "Guarda una posizione o entità"
-          },
-          "sneak": {
-            "label": "Accovacciati",
-            "description": "Attiva/disattiva sneaking"
-          },
-          "sprint": {
-            "label": "Scatta",
-            "description": "Attiva/disattiva corsa"
-          },
-          "jump": {
-            "label": "Salta",
-            "description": "Fa saltare il bot"
-          },
-          "attack": {
-            "label": "Attacca",
-            "description": "Attacca un'entità"
-          },
-          "use_item": {
-            "label": "Usa Oggetto",
-            "description": "Usa l'oggetto nella mano specificata"
-          },
-          "pathfind_to": {
-            "label": "Trova percorso verso",
-            "description": "Trova percorso verso una posizione di destinazione"
-          },
-          "break_block": {
-            "label": "Rompi Blocco",
-            "description": "Rompe un blocco in una posizione"
-          },
-          "place_block": {
-            "label": "Posiziona Blocco",
-            "description": "Posiziona un blocco in una posizione"
-          },
-          "select_slot": {
-            "label": "Seleziona Slot",
-            "description": "Seleziona uno slot della hotbar"
-          },
-          "send_chat": {
-            "label": "Invia Chat",
-            "description": "Invia un messaggio in chat"
-          },
-          "wait": {
-            "label": "Attendi",
-            "description": "Attende un certo numero di tick"
-          },
-          "print": {
-            "label": "Stampa",
-            "description": "Scrive un messaggio per il debug"
-          },
-          "set_variable": {
-            "label": "Imposta Variabile",
-            "description": "Memorizza un valore in una variabile"
-          }
-        },
-        "data": {
-          "get_position": {
-            "label": "Ottieni Posizione",
-            "description": "Ottiene la posizione attuale del bot"
-          },
-          "get_rotation": {
-            "label": "Ottieni Rotazione",
-            "description": "Ottiene la rotazione attuale del bot"
-          },
-          "get_health": {
-            "label": "Ottieni Salute",
-            "description": "Ottiene la salute attuale del bot"
-          },
-          "get_hunger": {
-            "label": "Ottieni Fame",
-            "description": "Ottiene il livello di fame attuale del bot"
-          },
-          "get_inventory": {
-            "label": "Ottieni Inventario",
-            "description": "Ottiene un oggetto dall'inventario"
-          },
-          "get_block": {
-            "label": "Ottieni Blocco",
-            "description": "Ottiene il blocco in una posizione"
-          },
-          "find_entity": {
-            "label": "Trova Entità",
-            "description": "Trova un'entità di uno specifico tipo nelle vicinanze"
-          },
-          "find_block": {
-            "label": "Trova Blocco",
-            "description": "Trova un blocco di uno specifico tipo nelle vicinanze"
-          },
-          "get_variable": {
-            "label": "Ottieni Variabile",
-            "description": "Recupera un valore da una variabile"
-          }
-        },
-        "constant": {
-          "number": {
-            "label": "Numero",
-            "description": "Un valore numerico costante"
-          },
-          "string": {
-            "label": "Stringa",
-            "description": "Un valore di testo costante"
-          },
-          "boolean": {
-            "label": "Booleano",
-            "description": "Un valore vero/falso costante"
-          },
-          "vector3": {
-            "label": "Vettore3",
-            "description": "Una posizione 3D costante (X, Y, Z)"
-          }
-        }
       }
     }
   }

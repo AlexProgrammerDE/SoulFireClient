@@ -273,9 +273,6 @@
   "scripts": {
     "title": "Görsel Scriptler",
     "description": "Görsel bir düğüm tabanlı düzenleyici kullanarak otomasyon scriptleri oluşturun.",
-    "wipTitle": "Görsel Script Editörü",
-    "wipDescription": "Görsel bir düğüm tabanlı düzenleyici kullanarak otomasyon scriptleri oluşturun.",
-    "wipDetails": "Bu özellik şu anda geliştirme aşamasında. Yeni görsel script editörüyle, kod yazmadan sürükle-bırak arayüzüyle güçlü otomasyon scriptleri oluşturabileceksiniz.",
     "createScript": "Script Oluştur",
     "createScriptTitle": "Yeni Script Oluştur",
     "createScriptDescription": "Bu örnek için yeni bir görsel script oluşturun. Scriptler, botun eylemlerini otomatikleştirebilir ve olaylara yanıt verebilir.",
@@ -289,12 +286,17 @@
     "noScripts": "Henüz Script Yok",
     "noScriptsDescription": "Görsel düğüm tabanlı düzenleyiciyi kullanarak bot eylemlerini otomatikleştirmek için ilk scriptinizi oluşturun.",
     "createFirstScript": "İlk Scriptinizi Oluşturun",
-    "active": "Aktif",
+    "running": "Çalışıyor",
+    "paused": "Duraklatıldı",
     "nodes": "düğümler",
     "noDescription": "Açıklama yok",
     "edit": "Düzenle",
-    "activate": "Aktifleştir",
-    "deactivate": "Devre Dışı Bırak",
+    "pause": "Duraklat",
+    "pauseSuccess": "",
+    "pauseError": "",
+    "resume": "Devam et",
+    "resumeSuccess": "",
+    "resumeError": "",
     "delete": "Sil",
     "deleteSuccess": "Script başarıyla silindi",
     "deleteError": "Script silinemedi",
@@ -303,7 +305,6 @@
     "activateSuccess": "Script aktifleştirildi",
     "activateError": "Script aktifleştirilemedi",
     "deactivateSuccess": "Script devre dışı bırakıldı",
-    "deactivateError": "Script devre dışı bırakılırken hata oluştu",
     "untitledScript": "Başlıksız Script",
     "saveFirstBeforeActivating": "Aktifleştirmeden önce scripti kaydedin",
     "activating": "Komut dosyası etkinleştiriliyor...",
@@ -322,49 +323,27 @@
         "backToScripts": "Scriptlere Geri Dön",
         "save": "Kaydet",
         "saveTooltip": "Scripti kaydet (Ctrl+S)",
-        "run": "Aktifleştir",
-        "runTooltip": "Komut dosyasını etkinleştir (F5)",
-        "deactivate": "Devre Dışı Bırak",
-        "deactivateTooltip": "Komut dosyasını devre dışı bırak",
-        "autoStart": "Otomatik başlat",
-        "autoStartTooltip": "Bu komut dosyasını örnek başladığında otomatik olarak etkinleştir",
+        "resume": "Devam et",
+        "resumeTooltip": "",
+        "pause": "Duraklat",
+        "pauseTooltip": "",
         "unsaved": "Kaydedilmedi",
         "clearCanvas": "Tuvali temizle",
         "zoomIn": "Yakınlaştır",
         "zoomOut": "Uzaklaştır",
         "fit": "Sığdır",
-        "export": "",
-        "import": "",
-        "exportSuccess": "",
-        "importSuccess": "",
-        "importError": ""
+        "export": "Scripti dışa aktar",
+        "import": "Scripti içe aktar",
+        "exportSuccess": "Script başarıyla dışa aktarıldı",
+        "importSuccess": "Script başarıyla içe aktarıldı",
+        "importError": "Script içe aktarılamadı"
       },
       "palette": {
         "title": "Düğüm Paleti",
-        "search": "Düğüm ara...",
-        "categories": {
-          "trigger": "Tetikleyiciler",
-          "action": "İşlemler",
-          "flow": "Akış Kontrolü",
-          "math": "Matematik",
-          "logic": "Mantık",
-          "data": "Veri",
-          "bot": "Bot",
-          "world": "Dünya"
-        }
-      },
-      "inspector": {
-        "title": "Düğüm Denetçisi",
-        "noSelection": "Özelliklerini görmek için bir düğüm seçin",
-        "properties": "Özellikler",
-        "nodeId": "Düğüm Kimliği",
-        "inputs": "Girdiler",
-        "outputs": "Çıktılar",
-        "selectPlaceholder": "Seç..."
+        "search": "Düğüm ara..."
       },
       "logs": {
         "title": "Yürütme Günlükleri",
-        "clear": "Günlükleri temizle",
         "clearTitle": "Günlükleri temizle",
         "noLogs": "Henüz günlük yok. Yürütme günlüklerini görmek için scripti çalıştırın.",
         "entries_one": "{{count}} giriş",
@@ -373,321 +352,13 @@
       "contextMenu": {
         "duplicate": "Çoğalt",
         "disconnectAll": "Tüm bağlantıları kes",
+        "collapse": "",
+        "expand": "",
+        "mute": "",
+        "unmute": "",
+        "showPreview": "",
+        "hidePreview": "",
         "delete": "Sil"
-      },
-      "ports": {
-        "exec": "Yürüt",
-        "execIn": "Yürüt Girişi",
-        "execOut": "Yürüt Çıkışı",
-        "execTrue": "Doğru",
-        "execFalse": "Yanlış",
-        "execLoop": "Döngü",
-        "execDone": "Bitti"
-      },
-      "fields": {
-        "value": "Değer",
-        "interval": "Aralık (ms)",
-        "variableName": "Değişken Adı",
-        "level": "Günlük Seviyesi",
-        "levelDebug": "Hata Ayıklama",
-        "levelInfo": "Bilgi",
-        "levelWarn": "Uyarı",
-        "levelError": "Hata",
-        "x": "X",
-        "y": "Y",
-        "z": "Z",
-        "min": "Min",
-        "max": "Maks",
-        "degree": "Derece",
-        "operator": "Operatör",
-        "operatorEqual": "Eşit (==)",
-        "operatorNotEqual": "Eşit Değil (!=)",
-        "operatorLess": "Küçüktür (<)",
-        "operatorLessEqual": "Küçük veya Eşit (<=)",
-        "operatorGreater": "Büyüktür (>)",
-        "operatorGreaterEqual": "Büyük veya Eşit (>=)",
-        "comparison": "Karşılaştırma",
-        "comparisonEqual": "Eşit (==)",
-        "comparisonNotEqual": "Eşit Değil (!=)",
-        "comparisonGreater": "Büyüktür (>)",
-        "comparisonLess": "Küçüktür (<)",
-        "comparisonGreaterEqual": "Büyük veya Eşit (>=)",
-        "comparisonLessEqual": "Küçük veya Eşit (<=)",
-        "formula": "Formül",
-        "message": "Mesaj",
-        "iterations": "İterasyonlar",
-        "minValue": "Minimum Değer",
-        "maxValue": "Maksimum Değer",
-        "start": "Başlat",
-        "end": "Bitiş",
-        "amount": "Miktar",
-        "blockType": "Blok Türü",
-        "radius": "Yarıçap",
-        "timeout": "Zaman Aşımı (ms)",
-        "slot": "Yuva",
-        "count": "Sayı",
-        "entityType": "Varlık Türü",
-        "smooth": "Yumuşak",
-        "enabled": "Etkin",
-        "hand": "El",
-        "handMain": "Ana El",
-        "handOff": "Diğer El",
-        "face": "Yüz",
-        "faceUp": "Yukarı",
-        "faceDown": "Aşağı",
-        "faceNorth": "Kuzey",
-        "faceSouth": "Güney",
-        "faceEast": "Doğu",
-        "faceWest": "Batı",
-        "ticks": "Tik",
-        "range": "Menzil",
-        "loopCount": "Döngü Sayısı",
-        "open": "Açık",
-        "delay": "Gecikme (ms)"
-      },
-      "nodes": {
-        "trigger": {
-          "on_tick": {
-            "label": "Tik Başlatıldı",
-            "description": "Her oyun tikinde tetiklenir (saniyede 20 kez)"
-          },
-          "on_join": {
-            "label": "Katıldığında",
-            "description": "Bot sunucuya katıldığında tetiklenir"
-          },
-          "on_chat": {
-            "label": "Sohbet",
-            "description": "Bir sohbet mesajı alındığında tetiklenir"
-          },
-          "on_damage": {
-            "label": "Hasar Alındı",
-            "description": "Bot hasar aldığında tetiklenir"
-          },
-          "on_death": {
-            "label": "Öldüğünde",
-            "description": "Bot öldüğünde tetiklenir"
-          },
-          "on_health_change": {
-            "label": "Can Değişimi",
-            "description": "Botun canı değiştiğinde tetiklenir"
-          },
-          "on_interval": {
-            "label": "Aralıklı",
-            "description": "Ayarlanabilir zaman aralığında tetiklenir"
-          }
-        },
-        "math": {
-          "add": {
-            "label": "Ekle",
-            "description": "İki sayıyı toplar"
-          },
-          "subtract": {
-            "label": "Çıkar",
-            "description": "İkinci sayıyı ilk sayıdan çıkarır"
-          },
-          "multiply": {
-            "label": "Çarp",
-            "description": "İki sayıyı çarpar"
-          },
-          "divide": {
-            "label": "Böl",
-            "description": "İlk sayıyı ikinci sayıya böler"
-          },
-          "modulo": {
-            "label": "Modül",
-            "description": "Bölme işleminin kalanını döndürür"
-          },
-          "formula": {
-            "label": "Formül",
-            "description": "Matematiksel bir formülü değerlendirir"
-          },
-          "random": {
-            "label": "Rastgele",
-            "description": "Min ve maks arasında rastgele bir sayı üretir"
-          },
-          "clamp": {
-            "label": "Kısıtla",
-            "description": "Bir değeri min ve maks arasında kısıtlar"
-          },
-          "lerp": {
-            "label": "Doğrusal aralık",
-            "description": "İki değer arasında doğrusal aralık"
-          },
-          "bspline": {
-            "label": "B-Spline",
-            "description": "B-spline eğrisi kullanılarak aralıklanır"
-          }
-        },
-        "logic": {
-          "compare": {
-            "label": "Karşılaştır",
-            "description": "İki değeri karşılaştırır"
-          },
-          "and": {
-            "label": "Ve",
-            "description": "İki boolean değerin mantıksal VE'si"
-          },
-          "or": {
-            "label": "Veya",
-            "description": "İki boolean değerin mantıksal VEYA'sı"
-          },
-          "not": {
-            "label": "Değil",
-            "description": "Bir boolean değerin mantıksal DEĞİL'i"
-          },
-          "xor": {
-            "label": "XOR",
-            "description": "İki boolean değerin mantıksal XOR'u"
-          }
-        },
-        "flow": {
-          "branch": {
-            "label": "Dallanma",
-            "description": "Bir boolean değerine göre koşullu dallanma"
-          },
-          "switch": {
-            "label": "Anahtar",
-            "description": "Bir değere göre çoklu yol dallanması"
-          },
-          "loop": {
-            "label": "Döngü",
-            "description": "Birden fazla kez yürütmeyi tekrarlar"
-          },
-          "for_each": {
-            "label": "Her Biri İçin",
-            "description": "Bir koleksiyon üzerinde yineleme yapar"
-          },
-          "sequence": {
-            "label": "Sıralama",
-            "description": "Çıktıları sırayla yürütür"
-          },
-          "gate": {
-            "label": "Kapı",
-            "description": "Bir kapı durumu temelinde akışı kontrol eder"
-          },
-          "debounce": {
-            "label": "Yineleme Engelleme",
-            "description": "Hızlı tekrar yürütmeyi önler"
-          }
-        },
-        "action": {
-          "set_rotation": {
-            "label": "Rotasyonu Ayarla",
-            "description": "Botun rotasyonunu ayarlar"
-          },
-          "look_at": {
-            "label": "Bak",
-            "description": "Bir konuma veya varlığa bakar"
-          },
-          "sneak": {
-            "label": "Yavaşla",
-            "description": "Sürünmeyi değiştirir"
-          },
-          "sprint": {
-            "label": "Koş",
-            "description": "Koşmayı değiştirir"
-          },
-          "jump": {
-            "label": "Zıpla",
-            "description": "Botun zıplamasını sağlar"
-          },
-          "attack": {
-            "label": "Saldır",
-            "description": "Bir varlığa saldırır"
-          },
-          "use_item": {
-            "label": "Eşyayı Kullan",
-            "description": "Belirtilen eldeki eşyayı kullanır"
-          },
-          "pathfind_to": {
-            "label": "Yola Git",
-            "description": "Hedef pozisyona yol bulur"
-          },
-          "break_block": {
-            "label": "Blok Kır",
-            "description": "Bir pozisyondaki bloğu kırar"
-          },
-          "place_block": {
-            "label": "Blok Koy",
-            "description": "Bir pozisyona blok koyar"
-          },
-          "select_slot": {
-            "label": "Yuva Seç",
-            "description": "Sıcak çubuk yuvası seçer"
-          },
-          "send_chat": {
-            "label": "Sohbet Gönder",
-            "description": "Bir sohbet mesajı gönderir"
-          },
-          "wait": {
-            "label": "Bekle",
-            "description": "Belirli bir süre boyunca bekler"
-          },
-          "print": {
-            "label": "Yazdır",
-            "description": "Hata ayıklama için bir mesaj kaydeder"
-          },
-          "set_variable": {
-            "label": "Değişken Ayarla",
-            "description": "Bir değeri bir değişkende saklar"
-          }
-        },
-        "data": {
-          "get_position": {
-            "label": "Konum Al",
-            "description": "Botun mevcut konumunu alır"
-          },
-          "get_rotation": {
-            "label": "Dönüş Al",
-            "description": "Botun mevcut dönüşünü alır"
-          },
-          "get_health": {
-            "label": "Canı Al",
-            "description": "Botun mevcut canını alır"
-          },
-          "get_hunger": {
-            "label": "Açlık Al",
-            "description": "Botun mevcut açlık seviyesini alır"
-          },
-          "get_inventory": {
-            "label": "Envanteri Al",
-            "description": "Envanterden bir eşya alır"
-          },
-          "get_block": {
-            "label": "Blok Al",
-            "description": "Bir konumdaki bloğu alır"
-          },
-          "find_entity": {
-            "label": "Varlık Bul",
-            "description": "Yakındaki belirli bir türdeki bir varlığı bulur"
-          },
-          "find_block": {
-            "label": "Blok Bul",
-            "description": "Yakındaki belirli bir türdeki bir bloğu bulur"
-          },
-          "get_variable": {
-            "label": "Değişken Al",
-            "description": "Bir değişkenden bir değer alır"
-          }
-        },
-        "constant": {
-          "number": {
-            "label": "Sayı",
-            "description": "Sabit bir sayı değeri"
-          },
-          "string": {
-            "label": "Metin",
-            "description": "Sabit bir metin değeri"
-          },
-          "boolean": {
-            "label": "Mantıksal",
-            "description": "Sabit bir doğru/yanlış değeri"
-          },
-          "vector3": {
-            "label": "Vektör3",
-            "description": "Sabit bir 3B konum (X, Y, Z)"
-          }
-        }
       }
     }
   }

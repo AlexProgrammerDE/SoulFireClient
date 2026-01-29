@@ -273,9 +273,6 @@
   "scripts": {
     "title": "Scripts Visuales",
     "description": "Cree scripts de automatización usando un editor visual basado en nodos.",
-    "wipTitle": "Editor visual de scripts",
-    "wipDescription": "Cree scripts de automatización usando un editor visual basado en nodos.",
-    "wipDetails": "Esta función está actualmente en desarrollo. El nuevo editor visual de scripts te permitirá crear potentes scripts de automatización utilizando una interfaz de arrastrar y soltar sin escribir código.",
     "createScript": "Crear Script",
     "createScriptTitle": "Crear Nuevo Script",
     "createScriptDescription": "Cree un nuevo script visual para esta instancia. Los scripts pueden automatizar acciones del bot y responder a eventos.",
@@ -289,12 +286,17 @@
     "noScripts": "Aún no hay Scripts",
     "noScriptsDescription": "Crea tu primer script para automatizar acciones del bot usando el editor visual basado en nodos.",
     "createFirstScript": "Crea tu Primer Script",
-    "active": "Activo",
+    "running": "En ejecución",
+    "paused": "Pausado",
     "nodes": "nodos",
     "noDescription": "Sin descripción",
     "edit": "Editar",
-    "activate": "Activar",
-    "deactivate": "Desactivar",
+    "pause": "Pausar",
+    "pauseSuccess": "",
+    "pauseError": "",
+    "resume": "Reanudar",
+    "resumeSuccess": "",
+    "resumeError": "",
     "delete": "Eliminar",
     "deleteSuccess": "Script eliminado con éxito",
     "deleteError": "Error al eliminar el script",
@@ -303,7 +305,6 @@
     "activateSuccess": "Script activado",
     "activateError": "Error al activar el script",
     "deactivateSuccess": "Script desactivado",
-    "deactivateError": "Error al desactivar el script",
     "untitledScript": "Script sin título",
     "saveFirstBeforeActivating": "Guarda el script primero antes de activarlo",
     "activating": "Activando script...",
@@ -322,49 +323,27 @@
         "backToScripts": "Volver a Scripts",
         "save": "Guardar",
         "saveTooltip": "Guardar script (Ctrl+S)",
-        "run": "Activar",
-        "runTooltip": "Activar script (F5)",
-        "deactivate": "Desactivar",
-        "deactivateTooltip": "Desactivar script",
-        "autoStart": "Auto-inicio",
-        "autoStartTooltip": "Activar automáticamente este script cuando se inicie la instancia",
+        "resume": "Reanudar",
+        "resumeTooltip": "",
+        "pause": "Pausar",
+        "pauseTooltip": "",
         "unsaved": "Sin guardar",
         "clearCanvas": "Limpiar lienzo",
         "zoomIn": "Acercar",
         "zoomOut": "Alejar",
         "fit": "Ajustar",
-        "export": "",
-        "import": "",
-        "exportSuccess": "",
-        "importSuccess": "",
-        "importError": ""
+        "export": "Exportar script",
+        "import": "Importar script",
+        "exportSuccess": "Script exportado correctamente",
+        "importSuccess": "Script importado correctamente",
+        "importError": "Error al importar el script"
       },
       "palette": {
         "title": "Paleta de Nodos",
-        "search": "Buscar nodos...",
-        "categories": {
-          "trigger": "Disparadores",
-          "action": "Acciones",
-          "flow": "Control de Flujo",
-          "math": "Matemáticas",
-          "logic": "Lógica",
-          "data": "Datos",
-          "bot": "Bot",
-          "world": "Mundo"
-        }
-      },
-      "inspector": {
-        "title": "Inspector de Nodo",
-        "noSelection": "Seleccione un nodo para ver sus propiedades",
-        "properties": "Propiedades",
-        "nodeId": "ID del Nodo",
-        "inputs": "Entradas",
-        "outputs": "Salidas",
-        "selectPlaceholder": "Seleccionar..."
+        "search": "Buscar nodos..."
       },
       "logs": {
         "title": "Registros de Ejecución",
-        "clear": "Borrar registros",
         "clearTitle": "Borrar registros",
         "noLogs": "Aún no hay registros. Ejecuta el script para ver los registros de ejecución.",
         "entries_one": "{{count}} entrada",
@@ -373,321 +352,13 @@
       "contextMenu": {
         "duplicate": "Duplicar",
         "disconnectAll": "Desconectar Todo",
+        "collapse": "",
+        "expand": "",
+        "mute": "",
+        "unmute": "",
+        "showPreview": "",
+        "hidePreview": "",
         "delete": "Eliminar"
-      },
-      "ports": {
-        "exec": "Ejecutar",
-        "execIn": "Ejecutar Entrada",
-        "execOut": "Ejecutar Salida",
-        "execTrue": "Verdadero",
-        "execFalse": "Falso",
-        "execLoop": "Bucle",
-        "execDone": "Hecho"
-      },
-      "fields": {
-        "value": "Valor",
-        "interval": "Intervalo (ms)",
-        "variableName": "Nombre de la Variable",
-        "level": "Nivel de Registro",
-        "levelDebug": "Depuración",
-        "levelInfo": "Información",
-        "levelWarn": "Advertencia",
-        "levelError": "Error",
-        "x": "X",
-        "y": "Y",
-        "z": "Z",
-        "min": "Mínimo",
-        "max": "Máximo",
-        "degree": "Grado",
-        "operator": "Operador",
-        "operatorEqual": "Igual (==)",
-        "operatorNotEqual": "Distinto (!=)",
-        "operatorLess": "Menor que (<)",
-        "operatorLessEqual": "Menor o igual (<=)",
-        "operatorGreater": "Mayor que (>)",
-        "operatorGreaterEqual": "Mayor o igual (>=)",
-        "comparison": "Comparación",
-        "comparisonEqual": "Igual (==)",
-        "comparisonNotEqual": "Distinto (!=)",
-        "comparisonGreater": "Mayor que (>)",
-        "comparisonLess": "Menor que (<)",
-        "comparisonGreaterEqual": "Mayor o igual (>=)",
-        "comparisonLessEqual": "Menor o igual (<=)",
-        "formula": "Fórmula",
-        "message": "Mensaje",
-        "iterations": "Iteraciones",
-        "minValue": "Valor Mínimo",
-        "maxValue": "Valor Máximo",
-        "start": "Iniciar",
-        "end": "Fin",
-        "amount": "Cantidad",
-        "blockType": "Tipo de Bloque",
-        "radius": "Radio",
-        "timeout": "Tiempo de espera (ms)",
-        "slot": "Ranura",
-        "count": "Contar",
-        "entityType": "Tipo de Entidad",
-        "smooth": "Suave",
-        "enabled": "Habilitado",
-        "hand": "Mano",
-        "handMain": "Mano Principal",
-        "handOff": "Mano Secundaria",
-        "face": "Cara",
-        "faceUp": "Arriba",
-        "faceDown": "Abajo",
-        "faceNorth": "Norte",
-        "faceSouth": "Sur",
-        "faceEast": "Este",
-        "faceWest": "Oeste",
-        "ticks": "Ticks",
-        "range": "Rango",
-        "loopCount": "Repetición de Bucle",
-        "open": "Abrir",
-        "delay": "Retraso (ms)"
-      },
-      "nodes": {
-        "trigger": {
-          "on_tick": {
-            "label": "Al Tick",
-            "description": "Dispara en cada tick del juego (20 veces por segundo)"
-          },
-          "on_join": {
-            "label": "Al Unirse",
-            "description": "Se activa cuando el bot se une al servidor"
-          },
-          "on_chat": {
-            "label": "Al Chat",
-            "description": "Se activa al recibir un mensaje de chat"
-          },
-          "on_damage": {
-            "label": "Al Daño",
-            "description": "Se activa cuando el bot recibe daño"
-          },
-          "on_death": {
-            "label": "Al Morir",
-            "description": "Se activa cuando el bot muere"
-          },
-          "on_health_change": {
-            "label": "Al Cambiar Salud",
-            "description": "Se activa cuando la salud del bot cambia"
-          },
-          "on_interval": {
-            "label": "Al Intervalo",
-            "description": "Se activa en un intervalo de tiempo configurable"
-          }
-        },
-        "math": {
-          "add": {
-            "label": "Añadir",
-            "description": "Suma dos números"
-          },
-          "subtract": {
-            "label": "Restar",
-            "description": "Resta el segundo número del primero"
-          },
-          "multiply": {
-            "label": "Multiplicar",
-            "description": "Multiplica dos números"
-          },
-          "divide": {
-            "label": "Dividir",
-            "description": "Divide el primer número por el segundo"
-          },
-          "modulo": {
-            "label": "Módulo",
-            "description": "Devuelve el resto de la división"
-          },
-          "formula": {
-            "label": "Fórmula",
-            "description": "Evalúa una fórmula matemática"
-          },
-          "random": {
-            "label": "Aleatorio",
-            "description": "Genera un número aleatorio entre el mínimo y el máximo"
-          },
-          "clamp": {
-            "label": "Limitar",
-            "description": "Limita un valor entre el mínimo y el máximo"
-          },
-          "lerp": {
-            "label": "Interpolar",
-            "description": "Interpolación lineal entre dos valores"
-          },
-          "bspline": {
-            "label": "B-Spline",
-            "description": "Interpola usando una curva B-spline"
-          }
-        },
-        "logic": {
-          "compare": {
-            "label": "Comparar",
-            "description": "Compara dos valores"
-          },
-          "and": {
-            "label": "Y",
-            "description": "AND lógico de dos booleanos"
-          },
-          "or": {
-            "label": "O",
-            "description": "OR lógico de dos booleanos"
-          },
-          "not": {
-            "label": "No",
-            "description": "NOT lógico de un booleano"
-          },
-          "xor": {
-            "label": "XOR",
-            "description": "XOR lógico de dos booleanos"
-          }
-        },
-        "flow": {
-          "branch": {
-            "label": "Rama",
-            "description": "Rama condicional basada en un booleano"
-          },
-          "switch": {
-            "label": "Switch",
-            "description": "Rama múltiple basada en un valor"
-          },
-          "loop": {
-            "label": "Bucle",
-            "description": "Repite la ejecución un número de veces"
-          },
-          "for_each": {
-            "label": "Para cada uno",
-            "description": "Itera sobre una colección"
-          },
-          "sequence": {
-            "label": "Secuencia",
-            "description": "Ejecuta salidas en secuencia"
-          },
-          "gate": {
-            "label": "Compuerta",
-            "description": "Controla el flujo según el estado de la compuerta"
-          },
-          "debounce": {
-            "label": "Antirrebote",
-            "description": "Previene ejecuciones repetidas rápidas"
-          }
-        },
-        "action": {
-          "set_rotation": {
-            "label": "Establecer Rotación",
-            "description": "Establece la rotación del bot"
-          },
-          "look_at": {
-            "label": "Mirar a",
-            "description": "Mira una posición o entidad"
-          },
-          "sneak": {
-            "label": "Agacharse",
-            "description": "Activa/agacha"
-          },
-          "sprint": {
-            "label": "Correr",
-            "description": "Activa/desactiva correr"
-          },
-          "jump": {
-            "label": "Saltar",
-            "description": "Hace que el bot salte"
-          },
-          "attack": {
-            "label": "Atacar",
-            "description": "Ataca una entidad"
-          },
-          "use_item": {
-            "label": "Usar Objeto",
-            "description": "Usa el objeto en la mano especificada"
-          },
-          "pathfind_to": {
-            "label": "Buscar Camino a",
-            "description": "Busca un camino hasta una posición objetivo"
-          },
-          "break_block": {
-            "label": "Romper Bloque",
-            "description": "Rompe un bloque en una posición"
-          },
-          "place_block": {
-            "label": "Colocar Bloque",
-            "description": "Coloca un bloque en una posición"
-          },
-          "select_slot": {
-            "label": "Seleccionar Ranura",
-            "description": "Selecciona una ranura de la barra rápida"
-          },
-          "send_chat": {
-            "label": "Enviar Chat",
-            "description": "Envía un mensaje de chat"
-          },
-          "wait": {
-            "label": "Esperar",
-            "description": "Espera una cantidad de ticks"
-          },
-          "print": {
-            "label": "Imprimir",
-            "description": "Registra un mensaje para depuración"
-          },
-          "set_variable": {
-            "label": "Establecer variable",
-            "description": "Almacena un valor en una variable"
-          }
-        },
-        "data": {
-          "get_position": {
-            "label": "Obtener posición",
-            "description": "Obtiene la posición actual del bot"
-          },
-          "get_rotation": {
-            "label": "Obtener rotación",
-            "description": "Obtiene la rotación actual del bot"
-          },
-          "get_health": {
-            "label": "Obtener salud",
-            "description": "Obtiene la salud actual del bot"
-          },
-          "get_hunger": {
-            "label": "Obtener hambre",
-            "description": "Obtiene el nivel actual de hambre del bot"
-          },
-          "get_inventory": {
-            "label": "Obtener inventario",
-            "description": "Obtiene un objeto del inventario"
-          },
-          "get_block": {
-            "label": "Obtener bloque",
-            "description": "Obtiene el bloque en una posición"
-          },
-          "find_entity": {
-            "label": "Encontrar entidad",
-            "description": "Encuentra una entidad de un tipo específico cerca"
-          },
-          "find_block": {
-            "label": "Encontrar bloque",
-            "description": "Encuentra un bloque de un tipo específico cerca"
-          },
-          "get_variable": {
-            "label": "Obtener variable",
-            "description": "Recupera un valor de una variable"
-          }
-        },
-        "constant": {
-          "number": {
-            "label": "Número",
-            "description": "Un valor numérico constante"
-          },
-          "string": {
-            "label": "Cadena",
-            "description": "Un valor de texto constante"
-          },
-          "boolean": {
-            "label": "Booleano",
-            "description": "Un valor veradero/falso constante"
-          },
-          "vector3": {
-            "label": "Vector3",
-            "description": "Una posición 3D constante (X, Y, Z)"
-          }
-        }
       }
     }
   }
