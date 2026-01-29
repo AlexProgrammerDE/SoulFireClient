@@ -273,9 +273,6 @@
   "scripts": {
     "title": "Visual Scripts",
     "description": "Tạo script tự động hóa bằng trình chỉnh sửa dạng nút trực quan.",
-    "wipTitle": "Trình chỉnh sửa Script trực quan",
-    "wipDescription": "Tạo script tự động hóa bằng trình chỉnh sửa dạng nút trực quan.",
-    "wipDetails": "Tính năng này hiện đang phát triển. Trình chỉnh sửa script trực quan mới sẽ cho phép bạn tạo các script tự động mạnh mẽ bằng giao diện kéo thả mà không cần viết mã.",
     "createScript": "Tạo Script",
     "createScriptTitle": "Tạo Script Mới",
     "createScriptDescription": "Tạo một script trực quan mới cho phiên bản này. Script có thể tự động hóa hành động bot và phản hồi các sự kiện.",
@@ -289,12 +286,17 @@
     "noScripts": "Chưa có Script nào",
     "noScriptsDescription": "Tạo script đầu tiên của bạn để tự động hóa hành động bot bằng trình chỉnh sửa dạng nút trực quan.",
     "createFirstScript": "Tạo Script Đầu Tiên Của Bạn",
-    "active": "Đang hoạt động",
+    "running": "Đang chạy",
+    "paused": "Đã tạm dừng",
     "nodes": "nút",
     "noDescription": "Không có mô tả",
     "edit": "Chỉnh sửa",
-    "activate": "Kích hoạt",
-    "deactivate": "Hủy kích hoạt",
+    "pause": "Tạm dừng",
+    "pauseSuccess": "",
+    "pauseError": "",
+    "resume": "Tiếp tục",
+    "resumeSuccess": "",
+    "resumeError": "",
     "delete": "Xóa",
     "deleteSuccess": "Xóa script thành công",
     "deleteError": "Xóa script thất bại",
@@ -303,7 +305,6 @@
     "activateSuccess": "Đã kích hoạt script",
     "activateError": "Kích hoạt script thất bại",
     "deactivateSuccess": "Đã hủy kích hoạt script",
-    "deactivateError": "Hủy kích hoạt script thất bại",
     "untitledScript": "Script chưa đặt tên",
     "saveFirstBeforeActivating": "Hãy lưu script trước khi kích hoạt",
     "activating": "Đang kích hoạt script...",
@@ -322,49 +323,27 @@
         "backToScripts": "Quay lại Scripts",
         "save": "Lưu",
         "saveTooltip": "Lưu script (Ctrl+S)",
-        "run": "Kích hoạt",
-        "runTooltip": "Kích hoạt script (F5)",
-        "deactivate": "Hủy kích hoạt",
-        "deactivateTooltip": "Vô hiệu hóa script",
-        "autoStart": "Tự động chạy",
-        "autoStartTooltip": "Tự động kích hoạt script này khi instance bắt đầu",
+        "resume": "Tiếp tục",
+        "resumeTooltip": "",
+        "pause": "Tạm dừng",
+        "pauseTooltip": "",
         "unsaved": "Chưa lưu",
         "clearCanvas": "Xóa canvas",
         "zoomIn": "Phóng to",
         "zoomOut": "Thu nhỏ",
         "fit": "Căn khít",
-        "export": "",
-        "import": "",
-        "exportSuccess": "",
-        "importSuccess": "",
-        "importError": ""
+        "export": "Xuất tập lệnh",
+        "import": "Nhập tập lệnh",
+        "exportSuccess": "Xuất tập lệnh thành công",
+        "importSuccess": "Nhập tập lệnh thành công",
+        "importError": "Nhập tập lệnh thất bại"
       },
       "palette": {
         "title": "Bảng Node",
-        "search": "Tìm kiếm node...",
-        "categories": {
-          "trigger": "Triggers",
-          "action": "Hành động",
-          "flow": "Điều khiển luồng",
-          "math": "Toán học",
-          "logic": "Logic",
-          "data": "Dữ liệu",
-          "bot": "Bot",
-          "world": "Thế giới"
-        }
-      },
-      "inspector": {
-        "title": "Kiểm tra Node",
-        "noSelection": "Chọn node để xem thuộc tính",
-        "properties": "Thuộc tính",
-        "nodeId": "ID Node",
-        "inputs": "Đầu vào",
-        "outputs": "Đầu ra",
-        "selectPlaceholder": "Chọn..."
+        "search": "Tìm kiếm node..."
       },
       "logs": {
         "title": "Nhật ký thực thi",
-        "clear": "Xóa nhật ký",
         "clearTitle": "Xóa nhật ký",
         "noLogs": "Chưa có nhật ký. Chạy script để xem nhật ký thực thi.",
         "entries_other": "{{count}} mục ghi"
@@ -372,321 +351,13 @@
       "contextMenu": {
         "duplicate": "Nhân bản",
         "disconnectAll": "Ngắt kết nối tất cả",
+        "collapse": "",
+        "expand": "",
+        "mute": "",
+        "unmute": "",
+        "showPreview": "",
+        "hidePreview": "",
         "delete": "Xóa"
-      },
-      "ports": {
-        "exec": "Exec",
-        "execIn": "Exec In",
-        "execOut": "Exec Out",
-        "execTrue": "Đúng",
-        "execFalse": "Sai",
-        "execLoop": "Lặp",
-        "execDone": "Xong"
-      },
-      "fields": {
-        "value": "Giá trị",
-        "interval": "Khoảng thời gian (ms)",
-        "variableName": "Tên biến",
-        "level": "Mức nhật ký",
-        "levelDebug": "Gỡ lỗi",
-        "levelInfo": "Thông tin",
-        "levelWarn": "Cảnh báo",
-        "levelError": "Lỗi",
-        "x": "X",
-        "y": "Y",
-        "z": "Z",
-        "min": "Min",
-        "max": "Tối đa",
-        "degree": "Độ",
-        "operator": "Toán tử",
-        "operatorEqual": "Bằng (==)",
-        "operatorNotEqual": "Không bằng (!=)",
-        "operatorLess": "Nhỏ hơn (<)",
-        "operatorLessEqual": "Nhỏ hơn hoặc bằng (<=)",
-        "operatorGreater": "Lớn hơn (>)",
-        "operatorGreaterEqual": "Lớn hơn hoặc bằng (>=)",
-        "comparison": "So sánh",
-        "comparisonEqual": "Bằng (==)",
-        "comparisonNotEqual": "Không bằng (!=)",
-        "comparisonGreater": "Lớn hơn (>)",
-        "comparisonLess": "Nhỏ hơn (<)",
-        "comparisonGreaterEqual": "Lớn hơn hoặc bằng (>=)",
-        "comparisonLessEqual": "Nhỏ hơn hoặc bằng (<=)",
-        "formula": "Công thức",
-        "message": "Tin nhắn",
-        "iterations": "Số lần lặp",
-        "minValue": "Giá trị nhỏ nhất",
-        "maxValue": "Giá trị lớn nhất",
-        "start": "Bắt đầu",
-        "end": "Kết thúc",
-        "amount": "Số lượng",
-        "blockType": "Loại khối",
-        "radius": "Bán kính",
-        "timeout": "Thời gian chờ (ms)",
-        "slot": "Ô",
-        "count": "Số lượng",
-        "entityType": "Loại thực thể",
-        "smooth": "Mượt",
-        "enabled": "Bật",
-        "hand": "Tay",
-        "handMain": "Tay chính",
-        "handOff": "Tay phụ",
-        "face": "Mặt",
-        "faceUp": "Lên",
-        "faceDown": "Xuống",
-        "faceNorth": "Bắc",
-        "faceSouth": "Nam",
-        "faceEast": "Đông",
-        "faceWest": "Tây",
-        "ticks": "Ticks",
-        "range": "Khoảng",
-        "loopCount": "Số lần lặp vòng",
-        "open": "Mở",
-        "delay": "Độ trễ (ms)"
-      },
-      "nodes": {
-        "trigger": {
-          "on_tick": {
-            "label": "Khi Tick",
-            "description": "Kích hoạt mỗi tick trò chơi (20 lần mỗi giây)"
-          },
-          "on_join": {
-            "label": "Khi Tham Gia",
-            "description": "Kích hoạt khi bot tham gia máy chủ"
-          },
-          "on_chat": {
-            "label": "Khi Chat",
-            "description": "Kích hoạt khi nhận được tin nhắn chat"
-          },
-          "on_damage": {
-            "label": "Khi Bị Thương",
-            "description": "Kích hoạt khi bot bị thương"
-          },
-          "on_death": {
-            "label": "Khi Chết",
-            "description": "Kích hoạt khi bot chết"
-          },
-          "on_health_change": {
-            "label": "Khi Thay Đổi Máu",
-            "description": "Kích hoạt khi máu của bot thay đổi"
-          },
-          "on_interval": {
-            "label": "Theo Khoảng Thời Gian",
-            "description": "Kích hoạt theo khoảng thời gian có thể cấu hình"
-          }
-        },
-        "math": {
-          "add": {
-            "label": "Thêm",
-            "description": "Cộng hai số lại với nhau"
-          },
-          "subtract": {
-            "label": "Trừ",
-            "description": "Trừ số thứ hai khỏi số đầu tiên"
-          },
-          "multiply": {
-            "label": "Nhân",
-            "description": "Nhân hai số lại với nhau"
-          },
-          "divide": {
-            "label": "Chia",
-            "description": "Chia số đầu tiên cho số thứ hai"
-          },
-          "modulo": {
-            "label": "Modulo",
-            "description": "Trả về phần dư của phép chia"
-          },
-          "formula": {
-            "label": "Công thức",
-            "description": "Đánh giá một công thức toán học"
-          },
-          "random": {
-            "label": "Ngẫu nhiên",
-            "description": "Tạo một số ngẫu nhiên giữa giá trị nhỏ nhất và lớn nhất"
-          },
-          "clamp": {
-            "label": "Giới hạn",
-            "description": "Giới hạn giá trị giữa nhỏ nhất và lớn nhất"
-          },
-          "lerp": {
-            "label": "Nội suy tuyến tính",
-            "description": "Nội suy tuyến tính giữa hai giá trị"
-          },
-          "bspline": {
-            "label": "B-Spline",
-            "description": "Nội suy sử dụng đường cong B-spline"
-          }
-        },
-        "logic": {
-          "compare": {
-            "label": "So sánh",
-            "description": "So sánh hai giá trị"
-          },
-          "and": {
-            "label": "Và",
-            "description": "AND logic giữa hai giá trị boolean"
-          },
-          "or": {
-            "label": "Hoặc",
-            "description": "OR logic giữa hai giá trị boolean"
-          },
-          "not": {
-            "label": "Phủ định",
-            "description": "NOT logic của một giá trị boolean"
-          },
-          "xor": {
-            "label": "XOR",
-            "description": "XOR logic của hai giá trị boolean"
-          }
-        },
-        "flow": {
-          "branch": {
-            "label": "Nhánh",
-            "description": "Nhánh điều kiện dựa trên giá trị boolean"
-          },
-          "switch": {
-            "label": "Chuyển đổi",
-            "description": "Nhánh nhiều hướng dựa trên một giá trị"
-          },
-          "loop": {
-            "label": "Lặp",
-            "description": "Lặp lại thực thi nhiều lần"
-          },
-          "for_each": {
-            "label": "For Each",
-            "description": "Lặp qua một bộ sưu tập"
-          },
-          "sequence": {
-            "label": "Chuỗi",
-            "description": "Thực thi đầu ra lần lượt"
-          },
-          "gate": {
-            "label": "Cổng",
-            "description": "Điều khiển luồng dựa trên trạng thái cổng"
-          },
-          "debounce": {
-            "label": "Giảm nhiễu",
-            "description": "Ngăn chặn thực thi lặp lại nhanh"
-          }
-        },
-        "action": {
-          "set_rotation": {
-            "label": "Đặt hướng quay",
-            "description": "Đặt hướng quay cho bot"
-          },
-          "look_at": {
-            "label": "Nhìn vào",
-            "description": "Nhìn vào một vị trí hoặc thực thể"
-          },
-          "sneak": {
-            "label": "Cúi",
-            "description": "Chuyển đổi trạng thái đi khom"
-          },
-          "sprint": {
-            "label": "Chạy nước rút",
-            "description": "Chuyển đổi trạng thái chạy nhanh"
-          },
-          "jump": {
-            "label": "Nhảy",
-            "description": "Làm cho bot nhảy"
-          },
-          "attack": {
-            "label": "Tấn công",
-            "description": "Tấn công một thực thể"
-          },
-          "use_item": {
-            "label": "Sử dụng vật phẩm",
-            "description": "Sử dụng vật phẩm ở tay được chỉ định"
-          },
-          "pathfind_to": {
-            "label": "Tìm đường tới",
-            "description": "Tìm đường đến một vị trí mục tiêu"
-          },
-          "break_block": {
-            "label": "Phá khối",
-            "description": "Phá một khối tại vị trí"
-          },
-          "place_block": {
-            "label": "Đặt khối",
-            "description": "Đặt một khối tại vị trí"
-          },
-          "select_slot": {
-            "label": "Chọn ô",
-            "description": "Chọn một ô hotbar"
-          },
-          "send_chat": {
-            "label": "Gửi chat",
-            "description": "Gửi một tin nhắn chat"
-          },
-          "wait": {
-            "label": "Đợi",
-            "description": "Đợi một số tick"
-          },
-          "print": {
-            "label": "In ra",
-            "description": "Ghi nhật ký một thông báo để gỡ lỗi"
-          },
-          "set_variable": {
-            "label": "Đặt Biến",
-            "description": "Lưu một giá trị vào biến"
-          }
-        },
-        "data": {
-          "get_position": {
-            "label": "Lấy Vị trí",
-            "description": "Lấy vị trí hiện tại của bot"
-          },
-          "get_rotation": {
-            "label": "Lấy Góc quay",
-            "description": "Lấy góc quay hiện tại của bot"
-          },
-          "get_health": {
-            "label": "Lấy Máu",
-            "description": "Lấy lượng máu hiện tại của bot"
-          },
-          "get_hunger": {
-            "label": "Lấy Đói",
-            "description": "Lấy mức độ đói hiện tại của bot"
-          },
-          "get_inventory": {
-            "label": "Lấy Kho đồ",
-            "description": "Lấy một vật phẩm từ kho đồ"
-          },
-          "get_block": {
-            "label": "Lấy Khối",
-            "description": "Lấy khối tại một vị trí"
-          },
-          "find_entity": {
-            "label": "Tìm Thực thể",
-            "description": "Tìm một thực thể thuộc loại cụ thể ở gần"
-          },
-          "find_block": {
-            "label": "Tìm Khối",
-            "description": "Tìm một khối thuộc loại cụ thể ở gần"
-          },
-          "get_variable": {
-            "label": "Lấy Biến",
-            "description": "Lấy giá trị từ một biến"
-          }
-        },
-        "constant": {
-          "number": {
-            "label": "Số",
-            "description": "Một giá trị số hằng số"
-          },
-          "string": {
-            "label": "Chuỗi",
-            "description": "Một giá trị văn bản hằng số"
-          },
-          "boolean": {
-            "label": "Boolean",
-            "description": "Một giá trị đúng/sai hằng số"
-          },
-          "vector3": {
-            "label": "Vector3",
-            "description": "Một vị trí 3D hằng số (X, Y, Z)"
-          }
-        }
       }
     }
   }

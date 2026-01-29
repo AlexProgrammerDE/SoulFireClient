@@ -273,9 +273,6 @@
   "scripts": {
     "title": "Візуальні скрипти",
     "description": "Створюйте автоматизаційні скрипти за допомогою візуального редактора на основі вузлів.",
-    "wipTitle": "Візуальний редактор скриптів",
-    "wipDescription": "Створюйте автоматизаційні скрипти за допомогою візуального редактора на основі вузлів.",
-    "wipDetails": "Ця функція наразі в розробці. Новий візуальний редактор скриптів дозволить вам створювати потужні автоматизаційні скрипти за допомогою інтерфейсу drag-and-drop без написання коду.",
     "createScript": "Створити скрипт",
     "createScriptTitle": "Створити новий скрипт",
     "createScriptDescription": "Створіть новий візуальний скрипт для цього екземпляра. Скрипти можуть автоматизувати дії бота та реагувати на події.",
@@ -289,12 +286,17 @@
     "noScripts": "Скриптів ще немає",
     "noScriptsDescription": "Створіть свій перший скрипт для автоматизації дій бота за допомогою візуального редактора на основі вузлів.",
     "createFirstScript": "Створіть свій перший скрипт",
-    "active": "Активний",
+    "running": "Працює",
+    "paused": "Призупинено",
     "nodes": "вузли",
     "noDescription": "Немає опису",
     "edit": "Редагувати",
-    "activate": "Активувати",
-    "deactivate": "Деактивувати",
+    "pause": "Призупинити",
+    "pauseSuccess": "",
+    "pauseError": "",
+    "resume": "Відновити",
+    "resumeSuccess": "",
+    "resumeError": "",
     "delete": "Видалити",
     "deleteSuccess": "Скрипт успішно видалено",
     "deleteError": "Не вдалося видалити скрипт",
@@ -303,7 +305,6 @@
     "activateSuccess": "Скрипт активовано",
     "activateError": "Не вдалося активувати скрипт",
     "deactivateSuccess": "Скрипт деактивовано",
-    "deactivateError": "Не вдалося деактивувати скрипт",
     "untitledScript": "Скрипт без назви",
     "saveFirstBeforeActivating": "Спочатку збережіть скрипт перед активацією",
     "activating": "Активується скрипт...",
@@ -322,49 +323,27 @@
         "backToScripts": "Повернутися до скриптів",
         "save": "Зберегти",
         "saveTooltip": "Зберегти скрипт (Ctrl+S)",
-        "run": "Активувати",
-        "runTooltip": "Активувати скрипт (F5)",
-        "deactivate": "Деактивувати",
-        "deactivateTooltip": "Деактивувати скрипт",
-        "autoStart": "Автозапуск",
-        "autoStartTooltip": "Автоматично активувати цей скрипт при запуску інстансу",
+        "resume": "Відновити",
+        "resumeTooltip": "",
+        "pause": "Призупинити",
+        "pauseTooltip": "",
         "unsaved": "Незбережено",
         "clearCanvas": "Очистити полотно",
         "zoomIn": "Збільшити",
         "zoomOut": "Зменшити",
         "fit": "Підігнати",
-        "export": "",
-        "import": "",
-        "exportSuccess": "",
-        "importSuccess": "",
-        "importError": ""
+        "export": "Експортувати скрипт",
+        "import": "Імпортувати скрипт",
+        "exportSuccess": "Скрипт успішно експортовано",
+        "importSuccess": "Скрипт успішно імпортовано",
+        "importError": "Не вдалося імпортувати скрипт"
       },
       "palette": {
         "title": "Палітра вузлів",
-        "search": "Пошук вузлів...",
-        "categories": {
-          "trigger": "Тригери",
-          "action": "Дії",
-          "flow": "Керування потоком",
-          "math": "Математика",
-          "logic": "Логіка",
-          "data": "Дані",
-          "bot": "Бот",
-          "world": "Світ"
-        }
-      },
-      "inspector": {
-        "title": "Інспектор вузлів",
-        "noSelection": "Виберіть вузол для перегляду його властивостей",
-        "properties": "Властивості",
-        "nodeId": "ID вузла",
-        "inputs": "Вхідні",
-        "outputs": "Вихідні",
-        "selectPlaceholder": "Виберіть..."
+        "search": "Пошук вузлів..."
       },
       "logs": {
         "title": "Логи виконання",
-        "clear": "Очистити логи",
         "clearTitle": "Очистити логи",
         "noLogs": "Логів ще немає. Запустіть скрипт, щоб побачити логи виконання.",
         "entries_one": "{{count}} запис",
@@ -375,321 +354,13 @@
       "contextMenu": {
         "duplicate": "Дублювати",
         "disconnectAll": "Від'єднати всі",
+        "collapse": "",
+        "expand": "",
+        "mute": "",
+        "unmute": "",
+        "showPreview": "",
+        "hidePreview": "",
         "delete": "Видалити"
-      },
-      "ports": {
-        "exec": "Виконати",
-        "execIn": "Вхід виконання",
-        "execOut": "Вихід виконання",
-        "execTrue": "True",
-        "execFalse": "False",
-        "execLoop": "Цикл",
-        "execDone": "Готово"
-      },
-      "fields": {
-        "value": "Значення",
-        "interval": "Інтервал (мс)",
-        "variableName": "Назва змінної",
-        "level": "Рівень логу",
-        "levelDebug": "Debug",
-        "levelInfo": "Інформація",
-        "levelWarn": "Попередження",
-        "levelError": "Помилка",
-        "x": "X",
-        "y": "Y",
-        "z": "Z",
-        "min": "Мін",
-        "max": "Макс",
-        "degree": "Градус",
-        "operator": "Оператор",
-        "operatorEqual": "Дорівнює (==)",
-        "operatorNotEqual": "Не дорівнює (!=)",
-        "operatorLess": "Менше (<)",
-        "operatorLessEqual": "Менше або дорівнює (<=)",
-        "operatorGreater": "Більше (>)",
-        "operatorGreaterEqual": "Більше або дорівнює (>=)",
-        "comparison": "Порівняння",
-        "comparisonEqual": "Дорівнює (==)",
-        "comparisonNotEqual": "Не дорівнює (!=)",
-        "comparisonGreater": "Більше (>)",
-        "comparisonLess": "Менше (<)",
-        "comparisonGreaterEqual": "Більше або дорівнює (>=)",
-        "comparisonLessEqual": "Менше або дорівнює (<=)",
-        "formula": "Формула",
-        "message": "Повідомлення",
-        "iterations": "Ітерації",
-        "minValue": "Мінімальне значення",
-        "maxValue": "Максимальне значення",
-        "start": "Почати",
-        "end": "Кінець",
-        "amount": "Кількість",
-        "blockType": "Тип блока",
-        "radius": "Радіус",
-        "timeout": "Таймаут (мс)",
-        "slot": "Слот",
-        "count": "Кількість",
-        "entityType": "Тип сутності",
-        "smooth": "Плавно",
-        "enabled": "Увімкнено",
-        "hand": "Рука",
-        "handMain": "Основна рука",
-        "handOff": "Додаткова рука",
-        "face": "Сторона",
-        "faceUp": "Вгору",
-        "faceDown": "Вниз",
-        "faceNorth": "Північ",
-        "faceSouth": "Південь",
-        "faceEast": "Схід",
-        "faceWest": "Захід",
-        "ticks": "Тіки",
-        "range": "Діапазон",
-        "loopCount": "Кількість повторень",
-        "open": "Відкрити",
-        "delay": "Затримка (мс)"
-      },
-      "nodes": {
-        "trigger": {
-          "on_tick": {
-            "label": "На тік",
-            "description": "Виконується кожен ігровий тік (20 разів на секунду)"
-          },
-          "on_join": {
-            "label": "При вході",
-            "description": "Виконується, коли бот приєднується до сервера"
-          },
-          "on_chat": {
-            "label": "В чаті",
-            "description": "Виконується, коли отримано повідомлення в чаті"
-          },
-          "on_damage": {
-            "label": "При отриманні ушкодження",
-            "description": "Виконується, коли бот отримує ушкодження"
-          },
-          "on_death": {
-            "label": "При смерті",
-            "description": "Виконується, коли бот помирає"
-          },
-          "on_health_change": {
-            "label": "При зміні здоровʼя",
-            "description": "Виконується при зміні здоровʼя бота"
-          },
-          "on_interval": {
-            "label": "За інтервалом",
-            "description": "Виконується за налаштованим інтервалом часу"
-          }
-        },
-        "math": {
-          "add": {
-            "label": "Додати",
-            "description": "Додає два числа разом"
-          },
-          "subtract": {
-            "label": "Відняти",
-            "description": "Віднімає друге число з першого"
-          },
-          "multiply": {
-            "label": "Множити",
-            "description": "Множить два числа"
-          },
-          "divide": {
-            "label": "Ділити",
-            "description": "Ділить перше число на друге"
-          },
-          "modulo": {
-            "label": "Остача від ділення",
-            "description": "Повертає залишок від ділення"
-          },
-          "formula": {
-            "label": "Формула",
-            "description": "Обчислює математичну формулу"
-          },
-          "random": {
-            "label": "Випадкове",
-            "description": "Генерує випадкове число між мінімумом і максимумом"
-          },
-          "clamp": {
-            "label": "Затиснути в діапазоні",
-            "description": "Обмежує значення між мінімумом і максимумом"
-          },
-          "lerp": {
-            "label": "Лінійна інтерполяція",
-            "description": "Лінійна інтерполяція між двома значеннями"
-          },
-          "bspline": {
-            "label": "B-сплайн",
-            "description": "Інтерполює за B-сплайн кривою"
-          }
-        },
-        "logic": {
-          "compare": {
-            "label": "Порівняти",
-            "description": "Порівнює два значення"
-          },
-          "and": {
-            "label": "І",
-            "description": "Логічне І для двох булевих значень"
-          },
-          "or": {
-            "label": "АБО",
-            "description": "Логічне АБО для двох булевих значень"
-          },
-          "not": {
-            "label": "НЕ",
-            "description": "Логічне НЕ для булевого значення"
-          },
-          "xor": {
-            "label": "XOR",
-            "description": "Логічне XOR для двох булевих значень"
-          }
-        },
-        "flow": {
-          "branch": {
-            "label": "Гілка",
-            "description": "Умовна гілка за булевим значенням"
-          },
-          "switch": {
-            "label": "Перемикач",
-            "description": "Багатонаправлена гілка за значенням"
-          },
-          "loop": {
-            "label": "Цикл",
-            "description": "Повторює виконання декілька разів"
-          },
-          "for_each": {
-            "label": "Для кожного",
-            "description": "Ітерує колекцію"
-          },
-          "sequence": {
-            "label": "Послідовність",
-            "description": "Виконує виходи послідовно"
-          },
-          "gate": {
-            "label": "Брама",
-            "description": "Керує потоком за станом брами"
-          },
-          "debounce": {
-            "label": "Затримка",
-            "description": "Запобігає швидкому повторному виконанню"
-          }
-        },
-        "action": {
-          "set_rotation": {
-            "label": "Встановити обертання",
-            "description": "Встановлює обертання бота"
-          },
-          "look_at": {
-            "label": "Поглянути на",
-            "description": "Дивиться на позицію або сутність"
-          },
-          "sneak": {
-            "label": "Крастися",
-            "description": "Вмикає або вимикає присідання"
-          },
-          "sprint": {
-            "label": "Бігти",
-            "description": "Вмикає або вимикає біг"
-          },
-          "jump": {
-            "label": "Стрибок",
-            "description": "Змушує бота стрибнути"
-          },
-          "attack": {
-            "label": "Атакувати",
-            "description": "Атакує сутність"
-          },
-          "use_item": {
-            "label": "Використати предмет",
-            "description": "Використовує предмет у зазначеній руці"
-          },
-          "pathfind_to": {
-            "label": "Йти до точки",
-            "description": "Прокладає шлях до цільової позиції"
-          },
-          "break_block": {
-            "label": "Зламати блок",
-            "description": "Ламає блок у позиції"
-          },
-          "place_block": {
-            "label": "Поставити блок",
-            "description": "Ставит блок у позиції"
-          },
-          "select_slot": {
-            "label": "Вибрати слот",
-            "description": "Вибирає слот гарячої панелі"
-          },
-          "send_chat": {
-            "label": "Надіслати чат",
-            "description": "Надсилає повідомлення в чат"
-          },
-          "wait": {
-            "label": "Зачекати",
-            "description": "Очікує певну кількість тіків"
-          },
-          "print": {
-            "label": "Друкувати",
-            "description": "Виводить повідомлення для зневадження"
-          },
-          "set_variable": {
-            "label": "Встановити змінну",
-            "description": "Зберігає значення у змінній"
-          }
-        },
-        "data": {
-          "get_position": {
-            "label": "Отримати позицію",
-            "description": "Отримує поточну позицію бота"
-          },
-          "get_rotation": {
-            "label": "Отримати обертання",
-            "description": "Отримує поточне обертання бота"
-          },
-          "get_health": {
-            "label": "Отримати здоров'я",
-            "description": "Отримує поточний рівень здоров'я бота"
-          },
-          "get_hunger": {
-            "label": "Отримати голод",
-            "description": "Отримує поточний рівень голоду бота"
-          },
-          "get_inventory": {
-            "label": "Отримати інвентар",
-            "description": "Отримує предмет з інвентаря"
-          },
-          "get_block": {
-            "label": "Отримати блок",
-            "description": "Отримує блок у вказаній позиції"
-          },
-          "find_entity": {
-            "label": "Знайти сутність",
-            "description": "Знаходить сутність певного типу поблизу"
-          },
-          "find_block": {
-            "label": "Знайти блок",
-            "description": "Знаходить блок певного типу поблизу"
-          },
-          "get_variable": {
-            "label": "Отримати змінну",
-            "description": "Отримує значення зі змінної"
-          }
-        },
-        "constant": {
-          "number": {
-            "label": "Число",
-            "description": "Постійне числове значення"
-          },
-          "string": {
-            "label": "Рядок",
-            "description": "Постійне текстове значення"
-          },
-          "boolean": {
-            "label": "Булеве",
-            "description": "Постійне значення істинно/хибно"
-          },
-          "vector3": {
-            "label": "Вектор3",
-            "description": "Постійна 3D-позиція (X, Y, Z)"
-          }
-        }
       }
     }
   }

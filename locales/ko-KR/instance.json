@@ -273,9 +273,6 @@
   "scripts": {
     "title": "비주얼 스크립트",
     "description": "비주얼 노드 기반 에디터로 자동화 스크립트를 만들 수 있습니다.",
-    "wipTitle": "비주얼 스크립트 에디터",
-    "wipDescription": "비주얼 노드 기반 에디터로 자동화 스크립트를 만들 수 있습니다.",
-    "wipDetails": "이 기능은 현재 개발 중입니다. 새로운 비주얼 스크립트 편집기를 통해 코드를 작성하지 않고도 드래그 앤 드롭 인터페이스를 사용하여 강력한 자동화 스크립트를 만들 수 있습니다.",
     "createScript": "스크립트 생성",
     "createScriptTitle": "새 스크립트 만들기",
     "createScriptDescription": "이 인스턴스를 위한 새로운 비주얼 스크립트를 만드세요. 스크립트는 봇의 동작을 자동화하고 이벤트에 대응할 수 있습니다.",
@@ -289,12 +286,17 @@
     "noScripts": "아직 스크립트가 없습니다.",
     "noScriptsDescription": "비주얼 노드 기반 에디터로 첫 번째 스크립트를 만들어 봇의 동작을 자동화하세요.",
     "createFirstScript": "첫 번째 스크립트 만들기",
-    "active": "활성화됨",
+    "running": "실행 중",
+    "paused": "일시 정지됨",
     "nodes": "노드",
     "noDescription": "설명 없음",
     "edit": "편집",
-    "activate": "활성화하기",
-    "deactivate": "비활성화하기",
+    "pause": "일시 정지",
+    "pauseSuccess": "",
+    "pauseError": "",
+    "resume": "다시 시작",
+    "resumeSuccess": "",
+    "resumeError": "",
     "delete": "삭제",
     "deleteSuccess": "스크립트가 성공적으로 삭제되었습니다.",
     "deleteError": "스크립트 삭제에 실패했습니다.",
@@ -303,7 +305,6 @@
     "activateSuccess": "스크립트가 활성화되었습니다",
     "activateError": "스크립트 활성화에 실패했습니다",
     "deactivateSuccess": "스크립트가 비활성화되었습니다",
-    "deactivateError": "스크립트 비활성화에 실패했습니다",
     "untitledScript": "제목 없음 스크립트",
     "saveFirstBeforeActivating": "활성화하기 전에 먼저 스크립트를 저장하세요",
     "activating": "스크립트 활성화 중...",
@@ -322,49 +323,27 @@
         "backToScripts": "스크립트 목록으로 돌아가기",
         "save": "저장",
         "saveTooltip": "스크립트 저장 (Ctrl+S)",
-        "run": "활성화하기",
-        "runTooltip": "스크립트 활성화 (F5)",
-        "deactivate": "비활성화하기",
-        "deactivateTooltip": "스크립트 비활성화",
-        "autoStart": "자동 시작",
-        "autoStartTooltip": "인스턴스가 시작될 때 이 스크립트를 자동으로 활성화합니다.",
+        "resume": "다시 시작",
+        "resumeTooltip": "",
+        "pause": "일시 정지",
+        "pauseTooltip": "",
         "unsaved": "저장되지 않음",
         "clearCanvas": "캔버스 지우기",
         "zoomIn": "확대",
         "zoomOut": "축소",
         "fit": "맞춤",
-        "export": "",
-        "import": "",
-        "exportSuccess": "",
-        "importSuccess": "",
-        "importError": ""
+        "export": "스크립트 내보내기",
+        "import": "스크립트 가져오기",
+        "exportSuccess": "스크립트가 성공적으로 내보내졌습니다",
+        "importSuccess": "스크립트가 성공적으로 가져와졌습니다",
+        "importError": "스크립트 가져오기에 실패했습니다"
       },
       "palette": {
         "title": "노드 팔레트",
-        "search": "노드 검색...",
-        "categories": {
-          "trigger": "트리거",
-          "action": "동작",
-          "flow": "흐름 제어",
-          "math": "수학",
-          "logic": "논리",
-          "data": "데이터",
-          "bot": "봇",
-          "world": "월드"
-        }
-      },
-      "inspector": {
-        "title": "노드 인스펙터",
-        "noSelection": "노드를 선택하면 속성을 볼 수 있습니다.",
-        "properties": "속성",
-        "nodeId": "노드 ID",
-        "inputs": "입력",
-        "outputs": "출력",
-        "selectPlaceholder": "선택..."
+        "search": "노드 검색..."
       },
       "logs": {
         "title": "실행 로그",
-        "clear": "로그 지우기",
         "clearTitle": "로그 지우기",
         "noLogs": "아직 로그가 없습니다. 스크립트를 실행하면 로그가 표시됩니다.",
         "entries_other": "{{count}}개 항목"
@@ -372,321 +351,13 @@
       "contextMenu": {
         "duplicate": "복제",
         "disconnectAll": "모두 연결 해제",
+        "collapse": "",
+        "expand": "",
+        "mute": "",
+        "unmute": "",
+        "showPreview": "",
+        "hidePreview": "",
         "delete": "삭제"
-      },
-      "ports": {
-        "exec": "실행",
-        "execIn": "실행 입력",
-        "execOut": "실행 출력",
-        "execTrue": "참",
-        "execFalse": "거짓",
-        "execLoop": "반복",
-        "execDone": "완료"
-      },
-      "fields": {
-        "value": "값",
-        "interval": "간격 (ms)",
-        "variableName": "변수 이름",
-        "level": "로그 레벨",
-        "levelDebug": "디버그",
-        "levelInfo": "정보",
-        "levelWarn": "경고",
-        "levelError": "오류",
-        "x": "X",
-        "y": "Y",
-        "z": "Z",
-        "min": "최소",
-        "max": "최대",
-        "degree": "도",
-        "operator": "연산자",
-        "operatorEqual": "같음 (==)",
-        "operatorNotEqual": "같지 않음 (!=)",
-        "operatorLess": "보다 작음 (<)",
-        "operatorLessEqual": "작거나 같음 (<=)",
-        "operatorGreater": "보다 큼 (>)",
-        "operatorGreaterEqual": "크거나 같음 (>=)",
-        "comparison": "비교",
-        "comparisonEqual": "같음 (==)",
-        "comparisonNotEqual": "같지 않음 (!=)",
-        "comparisonGreater": "보다 큼 (>)",
-        "comparisonLess": "보다 작음 (<)",
-        "comparisonGreaterEqual": "크거나 같음 (>=)",
-        "comparisonLessEqual": "작거나 같음 (<=)",
-        "formula": "수식",
-        "message": "메시지",
-        "iterations": "반복 횟수",
-        "minValue": "최소값",
-        "maxValue": "최대값",
-        "start": "시작",
-        "end": "끝",
-        "amount": "수량",
-        "blockType": "블록 유형",
-        "radius": "반경",
-        "timeout": "타임아웃 (ms)",
-        "slot": "슬롯",
-        "count": "개수",
-        "entityType": "엔터티 유형",
-        "smooth": "부드럽게",
-        "enabled": "활성화됨",
-        "hand": "손",
-        "handMain": "주 손",
-        "handOff": "보조 손",
-        "face": "면",
-        "faceUp": "위",
-        "faceDown": "아래",
-        "faceNorth": "북쪽",
-        "faceSouth": "남쪽",
-        "faceEast": "동쪽",
-        "faceWest": "서쪽",
-        "ticks": "틱",
-        "range": "범위",
-        "loopCount": "반복 횟수",
-        "open": "열기",
-        "delay": "지연 (ms)"
-      },
-      "nodes": {
-        "trigger": {
-          "on_tick": {
-            "label": "틱마다",
-            "description": "게임 틱마다 실행 (초당 20번)"
-          },
-          "on_join": {
-            "label": "서버 입장 시",
-            "description": "봇이 서버에 입장할 때 실행"
-          },
-          "on_chat": {
-            "label": "채팅 시",
-            "description": "채팅 메시지를 받을 때 실행"
-          },
-          "on_damage": {
-            "label": "피해 시",
-            "description": "봇이 피해를 받을 때 실행"
-          },
-          "on_death": {
-            "label": "사망 시",
-            "description": "봇이 죽을 때 실행"
-          },
-          "on_health_change": {
-            "label": "체력 변화 시",
-            "description": "봇의 체력이 변할 때 실행"
-          },
-          "on_interval": {
-            "label": "시간 간격마다",
-            "description": "설정한 시간 간격에 따라 실행"
-          }
-        },
-        "math": {
-          "add": {
-            "label": "추가",
-            "description": "두 숫자를 더합니다."
-          },
-          "subtract": {
-            "label": "빼기",
-            "description": "첫 번째 숫자에서 두 번째 숫자를 뺍니다."
-          },
-          "multiply": {
-            "label": "곱하기",
-            "description": "두 숫자를 곱합니다."
-          },
-          "divide": {
-            "label": "나누기",
-            "description": "첫 번째 숫자를 두 번째 숫자로 나눕니다."
-          },
-          "modulo": {
-            "label": "나머지",
-            "description": "나눗셈의 나머지를 반환합니다."
-          },
-          "formula": {
-            "label": "수식",
-            "description": "수학 수식을 평가합니다."
-          },
-          "random": {
-            "label": "랜덤",
-            "description": "최소값과 최대값 사이의 임의의 숫자를 생성합니다."
-          },
-          "clamp": {
-            "label": "클램프",
-            "description": "값을 최소값과 최대값 사이로 제한합니다."
-          },
-          "lerp": {
-            "label": "보간",
-            "description": "두 값 사이를 선형으로 보간합니다."
-          },
-          "bspline": {
-            "label": "B-스플라인",
-            "description": "B-스플라인 곡선을 사용해 보간합니다."
-          }
-        },
-        "logic": {
-          "compare": {
-            "label": "비교",
-            "description": "두 값을 비교합니다."
-          },
-          "and": {
-            "label": "AND",
-            "description": "두 불리언의 논리 AND"
-          },
-          "or": {
-            "label": "OR",
-            "description": "두 불리언의 논리 OR"
-          },
-          "not": {
-            "label": "NOT",
-            "description": "불리언의 논리 NOT"
-          },
-          "xor": {
-            "label": "XOR",
-            "description": "두 불리언의 논리 XOR"
-          }
-        },
-        "flow": {
-          "branch": {
-            "label": "분기",
-            "description": "불리언 값에 따른 조건 분기"
-          },
-          "switch": {
-            "label": "스위치",
-            "description": "값에 따라 다중 분기"
-          },
-          "loop": {
-            "label": "반복",
-            "description": "지정된 횟수만큼 실행을 반복합니다."
-          },
-          "for_each": {
-            "label": "For Each",
-            "description": "컬렉션을 반복합니다."
-          },
-          "sequence": {
-            "label": "시퀀스",
-            "description": "출력을 순차적으로 실행합니다."
-          },
-          "gate": {
-            "label": "게이트",
-            "description": "게이트 상태에 따라 흐름을 제어합니다."
-          },
-          "debounce": {
-            "label": "디바운스",
-            "description": "빠른 반복 실행을 방지합니다."
-          }
-        },
-        "action": {
-          "set_rotation": {
-            "label": "회전 설정",
-            "description": "봇의 회전을 설정합니다."
-          },
-          "look_at": {
-            "label": "바라보기",
-            "description": "위치나 엔터티를 바라봅니다."
-          },
-          "sneak": {
-            "label": "웅크리기",
-            "description": "스니크 토글"
-          },
-          "sprint": {
-            "label": "달리기",
-            "description": "스프린트 토글"
-          },
-          "jump": {
-            "label": "점프",
-            "description": "봇이 점프합니다."
-          },
-          "attack": {
-            "label": "공격",
-            "description": "엔터티를 공격합니다."
-          },
-          "use_item": {
-            "label": "아이템 사용",
-            "description": "지정된 손의 아이템을 사용합니다."
-          },
-          "pathfind_to": {
-            "label": "경로 찾기",
-            "description": "목표 위치로 경로를 찾습니다."
-          },
-          "break_block": {
-            "label": "블록 파괴",
-            "description": "지정한 위치의 블록을 파괴합니다."
-          },
-          "place_block": {
-            "label": "블록 놓기",
-            "description": "지정한 위치에 블록을 놓습니다."
-          },
-          "select_slot": {
-            "label": "슬롯 선택",
-            "description": "핫바 슬롯을 선택합니다."
-          },
-          "send_chat": {
-            "label": "채팅 보내기",
-            "description": "채팅 메시지를 보냅니다."
-          },
-          "wait": {
-            "label": "대기",
-            "description": "지정한 틱만큼 대기합니다."
-          },
-          "print": {
-            "label": "출력",
-            "description": "디버깅을 위해 메시지를 기록합니다."
-          },
-          "set_variable": {
-            "label": "변수 설정",
-            "description": "변수에 값을 저장합니다."
-          }
-        },
-        "data": {
-          "get_position": {
-            "label": "위치 가져오기",
-            "description": "봇의 현재 위치를 가져옵니다."
-          },
-          "get_rotation": {
-            "label": "회전값 가져오기",
-            "description": "봇의 현재 회전 값을 가져옵니다."
-          },
-          "get_health": {
-            "label": "체력 가져오기",
-            "description": "봇의 현재 체력을 가져옵니다."
-          },
-          "get_hunger": {
-            "label": "허기 가져오기",
-            "description": "봇의 현재 허기 수치를 가져옵니다."
-          },
-          "get_inventory": {
-            "label": "인벤토리 가져오기",
-            "description": "인벤토리에서 아이템을 가져옵니다."
-          },
-          "get_block": {
-            "label": "블록 가져오기",
-            "description": "특정 위치의 블록을 가져옵니다."
-          },
-          "find_entity": {
-            "label": "엔티티 찾기",
-            "description": "주변에서 특정 유형의 엔티티를 찾습니다."
-          },
-          "find_block": {
-            "label": "블록 찾기",
-            "description": "주변에서 특정 유형의 블록을 찾습니다."
-          },
-          "get_variable": {
-            "label": "변수 가져오기",
-            "description": "변수에서 값을 가져옵니다."
-          }
-        },
-        "constant": {
-          "number": {
-            "label": "숫자",
-            "description": "상수 숫자 값"
-          },
-          "string": {
-            "label": "문자열",
-            "description": "상수 텍스트 값"
-          },
-          "boolean": {
-            "label": "불리언",
-            "description": "상수 참/거짓 값"
-          },
-          "vector3": {
-            "label": "벡터3",
-            "description": "상수 3D 위치 (X, Y, Z)"
-          }
-        }
       }
     }
   }

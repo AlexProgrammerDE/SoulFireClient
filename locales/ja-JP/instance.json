@@ -273,9 +273,6 @@
   "scripts": {
     "title": "ビジュアルスクリプト",
     "description": "ビジュアルノードベースのエディターを使って自動化スクリプトを作成しましょう。",
-    "wipTitle": "ビジュアルスクリプトエディター",
-    "wipDescription": "ビジュアルノードベースのエディターを使って自動化スクリプトを作成しましょう。",
-    "wipDetails": "この機能は現在開発中です。新しいビジュアルスクリプトエディターでは、コードを書かずにドラッグ＆ドロップ操作で強力な自動化スクリプトを作成できます。",
     "createScript": "スクリプトを作成",
     "createScriptTitle": "新しいスクリプトを作成",
     "createScriptDescription": "このインスタンス用の新しいビジュアルスクリプトを作成します。スクリプトはボットの動作を自動化し、イベントに反応できます。",
@@ -289,12 +286,17 @@
     "noScripts": "まだスクリプトはありません",
     "noScriptsDescription": "ビジュアルノードベースのエディターを使って、最初のスクリプトでボット動作を自動化しましょう。",
     "createFirstScript": "最初のスクリプトを作成",
-    "active": "稼働中",
+    "running": "稼働中",
+    "paused": "一時停止中",
     "nodes": "ノード",
     "noDescription": "説明なし",
     "edit": "編集",
-    "activate": "有効化する",
-    "deactivate": "無効化する",
+    "pause": "一時停止",
+    "pauseSuccess": "",
+    "pauseError": "",
+    "resume": "再開",
+    "resumeSuccess": "",
+    "resumeError": "",
     "delete": "削除",
     "deleteSuccess": "スクリプトが正常に削除されました",
     "deleteError": "スクリプトの削除に失敗しました",
@@ -303,7 +305,6 @@
     "activateSuccess": "スクリプトが有効化されました",
     "activateError": "スクリプトの有効化に失敗しました",
     "deactivateSuccess": "スクリプトが無効化されました",
-    "deactivateError": "スクリプトの無効化に失敗しました",
     "untitledScript": "無題のスクリプト",
     "saveFirstBeforeActivating": "有効化する前に、まずスクリプトを保存してください",
     "activating": "スクリプトを有効化しています…",
@@ -322,49 +323,27 @@
         "backToScripts": "スクリプトへ戻る",
         "save": "保存する",
         "saveTooltip": "スクリプトを保存（Ctrl+S）",
-        "run": "有効化する",
-        "runTooltip": "スクリプトを有効化（F5）",
-        "deactivate": "無効化する",
-        "deactivateTooltip": "スクリプトを無効化",
-        "autoStart": "自動開始",
-        "autoStartTooltip": "インスタンス起動時にこのスクリプトを自動的に有効化する",
+        "resume": "再開",
+        "resumeTooltip": "",
+        "pause": "一時停止",
+        "pauseTooltip": "",
         "unsaved": "未保存",
         "clearCanvas": "キャンバスをクリア",
         "zoomIn": "ズームイン",
         "zoomOut": "ズームアウト",
         "fit": "フィット",
-        "export": "",
-        "import": "",
-        "exportSuccess": "",
-        "importSuccess": "",
-        "importError": ""
+        "export": "スクリプトをエクスポート",
+        "import": "スクリプトをインポート",
+        "exportSuccess": "スクリプトのエクスポートに成功しました",
+        "importSuccess": "スクリプトのインポートに成功しました",
+        "importError": "スクリプトのインポートに失敗しました"
       },
       "palette": {
         "title": "ノードパレット",
-        "search": "ノード検索...",
-        "categories": {
-          "trigger": "トリガー",
-          "action": "操作",
-          "flow": "フロー制御",
-          "math": "数値演算",
-          "logic": "論理演算",
-          "data": "データ",
-          "bot": "ボット",
-          "world": "ワールド"
-        }
-      },
-      "inspector": {
-        "title": "ノードインスペクター",
-        "noSelection": "ノードを選択してプロパティを表示",
-        "properties": "プロパティ",
-        "nodeId": "ノードID",
-        "inputs": "入力",
-        "outputs": "出力",
-        "selectPlaceholder": "選択してください..."
+        "search": "ノード検索..."
       },
       "logs": {
         "title": "実行ログ",
-        "clear": "ログをクリア",
         "clearTitle": "ログをクリア",
         "noLogs": "まだログはありません。スクリプトを実行してログをご確認ください。",
         "entries_other": "{{count}}件のエントリ"
@@ -372,321 +351,13 @@
       "contextMenu": {
         "duplicate": "複製",
         "disconnectAll": "すべて切断",
+        "collapse": "",
+        "expand": "",
+        "mute": "",
+        "unmute": "",
+        "showPreview": "",
+        "hidePreview": "",
         "delete": "削除"
-      },
-      "ports": {
-        "exec": "実行",
-        "execIn": "入力実行",
-        "execOut": "出力実行",
-        "execTrue": "真",
-        "execFalse": "偽",
-        "execLoop": "ループ",
-        "execDone": "完了"
-      },
-      "fields": {
-        "value": "値",
-        "interval": "間隔（ms）",
-        "variableName": "変数名",
-        "level": "ログレベル",
-        "levelDebug": "デバッグ",
-        "levelInfo": "情報",
-        "levelWarn": "警告",
-        "levelError": "エラー",
-        "x": "X",
-        "y": "Y",
-        "z": "Z",
-        "min": "最小",
-        "max": "最大",
-        "degree": "度数",
-        "operator": "演算子",
-        "operatorEqual": "等しい (==)",
-        "operatorNotEqual": "等しくない (!=)",
-        "operatorLess": "より小さい (<)",
-        "operatorLessEqual": "以下 (<=)",
-        "operatorGreater": "より大きい (>)",
-        "operatorGreaterEqual": "以上 (>=)",
-        "comparison": "比較",
-        "comparisonEqual": "等しい (==)",
-        "comparisonNotEqual": "等しくない (!=)",
-        "comparisonGreater": "より大きい (>)",
-        "comparisonLess": "より小さい (<)",
-        "comparisonGreaterEqual": "以上 (>=)",
-        "comparisonLessEqual": "以下 (<=)",
-        "formula": "数式",
-        "message": "メッセージ",
-        "iterations": "繰り返し回数",
-        "minValue": "最小値",
-        "maxValue": "最大値",
-        "start": "開始",
-        "end": "終了",
-        "amount": "件数",
-        "blockType": "ブロックタイプ",
-        "radius": "半径",
-        "timeout": "タイムアウト（ms）",
-        "slot": "スロット",
-        "count": "回数",
-        "entityType": "エンティティタイプ",
-        "smooth": "スムーズ",
-        "enabled": "有効",
-        "hand": "手",
-        "handMain": "利き手",
-        "handOff": "逆手",
-        "face": "面",
-        "faceUp": "上",
-        "faceDown": "下",
-        "faceNorth": "北",
-        "faceSouth": "南",
-        "faceEast": "東",
-        "faceWest": "西",
-        "ticks": "ティック",
-        "range": "範囲",
-        "loopCount": "ループ回数",
-        "open": "開く",
-        "delay": "遅延（ms）"
-      },
-      "nodes": {
-        "trigger": {
-          "on_tick": {
-            "label": "ティックごと",
-            "description": "ゲームティックごとに（1秒あたり20回）発動します"
-          },
-          "on_join": {
-            "label": "参加時",
-            "description": "ボットがサーバーに参加したときに発動します"
-          },
-          "on_chat": {
-            "label": "チャット時",
-            "description": "チャットメッセージを受信すると発動します"
-          },
-          "on_damage": {
-            "label": "ダメージ時",
-            "description": "ボットがダメージを受けたときに発動します"
-          },
-          "on_death": {
-            "label": "死亡時",
-            "description": "ボットが死亡したときに発動します"
-          },
-          "on_health_change": {
-            "label": "体力変化時",
-            "description": "ボットの体力が変化したときに発動します"
-          },
-          "on_interval": {
-            "label": "インターバル時",
-            "description": "設定した一定間隔で発動します"
-          }
-        },
-        "math": {
-          "add": {
-            "label": "追加",
-            "description": "2つの数値を加算します"
-          },
-          "subtract": {
-            "label": "減算",
-            "description": "2つ目の数値を1つ目から減算します"
-          },
-          "multiply": {
-            "label": "乗算",
-            "description": "2つの数値を乗算します"
-          },
-          "divide": {
-            "label": "除算",
-            "description": "1つ目の数値を2つ目で割ります"
-          },
-          "modulo": {
-            "label": "剰余",
-            "description": "割り算の余りを返します"
-          },
-          "formula": {
-            "label": "数式",
-            "description": "数式を評価します"
-          },
-          "random": {
-            "label": "ランダム",
-            "description": "最小値と最大値の間でランダムな数値を生成します"
-          },
-          "clamp": {
-            "label": "クランプ",
-            "description": "値を最小値と最大値の間に抑えます"
-          },
-          "lerp": {
-            "label": "線形補間（リープ）",
-            "description": "2つの値の間で線形補間します"
-          },
-          "bspline": {
-            "label": "B-スプライン",
-            "description": "Bスプライン曲線で補間します"
-          }
-        },
-        "logic": {
-          "compare": {
-            "label": "比較",
-            "description": "2つの値を比較します"
-          },
-          "and": {
-            "label": "AND",
-            "description": "2つのブール値の論理積 (AND) を取ります"
-          },
-          "or": {
-            "label": "OR",
-            "description": "2つのブール値の論理和 (OR) を取ります"
-          },
-          "not": {
-            "label": "NOT",
-            "description": "ブール値の論理否定 (NOT) を取ります"
-          },
-          "xor": {
-            "label": "XOR",
-            "description": "2つのブール値の排他的論理和 (XOR) を取ります"
-          }
-        },
-        "flow": {
-          "branch": {
-            "label": "分岐",
-            "description": "ブール値による条件分岐を行います"
-          },
-          "switch": {
-            "label": "スイッチ",
-            "description": "値による複数分岐を行います"
-          },
-          "loop": {
-            "label": "ループ",
-            "description": "指定回数繰り返し実行します"
-          },
-          "for_each": {
-            "label": "For Each",
-            "description": "コレクションを順番に処理します"
-          },
-          "sequence": {
-            "label": "シーケンス",
-            "description": "出力を順番に実行します"
-          },
-          "gate": {
-            "label": "ゲート",
-            "description": "ゲートの状態によってフローを制御します"
-          },
-          "debounce": {
-            "label": "デバウンス",
-            "description": "短時間で繰り返し実行されるのを防ぎます"
-          }
-        },
-        "action": {
-          "set_rotation": {
-            "label": "回転を設定",
-            "description": "ボットの回転を設定します"
-          },
-          "look_at": {
-            "label": "注視する",
-            "description": "座標やエンティティを注視します"
-          },
-          "sneak": {
-            "label": "スニーク",
-            "description": "スニークを切り替えます"
-          },
-          "sprint": {
-            "label": "スプリント",
-            "description": "スプリントを切り替えます"
-          },
-          "jump": {
-            "label": "ジャンプ",
-            "description": "ボットをジャンプさせます"
-          },
-          "attack": {
-            "label": "攻撃",
-            "description": "エンティティを攻撃します"
-          },
-          "use_item": {
-            "label": "アイテムを使用",
-            "description": "指定した手のアイテムを使います"
-          },
-          "pathfind_to": {
-            "label": "経路探索",
-            "description": "ターゲット座標へ経路探索します"
-          },
-          "break_block": {
-            "label": "ブロック破壊",
-            "description": "指定座標のブロックを破壊します"
-          },
-          "place_block": {
-            "label": "ブロック設置",
-            "description": "指定座標にブロックを設置します"
-          },
-          "select_slot": {
-            "label": "スロット選択",
-            "description": "ホットバーのスロットを選択します"
-          },
-          "send_chat": {
-            "label": "チャット送信",
-            "description": "チャットメッセージを送信します"
-          },
-          "wait": {
-            "label": "待機",
-            "description": "指定したティック数待機します"
-          },
-          "print": {
-            "label": "出力",
-            "description": "デバッグ用のメッセージを記録します。"
-          },
-          "set_variable": {
-            "label": "変数を設定",
-            "description": "値を変数に保存します。"
-          }
-        },
-        "data": {
-          "get_position": {
-            "label": "位置を取得",
-            "description": "ボットの現在の位置を取得します。"
-          },
-          "get_rotation": {
-            "label": "回転を取得",
-            "description": "ボットの現在の回転を取得します。"
-          },
-          "get_health": {
-            "label": "体力を取得",
-            "description": "ボットの現在の体力を取得します。"
-          },
-          "get_hunger": {
-            "label": "空腹度を取得",
-            "description": "ボットの現在の空腹度を取得します。"
-          },
-          "get_inventory": {
-            "label": "インベントリを取得",
-            "description": "インベントリからアイテムを取得します。"
-          },
-          "get_block": {
-            "label": "ブロックを取得",
-            "description": "指定した位置のブロックを取得します。"
-          },
-          "find_entity": {
-            "label": "エンティティを探す",
-            "description": "近くの特定の種類のエンティティを探します。"
-          },
-          "find_block": {
-            "label": "ブロックを探す",
-            "description": "近くの特定の種類のブロックを探します。"
-          },
-          "get_variable": {
-            "label": "変数を取得",
-            "description": "変数から値を取得します。"
-          }
-        },
-        "constant": {
-          "number": {
-            "label": "数値",
-            "description": "定数の数値です。"
-          },
-          "string": {
-            "label": "文字列",
-            "description": "定数のテキスト値です。"
-          },
-          "boolean": {
-            "label": "ブール値",
-            "description": "定数の真偽値です。"
-          },
-          "vector3": {
-            "label": "ベクトル3",
-            "description": "定数の3D位置（X, Y, Z）です。"
-          }
-        }
       }
     }
   }

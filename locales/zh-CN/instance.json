@@ -273,9 +273,6 @@
   "scripts": {
     "title": "可视化脚本",
     "description": "使用可视化节点编辑器创建自动化脚本。",
-    "wipTitle": "可视化脚本编辑器",
-    "wipDescription": "使用可视化节点编辑器创建自动化脚本。",
-    "wipDetails": "该功能正在开发中。全新的可视化脚本编辑器将允许您通过拖拽操作创建强大的自动化脚本，无需编写代码。",
     "createScript": "创建脚本",
     "createScriptTitle": "创建新脚本",
     "createScriptDescription": "为此实例创建新的可视化脚本。脚本可以自动化机器人操作并响应事件。",
@@ -289,12 +286,17 @@
     "noScripts": "尚无脚本",
     "noScriptsDescription": "使用可视化节点编辑器创建第一个脚本来自动化机器人操作。",
     "createFirstScript": "创建您的第一个脚本",
-    "active": "活跃",
+    "running": "正在运行",
+    "paused": "已暂停",
     "nodes": "节点",
     "noDescription": "无描述",
     "edit": "编辑",
-    "activate": "激活",
-    "deactivate": "停用",
+    "pause": "暂停",
+    "pauseSuccess": "",
+    "pauseError": "",
+    "resume": "继续",
+    "resumeSuccess": "",
+    "resumeError": "",
     "delete": "删除",
     "deleteSuccess": "脚本删除成功",
     "deleteError": "删除脚本失败",
@@ -303,7 +305,6 @@
     "activateSuccess": "脚本已激活",
     "activateError": "激活脚本失败",
     "deactivateSuccess": "脚本已停用",
-    "deactivateError": "停用脚本失败",
     "untitledScript": "无标题脚本",
     "saveFirstBeforeActivating": "请先保存脚本再激活",
     "activating": "正在激活脚本...",
@@ -322,49 +323,27 @@
         "backToScripts": "返回脚本",
         "save": "保存",
         "saveTooltip": "保存脚本（Ctrl+S）",
-        "run": "激活",
-        "runTooltip": "激活脚本（F5）",
-        "deactivate": "停用",
-        "deactivateTooltip": "停用脚本",
-        "autoStart": "自动启动",
-        "autoStartTooltip": "实例启动时自动激活此脚本",
+        "resume": "继续",
+        "resumeTooltip": "",
+        "pause": "暂停",
+        "pauseTooltip": "",
         "unsaved": "未保存",
         "clearCanvas": "清除画布",
         "zoomIn": "放大",
         "zoomOut": "缩小",
         "fit": "适配",
-        "export": "",
-        "import": "",
-        "exportSuccess": "",
-        "importSuccess": "",
-        "importError": ""
+        "export": "导出脚本",
+        "import": "导入脚本",
+        "exportSuccess": "脚本导出成功",
+        "importSuccess": "脚本导入成功",
+        "importError": "导入脚本失败"
       },
       "palette": {
         "title": "节点面板",
-        "search": "搜索节点...",
-        "categories": {
-          "trigger": "触发器",
-          "action": "操作",
-          "flow": "流程控制",
-          "math": "数学",
-          "logic": "逻辑",
-          "data": "数据",
-          "bot": "机器人",
-          "world": "世界"
-        }
-      },
-      "inspector": {
-        "title": "节点检查器",
-        "noSelection": "选择节点以查看其属性",
-        "properties": "属性",
-        "nodeId": "节点ID",
-        "inputs": "输入",
-        "outputs": "输出",
-        "selectPlaceholder": "选择..."
+        "search": "搜索节点..."
       },
       "logs": {
         "title": "执行日志",
-        "clear": "清除日志",
         "clearTitle": "清除日志",
         "noLogs": "暂无日志。请运行脚本以查看执行日志。",
         "entries_other": "{{count}} 个条目"
@@ -372,321 +351,13 @@
       "contextMenu": {
         "duplicate": "复制",
         "disconnectAll": "全部断开连接",
+        "collapse": "",
+        "expand": "",
+        "mute": "",
+        "unmute": "",
+        "showPreview": "",
+        "hidePreview": "",
         "delete": "删除"
-      },
-      "ports": {
-        "exec": "执行",
-        "execIn": "执行输入",
-        "execOut": "执行输出",
-        "execTrue": "真",
-        "execFalse": "假",
-        "execLoop": "循环",
-        "execDone": "完成"
-      },
-      "fields": {
-        "value": "值",
-        "interval": "间隔（毫秒）",
-        "variableName": "变量名",
-        "level": "日志级别",
-        "levelDebug": "调试",
-        "levelInfo": "信息",
-        "levelWarn": "警告",
-        "levelError": "出错",
-        "x": "X",
-        "y": "Y",
-        "z": "Z",
-        "min": "最小值",
-        "max": "最大值",
-        "degree": "度",
-        "operator": "运算符",
-        "operatorEqual": "等于（==）",
-        "operatorNotEqual": "不等于（!=）",
-        "operatorLess": "小于（<）",
-        "operatorLessEqual": "小于等于（<=）",
-        "operatorGreater": "大于（>）",
-        "operatorGreaterEqual": "大于等于（>=）",
-        "comparison": "对比",
-        "comparisonEqual": "等于（==）",
-        "comparisonNotEqual": "不等于（!=）",
-        "comparisonGreater": "大于（>）",
-        "comparisonLess": "小于（<）",
-        "comparisonGreaterEqual": "大于等于（>=）",
-        "comparisonLessEqual": "小于等于（<=）",
-        "formula": "公式",
-        "message": "消息",
-        "iterations": "迭代次数",
-        "minValue": "最小值",
-        "maxValue": "最大值",
-        "start": "开始",
-        "end": "结束",
-        "amount": "数量",
-        "blockType": "方块类型",
-        "radius": "半径",
-        "timeout": "超时（毫秒）",
-        "slot": "槽位",
-        "count": "计数",
-        "entityType": "实体类型",
-        "smooth": "平滑",
-        "enabled": "已启用",
-        "hand": "手",
-        "handMain": "主手",
-        "handOff": "副手",
-        "face": "面",
-        "faceUp": "上",
-        "faceDown": "下",
-        "faceNorth": "北",
-        "faceSouth": "南",
-        "faceEast": "东",
-        "faceWest": "西",
-        "ticks": "刻",
-        "range": "范围",
-        "loopCount": "循环次数",
-        "open": "打开",
-        "delay": "延迟（毫秒）"
-      },
-      "nodes": {
-        "trigger": {
-          "on_tick": {
-            "label": "每刻触发",
-            "description": "每个游戏刻触发一次（每秒 20 次）"
-          },
-          "on_join": {
-            "label": "加入时触发",
-            "description": "当机器人加入服务器时触发"
-          },
-          "on_chat": {
-            "label": "聊天时触发",
-            "description": "收到聊天消息时触发"
-          },
-          "on_damage": {
-            "label": "伤害时触发",
-            "description": "当机器人受到伤害时触发"
-          },
-          "on_death": {
-            "label": "死亡时触发",
-            "description": "当机器人死亡时触发"
-          },
-          "on_health_change": {
-            "label": "生命值变化时触发",
-            "description": "当机器人生命值变化时触发"
-          },
-          "on_interval": {
-            "label": "间隔触发",
-            "description": "在可配置的时间间隔触发"
-          }
-        },
-        "math": {
-          "add": {
-            "label": "添加",
-            "description": "将两个数相加"
-          },
-          "subtract": {
-            "label": "减法",
-            "description": "用第一个数减去第二个数"
-          },
-          "multiply": {
-            "label": "乘法",
-            "description": "将两个数相乘"
-          },
-          "divide": {
-            "label": "除法",
-            "description": "用第一个数除以第二个数"
-          },
-          "modulo": {
-            "label": "取模",
-            "description": "返回除法的余数"
-          },
-          "formula": {
-            "label": "公式",
-            "description": "计算数学公式"
-          },
-          "random": {
-            "label": "随机数",
-            "description": "生成一个介于最小值和最大值之间的随机数"
-          },
-          "clamp": {
-            "label": "限制值",
-            "description": "将值限制在最小值和最大值之间"
-          },
-          "lerp": {
-            "label": "线性插值",
-            "description": "在两个值之间进行线性插值"
-          },
-          "bspline": {
-            "label": "B样条",
-            "description": "使用B样条曲线插值"
-          }
-        },
-        "logic": {
-          "compare": {
-            "label": "对比",
-            "description": "对比两个值"
-          },
-          "and": {
-            "label": "与",
-            "description": "两个布尔值的逻辑与"
-          },
-          "or": {
-            "label": "或",
-            "description": "两个布尔值的逻辑或"
-          },
-          "not": {
-            "label": "非",
-            "description": "布尔值的逻辑非"
-          },
-          "xor": {
-            "label": "异或",
-            "description": "两个布尔值的逻辑异或"
-          }
-        },
-        "flow": {
-          "branch": {
-            "label": "分支",
-            "description": "基于布尔值的条件分支"
-          },
-          "switch": {
-            "label": "切换",
-            "description": "基于某个值的多路分支"
-          },
-          "loop": {
-            "label": "循环",
-            "description": "重复执行多次"
-          },
-          "for_each": {
-            "label": "遍历",
-            "description": "遍历集合"
-          },
-          "sequence": {
-            "label": "序列",
-            "description": "按顺序执行输出"
-          },
-          "gate": {
-            "label": "门",
-            "description": "基于门的状态控制流程"
-          },
-          "debounce": {
-            "label": "去抖动",
-            "description": "防止快速重复执行"
-          }
-        },
-        "action": {
-          "set_rotation": {
-            "label": "设置旋转",
-            "description": "设置机器人的旋转角度"
-          },
-          "look_at": {
-            "label": "朝向",
-            "description": "朝向某个位置或实体"
-          },
-          "sneak": {
-            "label": "潜行",
-            "description": "切换潜行"
-          },
-          "sprint": {
-            "label": "疾跑",
-            "description": "切换疾跑"
-          },
-          "jump": {
-            "label": "跳跃",
-            "description": "让机器人跳跃"
-          },
-          "attack": {
-            "label": "攻击",
-            "description": "攻击一个实体"
-          },
-          "use_item": {
-            "label": "使用物品",
-            "description": "使用指定手中的物品"
-          },
-          "pathfind_to": {
-            "label": "寻路到",
-            "description": "寻路到目标位置"
-          },
-          "break_block": {
-            "label": "破坏方块",
-            "description": "破坏某一位置的方块"
-          },
-          "place_block": {
-            "label": "放置方块",
-            "description": "在某一位置放置方块"
-          },
-          "select_slot": {
-            "label": "选择槽位",
-            "description": "选择一个快捷栏槽位"
-          },
-          "send_chat": {
-            "label": "发送聊天",
-            "description": "发送一条聊天信息"
-          },
-          "wait": {
-            "label": "等待",
-            "description": "等待若干刻"
-          },
-          "print": {
-            "label": "打印/输出信息",
-            "description": "用于调试的日志消息"
-          },
-          "set_variable": {
-            "label": "设置变量",
-            "description": "将一个值存储到变量中"
-          }
-        },
-        "data": {
-          "get_position": {
-            "label": "获取位置",
-            "description": "获取机器人当前的位置"
-          },
-          "get_rotation": {
-            "label": "获取旋转角度",
-            "description": "获取机器人当前的旋转角度"
-          },
-          "get_health": {
-            "label": "获取生命值",
-            "description": "获取机器人当前的生命值"
-          },
-          "get_hunger": {
-            "label": "获取饥饿值",
-            "description": "获取机器人当前的饥饿值"
-          },
-          "get_inventory": {
-            "label": "获取背包",
-            "description": "从背包中获取物品"
-          },
-          "get_block": {
-            "label": "获取方块",
-            "description": "获取指定位置的方块"
-          },
-          "find_entity": {
-            "label": "查找实体",
-            "description": "查找附近特定类型的实体"
-          },
-          "find_block": {
-            "label": "查找方块",
-            "description": "查找附近特定类型的方块"
-          },
-          "get_variable": {
-            "label": "获取变量",
-            "description": "从变量中获取值"
-          }
-        },
-        "constant": {
-          "number": {
-            "label": "数字",
-            "description": "一个常量数字值"
-          },
-          "string": {
-            "label": "字符串",
-            "description": "一个常量文本值"
-          },
-          "boolean": {
-            "label": "布尔值",
-            "description": "一个常量真/假值"
-          },
-          "vector3": {
-            "label": "三维向量（Vector3）",
-            "description": "一个常量三维坐标（X, Y, Z）"
-          }
-        }
       }
     }
   }

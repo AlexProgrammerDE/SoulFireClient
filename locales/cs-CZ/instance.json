@@ -273,9 +273,6 @@
   "scripts": {
     "title": "Vizuální skripty",
     "description": "Vytvářejte automatizační skripty pomocí vizuálního editoru založeného na uzlech.",
-    "wipTitle": "Vizuální editor skriptů",
-    "wipDescription": "Vytvářejte automatizační skripty pomocí vizuálního editoru založeného na uzlech.",
-    "wipDetails": "Tato funkce je momentálně ve vývoji. Nový vizuální editor skriptů vám umožní vytvářet výkonné automatizační skripty pomocí drag and drop rozhraní bez psaní kódu.",
     "createScript": "Vytvořit skript",
     "createScriptTitle": "Vytvořit nový skript",
     "createScriptDescription": "Vytvořte nový vizuální skript pro tuto instanci. Skripty mohou automatizovat akce bota a reagovat na události.",
@@ -289,12 +286,17 @@
     "noScripts": "Zatím žádné skripty",
     "noScriptsDescription": "Vytvořte svůj první skript pro automatizaci akcí bota pomocí vizuálního editoru založeného na uzlech.",
     "createFirstScript": "Vytvořte svůj první skript",
-    "active": "Aktivní",
+    "running": "Běží",
+    "paused": "Pozastaveno",
     "nodes": "uzly",
     "noDescription": "Žádný popis",
     "edit": "Upravit",
-    "activate": "Aktivovat",
-    "deactivate": "Deaktivovat",
+    "pause": "Pozastavit",
+    "pauseSuccess": "",
+    "pauseError": "",
+    "resume": "Pokračovat",
+    "resumeSuccess": "",
+    "resumeError": "",
     "delete": "Smazat",
     "deleteSuccess": "Skript byl úspěšně smazán",
     "deleteError": "Nepodařilo se smazat skript",
@@ -303,7 +305,6 @@
     "activateSuccess": "Skript aktivován",
     "activateError": "Aktivace skriptu se nezdařila",
     "deactivateSuccess": "Skript deaktivován",
-    "deactivateError": "Deaktivace skriptu se nezdařila",
     "untitledScript": "Nepojmenovaný skript",
     "saveFirstBeforeActivating": "Nejdříve skript uložte před aktivací",
     "activating": "Aktivuji skript...",
@@ -322,49 +323,27 @@
         "backToScripts": "Zpět na Skripty",
         "save": "Uložit",
         "saveTooltip": "Uložit skript (Ctrl+S)",
-        "run": "Aktivovat",
-        "runTooltip": "Aktivovat skript (F5)",
-        "deactivate": "Deaktivovat",
-        "deactivateTooltip": "Deaktivovat skript",
-        "autoStart": "Automatické spuštění",
-        "autoStartTooltip": "Automaticky aktivovat tento skript při spuštění instance",
+        "resume": "Pokračovat",
+        "resumeTooltip": "",
+        "pause": "Pozastavit",
+        "pauseTooltip": "",
         "unsaved": "Neuloženo",
         "clearCanvas": "Vymazat plátno",
         "zoomIn": "Přiblížit",
         "zoomOut": "Oddálit",
         "fit": "Přizpůsobit",
-        "export": "",
-        "import": "",
-        "exportSuccess": "",
-        "importSuccess": "",
-        "importError": ""
+        "export": "Exportovat skript",
+        "import": "Importovat skript",
+        "exportSuccess": "Skript byl úspěšně exportován",
+        "importSuccess": "Skript byl úspěšně importován",
+        "importError": "Nepodařilo se importovat skript"
       },
       "palette": {
         "title": "Paleta uzlů",
-        "search": "Hledat uzly...",
-        "categories": {
-          "trigger": "Triggery",
-          "action": "Akce",
-          "flow": "Řízení toku",
-          "math": "Matematika",
-          "logic": "Logika",
-          "data": "Data",
-          "bot": "Bot",
-          "world": "Svět"
-        }
-      },
-      "inspector": {
-        "title": "Inspektor uzlu",
-        "noSelection": "Vyberte uzel pro zobrazení vlastností",
-        "properties": "Vlastnosti",
-        "nodeId": "ID uzlu",
-        "inputs": "Vstupy",
-        "outputs": "Výstupy",
-        "selectPlaceholder": "Vybrat..."
+        "search": "Hledat uzly..."
       },
       "logs": {
         "title": "Protokoly spuštění",
-        "clear": "Vymazat protokoly",
         "clearTitle": "Vymazat protokoly",
         "noLogs": "Zatím žádné protokoly. Spusťte skript pro zobrazení protokolů spuštění.",
         "entries_one": "{{count}} záznam",
@@ -375,321 +354,13 @@
       "contextMenu": {
         "duplicate": "Duplikovat",
         "disconnectAll": "Odpojit vše",
+        "collapse": "",
+        "expand": "",
+        "mute": "",
+        "unmute": "",
+        "showPreview": "",
+        "hidePreview": "",
         "delete": "Smazat"
-      },
-      "ports": {
-        "exec": "Spustit",
-        "execIn": "Vstup",
-        "execOut": "Výstup",
-        "execTrue": "Pravda",
-        "execFalse": "Nepravda",
-        "execLoop": "Cyklus",
-        "execDone": "Hotovo"
-      },
-      "fields": {
-        "value": "Hodnota",
-        "interval": "Interval (ms)",
-        "variableName": "Název proměnné",
-        "level": "Úroveň protokolu",
-        "levelDebug": "Ladění",
-        "levelInfo": "Informace",
-        "levelWarn": "Varování",
-        "levelError": "Chyba",
-        "x": "X",
-        "y": "Y",
-        "z": "Z",
-        "min": "Min",
-        "max": "Max",
-        "degree": "Stupeň",
-        "operator": "Operátor",
-        "operatorEqual": "Rovná se (==)",
-        "operatorNotEqual": "Nerovná se (!=)",
-        "operatorLess": "Menší než (<)",
-        "operatorLessEqual": "Menší nebo rovno (<=)",
-        "operatorGreater": "Větší než (>)",
-        "operatorGreaterEqual": "Větší nebo rovno (>=)",
-        "comparison": "Porovnání",
-        "comparisonEqual": "Rovná se (==)",
-        "comparisonNotEqual": "Nerovná se (!=)",
-        "comparisonGreater": "Větší než (>)",
-        "comparisonLess": "Menší než (<)",
-        "comparisonGreaterEqual": "Větší nebo rovno (>=)",
-        "comparisonLessEqual": "Menší nebo rovno (<=)",
-        "formula": "Vzorec",
-        "message": "Zpráva",
-        "iterations": "Iterace",
-        "minValue": "Minimální hodnota",
-        "maxValue": "Maximální hodnota",
-        "start": "Spustit",
-        "end": "Konec",
-        "amount": "Počet",
-        "blockType": "Typ bloku",
-        "radius": "Poloměr",
-        "timeout": "Timeout (ms)",
-        "slot": "Slot",
-        "count": "Počet",
-        "entityType": "Typ entity",
-        "smooth": "Plynule",
-        "enabled": "Povoleno",
-        "hand": "Ruka",
-        "handMain": "Hlavní ruka",
-        "handOff": "Vedlejší ruka",
-        "face": "Strana",
-        "faceUp": "Nahoru",
-        "faceDown": "Dolů",
-        "faceNorth": "Sever",
-        "faceSouth": "Jih",
-        "faceEast": "Východ",
-        "faceWest": "Západ",
-        "ticks": "Ticků",
-        "range": "Rozsah",
-        "loopCount": "Počet cyklů",
-        "open": "Otevřít",
-        "delay": "Zpoždění (ms)"
-      },
-      "nodes": {
-        "trigger": {
-          "on_tick": {
-            "label": "Na tick",
-            "description": "Spouští se při každém herním ticku (20× za sekundu)"
-          },
-          "on_join": {
-            "label": "Při připojení",
-            "description": "Spouští se, když se bot připojí na server"
-          },
-          "on_chat": {
-            "label": "Při chatu",
-            "description": "Spouští se při přijetí chatové zprávy"
-          },
-          "on_damage": {
-            "label": "Při obdržení poškození",
-            "description": "Spouští se, když bot obdrží poškození"
-          },
-          "on_death": {
-            "label": "Při smrti",
-            "description": "Spouští se, když bot zemře"
-          },
-          "on_health_change": {
-            "label": "Při změně zdraví",
-            "description": "Spouští se, když se změní zdraví bota"
-          },
-          "on_interval": {
-            "label": "V intervalu",
-            "description": "Spouští se v nastavitelném časovém intervalu"
-          }
-        },
-        "math": {
-          "add": {
-            "label": "Přidat",
-            "description": "Sečte dvě čísla dohromady"
-          },
-          "subtract": {
-            "label": "Odečíst",
-            "description": "Odečte druhé číslo od prvního"
-          },
-          "multiply": {
-            "label": "Násobit",
-            "description": "Vynásobí dvě čísla"
-          },
-          "divide": {
-            "label": "Dělit",
-            "description": "Vydělí první číslo druhým"
-          },
-          "modulo": {
-            "label": "Modulo",
-            "description": "Vrací zbytek po dělení"
-          },
-          "formula": {
-            "label": "Vzorec",
-            "description": "Vyhodnotí matematický vzorec"
-          },
-          "random": {
-            "label": "Náhodné číslo",
-            "description": "Generuje náhodné číslo mezi minimem a maximem"
-          },
-          "clamp": {
-            "label": "Omezit (clamp)",
-            "description": "Omezí hodnotu mezi minimem a maximem"
-          },
-          "lerp": {
-            "label": "Interpolace (lerp)",
-            "description": "Lineární interpolace mezi dvěma hodnotami"
-          },
-          "bspline": {
-            "label": "B-spline",
-            "description": "Interpoluje křivku pomocí B-spline"
-          }
-        },
-        "logic": {
-          "compare": {
-            "label": "Porovnat",
-            "description": "Porovná dvě hodnoty"
-          },
-          "and": {
-            "label": "A zároveň",
-            "description": "Logická operace AND pro dvě booleovské hodnoty"
-          },
-          "or": {
-            "label": "Nebo",
-            "description": "Logická operace OR pro dvě booleovské hodnoty"
-          },
-          "not": {
-            "label": "Negace",
-            "description": "Logická negace booleovské hodnoty"
-          },
-          "xor": {
-            "label": "XOR",
-            "description": "Logická operace XOR pro dvě booleovské hodnoty"
-          }
-        },
-        "flow": {
-          "branch": {
-            "label": "Větev",
-            "description": "Podmíněná větev na základě hodnoty boolean"
-          },
-          "switch": {
-            "label": "Přepínač",
-            "description": "Vícecestné větvení podle hodnoty"
-          },
-          "loop": {
-            "label": "Cyklus",
-            "description": "Opakuje spuštění zadaný početkrát"
-          },
-          "for_each": {
-            "label": "Pro každý",
-            "description": "Iteruje přes kolekci"
-          },
-          "sequence": {
-            "label": "Sekvence",
-            "description": "Spouští výstupy v pořadí"
-          },
-          "gate": {
-            "label": "Brána",
-            "description": "Řídí tok na základě stavu brány"
-          },
-          "debounce": {
-            "label": "Debounce",
-            "description": "Zabraňuje rychlému opakovanému spuštění"
-          }
-        },
-        "action": {
-          "set_rotation": {
-            "label": "Nastavit rotaci",
-            "description": "Nastaví rotaci bota"
-          },
-          "look_at": {
-            "label": "Podívat se na",
-            "description": "Podívá se na pozici nebo entitu"
-          },
-          "sneak": {
-            "label": "Plížení",
-            "description": "Přepíná plížení"
-          },
-          "sprint": {
-            "label": "Sprint",
-            "description": "Přepíná sprintování"
-          },
-          "jump": {
-            "label": "Skok",
-            "description": "Přiměje bota skočit"
-          },
-          "attack": {
-            "label": "Útok",
-            "description": "Útočí na entitu"
-          },
-          "use_item": {
-            "label": "Použít předmět",
-            "description": "Použije předmět ve zvolené ruce"
-          },
-          "pathfind_to": {
-            "label": "Najít cestu k",
-            "description": "Najde cestu na cílovou pozici"
-          },
-          "break_block": {
-            "label": "Zničit blok",
-            "description": "Zničí blok na pozici"
-          },
-          "place_block": {
-            "label": "Umístit blok",
-            "description": "Umístí blok na pozici"
-          },
-          "select_slot": {
-            "label": "Vybrat slot",
-            "description": "Vybere slot v panelu rychlého výběru"
-          },
-          "send_chat": {
-            "label": "Odeslat chat",
-            "description": "Odešle chatovou zprávu"
-          },
-          "wait": {
-            "label": "Čekat",
-            "description": "Čeká zadaný počet ticků"
-          },
-          "print": {
-            "label": "Vytisknout",
-            "description": "Zaznamená zprávu pro ladění"
-          },
-          "set_variable": {
-            "label": "Nastavit proměnnou",
-            "description": "Uloží hodnotu do proměnné"
-          }
-        },
-        "data": {
-          "get_position": {
-            "label": "Získat pozici",
-            "description": "Získá aktuální pozici bota"
-          },
-          "get_rotation": {
-            "label": "Získat rotaci",
-            "description": "Získá aktuální rotaci bota"
-          },
-          "get_health": {
-            "label": "Získat zdraví",
-            "description": "Získá aktuální hodnotu zdraví bota"
-          },
-          "get_hunger": {
-            "label": "Získat hlad",
-            "description": "Získá aktuální úroveň hladu bota"
-          },
-          "get_inventory": {
-            "label": "Získat inventář",
-            "description": "Získá položku z inventáře"
-          },
-          "get_block": {
-            "label": "Získat blok",
-            "description": "Získá blok na dané pozici"
-          },
-          "find_entity": {
-            "label": "Najít entitu",
-            "description": "Najde entitu určitého typu poblíž"
-          },
-          "find_block": {
-            "label": "Najít blok",
-            "description": "Najde blok určitého typu poblíž"
-          },
-          "get_variable": {
-            "label": "Získat proměnnou",
-            "description": "Načte hodnotu z proměnné"
-          }
-        },
-        "constant": {
-          "number": {
-            "label": "Číslo",
-            "description": "Konstantní číselná hodnota"
-          },
-          "string": {
-            "label": "Řetězec",
-            "description": "Konstantní textová hodnota"
-          },
-          "boolean": {
-            "label": "Boolovská hodnota",
-            "description": "Konstantní hodnota pravda/nepravda"
-          },
-          "vector3": {
-            "label": "Vektor3",
-            "description": "Konstantní 3D pozice (X, Y, Z)"
-          }
-        }
       }
     }
   }

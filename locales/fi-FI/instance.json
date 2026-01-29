@@ -273,9 +273,6 @@
   "scripts": {
     "title": "Visuaaliset skriptit",
     "description": "Luo automaatioskriptejä visuaalisella solmupohjaisella editorilla.",
-    "wipTitle": "Visuaalinen skriptieditori",
-    "wipDescription": "Luo automaatioskriptejä visuaalisella solmupohjaisella editorilla.",
-    "wipDetails": "Tämä ominaisuus on parhaillaan kehitteillä. Uusi visuaalinen skriptieditori antaa sinun luoda tehokkaita automaatioskriptejä vetämällä ja pudottamalla ilman, että sinun tarvitsee kirjoittaa koodia.",
     "createScript": "Luo skripti",
     "createScriptTitle": "Luo uusi skripti",
     "createScriptDescription": "Luo uusi visuaalinen skripti tälle instanssille. Skriptit voivat automatisoida botin toimintoja ja reagoida tapahtumiin.",
@@ -289,12 +286,17 @@
     "noScripts": "Ei vielä skriptejä",
     "noScriptsDescription": "Luo ensimmäinen skriptisi automatisoidaksesi botin toimintoja visuaalisella solmupohjaisella editorilla.",
     "createFirstScript": "Luo ensimmäinen skriptisi",
-    "active": "Aktiivinen",
+    "running": "Käynnissä",
+    "paused": "Tauotettu",
     "nodes": "solmut",
     "noDescription": "Ei kuvausta",
     "edit": "Muokkaa",
-    "activate": "Aktivoi",
-    "deactivate": "Deaktivoi",
+    "pause": "Tauota",
+    "pauseSuccess": "",
+    "pauseError": "",
+    "resume": "Jatka",
+    "resumeSuccess": "",
+    "resumeError": "",
     "delete": "Poista",
     "deleteSuccess": "Skripti poistettiin onnistuneesti",
     "deleteError": "Skriptin poisto epäonnistui",
@@ -303,7 +305,6 @@
     "activateSuccess": "Skripti aktivoitu",
     "activateError": "Skriptin aktivointi epäonnistui",
     "deactivateSuccess": "Skripti deaktivoitu",
-    "deactivateError": "Skriptin deaktivointi epäonnistui",
     "untitledScript": "Nimetön skripti",
     "saveFirstBeforeActivating": "Tallenna skripti ennen aktivointia",
     "activating": "Skripti aktivoidaan...",
@@ -322,49 +323,27 @@
         "backToScripts": "Takaisin skripteihin",
         "save": "Tallenna",
         "saveTooltip": "Tallenna skripti (Ctrl+S)",
-        "run": "Aktivoi",
-        "runTooltip": "Aktivoi skripti (F5)",
-        "deactivate": "Deaktivoi",
-        "deactivateTooltip": "Poista skripti käytöstä",
-        "autoStart": "Automaattinen käynnistys",
-        "autoStartTooltip": "Aktivoi tämä skripti automaattisesti, kun instanssi käynnistyy",
+        "resume": "Jatka",
+        "resumeTooltip": "",
+        "pause": "Tauota",
+        "pauseTooltip": "",
         "unsaved": "Tallentamaton",
         "clearCanvas": "Tyhjennä työtila",
         "zoomIn": "Lähennä",
         "zoomOut": "Loitonna",
         "fit": "Sovita",
-        "export": "",
-        "import": "",
-        "exportSuccess": "",
-        "importSuccess": "",
-        "importError": ""
+        "export": "Vie skriptiä",
+        "import": "Tuo skripti",
+        "exportSuccess": "Skripti viety onnistuneesti",
+        "importSuccess": "Skripti tuotu onnistuneesti",
+        "importError": "Skriptin tuonti epäonnistui"
       },
       "palette": {
         "title": "Solmupaletti",
-        "search": "Etsi solmuja...",
-        "categories": {
-          "trigger": "Laukaisimet",
-          "action": "Toiminnot",
-          "flow": "Ohjausvirtaus",
-          "math": "Matematiikka",
-          "logic": "Logiikka",
-          "data": "Data",
-          "bot": "Botti",
-          "world": "Maailma"
-        }
-      },
-      "inspector": {
-        "title": "Solmutarkastaja",
-        "noSelection": "Valitse solmu nähdäksesi sen ominaisuudet",
-        "properties": "Ominaisuudet",
-        "nodeId": "Solmun ID",
-        "inputs": "Syötteet",
-        "outputs": "Tulosteet",
-        "selectPlaceholder": "Valitse..."
+        "search": "Etsi solmuja..."
       },
       "logs": {
         "title": "Suorituksen lokit",
-        "clear": "Tyhjennä lokit",
         "clearTitle": "Tyhjennä lokit",
         "noLogs": "Ei vielä lokia. Suorita skripti nähdäksesi suorituksen lokit.",
         "entries_one": "{{count}} merkintä",
@@ -373,321 +352,13 @@
       "contextMenu": {
         "duplicate": "Monista",
         "disconnectAll": "Katkaise kaikki yhteydet",
+        "collapse": "",
+        "expand": "",
+        "mute": "",
+        "unmute": "",
+        "showPreview": "",
+        "hidePreview": "",
         "delete": "Poista"
-      },
-      "ports": {
-        "exec": "Suorita",
-        "execIn": "Suorita sisään",
-        "execOut": "Suorita ulos",
-        "execTrue": "Tosi",
-        "execFalse": "Epätosi",
-        "execLoop": "Silmukka",
-        "execDone": "Valmis"
-      },
-      "fields": {
-        "value": "Arvo",
-        "interval": "Väli (ms)",
-        "variableName": "Muuttujan nimi",
-        "level": "Lokitaso",
-        "levelDebug": "Debugi",
-        "levelInfo": "Tiedot",
-        "levelWarn": "Varoitus",
-        "levelError": "Virhe",
-        "x": "X",
-        "y": "Y",
-        "z": "Z",
-        "min": "Minimi",
-        "max": "Maksimi",
-        "degree": "Aste",
-        "operator": "Operaattori",
-        "operatorEqual": "Yhtäsuuri (==)",
-        "operatorNotEqual": "Ei yhtäsuuri (!=)",
-        "operatorLess": "Pienempi kuin (<)",
-        "operatorLessEqual": "Pienempi tai yhtäsuuri (<=)",
-        "operatorGreater": "Suurempi kuin (>)",
-        "operatorGreaterEqual": "Suurempi tai yhtäsuuri (>=)",
-        "comparison": "Vertailu",
-        "comparisonEqual": "Yhtäsuuri (==)",
-        "comparisonNotEqual": "Ei yhtäsuuri (!=)",
-        "comparisonGreater": "Suurempi kuin (>)",
-        "comparisonLess": "Pienempi kuin (<)",
-        "comparisonGreaterEqual": "Suurempi tai yhtäsuuri (>=)",
-        "comparisonLessEqual": "Pienempi tai yhtäsuuri (<=)",
-        "formula": "Kaava",
-        "message": "Viesti",
-        "iterations": "Iteraatiot",
-        "minValue": "Minimiarvo",
-        "maxValue": "Maksimiarvo",
-        "start": "Aloita",
-        "end": "Loppu",
-        "amount": "Määrä",
-        "blockType": "Palikkatyyppi",
-        "radius": "Säde",
-        "timeout": "Aikakatkaisu (ms)",
-        "slot": "Paikka",
-        "count": "Määrä",
-        "entityType": "Entiteettityyppi",
-        "smooth": "Pehmeä",
-        "enabled": "Käytössä",
-        "hand": "Käsi",
-        "handMain": "Pääkasi",
-        "handOff": "Sivukäsi",
-        "face": "Sivu",
-        "faceUp": "Ylös",
-        "faceDown": "Alas",
-        "faceNorth": "Pohjoinen",
-        "faceSouth": "Etelä",
-        "faceEast": "Itä",
-        "faceWest": "Länsi",
-        "ticks": "Tickit",
-        "range": "Kantama",
-        "loopCount": "Silmukan määrä",
-        "open": "Avaa",
-        "delay": "Viive (ms)"
-      },
-      "nodes": {
-        "trigger": {
-          "on_tick": {
-            "label": "Tickillä",
-            "description": "Laukeaa jokaisella pelitickillä (20 kertaa sekunnissa)"
-          },
-          "on_join": {
-            "label": "Liityttäessä",
-            "description": "Laukeaa kun botti liittyy palvelimelle"
-          },
-          "on_chat": {
-            "label": "Viestin vastaanotto",
-            "description": "Laukeaa kun chatti-viesti vastaanotetaan"
-          },
-          "on_damage": {
-            "label": "Vahingon vastaanotto",
-            "description": "Laukeaa kun botti saa vahinkoa"
-          },
-          "on_death": {
-            "label": "Kuollessa",
-            "description": "Laukeaa kun botti kuolee"
-          },
-          "on_health_change": {
-            "label": "Terveyden muutos",
-            "description": "Laukeaa kun botin terveys muuttuu"
-          },
-          "on_interval": {
-            "label": "Aikavälillä",
-            "description": "Laukeaa säädettävällä aikavälillä"
-          }
-        },
-        "math": {
-          "add": {
-            "label": "Lisää",
-            "description": "Lisää kaksi lukua yhteen"
-          },
-          "subtract": {
-            "label": "Vähennä",
-            "description": "Vähentää toisen luvun ensimmäisestä"
-          },
-          "multiply": {
-            "label": "Kerro",
-            "description": "Kertoo kaksi lukua keskenään"
-          },
-          "divide": {
-            "label": "Jaa",
-            "description": "Jakaa ensimmäisen luvun toisella"
-          },
-          "modulo": {
-            "label": "Jakojäännös",
-            "description": "Palauttaa jaon jakojäännöksen"
-          },
-          "formula": {
-            "label": "Kaava",
-            "description": "Arvioi matemaattinen kaava"
-          },
-          "random": {
-            "label": "Satunnainen",
-            "description": "Arpoo satunnaisluvun minimin ja maksimin väliltä"
-          },
-          "clamp": {
-            "label": "Rajoita",
-            "description": "Rajoittaa arvon minimin ja maksimin väliin"
-          },
-          "lerp": {
-            "label": "Lerp",
-            "description": "Lineaarinen interpolointi kahden arvon välillä"
-          },
-          "bspline": {
-            "label": "B-Spline",
-            "description": "Interpoloi B-spline-käyrän avulla"
-          }
-        },
-        "logic": {
-          "compare": {
-            "label": "Vertaile",
-            "description": "Vertaa kahta arvoa"
-          },
-          "and": {
-            "label": "Ja",
-            "description": "Kahden booleanin looginen JA"
-          },
-          "or": {
-            "label": "Tai",
-            "description": "Kahden booleanin looginen TAI"
-          },
-          "not": {
-            "label": "Ei",
-            "description": "Booleanin looginen EI"
-          },
-          "xor": {
-            "label": "XOR",
-            "description": "Kahden booleanin looginen XOR"
-          }
-        },
-        "flow": {
-          "branch": {
-            "label": "Haarautuminen",
-            "description": "Ehdollinen haarautuminen boolean-arvon perusteella"
-          },
-          "switch": {
-            "label": "Kytkin",
-            "description": "Monisuuntainen haarautuminen arvon perusteella"
-          },
-          "loop": {
-            "label": "Silmukka",
-            "description": "Toistaa suorituksen useita kertoja"
-          },
-          "for_each": {
-            "label": "Jokaiselle",
-            "description": "Iteroi kokoelman läpi"
-          },
-          "sequence": {
-            "label": "Sekvenssi",
-            "description": "Suorittaa ulostulot järjestyksessä"
-          },
-          "gate": {
-            "label": "Portti",
-            "description": "Ohjaa virtausta portin tilan perusteella"
-          },
-          "debounce": {
-            "label": "Debounce",
-            "description": "Estää nopean toistuvan suorituksen"
-          }
-        },
-        "action": {
-          "set_rotation": {
-            "label": "Aseta kierto",
-            "description": "Asettaa botin kierron"
-          },
-          "look_at": {
-            "label": "Katso kohteeseen",
-            "description": "Katsoo paikkaan tai entiteettiin"
-          },
-          "sneak": {
-            "label": "Kyykisty",
-            "description": "Vaihda hiiviskelyä"
-          },
-          "sprint": {
-            "label": "Juokse",
-            "description": "Vaihda juoksua"
-          },
-          "jump": {
-            "label": "Hyppää",
-            "description": "Hyppää bottilla"
-          },
-          "attack": {
-            "label": "Hyökkää",
-            "description": "Hyökkää entiteettiin"
-          },
-          "use_item": {
-            "label": "Käytä esinettä",
-            "description": "Käyttää esinettä määritetyssä kädessä"
-          },
-          "pathfind_to": {
-            "label": "Poluta kohteeseen",
-            "description": "Poluttaa kohdepaikkaan"
-          },
-          "break_block": {
-            "label": "Riko palikka",
-            "description": "Rikkoo palikan paikassa"
-          },
-          "place_block": {
-            "label": "Aseta palikka",
-            "description": "Asettaa palikan paikalleen"
-          },
-          "select_slot": {
-            "label": "Valitse paikka",
-            "description": "Valitsee hotbar-paikan"
-          },
-          "send_chat": {
-            "label": "Lähetä viesti",
-            "description": "Lähettää chat-viestin"
-          },
-          "wait": {
-            "label": "Odota",
-            "description": "Odottaa tietyn määrän tickejä"
-          },
-          "print": {
-            "label": "Tulosta",
-            "description": "Kirjaa viestin virheenjäljitystä varten"
-          },
-          "set_variable": {
-            "label": "Aseta muuttuja",
-            "description": "Tallentaa arvon muuttujaan"
-          }
-        },
-        "data": {
-          "get_position": {
-            "label": "Hae sijainti",
-            "description": "Hakee botin nykyisen sijainnin"
-          },
-          "get_rotation": {
-            "label": "Hae kulma-asento",
-            "description": "Hakee botin nykyisen kulma-asennon"
-          },
-          "get_health": {
-            "label": "Hae terveys",
-            "description": "Hakee botin nykyisen terveyden"
-          },
-          "get_hunger": {
-            "label": "Hae nälkä",
-            "description": "Hakee botin nykyisen nälkätilan"
-          },
-          "get_inventory": {
-            "label": "Hae inventaario",
-            "description": "Hakee esineen inventaariosta"
-          },
-          "get_block": {
-            "label": "Hae lohko",
-            "description": "Hakee lohkon määrätyssä sijainnissa"
-          },
-          "find_entity": {
-            "label": "Etsi entiteetti",
-            "description": "Etsii lähellä olevan tietyn tyyppisen entiteetin"
-          },
-          "find_block": {
-            "label": "Etsi lohko",
-            "description": "Etsii lähellä olevan tietyn tyyppisen lohkon"
-          },
-          "get_variable": {
-            "label": "Hae muuttuja",
-            "description": "Hakee arvon muuttujasta"
-          }
-        },
-        "constant": {
-          "number": {
-            "label": "Luku",
-            "description": "Vakiolukuarvo"
-          },
-          "string": {
-            "label": "Merkkijono",
-            "description": "Vakiotekstiarvo"
-          },
-          "boolean": {
-            "label": "Totuusarvo",
-            "description": "Vakiototuusarvo (tosi/epätosi)"
-          },
-          "vector3": {
-            "label": "Vektori3",
-            "description": "Vakio 3D-sijainti (X, Y, Z)"
-          }
-        }
       }
     }
   }
