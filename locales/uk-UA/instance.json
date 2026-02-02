@@ -349,7 +349,7 @@
         "entries_one": "{{count}} запис",
         "entries_few": "{{count}} записи",
         "entries_many": "{{count}} записів",
-        "entries_other": "{{count}} запису"
+        "entries_other": "{{count}} Записи"
       },
       "contextMenu": {
         "duplicate": "Дублювати",
