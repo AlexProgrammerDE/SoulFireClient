@@ -428,6 +428,7 @@ function AddButton() {
       const total = textSplit.length;
       let failed = 0;
       let success = 0;
+      const accountsToAdd: ProfileAccount[] = [];
       const loadingReport = () =>
         t("account.listImportToast.loading", {
           checked: success + failed,
@@ -450,48 +451,14 @@ function AddButton() {
         runAsync(async () => {
           const data = r.data;
           switch (data.oneofKind) {
-            case "fullList": {
-              const accountsToAdd = data.fullList.account;
-
-              // Using batch add for bulk import
-              if (accountsToAdd.length > 0) {
-                await addAccountsBatchMutation(accountsToAdd);
-              }
-
-              if (accountsToAdd.length === 0) {
-                toast.error(t("account.listImportToast.allFailed"), {
-                  id: toastId,
-                  cancel: undefined,
-                });
-              } else if (accountsToAdd.length !== textSplit.length) {
-                toast.warning(
-                  t("account.listImportToast.someFailed", {
-                    count: accountsToAdd.length,
-                    failed: textSplit.length - accountsToAdd.length,
-                  }),
-                  {
-                    id: toastId,
-                    cancel: undefined,
-                  },
-                );
-              } else {
-                toast.success(
-                  t("account.listImportToast.noneFailed", {
-                    count: accountsToAdd.length,
-                  }),
-                  {
-                    id: toastId,
-                    cancel: undefined,
-                  },
-                );
-              }
-              break;
-            }
             case "oneSuccess": {
               if (abortController.signal.aborted) {
                 return;
               }
 
+              if (data.oneSuccess.account) {
+                accountsToAdd.push(data.oneSuccess.account);
+              }
               success++;
               toast.loading(loadingReport(), {
                 id: toastId,
@@ -509,6 +476,40 @@ function AddButton() {
                 id: toastId,
                 ...loadingData,
               });
+              break;
+            }
+            case "end": {
+              if (accountsToAdd.length > 0) {
+                await addAccountsBatchMutation(accountsToAdd);
+              }
+
+              if (accountsToAdd.length === 0) {
+                toast.error(t("account.listImportToast.allFailed"), {
+                  id: toastId,
+                  cancel: undefined,
+                });
+              } else if (failed > 0) {
+                toast.warning(
+                  t("account.listImportToast.someFailed", {
+                    count: accountsToAdd.length,
+                    failed,
+                  }),
+                  {
+                    id: toastId,
+                    cancel: undefined,
+                  },
+                );
+              } else {
+                toast.success(
+                  t("account.listImportToast.noneFailed", {
+                    count: accountsToAdd.length,
+                  }),
+                  {
+                    id: toastId,
+                    cancel: undefined,
+                  },
+                );
+              }
               break;
             }
           }

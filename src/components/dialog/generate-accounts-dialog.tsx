@@ -106,6 +106,7 @@ export default function GenerateAccountsDialog({
     const total = usernames.length;
     let failed = 0;
     let success = 0;
+    const accountsToAdd: ProfileAccount[] = [];
     const loadingReport = () =>
       t("account.generate.progress", {
         checked: success + failed,
@@ -130,8 +131,34 @@ export default function GenerateAccountsDialog({
       runAsync(async () => {
         const data = r.data;
         switch (data.oneofKind) {
-          case "fullList": {
-            const accountsToAdd = data.fullList.account;
+          case "oneSuccess": {
+            if (abortController.signal.aborted) {
+              return;
+            }
+
+            if (data.oneSuccess.account) {
+              accountsToAdd.push(data.oneSuccess.account);
+            }
+            success++;
+            toast.loading(loadingReport(), {
+              id: toastId,
+              ...loadingData,
+            });
+            break;
+          }
+          case "oneFailure": {
+            if (abortController.signal.aborted) {
+              return;
+            }
+
+            failed++;
+            toast.loading(loadingReport(), {
+              id: toastId,
+              ...loadingData,
+            });
+            break;
+          }
+          case "end": {
             setIsGenerating(false);
 
             if (accountsToAdd.length === 0) {
@@ -150,30 +177,6 @@ export default function GenerateAccountsDialog({
                 },
               );
             }
-            break;
-          }
-          case "oneSuccess": {
-            if (abortController.signal.aborted) {
-              return;
-            }
-
-            success++;
-            toast.loading(loadingReport(), {
-              id: toastId,
-              ...loadingData,
-            });
-            break;
-          }
-          case "oneFailure": {
-            if (abortController.signal.aborted) {
-              return;
-            }
-
-            failed++;
-            toast.loading(loadingReport(), {
-              id: toastId,
-              ...loadingData,
-            });
             break;
           }
         }
