@@ -38,9 +38,12 @@ export interface IMCAuthServiceClient {
    * Authenticates one or more Minecraft accounts using credentials or tokens.
    * Supports bulk authentication with concurrent processing.
    *
-   * The stream sends progress updates (one_success/one_failure) as each
-   * account is processed, allowing clients to show real-time progress.
-   * The final message contains the full list of successfully authenticated accounts.
+   * Results are streamed back as each authentication completes:
+   * 1. For each account, either a one_success (with account data) or
+   *    one_failure message is sent
+   * 2. A CredentialsAuthEnd message is sent when all checks are complete
+   *
+   * Concurrency is controlled by the instance's ACCOUNT_IMPORT_CONCURRENCY setting.
    *
    * Errors:
    * - NOT_FOUND: The specified instance does not exist
@@ -121,9 +124,12 @@ export class MCAuthServiceClient implements IMCAuthServiceClient, ServiceInfo {
    * Authenticates one or more Minecraft accounts using credentials or tokens.
    * Supports bulk authentication with concurrent processing.
    *
-   * The stream sends progress updates (one_success/one_failure) as each
-   * account is processed, allowing clients to show real-time progress.
-   * The final message contains the full list of successfully authenticated accounts.
+   * Results are streamed back as each authentication completes:
+   * 1. For each account, either a one_success (with account data) or
+   *    one_failure message is sent
+   * 2. A CredentialsAuthEnd message is sent when all checks are complete
+   *
+   * Concurrency is controlled by the instance's ACCOUNT_IMPORT_CONCURRENCY setting.
    *
    * Errors:
    * - NOT_FOUND: The specified instance does not exist

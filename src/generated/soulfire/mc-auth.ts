@@ -60,41 +60,37 @@ export interface CredentialsAuthRequest {
   payload: string[];
 }
 /**
- * Final response containing all successfully authenticated accounts.
- * Sent as the last message in the stream after all individual results.
- *
- * @generated from protobuf message soulfire.v1.CredentialsAuthFullList
- */
-export interface CredentialsAuthFullList {
-  /**
-   * List of all successfully authenticated Minecraft accounts.
-   * Failed authentications are excluded from this list.
-   *
-   * @generated from protobuf field: repeated soulfire.v1.MinecraftAccountProto account = 1
-   */
-  account: MinecraftAccountProto[];
-}
-/**
- * Progress indicator sent when an individual account authentication succeeds.
- * This is a streaming progress update, not the final result.
- * The actual account data is included in the final CredentialsAuthFullList.
+ * Result of a single account authentication attempt.
+ * Includes the authenticated account data on success.
  *
  * @generated from protobuf message soulfire.v1.CredentialsAuthOneSuccess
  */
-export interface CredentialsAuthOneSuccess {}
+export interface CredentialsAuthOneSuccess {
+  /**
+   * The successfully authenticated Minecraft account.
+   *
+   * @generated from protobuf field: soulfire.v1.MinecraftAccountProto account = 1
+   */
+  account?: MinecraftAccountProto;
+}
 /**
- * Progress indicator sent when an individual account authentication fails.
- * This is a streaming progress update indicating that one payload could not
- * be authenticated. The failure is logged server-side with detailed error info.
+ * Result sent when an individual account authentication fails.
+ * The failure is logged server-side with detailed error info.
  *
  * @generated from protobuf message soulfire.v1.CredentialsAuthOneFailure
  */
 export interface CredentialsAuthOneFailure {}
 /**
+ * Sentinel message indicating that all account authentications have completed.
+ * This is the final message sent in the response stream, signaling
+ * that no more result messages will follow.
+ *
+ * @generated from protobuf message soulfire.v1.CredentialsAuthEnd
+ */
+export interface CredentialsAuthEnd {}
+/**
  * Streaming response message for credentials-based authentication.
- * The stream sends progress updates (one_success/one_failure) for each
- * payload being processed, followed by a final full_list with all
- * successfully authenticated accounts.
+ * Each message contains either a single authentication result or an end marker.
  *
  * @generated from protobuf message soulfire.v1.CredentialsAuthResponse
  */
@@ -104,20 +100,11 @@ export interface CredentialsAuthResponse {
    */
   data:
     | {
-        oneofKind: "fullList";
-        /**
-         * Final response containing all successfully authenticated accounts.
-         * This is the last message in the stream.
-         *
-         * @generated from protobuf field: soulfire.v1.CredentialsAuthFullList full_list = 1
-         */
-        fullList: CredentialsAuthFullList;
-      }
-    | {
         oneofKind: "oneSuccess";
         /**
-         * Progress indicator: one account was successfully authenticated.
-         * Sent for each successful authentication as they complete.
+         * A single successful authentication result. Multiple of these will be
+         * streamed as each account authentication completes, allowing the client
+         * to process results incrementally.
          *
          * @generated from protobuf field: soulfire.v1.CredentialsAuthOneSuccess one_success = 2
          */
@@ -126,13 +113,23 @@ export interface CredentialsAuthResponse {
     | {
         oneofKind: "oneFailure";
         /**
-         * Progress indicator: one account authentication failed.
-         * Sent for each failed authentication as they complete.
-         * Errors are logged server-side (e.g., invalid credentials, network issues).
+         * A single failed authentication result. Streamed as each failed
+         * authentication completes. Errors are logged server-side
+         * (e.g., invalid credentials, network issues).
          *
          * @generated from protobuf field: soulfire.v1.CredentialsAuthOneFailure one_failure = 3
          */
         oneFailure: CredentialsAuthOneFailure;
+      }
+    | {
+        oneofKind: "end";
+        /**
+         * End-of-stream marker indicating all authentications are complete.
+         * This is always the last message in the stream before it closes.
+         *
+         * @generated from protobuf field: soulfire.v1.CredentialsAuthEnd end = 4
+         */
+        end: CredentialsAuthEnd;
       }
     | {
         oneofKind: undefined;
@@ -383,96 +380,16 @@ class CredentialsAuthRequest$Type extends MessageType<CredentialsAuthRequest> {
  */
 export const CredentialsAuthRequest = new CredentialsAuthRequest$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class CredentialsAuthFullList$Type extends MessageType<CredentialsAuthFullList> {
+class CredentialsAuthOneSuccess$Type extends MessageType<CredentialsAuthOneSuccess> {
   constructor() {
-    super("soulfire.v1.CredentialsAuthFullList", [
+    super("soulfire.v1.CredentialsAuthOneSuccess", [
       {
         no: 1,
         name: "account",
         kind: "message",
-        repeat: 2 /*RepeatType.UNPACKED*/,
         T: () => MinecraftAccountProto,
       },
     ]);
-  }
-  create(
-    value?: PartialMessage<CredentialsAuthFullList>,
-  ): CredentialsAuthFullList {
-    const message = globalThis.Object.create(this.messagePrototype!);
-    message.account = [];
-    if (value !== undefined)
-      reflectionMergePartial<CredentialsAuthFullList>(this, message, value);
-    return message;
-  }
-  internalBinaryRead(
-    reader: IBinaryReader,
-    length: number,
-    options: BinaryReadOptions,
-    target?: CredentialsAuthFullList,
-  ): CredentialsAuthFullList {
-    let message = target ?? this.create(),
-      end = reader.pos + length;
-    while (reader.pos < end) {
-      let [fieldNo, wireType] = reader.tag();
-      switch (fieldNo) {
-        case /* repeated soulfire.v1.MinecraftAccountProto account */ 1:
-          message.account.push(
-            MinecraftAccountProto.internalBinaryRead(
-              reader,
-              reader.uint32(),
-              options,
-            ),
-          );
-          break;
-        default:
-          let u = options.readUnknownField;
-          if (u === "throw")
-            throw new globalThis.Error(
-              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
-            );
-          let d = reader.skip(wireType);
-          if (u !== false)
-            (u === true ? UnknownFieldHandler.onRead : u)(
-              this.typeName,
-              message,
-              fieldNo,
-              wireType,
-              d,
-            );
-      }
-    }
-    return message;
-  }
-  internalBinaryWrite(
-    message: CredentialsAuthFullList,
-    writer: IBinaryWriter,
-    options: BinaryWriteOptions,
-  ): IBinaryWriter {
-    /* repeated soulfire.v1.MinecraftAccountProto account = 1; */
-    for (let i = 0; i < message.account.length; i++)
-      MinecraftAccountProto.internalBinaryWrite(
-        message.account[i],
-        writer.tag(1, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
-    let u = options.writeUnknownFields;
-    if (u !== false)
-      (u == true ? UnknownFieldHandler.onWrite : u)(
-        this.typeName,
-        message,
-        writer,
-      );
-    return writer;
-  }
-}
-/**
- * @generated MessageType for protobuf message soulfire.v1.CredentialsAuthFullList
- */
-export const CredentialsAuthFullList = new CredentialsAuthFullList$Type();
-// @generated message type with reflection information, may provide speed optimized methods
-class CredentialsAuthOneSuccess$Type extends MessageType<CredentialsAuthOneSuccess> {
-  constructor() {
-    super("soulfire.v1.CredentialsAuthOneSuccess", []);
   }
   create(
     value?: PartialMessage<CredentialsAuthOneSuccess>,
@@ -493,6 +410,14 @@ class CredentialsAuthOneSuccess$Type extends MessageType<CredentialsAuthOneSucce
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
+        case /* soulfire.v1.MinecraftAccountProto account */ 1:
+          message.account = MinecraftAccountProto.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.account,
+          );
+          break;
         default:
           let u = options.readUnknownField;
           if (u === "throw")
@@ -517,6 +442,13 @@ class CredentialsAuthOneSuccess$Type extends MessageType<CredentialsAuthOneSucce
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
+    /* soulfire.v1.MinecraftAccountProto account = 1; */
+    if (message.account)
+      MinecraftAccountProto.internalBinaryWrite(
+        message.account,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -594,16 +526,69 @@ class CredentialsAuthOneFailure$Type extends MessageType<CredentialsAuthOneFailu
  */
 export const CredentialsAuthOneFailure = new CredentialsAuthOneFailure$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class CredentialsAuthEnd$Type extends MessageType<CredentialsAuthEnd> {
+  constructor() {
+    super("soulfire.v1.CredentialsAuthEnd", []);
+  }
+  create(value?: PartialMessage<CredentialsAuthEnd>): CredentialsAuthEnd {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<CredentialsAuthEnd>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: CredentialsAuthEnd,
+  ): CredentialsAuthEnd {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: CredentialsAuthEnd,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.CredentialsAuthEnd
+ */
+export const CredentialsAuthEnd = new CredentialsAuthEnd$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class CredentialsAuthResponse$Type extends MessageType<CredentialsAuthResponse> {
   constructor() {
     super("soulfire.v1.CredentialsAuthResponse", [
-      {
-        no: 1,
-        name: "full_list",
-        kind: "message",
-        oneof: "data",
-        T: () => CredentialsAuthFullList,
-      },
       {
         no: 2,
         name: "one_success",
@@ -617,6 +602,13 @@ class CredentialsAuthResponse$Type extends MessageType<CredentialsAuthResponse> 
         kind: "message",
         oneof: "data",
         T: () => CredentialsAuthOneFailure,
+      },
+      {
+        no: 4,
+        name: "end",
+        kind: "message",
+        oneof: "data",
+        T: () => CredentialsAuthEnd,
       },
     ]);
   }
@@ -640,17 +632,6 @@ class CredentialsAuthResponse$Type extends MessageType<CredentialsAuthResponse> 
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
-        case /* soulfire.v1.CredentialsAuthFullList full_list */ 1:
-          message.data = {
-            oneofKind: "fullList",
-            fullList: CredentialsAuthFullList.internalBinaryRead(
-              reader,
-              reader.uint32(),
-              options,
-              (message.data as any).fullList,
-            ),
-          };
-          break;
         case /* soulfire.v1.CredentialsAuthOneSuccess one_success */ 2:
           message.data = {
             oneofKind: "oneSuccess",
@@ -670,6 +651,17 @@ class CredentialsAuthResponse$Type extends MessageType<CredentialsAuthResponse> 
               reader.uint32(),
               options,
               (message.data as any).oneFailure,
+            ),
+          };
+          break;
+        case /* soulfire.v1.CredentialsAuthEnd end */ 4:
+          message.data = {
+            oneofKind: "end",
+            end: CredentialsAuthEnd.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.data as any).end,
             ),
           };
           break;
@@ -697,13 +689,6 @@ class CredentialsAuthResponse$Type extends MessageType<CredentialsAuthResponse> 
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    /* soulfire.v1.CredentialsAuthFullList full_list = 1; */
-    if (message.data.oneofKind === "fullList")
-      CredentialsAuthFullList.internalBinaryWrite(
-        message.data.fullList,
-        writer.tag(1, WireType.LengthDelimited).fork(),
-        options,
-      ).join();
     /* soulfire.v1.CredentialsAuthOneSuccess one_success = 2; */
     if (message.data.oneofKind === "oneSuccess")
       CredentialsAuthOneSuccess.internalBinaryWrite(
@@ -716,6 +701,13 @@ class CredentialsAuthResponse$Type extends MessageType<CredentialsAuthResponse> 
       CredentialsAuthOneFailure.internalBinaryWrite(
         message.data.oneFailure,
         writer.tag(3, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.CredentialsAuthEnd end = 4; */
+    if (message.data.oneofKind === "end")
+      CredentialsAuthEnd.internalBinaryWrite(
+        message.data.end,
+        writer.tag(4, WireType.LengthDelimited).fork(),
         options,
       ).join();
     let u = options.writeUnknownFields;

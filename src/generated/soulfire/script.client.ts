@@ -44,28 +44,23 @@ import { ScriptService } from "./script";
  * nodes in a graph. Each node represents an action, condition, or event trigger.
  * Nodes are connected by edges that define execution flow and data transfer.
  *
- * SCRIPT LIFECYCLE (Pause-based model):
- * - Scripts run by default when created and on server startup
- * - Scripts can be paused to stop execution
- * - Paused scripts don't start on server startup
- * - Saving a non-paused script restarts it with the new configuration
- * - Scripts run even when the instance is stopped
+ * SCRIPT LIFECYCLE:
+ * 1. Create a script using CreateScript with initial nodes/edges or empty graph
+ * 2. Edit the script using UpdateScript to modify the node graph
+ * 3. Activate the script using ActivateScript to register event listeners
+ * 4. Monitor execution via SubscribeScriptEvents or GetScriptStatus
+ * 5. Deactivate using DeactivateScript when done
+ * 6. Delete unused scripts with DeleteScript
  *
- * 1. Create a script using CreateScript - runs immediately unless paused=true
- * 2. Edit using UpdateScript - restarts automatically if not paused
- * 3. Pause using PauseScript to stop execution
- * 4. Resume using ResumeScript to restart execution
- * 5. Monitor via SubscribeScriptEvents or GetScriptStatus
- * 6. Delete with DeleteScript (stops script first if running)
- *
- * Scripts are reactive state machines - they listen for trigger events and
- * execute node chains in response. They remain active until explicitly paused.
+ * Scripts are reactive state machines - they don't "run" but rather listen for
+ * trigger events and execute node chains in response. Activation registers the
+ * listeners, deactivation removes them and cancels any pending async operations.
  *
  * PERMISSIONS: Script operations require appropriate instance permissions.
  * The specific permissions are TBD but will likely include:
  * - READ_SCRIPT: View script definitions and status
  * - UPDATE_SCRIPT: Create, modify, and delete scripts
- * - EXECUTE_SCRIPT: Pause and resume scripts
+ * - EXECUTE_SCRIPT: Activate and deactivate scripts
  *
  * LOGGING: Script execution logs can be streamed via SubscribeScriptLogs or
  * filtered using InstanceScriptLogScope in the LogsService (see logs.proto).
@@ -141,13 +136,13 @@ export interface IScriptServiceClient {
     options?: RpcOptions,
   ): UnaryCall<ListScriptsRequest, ListScriptsResponse>;
   /**
-   * Resumes a paused script (or subscribes to events of a running script).
-   * Clears the paused flag and starts the script if it was paused.
+   * Activates a script by registering its trigger event listeners.
+   * The script will begin responding to trigger events (tick, chat, etc.).
    * Returns a stream of execution events as triggers fire and nodes execute.
-   * The stream remains open until the script is paused or client disconnects.
-   * Note: Client disconnect does NOT pause the script - it keeps running.
+   * The stream remains open until the script is deactivated.
    * Errors: NOT_FOUND if instance or script does not exist
    * Errors: PERMISSION_DENIED if user lacks script execution permission
+   * Errors: FAILED_PRECONDITION if script is already active
    * Errors: INVALID_ARGUMENT if script graph is invalid (e.g., no trigger nodes)
    *
    * @generated from protobuf rpc: ActivateScript
@@ -157,11 +152,11 @@ export interface IScriptServiceClient {
     options?: RpcOptions,
   ): ServerStreamingCall<ActivateScriptRequest, ScriptEvent>;
   /**
-   * Pauses a running script.
-   * Sets the paused flag and stops all event listeners.
-   * Paused scripts don't start on server startup or when updated.
+   * Deactivates an active script.
+   * Unregisters all event listeners and cancels any pending async operations.
    * Errors: NOT_FOUND if instance or script does not exist
    * Errors: PERMISSION_DENIED if user lacks script execution permission
+   * Errors: FAILED_PRECONDITION if script is not active
    *
    * @generated from protobuf rpc: DeactivateScript
    */
@@ -227,28 +222,23 @@ export interface IScriptServiceClient {
  * nodes in a graph. Each node represents an action, condition, or event trigger.
  * Nodes are connected by edges that define execution flow and data transfer.
  *
- * SCRIPT LIFECYCLE (Pause-based model):
- * - Scripts run by default when created and on server startup
- * - Scripts can be paused to stop execution
- * - Paused scripts don't start on server startup
- * - Saving a non-paused script restarts it with the new configuration
- * - Scripts run even when the instance is stopped
+ * SCRIPT LIFECYCLE:
+ * 1. Create a script using CreateScript with initial nodes/edges or empty graph
+ * 2. Edit the script using UpdateScript to modify the node graph
+ * 3. Activate the script using ActivateScript to register event listeners
+ * 4. Monitor execution via SubscribeScriptEvents or GetScriptStatus
+ * 5. Deactivate using DeactivateScript when done
+ * 6. Delete unused scripts with DeleteScript
  *
- * 1. Create a script using CreateScript - runs immediately unless paused=true
- * 2. Edit using UpdateScript - restarts automatically if not paused
- * 3. Pause using PauseScript to stop execution
- * 4. Resume using ResumeScript to restart execution
- * 5. Monitor via SubscribeScriptEvents or GetScriptStatus
- * 6. Delete with DeleteScript (stops script first if running)
- *
- * Scripts are reactive state machines - they listen for trigger events and
- * execute node chains in response. They remain active until explicitly paused.
+ * Scripts are reactive state machines - they don't "run" but rather listen for
+ * trigger events and execute node chains in response. Activation registers the
+ * listeners, deactivation removes them and cancels any pending async operations.
  *
  * PERMISSIONS: Script operations require appropriate instance permissions.
  * The specific permissions are TBD but will likely include:
  * - READ_SCRIPT: View script definitions and status
  * - UPDATE_SCRIPT: Create, modify, and delete scripts
- * - EXECUTE_SCRIPT: Pause and resume scripts
+ * - EXECUTE_SCRIPT: Activate and deactivate scripts
  *
  * LOGGING: Script execution logs can be streamed via SubscribeScriptLogs or
  * filtered using InstanceScriptLogScope in the LogsService (see logs.proto).
@@ -378,13 +368,13 @@ export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
     );
   }
   /**
-   * Resumes a paused script (or subscribes to events of a running script).
-   * Clears the paused flag and starts the script if it was paused.
+   * Activates a script by registering its trigger event listeners.
+   * The script will begin responding to trigger events (tick, chat, etc.).
    * Returns a stream of execution events as triggers fire and nodes execute.
-   * The stream remains open until the script is paused or client disconnects.
-   * Note: Client disconnect does NOT pause the script - it keeps running.
+   * The stream remains open until the script is deactivated.
    * Errors: NOT_FOUND if instance or script does not exist
    * Errors: PERMISSION_DENIED if user lacks script execution permission
+   * Errors: FAILED_PRECONDITION if script is already active
    * Errors: INVALID_ARGUMENT if script graph is invalid (e.g., no trigger nodes)
    *
    * @generated from protobuf rpc: ActivateScript
@@ -404,11 +394,11 @@ export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
     );
   }
   /**
-   * Pauses a running script.
-   * Sets the paused flag and stops all event listeners.
-   * Paused scripts don't start on server startup or when updated.
+   * Deactivates an active script.
+   * Unregisters all event listeners and cancels any pending async operations.
    * Errors: NOT_FOUND if instance or script does not exist
    * Errors: PERMISSION_DENIED if user lacks script execution permission
+   * Errors: FAILED_PRECONDITION if script is not active
    *
    * @generated from protobuf rpc: DeactivateScript
    */
