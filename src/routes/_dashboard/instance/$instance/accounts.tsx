@@ -70,6 +70,7 @@ import {
 } from "@/generated/soulfire/common.ts";
 import { MCAuthServiceClient } from "@/generated/soulfire/mc-auth.client.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
+import i18n from "@/lib/i18n";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
 import {
   type GenerateAccountsMode,
@@ -276,7 +277,10 @@ const columns: ColumnDef<ProfileAccount>[] = [
       getEnumKeyByValue(MinecraftAccountProto_AccountTypeProto, row.type),
     accessorKey: "type",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Type" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("instance:account.table.type")}
+      />
     ),
     cell: ({ cell }) => {
       const type =
@@ -291,7 +295,7 @@ const columns: ColumnDef<ProfileAccount>[] = [
       );
     },
     meta: {
-      label: "Type",
+      label: i18n.t("instance:account.table.type"),
       variant: "multiSelect",
       options: getEnumEntries(MinecraftAccountProto_AccountTypeProto).map(
         (type) => {
@@ -309,11 +313,14 @@ const columns: ColumnDef<ProfileAccount>[] = [
     id: "profileId",
     accessorKey: "profileId",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Profile ID" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("instance:account.table.profileId")}
+      />
     ),
     meta: {
-      label: "Profile ID",
-      placeholder: "Search profile IDs...",
+      label: i18n.t("instance:account.table.profileId"),
+      placeholder: i18n.t("instance:account.table.searchProfileIds"),
       variant: "text",
       icon: TextIcon,
     },
@@ -323,11 +330,14 @@ const columns: ColumnDef<ProfileAccount>[] = [
     id: "lastKnownName",
     accessorKey: "lastKnownName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Last known name" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("instance:account.table.lastKnownName")}
+      />
     ),
     meta: {
-      label: "Last known name",
-      placeholder: "Search last known names...",
+      label: i18n.t("instance:account.table.lastKnownName"),
+      placeholder: i18n.t("instance:account.table.searchLastKnownNames"),
       variant: "text",
       icon: TextIcon,
     },
@@ -335,7 +345,11 @@ const columns: ColumnDef<ProfileAccount>[] = [
   },
   {
     id: "actions",
-    header: () => <span className="sr-only">Actions</span>,
+    header: () => (
+      <span className="sr-only">
+        {i18n.t("instance:account.table.actions")}
+      </span>
+    ),
     cell: ({ row }) => <ActionsCell account={row.original} />,
     size: 80,
     enableSorting: false,
@@ -789,7 +803,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   return (
     <>
       <DataTableActionBarAction
-        tooltip="Remove selected accounts"
+        tooltip={t("account.removeSelectedTooltip")}
         onClick={() => {
           void trackEvent("remove_accounts", {
             count: props.table.getFilteredSelectedRowModel().rows.length,

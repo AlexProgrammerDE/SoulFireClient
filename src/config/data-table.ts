@@ -1,56 +1,245 @@
+import i18n from "@/lib/i18n";
+
+const t = (key: string) => i18n.t(`common:dataTable.${key}`);
+
 export type DataTableConfig = typeof dataTableConfig;
 
 export const dataTableConfig = {
   textOperators: [
-    { label: "Contains", value: "iLike" as const },
-    { label: "Does not contain", value: "notILike" as const },
-    { label: "Is", value: "eq" as const },
-    { label: "Is not", value: "ne" as const },
-    { label: "Is empty", value: "isEmpty" as const },
-    { label: "Is not empty", value: "isNotEmpty" as const },
+    {
+      get label() {
+        return t("operators.iLike");
+      },
+      value: "iLike" as const,
+    },
+    {
+      get label() {
+        return t("operators.notILike");
+      },
+      value: "notILike" as const,
+    },
+    {
+      get label() {
+        return t("operators.eq");
+      },
+      value: "eq" as const,
+    },
+    {
+      get label() {
+        return t("operators.ne");
+      },
+      value: "ne" as const,
+    },
+    {
+      get label() {
+        return t("operators.isEmpty");
+      },
+      value: "isEmpty" as const,
+    },
+    {
+      get label() {
+        return t("operators.isNotEmpty");
+      },
+      value: "isNotEmpty" as const,
+    },
   ],
   numericOperators: [
-    { label: "Is", value: "eq" as const },
-    { label: "Is not", value: "ne" as const },
-    { label: "Is less than", value: "lt" as const },
-    { label: "Is less than or equal to", value: "lte" as const },
-    { label: "Is greater than", value: "gt" as const },
-    { label: "Is greater than or equal to", value: "gte" as const },
-    { label: "Is between", value: "isBetween" as const },
-    { label: "Is empty", value: "isEmpty" as const },
-    { label: "Is not empty", value: "isNotEmpty" as const },
+    {
+      get label() {
+        return t("operators.eq");
+      },
+      value: "eq" as const,
+    },
+    {
+      get label() {
+        return t("operators.ne");
+      },
+      value: "ne" as const,
+    },
+    {
+      get label() {
+        return t("operators.lt");
+      },
+      value: "lt" as const,
+    },
+    {
+      get label() {
+        return t("operators.lte");
+      },
+      value: "lte" as const,
+    },
+    {
+      get label() {
+        return t("operators.gt");
+      },
+      value: "gt" as const,
+    },
+    {
+      get label() {
+        return t("operators.gte");
+      },
+      value: "gte" as const,
+    },
+    {
+      get label() {
+        return t("operators.isBetween");
+      },
+      value: "isBetween" as const,
+    },
+    {
+      get label() {
+        return t("operators.isEmpty");
+      },
+      value: "isEmpty" as const,
+    },
+    {
+      get label() {
+        return t("operators.isNotEmpty");
+      },
+      value: "isNotEmpty" as const,
+    },
   ],
   dateOperators: [
-    { label: "Is", value: "eq" as const },
-    { label: "Is not", value: "ne" as const },
-    { label: "Is before", value: "lt" as const },
-    { label: "Is after", value: "gt" as const },
-    { label: "Is on or before", value: "lte" as const },
-    { label: "Is on or after", value: "gte" as const },
-    { label: "Is between", value: "isBetween" as const },
-    { label: "Is relative to today", value: "isRelativeToToday" as const },
-    { label: "Is empty", value: "isEmpty" as const },
-    { label: "Is not empty", value: "isNotEmpty" as const },
+    {
+      get label() {
+        return t("operators.eq");
+      },
+      value: "eq" as const,
+    },
+    {
+      get label() {
+        return t("operators.ne");
+      },
+      value: "ne" as const,
+    },
+    {
+      get label() {
+        return t("operators.ltDate");
+      },
+      value: "lt" as const,
+    },
+    {
+      get label() {
+        return t("operators.gtDate");
+      },
+      value: "gt" as const,
+    },
+    {
+      get label() {
+        return t("operators.lteDate");
+      },
+      value: "lte" as const,
+    },
+    {
+      get label() {
+        return t("operators.gteDate");
+      },
+      value: "gte" as const,
+    },
+    {
+      get label() {
+        return t("operators.isBetween");
+      },
+      value: "isBetween" as const,
+    },
+    {
+      get label() {
+        return t("operators.isRelativeToToday");
+      },
+      value: "isRelativeToToday" as const,
+    },
+    {
+      get label() {
+        return t("operators.isEmpty");
+      },
+      value: "isEmpty" as const,
+    },
+    {
+      get label() {
+        return t("operators.isNotEmpty");
+      },
+      value: "isNotEmpty" as const,
+    },
   ],
   selectOperators: [
-    { label: "Is", value: "eq" as const },
-    { label: "Is not", value: "ne" as const },
-    { label: "Is empty", value: "isEmpty" as const },
-    { label: "Is not empty", value: "isNotEmpty" as const },
+    {
+      get label() {
+        return t("operators.eq");
+      },
+      value: "eq" as const,
+    },
+    {
+      get label() {
+        return t("operators.ne");
+      },
+      value: "ne" as const,
+    },
+    {
+      get label() {
+        return t("operators.isEmpty");
+      },
+      value: "isEmpty" as const,
+    },
+    {
+      get label() {
+        return t("operators.isNotEmpty");
+      },
+      value: "isNotEmpty" as const,
+    },
   ],
   multiSelectOperators: [
-    { label: "Has any of", value: "inArray" as const },
-    { label: "Has none of", value: "notInArray" as const },
-    { label: "Is empty", value: "isEmpty" as const },
-    { label: "Is not empty", value: "isNotEmpty" as const },
+    {
+      get label() {
+        return t("operators.inArray");
+      },
+      value: "inArray" as const,
+    },
+    {
+      get label() {
+        return t("operators.notInArray");
+      },
+      value: "notInArray" as const,
+    },
+    {
+      get label() {
+        return t("operators.isEmpty");
+      },
+      value: "isEmpty" as const,
+    },
+    {
+      get label() {
+        return t("operators.isNotEmpty");
+      },
+      value: "isNotEmpty" as const,
+    },
   ],
   booleanOperators: [
-    { label: "Is", value: "eq" as const },
-    { label: "Is not", value: "ne" as const },
+    {
+      get label() {
+        return t("operators.eq");
+      },
+      value: "eq" as const,
+    },
+    {
+      get label() {
+        return t("operators.ne");
+      },
+      value: "ne" as const,
+    },
   ],
   sortOrders: [
-    { label: "Asc", value: "asc" as const },
-    { label: "Desc", value: "desc" as const },
+    {
+      get label() {
+        return t("sortOrders.asc");
+      },
+      value: "asc" as const,
+    },
+    {
+      get label() {
+        return t("sortOrders.desc");
+      },
+      value: "desc" as const,
+    },
   ],
   filterVariants: [
     "text",

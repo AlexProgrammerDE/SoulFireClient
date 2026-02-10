@@ -40,8 +40,13 @@
       "type": "Type",
       "address": "Address",
       "username": "Username",
-      "password": "Password"
-    }
+      "password": "Password",
+      "searchAddresses": "Search addresses...",
+      "searchUsernames": "Search usernames...",
+      "searchPasswords": "Search passwords..."
+    },
+    "removeSelectedTooltip": "Remove selected proxies",
+    "checkSelectedTooltip": "Check selected proxies"
   },
   "account": {
     "getAccounts": "Get Accounts",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Type",
       "profileId": "UUID",
-      "lastKnownName": "Username"
+      "lastKnownName": "Username",
+      "searchProfileIds": "Search profile IDs...",
+      "searchLastKnownNames": "Search last known names...",
+      "actions": "Actions"
     },
+    "removeSelectedTooltip": "Remove selected accounts",
     "config": {
       "title": "Configure {{name}}",
       "description": "Configure per-bot settings for this account",

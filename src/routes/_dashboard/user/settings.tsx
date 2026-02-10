@@ -41,6 +41,7 @@ function UserSettings() {
 }
 
 function Content() {
+  const { t } = useTranslation("common");
   const { clientDataQueryOptions } = Route.useRouteContext();
   const queryClient = useQueryClient();
   const transport = use(TransportContext);
@@ -85,16 +86,15 @@ function Content() {
       <div className="flex flex-col gap-2">
         <div className="flex max-w-xl flex-col gap-1">
           <ComponentTitle
-            title="Avatar"
+            title={t("userSettings.avatar.title")}
             description={
               <>
-                Your user avatar is based on your account email address. You can
-                change the avatar for your email address at{" "}
+                {t("userSettings.avatar.description")}{" "}
                 <ExternalLink
                   className="font-semibold underline-offset-4 hover:underline"
                   href="https://gravatar.com"
                 >
-                  Gravatar
+                  {t("userSettings.avatar.gravatar")}
                 </ExternalLink>
                 .
               </>
@@ -118,9 +118,8 @@ function Content() {
           settingType={{
             oneofKind: "string",
             string: {
-              uiName: "Username",
-              description:
-                "Your username is used to identify you in the UI and in logs.",
+              uiName: t("userSettings.username.uiName"),
+              description: t("userSettings.username.description"),
               def: "",
               inputType: StringSetting_InputType.TEXT,
               placeholder: "username",
@@ -140,8 +139,8 @@ function Content() {
           settingType={{
             oneofKind: "string",
             string: {
-              uiName: "Email",
-              description: "Your email is used for login and notifications.",
+              uiName: t("userSettings.email.uiName"),
+              description: t("userSettings.email.description"),
               def: "",
               inputType: StringSetting_InputType.EMAIL,
               placeholder: "root@soulfiremc.com",

@@ -48,6 +48,7 @@ import { UserRole } from "@/generated/soulfire/common.ts";
 import { UserServiceClient } from "@/generated/soulfire/user.client.ts";
 import type { UserListResponse_User } from "@/generated/soulfire/user.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
+import i18n from "@/lib/i18n";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
 import {
   getEnumEntries,
@@ -85,7 +86,10 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     id: "username",
     accessorKey: "username",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Username" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("admin:users.table.username")}
+      />
     ),
     cell: ({ row }) => (
       <div className="flex flex-row items-center justify-start gap-2">
@@ -99,8 +103,8 @@ const columns: ColumnDef<UserListResponse_User>[] = [
       </div>
     ),
     meta: {
-      label: "Username",
-      placeholder: "Search usernames...",
+      label: i18n.t("admin:users.table.username"),
+      placeholder: i18n.t("admin:users.table.searchUsernames"),
       variant: "text",
       icon: TextIcon,
     },
@@ -110,11 +114,14 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     id: "email",
     accessorKey: "email",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Email" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("admin:users.table.email")}
+      />
     ),
     meta: {
-      label: "Email",
-      placeholder: "Search emails...",
+      label: i18n.t("admin:users.table.email"),
+      placeholder: i18n.t("admin:users.table.searchEmails"),
       variant: "text",
       icon: TextIcon,
     },
@@ -125,7 +132,10 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     accessorFn: (row) => getEnumKeyByValue(UserRole, row.role),
     accessorKey: "role",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Role" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("admin:users.table.role")}
+      />
     ),
     cell: ({ cell }) => {
       const type = cell.getValue<keyof typeof UserRole>();
@@ -139,7 +149,7 @@ const columns: ColumnDef<UserListResponse_User>[] = [
       );
     },
     meta: {
-      label: "Role",
+      label: i18n.t("admin:users.table.role"),
       variant: "multiSelect",
       options: getEnumEntries(UserRole).map((type) => {
         return {
@@ -156,7 +166,10 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     accessorFn: (row) => timestampToDate(row.createdAt as Timestamp),
     accessorKey: "createdAt",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Created at" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("admin:users.table.createdAt")}
+      />
     ),
     cell: ({ row }) => (
       <SFTimeAgo date={timestampToDate(row.original.createdAt as Timestamp)} />
@@ -164,8 +177,8 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     enableGlobalFilter: false,
     sortingFn: "datetime",
     meta: {
-      label: "Created at",
-      placeholder: "Search created ats...",
+      label: i18n.t("admin:users.table.createdAt"),
+      placeholder: i18n.t("admin:users.table.searchCreatedAts"),
       variant: "dateRange",
     },
     filterFn: "inNumberRange",
@@ -176,7 +189,10 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     accessorFn: (row) => timestampToDate(row.minIssuedAt as Timestamp),
     accessorKey: "minIssuedAt",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Min issued at" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("admin:users.table.minIssuedAt")}
+      />
     ),
     cell: ({ row }) => (
       <SFTimeAgo
@@ -186,8 +202,8 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     enableGlobalFilter: false,
     sortingFn: "datetime",
     meta: {
-      label: "Min issued at",
-      placeholder: "Search min issued ats...",
+      label: i18n.t("admin:users.table.minIssuedAt"),
+      placeholder: i18n.t("admin:users.table.searchMinIssuedAts"),
       variant: "dateRange",
     },
     filterFn: "inNumberRange",
@@ -325,7 +341,7 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
   return (
     <>
       <DataTableActionBarAction
-        tooltip="Remove selected users"
+        tooltip={t("users.removeSelectedTooltip")}
         onClick={() => {
           const selectedRows = props.table
             .getFilteredSelectedRowModel()
@@ -344,7 +360,7 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
         <TrashIcon />
       </DataTableActionBarAction>
       <DataTableActionBarAction
-        tooltip="Log out selected users"
+        tooltip={t("users.logOutSelectedTooltip")}
         onClick={() => {
           const selectedRows = props.table
             .getFilteredSelectedRowModel()

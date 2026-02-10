@@ -26,6 +26,7 @@ import {
   InstanceAuditLogResponse_AuditLogEntryType,
 } from "@/generated/soulfire/instance.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
+import i18n from "@/lib/i18n";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
 import {
   getEnumEntries,
@@ -121,7 +122,10 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     accessorFn: (row) => `${row.user?.username} ${row.user?.email}`,
     accessorKey: "user",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="User" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("common:auditLog.user")}
+      />
     ),
     cell: ({ row }) => (
       <div className="flex flex-row items-center justify-start gap-2">
@@ -134,8 +138,8 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
       </div>
     ),
     meta: {
-      label: "User",
-      placeholder: "Search users...",
+      label: i18n.t("common:auditLog.user"),
+      placeholder: i18n.t("common:auditLog.searchUsers"),
       variant: "text",
       icon: TextIcon,
     },
@@ -147,7 +151,10 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
       getEnumKeyByValue(InstanceAuditLogResponse_AuditLogEntryType, row.type),
     accessorKey: "type",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Type" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("common:auditLog.type")}
+      />
     ),
     cell: ({ row }) => {
       const Icon = logTypeToIcon(
@@ -170,7 +177,7 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
       );
     },
     meta: {
-      label: "Type",
+      label: i18n.t("common:auditLog.type"),
       variant: "multiSelect",
       options: getEnumEntries(InstanceAuditLogResponse_AuditLogEntryType).map(
         (type) => {
@@ -189,7 +196,10 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     accessorFn: (row) => timestampToDate(row.timestamp as Timestamp),
     accessorKey: "timestamp",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Timestamp" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("common:auditLog.timestamp")}
+      />
     ),
     cell: ({ row }) => (
       <SFTimeAgo date={timestampToDate(row.original.timestamp as Timestamp)} />
@@ -197,8 +207,8 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     enableGlobalFilter: false,
     sortingFn: "datetime",
     meta: {
-      label: "Timestamp",
-      placeholder: "Search timestamps...",
+      label: i18n.t("common:auditLog.timestamp"),
+      placeholder: i18n.t("common:auditLog.searchTimestamps"),
       variant: "dateRange",
     },
     filterFn: "inNumberRange",

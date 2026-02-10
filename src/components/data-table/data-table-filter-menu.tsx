@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useQueryState } from "nuqs";
 import * as React from "react";
-
+import { useTranslation } from "react-i18next";
 import { DataTableRangeFilter } from "@/components/data-table/data-table-range-filter";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -39,6 +39,7 @@ import {
 import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
 import { getDefaultFilterOperator, getFilterOperators } from "@/lib/data-table";
 import { formatDate } from "@/lib/format";
+import i18n from "@/lib/i18n";
 import { generateId } from "@/lib/id";
 import { getFiltersStateParser } from "@/lib/parsers";
 import { cn } from "@/lib/utils";
@@ -80,6 +81,7 @@ export function DataTableFilterMenu<TData>({
   const [inputValue, setInputValue] = React.useState("");
   const triggerRef = React.useRef<HTMLButtonElement>(null);
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const { t } = useTranslation("common");
 
   const onOpenChange = React.useCallback((open: boolean) => {
     setOpen(open);
@@ -256,7 +258,7 @@ export function DataTableFilterMenu<TData>({
             disabled={disabled}
           >
             <ListFilter className="text-muted-foreground" />
-            {filters.length > 0 ? null : "Filter"}
+            {filters.length > 0 ? null : t("dataTable.filter")}
           </Button>
         </PopoverTrigger>
         <PopoverContent
@@ -269,7 +271,7 @@ export function DataTableFilterMenu<TData>({
               placeholder={
                 selectedColumn
                   ? (selectedColumn.columnDef.meta?.label ?? selectedColumn.id)
-                  : "Search fields..."
+                  : t("dataTable.searchFields")
               }
               value={inputValue}
               onValueChange={setInputValue}
@@ -279,7 +281,7 @@ export function DataTableFilterMenu<TData>({
               {selectedColumn ? (
                 <>
                   {selectedColumn.columnDef.meta?.options && (
-                    <CommandEmpty>No options found.</CommandEmpty>
+                    <CommandEmpty>{t("dataTable.noOptionsFound")}</CommandEmpty>
                   )}
                   <FilterValueSelector
                     column={selectedColumn}
@@ -289,7 +291,7 @@ export function DataTableFilterMenu<TData>({
                 </>
               ) : (
                 <>
-                  <CommandEmpty>No fields found.</CommandEmpty>
+                  <CommandEmpty>{t("dataTable.noFieldsFound")}</CommandEmpty>
                   <CommandGroup>
                     {columns.map((column) => (
                       <CommandItem
@@ -345,6 +347,7 @@ function DataTableFilterItem<TData>({
     const [showOperatorSelector, setShowOperatorSelector] =
       React.useState(false);
     const [showValueSelector, setShowValueSelector] = React.useState(false);
+    const { t } = useTranslation("common");
 
     const column = columns.find((column) => column.id === filter.id);
 
@@ -406,9 +409,9 @@ function DataTableFilterItem<TData>({
           </PopoverTrigger>
           <PopoverContent align="start" className="w-48 p-0">
             <Command loop>
-              <CommandInput placeholder="Search fields..." />
+              <CommandInput placeholder={t("dataTable.searchFields")} />
               <CommandList>
-                <CommandEmpty>No fields found.</CommandEmpty>
+                <CommandEmpty>{t("dataTable.noFieldsFound")}</CommandEmpty>
                 <CommandGroup>
                   {columns.map((column) => (
                     <CommandItem
@@ -518,10 +521,10 @@ function FilterValueSelector<TData>({
       return (
         <CommandGroup>
           <CommandItem value="true" onSelect={() => onSelect("true")}>
-            True
+            {i18n.t("common:dataTable.true")}
           </CommandItem>
           <CommandItem value="false" onSelect={() => onSelect("false")}>
-            False
+            {i18n.t("common:dataTable.false")}
           </CommandItem>
         </CommandGroup>
       );
@@ -573,12 +576,14 @@ function FilterValueSelector<TData>({
             {isEmpty ? (
               <>
                 <Text />
-                <span>Type to add filter...</span>
+                <span>{i18n.t("common:dataTable.typeToFilter")}</span>
               </>
             ) : (
               <>
                 <BadgeCheck />
-                <span className="truncate">Filter by &quot;{value}&quot;</span>
+                <span className="truncate">
+                  {i18n.t("common:dataTable.filterByValue", { value })}
+                </span>
               </>
             )}
           </CommandItem>
@@ -647,7 +652,10 @@ function onFilterInputRender<TData>({
           id={inputId}
           type={isNumber ? "number" : "text"}
           inputMode={isNumber ? "numeric" : undefined}
-          placeholder={column.columnDef.meta?.placeholder ?? "Enter value..."}
+          placeholder={
+            column.columnDef.meta?.placeholder ??
+            i18n.t("common:dataTable.enterValueShort")
+          }
           className="h-full w-24 rounded-none px-1.5"
           defaultValue={typeof filter.value === "string" ? filter.value : ""}
           onChange={(event) =>
@@ -674,11 +682,21 @@ function onFilterInputRender<TData>({
             aria-controls={inputListboxId}
             className="rounded-none bg-transparent px-1.5 py-0.5 [&_svg]:hidden"
           >
-            <SelectValue placeholder={filter.value ? "True" : "False"} />
+            <SelectValue
+              placeholder={
+                filter.value
+                  ? i18n.t("common:dataTable.true")
+                  : i18n.t("common:dataTable.false")
+              }
+            />
           </SelectTrigger>
           <SelectContent id={inputListboxId}>
-            <SelectItem value="true">True</SelectItem>
-            <SelectItem value="false">False</SelectItem>
+            <SelectItem value="true">
+              {i18n.t("common:dataTable.true")}
+            </SelectItem>
+            <SelectItem value="false">
+              {i18n.t("common:dataTable.false")}
+            </SelectItem>
           </SelectContent>
         </Select>
       );
@@ -708,10 +726,10 @@ function onFilterInputRender<TData>({
               className="h-full min-w-16 rounded-none border px-1.5 font-normal dark:bg-input/30"
             >
               {selectedOptions.length === 0 ? (
-                filter.variant === "multiSelect" ? (
-                  "Select options..."
-                ) : (
-                  "Select option..."
+                i18n.t(
+                  filter.variant === "multiSelect"
+                    ? "common:dataTable.selectOptions"
+                    : "common:dataTable.selectOption",
                 )
               ) : (
                 <>
@@ -729,7 +747,9 @@ function onFilterInputRender<TData>({
                   </div>
                   <span className="truncate">
                     {selectedOptions.length > 1
-                      ? `${selectedOptions.length} selected`
+                      ? i18n.t("common:dataTable.selected", {
+                          count: selectedOptions.length,
+                        })
                       : selectedOptions[0]?.label}
                   </span>
                 </>
@@ -742,9 +762,13 @@ function onFilterInputRender<TData>({
             className="w-48 p-0"
           >
             <Command>
-              <CommandInput placeholder="Search options..." />
+              <CommandInput
+                placeholder={i18n.t("common:dataTable.searchOptions")}
+              />
               <CommandList>
-                <CommandEmpty>No options found.</CommandEmpty>
+                <CommandEmpty>
+                  {i18n.t("common:dataTable.noOptionsFound")}
+                </CommandEmpty>
                 <CommandGroup>
                   {options.map((option) => (
                     <CommandItem
@@ -805,7 +829,7 @@ function onFilterInputRender<TData>({
           ? `${formatDate(startDate, { month: "short" })} - ${formatDate(endDate, { month: "short" })}`
           : startDate
             ? formatDate(startDate, { month: "short" })
-            : "Pick date...";
+            : i18n.t("common:dataTable.pickDateShort");
 
       return (
         <Popover open={showValueSelector} onOpenChange={setShowValueSelector}>

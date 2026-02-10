@@ -141,7 +141,74 @@
     "goNext": "Go to next page",
     "goLast": "Go to last page",
     "selectAll": "Select all",
-    "selectRow": "Select row"
+    "selectRow": "Select row",
+    "selected": "{{count}} selected",
+    "clearSelection": "Clear selection",
+    "escape": "Esc",
+    "filter": "Filter",
+    "filters": "Filters",
+    "noFiltersApplied": "No filters applied",
+    "modifyFilters": "Modify filters to refine your rows.",
+    "addFilters": "Add filters to refine your rows.",
+    "addFilter": "Add filter",
+    "resetFilters": "Reset filters",
+    "reset": "Reset",
+    "where": "Where",
+    "selectField": "Select field",
+    "searchFields": "Search fields...",
+    "noFieldsFound": "No fields found.",
+    "enterValue": "Enter a value...",
+    "enterValueShort": "Enter value...",
+    "true": "True",
+    "false": "False",
+    "selectOption": "Select option...",
+    "selectOptions": "Select options...",
+    "searchOptions": "Search options...",
+    "noOptionsFound": "No options found.",
+    "pickDateShort": "Pick date...",
+    "typeToFilter": "Type to add filter...",
+    "filterByValue": "Filter by \"{{value}}\"",
+    "view": "View",
+    "searchColumns": "Search columns...",
+    "noColumnsFound": "No columns found.",
+    "toggleColumns": "Toggle columns",
+    "sort": "Sort",
+    "sortBy": "Sort by",
+    "noSortingApplied": "No sorting applied",
+    "modifySorting": "Modify sorting to organize your rows.",
+    "addSorting": "Add sorting to organize your rows.",
+    "addSort": "Add sort",
+    "resetSorting": "Reset sorting",
+    "columnHeader": {
+      "asc": "Asc",
+      "desc": "Desc",
+      "reset": "Reset",
+      "hide": "Hide"
+    },
+    "operators": {
+      "iLike": "Contains",
+      "notILike": "Does not contain",
+      "eq": "Is",
+      "ne": "Is not",
+      "isEmpty": "Is empty",
+      "isNotEmpty": "Is not empty",
+      "lt": "Is less than",
+      "lte": "Is less than or equal to",
+      "gt": "Is greater than",
+      "gte": "Is greater than or equal to",
+      "isBetween": "Is between",
+      "isRelativeToToday": "Is relative to today",
+      "ltDate": "Is before",
+      "gtDate": "Is after",
+      "lteDate": "Is on or before",
+      "gteDate": "Is on or after",
+      "inArray": "Has any of",
+      "notInArray": "Has none of"
+    },
+    "sortOrders": {
+      "asc": "Asc",
+      "desc": "Desc"
+    }
   },
   "pluginCard": {
     "version": "Version: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "Stopping",
     "stopped": "Stopped"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "Avatar",
+      "description": "Your user avatar is based on your account email address. You can change the avatar for your email address at",
+      "gravatar": "Gravatar"
+    },
+    "username": {
+      "uiName": "Username",
+      "description": "Your username is used to identify you in the UI and in logs."
+    },
+    "email": {
+      "uiName": "Email",
+      "description": "Your email is used for login and notifications."
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "Filter audit logs...",
     "user": "User",
     "action": "Action",
+    "type": "Type",
     "timestamp": "Timestamp",
+    "searchUsers": "Search users...",
+    "searchTimestamps": "Search timestamps...",
     "executedCommand": "Executed command: {{data}}",
     "startedSession": "Started a session",
     "resumedSession": "Resumed a session",
     "pausedSession": "Paused a session",
     "stoppedSession": "Stopped a session"
   },
+  "toggleTheme": "Toggle theme",
   "pickADate": "Pick a date",
   "scripts": {
     "filterPlaceholder": "Filter scripts...",

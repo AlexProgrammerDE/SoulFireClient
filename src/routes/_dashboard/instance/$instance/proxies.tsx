@@ -191,7 +191,10 @@ const columns: ColumnDef<ProfileProxy>[] = [
     accessorFn: (row) => getEnumKeyByValue(ProxyProto_Type, row.type),
     accessorKey: "type",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Type" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("instance:proxy.table.type")}
+      />
     ),
     cell: ({ cell }) => {
       const type = cell.getValue<keyof typeof ProxyProto_Type>();
@@ -205,7 +208,7 @@ const columns: ColumnDef<ProfileProxy>[] = [
       );
     },
     meta: {
-      label: "Type",
+      label: i18n.t("instance:proxy.table.type"),
       variant: "multiSelect",
       options: getEnumEntries(ProxyProto_Type).map((type) => {
         return {
@@ -221,11 +224,14 @@ const columns: ColumnDef<ProfileProxy>[] = [
     id: "address",
     accessorKey: "address",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Address" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("instance:proxy.table.address")}
+      />
     ),
     meta: {
-      label: "Address",
-      placeholder: "Search addresses...",
+      label: i18n.t("instance:proxy.table.address"),
+      placeholder: i18n.t("instance:proxy.table.searchAddresses"),
       variant: "text",
       icon: TextIcon,
     },
@@ -235,11 +241,14 @@ const columns: ColumnDef<ProfileProxy>[] = [
     id: "username",
     accessorKey: "username",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Username" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("instance:proxy.table.username")}
+      />
     ),
     meta: {
-      label: "Username",
-      placeholder: "Search usernames...",
+      label: i18n.t("instance:proxy.table.username"),
+      placeholder: i18n.t("instance:proxy.table.searchUsernames"),
       variant: "text",
       icon: TextIcon,
     },
@@ -249,11 +258,14 @@ const columns: ColumnDef<ProfileProxy>[] = [
     id: "password",
     accessorKey: "password",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} label="Password" />
+      <DataTableColumnHeader
+        column={column}
+        label={i18n.t("instance:proxy.table.password")}
+      />
     ),
     meta: {
-      label: "Password",
-      placeholder: "Search passwords...",
+      label: i18n.t("instance:proxy.table.password"),
+      placeholder: i18n.t("instance:proxy.table.searchPasswords"),
       variant: "text",
       icon: TextIcon,
     },
@@ -566,7 +578,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   return (
     <>
       <DataTableActionBarAction
-        tooltip="Check selected proxies"
+        tooltip={t("proxy.checkSelectedTooltip")}
         onClick={() => setCheckDialogOpen(true)}
       >
         <Wand2Icon />
@@ -641,7 +653,7 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
         </DialogContent>
       </Dialog>
       <DataTableActionBarAction
-        tooltip="Remove selected proxies"
+        tooltip={t("proxy.removeSelectedTooltip")}
         onClick={() => {
           void trackEvent("remove_proxies", {
             count: props.table.getFilteredSelectedRowModel().rows.length,
