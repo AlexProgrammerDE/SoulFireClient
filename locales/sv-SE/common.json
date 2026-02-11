@@ -141,7 +141,74 @@
     "goNext": "Gå till nästa sida",
     "goLast": "Gå till sista sidan",
     "selectAll": "Markera alla",
-    "selectRow": "Markera rad"
+    "selectRow": "Markera rad",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "Version: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "Stoppar",
     "stopped": "Stoppad"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "Användarnamn",
+      "description": ""
+    },
+    "email": {
+      "uiName": "E-post",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "Filtrera granskningsloggar...",
     "user": "Användare",
     "action": "Åtgärd",
+    "type": "Typ",
     "timestamp": "Tidsstämpel",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "Körde kommando: {{data}}",
     "startedSession": "Startade en session",
     "resumedSession": "Återupptog en session",
     "pausedSession": "Pausade en session",
     "stoppedSession": "Stoppade en session"
   },
+  "toggleTheme": "",
   "pickADate": "Välj ett datum",
   "scripts": {
     "filterPlaceholder": "Filtrera skript...",

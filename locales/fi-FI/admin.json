@@ -89,7 +89,13 @@
       "role": "Rooli",
       "createdAt": "Luotu",
       "minIssuedAt": "Min. kirjautuminen",
-      "actions": "Toiminnot"
-    }
+      "actions": "Toiminnot",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

@@ -40,8 +40,13 @@
       "type": "종류",
       "address": "주소",
       "username": "사용자 이름",
-      "password": "비밀번호"
-    }
+      "password": "비밀번호",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "계정 가져오기",
@@ -103,8 +108,12 @@
     "table": {
       "type": "종류",
       "profileId": "UUID",
-      "lastKnownName": "사용자 이름"
+      "lastKnownName": "사용자 이름",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "동작"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "{{name}} 설정하기",
       "description": "이 계정의 봇별 설정을 구성하세요",

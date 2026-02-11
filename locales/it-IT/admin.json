@@ -89,7 +89,13 @@
       "role": "Ruolo",
       "createdAt": "Creato",
       "minIssuedAt": "Login Min",
-      "actions": "Azioni"
-    }
+      "actions": "Azioni",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

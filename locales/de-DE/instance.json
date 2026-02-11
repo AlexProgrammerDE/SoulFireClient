@@ -40,8 +40,13 @@
       "type": "Typ",
       "address": "Adresse",
       "username": "Benutzername",
-      "password": "Passwort"
-    }
+      "password": "Passwort",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Konten abrufen",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Typ",
       "profileId": "UUID",
-      "lastKnownName": "Benutzername"
+      "lastKnownName": "Benutzername",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Aktionen"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "{{name}} konfigurieren",
       "description": "Pro-Bot-Einstellungen für dieses Konto konfigurieren",

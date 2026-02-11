@@ -40,8 +40,13 @@
       "type": "Növ",
       "address": "Ünvan",
       "username": "İstifadəçi adı",
-      "password": "Şifrə"
-    }
+      "password": "Şifrə",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Hesabları əldə et",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Növ",
       "profileId": "UUID",
-      "lastKnownName": "İstifadəçi adı"
+      "lastKnownName": "İstifadəçi adı",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Əməliyyatlar"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "{{name}}-i tənzimləyin",
       "description": "Bu hesab üçün hər bot üçün ayarları tənzimləyin",

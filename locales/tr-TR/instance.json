@@ -40,8 +40,13 @@
       "type": "Tip",
       "address": "Adres",
       "username": "Kullanıcı Adı",
-      "password": "Şifre"
-    }
+      "password": "Şifre",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Hesapları Al",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Tip",
       "profileId": "UUID",
-      "lastKnownName": "Kullanıcı Adı"
+      "lastKnownName": "Kullanıcı Adı",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "İşlemler"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "{{name}} Yapılandır",
       "description": "Bu hesap için bot başına ayarları yapılandırın",

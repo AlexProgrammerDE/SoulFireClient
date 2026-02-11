@@ -141,7 +141,74 @@
     "goNext": "Ir a la página siguiente",
     "goLast": "Ir a la última página",
     "selectAll": "Seleccionar todo",
-    "selectRow": "Seleccionar fila"
+    "selectRow": "Seleccionar fila",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "Versión: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "Deteniendo",
     "stopped": "Detenido"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "Nombre de usuario",
+      "description": ""
+    },
+    "email": {
+      "uiName": "Correo electrónico",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "Filtrar registros de auditoría...",
     "user": "Usuario",
     "action": "Acción",
+    "type": "Tipo",
     "timestamp": "Marca de tiempo",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "Comando ejecutado: {{data}}",
     "startedSession": "Se inició una sesión",
     "resumedSession": "Se reanudó una sesión",
     "pausedSession": "Se pausó una sesión",
     "stoppedSession": "Se detuvo una sesión"
   },
+  "toggleTheme": "",
   "pickADate": "Selecciona una fecha",
   "scripts": {
     "filterPlaceholder": "Filtrar scripts...",

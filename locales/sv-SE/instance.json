@@ -40,8 +40,13 @@
       "type": "Typ",
       "address": "Adress",
       "username": "Användarnamn",
-      "password": "Lösenord"
-    }
+      "password": "Lösenord",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Hämta konton",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Typ",
       "profileId": "UUID",
-      "lastKnownName": "Användarnamn"
+      "lastKnownName": "Användarnamn",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Åtgärder"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "Konfigurera {{name}}",
       "description": "Konfigurera inställningar per bot för detta konto",

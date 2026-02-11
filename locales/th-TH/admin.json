@@ -89,7 +89,13 @@
       "role": "บทบาท",
       "createdAt": "วันที่สร้าง",
       "minIssuedAt": "เข้าสู่ระบบครั้งต่ำสุด",
-      "actions": "การดำเนินการ"
-    }
+      "actions": "การดำเนินการ",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

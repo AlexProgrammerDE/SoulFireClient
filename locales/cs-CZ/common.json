@@ -141,7 +141,74 @@
     "goNext": "Jít na další stránku",
     "goLast": "Jít na poslední stránku",
     "selectAll": "Vybrat vše",
-    "selectRow": "Vybrat řádek"
+    "selectRow": "Vybrat řádek",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "Verze: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "Zastavování",
     "stopped": "Zastaveno"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "Uživatelské jméno",
+      "description": ""
+    },
+    "email": {
+      "uiName": "Email",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "Filtrovat audit logy...",
     "user": "Uživatel",
     "action": "Akce",
+    "type": "Typ",
     "timestamp": "Časové razítko",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "Proveden příkaz: {{data}}",
     "startedSession": "Byla spuštěna relace",
     "resumedSession": "Relace byla obnovena",
     "pausedSession": "Relace byla pozastavena",
     "stoppedSession": "Relace byla zastavena"
   },
+  "toggleTheme": "",
   "pickADate": "Vyberte datum",
   "scripts": {
     "filterPlaceholder": "Filtrovat skripty...",

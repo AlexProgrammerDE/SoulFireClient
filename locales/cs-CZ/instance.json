@@ -40,8 +40,13 @@
       "type": "Typ",
       "address": "Adresa",
       "username": "Uživatelské jméno",
-      "password": "Heslo"
-    }
+      "password": "Heslo",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Získat účty",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Typ",
       "profileId": "UUID",
-      "lastKnownName": "Uživatelské jméno"
+      "lastKnownName": "Uživatelské jméno",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Akce"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "Nastavit {{name}}",
       "description": "Nastavit nastavení pro jednotlivé boty tohoto účtu",

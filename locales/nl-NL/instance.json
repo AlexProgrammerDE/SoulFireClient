@@ -40,8 +40,13 @@
       "type": "Type",
       "address": "Adres",
       "username": "Gebruikersnaam",
-      "password": "Wachtwoord"
-    }
+      "password": "Wachtwoord",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Accounts ophalen",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Type",
       "profileId": "UUID",
-      "lastKnownName": "Gebruikersnaam"
+      "lastKnownName": "Gebruikersnaam",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Acties"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "{{name}} configureren",
       "description": "Stel per-bot instellingen in voor dit account",

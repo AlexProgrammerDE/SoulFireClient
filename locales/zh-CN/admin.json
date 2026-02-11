@@ -89,7 +89,13 @@
       "role": "用户类型",
       "createdAt": "创建时间",
       "minIssuedAt": "最早登录",
-      "actions": "操作"
-    }
+      "actions": "操作",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

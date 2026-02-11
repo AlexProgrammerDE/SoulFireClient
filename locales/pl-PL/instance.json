@@ -40,8 +40,13 @@
       "type": "Typ",
       "address": "Adres",
       "username": "Nazwa użytkownika",
-      "password": "Hasło"
-    }
+      "password": "Hasło",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Pobierz konta",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Typ",
       "profileId": "UUID",
-      "lastKnownName": "Nazwa użytkownika"
+      "lastKnownName": "Nazwa użytkownika",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Akcje"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "Konfiguruj {{name}}",
       "description": "Skonfiguruj ustawienia dla tego konta osobno dla każdego bota",

@@ -40,8 +40,13 @@
       "type": "Tipo",
       "address": "Indirizzo",
       "username": "Nome utente",
-      "password": "Password"
-    }
+      "password": "Password",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Ottieni Account",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Tipo",
       "profileId": "UUID",
-      "lastKnownName": "Nome utente"
+      "lastKnownName": "Nome utente",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Azioni"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "Configura {{name}}",
       "description": "Configura le impostazioni per-bot di questo account",

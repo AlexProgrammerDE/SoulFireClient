@@ -89,7 +89,13 @@
       "role": "Роль",
       "createdAt": "Створено",
       "minIssuedAt": "Мінімальний час входу",
-      "actions": "Дії"
-    }
+      "actions": "Дії",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

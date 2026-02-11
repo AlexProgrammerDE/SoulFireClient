@@ -40,8 +40,13 @@
       "type": "Тип",
       "address": "Адрес",
       "username": "Имя пользователя",
-      "password": "Пароль"
-    }
+      "password": "Пароль",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Получить аккаунты",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Тип",
       "profileId": "UUID",
-      "lastKnownName": "Имя пользователя"
+      "lastKnownName": "Имя пользователя",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Действия"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "Настроить {{name}}",
       "description": "Настройте параметры для каждого бота в этой учётной записи",

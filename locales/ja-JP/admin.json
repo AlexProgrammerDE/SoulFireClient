@@ -89,7 +89,13 @@
       "role": "役割",
       "createdAt": "作成日",
       "minIssuedAt": "最小ログイン日時",
-      "actions": "操作"
-    }
+      "actions": "操作",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

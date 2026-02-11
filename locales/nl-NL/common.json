@@ -141,7 +141,74 @@
     "goNext": "Ga naar volgende pagina",
     "goLast": "Ga naar laatste pagina",
     "selectAll": "Alles selecteren",
-    "selectRow": "Rij selecteren"
+    "selectRow": "Rij selecteren",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "Versie: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "Beëindigen",
     "stopped": "Gestopt"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "Gebruikersnaam",
+      "description": ""
+    },
+    "email": {
+      "uiName": "E-mailadres",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "Filter auditlogs...",
     "user": "Gebruiker",
     "action": "Actie",
+    "type": "Type",
     "timestamp": "Tijdstempel",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "Uitgevoerd commando: {{data}}",
     "startedSession": "Sessie gestart",
     "resumedSession": "Sessie hervat",
     "pausedSession": "Sessie gepauzeerd",
     "stoppedSession": "Sessie gestopt"
   },
+  "toggleTheme": "",
   "pickADate": "Selecteer een datum",
   "scripts": {
     "filterPlaceholder": "Scripts filteren...",

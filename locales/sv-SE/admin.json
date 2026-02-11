@@ -89,7 +89,13 @@
       "role": "Roll",
       "createdAt": "Skapad",
       "minIssuedAt": "Min inloggning",
-      "actions": "Åtgärder"
-    }
+      "actions": "Åtgärder",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

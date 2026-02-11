@@ -89,7 +89,13 @@
       "role": "角色",
       "createdAt": "建立時間",
       "minIssuedAt": "最早登入",
-      "actions": "動作"
-    }
+      "actions": "動作",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

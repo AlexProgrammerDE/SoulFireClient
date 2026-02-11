@@ -141,7 +141,74 @@
     "goNext": "अगला पृष्ठ पर जाएँ",
     "goLast": "आखिरी पृष्ठ पर जाएँ",
     "selectAll": "सभी चुनें",
-    "selectRow": "पंक्ति चुनें"
+    "selectRow": "पंक्ति चुनें",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "संस्करण: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "बंद हो रहा है",
     "stopped": "बंद हुआ"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "उपयोगकर्ता नाम",
+      "description": ""
+    },
+    "email": {
+      "uiName": "ईमेल",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "ऑडिट लॉग छाँटें...",
     "user": "उपयोगकर्ता",
     "action": "क्रिया",
+    "type": "प्रकार",
     "timestamp": "टाइमस्टैम्प",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "कमांड निष्पादित: {{data}}",
     "startedSession": "सत्र शुरू किया गया",
     "resumedSession": "सत्र फिर से शुरू किया गया",
     "pausedSession": "सत्र रोक दिया गया",
     "stoppedSession": "सत्र बंद कर दिया गया"
   },
+  "toggleTheme": "",
   "pickADate": "तारीख चुनें",
   "scripts": {
     "filterPlaceholder": "स्क्रिप्ट्स छाँटें...",

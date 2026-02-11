@@ -141,7 +141,74 @@
     "goNext": "次のページへ移動",
     "goLast": "最後のページへ移動",
     "selectAll": "すべて選択",
-    "selectRow": "行を選択"
+    "selectRow": "行を選択",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "バージョン: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "停止中",
     "stopped": "停止済み"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "ユーザー名",
+      "description": ""
+    },
+    "email": {
+      "uiName": "メールアドレス",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "監査ログを絞り込み...",
     "user": "ユーザー",
     "action": "アクション",
+    "type": "種類",
     "timestamp": "タイムスタンプ",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "コマンドを実行: {{data}}",
     "startedSession": "セッションを開始しました。",
     "resumedSession": "セッションを再開しました。",
     "pausedSession": "セッションを一時停止しました。",
     "stoppedSession": "セッションを停止しました。"
   },
+  "toggleTheme": "",
   "pickADate": "日付を選択",
   "scripts": {
     "filterPlaceholder": "スクリプトを絞り込み...",

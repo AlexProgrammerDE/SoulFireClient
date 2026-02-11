@@ -40,8 +40,13 @@
       "type": "Тип",
       "address": "Адреса",
       "username": "Ім'я користувача",
-      "password": "Пароль"
-    }
+      "password": "Пароль",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Отримати акаунти",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Тип",
       "profileId": "UUID",
-      "lastKnownName": "Ім'я користувача"
+      "lastKnownName": "Ім'я користувача",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Дії"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "Налаштувати {{name}}",
       "description": "Налаштуйте окремі параметри ботів для цього акаунта",

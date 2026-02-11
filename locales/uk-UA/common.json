@@ -141,7 +141,74 @@
     "goNext": "Перейти на наступну сторінку",
     "goLast": "Перейти на останню сторінку",
     "selectAll": "Вибрати всі",
-    "selectRow": "Вибрати рядок"
+    "selectRow": "Вибрати рядок",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "Версія: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "Зупинка",
     "stopped": "Зупинено"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "Ім'я користувача",
+      "description": ""
+    },
+    "email": {
+      "uiName": "Електронна пошта",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "Фільтрувати аудит-логи...",
     "user": "Користувач",
     "action": "Дія",
+    "type": "Тип",
     "timestamp": "Час",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "Виконана команда: {{data}}",
     "startedSession": "Сесію розпочато",
     "resumedSession": "Сесію відновлено",
     "pausedSession": "Сесію призупинено",
     "stoppedSession": "Сесію зупинено"
   },
+  "toggleTheme": "",
   "pickADate": "Оберіть дату",
   "scripts": {
     "filterPlaceholder": "Фільтрувати скрипти...",

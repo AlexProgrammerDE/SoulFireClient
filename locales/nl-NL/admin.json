@@ -89,7 +89,13 @@
       "role": "Rol",
       "createdAt": "Aangemaakt",
       "minIssuedAt": "Min. login",
-      "actions": "Acties"
-    }
+      "actions": "Acties",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }
