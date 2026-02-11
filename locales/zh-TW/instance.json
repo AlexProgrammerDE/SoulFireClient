@@ -40,8 +40,13 @@
       "type": "類型",
       "address": "位址",
       "username": "使用者名稱",
-      "password": "密碼"
-    }
+      "password": "密碼",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "獲取帳戶",
@@ -103,8 +108,12 @@
     "table": {
       "type": "類型",
       "profileId": "UUID",
-      "lastKnownName": "使用者名稱"
+      "lastKnownName": "使用者名稱",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "動作"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "設定 {{name}}",
       "description": "為此帳號設定每個機器人專屬的設定",

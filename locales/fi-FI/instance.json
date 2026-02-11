@@ -40,8 +40,13 @@
       "type": "Tyyppi",
       "address": "Osoite",
       "username": "Käyttäjätunnus",
-      "password": "Salasana"
-    }
+      "password": "Salasana",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Hae tilejä",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Tyyppi",
       "profileId": "UUID",
-      "lastKnownName": "Käyttäjätunnus"
+      "lastKnownName": "Käyttäjätunnus",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Toiminnot"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "Määritä {{name}}",
       "description": "Määritä tämän tilin bottikohtaiset asetukset",

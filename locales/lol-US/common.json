@@ -141,7 +141,74 @@
     "goNext": "Go to next page",
     "goLast": "Go to last page",
     "selectAll": "Selecc all",
-    "selectRow": "Selekt row"
+    "selectRow": "Selekt row",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "Vurshun: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "Stopping",
     "stopped": "Stopped"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "Usernamez",
+      "description": ""
+    },
+    "email": {
+      "uiName": "EMAYL",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "Filter audit logz...",
     "user": "Uzer",
     "action": "Akshun",
+    "type": "Tyep",
     "timestamp": "Timestamp",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "Did command: {{data}}",
     "startedSession": "Seshun startd!",
     "resumedSession": "Seshun rezumed!",
     "pausedSession": "Seshun pawzed!",
     "stoppedSession": "Seshun stoppd!"
   },
+  "toggleTheme": "",
   "pickADate": "Pickz a datez",
   "scripts": {
     "filterPlaceholder": "Filter scriptz...",

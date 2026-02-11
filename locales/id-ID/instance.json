@@ -40,8 +40,13 @@
       "type": "Tipe",
       "address": "Alamat",
       "username": "Nama Pengguna",
-      "password": "Kata Sandi"
-    }
+      "password": "Kata Sandi",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Dapatkan Akun",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Tipe",
       "profileId": "UUID",
-      "lastKnownName": "Nama Pengguna"
+      "lastKnownName": "Nama Pengguna",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Aksi"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "Konfigurasi {{name}}",
       "description": "Atur pengaturan per-bot untuk akun ini",

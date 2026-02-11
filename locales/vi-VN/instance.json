@@ -40,8 +40,13 @@
       "type": "Loại",
       "address": "Địa chỉ",
       "username": "Tên đăng nhập",
-      "password": "Mật khẩu"
-    }
+      "password": "Mật khẩu",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Lấy Tài khoản",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Loại",
       "profileId": "UUID",
-      "lastKnownName": "Tên đăng nhập"
+      "lastKnownName": "Tên đăng nhập",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Hành động"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "Cấu hình {{name}}",
       "description": "Cấu hình cài đặt riêng cho từng bot cho tài khoản này",

@@ -89,7 +89,13 @@
       "role": "역할",
       "createdAt": "생성일",
       "minIssuedAt": "최소 로그인",
-      "actions": "동작"
-    }
+      "actions": "동작",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

@@ -141,7 +141,74 @@
     "goNext": "Siirry seuraavalle sivulle",
     "goLast": "Siirry viimeiselle sivulle",
     "selectAll": "Valitse kaikki",
-    "selectRow": "Valitse rivi"
+    "selectRow": "Valitse rivi",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "Versio: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "Pysäytetään",
     "stopped": "Pysäytetty"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "Käyttäjätunnus",
+      "description": ""
+    },
+    "email": {
+      "uiName": "Sähköposti",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "Suodata audit-lokia...",
     "user": "Käyttäjä",
     "action": "Toiminto",
+    "type": "Tyyppi",
     "timestamp": "Aikaleima",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "Suoritettiin komento: {{data}}",
     "startedSession": "Istunto käynnistetty",
     "resumedSession": "Istunto jatkettu",
     "pausedSession": "Istunto keskeytetty",
     "stoppedSession": "Istunto pysäytetty"
   },
+  "toggleTheme": "",
   "pickADate": "Valitse päivämäärä",
   "scripts": {
     "filterPlaceholder": "Suodata skriptejä...",

@@ -40,8 +40,13 @@
       "type": "ประเภท",
       "address": "ที่อยู่",
       "username": "ชื่อผู้ใช้",
-      "password": "รหัสผ่าน"
-    }
+      "password": "รหัสผ่าน",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "รับไอดี",
@@ -103,8 +108,12 @@
     "table": {
       "type": "ประเภท",
       "profileId": "UUID",
-      "lastKnownName": "ชื่อผู้ใช้"
+      "lastKnownName": "ชื่อผู้ใช้",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "การดำเนินการ"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "กำหนดค่า {{name}}",
       "description": "กำหนดค่าบ็อตแต่ละตัวสำหรับบัญชีนี้",

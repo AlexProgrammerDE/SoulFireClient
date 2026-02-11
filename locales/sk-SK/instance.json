@@ -40,8 +40,13 @@
       "type": "Typ",
       "address": "Adresa",
       "username": "Používateľské meno",
-      "password": "Heslo"
-    }
+      "password": "Heslo",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Získať účty",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Typ",
       "profileId": "UUID",
-      "lastKnownName": "Používateľské meno"
+      "lastKnownName": "Používateľské meno",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Akcie"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "Nastaviť {{name}}",
       "description": "Nastavte individuálne možnosti pre bota na tomto účte",

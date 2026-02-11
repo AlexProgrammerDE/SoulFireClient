@@ -141,7 +141,74 @@
     "goNext": "ไปยังหน้าถัดไป",
     "goLast": "ไปยังหน้าสุดท้าย",
     "selectAll": "เลือกทั้งหมด",
-    "selectRow": "เลือกแถว"
+    "selectRow": "เลือกแถว",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "เวอร์ชัน: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "กำลังหยุด",
     "stopped": "หยุดแล้ว"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "ชื่อผู้ใช้",
+      "description": ""
+    },
+    "email": {
+      "uiName": "อีเมล",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "กรองบันทึกการตรวจสอบ...",
     "user": "ผู้ใช้",
     "action": "การกระทำ",
+    "type": "ประเภท",
     "timestamp": "เวลาบันทึก",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "ดำเนินการคำสั่ง: {{data}}",
     "startedSession": "เริ่มเซสชันแล้ว",
     "resumedSession": "ดำเนินการเซสชันต่อแล้ว",
     "pausedSession": "หยุดชั่วคราวเซสชันแล้ว",
     "stoppedSession": "หยุดเซสชันแล้ว"
   },
+  "toggleTheme": "",
   "pickADate": "เลือกวันที่",
   "scripts": {
     "filterPlaceholder": "กรองสคริปต์...",

@@ -141,7 +141,74 @@
     "goNext": "Перейти на следующую страницу",
     "goLast": "Перейти на последнюю страницу",
     "selectAll": "Выбрать все",
-    "selectRow": "Выбрать строку"
+    "selectRow": "Выбрать строку",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "Версия: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "Остановка",
     "stopped": "Остановлен"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "Имя пользователя",
+      "description": ""
+    },
+    "email": {
+      "uiName": "E-mail",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "Фильтровать журнал аудита...",
     "user": "Пользователь",
     "action": "Действие",
+    "type": "Тип",
     "timestamp": "Временная метка",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "Выполнена команда: {{data}}",
     "startedSession": "Сессия запущена",
     "resumedSession": "Сессия возобновлена",
     "pausedSession": "Сессия приостановлена",
     "stoppedSession": "Сессия остановлена"
   },
+  "toggleTheme": "",
   "pickADate": "Выберите дату",
   "scripts": {
     "filterPlaceholder": "Фильтровать скрипты...",

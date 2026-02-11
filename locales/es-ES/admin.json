@@ -89,7 +89,13 @@
       "role": "Rol",
       "createdAt": "Creado",
       "minIssuedAt": "Fecha mínima de validez de sesión",
-      "actions": "Acciones"
-    }
+      "actions": "Acciones",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

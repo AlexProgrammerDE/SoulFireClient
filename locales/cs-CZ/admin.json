@@ -89,7 +89,13 @@
       "role": "Role",
       "createdAt": "Vytvořeno",
       "minIssuedAt": "Minimální přihlášení",
-      "actions": "Akce"
-    }
+      "actions": "Akce",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

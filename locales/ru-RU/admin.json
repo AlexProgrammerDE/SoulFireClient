@@ -89,7 +89,13 @@
       "role": "Роли",
       "createdAt": "Дата создания",
       "minIssuedAt": "Дата входа",
-      "actions": "Действия"
-    }
+      "actions": "Действия",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

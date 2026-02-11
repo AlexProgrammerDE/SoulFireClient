@@ -141,7 +141,74 @@
     "goNext": "다음 페이지로 이동",
     "goLast": "마지막 페이지로 이동",
     "selectAll": "모두 선택",
-    "selectRow": "행 선택"
+    "selectRow": "행 선택",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "버전: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "중지 중",
     "stopped": "중지됨"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "사용자 이름",
+      "description": ""
+    },
+    "email": {
+      "uiName": "이메일",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "감사 로그 필터...",
     "user": "사용자",
     "action": "동작",
+    "type": "종류",
     "timestamp": "타임스탬프",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "명령 실행됨: {{data}}",
     "startedSession": "세션을 시작했습니다.",
     "resumedSession": "세션을 다시 시작했습니다.",
     "pausedSession": "세션을 일시 정지했습니다.",
     "stoppedSession": "세션을 중지했습니다."
   },
+  "toggleTheme": "",
   "pickADate": "날짜 선택",
   "scripts": {
     "filterPlaceholder": "스크립트 필터...",

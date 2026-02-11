@@ -89,7 +89,13 @@
       "role": "भूमिका",
       "createdAt": "निर्मित",
       "minIssuedAt": "न्यूनतम लॉगिन",
-      "actions": "क्रियाएँ"
-    }
+      "actions": "क्रियाएँ",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

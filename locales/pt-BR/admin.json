@@ -89,7 +89,13 @@
       "role": "Função",
       "createdAt": "Criado",
       "minIssuedAt": "Login Mínimo",
-      "actions": "Ações"
-    }
+      "actions": "Ações",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

@@ -40,8 +40,13 @@
       "type": "类型",
       "address": "地址",
       "username": "用户名",
-      "password": "密码"
-    }
+      "password": "密码",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "获取账户",
@@ -103,8 +108,12 @@
     "table": {
       "type": "类型",
       "profileId": "UUID",
-      "lastKnownName": "用户名"
+      "lastKnownName": "用户名",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "操作"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "配置 {{name}}",
       "description": "为此账号配置每个机器人的设置",

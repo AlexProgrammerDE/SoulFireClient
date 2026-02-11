@@ -141,7 +141,74 @@
     "goNext": "Đi đến trang tiếp theo",
     "goLast": "Đi đến trang cuối cùng",
     "selectAll": "Chọn tất cả",
-    "selectRow": "Chọn dòng"
+    "selectRow": "Chọn dòng",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "Phiên bản: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "Đang dừng",
     "stopped": "Đã dừng"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "Tên đăng nhập",
+      "description": ""
+    },
+    "email": {
+      "uiName": "Email",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "Lọc nhật ký kiểm toán...",
     "user": "Người dùng",
     "action": "Hành động",
+    "type": "Loại",
     "timestamp": "Dấu thời gian",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "Đã thực thi lệnh: {{data}}",
     "startedSession": "Đã bắt đầu một phiên",
     "resumedSession": "Đã tiếp tục một phiên",
     "pausedSession": "Đã tạm dừng một phiên",
     "stoppedSession": "Đã dừng một phiên"
   },
+  "toggleTheme": "",
   "pickADate": "Chọn ngày",
   "scripts": {
     "filterPlaceholder": "Lọc scripts...",

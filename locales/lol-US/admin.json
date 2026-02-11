@@ -89,7 +89,13 @@
       "role": "Roel",
       "createdAt": "Makd",
       "minIssuedAt": "Min Login",
-      "actions": "Akshuns"
-    }
+      "actions": "Akshuns",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

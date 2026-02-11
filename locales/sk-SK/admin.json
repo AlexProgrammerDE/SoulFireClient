@@ -89,7 +89,13 @@
       "role": "Rola",
       "createdAt": "Vytvorené",
       "minIssuedAt": "Min. prihlásenie",
-      "actions": "Akcie"
-    }
+      "actions": "Akcie",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

@@ -141,7 +141,74 @@
     "goNext": "前往下一頁",
     "goLast": "前往最後一頁",
     "selectAll": "全選",
-    "selectRow": "選取此行"
+    "selectRow": "選取此行",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "版本：{{version}}",
@@ -352,17 +419,36 @@
     "stopping": "停止中",
     "stopped": "已停止"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "使用者名稱",
+      "description": ""
+    },
+    "email": {
+      "uiName": "電子郵件",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "篩選稽核日誌...",
     "user": "使用者",
     "action": "動作",
+    "type": "類型",
     "timestamp": "時間戳記",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "執行指令：{{data}}",
     "startedSession": "已啟動會話",
     "resumedSession": "已恢復會話",
     "pausedSession": "已暫停會話",
     "stoppedSession": "已停止會話"
   },
+  "toggleTheme": "",
   "pickADate": "選擇日期",
   "scripts": {
     "filterPlaceholder": "篩選腳本...",

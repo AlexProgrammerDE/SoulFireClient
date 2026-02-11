@@ -40,8 +40,13 @@
       "type": "Type",
       "address": "Adresse",
       "username": "Nom d´utilisateur",
-      "password": "Mot de passe"
-    }
+      "password": "Mot de passe",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Obtenir des comptes",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Type",
       "profileId": "UUID",
-      "lastKnownName": "Nom d´utilisateur"
+      "lastKnownName": "Nom d´utilisateur",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Actions"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "Configurer {{name}}",
       "description": "Configurer les paramètres par bot pour ce compte",

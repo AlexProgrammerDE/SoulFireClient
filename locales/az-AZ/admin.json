@@ -89,7 +89,13 @@
       "role": "Rol",
       "createdAt": "Yaradılıb",
       "minIssuedAt": "Minimal giriş",
-      "actions": "Əməliyyatlar"
-    }
+      "actions": "Əməliyyatlar",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

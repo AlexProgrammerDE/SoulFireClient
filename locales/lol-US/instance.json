@@ -40,8 +40,13 @@
       "type": "Tyep",
       "address": "Addres",
       "username": "Usernamez",
-      "password": "Passwurd"
-    }
+      "password": "Passwurd",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "Getz Accountz!",
@@ -103,8 +108,12 @@
     "table": {
       "type": "Tyep",
       "profileId": "UUID",
-      "lastKnownName": "Usernamez"
+      "lastKnownName": "Usernamez",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "Akshuns"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "Configur teh {{name}}",
       "description": "Configur pwoper bot settns fur dis account",

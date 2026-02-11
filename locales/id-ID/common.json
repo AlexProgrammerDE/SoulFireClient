@@ -141,7 +141,74 @@
     "goNext": "Ke halaman berikutnya",
     "goLast": "Ke halaman terakhir",
     "selectAll": "Pilih semua",
-    "selectRow": "Pilih baris"
+    "selectRow": "Pilih baris",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "Versi: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "Menghentikan",
     "stopped": "Dihentikan"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "Nama Pengguna",
+      "description": ""
+    },
+    "email": {
+      "uiName": "Email",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "Filter log audit...",
     "user": "Pengguna",
     "action": "Aksi",
+    "type": "Tipe",
     "timestamp": "Waktu",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "Perintah dijalankan: {{data}}",
     "startedSession": "Memulai sesi",
     "resumedSession": "Melanjutkan sesi",
     "pausedSession": "Menjeda sesi",
     "stoppedSession": "Menghentikan sesi"
   },
+  "toggleTheme": "",
   "pickADate": "Pilih tanggal",
   "scripts": {
     "filterPlaceholder": "Filter skrip...",

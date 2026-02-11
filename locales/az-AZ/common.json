@@ -141,7 +141,74 @@
     "goNext": "Növbəti səhifəyə keç",
     "goLast": "Son səhifəyə keç",
     "selectAll": "Hamısını seç",
-    "selectRow": "Sətri seç"
+    "selectRow": "Sətri seç",
+    "selected": "",
+    "clearSelection": "",
+    "escape": "",
+    "filter": "",
+    "filters": "",
+    "noFiltersApplied": "",
+    "modifyFilters": "",
+    "addFilters": "",
+    "addFilter": "",
+    "resetFilters": "",
+    "reset": "",
+    "where": "",
+    "selectField": "",
+    "searchFields": "",
+    "noFieldsFound": "",
+    "enterValue": "",
+    "enterValueShort": "",
+    "true": "",
+    "false": "",
+    "selectOption": "",
+    "selectOptions": "",
+    "searchOptions": "",
+    "noOptionsFound": "",
+    "pickDateShort": "",
+    "typeToFilter": "",
+    "filterByValue": "",
+    "view": "",
+    "searchColumns": "",
+    "noColumnsFound": "",
+    "toggleColumns": "",
+    "sort": "",
+    "sortBy": "",
+    "noSortingApplied": "",
+    "modifySorting": "",
+    "addSorting": "",
+    "addSort": "",
+    "resetSorting": "",
+    "columnHeader": {
+      "asc": "",
+      "desc": "",
+      "reset": "",
+      "hide": ""
+    },
+    "operators": {
+      "iLike": "",
+      "notILike": "",
+      "eq": "",
+      "ne": "",
+      "isEmpty": "",
+      "isNotEmpty": "",
+      "lt": "",
+      "lte": "",
+      "gt": "",
+      "gte": "",
+      "isBetween": "",
+      "isRelativeToToday": "",
+      "ltDate": "",
+      "gtDate": "",
+      "lteDate": "",
+      "gteDate": "",
+      "inArray": "",
+      "notInArray": ""
+    },
+    "sortOrders": {
+      "asc": "",
+      "desc": ""
+    }
   },
   "pluginCard": {
     "version": "Versiya: {{version}}",
@@ -352,17 +419,36 @@
     "stopping": "Dayandırılır",
     "stopped": "Dayandırılıb"
   },
+  "userSettings": {
+    "avatar": {
+      "title": "",
+      "description": "",
+      "gravatar": ""
+    },
+    "username": {
+      "uiName": "İstifadəçi adı",
+      "description": ""
+    },
+    "email": {
+      "uiName": "Email",
+      "description": ""
+    }
+  },
   "auditLog": {
     "filterPlaceholder": "Audit loglarını filtr edin...",
     "user": "İstifadəçi",
     "action": "Əməliyyat",
+    "type": "Növ",
     "timestamp": "Zaman nöqtəsi",
+    "searchUsers": "",
+    "searchTimestamps": "",
     "executedCommand": "İcra edilmiş əmr: {{data}}",
     "startedSession": "Sessiya başladıldı",
     "resumedSession": "Sessiya davam etdirildi",
     "pausedSession": "Sessiya dayandırıldı",
     "stoppedSession": "Sessiya bitirildi"
   },
+  "toggleTheme": "",
   "pickADate": "Tarix seçin",
   "scripts": {
     "filterPlaceholder": "Skript üzrə filtreləyin...",

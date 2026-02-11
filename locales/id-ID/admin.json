@@ -89,7 +89,13 @@
       "role": "Peran",
       "createdAt": "Dibuat",
       "minIssuedAt": "Login Minimal",
-      "actions": "Aksi"
-    }
+      "actions": "Aksi",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

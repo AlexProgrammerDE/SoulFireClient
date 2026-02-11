@@ -89,7 +89,13 @@
       "role": "Vai trò",
       "createdAt": "Đã tạo",
       "minIssuedAt": "Lần đăng nhập sớm nhất",
-      "actions": "Hành động"
-    }
+      "actions": "Hành động",
+      "searchUsernames": "",
+      "searchEmails": "",
+      "searchCreatedAts": "",
+      "searchMinIssuedAts": ""
+    },
+    "removeSelectedTooltip": "",
+    "logOutSelectedTooltip": ""
   }
 }

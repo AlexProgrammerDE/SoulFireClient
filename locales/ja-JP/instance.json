@@ -40,8 +40,13 @@
       "type": "種類",
       "address": "アドレス",
       "username": "ユーザー名",
-      "password": "パスワード"
-    }
+      "password": "パスワード",
+      "searchAddresses": "",
+      "searchUsernames": "",
+      "searchPasswords": ""
+    },
+    "removeSelectedTooltip": "",
+    "checkSelectedTooltip": ""
   },
   "account": {
     "getAccounts": "アカウントを取得",
@@ -103,8 +108,12 @@
     "table": {
       "type": "種類",
       "profileId": "UUID",
-      "lastKnownName": "ユーザー名"
+      "lastKnownName": "ユーザー名",
+      "searchProfileIds": "",
+      "searchLastKnownNames": "",
+      "actions": "操作"
     },
+    "removeSelectedTooltip": "",
     "config": {
       "title": "{{name}}の設定を構成する",
       "description": "このアカウントのボットごとの設定を構成します",
