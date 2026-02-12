@@ -90,12 +90,12 @@
       "createdAt": "Aangemaakt",
       "minIssuedAt": "Min. login",
       "actions": "Acties",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "Gebruikersnamen zoeken...",
+      "searchEmails": "E-mails zoeken...",
+      "searchCreatedAts": "Aangemaakt op zoeken...",
+      "searchMinIssuedAts": "Min. uitgegeven op zoeken..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "Geselecteerde gebruikers verwijderen",
+    "logOutSelectedTooltip": "Geselecteerde gebruikers uitloggen"
   }
 }

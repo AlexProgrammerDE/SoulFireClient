@@ -41,12 +41,12 @@
       "address": "Adresa",
       "username": "Používateľské meno",
       "password": "Heslo",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Hľadať adresy...",
+      "searchUsernames": "Hľadať používateľské mená...",
+      "searchPasswords": "Hľadať heslá..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Odstrániť vybrané proxy",
+    "checkSelectedTooltip": "Skontrolovať vybrané proxy"
   },
   "account": {
     "getAccounts": "Získať účty",
@@ -109,11 +109,11 @@
       "type": "Typ",
       "profileId": "UUID",
       "lastKnownName": "Používateľské meno",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Hľadať ID profilov...",
+      "searchLastKnownNames": "Hľadať posledné známe mená...",
       "actions": "Akcie"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Odstrániť vybrané účty",
     "config": {
       "title": "Nastaviť {{name}}",
       "description": "Nastavte individuálne možnosti pre bota na tomto účte",

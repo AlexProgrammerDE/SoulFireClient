@@ -41,12 +41,12 @@
       "address": "Adresa",
       "username": "Uživatelské jméno",
       "password": "Heslo",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Hledat adresy...",
+      "searchUsernames": "Hledat uživatelská jména...",
+      "searchPasswords": "Hledat hesla..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Odebrat vybrané proxy",
+    "checkSelectedTooltip": "Zkontrolovat vybrané proxy"
   },
   "account": {
     "getAccounts": "Získat účty",
@@ -109,11 +109,11 @@
       "type": "Typ",
       "profileId": "UUID",
       "lastKnownName": "Uživatelské jméno",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Hledat ID profilů...",
+      "searchLastKnownNames": "Hledat poslední známá jména...",
       "actions": "Akce"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Odebrat vybrané účty",
     "config": {
       "title": "Nastavit {{name}}",
       "description": "Nastavit nastavení pro jednotlivé boty tohoto účtu",

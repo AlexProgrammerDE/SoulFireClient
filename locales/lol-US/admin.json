@@ -90,12 +90,12 @@
       "createdAt": "Makd",
       "minIssuedAt": "Min Login",
       "actions": "Akshuns",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "Seerch usernams...",
+      "searchEmails": "Seerch emailz...",
+      "searchCreatedAts": "Seerch created ats...",
+      "searchMinIssuedAts": "Seerch min issued ats..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "Remoov selekted users",
+    "logOutSelectedTooltip": "Logz owt selekted users"
   }
 }

@@ -41,12 +41,12 @@
       "address": "주소",
       "username": "사용자 이름",
       "password": "비밀번호",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "주소 검색...",
+      "searchUsernames": "사용자 이름 검색...",
+      "searchPasswords": "비밀번호 검색..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "선택한 프록시 제거",
+    "checkSelectedTooltip": "선택한 프록시 확인"
   },
   "account": {
     "getAccounts": "계정 가져오기",
@@ -109,11 +109,11 @@
       "type": "종류",
       "profileId": "UUID",
       "lastKnownName": "사용자 이름",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "프로필 ID 검색...",
+      "searchLastKnownNames": "마지막으로 확인된 이름 검색...",
       "actions": "동작"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "선택한 계정 제거",
     "config": {
       "title": "{{name}} 설정하기",
       "description": "이 계정의 봇별 설정을 구성하세요",

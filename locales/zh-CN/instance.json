@@ -41,12 +41,12 @@
       "address": "地址",
       "username": "用户名",
       "password": "密码",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "搜索地址...",
+      "searchUsernames": "搜索用户名...",
+      "searchPasswords": "搜索密码..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "移除所选代理",
+    "checkSelectedTooltip": "检测所选代理"
   },
   "account": {
     "getAccounts": "获取账户",
@@ -109,11 +109,11 @@
       "type": "类型",
       "profileId": "UUID",
       "lastKnownName": "用户名",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "搜索档案ID...",
+      "searchLastKnownNames": "搜索上次已知名称...",
       "actions": "操作"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "移除所选账户",
     "config": {
       "title": "配置 {{name}}",
       "description": "为此账号配置每个机器人的设置",

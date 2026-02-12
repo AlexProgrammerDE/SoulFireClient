@@ -41,12 +41,12 @@
       "address": "Адрес",
       "username": "Имя пользователя",
       "password": "Пароль",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Поиск адресов...",
+      "searchUsernames": "Поиск имен пользователей...",
+      "searchPasswords": "Поиск паролей..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Удалить выбранные прокси",
+    "checkSelectedTooltip": "Проверить выбранные прокси"
   },
   "account": {
     "getAccounts": "Получить аккаунты",
@@ -109,11 +109,11 @@
       "type": "Тип",
       "profileId": "UUID",
       "lastKnownName": "Имя пользователя",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Поиск ID профиля...",
+      "searchLastKnownNames": "Поиск последних известных имён...",
       "actions": "Действия"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Удалить выбранные аккаунты",
     "config": {
       "title": "Настроить {{name}}",
       "description": "Настройте параметры для каждого бота в этой учётной записи",

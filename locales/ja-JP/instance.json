@@ -41,12 +41,12 @@
       "address": "アドレス",
       "username": "ユーザー名",
       "password": "パスワード",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "アドレスを検索...",
+      "searchUsernames": "ユーザー名で検索...",
+      "searchPasswords": "パスワードを検索..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "選択したプロキシを削除",
+    "checkSelectedTooltip": "選択したプロキシをチェック"
   },
   "account": {
     "getAccounts": "アカウントを取得",
@@ -109,11 +109,11 @@
       "type": "種類",
       "profileId": "UUID",
       "lastKnownName": "ユーザー名",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "プロファイルIDを検索...",
+      "searchLastKnownNames": "最後に確認された名前を検索...",
       "actions": "操作"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "選択したアカウントを削除",
     "config": {
       "title": "{{name}}の設定を構成する",
       "description": "このアカウントのボットごとの設定を構成します",

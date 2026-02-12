@@ -41,12 +41,12 @@
       "address": "Adres",
       "username": "Kullanıcı Adı",
       "password": "Şifre",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Adreslerde ara...",
+      "searchUsernames": "Kullanıcı adlarında ara...",
+      "searchPasswords": "Şifrelerde ara..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Seçili proxy'leri kaldır",
+    "checkSelectedTooltip": "Seçili proxy'leri kontrol et"
   },
   "account": {
     "getAccounts": "Hesapları Al",
@@ -109,11 +109,11 @@
       "type": "Tip",
       "profileId": "UUID",
       "lastKnownName": "Kullanıcı Adı",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Profil kimliklerinde ara...",
+      "searchLastKnownNames": "Son bilinen isimlerde ara...",
       "actions": "İşlemler"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Seçili hesapları kaldır",
     "config": {
       "title": "{{name}} Yapılandır",
       "description": "Bu hesap için bot başına ayarları yapılandırın",

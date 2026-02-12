@@ -90,12 +90,12 @@
       "createdAt": "Yaradılıb",
       "minIssuedAt": "Minimal giriş",
       "actions": "Əməliyyatlar",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "İstifadəçi adlarında axtarış...",
+      "searchEmails": "E-poçtlarda axtarış...",
+      "searchCreatedAts": "Yaradılma tarixlərində axtarış...",
+      "searchMinIssuedAts": "Minimum verilən tarixdə axtarış..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "Seçilmiş istifadəçiləri sil",
+    "logOutSelectedTooltip": "Seçilmiş istifadəçiləri çıxış etdir"
   }
 }

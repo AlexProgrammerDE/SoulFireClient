@@ -41,12 +41,12 @@
       "address": "पता",
       "username": "उपयोगकर्ता नाम",
       "password": "पासवर्ड",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "पते खोजें...",
+      "searchUsernames": "यूज़रनेम खोजें...",
+      "searchPasswords": "पासवर्ड खोजें..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "चयनित प्रॉक्सी हटाएँ",
+    "checkSelectedTooltip": "चयनित प्रॉक्सी जांचें"
   },
   "account": {
     "getAccounts": "खाते प्राप्त करें",
@@ -109,11 +109,11 @@
       "type": "प्रकार",
       "profileId": "UUID",
       "lastKnownName": "उपयोगकर्ता नाम",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "प्रोफ़ाइल आईडी खोजें...",
+      "searchLastKnownNames": "आखिरी ज्ञात नाम खोजें...",
       "actions": "क्रियाएँ"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "चयनित खाते हटाएँ",
     "config": {
       "title": "{{name}} को कॉन्फ़िगर करें",
       "description": "इस खाते के लिए प्रति-बॉट सेटिंग्स कॉन्फ़िगर करें",

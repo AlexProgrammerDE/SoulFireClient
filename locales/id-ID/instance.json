@@ -41,12 +41,12 @@
       "address": "Alamat",
       "username": "Nama Pengguna",
       "password": "Kata Sandi",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Cari alamat...",
+      "searchUsernames": "Cari nama pengguna...",
+      "searchPasswords": "Cari kata sandi..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Hapus proxy yang dipilih",
+    "checkSelectedTooltip": "Periksa proxy yang dipilih"
   },
   "account": {
     "getAccounts": "Dapatkan Akun",
@@ -109,11 +109,11 @@
       "type": "Tipe",
       "profileId": "UUID",
       "lastKnownName": "Nama Pengguna",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Cari ID profil...",
+      "searchLastKnownNames": "Cari nama terakhir yang diketahui...",
       "actions": "Aksi"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Hapus akun yang dipilih",
     "config": {
       "title": "Konfigurasi {{name}}",
       "description": "Atur pengaturan per-bot untuk akun ini",

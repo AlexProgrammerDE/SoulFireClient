@@ -41,12 +41,12 @@
       "address": "Adres",
       "username": "Gebruikersnaam",
       "password": "Wachtwoord",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Adressen zoeken...",
+      "searchUsernames": "Gebruikersnamen zoeken...",
+      "searchPasswords": "Wachtwoorden zoeken..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Geselecteerde proxies verwijderen",
+    "checkSelectedTooltip": "Geselecteerde proxies controleren"
   },
   "account": {
     "getAccounts": "Accounts ophalen",
@@ -109,11 +109,11 @@
       "type": "Type",
       "profileId": "UUID",
       "lastKnownName": "Gebruikersnaam",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Profiel-ID&#39;s zoeken...",
+      "searchLastKnownNames": "Laatste bekende namen zoeken...",
       "actions": "Acties"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Geselecteerde accounts verwijderen",
     "config": {
       "title": "{{name}} configureren",
       "description": "Stel per-bot instellingen in voor dit account",

@@ -41,12 +41,12 @@
       "address": "Địa chỉ",
       "username": "Tên đăng nhập",
       "password": "Mật khẩu",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Tìm kiếm địa chỉ...",
+      "searchUsernames": "Tìm kiếm tên người dùng...",
+      "searchPasswords": "Tìm kiếm mật khẩu..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Xóa các proxy đã chọn",
+    "checkSelectedTooltip": "Kiểm tra các proxy đã chọn"
   },
   "account": {
     "getAccounts": "Lấy Tài khoản",
@@ -109,11 +109,11 @@
       "type": "Loại",
       "profileId": "UUID",
       "lastKnownName": "Tên đăng nhập",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Tìm kiếm ID hồ sơ...",
+      "searchLastKnownNames": "Tìm kiếm tên đã biết cuối cùng...",
       "actions": "Hành động"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Xóa các tài khoản đã chọn",
     "config": {
       "title": "Cấu hình {{name}}",
       "description": "Cấu hình cài đặt riêng cho từng bot cho tài khoản này",

@@ -41,12 +41,12 @@
       "address": "Adresse",
       "username": "Benutzername",
       "password": "Passwort",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Adressen suchen...",
+      "searchUsernames": "Benutzernamen suchen...",
+      "searchPasswords": "Passwörter suchen..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Ausgewählte Proxies entfernen",
+    "checkSelectedTooltip": "Ausgewählte Proxies prüfen"
   },
   "account": {
     "getAccounts": "Konten abrufen",
@@ -109,11 +109,11 @@
       "type": "Typ",
       "profileId": "UUID",
       "lastKnownName": "Benutzername",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Profil-IDs suchen...",
+      "searchLastKnownNames": "Letzte bekannte Namen suchen...",
       "actions": "Aktionen"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Ausgewählte Konten entfernen",
     "config": {
       "title": "{{name}} konfigurieren",
       "description": "Pro-Bot-Einstellungen für dieses Konto konfigurieren",

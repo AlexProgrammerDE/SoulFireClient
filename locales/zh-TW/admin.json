@@ -90,12 +90,12 @@
       "createdAt": "建立時間",
       "minIssuedAt": "最早登入",
       "actions": "動作",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "搜尋使用者名稱...",
+      "searchEmails": "搜尋電子郵件...",
+      "searchCreatedAts": "搜尋建立時間...",
+      "searchMinIssuedAts": "搜尋最小發放時間..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "移除選取的使用者",
+    "logOutSelectedTooltip": "登出選取的使用者"
   }
 }

@@ -90,12 +90,12 @@
       "createdAt": "Đã tạo",
       "minIssuedAt": "Lần đăng nhập sớm nhất",
       "actions": "Hành động",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "Tìm kiếm tên người dùng...",
+      "searchEmails": "Tìm kiếm email...",
+      "searchCreatedAts": "Tìm kiếm ngày tạo...",
+      "searchMinIssuedAts": "Tìm kiếm thời gian cấp phát tối thiểu..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "Xóa người dùng đã chọn",
+    "logOutSelectedTooltip": "Đăng xuất người dùng đã chọn"
   }
 }

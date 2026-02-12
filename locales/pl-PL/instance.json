@@ -41,12 +41,12 @@
       "address": "Adres",
       "username": "Nazwa użytkownika",
       "password": "Hasło",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Szukaj adresów...",
+      "searchUsernames": "Szukaj nazw użytkowników...",
+      "searchPasswords": "Szukaj haseł..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Usuń wybrane serwery proxy",
+    "checkSelectedTooltip": "Sprawdź wybrane serwery proxy"
   },
   "account": {
     "getAccounts": "Pobierz konta",
@@ -109,11 +109,11 @@
       "type": "Typ",
       "profileId": "UUID",
       "lastKnownName": "Nazwa użytkownika",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Szukaj ID profili...",
+      "searchLastKnownNames": "Szukaj ostatnich znanych nazw...",
       "actions": "Akcje"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Usuń wybrane konta",
     "config": {
       "title": "Konfiguruj {{name}}",
       "description": "Skonfiguruj ustawienia dla tego konta osobno dla każdego bota",

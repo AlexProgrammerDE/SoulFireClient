@@ -90,12 +90,12 @@
       "createdAt": "Дата создания",
       "minIssuedAt": "Дата входа",
       "actions": "Действия",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "Поиск имен пользователей...",
+      "searchEmails": "Поиск адресов электронной почты...",
+      "searchCreatedAts": "Поиск дат создания...",
+      "searchMinIssuedAts": "Поиск минимальных дат выдачи..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "Удалить выбранных пользователей",
+    "logOutSelectedTooltip": "Вывести из системы выбранных пользователей"
   }
 }

@@ -90,12 +90,12 @@
       "createdAt": "생성일",
       "minIssuedAt": "최소 로그인",
       "actions": "동작",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "사용자 이름 검색...",
+      "searchEmails": "이메일 검색...",
+      "searchCreatedAts": "생성일 검색...",
+      "searchMinIssuedAts": "최소 발급일 검색..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "선택한 사용자 삭제",
+    "logOutSelectedTooltip": "선택한 사용자 로그아웃"
   }
 }

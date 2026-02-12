@@ -41,12 +41,12 @@
       "address": "Adress",
       "username": "Användarnamn",
       "password": "Lösenord",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Sök adresser...",
+      "searchUsernames": "Sök användarnamn...",
+      "searchPasswords": "Sök lösenord..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Ta bort valda proxies",
+    "checkSelectedTooltip": "Kontrollera valda proxies"
   },
   "account": {
     "getAccounts": "Hämta konton",
@@ -109,11 +109,11 @@
       "type": "Typ",
       "profileId": "UUID",
       "lastKnownName": "Användarnamn",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Sök profil-ID:n...",
+      "searchLastKnownNames": "Sök senaste kända namn...",
       "actions": "Åtgärder"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Ta bort valda konton",
     "config": {
       "title": "Konfigurera {{name}}",
       "description": "Konfigurera inställningar per bot för detta konto",

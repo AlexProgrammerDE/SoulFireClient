@@ -90,12 +90,12 @@
       "createdAt": "निर्मित",
       "minIssuedAt": "न्यूनतम लॉगिन",
       "actions": "क्रियाएँ",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "यूज़रनेम खोजें...",
+      "searchEmails": "ईमेल खोजें...",
+      "searchCreatedAts": "निर्माण दिनांक खोजें...",
+      "searchMinIssuedAts": "न्यूनतम जारी दिनांक खोजें..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "चयनित उपयोगकर्ताओं को हटाएँ",
+    "logOutSelectedTooltip": "चयनित उपयोगकर्ताओं को लॉगआउट करें"
   }
 }

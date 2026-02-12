@@ -41,12 +41,12 @@
       "address": "Dirección de conexión",
       "username": "Nombre de usuario",
       "password": "Contraseña",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Buscar direcciones...",
+      "searchUsernames": "Buscar nombres de usuario...",
+      "searchPasswords": "Buscar contraseñas..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Eliminar proxies seleccionados",
+    "checkSelectedTooltip": "Comprobar proxies seleccionados"
   },
   "account": {
     "getAccounts": "Obtener cuentas",
@@ -109,11 +109,11 @@
       "type": "Tipo",
       "profileId": "UUID",
       "lastKnownName": "Nombre de usuario",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Buscar IDs de perfil...",
+      "searchLastKnownNames": "Buscar últimos nombres conocidos...",
       "actions": "Acciones"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Eliminar cuentas seleccionadas",
     "config": {
       "title": "Configurar {{name}}",
       "description": "Configura la configuración por bot para esta cuenta",
