@@ -90,12 +90,12 @@
       "createdAt": "Luotu",
       "minIssuedAt": "Min. kirjautuminen",
       "actions": "Toiminnot",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "Etsi käyttäjätunnuksia...",
+      "searchEmails": "Etsi sähköpostiosoitteita...",
+      "searchCreatedAts": "Etsi luontipäiviä...",
+      "searchMinIssuedAts": "Etsi minimi kirjautumispäiviä..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "Poista valitut käyttäjät",
+    "logOutSelectedTooltip": "Kirjaa valitut käyttäjät ulos"
   }
 }

@@ -41,12 +41,12 @@
       "address": "Addres",
       "username": "Usernamez",
       "password": "Passwurd",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "SRSCH 4DDRESSEZ...",
+      "searchUsernames": "Seerch usernams...",
+      "searchPasswords": "SRSCH PAWZSWRDZ..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "RMVZ SLEKTEDZ PROXIEZ",
+    "checkSelectedTooltip": "CHEK SLEKTEDZ PROXIEZ"
   },
   "account": {
     "getAccounts": "Getz Accountz!",
@@ -109,11 +109,11 @@
       "type": "Tyep",
       "profileId": "UUID",
       "lastKnownName": "Usernamez",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "SRSCH PURRFILE IDS...",
+      "searchLastKnownNames": "SRSCH LAST KNOWN NAMES...",
       "actions": "Akshuns"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "RMVZ SLEKTEDZ ACCOUNTZ",
     "config": {
       "title": "Configur teh {{name}}",
       "description": "Configur pwoper bot settns fur dis account",

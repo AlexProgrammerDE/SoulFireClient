@@ -90,12 +90,12 @@
       "createdAt": "วันที่สร้าง",
       "minIssuedAt": "เข้าสู่ระบบครั้งต่ำสุด",
       "actions": "การดำเนินการ",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "ค้นหาชื่อผู้ใช้...",
+      "searchEmails": "ค้นหาอีเมล...",
+      "searchCreatedAts": "ค้นหาวันที่สร้าง...",
+      "searchMinIssuedAts": "ค้นหาวันที่ออกขั้นต่ำ..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "ลบผู้ใช้ที่เลือก",
+    "logOutSelectedTooltip": "ออกจากระบบผู้ใช้ที่เลือก"
   }
 }

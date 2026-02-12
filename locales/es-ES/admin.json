@@ -90,12 +90,12 @@
       "createdAt": "Creado",
       "minIssuedAt": "Fecha mínima de validez de sesión",
       "actions": "Acciones",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "Buscar nombres de usuario...",
+      "searchEmails": "Buscar correos electrónicos...",
+      "searchCreatedAts": "Buscar fechas de creación...",
+      "searchMinIssuedAts": "Buscar fechas mínimas de emisión..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "Eliminar usuarios seleccionados",
+    "logOutSelectedTooltip": "Cerrar sesión de los usuarios seleccionados"
   }
 }

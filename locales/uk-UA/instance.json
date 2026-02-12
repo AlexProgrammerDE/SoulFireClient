@@ -41,12 +41,12 @@
       "address": "Адреса",
       "username": "Ім'я користувача",
       "password": "Пароль",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Пошук адрес...",
+      "searchUsernames": "Пошук імен користувачів...",
+      "searchPasswords": "Пошук паролів..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Видалити вибрані проксі",
+    "checkSelectedTooltip": "Перевірити вибрані проксі"
   },
   "account": {
     "getAccounts": "Отримати акаунти",
@@ -109,11 +109,11 @@
       "type": "Тип",
       "profileId": "UUID",
       "lastKnownName": "Ім'я користувача",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Пошук ID профілю...",
+      "searchLastKnownNames": "Пошук останніх відомих імен...",
       "actions": "Дії"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Видалити вибрані акаунти",
     "config": {
       "title": "Налаштувати {{name}}",
       "description": "Налаштуйте окремі параметри ботів для цього акаунта",

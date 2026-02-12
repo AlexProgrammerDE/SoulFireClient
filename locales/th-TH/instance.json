@@ -41,12 +41,12 @@
       "address": "ที่อยู่",
       "username": "ชื่อผู้ใช้",
       "password": "รหัสผ่าน",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "ค้นหาที่อยู่...",
+      "searchUsernames": "ค้นหาชื่อผู้ใช้...",
+      "searchPasswords": "ค้นหารหัสผ่าน..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "ลบพร็อกซีที่เลือก",
+    "checkSelectedTooltip": "ตรวจสอบพร็อกซีที่เลือก"
   },
   "account": {
     "getAccounts": "รับไอดี",
@@ -109,11 +109,11 @@
       "type": "ประเภท",
       "profileId": "UUID",
       "lastKnownName": "ชื่อผู้ใช้",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "ค้นหาไอดีโปรไฟล์...",
+      "searchLastKnownNames": "ค้นหาชื่อที่ทราบล่าสุด...",
       "actions": "การดำเนินการ"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "ลบบัญชีที่เลือก",
     "config": {
       "title": "กำหนดค่า {{name}}",
       "description": "กำหนดค่าบ็อตแต่ละตัวสำหรับบัญชีนี้",

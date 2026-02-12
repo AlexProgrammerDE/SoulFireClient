@@ -41,12 +41,12 @@
       "address": "Ünvan",
       "username": "İstifadəçi adı",
       "password": "Şifrə",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Ünvanlarda axtarış...",
+      "searchUsernames": "İstifadəçi adlarında axtarış...",
+      "searchPasswords": "Şifrlərdə axtarış..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Seçilmiş proksiləri sil",
+    "checkSelectedTooltip": "Seçilmiş proksiləri yoxla"
   },
   "account": {
     "getAccounts": "Hesabları əldə et",
@@ -109,11 +109,11 @@
       "type": "Növ",
       "profileId": "UUID",
       "lastKnownName": "İstifadəçi adı",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Profil ID-lərində axtarış...",
+      "searchLastKnownNames": "Son məlum adlarda axtarış...",
       "actions": "Əməliyyatlar"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Seçilmiş hesabları sil",
     "config": {
       "title": "{{name}}-i tənzimləyin",
       "description": "Bu hesab üçün hər bot üçün ayarları tənzimləyin",

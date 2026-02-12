@@ -41,12 +41,12 @@
       "address": "Osoite",
       "username": "Käyttäjätunnus",
       "password": "Salasana",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Etsi osoitteita...",
+      "searchUsernames": "Etsi käyttäjätunnuksia...",
+      "searchPasswords": "Etsi salasanoja..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Poista valitut proxyt",
+    "checkSelectedTooltip": "Tarkista valitut proxyt"
   },
   "account": {
     "getAccounts": "Hae tilejä",
@@ -109,11 +109,11 @@
       "type": "Tyyppi",
       "profileId": "UUID",
       "lastKnownName": "Käyttäjätunnus",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Etsi profiilitunnuksia...",
+      "searchLastKnownNames": "Etsi viimeksi tunnettuja nimiä...",
       "actions": "Toiminnot"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Poista valitut tilit",
     "config": {
       "title": "Määritä {{name}}",
       "description": "Määritä tämän tilin bottikohtaiset asetukset",

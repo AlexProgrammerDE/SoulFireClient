@@ -90,12 +90,12 @@
       "createdAt": "作成日",
       "minIssuedAt": "最小ログイン日時",
       "actions": "操作",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "ユーザー名で検索...",
+      "searchEmails": "メールアドレスで検索...",
+      "searchCreatedAts": "作成日時で検索...",
+      "searchMinIssuedAts": "最小発行日時で検索..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "選択したユーザーを削除",
+    "logOutSelectedTooltip": "選択したユーザーをログアウト"
   }
 }

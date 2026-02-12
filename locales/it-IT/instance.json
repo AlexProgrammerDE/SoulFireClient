@@ -41,12 +41,12 @@
       "address": "Indirizzo",
       "username": "Nome utente",
       "password": "Password",
-      "searchAddresses": "",
-      "searchUsernames": "",
-      "searchPasswords": ""
+      "searchAddresses": "Cerca indirizzi...",
+      "searchUsernames": "Cerca nomi utente...",
+      "searchPasswords": "Cerca password..."
     },
-    "removeSelectedTooltip": "",
-    "checkSelectedTooltip": ""
+    "removeSelectedTooltip": "Rimuovi i proxy selezionati",
+    "checkSelectedTooltip": "Controlla i proxy selezionati"
   },
   "account": {
     "getAccounts": "Ottieni Account",
@@ -109,11 +109,11 @@
       "type": "Tipo",
       "profileId": "UUID",
       "lastKnownName": "Nome utente",
-      "searchProfileIds": "",
-      "searchLastKnownNames": "",
+      "searchProfileIds": "Cerca ID profilo...",
+      "searchLastKnownNames": "Cerca ultimi nomi noti...",
       "actions": "Azioni"
     },
-    "removeSelectedTooltip": "",
+    "removeSelectedTooltip": "Rimuovi account selezionati",
     "config": {
       "title": "Configura {{name}}",
       "description": "Configura le impostazioni per-bot di questo account",

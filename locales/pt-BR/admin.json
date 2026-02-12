@@ -90,12 +90,12 @@
       "createdAt": "Criado",
       "minIssuedAt": "Login Mínimo",
       "actions": "Ações",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "Pesquisar nomes de usuário...",
+      "searchEmails": "Pesquisar e-mails...",
+      "searchCreatedAts": "Pesquisar datas de criação...",
+      "searchMinIssuedAts": "Pesquisar datas mínimas de emissão..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "Remover usuários selecionados",
+    "logOutSelectedTooltip": "Desconectar usuários selecionados"
   }
 }

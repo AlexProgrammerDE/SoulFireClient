@@ -90,12 +90,12 @@
       "createdAt": "Vytvorené",
       "minIssuedAt": "Min. prihlásenie",
       "actions": "Akcie",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "Hľadať používateľské mená...",
+      "searchEmails": "Hľadať e‑mailové adresy...",
+      "searchCreatedAts": "Hľadať dátumy vytvorenia...",
+      "searchMinIssuedAts": "Hľadať najskorší čas vydania..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "Odstrániť vybraných používateľov",
+    "logOutSelectedTooltip": "Odhlásiť vybraných používateľov"
   }
 }

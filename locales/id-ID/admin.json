@@ -90,12 +90,12 @@
       "createdAt": "Dibuat",
       "minIssuedAt": "Login Minimal",
       "actions": "Aksi",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "Cari nama pengguna...",
+      "searchEmails": "Cari email...",
+      "searchCreatedAts": "Cari tanggal dibuat...",
+      "searchMinIssuedAts": "Cari tanggal minimum diterbitkan..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "Hapus pengguna yang dipilih",
+    "logOutSelectedTooltip": "Keluar dari pengguna yang dipilih"
   }
 }

@@ -90,12 +90,12 @@
       "createdAt": "Створено",
       "minIssuedAt": "Мінімальний час входу",
       "actions": "Дії",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "Пошук імен користувачів...",
+      "searchEmails": "Пошук електронних адрес...",
+      "searchCreatedAts": "Пошук дат створення...",
+      "searchMinIssuedAts": "Пошук мінімальних дат видачі..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "Видалити вибраних користувачів",
+    "logOutSelectedTooltip": "Вийти з облікових записів вибраних користувачів"
   }
 }

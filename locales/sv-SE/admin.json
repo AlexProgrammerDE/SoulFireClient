@@ -90,12 +90,12 @@
       "createdAt": "Skapad",
       "minIssuedAt": "Min inloggning",
       "actions": "Åtgärder",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "Sök användarnamn...",
+      "searchEmails": "Sök e-postadresser...",
+      "searchCreatedAts": "Sök skapelsedatum...",
+      "searchMinIssuedAts": "Sök min. utfärdandedatum..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "Ta bort valda användare",
+    "logOutSelectedTooltip": "Logga ut valda användare"
   }
 }

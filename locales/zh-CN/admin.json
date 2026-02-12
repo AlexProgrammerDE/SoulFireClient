@@ -90,12 +90,12 @@
       "createdAt": "创建时间",
       "minIssuedAt": "最早登录",
       "actions": "操作",
-      "searchUsernames": "",
-      "searchEmails": "",
-      "searchCreatedAts": "",
-      "searchMinIssuedAts": ""
+      "searchUsernames": "搜索用户名...",
+      "searchEmails": "搜索邮箱...",
+      "searchCreatedAts": "搜索创建时间...",
+      "searchMinIssuedAts": "搜索最小发放时间..."
     },
-    "removeSelectedTooltip": "",
-    "logOutSelectedTooltip": ""
+    "removeSelectedTooltip": "移除已选用户",
+    "logOutSelectedTooltip": "注销已选用户"
   }
 }
