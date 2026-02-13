@@ -11,6 +11,7 @@ import {
   PlusIcon,
   SquareIcon,
   Trash2Icon,
+  TriangleAlertIcon,
   WorkflowIcon,
 } from "lucide-react";
 import { Suspense, use, useState } from "react";
@@ -19,6 +20,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import {
@@ -220,6 +222,15 @@ function Content() {
 
   return (
     <div className="container flex h-full w-full grow flex-col gap-4 py-4">
+      {/* Experimental Warning */}
+      <Alert>
+        <TriangleAlertIcon />
+        <AlertTitle>{tInstance("scripts.experimentalTitle")}</AlertTitle>
+        <AlertDescription>
+          {tInstance("scripts.experimentalWarning")}
+        </AlertDescription>
+      </Alert>
+
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex flex-col gap-1">

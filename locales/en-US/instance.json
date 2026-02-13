@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Visual Scripts",
     "description": "Create automation scripts using a visual node-based editor.",
+    "experimentalTitle": "Experimental Feature",
+    "experimentalWarning": "This feature is experimental. There may be breaking changes in the future and existing scripts might break. Use with caution.",
     "createScript": "Create Script",
     "createScriptTitle": "Create New Script",
     "createScriptDescription": "Create a new visual script for this instance. Scripts can automate bot actions and respond to events.",
