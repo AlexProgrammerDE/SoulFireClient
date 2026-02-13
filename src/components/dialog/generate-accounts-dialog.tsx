@@ -1,8 +1,10 @@
+import { useForm } from "@tanstack/react-form";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
-import { use, useId, useState } from "react";
+import { use, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { type ExternalToast, toast } from "sonner";
+import { z } from "zod";
 import { TextInfoButton } from "@/components/info-buttons.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -15,8 +17,13 @@ import {
   CredenzaHeader,
   CredenzaTitle,
 } from "@/components/ui/credenza.tsx";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import { Label } from "@/components/ui/label.tsx";
 import {
   Select,
   SelectContent,
@@ -49,25 +56,20 @@ export default function GenerateAccountsDialog({
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const [amount, setAmount] = useState(1);
-  const [nameFormat, setNameFormat] = useState("Bot_%d");
-  const [mode, setMode] = useState<GenerateAccountsMode>("IGNORE_EXISTING");
   const [isGenerating, setIsGenerating] = useState(false);
-  const amountId = useId();
-  const nameFormatId = useId();
-  const modeId = useId();
 
-  const handleGenerate = () => {
-    if (amount < 1) {
-      toast.error(t("account.generate.invalidAmount"));
-      return;
-    }
+  const formSchema = z.object({
+    amount: z.number().min(1, t("account.generate.invalidAmount")),
+    nameFormat: z
+      .string()
+      .refine(
+        (v) => v.includes("%d"),
+        t("account.generate.missingPlaceholder"),
+      ),
+    mode: z.enum(["IGNORE_EXISTING", "REPLACE_EXISTING", "REPLACE_ALL"]),
+  });
 
-    if (!nameFormat.includes("%d")) {
-      toast.error(t("account.generate.missingPlaceholder"));
-      return;
-    }
-
+  const handleGenerate = (value: z.infer<typeof formSchema>) => {
     if (transport === null) {
       return;
     }
@@ -76,10 +78,10 @@ export default function GenerateAccountsDialog({
 
     // Generate usernames based on format
     const usernames: string[] = [];
-    for (let i = 1; i <= amount; i++) {
-      const username = nameFormat.replace("%d", String(i));
+    for (let i = 1; i <= value.amount; i++) {
+      const username = value.nameFormat.replace("%d", String(i));
       // Skip usernames that already exist only in IGNORE_EXISTING mode
-      if (mode === "IGNORE_EXISTING" && existingUsernames.has(username)) {
+      if (value.mode === "IGNORE_EXISTING" && existingUsernames.has(username)) {
         continue;
       }
       usernames.push(username);
@@ -167,7 +169,7 @@ export default function GenerateAccountsDialog({
                 cancel: undefined,
               });
             } else {
-              onGenerate(accountsToAdd, mode);
+              onGenerate(accountsToAdd, value.mode);
               onOpenChange(false);
               toast.success(
                 t("account.generate.success", { count: accountsToAdd.length }),
@@ -192,79 +194,144 @@ export default function GenerateAccountsDialog({
     });
   };
 
+  const form = useForm({
+    defaultValues: {
+      amount: 1,
+      nameFormat: "Bot_%d",
+      mode: "IGNORE_EXISTING" as GenerateAccountsMode,
+    },
+    validators: {
+      onSubmit: formSchema,
+    },
+    onSubmit: async ({ value }) => {
+      handleGenerate(value);
+    },
+  });
+
   return (
     <Credenza open={open} onOpenChange={onOpenChange}>
       <CredenzaContent>
-        <CredenzaHeader>
-          <CredenzaTitle>{t("account.generate.title")}</CredenzaTitle>
-          <CredenzaDescription>
-            {t("account.generate.description")}
-          </CredenzaDescription>
-        </CredenzaHeader>
-        <CredenzaBody className="flex flex-col gap-4 pb-4 md:pb-0">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor={amountId}>{t("account.generate.amount")}</Label>
-            <Input
-              id={amountId}
-              type="number"
-              min={1}
-              value={amount}
-              onChange={(e) =>
-                setAmount(Math.max(1, parseInt(e.target.value, 10) || 1))
-              }
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor={nameFormatId}>
-              {t("account.generate.nameFormat")}
-            </Label>
-            <Input
-              id={nameFormatId}
-              type="text"
-              value={nameFormat}
-              onChange={(e) => setNameFormat(e.target.value)}
-              placeholder="Bot_%d"
-            />
-            <p className="text-muted-foreground text-sm">
-              {t("account.generate.nameFormatHelp")}
-            </p>
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center gap-2">
-              <Label htmlFor={modeId}>{t("account.generate.mode")}</Label>
-              <TextInfoButton value={t("account.generate.modeHelp")} />
-            </div>
-            <Select
-              value={mode}
-              onValueChange={(value) => setMode(value as GenerateAccountsMode)}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            void form.handleSubmit();
+          }}
+        >
+          <CredenzaHeader>
+            <CredenzaTitle>{t("account.generate.title")}</CredenzaTitle>
+            <CredenzaDescription>
+              {t("account.generate.description")}
+            </CredenzaDescription>
+          </CredenzaHeader>
+          <CredenzaBody className="flex flex-col gap-4 pb-4 md:pb-0">
+            <form.Field name="amount">
+              {(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>
+                      {t("account.generate.amount")}
+                    </FieldLabel>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      type="number"
+                      min={1}
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) =>
+                        field.handleChange(
+                          Math.max(1, Number.parseInt(e.target.value, 10) || 1),
+                        )
+                      }
+                      aria-invalid={isInvalid}
+                    />
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
+                  </Field>
+                );
+              }}
+            </form.Field>
+            <form.Field name="nameFormat">
+              {(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid;
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel htmlFor={field.name}>
+                      {t("account.generate.nameFormat")}
+                    </FieldLabel>
+                    <Input
+                      id={field.name}
+                      name={field.name}
+                      type="text"
+                      value={field.state.value}
+                      onBlur={field.handleBlur}
+                      onChange={(e) => field.handleChange(e.target.value)}
+                      placeholder="Bot_%d"
+                      aria-invalid={isInvalid}
+                    />
+                    <FieldDescription>
+                      {t("account.generate.nameFormatHelp")}
+                    </FieldDescription>
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
+                  </Field>
+                );
+              }}
+            </form.Field>
+            <form.Field name="mode">
+              {(field) => (
+                <Field>
+                  <div className="flex items-center gap-2">
+                    <FieldLabel htmlFor={field.name}>
+                      {t("account.generate.mode")}
+                    </FieldLabel>
+                    <TextInfoButton value={t("account.generate.modeHelp")} />
+                  </div>
+                  <Select
+                    value={field.state.value}
+                    onValueChange={(value) =>
+                      field.handleChange(value as GenerateAccountsMode)
+                    }
+                  >
+                    <SelectTrigger id={field.name} className="w-full">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="IGNORE_EXISTING">
+                        {t("account.generate.modeIgnoreExisting")}
+                      </SelectItem>
+                      <SelectItem value="REPLACE_EXISTING">
+                        {t("account.generate.modeReplaceExisting")}
+                      </SelectItem>
+                      <SelectItem value="REPLACE_ALL">
+                        {t("account.generate.modeReplaceAll")}
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </Field>
+              )}
+            </form.Field>
+          </CredenzaBody>
+          <CredenzaFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
             >
-              <SelectTrigger id={modeId} className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="IGNORE_EXISTING">
-                  {t("account.generate.modeIgnoreExisting")}
-                </SelectItem>
-                <SelectItem value="REPLACE_EXISTING">
-                  {t("account.generate.modeReplaceExisting")}
-                </SelectItem>
-                <SelectItem value="REPLACE_ALL">
-                  {t("account.generate.modeReplaceAll")}
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </CredenzaBody>
-        <CredenzaFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            {t("common:cancel")}
-          </Button>
-          <Button onClick={handleGenerate} disabled={isGenerating}>
-            {isGenerating
-              ? t("account.generate.generating")
-              : t("account.generate.submit")}
-          </Button>
-        </CredenzaFooter>
+              {t("common:cancel")}
+            </Button>
+            <Button type="submit" disabled={isGenerating}>
+              {isGenerating
+                ? t("account.generate.generating")
+                : t("account.generate.submit")}
+            </Button>
+          </CredenzaFooter>
+        </form>
       </CredenzaContent>
     </Credenza>
   );

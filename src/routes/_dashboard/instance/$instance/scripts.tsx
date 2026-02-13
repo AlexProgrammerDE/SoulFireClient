@@ -1,3 +1,4 @@
+import { useForm } from "@tanstack/react-form";
 import {
   useMutation,
   useQueryClient,
@@ -12,9 +13,10 @@ import {
   Trash2Icon,
   WorkflowIcon,
 } from "lucide-react";
-import { Suspense, use, useId, useState } from "react";
+import { Suspense, use, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { z } from "zod";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
@@ -35,12 +37,17 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog.tsx";
+import { Field, FieldLabel } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import { Label } from "@/components/ui/label.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
 import type { ScriptInfo } from "@/generated/soulfire/script";
 import { ScriptServiceClient } from "@/generated/soulfire/script.client";
 import { scriptListQueryOptions } from "@/lib/script-service.ts";
+
+const createScriptSchema = z.object({
+  name: z.string(),
+  description: z.string(),
+});
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/scripts")({
   component: InstanceScripts,
@@ -80,33 +87,27 @@ function Content() {
   );
   const scripts = scriptsData?.scripts ?? [];
 
-  const formId = useId();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [newScriptName, setNewScriptName] = useState("");
-  const [newScriptDescription, setNewScriptDescription] = useState("");
 
   // Create script mutation
   const createMutation = useMutation({
     mutationKey: ["script", "create", instanceId],
-    mutationFn: async () => {
+    mutationFn: async (value: z.infer<typeof createScriptSchema>) => {
       if (!transport) throw new Error("No transport available");
       const client = new ScriptServiceClient(transport);
       const result = await client.createScript({
         instanceId,
-        name: newScriptName.trim() || tInstance("scripts.untitledScript"),
-        description: newScriptDescription.trim(),
+        name: value.name.trim() || tInstance("scripts.untitledScript"),
+        description: value.description.trim(),
         nodes: [],
         edges: [],
-        paused: false, // Scripts start running immediately by default
+        paused: false,
       });
       return result.response;
     },
     onSuccess: (response) => {
       toast.success(tInstance("scripts.createSuccess"));
-      setNewScriptName("");
-      setNewScriptDescription("");
       setIsCreateDialogOpen(false);
-      // Navigate to the new script editor
       if (response.script) {
         void navigate({
           to: "/instance/$instance/script/$scriptId",
@@ -120,6 +121,19 @@ function Content() {
     },
     onSettled: () => {
       void queryClient.invalidateQueries({ queryKey: ["scripts", instanceId] });
+    },
+  });
+
+  const form = useForm({
+    defaultValues: {
+      name: "",
+      description: "",
+    },
+    validators: {
+      onSubmit: createScriptSchema,
+    },
+    onSubmit: async ({ value }) => {
+      createMutation.mutate(value);
     },
   });
 
@@ -192,10 +206,6 @@ function Content() {
     },
   });
 
-  const handleCreateScript = () => {
-    createMutation.mutate();
-  };
-
   const handleDeleteScript = (scriptId: string) => {
     deleteMutation.mutate(scriptId);
   };
@@ -228,55 +238,84 @@ function Content() {
             </Button>
           </DialogTrigger>
           <DialogContent>
-            <DialogHeader>
-              <DialogTitle>
-                {tInstance("scripts.createScriptTitle")}
-              </DialogTitle>
-              <DialogDescription>
-                {tInstance("scripts.createScriptDescription")}
-              </DialogDescription>
-            </DialogHeader>
-            <div className="flex flex-col gap-4 py-4">
-              <div className="flex flex-col gap-2">
-                <Label htmlFor={`${formId}-script-name`}>
-                  {tInstance("scripts.scriptName")}
-                </Label>
-                <Input
-                  id={`${formId}-script-name`}
-                  value={newScriptName}
-                  onChange={(e) => setNewScriptName(e.target.value)}
-                  placeholder={tInstance("scripts.scriptNamePlaceholder")}
-                />
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                void form.handleSubmit();
+              }}
+            >
+              <DialogHeader>
+                <DialogTitle>
+                  {tInstance("scripts.createScriptTitle")}
+                </DialogTitle>
+                <DialogDescription>
+                  {tInstance("scripts.createScriptDescription")}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex flex-col gap-4 py-4">
+                <form.Field name="name">
+                  {(field) => {
+                    const isInvalid =
+                      field.state.meta.isTouched && !field.state.meta.isValid;
+                    return (
+                      <Field data-invalid={isInvalid}>
+                        <FieldLabel htmlFor={field.name}>
+                          {tInstance("scripts.scriptName")}
+                        </FieldLabel>
+                        <Input
+                          id={field.name}
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          placeholder={tInstance(
+                            "scripts.scriptNamePlaceholder",
+                          )}
+                          aria-invalid={isInvalid}
+                        />
+                      </Field>
+                    );
+                  }}
+                </form.Field>
+                <form.Field name="description">
+                  {(field) => {
+                    const isInvalid =
+                      field.state.meta.isTouched && !field.state.meta.isValid;
+                    return (
+                      <Field data-invalid={isInvalid}>
+                        <FieldLabel htmlFor={field.name}>
+                          {tInstance("scripts.scriptDescription")}
+                        </FieldLabel>
+                        <Textarea
+                          id={field.name}
+                          name={field.name}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          placeholder={tInstance(
+                            "scripts.scriptDescriptionPlaceholder",
+                          )}
+                          rows={3}
+                          aria-invalid={isInvalid}
+                        />
+                      </Field>
+                    );
+                  }}
+                </form.Field>
               </div>
-              <div className="flex flex-col gap-2">
-                <Label htmlFor={`${formId}-script-description`}>
-                  {tInstance("scripts.scriptDescription")}
-                </Label>
-                <Textarea
-                  id={`${formId}-script-description`}
-                  value={newScriptDescription}
-                  onChange={(e) => setNewScriptDescription(e.target.value)}
-                  placeholder={tInstance(
-                    "scripts.scriptDescriptionPlaceholder",
-                  )}
-                  rows={3}
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setIsCreateDialogOpen(false)}
-              >
-                {t("cancel")}
-              </Button>
-              <Button
-                onClick={handleCreateScript}
-                disabled={createMutation.isPending}
-              >
-                {tInstance("scripts.create")}
-              </Button>
-            </DialogFooter>
+              <DialogFooter>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setIsCreateDialogOpen(false)}
+                >
+                  {t("cancel")}
+                </Button>
+                <Button type="submit" disabled={createMutation.isPending}>
+                  {tInstance("scripts.create")}
+                </Button>
+              </DialogFooter>
+            </form>
           </DialogContent>
         </Dialog>
       </div>

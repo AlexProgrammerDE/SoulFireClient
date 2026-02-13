@@ -1,10 +1,12 @@
 import type { JsonValue } from "@protobuf-ts/runtime";
+import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 import { PlusIcon, TrashIcon } from "lucide-react";
 import { Suspense, use, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { z } from "zod";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
@@ -119,11 +121,6 @@ function DialogContentInner({
   const [entries, setEntries] = useState<MetadataEntry[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // New entry form state
-  const [newNamespace, setNewNamespace] = useState("");
-  const [newKey, setNewKey] = useState("");
-  const [newValue, setNewValue] = useState("");
-
   // Load metadata on mount
   const loadMetadata = useCallback(async () => {
     if (transport === null) {
@@ -164,15 +161,6 @@ function DialogContentInner({
     },
     [entries],
   );
-
-  // Validate new entry
-  const newValueParsed = useMemo(() => parseJsonValue(newValue), [newValue]);
-  const canAddEntry =
-    newNamespace.trim() !== "" &&
-    newKey.trim() !== "" &&
-    newValue.trim() !== "" &&
-    newValueParsed !== null &&
-    !isDuplicate(newNamespace.trim(), newKey.trim());
 
   // Add entry mutation
   const addEntryMutation = useMutation({
@@ -267,38 +255,63 @@ function DialogContentInner({
     },
   });
 
-  const handleAddEntry = useCallback(() => {
-    if (!canAddEntry || newValueParsed === null) return;
+  const addEntrySchema = useMemo(
+    () =>
+      z.object({
+        namespace: z
+          .string()
+          .min(1, t("account.metadata.namespacePlaceholder")),
+        key: z.string().min(1, t("account.metadata.keyPlaceholder")),
+        value: z
+          .string()
+          .min(1, t("account.metadata.valuePlaceholder"))
+          .refine(
+            (v) => parseJsonValue(v) !== null,
+            t("account.metadata.invalidJson"),
+          ),
+      }),
+    [t],
+  );
 
-    const namespace = newNamespace.trim();
-    const key = newKey.trim();
+  const addEntryForm = useForm({
+    defaultValues: {
+      namespace: "",
+      key: "",
+      value: "",
+    },
+    validators: {
+      onSubmit: addEntrySchema,
+    },
+    onSubmit: async ({ value }) => {
+      const namespace = value.namespace.trim();
+      const key = value.key.trim();
+      const parsedValue = parseJsonValue(value.value);
 
-    // Add to local state
-    setEntries((prev) => [
-      ...(prev ?? []),
-      {
-        id: generateId(),
-        namespace,
-        key,
-        value: newValue,
-      },
-    ]);
+      if (parsedValue === null) return;
 
-    // Clear form
-    setNewNamespace("");
-    setNewKey("");
-    setNewValue("");
+      if (isDuplicate(namespace, key)) {
+        toast.error(t("account.metadata.duplicateError"));
+        return;
+      }
 
-    // Send to server
-    addEntryMutation.mutate({ namespace, key, value: newValueParsed });
-  }, [
-    canAddEntry,
-    newNamespace,
-    newKey,
-    newValue,
-    newValueParsed,
-    addEntryMutation,
-  ]);
+      // Add to local state
+      setEntries((prev) => [
+        ...(prev ?? []),
+        {
+          id: generateId(),
+          namespace,
+          key,
+          value: value.value,
+        },
+      ]);
+
+      // Reset form
+      addEntryForm.reset();
+
+      // Send to server
+      addEntryMutation.mutate({ namespace, key, value: parsedValue });
+    },
+  });
 
   const handleUpdateEntry = useCallback(
     (
@@ -370,41 +383,58 @@ function DialogContentInner({
     <div className="flex flex-col gap-4">
       <Card>
         <CardHeader>
-          <div className="flex flex-row gap-2">
-            <Input
-              type="text"
-              value={newNamespace}
-              onChange={(e) => setNewNamespace(e.currentTarget.value)}
-              placeholder={t("account.metadata.namespacePlaceholder")}
-              className="flex-1"
-            />
-            <Input
-              type="text"
-              value={newKey}
-              onChange={(e) => setNewKey(e.currentTarget.value)}
-              placeholder={t("account.metadata.keyPlaceholder")}
-              className="flex-1"
-            />
-            <Input
-              type="text"
-              value={newValue}
-              onChange={(e) => setNewValue(e.currentTarget.value)}
-              placeholder={t("account.metadata.valuePlaceholder")}
-              className="flex-1 font-mono"
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && canAddEntry) {
-                  handleAddEntry();
-                }
-              }}
-            />
-            <Button
-              variant="outline"
-              onClick={handleAddEntry}
-              disabled={!canAddEntry || addEntryMutation.isPending}
-            >
-              <PlusIcon />
-            </Button>
-          </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              void addEntryForm.handleSubmit();
+            }}
+          >
+            <div className="flex flex-row gap-2">
+              <addEntryForm.Field name="namespace">
+                {(field) => (
+                  <Input
+                    type="text"
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.currentTarget.value)}
+                    placeholder={t("account.metadata.namespacePlaceholder")}
+                    className="flex-1"
+                  />
+                )}
+              </addEntryForm.Field>
+              <addEntryForm.Field name="key">
+                {(field) => (
+                  <Input
+                    type="text"
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.currentTarget.value)}
+                    placeholder={t("account.metadata.keyPlaceholder")}
+                    className="flex-1"
+                  />
+                )}
+              </addEntryForm.Field>
+              <addEntryForm.Field name="value">
+                {(field) => (
+                  <Input
+                    type="text"
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.currentTarget.value)}
+                    placeholder={t("account.metadata.valuePlaceholder")}
+                    className="flex-1 font-mono"
+                  />
+                )}
+              </addEntryForm.Field>
+              <Button
+                type="submit"
+                variant="outline"
+                disabled={addEntryMutation.isPending}
+              >
+                <PlusIcon />
+              </Button>
+            </div>
+          </form>
         </CardHeader>
         <CardContent className="flex max-h-64 flex-col gap-2 overflow-y-auto p-4 pt-0">
           {entries && entries.length === 0 && (

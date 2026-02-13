@@ -1,4 +1,5 @@
 import { useAptabase } from "@aptabase/react";
+import { useForm } from "@tanstack/react-form";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 import { downloadDir } from "@tauri-apps/api/path";
@@ -11,6 +12,7 @@ import type { ReactNode } from "react";
 import { use, useCallback, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { z } from "zod";
 import { SystemInfoContext } from "@/components/providers/system-info-context.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
@@ -22,6 +24,7 @@ import {
   CredenzaHeader,
   CredenzaTitle,
 } from "@/components/ui/credenza.tsx";
+import { Field, FieldError, FieldLabel } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
@@ -69,72 +72,105 @@ function UrlDialog(props: ImportDialogProps) {
     select: (context) => context.instanceInfoQueryOptions,
   });
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const [inputText, setInputText] = useState("");
   const { trackEvent } = useAptabase();
+
+  const urlSchema = z.object({
+    url: z.string().url(t("dialog.import.url.form.url.empty")),
+  });
+
+  const form = useForm({
+    defaultValues: {
+      url: "",
+    },
+    validators: {
+      onSubmit: urlSchema,
+    },
+    onSubmit: async ({ value }) => {
+      void trackEvent("import_from_url");
+
+      const download = async () => {
+        if (transport === null) {
+          return;
+        }
+
+        const service = new DownloadServiceClient(transport);
+        const { response } = await service.download({
+          instanceId: instanceInfo.id,
+          uri: value.url,
+          headers: [],
+        });
+
+        const decoder = new TextDecoder();
+        props.listener(decoder.decode(response.data));
+      };
+
+      toast.promise(download(), {
+        loading: t("dialog.import.url.toast.loading"),
+        success: t("dialog.import.url.toast.success"),
+        error: (e) => {
+          console.error(e);
+          return t("dialog.import.url.toast.error");
+        },
+      });
+    },
+  });
 
   return (
     <Credenza open={true} onOpenChange={props.closer}>
       <CredenzaContent>
-        <CredenzaHeader>
-          <CredenzaTitle>{props.title}</CredenzaTitle>
-          <CredenzaDescription>
-            {t("dialog.import.url.description")}
-          </CredenzaDescription>
-        </CredenzaHeader>
-        <CredenzaBody className="pb-4 md:pb-0">
-          <div className="flex flex-col gap-4">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            void form.handleSubmit();
+          }}
+        >
+          <CredenzaHeader>
+            <CredenzaTitle>{props.title}</CredenzaTitle>
+            <CredenzaDescription>
+              {t("dialog.import.url.description")}
+            </CredenzaDescription>
+          </CredenzaHeader>
+          <CredenzaBody className="pb-4 md:pb-0">
             <div className="flex flex-col gap-4">
-              <Input
-                autoFocus
-                placeholder={t("dialog.import.url.form.url.placeholder")}
-                defaultValue={inputText}
-                type="url"
-                inputMode="url"
-                onChange={(e) => setInputText(e.currentTarget.value)}
-              />
-              <Button
-                variant="secondary"
-                className="w-full"
-                onClick={() => {
-                  if (inputText === "") {
-                    toast.error(t("dialog.import.url.form.url.empty"));
-                    return;
-                  }
-
-                  void trackEvent("import_from_url");
-
-                  const download = async () => {
-                    if (transport === null) {
-                      return;
-                    }
-
-                    const service = new DownloadServiceClient(transport);
-                    const { response } = await service.download({
-                      instanceId: instanceInfo.id,
-                      uri: inputText,
-                      headers: [],
-                    });
-
-                    const decoder = new TextDecoder();
-                    props.listener(decoder.decode(response.data));
-                  };
-
-                  toast.promise(download(), {
-                    loading: t("dialog.import.url.toast.loading"),
-                    success: t("dialog.import.url.toast.success"),
-                    error: (e) => {
-                      console.error(e);
-                      return t("dialog.import.url.toast.error");
-                    },
-                  });
+              <form.Field name="url">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name} className="sr-only">
+                        {t("dialog.import.url.form.url.placeholder")}
+                      </FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        autoFocus
+                        placeholder={t(
+                          "dialog.import.url.form.url.placeholder",
+                        )}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) =>
+                          field.handleChange(e.currentTarget.value)
+                        }
+                        type="url"
+                        inputMode="url"
+                        aria-invalid={isInvalid}
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  );
                 }}
-              >
+              </form.Field>
+              <Button type="submit" variant="secondary" className="w-full">
                 <GlobeIcon />
                 <span>{t("dialog.import.url.submit")}</span>
               </Button>
             </div>
-          </div>
-        </CredenzaBody>
+          </CredenzaBody>
+        </form>
       </CredenzaContent>
     </Credenza>
   );
