@@ -3,8 +3,9 @@ use crate::utils::{
   detect_architecture, detect_os, extract_tar_gz, extract_zip, find_random_available_port, get_java_exec_name,
   get_java_home_dir, SFAnyError, SFError,
 };
+use jsonwebtoken::{encode, Algorithm, EncodingKey, Header};
 use log::info;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use sha2::Digest;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
@@ -17,6 +18,38 @@ use tauri_plugin_shell::ShellExt;
 pub struct IntegratedServerState {
     pub starting: Arc<AtomicBool>,
     pub child_process: Arc<Mutex<Option<Box<CommandChild>>>>,
+}
+
+const ROOT_USER_UUID: &str = "00000000-0000-0000-0000-000000000000";
+
+#[derive(Serialize, Deserialize)]
+struct JwtClaims {
+    sub: String,
+    iat: u64,
+    aud: Vec<String>,
+}
+
+/// Generate a JWT for the root user with the "api" audience,
+/// matching the format produced by the SoulFire server's AuthSystem.
+fn generate_root_api_token(secret_key: &[u8]) -> Result<String, SFAnyError> {
+    let now = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)?
+        .as_secs();
+
+    let claims = JwtClaims {
+        sub: ROOT_USER_UUID.to_string(),
+        iat: now,
+        aud: vec!["api".to_string()],
+    };
+
+    let token = encode(
+        &Header::new(Algorithm::HS256),
+        &claims,
+        &EncodingKey::from_secret(secret_key),
+    )
+    .map_err(|e| std::io::Error::new(std::io::ErrorKind::Other, e))?;
+
+    Ok(token)
 }
 
 #[tauri::command]
@@ -269,18 +302,18 @@ async fn internal_load_integrated_server(
             ),
         )
         .env("JAVA_HOME", java_home_dir)
-        .current_dir(soul_fire_rundir)
+        .current_dir(&soul_fire_rundir)
         .args(full_jvm_args);
 
-    let (mut rx, mut child) = command.spawn()?;
+    let (mut rx, child) = command.spawn()?;
 
-    // Print all rx messages
+    // Print all rx messages until server is ready
     while let Some(message) = rx.recv().await {
         if let Stdout(line) = message {
             let line = String::from_utf8_lossy(&line);
             let line = strip_ansi_escapes::strip_str(line);
             if line.contains("Finished loading!") {
-                send_log(&app_handle, "Generating token...")?;
+                send_log(&app_handle, "Server ready")?;
                 break;
             } else {
                 send_log(&app_handle, line)?;
@@ -288,22 +321,11 @@ async fn internal_load_integrated_server(
         }
     }
 
-    child.write("generate-token api\n".as_bytes())?;
-
-    let token: String = loop {
-        if let Some(message) = rx.recv().await {
-            if let Stdout(line) = message {
-                let line = String::from_utf8_lossy(&line);
-                if line.contains("JWT") {
-                    break line
-                        .split_whitespace()
-                        .last()
-                        .ok_or(SFError::JwtLineInvalid)?
-                        .to_string();
-                }
-            }
-        }
-    };
+    // Generate JWT directly from the secret key file instead of
+    // running a command via stdin, keeping the token out of logs
+    let secret_key_path = soul_fire_rundir.join("secret-key.bin");
+    let secret_key = std::fs::read(&secret_key_path)?;
+    let token = generate_root_api_token(&secret_key)?;
 
     integrated_server_state
         .child_process

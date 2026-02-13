@@ -26,7 +26,7 @@
     "preparing": "Preparing to start integrated server...",
     "toast": {
       "loading": "Starting integrated server...",
-      "success": "Integrated server started",
+      "success": "Integrated server started in {{time}}s",
       "error": "Failed to start integrated server"
     },
     "description": "The integrated server runs locally on your PC. Configure the Java startup arguments below if needed.",

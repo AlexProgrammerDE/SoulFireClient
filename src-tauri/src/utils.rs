@@ -11,8 +11,6 @@ pub enum SFError {
     InvalidJvmChecksum,
     #[error("json field was invalid/not found: {0}")]
     JsonFieldInvalid(String),
-    #[error("jwt line was invalid")]
-    JwtLineInvalid,
     #[error("path could not be converted to string")]
     PathCouldNotBeConverted,
     #[error("no content length header present")]

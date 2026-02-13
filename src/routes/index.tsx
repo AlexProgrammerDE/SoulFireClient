@@ -20,7 +20,7 @@ import {
   SatelliteDishIcon,
   ServerIcon,
 } from "lucide-react";
-import { use, useCallback, useEffect, useId, useState } from "react";
+import { use, useCallback, useEffect, useId, useRef, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -177,6 +177,7 @@ function Index() {
   );
 
   const startIntegratedServer = () => {
+    const startTime = Date.now();
     toast.promise(
       (async () => {
         await emit("kill-integrated-server", {});
@@ -193,10 +194,14 @@ function Index() {
         const split = payloadString.split("\n");
 
         await redirectWithCredentials("integrated", split[0], split[1]);
+        return Date.now() - startTime;
       })(),
       {
         loading: t("integrated.toast.loading"),
-        success: t("integrated.toast.success"),
+        success: (elapsed) =>
+          t("integrated.toast.success", {
+            time: (elapsed / 1000).toFixed(1),
+          }),
         error: (e) => {
           setLoginType(null);
           console.error(e);
@@ -622,15 +627,34 @@ function IntegratedConfigureMenu({
   );
 }
 
+function useElapsedSeconds() {
+  const [elapsed, setElapsed] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setElapsed((prev) => prev + 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+  return elapsed;
+}
+
 function IntegratedLoadingMenu() {
   const { t } = useTranslation("login");
-  const [latestLog, setLatestLog] = useState<string>(t("integrated.preparing"));
+  const [logs, setLogs] = useState<string[]>([t("integrated.preparing")]);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const elapsed = useElapsedSeconds();
 
   // Hook for loading the integrated server
   useEffect(() => {
     const cancel = cancellablePromiseDefault(
       listen("integrated-server-start-log", (event) => {
-        setLatestLog(event.payload as string);
+        setLogs((prev) => [...prev, event.payload as string]);
+        requestAnimationFrame(() => {
+          scrollRef.current?.scrollTo({
+            top: scrollRef.current.scrollHeight,
+            behavior: "smooth",
+          });
+        });
       }),
     );
     return () => {
@@ -640,14 +664,27 @@ function IntegratedLoadingMenu() {
 
   return (
     <Card>
-      <CardHeader className="text-center">
+      <CardHeader>
         <LoginCardTitle />
-        <CardDescription className="truncate break-all whitespace-pre-wrap">
-          {latestLog}
+        <CardDescription className="flex items-center justify-center gap-2">
+          <LoaderCircleIcon className="size-4 animate-spin" />
+          {t("integrated.toast.loading")}
+          <span className="tabular-nums text-muted-foreground">{elapsed}s</span>
         </CardDescription>
       </CardHeader>
-      <CardContent className="flex h-32 w-full">
-        <LoaderCircleIcon className="m-auto h-12 w-12 animate-spin" />
+      <CardContent>
+        <ScrollArea viewportRef={scrollRef} className="h-48">
+          <div className="flex flex-col gap-1">
+            {logs.map((log, index) => (
+              <p
+                key={`${index}-${log}`}
+                className="rounded-md bg-muted px-3 py-2 font-mono text-xs break-all"
+              >
+                {log}
+              </p>
+            ))}
+          </div>
+        </ScrollArea>
       </CardContent>
     </Card>
   );
