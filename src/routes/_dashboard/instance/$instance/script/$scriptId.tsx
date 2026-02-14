@@ -114,6 +114,8 @@ function ScriptEditorContent() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const executionAbortRef = useRef<AbortController | null>(null);
+  // Store dragged node type in a ref to avoid WebView2 dataTransfer issues
+  const draggedNodeTypeRef = useRef<string | null>(null);
 
   // Load script into store when data changes
   useEffect(() => {
@@ -425,6 +427,12 @@ function ScriptEditorContent() {
   }, []);
 
   // Handle drag & drop from palette
+  // Uses a ref instead of dataTransfer.getData() because WebView2 (Tauri on Windows)
+  // doesn't reliably support dataTransfer for internal drag-and-drop operations.
+  const handleNodeDragStart = useCallback((nodeType: string) => {
+    draggedNodeTypeRef.current = nodeType;
+  }, []);
+
   const handleDragOver = useCallback((event: React.DragEvent) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = "copy";
@@ -434,9 +442,8 @@ function ScriptEditorContent() {
     (event: React.DragEvent) => {
       event.preventDefault();
 
-      const nodeType = event.dataTransfer.getData(
-        "application/script-node-type",
-      );
+      const nodeType = draggedNodeTypeRef.current;
+      draggedNodeTypeRef.current = null;
       if (!nodeType) return;
 
       const definition = getDefinition(nodeType);
@@ -476,7 +483,7 @@ function ScriptEditorContent() {
       <ResizablePanelGroup orientation="horizontal" className="flex-1">
         {/* Left sidebar - Node Palette */}
         <ResizablePanel defaultSize={20} minSize="12.5rem" maxSize="25rem">
-          <NodePalette />
+          <NodePalette onNodeDragStart={handleNodeDragStart} />
         </ResizablePanel>
 
         <ResizableHandle withHandle />
