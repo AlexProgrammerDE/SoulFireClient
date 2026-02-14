@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Visuaaliset skriptit",
     "description": "Luo automaatioskriptejä visuaalisella solmupohjaisella editorilla.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Luo skripti",
     "createScriptTitle": "Luo uusi skripti",
     "createScriptDescription": "Luo uusi visuaalinen skripti tälle instanssille. Skriptit voivat automatisoida botin toimintoja ja reagoida tapahtumiin.",

@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Visual Scripts",
     "description": "Tạo script tự động hóa bằng trình chỉnh sửa dạng nút trực quan.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Tạo Script",
     "createScriptTitle": "Tạo Script Mới",
     "createScriptDescription": "Tạo một script trực quan mới cho phiên bản này. Script có thể tự động hóa hành động bot và phản hồi các sự kiện.",

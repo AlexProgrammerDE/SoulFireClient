@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Skrypty wizualne",
     "description": "Twórz skrypty automatyzacji za pomocą wizualnego edytora węzłów.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Utwórz skrypt",
     "createScriptTitle": "Utwórz nowy skrypt",
     "createScriptDescription": "Utwórz nowy skrypt wizualny dla tej instancji. Skrypty mogą automatyzować działania bota i reagować na zdarzenia.",

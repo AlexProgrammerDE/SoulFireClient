@@ -26,7 +26,7 @@
     "preparing": "Mempersiapkan untuk memulai server terintegrasi...",
     "toast": {
       "loading": "Memulai server terintegrasi...",
-      "success": "Server terintegrasi telah dimulai",
+      "success": "",
       "error": "Gagal memulai server terintegrasi"
     },
     "description": "Server terintegrasi berjalan secara lokal di PC Anda. Konfigurasikan argumen mulai Java di bawah ini jika diperlukan.",

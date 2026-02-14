@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Scripts visuels",
     "description": "Créez des scripts d'automatisation à l'aide d'un éditeur visuel basé sur des nœuds.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Créer un script",
     "createScriptTitle": "Créer un nouveau script",
     "createScriptDescription": "Créez un nouveau script visuel pour cette instance. Les scripts peuvent automatiser les actions du bot et réagir aux événements.",

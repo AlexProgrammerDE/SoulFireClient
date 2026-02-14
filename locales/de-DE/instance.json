@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Visuelle Skripte",
     "description": "Erstellen Sie Automatisierungsskripte mit einem visuellen, node-basierten Editor.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Skript erstellen",
     "createScriptTitle": "Neues Skript erstellen",
     "createScriptDescription": "Erstellen Sie ein neues visuelles Skript für diese Instanz. Skripte können Botaktionen automatisieren und auf Ereignisse reagieren.",

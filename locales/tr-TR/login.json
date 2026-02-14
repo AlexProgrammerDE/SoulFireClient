@@ -26,7 +26,7 @@
     "preparing": "Yerel sunucu başlatmaya hazırlanıyor...",
     "toast": {
       "loading": "Yerel sunucu başlatılıyor...",
-      "success": "Yerel sunucu başladı",
+      "success": "",
       "error": "Yerel sunucu başlatılamadı"
     },
     "description": "Entegre sunucu bilgisayarınızda yerel olarak çalışır. Gerekirse aşağıdan Java başlatma argümanlarını yapılandırın.",

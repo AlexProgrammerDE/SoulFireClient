@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Visuele scripts",
     "description": "Maak automatiseringsscripts met behulp van een visuele, op knooppunten gebaseerde editor.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Script aanmaken",
     "createScriptTitle": "Nieuw script aanmaken",
     "createScriptDescription": "Maak een nieuw visueel script voor deze instantie. Scripts kunnen botacties automatiseren en reageren op gebeurtenissen.",

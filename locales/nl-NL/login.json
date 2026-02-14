@@ -26,7 +26,7 @@
     "preparing": "Bezig met voorbereiden om geïntegreerde server te starten...",
     "toast": {
       "loading": "Geïntegreerde server wordt gestart...",
-      "success": "Geïntegreerde server gestart",
+      "success": "",
       "error": "Kan geïntegreerde server niet starten"
     },
     "description": "De geïntegreerde server draait lokaal op je pc. Stel indien nodig hieronder de Java-opstartargumenten in.",

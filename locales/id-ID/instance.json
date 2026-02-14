@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Skrip Visual",
     "description": "Buat skrip otomatisasi menggunakan editor node visual.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Buat Skrip",
     "createScriptTitle": "Buat Skrip Baru",
     "createScriptDescription": "Buat skrip visual baru untuk instance ini. Skrip dapat mengotomatisasi aksi bot dan merespons kejadian.",

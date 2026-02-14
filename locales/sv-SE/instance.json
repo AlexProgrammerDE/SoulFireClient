@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Visuella skript",
     "description": "Skapa automationsskript med en visuell nodbaserad editor.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Skapa skript",
     "createScriptTitle": "Skapa nytt skript",
     "createScriptDescription": "Skapa ett nytt visuellt skript för denna instans. Skript kan automatisera bottåtgärder och svara på händelser.",

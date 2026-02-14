@@ -282,6 +282,8 @@
   "scripts": {
     "title": "可视化脚本",
     "description": "使用可视化节点编辑器创建自动化脚本。",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "创建脚本",
     "createScriptTitle": "创建新脚本",
     "createScriptDescription": "为此实例创建新的可视化脚本。脚本可以自动化机器人操作并响应事件。",

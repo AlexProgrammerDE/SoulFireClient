@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Vizual Skriptlər",
     "description": "Vizual düyün əsaslı redaktor vasitəsi ilə avtomatlaşdırma skriptləri yaradın.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Skript Yarat",
     "createScriptTitle": "Yeni Skript Yarat",
     "createScriptDescription": "Bu instansiya üçün yeni vizual skript yaradın. Skriptlər bot fəaliyyətlərini avtomatlaşdıra və hadisələrə cavab verə bilər.",

@@ -26,7 +26,7 @@
     "preparing": "Preparando para iniciar el servidor integrado...",
     "toast": {
       "loading": "Iniciando servidor integrado...",
-      "success": "Servidor integrado iniciado",
+      "success": "",
       "error": "No se pudo iniciar el servidor integrado"
     },
     "description": "El servidor integrado se ejecuta localmente en tu PC. Configura los argumentos de inicio de Java abajo si es necesario.",

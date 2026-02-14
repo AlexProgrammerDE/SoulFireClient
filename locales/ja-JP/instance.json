@@ -282,6 +282,8 @@
   "scripts": {
     "title": "ビジュアルスクリプト",
     "description": "ビジュアルノードベースのエディターを使って自動化スクリプトを作成しましょう。",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "スクリプトを作成",
     "createScriptTitle": "新しいスクリプトを作成",
     "createScriptDescription": "このインスタンス用の新しいビジュアルスクリプトを作成します。スクリプトはボットの動作を自動化し、イベントに反応できます。",

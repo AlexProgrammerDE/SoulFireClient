@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Görsel Scriptler",
     "description": "Görsel bir düğüm tabanlı düzenleyici kullanarak otomasyon scriptleri oluşturun.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Script Oluştur",
     "createScriptTitle": "Yeni Script Oluştur",
     "createScriptDescription": "Bu örnek için yeni bir görsel script oluşturun. Scriptler, botun eylemlerini otomatikleştirebilir ve olaylara yanıt verebilir.",
