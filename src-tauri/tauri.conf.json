@@ -84,7 +84,7 @@
     "createUpdaterArtifacts": true,
     "android": {
       "minSdkVersion": 34,
-      "versionCode": 16
+      "versionCode": 17
     }
   },
   "plugins": {
