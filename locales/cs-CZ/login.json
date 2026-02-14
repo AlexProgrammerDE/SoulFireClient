@@ -26,7 +26,7 @@
     "preparing": "Připravuji spuštění integrovaného serveru...",
     "toast": {
       "loading": "Spouštění integrovaného serveru...",
-      "success": "Integrovaný server spuštěn",
+      "success": "",
       "error": "Nepodařilo se spustit integrovaný server"
     },
     "description": "Integrovaný server běží lokálně na vašem PC. Pokud je třeba, nastavte níže argumenty pro spuštění Javy.",

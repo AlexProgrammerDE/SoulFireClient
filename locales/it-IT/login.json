@@ -26,7 +26,7 @@
     "preparing": "Preparazione dell'avvio del server integrato...",
     "toast": {
       "loading": "Avvio del server integrato...",
-      "success": "Server integrato avviato",
+      "success": "",
       "error": "Avvio del server integrato non riuscito"
     },
     "description": "Il server integrato viene eseguito localmente sul tuo PC. Configura gli argomenti di avvio Java qui sotto se necessario.",

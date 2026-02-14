@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Scripts Visuais",
     "description": "Crie scripts automáticos usando um editor visual baseado em nós.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Criar Script",
     "createScriptTitle": "Criar Novo Script",
     "createScriptDescription": "Crie um novo script visual para esta instância. Scripts podem automatizar ações do bot e responder a eventos.",

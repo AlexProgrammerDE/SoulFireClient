@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Script Visuali",
     "description": "Crea script di automazione usando un editor visuale basato su nodi.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Crea Script",
     "createScriptTitle": "Crea Nuovo Script",
     "createScriptDescription": "Crea un nuovo script visuale per questa istanza. Gli script possono automatizzare le azioni del bot e rispondere agli eventi.",

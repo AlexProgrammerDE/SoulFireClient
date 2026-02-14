@@ -26,7 +26,7 @@
     "preparing": "İnteqrasiyalı serverin başlatmasına hazırlıq...",
     "toast": {
       "loading": "İnteqrasiyalı server başladılır...",
-      "success": "İnteqrasiyalı server başlatıldı",
+      "success": "",
       "error": "İnteqrasiyalı serveri başlatmaq mümkün olmadı"
     },
     "description": "İnteqrasiyalı server kompüterinizdə yerli olaraq işləyir. Lazım olarsa aşağıda Java başladılma arqumentlərini tənzimləyin.",

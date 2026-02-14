@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Vizuálne skripty",
     "description": "Vytvárajte automatizačné skripty použitím vizuálneho editora na základe uzlov.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Vytvoriť skript",
     "createScriptTitle": "Vytvoriť nový skript",
     "createScriptDescription": "Vytvorte nový vizuálny skript pre túto inštanciu. Skripty môžu automatizovať akcie bota a reagovať na udalosti.",

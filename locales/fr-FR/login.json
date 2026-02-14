@@ -26,7 +26,7 @@
     "preparing": "Préparation du démarrage du serveur intégré...",
     "toast": {
       "loading": "Démarrage du serveur intégré...",
-      "success": "Serveur intégré démarré",
+      "success": "",
       "error": "Échec du démarrage du serveur intégré"
     },
     "description": "Le serveur intégré s'exécute localement sur votre PC. Configurez les arguments de démarrage Java ci-dessous si nécessaire.",

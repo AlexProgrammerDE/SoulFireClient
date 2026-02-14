@@ -282,6 +282,8 @@
   "scripts": {
     "title": "สคริปต์แบบภาพ",
     "description": "สร้างสคริปต์อัตโนมัติด้วยตัวแก้ไขแบบโหนดภาพ",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "สร้างสคริปต์",
     "createScriptTitle": "สร้างสคริปต์ใหม่",
     "createScriptDescription": "สร้างสคริปต์ภาพใหม่สำหรับอินสแตนซ์นี้ สคริปต์สามารถทำให้อัตโนมัติและตอบสนองต่อเหตุการณ์",

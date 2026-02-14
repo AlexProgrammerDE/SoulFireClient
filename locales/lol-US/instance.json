@@ -282,6 +282,8 @@
   "scripts": {
     "title": "Vizhul Skriptz",
     "description": "Mak awtomaet skript using funneh nodez editor, kthx.",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "Make Skript",
     "createScriptTitle": "Make Nu Skript",
     "createScriptDescription": "Mak nub vizhul skript 4 diz instanz. Skriptz do teh bot stuf an respawn to evnts.",

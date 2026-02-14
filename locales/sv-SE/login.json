@@ -26,7 +26,7 @@
     "preparing": "Förbereder att starta integrerad server...",
     "toast": {
       "loading": "Startar integrerad server...",
-      "success": "Integrerad server startad",
+      "success": "",
       "error": "Misslyckades med att starta integrerad server"
     },
     "description": "Den integrerade servern körs lokalt på din dator. Konfigurera Java-startargumenten nedan om det behövs.",

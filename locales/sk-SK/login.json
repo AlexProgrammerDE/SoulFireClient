@@ -26,7 +26,7 @@
     "preparing": "Nepodarilo sa spustiť integrovaný server…...",
     "toast": {
       "loading": "...Spustenie integrovaného servera…...",
-      "success": "Spustený integrovaný server",
+      "success": "",
       "error": "Nepodarilo sa spustiť integrovaný server"
     },
     "description": "Integrovaný server beží lokálne na vašom PC. V prípade potreby nakonfigurujte nižšie uvedené spúšťacie argumenty Java.",

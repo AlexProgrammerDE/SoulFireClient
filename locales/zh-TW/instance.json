@@ -282,6 +282,8 @@
   "scripts": {
     "title": "視覺腳本",
     "description": "使用可視化節點編輯器建立自動化腳本。",
+    "experimentalTitle": "",
+    "experimentalWarning": "",
     "createScript": "建立腳本",
     "createScriptTitle": "建立新腳本",
     "createScriptDescription": "為此實例建立新的視覺腳本。腳本可自動化機器人行為並回應事件。",
