@@ -10,6 +10,7 @@ import type {
   Row,
 } from "@tanstack/react-table";
 import {
+  ClipboardCopyIcon,
   LogOutIcon,
   PencilIcon,
   PlusIcon,
@@ -22,6 +23,11 @@ import {
 import { use, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { ContextMenuPortal } from "@/components/context-menu-portal.tsx";
+import {
+  MenuItem,
+  MenuSeparator,
+} from "@/components/context-menu-primitives.tsx";
 import { DataTable } from "@/components/data-table/data-table.tsx";
 import {
   DataTableActionBar,
@@ -47,6 +53,8 @@ import type { Timestamp } from "@/generated/google/protobuf/timestamp";
 import { UserRole } from "@/generated/soulfire/common.ts";
 import { UserServiceClient } from "@/generated/soulfire/user.client.ts";
 import type { UserListResponse_User } from "@/generated/soulfire/user.ts";
+import { useContextMenu } from "@/hooks/use-context-menu.ts";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
 import i18n from "@/lib/i18n";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
@@ -403,9 +411,12 @@ function Users() {
 }
 
 function Content() {
+  const { t } = useTranslation("admin");
   const { usersQueryOptions, clientDataQueryOptions } = Route.useRouteContext();
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const { data: userList } = useSuspenseQuery(usersQueryOptions);
+  const transport = use(TransportContext);
+  const navigate = useNavigate();
   const { table } = useDataTable({
     data: userList.users,
     columns,
@@ -413,11 +424,16 @@ function Content() {
       row.original.id !== ROOT_USER_ID && row.original.id !== clientInfo.id,
     getRowId: (row) => row.id,
   });
+  const { contextMenu, handleContextMenu, dismiss, menuRef } =
+    useContextMenu<UserListResponse_User>();
+  const copyToClipboard = useCopyToClipboard();
+  const [editUser, setEditUser] = useState<UserListResponse_User | null>(null);
 
   return (
     <div className="container flex h-full w-full grow flex-col gap-4">
       <DataTable
         table={table}
+        onRowContextMenu={handleContextMenu}
         actionBar={
           <DataTableActionBar table={table}>
             <ExtraHeader table={table} />
@@ -429,6 +445,64 @@ function Content() {
           <AddButton />
         </DataTableToolbar>
       </DataTable>
+      {contextMenu && (
+        <ContextMenuPortal
+          x={contextMenu.position.x}
+          y={contextMenu.position.y}
+          menuRef={menuRef}
+        >
+          <MenuItem
+            onClick={() => {
+              setEditUser(contextMenu.data);
+              dismiss();
+            }}
+          >
+            <PencilIcon />
+            {t("users.contextMenu.editUser")}
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              runAsync(async () => {
+                if (transport === null) return;
+                const userService = new UserServiceClient(transport);
+                const token = await userService.generateUserAPIToken({
+                  id: contextMenu.data.id,
+                });
+                startImpersonation(token.response.token);
+                await navigate({
+                  to: "/user",
+                  replace: true,
+                  reloadDocument: true,
+                });
+              });
+              dismiss();
+            }}
+          >
+            <VenetianMaskIcon />
+            {t("users.contextMenu.impersonate")}
+          </MenuItem>
+          <MenuSeparator />
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(contextMenu.data.id);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {t("users.contextMenu.copyUserId")}
+          </MenuItem>
+        </ContextMenuPortal>
+      )}
+      {editUser && (
+        <ManageUserDialog
+          mode="edit"
+          user={editUser}
+          open={true}
+          setOpen={(open) => {
+            if (!open) setEditUser(null);
+          }}
+        />
+      )}
     </div>
   );
 }

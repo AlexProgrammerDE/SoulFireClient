@@ -3,6 +3,10 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import {
+  ContextMenuContainer,
+  MenuItem,
+} from "@/components/context-menu-primitives.tsx";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { openExternalUrl, uploadToMcLogs } from "@/lib/utils.tsx";
 
@@ -23,9 +27,6 @@ function hasSelectTextAncestor(element: Element | null): boolean {
   return false;
 }
 
-const MENU_ITEM_CLASS =
-  "hover:bg-accent hover:text-accent-foreground flex w-full cursor-default items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden select-none";
-
 export function CustomContextMenu() {
   const [menu, setMenu] = useState<MenuPosition | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -36,6 +37,13 @@ export function CustomContextMenu() {
 
   useEffect(() => {
     function onContextMenu(e: MouseEvent) {
+      if (
+        "__entityContextMenu" in e &&
+        (e as MouseEvent & { __entityContextMenu?: boolean })
+          .__entityContextMenu
+      )
+        return;
+
       e.preventDefault();
 
       const target = e.target as Element | null;
@@ -94,14 +102,12 @@ export function CustomContextMenu() {
   if (!menu) return null;
 
   return createPortal(
-    <div
-      ref={menuRef}
-      className="bg-popover text-popover-foreground ring-foreground/10 animate-in fade-in-0 zoom-in-95 fixed z-50 min-w-32 rounded-md p-1 shadow-md ring-1 duration-100"
+    <ContextMenuContainer
+      menuRef={menuRef}
+      className="fixed z-50 duration-100"
       style={{ left: menu.x, top: menu.y }}
     >
-      <button
-        type="button"
-        className={MENU_ITEM_CLASS}
+      <MenuItem
         onClick={() => {
           copyToClipboard(menu.text);
           dismiss();
@@ -109,10 +115,8 @@ export function CustomContextMenu() {
       >
         <ClipboardCopyIcon className="size-4" />
         {t("copyToClipboard")}
-      </button>
-      <button
-        type="button"
-        className={MENU_ITEM_CLASS}
+      </MenuItem>
+      <MenuItem
         onClick={() => {
           toast.promise(
             uploadToMcLogs(menu.text).then((response) => {
@@ -133,10 +137,8 @@ export function CustomContextMenu() {
       >
         <CloudUploadIcon className="size-4" />
         {t("uploadToMcLogs")}
-      </button>
-      <button
-        type="button"
-        className={MENU_ITEM_CLASS}
+      </MenuItem>
+      <MenuItem
         onClick={() => {
           openExternalUrl(
             `https://www.google.com/search?q=${encodeURIComponent(menu.text)}`,
@@ -146,8 +148,8 @@ export function CustomContextMenu() {
       >
         <SearchIcon className="size-4" />
         {t("searchWithGoogle")}
-      </button>
-    </div>,
+      </MenuItem>
+    </ContextMenuContainer>,
     document.body,
   );
 }

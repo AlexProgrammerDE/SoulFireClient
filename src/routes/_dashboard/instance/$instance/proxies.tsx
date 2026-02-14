@@ -7,6 +7,7 @@ import {
 import { createFileRoute } from "@tanstack/react-router";
 import type { ColumnDef, Table as ReactTable } from "@tanstack/react-table";
 import {
+  ClipboardCopyIcon,
   Dice4Icon,
   Dice5Icon,
   GlobeIcon,
@@ -20,6 +21,11 @@ import { use, useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { type ExternalToast, toast } from "sonner";
 import URI from "urijs";
+import { ContextMenuPortal } from "@/components/context-menu-portal.tsx";
+import {
+  MenuItem,
+  MenuSeparator,
+} from "@/components/context-menu-primitives.tsx";
 import { DataTable } from "@/components/data-table/data-table.tsx";
 import {
   DataTableActionBar,
@@ -63,6 +69,8 @@ import {
 import type { SettingsPage } from "@/generated/soulfire/common";
 import { ProxyProto_Type } from "@/generated/soulfire/common.ts";
 import { ProxyCheckServiceClient } from "@/generated/soulfire/proxy-check.client.ts";
+import { useContextMenu } from "@/hooks/use-context-menu.ts";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
 import i18n from "@/lib/i18n.ts";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
@@ -704,16 +712,48 @@ function ProxySettings() {
 }
 
 function Content() {
+  const { t } = useTranslation("instance");
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { data: profile } = useSuspenseQuery({
     ...instanceInfoQueryOptions,
     select: (info) => info.profile,
   });
+  const transport = use(TransportContext);
+  const queryClient = useQueryClient();
   const { table } = useDataTable({
     data: profile.proxies,
     columns,
     getRowId: (row) => getProxyKey(row),
+  });
+  const { contextMenu, handleContextMenu, dismiss, menuRef } =
+    useContextMenu<ProfileProxy>();
+  const copyToClipboard = useCopyToClipboard();
+
+  const { mutate: removeProxyMutation } = useMutation({
+    mutationKey: ["instance", "proxies", "remove-single", instanceInfo.id],
+    scope: { id: `instance-proxies-${instanceInfo.id}` },
+    mutationFn: async (address: string) => {
+      await removeInstanceProxiesBatch(
+        [address],
+        instanceInfo,
+        transport,
+        queryClient,
+        instanceInfoQueryOptions.queryKey,
+      );
+    },
+    onSuccess: () => {
+      toast.success(t("proxy.removeToast.success", { count: 1 }));
+    },
+    onError: (e) => {
+      console.error(e);
+      toast.error(t("proxy.removeToast.error"));
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: instanceInfoQueryOptions.queryKey,
+      });
+    },
   });
 
   return (
@@ -730,6 +770,7 @@ function Content() {
       </div>
       <DataTable
         table={table}
+        onRowContextMenu={handleContextMenu}
         actionBar={
           <DataTableActionBar table={table}>
             <ExtraHeader table={table} />
@@ -742,6 +783,34 @@ function Content() {
           <AddButton />
         </DataTableToolbar>
       </DataTable>
+      {contextMenu && (
+        <ContextMenuPortal
+          x={contextMenu.position.x}
+          y={contextMenu.position.y}
+          menuRef={menuRef}
+        >
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(contextMenu.data.address);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {t("proxy.contextMenu.copyAddress")}
+          </MenuItem>
+          <MenuSeparator />
+          <MenuItem
+            variant="destructive"
+            onClick={() => {
+              removeProxyMutation(contextMenu.data.address);
+              dismiss();
+            }}
+          >
+            <TrashIcon />
+            {t("proxy.contextMenu.deleteProxy")}
+          </MenuItem>
+        </ContextMenuPortal>
+      )}
     </div>
   );
 }

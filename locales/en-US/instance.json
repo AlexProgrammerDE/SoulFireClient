@@ -46,7 +46,11 @@
       "searchPasswords": "Search passwords..."
     },
     "removeSelectedTooltip": "Remove selected proxies",
-    "checkSelectedTooltip": "Check selected proxies"
+    "checkSelectedTooltip": "Check selected proxies",
+    "contextMenu": {
+      "copyAddress": "Copy Address",
+      "deleteProxy": "Delete Proxy"
+    }
   },
   "account": {
     "getAccounts": "Get Accounts",
@@ -114,6 +118,11 @@
       "actions": "Actions"
     },
     "removeSelectedTooltip": "Remove selected accounts",
+    "contextMenu": {
+      "openConfig": "Open Config",
+      "openMetadata": "Open Metadata",
+      "copyProfileId": "Copy Profile ID"
+    },
     "config": {
       "title": "Configure {{name}}",
       "description": "Configure per-bot settings for this account",
@@ -329,6 +338,12 @@
     "nodeStarted": "Node started: {{nodeId}}",
     "nodeCompleted": "Node completed: {{nodeId}}",
     "nodeError": "Node error: {{error}}",
+    "contextMenu": {
+      "edit": "Edit Script",
+      "pause": "Pause",
+      "resume": "Resume",
+      "delete": "Delete Script"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Back to Scripts",

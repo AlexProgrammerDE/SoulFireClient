@@ -18,6 +18,11 @@ import { Suspense, use, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { z } from "zod";
+import { ContextMenuPortal } from "@/components/context-menu-portal.tsx";
+import {
+  MenuItem,
+  MenuSeparator,
+} from "@/components/context-menu-primitives.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert.tsx";
@@ -44,6 +49,7 @@ import { Input } from "@/components/ui/input.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
 import type { ScriptInfo } from "@/generated/soulfire/script";
 import { ScriptServiceClient } from "@/generated/soulfire/script.client";
+import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { scriptListQueryOptions } from "@/lib/script-service.ts";
 
 const createScriptSchema = z.object({
@@ -208,6 +214,9 @@ function Content() {
     },
   });
 
+  const { contextMenu, handleContextMenu, dismiss, menuRef } =
+    useContextMenu<ScriptInfo>();
+
   const handleDeleteScript = (scriptId: string) => {
     deleteMutation.mutate(scriptId);
   };
@@ -368,10 +377,56 @@ function Content() {
                   handleTogglePaused(script.id, isPaused)
                 }
                 isDeleting={deleteMutation.isPending}
+                onContextMenu={(e) => handleContextMenu(e, script)}
               />
             </Suspense>
           ))}
         </div>
+      )}
+      {contextMenu && (
+        <ContextMenuPortal
+          x={contextMenu.position.x}
+          y={contextMenu.position.y}
+          menuRef={menuRef}
+        >
+          <MenuItem
+            onClick={() => {
+              void navigate({
+                to: "/instance/$instance/script/$scriptId",
+                params: {
+                  instance: instanceId,
+                  scriptId: contextMenu.data.id,
+                },
+              });
+              dismiss();
+            }}
+          >
+            <EditIcon />
+            {tInstance("scripts.contextMenu.edit")}
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              handleTogglePaused(contextMenu.data.id, contextMenu.data.paused);
+              dismiss();
+            }}
+          >
+            {contextMenu.data.paused ? <PlayIcon /> : <SquareIcon />}
+            {contextMenu.data.paused
+              ? tInstance("scripts.contextMenu.resume")
+              : tInstance("scripts.contextMenu.pause")}
+          </MenuItem>
+          <MenuSeparator />
+          <MenuItem
+            variant="destructive"
+            onClick={() => {
+              handleDeleteScript(contextMenu.data.id);
+              dismiss();
+            }}
+          >
+            <Trash2Icon />
+            {tInstance("scripts.contextMenu.delete")}
+          </MenuItem>
+        </ContextMenuPortal>
       )}
     </div>
   );
@@ -445,6 +500,7 @@ interface ScriptCardProps {
   onDelete: () => void;
   onTogglePaused: (isPaused: boolean) => void;
   isDeleting: boolean;
+  onContextMenu: (e: React.MouseEvent) => void;
 }
 
 function ScriptCard({
@@ -453,6 +509,7 @@ function ScriptCard({
   onDelete,
   onTogglePaused,
   isDeleting,
+  onContextMenu,
 }: ScriptCardProps) {
   const { t: tInstance } = useTranslation("instance");
 
@@ -480,7 +537,10 @@ function ScriptCard({
   };
 
   return (
-    <Card className="group relative transition-colors hover:bg-muted/50">
+    <Card
+      className="group relative transition-colors hover:bg-muted/50"
+      onContextMenu={onContextMenu}
+    >
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2">

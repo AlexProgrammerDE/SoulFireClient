@@ -8,6 +8,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type { ColumnDef, Table as ReactTable } from "@tanstack/react-table";
 import {
   BracesIcon,
+  ClipboardCopyIcon,
   KeyRoundIcon,
   MonitorSmartphoneIcon,
   PlusIcon,
@@ -22,6 +23,11 @@ import {
 import { use, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { type ExternalToast, toast } from "sonner";
+import { ContextMenuPortal } from "@/components/context-menu-portal.tsx";
+import {
+  MenuItem,
+  MenuSeparator,
+} from "@/components/context-menu-primitives.tsx";
 import { DataTable } from "@/components/data-table/data-table.tsx";
 import {
   DataTableActionBar,
@@ -69,6 +75,8 @@ import {
   MinecraftAccountProto_AccountTypeProto,
 } from "@/generated/soulfire/common.ts";
 import { MCAuthServiceClient } from "@/generated/soulfire/mc-auth.client.ts";
+import { useContextMenu } from "@/hooks/use-context-menu.ts";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
 import i18n from "@/lib/i18n";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
@@ -854,6 +862,7 @@ function AccountSettings() {
 }
 
 function Content() {
+  const { t } = useTranslation("instance");
   const { instanceInfoQueryOptions } = Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { data: profile } = useSuspenseQuery({
@@ -865,6 +874,15 @@ function Content() {
     columns,
     getRowId: (row) => row.profileId,
   });
+  const { contextMenu, handleContextMenu, dismiss, menuRef } =
+    useContextMenu<ProfileAccount>();
+  const copyToClipboard = useCopyToClipboard();
+  const [configAccount, setConfigAccount] = useState<ProfileAccount | null>(
+    null,
+  );
+  const [metadataAccount, setMetadataAccount] = useState<ProfileAccount | null>(
+    null,
+  );
 
   return (
     <div className="container flex h-full w-full grow flex-col gap-4">
@@ -880,6 +898,7 @@ function Content() {
       </div>
       <DataTable
         table={table}
+        onRowContextMenu={handleContextMenu}
         actionBar={
           <DataTableActionBar table={table}>
             <ExtraHeader table={table} />
@@ -893,6 +912,60 @@ function Content() {
           <AddButton />
         </DataTableToolbar>
       </DataTable>
+      {contextMenu && (
+        <ContextMenuPortal
+          x={contextMenu.position.x}
+          y={contextMenu.position.y}
+          menuRef={menuRef}
+        >
+          <MenuItem
+            onClick={() => {
+              setConfigAccount(contextMenu.data);
+              dismiss();
+            }}
+          >
+            <SettingsIcon />
+            {t("account.contextMenu.openConfig")}
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              setMetadataAccount(contextMenu.data);
+              dismiss();
+            }}
+          >
+            <BracesIcon />
+            {t("account.contextMenu.openMetadata")}
+          </MenuItem>
+          <MenuSeparator />
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(contextMenu.data.profileId);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {t("account.contextMenu.copyProfileId")}
+          </MenuItem>
+        </ContextMenuPortal>
+      )}
+      {configAccount && (
+        <AccountConfigDialog
+          account={configAccount}
+          open={true}
+          onOpenChange={(open) => {
+            if (!open) setConfigAccount(null);
+          }}
+        />
+      )}
+      {metadataAccount && (
+        <AccountMetadataDialog
+          account={metadataAccount}
+          open={true}
+          onOpenChange={(open) => {
+            if (!open) setMetadataAccount(null);
+          }}
+        />
+      )}
     </div>
   );
 }

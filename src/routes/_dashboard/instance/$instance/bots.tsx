@@ -4,8 +4,10 @@ import {
   useSuspenseInfiniteQuery,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
+  ClipboardCopyIcon,
+  ExternalLinkIcon,
   KeyRoundIcon,
   LoaderCircleIcon,
   MapPinIcon,
@@ -17,6 +19,11 @@ import {
 import { parseAsString, useQueryState } from "nuqs";
 import { Suspense, useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
+import { ContextMenuPortal } from "@/components/context-menu-portal.tsx";
+import {
+  MenuItem,
+  MenuSeparator,
+} from "@/components/context-menu-primitives.tsx";
 import { LoadingComponent } from "@/components/loading-component.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
@@ -33,6 +40,8 @@ import type {
   BotListResponse,
 } from "@/generated/soulfire/bot.ts";
 import { MinecraftAccountProto_AccountTypeProto } from "@/generated/soulfire/common.ts";
+import { useContextMenu } from "@/hooks/use-context-menu.ts";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { simpleSearchValidateSearch } from "@/lib/parsers.ts";
 import {
   getEnumKeyByValue,
@@ -208,11 +217,16 @@ function OnlineCountBadge() {
 }
 
 function BotGrid({ search }: { search: string }) {
+  const { t: tCommon } = useTranslation("common");
   const { t } = useTranslation("instance");
+  const navigate = useNavigate();
   const { instanceInfoQueryOptions, botStatusQueryOptions } =
     Route.useRouteContext();
   const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
   const { data: botStatus } = useSuspenseQuery(botStatusQueryOptions);
+  const { contextMenu, handleContextMenu, dismiss, menuRef } =
+    useContextMenu<BotWithStatus>();
+  const copyToClipboard = useCopyToClipboard();
 
   // Create status map for quick lookup
   const statusMap = useMemo(() => {
@@ -316,7 +330,12 @@ function BotGrid({ search }: { search: string }) {
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {botsWithStatus.map((bot) => (
-          <BotCard key={bot.profileId} bot={bot} instanceId={instanceInfo.id} />
+          <BotCard
+            key={bot.profileId}
+            bot={bot}
+            instanceId={instanceInfo.id}
+            onContextMenu={(e) => handleContextMenu(e, bot)}
+          />
         ))}
       </div>
 
@@ -340,6 +359,39 @@ function BotGrid({ search }: { search: string }) {
           </span>
         ) : null}
       </div>
+      {contextMenu && (
+        <ContextMenuPortal
+          x={contextMenu.position.x}
+          y={contextMenu.position.y}
+          menuRef={menuRef}
+        >
+          <MenuItem
+            onClick={() => {
+              void navigate({
+                to: "/instance/$instance/bot/$botId",
+                params: {
+                  instance: instanceInfo.id,
+                  botId: contextMenu.data.profileId,
+                },
+              });
+              dismiss();
+            }}
+          >
+            <ExternalLinkIcon />
+            {tCommon("contextMenu.bot.goToBot")}
+          </MenuItem>
+          <MenuSeparator />
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(contextMenu.data.lastKnownName);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {tCommon("contextMenu.bot.copyUsername")}
+          </MenuItem>
+        </ContextMenuPortal>
+      )}
     </>
   );
 }
@@ -355,9 +407,11 @@ function getHeadUrl(skinTextureHash?: string): string {
 function BotCard({
   bot,
   instanceId,
+  onContextMenu,
 }: {
   bot: BotWithStatus;
   instanceId: string;
+  onContextMenu: (e: React.MouseEvent) => void;
 }) {
   const typeKey = getEnumKeyByValue(
     MinecraftAccountProto_AccountTypeProto,
@@ -370,6 +424,7 @@ function BotCard({
     <Link
       to="/instance/$instance/bot/$botId"
       params={{ instance: instanceId, botId: bot.profileId }}
+      onContextMenu={onContextMenu}
     >
       <Card className="hover:bg-muted/50 h-full cursor-pointer transition-colors">
         <CardHeader className="pb-2">

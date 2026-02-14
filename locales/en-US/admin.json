@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Search min issued ats..."
     },
     "removeSelectedTooltip": "Remove selected users",
-    "logOutSelectedTooltip": "Log out selected users"
+    "logOutSelectedTooltip": "Log out selected users",
+    "contextMenu": {
+      "editUser": "Edit User",
+      "impersonate": "Impersonate",
+      "copyUserId": "Copy User ID"
+    }
   }
 }

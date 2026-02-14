@@ -1,14 +1,38 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, useRouteContext } from "@tanstack/react-router";
-import { PlusIcon, SearchXIcon } from "lucide-react";
+import {
+  useMutation,
+  useQueryClient,
+  useSuspenseQuery,
+} from "@tanstack/react-query";
+import {
+  createFileRoute,
+  Link,
+  useNavigate,
+  useRouteContext,
+} from "@tanstack/react-router";
+import {
+  ExternalLinkIcon,
+  PlusIcon,
+  SearchXIcon,
+  TrashIcon,
+} from "lucide-react";
 import { use } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
+import { ContextMenuPortal } from "@/components/context-menu-portal.tsx";
+import {
+  MenuItem,
+  MenuSeparator,
+} from "@/components/context-menu-primitives.tsx";
 import { CreateInstanceContext } from "@/components/dialog/create-instance-dialog.tsx";
 import DynamicIcon from "@/components/dynamic-icon.tsx";
 import UserPageLayout from "@/components/nav/user/user-page-layout.tsx";
+import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card.tsx";
 import { GlobalPermission } from "@/generated/soulfire/common.ts";
+import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
+import type { InstanceListResponse_Instance } from "@/generated/soulfire/instance.ts";
+import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { translateInstanceState } from "@/lib/types.ts";
 import { hasGlobalPermission } from "@/lib/utils.tsx";
 
@@ -30,6 +54,37 @@ function Content() {
   const { t, i18n } = useTranslation("common");
   const { instanceListQueryOptions } = Route.useRouteContext();
   const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
+  const navigate = useNavigate();
+  const transport = use(TransportContext);
+  const queryClient = useQueryClient();
+  const { contextMenu, handleContextMenu, dismiss, menuRef } =
+    useContextMenu<InstanceListResponse_Instance>();
+
+  const deleteMutation = useMutation({
+    mutationKey: ["instance", "delete"],
+    mutationFn: async (instanceId: string) => {
+      if (transport === null) return;
+      const instanceService = new InstanceServiceClient(transport);
+      const promise = instanceService
+        .deleteInstance({ id: instanceId })
+        .then((r) => r.response);
+      toast.promise(promise, {
+        loading: t("instanceSidebar.deleteToast.loading"),
+        success: t("instanceSidebar.deleteToast.success"),
+        error: (e) => {
+          console.error(e);
+          return t("instanceSidebar.deleteToast.error");
+        },
+      });
+      return promise;
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: instanceListQueryOptions.queryKey,
+      });
+    },
+  });
+
   return (
     <>
       {instanceList.instances.length === 0 ? (
@@ -53,6 +108,7 @@ function Content() {
               params={{ instance: instance.id }}
               search={{}}
               className="max-h-fit w-full"
+              onContextMenu={(e) => handleContextMenu(e, instance)}
             >
               <Card className="flex w-full flex-row items-center gap-4 px-6">
                 <div className="shrink-0 pr-0">
@@ -80,6 +136,37 @@ function Content() {
             </Link>
           ))}
         </div>
+      )}
+      {contextMenu && (
+        <ContextMenuPortal
+          x={contextMenu.position.x}
+          y={contextMenu.position.y}
+          menuRef={menuRef}
+        >
+          <MenuItem
+            onClick={() => {
+              void navigate({
+                to: "/instance/$instance",
+                params: { instance: contextMenu.data.id },
+              });
+              dismiss();
+            }}
+          >
+            <ExternalLinkIcon />
+            {t("contextMenu.instance.goToInstance")}
+          </MenuItem>
+          <MenuSeparator />
+          <MenuItem
+            variant="destructive"
+            onClick={() => {
+              deleteMutation.mutate(contextMenu.data.id);
+              dismiss();
+            }}
+          >
+            <TrashIcon />
+            {t("contextMenu.instance.deleteInstance")}
+          </MenuItem>
+        </ContextMenuPortal>
       )}
     </>
   );

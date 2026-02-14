@@ -4,10 +4,16 @@ import {
   useQueryClient,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { Link, useRouteContext } from "@tanstack/react-router";
+import { Link, useNavigate, useRouteContext } from "@tanstack/react-router";
+import { ExternalLinkIcon, PowerIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { use, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { ContextMenuPortal } from "@/components/context-menu-portal.tsx";
+import {
+  MenuItem,
+  MenuSeparator,
+} from "@/components/context-menu-primitives.tsx";
 import { ExternalLink } from "@/components/external-link.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
@@ -23,6 +29,7 @@ import type {
   SettingsDefinition,
   SettingsPage,
 } from "@/generated/soulfire/common.ts";
+import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import type { BaseSettings } from "@/lib/types.ts";
 import {
   getSettingValue,
@@ -37,53 +44,91 @@ function PluginInfoCardContent(props: {
   link: ReactNode;
   enabledValue: boolean;
   onEnabledChange: (value: boolean) => void;
+  settingsUrl: string;
 }) {
   const { t } = useTranslation("common");
+  const navigate = useNavigate();
+  const { contextMenu, handleContextMenu, dismiss, menuRef } =
+    useContextMenu<null>();
 
   return (
-    <Card className="container">
-      <CardHeader>
-        <div className="flex flex-row items-center justify-between gap-2">
-          {props.link}
-          <Switch
-            checked={props.enabledValue}
-            onCheckedChange={props.onEnabledChange}
-          />
-        </div>
-        <CardDescription className="whitespace-pre-line">
-          {props.plugin.description}
-        </CardDescription>
-        <div className="mt-2 flex flex-wrap gap-2">
-          <Badge variant="secondary">
-            {t("pluginCard.version", {
-              version: props.plugin.version,
-            })}
-          </Badge>
-          <Badge variant="secondary">
-            {t("pluginCard.author", {
-              author: props.plugin.author,
-            })}
-          </Badge>
-          <Badge variant="secondary">
-            {t("pluginCard.license", {
-              license: props.plugin.license,
-            })}
-          </Badge>
-          {props.plugin.website && (
-            <ExternalLink
-              href={props.plugin.website}
-              className="inline-flex items-center"
-            >
-              <Badge variant="secondary">
-                {t("pluginCard.website", {
-                  website: props.plugin.website,
-                })}
-              </Badge>
-            </ExternalLink>
-          )}
-        </div>
-      </CardHeader>
-    </Card>
+    <>
+      <Card
+        className="container"
+        onContextMenu={(e) => handleContextMenu(e, null)}
+      >
+        <CardHeader>
+          <div className="flex flex-row items-center justify-between gap-2">
+            {props.link}
+            <Switch
+              checked={props.enabledValue}
+              onCheckedChange={props.onEnabledChange}
+            />
+          </div>
+          <CardDescription className="whitespace-pre-line">
+            {props.plugin.description}
+          </CardDescription>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <Badge variant="secondary">
+              {t("pluginCard.version", {
+                version: props.plugin.version,
+              })}
+            </Badge>
+            <Badge variant="secondary">
+              {t("pluginCard.author", {
+                author: props.plugin.author,
+              })}
+            </Badge>
+            <Badge variant="secondary">
+              {t("pluginCard.license", {
+                license: props.plugin.license,
+              })}
+            </Badge>
+            {props.plugin.website && (
+              <ExternalLink
+                href={props.plugin.website}
+                className="inline-flex items-center"
+              >
+                <Badge variant="secondary">
+                  {t("pluginCard.website", {
+                    website: props.plugin.website,
+                  })}
+                </Badge>
+              </ExternalLink>
+            )}
+          </div>
+        </CardHeader>
+      </Card>
+      {contextMenu && (
+        <ContextMenuPortal
+          x={contextMenu.position.x}
+          y={contextMenu.position.y}
+          menuRef={menuRef}
+        >
+          <MenuItem
+            onClick={() => {
+              props.onEnabledChange(!props.enabledValue);
+              dismiss();
+            }}
+          >
+            <PowerIcon />
+            {props.enabledValue
+              ? t("contextMenu.plugin.disable")
+              : t("contextMenu.plugin.enable")}
+          </MenuItem>
+          <MenuSeparator />
+          <MenuItem
+            onClick={() => {
+              void navigate({ to: props.settingsUrl });
+              dismiss();
+            }}
+          >
+            <ExternalLinkIcon />
+            {t("contextMenu.plugin.openSettings")}
+          </MenuItem>
+        </ContextMenuPortal>
+      )}
+    </>
   );
 }
 
@@ -179,6 +224,7 @@ export function PluginInfoCard(props: {
       plugin={props.plugin}
       enabledValue={enabledValue}
       onEnabledChange={setEnabledMutation.mutate}
+      settingsUrl={`/instance/${instanceInfo.id}/settings/${props.settingsEntry.id}`}
       link={
         <Link
           to="/instance/$instance/settings/$pageId"
@@ -244,6 +290,7 @@ export function ServerPluginInfoCard(props: {
       plugin={props.plugin}
       enabledValue={enabledValue}
       onEnabledChange={setEnabledMutation.mutate}
+      settingsUrl={`/user/admin/settings/${props.settingsEntry.id}`}
       link={
         <Link
           to="/user/admin/settings/$pageId"

@@ -515,5 +515,20 @@
     },
     "globalScript": "Global",
     "instanceScript": "Instance"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "Go to Instance",
+      "deleteInstance": "Delete Instance"
+    },
+    "bot": {
+      "goToBot": "Go to Bot",
+      "copyUsername": "Copy Username"
+    },
+    "plugin": {
+      "enable": "Enable",
+      "disable": "Disable",
+      "openSettings": "Open Settings"
+    }
   }
 }

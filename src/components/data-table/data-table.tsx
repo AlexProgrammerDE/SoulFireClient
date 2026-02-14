@@ -15,11 +15,13 @@ import { cn } from "@/lib/utils";
 interface DataTableProps<TData> extends React.ComponentProps<"div"> {
   table: TanstackTable<TData>;
   actionBar?: React.ReactNode;
+  onRowContextMenu?: (e: React.MouseEvent, row: TData) => void;
 }
 
 export function DataTable<TData>({
   table,
   actionBar,
+  onRowContextMenu,
   children,
   className,
   ...props
@@ -60,6 +62,11 @@ export function DataTable<TData>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onContextMenu={
+                    onRowContextMenu
+                      ? (e) => onRowContextMenu(e, row.original)
+                      : undefined
+                  }
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell
