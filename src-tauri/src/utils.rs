@@ -9,6 +9,8 @@ use std::sync::Arc;
 pub enum SFError {
     #[error("checksum of downloaded jvm data does not match")]
     InvalidJvmChecksum,
+    #[error("checksum of downloaded jar data does not match")]
+    InvalidJarChecksum,
     #[error("json field was invalid/not found: {0}")]
     JsonFieldInvalid(String),
     #[error("path could not be converted to string")]

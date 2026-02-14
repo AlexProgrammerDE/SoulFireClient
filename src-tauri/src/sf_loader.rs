@@ -7,6 +7,9 @@ use jsonwebtoken::{encode, Algorithm, EncodingKey, Header};
 use log::info;
 use serde::{Deserialize, Serialize};
 use sha2::Digest;
+use std::fs::File;
+use std::io::Write;
+use std::path::Path;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
 use tauri::async_runtime::Mutex;
@@ -52,6 +55,92 @@ fn generate_root_api_token(secret_key: &[u8]) -> Result<String, SFAnyError> {
     Ok(token)
 }
 
+fn unix_timestamp_millis() -> Result<u128, SFAnyError> {
+    Ok(std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)?
+        .as_millis())
+}
+
+fn sha256_hex(data: &[u8]) -> String {
+    let mut hasher = sha2::Sha256::new();
+    hasher.update(data);
+    hex::encode(hasher.finalize())
+}
+
+fn sha256_file_hex(path: &Path) -> Result<String, SFAnyError> {
+    let data = std::fs::read(path)?;
+    Ok(sha256_hex(&data))
+}
+
+fn atomic_replace_path(tmp_path: &Path, final_path: &Path) -> Result<(), SFAnyError> {
+    let timestamp = unix_timestamp_millis()?;
+    let backup_path = final_path.with_extension(format!("bak.{}", timestamp));
+
+    if final_path.exists() {
+        std::fs::rename(final_path, &backup_path)?;
+        match std::fs::rename(tmp_path, final_path) {
+            Ok(_) => {
+                let _ = if backup_path.is_dir() {
+                    std::fs::remove_dir_all(&backup_path)
+                } else {
+                    std::fs::remove_file(&backup_path)
+                };
+                Ok(())
+            }
+            Err(err) => {
+                let _ = std::fs::rename(&backup_path, final_path);
+                Err(err.into())
+            }
+        }
+    } else {
+        std::fs::rename(tmp_path, final_path)?;
+        Ok(())
+    }
+}
+
+fn parse_sha256_digest(value: &str) -> Option<&str> {
+    if value.is_empty() {
+        None
+    } else {
+        Some(value.strip_prefix("sha256:").unwrap_or(value))
+    }
+}
+
+async fn fetch_soulfire_jar_sha256(version: &str, jar_file_name: &str) -> Result<String, SFAnyError> {
+    let url = format!(
+        "https://api.github.com/repos/AlexProgrammerDE/SoulFire/releases/tags/{}",
+        version
+    );
+    let response = reqwest::Client::new()
+        .get(url)
+        .header(reqwest::header::USER_AGENT, "SoulFireClient")
+        .send()
+        .await?;
+    if !response.status().is_success() {
+        return Err(SFAnyError::from(SFError::DownloadFailed));
+    }
+
+    let release_json: serde_json::Value = response.json().await?;
+    let assets = release_json["assets"]
+        .as_array()
+        .ok_or(SFError::JsonFieldInvalid("assets".to_string()))?;
+
+    let digest = assets
+        .iter()
+        .find(|asset| {
+            asset["name"]
+                .as_str()
+                .map(|name| name == jar_file_name)
+                .unwrap_or(false)
+        })
+        .and_then(|asset| asset["digest"].as_str())
+        .ok_or(SFError::JsonFieldInvalid("assets[].digest".to_string()))?;
+
+    let digest = parse_sha256_digest(digest)
+        .ok_or(SFError::JsonFieldInvalid("assets[].digest".to_string()))?;
+    Ok(digest.to_string())
+}
+
 #[tauri::command]
 pub async fn get_sf_server_version() -> String {
     SOULFIRE_VERSION.to_string()
@@ -94,14 +183,14 @@ async fn internal_load_integrated_server(
     }
 
     let app_local_data_dir = app_handle.path().app_local_data_dir()?;
-  let jvm_dir = app_local_data_dir.join("jvm-25");
+    let jvm_dir = app_local_data_dir.join("jvm-25");
     if jvm_dir.exists() {
         send_log(&app_handle, "JVM detected")?;
     } else {
         let adoptium_os = detect_os();
         let adoptium_arch = detect_architecture();
         let jvm_url = format!(
-          "https://api.adoptium.net/v3/assets/latest/25/hotspot?architecture={}&image_type=jre&os={}&vendor=eclipse",
+            "https://api.adoptium.net/v3/assets/latest/25/hotspot?architecture={}&image_type=jre&os={}&vendor=eclipse",
             adoptium_arch, adoptium_os
         );
         info!("JVM URL: {}", jvm_url);
@@ -117,18 +206,16 @@ async fn internal_load_integrated_server(
             .as_str()
             .ok_or(SFError::JsonFieldInvalid(
                 "binary.package.checksum".to_string(),
-            ))?;
+            ))?
+            .to_string();
         let download_url = jvm_json[0]["binary"]["package"]["link"]
             .as_str()
             .ok_or(SFError::JsonFieldInvalid("binary.package.link".to_string()))?;
-      let release_name = jvm_json[0]["release_name"]
-        .as_str()
-        .ok_or(SFError::JsonFieldInvalid("release_name".to_string()))?;
+        let release_name = jvm_json[0]["release_name"]
+            .as_str()
+            .ok_or(SFError::JsonFieldInvalid("release_name".to_string()))?;
         info!("Download URL: {}", download_url);
-        let jvm_archive_dir_name = format!(
-          "{}-jre",
-          release_name
-        );
+        let jvm_archive_dir_name = format!("{}-jre", release_name);
 
         let last_sent_progress = std::sync::atomic::AtomicU64::new(0);
         let send_download_progress =
@@ -162,30 +249,53 @@ async fn internal_load_integrated_server(
             send_download_progress(&app_handle, downloaded_size, total_size)?;
         }
 
-        send_log(&app_handle, "Verifying sha256 checksum...")?;
-        let mut hasher = sha2::Sha256::new();
-        hasher.update(&content);
-        let hash = hasher.finalize();
-        let hash = hex::encode(hash);
-        if hash != checksum {
-            send_log(&app_handle, "Checksum verification failed")?;
+        send_log(&app_handle, "Verifying JVM sha256 checksum...")?;
+        let hash = sha256_hex(&content);
+        if !hash.eq_ignore_ascii_case(&checksum) {
+            send_log(&app_handle, "JVM checksum verification failed")?;
+            return Err(SFAnyError::from(SFError::InvalidJvmChecksum));
+        }
+
+        let timestamp = unix_timestamp_millis()?;
+        let archive_tmp_path = app_local_data_dir.join(format!("jvm-25-archive.tmp.{}", timestamp));
+        let mut archive_file = File::create(&archive_tmp_path)?;
+        archive_file.write_all(&content)?;
+        archive_file.sync_all()?;
+
+        send_log(&app_handle, "Verifying JVM sha256 checksum from disk...")?;
+        let archive_hash = sha256_file_hex(&archive_tmp_path)?;
+        if !archive_hash.eq_ignore_ascii_case(&checksum) {
+            let _ = std::fs::remove_file(&archive_tmp_path);
+            send_log(&app_handle, "JVM checksum verification from disk failed")?;
             return Err(SFAnyError::from(SFError::InvalidJvmChecksum));
         }
 
         send_log(&app_handle, "Extracting JVM...")?;
-
-        let jvm_tmp_dir = app_handle.path().cache_dir()?.join("jvm-extract");
-        std::fs::create_dir_all(&jvm_tmp_dir)?;
+        let extract_tmp_root = app_local_data_dir.join(format!("jvm-25-extract.tmp.{}", timestamp));
+        std::fs::create_dir_all(&extract_tmp_root)?;
         if download_url.ends_with(".tar.gz") {
-            let _ = extract_tar_gz(&content[..], jvm_tmp_dir.as_path())?;
+            extract_tar_gz(&content, extract_tmp_root.as_path())?;
         } else if download_url.ends_with(".zip") {
-            let _ = extract_zip(&content[..], jvm_tmp_dir.as_path())?;
+            extract_zip(&content, extract_tmp_root.as_path())?;
         } else {
+            let _ = std::fs::remove_file(&archive_tmp_path);
+            let _ = std::fs::remove_dir_all(&extract_tmp_root);
             return Err(SFAnyError::from(SFError::InvalidArchiveType));
         }
 
-        std::fs::rename(jvm_tmp_dir.as_path().join(jvm_archive_dir_name), &jvm_dir)?;
+        let extracted_jvm_dir = extract_tmp_root.join(jvm_archive_dir_name);
+        if !extracted_jvm_dir.exists() {
+            let _ = std::fs::remove_file(&archive_tmp_path);
+            let _ = std::fs::remove_dir_all(&extract_tmp_root);
+            return Err(SFAnyError::from(SFError::DownloadFailed));
+        }
 
+        let jvm_tmp_dir = app_local_data_dir.join(format!("jvm-25.tmp.{}", timestamp));
+        std::fs::rename(&extracted_jvm_dir, &jvm_tmp_dir)?;
+        atomic_replace_path(&jvm_tmp_dir, &jvm_dir)?;
+
+        let _ = std::fs::remove_file(&archive_tmp_path);
+        let _ = std::fs::remove_dir_all(&extract_tmp_root);
         send_log(&app_handle, "Downloaded JVM")?;
     };
 
@@ -194,13 +304,28 @@ async fn internal_load_integrated_server(
         std::fs::create_dir_all(&jars_dir)?;
     }
 
-    let soul_fire_version_file =
-        jars_dir.join(format!("SoulFireDedicated-{}.jar", SOULFIRE_VERSION));
-    if !soul_fire_version_file.exists() {
+    let soulfire_jar_name = format!("SoulFireDedicated-{}.jar", SOULFIRE_VERSION);
+    let soul_fire_version_file = jars_dir.join(&soulfire_jar_name);
+    send_log(&app_handle, "Fetching SoulFire checksum metadata...")?;
+    let expected_soulfire_sha256 = fetch_soulfire_jar_sha256(SOULFIRE_VERSION, &soulfire_jar_name).await?;
+
+    let mut need_download_jar = true;
+    if soul_fire_version_file.exists() {
+        send_log(&app_handle, "Verifying existing SoulFire jar sha256 checksum...")?;
+        let existing_hash = sha256_file_hex(&soul_fire_version_file)?;
+        if existing_hash.eq_ignore_ascii_case(&expected_soulfire_sha256) {
+            need_download_jar = false;
+            send_log(&app_handle, "SoulFire already downloaded and verified")?;
+        } else {
+            send_log(&app_handle, "Existing SoulFire jar is corrupted, re-downloading...")?;
+        }
+    }
+
+    if need_download_jar {
         send_log(&app_handle, "Fetching SoulFire data...")?;
         let soul_fire_url = format!(
-            "https://github.com/AlexProgrammerDE/SoulFire/releases/download/{}/SoulFireDedicated-{}.jar",
-            SOULFIRE_VERSION, SOULFIRE_VERSION
+            "https://github.com/AlexProgrammerDE/SoulFire/releases/download/{}/{}",
+            SOULFIRE_VERSION, soulfire_jar_name
         );
         info!("SoulFire URL: {}", soul_fire_url);
 
@@ -236,11 +361,28 @@ async fn internal_load_integrated_server(
             send_download_progress(&app_handle, downloaded_size, total_size)?;
         }
 
+        send_log(&app_handle, "Verifying SoulFire jar sha256 checksum...")?;
+        let jar_hash = sha256_hex(&content);
+        if !jar_hash.eq_ignore_ascii_case(&expected_soulfire_sha256) {
+            return Err(SFAnyError::from(SFError::InvalidJarChecksum));
+        }
+
+        let timestamp = unix_timestamp_millis()?;
+        let jar_tmp_file = jars_dir.join(format!("{}.tmp.{}", soulfire_jar_name, timestamp));
         send_log(&app_handle, "Saving SoulFire...")?;
-        std::fs::write(&soul_fire_version_file, &content)?;
+        let mut jar_file = File::create(&jar_tmp_file)?;
+        jar_file.write_all(&content)?;
+        jar_file.sync_all()?;
+
+        send_log(&app_handle, "Verifying SoulFire jar sha256 checksum from disk...")?;
+        let jar_disk_hash = sha256_file_hex(&jar_tmp_file)?;
+        if !jar_disk_hash.eq_ignore_ascii_case(&expected_soulfire_sha256) {
+            let _ = std::fs::remove_file(&jar_tmp_file);
+            return Err(SFAnyError::from(SFError::InvalidJarChecksum));
+        }
+
+        atomic_replace_path(&jar_tmp_file, &soul_fire_version_file)?;
         send_log(&app_handle, "Downloaded SoulFire")?;
-    } else {
-        send_log(&app_handle, "SoulFire already downloaded")?;
     }
 
     info!(
