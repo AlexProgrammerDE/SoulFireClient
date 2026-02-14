@@ -6,9 +6,11 @@ import {
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ReactFlowProvider, useReactFlow } from "@xyflow/react";
 import { Suspense, use, useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { Separator } from "react-resizable-panels";
 import { toast } from "sonner";
+import DynamicIcon from "@/components/dynamic-icon.tsx";
 import { LoadingComponent } from "@/components/loading-component.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { ExecutionLogs } from "@/components/script-editor/ExecutionLogs.tsx";
@@ -114,8 +116,15 @@ function ScriptEditorContent() {
   const [logs, setLogs] = useState<LogEntry[]>([]);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const executionAbortRef = useRef<AbortController | null>(null);
-  // Store dragged node type in a ref to avoid WebView2 dataTransfer issues
+  // Pointer-based drag state (replaces HTML5 DnD which is broken in WebView2)
   const draggedNodeTypeRef = useRef<string | null>(null);
+  const dragPreviewRef = useRef<HTMLDivElement>(null);
+  const [dragPreview, setDragPreview] = useState<{
+    icon: string;
+    label: string;
+    startX: number;
+    startY: number;
+  } | null>(null);
 
   // Load script into store when data changes
   useEffect(() => {
@@ -426,25 +435,53 @@ function ScriptEditorContent() {
     setLogs([]);
   }, []);
 
-  // Handle drag & drop from palette
-  // Uses a ref instead of dataTransfer.getData() because WebView2 (Tauri on Windows)
-  // doesn't reliably support dataTransfer for internal drag-and-drop operations.
-  const handleNodeDragStart = useCallback((nodeType: string) => {
-    draggedNodeTypeRef.current = nodeType;
-  }, []);
+  // Handle drag & drop from palette using pointer events instead of HTML5 DnD.
+  // WebView2 (Tauri on Windows) doesn't support HTML5 drag-and-drop within the webview,
+  // so we use pointer events with a custom drag preview overlay.
+  const handleNodeDragStart = useCallback(
+    (nodeType: string, x: number, y: number) => {
+      draggedNodeTypeRef.current = nodeType;
+      const definition = getDefinition(nodeType);
+      if (definition) {
+        setDragPreview({
+          icon: definition.icon,
+          label: definition.label,
+          startX: x,
+          startY: y,
+        });
+      }
+    },
+    [getDefinition],
+  );
 
-  const handleDragOver = useCallback((event: React.DragEvent) => {
-    event.preventDefault();
-    event.dataTransfer.dropEffect = "copy";
-  }, []);
+  useEffect(() => {
+    if (!dragPreview) return;
 
-  const handleDrop = useCallback(
-    (event: React.DragEvent) => {
-      event.preventDefault();
+    const handlePointerMove = (event: PointerEvent) => {
+      if (dragPreviewRef.current) {
+        dragPreviewRef.current.style.transform = `translate(${event.clientX}px, ${event.clientY}px) translate(-50%, -50%)`;
+      }
+    };
 
+    const handlePointerUp = (event: PointerEvent) => {
       const nodeType = draggedNodeTypeRef.current;
       draggedNodeTypeRef.current = null;
+      setDragPreview(null);
+
       if (!nodeType) return;
+
+      const wrapper = reactFlowWrapper.current;
+      if (!wrapper) return;
+
+      const rect = wrapper.getBoundingClientRect();
+      if (
+        event.clientX < rect.left ||
+        event.clientX > rect.right ||
+        event.clientY < rect.top ||
+        event.clientY > rect.bottom
+      ) {
+        return;
+      }
 
       const definition = getDefinition(nodeType);
       if (!definition) return;
@@ -454,16 +491,21 @@ function ScriptEditorContent() {
         y: event.clientY,
       });
 
-      // Center the node under the cursor
       const centeredPosition = {
         x: position.x - DEFAULT_NODE_WIDTH / 2,
         y: position.y - DEFAULT_NODE_HEIGHT / 2,
       };
 
       addNode(nodeType, centeredPosition, definition.defaultData);
-    },
-    [reactFlowInstance, addNode, getDefinition],
-  );
+    };
+
+    document.addEventListener("pointermove", handlePointerMove);
+    document.addEventListener("pointerup", handlePointerUp);
+    return () => {
+      document.removeEventListener("pointermove", handlePointerMove);
+      document.removeEventListener("pointerup", handlePointerUp);
+    };
+  }, [dragPreview, reactFlowInstance, addNode, getDefinition]);
 
   return (
     <div className="flex h-full w-full flex-col">
@@ -497,8 +539,6 @@ function ScriptEditorContent() {
                 role="application"
                 ref={reactFlowWrapper}
                 className="h-full w-full"
-                onDragOver={handleDragOver}
-                onDrop={handleDrop}
               >
                 <ScriptEditor />
               </div>
@@ -513,6 +553,22 @@ function ScriptEditorContent() {
           </ResizablePanelGroup>
         </ResizablePanel>
       </ResizablePanelGroup>
+
+      {/* Drag preview overlay for pointer-based DnD */}
+      {dragPreview &&
+        createPortal(
+          <div
+            ref={dragPreviewRef}
+            className="pointer-events-none fixed left-0 top-0 z-50 flex items-center gap-2 rounded-md border border-border bg-muted/90 px-2 py-1.5 text-sm shadow-md"
+            style={{
+              transform: `translate(${dragPreview.startX}px, ${dragPreview.startY}px) translate(-50%, -50%)`,
+            }}
+          >
+            <DynamicIcon name={dragPreview.icon} className="size-4 shrink-0" />
+            <span className="truncate">{dragPreview.label}</span>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }

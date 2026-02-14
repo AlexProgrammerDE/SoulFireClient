@@ -15,14 +15,14 @@ import type { CategoryInfo, NodeDefinition } from "./nodes/types.ts";
 import { useNodeTranslations } from "./useNodeTranslations";
 
 interface NodePaletteProps {
-  onNodeDragStart?: (nodeType: string) => void;
+  onNodeDragStart?: (nodeType: string, x: number, y: number) => void;
   className?: string;
 }
 
 interface DraggableNodeItemProps {
   node: NodeDefinition;
   nodeLabel: string;
-  onDragStart?: (nodeType: string) => void;
+  onDragStart?: (nodeType: string, x: number, y: number) => void;
 }
 
 function DraggableNodeItem({
@@ -30,20 +30,16 @@ function DraggableNodeItem({
   nodeLabel,
   onDragStart,
 }: DraggableNodeItemProps) {
-  const handleDragStart = (e: React.DragEvent) => {
-    e.dataTransfer.setData("application/script-node-type", node.type);
-    e.dataTransfer.effectAllowed = "copy";
-    onDragStart?.(node.type);
-  };
-
   return (
-    // biome-ignore lint/a11y/useSemanticElements: draggable requires div for proper drag behavior
+    // biome-ignore lint/a11y/useSemanticElements: drag source requires div for proper pointer behavior
     <div
       role="button"
       tabIndex={0}
-      draggable
-      onDragStart={handleDragStart}
-      className="group flex cursor-grab items-center gap-2 rounded-md border border-transparent bg-muted/50 px-2 py-1.5 text-sm transition-colors hover:border-border hover:bg-muted active:cursor-grabbing"
+      onPointerDown={(e) => {
+        if (e.button !== 0) return;
+        onDragStart?.(node.type, e.clientX, e.clientY);
+      }}
+      className="group flex cursor-grab items-center gap-2 rounded-md border border-transparent bg-muted/50 px-2 py-1.5 text-sm select-none transition-colors hover:border-border hover:bg-muted active:cursor-grabbing"
     >
       <GripVerticalIcon className="size-3 shrink-0 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100" />
       <DynamicIcon name={node.icon} className="size-4 shrink-0" />
@@ -58,7 +54,7 @@ interface CategorySectionProps {
   nodes: NodeDefinition[];
   getNodeLabel: (node: NodeDefinition) => string;
   defaultOpen?: boolean;
-  onNodeDragStart?: (nodeType: string) => void;
+  onNodeDragStart?: (nodeType: string, x: number, y: number) => void;
 }
 
 function CategorySection({
