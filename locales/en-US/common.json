@@ -406,6 +406,7 @@
     "success": "Uploaded to mclo.gs! View it here: {{url}}",
     "error": "Failed to upload to mclo.gs"
   },
+  "searchWithGoogle": "Search with Google",
   "copyToClipboard": "Copy to clipboard",
   "clipboardCopy": {
     "loading": "Copying to clipboard...",

@@ -21,6 +21,7 @@ import { arch, locale, platform, type, version } from "@tauri-apps/plugin-os";
 import { useTheme } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/tanstack-router";
 import { memo, useEffect, useState } from "react";
+import { CustomContextMenu } from "@/components/custom-context-menu.tsx";
 import { AboutProvider } from "@/components/dialog/about-dialog.tsx";
 import {
   type SystemInfo,
@@ -249,6 +250,7 @@ function RootLayout() {
                     className="flex h-dvh w-dvw flex-col"
                   >
                     <PointerReset />
+                    <CustomContextMenu />
                     <AboutProvider>
                       <Outlet />
                       <TanStackDevtools
