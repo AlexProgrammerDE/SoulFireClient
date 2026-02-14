@@ -24,7 +24,6 @@
         "minHeight": 500,
         "resizable": true,
         "center": true,
-        "dragDropEnabled": true,
         "visible": false
       }
     ],
