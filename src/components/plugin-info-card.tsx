@@ -5,7 +5,7 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { Link, useNavigate, useRouteContext } from "@tanstack/react-router";
-import { ExternalLinkIcon, PowerIcon } from "lucide-react";
+import { ClipboardCopyIcon, ExternalLinkIcon, PowerIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { use, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -30,6 +30,7 @@ import type {
   SettingsPage,
 } from "@/generated/soulfire/common.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import type { BaseSettings } from "@/lib/types.ts";
 import {
   getSettingValue,
@@ -50,6 +51,7 @@ function PluginInfoCardContent(props: {
   const navigate = useNavigate();
   const { contextMenu, handleContextMenu, dismiss, menuRef } =
     useContextMenu<null>();
+  const copyToClipboard = useCopyToClipboard();
 
   return (
     <>
@@ -126,6 +128,36 @@ function PluginInfoCardContent(props: {
             <ExternalLinkIcon />
             {t("contextMenu.plugin.openSettings")}
           </MenuItem>
+          <MenuSeparator />
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(props.settingsEntry.pageName);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {t("contextMenu.plugin.copyPluginName")}
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(props.plugin.version);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {t("contextMenu.plugin.copyVersion")}
+          </MenuItem>
+          {props.plugin.website && (
+            <MenuItem
+              onClick={() => {
+                copyToClipboard(props.plugin.website);
+                dismiss();
+              }}
+            >
+              <ClipboardCopyIcon />
+              {t("contextMenu.plugin.copyWebsiteUrl")}
+            </MenuItem>
+          )}
         </ContextMenuPortal>
       )}
     </>

@@ -946,6 +946,15 @@ function Content() {
             <ClipboardCopyIcon />
             {t("account.contextMenu.copyProfileId")}
           </MenuItem>
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(contextMenu.data.lastKnownName);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {t("account.contextMenu.copyUsername")}
+          </MenuItem>
         </ContextMenuPortal>
       )}
       {configAccount && (

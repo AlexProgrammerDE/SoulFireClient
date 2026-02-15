@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import {
+  ClipboardCopyIcon,
   EditIcon,
   PlayIcon,
   PlusIcon,
@@ -50,6 +51,7 @@ import { Textarea } from "@/components/ui/textarea.tsx";
 import type { ScriptInfo } from "@/generated/soulfire/script";
 import { ScriptServiceClient } from "@/generated/soulfire/script.client";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { scriptListQueryOptions } from "@/lib/script-service.ts";
 
 const createScriptSchema = z.object({
@@ -216,6 +218,7 @@ function Content() {
 
   const { contextMenu, handleContextMenu, dismiss, menuRef } =
     useContextMenu<ScriptInfo>();
+  const copyToClipboard = useCopyToClipboard();
 
   const handleDeleteScript = (scriptId: string) => {
     deleteMutation.mutate(scriptId);
@@ -414,6 +417,25 @@ function Content() {
             {contextMenu.data.paused
               ? tInstance("scripts.contextMenu.resume")
               : tInstance("scripts.contextMenu.pause")}
+          </MenuItem>
+          <MenuSeparator />
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(contextMenu.data.name);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {tInstance("scripts.contextMenu.copyScriptName")}
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(contextMenu.data.id);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {tInstance("scripts.contextMenu.copyScriptId")}
           </MenuItem>
           <MenuSeparator />
           <MenuItem

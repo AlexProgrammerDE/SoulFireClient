@@ -798,6 +798,28 @@ function Content() {
             <ClipboardCopyIcon />
             {t("proxy.contextMenu.copyAddress")}
           </MenuItem>
+          {contextMenu.data.username && (
+            <MenuItem
+              onClick={() => {
+                copyToClipboard(contextMenu.data.username ?? "");
+                dismiss();
+              }}
+            >
+              <ClipboardCopyIcon />
+              {t("proxy.contextMenu.copyUsername")}
+            </MenuItem>
+          )}
+          {contextMenu.data.password && (
+            <MenuItem
+              onClick={() => {
+                copyToClipboard(contextMenu.data.password ?? "");
+                dismiss();
+              }}
+            >
+              <ClipboardCopyIcon />
+              {t("proxy.contextMenu.copyPassword")}
+            </MenuItem>
+          )}
           <MenuSeparator />
           <MenuItem
             variant="destructive"

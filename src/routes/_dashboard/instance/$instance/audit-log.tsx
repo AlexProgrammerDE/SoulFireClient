@@ -2,6 +2,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import type { ColumnDef } from "@tanstack/react-table";
 import {
+  ClipboardCopyIcon,
   PlayIcon,
   SquareIcon,
   SquareTerminalIcon,
@@ -10,6 +11,8 @@ import {
   TimerOffIcon,
 } from "lucide-react";
 import { Trans, useTranslation } from "react-i18next";
+import { ContextMenuPortal } from "@/components/context-menu-portal.tsx";
+import { MenuItem } from "@/components/context-menu-primitives.tsx";
 import { DataTable } from "@/components/data-table/data-table.tsx";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header.tsx";
 import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
@@ -25,6 +28,8 @@ import {
   type InstanceAuditLogResponse_AuditLogEntry,
   InstanceAuditLogResponse_AuditLogEntryType,
 } from "@/generated/soulfire/instance.ts";
+import { useContextMenu } from "@/hooks/use-context-menu.ts";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { useDataTable } from "@/hooks/use-data-table.ts";
 import i18n from "@/lib/i18n";
 import { dataTableValidateSearch } from "@/lib/parsers.ts";
@@ -235,6 +240,7 @@ function AuditLog() {
 }
 
 function Content() {
+  const { t } = useTranslation("common");
   const { auditLogQueryOptions } = Route.useRouteContext();
   const { data: auditLog } = useSuspenseQuery(auditLogQueryOptions);
   const { table } = useDataTable({
@@ -242,14 +248,49 @@ function Content() {
     columns,
     getRowId: (row) => row.id,
   });
+  const { contextMenu, handleContextMenu, dismiss, menuRef } =
+    useContextMenu<InstanceAuditLogResponse_AuditLogEntry>();
+  const copyToClipboard = useCopyToClipboard();
 
   return (
     <div className="container flex h-full w-full grow flex-col gap-4">
-      <DataTable table={table}>
+      <DataTable table={table} onRowContextMenu={handleContextMenu}>
         <DataTableToolbar table={table}>
           <DataTableSortList table={table} />
         </DataTableToolbar>
       </DataTable>
+      {contextMenu && (
+        <ContextMenuPortal
+          x={contextMenu.position.x}
+          y={contextMenu.position.y}
+          menuRef={menuRef}
+        >
+          {contextMenu.data.user?.username && (
+            <MenuItem
+              onClick={() => {
+                copyToClipboard(contextMenu.data.user?.username ?? "");
+                dismiss();
+              }}
+            >
+              <ClipboardCopyIcon />
+              {t("auditLog.contextMenu.copyUsername")}
+            </MenuItem>
+          )}
+          {contextMenu.data.type ===
+            InstanceAuditLogResponse_AuditLogEntryType.EXECUTE_COMMAND &&
+            contextMenu.data.data && (
+              <MenuItem
+                onClick={() => {
+                  copyToClipboard(contextMenu.data.data);
+                  dismiss();
+                }}
+              >
+                <ClipboardCopyIcon />
+                {t("auditLog.contextMenu.copyCommand")}
+              </MenuItem>
+            )}
+        </ContextMenuPortal>
+      )}
     </div>
   );
 }

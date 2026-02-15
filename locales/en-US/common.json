@@ -447,7 +447,11 @@
     "startedSession": "Started a session",
     "resumedSession": "Resumed a session",
     "pausedSession": "Paused a session",
-    "stoppedSession": "Stopped a session"
+    "stoppedSession": "Stopped a session",
+    "contextMenu": {
+      "copyUsername": "Copy Username",
+      "copyCommand": "Copy Command"
+    }
   },
   "toggleTheme": "Toggle theme",
   "pickADate": "Pick a date",
@@ -519,16 +523,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Go to Instance",
+      "copyInstanceId": "Copy Instance ID",
+      "copyInstanceName": "Copy Instance Name",
       "deleteInstance": "Delete Instance"
     },
     "bot": {
       "goToBot": "Go to Bot",
-      "copyUsername": "Copy Username"
+      "copyUsername": "Copy Username",
+      "copyUuid": "Copy UUID",
+      "copyCoordinates": "Copy Coordinates"
     },
     "plugin": {
       "enable": "Enable",
       "disable": "Disable",
-      "openSettings": "Open Settings"
+      "openSettings": "Open Settings",
+      "copyPluginName": "Copy Plugin Name",
+      "copyVersion": "Copy Version",
+      "copyWebsiteUrl": "Copy Website URL"
     }
   }
 }

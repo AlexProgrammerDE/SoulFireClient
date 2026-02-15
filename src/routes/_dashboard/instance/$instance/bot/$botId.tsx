@@ -15,6 +15,7 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   ChevronUpIcon,
+  ClipboardCopyIcon,
   CompassIcon,
   EyeIcon,
   GamepadIcon,
@@ -43,6 +44,8 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import CommandInput from "@/components/command-input.tsx";
+import { ContextMenuPortal } from "@/components/context-menu-portal.tsx";
+import { MenuItem } from "@/components/context-menu-primitives.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { TerminalComponent } from "@/components/terminal.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
@@ -82,6 +85,8 @@ import {
   MinecraftAccountProto_AccountTypeProto,
 } from "@/generated/soulfire/common.ts";
 import type { LogScope } from "@/generated/soulfire/logs.ts";
+import { useContextMenu } from "@/hooks/use-context-menu.ts";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import {
   getEnumKeyByValue,
   type InstanceInfoQueryData,
@@ -364,39 +369,73 @@ function BotSkinPreview({
   TypeIcon: React.ComponentType<{ className?: string }>;
 }) {
   const { t } = useTranslation("instance");
+  const { t: tCommon } = useTranslation("common");
+  const { contextMenu, handleContextMenu, dismiss, menuRef } =
+    useContextMenu<null>();
+  const copyToClipboard = useCopyToClipboard();
 
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-start gap-4">
-          {/* Full body render */}
-          <img
-            src={getAvatarUrl(skinTextureHash)}
-            alt={account.lastKnownName}
-            className="h-32 w-auto"
-            loading="lazy"
-          />
-          <div className="flex flex-1 flex-col gap-2">
-            <CardTitle className="text-2xl">{account.lastKnownName}</CardTitle>
-            <div className="flex flex-wrap gap-2">
-              <Badge
-                variant={isOnline ? "default" : "secondary"}
-                className="text-sm"
-              >
-                {isOnline ? t("bots.online") : t("bots.notJoined")}
-              </Badge>
-              <Badge variant="outline" className="text-sm">
-                <TypeIcon className="mr-1 size-3" />
-                {accountTypeLabel(typeKey)}
-              </Badge>
+    <>
+      <Card onContextMenu={(e) => handleContextMenu(e, null)}>
+        <CardHeader>
+          <div className="flex items-start gap-4">
+            {/* Full body render */}
+            <img
+              src={getAvatarUrl(skinTextureHash)}
+              alt={account.lastKnownName}
+              className="h-32 w-auto"
+              loading="lazy"
+            />
+            <div className="flex flex-1 flex-col gap-2">
+              <CardTitle className="text-2xl">
+                {account.lastKnownName}
+              </CardTitle>
+              <div className="flex flex-wrap gap-2">
+                <Badge
+                  variant={isOnline ? "default" : "secondary"}
+                  className="text-sm"
+                >
+                  {isOnline ? t("bots.online") : t("bots.notJoined")}
+                </Badge>
+                <Badge variant="outline" className="text-sm">
+                  <TypeIcon className="mr-1 size-3" />
+                  {accountTypeLabel(typeKey)}
+                </Badge>
+              </div>
+              <CardDescription className="font-mono text-xs">
+                UUID: {account.profileId}
+              </CardDescription>
             </div>
-            <CardDescription className="font-mono text-xs">
-              UUID: {account.profileId}
-            </CardDescription>
           </div>
-        </div>
-      </CardHeader>
-    </Card>
+        </CardHeader>
+      </Card>
+      {contextMenu && (
+        <ContextMenuPortal
+          x={contextMenu.position.x}
+          y={contextMenu.position.y}
+          menuRef={menuRef}
+        >
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(account.lastKnownName);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {tCommon("contextMenu.bot.copyUsername")}
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(account.profileId);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {tCommon("contextMenu.bot.copyUuid")}
+          </MenuItem>
+        </ContextMenuPortal>
+      )}
+    </>
   );
 }
 
@@ -408,66 +447,91 @@ function BotPositionPanel({
   isOnline: boolean;
 }) {
   const { t } = useTranslation("instance");
+  const { t: tCommon } = useTranslation("common");
+  const { contextMenu, handleContextMenu, dismiss, menuRef } =
+    useContextMenu<null>();
+  const copyToClipboard = useCopyToClipboard();
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <CompassIcon className="size-5" />
-          {t("bots.positionPanel.title")}
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        {isOnline && liveState ? (
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-3">
-              <div>
-                <p className="text-muted-foreground text-xs font-medium uppercase">
-                  {t("bots.positionPanel.position")}
-                </p>
-                <div className="mt-1 grid grid-cols-3 gap-2 font-mono text-sm">
-                  <div>
-                    <span className="text-muted-foreground">X:</span>{" "}
-                    {liveState.x.toFixed(2)}
+    <>
+      <Card onContextMenu={(e) => handleContextMenu(e, null)}>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CompassIcon className="size-5" />
+            {t("bots.positionPanel.title")}
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          {isOnline && liveState ? (
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-3">
+                <div>
+                  <p className="text-muted-foreground text-xs font-medium uppercase">
+                    {t("bots.positionPanel.position")}
+                  </p>
+                  <div className="mt-1 grid grid-cols-3 gap-2 font-mono text-sm">
+                    <div>
+                      <span className="text-muted-foreground">X:</span>{" "}
+                      {liveState.x.toFixed(2)}
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Y:</span>{" "}
+                      {liveState.y.toFixed(2)}
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Z:</span>{" "}
+                      {liveState.z.toFixed(2)}
+                    </div>
                   </div>
-                  <div>
-                    <span className="text-muted-foreground">Y:</span>{" "}
-                    {liveState.y.toFixed(2)}
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground">Z:</span>{" "}
-                    {liveState.z.toFixed(2)}
+                </div>
+              </div>
+              <div className="space-y-3">
+                <div>
+                  <p className="text-muted-foreground text-xs font-medium uppercase">
+                    {t("bots.positionPanel.rotation")}
+                  </p>
+                  <div className="mt-1 grid grid-cols-2 gap-2 font-mono text-sm">
+                    <div>
+                      <span className="text-muted-foreground">Pitch:</span>{" "}
+                      {liveState.xRot.toFixed(1)}°
+                    </div>
+                    <div>
+                      <span className="text-muted-foreground">Yaw:</span>{" "}
+                      {liveState.yRot.toFixed(1)}°
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="space-y-3">
-              <div>
-                <p className="text-muted-foreground text-xs font-medium uppercase">
-                  {t("bots.positionPanel.rotation")}
-                </p>
-                <div className="mt-1 grid grid-cols-2 gap-2 font-mono text-sm">
-                  <div>
-                    <span className="text-muted-foreground">Pitch:</span>{" "}
-                    {liveState.xRot.toFixed(1)}°
-                  </div>
-                  <div>
-                    <span className="text-muted-foreground">Yaw:</span>{" "}
-                    {liveState.yRot.toFixed(1)}°
-                  </div>
-                </div>
-              </div>
+          ) : (
+            <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
+              <p className="text-muted-foreground">
+                {t("bots.positionPanel.offline")}
+              </p>
             </div>
-          </div>
-        ) : (
-          <div className="bg-muted/30 flex items-center justify-center rounded-lg p-6">
-            <p className="text-muted-foreground">
-              {t("bots.positionPanel.offline")}
-            </p>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+          )}
+        </CardContent>
+      </Card>
+      {contextMenu && isOnline && liveState && (
+        <ContextMenuPortal
+          x={contextMenu.position.x}
+          y={contextMenu.position.y}
+          menuRef={menuRef}
+        >
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(
+                `${liveState.x.toFixed(2)}, ${liveState.y.toFixed(2)}, ${liveState.z.toFixed(2)}`,
+              );
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {tCommon("contextMenu.bot.copyCoordinates")}
+          </MenuItem>
+        </ContextMenuPortal>
+      )}
+    </>
   );
 }
 

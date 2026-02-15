@@ -10,6 +10,7 @@ import {
   useRouteContext,
 } from "@tanstack/react-router";
 import {
+  ClipboardCopyIcon,
   ExternalLinkIcon,
   PlusIcon,
   SearchXIcon,
@@ -33,6 +34,7 @@ import { GlobalPermission } from "@/generated/soulfire/common.ts";
 import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
 import type { InstanceListResponse_Instance } from "@/generated/soulfire/instance.ts";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { translateInstanceState } from "@/lib/types.ts";
 import { hasGlobalPermission } from "@/lib/utils.tsx";
 
@@ -59,6 +61,7 @@ function Content() {
   const queryClient = useQueryClient();
   const { contextMenu, handleContextMenu, dismiss, menuRef } =
     useContextMenu<InstanceListResponse_Instance>();
+  const copyToClipboard = useCopyToClipboard();
 
   const deleteMutation = useMutation({
     mutationKey: ["instance", "delete"],
@@ -154,6 +157,25 @@ function Content() {
           >
             <ExternalLinkIcon />
             {t("contextMenu.instance.goToInstance")}
+          </MenuItem>
+          <MenuSeparator />
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(contextMenu.data.friendlyName);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {t("contextMenu.instance.copyInstanceName")}
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(contextMenu.data.id);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {t("contextMenu.instance.copyInstanceId")}
           </MenuItem>
           <MenuSeparator />
           <MenuItem

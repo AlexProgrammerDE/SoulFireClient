@@ -390,6 +390,33 @@ function BotGrid({ search }: { search: string }) {
             <ClipboardCopyIcon />
             {tCommon("contextMenu.bot.copyUsername")}
           </MenuItem>
+          <MenuItem
+            onClick={() => {
+              copyToClipboard(contextMenu.data.profileId);
+              dismiss();
+            }}
+          >
+            <ClipboardCopyIcon />
+            {tCommon("contextMenu.bot.copyUuid")}
+          </MenuItem>
+          {contextMenu.data.isOnline && contextMenu.data.liveState && (
+            <MenuItem
+              onClick={() => {
+                const { x, y, z } = contextMenu.data.liveState ?? {
+                  x: 0,
+                  y: 0,
+                  z: 0,
+                };
+                copyToClipboard(
+                  `${x.toFixed(2)}, ${y.toFixed(2)}, ${z.toFixed(2)}`,
+                );
+                dismiss();
+              }}
+            >
+              <ClipboardCopyIcon />
+              {tCommon("contextMenu.bot.copyCoordinates")}
+            </MenuItem>
+          )}
         </ContextMenuPortal>
       )}
     </>
