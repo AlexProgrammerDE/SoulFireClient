@@ -2,10 +2,10 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { useTranslation } from "react-i18next";
+import { ServerPluginInfoCard } from "@/components/instance-plugin-info-card.tsx";
 import { LoadingComponent } from "@/components/loading-component.tsx";
 import UserPageLayout from "@/components/nav/user/user-page-layout";
 import { NotFoundComponent } from "@/components/not-found-component.tsx";
-import { ServerPluginInfoCard } from "@/components/plugin-info-card.tsx";
 import { AdminSettingsPageComponent } from "@/components/settings-page.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 

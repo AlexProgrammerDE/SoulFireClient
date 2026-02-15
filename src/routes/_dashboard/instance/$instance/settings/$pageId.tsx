@@ -2,10 +2,10 @@ import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { useTranslation } from "react-i18next";
+import { InstancePluginInfoCard } from "@/components/instance-plugin-info-card.tsx";
 import { LoadingComponent } from "@/components/loading-component.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { NotFoundComponent } from "@/components/not-found-component.tsx";
-import { PluginInfoCard } from "@/components/plugin-info-card.tsx";
 import { InstanceSettingsPageComponent } from "@/components/settings-page.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 
@@ -73,7 +73,10 @@ function Content() {
       <div className="flex h-full w-full grow flex-row gap-2">
         <div className="flex h-full grow flex-col gap-4">
           {plugin && (
-            <PluginInfoCard settingsEntry={settingsEntry} plugin={plugin} />
+            <InstancePluginInfoCard
+              settingsEntry={settingsEntry}
+              plugin={plugin}
+            />
           )}
           <div className="flex flex-col gap-2">
             <InstanceSettingsPageComponent data={settingsEntry} />

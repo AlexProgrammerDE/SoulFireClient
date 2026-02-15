@@ -1,28 +1,11 @@
 import type { JsonValue } from "@protobuf-ts/runtime";
-import {
-  useMutation,
-  useQueryClient,
-  useSuspenseQuery,
-} from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
-import { Suspense, use, useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import DynamicIcon from "@/components/dynamic-icon.tsx";
-import { ExternalLink } from "@/components/external-link.tsx";
-import {
-  createSettingsRegistry,
-  SettingsRegistryContext,
-  useSettingsDefinition,
-} from "@/components/providers/settings-registry-context.tsx";
-import { TransportContext } from "@/components/providers/transport-context.tsx";
-import { SettingTypeRenderer } from "@/components/settings-page.tsx";
-import { Badge } from "@/components/ui/badge.tsx";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card.tsx";
+import { BotPluginInfoCard } from "@/components/instance-plugin-info-card.tsx";
+import { BotSettingsPageComponent } from "@/components/settings-page.tsx";
 import {
   Dialog,
   DialogContent,
@@ -47,7 +30,6 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
-import { Switch } from "@/components/ui/switch.tsx";
 import { Value } from "@/generated/google/protobuf/struct.ts";
 import {
   type ServerPlugin,
@@ -57,8 +39,8 @@ import {
   SettingsPageEntryScopeType,
 } from "@/generated/soulfire/common.ts";
 import { useIsMobile } from "@/hooks/use-mobile.ts";
-import type { ProfileAccount } from "@/lib/types.ts";
-import { getSettingIdentifierKey, updateBotConfigEntry } from "@/lib/utils.tsx";
+import type { BaseSettings, ProfileAccount } from "@/lib/types.ts";
+import { getSettingIdentifierKey } from "@/lib/utils.tsx";
 
 type BotSettingsPage = SettingsPage & {
   plugin?: ServerPlugin;
@@ -224,13 +206,8 @@ function DialogContentInner({
     ],
   );
 
-  const settingsRegistry = useMemo(
-    () => createSettingsRegistry(instanceInfo.settingsDefinitions),
-    [instanceInfo.settingsDefinitions],
-  );
-
-  const botConfig = useMemo(
-    () => convertAccountConfigToSettings(account),
+  const botSettingsConfig: BaseSettings = useMemo(
+    () => ({ settings: convertAccountConfigToSettings(account) }),
     [account],
   );
 
@@ -244,357 +221,103 @@ function DialogContentInner({
   const currentPage = botSettingsPages.find((p) => p.id === selectedPage);
 
   return (
-    <SettingsRegistryContext.Provider value={settingsRegistry}>
-      <SidebarProvider className="h-[480px] min-h-0 items-stretch">
-        {!isMobile && (
-          <Sidebar collapsible="none" className="hidden md:flex">
-            <SidebarContent className="overflow-y-auto">
-              <SidebarGroup>
-                <SidebarGroupContent>
-                  <SidebarMenu>
-                    {botSettingsPages.map((page) => (
-                      <SidebarMenuItem key={page.id}>
-                        <SidebarMenuButton
-                          isActive={page.id === selectedPage}
-                          onClick={() => setSelectedPage(page.id)}
-                        >
-                          <DynamicIcon
-                            name={page.iconId}
-                            className="size-4 shrink-0"
-                          />
-                          <span className="truncate">{page.pageName}</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
-                  </SidebarMenu>
-                </SidebarGroupContent>
-              </SidebarGroup>
-            </SidebarContent>
-          </Sidebar>
-        )}
-        <main className="flex flex-1 flex-col overflow-hidden">
-          <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
-            {isMobile ? (
-              <Select
-                value={selectedPage ?? undefined}
-                onValueChange={setSelectedPage}
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
+    <SidebarProvider className="h-[480px] min-h-0 items-stretch">
+      {!isMobile && (
+        <Sidebar collapsible="none" className="hidden md:flex">
+          <SidebarContent className="overflow-y-auto">
+            <SidebarGroup>
+              <SidebarGroupContent>
+                <SidebarMenu>
                   {botSettingsPages.map((page) => (
-                    <SelectItem key={page.id} value={page.id}>
-                      <div className="flex items-center gap-2">
+                    <SidebarMenuItem key={page.id}>
+                      <SidebarMenuButton
+                        isActive={page.id === selectedPage}
+                        onClick={() => setSelectedPage(page.id)}
+                      >
                         <DynamicIcon
                           name={page.iconId}
                           className="size-4 shrink-0"
                         />
-                        <span>{page.pageName}</span>
-                      </div>
-                    </SelectItem>
+                        <span className="truncate">{page.pageName}</span>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
                   ))}
-                </SelectContent>
-              </Select>
-            ) : (
-              <div className="flex items-center gap-2">
-                {currentPage && (
-                  <>
-                    <DynamicIcon
-                      name={currentPage.iconId}
-                      className="size-4 shrink-0"
-                    />
-                    <span className="font-medium">
-                      {t("account.config.pageTitle", {
-                        name: account.lastKnownName,
-                        page: currentPage.pageName,
-                      })}
-                    </span>
-                  </>
-                )}
-              </div>
-            )}
-          </header>
-          <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4">
-            {currentPage ? (
-              <BotSettingsPageContent
-                page={currentPage}
-                botConfig={botConfig}
-                instanceId={instanceInfo.id}
-                botId={account.profileId}
-                instanceInfoQueryKey={instanceInfoQueryOptions.queryKey}
-                settingsDefinitions={instanceInfo.settingsDefinitions}
-              />
-            ) : (
-              <div className="text-muted-foreground">
-                {t("account.config.noSettings")}
-              </div>
-            )}
-          </div>
-        </main>
-      </SidebarProvider>
-    </SettingsRegistryContext.Provider>
-  );
-}
-
-function BotPluginInfoCard({
-  page,
-  plugin,
-  botConfig,
-  instanceId,
-  botId,
-  instanceInfoQueryKey,
-  settingsDefinitions,
-}: {
-  page: BotSettingsPage;
-  plugin: ServerPlugin;
-  botConfig: Record<string, Record<string, JsonValue>>;
-  instanceId: string;
-  botId: string;
-  instanceInfoQueryKey: readonly unknown[];
-  settingsDefinitions: SettingsDefinition[];
-}) {
-  const { t } = useTranslation("common");
-  const transport = use(TransportContext);
-  const queryClient = useQueryClient();
-
-  const enabledIdentifier = page.enabledIdentifier;
-
-  // Find enabled definition
-  const enabledDefinition = useMemo(
-    () =>
-      settingsDefinitions.find(
-        (def) =>
-          def.id?.key === enabledIdentifier?.key &&
-          def.id?.namespace === enabledIdentifier?.namespace,
-      ),
-    [settingsDefinitions, enabledIdentifier],
-  );
-
-  // Get enabled value from bot config, falling back to default
-  const enabledValue = useMemo(() => {
-    if (!enabledIdentifier || !enabledDefinition) return true;
-
-    const namespace = enabledIdentifier.namespace;
-    const key = enabledIdentifier.key;
-    const current = botConfig[namespace]?.[key];
-
-    if (current !== undefined) {
-      return current === true;
-    }
-
-    // Get default from definition (bool settings have a def field)
-    if (enabledDefinition.type.oneofKind === "bool") {
-      return enabledDefinition.type.bool.def;
-    }
-
-    return true;
-  }, [botConfig, enabledIdentifier, enabledDefinition]);
-
-  const setEnabledMutation = useMutation({
-    mutationKey: ["bot", "config", "enabled", instanceId, botId],
-    scope: { id: `bot-config-enabled-${instanceId}-${botId}` },
-    mutationFn: async (value: JsonValue) => {
-      if (!enabledIdentifier) return;
-      await updateBotConfigEntry(
-        enabledIdentifier.namespace,
-        enabledIdentifier.key,
-        value,
-        instanceId,
-        botId,
-        transport,
-        queryClient,
-        instanceInfoQueryKey,
-      );
-    },
-  });
-
-  return (
-    <Card className="container">
-      <CardHeader>
-        <div className="flex flex-row items-center justify-between gap-2">
-          <CardTitle className="flex flex-row items-center gap-2 text-xl">
-            <DynamicIcon className="size-6 shrink-0" name={page.iconId} />
-            {page.pageName}
-          </CardTitle>
-          {enabledIdentifier && (
-            <Switch
-              checked={enabledValue}
-              onCheckedChange={setEnabledMutation.mutate}
-            />
-          )}
-        </div>
-        <CardDescription className="whitespace-pre-line">
-          {plugin.description}
-        </CardDescription>
-        <div className="mt-2 flex flex-wrap gap-2">
-          <Badge variant="secondary">
-            {t("pluginCard.version", { version: plugin.version })}
-          </Badge>
-          <Badge variant="secondary">
-            {t("pluginCard.author", { author: plugin.author })}
-          </Badge>
-          <Badge variant="secondary">
-            {t("pluginCard.license", { license: plugin.license })}
-          </Badge>
-          {plugin.website && (
-            <ExternalLink
-              href={plugin.website}
-              className="inline-flex items-center"
-            >
-              <Badge variant="secondary">
-                {t("pluginCard.website", { website: plugin.website })}
-              </Badge>
-            </ExternalLink>
-          )}
-        </div>
-      </CardHeader>
-    </Card>
-  );
-}
-
-function BotSettingsPageContent({
-  page,
-  botConfig,
-  instanceId,
-  botId,
-  instanceInfoQueryKey,
-  settingsDefinitions,
-}: {
-  page: BotSettingsPage;
-  botConfig: Record<string, Record<string, JsonValue>>;
-  instanceId: string;
-  botId: string;
-  instanceInfoQueryKey: readonly unknown[];
-  settingsDefinitions: SettingsDefinition[];
-}) {
-  // Filter out the enabled identifier from the entries list
-  const enabledIdentifier = page.enabledIdentifier;
-  const filteredEntries = useMemo(() => {
-    if (!enabledIdentifier) return page.entries;
-    return page.entries.filter(
-      (entry) =>
-        !(
-          entry.namespace === enabledIdentifier.namespace &&
-          entry.key === enabledIdentifier.key
-        ),
-    );
-  }, [page.entries, enabledIdentifier]);
-
-  return (
-    <div className="flex flex-col gap-4">
-      {page.plugin && (
-        <BotPluginInfoCard
-          page={page}
-          plugin={page.plugin}
-          botConfig={botConfig}
-          instanceId={instanceId}
-          botId={botId}
-          instanceInfoQueryKey={instanceInfoQueryKey}
-          settingsDefinitions={settingsDefinitions}
-        />
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </SidebarContent>
+        </Sidebar>
       )}
-      {filteredEntries.map((entryId) => (
-        <BotSettingField
-          key={getSettingIdentifierKey(entryId)}
-          settingId={entryId}
-          botConfig={botConfig}
-          instanceId={instanceId}
-          botId={botId}
-          instanceInfoQueryKey={instanceInfoQueryKey}
-        />
-      ))}
-    </div>
-  );
-}
-
-function BotSettingField({
-  settingId,
-  botConfig,
-  instanceId,
-  botId,
-  instanceInfoQueryKey,
-}: {
-  settingId: SettingsEntryIdentifier;
-  botConfig: Record<string, Record<string, JsonValue>>;
-  instanceId: string;
-  botId: string;
-  instanceInfoQueryKey: readonly unknown[];
-}) {
-  const transport = use(TransportContext);
-  const queryClient = useQueryClient();
-  const definition = useSettingsDefinition(settingId);
-
-  const value = useMemo(() => {
-    if (!definition) return null;
-
-    const namespace = settingId.namespace;
-    const key = settingId.key;
-    const current = botConfig[namespace]?.[key];
-
-    if (current !== undefined) {
-      return current;
-    }
-
-    // Return default value from definition
-    switch (definition.type.oneofKind) {
-      case "string":
-        return definition.type.string.def;
-      case "int":
-        return definition.type.int.def;
-      case "bool":
-        return definition.type.bool.def;
-      case "double":
-        return definition.type.double.def;
-      case "combo":
-        return definition.type.combo.def;
-      case "stringList":
-        return definition.type.stringList.def;
-      case "minMax":
-        return {
-          min: definition.type.minMax.minEntry?.def ?? null,
-          max: definition.type.minMax.maxEntry?.def ?? null,
-        };
-      default:
-        return null;
-    }
-  }, [botConfig, settingId, definition]);
-
-  const setValueMutation = useMutation({
-    mutationKey: [
-      "bot",
-      "config",
-      settingId.namespace,
-      settingId.key,
-      instanceId,
-      botId,
-    ],
-    scope: {
-      id: `bot-config-${settingId.namespace}-${settingId.key}-${instanceId}-${botId}`,
-    },
-    mutationFn: async (newValue: JsonValue) => {
-      await updateBotConfigEntry(
-        settingId.namespace,
-        settingId.key,
-        newValue,
-        instanceId,
-        botId,
-        transport,
-        queryClient,
-        instanceInfoQueryKey,
-      );
-    },
-  });
-
-  if (!definition || value === null) {
-    return null;
-  }
-
-  return (
-    <SettingTypeRenderer
-      settingType={definition.type}
-      value={value}
-      changeCallback={setValueMutation.mutate}
-    />
+      <main className="flex flex-1 flex-col overflow-hidden">
+        <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+          {isMobile ? (
+            <Select
+              value={selectedPage ?? undefined}
+              onValueChange={setSelectedPage}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {botSettingsPages.map((page) => (
+                  <SelectItem key={page.id} value={page.id}>
+                    <div className="flex items-center gap-2">
+                      <DynamicIcon
+                        name={page.iconId}
+                        className="size-4 shrink-0"
+                      />
+                      <span>{page.pageName}</span>
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          ) : (
+            <div className="flex items-center gap-2">
+              {currentPage && (
+                <>
+                  <DynamicIcon
+                    name={currentPage.iconId}
+                    className="size-4 shrink-0"
+                  />
+                  <span className="font-medium">
+                    {t("account.config.pageTitle", {
+                      name: account.lastKnownName,
+                      page: currentPage.pageName,
+                    })}
+                  </span>
+                </>
+              )}
+            </div>
+          )}
+        </header>
+        <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4">
+          {currentPage ? (
+            <>
+              {currentPage.plugin && (
+                <BotPluginInfoCard
+                  settingsEntry={currentPage}
+                  plugin={currentPage.plugin}
+                  botConfig={botSettingsConfig}
+                  instanceId={instanceInfo.id}
+                  botId={account.profileId}
+                  instanceInfoQueryKey={instanceInfoQueryOptions.queryKey}
+                  settingsDefinitions={instanceInfo.settingsDefinitions}
+                />
+              )}
+              <BotSettingsPageComponent
+                data={currentPage}
+                botConfig={botSettingsConfig}
+                botId={account.profileId}
+              />
+            </>
+          ) : (
+            <div className="text-muted-foreground">
+              {t("account.config.noSettings")}
+            </div>
+          )}
+        </div>
+      </main>
+    </SidebarProvider>
   );
 }

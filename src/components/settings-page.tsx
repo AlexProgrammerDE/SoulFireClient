@@ -67,6 +67,7 @@ import {
   cn,
   getSettingIdentifierKey,
   getSettingValue,
+  updateBotConfigEntry,
   updateInstanceConfigEntry,
   updateServerConfigEntry,
 } from "@/lib/utils.tsx";
@@ -950,6 +951,53 @@ export function AdminSettingsPageComponent({ data }: { data: SettingsPage }) {
           });
         }}
         config={serverConfig}
+      />
+    </SettingsRegistryContext.Provider>
+  );
+}
+
+export function BotSettingsPageComponent({
+  data,
+  botConfig,
+  botId,
+}: {
+  data: SettingsPage;
+  botConfig: BaseSettings;
+  botId: string;
+}) {
+  const queryClient = useQueryClient();
+  const instanceInfoQueryOptions = useRouteContext({
+    from: "/_dashboard/instance/$instance",
+    select: (context) => context.instanceInfoQueryOptions,
+  });
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const transport = use(TransportContext);
+  const settingsRegistry = useMemo(
+    () => createSettingsRegistry(instanceInfo.settingsDefinitions),
+    [instanceInfo.settingsDefinitions],
+  );
+  return (
+    <SettingsRegistryContext.Provider value={settingsRegistry}>
+      <ClientSettingsPageComponent
+        data={data}
+        updateConfigEntry={async (namespace, key, value) =>
+          await updateBotConfigEntry(
+            namespace,
+            key,
+            value,
+            instanceInfo.id,
+            botId,
+            transport,
+            queryClient,
+            instanceInfoQueryOptions.queryKey,
+          )
+        }
+        invalidateQuery={async () => {
+          await queryClient.invalidateQueries({
+            queryKey: instanceInfoQueryOptions.queryKey,
+          });
+        }}
+        config={botConfig}
       />
     </SettingsRegistryContext.Provider>
   );

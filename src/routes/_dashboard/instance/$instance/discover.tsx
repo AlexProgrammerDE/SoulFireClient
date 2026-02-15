@@ -1,8 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
+import { InstancePluginInfoCard } from "@/components/instance-plugin-info-card.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
-import { PluginInfoCard } from "@/components/plugin-info-card.tsx";
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/discover")(
   {
@@ -46,7 +46,7 @@ function Content() {
           );
           if (!plugin) return null;
           return (
-            <PluginInfoCard
+            <InstancePluginInfoCard
               key={settings.id}
               settingsEntry={settings}
               plugin={plugin}

@@ -40,6 +40,7 @@ import type { BaseSettings } from "@/lib/types.ts";
 import {
   getSettingValue,
   openExternalUrl,
+  updateBotConfigEntry,
   updateInstanceConfigEntry,
   updateServerConfigEntry,
 } from "@/lib/utils.tsx";
@@ -51,7 +52,7 @@ function PluginInfoCardContent(props: {
   link: ReactNode;
   enabledValue: boolean;
   onEnabledChange: (value: boolean) => void;
-  settingsUrl: string;
+  settingsUrl?: string;
 }) {
   const { t } = useTranslation("common");
   const navigate = useNavigate();
@@ -125,16 +126,20 @@ function PluginInfoCardContent(props: {
               : t("contextMenu.plugin.enable")}
           </MenuItem>
           <MenuSeparator />
-          <MenuItem
-            onClick={() => {
-              void navigate({ to: props.settingsUrl });
-              dismiss();
-            }}
-          >
-            <ExternalLinkIcon />
-            {t("contextMenu.plugin.openSettings")}
-          </MenuItem>
-          <MenuSeparator />
+          {props.settingsUrl && (
+            <>
+              <MenuItem
+                onClick={() => {
+                  void navigate({ to: props.settingsUrl });
+                  dismiss();
+                }}
+              >
+                <ExternalLinkIcon />
+                {t("contextMenu.plugin.openSettings")}
+              </MenuItem>
+              <MenuSeparator />
+            </>
+          )}
           <MenuItem
             onClick={() => {
               copyToClipboard(props.settingsEntry.pageName);
@@ -204,7 +209,7 @@ function usePluginEnabledState(
   return { enabledIdentifier, enabledValue };
 }
 
-export function PluginInfoCard(props: {
+export function InstancePluginInfoCard(props: {
   settingsEntry: SettingsPage;
   plugin: ServerPlugin;
 }) {
@@ -275,6 +280,67 @@ export function PluginInfoCard(props: {
           <PluginCardTitle settingsEntry={props.settingsEntry} />
         </Link>
       }
+    />
+  );
+}
+
+export function BotPluginInfoCard(props: {
+  settingsEntry: SettingsPage;
+  plugin: ServerPlugin;
+  botConfig: BaseSettings;
+  instanceId: string;
+  botId: string;
+  instanceInfoQueryKey: readonly unknown[];
+  settingsDefinitions: SettingsDefinition[];
+}) {
+  const transport = use(TransportContext);
+  const queryClient = useQueryClient();
+
+  const { enabledIdentifier, enabledValue } = usePluginEnabledState(
+    props.settingsEntry,
+    props.botConfig,
+    props.settingsDefinitions,
+  );
+
+  const setEnabledMutation = useMutation({
+    mutationKey: [
+      "bot",
+      "plugin",
+      "enabled",
+      props.instanceId,
+      props.botId,
+      props.settingsEntry.id,
+    ],
+    scope: {
+      id: `bot-plugin-${props.instanceId}-${props.botId}-${props.settingsEntry.id}`,
+    },
+    mutationFn: async (value: JsonValue) => {
+      if (!enabledIdentifier) return;
+      await updateBotConfigEntry(
+        enabledIdentifier.namespace,
+        enabledIdentifier.key,
+        value,
+        props.instanceId,
+        props.botId,
+        transport,
+        queryClient,
+        props.instanceInfoQueryKey,
+      );
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: props.instanceInfoQueryKey,
+      });
+    },
+  });
+
+  return (
+    <PluginInfoCardContent
+      settingsEntry={props.settingsEntry}
+      plugin={props.plugin}
+      enabledValue={enabledValue}
+      onEnabledChange={setEnabledMutation.mutate}
+      link={<PluginCardTitle settingsEntry={props.settingsEntry} />}
     />
   );
 }
