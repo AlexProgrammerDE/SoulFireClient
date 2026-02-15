@@ -46,7 +46,11 @@
       "searchPasswords": "Tìm kiếm mật khẩu..."
     },
     "removeSelectedTooltip": "Xóa các proxy đã chọn",
-    "checkSelectedTooltip": "Kiểm tra các proxy đã chọn"
+    "checkSelectedTooltip": "Kiểm tra các proxy đã chọn",
+    "contextMenu": {
+      "copyAddress": "Sao chép địa chỉ",
+      "deleteProxy": "Xóa Proxy"
+    }
   },
   "account": {
     "getAccounts": "Lấy Tài khoản",
@@ -114,6 +118,11 @@
       "actions": "Hành động"
     },
     "removeSelectedTooltip": "Xóa các tài khoản đã chọn",
+    "contextMenu": {
+      "openConfig": "Mở Cấu Hình",
+      "openMetadata": "Mở Metadata",
+      "copyProfileId": "Sao Chép ID Hồ Sơ"
+    },
     "config": {
       "title": "Cấu hình {{name}}",
       "description": "Cấu hình cài đặt riêng cho từng bot cho tài khoản này",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Visual Scripts",
     "description": "Tạo script tự động hóa bằng trình chỉnh sửa dạng nút trực quan.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Tính năng thử nghiệm",
+    "experimentalWarning": "Tính năng này đang ở giai đoạn thử nghiệm. Tương lai có thể sẽ có những thay đổi lớn và các script hiện tại có thể bị hỏng. Vui lòng sử dụng cẩn thận.",
     "createScript": "Tạo Script",
     "createScriptTitle": "Tạo Script Mới",
     "createScriptDescription": "Tạo một script trực quan mới cho phiên bản này. Script có thể tự động hóa hành động bot và phản hồi các sự kiện.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Node đã bắt đầu: {{nodeId}}",
     "nodeCompleted": "Node đã hoàn thành: {{nodeId}}",
     "nodeError": "Lỗi Node: {{error}}",
+    "contextMenu": {
+      "edit": "Chỉnh Sửa Script",
+      "pause": "Tạm dừng",
+      "resume": "Tiếp tục",
+      "delete": "Xóa Script"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Quay lại Scripts",

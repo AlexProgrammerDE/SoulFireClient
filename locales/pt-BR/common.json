@@ -406,6 +406,7 @@
     "success": "Enviado para mclo.gs! Veja aqui: {{url}}",
     "error": "Falha ao enviar para mclo.gs"
   },
+  "searchWithGoogle": "",
   "copyToClipboard": "Copiar para a área de transferência",
   "clipboardCopy": {
     "loading": "Copiando para a área de transferência...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Global",
     "instanceScript": "Instância"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "",
+      "deleteInstance": "Deletar Instancia"
+    },
+    "bot": {
+      "goToBot": "",
+      "copyUsername": ""
+    },
+    "plugin": {
+      "enable": "",
+      "disable": "",
+      "openSettings": ""
+    }
   }
 }

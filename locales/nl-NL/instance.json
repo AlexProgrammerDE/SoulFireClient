@@ -46,7 +46,11 @@
       "searchPasswords": "Wachtwoorden zoeken..."
     },
     "removeSelectedTooltip": "Geselecteerde proxies verwijderen",
-    "checkSelectedTooltip": "Geselecteerde proxies controleren"
+    "checkSelectedTooltip": "Geselecteerde proxies controleren",
+    "contextMenu": {
+      "copyAddress": "Adres kopiëren",
+      "deleteProxy": "Proxy verwijderen"
+    }
   },
   "account": {
     "getAccounts": "Accounts ophalen",
@@ -114,6 +118,11 @@
       "actions": "Acties"
     },
     "removeSelectedTooltip": "Geselecteerde accounts verwijderen",
+    "contextMenu": {
+      "openConfig": "Config openen",
+      "openMetadata": "Metadata openen",
+      "copyProfileId": "Profiel-ID kopiëren"
+    },
     "config": {
       "title": "{{name}} configureren",
       "description": "Stel per-bot instellingen in voor dit account",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Visuele scripts",
     "description": "Maak automatiseringsscripts met behulp van een visuele, op knooppunten gebaseerde editor.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Experimentele functie",
+    "experimentalWarning": "Deze functie is experimenteel. Er kunnen in de toekomst ingrijpende wijzigingen zijn en bestaande scripts kunnen hierdoor niet meer werken. Gebruik met voorzichtigheid.",
     "createScript": "Script aanmaken",
     "createScriptTitle": "Nieuw script aanmaken",
     "createScriptDescription": "Maak een nieuw visueel script voor deze instantie. Scripts kunnen botacties automatiseren en reageren op gebeurtenissen.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Knooppunt gestart: {{nodeId}}",
     "nodeCompleted": "Knooppunt voltooid: {{nodeId}}",
     "nodeError": "Knooppuntfout: {{error}}",
+    "contextMenu": {
+      "edit": "Script bewerken",
+      "pause": "Pauzeren",
+      "resume": "Hervatten",
+      "delete": "Script verwijderen"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Terug naar scripts",

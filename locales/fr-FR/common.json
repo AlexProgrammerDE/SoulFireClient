@@ -406,6 +406,7 @@
     "success": "Téléchargé sur mclo.gs\u0000a0! Voir ici\u0000a0: {{url}}",
     "error": "\u0000cchec du téléchargement vers mclo.gs"
   },
+  "searchWithGoogle": "Rechercher avec Google",
   "copyToClipboard": "Copier dans le presse-papier",
   "clipboardCopy": {
     "loading": "Copie dans le presse-papier...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Global",
     "instanceScript": "Instance"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "Aller à l'instance",
+      "deleteInstance": "Supprimer l'instance"
+    },
+    "bot": {
+      "goToBot": "Aller au bot",
+      "copyUsername": "Copier le nom d'utilisateur"
+    },
+    "plugin": {
+      "enable": "Activer",
+      "disable": "Désactiver",
+      "openSettings": "Ouvrir les paramètres"
+    }
   }
 }

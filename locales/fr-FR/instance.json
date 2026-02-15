@@ -46,7 +46,11 @@
       "searchPasswords": "Rechercher des mots de passe..."
     },
     "removeSelectedTooltip": "Supprimer les proxys sélectionnés",
-    "checkSelectedTooltip": "Vérifier les proxys sélectionnés"
+    "checkSelectedTooltip": "Vérifier les proxys sélectionnés",
+    "contextMenu": {
+      "copyAddress": "Copier l'adresse",
+      "deleteProxy": "Supprimer le proxy"
+    }
   },
   "account": {
     "getAccounts": "Obtenir des comptes",
@@ -114,6 +118,11 @@
       "actions": "Actions"
     },
     "removeSelectedTooltip": "Supprimer les comptes sélectionnés",
+    "contextMenu": {
+      "openConfig": "Ouvrir la configuration",
+      "openMetadata": "Ouvrir les métadonnées",
+      "copyProfileId": "Copier l'ID du profil"
+    },
     "config": {
       "title": "Configurer {{name}}",
       "description": "Configurer les paramètres par bot pour ce compte",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Scripts visuels",
     "description": "Créez des scripts d'automatisation à l'aide d'un éditeur visuel basé sur des nœuds.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Fonctionnalité expérimentale",
+    "experimentalWarning": "Cette fonctionnalité est expérimentale. Des modifications majeures peuvent survenir à l'avenir et les scripts existants pourraient cesser de fonctionner. À utiliser avec précaution.",
     "createScript": "Créer un script",
     "createScriptTitle": "Créer un nouveau script",
     "createScriptDescription": "Créez un nouveau script visuel pour cette instance. Les scripts peuvent automatiser les actions du bot et réagir aux événements.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Nœud démarré\u0000a0: {{nodeId}}",
     "nodeCompleted": "Nœud terminé\u0000a0: {{nodeId}}",
     "nodeError": "Erreur du nœud\u0000a0: {{error}}",
+    "contextMenu": {
+      "edit": "Éditer le script",
+      "pause": "Pauser",
+      "resume": "Reprendre",
+      "delete": "Supprimer le script"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Retour aux scripts",

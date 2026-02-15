@@ -46,7 +46,11 @@
       "searchPasswords": "Passwörter suchen..."
     },
     "removeSelectedTooltip": "Ausgewählte Proxies entfernen",
-    "checkSelectedTooltip": "Ausgewählte Proxies prüfen"
+    "checkSelectedTooltip": "Ausgewählte Proxies prüfen",
+    "contextMenu": {
+      "copyAddress": "Adresse kopieren",
+      "deleteProxy": "Proxy löschen"
+    }
   },
   "account": {
     "getAccounts": "Konten abrufen",
@@ -114,6 +118,11 @@
       "actions": "Aktionen"
     },
     "removeSelectedTooltip": "Ausgewählte Konten entfernen",
+    "contextMenu": {
+      "openConfig": "Konfiguration öffnen",
+      "openMetadata": "Metadaten öffnen",
+      "copyProfileId": "Profil-ID kopieren"
+    },
     "config": {
       "title": "{{name}} konfigurieren",
       "description": "Pro-Bot-Einstellungen für dieses Konto konfigurieren",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Visuelle Skripte",
     "description": "Erstellen Sie Automatisierungsskripte mit einem visuellen, node-basierten Editor.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Experimentelles Feature",
+    "experimentalWarning": "Diese Funktion ist experimentell. Zukünftige Änderungen könnten Inkompatibilitäten verursachen und bestehende Skripte könnten nicht mehr funktionieren. Bitte mit Vorsicht verwenden.",
     "createScript": "Skript erstellen",
     "createScriptTitle": "Neues Skript erstellen",
     "createScriptDescription": "Erstellen Sie ein neues visuelles Skript für diese Instanz. Skripte können Botaktionen automatisieren und auf Ereignisse reagieren.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Knoten gestartet: {{nodeId}}",
     "nodeCompleted": "Knoten abgeschlossen: {{nodeId}}",
     "nodeError": "Knotenfehler: {{error}}",
+    "contextMenu": {
+      "edit": "Skript bearbeiten",
+      "pause": "Pausieren",
+      "resume": "Fortsetzen",
+      "delete": "Skript löschen"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Zurück zu den Skripten",

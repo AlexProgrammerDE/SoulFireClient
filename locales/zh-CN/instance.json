@@ -46,7 +46,11 @@
       "searchPasswords": "搜索密码..."
     },
     "removeSelectedTooltip": "移除所选代理",
-    "checkSelectedTooltip": "检测所选代理"
+    "checkSelectedTooltip": "检测所选代理",
+    "contextMenu": {
+      "copyAddress": "复制地址",
+      "deleteProxy": "删除代理"
+    }
   },
   "account": {
     "getAccounts": "获取账户",
@@ -114,6 +118,11 @@
       "actions": "操作"
     },
     "removeSelectedTooltip": "移除所选账户",
+    "contextMenu": {
+      "openConfig": "打开配置",
+      "openMetadata": "打开元数据",
+      "copyProfileId": "复制配置文件ID"
+    },
     "config": {
       "title": "配置 {{name}}",
       "description": "为此账号配置每个机器人的设置",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "可视化脚本",
     "description": "使用可视化节点编辑器创建自动化脚本。",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "实验性功能",
+    "experimentalWarning": "此功能为实验性功能。未来可能会有重大更改，现有脚本可能会失效。请谨慎使用。",
     "createScript": "创建脚本",
     "createScriptTitle": "创建新脚本",
     "createScriptDescription": "为此实例创建新的可视化脚本。脚本可以自动化机器人操作并响应事件。",
@@ -329,6 +338,12 @@
     "nodeStarted": "节点已启动：{{nodeId}}",
     "nodeCompleted": "节点已完成：{{nodeId}}",
     "nodeError": "节点错误：{{error}}",
+    "contextMenu": {
+      "edit": "编辑脚本",
+      "pause": "暂停",
+      "resume": "继续",
+      "delete": "删除脚本"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "返回脚本",

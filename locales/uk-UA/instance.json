@@ -46,7 +46,11 @@
       "searchPasswords": "Пошук паролів..."
     },
     "removeSelectedTooltip": "Видалити вибрані проксі",
-    "checkSelectedTooltip": "Перевірити вибрані проксі"
+    "checkSelectedTooltip": "Перевірити вибрані проксі",
+    "contextMenu": {
+      "copyAddress": "Скопіювати адресу",
+      "deleteProxy": "Видалити проксі"
+    }
   },
   "account": {
     "getAccounts": "Отримати акаунти",
@@ -114,6 +118,11 @@
       "actions": "Дії"
     },
     "removeSelectedTooltip": "Видалити вибрані акаунти",
+    "contextMenu": {
+      "openConfig": "Відкрити конфігурацію",
+      "openMetadata": "Відкрити метадані",
+      "copyProfileId": "Скопіювати ID профілю"
+    },
     "config": {
       "title": "Налаштувати {{name}}",
       "description": "Налаштуйте окремі параметри ботів для цього акаунта",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Візуальні скрипти",
     "description": "Створюйте автоматизаційні скрипти за допомогою візуального редактора на основі вузлів.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Експериментальна функція",
+    "experimentalWarning": "Ця функція є експериментальною. Можуть бути непередбачені зміни в майбутньому, і наявні скрипти можуть перестати працювати. Використовуйте з обережністю.",
     "createScript": "Створити скрипт",
     "createScriptTitle": "Створити новий скрипт",
     "createScriptDescription": "Створіть новий візуальний скрипт для цього екземпляра. Скрипти можуть автоматизувати дії бота та реагувати на події.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Вузол запущено: {{nodeId}}",
     "nodeCompleted": "Вузол завершено: {{nodeId}}",
     "nodeError": "Помилка вузла: {{error}}",
+    "contextMenu": {
+      "edit": "Редагувати скрипт",
+      "pause": "Призупинити",
+      "resume": "Відновити",
+      "delete": "Видалити скрипт"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Повернутися до скриптів",

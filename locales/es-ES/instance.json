@@ -46,7 +46,11 @@
       "searchPasswords": "Buscar contraseñas..."
     },
     "removeSelectedTooltip": "Eliminar proxies seleccionados",
-    "checkSelectedTooltip": "Comprobar proxies seleccionados"
+    "checkSelectedTooltip": "Comprobar proxies seleccionados",
+    "contextMenu": {
+      "copyAddress": "Copiar dirección",
+      "deleteProxy": "Eliminar proxy"
+    }
   },
   "account": {
     "getAccounts": "Obtener cuentas",
@@ -114,6 +118,11 @@
       "actions": "Acciones"
     },
     "removeSelectedTooltip": "Eliminar cuentas seleccionadas",
+    "contextMenu": {
+      "openConfig": "Abrir configuración",
+      "openMetadata": "Abrir metadatos",
+      "copyProfileId": "Copiar ID de perfil"
+    },
     "config": {
       "title": "Configurar {{name}}",
       "description": "Configura la configuración por bot para esta cuenta",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Scripts Visuales",
     "description": "Cree scripts de automatización usando un editor visual basado en nodos.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Función experimental",
+    "experimentalWarning": "Esta función es experimental. Puede haber cambios importantes en el futuro y los scripts existentes podrían dejar de funcionar. Úselo con precaución.",
     "createScript": "Crear Script",
     "createScriptTitle": "Crear Nuevo Script",
     "createScriptDescription": "Cree un nuevo script visual para esta instancia. Los scripts pueden automatizar acciones del bot y responder a eventos.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Nodo iniciado: {{nodeId}}",
     "nodeCompleted": "Nodo completado: {{nodeId}}",
     "nodeError": "Error en el nodo: {{error}}",
+    "contextMenu": {
+      "edit": "Editar script",
+      "pause": "Pausar",
+      "resume": "Reanudar",
+      "delete": "Eliminar script"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Volver a Scripts",

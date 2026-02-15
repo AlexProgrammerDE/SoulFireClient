@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Etsi minimi kirjautumispäiviä..."
     },
     "removeSelectedTooltip": "Poista valitut käyttäjät",
-    "logOutSelectedTooltip": "Kirjaa valitut käyttäjät ulos"
+    "logOutSelectedTooltip": "Kirjaa valitut käyttäjät ulos",
+    "contextMenu": {
+      "editUser": "Muokkaa käyttäjää",
+      "impersonate": "Aja käyttäjäksi",
+      "copyUserId": "Kopioi käyttäjätunnus"
+    }
   }
 }

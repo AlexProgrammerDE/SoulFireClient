@@ -46,7 +46,11 @@
       "searchPasswords": "Hledat hesla..."
     },
     "removeSelectedTooltip": "Odebrat vybrané proxy",
-    "checkSelectedTooltip": "Zkontrolovat vybrané proxy"
+    "checkSelectedTooltip": "Zkontrolovat vybrané proxy",
+    "contextMenu": {
+      "copyAddress": "Kopírovat adresu",
+      "deleteProxy": "Smazat proxy"
+    }
   },
   "account": {
     "getAccounts": "Získat účty",
@@ -114,6 +118,11 @@
       "actions": "Akce"
     },
     "removeSelectedTooltip": "Odebrat vybrané účty",
+    "contextMenu": {
+      "openConfig": "Otevřít konfiguraci",
+      "openMetadata": "Otevřít metadata",
+      "copyProfileId": "Kopírovat ID profilu"
+    },
     "config": {
       "title": "Nastavit {{name}}",
       "description": "Nastavit nastavení pro jednotlivé boty tohoto účtu",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Vizuální skripty",
     "description": "Vytvářejte automatizační skripty pomocí vizuálního editoru založeného na uzlech.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Experimentální funkce",
+    "experimentalWarning": "Tato funkce je experimentální. V budoucnu může dojít k nekompatibilním změnám a stávající skripty mohou přestat fungovat. Používejte s opatrností.",
     "createScript": "Vytvořit skript",
     "createScriptTitle": "Vytvořit nový skript",
     "createScriptDescription": "Vytvořte nový vizuální skript pro tuto instanci. Skripty mohou automatizovat akce bota a reagovat na události.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Uzlu spuštěn: {{nodeId}}",
     "nodeCompleted": "Uzel dokončen: {{nodeId}}",
     "nodeError": "Chyba uzlu: {{error}}",
+    "contextMenu": {
+      "edit": "Upravit skript",
+      "pause": "Pozastavit",
+      "resume": "Pokračovat",
+      "delete": "Smazat skript"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Zpět na Skripty",

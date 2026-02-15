@@ -406,6 +406,7 @@
     "success": "已上传到 mclo.gs！在此查看：{{url}}",
     "error": "上传到 mclo.gs 失败"
   },
+  "searchWithGoogle": "",
   "copyToClipboard": "复制到剪贴板",
   "clipboardCopy": {
     "loading": "正在复制到剪贴板...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "全局",
     "instanceScript": "实例"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "",
+      "deleteInstance": "删除实例"
+    },
+    "bot": {
+      "goToBot": "",
+      "copyUsername": ""
+    },
+    "plugin": {
+      "enable": "",
+      "disable": "",
+      "openSettings": ""
+    }
   }
 }

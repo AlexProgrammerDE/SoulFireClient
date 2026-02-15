@@ -46,7 +46,11 @@
       "searchPasswords": "Szukaj haseł..."
     },
     "removeSelectedTooltip": "Usuń wybrane serwery proxy",
-    "checkSelectedTooltip": "Sprawdź wybrane serwery proxy"
+    "checkSelectedTooltip": "Sprawdź wybrane serwery proxy",
+    "contextMenu": {
+      "copyAddress": "Kopiuj adres",
+      "deleteProxy": "Usuń proxy"
+    }
   },
   "account": {
     "getAccounts": "Pobierz konta",
@@ -114,6 +118,11 @@
       "actions": "Akcje"
     },
     "removeSelectedTooltip": "Usuń wybrane konta",
+    "contextMenu": {
+      "openConfig": "Otwórz konfigurację",
+      "openMetadata": "Otwórz metadane",
+      "copyProfileId": "Kopiuj ID profilu"
+    },
     "config": {
       "title": "Konfiguruj {{name}}",
       "description": "Skonfiguruj ustawienia dla tego konta osobno dla każdego bota",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Skrypty wizualne",
     "description": "Twórz skrypty automatyzacji za pomocą wizualnego edytora węzłów.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Funkcja eksperymentalna",
+    "experimentalWarning": "Ta funkcja jest eksperymentalna. W przyszłości mogą wystąpić niezgodności, a istniejące skrypty mogą przestać działać. Używaj ostrożnie.",
     "createScript": "Utwórz skrypt",
     "createScriptTitle": "Utwórz nowy skrypt",
     "createScriptDescription": "Utwórz nowy skrypt wizualny dla tej instancji. Skrypty mogą automatyzować działania bota i reagować na zdarzenia.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Węzeł rozpoczęty: {{nodeId}}",
     "nodeCompleted": "Węzeł zakończony: {{nodeId}}",
     "nodeError": "Błąd węzła: {{error}}",
+    "contextMenu": {
+      "edit": "Edytuj skrypt",
+      "pause": "Wstrzymaj",
+      "resume": "Wznów",
+      "delete": "Usuń skrypt"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Powrót do skryptów",

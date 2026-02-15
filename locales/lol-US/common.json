@@ -406,6 +406,7 @@
     "success": "Uploded to mclo.gs! Seez it heer: {{url}}",
     "error": "Uplod to mclo.gs FAILED!"
   },
+  "searchWithGoogle": "",
   "copyToClipboard": "Copyz to clipbored",
   "clipboardCopy": {
     "loading": "Copyin to clipbored...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Globel",
     "instanceScript": "Inztanz"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "",
+      "deleteInstance": "Deleet Instance"
+    },
+    "bot": {
+      "goToBot": "",
+      "copyUsername": ""
+    },
+    "plugin": {
+      "enable": "",
+      "disable": "",
+      "openSettings": ""
+    }
   }
 }

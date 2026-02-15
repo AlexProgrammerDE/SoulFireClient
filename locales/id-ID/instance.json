@@ -46,7 +46,11 @@
       "searchPasswords": "Cari kata sandi..."
     },
     "removeSelectedTooltip": "Hapus proxy yang dipilih",
-    "checkSelectedTooltip": "Periksa proxy yang dipilih"
+    "checkSelectedTooltip": "Periksa proxy yang dipilih",
+    "contextMenu": {
+      "copyAddress": "Salin Alamat",
+      "deleteProxy": "Hapus Proxy"
+    }
   },
   "account": {
     "getAccounts": "Dapatkan Akun",
@@ -114,6 +118,11 @@
       "actions": "Aksi"
     },
     "removeSelectedTooltip": "Hapus akun yang dipilih",
+    "contextMenu": {
+      "openConfig": "Buka Konfigurasi",
+      "openMetadata": "Buka Metadata",
+      "copyProfileId": "Salin ID Profil"
+    },
     "config": {
       "title": "Konfigurasi {{name}}",
       "description": "Atur pengaturan per-bot untuk akun ini",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Skrip Visual",
     "description": "Buat skrip otomatisasi menggunakan editor node visual.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Fitur Eksperimental",
+    "experimentalWarning": "Fitur ini masih bersifat eksperimental. Mungkin akan ada perubahan besar di masa depan dan skrip yang ada bisa jadi tidak berfungsi. Gunakan dengan hati-hati.",
     "createScript": "Buat Skrip",
     "createScriptTitle": "Buat Skrip Baru",
     "createScriptDescription": "Buat skrip visual baru untuk instance ini. Skrip dapat mengotomatisasi aksi bot dan merespons kejadian.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Node dimulai: {{nodeId}}",
     "nodeCompleted": "Node selesai: {{nodeId}}",
     "nodeError": "Kesalahan node: {{error}}",
+    "contextMenu": {
+      "edit": "Edit Skrip",
+      "pause": "Jeda",
+      "resume": "Lanjutkan",
+      "delete": "Hapus Skrip"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Kembali ke Skrip",

@@ -46,7 +46,11 @@
       "searchPasswords": "搜尋密碼..."
     },
     "removeSelectedTooltip": "移除所選代理伺服器",
-    "checkSelectedTooltip": "檢查所選代理伺服器"
+    "checkSelectedTooltip": "檢查所選代理伺服器",
+    "contextMenu": {
+      "copyAddress": "複製位址",
+      "deleteProxy": "刪除代理伺服器"
+    }
   },
   "account": {
     "getAccounts": "獲取帳戶",
@@ -114,6 +118,11 @@
       "actions": "動作"
     },
     "removeSelectedTooltip": "移除所選帳號",
+    "contextMenu": {
+      "openConfig": "打開設定檔",
+      "openMetadata": "打開中繼資料",
+      "copyProfileId": "複製個人檔案 ID"
+    },
     "config": {
       "title": "設定 {{name}}",
       "description": "為此帳號設定每個機器人專屬的設定",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "視覺腳本",
     "description": "使用可視化節點編輯器建立自動化腳本。",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "實驗性功能",
+    "experimentalWarning": "此功能為實驗性質。未來可能會有重大變更，現有腳本可能會發生錯誤，請小心使用。",
     "createScript": "建立腳本",
     "createScriptTitle": "建立新腳本",
     "createScriptDescription": "為此實例建立新的視覺腳本。腳本可自動化機器人行為並回應事件。",
@@ -329,6 +338,12 @@
     "nodeStarted": "節點已啟動：{{nodeId}}",
     "nodeCompleted": "節點完成：{{nodeId}}",
     "nodeError": "節點錯誤：{{error}}",
+    "contextMenu": {
+      "edit": "編輯腳本",
+      "pause": "暫停",
+      "resume": "繼續",
+      "delete": "刪除腳本"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "返回腳本",

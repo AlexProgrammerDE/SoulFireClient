@@ -406,6 +406,7 @@
     "success": "Đã tải lên mclo.gs! Xem tại đây: {{url}}",
     "error": "Tải lên mclo.gs thất bại"
   },
+  "searchWithGoogle": "",
   "copyToClipboard": "Sao chép vào bộ nhớ tạm",
   "clipboardCopy": {
     "loading": "Đang sao chép vào bộ nhớ tạm...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Toàn cục",
     "instanceScript": "Phiên bản"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "",
+      "deleteInstance": "Xóa phiên bản"
+    },
+    "bot": {
+      "goToBot": "",
+      "copyUsername": ""
+    },
+    "plugin": {
+      "enable": "",
+      "disable": "",
+      "openSettings": ""
+    }
   }
 }

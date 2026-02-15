@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Поиск минимальных дат выдачи..."
     },
     "removeSelectedTooltip": "Удалить выбранных пользователей",
-    "logOutSelectedTooltip": "Вывести из системы выбранных пользователей"
+    "logOutSelectedTooltip": "Вывести из системы выбранных пользователей",
+    "contextMenu": {
+      "editUser": "Редактировать пользователя",
+      "impersonate": "Войти от имени пользователя",
+      "copyUserId": "Скопировать ID пользователя"
+    }
   }
 }

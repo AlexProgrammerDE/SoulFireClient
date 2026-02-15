@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Min. uitgegeven op zoeken..."
     },
     "removeSelectedTooltip": "Geselecteerde gebruikers verwijderen",
-    "logOutSelectedTooltip": "Geselecteerde gebruikers uitloggen"
+    "logOutSelectedTooltip": "Geselecteerde gebruikers uitloggen",
+    "contextMenu": {
+      "editUser": "Gebruiker bewerken",
+      "impersonate": "Als deze gebruiker inloggen",
+      "copyUserId": "Gebruikers-ID kopiëren"
+    }
   }
 }

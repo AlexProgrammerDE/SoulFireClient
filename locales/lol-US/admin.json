@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Seerch min issued ats..."
     },
     "removeSelectedTooltip": "Remoov selekted users",
-    "logOutSelectedTooltip": "Logz owt selekted users"
+    "logOutSelectedTooltip": "Logz owt selekted users",
+    "contextMenu": {
+      "editUser": "",
+      "impersonate": "",
+      "copyUserId": ""
+    }
   }
 }

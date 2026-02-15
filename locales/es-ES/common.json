@@ -406,6 +406,7 @@
     "success": "¡Subido a mclo.gs! Véalo aquí: {{url}}",
     "error": "No se pudo subir a mclo.gs"
   },
+  "searchWithGoogle": "Buscar con Google",
   "copyToClipboard": "Copiar al portapapeles",
   "clipboardCopy": {
     "loading": "Copiando al portapapeles...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Global",
     "instanceScript": "Instancia"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "Ir a la instancia",
+      "deleteInstance": "Eliminar instancia"
+    },
+    "bot": {
+      "goToBot": "Ir al bot",
+      "copyUsername": "Copiar nombre de usuario"
+    },
+    "plugin": {
+      "enable": "Habilitar",
+      "disable": "Deshabilitar",
+      "openSettings": "Abrir configuración"
+    }
   }
 }

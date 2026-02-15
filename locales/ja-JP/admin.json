@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "最小発行日時で検索..."
     },
     "removeSelectedTooltip": "選択したユーザーを削除",
-    "logOutSelectedTooltip": "選択したユーザーをログアウト"
+    "logOutSelectedTooltip": "選択したユーザーをログアウト",
+    "contextMenu": {
+      "editUser": "ユーザーを編集する",
+      "impersonate": "なりすます",
+      "copyUserId": "ユーザーIDをコピー"
+    }
   }
 }

@@ -46,7 +46,11 @@
       "searchPasswords": "Şifrelerde ara..."
     },
     "removeSelectedTooltip": "Seçili proxy'leri kaldır",
-    "checkSelectedTooltip": "Seçili proxy'leri kontrol et"
+    "checkSelectedTooltip": "Seçili proxy'leri kontrol et",
+    "contextMenu": {
+      "copyAddress": "Adresi Kopyala",
+      "deleteProxy": "Proxy'yi Sil"
+    }
   },
   "account": {
     "getAccounts": "Hesapları Al",
@@ -114,6 +118,11 @@
       "actions": "İşlemler"
     },
     "removeSelectedTooltip": "Seçili hesapları kaldır",
+    "contextMenu": {
+      "openConfig": "Yapılandırmayı Aç",
+      "openMetadata": "Metadata'yı Aç",
+      "copyProfileId": "Profil Kimliğini Kopyala"
+    },
     "config": {
       "title": "{{name}} Yapılandır",
       "description": "Bu hesap için bot başına ayarları yapılandırın",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Görsel Scriptler",
     "description": "Görsel bir düğüm tabanlı düzenleyici kullanarak otomasyon scriptleri oluşturun.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Deneysel Özellik",
+    "experimentalWarning": "Bu özellik deneyseldir. Gelecekte bozulmalar olabilir ve mevcut scriptler çalışmayabilir. Dikkatli kullanın.",
     "createScript": "Script Oluştur",
     "createScriptTitle": "Yeni Script Oluştur",
     "createScriptDescription": "Bu örnek için yeni bir görsel script oluşturun. Scriptler, botun eylemlerini otomatikleştirebilir ve olaylara yanıt verebilir.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Düğüm başlatıldı: {{nodeId}}",
     "nodeCompleted": "Düğüm tamamlandı: {{nodeId}}",
     "nodeError": "Düğüm hatası: {{error}}",
+    "contextMenu": {
+      "edit": "Script'i Düzenle",
+      "pause": "Duraklat",
+      "resume": "Devam et",
+      "delete": "Script'i Sil"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Scriptlere Geri Dön",

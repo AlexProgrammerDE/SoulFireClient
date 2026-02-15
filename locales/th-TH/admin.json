@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "ค้นหาวันที่ออกขั้นต่ำ..."
     },
     "removeSelectedTooltip": "ลบผู้ใช้ที่เลือก",
-    "logOutSelectedTooltip": "ออกจากระบบผู้ใช้ที่เลือก"
+    "logOutSelectedTooltip": "ออกจากระบบผู้ใช้ที่เลือก",
+    "contextMenu": {
+      "editUser": "",
+      "impersonate": "",
+      "copyUserId": ""
+    }
   }
 }

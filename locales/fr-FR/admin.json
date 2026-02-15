@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Rechercher les dates d'émission minimales..."
     },
     "removeSelectedTooltip": "Supprimer les utilisateurs sélectionnés",
-    "logOutSelectedTooltip": "Déconnecter les utilisateurs sélectionnés"
+    "logOutSelectedTooltip": "Déconnecter les utilisateurs sélectionnés",
+    "contextMenu": {
+      "editUser": "Modifier l'utilisateur",
+      "impersonate": "Se connecter en tant qu'utilisateur",
+      "copyUserId": "Copier l'ID de l'utilisateur"
+    }
   }
 }

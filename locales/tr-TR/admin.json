@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Minimum oluşturulma tarihlerinde ara..."
     },
     "removeSelectedTooltip": "Seçili kullanıcıları kaldır",
-    "logOutSelectedTooltip": "Seçili kullanıcıların oturumunu kapat"
+    "logOutSelectedTooltip": "Seçili kullanıcıların oturumunu kapat",
+    "contextMenu": {
+      "editUser": "",
+      "impersonate": "",
+      "copyUserId": ""
+    }
   }
 }

@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Sök min. utfärdandedatum..."
     },
     "removeSelectedTooltip": "Ta bort valda användare",
-    "logOutSelectedTooltip": "Logga ut valda användare"
+    "logOutSelectedTooltip": "Logga ut valda användare",
+    "contextMenu": {
+      "editUser": "",
+      "impersonate": "",
+      "copyUserId": ""
+    }
   }
 }

@@ -406,6 +406,7 @@
     "success": "Uppladdad till mclo.gs! Visa det här: {{url}}",
     "error": "Misslyckades med att ladda upp till mclo.gs"
   },
+  "searchWithGoogle": "",
   "copyToClipboard": "Kopiera till urklipp",
   "clipboardCopy": {
     "loading": "Kopierar till urklipp...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Globalt",
     "instanceScript": "Instans"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "",
+      "deleteInstance": "Ta bort instans"
+    },
+    "bot": {
+      "goToBot": "",
+      "copyUsername": ""
+    },
+    "plugin": {
+      "enable": "",
+      "disable": "",
+      "openSettings": ""
+    }
   }
 }

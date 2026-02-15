@@ -46,7 +46,11 @@
       "searchPasswords": "SRSCH PAWZSWRDZ..."
     },
     "removeSelectedTooltip": "RMVZ SLEKTEDZ PROXIEZ",
-    "checkSelectedTooltip": "CHEK SLEKTEDZ PROXIEZ"
+    "checkSelectedTooltip": "CHEK SLEKTEDZ PROXIEZ",
+    "contextMenu": {
+      "copyAddress": "Coppy Adress",
+      "deleteProxy": "DELET PROXY, KTHX!"
+    }
   },
   "account": {
     "getAccounts": "Getz Accountz!",
@@ -114,6 +118,11 @@
       "actions": "Akshuns"
     },
     "removeSelectedTooltip": "RMVZ SLEKTEDZ ACCOUNTZ",
+    "contextMenu": {
+      "openConfig": "OPN CONFIG, YAY!",
+      "openMetadata": "OPN METADEETA, WOW!",
+      "copyProfileId": "COPY PROFILE ID, SRSLY"
+    },
     "config": {
       "title": "Configur teh {{name}}",
       "description": "Configur pwoper bot settns fur dis account",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Vizhul Skriptz",
     "description": "Mak awtomaet skript using funneh nodez editor, kthx.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "XPERIMENTAL FEETURZ!!1!1!",
+    "experimentalWarning": "Dis featur iz xperimentul. Dere can b breakin changz in da future an' skripts u got mite brake. USE WIF CAWTUN, KTHXBAI!",
     "createScript": "Make Skript",
     "createScriptTitle": "Make Nu Skript",
     "createScriptDescription": "Mak nub vizhul skript 4 diz instanz. Skriptz do teh bot stuf an respawn to evnts.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Node begun: {{nodeId}}",
     "nodeCompleted": "Node completid: {{nodeId}}",
     "nodeError": "Node fail: {{error}}",
+    "contextMenu": {
+      "edit": "EDIT SCRIPT, LETZ GO!",
+      "pause": "Pawse",
+      "resume": "Resoome",
+      "delete": "DELET SCRIPT, KTHXBYE!"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Bak to Skriptz",

@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Minimum verilən tarixdə axtarış..."
     },
     "removeSelectedTooltip": "Seçilmiş istifadəçiləri sil",
-    "logOutSelectedTooltip": "Seçilmiş istifadəçiləri çıxış etdir"
+    "logOutSelectedTooltip": "Seçilmiş istifadəçiləri çıxış etdir",
+    "contextMenu": {
+      "editUser": "",
+      "impersonate": "",
+      "copyUserId": ""
+    }
   }
 }
