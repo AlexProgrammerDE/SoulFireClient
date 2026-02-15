@@ -77,17 +77,17 @@ function PluginInfoCardContent(props: {
             {props.plugin.description}
           </CardDescription>
           <div className="mt-2 flex flex-wrap gap-2">
-            <Badge variant="secondary">
+            <Badge variant="secondary" className="select-text">
               {t("pluginCard.version", {
                 version: props.plugin.version,
               })}
             </Badge>
-            <Badge variant="secondary">
+            <Badge variant="secondary" className="select-text">
               {t("pluginCard.author", {
                 author: props.plugin.author,
               })}
             </Badge>
-            <Badge variant="secondary">
+            <Badge variant="secondary" className="select-text">
               {t("pluginCard.license", {
                 license: props.plugin.license,
               })}

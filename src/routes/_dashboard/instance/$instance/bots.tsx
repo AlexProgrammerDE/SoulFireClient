@@ -485,7 +485,7 @@ function BotCard({
           <CardContent className="pt-0">
             <div className="text-muted-foreground flex items-center gap-1 text-xs">
               <MapPinIcon className="size-3" />
-              <span>
+              <span className="select-text">
                 {bot.liveState.x.toFixed(1)}, {bot.liveState.y.toFixed(1)},{" "}
                 {bot.liveState.z.toFixed(1)}
               </span>

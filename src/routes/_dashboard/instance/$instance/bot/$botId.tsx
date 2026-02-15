@@ -402,7 +402,7 @@ function BotSkinPreview({
                   {accountTypeLabel(typeKey)}
                 </Badge>
               </div>
-              <CardDescription className="font-mono text-xs">
+              <CardDescription className="select-text font-mono text-xs">
                 UUID: {account.profileId}
               </CardDescription>
             </div>
@@ -469,7 +469,7 @@ function BotPositionPanel({
                   <p className="text-muted-foreground text-xs font-medium uppercase">
                     {t("bots.positionPanel.position")}
                   </p>
-                  <div className="mt-1 grid grid-cols-3 gap-2 font-mono text-sm">
+                  <div className="mt-1 grid select-text grid-cols-3 gap-2 font-mono text-sm">
                     <div>
                       <span className="text-muted-foreground">X:</span>{" "}
                       {liveState.x.toFixed(2)}
@@ -490,7 +490,7 @@ function BotPositionPanel({
                   <p className="text-muted-foreground text-xs font-medium uppercase">
                     {t("bots.positionPanel.rotation")}
                   </p>
-                  <div className="mt-1 grid grid-cols-2 gap-2 font-mono text-sm">
+                  <div className="mt-1 grid select-text grid-cols-2 gap-2 font-mono text-sm">
                     <div>
                       <span className="text-muted-foreground">Pitch:</span>{" "}
                       {liveState.xRot.toFixed(1)}°
@@ -594,7 +594,7 @@ function BotStatsPanel({
                     {t("bots.statsPanel.health")}
                   </span>
                 </div>
-                <span className="font-mono text-sm">
+                <span className="select-text font-mono text-sm">
                   {liveState.health.toFixed(1)} /{" "}
                   {liveState.maxHealth.toFixed(1)}
                 </span>
@@ -618,7 +618,7 @@ function BotStatsPanel({
                     {t("bots.statsPanel.food")}
                   </span>
                 </div>
-                <span className="font-mono text-sm">
+                <span className="select-text font-mono text-sm">
                   {liveState.foodLevel} / 20
                 </span>
               </div>
@@ -628,7 +628,7 @@ function BotStatsPanel({
                   style={{ width: `${(liveState.foodLevel / 20) * 100}%` }}
                 />
               </div>
-              <p className="text-muted-foreground mt-0.5 text-xs">
+              <p className="text-muted-foreground mt-0.5 select-text text-xs">
                 {t("bots.statsPanel.saturation")}:{" "}
                 {liveState.saturationLevel.toFixed(1)}
               </p>
@@ -643,7 +643,7 @@ function BotStatsPanel({
                     {t("bots.statsPanel.experience")}
                   </span>
                 </div>
-                <span className="font-mono text-sm">
+                <span className="select-text font-mono text-sm">
                   {t("bots.statsPanel.level")} {liveState.experienceLevel}
                 </span>
               </div>
@@ -653,7 +653,7 @@ function BotStatsPanel({
                   style={{ width: `${liveState.experienceProgress * 100}%` }}
                 />
               </div>
-              <p className="text-muted-foreground mt-0.5 text-xs">
+              <p className="text-muted-foreground mt-0.5 select-text text-xs">
                 {(liveState.experienceProgress * 100).toFixed(0)}%{" "}
                 {t("bots.statsPanel.toNextLevel")}
               </p>
@@ -1494,7 +1494,7 @@ function BookPagesPanel({
       </div>
       <div className="rounded-lg border p-3">
         {/* Page content */}
-        <div className="bg-muted/30 mb-2 min-h-[100px] whitespace-pre-wrap rounded p-2 font-mono text-xs">
+        <div className="bg-muted/30 mb-2 min-h-[100px] select-text whitespace-pre-wrap rounded p-2 font-mono text-xs">
           {currentPageContent?.content ||
             t("bots.inventoryPanel.bookPages.emptyPage")}
         </div>
@@ -1992,7 +1992,7 @@ function BotDialogPanel({
                   <span className="text-muted-foreground text-sm">
                     {t("bots.dialogPanel.dialogId")}:
                   </span>
-                  <code className="bg-muted rounded px-2 py-1 text-xs">
+                  <code className="bg-muted select-text rounded px-2 py-1 text-xs">
                     {dialog.id}
                   </code>
                 </div>
@@ -2111,10 +2111,10 @@ function BotVisualPanel({
                   <div className="bg-primary absolute left-1/2 top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full" />
                 </div>
                 <div className="text-center">
-                  <p className="text-lg font-bold">
+                  <p className="select-text text-lg font-bold">
                     {getCompassDirection(liveState.yRot)}
                   </p>
-                  <p className="text-muted-foreground text-xs">
+                  <p className="text-muted-foreground select-text text-xs">
                     {liveState.yRot.toFixed(1)}°
                   </p>
                 </div>
@@ -2146,7 +2146,7 @@ function BotVisualPanel({
                           ? t("bots.visualPanel.lookingDown")
                           : t("bots.visualPanel.lookingStraight")}
                     </p>
-                    <p className="text-muted-foreground text-xs">
+                    <p className="text-muted-foreground select-text text-xs">
                       {liveState.xRot.toFixed(1)}°
                     </p>
                   </div>
@@ -2164,7 +2164,7 @@ function BotVisualPanel({
                   <span className="text-muted-foreground">
                     {t("bots.visualPanel.dimension")}:
                   </span>{" "}
-                  <span className="font-mono">
+                  <span className="select-text font-mono">
                     {formatDimension(liveState.dimension)}
                   </span>
                 </div>

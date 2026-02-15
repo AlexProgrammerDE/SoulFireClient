@@ -678,7 +678,7 @@ function IntegratedLoadingMenu() {
             {logs.map((log, index) => (
               <p
                 key={`${index}-${log}`}
-                className="rounded-md bg-muted px-3 py-2 font-mono text-xs break-all"
+                className="select-text rounded-md bg-muted px-3 py-2 font-mono text-xs break-all"
               >
                 {log}
               </p>

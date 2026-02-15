@@ -81,52 +81,66 @@ function AboutDialog({
                     <TableCell>
                       {t("dialog.about.fields.operatingSystem")}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="select-text">
                       {systemInfo.osType} {systemInfo.osVersion}
                     </TableCell>
                   </TableRow>
 
                   <TableRow>
                     <TableCell>{t("dialog.about.fields.platform")}</TableCell>
-                    <TableCell>{systemInfo.platformName}</TableCell>
+                    <TableCell className="select-text">
+                      {systemInfo.platformName}
+                    </TableCell>
                   </TableRow>
 
                   <TableRow>
                     <TableCell>{t("dialog.about.fields.locale")}</TableCell>
-                    <TableCell>{systemInfo.osLocale ?? "Unknown"}</TableCell>
+                    <TableCell className="select-text">
+                      {systemInfo.osLocale ?? "Unknown"}
+                    </TableCell>
                   </TableRow>
 
                   <TableRow>
                     <TableCell>
                       {t("dialog.about.fields.architecture")}
                     </TableCell>
-                    <TableCell>{systemInfo.archName}</TableCell>
+                    <TableCell className="select-text">
+                      {systemInfo.archName}
+                    </TableCell>
                   </TableRow>
 
                   <TableRow>
                     <TableCell>
                       {t("dialog.about.fields.environment")}
                     </TableCell>
-                    <TableCell>{APP_ENVIRONMENT}</TableCell>
+                    <TableCell className="select-text">
+                      {APP_ENVIRONMENT}
+                    </TableCell>
                   </TableRow>
                 </>
               ) : (
                 <>
                   <TableRow>
                     <TableCell>{t("dialog.about.fields.browser")}</TableCell>
-                    <TableCell>{navigator.userAgent}</TableCell>
+                    <TableCell className="select-text">
+                      {navigator.userAgent}
+                    </TableCell>
                   </TableRow>
 
                   <TableRow>
                     <TableCell>{t("dialog.about.fields.locale")}</TableCell>
-                    <TableCell>{navigator.language}</TableCell>
+                    <TableCell className="select-text">
+                      {navigator.language}
+                    </TableCell>
                   </TableRow>
 
                   <TableRow>
                     <TableCell>
                       {t("dialog.about.fields.environment")}
                     </TableCell>
-                    <TableCell>{APP_ENVIRONMENT}</TableCell>
+                    <TableCell className="select-text">
+                      {APP_ENVIRONMENT}
+                    </TableCell>
                   </TableRow>
                 </>
               )}
