@@ -292,7 +292,7 @@ function Index() {
                   }}
                 />
               </p>
-              <p className="mb-1">
+              <p className="select-text mb-1">
                 {t("footer.version", {
                   version: APP_VERSION,
                   environment: APP_ENVIRONMENT,

@@ -539,7 +539,7 @@
       "openSettings": "Open Settings",
       "copyPluginName": "Copy Plugin Name",
       "copyVersion": "Copy Version",
-      "copyWebsiteUrl": "Copy Website URL"
+      "openWebsite": "Open Website"
     }
   }
 }

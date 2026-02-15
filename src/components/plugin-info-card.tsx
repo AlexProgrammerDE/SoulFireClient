@@ -5,7 +5,12 @@ import {
   useSuspenseQuery,
 } from "@tanstack/react-query";
 import { Link, useNavigate, useRouteContext } from "@tanstack/react-router";
-import { ClipboardCopyIcon, ExternalLinkIcon, PowerIcon } from "lucide-react";
+import {
+  ClipboardCopyIcon,
+  ExternalLinkIcon,
+  GlobeIcon,
+  PowerIcon,
+} from "lucide-react";
 import type { ReactNode } from "react";
 import { use, useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -34,6 +39,7 @@ import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import type { BaseSettings } from "@/lib/types.ts";
 import {
   getSettingValue,
+  openExternalUrl,
   updateInstanceConfigEntry,
   updateServerConfigEntry,
 } from "@/lib/utils.tsx";
@@ -150,12 +156,12 @@ function PluginInfoCardContent(props: {
           {props.plugin.website && (
             <MenuItem
               onClick={() => {
-                copyToClipboard(props.plugin.website);
+                openExternalUrl(props.plugin.website);
                 dismiss();
               }}
             >
-              <ClipboardCopyIcon />
-              {t("contextMenu.plugin.copyWebsiteUrl")}
+              <GlobeIcon />
+              {t("contextMenu.plugin.openWebsite")}
             </MenuItem>
           )}
         </ContextMenuPortal>
