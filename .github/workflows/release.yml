@@ -470,6 +470,6 @@ jobs:
           webhook-url: ${{ secrets.WEBHOOK_URL }}
           content: <@&850705047938793503> New SoulFireClient version released!
           embed-title: SoulFireClient ${{ inputs.app-version }}
-          embed-description: SoulFireClient ${{ inputs.app-version }} has been released! Changelog and download can be found at https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/${{ inputs.app-version }}
+          embed-description: SoulFireClient ${{ inputs.app-version }} has been released! Download at https://soulfiremc.com/download and changelog at https://github.com/AlexProgrammerDE/SoulFireClient/releases/tag/${{ inputs.app-version }}
           embed-color: 3312063
           embed-thumbnail-url: https://soulfiremc.com/logo.png
