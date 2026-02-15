@@ -406,6 +406,7 @@
     "success": "Berhasil diunggah ke mclo.gs! Lihat di sini: {{url}}",
     "error": "Gagal mengunggah ke mclo.gs"
   },
+  "searchWithGoogle": "",
   "copyToClipboard": "Salin ke clipboard",
   "clipboardCopy": {
     "loading": "Menyalin ke clipboard...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Global",
     "instanceScript": "Instansi"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "",
+      "deleteInstance": "Hapus Instansi"
+    },
+    "bot": {
+      "goToBot": "",
+      "copyUsername": ""
+    },
+    "plugin": {
+      "enable": "",
+      "disable": "",
+      "openSettings": ""
+    }
   }
 }

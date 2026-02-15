@@ -406,6 +406,7 @@
     "success": "Geüpload naar mclo.gs! Bekijk het hier: {{url}}",
     "error": "Uploaden naar mclo.gs mislukt"
   },
+  "searchWithGoogle": "Zoeken met Google",
   "copyToClipboard": "Kopiëren naar klembord",
   "clipboardCopy": {
     "loading": "Kopiëren naar klembord...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Globaal",
     "instanceScript": "Instantie"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "Ga naar instantie",
+      "deleteInstance": "Instantie verwijderen"
+    },
+    "bot": {
+      "goToBot": "Ga naar bot",
+      "copyUsername": "Gebruikersnaam kopiëren"
+    },
+    "plugin": {
+      "enable": "Inschakelen",
+      "disable": "Uitschakelen",
+      "openSettings": "Instellingen openen"
+    }
   }
 }

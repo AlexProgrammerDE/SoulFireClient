@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "최소 발급일 검색..."
     },
     "removeSelectedTooltip": "선택한 사용자 삭제",
-    "logOutSelectedTooltip": "선택한 사용자 로그아웃"
+    "logOutSelectedTooltip": "선택한 사용자 로그아웃",
+    "contextMenu": {
+      "editUser": "사용자 편집",
+      "impersonate": "가상 사용자로 전환",
+      "copyUserId": "사용자 ID 복사"
+    }
   }
 }

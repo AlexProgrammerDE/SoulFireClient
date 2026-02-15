@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Mindest-Ausstellungsdaten suchen..."
     },
     "removeSelectedTooltip": "Ausgewählte Benutzer entfernen",
-    "logOutSelectedTooltip": "Ausgewählte Benutzer abmelden"
+    "logOutSelectedTooltip": "Ausgewählte Benutzer abmelden",
+    "contextMenu": {
+      "editUser": "Benutzer bearbeiten",
+      "impersonate": "Sich als Benutzer ausgeben",
+      "copyUserId": "Benutzer-ID kopieren"
+    }
   }
 }

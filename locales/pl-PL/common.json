@@ -406,6 +406,7 @@
     "success": "Wysłano do mclo.gs! Zobacz tutaj: {{url}}",
     "error": "Nie udało się wysłać do mclo.gs"
   },
+  "searchWithGoogle": "Wyszukaj w Google",
   "copyToClipboard": "Kopiuj do schowka",
   "clipboardCopy": {
     "loading": "Kopiowanie do schowka...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Globalny",
     "instanceScript": "Instancja"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "Przejdź do instancji",
+      "deleteInstance": "Usuń instancję"
+    },
+    "bot": {
+      "goToBot": "Przejdź do bota",
+      "copyUsername": "Kopiuj nazwę użytkownika"
+    },
+    "plugin": {
+      "enable": "Włącz",
+      "disable": "Wyłącz",
+      "openSettings": "Otwórz ustawienia"
+    }
   }
 }

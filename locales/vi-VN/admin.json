@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Tìm kiếm thời gian cấp phát tối thiểu..."
     },
     "removeSelectedTooltip": "Xóa người dùng đã chọn",
-    "logOutSelectedTooltip": "Đăng xuất người dùng đã chọn"
+    "logOutSelectedTooltip": "Đăng xuất người dùng đã chọn",
+    "contextMenu": {
+      "editUser": "",
+      "impersonate": "",
+      "copyUserId": ""
+    }
   }
 }

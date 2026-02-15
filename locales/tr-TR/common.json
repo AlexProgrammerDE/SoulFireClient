@@ -406,6 +406,7 @@
     "success": "mclo.gs'ye yüklendi! Buradan görüntüleyin: {{url}}",
     "error": "mclo.gs'ye yükleme başarısız oldu"
   },
+  "searchWithGoogle": "",
   "copyToClipboard": "Panoya kopyala",
   "clipboardCopy": {
     "loading": "Panoya kopyalanıyor...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Genel",
     "instanceScript": "Örnek"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "",
+      "deleteInstance": "Örneği Sil"
+    },
+    "bot": {
+      "goToBot": "",
+      "copyUsername": ""
+    },
+    "plugin": {
+      "enable": "",
+      "disable": "",
+      "openSettings": ""
+    }
   }
 }

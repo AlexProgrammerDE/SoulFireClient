@@ -46,7 +46,11 @@
       "searchPasswords": "パスワードを検索..."
     },
     "removeSelectedTooltip": "選択したプロキシを削除",
-    "checkSelectedTooltip": "選択したプロキシをチェック"
+    "checkSelectedTooltip": "選択したプロキシをチェック",
+    "contextMenu": {
+      "copyAddress": "アドレスをコピー",
+      "deleteProxy": "プロキシを削除する"
+    }
   },
   "account": {
     "getAccounts": "アカウントを取得",
@@ -114,6 +118,11 @@
       "actions": "操作"
     },
     "removeSelectedTooltip": "選択したアカウントを削除",
+    "contextMenu": {
+      "openConfig": "設定を開く",
+      "openMetadata": "メタデータを開く",
+      "copyProfileId": "プロファイルIDをコピー"
+    },
     "config": {
       "title": "{{name}}の設定を構成する",
       "description": "このアカウントのボットごとの設定を構成します",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "ビジュアルスクリプト",
     "description": "ビジュアルノードベースのエディターを使って自動化スクリプトを作成しましょう。",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "実験的機能",
+    "experimentalWarning": "この機能は実験的です。将来的に互換性が破壊される変更が加えられる可能性があり、既存のスクリプトが動作しなくなることがあります。ご利用の際はご注意ください。",
     "createScript": "スクリプトを作成",
     "createScriptTitle": "新しいスクリプトを作成",
     "createScriptDescription": "このインスタンス用の新しいビジュアルスクリプトを作成します。スクリプトはボットの動作を自動化し、イベントに反応できます。",
@@ -329,6 +338,12 @@
     "nodeStarted": "ノード開始: {{nodeId}}",
     "nodeCompleted": "ノード完了: {{nodeId}}",
     "nodeError": "ノードエラー: {{error}}",
+    "contextMenu": {
+      "edit": "スクリプトを編集",
+      "pause": "一時停止",
+      "resume": "再開",
+      "delete": "スクリプトを削除する"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "スクリプトへ戻る",

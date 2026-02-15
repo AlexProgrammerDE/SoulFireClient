@@ -406,6 +406,7 @@
     "success": "mclo.gs पर अपलोड हो गया! यहाँ देखें: {{url}}",
     "error": "mclo.gs पर अपलोड करने में विफल"
   },
+  "searchWithGoogle": "",
   "copyToClipboard": "क्लिपबोर्ड पर कॉपी करें",
   "clipboardCopy": {
     "loading": "क्लिपबोर्ड पर कॉपी हो रहा है...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "वैश्विक",
     "instanceScript": "इंस्टेंस"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "",
+      "deleteInstance": "इंस्टेंस हटाएँ"
+    },
+    "bot": {
+      "goToBot": "",
+      "copyUsername": ""
+    },
+    "plugin": {
+      "enable": "",
+      "disable": "",
+      "openSettings": ""
+    }
   }
 }

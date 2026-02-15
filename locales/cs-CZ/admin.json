@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Hledat minimální datum vydání..."
     },
     "removeSelectedTooltip": "Odstranit vybrané uživatele",
-    "logOutSelectedTooltip": "Odhlásit vybrané uživatele"
+    "logOutSelectedTooltip": "Odhlásit vybrané uživatele",
+    "contextMenu": {
+      "editUser": "Upravit uživatele",
+      "impersonate": "Převzít identitu",
+      "copyUserId": "Zkopírovat ID uživatele"
+    }
   }
 }

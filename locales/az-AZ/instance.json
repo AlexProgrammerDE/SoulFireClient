@@ -46,7 +46,11 @@
       "searchPasswords": "Şifrlərdə axtarış..."
     },
     "removeSelectedTooltip": "Seçilmiş proksiləri sil",
-    "checkSelectedTooltip": "Seçilmiş proksiləri yoxla"
+    "checkSelectedTooltip": "Seçilmiş proksiləri yoxla",
+    "contextMenu": {
+      "copyAddress": "Ünvani kopyala",
+      "deleteProxy": "Proksini Sil"
+    }
   },
   "account": {
     "getAccounts": "Hesabları əldə et",
@@ -114,6 +118,11 @@
       "actions": "Əməliyyatlar"
     },
     "removeSelectedTooltip": "Seçilmiş hesabları sil",
+    "contextMenu": {
+      "openConfig": "Konfiqurasiyanı Aç",
+      "openMetadata": "Metadatanı Aç",
+      "copyProfileId": "Profil ID-ni Kopyala"
+    },
     "config": {
       "title": "{{name}}-i tənzimləyin",
       "description": "Bu hesab üçün hər bot üçün ayarları tənzimləyin",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Vizual Skriptlər",
     "description": "Vizual düyün əsaslı redaktor vasitəsi ilə avtomatlaşdırma skriptləri yaradın.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Eksperimental Funksiya",
+    "experimentalWarning": "Bu funksiya eksperimental mərhələdədir. Gələcəkdə dəyişikliklər ola bilər və mövcud skriptlər işləməyə bilər. Diqqətlə istifadə edin.",
     "createScript": "Skript Yarat",
     "createScriptTitle": "Yeni Skript Yarat",
     "createScriptDescription": "Bu instansiya üçün yeni vizual skript yaradın. Skriptlər bot fəaliyyətlərini avtomatlaşdıra və hadisələrə cavab verə bilər.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Düyün başlandı: {{nodeId}}",
     "nodeCompleted": "Düyün tamamlandı: {{nodeId}}",
     "nodeError": "Düyün xətası: {{error}}",
+    "contextMenu": {
+      "edit": "Skripti Redaktə Et",
+      "pause": "Fasilə",
+      "resume": "Davam et",
+      "delete": "Skripti Sil"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Skriptlərə Qayıt",

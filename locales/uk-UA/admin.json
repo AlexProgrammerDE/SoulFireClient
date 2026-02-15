@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Пошук мінімальних дат видачі..."
     },
     "removeSelectedTooltip": "Видалити вибраних користувачів",
-    "logOutSelectedTooltip": "Вийти з облікових записів вибраних користувачів"
+    "logOutSelectedTooltip": "Вийти з облікових записів вибраних користувачів",
+    "contextMenu": {
+      "editUser": "",
+      "impersonate": "",
+      "copyUserId": ""
+    }
   }
 }

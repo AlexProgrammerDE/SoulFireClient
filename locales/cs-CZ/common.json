@@ -406,6 +406,7 @@
     "success": "Nahráno na mclo.gs! Zobrazit zde: {{url}}",
     "error": "Nepodařilo se nahrát na mclo.gs"
   },
+  "searchWithGoogle": "Vyhledat pomocí Googlu",
   "copyToClipboard": "Kopírovat do schránky",
   "clipboardCopy": {
     "loading": "Kopírování do schránky...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Globální",
     "instanceScript": "Instance"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "Přejít na instanci",
+      "deleteInstance": "Smazat instanci"
+    },
+    "bot": {
+      "goToBot": "Přejít na bota",
+      "copyUsername": "Kopírovat uživatelské jméno"
+    },
+    "plugin": {
+      "enable": "Povolit",
+      "disable": "Zakázat",
+      "openSettings": "Otevřít nastavení"
+    }
   }
 }

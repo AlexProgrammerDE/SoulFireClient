@@ -46,7 +46,11 @@
       "searchPasswords": "Поиск паролей..."
     },
     "removeSelectedTooltip": "Удалить выбранные прокси",
-    "checkSelectedTooltip": "Проверить выбранные прокси"
+    "checkSelectedTooltip": "Проверить выбранные прокси",
+    "contextMenu": {
+      "copyAddress": "Скопировать адрес",
+      "deleteProxy": "Удалить прокси"
+    }
   },
   "account": {
     "getAccounts": "Получить аккаунты",
@@ -114,6 +118,11 @@
       "actions": "Действия"
     },
     "removeSelectedTooltip": "Удалить выбранные аккаунты",
+    "contextMenu": {
+      "openConfig": "Открыть конфигурацию",
+      "openMetadata": "Открыть метаданные",
+      "copyProfileId": "Скопировать ID профиля"
+    },
     "config": {
       "title": "Настроить {{name}}",
       "description": "Настройте параметры для каждого бота в этой учётной записи",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Визуальные скрипты",
     "description": "Создавайте скрипты автоматизации, используя визуальный редактор на узлах.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Экспериментальная функция",
+    "experimentalWarning": "Эта функция является экспериментальной. Возможны серьёзные изменения в будущем, и существующие скрипты могут перестать работать. Используйте с осторожностью.",
     "createScript": "Создать скрипт",
     "createScriptTitle": "Создать новый скрипт",
     "createScriptDescription": "Создайте новый визуальный скрипт для этого экземпляра. Скрипты могут автоматизировать действия бота и реагировать на события.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Узел запущен: {{nodeId}}",
     "nodeCompleted": "Узел завершён: {{nodeId}}",
     "nodeError": "Ошибка узла: {{error}}",
+    "contextMenu": {
+      "edit": "Редактировать скрипт",
+      "pause": "Пауза",
+      "resume": "Возобновить",
+      "delete": "Удалить скрипт"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Назад к скриптам",

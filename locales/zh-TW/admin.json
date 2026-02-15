@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "搜尋最小發放時間..."
     },
     "removeSelectedTooltip": "移除選取的使用者",
-    "logOutSelectedTooltip": "登出選取的使用者"
+    "logOutSelectedTooltip": "登出選取的使用者",
+    "contextMenu": {
+      "editUser": "",
+      "impersonate": "",
+      "copyUserId": ""
+    }
   }
 }

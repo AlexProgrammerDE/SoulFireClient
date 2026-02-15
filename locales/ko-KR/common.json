@@ -406,6 +406,7 @@
     "success": "mclo.gs에 업로드됨! 여기에서 보기: {{url}}",
     "error": "mclo.gs로 업로드에 실패했습니다"
   },
+  "searchWithGoogle": "Google에서 검색하기",
   "copyToClipboard": "클립보드에 복사",
   "clipboardCopy": {
     "loading": "클립보드에 복사 중...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "글로벌",
     "instanceScript": "인스턴스"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "인스턴스로 이동",
+      "deleteInstance": "인스턴스 삭제"
+    },
+    "bot": {
+      "goToBot": "봇으로 이동",
+      "copyUsername": "사용자명 복사"
+    },
+    "plugin": {
+      "enable": "활성화",
+      "disable": "비활성화",
+      "openSettings": "설정 열기"
+    }
   }
 }

@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Hľadať najskorší čas vydania..."
     },
     "removeSelectedTooltip": "Odstrániť vybraných používateľov",
-    "logOutSelectedTooltip": "Odhlásiť vybraných používateľov"
+    "logOutSelectedTooltip": "Odhlásiť vybraných používateľov",
+    "contextMenu": {
+      "editUser": "Upraviť používateľa",
+      "impersonate": "Imitovať",
+      "copyUserId": "Kopírovať ID používateľa"
+    }
   }
 }

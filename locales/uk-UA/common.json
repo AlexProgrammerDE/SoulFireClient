@@ -406,6 +406,7 @@
     "success": "Завантажено на mclo.gs! Переглянути тут: {{url}}",
     "error": "Не вдалося завантажити на mclo.gs"
   },
+  "searchWithGoogle": "",
   "copyToClipboard": "Скопіювати в буфер обміну",
   "clipboardCopy": {
     "loading": "Копіювання в буфер обміну...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Глобальний",
     "instanceScript": "Екземпляр"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "",
+      "deleteInstance": "Видалити екземпляр"
+    },
+    "bot": {
+      "goToBot": "",
+      "copyUsername": ""
+    },
+    "plugin": {
+      "enable": "",
+      "disable": "",
+      "openSettings": ""
+    }
   }
 }

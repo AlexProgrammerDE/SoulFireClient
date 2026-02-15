@@ -406,6 +406,7 @@
     "success": "Загружено на mclo.gs! Посмотрите здесь: {{url}}",
     "error": "Ошибка загрузки на mclo.gs"
   },
+  "searchWithGoogle": "Искать в Google",
   "copyToClipboard": "Скопировать в буфер обмена",
   "clipboardCopy": {
     "loading": "Копирование в буфер обмена...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Глобальный",
     "instanceScript": "Экземпляр"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "Перейти к экземпляру",
+      "deleteInstance": "Удалить экземпляр"
+    },
+    "bot": {
+      "goToBot": "Перейти к боту",
+      "copyUsername": "Скопировать имя пользователя"
+    },
+    "plugin": {
+      "enable": "Включить",
+      "disable": "Отключить",
+      "openSettings": "Открыть настройки"
+    }
   }
 }

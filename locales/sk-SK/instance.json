@@ -46,7 +46,11 @@
       "searchPasswords": "Hľadať heslá..."
     },
     "removeSelectedTooltip": "Odstrániť vybrané proxy",
-    "checkSelectedTooltip": "Skontrolovať vybrané proxy"
+    "checkSelectedTooltip": "Skontrolovať vybrané proxy",
+    "contextMenu": {
+      "copyAddress": "Kopírovať adresu",
+      "deleteProxy": "Odstrániť proxy"
+    }
   },
   "account": {
     "getAccounts": "Získať účty",
@@ -114,6 +118,11 @@
       "actions": "Akcie"
     },
     "removeSelectedTooltip": "Odstrániť vybrané účty",
+    "contextMenu": {
+      "openConfig": "Otvoriť konfiguráciu",
+      "openMetadata": "Otvoriť metadáta",
+      "copyProfileId": "Kopírovať ID profilu"
+    },
     "config": {
       "title": "Nastaviť {{name}}",
       "description": "Nastavte individuálne možnosti pre bota na tomto účte",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Vizuálne skripty",
     "description": "Vytvárajte automatizačné skripty použitím vizuálneho editora na základe uzlov.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Experimentálna funkcia",
+    "experimentalWarning": "Táto funkcia je experimentálna. V budúcnosti môže dôjsť k zásadným zmenám a existujúce skripty môžu prestať fungovať. Používajte ju opatrne.",
     "createScript": "Vytvoriť skript",
     "createScriptTitle": "Vytvoriť nový skript",
     "createScriptDescription": "Vytvorte nový vizuálny skript pre túto inštanciu. Skripty môžu automatizovať akcie bota a reagovať na udalosti.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Uzol spustený: {{nodeId}}",
     "nodeCompleted": "Uzol dokončený: {{nodeId}}",
     "nodeError": "Chyba uzla: {{error}}",
+    "contextMenu": {
+      "edit": "Upraviť skript",
+      "pause": "Pozastaviť",
+      "resume": "Pokračovať",
+      "delete": "Odstrániť skript"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Späť na skripty",

@@ -406,6 +406,7 @@
     "success": "mclo.gsにアップロードしました！こちらで表示: {{url}}",
     "error": "mclo.gsへのアップロードに失敗しました"
   },
+  "searchWithGoogle": "Googleで検索する",
   "copyToClipboard": "クリップボードにコピー",
   "clipboardCopy": {
     "loading": "クリップボードにコピー中...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "グローバル",
     "instanceScript": "インスタンス"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "インスタンスへ移動",
+      "deleteInstance": "インスタンスを削除"
+    },
+    "bot": {
+      "goToBot": "Botへ移動",
+      "copyUsername": "ユーザー名をコピー"
+    },
+    "plugin": {
+      "enable": "有効化",
+      "disable": "無効化",
+      "openSettings": "設定を開く"
+    }
   }
 }

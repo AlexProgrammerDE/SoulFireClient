@@ -406,6 +406,7 @@
     "success": "Ladattu mclo.gs-palveluun! Katso täältä: {{url}}",
     "error": "Lataus mclo.gs:ään epäonnistui"
   },
+  "searchWithGoogle": "Etsi Googlesta",
   "copyToClipboard": "Kopioi leikepöydälle",
   "clipboardCopy": {
     "loading": "Kopioidaan leikepöydälle...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Globaali",
     "instanceScript": "Instanssi"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "Siirry instanssiin",
+      "deleteInstance": "Poista instanssi"
+    },
+    "bot": {
+      "goToBot": "Siirry bottiin",
+      "copyUsername": "Kopioi käyttäjätunnus"
+    },
+    "plugin": {
+      "enable": "Ota käyttöön",
+      "disable": "Poista käytöstä",
+      "openSettings": "Avaa asetukset"
+    }
   }
 }

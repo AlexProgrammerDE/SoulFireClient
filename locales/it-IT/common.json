@@ -406,6 +406,7 @@
     "success": "Caricato su mclo.gs! Visualizzalo qui: {{url}}",
     "error": "Impossibile caricare su mclo.gs"
   },
+  "searchWithGoogle": "Cerca con Google",
   "copyToClipboard": "Copia negli appunti",
   "clipboardCopy": {
     "loading": "Copia negli appunti in corso...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Globale",
     "instanceScript": "Istanza"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "Vai all'istanza",
+      "deleteInstance": "Elimina istanza"
+    },
+    "bot": {
+      "goToBot": "Vai al Bot",
+      "copyUsername": "Copia nome utente"
+    },
+    "plugin": {
+      "enable": "Abilita",
+      "disable": "Disabilita",
+      "openSettings": "Apri impostazioni"
+    }
   }
 }

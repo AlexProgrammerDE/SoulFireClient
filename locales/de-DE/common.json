@@ -406,6 +406,7 @@
     "success": "Zu mclo.gs hochgeladen! Hier ansehen: {{url}}",
     "error": "Hochladen zu mclo.gs fehlgeschlagen"
   },
+  "searchWithGoogle": "Mit Google suchen",
   "copyToClipboard": "In die Zwischenablage kopieren",
   "clipboardCopy": {
     "loading": "Wird in die Zwischenablage kopiert...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "Global",
     "instanceScript": "Instanz"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "Zur Instanz gehen",
+      "deleteInstance": "Instanz löschen"
+    },
+    "bot": {
+      "goToBot": "Zum Bot gehen",
+      "copyUsername": "Benutzernamen kopieren"
+    },
+    "plugin": {
+      "enable": "Aktivieren",
+      "disable": "Deaktivieren",
+      "openSettings": "Einstellungen öffnen"
+    }
   }
 }

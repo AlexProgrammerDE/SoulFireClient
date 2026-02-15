@@ -46,7 +46,11 @@
       "searchPasswords": "Sök lösenord..."
     },
     "removeSelectedTooltip": "Ta bort valda proxies",
-    "checkSelectedTooltip": "Kontrollera valda proxies"
+    "checkSelectedTooltip": "Kontrollera valda proxies",
+    "contextMenu": {
+      "copyAddress": "Kopiera adress",
+      "deleteProxy": "Ta bort proxy"
+    }
   },
   "account": {
     "getAccounts": "Hämta konton",
@@ -114,6 +118,11 @@
       "actions": "Åtgärder"
     },
     "removeSelectedTooltip": "Ta bort valda konton",
+    "contextMenu": {
+      "openConfig": "Öppna konfigurering",
+      "openMetadata": "Öppna metadata",
+      "copyProfileId": "Kopiera profil-ID"
+    },
     "config": {
       "title": "Konfigurera {{name}}",
       "description": "Konfigurera inställningar per bot för detta konto",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Visuella skript",
     "description": "Skapa automationsskript med en visuell nodbaserad editor.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Experimentell funktion",
+    "experimentalWarning": "Den här funktionen är experimentell. Det kan komma att ske förändringar som bryter bakåtkompatibilitet i framtiden och befintliga skript kan sluta fungera. Använd med försiktighet.",
     "createScript": "Skapa skript",
     "createScriptTitle": "Skapa nytt skript",
     "createScriptDescription": "Skapa ett nytt visuellt skript för denna instans. Skript kan automatisera bottåtgärder och svara på händelser.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Nod startad: {{nodeId}}",
     "nodeCompleted": "Nod slutförd: {{nodeId}}",
     "nodeError": "Nodfel: {{error}}",
+    "contextMenu": {
+      "edit": "Redigera skript",
+      "pause": "Pausa",
+      "resume": "Återuppta",
+      "delete": "Ta bort skript"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Tillbaka till skript",

@@ -46,7 +46,11 @@
       "searchPasswords": "Etsi salasanoja..."
     },
     "removeSelectedTooltip": "Poista valitut proxyt",
-    "checkSelectedTooltip": "Tarkista valitut proxyt"
+    "checkSelectedTooltip": "Tarkista valitut proxyt",
+    "contextMenu": {
+      "copyAddress": "Kopioi osoite",
+      "deleteProxy": "Poista välityspalvelin"
+    }
   },
   "account": {
     "getAccounts": "Hae tilejä",
@@ -114,6 +118,11 @@
       "actions": "Toiminnot"
     },
     "removeSelectedTooltip": "Poista valitut tilit",
+    "contextMenu": {
+      "openConfig": "Avaa asetukset",
+      "openMetadata": "Avaa metatiedot",
+      "copyProfileId": "Kopioi profiilin tunniste"
+    },
     "config": {
       "title": "Määritä {{name}}",
       "description": "Määritä tämän tilin bottikohtaiset asetukset",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "Visuaaliset skriptit",
     "description": "Luo automaatioskriptejä visuaalisella solmupohjaisella editorilla.",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "Kokeellinen ominaisuus",
+    "experimentalWarning": "Tämä ominaisuus on kokeellinen. Tulevaisuudessa voi tapahtua muutoksia, jotka rikkovat nykyisen toiminnan, ja olemassa olevat skriptit saattavat lakata toimimasta. Käytä varoen.",
     "createScript": "Luo skripti",
     "createScriptTitle": "Luo uusi skripti",
     "createScriptDescription": "Luo uusi visuaalinen skripti tälle instanssille. Skriptit voivat automatisoida botin toimintoja ja reagoida tapahtumiin.",
@@ -329,6 +338,12 @@
     "nodeStarted": "Solmu käynnistetty: {{nodeId}}",
     "nodeCompleted": "Solmu valmis: {{nodeId}}",
     "nodeError": "Solmun virhe: {{error}}",
+    "contextMenu": {
+      "edit": "Muokkaa skriptiä",
+      "pause": "Tauota",
+      "resume": "Jatka",
+      "delete": "Poista skripti"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "Takaisin skripteihin",

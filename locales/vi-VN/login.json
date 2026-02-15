@@ -26,7 +26,7 @@
     "preparing": "Đang chuẩn bị khởi động máy chủ tích hợp...",
     "toast": {
       "loading": "Đang khởi động máy chủ tích hợp...",
-      "success": "",
+      "success": "Máy chủ tích hợp đã khởi động trong {{time}} giây",
       "error": "Không thể khởi động máy chủ tích hợp"
     },
     "description": "Máy chủ tích hợp chạy cục bộ trên máy tính của bạn. Nếu cần, hãy cấu hình các tham số khởi động Java ở bên dưới.",

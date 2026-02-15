@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "न्यूनतम जारी दिनांक खोजें..."
     },
     "removeSelectedTooltip": "चयनित उपयोगकर्ताओं को हटाएँ",
-    "logOutSelectedTooltip": "चयनित उपयोगकर्ताओं को लॉगआउट करें"
+    "logOutSelectedTooltip": "चयनित उपयोगकर्ताओं को लॉगआउट करें",
+    "contextMenu": {
+      "editUser": "",
+      "impersonate": "",
+      "copyUserId": ""
+    }
   }
 }

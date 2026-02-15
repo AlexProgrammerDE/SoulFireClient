@@ -26,7 +26,7 @@
     "preparing": "Valmistellaan integroidun palvelimen käynnistystä...",
     "toast": {
       "loading": "Käynnistetään integroitu palvelin...",
-      "success": "",
+      "success": "Integroitu palvelin käynnistyi {{time}} sekunnissa",
       "error": "Integroitu palvelin ei käynnistynyt"
     },
     "description": "Integroitu palvelin toimii paikallisesti tietokoneellasi. Voit tarvittaessa määrittää Java-käynnistysparametrit alla.",

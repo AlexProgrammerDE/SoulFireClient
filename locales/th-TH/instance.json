@@ -46,7 +46,11 @@
       "searchPasswords": "ค้นหารหัสผ่าน..."
     },
     "removeSelectedTooltip": "ลบพร็อกซีที่เลือก",
-    "checkSelectedTooltip": "ตรวจสอบพร็อกซีที่เลือก"
+    "checkSelectedTooltip": "ตรวจสอบพร็อกซีที่เลือก",
+    "contextMenu": {
+      "copyAddress": "คัดลอกที่อยู่",
+      "deleteProxy": "ลบ Proxy"
+    }
   },
   "account": {
     "getAccounts": "รับไอดี",
@@ -114,6 +118,11 @@
       "actions": "การดำเนินการ"
     },
     "removeSelectedTooltip": "ลบบัญชีที่เลือก",
+    "contextMenu": {
+      "openConfig": "เปิดการตั้งค่า",
+      "openMetadata": "เปิดข้อมูลเมตา",
+      "copyProfileId": "คัดลอกโปรไฟล์ ID"
+    },
     "config": {
       "title": "กำหนดค่า {{name}}",
       "description": "กำหนดค่าบ็อตแต่ละตัวสำหรับบัญชีนี้",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "สคริปต์แบบภาพ",
     "description": "สร้างสคริปต์อัตโนมัติด้วยตัวแก้ไขแบบโหนดภาพ",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "ฟีเจอร์ทดลองใช้งาน",
+    "experimentalWarning": "ฟีเจอร์นี้เป็นฟีเจอร์ทดลอง อาจมีการเปลี่ยนแปลงที่สำคัญในอนาคตและสคริปต์ที่มีอยู่อาจหยุดทำงานได้ กรุณาใช้งานด้วยความระมัดระวัง",
     "createScript": "สร้างสคริปต์",
     "createScriptTitle": "สร้างสคริปต์ใหม่",
     "createScriptDescription": "สร้างสคริปต์ภาพใหม่สำหรับอินสแตนซ์นี้ สคริปต์สามารถทำให้อัตโนมัติและตอบสนองต่อเหตุการณ์",
@@ -329,6 +338,12 @@
     "nodeStarted": "เริ่มโหนด: {{nodeId}}",
     "nodeCompleted": "โหนดเสร็จสิ้น: {{nodeId}}",
     "nodeError": "ข้อผิดพลาดโหนด: {{error}}",
+    "contextMenu": {
+      "edit": "แก้ไขสคริปต์",
+      "pause": "หยุดชั่วคราว",
+      "resume": "ดำเนินการต่อ",
+      "delete": "ลบสคริปต์"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "กลับไปที่สคริปต์",

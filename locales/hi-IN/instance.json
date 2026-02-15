@@ -46,7 +46,11 @@
       "searchPasswords": "पासवर्ड खोजें..."
     },
     "removeSelectedTooltip": "चयनित प्रॉक्सी हटाएँ",
-    "checkSelectedTooltip": "चयनित प्रॉक्सी जांचें"
+    "checkSelectedTooltip": "चयनित प्रॉक्सी जांचें",
+    "contextMenu": {
+      "copyAddress": "पता कॉपी करें",
+      "deleteProxy": "प्रॉक्सी हटाएँ"
+    }
   },
   "account": {
     "getAccounts": "खाते प्राप्त करें",
@@ -114,6 +118,11 @@
       "actions": "क्रियाएँ"
     },
     "removeSelectedTooltip": "चयनित खाते हटाएँ",
+    "contextMenu": {
+      "openConfig": "कॉन्फ़िग खोलें",
+      "openMetadata": "मेटाडाटा खोलें",
+      "copyProfileId": "प्रोफ़ाइल आईडी कॉपी करें"
+    },
     "config": {
       "title": "{{name}} को कॉन्फ़िगर करें",
       "description": "इस खाते के लिए प्रति-बॉट सेटिंग्स कॉन्फ़िगर करें",
@@ -282,8 +291,8 @@
   "scripts": {
     "title": "विजुअल स्क्रिप्ट्स",
     "description": "विजुअल नोड-आधारित संपादक का उपयोग करके ऑटोमेशन स्क्रिप्ट्स बनाएँ।",
-    "experimentalTitle": "",
-    "experimentalWarning": "",
+    "experimentalTitle": "प्रायोगिक सुविधा",
+    "experimentalWarning": "यह सुविधा प्रायोगिक है। भविष्य में इसमें महत्वपूर्ण परिवर्तन हो सकते हैं और मौजूदा स्क्रिप्ट्स काम करना बंद कर सकती हैं। सावधानी के साथ प्रयोग करें।",
     "createScript": "स्क्रिप्ट बनाएँ",
     "createScriptTitle": "नई स्क्रिप्ट बनाएँ",
     "createScriptDescription": "इस उदाहरण के लिए एक नई विजुअल स्क्रिप्ट बनाएँ। स्क्रिप्ट्स बॉट की क्रियाओं को स्वचालित कर सकती हैं और घटनाओं पर प्रतिक्रिया दे सकती हैं।",
@@ -329,6 +338,12 @@
     "nodeStarted": "नोड शुरू: {{nodeId}}",
     "nodeCompleted": "नोड पूर्ण: {{nodeId}}",
     "nodeError": "नोड त्रुटि: {{error}}",
+    "contextMenu": {
+      "edit": "स्क्रिप्ट संपादित करें",
+      "pause": "रोकें",
+      "resume": "फिर से शुरू करें",
+      "delete": "स्क्रिप्ट हटाएँ"
+    },
     "editor": {
       "toolbar": {
         "backToScripts": "स्क्रिप्ट्स पर वापस जाएँ",

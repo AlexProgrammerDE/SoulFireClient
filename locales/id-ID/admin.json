@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Cari tanggal minimum diterbitkan..."
     },
     "removeSelectedTooltip": "Hapus pengguna yang dipilih",
-    "logOutSelectedTooltip": "Keluar dari pengguna yang dipilih"
+    "logOutSelectedTooltip": "Keluar dari pengguna yang dipilih",
+    "contextMenu": {
+      "editUser": "",
+      "impersonate": "",
+      "copyUserId": ""
+    }
   }
 }

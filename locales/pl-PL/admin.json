@@ -96,6 +96,11 @@
       "searchMinIssuedAts": "Szukaj minimalnych dat wydania..."
     },
     "removeSelectedTooltip": "Usuń wybranych użytkowników",
-    "logOutSelectedTooltip": "Wyloguj wybranych użytkowników"
+    "logOutSelectedTooltip": "Wyloguj wybranych użytkowników",
+    "contextMenu": {
+      "editUser": "Edytuj użytkownika",
+      "impersonate": "Podszyj się",
+      "copyUserId": "Kopiuj ID użytkownika"
+    }
   }
 }

@@ -406,6 +406,7 @@
     "success": "อัปโหลดไปที่ mclo.gs สำเร็จ! ดูได้ที่นี่: {{url}}",
     "error": "อัปโหลดไปที่ mclo.gs ไม่สำเร็จ"
   },
+  "searchWithGoogle": "",
   "copyToClipboard": "คัดลอกไปยังคลิปบอร์ด",
   "clipboardCopy": {
     "loading": "กำลังคัดลอกไปยังคลิปบอร์ด...",
@@ -514,5 +515,20 @@
     },
     "globalScript": "โกลบอล",
     "instanceScript": "อินสแตนซ์"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "",
+      "deleteInstance": "ลบอินสแตนซ์"
+    },
+    "bot": {
+      "goToBot": "",
+      "copyUsername": ""
+    },
+    "plugin": {
+      "enable": "",
+      "disable": "",
+      "openSettings": ""
+    }
   }
 }
