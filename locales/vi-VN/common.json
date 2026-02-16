@@ -406,7 +406,7 @@
     "success": "Đã tải lên mclo.gs! Xem tại đây: {{url}}",
     "error": "Tải lên mclo.gs thất bại"
   },
-  "searchWithGoogle": "",
+  "searchWithGoogle": "Tìm kiếm bằng Google",
   "copyToClipboard": "Sao chép vào bộ nhớ tạm",
   "clipboardCopy": {
     "loading": "Đang sao chép vào bộ nhớ tạm...",
@@ -447,7 +447,11 @@
     "startedSession": "Đã bắt đầu một phiên",
     "resumedSession": "Đã tiếp tục một phiên",
     "pausedSession": "Đã tạm dừng một phiên",
-    "stoppedSession": "Đã dừng một phiên"
+    "stoppedSession": "Đã dừng một phiên",
+    "contextMenu": {
+      "copyUsername": "Sao chép Tên người dùng",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Chuyển đổi giao diện",
   "pickADate": "Chọn ngày",
@@ -518,17 +522,24 @@
   },
   "contextMenu": {
     "instance": {
-      "goToInstance": "",
+      "goToInstance": "Đi đến Phiên bản",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Xóa phiên bản"
     },
     "bot": {
-      "goToBot": "",
-      "copyUsername": ""
+      "goToBot": "Đi đến Bot",
+      "copyUsername": "Sao chép Tên người dùng",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
-      "enable": "",
-      "disable": "",
-      "openSettings": ""
+      "enable": "Bật",
+      "disable": "Tắt",
+      "openSettings": "Mở Cài đặt",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

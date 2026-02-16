@@ -406,7 +406,7 @@
     "success": "Uploded to mclo.gs! Seez it heer: {{url}}",
     "error": "Uplod to mclo.gs FAILED!"
   },
-  "searchWithGoogle": "",
+  "searchWithGoogle": "Seerch wit Google",
   "copyToClipboard": "Copyz to clipbored",
   "clipboardCopy": {
     "loading": "Copyin to clipbored...",
@@ -447,7 +447,11 @@
     "startedSession": "Seshun startd!",
     "resumedSession": "Seshun rezumed!",
     "pausedSession": "Seshun pawzed!",
-    "stoppedSession": "Seshun stoppd!"
+    "stoppedSession": "Seshun stoppd!",
+    "contextMenu": {
+      "copyUsername": "Copy Usernamez",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Toggle thiem",
   "pickADate": "Pickz a datez",
@@ -518,17 +522,24 @@
   },
   "contextMenu": {
     "instance": {
-      "goToInstance": "",
+      "goToInstance": "Go tu Instanz",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Deleet Instance"
     },
     "bot": {
-      "goToBot": "",
-      "copyUsername": ""
+      "goToBot": "Go tu Bot",
+      "copyUsername": "Copy Usernamez",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
-      "enable": "",
-      "disable": "",
-      "openSettings": ""
+      "enable": "Enablez",
+      "disable": "Disablez",
+      "openSettings": "Open Settingz",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

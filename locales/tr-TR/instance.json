@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "Seçili proxy'leri kontrol et",
     "contextMenu": {
       "copyAddress": "Adresi Kopyala",
+      "copyUsername": "Kullanıcı Adını Kopyala",
+      "copyPassword": "",
       "deleteProxy": "Proxy'yi Sil"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "Yapılandırmayı Aç",
       "openMetadata": "Metadata'yı Aç",
-      "copyProfileId": "Profil Kimliğini Kopyala"
+      "copyProfileId": "Profil Kimliğini Kopyala",
+      "copyUsername": "Kullanıcı Adını Kopyala"
     },
     "config": {
       "title": "{{name}} Yapılandır",
@@ -342,7 +345,9 @@
       "edit": "Script'i Düzenle",
       "pause": "Duraklat",
       "resume": "Devam et",
-      "delete": "Script'i Sil"
+      "delete": "Script'i Sil",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

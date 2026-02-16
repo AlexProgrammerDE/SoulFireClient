@@ -406,7 +406,7 @@
     "success": "Завантажено на mclo.gs! Переглянути тут: {{url}}",
     "error": "Не вдалося завантажити на mclo.gs"
   },
-  "searchWithGoogle": "",
+  "searchWithGoogle": "Шукати в Google",
   "copyToClipboard": "Скопіювати в буфер обміну",
   "clipboardCopy": {
     "loading": "Копіювання в буфер обміну...",
@@ -447,7 +447,11 @@
     "startedSession": "Сесію розпочато",
     "resumedSession": "Сесію відновлено",
     "pausedSession": "Сесію призупинено",
-    "stoppedSession": "Сесію зупинено"
+    "stoppedSession": "Сесію зупинено",
+    "contextMenu": {
+      "copyUsername": "Копіювати ім'я користувача",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Перемкнути тему",
   "pickADate": "Оберіть дату",
@@ -518,17 +522,24 @@
   },
   "contextMenu": {
     "instance": {
-      "goToInstance": "",
+      "goToInstance": "Перейти до інстансу",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Видалити екземпляр"
     },
     "bot": {
-      "goToBot": "",
-      "copyUsername": ""
+      "goToBot": "Перейти до бота",
+      "copyUsername": "Копіювати ім'я користувача",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
-      "enable": "",
-      "disable": "",
-      "openSettings": ""
+      "enable": "Увімкнути",
+      "disable": "Вимкнути",
+      "openSettings": "Відкрити налаштування",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

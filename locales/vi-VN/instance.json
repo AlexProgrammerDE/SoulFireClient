@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "Kiểm tra các proxy đã chọn",
     "contextMenu": {
       "copyAddress": "Sao chép địa chỉ",
+      "copyUsername": "Sao chép Tên người dùng",
+      "copyPassword": "",
       "deleteProxy": "Xóa Proxy"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "Mở Cấu Hình",
       "openMetadata": "Mở Metadata",
-      "copyProfileId": "Sao Chép ID Hồ Sơ"
+      "copyProfileId": "Sao Chép ID Hồ Sơ",
+      "copyUsername": "Sao chép Tên người dùng"
     },
     "config": {
       "title": "Cấu hình {{name}}",
@@ -342,7 +345,9 @@
       "edit": "Chỉnh Sửa Script",
       "pause": "Tạm dừng",
       "resume": "Tiếp tục",
-      "delete": "Xóa Script"
+      "delete": "Xóa Script",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

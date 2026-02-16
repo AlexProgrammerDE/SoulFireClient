@@ -447,7 +447,11 @@
     "startedSession": "Сессия запущена",
     "resumedSession": "Сессия возобновлена",
     "pausedSession": "Сессия приостановлена",
-    "stoppedSession": "Сессия остановлена"
+    "stoppedSession": "Сессия остановлена",
+    "contextMenu": {
+      "copyUsername": "Скопировать имя пользователя",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Переключить тему",
   "pickADate": "Выберите дату",
@@ -519,16 +523,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Перейти к экземпляру",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Удалить экземпляр"
     },
     "bot": {
       "goToBot": "Перейти к боту",
-      "copyUsername": "Скопировать имя пользователя"
+      "copyUsername": "Скопировать имя пользователя",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
       "enable": "Включить",
       "disable": "Отключить",
-      "openSettings": "Открыть настройки"
+      "openSettings": "Открыть настройки",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

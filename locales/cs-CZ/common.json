@@ -447,7 +447,11 @@
     "startedSession": "Byla spuštěna relace",
     "resumedSession": "Relace byla obnovena",
     "pausedSession": "Relace byla pozastavena",
-    "stoppedSession": "Relace byla zastavena"
+    "stoppedSession": "Relace byla zastavena",
+    "contextMenu": {
+      "copyUsername": "Kopírovat uživatelské jméno",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Přepnout motiv",
   "pickADate": "Vyberte datum",
@@ -519,16 +523,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Přejít na instanci",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Smazat instanci"
     },
     "bot": {
       "goToBot": "Přejít na bota",
-      "copyUsername": "Kopírovat uživatelské jméno"
+      "copyUsername": "Kopírovat uživatelské jméno",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
       "enable": "Povolit",
       "disable": "Zakázat",
-      "openSettings": "Otevřít nastavení"
+      "openSettings": "Otevřít nastavení",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

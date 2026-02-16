@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "Проверить выбранные прокси",
     "contextMenu": {
       "copyAddress": "Скопировать адрес",
+      "copyUsername": "Скопировать имя пользователя",
+      "copyPassword": "",
       "deleteProxy": "Удалить прокси"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "Открыть конфигурацию",
       "openMetadata": "Открыть метаданные",
-      "copyProfileId": "Скопировать ID профиля"
+      "copyProfileId": "Скопировать ID профиля",
+      "copyUsername": "Скопировать имя пользователя"
     },
     "config": {
       "title": "Настроить {{name}}",
@@ -342,7 +345,9 @@
       "edit": "Редактировать скрипт",
       "pause": "Пауза",
       "resume": "Возобновить",
-      "delete": "Удалить скрипт"
+      "delete": "Удалить скрипт",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

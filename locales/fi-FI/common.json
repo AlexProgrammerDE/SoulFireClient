@@ -447,7 +447,11 @@
     "startedSession": "Istunto käynnistetty",
     "resumedSession": "Istunto jatkettu",
     "pausedSession": "Istunto keskeytetty",
-    "stoppedSession": "Istunto pysäytetty"
+    "stoppedSession": "Istunto pysäytetty",
+    "contextMenu": {
+      "copyUsername": "Kopioi käyttäjätunnus",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Vaihda teema",
   "pickADate": "Valitse päivämäärä",
@@ -519,16 +523,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Siirry instanssiin",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Poista instanssi"
     },
     "bot": {
       "goToBot": "Siirry bottiin",
-      "copyUsername": "Kopioi käyttäjätunnus"
+      "copyUsername": "Kopioi käyttäjätunnus",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
       "enable": "Ota käyttöön",
       "disable": "Poista käytöstä",
-      "openSettings": "Avaa asetukset"
+      "openSettings": "Avaa asetukset",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

@@ -98,9 +98,9 @@
     "removeSelectedTooltip": "移除選取的使用者",
     "logOutSelectedTooltip": "登出選取的使用者",
     "contextMenu": {
-      "editUser": "",
-      "impersonate": "",
-      "copyUserId": ""
+      "editUser": "編輯使用者",
+      "impersonate": "模擬身份",
+      "copyUserId": "複製使用者 ID"
     }
   }
 }

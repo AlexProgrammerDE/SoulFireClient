@@ -406,7 +406,7 @@
     "success": "อัปโหลดไปที่ mclo.gs สำเร็จ! ดูได้ที่นี่: {{url}}",
     "error": "อัปโหลดไปที่ mclo.gs ไม่สำเร็จ"
   },
-  "searchWithGoogle": "",
+  "searchWithGoogle": "ค้นหาด้วย Google",
   "copyToClipboard": "คัดลอกไปยังคลิปบอร์ด",
   "clipboardCopy": {
     "loading": "กำลังคัดลอกไปยังคลิปบอร์ด...",
@@ -447,7 +447,11 @@
     "startedSession": "เริ่มเซสชันแล้ว",
     "resumedSession": "ดำเนินการเซสชันต่อแล้ว",
     "pausedSession": "หยุดชั่วคราวเซสชันแล้ว",
-    "stoppedSession": "หยุดเซสชันแล้ว"
+    "stoppedSession": "หยุดเซสชันแล้ว",
+    "contextMenu": {
+      "copyUsername": "คัดลอกชื่อผู้ใช้",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "สลับธีม",
   "pickADate": "เลือกวันที่",
@@ -518,17 +522,24 @@
   },
   "contextMenu": {
     "instance": {
-      "goToInstance": "",
+      "goToInstance": "ไปที่อินสแตนซ์",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "ลบอินสแตนซ์"
     },
     "bot": {
-      "goToBot": "",
-      "copyUsername": ""
+      "goToBot": "ไปที่บอท",
+      "copyUsername": "คัดลอกชื่อผู้ใช้",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
-      "enable": "",
-      "disable": "",
-      "openSettings": ""
+      "enable": "เปิดใช้งาน",
+      "disable": "ปิดใช้งาน",
+      "openSettings": "เปิดการตั้งค่า",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

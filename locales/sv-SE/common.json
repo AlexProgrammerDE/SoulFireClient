@@ -406,7 +406,7 @@
     "success": "Uppladdad till mclo.gs! Visa det här: {{url}}",
     "error": "Misslyckades med att ladda upp till mclo.gs"
   },
-  "searchWithGoogle": "",
+  "searchWithGoogle": "Sök med Google",
   "copyToClipboard": "Kopiera till urklipp",
   "clipboardCopy": {
     "loading": "Kopierar till urklipp...",
@@ -447,7 +447,11 @@
     "startedSession": "Startade en session",
     "resumedSession": "Återupptog en session",
     "pausedSession": "Pausade en session",
-    "stoppedSession": "Stoppade en session"
+    "stoppedSession": "Stoppade en session",
+    "contextMenu": {
+      "copyUsername": "Kopiera användarnamn",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Växla tema",
   "pickADate": "Välj ett datum",
@@ -518,17 +522,24 @@
   },
   "contextMenu": {
     "instance": {
-      "goToInstance": "",
+      "goToInstance": "Gå till instans",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Ta bort instans"
     },
     "bot": {
-      "goToBot": "",
-      "copyUsername": ""
+      "goToBot": "Gå till bot",
+      "copyUsername": "Kopiera användarnamn",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
-      "enable": "",
-      "disable": "",
-      "openSettings": ""
+      "enable": "Aktivera",
+      "disable": "Inaktivera",
+      "openSettings": "Öppna inställningar",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

@@ -447,7 +447,11 @@
     "startedSession": "Sessie gestart",
     "resumedSession": "Sessie hervat",
     "pausedSession": "Sessie gepauzeerd",
-    "stoppedSession": "Sessie gestopt"
+    "stoppedSession": "Sessie gestopt",
+    "contextMenu": {
+      "copyUsername": "Gebruikersnaam kopiëren",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Thema wisselen",
   "pickADate": "Selecteer een datum",
@@ -519,16 +523,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Ga naar instantie",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Instantie verwijderen"
     },
     "bot": {
       "goToBot": "Ga naar bot",
-      "copyUsername": "Gebruikersnaam kopiëren"
+      "copyUsername": "Gebruikersnaam kopiëren",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
       "enable": "Inschakelen",
       "disable": "Uitschakelen",
-      "openSettings": "Instellingen openen"
+      "openSettings": "Instellingen openen",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

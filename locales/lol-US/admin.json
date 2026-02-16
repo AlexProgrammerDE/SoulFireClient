@@ -98,9 +98,9 @@
     "removeSelectedTooltip": "Remoov selekted users",
     "logOutSelectedTooltip": "Logz owt selekted users",
     "contextMenu": {
-      "editUser": "",
-      "impersonate": "",
-      "copyUserId": ""
+      "editUser": "Edits Usr",
+      "impersonate": "Impurrrsonaet",
+      "copyUserId": "Coppy Usr ID"
     }
   }
 }

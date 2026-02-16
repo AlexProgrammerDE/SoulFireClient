@@ -447,7 +447,11 @@
     "startedSession": "Sessione avviata",
     "resumedSession": "Sessione ripresa",
     "pausedSession": "Sessione messa in pausa",
-    "stoppedSession": "Sessione interrotta"
+    "stoppedSession": "Sessione interrotta",
+    "contextMenu": {
+      "copyUsername": "Copia nome utente",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Cambia tema",
   "pickADate": "Scegli una data",
@@ -519,16 +523,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Vai all'istanza",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Elimina istanza"
     },
     "bot": {
       "goToBot": "Vai al Bot",
-      "copyUsername": "Copia nome utente"
+      "copyUsername": "Copia nome utente",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
       "enable": "Abilita",
       "disable": "Disabilita",
-      "openSettings": "Apri impostazioni"
+      "openSettings": "Apri impostazioni",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

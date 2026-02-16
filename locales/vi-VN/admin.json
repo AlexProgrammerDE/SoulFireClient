@@ -98,9 +98,9 @@
     "removeSelectedTooltip": "Xóa người dùng đã chọn",
     "logOutSelectedTooltip": "Đăng xuất người dùng đã chọn",
     "contextMenu": {
-      "editUser": "",
-      "impersonate": "",
-      "copyUserId": ""
+      "editUser": "Chỉnh sửa người dùng",
+      "impersonate": "Giả lập người dùng",
+      "copyUserId": "Sao chép ID người dùng"
     }
   }
 }

@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "Vérifier les proxys sélectionnés",
     "contextMenu": {
       "copyAddress": "Copier l'adresse",
+      "copyUsername": "Copier le nom d'utilisateur",
+      "copyPassword": "",
       "deleteProxy": "Supprimer le proxy"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "Ouvrir la configuration",
       "openMetadata": "Ouvrir les métadonnées",
-      "copyProfileId": "Copier l'ID du profil"
+      "copyProfileId": "Copier l'ID du profil",
+      "copyUsername": "Copier le nom d'utilisateur"
     },
     "config": {
       "title": "Configurer {{name}}",
@@ -342,7 +345,9 @@
       "edit": "Éditer le script",
       "pause": "Pauser",
       "resume": "Reprendre",
-      "delete": "Supprimer le script"
+      "delete": "Supprimer le script",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

@@ -98,9 +98,9 @@
     "removeSelectedTooltip": "移除已选用户",
     "logOutSelectedTooltip": "注销已选用户",
     "contextMenu": {
-      "editUser": "",
-      "impersonate": "",
-      "copyUserId": ""
+      "editUser": "编辑用户",
+      "impersonate": "模拟登录",
+      "copyUserId": "复制用户ID"
     }
   }
 }

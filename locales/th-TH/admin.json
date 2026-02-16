@@ -98,9 +98,9 @@
     "removeSelectedTooltip": "ลบผู้ใช้ที่เลือก",
     "logOutSelectedTooltip": "ออกจากระบบผู้ใช้ที่เลือก",
     "contextMenu": {
-      "editUser": "",
-      "impersonate": "",
-      "copyUserId": ""
+      "editUser": "แก้ไขผู้ใช้",
+      "impersonate": "สวมรอยเป็นผู้ใช้นี้",
+      "copyUserId": "คัดลอก User ID"
     }
   }
 }

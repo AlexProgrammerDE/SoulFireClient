@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "檢查所選代理伺服器",
     "contextMenu": {
       "copyAddress": "複製位址",
+      "copyUsername": "複製用戶名稱",
+      "copyPassword": "",
       "deleteProxy": "刪除代理伺服器"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "打開設定檔",
       "openMetadata": "打開中繼資料",
-      "copyProfileId": "複製個人檔案 ID"
+      "copyProfileId": "複製個人檔案 ID",
+      "copyUsername": "複製用戶名稱"
     },
     "config": {
       "title": "設定 {{name}}",
@@ -342,7 +345,9 @@
       "edit": "編輯腳本",
       "pause": "暫停",
       "resume": "繼續",
-      "delete": "刪除腳本"
+      "delete": "刪除腳本",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

@@ -447,7 +447,11 @@
     "startedSession": "セッションを開始しました。",
     "resumedSession": "セッションを再開しました。",
     "pausedSession": "セッションを一時停止しました。",
-    "stoppedSession": "セッションを停止しました。"
+    "stoppedSession": "セッションを停止しました。",
+    "contextMenu": {
+      "copyUsername": "ユーザー名をコピー",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "テーマを切り替える",
   "pickADate": "日付を選択",
@@ -519,16 +523,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "インスタンスへ移動",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "インスタンスを削除"
     },
     "bot": {
       "goToBot": "Botへ移動",
-      "copyUsername": "ユーザー名をコピー"
+      "copyUsername": "ユーザー名をコピー",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
       "enable": "有効化",
       "disable": "無効化",
-      "openSettings": "設定を開く"
+      "openSettings": "設定を開く",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

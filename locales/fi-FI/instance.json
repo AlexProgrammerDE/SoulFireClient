@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "Tarkista valitut proxyt",
     "contextMenu": {
       "copyAddress": "Kopioi osoite",
+      "copyUsername": "Kopioi käyttäjätunnus",
+      "copyPassword": "",
       "deleteProxy": "Poista välityspalvelin"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "Avaa asetukset",
       "openMetadata": "Avaa metatiedot",
-      "copyProfileId": "Kopioi profiilin tunniste"
+      "copyProfileId": "Kopioi profiilin tunniste",
+      "copyUsername": "Kopioi käyttäjätunnus"
     },
     "config": {
       "title": "Määritä {{name}}",
@@ -342,7 +345,9 @@
       "edit": "Muokkaa skriptiä",
       "pause": "Tauota",
       "resume": "Jatka",
-      "delete": "Poista skripti"
+      "delete": "Poista skripti",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

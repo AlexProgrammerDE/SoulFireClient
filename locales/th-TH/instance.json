@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "ตรวจสอบพร็อกซีที่เลือก",
     "contextMenu": {
       "copyAddress": "คัดลอกที่อยู่",
+      "copyUsername": "คัดลอกชื่อผู้ใช้",
+      "copyPassword": "",
       "deleteProxy": "ลบ Proxy"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "เปิดการตั้งค่า",
       "openMetadata": "เปิดข้อมูลเมตา",
-      "copyProfileId": "คัดลอกโปรไฟล์ ID"
+      "copyProfileId": "คัดลอกโปรไฟล์ ID",
+      "copyUsername": "คัดลอกชื่อผู้ใช้"
     },
     "config": {
       "title": "กำหนดค่า {{name}}",
@@ -342,7 +345,9 @@
       "edit": "แก้ไขสคริปต์",
       "pause": "หยุดชั่วคราว",
       "resume": "ดำเนินการต่อ",
-      "delete": "ลบสคริปต์"
+      "delete": "ลบสคริปต์",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

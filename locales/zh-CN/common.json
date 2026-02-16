@@ -406,7 +406,7 @@
     "success": "已上传到 mclo.gs！在此查看：{{url}}",
     "error": "上传到 mclo.gs 失败"
   },
-  "searchWithGoogle": "",
+  "searchWithGoogle": "使用 Google 搜索",
   "copyToClipboard": "复制到剪贴板",
   "clipboardCopy": {
     "loading": "正在复制到剪贴板...",
@@ -447,7 +447,11 @@
     "startedSession": "已启动会话",
     "resumedSession": "已恢复会话",
     "pausedSession": "已暂停会话",
-    "stoppedSession": "已停止会话"
+    "stoppedSession": "已停止会话",
+    "contextMenu": {
+      "copyUsername": "复制用户名",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "切换主题",
   "pickADate": "选日期",
@@ -518,17 +522,24 @@
   },
   "contextMenu": {
     "instance": {
-      "goToInstance": "",
+      "goToInstance": "前往实例",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "删除实例"
     },
     "bot": {
-      "goToBot": "",
-      "copyUsername": ""
+      "goToBot": "前往 Bot",
+      "copyUsername": "复制用户名",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
-      "enable": "",
-      "disable": "",
-      "openSettings": ""
+      "enable": "启用",
+      "disable": "禁用",
+      "openSettings": "打开设置",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }
