@@ -1,5 +1,6 @@
 {
   "locale": "Locale",
+  "close": "Close",
   "cancel": "Cancel",
   "save": "Save",
   "saving": "Saving...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "Enter command (type 'help' for list)"
+    "placeholder": "Enter command (type 'help' for list)",
+    "emptySuggestions": "Type to request suggestions or press Tab.",
+    "noSuggestions": "No suggestions available."
   },
   "controls": {
     "start": "Start",

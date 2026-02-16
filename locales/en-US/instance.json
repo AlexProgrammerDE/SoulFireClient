@@ -155,7 +155,8 @@
       "updateError": "Failed to update entry",
       "deleteSuccess": "Entry deleted",
       "deleteError": "Failed to delete entry",
-      "duplicateError": "An entry with this namespace and key already exists"
+      "duplicateError": "An entry with this namespace and key already exists",
+      "invalidJson": "Invalid JSON value"
     }
   },
   "bots": {
