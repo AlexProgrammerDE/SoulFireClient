@@ -52,6 +52,15 @@
       "copyUsername": "Copy Username",
       "copyPassword": "Copy Password",
       "deleteProxy": "Delete Proxy"
+    },
+    "exportProxies": "Export Proxies",
+    "export": {
+      "format": "Export Format",
+      "uri": "URI Format (all types)",
+      "http": "HTTP Only (flat)",
+      "socks4": "SOCKS4 Only (flat)",
+      "socks5": "SOCKS5 Only (flat)",
+      "noProxies": "No proxies to export"
     }
   },
   "account": {

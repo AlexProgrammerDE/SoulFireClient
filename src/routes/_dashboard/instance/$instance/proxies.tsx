@@ -6,10 +6,12 @@ import {
 } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import type { ColumnDef, Table as ReactTable } from "@tanstack/react-table";
+import { saveAs } from "file-saver";
 import {
   ClipboardCopyIcon,
   Dice4Icon,
   Dice5Icon,
+  DownloadIcon,
   GlobeIcon,
   PlusIcon,
   ShoppingCartIcon,
@@ -82,6 +84,8 @@ import {
 } from "@/lib/types.ts";
 import {
   addInstanceProxiesBatch,
+  data2blob,
+  isTauri,
   removeInstanceProxiesBatch,
   runAsync,
   updateInstanceConfigEntry,
@@ -171,6 +175,71 @@ function getProxyKey(proxy: ProfileProxy): string {
   return `${proxy.type}-${proxy.address}-${proxy.username ?? ""}-${
     proxy.password ?? ""
   }`;
+}
+
+function stripAddressPrefix(address: string): string {
+  if (address.startsWith("inet://")) {
+    return address.slice(7);
+  }
+  if (address.startsWith("unix://")) {
+    return address.slice(7);
+  }
+  return address;
+}
+
+function formatProxyAsURI(proxy: ProfileProxy): string {
+  const address = stripAddressPrefix(proxy.address);
+  const protocol = getEnumKeyByValue(ProxyProto_Type, proxy.type)
+    .toString()
+    .toLowerCase();
+
+  if (proxy.username && proxy.password) {
+    return `${protocol}://${proxy.username}:${proxy.password}@${address}`;
+  }
+  if (proxy.username) {
+    return `${protocol}://${proxy.username}@${address}`;
+  }
+  return `${protocol}://${address}`;
+}
+
+function formatProxyAsFlat(proxy: ProfileProxy): string {
+  const address = stripAddressPrefix(proxy.address);
+
+  if (proxy.username && proxy.password) {
+    return `${address}:${proxy.username}:${proxy.password}`;
+  }
+  if (proxy.username) {
+    return `${address}:${proxy.username}`;
+  }
+  return address;
+}
+
+function saveProxyFile(content: string, filename: string) {
+  if (isTauri()) {
+    runAsync(async () => {
+      const { save } = await import("@tauri-apps/plugin-dialog");
+      const { writeTextFile } = await import("@tauri-apps/plugin-fs");
+
+      let selected = await save({
+        title: filename,
+        filters: [
+          {
+            name: "Text File",
+            extensions: ["txt"],
+          },
+        ],
+      });
+
+      if (selected) {
+        if (!selected.endsWith(".txt")) {
+          selected += ".txt";
+        }
+        await writeTextFile(selected, content);
+      }
+    });
+  } else {
+    saveAs(data2blob(content), filename);
+  }
 }
 
 const proxyTypeToIcon = (type: keyof typeof ProxyProto_Type) =>
@@ -444,6 +513,74 @@ function AddButton() {
         />
       )}
     </>
+  );
+}
+
+function ExportButton() {
+  const { t } = useTranslation("instance");
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
+  const { trackEvent } = useAptabase();
+
+  const exportProxies = useCallback(
+    (mode: "uri" | "http" | "socks4" | "socks5") => {
+      void trackEvent("export_proxies", { mode });
+
+      let proxies = profile.proxies;
+
+      if (mode === "uri") {
+        if (proxies.length === 0) {
+          toast.error(t("proxy.export.noProxies"));
+          return;
+        }
+        const lines = proxies.map(formatProxyAsURI);
+        saveProxyFile(lines.join("\n"), "proxies.txt");
+      } else {
+        const typeMap = {
+          http: ProxyProto_Type.HTTP,
+          socks4: ProxyProto_Type.SOCKS4,
+          socks5: ProxyProto_Type.SOCKS5,
+        };
+        proxies = proxies.filter((p) => p.type === typeMap[mode]);
+        if (proxies.length === 0) {
+          toast.error(t("proxy.export.noProxies"));
+          return;
+        }
+        const lines = proxies.map(formatProxyAsFlat);
+        saveProxyFile(lines.join("\n"), `${mode}-proxies.txt`);
+      }
+    },
+    [profile.proxies, trackEvent, t],
+  );
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline" size="sm">
+          <DownloadIcon />
+          {t("proxy.exportProxies")}
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuLabel>{t("proxy.export.format")}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => exportProxies("uri")}>
+          {t("proxy.export.uri")}
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => exportProxies("http")}>
+          {t("proxy.export.http")}
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => exportProxies("socks4")}>
+          {t("proxy.export.socks4")}
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => exportProxies("socks5")}>
+          {t("proxy.export.socks5")}
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
@@ -781,6 +918,7 @@ function Content() {
           <DataTableSortList table={table} />
           <GetProxiesButton />
           <AddButton />
+          <ExportButton />
         </DataTableToolbar>
       </DataTable>
       {contextMenu && (
