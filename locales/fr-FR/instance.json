@@ -52,6 +52,12 @@
       "copyUsername": "Copier le nom d'utilisateur",
       "copyPassword": "",
       "deleteProxy": "Supprimer le proxy"
+    },
+    "postImportCheckDialog": {
+      "title": "Check Proxies?",
+      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
+      "confirm": "Check Proxies",
+      "skip": "Skip"
     }
   },
   "account": {

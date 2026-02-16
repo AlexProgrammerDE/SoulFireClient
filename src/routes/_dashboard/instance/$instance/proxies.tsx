@@ -386,6 +386,14 @@ function AddButton() {
   const [proxyTypeSelected, setProxyTypeSelected] =
     useState<UIProxyType | null>(null);
   const { trackEvent } = useAptabase();
+  const [importedProxies, setImportedProxies] = useState<ProfileProxy[] | null>(
+    null,
+  );
+  const [checkDialogOpen, setCheckDialogOpen] = useState(false);
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
   // Batch add proxies mutation
   const { mutateAsync: addProxiesBatchMutation } = useMutation({
     mutationKey: ["instance", "proxies", "add-batch", instanceInfo.id],
@@ -393,6 +401,25 @@ function AddButton() {
     mutationFn: async (proxies: ProfileProxy[]) => {
       await addInstanceProxiesBatch(
         proxies,
+        instanceInfo,
+        transport,
+        queryClient,
+        instanceInfoQueryOptions.queryKey,
+      );
+    },
+    onSettled: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: instanceInfoQueryOptions.queryKey,
+      });
+    },
+  });
+  // Batch remove proxies mutation (for post-import check)
+  const { mutateAsync: removeProxiesBatchMutation } = useMutation({
+    mutationKey: ["instance", "proxies", "remove-batch", instanceInfo.id],
+    scope: { id: `instance-proxies-${instanceInfo.id}` },
+    mutationFn: async (addresses: string[]) => {
+      await removeInstanceProxiesBatch(
+        addresses,
         instanceInfo,
         transport,
         queryClient,
@@ -444,6 +471,9 @@ function AddButton() {
           }
 
           await addProxiesBatchMutation(proxiesToAdd);
+          if (proxiesToAdd.length > 0) {
+            setImportedProxies(proxiesToAdd);
+          }
           return proxiesToAdd.length;
         })(),
         {
@@ -458,6 +488,104 @@ function AddButton() {
     },
     [proxyTypeSelected, addProxiesBatchMutation, t],
   );
+
+  const performProxyCheck = useCallback(() => {
+    if (transport === null || importedProxies === null) {
+      return;
+    }
+
+    const proxiesToCheck = importedProxies;
+    setImportedProxies(null);
+
+    void trackEvent("check_proxies", {
+      count: proxiesToCheck.length,
+    });
+
+    const abortController = new AbortController();
+    const loadingData: ExternalToast = {
+      cancel: {
+        label: t("common:cancel"),
+        onClick: () => {
+          abortController.abort();
+        },
+      },
+    };
+    const total = proxiesToCheck.length;
+    let failed = 0;
+    let success = 0;
+    const loadingReport = () =>
+      t("proxy.checkToast.loading", {
+        checked: success + failed,
+        total,
+        success,
+        failed,
+      });
+    const toastId = toast.loading(loadingReport(), loadingData);
+    const service = new ProxyCheckServiceClient(transport);
+    const { responses } = service.check(
+      {
+        instanceId: instanceInfo.id,
+        proxy: proxiesToCheck,
+      },
+      {
+        abort: abortController.signal,
+      },
+    );
+    responses.onMessage((r) => {
+      runAsync(async () => {
+        const data = r.data;
+        switch (data.oneofKind) {
+          case "end": {
+            toast.success(
+              t("proxy.checkToast.success", {
+                count: failed,
+              }),
+              {
+                id: toastId,
+                cancel: undefined,
+              },
+            );
+            break;
+          }
+          case "single": {
+            if (abortController.signal.aborted) {
+              return;
+            }
+
+            if (data.single.valid) {
+              success++;
+            } else {
+              failed++;
+              const proxyToRemove = data.single.proxy;
+              if (proxyToRemove) {
+                await removeProxiesBatchMutation([proxyToRemove.address]);
+              }
+            }
+
+            toast.loading(loadingReport(), {
+              id: toastId,
+              ...loadingData,
+            });
+            break;
+          }
+        }
+      });
+      responses.onError((e) => {
+        console.error(e);
+        toast.error(t("proxy.checkToast.error"), {
+          id: toastId,
+          cancel: undefined,
+        });
+      });
+    });
+  }, [
+    transport,
+    importedProxies,
+    trackEvent,
+    t,
+    instanceInfo.id,
+    removeProxiesBatchMutation,
+  ]);
 
   return (
     <>
@@ -526,6 +654,112 @@ function AddButton() {
           }}
         />
       )}
+      <Dialog
+        open={importedProxies !== null && !checkDialogOpen}
+        onOpenChange={(open) => {
+          if (!open) setImportedProxies(null);
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("proxy.postImportCheckDialog.title")}</DialogTitle>
+            <DialogDescription>
+              {t("proxy.postImportCheckDialog.description", {
+                count: importedProxies?.length ?? 0,
+              })}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setImportedProxies(null)}>
+              {t("proxy.postImportCheckDialog.skip")}
+            </Button>
+            <Button onClick={() => setCheckDialogOpen(true)}>
+              {t("proxy.postImportCheckDialog.confirm")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <Dialog
+        open={checkDialogOpen}
+        onOpenChange={(open) => {
+          setCheckDialogOpen(open);
+          if (!open) setImportedProxies(null);
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t("proxy.checkDialog.title")}</DialogTitle>
+            <DialogDescription>
+              {t("proxy.checkDialog.description", {
+                count: importedProxies?.length ?? 0,
+              })}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-4">
+            <InstanceSettingFieldByKey
+              namespace="proxy"
+              settingKey="proxy-check-address"
+              invalidateQuery={async () => {
+                await queryClient.invalidateQueries({
+                  queryKey: instanceInfoQueryOptions.queryKey,
+                });
+              }}
+              updateConfigEntry={async (namespace, key, value) => {
+                await updateInstanceConfigEntry(
+                  namespace,
+                  key,
+                  value,
+                  instanceInfo,
+                  transport,
+                  queryClient,
+                  instanceInfoQueryOptions.queryKey,
+                );
+              }}
+              config={profile}
+            />
+            <InstanceSettingFieldByKey
+              namespace="proxy"
+              settingKey="proxy-check-concurrency"
+              invalidateQuery={async () => {
+                await queryClient.invalidateQueries({
+                  queryKey: instanceInfoQueryOptions.queryKey,
+                });
+              }}
+              updateConfigEntry={async (namespace, key, value) => {
+                await updateInstanceConfigEntry(
+                  namespace,
+                  key,
+                  value,
+                  instanceInfo,
+                  transport,
+                  queryClient,
+                  instanceInfoQueryOptions.queryKey,
+                );
+              }}
+              config={profile}
+            />
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setCheckDialogOpen(false);
+                setImportedProxies(null);
+              }}
+            >
+              {t("common:cancel")}
+            </Button>
+            <Button
+              onClick={() => {
+                setCheckDialogOpen(false);
+                performProxyCheck();
+              }}
+            >
+              {t("proxy.checkDialog.confirm")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

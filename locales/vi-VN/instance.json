@@ -52,6 +52,12 @@
       "copyUsername": "Sao chép Tên người dùng",
       "copyPassword": "",
       "deleteProxy": "Xóa Proxy"
+    },
+    "postImportCheckDialog": {
+      "title": "Check Proxies?",
+      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
+      "confirm": "Check Proxies",
+      "skip": "Skip"
     }
   },
   "account": {
