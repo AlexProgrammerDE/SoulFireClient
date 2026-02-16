@@ -98,9 +98,9 @@
     "removeSelectedTooltip": "Видалити вибраних користувачів",
     "logOutSelectedTooltip": "Вийти з облікових записів вибраних користувачів",
     "contextMenu": {
-      "editUser": "",
-      "impersonate": "",
-      "copyUserId": ""
+      "editUser": "Редагувати користувача",
+      "impersonate": "Увійти як користувач",
+      "copyUserId": "Скопіювати ідентифікатор користувача"
     }
   }
 }

@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "CHEK SLEKTEDZ PROXIEZ",
     "contextMenu": {
       "copyAddress": "Coppy Adress",
+      "copyUsername": "Copy Usernamez",
+      "copyPassword": "",
       "deleteProxy": "DELET PROXY, KTHX!"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "OPN CONFIG, YAY!",
       "openMetadata": "OPN METADEETA, WOW!",
-      "copyProfileId": "COPY PROFILE ID, SRSLY"
+      "copyProfileId": "COPY PROFILE ID, SRSLY",
+      "copyUsername": "Copy Usernamez"
     },
     "config": {
       "title": "Configur teh {{name}}",
@@ -342,7 +345,9 @@
       "edit": "EDIT SCRIPT, LETZ GO!",
       "pause": "Pawse",
       "resume": "Resoome",
-      "delete": "DELET SCRIPT, KTHXBYE!"
+      "delete": "DELET SCRIPT, KTHXBYE!",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

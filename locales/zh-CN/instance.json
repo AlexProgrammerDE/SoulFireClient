@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "检测所选代理",
     "contextMenu": {
       "copyAddress": "复制地址",
+      "copyUsername": "复制用户名",
+      "copyPassword": "",
       "deleteProxy": "删除代理"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "打开配置",
       "openMetadata": "打开元数据",
-      "copyProfileId": "复制配置文件ID"
+      "copyProfileId": "复制配置文件ID",
+      "copyUsername": "复制用户名"
     },
     "config": {
       "title": "配置 {{name}}",
@@ -342,7 +345,9 @@
       "edit": "编辑脚本",
       "pause": "暂停",
       "resume": "继续",
-      "delete": "删除脚本"
+      "delete": "删除脚本",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

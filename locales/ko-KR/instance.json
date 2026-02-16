@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "선택한 프록시 확인",
     "contextMenu": {
       "copyAddress": "주소 복사",
+      "copyUsername": "사용자명 복사",
+      "copyPassword": "",
       "deleteProxy": "프록시 삭제"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "설정 열기",
       "openMetadata": "메타데이터 열기",
-      "copyProfileId": "프로필 ID 복사"
+      "copyProfileId": "프로필 ID 복사",
+      "copyUsername": "사용자명 복사"
     },
     "config": {
       "title": "{{name}} 설정하기",
@@ -342,7 +345,9 @@
       "edit": "스크립트 편집",
       "pause": "일시 정지",
       "resume": "다시 시작",
-      "delete": "스크립트 삭제"
+      "delete": "스크립트 삭제",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

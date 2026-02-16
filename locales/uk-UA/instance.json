@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "Перевірити вибрані проксі",
     "contextMenu": {
       "copyAddress": "Скопіювати адресу",
+      "copyUsername": "Копіювати ім'я користувача",
+      "copyPassword": "",
       "deleteProxy": "Видалити проксі"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "Відкрити конфігурацію",
       "openMetadata": "Відкрити метадані",
-      "copyProfileId": "Скопіювати ID профілю"
+      "copyProfileId": "Скопіювати ID профілю",
+      "copyUsername": "Копіювати ім'я користувача"
     },
     "config": {
       "title": "Налаштувати {{name}}",
@@ -342,7 +345,9 @@
       "edit": "Редагувати скрипт",
       "pause": "Призупинити",
       "resume": "Відновити",
-      "delete": "Видалити скрипт"
+      "delete": "Видалити скрипт",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

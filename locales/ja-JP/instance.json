@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "選択したプロキシをチェック",
     "contextMenu": {
       "copyAddress": "アドレスをコピー",
+      "copyUsername": "ユーザー名をコピー",
+      "copyPassword": "",
       "deleteProxy": "プロキシを削除する"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "設定を開く",
       "openMetadata": "メタデータを開く",
-      "copyProfileId": "プロファイルIDをコピー"
+      "copyProfileId": "プロファイルIDをコピー",
+      "copyUsername": "ユーザー名をコピー"
     },
     "config": {
       "title": "{{name}}の設定を構成する",
@@ -342,7 +345,9 @@
       "edit": "スクリプトを編集",
       "pause": "一時停止",
       "resume": "再開",
-      "delete": "スクリプトを削除する"
+      "delete": "スクリプトを削除する",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

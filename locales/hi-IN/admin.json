@@ -98,9 +98,9 @@
     "removeSelectedTooltip": "चयनित उपयोगकर्ताओं को हटाएँ",
     "logOutSelectedTooltip": "चयनित उपयोगकर्ताओं को लॉगआउट करें",
     "contextMenu": {
-      "editUser": "",
-      "impersonate": "",
-      "copyUserId": ""
+      "editUser": "यूज़र संपादित करें",
+      "impersonate": "रूप धारण करें",
+      "copyUserId": "यूज़र आईडी कॉपी करें"
     }
   }
 }

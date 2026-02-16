@@ -406,7 +406,7 @@
     "success": "mclo.gs'ye yüklendi! Buradan görüntüleyin: {{url}}",
     "error": "mclo.gs'ye yükleme başarısız oldu"
   },
-  "searchWithGoogle": "",
+  "searchWithGoogle": "Google ile Ara",
   "copyToClipboard": "Panoya kopyala",
   "clipboardCopy": {
     "loading": "Panoya kopyalanıyor...",
@@ -447,7 +447,11 @@
     "startedSession": "Bir oturum başlatıldı",
     "resumedSession": "Bir oturum devam ettirildi",
     "pausedSession": "Bir oturum duraklatıldı",
-    "stoppedSession": "Bir oturum durduruldu"
+    "stoppedSession": "Bir oturum durduruldu",
+    "contextMenu": {
+      "copyUsername": "Kullanıcı Adını Kopyala",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Temayı değiştir",
   "pickADate": "Bir tarih seçin",
@@ -518,17 +522,24 @@
   },
   "contextMenu": {
     "instance": {
-      "goToInstance": "",
+      "goToInstance": "Instansa Git",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Örneği Sil"
     },
     "bot": {
-      "goToBot": "",
-      "copyUsername": ""
+      "goToBot": "Bot'a Git",
+      "copyUsername": "Kullanıcı Adını Kopyala",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
-      "enable": "",
-      "disable": "",
-      "openSettings": ""
+      "enable": "Etkinleştir",
+      "disable": "Devre Dışı Bırak",
+      "openSettings": "Ayarları Aç",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "चयनित प्रॉक्सी जांचें",
     "contextMenu": {
       "copyAddress": "पता कॉपी करें",
+      "copyUsername": "यूज़रनेम कॉपी करें",
+      "copyPassword": "",
       "deleteProxy": "प्रॉक्सी हटाएँ"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "कॉन्फ़िग खोलें",
       "openMetadata": "मेटाडाटा खोलें",
-      "copyProfileId": "प्रोफ़ाइल आईडी कॉपी करें"
+      "copyProfileId": "प्रोफ़ाइल आईडी कॉपी करें",
+      "copyUsername": "यूज़रनेम कॉपी करें"
     },
     "config": {
       "title": "{{name}} को कॉन्फ़िगर करें",
@@ -342,7 +345,9 @@
       "edit": "स्क्रिप्ट संपादित करें",
       "pause": "रोकें",
       "resume": "फिर से शुरू करें",
-      "delete": "स्क्रिप्ट हटाएँ"
+      "delete": "स्क्रिप्ट हटाएँ",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

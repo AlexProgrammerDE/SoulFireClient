@@ -98,9 +98,9 @@
     "removeSelectedTooltip": "Seçilmiş istifadəçiləri sil",
     "logOutSelectedTooltip": "Seçilmiş istifadəçiləri çıxış etdir",
     "contextMenu": {
-      "editUser": "",
-      "impersonate": "",
-      "copyUserId": ""
+      "editUser": "İstifadəçini düzəliş et",
+      "impersonate": "Təqlid et",
+      "copyUserId": "İstifadəçi ID-sini köçür"
     }
   }
 }

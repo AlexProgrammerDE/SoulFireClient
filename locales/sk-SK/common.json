@@ -406,7 +406,7 @@
     "success": "Nahraté na mclo.gs! Pozrieť tu: {{url}}",
     "error": "Nepodarilo sa nahrať na mclo.gs"
   },
-  "searchWithGoogle": "",
+  "searchWithGoogle": "Vyhľadávať pomocou Google",
   "copyToClipboard": "Kopírovať do schránky",
   "clipboardCopy": {
     "loading": "Kopíruje sa do schránky...",
@@ -447,7 +447,11 @@
     "startedSession": "Relácia spustená",
     "resumedSession": "Relácia obnovená",
     "pausedSession": "Relácia pozastavená",
-    "stoppedSession": "Relácia zastavená"
+    "stoppedSession": "Relácia zastavená",
+    "contextMenu": {
+      "copyUsername": "Kopírovať používateľské meno",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Prepínať tému",
   "pickADate": "Vyberte dátum",
@@ -518,17 +522,24 @@
   },
   "contextMenu": {
     "instance": {
-      "goToInstance": "",
+      "goToInstance": "Prejsť na inštanciu",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Odstrániť inštanciu"
     },
     "bot": {
-      "goToBot": "",
-      "copyUsername": ""
+      "goToBot": "Prejsť na bota",
+      "copyUsername": "Kopírovať používateľské meno",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
-      "enable": "",
-      "disable": "",
-      "openSettings": ""
+      "enable": "Povoliť",
+      "disable": "Zakázať",
+      "openSettings": "Otvoriť nastavenia",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

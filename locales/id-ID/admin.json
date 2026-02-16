@@ -98,9 +98,9 @@
     "removeSelectedTooltip": "Hapus pengguna yang dipilih",
     "logOutSelectedTooltip": "Keluar dari pengguna yang dipilih",
     "contextMenu": {
-      "editUser": "",
-      "impersonate": "",
-      "copyUserId": ""
+      "editUser": "Edit Pengguna",
+      "impersonate": "Menjadi Pengguna Ini",
+      "copyUserId": "Salin ID Pengguna"
     }
   }
 }

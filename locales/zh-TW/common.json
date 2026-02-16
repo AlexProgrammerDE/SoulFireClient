@@ -406,7 +406,7 @@
     "success": "已上傳到 mclo.gs！在此檢視：{{url}}",
     "error": "上傳至 mclo.gs 失敗"
   },
-  "searchWithGoogle": "",
+  "searchWithGoogle": "使用 Google 搜尋",
   "copyToClipboard": "複製到剪貼簿",
   "clipboardCopy": {
     "loading": "正在複製到剪貼簿...",
@@ -447,7 +447,11 @@
     "startedSession": "已啟動會話",
     "resumedSession": "已恢復會話",
     "pausedSession": "已暫停會話",
-    "stoppedSession": "已停止會話"
+    "stoppedSession": "已停止會話",
+    "contextMenu": {
+      "copyUsername": "複製用戶名稱",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "切換主題",
   "pickADate": "選擇日期",
@@ -518,17 +522,24 @@
   },
   "contextMenu": {
     "instance": {
-      "goToInstance": "",
+      "goToInstance": "前往實例",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "刪除實例"
     },
     "bot": {
-      "goToBot": "",
-      "copyUsername": ""
+      "goToBot": "前往機器人",
+      "copyUsername": "複製用戶名稱",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
-      "enable": "",
-      "disable": "",
-      "openSettings": ""
+      "enable": "啟用",
+      "disable": "停用",
+      "openSettings": "打開設定",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

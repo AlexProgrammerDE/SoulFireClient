@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "Seçilmiş proksiləri yoxla",
     "contextMenu": {
       "copyAddress": "Ünvani kopyala",
+      "copyUsername": "İstifadəçi adını kopyala",
+      "copyPassword": "",
       "deleteProxy": "Proksini Sil"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "Konfiqurasiyanı Aç",
       "openMetadata": "Metadatanı Aç",
-      "copyProfileId": "Profil ID-ni Kopyala"
+      "copyProfileId": "Profil ID-ni Kopyala",
+      "copyUsername": "İstifadəçi adını kopyala"
     },
     "config": {
       "title": "{{name}}-i tənzimləyin",
@@ -342,7 +345,9 @@
       "edit": "Skripti Redaktə Et",
       "pause": "Fasilə",
       "resume": "Davam et",
-      "delete": "Skripti Sil"
+      "delete": "Skripti Sil",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

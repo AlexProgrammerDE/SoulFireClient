@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "Periksa proxy yang dipilih",
     "contextMenu": {
       "copyAddress": "Salin Alamat",
+      "copyUsername": "Salin Nama Pengguna",
+      "copyPassword": "",
       "deleteProxy": "Hapus Proxy"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "Buka Konfigurasi",
       "openMetadata": "Buka Metadata",
-      "copyProfileId": "Salin ID Profil"
+      "copyProfileId": "Salin ID Profil",
+      "copyUsername": "Salin Nama Pengguna"
     },
     "config": {
       "title": "Konfigurasi {{name}}",
@@ -342,7 +345,9 @@
       "edit": "Edit Skrip",
       "pause": "Jeda",
       "resume": "Lanjutkan",
-      "delete": "Hapus Skrip"
+      "delete": "Hapus Skrip",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

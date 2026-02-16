@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "Zkontrolovat vybrané proxy",
     "contextMenu": {
       "copyAddress": "Kopírovat adresu",
+      "copyUsername": "Kopírovat uživatelské jméno",
+      "copyPassword": "",
       "deleteProxy": "Smazat proxy"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "Otevřít konfiguraci",
       "openMetadata": "Otevřít metadata",
-      "copyProfileId": "Kopírovat ID profilu"
+      "copyProfileId": "Kopírovat ID profilu",
+      "copyUsername": "Kopírovat uživatelské jméno"
     },
     "config": {
       "title": "Nastavit {{name}}",
@@ -342,7 +345,9 @@
       "edit": "Upravit skript",
       "pause": "Pozastavit",
       "resume": "Pokračovat",
-      "delete": "Smazat skript"
+      "delete": "Smazat skript",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

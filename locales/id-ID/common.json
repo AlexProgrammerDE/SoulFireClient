@@ -406,7 +406,7 @@
     "success": "Berhasil diunggah ke mclo.gs! Lihat di sini: {{url}}",
     "error": "Gagal mengunggah ke mclo.gs"
   },
-  "searchWithGoogle": "",
+  "searchWithGoogle": "Cari dengan Google",
   "copyToClipboard": "Salin ke clipboard",
   "clipboardCopy": {
     "loading": "Menyalin ke clipboard...",
@@ -447,7 +447,11 @@
     "startedSession": "Memulai sesi",
     "resumedSession": "Melanjutkan sesi",
     "pausedSession": "Menjeda sesi",
-    "stoppedSession": "Menghentikan sesi"
+    "stoppedSession": "Menghentikan sesi",
+    "contextMenu": {
+      "copyUsername": "Salin Nama Pengguna",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Ganti tema",
   "pickADate": "Pilih tanggal",
@@ -518,17 +522,24 @@
   },
   "contextMenu": {
     "instance": {
-      "goToInstance": "",
+      "goToInstance": "Buka Instance",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Hapus Instansi"
     },
     "bot": {
-      "goToBot": "",
-      "copyUsername": ""
+      "goToBot": "Buka Bot",
+      "copyUsername": "Salin Nama Pengguna",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
-      "enable": "",
-      "disable": "",
-      "openSettings": ""
+      "enable": "Aktifkan",
+      "disable": "Nonaktifkan",
+      "openSettings": "Buka Pengaturan",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

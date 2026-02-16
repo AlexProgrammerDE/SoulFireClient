@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "Geselecteerde proxies controleren",
     "contextMenu": {
       "copyAddress": "Adres kopiëren",
+      "copyUsername": "Gebruikersnaam kopiëren",
+      "copyPassword": "",
       "deleteProxy": "Proxy verwijderen"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "Config openen",
       "openMetadata": "Metadata openen",
-      "copyProfileId": "Profiel-ID kopiëren"
+      "copyProfileId": "Profiel-ID kopiëren",
+      "copyUsername": "Gebruikersnaam kopiëren"
     },
     "config": {
       "title": "{{name}} configureren",
@@ -342,7 +345,9 @@
       "edit": "Script bewerken",
       "pause": "Pauzeren",
       "resume": "Hervatten",
-      "delete": "Script verwijderen"
+      "delete": "Script verwijderen",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

@@ -447,7 +447,11 @@
     "startedSession": "세션을 시작했습니다.",
     "resumedSession": "세션을 다시 시작했습니다.",
     "pausedSession": "세션을 일시 정지했습니다.",
-    "stoppedSession": "세션을 중지했습니다."
+    "stoppedSession": "세션을 중지했습니다.",
+    "contextMenu": {
+      "copyUsername": "사용자명 복사",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "테마 전환",
   "pickADate": "날짜 선택",
@@ -519,16 +523,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "인스턴스로 이동",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "인스턴스 삭제"
     },
     "bot": {
       "goToBot": "봇으로 이동",
-      "copyUsername": "사용자명 복사"
+      "copyUsername": "사용자명 복사",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
       "enable": "활성화",
       "disable": "비활성화",
-      "openSettings": "설정 열기"
+      "openSettings": "설정 열기",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

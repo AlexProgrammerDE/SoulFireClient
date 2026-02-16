@@ -406,7 +406,7 @@
     "success": "Enviado para mclo.gs! Veja aqui: {{url}}",
     "error": "Falha ao enviar para mclo.gs"
   },
-  "searchWithGoogle": "",
+  "searchWithGoogle": "Pesquisar com o Google",
   "copyToClipboard": "Copiar para a área de transferência",
   "clipboardCopy": {
     "loading": "Copiando para a área de transferência...",
@@ -447,7 +447,11 @@
     "startedSession": "Sessão iniciada",
     "resumedSession": "Sessão retomada",
     "pausedSession": "Sessão pausada",
-    "stoppedSession": "Sessão interrompida"
+    "stoppedSession": "Sessão interrompida",
+    "contextMenu": {
+      "copyUsername": "Copiar nome de usuário",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Alternar tema",
   "pickADate": "Escolha uma data",
@@ -518,17 +522,24 @@
   },
   "contextMenu": {
     "instance": {
-      "goToInstance": "",
+      "goToInstance": "Ir para Instância",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Deletar Instancia"
     },
     "bot": {
-      "goToBot": "",
-      "copyUsername": ""
+      "goToBot": "Ir para o Bot",
+      "copyUsername": "Copiar nome de usuário",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
-      "enable": "",
-      "disable": "",
-      "openSettings": ""
+      "enable": "Ativar",
+      "disable": "Desativar",
+      "openSettings": "Abrir Configurações",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }

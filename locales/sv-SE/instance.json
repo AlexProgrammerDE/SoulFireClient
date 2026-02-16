@@ -49,6 +49,8 @@
     "checkSelectedTooltip": "Kontrollera valda proxies",
     "contextMenu": {
       "copyAddress": "Kopiera adress",
+      "copyUsername": "Kopiera användarnamn",
+      "copyPassword": "",
       "deleteProxy": "Ta bort proxy"
     }
   },
@@ -121,7 +123,8 @@
     "contextMenu": {
       "openConfig": "Öppna konfigurering",
       "openMetadata": "Öppna metadata",
-      "copyProfileId": "Kopiera profil-ID"
+      "copyProfileId": "Kopiera profil-ID",
+      "copyUsername": "Kopiera användarnamn"
     },
     "config": {
       "title": "Konfigurera {{name}}",
@@ -342,7 +345,9 @@
       "edit": "Redigera skript",
       "pause": "Pausa",
       "resume": "Återuppta",
-      "delete": "Ta bort skript"
+      "delete": "Ta bort skript",
+      "copyScriptName": "",
+      "copyScriptId": ""
     },
     "editor": {
       "toolbar": {

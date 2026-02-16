@@ -447,7 +447,11 @@
     "startedSession": "Se inició una sesión",
     "resumedSession": "Se reanudó una sesión",
     "pausedSession": "Se pausó una sesión",
-    "stoppedSession": "Se detuvo una sesión"
+    "stoppedSession": "Se detuvo una sesión",
+    "contextMenu": {
+      "copyUsername": "Copiar nombre de usuario",
+      "copyCommand": ""
+    }
   },
   "toggleTheme": "Alternar tema",
   "pickADate": "Selecciona una fecha",
@@ -519,16 +523,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Ir a la instancia",
+      "copyInstanceId": "",
+      "copyInstanceName": "",
       "deleteInstance": "Eliminar instancia"
     },
     "bot": {
       "goToBot": "Ir al bot",
-      "copyUsername": "Copiar nombre de usuario"
+      "copyUsername": "Copiar nombre de usuario",
+      "copyUuid": "",
+      "copyCoordinates": ""
     },
     "plugin": {
       "enable": "Habilitar",
       "disable": "Deshabilitar",
-      "openSettings": "Abrir configuración"
+      "openSettings": "Abrir configuración",
+      "copyPluginName": "",
+      "copyVersion": "",
+      "openWebsite": ""
     }
   }
 }
