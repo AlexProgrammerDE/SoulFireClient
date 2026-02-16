@@ -303,7 +303,9 @@ const columns: ColumnDef<ProfileAccount>[] = [
       );
     },
     meta: {
-      label: i18n.t("instance:account.table.type"),
+      get label() {
+        return i18n.t("instance:account.table.type");
+      },
       variant: "multiSelect",
       options: getEnumEntries(MinecraftAccountProto_AccountTypeProto).map(
         (type) => {
@@ -327,8 +329,12 @@ const columns: ColumnDef<ProfileAccount>[] = [
       />
     ),
     meta: {
-      label: i18n.t("instance:account.table.profileId"),
-      placeholder: i18n.t("instance:account.table.searchProfileIds"),
+      get label() {
+        return i18n.t("instance:account.table.profileId");
+      },
+      get placeholder() {
+        return i18n.t("instance:account.table.searchProfileIds");
+      },
       variant: "text",
       icon: TextIcon,
     },
@@ -344,8 +350,12 @@ const columns: ColumnDef<ProfileAccount>[] = [
       />
     ),
     meta: {
-      label: i18n.t("instance:account.table.lastKnownName"),
-      placeholder: i18n.t("instance:account.table.searchLastKnownNames"),
+      get label() {
+        return i18n.t("instance:account.table.lastKnownName");
+      },
+      get placeholder() {
+        return i18n.t("instance:account.table.searchLastKnownNames");
+      },
       variant: "text",
       icon: TextIcon,
     },

@@ -143,8 +143,12 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
       </div>
     ),
     meta: {
-      label: i18n.t("common:auditLog.user"),
-      placeholder: i18n.t("common:auditLog.searchUsers"),
+      get label() {
+        return i18n.t("common:auditLog.user");
+      },
+      get placeholder() {
+        return i18n.t("common:auditLog.searchUsers");
+      },
       variant: "text",
       icon: TextIcon,
     },
@@ -182,7 +186,9 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
       );
     },
     meta: {
-      label: i18n.t("common:auditLog.type"),
+      get label() {
+        return i18n.t("common:auditLog.type");
+      },
       variant: "multiSelect",
       options: getEnumEntries(InstanceAuditLogResponse_AuditLogEntryType).map(
         (type) => {
@@ -212,8 +218,12 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
     enableGlobalFilter: false,
     sortingFn: "datetime",
     meta: {
-      label: i18n.t("common:auditLog.timestamp"),
-      placeholder: i18n.t("common:auditLog.searchTimestamps"),
+      get label() {
+        return i18n.t("common:auditLog.timestamp");
+      },
+      get placeholder() {
+        return i18n.t("common:auditLog.searchTimestamps");
+      },
       variant: "dateRange",
     },
     filterFn: "inNumberRange",

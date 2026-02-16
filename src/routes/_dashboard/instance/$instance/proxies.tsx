@@ -285,7 +285,9 @@ const columns: ColumnDef<ProfileProxy>[] = [
       );
     },
     meta: {
-      label: i18n.t("instance:proxy.table.type"),
+      get label() {
+        return i18n.t("instance:proxy.table.type");
+      },
       variant: "multiSelect",
       options: getEnumEntries(ProxyProto_Type).map((type) => {
         return {
@@ -307,8 +309,12 @@ const columns: ColumnDef<ProfileProxy>[] = [
       />
     ),
     meta: {
-      label: i18n.t("instance:proxy.table.address"),
-      placeholder: i18n.t("instance:proxy.table.searchAddresses"),
+      get label() {
+        return i18n.t("instance:proxy.table.address");
+      },
+      get placeholder() {
+        return i18n.t("instance:proxy.table.searchAddresses");
+      },
       variant: "text",
       icon: TextIcon,
     },
@@ -324,8 +330,12 @@ const columns: ColumnDef<ProfileProxy>[] = [
       />
     ),
     meta: {
-      label: i18n.t("instance:proxy.table.username"),
-      placeholder: i18n.t("instance:proxy.table.searchUsernames"),
+      get label() {
+        return i18n.t("instance:proxy.table.username");
+      },
+      get placeholder() {
+        return i18n.t("instance:proxy.table.searchUsernames");
+      },
       variant: "text",
       icon: TextIcon,
     },
@@ -341,8 +351,12 @@ const columns: ColumnDef<ProfileProxy>[] = [
       />
     ),
     meta: {
-      label: i18n.t("instance:proxy.table.password"),
-      placeholder: i18n.t("instance:proxy.table.searchPasswords"),
+      get label() {
+        return i18n.t("instance:proxy.table.password");
+      },
+      get placeholder() {
+        return i18n.t("instance:proxy.table.searchPasswords");
+      },
       variant: "text",
       icon: TextIcon,
     },

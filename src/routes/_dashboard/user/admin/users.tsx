@@ -111,8 +111,12 @@ const columns: ColumnDef<UserListResponse_User>[] = [
       </div>
     ),
     meta: {
-      label: i18n.t("admin:users.table.username"),
-      placeholder: i18n.t("admin:users.table.searchUsernames"),
+      get label() {
+        return i18n.t("admin:users.table.username");
+      },
+      get placeholder() {
+        return i18n.t("admin:users.table.searchUsernames");
+      },
       variant: "text",
       icon: TextIcon,
     },
@@ -128,8 +132,12 @@ const columns: ColumnDef<UserListResponse_User>[] = [
       />
     ),
     meta: {
-      label: i18n.t("admin:users.table.email"),
-      placeholder: i18n.t("admin:users.table.searchEmails"),
+      get label() {
+        return i18n.t("admin:users.table.email");
+      },
+      get placeholder() {
+        return i18n.t("admin:users.table.searchEmails");
+      },
       variant: "text",
       icon: TextIcon,
     },
@@ -157,7 +165,9 @@ const columns: ColumnDef<UserListResponse_User>[] = [
       );
     },
     meta: {
-      label: i18n.t("admin:users.table.role"),
+      get label() {
+        return i18n.t("admin:users.table.role");
+      },
       variant: "multiSelect",
       options: getEnumEntries(UserRole).map((type) => {
         return {
@@ -185,8 +195,12 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     enableGlobalFilter: false,
     sortingFn: "datetime",
     meta: {
-      label: i18n.t("admin:users.table.createdAt"),
-      placeholder: i18n.t("admin:users.table.searchCreatedAts"),
+      get label() {
+        return i18n.t("admin:users.table.createdAt");
+      },
+      get placeholder() {
+        return i18n.t("admin:users.table.searchCreatedAts");
+      },
       variant: "dateRange",
     },
     filterFn: "inNumberRange",
@@ -210,8 +224,12 @@ const columns: ColumnDef<UserListResponse_User>[] = [
     enableGlobalFilter: false,
     sortingFn: "datetime",
     meta: {
-      label: i18n.t("admin:users.table.minIssuedAt"),
-      placeholder: i18n.t("admin:users.table.searchMinIssuedAts"),
+      get label() {
+        return i18n.t("admin:users.table.minIssuedAt");
+      },
+      get placeholder() {
+        return i18n.t("admin:users.table.searchMinIssuedAts");
+      },
       variant: "dateRange",
     },
     filterFn: "inNumberRange",
