@@ -516,74 +516,6 @@ function AddButton() {
   );
 }
 
-function ExportButton() {
-  const { t } = useTranslation("instance");
-  const { instanceInfoQueryOptions } = Route.useRouteContext();
-  const { data: profile } = useSuspenseQuery({
-    ...instanceInfoQueryOptions,
-    select: (info) => info.profile,
-  });
-  const { trackEvent } = useAptabase();
-
-  const exportProxies = useCallback(
-    (mode: "uri" | "http" | "socks4" | "socks5") => {
-      void trackEvent("export_proxies", { mode });
-
-      let proxies = profile.proxies;
-
-      if (mode === "uri") {
-        if (proxies.length === 0) {
-          toast.error(t("proxy.export.noProxies"));
-          return;
-        }
-        const lines = proxies.map(formatProxyAsURI);
-        saveProxyFile(lines.join("\n"), "proxies.txt");
-      } else {
-        const typeMap = {
-          http: ProxyProto_Type.HTTP,
-          socks4: ProxyProto_Type.SOCKS4,
-          socks5: ProxyProto_Type.SOCKS5,
-        };
-        proxies = proxies.filter((p) => p.type === typeMap[mode]);
-        if (proxies.length === 0) {
-          toast.error(t("proxy.export.noProxies"));
-          return;
-        }
-        const lines = proxies.map(formatProxyAsFlat);
-        saveProxyFile(lines.join("\n"), `${mode}-proxies.txt`);
-      }
-    },
-    [profile.proxies, trackEvent, t],
-  );
-
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm">
-          <DownloadIcon />
-          {t("proxy.exportProxies")}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuLabel>{t("proxy.export.format")}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => exportProxies("uri")}>
-          {t("proxy.export.uri")}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => exportProxies("http")}>
-          {t("proxy.export.http")}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => exportProxies("socks4")}>
-          {t("proxy.export.socks4")}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => exportProxies("socks5")}>
-          {t("proxy.export.socks5")}
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
-  );
-}
-
 function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   const { t } = useTranslation("instance");
   const queryClient = useQueryClient();
@@ -618,6 +550,35 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
 
   const selectedProxyCount =
     props.table.getFilteredSelectedRowModel().rows.length;
+
+  const exportSelectedProxies = useCallback(
+    (mode: "uri" | "http" | "socks4" | "socks5") => {
+      const selectedRows = props.table
+        .getFilteredSelectedRowModel()
+        .rows.map((r) => r.original);
+
+      void trackEvent("export_proxies", { mode, count: selectedRows.length });
+
+      if (mode === "uri") {
+        const lines = selectedRows.map(formatProxyAsURI);
+        saveProxyFile(lines.join("\n"), "proxies.txt");
+      } else {
+        const typeMap = {
+          http: ProxyProto_Type.HTTP,
+          socks4: ProxyProto_Type.SOCKS4,
+          socks5: ProxyProto_Type.SOCKS5,
+        };
+        const filtered = selectedRows.filter((p) => p.type === typeMap[mode]);
+        if (filtered.length === 0) {
+          toast.error(t("proxy.export.noProxies"));
+          return;
+        }
+        const lines = filtered.map(formatProxyAsFlat);
+        saveProxyFile(lines.join("\n"), `${mode}-proxies.txt`);
+      }
+    },
+    [props.table, trackEvent, t],
+  );
 
   const performProxyCheck = useCallback(() => {
     if (transport === null) {
@@ -797,6 +758,29 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <DataTableActionBarAction tooltip={t("proxy.exportSelectedTooltip")}>
+            <DownloadIcon />
+          </DataTableActionBarAction>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>{t("proxy.export.format")}</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={() => exportSelectedProxies("uri")}>
+            {t("proxy.export.uri")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => exportSelectedProxies("http")}>
+            {t("proxy.export.http")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => exportSelectedProxies("socks4")}>
+            {t("proxy.export.socks4")}
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => exportSelectedProxies("socks5")}>
+            {t("proxy.export.socks5")}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
       <DataTableActionBarAction
         tooltip={t("proxy.removeSelectedTooltip")}
         onClick={() => {
@@ -918,7 +902,6 @@ function Content() {
           <DataTableSortList table={table} />
           <GetProxiesButton />
           <AddButton />
-          <ExportButton />
         </DataTableToolbar>
       </DataTable>
       {contextMenu && (

@@ -46,6 +46,7 @@
       "searchPasswords": "Search passwords..."
     },
     "removeSelectedTooltip": "Remove selected proxies",
+    "exportSelectedTooltip": "Export selected proxies",
     "checkSelectedTooltip": "Check selected proxies",
     "contextMenu": {
       "copyAddress": "Copy Address",
@@ -53,7 +54,6 @@
       "copyPassword": "Copy Password",
       "deleteProxy": "Delete Proxy"
     },
-    "exportProxies": "Export Proxies",
     "export": {
       "format": "Export Format",
       "uri": "URI Format (all types)",
