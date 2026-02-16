@@ -52,7 +52,7 @@ void i18n
   .init({
     defaultNS: "common",
     fallbackLng: "en-US",
-    debug: true,
+    /// debug: true,
 
     load: "currentOnly",
     supportedLngs: APP_LOCALES.split(","),
