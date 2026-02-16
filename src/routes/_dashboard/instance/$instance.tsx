@@ -19,6 +19,7 @@ import {
   InstanceState,
 } from "@/generated/soulfire/instance.ts";
 import { useIsMobile } from "@/hooks/use-mobile.ts";
+import { instanceMetricsQueryOptions } from "@/lib/metrics-query.ts";
 import {
   convertFromInstanceProto,
   type InstanceInfoQueryData,
@@ -130,6 +131,11 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
       },
       refetchInterval: 3_000,
     });
+    const transport = createTransport();
+    const metricsQueryOptions = instanceMetricsQueryOptions(
+      transport,
+      instance,
+    );
     props.abortController.signal.addEventListener("abort", () => {
       void props.context.queryClient.cancelQueries({
         queryKey: instanceInfoQueryOptions.queryKey,
@@ -137,6 +143,7 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
     });
     return {
       instanceInfoQueryOptions,
+      metricsQueryOptions,
     };
   },
   loader: (props) => {
