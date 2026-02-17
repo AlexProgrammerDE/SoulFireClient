@@ -46,18 +46,27 @@
       "searchPasswords": "Поиск паролей..."
     },
     "removeSelectedTooltip": "Удалить выбранные прокси",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "Проверить выбранные прокси",
     "contextMenu": {
       "copyAddress": "Скопировать адрес",
       "copyUsername": "Скопировать имя пользователя",
-      "copyPassword": "",
+      "copyPassword": "Скопировать пароль",
       "deleteProxy": "Удалить прокси"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "Проверить прокси",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "Ошибка обновления записи",
       "deleteSuccess": "Запись удалена",
       "deleteError": "Не удалось удалить запись",
-      "duplicateError": "Запись с этим пространством имен и ключом уже существует"
+      "duplicateError": "Запись с этим пространством имен и ключом уже существует",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "Пауза",
       "resume": "Возобновить",
       "delete": "Удалить скрипт",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "Скопировать имя скрипта",
+      "copyScriptId": "Скопировать ID скрипта"
     },
     "editor": {
       "toolbar": {

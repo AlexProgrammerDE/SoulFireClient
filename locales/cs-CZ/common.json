@@ -1,5 +1,6 @@
 {
   "locale": "Místní nastavení",
+  "close": "Zavřít",
   "cancel": "Zrušit",
   "save": "Uložit",
   "saving": "Ukládání...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "Zadejte příkaz (napište 'help' pro seznam)"
+    "placeholder": "Zadejte příkaz (napište 'help' pro seznam)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "Spustit",
@@ -450,7 +453,7 @@
     "stoppedSession": "Relace byla zastavena",
     "contextMenu": {
       "copyUsername": "Kopírovat uživatelské jméno",
-      "copyCommand": ""
+      "copyCommand": "Kopírovat příkaz"
     }
   },
   "toggleTheme": "Přepnout motiv",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Přejít na instanci",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "Kopírovat ID instance",
+      "copyInstanceName": "Kopírovat název instance",
       "deleteInstance": "Smazat instanci"
     },
     "bot": {
       "goToBot": "Přejít na bota",
       "copyUsername": "Kopírovat uživatelské jméno",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "Kopírovat UUID",
+      "copyCoordinates": "Kopírovat souřadnice"
     },
     "plugin": {
       "enable": "Povolit",
       "disable": "Zakázat",
       "openSettings": "Otevřít nastavení",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "Kopírovat název pluginu",
+      "copyVersion": "Kopírovat verzi",
+      "openWebsite": "Otevřít webovou stránku"
     }
   }
 }

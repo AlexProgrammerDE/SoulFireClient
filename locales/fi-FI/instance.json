@@ -46,18 +46,27 @@
       "searchPasswords": "Etsi salasanoja..."
     },
     "removeSelectedTooltip": "Poista valitut proxyt",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "Tarkista valitut proxyt",
     "contextMenu": {
       "copyAddress": "Kopioi osoite",
       "copyUsername": "Kopioi käyttäjätunnus",
-      "copyPassword": "",
+      "copyPassword": "Kopioi salasana",
       "deleteProxy": "Poista välityspalvelin"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "Tarkista välityspalvelimet",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "Kirjauksen päivittäminen epäonnistui",
       "deleteSuccess": "Merkintä poistettu",
       "deleteError": "Merkinnän poistaminen epäonnistui",
-      "duplicateError": "Merkintä tällä nimiavaruudella ja avaimella on jo olemassa"
+      "duplicateError": "Merkintä tällä nimiavaruudella ja avaimella on jo olemassa",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "Tauota",
       "resume": "Jatka",
       "delete": "Poista skripti",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "Kopioi skriptin nimi",
+      "copyScriptId": "Kopioi skriptin tunniste"
     },
     "editor": {
       "toolbar": {

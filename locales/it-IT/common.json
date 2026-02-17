@@ -1,5 +1,6 @@
 {
   "locale": "Lingua",
+  "close": "Chiudi",
   "cancel": "Annulla",
   "save": "Salva",
   "saving": "Salvataggio in corso...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "Inserisci comando (digita 'help' per l'elenco)"
+    "placeholder": "Inserisci comando (digita 'help' per l'elenco)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "Avvia",
@@ -450,7 +453,7 @@
     "stoppedSession": "Sessione interrotta",
     "contextMenu": {
       "copyUsername": "Copia nome utente",
-      "copyCommand": ""
+      "copyCommand": "Copia comando"
     }
   },
   "toggleTheme": "Cambia tema",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Vai all'istanza",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "Copia ID istanza",
+      "copyInstanceName": "Copia nome istanza",
       "deleteInstance": "Elimina istanza"
     },
     "bot": {
       "goToBot": "Vai al Bot",
       "copyUsername": "Copia nome utente",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "Copia UUID",
+      "copyCoordinates": "Copia coordinate"
     },
     "plugin": {
       "enable": "Abilita",
       "disable": "Disabilita",
       "openSettings": "Apri impostazioni",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "Copia nome plugin",
+      "copyVersion": "Copia versione",
+      "openWebsite": "Apri sito web"
     }
   }
 }

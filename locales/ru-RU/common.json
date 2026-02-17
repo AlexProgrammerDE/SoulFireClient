@@ -1,5 +1,6 @@
 {
   "locale": "Локализация",
+  "close": "Закрыть",
   "cancel": "Отмена",
   "save": "Сохранить",
   "saving": "Сохраняется...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "Введите команду (введите 'help' для списка)"
+    "placeholder": "Введите команду (введите 'help' для списка)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "Запуск",
@@ -450,7 +453,7 @@
     "stoppedSession": "Сессия остановлена",
     "contextMenu": {
       "copyUsername": "Скопировать имя пользователя",
-      "copyCommand": ""
+      "copyCommand": "Скопировать команду"
     }
   },
   "toggleTheme": "Переключить тему",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Перейти к экземпляру",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "Скопировать ID экземпляра",
+      "copyInstanceName": "Скопировать имя экземпляра",
       "deleteInstance": "Удалить экземпляр"
     },
     "bot": {
       "goToBot": "Перейти к боту",
       "copyUsername": "Скопировать имя пользователя",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "Скопировать UUID",
+      "copyCoordinates": "Скопировать координаты"
     },
     "plugin": {
       "enable": "Включить",
       "disable": "Отключить",
       "openSettings": "Открыть настройки",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "Скопировать имя плагина",
+      "copyVersion": "Скопировать версию",
+      "openWebsite": "Открыть сайт"
     }
   }
 }

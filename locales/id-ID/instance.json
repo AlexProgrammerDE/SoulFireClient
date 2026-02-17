@@ -46,18 +46,27 @@
       "searchPasswords": "Cari kata sandi..."
     },
     "removeSelectedTooltip": "Hapus proxy yang dipilih",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "Periksa proxy yang dipilih",
     "contextMenu": {
       "copyAddress": "Salin Alamat",
       "copyUsername": "Salin Nama Pengguna",
-      "copyPassword": "",
+      "copyPassword": "Salin Kata Sandi",
       "deleteProxy": "Hapus Proxy"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "Periksa Proksi",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "Gagal memperbarui entri",
       "deleteSuccess": "Entri dihapus",
       "deleteError": "Gagal menghapus entri",
-      "duplicateError": "Entri dengan namespace dan kunci ini sudah ada"
+      "duplicateError": "Entri dengan namespace dan kunci ini sudah ada",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "Jeda",
       "resume": "Lanjutkan",
       "delete": "Hapus Skrip",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "Salin Nama Skrip",
+      "copyScriptId": "Salin ID Skrip"
     },
     "editor": {
       "toolbar": {

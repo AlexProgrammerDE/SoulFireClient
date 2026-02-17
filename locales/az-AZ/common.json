@@ -1,5 +1,6 @@
 {
   "locale": "Lokallaşdırma",
+  "close": "Bağla",
   "cancel": "Ləğv et",
   "save": "Yadda saxla",
   "saving": "Yadda saxlanılır...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "Əmr daxil edin ('help' yazın siyahı üçün)"
+    "placeholder": "Əmr daxil edin ('help' yazın siyahı üçün)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "Başla",
@@ -450,7 +453,7 @@
     "stoppedSession": "Sessiya bitirildi",
     "contextMenu": {
       "copyUsername": "İstifadəçi adını kopyala",
-      "copyCommand": ""
+      "copyCommand": "Əmri Kopyala"
     }
   },
   "toggleTheme": "Temanı dəyiş",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "İnstantsa get",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "İnstant ID-ni kopyala",
+      "copyInstanceName": "İnstant adını kopyala",
       "deleteInstance": "Instansiyanı sil"
     },
     "bot": {
       "goToBot": "Bota get",
       "copyUsername": "İstifadəçi adını kopyala",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "UUID-ni kopyala",
+      "copyCoordinates": "Kordinatları kopyala"
     },
     "plugin": {
       "enable": "Aktiv et",
       "disable": "Deaktiv et",
       "openSettings": "Ayarları aç",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "Plugin adını kopyala",
+      "copyVersion": "Versiyanı kopyala",
+      "openWebsite": "Saytı aç"
     }
   }
 }

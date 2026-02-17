@@ -46,18 +46,27 @@
       "searchPasswords": "Wachtwoorden zoeken..."
     },
     "removeSelectedTooltip": "Geselecteerde proxies verwijderen",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "Geselecteerde proxies controleren",
     "contextMenu": {
       "copyAddress": "Adres kopiëren",
       "copyUsername": "Gebruikersnaam kopiëren",
-      "copyPassword": "",
+      "copyPassword": "Wachtwoord kopiëren",
       "deleteProxy": "Proxy verwijderen"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "Proxies controleren",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "Bijwerken van item mislukt",
       "deleteSuccess": "Item verwijderd",
       "deleteError": "Verwijderen van item mislukt",
-      "duplicateError": "Er bestaat al een item met deze namespace en sleutel"
+      "duplicateError": "Er bestaat al een item met deze namespace en sleutel",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "Pauzeren",
       "resume": "Hervatten",
       "delete": "Script verwijderen",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "Scriptnaam kopiëren",
+      "copyScriptId": "Script-ID kopiëren"
     },
     "editor": {
       "toolbar": {

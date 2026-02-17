@@ -46,18 +46,27 @@
       "searchPasswords": "Şifrelerde ara..."
     },
     "removeSelectedTooltip": "Seçili proxy'leri kaldır",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "Seçili proxy'leri kontrol et",
     "contextMenu": {
       "copyAddress": "Adresi Kopyala",
       "copyUsername": "Kullanıcı Adını Kopyala",
-      "copyPassword": "",
+      "copyPassword": "Şifreyi Kopyala",
       "deleteProxy": "Proxy'yi Sil"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "Proxyleri Kontrol Et",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "Giriş güncellenemedi",
       "deleteSuccess": "Girdi silindi",
       "deleteError": "Girdi silinemedi",
-      "duplicateError": "Bu ad alanı ve anahtara sahip bir giriş zaten mevcut"
+      "duplicateError": "Bu ad alanı ve anahtara sahip bir giriş zaten mevcut",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "Duraklat",
       "resume": "Devam et",
       "delete": "Script'i Sil",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "Script Adını Kopyala",
+      "copyScriptId": "Script Kimliğini Kopyala"
     },
     "editor": {
       "toolbar": {

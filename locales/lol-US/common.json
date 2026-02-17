@@ -1,5 +1,6 @@
 {
   "locale": "Locael",
+  "close": "Cloes",
   "cancel": "cancel k?",
   "save": "SAEV",
   "saving": "SAEVIN...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "Entah teh command (type 'help' if yar confoosed)"
+    "placeholder": "Entah teh command (type 'help' if yar confoosed)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "Strat",
@@ -450,7 +453,7 @@
     "stoppedSession": "Seshun stoppd!",
     "contextMenu": {
       "copyUsername": "Copy Usernamez",
-      "copyCommand": ""
+      "copyCommand": "Copy Commandz"
     }
   },
   "toggleTheme": "Toggle thiem",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Go tu Instanz",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "Copy Instunce IDZ",
+      "copyInstanceName": "Copy Instunce Naym",
       "deleteInstance": "Deleet Instance"
     },
     "bot": {
       "goToBot": "Go tu Bot",
       "copyUsername": "Copy Usernamez",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "Copy UUIDZ",
+      "copyCoordinates": "Copy Ceewrdinaytz"
     },
     "plugin": {
       "enable": "Enablez",
       "disable": "Disablez",
       "openSettings": "Open Settingz",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "Copy Plugun Naym",
+      "copyVersion": "Copy Verzshun",
+      "openWebsite": "Open Websyte"
     }
   }
 }

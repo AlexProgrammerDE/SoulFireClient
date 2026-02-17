@@ -1,5 +1,6 @@
 {
   "locale": "Lokal",
+  "close": "Tutup",
   "cancel": "Batal",
   "save": "Simpan",
   "saving": "Menyimpan...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "Masukkan perintah (ketik 'help' untuk daftar)"
+    "placeholder": "Masukkan perintah (ketik 'help' untuk daftar)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "Mulai",
@@ -450,7 +453,7 @@
     "stoppedSession": "Menghentikan sesi",
     "contextMenu": {
       "copyUsername": "Salin Nama Pengguna",
-      "copyCommand": ""
+      "copyCommand": "Salin Perintah"
     }
   },
   "toggleTheme": "Ganti tema",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Buka Instance",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "Salin ID Instansi",
+      "copyInstanceName": "Salin Nama Instansi",
       "deleteInstance": "Hapus Instansi"
     },
     "bot": {
       "goToBot": "Buka Bot",
       "copyUsername": "Salin Nama Pengguna",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "Salin UUID",
+      "copyCoordinates": "Salin Koordinat"
     },
     "plugin": {
       "enable": "Aktifkan",
       "disable": "Nonaktifkan",
       "openSettings": "Buka Pengaturan",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "Salin Nama Plugin",
+      "copyVersion": "Salin Versi",
+      "openWebsite": "Buka Situs Web"
     }
   }
 }

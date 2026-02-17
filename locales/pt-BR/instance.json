@@ -46,18 +46,27 @@
       "searchPasswords": "Pesquisar senhas..."
     },
     "removeSelectedTooltip": "Remover proxies selecionados",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "Checar proxies selecionados",
     "contextMenu": {
       "copyAddress": "Copiar Endereço",
       "copyUsername": "Copiar nome de usuário",
-      "copyPassword": "",
+      "copyPassword": "Copiar senha",
       "deleteProxy": "Excluir Proxy"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "Verificar Proxies",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "Falha ao atualizar entrada",
       "deleteSuccess": "Entrada excluída",
       "deleteError": "Falha ao excluir entrada",
-      "duplicateError": "Já existe uma entrada com este namespace e chave"
+      "duplicateError": "Já existe uma entrada com este namespace e chave",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "Pausar",
       "resume": "Continuar",
       "delete": "Excluir Script",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "Copiar nome do script",
+      "copyScriptId": "Copiar ID do script"
     },
     "editor": {
       "toolbar": {

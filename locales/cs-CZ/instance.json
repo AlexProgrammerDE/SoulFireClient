@@ -46,18 +46,27 @@
       "searchPasswords": "Hledat hesla..."
     },
     "removeSelectedTooltip": "Odebrat vybrané proxy",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "Zkontrolovat vybrané proxy",
     "contextMenu": {
       "copyAddress": "Kopírovat adresu",
       "copyUsername": "Kopírovat uživatelské jméno",
-      "copyPassword": "",
+      "copyPassword": "Kopírovat heslo",
       "deleteProxy": "Smazat proxy"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "Zkontrolovat proxy servery",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "Nepodařilo se aktualizovat položku",
       "deleteSuccess": "Záznam byl smazán",
       "deleteError": "Nepodařilo se smazat záznam",
-      "duplicateError": "Záznam s tímto jmenným prostorem a klíčem již existuje"
+      "duplicateError": "Záznam s tímto jmenným prostorem a klíčem již existuje",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "Pozastavit",
       "resume": "Pokračovat",
       "delete": "Smazat skript",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "Kopírovat název skriptu",
+      "copyScriptId": "Kopírovat ID skriptu"
     },
     "editor": {
       "toolbar": {

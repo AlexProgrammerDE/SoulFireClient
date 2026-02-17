@@ -46,18 +46,27 @@
       "searchPasswords": "ค้นหารหัสผ่าน..."
     },
     "removeSelectedTooltip": "ลบพร็อกซีที่เลือก",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "ตรวจสอบพร็อกซีที่เลือก",
     "contextMenu": {
       "copyAddress": "คัดลอกที่อยู่",
       "copyUsername": "คัดลอกชื่อผู้ใช้",
-      "copyPassword": "",
+      "copyPassword": "คัดลอกรหัสผ่าน",
       "deleteProxy": "ลบ Proxy"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "ตรวจสอบพร็อกซี",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "ไม่สามารถอัปเดตรายการได้",
       "deleteSuccess": "ลบรายการเรียบร้อยแล้ว",
       "deleteError": "ลบรายการไม่สำเร็จ",
-      "duplicateError": "มีรายการที่ใช้ namespace และคีย์นี้อยู่แล้ว"
+      "duplicateError": "มีรายการที่ใช้ namespace และคีย์นี้อยู่แล้ว",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "หยุดชั่วคราว",
       "resume": "ดำเนินการต่อ",
       "delete": "ลบสคริปต์",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "คัดลอกชื่อสคริปต์",
+      "copyScriptId": "คัดลอก Script ID"
     },
     "editor": {
       "toolbar": {

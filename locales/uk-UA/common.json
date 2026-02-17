@@ -1,5 +1,6 @@
 {
   "locale": "Мова інтерфейсу",
+  "close": "Закрити",
   "cancel": "Скасувати",
   "save": "Зберегти",
   "saving": "Збереження...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "Введіть команду (введіть 'help' для списку)"
+    "placeholder": "Введіть команду (введіть 'help' для списку)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "Почати",
@@ -450,7 +453,7 @@
     "stoppedSession": "Сесію зупинено",
     "contextMenu": {
       "copyUsername": "Копіювати ім'я користувача",
-      "copyCommand": ""
+      "copyCommand": "Скопіювати команду"
     }
   },
   "toggleTheme": "Перемкнути тему",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Перейти до інстансу",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "Скопіювати ID екземпляра",
+      "copyInstanceName": "Скопіювати назву екземпляра",
       "deleteInstance": "Видалити екземпляр"
     },
     "bot": {
       "goToBot": "Перейти до бота",
       "copyUsername": "Копіювати ім'я користувача",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "Скопіювати UUID",
+      "copyCoordinates": "Скопіювати координати"
     },
     "plugin": {
       "enable": "Увімкнути",
       "disable": "Вимкнути",
       "openSettings": "Відкрити налаштування",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "Скопіювати назву плагіна",
+      "copyVersion": "Скопіювати версію",
+      "openWebsite": "Відкрити вебсайт"
     }
   }
 }

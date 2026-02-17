@@ -46,18 +46,27 @@
       "searchPasswords": "Sök lösenord..."
     },
     "removeSelectedTooltip": "Ta bort valda proxies",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "Kontrollera valda proxies",
     "contextMenu": {
       "copyAddress": "Kopiera adress",
       "copyUsername": "Kopiera användarnamn",
-      "copyPassword": "",
+      "copyPassword": "Kopiera lösenordet",
       "deleteProxy": "Ta bort proxy"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "Kontrollera proxysar",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "Misslyckades med att uppdatera posten",
       "deleteSuccess": "Post borttagen",
       "deleteError": "Misslyckades med att ta bort posten",
-      "duplicateError": "En post med detta namnrymd och nyckel finns redan"
+      "duplicateError": "En post med detta namnrymd och nyckel finns redan",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "Pausa",
       "resume": "Återuppta",
       "delete": "Ta bort skript",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "Kopiera skriptnamn",
+      "copyScriptId": "Kopiera skript-ID"
     },
     "editor": {
       "toolbar": {

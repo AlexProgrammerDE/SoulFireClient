@@ -1,5 +1,6 @@
 {
   "locale": "ภาษาโลแคล (Locale)",
+  "close": "ปิด",
   "cancel": "ยกเลิก",
   "save": "บันทึก",
   "saving": "กำลังบันทึก...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "ใส่คำสั่ง (พิมพ์ 'help' เพื่อดูรายการ)"
+    "placeholder": "ใส่คำสั่ง (พิมพ์ 'help' เพื่อดูรายการ)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "เริ่มต้น",
@@ -450,7 +453,7 @@
     "stoppedSession": "หยุดเซสชันแล้ว",
     "contextMenu": {
       "copyUsername": "คัดลอกชื่อผู้ใช้",
-      "copyCommand": ""
+      "copyCommand": "คัดลอกคำสั่ง"
     }
   },
   "toggleTheme": "สลับธีม",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "ไปที่อินสแตนซ์",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "คัดลอก Instance ID",
+      "copyInstanceName": "คัดลอกชื่อ Instance",
       "deleteInstance": "ลบอินสแตนซ์"
     },
     "bot": {
       "goToBot": "ไปที่บอท",
       "copyUsername": "คัดลอกชื่อผู้ใช้",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "คัดลอก UUID",
+      "copyCoordinates": "คัดลอกพิกัด"
     },
     "plugin": {
       "enable": "เปิดใช้งาน",
       "disable": "ปิดใช้งาน",
       "openSettings": "เปิดการตั้งค่า",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "คัดลอกชื่อปลั๊กอิน",
+      "copyVersion": "คัดลอกเวอร์ชัน",
+      "openWebsite": "เปิดเว็บไซต์"
     }
   }
 }
