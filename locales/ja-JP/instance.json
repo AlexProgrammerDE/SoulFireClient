@@ -46,18 +46,27 @@
       "searchPasswords": "パスワードを検索..."
     },
     "removeSelectedTooltip": "選択したプロキシを削除",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "選択したプロキシをチェック",
     "contextMenu": {
       "copyAddress": "アドレスをコピー",
       "copyUsername": "ユーザー名をコピー",
-      "copyPassword": "",
+      "copyPassword": "パスワードをコピーする",
       "deleteProxy": "プロキシを削除する"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "プロキシの確認",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "エントリの更新に失敗しました",
       "deleteSuccess": "エントリを削除しました",
       "deleteError": "エントリの削除に失敗しました",
-      "duplicateError": "このネームスペースとキーを持つエントリは既に存在します"
+      "duplicateError": "このネームスペースとキーを持つエントリは既に存在します",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "一時停止",
       "resume": "再開",
       "delete": "スクリプトを削除する",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "スクリプト名をコピー",
+      "copyScriptId": "スクリプトIDをコピー"
     },
     "editor": {
       "toolbar": {

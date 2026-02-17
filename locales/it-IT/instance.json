@@ -46,18 +46,27 @@
       "searchPasswords": "Cerca password..."
     },
     "removeSelectedTooltip": "Rimuovi i proxy selezionati",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "Controlla i proxy selezionati",
     "contextMenu": {
       "copyAddress": "Copia indirizzo",
       "copyUsername": "Copia nome utente",
-      "copyPassword": "",
+      "copyPassword": "Copia password",
       "deleteProxy": "Elimina proxy"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "Controlla Proxy",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "Impossibile aggiornare la voce",
       "deleteSuccess": "Voce eliminata",
       "deleteError": "Impossibile eliminare la voce",
-      "duplicateError": "Esiste già una voce con questo namespace e chiave"
+      "duplicateError": "Esiste già una voce con questo namespace e chiave",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "Pausa",
       "resume": "Riprendi",
       "delete": "Elimina script",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "Copia nome script",
+      "copyScriptId": "Copia ID script"
     },
     "editor": {
       "toolbar": {

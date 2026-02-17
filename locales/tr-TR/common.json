@@ -1,5 +1,6 @@
 {
   "locale": "Yerel",
+  "close": "Kapat",
   "cancel": "İptal",
   "save": "Kaydet",
   "saving": "Kaydediliyor...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "Komut girin ('help' yazarsanız liste çıkar)"
+    "placeholder": "Komut girin ('help' yazarsanız liste çıkar)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "Başlat",
@@ -450,7 +453,7 @@
     "stoppedSession": "Bir oturum durduruldu",
     "contextMenu": {
       "copyUsername": "Kullanıcı Adını Kopyala",
-      "copyCommand": ""
+      "copyCommand": "Komutu Kopyala"
     }
   },
   "toggleTheme": "Temayı değiştir",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Instansa Git",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "Instance Kimliğini Kopyala",
+      "copyInstanceName": "Instance Adını Kopyala",
       "deleteInstance": "Örneği Sil"
     },
     "bot": {
       "goToBot": "Bot'a Git",
       "copyUsername": "Kullanıcı Adını Kopyala",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "UUID'yi Kopyala",
+      "copyCoordinates": "Koordinatları Kopyala"
     },
     "plugin": {
       "enable": "Etkinleştir",
       "disable": "Devre Dışı Bırak",
       "openSettings": "Ayarları Aç",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "Eklenti Adını Kopyala",
+      "copyVersion": "Sürümü Kopyala",
+      "openWebsite": "Web Sitesini Aç"
     }
   }
 }

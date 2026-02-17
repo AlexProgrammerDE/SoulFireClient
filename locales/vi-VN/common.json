@@ -1,5 +1,6 @@
 {
   "locale": "Ngôn ngữ",
+  "close": "Đóng",
   "cancel": "Hủy",
   "save": "Lưu",
   "saving": "Đang lưu...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "Nhập lệnh (gõ 'help' để xem danh sách)"
+    "placeholder": "Nhập lệnh (gõ 'help' để xem danh sách)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "Bắt đầu",
@@ -450,7 +453,7 @@
     "stoppedSession": "Đã dừng một phiên",
     "contextMenu": {
       "copyUsername": "Sao chép Tên người dùng",
-      "copyCommand": ""
+      "copyCommand": "Sao chép Lệnh"
     }
   },
   "toggleTheme": "Chuyển đổi giao diện",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Đi đến Phiên bản",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "Sao chép ID Phiên bản",
+      "copyInstanceName": "Sao chép Tên Phiên bản",
       "deleteInstance": "Xóa phiên bản"
     },
     "bot": {
       "goToBot": "Đi đến Bot",
       "copyUsername": "Sao chép Tên người dùng",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "Sao chép UUID",
+      "copyCoordinates": "Sao chép Tọa độ"
     },
     "plugin": {
       "enable": "Bật",
       "disable": "Tắt",
       "openSettings": "Mở Cài đặt",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "Sao chép Tên Plugin",
+      "copyVersion": "Sao chép Phiên bản",
+      "openWebsite": "Mở Trang web"
     }
   }
 }

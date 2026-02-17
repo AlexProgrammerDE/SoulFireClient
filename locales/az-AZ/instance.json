@@ -46,18 +46,27 @@
       "searchPasswords": "Şifrlərdə axtarış..."
     },
     "removeSelectedTooltip": "Seçilmiş proksiləri sil",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "Seçilmiş proksiləri yoxla",
     "contextMenu": {
       "copyAddress": "Ünvani kopyala",
       "copyUsername": "İstifadəçi adını kopyala",
-      "copyPassword": "",
+      "copyPassword": "Şifrəni köçür",
       "deleteProxy": "Proksini Sil"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "Proksiləri Yoxla",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "Girişi yeniləmək mümkün olmadı",
       "deleteSuccess": "Qeyd silindi",
       "deleteError": "Qeydi silmək mümkün olmadı",
-      "duplicateError": "Bu ad sahəsi və açarla giriş artıq mövcuddur"
+      "duplicateError": "Bu ad sahəsi və açarla giriş artıq mövcuddur",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "Fasilə",
       "resume": "Davam et",
       "delete": "Skripti Sil",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "Skript adını köçür",
+      "copyScriptId": "Skript ID-sini köçür"
     },
     "editor": {
       "toolbar": {

@@ -1,5 +1,6 @@
 {
   "locale": "語言環境",
+  "close": "關閉",
   "cancel": "取消",
   "save": "儲存",
   "saving": "正在儲存...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "輸入指令（輸入 'help' 查看列表）"
+    "placeholder": "輸入指令（輸入 'help' 查看列表）",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "開始",
@@ -450,7 +453,7 @@
     "stoppedSession": "已停止會話",
     "contextMenu": {
       "copyUsername": "複製用戶名稱",
-      "copyCommand": ""
+      "copyCommand": "複製指令"
     }
   },
   "toggleTheme": "切換主題",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "前往實例",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "複製實例 ID",
+      "copyInstanceName": "複製實例名稱",
       "deleteInstance": "刪除實例"
     },
     "bot": {
       "goToBot": "前往機器人",
       "copyUsername": "複製用戶名稱",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "複製 UUID",
+      "copyCoordinates": "複製座標"
     },
     "plugin": {
       "enable": "啟用",
       "disable": "停用",
       "openSettings": "打開設定",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "複製插件名稱",
+      "copyVersion": "複製版本",
+      "openWebsite": "打開網站"
     }
   }
 }

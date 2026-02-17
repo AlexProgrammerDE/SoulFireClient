@@ -46,18 +46,27 @@
       "searchPasswords": "Passwörter suchen..."
     },
     "removeSelectedTooltip": "Ausgewählte Proxies entfernen",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "Ausgewählte Proxies prüfen",
     "contextMenu": {
       "copyAddress": "Adresse kopieren",
       "copyUsername": "Benutzernamen kopieren",
-      "copyPassword": "",
+      "copyPassword": "Passwort kopieren",
       "deleteProxy": "Proxy löschen"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "Proxies überprüfen",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "Eintrag konnte nicht aktualisiert werden",
       "deleteSuccess": "Eintrag gelöscht",
       "deleteError": "Fehler beim Löschen des Eintrags",
-      "duplicateError": "Ein Eintrag mit diesem Namensraum und Schlüssel existiert bereits"
+      "duplicateError": "Ein Eintrag mit diesem Namensraum und Schlüssel existiert bereits",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "Pausieren",
       "resume": "Fortsetzen",
       "delete": "Skript löschen",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "Scriptnamen kopieren",
+      "copyScriptId": "Script-ID kopieren"
     },
     "editor": {
       "toolbar": {

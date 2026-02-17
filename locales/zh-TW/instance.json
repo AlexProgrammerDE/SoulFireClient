@@ -46,18 +46,27 @@
       "searchPasswords": "搜尋密碼..."
     },
     "removeSelectedTooltip": "移除所選代理伺服器",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "檢查所選代理伺服器",
     "contextMenu": {
       "copyAddress": "複製位址",
       "copyUsername": "複製用戶名稱",
-      "copyPassword": "",
+      "copyPassword": "複製密碼",
       "deleteProxy": "刪除代理伺服器"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "檢查代理伺服器",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "更新條目失敗",
       "deleteSuccess": "條目已刪除",
       "deleteError": "刪除條目失敗",
-      "duplicateError": "具有相同命名空間和鍵的條目已存在"
+      "duplicateError": "具有相同命名空間和鍵的條目已存在",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "暫停",
       "resume": "繼續",
       "delete": "刪除腳本",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "複製腳本名稱",
+      "copyScriptId": "複製腳本 ID"
     },
     "editor": {
       "toolbar": {

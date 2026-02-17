@@ -46,18 +46,27 @@
       "searchPasswords": "비밀번호 검색..."
     },
     "removeSelectedTooltip": "선택한 프록시 제거",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "선택한 프록시 확인",
     "contextMenu": {
       "copyAddress": "주소 복사",
       "copyUsername": "사용자명 복사",
-      "copyPassword": "",
+      "copyPassword": "비밀번호 복사하기",
       "deleteProxy": "프록시 삭제"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "프록시 확인하기",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "항목 수정에 실패하였습니다",
       "deleteSuccess": "항목이 삭제되었습니다.",
       "deleteError": "항목 삭제에 실패했습니다.",
-      "duplicateError": "이 네임스페이스와 키를 가진 항목이 이미 존재합니다."
+      "duplicateError": "이 네임스페이스와 키를 가진 항목이 이미 존재합니다.",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "일시 정지",
       "resume": "다시 시작",
       "delete": "스크립트 삭제",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "스크립트 이름 복사하기",
+      "copyScriptId": "스크립트 ID 복사하기"
     },
     "editor": {
       "toolbar": {

@@ -1,5 +1,6 @@
 {
   "locale": "Jazykové nastavenie",
+  "close": "Zavrieť",
   "cancel": "Zrušiť",
   "save": "Uložiť",
   "saving": "Ukladá sa...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "Zadajte príkaz (napíšte \"help\" pre zoznam)"
+    "placeholder": "Zadajte príkaz (napíšte \"help\" pre zoznam)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "Spustiť",
@@ -450,7 +453,7 @@
     "stoppedSession": "Relácia zastavená",
     "contextMenu": {
       "copyUsername": "Kopírovať používateľské meno",
-      "copyCommand": ""
+      "copyCommand": "Kopírovať príkaz"
     }
   },
   "toggleTheme": "Prepínať tému",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Prejsť na inštanciu",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "Kopírovať ID inštancie",
+      "copyInstanceName": "Kopírovať názov inštancie",
       "deleteInstance": "Odstrániť inštanciu"
     },
     "bot": {
       "goToBot": "Prejsť na bota",
       "copyUsername": "Kopírovať používateľské meno",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "Kopírovať UUID",
+      "copyCoordinates": "Kopírovať súradnice"
     },
     "plugin": {
       "enable": "Povoliť",
       "disable": "Zakázať",
       "openSettings": "Otvoriť nastavenia",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "Kopírovať názov pluginu",
+      "copyVersion": "Kopírovať verziu",
+      "openWebsite": "Otvoriť webstránku"
     }
   }
 }

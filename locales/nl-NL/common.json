@@ -1,5 +1,6 @@
 {
   "locale": "Taal",
+  "close": "Sluiten",
   "cancel": "Annuleren",
   "save": "Opslaan",
   "saving": "Bezig met opslaan...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "Voer commando in (typ 'help' voor lijst)"
+    "placeholder": "Voer commando in (typ 'help' voor lijst)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "Start",
@@ -450,7 +453,7 @@
     "stoppedSession": "Sessie gestopt",
     "contextMenu": {
       "copyUsername": "Gebruikersnaam kopiëren",
-      "copyCommand": ""
+      "copyCommand": "Kopieer commando"
     }
   },
   "toggleTheme": "Thema wisselen",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Ga naar instantie",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "Instantie-ID kopiëren",
+      "copyInstanceName": "Instantienaam kopiëren",
       "deleteInstance": "Instantie verwijderen"
     },
     "bot": {
       "goToBot": "Ga naar bot",
       "copyUsername": "Gebruikersnaam kopiëren",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "UUID kopiëren",
+      "copyCoordinates": "Coördinaten kopiëren"
     },
     "plugin": {
       "enable": "Inschakelen",
       "disable": "Uitschakelen",
       "openSettings": "Instellingen openen",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "Pluginnaam kopiëren",
+      "copyVersion": "Versie kopiëren",
+      "openWebsite": "Website openen"
     }
   }
 }

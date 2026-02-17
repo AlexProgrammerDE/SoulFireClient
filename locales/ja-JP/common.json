@@ -1,5 +1,6 @@
 {
   "locale": "ロケール",
+  "close": "閉じる",
   "cancel": "キャンセル",
   "save": "保存する",
   "saving": "保存中...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "コマンドを入力 (一覧は「help」と入力)"
+    "placeholder": "コマンドを入力 (一覧は「help」と入力)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "開始",
@@ -450,7 +453,7 @@
     "stoppedSession": "セッションを停止しました。",
     "contextMenu": {
       "copyUsername": "ユーザー名をコピー",
-      "copyCommand": ""
+      "copyCommand": "コマンドをコピー"
     }
   },
   "toggleTheme": "テーマを切り替える",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "インスタンスへ移動",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "インスタンスIDをコピー",
+      "copyInstanceName": "インスタンス名をコピー",
       "deleteInstance": "インスタンスを削除"
     },
     "bot": {
       "goToBot": "Botへ移動",
       "copyUsername": "ユーザー名をコピー",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "UUIDをコピー",
+      "copyCoordinates": "座標をコピー"
     },
     "plugin": {
       "enable": "有効化",
       "disable": "無効化",
       "openSettings": "設定を開く",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "プラグイン名をコピー",
+      "copyVersion": "バージョンをコピー",
+      "openWebsite": "ウェブサイトを開く"
     }
   }
 }

@@ -46,18 +46,27 @@
       "searchPasswords": "Tìm kiếm mật khẩu..."
     },
     "removeSelectedTooltip": "Xóa các proxy đã chọn",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "Kiểm tra các proxy đã chọn",
     "contextMenu": {
       "copyAddress": "Sao chép địa chỉ",
       "copyUsername": "Sao chép Tên người dùng",
-      "copyPassword": "",
+      "copyPassword": "Sao chép Mật khẩu",
       "deleteProxy": "Xóa Proxy"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "Kiểm Tra Proxy",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "Không thể cập nhật mục",
       "deleteSuccess": "Mục đã được xóa",
       "deleteError": "Xóa mục thất bại",
-      "duplicateError": "Đã tồn tại một mục với namespace và khóa này"
+      "duplicateError": "Đã tồn tại một mục với namespace và khóa này",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "Tạm dừng",
       "resume": "Tiếp tục",
       "delete": "Xóa Script",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "Sao chép Tên Script",
+      "copyScriptId": "Sao chép ID Script"
     },
     "editor": {
       "toolbar": {

@@ -46,18 +46,27 @@
       "searchPasswords": "搜索密码..."
     },
     "removeSelectedTooltip": "移除所选代理",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "检测所选代理",
     "contextMenu": {
       "copyAddress": "复制地址",
       "copyUsername": "复制用户名",
-      "copyPassword": "",
+      "copyPassword": "复制密码",
       "deleteProxy": "删除代理"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "检查代理服务器",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "更新条目失败",
       "deleteSuccess": "条目已删除",
       "deleteError": "删除条目失败",
-      "duplicateError": "具有此命名空间和键的条目已存在"
+      "duplicateError": "具有此命名空间和键的条目已存在",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "暂停",
       "resume": "继续",
       "delete": "删除脚本",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "复制脚本名称",
+      "copyScriptId": "复制脚本ID"
     },
     "editor": {
       "toolbar": {

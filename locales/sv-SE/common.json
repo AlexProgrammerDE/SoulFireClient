@@ -1,5 +1,6 @@
 {
   "locale": "Språkval",
+  "close": "Stäng",
   "cancel": "Avbryt",
   "save": "Spara",
   "saving": "Sparar...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "Skriv kommando (\"help\" visar lista)"
+    "placeholder": "Skriv kommando (\"help\" visar lista)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "Starta",
@@ -450,7 +453,7 @@
     "stoppedSession": "Stoppade en session",
     "contextMenu": {
       "copyUsername": "Kopiera användarnamn",
-      "copyCommand": ""
+      "copyCommand": "Kopiera kommando"
     }
   },
   "toggleTheme": "Växla tema",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "Gå till instans",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "Kopiera instans-ID",
+      "copyInstanceName": "Kopiera instansnamn",
       "deleteInstance": "Ta bort instans"
     },
     "bot": {
       "goToBot": "Gå till bot",
       "copyUsername": "Kopiera användarnamn",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "Kopiera UUID",
+      "copyCoordinates": "Kopiera koordinater"
     },
     "plugin": {
       "enable": "Aktivera",
       "disable": "Inaktivera",
       "openSettings": "Öppna inställningar",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "Kopiera plugin-namn",
+      "copyVersion": "Kopiera version",
+      "openWebsite": "Öppna webbplats"
     }
   }
 }

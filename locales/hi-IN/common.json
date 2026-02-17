@@ -1,5 +1,6 @@
 {
   "locale": "लोकैल",
+  "close": "बंद करें",
   "cancel": "रद्द करें",
   "save": "सहेजें",
   "saving": "सहेजा जा रहा है...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "कमान्ड दर्ज करें (सूची के लिए 'help' टाइप करें)"
+    "placeholder": "कमान्ड दर्ज करें (सूची के लिए 'help' टाइप करें)",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "प्रारंभ करें",
@@ -450,7 +453,7 @@
     "stoppedSession": "सत्र बंद कर दिया गया",
     "contextMenu": {
       "copyUsername": "यूज़रनेम कॉपी करें",
-      "copyCommand": ""
+      "copyCommand": "कमान्ड कॉपी करें"
     }
   },
   "toggleTheme": "थीम टॉगल करें",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "इंस्टेंस पर जाएँ",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "इंस्टेंस आईडी कॉपी करें",
+      "copyInstanceName": "इंस्टेंस नाम कॉपी करें",
       "deleteInstance": "इंस्टेंस हटाएँ"
     },
     "bot": {
       "goToBot": "बोट पर जाएँ",
       "copyUsername": "यूज़रनेम कॉपी करें",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "UUID कॉपी करें",
+      "copyCoordinates": "निर्देशांक कॉपी करें"
     },
     "plugin": {
       "enable": "सक्षम करें",
       "disable": "अक्षम करें",
       "openSettings": "सेटिंग्स खोलें",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "प्लगइन नाम कॉपी करें",
+      "copyVersion": "संस्करण कॉपी करें",
+      "openWebsite": "वेबसाइट खोलें"
     }
   }
 }

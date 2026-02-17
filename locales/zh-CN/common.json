@@ -1,5 +1,6 @@
 {
   "locale": "语言",
+  "close": "关闭",
   "cancel": "取消",
   "save": "保存",
   "saving": "正在保存...",
@@ -91,7 +92,9 @@
     }
   },
   "commandInput": {
-    "placeholder": "输入命令（输入“help”查看列表）"
+    "placeholder": "输入命令（输入“help”查看列表）",
+    "emptySuggestions": "",
+    "noSuggestions": ""
   },
   "controls": {
     "start": "开始",
@@ -450,7 +453,7 @@
     "stoppedSession": "已停止会话",
     "contextMenu": {
       "copyUsername": "复制用户名",
-      "copyCommand": ""
+      "copyCommand": "复制命令"
     }
   },
   "toggleTheme": "切换主题",
@@ -523,23 +526,23 @@
   "contextMenu": {
     "instance": {
       "goToInstance": "前往实例",
-      "copyInstanceId": "",
-      "copyInstanceName": "",
+      "copyInstanceId": "复制实例 ID",
+      "copyInstanceName": "复制实例名称",
       "deleteInstance": "删除实例"
     },
     "bot": {
       "goToBot": "前往 Bot",
       "copyUsername": "复制用户名",
-      "copyUuid": "",
-      "copyCoordinates": ""
+      "copyUuid": "复制 UUID",
+      "copyCoordinates": "复制坐标"
     },
     "plugin": {
       "enable": "启用",
       "disable": "禁用",
       "openSettings": "打开设置",
-      "copyPluginName": "",
-      "copyVersion": "",
-      "openWebsite": ""
+      "copyPluginName": "复制插件名称",
+      "copyVersion": "复制版本",
+      "openWebsite": "打开网站"
     }
   }
 }

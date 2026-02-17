@@ -46,18 +46,27 @@
       "searchPasswords": "पासवर्ड खोजें..."
     },
     "removeSelectedTooltip": "चयनित प्रॉक्सी हटाएँ",
+    "exportSelectedTooltip": "",
     "checkSelectedTooltip": "चयनित प्रॉक्सी जांचें",
     "contextMenu": {
       "copyAddress": "पता कॉपी करें",
       "copyUsername": "यूज़रनेम कॉपी करें",
-      "copyPassword": "",
+      "copyPassword": "पासवर्ड कॉपी करें",
       "deleteProxy": "प्रॉक्सी हटाएँ"
     },
     "postImportCheckDialog": {
-      "title": "Check Proxies?",
-      "description": "You just imported {{count}} proxies. Would you like to check them now? Invalid proxies will be removed automatically.",
-      "confirm": "Check Proxies",
-      "skip": "Skip"
+      "title": "",
+      "description": "",
+      "confirm": "प्रॉक्सी जांचें",
+      "skip": ""
+    },
+    "export": {
+      "format": "",
+      "uri": "",
+      "http": "",
+      "socks4": "",
+      "socks5": "",
+      "noProxies": ""
     }
   },
   "account": {
@@ -152,7 +161,8 @@
       "updateError": "प्रविष्टि अपडेट करने में विफल",
       "deleteSuccess": "प्रविष्टि हटाई गई",
       "deleteError": "प्रविष्टि हटाने में विफल",
-      "duplicateError": "इस नेमस्पेस और कुंजी के साथ एक प्रविष्टि पहले से मौजूद है"
+      "duplicateError": "इस नेमस्पेस और कुंजी के साथ एक प्रविष्टि पहले से मौजूद है",
+      "invalidJson": ""
     }
   },
   "bots": {
@@ -352,8 +362,8 @@
       "pause": "रोकें",
       "resume": "फिर से शुरू करें",
       "delete": "स्क्रिप्ट हटाएँ",
-      "copyScriptName": "",
-      "copyScriptId": ""
+      "copyScriptName": "स्क्रिप्ट नाम कॉपी करें",
+      "copyScriptId": "स्क्रिप्ट आईडी कॉपी करें"
     },
     "editor": {
       "toolbar": {
