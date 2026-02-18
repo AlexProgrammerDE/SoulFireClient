@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "Syötä komento (kirjoita 'help' nähdäksesi luettelon)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "Kirjoita pyytääksesi ehdotuksia tai paina Tabulaattoria.",
+    "noSuggestions": "Ei ehdotuksia saatavilla."
   },
   "controls": {
     "start": "Aloita",

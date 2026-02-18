@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "輸入指令（輸入 'help' 查看列表）",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "輸入以請求建議或按 Tab 鍵。",
+    "noSuggestions": "沒有可用建議。"
   },
   "controls": {
     "start": "開始",

@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "Введіть команду (введіть 'help' для списку)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "Введіть текст для отримання підказок або натисніть Tab.",
+    "noSuggestions": "Підказки відсутні."
   },
   "controls": {
     "start": "Почати",

@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "Introduce un comando (escribe 'help' para la lista)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "Escribe para solicitar sugerencias o presiona Tab.",
+    "noSuggestions": "No hay sugerencias disponibles."
   },
   "controls": {
     "start": "Iniciar",

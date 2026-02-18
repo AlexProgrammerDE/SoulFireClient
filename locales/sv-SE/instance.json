@@ -46,7 +46,7 @@
       "searchPasswords": "Sök lösenord..."
     },
     "removeSelectedTooltip": "Ta bort valda proxies",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Exportera valda proxysar",
     "checkSelectedTooltip": "Kontrollera valda proxies",
     "contextMenu": {
       "copyAddress": "Kopiera adress",
@@ -55,18 +55,18 @@
       "deleteProxy": "Ta bort proxy"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Kontrollera proxysar?",
+      "description": "Du har just importerat {{count}} proxysar. Vill du kontrollera dem nu? Ogiltiga proxysar tas bort automatiskt.",
       "confirm": "Kontrollera proxysar",
-      "skip": ""
+      "skip": "Hoppa över"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Exportformat",
+      "uri": "URI-format (alla typer)",
+      "http": "Endast HTTP (platt)",
+      "socks4": "Endast SOCKS4 (platt)",
+      "socks5": "Endast SOCKS5 (platt)",
+      "noProxies": "Inga proxys att exportera"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Post borttagen",
       "deleteError": "Misslyckades med att ta bort posten",
       "duplicateError": "En post med detta namnrymd och nyckel finns redan",
-      "invalidJson": ""
+      "invalidJson": "Ogiltigt JSON-värde"
     }
   },
   "bots": {

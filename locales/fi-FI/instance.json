@@ -46,7 +46,7 @@
       "searchPasswords": "Etsi salasanoja..."
     },
     "removeSelectedTooltip": "Poista valitut proxyt",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Vie valitut proxyt",
     "checkSelectedTooltip": "Tarkista valitut proxyt",
     "contextMenu": {
       "copyAddress": "Kopioi osoite",
@@ -55,18 +55,18 @@
       "deleteProxy": "Poista välityspalvelin"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Tarkista proxyt?",
+      "description": "Toit juuri sisään {{count}} proxyä. Haluatko tarkistaa ne nyt? Virheelliset proxyt poistetaan automaattisesti.",
       "confirm": "Tarkista välityspalvelimet",
-      "skip": ""
+      "skip": "Ohita"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Vientimuoto",
+      "uri": "URI-muoto (kaikki tyypit)",
+      "http": "Vain HTTP (tavallinen)",
+      "socks4": "Vain SOCKS4 (tavallinen)",
+      "socks5": "Vain SOCKS5 (tavallinen)",
+      "noProxies": "Ei proxyja vietäväksi"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Merkintä poistettu",
       "deleteError": "Merkinnän poistaminen epäonnistui",
       "duplicateError": "Merkintä tällä nimiavaruudella ja avaimella on jo olemassa",
-      "invalidJson": ""
+      "invalidJson": "Virheellinen JSON-arvo"
     }
   },
   "bots": {

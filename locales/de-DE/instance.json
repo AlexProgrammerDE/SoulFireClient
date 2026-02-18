@@ -46,7 +46,7 @@
       "searchPasswords": "Passwörter suchen..."
     },
     "removeSelectedTooltip": "Ausgewählte Proxies entfernen",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Ausgewählte Proxys exportieren",
     "checkSelectedTooltip": "Ausgewählte Proxies prüfen",
     "contextMenu": {
       "copyAddress": "Adresse kopieren",
@@ -55,18 +55,18 @@
       "deleteProxy": "Proxy löschen"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Proxys überprüfen?",
+      "description": "Sie haben gerade {{count}} Proxys importiert. Möchten Sie sie jetzt überprüfen? Ungültige Proxys werden automatisch entfernt.",
       "confirm": "Proxies überprüfen",
-      "skip": ""
+      "skip": "Überspringen"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Exportformat",
+      "uri": "URI-Format (alle Typen)",
+      "http": "Nur HTTP (flach)",
+      "socks4": "Nur SOCKS4 (flach)",
+      "socks5": "Nur SOCKS5 (flach)",
+      "noProxies": "Keine Proxies zum Exportieren"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Eintrag gelöscht",
       "deleteError": "Fehler beim Löschen des Eintrags",
       "duplicateError": "Ein Eintrag mit diesem Namensraum und Schlüssel existiert bereits",
-      "invalidJson": ""
+      "invalidJson": "Ungültiger JSON-Wert"
     }
   },
   "bots": {

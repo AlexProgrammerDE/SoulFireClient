@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "Wpisz komendę (napisz 'help' dla listy)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "Wpisz, aby poprosić o sugestie lub naciśnij Tab.",
+    "noSuggestions": "Brak dostępnych sugestii."
   },
   "controls": {
     "start": "Rozpocznij",

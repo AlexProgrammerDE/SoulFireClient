@@ -46,7 +46,7 @@
       "searchPasswords": "Cerca password..."
     },
     "removeSelectedTooltip": "Rimuovi i proxy selezionati",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Esporta i proxy selezionati",
     "checkSelectedTooltip": "Controlla i proxy selezionati",
     "contextMenu": {
       "copyAddress": "Copia indirizzo",
@@ -55,18 +55,18 @@
       "deleteProxy": "Elimina proxy"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Controllare i proxy?",
+      "description": "Hai appena importato {{count}} proxy. Vuoi controllarli ora? I proxy non validi verranno rimossi automaticamente.",
       "confirm": "Controlla Proxy",
-      "skip": ""
+      "skip": "Salta"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Formato di esportazione",
+      "uri": "Formato URI (tutti i tipi)",
+      "http": "Solo HTTP (piatto)",
+      "socks4": "Solo SOCKS4 (piatto)",
+      "socks5": "Solo SOCKS5 (piatto)",
+      "noProxies": "Nessun proxy da esportare"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Voce eliminata",
       "deleteError": "Impossibile eliminare la voce",
       "duplicateError": "Esiste già una voce con questo namespace e chiave",
-      "invalidJson": ""
+      "invalidJson": "Valore JSON non valido"
     }
   },
   "bots": {

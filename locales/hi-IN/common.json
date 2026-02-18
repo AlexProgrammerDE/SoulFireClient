@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "कमान्ड दर्ज करें (सूची के लिए 'help' टाइप करें)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "सुझाव प्राप्त करने के लिए टाइप करें या Tab दबाएँ।",
+    "noSuggestions": "कोई सुझाव उपलब्ध नहीं हैं।"
   },
   "controls": {
     "start": "प्रारंभ करें",

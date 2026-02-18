@@ -46,7 +46,7 @@
       "searchPasswords": "Cari kata sandi..."
     },
     "removeSelectedTooltip": "Hapus proxy yang dipilih",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Ekspor proxy yang dipilih",
     "checkSelectedTooltip": "Periksa proxy yang dipilih",
     "contextMenu": {
       "copyAddress": "Salin Alamat",
@@ -55,18 +55,18 @@
       "deleteProxy": "Hapus Proxy"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Periksa Proxy?",
+      "description": "Anda baru saja mengimpor {{count}} proxy. Apakah Anda ingin memeriksanya sekarang? Proxy tidak valid akan dihapus secara otomatis.",
       "confirm": "Periksa Proksi",
-      "skip": ""
+      "skip": "Lewati"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Format Ekspor",
+      "uri": "Format URI (semua tipe)",
+      "http": "Hanya HTTP (flat)",
+      "socks4": "Hanya SOCKS4 (flat)",
+      "socks5": "Hanya SOCKS5 (flat)",
+      "noProxies": "Tidak ada proxy untuk diekspor"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Entri dihapus",
       "deleteError": "Gagal menghapus entri",
       "duplicateError": "Entri dengan namespace dan kunci ini sudah ada",
-      "invalidJson": ""
+      "invalidJson": "Nilai JSON tidak valid"
     }
   },
   "bots": {

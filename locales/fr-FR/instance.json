@@ -46,7 +46,7 @@
       "searchPasswords": "Rechercher des mots de passe..."
     },
     "removeSelectedTooltip": "Supprimer les proxys sélectionnés",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Exporter les proxys sélectionnés",
     "checkSelectedTooltip": "Vérifier les proxys sélectionnés",
     "contextMenu": {
       "copyAddress": "Copier l'adresse",
@@ -55,18 +55,18 @@
       "deleteProxy": "Supprimer le proxy"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Vérifier les proxys\u00000?",
+      "description": "Vous venez d'importer {{count}} proxys. Voulez-vous les vérifier maintenant\u00000? Les proxys invalides seront supprimés automatiquement.",
       "confirm": "Vérifier les proxys",
-      "skip": ""
+      "skip": "Ignorer"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Format d'exportation",
+      "uri": "Format URI (tous types)",
+      "http": "HTTP uniquement (plat)",
+      "socks4": "SOCKS4 uniquement (plat)",
+      "socks5": "SOCKS5 uniquement (plat)",
+      "noProxies": "Aucun proxy à exporter"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Entrée supprimée",
       "deleteError": "Échec de la suppression de l'entrée",
       "duplicateError": "Une entrée avec cet espace de noms et cette clé existe déjà",
-      "invalidJson": ""
+      "invalidJson": "Valeur JSON invalide"
     }
   },
   "bots": {

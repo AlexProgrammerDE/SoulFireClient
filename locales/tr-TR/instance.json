@@ -46,7 +46,7 @@
       "searchPasswords": "Şifrelerde ara..."
     },
     "removeSelectedTooltip": "Seçili proxy'leri kaldır",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Seçili proxy'leri dışa aktar",
     "checkSelectedTooltip": "Seçili proxy'leri kontrol et",
     "contextMenu": {
       "copyAddress": "Adresi Kopyala",
@@ -55,18 +55,18 @@
       "deleteProxy": "Proxy'yi Sil"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Proxy'leri Kontrol Et?",
+      "description": "{{count}} proxy içe aktardınız. Şimdi onları kontrol etmek ister misiniz? Geçersiz proxy'ler otomatik olarak kaldırılacaktır.",
       "confirm": "Proxyleri Kontrol Et",
-      "skip": ""
+      "skip": "Atla"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Dışa Aktarma Formatı",
+      "uri": "URI Formatı (tüm türler)",
+      "http": "Yalnızca HTTP (düz)",
+      "socks4": "Yalnızca SOCKS4 (düz)",
+      "socks5": "Yalnızca SOCKS5 (düz)",
+      "noProxies": "Dışa aktarılacak proxy yok"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Girdi silindi",
       "deleteError": "Girdi silinemedi",
       "duplicateError": "Bu ad alanı ve anahtara sahip bir giriş zaten mevcut",
-      "invalidJson": ""
+      "invalidJson": "Geçersiz JSON değeri"
     }
   },
   "bots": {

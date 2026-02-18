@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "명령 입력 (목록이 필요하면 'help' 입력)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "제안을 요청하려면 입력하거나 Tab 키를 누르세요.",
+    "noSuggestions": "사용 가능한 제안이 없습니다."
   },
   "controls": {
     "start": "시작",
