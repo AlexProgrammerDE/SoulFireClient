@@ -46,7 +46,7 @@
       "searchPasswords": "Hľadať heslá..."
     },
     "removeSelectedTooltip": "Odstrániť vybrané proxy",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Exportovať vybrané proxy",
     "checkSelectedTooltip": "Skontrolovať vybrané proxy",
     "contextMenu": {
       "copyAddress": "Kopírovať adresu",
@@ -55,18 +55,18 @@
       "deleteProxy": "Odstrániť proxy"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Skontrolovať proxy?",
+      "description": "Práve ste importovali {{count}} proxy. Chcete ich teraz skontrolovať? Neplatné proxy budú automaticky odstránené.",
       "confirm": "Skontrolovať proxy servery",
-      "skip": ""
+      "skip": "Preskočiť"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Exportný formát",
+      "uri": "Formát URI (všetky typy)",
+      "http": "Iba HTTP (ploché)",
+      "socks4": "Iba SOCKS4 (ploché)",
+      "socks5": "Iba SOCKS5 (ploché)",
+      "noProxies": "Žiadne proxy na export"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Záznam bol odstránený",
       "deleteError": "Zlyhalo odstránenie záznamu",
       "duplicateError": "Záznam s touto mennou oblasťou a kľúčom už existuje",
-      "invalidJson": ""
+      "invalidJson": "Neplatná hodnota JSON"
     }
   },
   "bots": {

@@ -46,7 +46,7 @@
       "searchPasswords": "搜尋密碼..."
     },
     "removeSelectedTooltip": "移除所選代理伺服器",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "導出已選取的代理伺服器",
     "checkSelectedTooltip": "檢查所選代理伺服器",
     "contextMenu": {
       "copyAddress": "複製位址",
@@ -55,18 +55,18 @@
       "deleteProxy": "刪除代理伺服器"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "檢查代理伺服器？",
+      "description": "您剛剛匯入了 {{count}} 個代理伺服器。您現在要檢查它們嗎？無效的代理將自動移除。",
       "confirm": "檢查代理伺服器",
-      "skip": ""
+      "skip": "略過"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "導出格式",
+      "uri": "URI 格式（所有類型）",
+      "http": "僅限 HTTP（平面）",
+      "socks4": "僅限 SOCKS4（平面）",
+      "socks5": "僅限 SOCKS5（平面）",
+      "noProxies": "無可匯出的代理伺服器"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "條目已刪除",
       "deleteError": "刪除條目失敗",
       "duplicateError": "具有相同命名空間和鍵的條目已存在",
-      "invalidJson": ""
+      "invalidJson": "無效的 JSON 值"
     }
   },
   "bots": {

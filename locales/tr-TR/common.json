@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "Komut girin ('help' yazarsanız liste çıkar)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "Öneri istemek için yazın veya Tab tuşuna basın.",
+    "noSuggestions": "Hiçbir öneri yok."
   },
   "controls": {
     "start": "Başlat",

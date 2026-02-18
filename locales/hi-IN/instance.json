@@ -46,7 +46,7 @@
       "searchPasswords": "पासवर्ड खोजें..."
     },
     "removeSelectedTooltip": "चयनित प्रॉक्सी हटाएँ",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "चयनित प्रॉक्सी निर्यात करें",
     "checkSelectedTooltip": "चयनित प्रॉक्सी जांचें",
     "contextMenu": {
       "copyAddress": "पता कॉपी करें",
@@ -55,18 +55,18 @@
       "deleteProxy": "प्रॉक्सी हटाएँ"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "क्या प्रॉक्सी जांचें?",
+      "description": "आपने अभी-अभी {{count}} प्रॉक्सी आयात किए हैं। क्या आप इन्हें अभी जांचना चाहेंगे? अवैध प्रॉक्सी स्वतः ही हटा दिए जाएंगे।",
       "confirm": "प्रॉक्सी जांचें",
-      "skip": ""
+      "skip": "छोड़ें"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "निर्यात प्रारूप",
+      "uri": "URI प्रारूप (सभी प्रकार)",
+      "http": "केवल HTTP (फ्लैट)",
+      "socks4": "केवल SOCKS4 (फ्लैट)",
+      "socks5": "केवल SOCKS5 (फ्लैट)",
+      "noProxies": "निर्यात करने के लिए कोई प्रॉक्सी नहीं है"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "प्रविष्टि हटाई गई",
       "deleteError": "प्रविष्टि हटाने में विफल",
       "duplicateError": "इस नेमस्पेस और कुंजी के साथ एक प्रविष्टि पहले से मौजूद है",
-      "invalidJson": ""
+      "invalidJson": "अमान्य JSON मान"
     }
   },
   "bots": {

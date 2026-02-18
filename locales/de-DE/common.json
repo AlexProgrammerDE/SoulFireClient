@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "Befehl eingeben (\"help\" für Liste tippen)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "Tippen Sie, um Vorschläge anzufordern, oder drücken Sie die Tabulatortaste.",
+    "noSuggestions": "Keine Vorschläge verfügbar."
   },
   "controls": {
     "start": "Start",

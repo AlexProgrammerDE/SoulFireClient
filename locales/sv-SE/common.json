@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "Skriv kommando (\"help\" visar lista)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "Skriv för att be om förslag eller tryck på Tab.",
+    "noSuggestions": "Inga förslag tillgängliga."
   },
   "controls": {
     "start": "Starta",

@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "Zadejte příkaz (napište 'help' pro seznam)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "Začněte psát pro návrhy nebo stiskněte Tab.",
+    "noSuggestions": "Žádné návrhy nejsou k dispozici."
   },
   "controls": {
     "start": "Spustit",

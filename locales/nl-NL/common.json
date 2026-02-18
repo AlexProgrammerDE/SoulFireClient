@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "Voer commando in (typ 'help' voor lijst)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "Typ om suggesties aan te vragen of druk op Tab.",
+    "noSuggestions": "Geen suggesties beschikbaar."
   },
   "controls": {
     "start": "Start",

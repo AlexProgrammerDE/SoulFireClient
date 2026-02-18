@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "Masukkan perintah (ketik 'help' untuk daftar)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "Ketik untuk meminta saran atau tekan Tab.",
+    "noSuggestions": "Tidak ada saran yang tersedia."
   },
   "controls": {
     "start": "Mulai",

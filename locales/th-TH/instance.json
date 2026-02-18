@@ -46,7 +46,7 @@
       "searchPasswords": "ค้นหารหัสผ่าน..."
     },
     "removeSelectedTooltip": "ลบพร็อกซีที่เลือก",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "ส่งออกพร็อกซีที่เลือกไว้แล้ว",
     "checkSelectedTooltip": "ตรวจสอบพร็อกซีที่เลือก",
     "contextMenu": {
       "copyAddress": "คัดลอกที่อยู่",
@@ -55,18 +55,18 @@
       "deleteProxy": "ลบ Proxy"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "ตรวจสอบพร็อกซีหรือไม่?",
+      "description": "คุณเพิ่งนำเข้า {{count}} พร็อกซี ต้องการตรวจสอบตอนนี้หรือไม่? พร็อกซีที่ไม่ถูกต้องจะถูกลบออกโดยอัตโนมัติ",
       "confirm": "ตรวจสอบพร็อกซี",
-      "skip": ""
+      "skip": "ข้าม"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "รูปแบบการส่งออก",
+      "uri": "รูปแบบ URI (ทุกประเภท)",
+      "http": "HTTP เท่านั้น (แบบเรียบ)",
+      "socks4": "SOCKS4 เท่านั้น (แบบเรียบ)",
+      "socks5": "SOCKS5 เท่านั้น (แบบเรียบ)",
+      "noProxies": "ไม่มีพร็อกซีให้ส่งออก"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "ลบรายการเรียบร้อยแล้ว",
       "deleteError": "ลบรายการไม่สำเร็จ",
       "duplicateError": "มีรายการที่ใช้ namespace และคีย์นี้อยู่แล้ว",
-      "invalidJson": ""
+      "invalidJson": "ค่า JSON ไม่ถูกต้อง"
     }
   },
   "bots": {

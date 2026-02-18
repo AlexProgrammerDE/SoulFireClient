@@ -46,7 +46,7 @@
       "searchPasswords": "Поиск паролей..."
     },
     "removeSelectedTooltip": "Удалить выбранные прокси",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Экспортировать выбранные прокси",
     "checkSelectedTooltip": "Проверить выбранные прокси",
     "contextMenu": {
       "copyAddress": "Скопировать адрес",
@@ -55,18 +55,18 @@
       "deleteProxy": "Удалить прокси"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Проверить прокси?",
+      "description": "Вы только что импортировали {{count}} прокси. Хотите проверить их сейчас? Недействительные прокси будут удалены автоматически.",
       "confirm": "Проверить прокси",
-      "skip": ""
+      "skip": "Пропустить"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Формат экспорта",
+      "uri": "Формат URI (все типы)",
+      "http": "Только HTTP (плоский)",
+      "socks4": "Только SOCKS4 (плоский)",
+      "socks5": "Только SOCKS5 (плоский)",
+      "noProxies": "Нет прокси для экспорта"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Запись удалена",
       "deleteError": "Не удалось удалить запись",
       "duplicateError": "Запись с этим пространством имен и ключом уже существует",
-      "invalidJson": ""
+      "invalidJson": "Недопустимое значение JSON"
     }
   },
   "bots": {

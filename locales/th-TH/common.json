@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "ใส่คำสั่ง (พิมพ์ 'help' เพื่อดูรายการ)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "พิมพ์เพื่อขอรับคำแนะนำหรือกด Tab",
+    "noSuggestions": "ไม่มีคำแนะนำที่พร้อมใช้งาน"
   },
   "controls": {
     "start": "เริ่มต้น",

@@ -46,7 +46,7 @@
       "searchPasswords": "Pesquisar senhas..."
     },
     "removeSelectedTooltip": "Remover proxies selecionados",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Exportar proxies selecionados",
     "checkSelectedTooltip": "Checar proxies selecionados",
     "contextMenu": {
       "copyAddress": "Copiar Endereço",
@@ -55,18 +55,18 @@
       "deleteProxy": "Excluir Proxy"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Verificar proxies?",
+      "description": "Você acabou de importar {{count}} proxies. Gostaria de verificá-los agora? Proxies inválidos serão removidos automaticamente.",
       "confirm": "Verificar Proxies",
-      "skip": ""
+      "skip": "Pular"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Formato de exportação",
+      "uri": "Formato URI (todos os tipos)",
+      "http": "Apenas HTTP (simples)",
+      "socks4": "Apenas SOCKS4 (simples)",
+      "socks5": "Apenas SOCKS5 (simples)",
+      "noProxies": "Nenhum proxy para exportar"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Entrada excluída",
       "deleteError": "Falha ao excluir entrada",
       "duplicateError": "Já existe uma entrada com este namespace e chave",
-      "invalidJson": ""
+      "invalidJson": "Valor JSON inválido"
     }
   },
   "bots": {

@@ -46,7 +46,7 @@
       "searchPasswords": "Wachtwoorden zoeken..."
     },
     "removeSelectedTooltip": "Geselecteerde proxies verwijderen",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Geselecteerde proxies exporteren",
     "checkSelectedTooltip": "Geselecteerde proxies controleren",
     "contextMenu": {
       "copyAddress": "Adres kopiëren",
@@ -55,18 +55,18 @@
       "deleteProxy": "Proxy verwijderen"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Proxies controleren?",
+      "description": "Je hebt zojuist {{count}} proxies geïmporteerd. Wil je ze nu controleren? Ongeldige proxies worden automatisch verwijderd.",
       "confirm": "Proxies controleren",
-      "skip": ""
+      "skip": "Overslaan"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Exportformaat",
+      "uri": "URI-formaat (alle typen)",
+      "http": "Alleen HTTP (vlak)",
+      "socks4": "Alleen SOCKS4 (vlak)",
+      "socks5": "Alleen SOCKS5 (vlak)",
+      "noProxies": "Geen proxies om te exporteren"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Item verwijderd",
       "deleteError": "Verwijderen van item mislukt",
       "duplicateError": "Er bestaat al een item met deze namespace en sleutel",
-      "invalidJson": ""
+      "invalidJson": "Ongeldige JSON-waarde"
     }
   },
   "bots": {

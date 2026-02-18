@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "コマンドを入力 (一覧は「help」と入力)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "提案をリクエストするには入力するか、Tabキーを押してください。",
+    "noSuggestions": "利用可能な提案はありません。"
   },
   "controls": {
     "start": "開始",

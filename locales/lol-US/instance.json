@@ -46,7 +46,7 @@
       "searchPasswords": "SRSCH PAWZSWRDZ..."
     },
     "removeSelectedTooltip": "RMVZ SLEKTEDZ PROXIEZ",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Eksport selekted proxiezz",
     "checkSelectedTooltip": "CHEK SLEKTEDZ PROXIEZ",
     "contextMenu": {
       "copyAddress": "Coppy Adress",
@@ -55,18 +55,18 @@
       "deleteProxy": "DELET PROXY, KTHX!"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Chek Proxiez?",
+      "description": "U jus imported {{count}} proxiez. U wants 2 chek dem now? Invalid proxiez will be removd automaticly.",
       "confirm": "Chek Proxyz",
-      "skip": ""
+      "skip": "SKIPZ"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Eksport Format",
+      "uri": "URI Format (all typz)",
+      "http": "HTTP Only (flat)",
+      "socks4": "SOCKS4 Only (flat)",
+      "socks5": "SOCKS5 Only (flat)",
+      "noProxies": "No proxiez to eksport, kthx."
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Entry deletd, kthxbye!",
       "deleteError": "O NOEZ! Couldn delet entry D:",
       "duplicateError": "Dis entry already existz wit dat namespace an key!",
-      "invalidJson": ""
+      "invalidJson": "Dis JSON iz borked, fix plz!"
     }
   },
   "bots": {

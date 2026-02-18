@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "Entah teh command (type 'help' if yar confoosed)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "Typz to get sugjestshunz or smash Tab, kthx.",
+    "noSuggestions": "No sugjestshunz r here, sry."
   },
   "controls": {
     "start": "Strat",

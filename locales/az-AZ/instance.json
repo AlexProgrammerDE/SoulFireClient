@@ -46,7 +46,7 @@
       "searchPasswords": "Şifrlərdə axtarış..."
     },
     "removeSelectedTooltip": "Seçilmiş proksiləri sil",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Seçilmiş proksiləri ixrac et.",
     "checkSelectedTooltip": "Seçilmiş proksiləri yoxla",
     "contextMenu": {
       "copyAddress": "Ünvani kopyala",
@@ -55,18 +55,18 @@
       "deleteProxy": "Proksini Sil"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Proksiləri yoxlamaq?",
+      "description": "Siz yeni {{count}} proksi idxal etdiniz. Onları indi yoxlamaq istəyirsiniz? Yanlış proksilər avtomatik olaraq silinəcək.",
       "confirm": "Proksiləri Yoxla",
-      "skip": ""
+      "skip": "Keç"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "İxrac formatı",
+      "uri": "URI formatı (bütün tiplər)",
+      "http": "Yalnız HTTP (səviyyəli)",
+      "socks4": "Yalnız SOCKS4 (səviyyəli)",
+      "socks5": "Yalnız SOCKS5 (səviyyəli)",
+      "noProxies": "İxrac etmək üçün proksi yoxdur"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Qeyd silindi",
       "deleteError": "Qeydi silmək mümkün olmadı",
       "duplicateError": "Bu ad sahəsi və açarla giriş artıq mövcuddur",
-      "invalidJson": ""
+      "invalidJson": "Yanlış JSON dəyəri"
     }
   },
   "bots": {

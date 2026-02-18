@@ -46,7 +46,7 @@
       "searchPasswords": "パスワードを検索..."
     },
     "removeSelectedTooltip": "選択したプロキシを削除",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "選択したプロキシをエクスポートする",
     "checkSelectedTooltip": "選択したプロキシをチェック",
     "contextMenu": {
       "copyAddress": "アドレスをコピー",
@@ -55,18 +55,18 @@
       "deleteProxy": "プロキシを削除する"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "プロキシをチェックしますか？",
+      "description": "{{count}} 個のプロキシをインポートしました。今すぐチェックしますか？無効なプロキシは自動的に削除されます。",
       "confirm": "プロキシの確認",
-      "skip": ""
+      "skip": "スキップ"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "エクスポート形式",
+      "uri": "URI形式（すべてのタイプ）",
+      "http": "HTTP専用（フラット）",
+      "socks4": "SOCKS4専用（フラット）",
+      "socks5": "SOCKS5専用（フラット）",
+      "noProxies": "エクスポートするプロキシがありません"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "エントリを削除しました",
       "deleteError": "エントリの削除に失敗しました",
       "duplicateError": "このネームスペースとキーを持つエントリは既に存在します",
-      "invalidJson": ""
+      "invalidJson": "無効なJSON値"
     }
   },
   "bots": {

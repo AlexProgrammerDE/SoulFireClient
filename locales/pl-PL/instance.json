@@ -46,7 +46,7 @@
       "searchPasswords": "Szukaj haseł..."
     },
     "removeSelectedTooltip": "Usuń wybrane serwery proxy",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Eksportuj wybrane proxy",
     "checkSelectedTooltip": "Sprawdź wybrane serwery proxy",
     "contextMenu": {
       "copyAddress": "Kopiuj adres",
@@ -55,18 +55,18 @@
       "deleteProxy": "Usuń proxy"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Sprawdzić serwery pośredniczące?",
+      "description": "Właśnie zaimportowałeś {{count}} proxy. Czy chcesz je teraz sprawdzić? Nieprawidłowe proxy zostaną usunięte automatycznie.",
       "confirm": "Sprawdź serwery proxy",
-      "skip": ""
+      "skip": "Pomiń"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Format eksportu",
+      "uri": "Format URI (wszystkie typy)",
+      "http": "Tylko HTTP (płaski format)",
+      "socks4": "Tylko SOCKS4 (płaski format)",
+      "socks5": "Tylko SOCKS5 (płaski format)",
+      "noProxies": "Brak serwerów proxy do eksportu"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Wpis został usunięty",
       "deleteError": "Nie udało się usunąć wpisu",
       "duplicateError": "Wpis z tą przestrzenią nazw i kluczem już istnieje",
-      "invalidJson": ""
+      "invalidJson": "Nieprawidłowa wartość JSON"
     }
   },
   "bots": {

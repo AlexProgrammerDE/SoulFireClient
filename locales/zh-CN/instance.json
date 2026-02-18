@@ -46,7 +46,7 @@
       "searchPasswords": "搜索密码..."
     },
     "removeSelectedTooltip": "移除所选代理",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "导出所选代理",
     "checkSelectedTooltip": "检测所选代理",
     "contextMenu": {
       "copyAddress": "复制地址",
@@ -55,18 +55,18 @@
       "deleteProxy": "删除代理"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "要检查代理吗？",
+      "description": "您刚刚导入了{{count}}个代理。现在要检查它们吗？无效的代理将会被自动移除。",
       "confirm": "检查代理服务器",
-      "skip": ""
+      "skip": "跳过"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "导出格式",
+      "uri": "URI 格式（所有类型）",
+      "http": "仅限HTTP（扁平）",
+      "socks4": "仅限SOCKS4（扁平）",
+      "socks5": "仅限SOCKS5（扁平）",
+      "noProxies": "没有代理可导出"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "条目已删除",
       "deleteError": "删除条目失败",
       "duplicateError": "具有此命名空间和键的条目已存在",
-      "invalidJson": ""
+      "invalidJson": "无效的JSON值"
     }
   },
   "bots": {

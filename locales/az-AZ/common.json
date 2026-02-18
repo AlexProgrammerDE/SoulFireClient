@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "Əmr daxil edin ('help' yazın siyahı üçün)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "Təkliflər üçün yazmağa başlayın və ya Tab düyməsini basın.",
+    "noSuggestions": "Heç bir təklif mövcud deyil."
   },
   "controls": {
     "start": "Başla",

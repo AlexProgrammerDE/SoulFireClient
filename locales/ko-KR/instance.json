@@ -46,7 +46,7 @@
       "searchPasswords": "비밀번호 검색..."
     },
     "removeSelectedTooltip": "선택한 프록시 제거",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "선택한 프록시 내보내기",
     "checkSelectedTooltip": "선택한 프록시 확인",
     "contextMenu": {
       "copyAddress": "주소 복사",
@@ -55,18 +55,18 @@
       "deleteProxy": "프록시 삭제"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "프록시를 확인하시겠습니까?",
+      "description": "{{count}}개의 프록시를 방금 가져왔습니다. 지금 확인하시겠습니까? 잘못된 프록시는 자동으로 제거됩니다.",
       "confirm": "프록시 확인하기",
-      "skip": ""
+      "skip": "건너뛰기"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "내보내기 형식",
+      "uri": "URI 형식(모든 유형)",
+      "http": "HTTP 전용(평면)",
+      "socks4": "SOCKS4 전용(평면)",
+      "socks5": "SOCKS5 전용(평면)",
+      "noProxies": "내보낼 프록시가 없습니다."
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "항목이 삭제되었습니다.",
       "deleteError": "항목 삭제에 실패했습니다.",
       "duplicateError": "이 네임스페이스와 키를 가진 항목이 이미 존재합니다.",
-      "invalidJson": ""
+      "invalidJson": "잘못된 JSON 값"
     }
   },
   "bots": {

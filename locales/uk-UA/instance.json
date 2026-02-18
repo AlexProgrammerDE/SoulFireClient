@@ -46,7 +46,7 @@
       "searchPasswords": "Пошук паролів..."
     },
     "removeSelectedTooltip": "Видалити вибрані проксі",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Експортувати вибрані проксі",
     "checkSelectedTooltip": "Перевірити вибрані проксі",
     "contextMenu": {
       "copyAddress": "Скопіювати адресу",
@@ -55,18 +55,18 @@
       "deleteProxy": "Видалити проксі"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Перевірити проксі?",
+      "description": "Ви щойно імпортували {{count}} проксі. Бажаєте перевірити їх зараз? Невалідні проксі буде автоматично видалено.",
       "confirm": "Перевірити проксі-сервери",
-      "skip": ""
+      "skip": "Пропустити"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Формат експорту",
+      "uri": "Формат URI (усі типи)",
+      "http": "Тільки HTTP (флет)",
+      "socks4": "Тільки SOCKS4 (флет)",
+      "socks5": "Тільки SOCKS5 (флет)",
+      "noProxies": "Немає проксі для експорту"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Запис видалено",
       "deleteError": "Не вдалося видалити запис",
       "duplicateError": "Запис із цим простором і ключем вже існує",
-      "invalidJson": ""
+      "invalidJson": "Неприпустиме значення JSON"
     }
   },
   "bots": {

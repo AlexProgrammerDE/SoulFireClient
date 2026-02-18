@@ -93,8 +93,8 @@
   },
   "commandInput": {
     "placeholder": "Nhập lệnh (gõ 'help' để xem danh sách)",
-    "emptySuggestions": "",
-    "noSuggestions": ""
+    "emptySuggestions": "Nhập để yêu cầu gợi ý hoặc nhấn Tab.",
+    "noSuggestions": "Không có gợi ý nào."
   },
   "controls": {
     "start": "Bắt đầu",

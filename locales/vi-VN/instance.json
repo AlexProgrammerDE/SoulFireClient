@@ -46,7 +46,7 @@
       "searchPasswords": "Tìm kiếm mật khẩu..."
     },
     "removeSelectedTooltip": "Xóa các proxy đã chọn",
-    "exportSelectedTooltip": "",
+    "exportSelectedTooltip": "Xuất các proxy đã chọn",
     "checkSelectedTooltip": "Kiểm tra các proxy đã chọn",
     "contextMenu": {
       "copyAddress": "Sao chép địa chỉ",
@@ -55,18 +55,18 @@
       "deleteProxy": "Xóa Proxy"
     },
     "postImportCheckDialog": {
-      "title": "",
-      "description": "",
+      "title": "Kiểm tra proxy?",
+      "description": "Bạn vừa nhập {{count}} proxy. Bạn có muốn kiểm tra chúng ngay bây giờ không? Các proxy không hợp lệ sẽ được tự động loại bỏ.",
       "confirm": "Kiểm Tra Proxy",
-      "skip": ""
+      "skip": "Bỏ qua"
     },
     "export": {
-      "format": "",
-      "uri": "",
-      "http": "",
-      "socks4": "",
-      "socks5": "",
-      "noProxies": ""
+      "format": "Định dạng xuất",
+      "uri": "Định dạng URI (mọi loại)",
+      "http": "Chỉ HTTP (dạng đơn)",
+      "socks4": "Chỉ SOCKS4 (dạng đơn)",
+      "socks5": "Chỉ SOCKS5 (dạng đơn)",
+      "noProxies": "Không có proxy để xuất"
     }
   },
   "account": {
@@ -162,7 +162,7 @@
       "deleteSuccess": "Mục đã được xóa",
       "deleteError": "Xóa mục thất bại",
       "duplicateError": "Đã tồn tại một mục với namespace và khóa này",
-      "invalidJson": ""
+      "invalidJson": "Giá trị JSON không hợp lệ"
     }
   },
   "bots": {
