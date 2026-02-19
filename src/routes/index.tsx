@@ -334,7 +334,7 @@ function Index() {
                     )}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent>
+                <DropdownMenuContent className="w-56">
                   <DropdownMenuLabel>{t("common:locale")}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuRadioGroup

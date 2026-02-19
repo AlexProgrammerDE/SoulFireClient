@@ -653,7 +653,7 @@ function AddButton() {
             {t("account.addAccounts")}
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent>
+        <DropdownMenuContent className="w-64">
           <DropdownMenuLabel>
             {t("account.import.javaEdition")}
           </DropdownMenuLabel>
