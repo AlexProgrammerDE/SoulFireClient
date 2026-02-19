@@ -674,7 +674,7 @@ function IntegratedLoadingMenu() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Scroller ref={scrollRef} className="h-48">
+        <Scroller ref={scrollRef} className="h-48" hideScrollbar>
           <div className="flex flex-col gap-1">
             {logs.map((log, index) => (
               <p
