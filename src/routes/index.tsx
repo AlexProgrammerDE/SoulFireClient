@@ -66,6 +66,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
+import { Scroller } from "@/components/ui/scroller.tsx";
 import { LoginServiceClient } from "@/generated/soulfire/login.client.ts";
 import { NextAuthFlowResponse_Failure_Reason } from "@/generated/soulfire/login.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
@@ -673,7 +674,7 @@ function IntegratedLoadingMenu() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <ScrollArea viewportRef={scrollRef} className="h-48">
+        <Scroller ref={scrollRef} className="h-48">
           <div className="flex flex-col gap-1">
             {logs.map((log, index) => (
               <p
@@ -684,7 +685,7 @@ function IntegratedLoadingMenu() {
               </p>
             ))}
           </div>
-        </ScrollArea>
+        </Scroller>
       </CardContent>
     </Card>
   );
