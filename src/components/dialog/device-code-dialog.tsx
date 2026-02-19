@@ -36,7 +36,7 @@ export function DeviceCodeDialog({
 
   return (
     <Credenza open={open} onOpenChange={onOpenChange}>
-      <CredenzaContent className="sm:max-w-lg">
+      <CredenzaContent className="sm:max-w-2xl">
         <CredenzaHeader>
           <CredenzaTitle>{t("account.deviceCodeDialog.title")}</CredenzaTitle>
           <CredenzaDescription>
