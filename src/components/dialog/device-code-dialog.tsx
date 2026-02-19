@@ -45,7 +45,7 @@ export function DeviceCodeDialog({
         </CredenzaHeader>
         <CredenzaBody>
           <div className={`flex gap-6 ${isDesktop ? "flex-row" : "flex-col"}`}>
-            <div className="flex flex-1 flex-col gap-4">
+            <div className="flex min-w-0 flex-1 flex-col gap-4">
               <Button
                 onClick={() =>
                   openExternalUrl(deviceCodeData.directVerificationUri)
@@ -99,8 +99,8 @@ export function DeviceCodeDialog({
               </div>
             </div>
             {isDesktop && (
-              <div className="flex items-center justify-center">
-                <QRCode value={deviceCodeData.directVerificationUri} size={200}>
+              <div className="flex shrink-0 items-center justify-center">
+                <QRCode value={deviceCodeData.directVerificationUri} size={160}>
                   <QRCodeSvg />
                 </QRCode>
               </div>
