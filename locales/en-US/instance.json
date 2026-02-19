@@ -148,6 +148,14 @@
       "pageTitle": "{{name}} - {{page}} Settings",
       "noSettings": "No settings available for this page"
     },
+    "deviceCodeDialog": {
+      "title": "Device Code Authentication",
+      "description": "Sign in with your Microsoft account to link it.",
+      "openInBrowser": "Open in Browser",
+      "orManually": "Or enter code manually",
+      "codeLabel": "Your code",
+      "urlLabel": "Go to"
+    },
     "metadata": {
       "openButton": "Edit Metadata",
       "title": "Metadata: {{name}}",

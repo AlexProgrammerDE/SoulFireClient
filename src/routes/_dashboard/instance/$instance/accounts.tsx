@@ -43,6 +43,10 @@ import { DataTableSortList } from "@/components/data-table/data-table-sort-list.
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
 import { AccountConfigDialog } from "@/components/dialog/account-config-dialog.tsx";
 import { AccountMetadataDialog } from "@/components/dialog/account-metadata-dialog.tsx";
+import {
+  type DeviceCodeData,
+  DeviceCodeDialog,
+} from "@/components/dialog/device-code-dialog.tsx";
 import GenerateAccountsDialog from "@/components/dialog/generate-accounts-dialog.tsx";
 import ImportDialog from "@/components/dialog/import-dialog.tsx";
 import { ExternalLink } from "@/components/external-link.tsx";
@@ -91,7 +95,6 @@ import {
   addInstanceAccount,
   addInstanceAccountsBatch,
   applyGeneratedAccounts,
-  openExternalUrl,
   removeInstanceAccountsBatch,
   runAsync,
   updateInstanceConfigEntry,
@@ -426,6 +429,9 @@ function AddButton() {
   });
   const [accountTypeCredentialsSelected, setAccountTypeCredentialsSelected] =
     useState<AccountTypeCredentials | null>(null);
+  const [deviceCodeData, setDeviceCodeData] = useState<DeviceCodeData | null>(
+    null,
+  );
 
   const textSelectedCallback = useCallback(
     (text: string) => {
@@ -587,18 +593,24 @@ function AddButton() {
               );
               responses.onMessage((message) => {
                 if (message.data.oneofKind === "account") {
+                  setDeviceCodeData(null);
                   resolve(message.data.account);
                 } else if (message.data.oneofKind === "deviceCode") {
-                  openExternalUrl(
-                    message.data.deviceCode.directVerificationUri,
-                  );
+                  setDeviceCodeData({
+                    userCode: message.data.deviceCode.userCode,
+                    verificationUri: message.data.deviceCode.verificationUri,
+                    directVerificationUri:
+                      message.data.deviceCode.directVerificationUri,
+                  });
                 }
               });
               responses.onError((e) => {
                 console.error(e);
+                setDeviceCodeData(null);
                 reject(new Error(t("account.unknownError")));
               });
             } catch (e) {
+              setDeviceCodeData(null);
               if (e instanceof Error) {
                 reject(e);
               } else {
@@ -616,11 +628,13 @@ function AddButton() {
           success: t("account.deviceCodeImportToast.success"),
           error: (e) => {
             console.error(e);
+            setDeviceCodeData(null);
             return t("account.deviceCodeImportToast.error");
           },
           cancel: {
             label: t("common:cancel"),
             onClick: () => {
+              setDeviceCodeData(null);
               abortController.abort();
             },
           },
@@ -717,6 +731,15 @@ function AddButton() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      {deviceCodeData !== null && (
+        <DeviceCodeDialog
+          open={true}
+          onOpenChange={(open) => {
+            if (!open) setDeviceCodeData(null);
+          }}
+          deviceCodeData={deviceCodeData}
+        />
+      )}
       {accountTypeCredentialsSelected !== null && (
         <ImportDialog
           title={t("account.import.dialog.title", {
