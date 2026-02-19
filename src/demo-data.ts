@@ -1008,6 +1008,25 @@ export const demoInstanceSettingsDefinitions: SettingsDefinition[] = [
     id: { namespace: "proxy", key: "proxy-check-concurrency" },
   },
   {
+    scope: 1,
+    type: {
+      oneofKind: "int",
+      int: {
+        uiName: "Proxy check timeout",
+        description:
+          "How long to wait for a proxy check response before considering it failed (seconds)",
+        def: 30,
+        min: 1,
+        max: 2147483647,
+        step: 1,
+        placeholder: "",
+        thousandSeparator: true,
+        disabled: false,
+      },
+    },
+    id: { namespace: "proxy", key: "proxy-check-timeout" },
+  },
+  {
     scope: 2,
     type: {
       oneofKind: "string",

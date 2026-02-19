@@ -94,6 +94,7 @@ import {
 const PROXY_SETTINGS_DISABLED_IDS: DisabledSettingId[] = [
   { namespace: "proxy", key: "proxy-check-concurrency" },
   { namespace: "proxy", key: "proxy-check-address" },
+  { namespace: "proxy", key: "proxy-check-timeout" },
 ];
 
 export const Route = createFileRoute("/_dashboard/instance/$instance/proxies")({
