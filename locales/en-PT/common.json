@@ -1,0 +1,548 @@
+{
+  "locale": "Lingo",
+  "close": "Batten down!",
+  "cancel": "Lower anchor",
+  "save": "Tuck it away",
+  "saving": "Stashin' yer changes...",
+  "error": {
+    "noAddressOrToken": "No ship address nor treasure map (token) found, matey!",
+    "page": {
+      "title": "Blunder!",
+      "description": "A blunder’s struck while loadin' this plundered page. Scour the crew's logs fer more details in the console.",
+      "logOut": "Abandon Ship",
+      "reloadPage": "Reload th' deck",
+      "showDetails": "Show piratey details"
+    },
+    "connectionFailed": "Link with the SoulFire ship’s hub failed, arrr."
+  },
+  "notFound": {
+    "page": {
+      "title": "Missin’ at sea!",
+      "description": "Can’t chart a page at this heading, matey.",
+      "logOut": "Abandon Ship",
+      "reloadPage": "Reload th' deck"
+    }
+  },
+  "pending": {
+    "connecting": "Hoistin' sails..."
+  },
+  "dialog": {
+    "about": {
+      "title": "About SoulFire",
+      "description": "Ye be runnin' version {{version}} o' the SoulFire crew client.",
+      "type": "Cargo Type",
+      "value": "Worth",
+      "fields": {
+        "operatingSystem": "Seafaring System",
+        "platform": "Dock",
+        "locale": "Lingo",
+        "architecture": "Ship Build",
+        "environment": "Surroundin's",
+        "browser": "Spyglass"
+      },
+      "close": "Batten down!"
+    },
+    "createInstance": {
+      "title": "Raise a new hull",
+      "description": "Every vessel needs a jolly name, so ye can tell 'em apart. Call it whatever you please, like \"Me Minecraft Matey\".",
+      "form": {
+        "friendlyName": {
+          "label": "Jolly moniker",
+          "placeholder": "Me Minecraft Matey",
+          "description": "The moniker ye wish to name this vessel.",
+          "min": "Yarr, th' jolly moniker needs at least 3 markings (characters).",
+          "max": "Moniker can’t be longer than 32 marks, matey.",
+          "regex": "Jolly moniker must use only letters, numerics, and blank air between!"
+        },
+        "cancel": "Lower anchor",
+        "create": "Set sail!"
+      },
+      "createToast": {
+        "loading": "Raisin' the hull...",
+        "success": "Hull lifted from the briny deep!",
+        "error": "Blasted barnacles! Couldn’t raise the hull!"
+      }
+    },
+    "import": {
+      "main": {
+        "fromFile": "From th' captain's log",
+        "fromUrl": "From the bottle at sea",
+        "firstClipboardItem": "Ye had a pile o' loot in yer clipboard, usin' the first booty only.",
+        "fromClipboard": "From the chest o' clippin's",
+        "textarea": {
+          "placeholder": "Scrawl yer words here...",
+          "submit": "Heave from th' writin'"
+        }
+      },
+      "url": {
+        "description": "Loadin' from the bottle at sea makes the SoulFire crew send a parrot (GET) to the other ship and use their reply as the booty.",
+        "form": {
+          "url": {
+            "placeholder": "Paste yer bottle's route here...",
+            "empty": "Chuck in a prop' url, matey!"
+          }
+        },
+        "submit": "Heave up treasure from that bottle",
+        "toast": {
+          "loading": "Snaggin' loot from the bottle...",
+          "success": "Booty be found!",
+          "error": "Blimey! Couldn't fetch the loot!"
+        }
+      }
+    }
+  },
+  "commandInput": {
+    "placeholder": "Enter yer decree! (Type 'help' to spy the legend)",
+    "emptySuggestions": "Type to beg for ideas or whack Tab, matey.",
+    "noSuggestions": "No pirate ideas showed up, arrr."
+  },
+  "controls": {
+    "start": "Hoist anchor",
+    "resume": "Sail onward",
+    "pause": "Drop anchor",
+    "stop": "Abandon voyage",
+    "startToast": {
+      "loading": "Bootin’ up a scurvy session...",
+      "success": "Session launched like a cannonball!",
+      "error": "Session fouled—the cannon backfired!"
+    },
+    "resumeToast": {
+      "loading": "Hoistin’ an old session...",
+      "success": "Old session’s alive!",
+      "error": "Arrr! Forgotten spell—session stuck in limbo!"
+    },
+    "pauseToast": {
+      "loading": "Lowerin’ the session...\n",
+      "success": "Session’s takin’ a nap!",
+      "error": "Blasted session won’t stay still!"
+    },
+    "stopToast": {
+      "loading": "Droppin’ a session o’erboard...",
+      "success": "Session sent ta Davy Jones!",
+      "error": "Session be too rowdy to scuttle!"
+    },
+    "accountWarning": {
+      "noAccountsTitle": "No Buccaneers Registered",
+      "noAccountsDescription": "Import some pirates 'fore ye hoist a session, mate! {{required}} bots be wanted.",
+      "notEnoughTitle": "Short Crew!",
+      "notEnoughDescription": "Ye demanded {{required}} bots, but only {{available}} pirates are aboard.",
+      "hint": "Ye can round up landlubbers offline or smuggle ‘em in from the Account Ship.",
+      "continueWithExisting": "Carry on with {{count}} cards",
+      "generateAccounts": "Be makin' new accounts!"
+    }
+  },
+  "icon": {
+    "invalidName": "Scurvy icon name: {{name}}"
+  },
+  "dataTable": {
+    "noResults": "Nay booty here.",
+    "rowsSelected": "{{amount}} of {{total}} row(s) be chosen, savvy?",
+    "rowsPerPage": "Rows per scroll o' logs",
+    "currentPage": "Page {{page}} o' {{total}}",
+    "goFirst": "Set course for the first page",
+    "goPrevious": "Sidle t' previous page",
+    "goNext": "Sidle t' next page",
+    "goLast": "Set sail for the last page",
+    "selectAll": "Mark all o’ them",
+    "selectRow": "Mark this row, matey",
+    "selected": "{{count}} chosen",
+    "clearSelection": "Clear the gangway",
+    "escape": "Escape!",
+    "filter": "Sort out",
+    "filters": "Sorts",
+    "noFiltersApplied": "No sortin' set, matey",
+    "modifyFilters": "Tweak yer sorts fer cleaner pickin'.",
+    "addFilters": "Add some sorts fer tidy lootin'.",
+    "addFilter": "Add a sort",
+    "resetFilters": "Scrub sorts",
+    "reset": "Reset compass",
+    "where": "Which",
+    "selectField": "Spy the pick",
+    "searchFields": "Search riggin'...",
+    "noFieldsFound": "Not a single rigging can be found at sea.",
+    "enterValue": "Drop yer wager...",
+    "enterValueShort": "Scrawl a value...",
+    "true": "Aye!",
+    "false": "Nay!",
+    "selectOption": "Pick an option...",
+    "selectOptions": "Pick a few...",
+    "searchOptions": "Scoutin' for options...",
+    "noOptionsFound": "No options floatin' by, mate.",
+    "pickDateShort": "Pick a fortunate date...",
+    "typeToFilter": "Start typin' to single out sorts...",
+    "filterByValue": "Filtered by \"{{value}}\"",
+    "view": "Spy",
+    "searchColumns": "Scout columns...",
+    "noColumnsFound": "No columns found on deck.",
+    "toggleColumns": "Hide from the crow's nest",
+    "sort": "Sort the loot",
+    "sortBy": "Sort booty by",
+    "noSortingApplied": "No mixin’ up the loot yet, matey",
+    "modifySorting": "Muck about with the loot to get things shipshape.",
+    "addSorting": "Add loot sortin'",
+    "addSort": "Add a loot sorter",
+    "resetSorting": "Hoist the colors for sortin'!",
+    "columnHeader": {
+      "asc": "Climbin' up",
+      "desc": "Divin' down",
+      "reset": "Reset compass",
+      "hide": "Hide the booty"
+    },
+    "operators": {
+      "iLike": "Havin'",
+      "notILike": "Not havin'",
+      "eq": "Be",
+      "ne": "Be not",
+      "isEmpty": "Be empty",
+      "isNotEmpty": "Ain't empty",
+      "lt": "Is less than",
+      "lte": "Is less or equal to",
+      "gt": "Is more than",
+      "gte": "Is more or equal to",
+      "isBetween": "Be twixt two dead men’s chests",
+      "isRelativeToToday": "Like today’s booty",
+      "ltDate": "Be before",
+      "gtDate": "Be after",
+      "lteDate": "Be on or afore",
+      "gteDate": "Be on or after",
+      "inArray": "Holding any o' these trinkets",
+      "notInArray": "Holding nary one o' these trinkets!"
+    },
+    "sortOrders": {
+      "asc": "Climbin' up",
+      "desc": "Divin' down"
+    }
+  },
+  "pluginCard": {
+    "version": "Manifest ver. {{version}}",
+    "author": "Captain: {{author}}",
+    "license": "Seafarer's code: {{license}}",
+    "website": "Shanty Site"
+  },
+  "settingsPage": {
+    "namespacesNotFound": "No map findin' for settings!",
+    "stringList": {
+      "placeholder": "Jot a new entry, matey...",
+      "add": "Chart course",
+      "remove": "Scuttle"
+    },
+    "invalidNumberToast": {
+      "title": "Arrr! That be a bogus number!",
+      "description": "Yarrr! Value should be between {{min}} and {{max}}, no more and no less!"
+    }
+  },
+  "terminal": {
+    "noLogs": "🧙 Arrr, there be no logs for th’ captain’s eyes; try runnin’ a command, ye landlubber!",
+    "demo-1": "Welcome t' sailin' in demo waters! 🧪",
+    "demo-2": "This be a read-only hull in SoulFire.",
+    "demo-3": "Give all th' menus and tools a look before pipin' SoulFire into yer own fleet :D",
+    "demo-4": "Join our crew in Discord if ye wish to parley: https://soulfiremc.com/discord"
+  },
+  "uiBreadcrumb": {
+    "more": "More booty"
+  },
+  "uiDialog": {
+    "close": "Batten down!"
+  },
+  "uiSheet": {
+    "close": "Batten down!"
+  },
+  "uiSidebar": {
+    "toggle": "Open the hold"
+  },
+  "castMenu": {
+    "title": "Send a signal!",
+    "disconnected": "Lost connection t' {{device}}",
+    "alreadyConnected": "Already anchored t' {{device}}",
+    "connectToast": {
+      "loading": "Connectin' to {{device}}...",
+      "success": "Tethered t' {{device}}",
+      "error": "Failed t' reach {{device}}"
+    },
+    "noDevices": "No seafarin' gadgets found",
+    "broadcastLabel": "Broadcast test, arr!",
+    "broadcastToast": {
+      "loading": "Sendin' message by sea...",
+      "success": "Message sent by cannonball!",
+      "error": "Couldn’t fire off the message, mate!"
+    }
+  },
+  "instanceSidebar": {
+    "readDocumentation": "Read the captain's map",
+    "backToDashboard": "Back t' the main deck",
+    "deleteToast": {
+      "loading": "Castin' off instance...",
+      "success": "Hull cast adrift",
+      "error": "Storm ahead! Could not scuttle hull."
+    },
+    "instancesGroup": "Fleets",
+    "createInstance": "Raise a hull",
+    "loadProfileToast": {
+      "loading": "Fetchin’ yer profile...",
+      "success": "Profile's aboard",
+      "error": "Grog-soaked code! Couldn't fetch the profile."
+    },
+    "loadProfile": "Fetch Profile",
+    "loadFromFile": "Fetch from logbook",
+    "profileSaved": "Profile stashed",
+    "saveProfile": "Stash Profile",
+    "deleteInstance": "Scuttle Hull",
+    "controlsGroup": "Controls o’ the ship",
+    "overview": "Spyglass View",
+    "terminal": "Deck o' Terminals",
+    "bots": "Crew",
+    "audit-log": "Captain’s Chronicle",
+    "settingsGroup": "Chart Room",
+    "pluginsGroup": "Pirate Add-ons",
+    "pluginSettings": "Plugin Shimmy",
+    "botSettings": "Bot Shimmy",
+    "accountSettings": "Matey Account",
+    "metaSettings": "Fleet Chartin'",
+    "proxySettings": "Proxy Tides",
+    "aiSettings": "Artificial Matey (AI)",
+    "pathfindingSettings": "Pathfindin’ Charts",
+    "discoverPlugins": "Pirate Add-ons",
+    "instanceScripts": "Script Scrolls"
+  },
+  "userSidebar": {
+    "readDocumentation": "Read the captain's map",
+    "userGroup": "Buccaneer",
+    "instances": "Fleets",
+    "access": "Boardin’ Rights",
+    "createInstance": "Raise a hull",
+    "settings": "Chart Room",
+    "adminGroup": "Admiral",
+    "adminOverview": "Spyglass View",
+    "adminLogs": "Captain’s Logs",
+    "adminTerminal": "Deck o' Terminals",
+    "users": "Crewmates",
+    "adminScripts": "Script Scrolls",
+    "serverSettings": "Server Orders",
+    "devSettings": "Swab Orders",
+    "theme": {
+      "title": "Theme Song",
+      "system": "Ship's Wheel",
+      "light": "Dawn Watch",
+      "dark": "Evenin' Watch"
+    },
+    "terminal": {
+      "title": "Deck o' Terminals"
+    },
+    "configDir": "Map Folder",
+    "dataDir": "Treasure Hold",
+    "about": "This Page o' Lore",
+    "logOut": "Abandon Ship",
+    "logOutToast": {
+      "loading": "Jumpin' ship...",
+      "success": "Walked the gangplank",
+      "error": "No escaping the plank! Log out failed!"
+    },
+    "exit": "Abandon hull",
+    "stopImpersonating": "Drop that disguise, ye rogue!",
+    "helpTranslate": "Help translate SoulFire, matey!"
+  },
+  "sidebar": {
+    "documentation": "The Captain's Log",
+    "buyMeACoffee": "Buy me a tankard o' rum",
+    "discord": "Discord’s Cove"
+  },
+  "breadcrumbs": {
+    "admin": "Admiral",
+    "settings": "Chart Room",
+    "controls": "Controls o’ the ship",
+    "plugins": "Pirate Add-ons",
+    "bots": "Crew"
+  },
+  "noInstancesFound": "No hulls found drifting",
+  "pageName": {
+    "terminal": "Deck o' Terminals",
+    "logs": "Captain’s Logs",
+    "audit-log": "Captain’s Chronicle",
+    "bots": "Crew",
+    "botDetail": "Bot Manifest",
+    "instances": "Fleets",
+    "access": "Boardin’ Rights",
+    "settings": "Chart Room",
+    "proxySettings": "Proxy Tides",
+    "overview": "Spyglass View",
+    "users": "Crewmates",
+    "accountSettings": "Matey Account",
+    "metaSettings": "Fleet Chartin'",
+    "discoverPlugins": "Pirate Add-ons",
+    "adminScripts": "Script Scrolls",
+    "instanceScripts": "Script Scrolls"
+  },
+  "access": {
+    "webdav": {
+      "title": "WebDAV Gangway",
+      "description": "SoulFire lets ye plunder yer fleet, scripts, and more through WebDAV shenanigans.",
+      "publicAddress": "Charted WebDAV Port",
+      "personalToken": "Yer own WebDAV Treasure Map (Token)",
+      "securityWarning": "Keep this here WebDAV Treasure Map secret, matey! Don’t be parlayin’ it! It be yer ticket for plunderin’ files. Use it as yer password aboard the WebDAV ship. No username be required, but if yer prompted, toss in whatever ye fancy (even 'soulfire').",
+      "addressDescription": "Here’s the port ye need t’ reach yer files, matey! Sometimes it’s dav:// or davs:// instead o’ the usual seas (http(s)://)."
+    },
+    "api": {
+      "title": "API Gangway",
+      "description": "SoulFire’s gRPC HTTP API lets ye parley with yer hulls through web-calls, arr!",
+      "publicAddress": "Charted API Port",
+      "personalToken": "Yer own API Treasure Map (Token)",
+      "securityWarning": "Keep this here API Treasure Map secret, mate! Don’t be parlayin’ it. It’ll unlock the API fer ye.",
+      "addressDescription": "Here’s the route ye need to use to plunder the API."
+    },
+    "token": {
+      "generate": "Hoist a New Map!",
+      "placeholder": "Click 'Hoist a New Map' below",
+      "generating": "Drawin' treasure map...",
+      "success": "Map made, aye!",
+      "error": "Couldn’t draw ye a map, mate!",
+      "copy": "Snatch Map Code"
+    },
+    "address": {
+      "copy": "Copy Port"
+    },
+    "documentation": "The Captain's Log",
+    "howToConnect": "How t’ parley with the fleet"
+  },
+  "uploadToMcLogs": "Send logs to mclo.gs",
+  "mcLogsUpload": {
+    "loading": "Haulin’ to mclo.gs, set the sails...",
+    "success": "Haul successful! Peek it here: {{url}}",
+    "error": "Storms! Log upload sunk to the briny mclo.gs!"
+  },
+  "searchWithGoogle": "Search with the Telescope",
+  "copyToClipboard": "Copy for yer logbook",
+  "clipboardCopy": {
+    "loading": "Logbook’s fetchin’...",
+    "success": "Copied \"{{content}}\" to yer logbook",
+    "error": "Clipboard mutinied!"
+  },
+  "instanceState": {
+    "starting": "Liftin' anchor",
+    "running": "Aye! Sailin'",
+    "paused": "Ship be idle",
+    "stopping": "Slack off the sails",
+    "stopped": "Ship at rest"
+  },
+  "userSettings": {
+    "avatar": {
+      "title": "Portrait o' thyself",
+      "description": "Yer picture be based on yer pirate mail. Change your avatar yonder:",
+      "gravatar": "Graveseas"
+    },
+    "username": {
+      "uiName": "Name o' the Mate",
+      "description": "Yer tag’s used to name ye at the helm and in logs."
+    },
+    "email": {
+      "uiName": "Parrot mail",
+      "description": "Yer mail be used fer settin' sail an' messages, arrr."
+    }
+  },
+  "auditLog": {
+    "filterPlaceholder": "Filter the captain's log...",
+    "user": "Buccaneer",
+    "action": "Pirate Deed",
+    "type": "Cargo Type",
+    "timestamp": "Bell o' Time",
+    "searchUsers": "Scout a proper pirate...",
+    "searchTimestamps": "Scout bell o’ time...",
+    "executedCommand": "Decree fired: {{data}}",
+    "startedSession": "Session set sail!",
+    "resumedSession": "Session pulled from the deep!",
+    "pausedSession": "Session put in irons!",
+    "stoppedSession": "Session thrown overboard!",
+    "contextMenu": {
+      "copyUsername": "Snatch Pirate Name",
+      "copyCommand": "Snatch Command"
+    }
+  },
+  "toggleTheme": "Flip between dawn ‘n dusk",
+  "pickADate": "Choose yer date o' destiny",
+  "scripts": {
+    "filterPlaceholder": "Filter script scrolls...",
+    "baseScriptDialog": {
+      "form": {
+        "scriptName": {
+          "min": "Script monikers must have at least 3 runes, matey!",
+          "max": "Script monikers must have at most 32 runes, arrr!",
+          "regex": "Script names be all lowercase, start an' end with a letter or digit, dashes allowed between—no funny business!",
+          "label": "Moniker",
+          "placeholder": "Me Pirate Script",
+          "description": "Name of the scroll yer scribblin’"
+        },
+        "elevatedPermissions": {
+          "label": "High Pirate Privileges",
+          "description": "Should this scroll be read with admiral’s eyes? Only top pirates can flip this."
+        }
+      }
+    },
+    "addScriptDialog": {
+      "title": "Add new scroll to the chest",
+      "description": "Scrolls be small code-parchments runnin’ on SoulFire. Use ‘em to do th’ dirty work or make the bots dance.",
+      "form": {
+        "cancel": "Lower anchor",
+        "add": "Chart course"
+      }
+    },
+    "updateScriptDialog": {
+      "title": "Overhaul scroll",
+      "description": "Refresh th’ scroll’s details, mate.",
+      "form": {
+        "cancel": "Lower anchor",
+        "update": "Patch it!"
+      }
+    },
+    "removeToast": {
+      "loading": "Throwing scripts overboard...",
+      "success": "Scripts be overboard!",
+      "error": "Failed to make scripts walk the plank!"
+    },
+    "addToast": {
+      "loading": "Haulin' in a new script...",
+      "success": "Script be added!",
+      "error": "Failed to haul in script!"
+    },
+    "updateToast": {
+      "loading": "Patchin’ up script...",
+      "success": "Script be patched!",
+      "error": "Arrr! Failed to patch script!"
+    },
+    "restartToast": {
+      "loading": "Kickin’ script back to life...",
+      "success": "Script be back from Davy Jones!",
+      "error": "Script went under anyway—restart failed!"
+    },
+    "table": {
+      "type": "Cargo Type",
+      "scriptName": "Moniker",
+      "language": "Tongue o' Code",
+      "elevatedPermissions": "High Pirate Privileges",
+      "createdAt": "Set afloat",
+      "actions": "Duties"
+    },
+    "globalScript": "Worldly",
+    "instanceScript": "This hull only"
+  },
+  "contextMenu": {
+    "instance": {
+      "goToInstance": "Sail t' Fleet",
+      "copyInstanceId": "Snatch Fleet ID",
+      "copyInstanceName": "Snatch Fleet’s Moniker",
+      "deleteInstance": "Scuttle Hull"
+    },
+    "bot": {
+      "goToBot": "Sail t' Bot",
+      "copyUsername": "Snatch Pirate Name",
+      "copyUuid": "Snatch UUID",
+      "copyCoordinates": "Snatch Map Pieces (Coords)"
+    },
+    "plugin": {
+      "enable": "Hoist plugin!",
+      "disable": "Drop plugin!",
+      "openSettings": "Open the plugin chest",
+      "copyPluginName": "Snatch Plugin’s Name",
+      "copyVersion": "Snatch Version",
+      "openWebsite": "Chart a course to th' plugin website"
+    }
+  }
+}

@@ -148,6 +148,14 @@
       "pageTitle": "{{name}} - {{page}}の設定",
       "noSettings": "このページには設定がありません"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "メタデータを編集する",
       "title": "メタデータ: {{name}}",

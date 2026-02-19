@@ -148,6 +148,14 @@
       "pageTitle": "{{name}} - {{page}} asetukset",
       "noSettings": "Tälle sivulle ei ole asetuksia saatavilla"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "Muokkaa metatietoja",
       "title": "Metatiedot: {{name}}",

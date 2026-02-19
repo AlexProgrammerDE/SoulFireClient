@@ -1,0 +1,106 @@
+{
+  "overview": {
+    "welcome": "Ahoy, {{name}}, ye be back! 🧙",
+    "instancesChart": {
+      "title": "Total booty o' instances on this ship",
+      "instances": "Fleets",
+      "label": {
+        "state": "State o' affairs",
+        "active": "Active n' sailin'",
+        "stopped": "Ship at rest",
+        "other": "The rest o' 'em"
+      }
+    },
+    "usersChart": {
+      "title": "Total crew aboard this ship",
+      "users": "Crewmates",
+      "label": {
+        "role": "Rank",
+        "user": "Buccaneer",
+        "admin": "Admiral",
+        "other": "The rest o' 'em"
+      }
+    }
+  },
+  "users": {
+    "filterPlaceholder": "Be searchin' fer crew...",
+    "baseUserDialog": {
+      "form": {
+        "username": {
+          "min": "Crew names be at least 3 marks long",
+          "max": "Crew names be at most 32 marks long",
+          "regex": "Crew names be lowercase, start with a shipshape mark, sail on with more shipshape marks or dashes, and end with a shipshape mark.",
+          "label": "Name o' the Mate",
+          "placeholder": "Type in crew name",
+          "description": "A unique moniker for the matey"
+        },
+        "email": {
+          "label": "Parrot mail",
+          "placeholder": "Type in the sea-mail",
+          "description": "The matey's sea-mail used fer messages an' boardin'"
+        },
+        "role": {
+          "label": "Rank",
+          "description": "The matey rank. Cap'ns may command all, swabs tend only their own ships.",
+          "user": "Buccaneer",
+          "admin": "Admiral"
+        }
+      }
+    },
+    "addUserDialog": {
+      "title": "Add a fresh crew matey",
+      "description": "Add a new matey to this ship",
+      "form": {
+        "cancel": "Lower anchor",
+        "add": "Add Matey"
+      }
+    },
+    "updateUserDialog": {
+      "title": "Give a matey an update",
+      "description": "Change the matey's info",
+      "form": {
+        "cancel": "Lower anchor",
+        "update": "Update Matey"
+      }
+    },
+    "addToast": {
+      "loading": "Addin' matey...",
+      "success": "Matey be added!",
+      "error": "Couldn't bring aboard matey"
+    },
+    "updateToast": {
+      "loading": "Update in progress...",
+      "success": "Matey spruced up!",
+      "error": "Couldn't update matey"
+    },
+    "removeToast": {
+      "loading": "Castin' off mateys...",
+      "success": "Cast off mateys from the crew!",
+      "error": "Failed t' cast off crew"
+    },
+    "invalidateToast": {
+      "loading": "Loggin' out crew...",
+      "success": "Crew be logged out!",
+      "error": "Couldn't log out crew"
+    },
+    "table": {
+      "username": "Name o' the Mate",
+      "email": "Parrot mail",
+      "role": "Rank",
+      "createdAt": "Set afloat",
+      "minIssuedAt": "Earliest Login",
+      "actions": "Duties",
+      "searchUsernames": "Seek crew names...",
+      "searchEmails": "Seek sea-mails...",
+      "searchCreatedAts": "Search fer float dates...",
+      "searchMinIssuedAts": "Search fer earliest login times..."
+    },
+    "removeSelectedTooltip": "Send selected crew off the plank",
+    "logOutSelectedTooltip": "Make selected crew disembark",
+    "contextMenu": {
+      "editUser": "Edit Matey",
+      "impersonate": "Sail in another matey's boots",
+      "copyUserId": "Copy Matey ID"
+    }
+  }
+}

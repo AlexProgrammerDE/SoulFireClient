@@ -1,0 +1,103 @@
+{
+  "header": {
+    "image": {
+      "alt": "oƃo˥ ǝɹᴉɟ˥noS"
+    },
+    "title": "ǝɹᴉɟ˥noS"
+  },
+  "newUser": "˙<a>ǝpᴉnp  pǝʇɹɐʇs ƃuᴉʇʇǝƃ</a> ǝɥʇ ƃuᴉʞɔǝɥ  puɐɯɯoɔ ǝpɐɯɯᴉ uɐ noʎ ?ǝɹᴉɟ˥noS oʇ ʍǝu",
+  "connect": {
+    "title": "ʇǝuuuoɔ ʇo ɐ ǝɹʌɹǝs ǝɹᴉɟ˥noS",
+    "description": "˙oʇ ʇɔǝuuoɔ oʇ ǝdoʇ ɥɔᴉɥʍ ʇɔǝlǝS .ǝɹʌɹǝs ǝɹᴉɟ˥noS ɟo ǝdoʇ ɥɔᴉɥʍ ʇɔǝlǝs",
+    "integrated": {
+      "title": "(lɐɔol) ɹǝʌɹǝs pǝʇɐɹƃǝʇuI",
+      "description": "(ddɐ / poʇʇǝpʞsǝᗡ : sǝɹᴉɹnqǝɹ noᴉʇɐlᴉɟ os ǝɹᴉnqǝɹ noᴉʇɐɓᴉl ǝɹnᴉɹǝqǝʞs oʇ sǝƃuᴉɹnq sǝlʇɐɯoʇnɹ oʇ sǝddɹns ʇuoᴉʇpǝlɔ ɹol ɐ) .uoᴉʇɐɹnɡᴉʇuᴉ lɐɔo˥ spuɹns ɹǝʌɹǝs ǝɹᴉɟ˥noS"
+    },
+    "dedicated": {
+      "title": "(ǝʇoɯǝɹ) ɹǝʌɹǝs pǝʇɐʇɔᴉpǝpǝp",
+      "description": "˙ɹǝʌɹǝs ǝɹᴉɟ˥noS ǝɥʇ ɟo ǝuǝʞoʇ puɐ sǝssǝɹpɐ ǝɥʇ ǝpᴉʌᴉɹdo oʇ pǝǝu llᴉʍ noʎ .ɹǝʌɹǝs ǝɹᴉɟ˥noS ɟo ǝɔuɐʇsuᴉ ǝʇoɯǝɹ ɐ oʇ sʇɔǝuuoɔ"
+    },
+    "demo": {
+      "title": "ɹǝʌɹǝs oɯǝp",
+      "description": "˙ʇᴉ ʇo oʇ sǝƃuɐɥɔ ʎuɐ ǝʞɐɯ ʇouuɐɔ noʎ puɐ ʎluo-ʎpɐǝɹ sᴉ ɹǝʌɹǝs sᴉɥʇ .ɐʇɐp oɯǝp ɥʇᴉʍ ɹǝʌɹǝs lɐnʇɹᴉʌ ɐ sǝʇɐlᴉɯnlᴉS"
+    }
+  },
+  "integrated": {
+    "preparing": ". . .ɹǝʌɹǝs pǝʇɐɹƃǝʇuᴉ ʇɹɐʇs oʇ ƃuᴉɹɐɹǝԀ",
+    "toast": {
+      "loading": ". . .ɹǝʌɹǝs pǝʇɐɹƃǝʇuᴉ ƃuᴉʇɹɐʇS",
+      "success": "{{s}}ǝɯᴉʇ uᴉ pǝʇɐɹʇs ɹǝʌɹǝs pǝʇɐɹƃǝʇuI",
+      "error": "ɹǝʌɹǝs pǝʇɐɹƃǝʇuᴉ ʇɹɐʇs oʇ pǝlᴉɐlℲ"
+    },
+    "description": "˙pǝpǝǝu ɟᴉ 'ʍo˥ǝqǝן ɹnoʎ uo ʎʇlɐɔol snɹ ɹǝʌɹǝs pǝʇɐɹƃǝʇuᴉ ǝɥʇ .pǝʇuǝɹǝɟuᴉ ɟɟɐ sʇuǝƃnɯɐ ɥɔuǝʇ ɐʌɐɾ ǝɥʇ ǝɹnƃᴉɟuoɔ",
+    "form": {
+      "jvmArgs": {
+        "title": "sʎɐƃɐɯɹʌ ɯʌɾ",
+        "description": ".ɯɐᴉɹ noɹ 25 % sᴉ ʇlɐɟǝp  .<bold>ƃ4xM-X-</bold> ppɐ 'ɯɐᴉɹ fo ᄅɓ ǝsn oʇ .sʎɐƃɐɯ ɯʌɾ ǝɹᴉɟ˥noS",
+        "placeholder": "ǝɹǝɥ sʎɐƃɐɯɹʌ ɯʌɾ ɹnoʎ"
+      },
+      "back": "ʞɔɐԐ",
+      "start": "ʇɹɐ┴S"
+    },
+    "mobile": {
+      "description": "˙sǝdǝʇs lɐnuɐɯ ʍǝɟ ɐ ǝʇǝldoɯ uo ɹǝʌɹǝs pǝʇɐɹƃǝʇuᴉ ǝɥʇ uɐ ɹnu oʇ pǝǝu noʎ 'ǝlᴉqoɯ uo",
+      "form": {
+        "termuxCommand": {
+          "title": "puɐɯɯoɔ xnuɹǝʇ",
+          "description": "˙uǝʞoʇ ǝɥʇ ɹǝʇuǝ  uǝɥʇ .uǝʞoʇ ǝʇɐɹǝuǝƃ <copy>ipa uoʇǝuǝɹǝƃ</copy> ǝɥʇ unɹ oʇ pǝǝu llᴉʍ noʎ .ɹǝʌɹǝs ǝɹᴉɟ˥noS ǝɥʇ llɐʇsni oʇ xnuɹǝʇ uᴉ puɐɯɯoɔ sᴉɥʇ uɹn ǝuɥʇ '˙<a>ddɐ xnuɹǝʇ</a> ǝɥʇ llɐʇsni"
+        },
+        "token": {
+          "title": "uǝʞoʇ",
+          "description": "˙ɹǝʌɹǝs lɐɔol ǝɥʇ ɥʇᴉʍ ǝʇɐɔᴉʇuǝɥʇuɐ oʇ uǝʞoʇ",
+          "placeholder": "uǝʞoʇ ʇǝɹɔǝS"
+        },
+        "back": "ʞɔɐԐ",
+        "connect": "ʇɔǝuuoɔ"
+      }
+    }
+  },
+  "dedicated": {
+    "description": "˙oʇ ʇuɐʍ noʎ ɹǝʌɹǝs ǝɹᴉɟ˥noS ǝɥʇ ɟo uǝʞoʇ puɐ sǝssǝɹpɐ ǝɥʇ uᴉ ʇnԀ",
+    "toast": {
+      "loading": ". . .ɹǝʌɹǝs oʇ ƃuᴉʞɔǝuuoɔ",
+      "success": "ɹǝʌɹǝs oʇ pǝʇɔǝuuoɔ",
+      "error": "ɹǝʌɹǝs oʇ ʇɔǝuuoɔ oʇ pǝlᴉɐlℲ"
+    },
+    "form": {
+      "address": {
+        "title": "ssǝɹpɐ",
+        "description": "˙ɹǝʌɹǝs ǝɹᴉɟ˥noS ɹnoʎ ɟo ssǝɹpɐ",
+        "placeholder": "56076:5180ɥʇ//:dɐolɔɐlo"
+      },
+      "token": {
+        "title": "uǝʞoʇ",
+        "placeholder": "uǝʞoʇ ʇǝɹɔǝS",
+        "description": "˙ɹǝʌɹǝs ǝɥʇ ɥʇᴉʍ ǝʇɐɔᴉʇuǝɥʇnɐ oʇ uǝʞoʇ"
+      },
+      "email": {
+        "title": "lᴉɐɯǝ",
+        "placeholder": "ɯoɔ˙ɔɯǝɹᴉɟ˥lnos@ʇooɹ",
+        "description": "˙ʇunoɔɔɐ ǝɹᴉɟ˥noS ɹnoʎ ɟo lᴉɐɯǝ"
+      },
+      "back": "ʞɔɐԐ",
+      "useToken": "uǝʞoʇ ǝsn",
+      "useEmail": "lᴉɐɯǝ ǝsn",
+      "login": "uᴉƃo˥"
+    }
+  },
+  "emailCode": {
+    "description": "˙ʍo˥ǝq ʇᴉ ɹǝʇuǝ  .<bold>{{lᴉɐɯǝ}}</bold> oʇ ǝpoɔ ɐ ʇuǝs ǝʌɐɥ ǝʍ  'ʇunoɔɔɐ uɐ ǝʌɐɥ noʎ ɟI",
+    "toast": {
+      "loading": ". . .ƃuᴉpɐo˥ ƃuᴉʞɔnǝɥɔ",
+      "success": "uᴉ puǝƃƃo˥",
+      "error": "pᴉlɐʌuᴉ sᴉ ǝpoɔ"
+    },
+    "back": "ʞɔɐԐ"
+  },
+  "footer": {
+    "version": "ʇuǝɯunɹoʌ ɐ – {{ʎ sǝƃuᴉɥʇ ʎuɐɯ ɹǝlᴉɐʇ ʎuɐ ɹnoʎ ǝpᴉnƃ ǝɥʇ ʇnoɥƆ}} – ʇuǝlᴉlɔ ǝɹᴉɟ˥noS",
+    "preview": "¿ʎǝʌᴉǝɹd ɹoɟ ƃuᴉʞool",
+    "production": "¿uoᴉʇɔnlɹoԀ ɹoɟ ƃuᴉʞool",
+    "helpTranslate": "ǝʇɐslɐɹɐɥʇ ɥʇᴉʍ ǝɹᴉɟ˥noS"
+  }
+}

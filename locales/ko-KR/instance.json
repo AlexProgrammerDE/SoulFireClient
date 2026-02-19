@@ -148,6 +148,14 @@
       "pageTitle": "{{name}} - {{page}} 설정",
       "noSettings": "이 페이지에 사용할 수 있는 설정이 없습니다"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "메타데이터 편집하기",
       "title": "메타데이터: {{name}}",

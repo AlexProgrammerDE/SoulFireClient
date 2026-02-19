@@ -148,6 +148,14 @@
       "pageTitle": "Налаштування {{name}} — {{page}}",
       "noSettings": "Немає налаштувань для цієї сторінки"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "Редагувати метадані",
       "title": "Метадані: {{name}}",
