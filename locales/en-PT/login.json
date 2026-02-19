@@ -1,0 +1,103 @@
+{
+  "header": {
+    "image": {
+      "alt": "SoulFire Jolly Roger"
+    },
+    "title": "SoulFire"
+  },
+  "newUser": "New to SoulFire? Best check the <a>getting started guide</a>, matey!",
+  "connect": {
+    "title": "Hoist yer sails to a SoulFire server",
+    "description": "Choose which kind o' SoulFire vessel ye wish to board, matey.",
+    "integrated": {
+      "title": "Ship computer (local)",
+      "description": "Runs a SoulFire ship on yer own contraption. All preparations be automatic, no fussin' about needed. (Ye need the Desktop/Android app, aye.)"
+    },
+    "dedicated": {
+      "title": "Remote server (yonder)",
+      "description": "Sets yer course to a distant SoulFire outpost. Ye must give the port address and secret code o' the outpost."
+    },
+    "demo": {
+      "title": "Demo schooner",
+      "description": "Simulates a make-believe ship with demo cargo. This ship be but for showin', ye can't be changin' a thing aboard."
+    }
+  },
+  "integrated": {
+    "preparing": "Preparin' to hoist the integrated server...",
+    "toast": {
+      "loading": "Startin' the integrated ship now...",
+      "success": "Local ship set sail in {{time}}s",
+      "error": "Blimey! Couldn’t start the local server."
+    },
+    "description": "The local SoulFire ship runs on yer own deck. Adjust the Java startup riggin' below if need be.",
+    "form": {
+      "jvmArgs": {
+        "title": "Java VM riggin'",
+        "description": "Arguin' with the SoulFire Java engine. To command 4G o' RAM, add <bold>-Xmx4G</bold>. By default, she claims 25% o' yer treasure.",
+        "placeholder": "Drop yer own JVM spells here"
+      },
+      "back": "Avast",
+      "start": "Hoist anchor"
+    },
+    "mobile": {
+      "description": "To set sail on mobile, ye need to do a bit o' handwork first.",
+      "form": {
+        "termuxCommand": {
+          "title": "Termux spell",
+          "description": "Haul in the <a>Termux app</a>, then run this here command in Termux to set up yer SoulFire ship. Then, hoist the <copy>generate-token api</copy> command to fetch a secret code. Enter yer code below, sailor."
+        },
+        "token": {
+          "title": "Token",
+          "description": "Secret code to prove ye belong on this here local ship.",
+          "placeholder": "Secret code"
+        },
+        "back": "Avast",
+        "connect": "Set sail!"
+      }
+    }
+  },
+  "dedicated": {
+    "description": "Type in the port and secret token o' the SoulFire server ye wish to board.",
+    "toast": {
+      "loading": "Castin' line to server...",
+      "success": "Successfully boarded the server, aye!",
+      "error": "Cursed wind! Couldn’t board the server."
+    },
+    "form": {
+      "address": {
+        "title": "Port",
+        "description": "Port o' yer SoulFire outpost.",
+        "placeholder": "http://localhost:38765"
+      },
+      "token": {
+        "title": "Token",
+        "placeholder": "Secret code",
+        "description": "The code to prove ye belong on this server, matey."
+      },
+      "email": {
+        "title": "Parrot mail",
+        "placeholder": "root@soulfiremc.com",
+        "description": "The parrot mail of yer SoulFire account."
+      },
+      "back": "Avast",
+      "useToken": "Use secret code",
+      "useEmail": "Use parrot mail",
+      "login": "Login"
+    }
+  },
+  "emailCode": {
+    "description": "If ye be havin' an account, we've sent a code to <bold>{{email}}</bold>. Feed it in below, matey.",
+    "toast": {
+      "loading": "Checkin' code...",
+      "success": "Ye be aboard!",
+      "error": "That code be no good, ye scallywag."
+    },
+    "back": "Avast"
+  },
+  "footer": {
+    "version": "SoulFire Client {{version}} - {{environment}}",
+    "preview": "Seekin' the preview version, are ye?",
+    "production": "Want to cast off to production waters, do ye?",
+    "helpTranslate": "Help translate SoulFire, matey!"
+  }
+}

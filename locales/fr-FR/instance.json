@@ -148,6 +148,14 @@
       "pageTitle": "Paramètres {{name}} - {{page}}",
       "noSettings": "Aucun paramètre disponible pour cette page"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "Éditer les métadonnées",
       "title": "Métadonnées\u00000: {{name}}",

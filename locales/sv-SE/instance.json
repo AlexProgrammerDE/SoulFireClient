@@ -148,6 +148,14 @@
       "pageTitle": "{{name}} - {{page}} Inställningar",
       "noSettings": "Inga inställningar tillgängliga för denna sida"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "Redigera metadata",
       "title": "Metadata: {{name}}",

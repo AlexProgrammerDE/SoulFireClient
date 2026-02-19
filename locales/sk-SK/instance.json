@@ -148,6 +148,14 @@
       "pageTitle": "{{name}} – Nastavenia {{page}}",
       "noSettings": "Pre túto stránku nie sú k dispozícii žiadne nastavenia"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "Upraviť metadáta",
       "title": "Metadáta: {{name}}",

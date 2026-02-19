@@ -148,6 +148,14 @@
       "pageTitle": "{{name}} - {{page}} सेटिंग्स",
       "noSettings": "इस पेज के लिए कोई सेटिंग्स उपलब्ध नहीं हैं"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "मेटाडेटा संपादित करें",
       "title": "मेटाडेटा: {{name}}",

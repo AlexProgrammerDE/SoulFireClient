@@ -148,6 +148,14 @@
       "pageTitle": "{{name}} - {{page}} Ayarları",
       "noSettings": "Bu səhifə üçün heç bir ayar mövcud deyil"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "Metadatanı redaktə et",
       "title": "Metadata: {{name}}",

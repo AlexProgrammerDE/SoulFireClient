@@ -148,6 +148,14 @@
       "pageTitle": "{{name}} - {{page}} Instellingen",
       "noSettings": "Geen instellingen beschikbaar voor deze pagina"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "Metadata bewerken",
       "title": "Metadata: {{name}}",

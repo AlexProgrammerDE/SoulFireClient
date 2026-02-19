@@ -148,6 +148,14 @@
       "pageTitle": "{{name}} - Cài đặt {{page}}",
       "noSettings": "Không có cài đặt nào cho trang này"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "Chỉnh sửa Metadata",
       "title": "Metadata: {{name}}",

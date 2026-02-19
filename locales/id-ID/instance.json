@@ -148,6 +148,14 @@
       "pageTitle": "{{name}} - Pengaturan {{page}}",
       "noSettings": "Tidak ada pengaturan yang tersedia untuk halaman ini"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "Edit Metadata",
       "title": "Metadata: {{name}}",

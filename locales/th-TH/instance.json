@@ -148,6 +148,14 @@
       "pageTitle": "{{name}} - การตั้งค่า {{page}}",
       "noSettings": "ไม่มีการตั้งค่าสำหรับหน้านี้"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "แก้ไข Metadata",
       "title": "Metadata: {{name}}",

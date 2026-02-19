@@ -148,6 +148,14 @@
       "pageTitle": "{{name}} - {{page}} Settnz",
       "noSettings": "No settnz availabru fur dis page"
     },
+    "deviceCodeDialog": {
+      "title": "",
+      "description": "",
+      "openInBrowser": "",
+      "orManually": "",
+      "codeLabel": "",
+      "urlLabel": ""
+    },
     "metadata": {
       "openButton": "Edit Metadaterz",
       "title": "Metadaterz: {{name}}",
