@@ -171,19 +171,52 @@ export function ScriptEditor() {
 
       const selectedNodes = nodes.filter((n) => n.selected);
 
-      // Ctrl+A - Select all nodes
+      // A - Select all nodes (Blender-style, no modifier)
       if (
-        (event.key === "a" || event.key === "A") &&
-        (event.ctrlKey || event.metaKey) &&
-        !event.shiftKey
+        event.key === "a" &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.shiftKey &&
+        !event.altKey
       ) {
         event.preventDefault();
         selectAll();
         return;
       }
 
-      // Delete/Backspace - Delete selected
-      if (event.key === "Delete" || event.key === "Backspace") {
+      // Alt+A - Deselect all nodes
+      if (
+        (event.key === "a" || event.key === "A") &&
+        event.altKey &&
+        !event.ctrlKey &&
+        !event.metaKey &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
+        onNodesChange(
+          nodes
+            .filter((n) => n.selected)
+            .map((n) => ({
+              type: "select" as const,
+              id: n.id,
+              selected: false,
+            })),
+        );
+        return;
+      }
+
+      // Delete/Backspace/X - Delete selected
+      if (
+        event.key === "Delete" ||
+        event.key === "Backspace" ||
+        event.key === "x"
+      ) {
+        if (
+          event.key === "x" &&
+          (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)
+        ) {
+          return;
+        }
         deleteSelected();
         return;
       }
@@ -304,11 +337,11 @@ export function ScriptEditor() {
         return;
       }
 
-      // Ctrl+Shift+G - Ungroup selected group node
+      // Ctrl+Alt+G - Ungroup selected group node (Blender convention)
       if (
-        event.key === "G" &&
+        (event.key === "g" || event.key === "G") &&
         (event.ctrlKey || event.metaKey) &&
-        event.shiftKey
+        event.altKey
       ) {
         event.preventDefault();
         ungroupSelected();
@@ -327,10 +360,12 @@ export function ScriptEditor() {
         return;
       }
 
-      // Ctrl+D - Duplicate selected
+      // Shift+D - Duplicate selected (Blender-style)
       if (
-        (event.key === "d" || event.key === "D") &&
-        (event.ctrlKey || event.metaKey)
+        event.key === "D" &&
+        event.shiftKey &&
+        !event.ctrlKey &&
+        !event.metaKey
       ) {
         event.preventDefault();
         duplicateSelected();
@@ -340,31 +375,37 @@ export function ScriptEditor() {
       // Note: Ctrl+C and Ctrl+V are handled via native onCopy/onPaste events
       // to avoid Firefox's clipboard permission prompts
 
-      // Shift+L - Select linked (both directions)
+      // L - Select linked (both directions, Blender-style)
       if (
-        event.key === "L" &&
-        event.shiftKey &&
+        event.key === "l" &&
+        !event.shiftKey &&
         !event.ctrlKey &&
-        !event.metaKey
+        !event.metaKey &&
+        !event.altKey
       ) {
         event.preventDefault();
         selectLinked("both");
         return;
       }
 
-      // Ctrl+Shift+L - Select upstream only
+      // Ctrl+L / Cmd+L - Select upstream only
       if (
-        event.key === "L" &&
-        event.shiftKey &&
-        (event.ctrlKey || event.metaKey)
+        (event.key === "l" || event.key === "L") &&
+        (event.ctrlKey || event.metaKey) &&
+        !event.altKey
       ) {
         event.preventDefault();
         selectLinked("upstream");
         return;
       }
 
-      // Alt+Shift+L - Select downstream only
-      if (event.key === "L" && event.shiftKey && event.altKey) {
+      // Alt+L / ⌥L - Select downstream only
+      if (
+        (event.key === "l" || event.key === "L") &&
+        event.altKey &&
+        !event.ctrlKey &&
+        !event.metaKey
+      ) {
         event.preventDefault();
         selectLinked("downstream");
         return;
@@ -382,8 +423,12 @@ export function ScriptEditor() {
         return;
       }
 
-      // Alignment shortcuts (Ctrl+Shift+Arrow)
-      if (event.ctrlKey && event.shiftKey && selectedNodes.length >= 2) {
+      // Alignment shortcuts (Ctrl+Shift+Arrow / Cmd+Shift+Arrow)
+      if (
+        (event.ctrlKey || event.metaKey) &&
+        event.shiftKey &&
+        selectedNodes.length >= 2
+      ) {
         switch (event.key) {
           case "ArrowLeft":
             event.preventDefault();
@@ -420,6 +465,7 @@ export function ScriptEditor() {
     },
     [
       nodes,
+      onNodesChange,
       deleteSelected,
       reactFlowInstance,
       openQuickAddMenu,
@@ -569,11 +615,11 @@ export function ScriptEditor() {
     setNodeContextMenu(null);
   }, []);
 
-  // Handle mouse down for link cutting (Ctrl+drag)
+  // Handle mouse down for link cutting (Alt+drag)
   // Note: React Flow doesn't provide onPaneMouseDown, so we use the wrapper div
   const handleMouseDown = useCallback(
     (event: React.MouseEvent) => {
-      if (event.ctrlKey && event.button === 0 && reactFlowInstance) {
+      if (event.altKey && event.button === 0 && reactFlowInstance) {
         event.preventDefault();
         const flowPosition = reactFlowInstance.screenToFlowPosition({
           x: event.clientX,

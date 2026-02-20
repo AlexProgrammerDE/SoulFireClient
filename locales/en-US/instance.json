@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "Back to Scripts",
         "save": "Save",
-        "saveTooltip": "Save script (Ctrl+S)",
+        "saveTooltip": "Save script",
         "resume": "Resume",
         "resumeTooltip": "Resume script execution",
         "pause": "Pause",

@@ -50,6 +50,7 @@ import {
   InstancePermission,
 } from "@/generated/soulfire/common.ts";
 import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
+import { formatShortcut } from "@/lib/platform.ts";
 import { type ProfileRoot, translateInstanceState } from "@/lib/types.ts";
 import {
   data2blob,
@@ -124,7 +125,9 @@ function InstanceList() {
             <Link to="/instance/$instance" params={{ instance: instance.id }}>
               <DynamicIcon name={instance.icon} className="size-4 shrink-0" />
               {instance.friendlyName}
-              <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
+              <DropdownMenuShortcut>
+                {formatShortcut(`Ctrl+${index + 1}`)}
+              </DropdownMenuShortcut>
             </Link>
           </DropdownMenuItem>
         );

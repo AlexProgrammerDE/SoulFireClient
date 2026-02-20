@@ -70,7 +70,7 @@ export function NodeContextMenu({
         >
           <CopyIcon />
           {t("scripts.editor.contextMenu.duplicate")}
-          <MenuShortcut>Ctrl+D</MenuShortcut>
+          <MenuShortcut>Shift+D</MenuShortcut>
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -146,7 +146,7 @@ export function NodeContextMenu({
         >
           <TrashIcon />
           {t("scripts.editor.contextMenu.delete")}
-          <MenuShortcut>Del</MenuShortcut>
+          <MenuShortcut>Del / X</MenuShortcut>
         </MenuItem>
       </div>
     </ContextMenuContainer>
