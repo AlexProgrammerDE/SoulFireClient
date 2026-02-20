@@ -146,7 +146,7 @@ export function BotsOnlineChart({
       <CardContent>
         <ChartContainer
           config={botsOnlineConfig}
-          className="aspect-auto h-[200px] min-w-0 w-full"
+          className="min-h-[200px] w-full"
         >
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -208,10 +208,7 @@ export function NetworkTrafficChart({
         <CardTitle className="text-sm">Packets / Second</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer
-          config={networkConfig}
-          className="aspect-auto h-[200px] min-w-0 w-full"
-        >
+        <ChartContainer config={networkConfig} className="min-h-[200px] w-full">
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="time" tick={{ fontSize: 10 }} />
@@ -272,7 +269,7 @@ export function BandwidthChart({
       <CardContent>
         <ChartContainer
           config={bandwidthConfig}
-          className="aspect-auto h-[200px] min-w-0 w-full"
+          className="min-h-[200px] w-full"
         >
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -285,9 +282,23 @@ export function BandwidthChart({
               content={(props: CustomTooltipProps) => (
                 <ChartTooltipContent
                   {...props}
-                  formatter={(value) =>
-                    formatBytes(typeof value === "number" ? value : 0)
-                  }
+                  formatter={(value, name, item) => (
+                    <>
+                      <div
+                        className="h-2.5 w-2.5 shrink-0 rounded-[2px]"
+                        style={{ backgroundColor: item.color }}
+                      />
+                      <div className="flex flex-1 items-center justify-between leading-none">
+                        <span className="text-muted-foreground">
+                          {bandwidthConfig[name as keyof typeof bandwidthConfig]
+                            ?.label ?? name}
+                        </span>
+                        <span className="text-foreground font-mono font-medium tabular-nums">
+                          {formatBytes(typeof value === "number" ? value : 0)}
+                        </span>
+                      </div>
+                    </>
+                  )}
                 />
               )}
             />
@@ -342,10 +353,7 @@ export function TickDurationChart({
         <CardTitle className="text-sm">Tick Duration</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer
-          config={tickConfig}
-          className="aspect-auto h-[200px] min-w-0 w-full"
-        >
+        <ChartContainer config={tickConfig} className="min-h-[200px] w-full">
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="time" tick={{ fontSize: 10 }} />
@@ -410,7 +418,7 @@ export function HealthFoodChart({
       <CardContent>
         <ChartContainer
           config={healthFoodConfig}
-          className="aspect-auto h-[200px] min-w-0 w-full"
+          className="min-h-[200px] w-full"
         >
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -472,7 +480,7 @@ export function ChunksEntitiesChart({
       <CardContent>
         <ChartContainer
           config={chunksEntitiesConfig}
-          className="aspect-auto h-[200px] min-w-0 w-full"
+          className="min-h-[200px] w-full"
         >
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -536,7 +544,7 @@ export function ConnectionEventsChart({
       <CardContent>
         <ChartContainer
           config={connectionConfig}
-          className="aspect-auto h-[200px] min-w-0 w-full"
+          className="min-h-[200px] w-full"
         >
           <BarChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -605,7 +613,7 @@ export function HealthDistributionChart({
       <CardContent>
         <ChartContainer
           config={healthDistConfig}
-          className="aspect-auto h-[200px] min-w-0 w-full"
+          className="min-h-[200px] w-full"
         >
           <BarChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -801,7 +809,7 @@ export function PositionScatterChart({
       <CardContent>
         <ChartContainer
           config={positionConfig}
-          className="aspect-auto h-[200px] min-w-0 w-full"
+          className="min-h-[200px] w-full"
         >
           <ScatterChart>
             <CartesianGrid strokeDasharray="3 3" />
