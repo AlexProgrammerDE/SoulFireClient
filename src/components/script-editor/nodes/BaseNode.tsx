@@ -103,6 +103,7 @@ function PortRow({
         position={position}
         id={port.id}
         className="!absolute transition-transform hover:scale-125"
+        title={port.description || undefined}
         style={{
           background: color,
           width: handleWidth,
@@ -139,7 +140,9 @@ function PortRow({
           borderRadius: handleBorderRadius,
         }}
         title={
-          isMultiInput ? "Multi-input: accepts multiple connections" : undefined
+          isMultiInput
+            ? `Multi-input: accepts multiple connections${port.description ? ` (${port.description})` : ""}`
+            : port.description || undefined
         }
       />
 
