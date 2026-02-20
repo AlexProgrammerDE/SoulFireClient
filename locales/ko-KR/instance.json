@@ -149,12 +149,12 @@
       "noSettings": "이 페이지에 사용할 수 있는 설정이 없습니다"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "디바이스 코드 인증",
+      "description": "Microsoft 계정으로 로그인하여 연결하세요.",
+      "openInBrowser": "브라우저에서 열기",
+      "orManually": "또는 코드를 수동으로 입력",
+      "codeLabel": "귀하의 코드",
+      "urlLabel": "이동 주소"
     },
     "metadata": {
       "openButton": "메타데이터 편집하기",

@@ -149,12 +149,12 @@
       "noSettings": "Немає налаштувань для цієї сторінки"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Аутентифікація за допомогою коду пристрою",
+      "description": "Увійдіть до свого облікового запису Microsoft, щоб звʼязати його.",
+      "openInBrowser": "Відкрити в браузері",
+      "orManually": "Або введіть код вручну",
+      "codeLabel": "Ваш код",
+      "urlLabel": "Перейдіть на"
     },
     "metadata": {
       "openButton": "Редагувати метадані",

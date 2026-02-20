@@ -149,12 +149,12 @@
       "noSettings": "此页面暂无可用设置"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "设备代码认证",
+      "description": "使用您的 Microsoft 账户登录以进行绑定。",
+      "openInBrowser": "在浏览器中打开",
+      "orManually": "或手动输入代码",
+      "codeLabel": "您的代码",
+      "urlLabel": "前往"
     },
     "metadata": {
       "openButton": "编辑元数据",

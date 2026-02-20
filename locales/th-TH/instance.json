@@ -149,12 +149,12 @@
       "noSettings": "ไม่มีการตั้งค่าสำหรับหน้านี้"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "การยืนยันตัวตนด้วยรหัสอุปกรณ์",
+      "description": "ลงชื่อเข้าใช้ด้วยบัญชี Microsoft ของคุณเพื่อเชื่อมโยงบัญชีนี้",
+      "openInBrowser": "เปิดในเบราว์เซอร์",
+      "orManually": "หรือกรอกรหัสด้วยตนเอง",
+      "codeLabel": "รหัสของคุณ",
+      "urlLabel": "ไปที่"
     },
     "metadata": {
       "openButton": "แก้ไข Metadata",

@@ -149,12 +149,12 @@
       "noSettings": "ǝƃɐd sᴉɥʇ ɹoɟ ǝlqɐlᴉɐʌɐ sƃuᴉʇsǝʇ oN"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "uoıʇɐɔıɟıʇuǝ lɐʇuǝɥʇn∀ ǝpoɔ ǝɔıʌǝp",
+      "description": ".ʇı ʞuıl oʇ ʇunoɔɔɐ ʇɐɹoɟoɹɔıɯ ɹnoʎ ɥʇıʍ uı ƃuıƃuıs",
+      "openInBrowser": "ɹǝsʍoɹq uı uǝdo",
+      "orManually": "ʎllɐnɯ ǝpoɔ ɹǝʇuǝ ɹO",
+      "codeLabel": "ǝpoɔ ɹnoʎ",
+      "urlLabel": "oʇ oƃ"
     },
     "metadata": {
       "openButton": "ɐʇɐpɐʇǝɯ ʇᴉpƎ",

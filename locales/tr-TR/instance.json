@@ -149,12 +149,12 @@
       "noSettings": "Bu sayfa için ayar mevcut değil"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Cihaz Kodu Kimlik Doğrulaması",
+      "description": "Bağlamak için Microsoft hesabınızla oturum açın.",
+      "openInBrowser": "Tarayıcıda Aç",
+      "orManually": "Ya da kodu elle girin",
+      "codeLabel": "Kodunuz",
+      "urlLabel": "Git:"
     },
     "metadata": {
       "openButton": "Metaveriyi Düzenle",

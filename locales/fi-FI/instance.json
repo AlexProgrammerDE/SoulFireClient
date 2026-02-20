@@ -149,12 +149,12 @@
       "noSettings": "Tälle sivulle ei ole asetuksia saatavilla"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Laitteen kooditodennus",
+      "description": "Kirjaudu sisään Microsoft-tililläsi yhdistääksesi sen.",
+      "openInBrowser": "Avaa selaimessa",
+      "orManually": "Tai syötä koodi manuaalisesti",
+      "codeLabel": "Koodisi",
+      "urlLabel": "Siirry osoitteeseen"
     },
     "metadata": {
       "openButton": "Muokkaa metatietoja",

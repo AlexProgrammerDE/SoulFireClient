@@ -149,12 +149,12 @@
       "noSettings": "इस पेज के लिए कोई सेटिंग्स उपलब्ध नहीं हैं"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "डिवाइस कोड प्रमाणीकरण",
+      "description": "लिंक करने के लिए अपने Microsoft खाते से साइन इन करें।",
+      "openInBrowser": "ब्राउज़र में खोलें",
+      "orManually": "या कोड मैन्युअली दर्ज करें",
+      "codeLabel": "आपका कोड",
+      "urlLabel": "पर जाएं"
     },
     "metadata": {
       "openButton": "मेटाडेटा संपादित करें",

@@ -149,12 +149,12 @@
       "noSettings": "Inga inställningar tillgängliga för denna sida"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Enhetskodautentisering",
+      "description": "Logga in med ditt Microsoft-konto för att länka det.",
+      "openInBrowser": "Öppna i webbläsare",
+      "orManually": "Eller ange kod manuellt",
+      "codeLabel": "Din kod",
+      "urlLabel": "Gå till"
     },
     "metadata": {
       "openButton": "Redigera metadata",

@@ -149,12 +149,12 @@
       "noSettings": "Brak dostępnych ustawień dla tej strony"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Uwierzytelnianie za pomocą kodu urządzenia",
+      "description": "Zaloguj się przy użyciu swojego konta Microsoft, aby je powiązać.",
+      "openInBrowser": "Otwórz w przeglądarce",
+      "orManually": "Lub wpisz kod ręcznie",
+      "codeLabel": "Twój kod",
+      "urlLabel": "Przejdź do"
     },
     "metadata": {
       "openButton": "Edytuj metadane",

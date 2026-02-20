@@ -149,12 +149,12 @@
       "noSettings": "Không có cài đặt nào cho trang này"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Xác thực mã thiết bị",
+      "description": "Đăng nhập bằng tài khoản Microsoft của bạn để liên kết tài khoản.",
+      "openInBrowser": "Mở trong trình duyệt",
+      "orManually": "Hoặc nhập mã theo cách thủ công",
+      "codeLabel": "Mã của bạn",
+      "urlLabel": "Truy cập"
     },
     "metadata": {
       "openButton": "Chỉnh sửa Metadata",
