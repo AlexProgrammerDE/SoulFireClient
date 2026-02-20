@@ -380,6 +380,7 @@ export const TerminalComponent = (props: { scope: LogScope }) => {
   return (
     <ScrollArea
       viewportRef={paneRef}
+      viewportClassName="overscroll-contain"
       className="h-[calc(75vh-8rem)] rounded-md pr-4 font-mono text-xs"
       style={
         {
