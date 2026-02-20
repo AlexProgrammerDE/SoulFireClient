@@ -149,12 +149,12 @@
       "noSettings": "Tidak ada pengaturan yang tersedia untuk halaman ini"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Otentikasi Kode Perangkat",
+      "description": "Masuk dengan akun Microsoft Anda untuk menautkannya.",
+      "openInBrowser": "Buka di Peramban",
+      "orManually": "Atau masukkan kode secara manual",
+      "codeLabel": "Kode Anda",
+      "urlLabel": "Kunjungi"
     },
     "metadata": {
       "openButton": "Edit Metadata",

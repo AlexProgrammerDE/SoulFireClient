@@ -149,12 +149,12 @@
       "noSettings": "Geen instellingen beschikbaar voor deze pagina"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Authenticatie met apparaatgecode",
+      "description": "Meld je aan met je Microsoft-account om deze te koppelen.",
+      "openInBrowser": "Openen in browser",
+      "orManually": "Of voer de code handmatig in",
+      "codeLabel": "Je code",
+      "urlLabel": "Ga naar"
     },
     "metadata": {
       "openButton": "Metadata bewerken",

@@ -149,12 +149,12 @@
       "noSettings": "此頁面沒有可用的設定"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "裝置代碼驗證",
+      "description": "使用您的 Microsoft 帳戶登入以進行連結。",
+      "openInBrowser": "在瀏覽器中開啟",
+      "orManually": "或手動輸入代碼",
+      "codeLabel": "您的代碼",
+      "urlLabel": "前往"
     },
     "metadata": {
       "openButton": "編輯中繼資料",

@@ -149,12 +149,12 @@
       "noSettings": "Для этой страницы нет доступных настроек"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Аутентификация с помощью кода устройства",
+      "description": "Войдите с помощью своей учетной записи Microsoft, чтобы связать её.",
+      "openInBrowser": "Открыть в браузере",
+      "orManually": "Или введите код вручную",
+      "codeLabel": "Ваш код",
+      "urlLabel": "Перейдите на"
     },
     "metadata": {
       "openButton": "Редактировать метаданные",

@@ -149,12 +149,12 @@
       "noSettings": "Aucun paramètre disponible pour cette page"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Authentification avec le code de l'appareil",
+      "description": "Connectez-vous avec votre compte Microsoft pour le lier.",
+      "openInBrowser": "Ouvrir dans le navigateur",
+      "orManually": "Ou saisir le code manuellement",
+      "codeLabel": "Votre code",
+      "urlLabel": "Aller sur"
     },
     "metadata": {
       "openButton": "Éditer les métadonnées",

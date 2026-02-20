@@ -149,12 +149,12 @@
       "noSettings": "このページには設定がありません"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "デバイスコード認証",
+      "description": "Microsoft アカウントでサインインしてリンクします。",
+      "openInBrowser": "ブラウザで開く",
+      "orManually": "またはコードを手動で入力",
+      "codeLabel": "あなたのコード",
+      "urlLabel": "アクセス先"
     },
     "metadata": {
       "openButton": "メタデータを編集する",

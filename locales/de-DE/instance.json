@@ -149,12 +149,12 @@
       "noSettings": "Für diese Seite sind keine Einstellungen verfügbar"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Gerätecode-Authentifizierung",
+      "description": "Melden Sie sich mit Ihrem Microsoft-Konto an, um es zu verknüpfen.",
+      "openInBrowser": "Im Browser öffnen",
+      "orManually": "Oder Code manuell eingeben",
+      "codeLabel": "Ihr Code",
+      "urlLabel": "Gehe zu"
     },
     "metadata": {
       "openButton": "Metadaten bearbeiten",

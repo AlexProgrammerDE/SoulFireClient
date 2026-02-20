@@ -149,12 +149,12 @@
       "noSettings": "Pro tuto stránku nejsou k dispozici žádná nastavení"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Ověření pomocí kódu zařízení",
+      "description": "Přihlaste se ke svému účtu Microsoft pro jeho propojení.",
+      "openInBrowser": "Otevřít v prohlížeči",
+      "orManually": "Nebo zadejte kód ručně",
+      "codeLabel": "Váš kód",
+      "urlLabel": "Přejděte na"
     },
     "metadata": {
       "openButton": "Upravit metadata",

@@ -149,12 +149,12 @@
       "noSettings": "No ship's settings fer this page, matey"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Device Code Authentication",
+      "description": "Hoist yer sails 'n sign in with yer Microsoft account to be hookin' it up.",
+      "openInBrowser": "Set Course in Browser",
+      "orManually": "Or enter the code by hand, matey",
+      "codeLabel": "Yer code",
+      "urlLabel": "Sail to"
     },
     "metadata": {
       "openButton": "Tweak Metadata",

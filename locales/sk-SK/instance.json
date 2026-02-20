@@ -149,12 +149,12 @@
       "noSettings": "Pre túto stránku nie sú k dispozícii žiadne nastavenia"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Overenie zariadenia pomocou kódu",
+      "description": "Prihláste sa pomocou svojho Microsoft účtu, aby ste si ho prepojili.",
+      "openInBrowser": "Otvoriť v prehliadači",
+      "orManually": "Alebo zadajte kód ručne",
+      "codeLabel": "Váš kód",
+      "urlLabel": "Prejsť na"
     },
     "metadata": {
       "openButton": "Upraviť metadáta",

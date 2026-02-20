@@ -149,12 +149,12 @@
       "noSettings": "Bu səhifə üçün heç bir ayar mövcud deyil"
     },
     "deviceCodeDialog": {
-      "title": "",
-      "description": "",
-      "openInBrowser": "",
-      "orManually": "",
-      "codeLabel": "",
-      "urlLabel": ""
+      "title": "Cihaz Kodu İlə Doğrulama",
+      "description": "Bağlamaq üçün Microsoft hesabınızla daxil olun.",
+      "openInBrowser": "Brauzerdə Aç",
+      "orManually": "Və ya kodu əl ilə daxil edin",
+      "codeLabel": "Sizin kodunuz",
+      "urlLabel": "Keçin"
     },
     "metadata": {
       "openButton": "Metadatanı redaktə et",
