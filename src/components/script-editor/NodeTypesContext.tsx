@@ -17,6 +17,7 @@ import { FrameNode } from "./nodes/FrameNode";
 import { GroupInputNode } from "./nodes/GroupInputNode";
 import { GroupNode } from "./nodes/GroupNode";
 import { GroupOutputNode } from "./nodes/GroupOutputNode";
+import { NoteNode } from "./nodes/NoteNode";
 import { RerouteNode } from "./nodes/RerouteNode";
 import {
   type CategoryInfo,
@@ -95,6 +96,17 @@ const LAYOUT_NODE_DEFINITIONS: NodeDefinition[] = [
     description: "Debug node for inspecting values during execution",
     isLayoutNode: true,
     keywords: ["debug", "viewer", "inspect", "watch", "log"],
+  },
+  {
+    type: "layout.note",
+    label: "Note",
+    category: "layout",
+    icon: "StickyNote",
+    inputs: [],
+    outputs: [],
+    description: "A sticky note for adding comments and annotations",
+    isLayoutNode: true,
+    keywords: ["note", "comment", "annotation", "sticky", "text"],
   },
 ];
 
@@ -192,6 +204,8 @@ export function NodeTypesProvider({
         result[type] = GroupOutputNode;
       } else if (type === "layout.debug") {
         result[type] = DebugNode;
+      } else if (type === "layout.note") {
+        result[type] = NoteNode;
       } else {
         result[type] = createNodeComponent(definition);
       }

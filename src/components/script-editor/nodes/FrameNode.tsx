@@ -1,6 +1,8 @@
 import { type NodeProps, NodeResizer } from "@xyflow/react";
-import { memo } from "react";
+import { memo, useCallback } from "react";
 import { cn } from "@/lib/utils";
+import { useNodeEditing } from "../NodeEditingContext";
+import { EditableNodeLabel } from "./EditableNodeLabel";
 
 export interface FrameNodeData {
   /** Label displayed at the top of the frame */
@@ -21,9 +23,17 @@ interface FrameNodeProps extends NodeProps {
  * Blender-style: provides organization without affecting execution.
  * Children move with the frame when it's dragged.
  */
-function FrameNodeComponent({ data, selected }: FrameNodeProps) {
+function FrameNodeComponent({ id, data, selected }: FrameNodeProps) {
+  const { updateNodeData } = useNodeEditing();
   const label = data.label ?? "Frame";
   const backgroundColor = data.color ?? "var(--muted)";
+
+  const handleLabelSubmit = useCallback(
+    (newLabel: string) => {
+      updateNodeData(id, { label: newLabel });
+    },
+    [id, updateNodeData],
+  );
 
   return (
     <>
@@ -52,14 +62,22 @@ function FrameNodeComponent({ data, selected }: FrameNodeProps) {
         {/* Frame header/label */}
         <div
           className={cn(
-            "absolute -top-6 left-2 px-2 py-0.5 rounded text-sm font-medium",
+            "absolute -top-6 left-2 px-2 py-0.5 rounded text-sm font-medium flex items-center",
             selected ? "text-primary" : "text-muted-foreground",
           )}
           style={{
             backgroundColor: backgroundColor,
           }}
         >
-          {label}
+          <EditableNodeLabel
+            nodeId={id}
+            value={label}
+            onSubmit={handleLabelSubmit}
+            className={cn(
+              "text-sm font-medium",
+              selected ? "text-primary" : "text-muted-foreground",
+            )}
+          />
           {data.locked && <span className="ml-1 text-xs opacity-50">🔒</span>}
         </div>
       </div>

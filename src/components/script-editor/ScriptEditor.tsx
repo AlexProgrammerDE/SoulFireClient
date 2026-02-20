@@ -36,6 +36,7 @@ export function ScriptEditor() {
     useState<ReactFlowInstance | null>(null);
   const [nodeContextMenu, setNodeContextMenu] =
     useState<NodeContextMenuState | null>(null);
+  const [renamingNodeId, setRenamingNodeId] = useState<string | null>(null);
   const { nodeTypes } = useNodeTypes();
 
   const nodes = useScriptEditorStore((state) => state.nodes);
@@ -184,6 +185,15 @@ export function ScriptEditor() {
       // Delete/Backspace - Delete selected
       if (event.key === "Delete" || event.key === "Backspace") {
         deleteSelected();
+        return;
+      }
+
+      // F2 - Rename selected node
+      if (event.key === "F2") {
+        event.preventDefault();
+        if (selectedNodeId) {
+          setRenamingNodeId(selectedNodeId);
+        }
         return;
       }
 
@@ -602,7 +612,12 @@ export function ScriptEditor() {
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
     >
-      <NodeEditingProvider edges={visibleEdges} updateNodeData={updateNodeData}>
+      <NodeEditingProvider
+        edges={visibleEdges}
+        updateNodeData={updateNodeData}
+        renamingNodeId={renamingNodeId}
+        clearRenamingNodeId={() => setRenamingNodeId(null)}
+      >
         <ReactFlow
           nodes={visibleNodes}
           edges={visibleEdges}
@@ -671,6 +686,10 @@ export function ScriptEditor() {
               )?.collapsed ?? false
             }
             previewEnabled={previewEnabledNodes.has(nodeContextMenu.nodeId)}
+            onRename={(nodeId) => {
+              setRenamingNodeId(nodeId);
+              setNodeContextMenu(null);
+            }}
             onDelete={() => {
               deleteSelected();
               setNodeContextMenu(null);

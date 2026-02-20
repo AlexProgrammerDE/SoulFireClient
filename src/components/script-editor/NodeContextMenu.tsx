@@ -4,6 +4,7 @@ import {
   CopyIcon,
   EyeIcon,
   EyeOffIcon,
+  PencilIcon,
   TrashIcon,
   UnplugIcon,
   VolumeIcon,
@@ -28,6 +29,7 @@ interface NodeContextMenuProps {
   supportsPreview?: boolean;
   onDelete?: (nodeId: string) => void;
   onDuplicate?: (nodeId: string) => void;
+  onRename?: (nodeId: string) => void;
   onDisconnectAll?: (nodeId: string) => void;
   onToggleMute?: (nodeId: string) => void;
   onToggleCollapse?: (nodeId: string) => void;
@@ -46,6 +48,7 @@ export function NodeContextMenu({
   supportsPreview = true,
   onDelete,
   onDuplicate,
+  onRename,
   onDisconnectAll,
   onToggleMute,
   onToggleCollapse,
@@ -68,6 +71,16 @@ export function NodeContextMenu({
           <CopyIcon />
           {t("scripts.editor.contextMenu.duplicate")}
           <MenuShortcut>Ctrl+D</MenuShortcut>
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            onRename?.(nodeId);
+            onClose?.();
+          }}
+        >
+          <PencilIcon />
+          {t("scripts.editor.contextMenu.rename")}
+          <MenuShortcut>F2</MenuShortcut>
         </MenuItem>
         <MenuItem
           onClick={() => {

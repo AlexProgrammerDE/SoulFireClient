@@ -406,6 +406,7 @@
       },
       "contextMenu": {
         "duplicate": "Duplicate",
+        "rename": "Rename",
         "disconnectAll": "Disconnect All",
         "collapse": "Collapse",
         "expand": "Expand",

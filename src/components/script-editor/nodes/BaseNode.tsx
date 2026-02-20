@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
 import { useNodeEditing } from "../NodeEditingContext";
 import { NodePreview } from "../NodePreview";
+import { EditableNodeLabel } from "./EditableNodeLabel";
 import { InlineEditor } from "./InlineEditor";
 import {
   getHandleShape,
@@ -317,9 +318,12 @@ function BaseNodeComponent({
             )}
           </button>
         )}
-        <span className={cn("text-sm font-medium", isMuted && "line-through")}>
-          {displayLabel}
-        </span>
+        <EditableNodeLabel
+          nodeId={id}
+          value={displayLabel}
+          onSubmit={(newLabel) => onDataChange?.({ label: newLabel })}
+          className={cn("text-sm font-medium", isMuted && "line-through")}
+        />
         {isMuted && supportsMuting && (
           <span className="text-xs text-muted-foreground">(muted)</span>
         )}

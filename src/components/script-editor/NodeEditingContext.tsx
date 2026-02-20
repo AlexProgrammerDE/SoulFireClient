@@ -10,6 +10,10 @@ export interface NodeEditingContextValue {
   edges: Edge[];
   /** Update node data */
   updateNodeData: (nodeId: string, data: Record<string, unknown>) => void;
+  /** ID of the node currently being renamed (via F2 or context menu) */
+  renamingNodeId: string | null;
+  /** Clear the renaming node ID after the target node has entered edit mode */
+  clearRenamingNodeId: () => void;
 }
 
 const NodeEditingContext = createContext<NodeEditingContextValue | null>(null);
@@ -18,15 +22,21 @@ interface NodeEditingProviderProps {
   children: ReactNode;
   edges: Edge[];
   updateNodeData: (nodeId: string, data: Record<string, unknown>) => void;
+  renamingNodeId: string | null;
+  clearRenamingNodeId: () => void;
 }
 
 export function NodeEditingProvider({
   children,
   edges,
   updateNodeData,
+  renamingNodeId,
+  clearRenamingNodeId,
 }: NodeEditingProviderProps) {
   return (
-    <NodeEditingContext.Provider value={{ edges, updateNodeData }}>
+    <NodeEditingContext.Provider
+      value={{ edges, updateNodeData, renamingNodeId, clearRenamingNodeId }}
+    >
       {children}
     </NodeEditingContext.Provider>
   );
@@ -43,6 +53,8 @@ export function useNodeEditing(): NodeEditingContextValue {
     return {
       edges: [],
       updateNodeData: () => {},
+      renamingNodeId: null,
+      clearRenamingNodeId: () => {},
     };
   }
   return context;
