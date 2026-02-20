@@ -4,7 +4,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "@/components/ui/avatar.tsx";
-import { cn, getGravatarUrl } from "@/lib/utils.tsx";
+import { getGravatarUrl } from "@/lib/utils.tsx";
 
 const cache = new Map<string, true>();
 
@@ -31,7 +31,7 @@ export const UserAvatar = React.memo(
     const [isError, setIsError] = React.useState(isErrorCached(props.email));
 
     return (
-      <Avatar className={cn("rounded-lg", props.className)}>
+      <Avatar className={props.className}>
         {!isError && (
           <AvatarImage
             onLoadingStatusChange={(e) => {
@@ -44,7 +44,7 @@ export const UserAvatar = React.memo(
             alt={props.username}
           />
         )}
-        <AvatarFallback className="rounded-lg">
+        <AvatarFallback>
           {props.username.slice(0, 2).toUpperCase()}
         </AvatarFallback>
       </Avatar>
