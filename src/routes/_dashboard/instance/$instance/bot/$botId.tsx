@@ -864,6 +864,10 @@ function InventorySlotDisplay({
   onShiftClick,
   onMiddleClick,
   isClickable,
+  containerType,
+  regionId,
+  hotbarIndex,
+  slotIndex,
 }: {
   item?: InventorySlot;
   isSelected?: boolean;
@@ -873,6 +877,10 @@ function InventorySlotDisplay({
   onShiftClick?: () => void;
   onMiddleClick?: () => void;
   isClickable?: boolean;
+  containerType?: string;
+  regionId?: string;
+  hotbarIndex?: number;
+  slotIndex?: number;
 }) {
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -902,6 +910,14 @@ function InventorySlotDisplay({
     isSelected ? "ring-primary ring-2" : ""
   } ${isClickable ? "cursor-pointer hover:border-primary/50" : ""}`;
 
+  const devInfoParts: string[] = [];
+  if (slotIndex !== undefined) devInfoParts.push(`Slot: ${slotIndex}`);
+  if (item) devInfoParts.push(`Item: ${item.itemId}`);
+  if (regionId !== undefined) devInfoParts.push(`Region: ${regionId}`);
+  if (containerType !== undefined)
+    devInfoParts.push(`Container: ${containerType}`);
+  if (hotbarIndex !== undefined) devInfoParts.push(`Hotbar: ${hotbarIndex}`);
+
   if (!item) {
     return (
       <button
@@ -911,6 +927,7 @@ function InventorySlotDisplay({
         onContextMenu={handleContextMenu}
         onMouseDown={handleMouseDown}
         disabled={!isClickable}
+        title={devInfoParts.length > 0 ? devInfoParts.join("\n") : undefined}
       >
         {slotNumber !== undefined && (
           <span className="text-muted-foreground/30">{slotNumber}</span>
@@ -922,8 +939,11 @@ function InventorySlotDisplay({
   const titleParts = [
     `${item.displayName || formatItemId(item.itemId)} x${item.count}`,
   ];
+  if (devInfoParts.length > 0) {
+    titleParts.push("", ...devInfoParts);
+  }
   if (isClickable) {
-    titleParts.push("Left click: Pick up/place");
+    titleParts.push("", "Left click: Pick up/place");
     titleParts.push("Right click: Pick up half/place one");
     titleParts.push("Shift+click: Quick move");
   }
@@ -960,12 +980,14 @@ function SlotRegionGrid({
   selectedHotbarSlot,
   onSlotClick,
   onHotbarSlotSelect,
+  containerType,
 }: {
   region: SlotRegion;
   slots: InventorySlot[];
   selectedHotbarSlot: number;
   onSlotClick: (slotIndex: number, clickType: ClickType) => void;
   onHotbarSlotSelect?: (slot: number) => void;
+  containerType?: string;
 }) {
   const isHotbar = region.type === SlotRegionType.SLOT_REGION_HOTBAR;
   const isArmor = region.type === SlotRegionType.SLOT_REGION_ARMOR;
@@ -1004,6 +1026,10 @@ function SlotRegionGrid({
                   ? () => onHotbarSlotSelect(i)
                   : undefined
               }
+              containerType={containerType}
+              regionId={region.id}
+              hotbarIndex={isHotbar ? i : undefined}
+              slotIndex={slotIndex}
             />
           );
         })}
@@ -1241,6 +1267,7 @@ function BotInventoryPanel({
                 selectedHotbarSlot={selectedHotbarSlot}
                 onSlotClick={handleSlotClick}
                 onHotbarSlotSelect={handleHotbarSlotSelect}
+                containerType={layout.containerType}
               />
             ))}
 
