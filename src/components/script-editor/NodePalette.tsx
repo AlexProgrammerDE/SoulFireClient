@@ -35,6 +35,7 @@ function DraggableNodeItem({
     <div
       role="button"
       tabIndex={0}
+      title={node.description}
       onPointerDown={(e) => {
         if (e.button !== 0) return;
         onDragStart?.(node.type, e.clientX, e.clientY);
@@ -73,7 +74,10 @@ function CategorySection({
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-      <CollapsibleTrigger className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium transition-colors hover:bg-muted">
+      <CollapsibleTrigger
+        title={categoryInfo.description}
+        className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium transition-colors hover:bg-muted"
+      >
         <ChevronDownIcon
           className={cn(
             "size-4 shrink-0 text-muted-foreground transition-transform",

@@ -259,6 +259,7 @@ export function QuickAddMenu() {
                     <button
                       key={`cat-${item.id}`}
                       type="button"
+                      title={info.description}
                       className={cn(
                         "flex w-full items-center gap-2 rounded px-2 py-1.5 text-sm font-medium",
                         index === selectedIndex
@@ -285,6 +286,7 @@ export function QuickAddMenu() {
                     <button
                       key={`node-${item.id}`}
                       type="button"
+                      title={item.node.description}
                       className={cn(
                         "flex w-full items-center gap-2 rounded px-2 py-1.5 pl-6 text-sm",
                         index === selectedIndex
