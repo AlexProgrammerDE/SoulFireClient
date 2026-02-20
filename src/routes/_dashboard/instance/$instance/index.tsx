@@ -88,48 +88,46 @@ function Content() {
             {translateInstanceState(i18n, instanceInfo.state)}
           </Badge>
         </div>
-        {showMetrics && (
-          <div className="flex flex-col gap-2">
-            <MetricsSummaryCards data={metricsData} />
-            {hasSnapshots && (
-              <>
-                <div className="grid grid-cols-1 gap-2 lg:grid-cols-2">
-                  <BotsOnlineChart snapshots={metricsData.snapshots} />
-                  <NetworkTrafficChart snapshots={metricsData.snapshots} />
-                  <BandwidthChart snapshots={metricsData.snapshots} />
-                  <TickDurationChart snapshots={metricsData.snapshots} />
-                  <HealthFoodChart snapshots={metricsData.snapshots} />
-                  <ChunksEntitiesChart snapshots={metricsData.snapshots} />
-                  <ConnectionEventsChart snapshots={metricsData.snapshots} />
-                </div>
-                {metricsData.distributions && (
-                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
-                    <HealthDistributionChart
-                      histogram={metricsData.distributions.healthHistogram}
-                    />
-                    <DimensionPieChart
-                      dimensionCounts={
-                        metricsData.distributions.dimensionCounts
-                      }
-                    />
-                    <GameModePieChart
-                      gameModeCounts={metricsData.distributions.gameModeCounts}
-                    />
-                    <PositionScatterChart
-                      positions={metricsData.distributions.botPositions}
-                    />
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-        )}
         {hasInstancePermission(
           instanceInfo,
           InstancePermission.INSTANCE_SUBSCRIBE_LOGS,
         ) && <TerminalComponent scope={logScope} />}
       </div>
       <ControlsMenu />
+      {showMetrics && (
+        <div className="flex flex-col gap-2">
+          <MetricsSummaryCards data={metricsData} />
+          {hasSnapshots && (
+            <>
+              <div className="grid min-w-0 grid-cols-1 gap-2 lg:grid-cols-2">
+                <BotsOnlineChart snapshots={metricsData.snapshots} />
+                <NetworkTrafficChart snapshots={metricsData.snapshots} />
+                <BandwidthChart snapshots={metricsData.snapshots} />
+                <TickDurationChart snapshots={metricsData.snapshots} />
+                <HealthFoodChart snapshots={metricsData.snapshots} />
+                <ChunksEntitiesChart snapshots={metricsData.snapshots} />
+                <ConnectionEventsChart snapshots={metricsData.snapshots} />
+              </div>
+              {metricsData.distributions && (
+                <div className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
+                  <HealthDistributionChart
+                    histogram={metricsData.distributions.healthHistogram}
+                  />
+                  <DimensionPieChart
+                    dimensionCounts={metricsData.distributions.dimensionCounts}
+                  />
+                  <GameModePieChart
+                    gameModeCounts={metricsData.distributions.gameModeCounts}
+                  />
+                  <PositionScatterChart
+                    positions={metricsData.distributions.botPositions}
+                  />
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }

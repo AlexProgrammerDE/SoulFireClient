@@ -144,7 +144,10 @@ export function BotsOnlineChart({
         <CardTitle className="text-sm">Bots Online</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={botsOnlineConfig} className="h-[200px] w-full">
+        <ChartContainer
+          config={botsOnlineConfig}
+          className="aspect-auto h-[200px] min-w-0 w-full"
+        >
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="time" tick={{ fontSize: 10 }} />
@@ -205,7 +208,10 @@ export function NetworkTrafficChart({
         <CardTitle className="text-sm">Packets / Second</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={networkConfig} className="h-[200px] w-full">
+        <ChartContainer
+          config={networkConfig}
+          className="aspect-auto h-[200px] min-w-0 w-full"
+        >
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="time" tick={{ fontSize: 10 }} />
@@ -264,7 +270,10 @@ export function BandwidthChart({
         <CardTitle className="text-sm">Bandwidth</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={bandwidthConfig} className="h-[200px] w-full">
+        <ChartContainer
+          config={bandwidthConfig}
+          className="aspect-auto h-[200px] min-w-0 w-full"
+        >
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="time" tick={{ fontSize: 10 }} />
@@ -333,7 +342,10 @@ export function TickDurationChart({
         <CardTitle className="text-sm">Tick Duration</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={tickConfig} className="h-[200px] w-full">
+        <ChartContainer
+          config={tickConfig}
+          className="aspect-auto h-[200px] min-w-0 w-full"
+        >
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="time" tick={{ fontSize: 10 }} />
@@ -396,7 +408,10 @@ export function HealthFoodChart({
         <CardTitle className="text-sm">Health / Food</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={healthFoodConfig} className="h-[200px] w-full">
+        <ChartContainer
+          config={healthFoodConfig}
+          className="aspect-auto h-[200px] min-w-0 w-full"
+        >
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="time" tick={{ fontSize: 10 }} />
@@ -457,7 +472,7 @@ export function ChunksEntitiesChart({
       <CardContent>
         <ChartContainer
           config={chunksEntitiesConfig}
-          className="h-[200px] w-full"
+          className="aspect-auto h-[200px] min-w-0 w-full"
         >
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
@@ -519,7 +534,10 @@ export function ConnectionEventsChart({
         <CardTitle className="text-sm">Connection Events</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={connectionConfig} className="h-[200px] w-full">
+        <ChartContainer
+          config={connectionConfig}
+          className="aspect-auto h-[200px] min-w-0 w-full"
+        >
           <BarChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="time" tick={{ fontSize: 10 }} />
@@ -585,7 +603,10 @@ export function HealthDistributionChart({
         <CardTitle className="text-sm">Health Distribution</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={healthDistConfig} className="h-[200px] w-full">
+        <ChartContainer
+          config={healthDistConfig}
+          className="aspect-auto h-[200px] min-w-0 w-full"
+        >
           <BarChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="bucket" tick={{ fontSize: 9 }} />
@@ -778,7 +799,10 @@ export function PositionScatterChart({
         <CardTitle className="text-sm">Bot Positions (XZ)</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={positionConfig} className="h-[200px] w-full">
+        <ChartContainer
+          config={positionConfig}
+          className="aspect-auto h-[200px] min-w-0 w-full"
+        >
           <ScatterChart>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="x" name="X" type="number" tick={{ fontSize: 10 }} />
