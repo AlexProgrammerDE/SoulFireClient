@@ -166,6 +166,14 @@ export function languageEmoji(locale: string): ReactNode {
     return "🐱";
   }
 
+  if (locale === "en-UD") {
+    return "🙃";
+  }
+
+  if (locale === "en-PT") {
+    return "🏴‍☠️";
+  }
+
   const countryCode = locale.split("-")[1];
   if (!countryCode) return "";
 
@@ -178,6 +186,14 @@ export function languageEmoji(locale: string): ReactNode {
 export function getLanguageName(languageCode: string, displayLanguage: string) {
   if (languageCode === "lol-US") {
     return "LOLCAT";
+  }
+
+  if (languageCode === "en-UD") {
+    return "Upside Down English";
+  }
+
+  if (languageCode === "en-PT") {
+    return "Pirate English";
   }
 
   const displayNames = new Intl.DisplayNames([displayLanguage], {
