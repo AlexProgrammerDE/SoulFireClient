@@ -531,6 +531,22 @@ export function ScriptEditor() {
 
       if (!containerRef.current) return;
 
+      // Select the right-clicked node if it isn't already selected
+      if (!node.selected) {
+        onNodesChange([
+          // Deselect all other nodes
+          ...nodes
+            .filter((n) => n.selected && n.id !== node.id)
+            .map((n) => ({
+              type: "select" as const,
+              id: n.id,
+              selected: false,
+            })),
+          // Select the right-clicked node
+          { type: "select" as const, id: node.id, selected: true },
+        ]);
+      }
+
       // Calculate position, ensuring menu stays within bounds
       const pane = containerRef.current.getBoundingClientRect();
       setNodeContextMenu({
@@ -545,7 +561,7 @@ export function ScriptEditor() {
           pane.height - (event.clientY - pane.top),
       });
     },
-    [],
+    [nodes, onNodesChange],
   );
 
   // Close node context menu on pane click
