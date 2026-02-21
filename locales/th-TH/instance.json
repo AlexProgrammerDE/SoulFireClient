@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "กลับไปที่สคริปต์",
         "save": "บันทึก",
-        "saveTooltip": "บันทึกสคริปต์ (Ctrl+S)",
+        "saveTooltip": "",
         "resume": "ดำเนินการต่อ",
         "resumeTooltip": "ดำเนินการสคริปต์ต่อ",
         "pause": "หยุดชั่วคราว",
@@ -405,6 +405,7 @@
       },
       "contextMenu": {
         "duplicate": "ทำซ้ำ",
+        "rename": "",
         "disconnectAll": "ตัดการเชื่อมต่อทั้งหมด",
         "collapse": "ย่อ",
         "expand": "ขยาย",

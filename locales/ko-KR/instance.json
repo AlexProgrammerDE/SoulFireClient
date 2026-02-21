@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "스크립트 목록으로 돌아가기",
         "save": "저장",
-        "saveTooltip": "스크립트 저장 (Ctrl+S)",
+        "saveTooltip": "",
         "resume": "다시 시작",
         "resumeTooltip": "스크립트 실행 재개",
         "pause": "일시 정지",
@@ -405,6 +405,7 @@
       },
       "contextMenu": {
         "duplicate": "복제",
+        "rename": "",
         "disconnectAll": "모두 연결 해제",
         "collapse": "접기",
         "expand": "펼치기",

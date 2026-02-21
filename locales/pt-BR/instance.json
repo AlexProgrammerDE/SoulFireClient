@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "Voltar para Scripts",
         "save": "Salvar",
-        "saveTooltip": "Salvar script (Ctrl+S)",
+        "saveTooltip": "",
         "resume": "Continuar",
         "resumeTooltip": "Retomar execução do script",
         "pause": "Pausar",
@@ -406,6 +406,7 @@
       },
       "contextMenu": {
         "duplicate": "Duplicar",
+        "rename": "",
         "disconnectAll": "Desconectar Tudo",
         "collapse": "Recolher",
         "expand": "Expandir",

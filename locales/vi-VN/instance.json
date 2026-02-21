@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "Quay lại Scripts",
         "save": "Lưu",
-        "saveTooltip": "Lưu script (Ctrl+S)",
+        "saveTooltip": "",
         "resume": "Tiếp tục",
         "resumeTooltip": "Tiếp tục thực thi script",
         "pause": "Tạm dừng",
@@ -405,6 +405,7 @@
       },
       "contextMenu": {
         "duplicate": "Nhân bản",
+        "rename": "",
         "disconnectAll": "Ngắt kết nối tất cả",
         "collapse": "Thu gọn",
         "expand": "Mở rộng",

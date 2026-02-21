@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "返回脚本",
         "save": "保存",
-        "saveTooltip": "保存脚本（Ctrl+S）",
+        "saveTooltip": "",
         "resume": "继续",
         "resumeTooltip": "恢复脚本执行",
         "pause": "暂停",
@@ -405,6 +405,7 @@
       },
       "contextMenu": {
         "duplicate": "复制",
+        "rename": "",
         "disconnectAll": "全部断开连接",
         "collapse": "折叠",
         "expand": "展开",

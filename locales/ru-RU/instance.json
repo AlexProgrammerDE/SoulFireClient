@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "Назад к скриптам",
         "save": "Сохранить",
-        "saveTooltip": "Сохранить скрипт (Ctrl+S)",
+        "saveTooltip": "",
         "resume": "Возобновить",
         "resumeTooltip": "Возобновить выполнение скрипта",
         "pause": "Пауза",
@@ -408,6 +408,7 @@
       },
       "contextMenu": {
         "duplicate": "Дублировать",
+        "rename": "",
         "disconnectAll": "Отключить всё",
         "collapse": "Свернуть",
         "expand": "Развернуть",
