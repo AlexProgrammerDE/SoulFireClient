@@ -199,6 +199,27 @@ function uiProxyTypeToProto(type: SimpleProxyType): ProxyProto_Type {
 }
 
 function parseNormalProxy(line: string, type: SimpleProxyType): ProfileProxy {
+  // Support user:pass@host:port format
+  const atIndex = line.lastIndexOf("@");
+  if (atIndex !== -1) {
+    const userInfo = line.substring(0, atIndex);
+    const hostPort = line.substring(atIndex + 1);
+    const hostPortParts = hostPort.split(":");
+    if (hostPortParts.length < 2) {
+      throw new Error(i18n.t("instance:proxy.invalidFormat"));
+    }
+
+    const host = `${hostPortParts[0]}:${hostPortParts[1]}`;
+    const userInfoParts = userInfo.split(":");
+    return {
+      type: uiProxyTypeToProto(type),
+      address: host.startsWith("/") ? `unix://${host}` : `inet://${host}`,
+      username: userInfoParts[0],
+      password: userInfoParts[1],
+    };
+  }
+
+  // Standard host:port:user:pass format
   const parts = line.split(":");
   if (parts.length < 2) {
     throw new Error(i18n.t("instance:proxy.invalidFormat"));
