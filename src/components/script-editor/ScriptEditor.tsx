@@ -159,6 +159,16 @@ export function ScriptEditor() {
     [nodes, selectShortestPath],
   );
 
+  // Double-click on a group node to enter it
+  const handleNodeDoubleClick = useCallback(
+    (_event: React.MouseEvent, node: Node) => {
+      if (node.type === "layout.group") {
+        enterGroup(node.id);
+      }
+    },
+    [enterGroup],
+  );
+
   const handleKeyDown = useCallback(
     (event: React.KeyboardEvent) => {
       // Ignore if typing in an input
@@ -690,6 +700,7 @@ export function ScriptEditor() {
           onConnect={onConnect}
           onInit={handleInit}
           onNodeClick={handleNodeClick}
+          onNodeDoubleClick={handleNodeDoubleClick}
           onSelectionChange={handleSelectionChange}
           onNodeContextMenu={handleNodeContextMenu}
           onPaneContextMenu={handlePaneContextMenu}
