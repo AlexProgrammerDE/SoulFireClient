@@ -148,6 +148,11 @@
       "pageTitle": "{{name}} - {{page}} Settings",
       "noSettings": "No settings available for this page"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "Device Code Authentication",
+      "description": "Configure options before starting the device code flow.",
+      "start": "Start Authentication"
+    },
     "deviceCodeDialog": {
       "title": "Device Code Authentication",
       "description": "Sign in with your Microsoft account to link it.",

@@ -60,6 +60,15 @@ import {
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import {
+  Credenza,
+  CredenzaBody,
+  CredenzaContent,
+  CredenzaDescription,
+  CredenzaFooter,
+  CredenzaHeader,
+  CredenzaTitle,
+} from "@/components/ui/credenza.tsx";
+import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -432,6 +441,8 @@ function AddButton() {
   const [deviceCodeData, setDeviceCodeData] = useState<DeviceCodeData | null>(
     null,
   );
+  const [pendingDeviceCodeType, setPendingDeviceCodeType] =
+    useState<AccountTypeDeviceCode | null>(null);
 
   const textSelectedCallback = useCallback(
     (text: string) => {
@@ -679,7 +690,7 @@ function AddButton() {
           <DropdownMenuItem
             onClick={() => {
               void trackEvent("import_account_microsoft_java_device_code");
-              deviceCodeSelected(
+              setPendingDeviceCodeType(
                 AccountTypeDeviceCode.MICROSOFT_JAVA_DEVICE_CODE,
               );
             }}
@@ -722,7 +733,7 @@ function AddButton() {
           <DropdownMenuItem
             onClick={() => {
               void trackEvent("import_account_microsoft_bedrock_device_code");
-              deviceCodeSelected(
+              setPendingDeviceCodeType(
                 AccountTypeDeviceCode.MICROSOFT_BEDROCK_DEVICE_CODE,
               );
             }}
@@ -739,6 +750,59 @@ function AddButton() {
           }}
           deviceCodeData={deviceCodeData}
         />
+      )}
+      {pendingDeviceCodeType !== null && (
+        <Credenza
+          open={true}
+          onOpenChange={(open) => {
+            if (!open) setPendingDeviceCodeType(null);
+          }}
+        >
+          <CredenzaContent>
+            <CredenzaHeader>
+              <CredenzaTitle>
+                {t("account.deviceCodeConfirmDialog.title")}
+              </CredenzaTitle>
+              <CredenzaDescription>
+                {t("account.deviceCodeConfirmDialog.description")}
+              </CredenzaDescription>
+            </CredenzaHeader>
+            <CredenzaBody>
+              <InstanceSettingFieldByKey
+                namespace="account"
+                settingKey="use-proxies-for-account-auth"
+                invalidateQuery={async () => {
+                  await queryClient.invalidateQueries({
+                    queryKey: instanceInfoQueryOptions.queryKey,
+                  });
+                }}
+                updateConfigEntry={async (namespace, key, value) => {
+                  await updateInstanceConfigEntry(
+                    namespace,
+                    key,
+                    value,
+                    instanceInfo,
+                    transport,
+                    queryClient,
+                    instanceInfoQueryOptions.queryKey,
+                  );
+                }}
+                config={profile}
+              />
+            </CredenzaBody>
+            <CredenzaFooter>
+              <Button
+                onClick={() => {
+                  const type = pendingDeviceCodeType;
+                  setPendingDeviceCodeType(null);
+                  deviceCodeSelected(type);
+                }}
+              >
+                {t("account.deviceCodeConfirmDialog.start")}
+              </Button>
+            </CredenzaFooter>
+          </CredenzaContent>
+        </Credenza>
       )}
       {accountTypeCredentialsSelected !== null && (
         <ImportDialog
