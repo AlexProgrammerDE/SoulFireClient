@@ -267,6 +267,137 @@ export interface GetInstanceMetricsResponse {
    */
   distributions?: MetricsDistributions;
 }
+/**
+ * A single server-level system metrics data point sampled at a fixed interval.
+ *
+ * @generated from protobuf message soulfire.v1.ServerMetricsSnapshot
+ */
+export interface ServerMetricsSnapshot {
+  /**
+   * When this snapshot was taken.
+   *
+   * @generated from protobuf field: google.protobuf.Timestamp timestamp = 1
+   */
+  timestamp?: Timestamp;
+  /**
+   * JVM process CPU load (0.0 to 1.0, or -1.0 if unavailable).
+   *
+   * @generated from protobuf field: double process_cpu_load = 2
+   */
+  processCpuLoad: number;
+  /**
+   * System-wide CPU load (0.0 to 1.0, or -1.0 if unavailable).
+   *
+   * @generated from protobuf field: double system_cpu_load = 3
+   */
+  systemCpuLoad: number;
+  /**
+   * Heap memory currently used in bytes.
+   *
+   * @generated from protobuf field: uint64 heap_used_bytes = 4
+   */
+  heapUsedBytes: string;
+  /**
+   * Heap memory committed (reserved by JVM) in bytes.
+   *
+   * @generated from protobuf field: uint64 heap_committed_bytes = 5
+   */
+  heapCommittedBytes: string;
+  /**
+   * Maximum heap memory in bytes (-1 if undefined).
+   *
+   * @generated from protobuf field: int64 heap_max_bytes = 6
+   */
+  heapMaxBytes: string;
+  /**
+   * Non-heap memory currently used in bytes.
+   *
+   * @generated from protobuf field: uint64 non_heap_used_bytes = 7
+   */
+  nonHeapUsedBytes: string;
+  /**
+   * Current live thread count.
+   *
+   * @generated from protobuf field: uint32 thread_count = 8
+   */
+  threadCount: number;
+  /**
+   * Current daemon thread count.
+   *
+   * @generated from protobuf field: uint32 daemon_thread_count = 9
+   */
+  daemonThreadCount: number;
+  /**
+   * Cumulative GC collection count across all collectors.
+   *
+   * @generated from protobuf field: uint64 gc_collection_count = 10
+   */
+  gcCollectionCount: string;
+  /**
+   * Cumulative GC collection time in milliseconds across all collectors.
+   *
+   * @generated from protobuf field: uint64 gc_collection_time_ms = 11
+   */
+  gcCollectionTimeMs: string;
+  /**
+   * JVM uptime in milliseconds.
+   *
+   * @generated from protobuf field: uint64 uptime_ms = 12
+   */
+  uptimeMs: string;
+  /**
+   * Number of available processors.
+   *
+   * @generated from protobuf field: uint32 available_processors = 13
+   */
+  availableProcessors: number;
+  /**
+   * Total bots online across all instances.
+   *
+   * @generated from protobuf field: uint32 total_bots_online = 14
+   */
+  totalBotsOnline: number;
+  /**
+   * Total bots configured across all instances.
+   *
+   * @generated from protobuf field: uint32 total_bots_total = 15
+   */
+  totalBotsTotal: number;
+  /**
+   * Number of active (non-stopped) instances.
+   *
+   * @generated from protobuf field: uint32 active_instances = 16
+   */
+  activeInstances: number;
+}
+/**
+ * Request to retrieve server-level system metrics.
+ *
+ * @generated from protobuf message soulfire.v1.GetServerMetricsRequest
+ */
+export interface GetServerMetricsRequest {
+  /**
+   * If set, only return snapshots taken after this timestamp.
+   * Used for incremental fetching to reduce payload size.
+   *
+   * @generated from protobuf field: optional google.protobuf.Timestamp since = 1
+   */
+  since?: Timestamp;
+}
+/**
+ * Response containing server-level system metrics time-series.
+ *
+ * @generated from protobuf message soulfire.v1.GetServerMetricsResponse
+ */
+export interface GetServerMetricsResponse {
+  /**
+   * Time-series snapshots ordered oldest to newest.
+   * Contains up to 600 snapshots (30 minutes at 3-second intervals).
+   *
+   * @generated from protobuf field: repeated soulfire.v1.ServerMetricsSnapshot snapshots = 1
+   */
+  snapshots: ServerMetricsSnapshot[];
+}
 // @generated message type with reflection information, may provide speed optimized methods
 class MetricsSnapshot$Type extends MessageType<MetricsSnapshot> {
   constructor() {
@@ -1078,6 +1209,439 @@ class GetInstanceMetricsResponse$Type extends MessageType<GetInstanceMetricsResp
  * @generated MessageType for protobuf message soulfire.v1.GetInstanceMetricsResponse
  */
 export const GetInstanceMetricsResponse = new GetInstanceMetricsResponse$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ServerMetricsSnapshot$Type extends MessageType<ServerMetricsSnapshot> {
+  constructor() {
+    super("soulfire.v1.ServerMetricsSnapshot", [
+      { no: 1, name: "timestamp", kind: "message", T: () => Timestamp },
+      {
+        no: 2,
+        name: "process_cpu_load",
+        kind: "scalar",
+        T: 1 /*ScalarType.DOUBLE*/,
+      },
+      {
+        no: 3,
+        name: "system_cpu_load",
+        kind: "scalar",
+        T: 1 /*ScalarType.DOUBLE*/,
+      },
+      {
+        no: 4,
+        name: "heap_used_bytes",
+        kind: "scalar",
+        T: 4 /*ScalarType.UINT64*/,
+      },
+      {
+        no: 5,
+        name: "heap_committed_bytes",
+        kind: "scalar",
+        T: 4 /*ScalarType.UINT64*/,
+      },
+      {
+        no: 6,
+        name: "heap_max_bytes",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+      {
+        no: 7,
+        name: "non_heap_used_bytes",
+        kind: "scalar",
+        T: 4 /*ScalarType.UINT64*/,
+      },
+      {
+        no: 8,
+        name: "thread_count",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 9,
+        name: "daemon_thread_count",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 10,
+        name: "gc_collection_count",
+        kind: "scalar",
+        T: 4 /*ScalarType.UINT64*/,
+      },
+      {
+        no: 11,
+        name: "gc_collection_time_ms",
+        kind: "scalar",
+        T: 4 /*ScalarType.UINT64*/,
+      },
+      { no: 12, name: "uptime_ms", kind: "scalar", T: 4 /*ScalarType.UINT64*/ },
+      {
+        no: 13,
+        name: "available_processors",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 14,
+        name: "total_bots_online",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 15,
+        name: "total_bots_total",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+      {
+        no: 16,
+        name: "active_instances",
+        kind: "scalar",
+        T: 13 /*ScalarType.UINT32*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ServerMetricsSnapshot>): ServerMetricsSnapshot {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.processCpuLoad = 0;
+    message.systemCpuLoad = 0;
+    message.heapUsedBytes = "0";
+    message.heapCommittedBytes = "0";
+    message.heapMaxBytes = "0";
+    message.nonHeapUsedBytes = "0";
+    message.threadCount = 0;
+    message.daemonThreadCount = 0;
+    message.gcCollectionCount = "0";
+    message.gcCollectionTimeMs = "0";
+    message.uptimeMs = "0";
+    message.availableProcessors = 0;
+    message.totalBotsOnline = 0;
+    message.totalBotsTotal = 0;
+    message.activeInstances = 0;
+    if (value !== undefined)
+      reflectionMergePartial<ServerMetricsSnapshot>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ServerMetricsSnapshot,
+  ): ServerMetricsSnapshot {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* google.protobuf.Timestamp timestamp */ 1:
+          message.timestamp = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.timestamp,
+          );
+          break;
+        case /* double process_cpu_load */ 2:
+          message.processCpuLoad = reader.double();
+          break;
+        case /* double system_cpu_load */ 3:
+          message.systemCpuLoad = reader.double();
+          break;
+        case /* uint64 heap_used_bytes */ 4:
+          message.heapUsedBytes = reader.uint64().toString();
+          break;
+        case /* uint64 heap_committed_bytes */ 5:
+          message.heapCommittedBytes = reader.uint64().toString();
+          break;
+        case /* int64 heap_max_bytes */ 6:
+          message.heapMaxBytes = reader.int64().toString();
+          break;
+        case /* uint64 non_heap_used_bytes */ 7:
+          message.nonHeapUsedBytes = reader.uint64().toString();
+          break;
+        case /* uint32 thread_count */ 8:
+          message.threadCount = reader.uint32();
+          break;
+        case /* uint32 daemon_thread_count */ 9:
+          message.daemonThreadCount = reader.uint32();
+          break;
+        case /* uint64 gc_collection_count */ 10:
+          message.gcCollectionCount = reader.uint64().toString();
+          break;
+        case /* uint64 gc_collection_time_ms */ 11:
+          message.gcCollectionTimeMs = reader.uint64().toString();
+          break;
+        case /* uint64 uptime_ms */ 12:
+          message.uptimeMs = reader.uint64().toString();
+          break;
+        case /* uint32 available_processors */ 13:
+          message.availableProcessors = reader.uint32();
+          break;
+        case /* uint32 total_bots_online */ 14:
+          message.totalBotsOnline = reader.uint32();
+          break;
+        case /* uint32 total_bots_total */ 15:
+          message.totalBotsTotal = reader.uint32();
+          break;
+        case /* uint32 active_instances */ 16:
+          message.activeInstances = reader.uint32();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ServerMetricsSnapshot,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* google.protobuf.Timestamp timestamp = 1; */
+    if (message.timestamp)
+      Timestamp.internalBinaryWrite(
+        message.timestamp,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* double process_cpu_load = 2; */
+    if (message.processCpuLoad !== 0)
+      writer.tag(2, WireType.Bit64).double(message.processCpuLoad);
+    /* double system_cpu_load = 3; */
+    if (message.systemCpuLoad !== 0)
+      writer.tag(3, WireType.Bit64).double(message.systemCpuLoad);
+    /* uint64 heap_used_bytes = 4; */
+    if (message.heapUsedBytes !== "0")
+      writer.tag(4, WireType.Varint).uint64(message.heapUsedBytes);
+    /* uint64 heap_committed_bytes = 5; */
+    if (message.heapCommittedBytes !== "0")
+      writer.tag(5, WireType.Varint).uint64(message.heapCommittedBytes);
+    /* int64 heap_max_bytes = 6; */
+    if (message.heapMaxBytes !== "0")
+      writer.tag(6, WireType.Varint).int64(message.heapMaxBytes);
+    /* uint64 non_heap_used_bytes = 7; */
+    if (message.nonHeapUsedBytes !== "0")
+      writer.tag(7, WireType.Varint).uint64(message.nonHeapUsedBytes);
+    /* uint32 thread_count = 8; */
+    if (message.threadCount !== 0)
+      writer.tag(8, WireType.Varint).uint32(message.threadCount);
+    /* uint32 daemon_thread_count = 9; */
+    if (message.daemonThreadCount !== 0)
+      writer.tag(9, WireType.Varint).uint32(message.daemonThreadCount);
+    /* uint64 gc_collection_count = 10; */
+    if (message.gcCollectionCount !== "0")
+      writer.tag(10, WireType.Varint).uint64(message.gcCollectionCount);
+    /* uint64 gc_collection_time_ms = 11; */
+    if (message.gcCollectionTimeMs !== "0")
+      writer.tag(11, WireType.Varint).uint64(message.gcCollectionTimeMs);
+    /* uint64 uptime_ms = 12; */
+    if (message.uptimeMs !== "0")
+      writer.tag(12, WireType.Varint).uint64(message.uptimeMs);
+    /* uint32 available_processors = 13; */
+    if (message.availableProcessors !== 0)
+      writer.tag(13, WireType.Varint).uint32(message.availableProcessors);
+    /* uint32 total_bots_online = 14; */
+    if (message.totalBotsOnline !== 0)
+      writer.tag(14, WireType.Varint).uint32(message.totalBotsOnline);
+    /* uint32 total_bots_total = 15; */
+    if (message.totalBotsTotal !== 0)
+      writer.tag(15, WireType.Varint).uint32(message.totalBotsTotal);
+    /* uint32 active_instances = 16; */
+    if (message.activeInstances !== 0)
+      writer.tag(16, WireType.Varint).uint32(message.activeInstances);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ServerMetricsSnapshot
+ */
+export const ServerMetricsSnapshot = new ServerMetricsSnapshot$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetServerMetricsRequest$Type extends MessageType<GetServerMetricsRequest> {
+  constructor() {
+    super("soulfire.v1.GetServerMetricsRequest", [
+      { no: 1, name: "since", kind: "message", T: () => Timestamp },
+    ]);
+  }
+  create(
+    value?: PartialMessage<GetServerMetricsRequest>,
+  ): GetServerMetricsRequest {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    if (value !== undefined)
+      reflectionMergePartial<GetServerMetricsRequest>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetServerMetricsRequest,
+  ): GetServerMetricsRequest {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* optional google.protobuf.Timestamp since */ 1:
+          message.since = Timestamp.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.since,
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetServerMetricsRequest,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* optional google.protobuf.Timestamp since = 1; */
+    if (message.since)
+      Timestamp.internalBinaryWrite(
+        message.since,
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GetServerMetricsRequest
+ */
+export const GetServerMetricsRequest = new GetServerMetricsRequest$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GetServerMetricsResponse$Type extends MessageType<GetServerMetricsResponse> {
+  constructor() {
+    super("soulfire.v1.GetServerMetricsResponse", [
+      {
+        no: 1,
+        name: "snapshots",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => ServerMetricsSnapshot,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<GetServerMetricsResponse>,
+  ): GetServerMetricsResponse {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.snapshots = [];
+    if (value !== undefined)
+      reflectionMergePartial<GetServerMetricsResponse>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GetServerMetricsResponse,
+  ): GetServerMetricsResponse {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* repeated soulfire.v1.ServerMetricsSnapshot snapshots */ 1:
+          message.snapshots.push(
+            ServerMetricsSnapshot.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+            ),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: GetServerMetricsResponse,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* repeated soulfire.v1.ServerMetricsSnapshot snapshots = 1; */
+    for (let i = 0; i < message.snapshots.length; i++)
+      ServerMetricsSnapshot.internalBinaryWrite(
+        message.snapshots[i],
+        writer.tag(1, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.GetServerMetricsResponse
+ */
+export const GetServerMetricsResponse = new GetServerMetricsResponse$Type();
 /**
  * @generated ServiceType for protobuf service soulfire.v1.MetricsService
  */
@@ -1087,5 +1651,11 @@ export const MetricsService = new ServiceType("soulfire.v1.MetricsService", [
     options: {},
     I: GetInstanceMetricsRequest,
     O: GetInstanceMetricsResponse,
+  },
+  {
+    name: "GetServerMetrics",
+    options: {},
+    I: GetServerMetricsRequest,
+    O: GetServerMetricsResponse,
   },
 ]);

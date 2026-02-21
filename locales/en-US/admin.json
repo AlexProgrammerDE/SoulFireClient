@@ -1,6 +1,28 @@
 {
   "overview": {
     "welcome": "Welcome back, {{name}} 🧙",
+    "serverMetrics": {
+      "sectionTitle": "Server Metrics",
+      "summary": {
+        "cpu": "CPU",
+        "heapUsed": "Heap Used",
+        "threads": "Threads",
+        "botsOnline": "Bots Online",
+        "uptime": "Uptime"
+      },
+      "cpuUsage": {
+        "title": "CPU Usage (%)"
+      },
+      "memoryUsage": {
+        "title": "Heap Memory (MB)"
+      },
+      "threadCount": {
+        "title": "Thread Count"
+      },
+      "aggregateBots": {
+        "title": "Bots Online (All Instances)"
+      }
+    },
     "instancesChart": {
       "title": "Total instances on this server",
       "instances": "Instances",

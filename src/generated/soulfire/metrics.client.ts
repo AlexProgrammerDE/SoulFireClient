@@ -13,6 +13,8 @@ import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type {
   GetInstanceMetricsRequest,
   GetInstanceMetricsResponse,
+  GetServerMetricsRequest,
+  GetServerMetricsResponse,
 } from "./metrics";
 import { MetricsService } from "./metrics";
 /**
@@ -35,6 +37,17 @@ export interface IMetricsServiceClient {
     input: GetInstanceMetricsRequest,
     options?: RpcOptions,
   ): UnaryCall<GetInstanceMetricsRequest, GetInstanceMetricsResponse>;
+  /**
+   * Returns server-level system metrics (CPU, memory, threads, GC, aggregate bots).
+   * Supports incremental fetching via the "since" parameter.
+   * Requires: READ_SERVER_CONFIG global permission
+   *
+   * @generated from protobuf rpc: GetServerMetrics
+   */
+  getServerMetrics(
+    input: GetServerMetricsRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetServerMetricsRequest, GetServerMetricsResponse>;
 }
 /**
  * Service for retrieving instance metrics and monitoring data.
@@ -68,5 +81,26 @@ export class MetricsServiceClient
       GetInstanceMetricsRequest,
       GetInstanceMetricsResponse
     >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * Returns server-level system metrics (CPU, memory, threads, GC, aggregate bots).
+   * Supports incremental fetching via the "since" parameter.
+   * Requires: READ_SERVER_CONFIG global permission
+   *
+   * @generated from protobuf rpc: GetServerMetrics
+   */
+  getServerMetrics(
+    input: GetServerMetricsRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetServerMetricsRequest, GetServerMetricsResponse> {
+    const method = this.methods[1],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<GetServerMetricsRequest, GetServerMetricsResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
   }
 }

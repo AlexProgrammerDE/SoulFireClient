@@ -4,6 +4,13 @@ import * as React from "react";
 import { useMemo } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { Label, Pie, PieChart } from "recharts";
+import {
+  AggregateBotsChart,
+  CpuUsageChart,
+  MemoryUsageChart,
+  ServerMetricsSummaryCards,
+  ThreadCountChart,
+} from "@/components/admin-metrics/server-metrics-charts.tsx";
 import UserPageLayout from "@/components/nav/user/user-page-layout.tsx";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -259,10 +266,12 @@ function Content() {
     usersQueryOptions,
     clientDataQueryOptions,
     instanceListQueryOptions,
+    serverMetricsOptions,
   } = Route.useRouteContext();
   const { data: userList } = useSuspenseQuery(usersQueryOptions);
   const { data: clientInfo } = useSuspenseQuery(clientDataQueryOptions);
   const { data: instanceList } = useSuspenseQuery(instanceListQueryOptions);
+  const { data: serverMetrics } = useSuspenseQuery(serverMetricsOptions);
 
   return (
     <div className="flex h-full w-full grow flex-col gap-2 pl-2">
@@ -275,6 +284,18 @@ function Content() {
         <UsersChart userList={userList} />
         <InstancesChart instanceList={instanceList} />
       </div>
+      <h3 className="mt-4 text-lg font-semibold">
+        {t("admin:overview.serverMetrics.sectionTitle")}
+      </h3>
+      <ServerMetricsSummaryCards data={serverMetrics} />
+      {serverMetrics.snapshots.length >= 2 && (
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <CpuUsageChart snapshots={serverMetrics.snapshots} />
+          <MemoryUsageChart snapshots={serverMetrics.snapshots} />
+          <ThreadCountChart snapshots={serverMetrics.snapshots} />
+          <AggregateBotsChart snapshots={serverMetrics.snapshots} />
+        </div>
+      )}
     </div>
   );
 }

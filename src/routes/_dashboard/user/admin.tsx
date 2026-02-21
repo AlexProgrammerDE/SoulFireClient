@@ -9,6 +9,7 @@ import { ServerServiceClient } from "@/generated/soulfire/server.client.ts";
 import type { ServerConfig } from "@/generated/soulfire/server.ts";
 import { UserServiceClient } from "@/generated/soulfire/user.client.ts";
 import type { UserListResponse } from "@/generated/soulfire/user.ts";
+import { serverMetricsQueryOptions } from "@/lib/server-metrics-query.ts";
 import {
   convertFromServerProto,
   type ServerInfoQueryData,
@@ -81,6 +82,7 @@ export const Route = createFileRoute("/_dashboard/user/admin")({
       },
       refetchInterval: 3_000,
     });
+    const serverMetricsOptions = serverMetricsQueryOptions(createTransport());
     props.abortController.signal.addEventListener("abort", () => {
       void props.context.queryClient.cancelQueries({
         queryKey: serverInfoQueryOptions.queryKey,
@@ -91,9 +93,15 @@ export const Route = createFileRoute("/_dashboard/user/admin")({
         queryKey: usersQueryOptions.queryKey,
       });
     });
+    props.abortController.signal.addEventListener("abort", () => {
+      void props.context.queryClient.cancelQueries({
+        queryKey: serverMetricsOptions.queryKey,
+      });
+    });
     return {
       serverInfoQueryOptions,
       usersQueryOptions,
+      serverMetricsOptions,
     };
   },
   loader: (props) => {
@@ -102,6 +110,9 @@ export const Route = createFileRoute("/_dashboard/user/admin")({
     );
     void props.context.queryClient.prefetchQuery(
       props.context.usersQueryOptions,
+    );
+    void props.context.queryClient.prefetchQuery(
+      props.context.serverMetricsOptions,
     );
   },
 });
