@@ -7,7 +7,11 @@ import {
 import "../App.css";
 import { AptabaseProvider, useAptabase } from "@aptabase/react";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  type QueryClient,
+  QueryClientProvider,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { setTheme } from "@tauri-apps/api/app";
@@ -20,7 +24,7 @@ import { attachConsole } from "@tauri-apps/plugin-log";
 import { arch, locale, platform, type, version } from "@tauri-apps/plugin-os";
 import { useTheme } from "next-themes";
 import { NuqsAdapter } from "nuqs/adapters/tanstack-router";
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { CustomContextMenu } from "@/components/custom-context-menu.tsx";
 import { AboutProvider } from "@/components/dialog/about-dialog.tsx";
 import {
@@ -32,6 +36,8 @@ import { ThemeProvider } from "@/components/providers/theme-provider.tsx";
 import { TailwindIndicator } from "@/components/tailwind-indicator.tsx";
 import { Toaster } from "@/components/ui/sonner.tsx";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import type { GetInstanceMetricsResponse } from "@/generated/soulfire/metrics.ts";
+import { useDiscordPresence } from "@/hooks/use-discord-presence.ts";
 import { getTerminalTheme, isTauri } from "@/lib/utils.tsx";
 
 async function getAvailableProfiles() {
@@ -150,6 +156,74 @@ const PageChangedEvent = memo(() => {
   return null;
 });
 
+function getPresenceForPath(
+  pathname: string,
+  queryClient: QueryClient,
+): { state: string; details?: string } {
+  const instanceMatch = pathname.match(/\/instance\/([^/]+)(?:\/(.*))?/);
+  if (instanceMatch) {
+    const instanceId = instanceMatch[1];
+    const subPage = instanceMatch[2] ?? "";
+
+    const metrics = queryClient.getQueryData<GetInstanceMetricsResponse>([
+      "instance-metrics",
+      instanceId,
+    ]);
+    const snapshots = metrics?.snapshots;
+    const lastSnapshot = snapshots?.[snapshots.length - 1];
+    const botInfo = lastSnapshot
+      ? `${lastSnapshot.botsOnline}/${lastSnapshot.botsTotal} bots online`
+      : undefined;
+
+    if (subPage.startsWith("bot/"))
+      return { state: "Controlling a bot", details: botInfo };
+    if (subPage === "bots") return { state: "Managing bots", details: botInfo };
+    if (subPage.startsWith("script/"))
+      return { state: "Editing a script", details: botInfo };
+    if (subPage === "scripts")
+      return { state: "Managing scripts", details: botInfo };
+    if (subPage === "accounts")
+      return { state: "Managing accounts", details: botInfo };
+    if (subPage === "proxies")
+      return { state: "Managing proxies", details: botInfo };
+    if (subPage === "discover")
+      return { state: "Discovering servers", details: botInfo };
+    if (subPage === "terminal")
+      return { state: "Viewing terminal", details: botInfo };
+    if (subPage === "audit-log")
+      return { state: "Viewing audit log", details: botInfo };
+    if (subPage === "meta")
+      return { state: "Editing metadata", details: botInfo };
+    if (subPage.startsWith("settings"))
+      return { state: "Configuring settings", details: botInfo };
+
+    return { state: "Viewing instance overview", details: botInfo };
+  }
+
+  if (pathname.includes("/user/admin"))
+    return { state: "Server administration" };
+  if (pathname.includes("/user/settings")) return { state: "User settings" };
+  if (pathname.includes("/user/access")) return { state: "Managing access" };
+  if (pathname.includes("/user")) return { state: "User profile" };
+
+  if (pathname === "/") return { state: "Logging in" };
+
+  return { state: "Browsing dashboard" };
+}
+
+function DiscordPresenceUpdater() {
+  const location = useLocation();
+  const queryClient = useQueryClient();
+  const presence = useMemo(
+    () => getPresenceForPath(location.pathname, queryClient),
+    [location.pathname, queryClient],
+  );
+
+  useDiscordPresence(presence.state, presence.details);
+
+  return null;
+}
+
 function WindowThemeSyncer() {
   const { theme } = useTheme();
 
@@ -230,6 +304,7 @@ function RootLayout() {
         <AppStartedEvent />
         <PageChangedEvent />
         <QueryClientProvider client={queryClient}>
+          <DiscordPresenceUpdater />
           <ThemeProvider
             attribute="class"
             defaultTheme="system"

@@ -1,5 +1,5 @@
 use crate::cast::{CastRunningState, connect_cast, discover_casts, get_casts};
-use crate::discord::load_discord_rpc;
+use crate::discord::{DiscordRpcState, load_discord_rpc, update_discord_activity};
 use crate::sf_loader::{IntegratedServerState, get_sf_server_version, run_integrated_server};
 use crate::utils::kill_child_process;
 use log::{error, info};
@@ -86,19 +86,25 @@ pub fn run() {
             starting: Arc::new(AtomicBool::new(false)),
             child_process: Arc::new(Mutex::new(None)),
         })
+        .manage(DiscordRpcState {
+            sender: std::sync::Mutex::new(None),
+        })
         .invoke_handler(tauri::generate_handler![
             run_integrated_server,
             get_sf_server_version,
             discover_casts,
             connect_cast,
-            get_casts
+            get_casts,
+            update_discord_activity
         ])
         .setup(|app| {
             std::panic::set_hook(Box::new(|panic_info| {
                 error!("{}", format!("{}", panic_info).replace('\n', " "));
             }));
 
-            thread::spawn(|| match load_discord_rpc() {
+            let (sender, receiver) = std::sync::mpsc::channel();
+            *app.state::<DiscordRpcState>().sender.lock().unwrap() = Some(sender);
+            thread::spawn(move || match load_discord_rpc(receiver) {
                 Ok(_) => {}
                 Err(error) => {
                     error!("Fatal discord error: {error}");
