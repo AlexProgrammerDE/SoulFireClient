@@ -18,6 +18,7 @@ import {
   type InstanceConfig,
   InstanceState,
 } from "@/generated/soulfire/instance.ts";
+import { useCastBroadcast } from "@/hooks/use-cast-broadcast.ts";
 import { useIsMobile } from "@/hooks/use-mobile.ts";
 import { instanceMetricsQueryOptions } from "@/lib/metrics-query.ts";
 import {
@@ -155,6 +156,12 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
 });
 
 function InstanceLayout() {
+  const { metricsQueryOptions, instanceInfoQueryOptions } =
+    Route.useRouteContext();
+  useCastBroadcast(
+    metricsQueryOptions.queryKey,
+    instanceInfoQueryOptions.queryKey,
+  );
   const isMobile = useIsMobile();
   const sidebarState = localStorage.getItem("sidebar:state");
   const defaultOpen =

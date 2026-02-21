@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
-import { emit, listen } from "@tauri-apps/api/event";
-import { CastIcon, RadioTowerIcon, SearchXIcon } from "lucide-react";
+import { listen } from "@tauri-apps/api/event";
+import { CastIcon, SearchXIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
@@ -8,7 +8,6 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuPortal,
-  DropdownMenuSeparator,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
@@ -168,28 +167,6 @@ export default function CastMenuEntry() {
                 <span>{t("castMenu.noDevices")}</span>
               </DropdownMenuItem>
             )}
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() => {
-                toast.promise(
-                  emit("cast-global-message", {
-                    type: "DISPLAY_LOGS",
-                    logs: ["Hello from SoulFire!"],
-                  }),
-                  {
-                    loading: t("castMenu.broadcastToast.loading"),
-                    success: t("castMenu.broadcastToast.success"),
-                    error: (e) => {
-                      console.error(e);
-                      return t("castMenu.broadcastToast.error");
-                    },
-                  },
-                );
-              }}
-            >
-              <RadioTowerIcon />
-              <span>{t("castMenu.broadcastLabel")}</span>
-            </DropdownMenuItem>
           </DropdownMenuSubContent>
         </DropdownMenuPortal>
       </DropdownMenuSub>
