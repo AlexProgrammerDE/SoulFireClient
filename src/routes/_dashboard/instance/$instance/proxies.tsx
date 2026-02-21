@@ -665,12 +665,12 @@ function AddButton() {
           }
         }
       });
-      responses.onError((e) => {
-        console.error(e);
-        toast.error(t("proxy.checkToast.error"), {
-          id: toastId,
-          cancel: undefined,
-        });
+    });
+    responses.onError((e) => {
+      console.error(e);
+      toast.error(t("proxy.checkToast.error"), {
+        id: toastId,
+        cancel: undefined,
       });
     });
   }, [
@@ -937,12 +937,12 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
           }
         }
       });
-      responses.onError((e) => {
-        console.error(e);
-        toast.error(t("proxy.checkToast.error"), {
-          id: toastId,
-          cancel: undefined,
-        });
+    });
+    responses.onError((e) => {
+      console.error(e);
+      toast.error(t("proxy.checkToast.error"), {
+        id: toastId,
+        cancel: undefined,
       });
     });
   }, [
