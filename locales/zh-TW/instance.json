@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "返回腳本",
         "save": "儲存",
-        "saveTooltip": "儲存腳本（Ctrl+S）",
+        "saveTooltip": "",
         "resume": "繼續",
         "resumeTooltip": "恢復執行指令碼",
         "pause": "暫停",
@@ -405,6 +405,7 @@
       },
       "contextMenu": {
         "duplicate": "複製",
+        "rename": "",
         "disconnectAll": "全部斷開連線",
         "collapse": "收合",
         "expand": "展開",

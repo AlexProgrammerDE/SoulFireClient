@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "Skriptlərə Qayıt",
         "save": "Yadda saxla",
-        "saveTooltip": "Skripti yadda saxla (Ctrl+S)",
+        "saveTooltip": "",
         "resume": "Davam et",
         "resumeTooltip": "Skriptin icrasını davam etdir",
         "pause": "Fasilə",
@@ -406,6 +406,7 @@
       },
       "contextMenu": {
         "duplicate": "Dublikat",
+        "rename": "",
         "disconnectAll": "Hamısını ayır",
         "collapse": "Yığışdır",
         "expand": "Genişlət",

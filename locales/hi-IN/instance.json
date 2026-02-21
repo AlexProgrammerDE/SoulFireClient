@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "स्क्रिप्ट्स पर वापस जाएँ",
         "save": "सहेजें",
-        "saveTooltip": "स्क्रिप्ट सेव करें (Ctrl+S)",
+        "saveTooltip": "",
         "resume": "फिर से शुरू करें",
         "resumeTooltip": "स्क्रिप्ट निष्पादन फिर से प्रारंभ करें",
         "pause": "रोकें",
@@ -406,6 +406,7 @@
       },
       "contextMenu": {
         "duplicate": "डुप्लिकेट करें",
+        "rename": "",
         "disconnectAll": "सभी डिस्कनेक्ट करें",
         "collapse": "संकुचित करें",
         "expand": "विस्तृत करें",

@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "Bak to Skriptz",
         "save": "SAEV",
-        "saveTooltip": "Save skript (Ctrl+S, so pro)",
+        "saveTooltip": "",
         "resume": "Resoome",
         "resumeTooltip": "Resoom skript doin stufs",
         "pause": "Pawse",
@@ -406,6 +406,7 @@
       },
       "contextMenu": {
         "duplicate": "Copy dat",
+        "rename": "",
         "disconnectAll": "ALL DISCONNECT",
         "collapse": "COLLAPZ",
         "expand": "EXPANDZ",

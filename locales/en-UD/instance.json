@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "sʇdıɹɔS oʇ ʞɔɐq",
         "save": "ǝʌɐS",
-        "saveTooltip": "(S+lɹʇↃ) ʇdıɹɔs ǝʌɐS",
+        "saveTooltip": "",
         "resume": "ǝɯnsǝᴚ",
         "resumeTooltip": "uoᴉʇnɔǝxǝ ʇdıɹɔs ǝɯnsǝɹ",
         "pause": "ǝsnsɐԀ",
@@ -406,6 +406,7 @@
       },
       "contextMenu": {
         "duplicate": "ǝʇɐɔᴉlndnᗡ",
+        "rename": "",
         "disconnectAll": "ll∀ ʇɔǝuuoɔsᴉᗡ",
         "collapse": "ǝsɐdlolɯoↃ",
         "expand": "puɐdxƎ",

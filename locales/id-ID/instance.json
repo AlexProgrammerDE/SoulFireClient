@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "Kembali ke Skrip",
         "save": "Simpan",
-        "saveTooltip": "Simpan skrip (Ctrl+S)",
+        "saveTooltip": "",
         "resume": "Lanjutkan",
         "resumeTooltip": "Lanjutkan eksekusi skrip",
         "pause": "Jeda",
@@ -405,6 +405,7 @@
       },
       "contextMenu": {
         "duplicate": "Duplikat",
+        "rename": "",
         "disconnectAll": "Putuskan Semua",
         "collapse": "Ciutkan",
         "expand": "Lebarkan",

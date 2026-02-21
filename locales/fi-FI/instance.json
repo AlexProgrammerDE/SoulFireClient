@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "Takaisin skripteihin",
         "save": "Tallenna",
-        "saveTooltip": "Tallenna skripti (Ctrl+S)",
+        "saveTooltip": "",
         "resume": "Jatka",
         "resumeTooltip": "Jatka skriptin suorittamista",
         "pause": "Tauota",
@@ -406,6 +406,7 @@
       },
       "contextMenu": {
         "duplicate": "Monista",
+        "rename": "",
         "disconnectAll": "Katkaise kaikki yhteydet",
         "collapse": "Pienennä",
         "expand": "Laajenna",

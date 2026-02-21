@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "Terug naar scripts",
         "save": "Opslaan",
-        "saveTooltip": "Script opslaan (Ctrl+S)",
+        "saveTooltip": "",
         "resume": "Hervatten",
         "resumeTooltip": "Hervat uitvoer van script",
         "pause": "Pauzeren",
@@ -406,6 +406,7 @@
       },
       "contextMenu": {
         "duplicate": "Dupliceren",
+        "rename": "",
         "disconnectAll": "Alles loskoppelen",
         "collapse": "Samenvouwen",
         "expand": "Uitvouwen",

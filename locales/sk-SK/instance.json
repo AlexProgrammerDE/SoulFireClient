@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "Späť na skripty",
         "save": "Uložiť",
-        "saveTooltip": "Uložiť skript (Ctrl+S)",
+        "saveTooltip": "",
         "resume": "Pokračovať",
         "resumeTooltip": "Obnoviť vykonávanie skriptu",
         "pause": "Pozastaviť",
@@ -408,6 +408,7 @@
       },
       "contextMenu": {
         "duplicate": "Duplikovať",
+        "rename": "",
         "disconnectAll": "Odpojiť všetko",
         "collapse": "Zbaliť",
         "expand": "Rozbaliť",

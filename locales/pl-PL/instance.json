@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "Powrót do skryptów",
         "save": "Zapisz",
-        "saveTooltip": "Zapisz skrypt (Ctrl+S)",
+        "saveTooltip": "",
         "resume": "Wznów",
         "resumeTooltip": "Wznów wykonywanie skryptu",
         "pause": "Wstrzymaj",
@@ -408,6 +408,7 @@
       },
       "contextMenu": {
         "duplicate": "Duplikuj",
+        "rename": "",
         "disconnectAll": "Odłącz wszystko",
         "collapse": "Zwiń",
         "expand": "Rozwiń",

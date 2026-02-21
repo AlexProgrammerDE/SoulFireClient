@@ -377,7 +377,7 @@
       "toolbar": {
         "backToScripts": "Tillbaka till skript",
         "save": "Spara",
-        "saveTooltip": "Spara skript (Ctrl+S)",
+        "saveTooltip": "",
         "resume": "Återuppta",
         "resumeTooltip": "Återuppta skriptexekvering",
         "pause": "Pausa",
@@ -406,6 +406,7 @@
       },
       "contextMenu": {
         "duplicate": "Duplicera",
+        "rename": "",
         "disconnectAll": "Koppla från alla",
         "collapse": "Fäll ihop",
         "expand": "Fäll ut",
