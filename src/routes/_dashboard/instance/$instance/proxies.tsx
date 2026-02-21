@@ -97,6 +97,79 @@ const PROXY_SETTINGS_DISABLED_IDS: DisabledSettingId[] = [
   { namespace: "proxy", key: "proxy-check-timeout" },
 ];
 
+const PROXY_CHECK_SETTING_KEYS = [
+  "proxy-check-address",
+  "proxy-check-concurrency",
+  "proxy-check-timeout",
+] as const;
+
+function ProxyCheckDialog({
+  open,
+  onOpenChange,
+  onConfirm,
+  count,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onConfirm: () => void;
+  count: number;
+}) {
+  const { t } = useTranslation("instance");
+  const queryClient = useQueryClient();
+  const { instanceInfoQueryOptions } = Route.useRouteContext();
+  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
+  const { data: profile } = useSuspenseQuery({
+    ...instanceInfoQueryOptions,
+    select: (info) => info.profile,
+  });
+  const transport = use(TransportContext);
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t("proxy.checkDialog.title")}</DialogTitle>
+          <DialogDescription>
+            {t("proxy.checkDialog.description", { count })}
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex flex-col gap-4">
+          {PROXY_CHECK_SETTING_KEYS.map((key) => (
+            <InstanceSettingFieldByKey
+              key={key}
+              namespace="proxy"
+              settingKey={key}
+              invalidateQuery={async () => {
+                await queryClient.invalidateQueries({
+                  queryKey: instanceInfoQueryOptions.queryKey,
+                });
+              }}
+              updateConfigEntry={async (namespace, settingKey, value) => {
+                await updateInstanceConfigEntry(
+                  namespace,
+                  settingKey,
+                  value,
+                  instanceInfo,
+                  transport,
+                  queryClient,
+                  instanceInfoQueryOptions.queryKey,
+                );
+              }}
+              config={profile}
+            />
+          ))}
+        </div>
+        <DialogFooter>
+          <Button variant="outline" onClick={() => onOpenChange(false)}>
+            {t("common:cancel")}
+          </Button>
+          <Button onClick={onConfirm}>{t("proxy.checkDialog.confirm")}</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export const Route = createFileRoute("/_dashboard/instance/$instance/proxies")({
   validateSearch: dataTableValidateSearch,
   component: ProxySettings,
@@ -680,87 +753,18 @@ function AddButton() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      <Dialog
+      <ProxyCheckDialog
         open={checkDialogOpen}
         onOpenChange={(open) => {
           setCheckDialogOpen(open);
           if (!open) setImportedProxies(null);
         }}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("proxy.checkDialog.title")}</DialogTitle>
-            <DialogDescription>
-              {t("proxy.checkDialog.description", {
-                count: importedProxies?.length ?? 0,
-              })}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-4">
-            <InstanceSettingFieldByKey
-              namespace="proxy"
-              settingKey="proxy-check-address"
-              invalidateQuery={async () => {
-                await queryClient.invalidateQueries({
-                  queryKey: instanceInfoQueryOptions.queryKey,
-                });
-              }}
-              updateConfigEntry={async (namespace, key, value) => {
-                await updateInstanceConfigEntry(
-                  namespace,
-                  key,
-                  value,
-                  instanceInfo,
-                  transport,
-                  queryClient,
-                  instanceInfoQueryOptions.queryKey,
-                );
-              }}
-              config={profile}
-            />
-            <InstanceSettingFieldByKey
-              namespace="proxy"
-              settingKey="proxy-check-concurrency"
-              invalidateQuery={async () => {
-                await queryClient.invalidateQueries({
-                  queryKey: instanceInfoQueryOptions.queryKey,
-                });
-              }}
-              updateConfigEntry={async (namespace, key, value) => {
-                await updateInstanceConfigEntry(
-                  namespace,
-                  key,
-                  value,
-                  instanceInfo,
-                  transport,
-                  queryClient,
-                  instanceInfoQueryOptions.queryKey,
-                );
-              }}
-              config={profile}
-            />
-          </div>
-          <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setCheckDialogOpen(false);
-                setImportedProxies(null);
-              }}
-            >
-              {t("common:cancel")}
-            </Button>
-            <Button
-              onClick={() => {
-                setCheckDialogOpen(false);
-                performProxyCheck();
-              }}
-            >
-              {t("proxy.checkDialog.confirm")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        onConfirm={() => {
+          setCheckDialogOpen(false);
+          performProxyCheck();
+        }}
+        count={importedProxies?.length ?? 0}
+      />
     </>
   );
 }
@@ -938,75 +942,15 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
       >
         <Wand2Icon />
       </DataTableActionBarAction>
-      <Dialog open={checkDialogOpen} onOpenChange={setCheckDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("proxy.checkDialog.title")}</DialogTitle>
-            <DialogDescription>
-              {t("proxy.checkDialog.description", {
-                count: selectedProxyCount,
-              })}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-4">
-            <InstanceSettingFieldByKey
-              namespace="proxy"
-              settingKey="proxy-check-address"
-              invalidateQuery={async () => {
-                await queryClient.invalidateQueries({
-                  queryKey: instanceInfoQueryOptions.queryKey,
-                });
-              }}
-              updateConfigEntry={async (namespace, key, value) => {
-                await updateInstanceConfigEntry(
-                  namespace,
-                  key,
-                  value,
-                  instanceInfo,
-                  transport,
-                  queryClient,
-                  instanceInfoQueryOptions.queryKey,
-                );
-              }}
-              config={profile}
-            />
-            <InstanceSettingFieldByKey
-              namespace="proxy"
-              settingKey="proxy-check-concurrency"
-              invalidateQuery={async () => {
-                await queryClient.invalidateQueries({
-                  queryKey: instanceInfoQueryOptions.queryKey,
-                });
-              }}
-              updateConfigEntry={async (namespace, key, value) => {
-                await updateInstanceConfigEntry(
-                  namespace,
-                  key,
-                  value,
-                  instanceInfo,
-                  transport,
-                  queryClient,
-                  instanceInfoQueryOptions.queryKey,
-                );
-              }}
-              config={profile}
-            />
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setCheckDialogOpen(false)}>
-              {t("common:cancel")}
-            </Button>
-            <Button
-              onClick={() => {
-                setCheckDialogOpen(false);
-                performProxyCheck();
-              }}
-            >
-              {t("proxy.checkDialog.confirm")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <ProxyCheckDialog
+        open={checkDialogOpen}
+        onOpenChange={setCheckDialogOpen}
+        onConfirm={() => {
+          setCheckDialogOpen(false);
+          performProxyCheck();
+        }}
+        count={selectedProxyCount}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <DataTableActionBarAction tooltip={t("proxy.exportSelectedTooltip")}>
