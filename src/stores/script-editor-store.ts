@@ -21,6 +21,9 @@ import { hasScriptClipboardData } from "@/lib/script-clipboard";
 
 export type { PortType };
 
+// Stable empty array to avoid infinite re-renders in Zustand selectors
+const EMPTY_DEBUG_HISTORY: Array<{ value: unknown; timestamp: Date }> = [];
+
 export interface ScriptEditorState {
   // React Flow state
   nodes: Node[];
@@ -1170,7 +1173,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   },
 
   getDebugHistory: (nodeId) => {
-    return get().debugNodeValues.get(nodeId) ?? [];
+    return get().debugNodeValues.get(nodeId) ?? EMPTY_DEBUG_HISTORY;
   },
 
   // Selection actions
