@@ -195,6 +195,14 @@ function BaseNodeComponent({
     [onDataChange, data.collapsed],
   );
 
+  // Handler for label rename - stable callback so EditableNodeLabel memo works
+  const handleLabelSubmit = useCallback(
+    (newLabel: string) => {
+      onDataChange?.({ label: newLabel });
+    },
+    [onDataChange],
+  );
+
   // Preview state from store
   const previewEnabled = useScriptEditorStore((s) =>
     s.previewEnabledNodes.has(id),
@@ -324,7 +332,7 @@ function BaseNodeComponent({
         <EditableNodeLabel
           nodeId={id}
           value={displayLabel}
-          onSubmit={(newLabel) => onDataChange?.({ label: newLabel })}
+          onSubmit={handleLabelSubmit}
           className={cn("text-sm font-medium", isMuted && "line-through")}
         />
         {isMuted && supportsMuting && (

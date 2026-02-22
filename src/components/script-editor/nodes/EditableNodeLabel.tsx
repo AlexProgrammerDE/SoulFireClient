@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import {
   Editable,
   EditableArea,
@@ -29,6 +29,12 @@ function EditableNodeLabelComponent({
   const { renamingNodeId, clearRenamingNodeId } = useNodeEditing();
   const [editing, setEditing] = useState(false);
 
+  // Use a ref to always have the latest value for comparison in handleSubmit,
+  // avoiding stale closure issues when the Editable component calls onSubmit
+  // via propsRef after React re-renders.
+  const valueRef = useRef(value);
+  valueRef.current = value;
+
   // Trigger edit mode when this node is targeted for rename (F2 / context menu)
   useEffect(() => {
     if (renamingNodeId === nodeId) {
@@ -44,12 +50,12 @@ function EditableNodeLabelComponent({
   const handleSubmit = useCallback(
     (newValue: string) => {
       const trimmed = newValue.trim();
-      if (trimmed && trimmed !== value) {
+      if (trimmed && trimmed !== valueRef.current) {
         onSubmit(trimmed);
       }
       setEditing(false);
     },
-    [value, onSubmit],
+    [onSubmit],
   );
 
   return (

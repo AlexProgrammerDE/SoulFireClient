@@ -137,8 +137,6 @@ function ScriptEditorContent() {
   const reactFlowInstance = useReactFlow();
 
   // Script editor store
-  const nodes = useScriptEditorStore((state) => state.nodes);
-  const edges = useScriptEditorStore((state) => state.edges);
   const loadScript = useScriptEditorStore((state) => state.loadScript);
   const resetEditor = useScriptEditorStore((state) => state.resetEditor);
   const setDirty = useScriptEditorStore((state) => state.setDirty);
@@ -176,14 +174,15 @@ function ScriptEditorContent() {
     mutationKey: ["script", "create", instanceId],
     mutationFn: async () => {
       if (!transport) throw new Error("No transport available");
+      // Read fresh from the store to avoid stale closure issues
       const scriptData = getScriptData();
       const client = new ScriptServiceClient(transport);
       const result = await client.createScript({
         instanceId,
         name: scriptData.name || tInstance("scripts.untitledScript"),
         description: scriptData.description,
-        nodes: nodesToProto(nodes),
-        edges: edgesToProto(edges),
+        nodes: nodesToProto(scriptData.nodes),
+        edges: edgesToProto(scriptData.edges),
         paused: scriptData.paused,
       });
       return result.response;
@@ -214,6 +213,7 @@ function ScriptEditorContent() {
     mutationKey: ["script", "update", instanceId, scriptId],
     mutationFn: async () => {
       if (!transport) throw new Error("No transport available");
+      // Read fresh from the store to avoid stale closure issues
       const scriptData = getScriptData();
       const client = new ScriptServiceClient(transport);
       const result = await client.updateScript({
@@ -221,8 +221,8 @@ function ScriptEditorContent() {
         scriptId,
         name: scriptData.name,
         description: scriptData.description,
-        nodes: nodesToProto(nodes),
-        edges: edgesToProto(edges),
+        nodes: nodesToProto(scriptData.nodes),
+        edges: edgesToProto(scriptData.edges),
         updateNodes: true,
         updateEdges: true,
         paused: scriptData.paused,
@@ -238,8 +238,12 @@ function ScriptEditorContent() {
       toast.error(tInstance("scripts.saveError"));
     },
     onSettled: () => {
+      // Only invalidate the script list (for sidebar updates), not the
+      // individual script query.  Re-fetching the individual script would
+      // call loadScript and overwrite the local store, which can race with
+      // the server and revert changes the user just made (e.g. node labels).
       void queryClient.invalidateQueries({
-        queryKey: ["script", instanceId, scriptId],
+        queryKey: ["scripts", instanceId],
       });
     },
   });
