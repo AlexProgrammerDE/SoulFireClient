@@ -58,6 +58,7 @@ import {
   CardTitle,
 } from "@/components/ui/card.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
 import type {
   BookPage,
@@ -167,6 +168,35 @@ const accountTypeToIcon = (
     }
   });
 
+function BotDetailSkeleton() {
+  return (
+    <div className="container flex flex-col gap-4">
+      {/* Header with avatar */}
+      <div className="flex items-start gap-4">
+        <Skeleton className="size-16 rounded" />
+        <div className="flex flex-col gap-2">
+          <Skeleton className="h-6 w-32" />
+          <div className="flex gap-2">
+            <Skeleton className="h-5 w-16" />
+            <Skeleton className="h-5 w-20" />
+          </div>
+        </div>
+      </div>
+      {/* Stats cards */}
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
+          <Skeleton key={i} className="h-24 w-full rounded-lg" />
+        ))}
+      </div>
+      {/* Terminal */}
+      <Skeleton className="h-[calc(75vh-8rem)] w-full rounded-md" />
+      {/* Command input */}
+      <Skeleton className="h-9 w-full rounded-md" />
+    </div>
+  );
+}
+
 function BotDetail() {
   const { t } = useTranslation("common");
   const { instanceInfoQueryOptions } = Route.useRouteContext();
@@ -211,6 +241,7 @@ function BotDetail() {
         { id: "bots", content: t("breadcrumbs.bots") },
       ]}
       pageName={account.lastKnownName}
+      loadingSkeleton={<BotDetailSkeleton />}
     >
       <BotDetailContent account={account} instanceId={instanceInfo.id} />
     </InstancePageLayout>

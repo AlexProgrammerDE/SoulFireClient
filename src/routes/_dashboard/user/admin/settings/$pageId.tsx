@@ -3,7 +3,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import { ServerPluginInfoCard } from "@/components/instance-plugin-info-card.tsx";
-import { LoadingComponent } from "@/components/loading-component.tsx";
 import UserPageLayout from "@/components/nav/user/user-page-layout";
 import { NotFoundComponent } from "@/components/not-found-component.tsx";
 import { AdminSettingsPageComponent } from "@/components/settings-page.tsx";
@@ -20,6 +19,24 @@ function SettingsPage() {
     <Suspense fallback={<ContentSkeleton />}>
       <Content />
     </Suspense>
+  );
+}
+
+function SettingsFormSkeleton() {
+  return (
+    <div className="flex h-full w-full grow flex-row gap-2 pl-2">
+      <div className="flex h-full grow flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          {Array.from({ length: 5 }).map((_, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
+            <div key={i} className="flex flex-col gap-1">
+              <Skeleton className="h-4 w-28" />
+              <Skeleton className="h-9 w-full" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -40,8 +57,9 @@ function ContentSkeleton() {
         },
       ]}
       pageName={<Skeleton className="h-4 w-24" />}
+      loadingSkeleton={<SettingsFormSkeleton />}
     >
-      <LoadingComponent />
+      {null}
     </UserPageLayout>
   );
 }

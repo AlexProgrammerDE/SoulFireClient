@@ -30,6 +30,7 @@ import UserPageLayout from "@/components/nav/user/user-page-layout.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { GlobalPermission } from "@/generated/soulfire/common.ts";
 import { InstanceServiceClient } from "@/generated/soulfire/instance.client.ts";
 import type { InstanceListResponse_Instance } from "@/generated/soulfire/instance.ts";
@@ -42,11 +43,39 @@ export const Route = createFileRoute("/_dashboard/user/")({
   component: InstanceSelectPage,
 });
 
+function InstanceCardSkeleton() {
+  return (
+    <div className="flex w-full flex-row items-center gap-4 rounded-lg border px-6 py-4">
+      <Skeleton className="size-12 rounded-lg" />
+      <div className="flex grow flex-col gap-2">
+        <Skeleton className="h-5 w-32" />
+        <Skeleton className="h-4 w-20" />
+      </div>
+      <Skeleton className="h-8 w-8" />
+    </div>
+  );
+}
+
+function InstanceListSkeleton() {
+  return (
+    <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
+      {Array.from({ length: 4 }).map((_, i) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
+        <InstanceCardSkeleton key={i} />
+      ))}
+    </div>
+  );
+}
+
 function InstanceSelectPage() {
   const { t } = useTranslation("common");
 
   return (
-    <UserPageLayout showUserCrumb={true} pageName={t("pageName.instances")}>
+    <UserPageLayout
+      showUserCrumb={true}
+      pageName={t("pageName.instances")}
+      loadingSkeleton={<InstanceListSkeleton />}
+    >
       <Content />
     </UserPageLayout>
   );

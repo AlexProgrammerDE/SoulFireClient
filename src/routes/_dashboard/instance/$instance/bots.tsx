@@ -24,7 +24,6 @@ import {
   MenuItem,
   MenuSeparator,
 } from "@/components/context-menu-primitives.tsx";
-import { LoadingComponent } from "@/components/loading-component.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
 import {
@@ -34,6 +33,7 @@ import {
   CardTitle,
 } from "@/components/ui/card.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { BotServiceClient } from "@/generated/soulfire/bot.client.ts";
 import type {
   BotListEntry,
@@ -127,6 +127,40 @@ const accountTypeLabel = (
     }
   });
 
+function BotCardSkeleton() {
+  return (
+    <div className="rounded-lg border p-4">
+      <div className="flex items-start gap-3">
+        <Skeleton className="size-12 rounded" />
+        <div className="flex min-w-0 flex-1 flex-col gap-2">
+          <Skeleton className="h-5 w-24" />
+          <div className="flex gap-1">
+            <Skeleton className="h-5 w-14" />
+            <Skeleton className="h-5 w-16" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BotsSkeleton() {
+  return (
+    <div className="container flex h-full w-full grow flex-col gap-4 py-4">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <Skeleton className="h-9 max-w-sm flex-1" />
+        <Skeleton className="h-5 w-32" />
+      </div>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {Array.from({ length: 8 }).map((_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
+          <BotCardSkeleton key={i} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function Bots() {
   const { t } = useTranslation("common");
 
@@ -139,6 +173,7 @@ function Bots() {
         },
       ]}
       pageName={t("pageName.bots")}
+      loadingSkeleton={<BotsSkeleton />}
     >
       <Content />
     </InstancePageLayout>
@@ -181,7 +216,16 @@ function Content() {
       </div>
 
       {/* Bot grid - needs data */}
-      <Suspense fallback={<LoadingComponent />}>
+      <Suspense
+        fallback={
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {Array.from({ length: 8 }).map((_, i) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
+              <BotCardSkeleton key={i} />
+            ))}
+          </div>
+        }
+      >
         <BotGrid search={search} />
       </Suspense>
     </div>

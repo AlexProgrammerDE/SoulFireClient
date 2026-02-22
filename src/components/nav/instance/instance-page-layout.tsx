@@ -47,6 +47,7 @@ export default function InstancePageLayout(props: {
   extraCrumbs?: { id: string; content: ReactNode }[];
   pageName: ReactNode;
   documentationLink?: string;
+  loadingSkeleton?: ReactNode;
 }) {
   const { t } = useTranslation("common");
 
@@ -114,7 +115,7 @@ export default function InstancePageLayout(props: {
             getResetKey={() => "instance-page-layout"}
             errorComponent={ErrorComponent}
           >
-            <Suspense fallback={<LoadingComponent />}>
+            <Suspense fallback={props.loadingSkeleton ?? <LoadingComponent />}>
               {props.children}
             </Suspense>
           </CatchBoundary>

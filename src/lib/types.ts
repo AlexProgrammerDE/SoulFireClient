@@ -106,6 +106,7 @@ export function convertToInstanceProto(data: ProfileRoot): InstanceConfig {
     })),
     accounts: data.accounts,
     proxies: data.proxies,
+    persistentMetadata: [],
   };
 }
 

@@ -11,7 +11,6 @@ import { useTranslation } from "react-i18next";
 import { Separator } from "react-resizable-panels";
 import { toast } from "sonner";
 import DynamicIcon from "@/components/dynamic-icon.tsx";
-import { LoadingComponent } from "@/components/loading-component.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { ExecutionLogs } from "@/components/script-editor/ExecutionLogs.tsx";
 import { NodePalette } from "@/components/script-editor/NodePalette.tsx";
@@ -26,6 +25,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { ScriptServiceClient } from "@/generated/soulfire/script.client";
 import {
   edgesToProto,
@@ -64,11 +64,47 @@ export const Route = createFileRoute(
   component: ScriptEditorPage,
 });
 
+function ScriptEditorSkeleton() {
+  return (
+    <div className="flex h-full w-full flex-col">
+      {/* Toolbar skeleton */}
+      <div className="flex items-center gap-2 border-b p-2">
+        <Skeleton className="h-8 w-32" />
+        <Skeleton className="h-8 w-8" />
+        <Skeleton className="h-8 w-8" />
+        <Skeleton className="h-8 w-8" />
+        <div className="flex-1" />
+        <Skeleton className="h-8 w-20" />
+        <Skeleton className="h-8 w-20" />
+      </div>
+      {/* Main content */}
+      <div className="flex flex-1">
+        {/* Node palette */}
+        <div className="flex w-48 flex-col gap-2 border-r p-3">
+          <Skeleton className="h-8 w-full" />
+          {Array.from({ length: 6 }).map((_, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
+            <Skeleton key={i} className="h-8 w-full" />
+          ))}
+        </div>
+        {/* Canvas area */}
+        <div className="flex flex-1 flex-col">
+          <Skeleton className="flex-1" />
+          {/* Execution logs */}
+          <div className="border-t p-2">
+            <Skeleton className="h-24 w-full" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ScriptEditorPage() {
   return (
     <ReactFlowProvider>
       <NodeTypesProvider>
-        <Suspense fallback={<LoadingComponent />}>
+        <Suspense fallback={<ScriptEditorSkeleton />}>
           <ScriptEditorContent />
         </Suspense>
       </NodeTypesProvider>

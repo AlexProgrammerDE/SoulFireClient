@@ -15,6 +15,7 @@ import {
   SettingTypeRenderer,
 } from "@/components/settings-page.tsx";
 import { Card } from "@/components/ui/card.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { UserAvatar } from "@/components/user-avatar.tsx";
 import {
   GlobalPermission,
@@ -30,11 +31,46 @@ export const Route = createFileRoute("/_dashboard/user/settings")({
   component: UserSettings,
 });
 
+function UserSettingsSkeleton() {
+  return (
+    <div className="container flex h-full w-full grow flex-col gap-4">
+      <div className="flex flex-col gap-2">
+        {/* Avatar section */}
+        <div className="flex max-w-xl flex-col gap-1">
+          <Skeleton className="h-4 w-16" />
+          <Skeleton className="h-4 w-48" />
+          <div className="flex w-fit flex-row items-center gap-2 rounded-lg border p-3">
+            <Skeleton className="size-10 rounded-full" />
+            <div className="flex flex-col gap-1">
+              <Skeleton className="h-4 w-24" />
+              <Skeleton className="h-3 w-32" />
+            </div>
+          </div>
+        </div>
+        {/* Username field */}
+        <div className="flex flex-col gap-1">
+          <Skeleton className="h-4 w-20" />
+          <Skeleton className="h-9 w-full" />
+        </div>
+        {/* Email field */}
+        <div className="flex flex-col gap-1">
+          <Skeleton className="h-4 w-12" />
+          <Skeleton className="h-9 w-full" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function UserSettings() {
   const { t } = useTranslation("common");
 
   return (
-    <UserPageLayout showUserCrumb={true} pageName={t("pageName.settings")}>
+    <UserPageLayout
+      showUserCrumb={true}
+      pageName={t("pageName.settings")}
+      loadingSkeleton={<UserSettingsSkeleton />}
+    >
       <Content />
     </UserPageLayout>
   );

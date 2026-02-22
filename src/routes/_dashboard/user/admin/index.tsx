@@ -20,6 +20,7 @@ import {
   ChartTooltipContent,
   type CustomTooltipProps,
 } from "@/components/ui/chart";
+import { Skeleton } from "@/components/ui/skeleton";
 import { UserRole } from "@/generated/soulfire/common.ts";
 import {
   type InstanceListResponse,
@@ -241,6 +242,31 @@ export function InstancesChart(props: { instanceList: InstanceListResponse }) {
   );
 }
 
+function AdminOverviewSkeleton() {
+  return (
+    <div className="flex h-full w-full grow flex-col gap-2 pl-2">
+      <Skeleton className="h-7 w-48" />
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <Skeleton className="h-64 w-full rounded-lg" />
+        <Skeleton className="h-64 w-full rounded-lg" />
+      </div>
+      <Skeleton className="mt-4 h-6 w-32" />
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
+          <Skeleton key={i} className="h-24 w-full rounded-lg" />
+        ))}
+      </div>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {Array.from({ length: 4 }).map((_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
+          <Skeleton key={i} className="h-64 w-full rounded-lg" />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function OverviewPage() {
   const { t } = useTranslation("common");
 
@@ -254,6 +280,7 @@ function OverviewPage() {
         },
       ]}
       pageName={t("pageName.overview")}
+      loadingSkeleton={<AdminOverviewSkeleton />}
     >
       <Content />
     </UserPageLayout>

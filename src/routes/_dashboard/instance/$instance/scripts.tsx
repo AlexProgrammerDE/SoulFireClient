@@ -47,6 +47,7 @@ import {
 } from "@/components/ui/dialog.tsx";
 import { Field, FieldLabel } from "@/components/ui/form.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
 import type { ScriptInfo } from "@/generated/soulfire/script";
 import { ScriptServiceClient } from "@/generated/soulfire/script.client";
@@ -63,6 +64,53 @@ export const Route = createFileRoute("/_dashboard/instance/$instance/scripts")({
   component: InstanceScripts,
 });
 
+function ScriptsPageSkeleton() {
+  return (
+    <div className="container flex h-full w-full grow flex-col gap-4 py-4">
+      {/* Alert skeleton */}
+      <div className="flex items-start gap-3 rounded-lg border p-4">
+        <Skeleton className="size-5 shrink-0" />
+        <div className="flex flex-col gap-1">
+          <Skeleton className="h-5 w-32" />
+          <Skeleton className="h-4 w-64" />
+        </div>
+      </div>
+      {/* Header skeleton */}
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-1">
+          <Skeleton className="h-7 w-24" />
+          <Skeleton className="h-4 w-48" />
+        </div>
+        <Skeleton className="h-9 w-32" />
+      </div>
+      {/* Script cards grid */}
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 3 }).map((_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
+          <div key={i} className="rounded-lg border p-4">
+            <div className="flex flex-col gap-3">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-2">
+                  <Skeleton className="size-5" />
+                  <Skeleton className="h-5 w-28" />
+                </div>
+                <Skeleton className="h-5 w-16" />
+              </div>
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-16" />
+              <div className="flex items-center gap-2">
+                <Skeleton className="h-8 flex-1" />
+                <Skeleton className="size-8" />
+                <Skeleton className="size-8" />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function InstanceScripts() {
   const { t } = useTranslation("common");
 
@@ -75,6 +123,7 @@ function InstanceScripts() {
         },
       ]}
       pageName={t("pageName.instanceScripts")}
+      loadingSkeleton={<ScriptsPageSkeleton />}
     >
       <Content />
     </InstancePageLayout>

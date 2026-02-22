@@ -70,6 +70,7 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
                 password: "admin",
               },
             ],
+            persistentMetadata: [],
           };
           return {
             id: instance,

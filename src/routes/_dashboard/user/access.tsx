@@ -23,6 +23,7 @@ import {
   CardTitle,
 } from "@/components/ui/card.tsx";
 import { Input } from "@/components/ui/input.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { ClientServiceClient } from "@/generated/soulfire/client.client.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 
@@ -30,11 +31,54 @@ export const Route = createFileRoute("/_dashboard/user/access")({
   component: AccessPage,
 });
 
+function AccessCardSkeleton() {
+  return (
+    <div className="container rounded-lg border p-6">
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center gap-2">
+          <Skeleton className="size-5" />
+          <Skeleton className="h-6 w-32" />
+        </div>
+        <Skeleton className="h-4 w-64" />
+        <div className="flex flex-col gap-2">
+          <Skeleton className="h-4 w-24" />
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-9 flex-1" />
+            <Skeleton className="h-9 w-20" />
+          </div>
+          <Skeleton className="h-4 w-24" />
+          <div className="flex items-center gap-2">
+            <Skeleton className="h-9 flex-1" />
+            <Skeleton className="h-9 w-20" />
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <Skeleton className="h-9 w-32" />
+          <Skeleton className="h-9 w-32" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AccessSkeleton() {
+  return (
+    <div className="flex flex-col gap-4">
+      <AccessCardSkeleton />
+      <AccessCardSkeleton />
+    </div>
+  );
+}
+
 function AccessPage() {
   const { t } = useTranslation("common");
 
   return (
-    <UserPageLayout showUserCrumb={true} pageName={t("pageName.access")}>
+    <UserPageLayout
+      showUserCrumb={true}
+      pageName={t("pageName.access")}
+      loadingSkeleton={<AccessSkeleton />}
+    >
       <Content />
     </UserPageLayout>
   );

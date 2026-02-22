@@ -15,6 +15,7 @@ import { ContextMenuPortal } from "@/components/context-menu-portal.tsx";
 import { MenuItem } from "@/components/context-menu-primitives.tsx";
 import { DataTable } from "@/components/data-table/data-table.tsx";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header.tsx";
+import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton.tsx";
 import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
@@ -231,6 +232,18 @@ const columns: ColumnDef<InstanceAuditLogResponse_AuditLogEntry>[] = [
   },
 ];
 
+function AuditLogSkeleton() {
+  return (
+    <div className="container flex h-full w-full grow flex-col gap-4">
+      <DataTableSkeleton
+        columnCount={3}
+        filterCount={3}
+        cellWidths={["auto", "auto", "8rem"]}
+      />
+    </div>
+  );
+}
+
 function AuditLog() {
   const { t } = useTranslation("common");
 
@@ -243,6 +256,7 @@ function AuditLog() {
         },
       ]}
       pageName={t("pageName.audit-log")}
+      loadingSkeleton={<AuditLogSkeleton />}
     >
       <Content />
     </InstancePageLayout>

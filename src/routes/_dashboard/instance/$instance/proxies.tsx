@@ -39,6 +39,7 @@ import {
   SelectAllHeader,
   SelectRowHeader,
 } from "@/components/data-table/data-table-selects.tsx";
+import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton.tsx";
 import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
 import ImportDialog from "@/components/dialog/import-dialog.tsx";
@@ -68,6 +69,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 import type { SettingsPage } from "@/generated/soulfire/common";
 import { ProxyProto_Type } from "@/generated/soulfire/common.ts";
 import { ProxyCheckServiceClient } from "@/generated/soulfire/proxy-check.client.ts";
@@ -1027,6 +1029,23 @@ function ExtraHeader(props: { table: ReactTable<ProfileProxy> }) {
   );
 }
 
+function ProxySettingsSkeleton() {
+  return (
+    <div className="container flex h-full w-full grow flex-col gap-4">
+      <div className="flex flex-col gap-2">
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10 w-full" />
+      </div>
+      <DataTableSkeleton
+        columnCount={6}
+        filterCount={4}
+        cellWidths={["2rem", "6rem", "auto", "auto", "auto", "auto"]}
+      />
+    </div>
+  );
+}
+
 function ProxySettings() {
   const { t } = useTranslation("common");
 
@@ -1040,6 +1059,7 @@ function ProxySettings() {
       ]}
       pageName={t("pageName.proxySettings")}
       documentationLink="https://soulfiremc.com/docs/usage/proxies?utm_source=soulfire-client&utm_medium=app&utm_campaign=proxies-docs"
+      loadingSkeleton={<ProxySettingsSkeleton />}
     >
       <Content />
     </InstancePageLayout>

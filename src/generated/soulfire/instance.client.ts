@@ -13,8 +13,12 @@ import { stackIntercept } from "@protobuf-ts/runtime-rpc";
 import type {
   DeleteAccountMetadataEntryRequest,
   DeleteAccountMetadataEntryResponse,
+  DeleteInstanceMetadataEntryRequest,
+  DeleteInstanceMetadataEntryResponse,
   GetAccountMetadataRequest,
   GetAccountMetadataResponse,
+  GetInstanceMetadataRequest,
+  GetInstanceMetadataResponse,
   InstanceAddAccountRequest,
   InstanceAddAccountResponse,
   InstanceAddAccountsBatchRequest,
@@ -55,6 +59,8 @@ import type {
   InstanceUpdateProxyResponse,
   SetAccountMetadataEntryRequest,
   SetAccountMetadataEntryResponse,
+  SetInstanceMetadataEntryRequest,
+  SetInstanceMetadataEntryResponse,
 } from "./instance";
 import { InstanceService } from "./instance";
 /**
@@ -355,6 +361,47 @@ export interface IInstanceServiceClient {
   ): UnaryCall<
     DeleteAccountMetadataEntryRequest,
     DeleteAccountMetadataEntryResponse
+  >;
+  /**
+   * Gets persistent metadata for the instance itself.
+   * Persistent metadata survives restarts and session changes.
+   * Requires: READ_INSTANCE permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
+   * @generated from protobuf rpc: GetInstanceMetadata
+   */
+  getInstanceMetadata(
+    input: GetInstanceMetadataRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetInstanceMetadataRequest, GetInstanceMetadataResponse>;
+  /**
+   * Sets a single persistent metadata entry for the instance.
+   * Creates the namespace and key if they don't exist, or updates if they do.
+   * Requires: UPDATE_INSTANCE_META permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
+   * @generated from protobuf rpc: SetInstanceMetadataEntry
+   */
+  setInstanceMetadataEntry(
+    input: SetInstanceMetadataEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    SetInstanceMetadataEntryRequest,
+    SetInstanceMetadataEntryResponse
+  >;
+  /**
+   * Deletes a persistent metadata entry from the instance.
+   * Requires: UPDATE_INSTANCE_META permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
+   * @generated from protobuf rpc: DeleteInstanceMetadataEntry
+   */
+  deleteInstanceMetadataEntry(
+    input: DeleteInstanceMetadataEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    DeleteInstanceMetadataEntryRequest,
+    DeleteInstanceMetadataEntryResponse
   >;
 }
 /**
@@ -838,6 +885,68 @@ export class InstanceServiceClient
     return stackIntercept<
       DeleteAccountMetadataEntryRequest,
       DeleteAccountMetadataEntryResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * Gets persistent metadata for the instance itself.
+   * Persistent metadata survives restarts and session changes.
+   * Requires: READ_INSTANCE permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
+   * @generated from protobuf rpc: GetInstanceMetadata
+   */
+  getInstanceMetadata(
+    input: GetInstanceMetadataRequest,
+    options?: RpcOptions,
+  ): UnaryCall<GetInstanceMetadataRequest, GetInstanceMetadataResponse> {
+    const method = this.methods[22],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      GetInstanceMetadataRequest,
+      GetInstanceMetadataResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * Sets a single persistent metadata entry for the instance.
+   * Creates the namespace and key if they don't exist, or updates if they do.
+   * Requires: UPDATE_INSTANCE_META permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
+   * @generated from protobuf rpc: SetInstanceMetadataEntry
+   */
+  setInstanceMetadataEntry(
+    input: SetInstanceMetadataEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    SetInstanceMetadataEntryRequest,
+    SetInstanceMetadataEntryResponse
+  > {
+    const method = this.methods[23],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      SetInstanceMetadataEntryRequest,
+      SetInstanceMetadataEntryResponse
+    >("unary", this._transport, method, opt, input);
+  }
+  /**
+   * Deletes a persistent metadata entry from the instance.
+   * Requires: UPDATE_INSTANCE_META permission on the instance
+   * Errors: NOT_FOUND if instance does not exist
+   *
+   * @generated from protobuf rpc: DeleteInstanceMetadataEntry
+   */
+  deleteInstanceMetadataEntry(
+    input: DeleteInstanceMetadataEntryRequest,
+    options?: RpcOptions,
+  ): UnaryCall<
+    DeleteInstanceMetadataEntryRequest,
+    DeleteInstanceMetadataEntryResponse
+  > {
+    const method = this.methods[24],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<
+      DeleteInstanceMetadataEntryRequest,
+      DeleteInstanceMetadataEntryResponse
     >("unary", this._transport, method, opt, input);
   }
 }

@@ -20,6 +20,7 @@ import {
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { TerminalComponent } from "@/components/terminal.tsx";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { InstancePermission } from "@/generated/soulfire/common.ts";
 import { InstanceState } from "@/generated/soulfire/instance.ts";
 import type { LogScope } from "@/generated/soulfire/logs.ts";
@@ -29,6 +30,38 @@ import { hasInstancePermission } from "@/lib/utils.tsx";
 export const Route = createFileRoute("/_dashboard/instance/$instance/")({
   component: Overview,
 });
+
+function OverviewSkeleton() {
+  return (
+    <div className="flex h-full w-full grow flex-col gap-2">
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-row items-center gap-2">
+          <Skeleton className="h-7 w-40" />
+          <Skeleton className="h-5 w-16" />
+        </div>
+        <Skeleton className="h-[calc(75vh-8rem)] w-full rounded-md" />
+      </div>
+      <div className="flex flex-row gap-2">
+        {Array.from({ length: 4 }).map((_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
+          <Skeleton key={i} className="h-9 w-20" />
+        ))}
+      </div>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {Array.from({ length: 4 }).map((_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
+          <Skeleton key={i} className="h-24 w-full rounded-lg" />
+        ))}
+      </div>
+      <div className="grid min-w-0 grid-cols-1 gap-2 lg:grid-cols-2">
+        {Array.from({ length: 4 }).map((_, i) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static skeleton list
+          <Skeleton key={i} className="h-64 w-full rounded-lg" />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function Overview() {
   const { t } = useTranslation("common");
@@ -42,6 +75,7 @@ function Overview() {
         },
       ]}
       pageName={t("pageName.overview")}
+      loadingSkeleton={<OverviewSkeleton />}
     >
       <Content />
     </InstancePageLayout>

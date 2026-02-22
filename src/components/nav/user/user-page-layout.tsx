@@ -48,6 +48,7 @@ export default function UserPageLayout(props: {
   pageName: ReactNode;
   showUserCrumb: boolean;
   documentationLink?: string;
+  loadingSkeleton?: ReactNode;
 }) {
   const { t } = useTranslation("common");
 
@@ -107,7 +108,7 @@ export default function UserPageLayout(props: {
             getResetKey={() => "user-page-layout"}
             errorComponent={ErrorComponent}
           >
-            <Suspense fallback={<LoadingComponent />}>
+            <Suspense fallback={props.loadingSkeleton ?? <LoadingComponent />}>
               {props.children}
             </Suspense>
           </CatchBoundary>

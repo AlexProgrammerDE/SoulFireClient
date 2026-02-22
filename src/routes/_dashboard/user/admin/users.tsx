@@ -39,6 +39,7 @@ import {
   SelectAllHeader,
   SelectRowHeader,
 } from "@/components/data-table/data-table-selects.tsx";
+import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton.tsx";
 import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
 import { ManageUserDialog } from "@/components/dialog/manage-user-dialog.tsx";
@@ -409,6 +410,18 @@ function ExtraHeader(props: { table: ReactTable<UserListResponse_User> }) {
   );
 }
 
+function UsersSkeleton() {
+  return (
+    <div className="container flex h-full w-full grow flex-col gap-4">
+      <DataTableSkeleton
+        columnCount={7}
+        filterCount={4}
+        cellWidths={["2rem", "auto", "auto", "6rem", "8rem", "8rem", "4rem"]}
+      />
+    </div>
+  );
+}
+
 function Users() {
   const { t } = useTranslation("common");
 
@@ -422,6 +435,7 @@ function Users() {
         },
       ]}
       pageName={t("pageName.users")}
+      loadingSkeleton={<UsersSkeleton />}
     >
       <Content />
     </UserPageLayout>

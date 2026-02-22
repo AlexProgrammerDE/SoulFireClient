@@ -39,6 +39,7 @@ import {
   SelectAllHeader,
   SelectRowHeader,
 } from "@/components/data-table/data-table-selects.tsx";
+import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton.tsx";
 import { DataTableSortList } from "@/components/data-table/data-table-sort-list.tsx";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar.tsx";
 import { AccountConfigDialog } from "@/components/dialog/account-config-dialog.tsx";
@@ -76,6 +77,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu.tsx";
+import { Skeleton } from "@/components/ui/skeleton.tsx";
 import {
   Tooltip,
   TooltipContent,
@@ -939,6 +941,22 @@ function ExtraHeader(props: { table: ReactTable<ProfileAccount> }) {
   );
 }
 
+function AccountSettingsSkeleton() {
+  return (
+    <div className="container flex h-full w-full grow flex-col gap-4">
+      <div className="flex flex-col gap-2">
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10 w-full" />
+      </div>
+      <DataTableSkeleton
+        columnCount={5}
+        filterCount={3}
+        cellWidths={["2rem", "8rem", "auto", "auto", "5rem"]}
+      />
+    </div>
+  );
+}
+
 function AccountSettings() {
   const { t } = useTranslation("common");
 
@@ -952,6 +970,7 @@ function AccountSettings() {
       ]}
       pageName={t("pageName.accountSettings")}
       documentationLink="https://soulfiremc.com/docs/usage/accounts?utm_source=soulfire-client&utm_medium=app&utm_campaign=accounts-docs"
+      loadingSkeleton={<AccountSettingsSkeleton />}
     >
       <Content />
     </InstancePageLayout>
