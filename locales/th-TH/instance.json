@@ -148,6 +148,11 @@
       "pageTitle": "{{name}} - การตั้งค่า {{page}}",
       "noSettings": "ไม่มีการตั้งค่าสำหรับหน้านี้"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "การยืนยันตัวตนด้วยรหัสอุปกรณ์",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "การยืนยันตัวตนด้วยรหัสอุปกรณ์",
       "description": "ลงชื่อเข้าใช้ด้วยบัญชี Microsoft ของคุณเพื่อเชื่อมโยงบัญชีนี้",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "กลับไปที่สคริปต์",
         "save": "บันทึก",
-        "saveTooltip": "",
+        "saveTooltip": "บันทึกสคริปต์",
         "resume": "ดำเนินการต่อ",
         "resumeTooltip": "ดำเนินการสคริปต์ต่อ",
         "pause": "หยุดชั่วคราว",
@@ -405,7 +410,7 @@
       },
       "contextMenu": {
         "duplicate": "ทำซ้ำ",
-        "rename": "",
+        "rename": "เปลี่ยนชื่อ",
         "disconnectAll": "ตัดการเชื่อมต่อทั้งหมด",
         "collapse": "ย่อ",
         "expand": "ขยาย",

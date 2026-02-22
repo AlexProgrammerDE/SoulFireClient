@@ -148,6 +148,11 @@
       "pageTitle": "{{name}} - {{page}} Settnz",
       "noSettings": "No settnz availabru fur dis page"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "DEVIC COD AUTENTIKASHUNZ!11!",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "DEVIC COD AUTENTIKASHUNZ!11!",
       "description": "SIGNS IN WIF UR MICROSFT AKOUNT TO LINKZ IT. KTHXBAI!1!",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "Bak to Skriptz",
         "save": "SAEV",
-        "saveTooltip": "",
+        "saveTooltip": "Saev skriptz!",
         "resume": "Resoome",
         "resumeTooltip": "Resoom skript doin stufs",
         "pause": "Pawse",
@@ -406,7 +411,7 @@
       },
       "contextMenu": {
         "duplicate": "Copy dat",
-        "rename": "",
+        "rename": "Renaym",
         "disconnectAll": "ALL DISCONNECT",
         "collapse": "COLLAPZ",
         "expand": "EXPANDZ",

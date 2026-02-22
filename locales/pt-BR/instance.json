@@ -148,6 +148,11 @@
       "pageTitle": "Configurações de {{name}} - {{page}}",
       "noSettings": "Nenhuma configuração disponível para esta página"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "Autenticação por Código de Dispositivo",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "Autenticação por Código de Dispositivo",
       "description": "Entre com sua conta Microsoft para vinculá-la.",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "Voltar para Scripts",
         "save": "Salvar",
-        "saveTooltip": "",
+        "saveTooltip": "Salvar script",
         "resume": "Continuar",
         "resumeTooltip": "Retomar execução do script",
         "pause": "Pausar",
@@ -406,7 +411,7 @@
       },
       "contextMenu": {
         "duplicate": "Duplicar",
-        "rename": "",
+        "rename": "Renomear",
         "disconnectAll": "Desconectar Tudo",
         "collapse": "Recolher",
         "expand": "Expandir",

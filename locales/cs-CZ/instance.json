@@ -148,6 +148,11 @@
       "pageTitle": "Nastavení {{name}} – {{page}}",
       "noSettings": "Pro tuto stránku nejsou k dispozici žádná nastavení"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "Ověření pomocí kódu zařízení",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "Ověření pomocí kódu zařízení",
       "description": "Přihlaste se ke svému účtu Microsoft pro jeho propojení.",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "Zpět na Skripty",
         "save": "Uložit",
-        "saveTooltip": "",
+        "saveTooltip": "Uložit skript",
         "resume": "Pokračovat",
         "resumeTooltip": "Obnovit spuštění skriptu",
         "pause": "Pozastavit",
@@ -408,7 +413,7 @@
       },
       "contextMenu": {
         "duplicate": "Duplikovat",
-        "rename": "",
+        "rename": "Přejmenovat",
         "disconnectAll": "Odpojit vše",
         "collapse": "Sbalit",
         "expand": "Rozbalit",

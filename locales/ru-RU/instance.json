@@ -148,6 +148,11 @@
       "pageTitle": "{{name}} — настройки {{page}}",
       "noSettings": "Для этой страницы нет доступных настроек"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "Аутентификация с помощью кода устройства",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "Аутентификация с помощью кода устройства",
       "description": "Войдите с помощью своей учетной записи Microsoft, чтобы связать её.",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "Назад к скриптам",
         "save": "Сохранить",
-        "saveTooltip": "",
+        "saveTooltip": "Сохранить скрипт",
         "resume": "Возобновить",
         "resumeTooltip": "Возобновить выполнение скрипта",
         "pause": "Пауза",
@@ -408,7 +413,7 @@
       },
       "contextMenu": {
         "duplicate": "Дублировать",
-        "rename": "",
+        "rename": "Переименовать",
         "disconnectAll": "Отключить всё",
         "collapse": "Свернуть",
         "expand": "Развернуть",

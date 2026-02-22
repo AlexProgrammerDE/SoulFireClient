@@ -1,6 +1,28 @@
 {
   "overview": {
     "welcome": "ยินดีต้อนรับกลับ, {{name}} 🧙",
+    "serverMetrics": {
+      "sectionTitle": "",
+      "summary": {
+        "cpu": "",
+        "heapUsed": "",
+        "threads": "",
+        "botsOnline": "",
+        "uptime": ""
+      },
+      "cpuUsage": {
+        "title": ""
+      },
+      "memoryUsage": {
+        "title": ""
+      },
+      "threadCount": {
+        "title": ""
+      },
+      "aggregateBots": {
+        "title": ""
+      }
+    },
     "instancesChart": {
       "title": "อินสแตนซ์ทั้งหมดบนเซิร์ฟเวอร์นี้",
       "instances": "อินสแตนซ์",

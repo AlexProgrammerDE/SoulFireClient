@@ -148,6 +148,11 @@
       "pageTitle": "{{name}} - {{page}} सेटिंग्स",
       "noSettings": "इस पेज के लिए कोई सेटिंग्स उपलब्ध नहीं हैं"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "डिवाइस कोड प्रमाणीकरण",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "डिवाइस कोड प्रमाणीकरण",
       "description": "लिंक करने के लिए अपने Microsoft खाते से साइन इन करें।",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "स्क्रिप्ट्स पर वापस जाएँ",
         "save": "सहेजें",
-        "saveTooltip": "",
+        "saveTooltip": "स्क्रिप्ट सहेजें",
         "resume": "फिर से शुरू करें",
         "resumeTooltip": "स्क्रिप्ट निष्पादन फिर से प्रारंभ करें",
         "pause": "रोकें",
@@ -406,7 +411,7 @@
       },
       "contextMenu": {
         "duplicate": "डुप्लिकेट करें",
-        "rename": "",
+        "rename": "नाम बदलें",
         "disconnectAll": "सभी डिस्कनेक्ट करें",
         "collapse": "संकुचित करें",
         "expand": "विस्तृत करें",

@@ -148,6 +148,11 @@
       "pageTitle": "Paramètres {{name}} - {{page}}",
       "noSettings": "Aucun paramètre disponible pour cette page"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "Authentification avec le code de l'appareil",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "Authentification avec le code de l'appareil",
       "description": "Connectez-vous avec votre compte Microsoft pour le lier.",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "Retour aux scripts",
         "save": "Enregistrer",
-        "saveTooltip": "",
+        "saveTooltip": "Enregistrer le script",
         "resume": "Reprendre",
         "resumeTooltip": "Reprendre l'exécution du script",
         "pause": "Pauser",
@@ -406,7 +411,7 @@
       },
       "contextMenu": {
         "duplicate": "Dupliquer",
-        "rename": "",
+        "rename": "Renommer",
         "disconnectAll": "Tout déconnecter",
         "collapse": "Réduire",
         "expand": "Développer",
