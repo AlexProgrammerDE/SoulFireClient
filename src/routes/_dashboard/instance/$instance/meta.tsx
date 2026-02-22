@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { PlusIcon, TrashIcon } from "lucide-react";
-import { use, useCallback, useMemo, useState } from "react";
+import { use, useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -238,6 +238,7 @@ function InstanceMetadataEditor({ instanceId }: { instanceId: string }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const loadMetadata = useCallback(async () => {
+    setIsLoading(true);
     if (transport === null) {
       setEntries([]);
       setIsLoading(false);
@@ -257,9 +258,9 @@ function InstanceMetadataEditor({ instanceId }: { instanceId: string }) {
     setIsLoading(false);
   }, [transport, instanceId]);
 
-  if (isLoading && entries === null) {
-    loadMetadata();
-  }
+  useEffect(() => {
+    void loadMetadata();
+  }, [loadMetadata]);
 
   const isDuplicate = useCallback(
     (namespace: string, key: string, excludeId?: string) => {
@@ -293,10 +294,12 @@ function InstanceMetadataEditor({ instanceId }: { instanceId: string }) {
     },
     onSuccess: () => {
       toast.success(t("instanceMetadata.addSuccess"));
+      void loadMetadata();
     },
     onError: (e) => {
       console.error(e);
       toast.error(t("instanceMetadata.addError"));
+      void loadMetadata();
     },
   });
 
@@ -331,9 +334,13 @@ function InstanceMetadataEditor({ instanceId }: { instanceId: string }) {
         value: Value.fromJson(entry.value),
       });
     },
+    onSuccess: () => {
+      void loadMetadata();
+    },
     onError: (e) => {
       console.error(e);
       toast.error(t("instanceMetadata.updateError"));
+      void loadMetadata();
     },
   });
 
@@ -351,10 +358,12 @@ function InstanceMetadataEditor({ instanceId }: { instanceId: string }) {
     },
     onSuccess: () => {
       toast.success(t("instanceMetadata.deleteSuccess"));
+      void loadMetadata();
     },
     onError: (e) => {
       console.error(e);
       toast.error(t("instanceMetadata.deleteError"));
+      void loadMetadata();
     },
   });
 

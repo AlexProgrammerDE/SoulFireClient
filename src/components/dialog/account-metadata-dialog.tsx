@@ -3,7 +3,14 @@ import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 import { PlusIcon, TrashIcon } from "lucide-react";
-import { Suspense, use, useCallback, useMemo, useState } from "react";
+import {
+  Suspense,
+  use,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -84,7 +91,11 @@ export function AccountMetadataDialog({
           </DialogDescription>
         </DialogHeader>
         <Suspense fallback={<DialogSkeleton />}>
-          <DialogContentInner account={account} onOpenChange={onOpenChange} />
+          <DialogContentInner
+            account={account}
+            open={open}
+            onOpenChange={onOpenChange}
+          />
         </Suspense>
       </DialogContent>
     </Dialog>
@@ -104,9 +115,11 @@ function DialogSkeleton() {
 
 function DialogContentInner({
   account,
+  open,
   onOpenChange,
 }: {
   account: ProfileAccount;
+  open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
   const { t } = useTranslation("instance");
@@ -123,6 +136,7 @@ function DialogContentInner({
 
   // Load metadata on mount
   const loadMetadata = useCallback(async () => {
+    setIsLoading(true);
     if (transport === null) {
       setEntries([]);
       setIsLoading(false);
@@ -143,10 +157,10 @@ function DialogContentInner({
     setIsLoading(false);
   }, [transport, instanceId, account.profileId]);
 
-  // Load on first render
-  if (isLoading && entries === null) {
-    loadMetadata();
-  }
+  useEffect(() => {
+    if (!open) return;
+    void loadMetadata();
+  }, [open, loadMetadata]);
 
   // Check for duplicate namespace+key
   const isDuplicate = useCallback(
@@ -183,10 +197,12 @@ function DialogContentInner({
     },
     onSuccess: () => {
       toast.success(t("account.metadata.addSuccess"));
+      void loadMetadata();
     },
     onError: (e) => {
       console.error(e);
       toast.error(t("account.metadata.addError"));
+      void loadMetadata();
     },
   });
 
@@ -226,9 +242,13 @@ function DialogContentInner({
         value: Value.fromJson(entry.value),
       });
     },
+    onSuccess: () => {
+      void loadMetadata();
+    },
     onError: (e) => {
       console.error(e);
       toast.error(t("account.metadata.updateError"));
+      void loadMetadata();
     },
   });
 
@@ -248,10 +268,12 @@ function DialogContentInner({
     },
     onSuccess: () => {
       toast.success(t("account.metadata.deleteSuccess"));
+      void loadMetadata();
     },
     onError: (e) => {
       console.error(e);
       toast.error(t("account.metadata.deleteError"));
+      void loadMetadata();
     },
   });
 
