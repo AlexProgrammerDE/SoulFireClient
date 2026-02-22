@@ -112,7 +112,7 @@ export function ScriptToolbar({
           edges: importData.edges,
           name: importData.name ?? scriptName,
           description: importData.description ?? scriptDescription,
-          paused: importData.paused ?? importData.autoStart ?? false, // Support both old and new format
+          paused: importData.paused ?? false,
         });
 
         toast.success(t("scripts.editor.toolbar.importSuccess"));

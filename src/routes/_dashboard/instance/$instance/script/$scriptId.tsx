@@ -292,6 +292,8 @@ function ScriptEditorContent() {
         { instanceId, scriptId },
         { abort: abortController.signal },
       );
+      useScriptEditorStore.setState({ paused: false });
+      void queryClient.invalidateQueries({ queryKey: ["scripts", instanceId] });
 
       responses.onMessage((event) => {
         if (event.event.oneofKind === "scriptStarted") {
@@ -408,7 +410,15 @@ function ScriptEditorContent() {
       setActive(false);
       toast.error(tInstance("scripts.activateError"));
     }
-  }, [transport, instanceId, scriptId, setActive, setActiveNode, tInstance]);
+  }, [
+    transport,
+    instanceId,
+    scriptId,
+    setActive,
+    setActiveNode,
+    tInstance,
+    queryClient,
+  ]);
 
   // Handle script deactivation
   const handleStop = useCallback(async () => {
@@ -425,6 +435,8 @@ function ScriptEditorContent() {
       await client.deactivateScript({ instanceId, scriptId });
       setActive(false);
       setActiveNode(null);
+      useScriptEditorStore.setState({ paused: true });
+      void queryClient.invalidateQueries({ queryKey: ["scripts", instanceId] });
       setLogs((prev) => [
         ...prev,
         {
@@ -442,7 +454,15 @@ function ScriptEditorContent() {
       setActive(false);
       setActiveNode(null);
     }
-  }, [transport, instanceId, scriptId, setActive, setActiveNode, tInstance]);
+  }, [
+    transport,
+    instanceId,
+    scriptId,
+    setActive,
+    setActiveNode,
+    tInstance,
+    queryClient,
+  ]);
 
   // Cleanup on unmount
   useEffect(() => {
