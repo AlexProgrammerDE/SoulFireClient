@@ -288,6 +288,14 @@ export function protoToNodes(nodes: ScriptNode[]): Node[] {
         data[key] = fromProtoValue(value);
       }
     }
+    // Restore top-level proto fields that nodesToProto() extracts from data
+    if (node.label) data.label = node.label;
+    if (node.muted) data.muted = node.muted;
+    if (node.collapsed) data.collapsed = node.collapsed;
+    if (node.containedNodes.length > 0)
+      data.containedNodes = node.containedNodes;
+    if (node.parentFrameId) data.parentFrameId = node.parentFrameId;
+    if (node.resolvedType !== undefined) data.resolvedType = node.resolvedType;
     return {
       id: node.id,
       type: node.type,
