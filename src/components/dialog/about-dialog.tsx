@@ -1,8 +1,10 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { XIcon } from "lucide-react";
 import { createContext, type ReactNode, use, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SystemInfoContext } from "@/components/providers/system-info-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import type { ClientDataResponse } from "@/generated/soulfire/client.ts";
 import {
   Credenza,
   CredenzaBody,
@@ -54,6 +56,10 @@ function AboutDialog({
 }) {
   const { t } = useTranslation("common");
   const systemInfo = use(SystemInfoContext);
+  const queryClient = useQueryClient();
+  const clientData = queryClient.getQueryData<ClientDataResponse>([
+    "client-data",
+  ]);
 
   return (
     <Credenza open={open} onOpenChange={setOpen}>
@@ -75,6 +81,42 @@ function AboutDialog({
               </TableRow>
             </TableHeader>
             <TableBody>
+              {clientData?.serverInfo && (
+                <>
+                  <TableRow>
+                    <TableCell>
+                      {t("dialog.about.fields.serverVersion")}
+                    </TableCell>
+                    <TableCell className="select-text">
+                      {clientData.serverInfo.version}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      {t("dialog.about.fields.serverCommit")}
+                    </TableCell>
+                    <TableCell className="select-text">
+                      {clientData.serverInfo.commitHash.substring(0, 7)}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      {t("dialog.about.fields.serverBranch")}
+                    </TableCell>
+                    <TableCell className="select-text">
+                      {clientData.serverInfo.branchName}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>
+                      {t("dialog.about.fields.minecraftVersion")}
+                    </TableCell>
+                    <TableCell className="select-text">
+                      {clientData.serverInfo.minecraftVersion}
+                    </TableCell>
+                  </TableRow>
+                </>
+              )}
               {systemInfo !== null ? (
                 <>
                   <TableRow>

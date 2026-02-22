@@ -33,6 +33,10 @@
       "type": "Type",
       "value": "Value",
       "fields": {
+        "serverVersion": "Server Version",
+        "serverCommit": "Server Commit",
+        "serverBranch": "Server Branch",
+        "minecraftVersion": "Minecraft Version",
         "operatingSystem": "Operating System",
         "platform": "Platform",
         "locale": "Locale",
