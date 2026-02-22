@@ -121,7 +121,7 @@ export function protoPortToLocal(proto: ProtoPortDefinition): PortDefinition {
     label: proto.displayName,
     type: protoPortTypeToLocal(proto.portType),
     required: proto.required || undefined,
-    defaultValue: proto.defaultValue,
+    defaultValue: proto.defaultValue || undefined,
     description: proto.description || undefined,
     elementType:
       proto.elementType !== undefined
