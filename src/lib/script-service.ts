@@ -270,8 +270,8 @@ export function nodesToProto(nodes: Node[]): ScriptNode[] {
       label: (nodeData?.label as string) ?? "",
       containedNodes: (nodeData?.containedNodes as string[]) ?? [],
       parentFrameId: (nodeData?.parentFrameId as string) ?? "",
-      width: node.measured?.width,
-      height: node.measured?.height,
+      width: node.width ?? node.measured?.width,
+      height: node.height ?? node.measured?.height,
       resolvedType: nodeData?.resolvedType as PortType | undefined,
     };
   });
@@ -304,6 +304,10 @@ export function protoToNodes(nodes: ScriptNode[]): Node[] {
         y: node.position?.y ?? 0,
       },
       data,
+      ...(node.width != null && { width: node.width }),
+      ...(node.height != null && { height: node.height }),
+      // Frames must render behind other nodes
+      ...(node.type === "layout.frame" && { zIndex: -1 }),
     };
   });
 }
