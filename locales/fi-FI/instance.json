@@ -148,6 +148,11 @@
       "pageTitle": "{{name}} - {{page}} asetukset",
       "noSettings": "Tälle sivulle ei ole asetuksia saatavilla"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "Laitteen kooditodennus",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "Laitteen kooditodennus",
       "description": "Kirjaudu sisään Microsoft-tililläsi yhdistääksesi sen.",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "Takaisin skripteihin",
         "save": "Tallenna",
-        "saveTooltip": "",
+        "saveTooltip": "Tallenna skripti",
         "resume": "Jatka",
         "resumeTooltip": "Jatka skriptin suorittamista",
         "pause": "Tauota",
@@ -406,7 +411,7 @@
       },
       "contextMenu": {
         "duplicate": "Monista",
-        "rename": "",
+        "rename": "Nimeä uudelleen",
         "disconnectAll": "Katkaise kaikki yhteydet",
         "collapse": "Pienennä",
         "expand": "Laajenna",

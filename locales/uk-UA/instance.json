@@ -148,6 +148,11 @@
       "pageTitle": "Налаштування {{name}} — {{page}}",
       "noSettings": "Немає налаштувань для цієї сторінки"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "Аутентифікація за допомогою коду пристрою",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "Аутентифікація за допомогою коду пристрою",
       "description": "Увійдіть до свого облікового запису Microsoft, щоб звʼязати його.",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "Повернутися до скриптів",
         "save": "Зберегти",
-        "saveTooltip": "",
+        "saveTooltip": "Зберегти скрипт",
         "resume": "Відновити",
         "resumeTooltip": "Відновити виконання скрипту",
         "pause": "Призупинити",
@@ -408,7 +413,7 @@
       },
       "contextMenu": {
         "duplicate": "Дублювати",
-        "rename": "",
+        "rename": "Перейменувати",
         "disconnectAll": "Від'єднати всі",
         "collapse": "Згорнути",
         "expand": "Розгорнути",

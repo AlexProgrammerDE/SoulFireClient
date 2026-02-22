@@ -148,6 +148,11 @@
       "pageTitle": "{{name}} - {{page}} Inställningar",
       "noSettings": "Inga inställningar tillgängliga för denna sida"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "Enhetskodautentisering",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "Enhetskodautentisering",
       "description": "Logga in med ditt Microsoft-konto för att länka det.",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "Tillbaka till skript",
         "save": "Spara",
-        "saveTooltip": "",
+        "saveTooltip": "Spara skriptet",
         "resume": "Återuppta",
         "resumeTooltip": "Återuppta skriptexekvering",
         "pause": "Pausa",
@@ -406,7 +411,7 @@
       },
       "contextMenu": {
         "duplicate": "Duplicera",
-        "rename": "",
+        "rename": "Byt namn",
         "disconnectAll": "Koppla från alla",
         "collapse": "Fäll ihop",
         "expand": "Fäll ut",

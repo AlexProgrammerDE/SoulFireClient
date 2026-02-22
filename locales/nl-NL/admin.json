@@ -1,6 +1,28 @@
 {
   "overview": {
     "welcome": "Welkom terug, {{name}} 🧙",
+    "serverMetrics": {
+      "sectionTitle": "",
+      "summary": {
+        "cpu": "",
+        "heapUsed": "",
+        "threads": "",
+        "botsOnline": "",
+        "uptime": ""
+      },
+      "cpuUsage": {
+        "title": ""
+      },
+      "memoryUsage": {
+        "title": ""
+      },
+      "threadCount": {
+        "title": ""
+      },
+      "aggregateBots": {
+        "title": ""
+      }
+    },
     "instancesChart": {
       "title": "Totaal aantal instanties op deze server",
       "instances": "Instanties",

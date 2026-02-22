@@ -148,6 +148,11 @@
       "pageTitle": "{{name}} - {{page}}の設定",
       "noSettings": "このページには設定がありません"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "デバイスコード認証",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "デバイスコード認証",
       "description": "Microsoft アカウントでサインインしてリンクします。",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "スクリプトへ戻る",
         "save": "保存する",
-        "saveTooltip": "",
+        "saveTooltip": "スクリプトを保存",
         "resume": "再開",
         "resumeTooltip": "スクリプトの実行を再開",
         "pause": "一時停止",
@@ -405,7 +410,7 @@
       },
       "contextMenu": {
         "duplicate": "複製",
-        "rename": "",
+        "rename": "名前を変更",
         "disconnectAll": "すべて切断",
         "collapse": "折りたたむ",
         "expand": "展開",

@@ -1,6 +1,28 @@
 {
   "overview": {
     "welcome": "Witamy ponownie, {{name}}🧙",
+    "serverMetrics": {
+      "sectionTitle": "",
+      "summary": {
+        "cpu": "",
+        "heapUsed": "",
+        "threads": "",
+        "botsOnline": "",
+        "uptime": ""
+      },
+      "cpuUsage": {
+        "title": ""
+      },
+      "memoryUsage": {
+        "title": ""
+      },
+      "threadCount": {
+        "title": ""
+      },
+      "aggregateBots": {
+        "title": ""
+      }
+    },
     "instancesChart": {
       "title": "Wszystkie instancje na tym serwerze",
       "instances": "Instancje",

@@ -148,6 +148,11 @@
       "pageTitle": "{{name}} - {{page}} Ship's Settings",
       "noSettings": "No ship's settings fer this page, matey"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "Device Code Authentication",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "Device Code Authentication",
       "description": "Hoist yer sails 'n sign in with yer Microsoft account to be hookin' it up.",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "Back t' Spells!",
         "save": "Tuck it away",
-        "saveTooltip": "",
+        "saveTooltip": "Be savin' yer script, matey!",
         "resume": "Sail onward",
         "resumeTooltip": "Set spell adrift once again",
         "pause": "Drop anchor",
@@ -406,7 +411,7 @@
       },
       "contextMenu": {
         "duplicate": "Clone this, arrr!",
-        "rename": "",
+        "rename": "Be givin' a new name, ye scallywag!",
         "disconnectAll": "Sever all ropes!",
         "collapse": "Collapse the hull!",
         "expand": "Raise 'er up (Expand)!",

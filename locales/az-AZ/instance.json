@@ -148,6 +148,11 @@
       "pageTitle": "{{name}} - {{page}} Ayarları",
       "noSettings": "Bu səhifə üçün heç bir ayar mövcud deyil"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "Cihaz Kodu İlə Doğrulama",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "Cihaz Kodu İlə Doğrulama",
       "description": "Bağlamaq üçün Microsoft hesabınızla daxil olun.",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "Skriptlərə Qayıt",
         "save": "Yadda saxla",
-        "saveTooltip": "",
+        "saveTooltip": "Skripti yadda saxla",
         "resume": "Davam et",
         "resumeTooltip": "Skriptin icrasını davam etdir",
         "pause": "Fasilə",
@@ -406,7 +411,7 @@
       },
       "contextMenu": {
         "duplicate": "Dublikat",
-        "rename": "",
+        "rename": "Adını dəyiş",
         "disconnectAll": "Hamısını ayır",
         "collapse": "Yığışdır",
         "expand": "Genişlət",

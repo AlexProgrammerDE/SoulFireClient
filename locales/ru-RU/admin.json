@@ -1,6 +1,28 @@
 {
   "overview": {
     "welcome": "С возвращением, {{name}}🧙",
+    "serverMetrics": {
+      "sectionTitle": "",
+      "summary": {
+        "cpu": "",
+        "heapUsed": "",
+        "threads": "",
+        "botsOnline": "",
+        "uptime": ""
+      },
+      "cpuUsage": {
+        "title": ""
+      },
+      "memoryUsage": {
+        "title": ""
+      },
+      "threadCount": {
+        "title": ""
+      },
+      "aggregateBots": {
+        "title": ""
+      }
+    },
     "instancesChart": {
       "title": "Общее количество экземпляров на сервере",
       "instances": "Экземпляры",

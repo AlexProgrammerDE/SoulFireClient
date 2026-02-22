@@ -1,6 +1,28 @@
 {
   "overview": {
     "welcome": "Chào mừng trở lại, {{name}} 🧙",
+    "serverMetrics": {
+      "sectionTitle": "",
+      "summary": {
+        "cpu": "",
+        "heapUsed": "",
+        "threads": "",
+        "botsOnline": "",
+        "uptime": ""
+      },
+      "cpuUsage": {
+        "title": ""
+      },
+      "memoryUsage": {
+        "title": ""
+      },
+      "threadCount": {
+        "title": ""
+      },
+      "aggregateBots": {
+        "title": ""
+      }
+    },
     "instancesChart": {
       "title": "Tổng số phiên bản trên máy chủ này",
       "instances": "Các phiên bản",

@@ -148,6 +148,11 @@
       "pageTitle": "{{name}} - Pengaturan {{page}}",
       "noSettings": "Tidak ada pengaturan yang tersedia untuk halaman ini"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "Otentikasi Kode Perangkat",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "Otentikasi Kode Perangkat",
       "description": "Masuk dengan akun Microsoft Anda untuk menautkannya.",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "Kembali ke Skrip",
         "save": "Simpan",
-        "saveTooltip": "",
+        "saveTooltip": "Simpan skrip",
         "resume": "Lanjutkan",
         "resumeTooltip": "Lanjutkan eksekusi skrip",
         "pause": "Jeda",
@@ -405,7 +410,7 @@
       },
       "contextMenu": {
         "duplicate": "Duplikat",
-        "rename": "",
+        "rename": "Ganti nama",
         "disconnectAll": "Putuskan Semua",
         "collapse": "Ciutkan",
         "expand": "Lebarkan",

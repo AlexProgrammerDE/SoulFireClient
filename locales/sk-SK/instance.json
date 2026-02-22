@@ -148,6 +148,11 @@
       "pageTitle": "{{name}} – Nastavenia {{page}}",
       "noSettings": "Pre túto stránku nie sú k dispozícii žiadne nastavenia"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "Overenie zariadenia pomocou kódu",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "Overenie zariadenia pomocou kódu",
       "description": "Prihláste sa pomocou svojho Microsoft účtu, aby ste si ho prepojili.",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "Späť na skripty",
         "save": "Uložiť",
-        "saveTooltip": "",
+        "saveTooltip": "Uložiť skript",
         "resume": "Pokračovať",
         "resumeTooltip": "Obnoviť vykonávanie skriptu",
         "pause": "Pozastaviť",
@@ -408,7 +413,7 @@
       },
       "contextMenu": {
         "duplicate": "Duplikovať",
-        "rename": "",
+        "rename": "Premenovať",
         "disconnectAll": "Odpojiť všetko",
         "collapse": "Zbaliť",
         "expand": "Rozbaliť",

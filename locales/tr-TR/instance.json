@@ -148,6 +148,11 @@
       "pageTitle": "{{name}} - {{page}} Ayarları",
       "noSettings": "Bu sayfa için ayar mevcut değil"
     },
+    "deviceCodeConfirmDialog": {
+      "title": "Cihaz Kodu Kimlik Doğrulaması",
+      "description": "",
+      "start": ""
+    },
     "deviceCodeDialog": {
       "title": "Cihaz Kodu Kimlik Doğrulaması",
       "description": "Bağlamak için Microsoft hesabınızla oturum açın.",
@@ -377,7 +382,7 @@
       "toolbar": {
         "backToScripts": "Scriptlere Geri Dön",
         "save": "Kaydet",
-        "saveTooltip": "",
+        "saveTooltip": "Scripti kaydet.",
         "resume": "Devam et",
         "resumeTooltip": "Betik yürütmesini devam ettir",
         "pause": "Duraklat",
@@ -406,7 +411,7 @@
       },
       "contextMenu": {
         "duplicate": "Çoğalt",
-        "rename": "",
+        "rename": "Yeniden adlandır.",
         "disconnectAll": "Tüm bağlantıları kes",
         "collapse": "Daralt",
         "expand": "Genişlet",
