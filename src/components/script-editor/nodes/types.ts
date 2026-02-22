@@ -121,7 +121,7 @@ export function protoPortToLocal(proto: ProtoPortDefinition): PortDefinition {
     label: proto.displayName,
     type: protoPortTypeToLocal(proto.portType),
     required: proto.required || undefined,
-    defaultValue: proto.defaultValue || undefined,
+    defaultValue: proto.defaultValue,
     description: proto.description || undefined,
     elementType:
       proto.elementType !== undefined
@@ -146,7 +146,7 @@ export function protoNodeTypeToLocal(
   // Port IDs are now simple names (e.g., "interval", "message")
   const defaultData: Record<string, unknown> = {};
   for (const input of proto.inputs) {
-    if (input.defaultValue) {
+    if (input.defaultValue !== undefined) {
       try {
         defaultData[input.id] = JSON.parse(input.defaultValue);
       } catch {
