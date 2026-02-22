@@ -12,7 +12,6 @@ import {
   type HTMLInputTypeAttribute,
   type ReactNode,
   use,
-  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -151,7 +150,10 @@ function StringComponent(props: {
   value: string;
   changeCallback: (value: string) => void;
 }) {
-  const [inputValue, setInputValue] = useCachedState(props.value);
+  const [isFocused, setIsFocused] = useState(false);
+  const [inputValue, setInputValue] = useCachedState(props.value, {
+    shouldSync: !isFocused,
+  });
 
   const onChangeHandler = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -170,6 +172,8 @@ function StringComponent(props: {
         maxLength={props.setting.maxLength}
         disabled={props.setting.disabled}
         onChange={onChangeHandler}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
       />
     );
   } else {
@@ -183,6 +187,8 @@ function StringComponent(props: {
         pattern={props.setting.pattern}
         disabled={props.setting.disabled}
         onChange={onChangeHandler}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
       />
     );
   }
@@ -195,7 +201,10 @@ function IntComponent(props: {
 }) {
   const { t } = useTranslation("common");
   const localeNumberFormat = useLocaleNumberFormat();
-  const [inputValue, setInputValue] = useCachedState(props.value);
+  const [isFocused, setIsFocused] = useState(false);
+  const [inputValue, setInputValue] = useCachedState(props.value, {
+    shouldSync: !isFocused,
+  });
 
   return (
     <NumericFormat
@@ -230,6 +239,8 @@ function IntComponent(props: {
       max={props.setting.max}
       step={props.setting.step}
       disabled={props.setting.disabled}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
       customInput={Input}
     />
   );
@@ -242,7 +253,10 @@ function DoubleComponent(props: {
 }) {
   const { t } = useTranslation("common");
   const localeNumberFormat = useLocaleNumberFormat();
-  const [inputValue, setInputValue] = useCachedState(props.value);
+  const [isFocused, setIsFocused] = useState(false);
+  const [inputValue, setInputValue] = useCachedState(props.value, {
+    shouldSync: !isFocused,
+  });
 
   return (
     <NumericFormat
@@ -278,6 +292,8 @@ function DoubleComponent(props: {
       max={props.setting.max}
       step={props.setting.step}
       disabled={props.setting.disabled}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
       customInput={Input}
     />
   );
@@ -493,17 +509,10 @@ function MinMaxComponent(props: {
 }) {
   const { t } = useTranslation("common");
   const localeNumberFormat = useLocaleNumberFormat();
-  const [inputValue, setInputValue] = useState(props.value);
-
-  useEffect(() => {
-    setInputValue((old) => {
-      if (old !== props.value) {
-        return props.value;
-      }
-
-      return old;
-    });
-  }, [props.value]);
+  const [isFocused, setIsFocused] = useState(false);
+  const [inputValue] = useCachedState(props.value, {
+    shouldSync: !isFocused,
+  });
 
   return (
     <NumericFormat
@@ -533,6 +542,8 @@ function MinMaxComponent(props: {
       }}
       placeholder={props.entry.placeholder}
       disabled={props.setting.disabled}
+      onFocus={() => setIsFocused(true)}
+      onBlur={() => setIsFocused(false)}
       inputMode="numeric"
       min={props.setting.min}
       max={props.setting.max}
