@@ -29,19 +29,7 @@ import type {
   GetInstanceMetricsResponse,
   MetricsSnapshot,
 } from "@/generated/soulfire/metrics";
-
-function formatTime(snapshot: MetricsSnapshot): string {
-  if (!snapshot.timestamp) return "";
-  const date = new Date(
-    Number(snapshot.timestamp.seconds) * 1000 +
-      snapshot.timestamp.nanos / 1_000_000,
-  );
-  return date.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-}
+import { padSnapshots } from "@/lib/metrics-utils";
 
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes.toFixed(0)} B/s`;
@@ -130,10 +118,10 @@ export function BotsOnlineChart({
 }) {
   const chartData = useMemo(
     () =>
-      snapshots.map((s) => ({
-        time: formatTime(s),
-        online: s.botsOnline,
-        total: s.botsTotal,
+      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
+        time,
+        online: s ? s.botsOnline : null,
+        total: s ? s.botsTotal : null,
       })),
     [snapshots],
   );
@@ -194,10 +182,10 @@ export function NetworkTrafficChart({
 }) {
   const chartData = useMemo(
     () =>
-      snapshots.map((s) => ({
-        time: formatTime(s),
-        sent: Math.round(s.packetsSentPerSecond),
-        received: Math.round(s.packetsReceivedPerSecond),
+      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
+        time,
+        sent: s ? Math.round(s.packetsSentPerSecond) : null,
+        received: s ? Math.round(s.packetsReceivedPerSecond) : null,
       })),
     [snapshots],
   );
@@ -253,10 +241,10 @@ export function BandwidthChart({
 }) {
   const chartData = useMemo(
     () =>
-      snapshots.map((s) => ({
-        time: formatTime(s),
-        upload: s.bytesSentPerSecond,
-        download: s.bytesReceivedPerSecond,
+      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
+        time,
+        upload: s ? s.bytesSentPerSecond : null,
+        download: s ? s.bytesReceivedPerSecond : null,
       })),
     [snapshots],
   );
@@ -339,10 +327,10 @@ export function TickDurationChart({
 }) {
   const chartData = useMemo(
     () =>
-      snapshots.map((s) => ({
-        time: formatTime(s),
-        avg: Number(s.avgTickDurationMs.toFixed(2)),
-        max: Number(s.maxTickDurationMs.toFixed(2)),
+      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
+        time,
+        avg: s ? Number(s.avgTickDurationMs.toFixed(2)) : null,
+        max: s ? Number(s.maxTickDurationMs.toFixed(2)) : null,
       })),
     [snapshots],
   );
@@ -402,10 +390,10 @@ export function HealthFoodChart({
 }) {
   const chartData = useMemo(
     () =>
-      snapshots.map((s) => ({
-        time: formatTime(s),
-        health: Number(s.avgHealth.toFixed(1)),
-        food: Number(s.avgFoodLevel.toFixed(1)),
+      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
+        time,
+        health: s ? Number(s.avgHealth.toFixed(1)) : null,
+        food: s ? Number(s.avgFoodLevel.toFixed(1)) : null,
       })),
     [snapshots],
   );
@@ -464,10 +452,10 @@ export function ChunksEntitiesChart({
 }) {
   const chartData = useMemo(
     () =>
-      snapshots.map((s) => ({
-        time: formatTime(s),
-        chunks: s.totalLoadedChunks,
-        entities: s.totalTrackedEntities,
+      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
+        time,
+        chunks: s ? s.totalLoadedChunks : null,
+        entities: s ? s.totalTrackedEntities : null,
       })),
     [snapshots],
   );
@@ -528,10 +516,10 @@ export function ConnectionEventsChart({
 }) {
   const chartData = useMemo(
     () =>
-      snapshots.map((s) => ({
-        time: formatTime(s),
-        connections: s.connections,
-        disconnections: s.disconnections,
+      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
+        time,
+        connections: s ? s.connections : null,
+        disconnections: s ? s.disconnections : null,
       })),
     [snapshots],
   );

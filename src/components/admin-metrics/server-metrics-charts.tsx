@@ -23,19 +23,7 @@ import type {
   GetServerMetricsResponse,
   ServerMetricsSnapshot,
 } from "@/generated/soulfire/metrics";
-
-function formatTime(snapshot: ServerMetricsSnapshot): string {
-  if (!snapshot.timestamp) return "";
-  const date = new Date(
-    Number(snapshot.timestamp.seconds) * 1000 +
-      snapshot.timestamp.nanos / 1_000_000,
-  );
-  return date.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-}
+import { padSnapshots } from "@/lib/metrics-utils";
 
 function formatMB(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(0)} MB`;
@@ -118,14 +106,18 @@ export function CpuUsageChart({
   const { t } = useTranslation("admin");
   const chartData = useMemo(
     () =>
-      snapshots.map((s) => ({
-        time: formatTime(s),
-        process:
-          s.processCpuLoad >= 0
+      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
+        time,
+        process: s
+          ? s.processCpuLoad >= 0
             ? Number((s.processCpuLoad * 100).toFixed(1))
-            : 0,
-        system:
-          s.systemCpuLoad >= 0 ? Number((s.systemCpuLoad * 100).toFixed(1)) : 0,
+            : 0
+          : null,
+        system: s
+          ? s.systemCpuLoad >= 0
+            ? Number((s.systemCpuLoad * 100).toFixed(1))
+            : 0
+          : null,
       })),
     [snapshots],
   );
@@ -191,14 +183,15 @@ export function MemoryUsageChart({
   const { t } = useTranslation("admin");
   const chartData = useMemo(
     () =>
-      snapshots.map((s) => ({
-        time: formatTime(s),
-        used: Number(s.heapUsedBytes) / (1024 * 1024),
-        committed: Number(s.heapCommittedBytes) / (1024 * 1024),
-        max:
-          Number(s.heapMaxBytes) > 0
+      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
+        time,
+        used: s ? Number(s.heapUsedBytes) / (1024 * 1024) : null,
+        committed: s ? Number(s.heapCommittedBytes) / (1024 * 1024) : null,
+        max: s
+          ? Number(s.heapMaxBytes) > 0
             ? Number(s.heapMaxBytes) / (1024 * 1024)
-            : undefined,
+            : undefined
+          : null,
       })),
     [snapshots],
   );
@@ -293,10 +286,10 @@ export function ThreadCountChart({
   const { t } = useTranslation("admin");
   const chartData = useMemo(
     () =>
-      snapshots.map((s) => ({
-        time: formatTime(s),
-        total: s.threadCount,
-        daemon: s.daemonThreadCount,
+      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
+        time,
+        total: s ? s.threadCount : null,
+        daemon: s ? s.daemonThreadCount : null,
       })),
     [snapshots],
   );
@@ -354,10 +347,10 @@ export function AggregateBotsChart({
   const { t } = useTranslation("admin");
   const chartData = useMemo(
     () =>
-      snapshots.map((s) => ({
-        time: formatTime(s),
-        online: s.totalBotsOnline,
-        total: s.totalBotsTotal,
+      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
+        time,
+        online: s ? s.totalBotsOnline : null,
+        total: s ? s.totalBotsTotal : null,
       })),
     [snapshots],
   );
