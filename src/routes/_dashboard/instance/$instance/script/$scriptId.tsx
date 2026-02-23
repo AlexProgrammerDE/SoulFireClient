@@ -451,12 +451,17 @@ function ScriptEditorContent() {
           ]);
         } else if (event.event.oneofKind === "scriptLog") {
           const { nodeId, level, message } = event.event.scriptLog;
+          const normalizedLevel = (level?.toLowerCase() || "info") as
+            | "debug"
+            | "info"
+            | "warn"
+            | "error";
           setLogs((prev) => [
             ...prev,
             {
               id: crypto.randomUUID(),
               timestamp: new Date(),
-              level: (level as "debug" | "info" | "warn" | "error") || "info",
+              level: normalizedLevel,
               nodeId: nodeId ?? null,
               message,
             },

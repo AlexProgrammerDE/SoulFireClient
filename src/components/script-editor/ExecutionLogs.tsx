@@ -27,6 +27,8 @@ function getLogLevelStyles(level: LogLevel): {
       return { badge: "outline", text: "text-yellow-600 dark:text-yellow-500" };
     case "error":
       return { badge: "destructive", text: "text-destructive" };
+    default:
+      return { badge: "default", text: "text-foreground" };
   }
 }
 
