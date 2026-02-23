@@ -33,6 +33,10 @@
       "type": "類型",
       "value": "數值",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "作業系統",
         "platform": "平台",
         "locale": "語言環境",

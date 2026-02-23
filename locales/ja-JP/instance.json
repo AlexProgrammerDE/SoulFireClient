@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "デバイスコード認証",
-      "description": "",
-      "start": ""
+      "description": "デバイスコードフローを開始する前にオプションを設定してください。",
+      "start": "認証を開始"
     },
     "deviceCodeDialog": {
       "title": "デバイスコード認証",
@@ -177,6 +177,21 @@
       "duplicateError": "このネームスペースとキーを持つエントリは既に存在します",
       "invalidJson": "無効なJSON値"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "名前空間",
+    "keyPlaceholder": "キー",
+    "valuePlaceholder": "値（JSON）",
+    "noEntries": "メタデータエントリがありません。上で追加してください。",
+    "addSuccess": "エントリが追加されました",
+    "addError": "エントリの追加に失敗しました",
+    "updateError": "エントリの更新に失敗しました",
+    "deleteSuccess": "エントリを削除しました",
+    "deleteError": "エントリの削除に失敗しました",
+    "duplicateError": "このネームスペースとキーを持つエントリは既に存在します",
+    "invalidJson": "無効なJSON値"
   },
   "bots": {
     "searchPlaceholder": "ボットを検索...",

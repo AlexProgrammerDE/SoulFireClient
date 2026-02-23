@@ -33,6 +33,10 @@
       "type": "प्रकार",
       "value": "मान",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "ऑपरेटिंग सिस्टम",
         "platform": "प्लेटफ़ॉर्म",
         "locale": "लोकैल",

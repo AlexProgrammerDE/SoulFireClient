@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Authenticatie met apparaatgecode",
-      "description": "",
-      "start": ""
+      "description": "Configureer de opties voordat je de apparaatcodeprocedure start.",
+      "start": "Authenticatie starten"
     },
     "deviceCodeDialog": {
       "title": "Authenticatie met apparaatgecode",
@@ -177,6 +177,21 @@
       "duplicateError": "Er bestaat al een item met deze namespace en sleutel",
       "invalidJson": "Ongeldige JSON-waarde"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Namespace",
+    "keyPlaceholder": "Sleutel",
+    "valuePlaceholder": "Waarde (JSON)",
+    "noEntries": "Geen metadata-items. Voeg er hierboven één toe.",
+    "addSuccess": "Item toegevoegd",
+    "addError": "Toevoegen van item mislukt",
+    "updateError": "Bijwerken van item mislukt",
+    "deleteSuccess": "Item verwijderd",
+    "deleteError": "Verwijderen van item mislukt",
+    "duplicateError": "Er bestaat al een item met deze namespace en sleutel",
+    "invalidJson": "Ongeldige JSON-waarde"
   },
   "bots": {
     "searchPlaceholder": "Bots zoeken...",

@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Cihaz Kodu Kimlik Doğrulaması",
-      "description": "",
-      "start": ""
+      "description": "Cihaz kodu akışını başlatmadan önce seçenekleri yapılandırın.",
+      "start": "Kimlik Doğrulamayı Başlat"
     },
     "deviceCodeDialog": {
       "title": "Cihaz Kodu Kimlik Doğrulaması",
@@ -177,6 +177,21 @@
       "duplicateError": "Bu ad alanı ve anahtara sahip bir giriş zaten mevcut",
       "invalidJson": "Geçersiz JSON değeri"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Ad Alanı",
+    "keyPlaceholder": "Anahtar",
+    "valuePlaceholder": "Değer (JSON)",
+    "noEntries": "Metadata girişi yok. Yukarıdan bir tane ekleyin.",
+    "addSuccess": "Giriş eklendi",
+    "addError": "Giriş eklenemedi",
+    "updateError": "Giriş güncellenemedi",
+    "deleteSuccess": "Girdi silindi",
+    "deleteError": "Girdi silinemedi",
+    "duplicateError": "Bu ad alanı ve anahtara sahip bir giriş zaten mevcut",
+    "invalidJson": "Geçersiz JSON değeri"
   },
   "bots": {
     "searchPlaceholder": "Botlarda ara...",

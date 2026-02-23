@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "歡迎回來，{{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "伺服器指標",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPU",
+        "heapUsed": "已用堆積記憶體",
+        "threads": "執行緒",
+        "botsOnline": "線上機器人",
+        "uptime": "運作時間"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "CPU 使用率 (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "堆記憶體 (MB)"
       },
       "threadCount": {
-        "title": ""
+        "title": "執行緒數量"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "線上機器人數（所有實例）"
       }
     },
     "instancesChart": {

@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Xác thực mã thiết bị",
-      "description": "",
-      "start": ""
+      "description": "Cấu hình các tuỳ chọn trước khi bắt đầu quy trình mã thiết bị.",
+      "start": "Bắt đầu xác thực"
     },
     "deviceCodeDialog": {
       "title": "Xác thực mã thiết bị",
@@ -177,6 +177,21 @@
       "duplicateError": "Đã tồn tại một mục với namespace và khóa này",
       "invalidJson": "Giá trị JSON không hợp lệ"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Không gian tên",
+    "keyPlaceholder": "Khóa",
+    "valuePlaceholder": "Giá trị (JSON)",
+    "noEntries": "Không có mục siêu dữ liệu nào. Thêm một mục ở trên.",
+    "addSuccess": "Đã thêm mục",
+    "addError": "Không thể thêm mục",
+    "updateError": "Không thể cập nhật mục",
+    "deleteSuccess": "Mục đã được xóa",
+    "deleteError": "Xóa mục thất bại",
+    "duplicateError": "Đã tồn tại một mục với namespace và khóa này",
+    "invalidJson": "Giá trị JSON không hợp lệ"
   },
   "bots": {
     "searchPlaceholder": "Tìm bot...",

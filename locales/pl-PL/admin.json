@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "Witamy ponownie, {{name}}🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "Metryki serwera",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPU",
+        "heapUsed": "Użycie sterty",
+        "threads": "Wątki",
+        "botsOnline": "Boty online",
+        "uptime": "Czas działania"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "Użycie CPU (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "Pamięć sterty (MB)"
       },
       "threadCount": {
-        "title": ""
+        "title": "Liczba wątków"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "Boty online (wszystkie instancje)"
       }
     },
     "instancesChart": {

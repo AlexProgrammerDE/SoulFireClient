@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Uwierzytelnianie za pomocą kodu urządzenia",
-      "description": "",
-      "start": ""
+      "description": "Skonfiguruj opcje przed rozpoczęciem uwierzytelniania za pomocą kodu urządzenia.",
+      "start": "Rozpocznij uwierzytelnianie"
     },
     "deviceCodeDialog": {
       "title": "Uwierzytelnianie za pomocą kodu urządzenia",
@@ -177,6 +177,21 @@
       "duplicateError": "Wpis z tą przestrzenią nazw i kluczem już istnieje",
       "invalidJson": "Nieprawidłowa wartość JSON"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Przestrzeń nazw",
+    "keyPlaceholder": "Klucz",
+    "valuePlaceholder": "Wartość (JSON)",
+    "noEntries": "Brak wpisów metadanych. Dodaj jeden powyżej.",
+    "addSuccess": "Wpis dodany",
+    "addError": "Nie udało się dodać wpisu",
+    "updateError": "Nie udało się zaktualizować wpisu",
+    "deleteSuccess": "Wpis został usunięty",
+    "deleteError": "Nie udało się usunąć wpisu",
+    "duplicateError": "Wpis z tą przestrzenią nazw i kluczem już istnieje",
+    "invalidJson": "Nieprawidłowa wartość JSON"
   },
   "bots": {
     "searchPlaceholder": "Szukaj botów...",

@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "डिवाइस कोड प्रमाणीकरण",
-      "description": "",
-      "start": ""
+      "description": "डिवाइस कोड फ़्लो शुरू करने से पहले विकल्प कॉन्फ़िगर करें।",
+      "start": "प्रमाणीकरण शुरू करें"
     },
     "deviceCodeDialog": {
       "title": "डिवाइस कोड प्रमाणीकरण",
@@ -177,6 +177,21 @@
       "duplicateError": "इस नेमस्पेस और कुंजी के साथ एक प्रविष्टि पहले से मौजूद है",
       "invalidJson": "अमान्य JSON मान"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "नेमस्पेस",
+    "keyPlaceholder": "कुंजी",
+    "valuePlaceholder": "मान (JSON)",
+    "noEntries": "कोई मेटाडेटा प्रविष्टियाँ नहीं हैं। ऊपर एक जोड़ें।",
+    "addSuccess": "प्रविष्टि जोड़ी गई",
+    "addError": "प्रविष्टि जोड़ने में विफल",
+    "updateError": "प्रविष्टि अपडेट करने में विफल",
+    "deleteSuccess": "प्रविष्टि हटाई गई",
+    "deleteError": "प्रविष्टि हटाने में विफल",
+    "duplicateError": "इस नेमस्पेस और कुंजी के साथ एक प्रविष्टि पहले से मौजूद है",
+    "invalidJson": "अमान्य JSON मान"
   },
   "bots": {
     "searchPlaceholder": "बॉट्स खोजें...",

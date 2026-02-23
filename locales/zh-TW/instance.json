@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "裝置代碼驗證",
-      "description": "",
-      "start": ""
+      "description": "在開始裝置代碼流程前請先配置選項。",
+      "start": "開始驗證"
     },
     "deviceCodeDialog": {
       "title": "裝置代碼驗證",
@@ -177,6 +177,21 @@
       "duplicateError": "具有相同命名空間和鍵的條目已存在",
       "invalidJson": "無效的 JSON 值"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "命名空間",
+    "keyPlaceholder": "鍵",
+    "valuePlaceholder": "值（JSON）",
+    "noEntries": "沒有中繼資料條目。請在上方新增一個。",
+    "addSuccess": "已新增條目",
+    "addError": "新增條目失敗",
+    "updateError": "更新條目失敗",
+    "deleteSuccess": "條目已刪除",
+    "deleteError": "刪除條目失敗",
+    "duplicateError": "具有相同命名空間和鍵的條目已存在",
+    "invalidJson": "無效的 JSON 值"
   },
   "bots": {
     "searchPlaceholder": "搜尋機器人...",

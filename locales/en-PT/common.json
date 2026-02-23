@@ -33,6 +33,10 @@
       "type": "Cargo Type",
       "value": "Worth",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "Seafaring System",
         "platform": "Dock",
         "locale": "Lingo",

@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "设备代码认证",
-      "description": "",
-      "start": ""
+      "description": "在开始设备码流程前请先配置选项。",
+      "start": "开始认证"
     },
     "deviceCodeDialog": {
       "title": "设备代码认证",
@@ -177,6 +177,21 @@
       "duplicateError": "具有此命名空间和键的条目已存在",
       "invalidJson": "无效的JSON值"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "命名空间",
+    "keyPlaceholder": "键",
+    "valuePlaceholder": "值（JSON）",
+    "noEntries": "没有元数据条目。请在上方添加。",
+    "addSuccess": "条目已添加",
+    "addError": "添加条目失败",
+    "updateError": "更新条目失败",
+    "deleteSuccess": "条目已删除",
+    "deleteError": "删除条目失败",
+    "duplicateError": "具有此命名空间和键的条目已存在",
+    "invalidJson": "无效的JSON值"
   },
   "bots": {
     "searchPlaceholder": "搜索机器人...",

@@ -33,6 +33,10 @@
       "type": "Type",
       "value": "Waarde",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "Besturingssysteem",
         "platform": "Platform",
         "locale": "Taal",

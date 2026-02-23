@@ -33,6 +33,10 @@
       "type": "ǝԀʎ┴",
       "value": "ǝnlɐΛ",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "ɯǝʇsǝS ƃuᴉʇɐɹǝdo",
         "platform": "ɯɹoɟɐ˥Ԁ",
         "locale": "ǝlɐɔo˥",

@@ -33,6 +33,10 @@
       "type": "Tyep",
       "value": "Value",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "Operatin Sistem",
         "platform": "Platform",
         "locale": "Locael",

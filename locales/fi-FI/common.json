@@ -33,6 +33,10 @@
       "type": "Tyyppi",
       "value": "Arvo",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "Käyttöjärjestelmä",
         "platform": "Alusta",
         "locale": "Lokalisointi",

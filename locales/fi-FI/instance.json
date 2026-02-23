@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Laitteen kooditodennus",
-      "description": "",
-      "start": ""
+      "description": "Määritä asetukset ennen laitteen koodivirran aloittamista.",
+      "start": "Aloita todennus"
     },
     "deviceCodeDialog": {
       "title": "Laitteen kooditodennus",
@@ -177,6 +177,21 @@
       "duplicateError": "Merkintä tällä nimiavaruudella ja avaimella on jo olemassa",
       "invalidJson": "Virheellinen JSON-arvo"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Nimiavaruus",
+    "keyPlaceholder": "Avain",
+    "valuePlaceholder": "Arvo (JSON)",
+    "noEntries": "Ei metatietokirjauksia. Lisää yksi yllä.",
+    "addSuccess": "Merkintä lisätty",
+    "addError": "Kirjauksen lisääminen epäonnistui",
+    "updateError": "Kirjauksen päivittäminen epäonnistui",
+    "deleteSuccess": "Merkintä poistettu",
+    "deleteError": "Merkinnän poistaminen epäonnistui",
+    "duplicateError": "Merkintä tällä nimiavaruudella ja avaimella on jo olemassa",
+    "invalidJson": "Virheellinen JSON-arvo"
   },
   "bots": {
     "searchPlaceholder": "Hae botteja...",

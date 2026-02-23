@@ -33,6 +33,10 @@
       "type": "종류",
       "value": "값",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "운영 체제",
         "platform": "플랫폼",
         "locale": "로케일",

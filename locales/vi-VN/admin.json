@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "Chào mừng trở lại, {{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "Chỉ Số Máy Chủ",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPU",
+        "heapUsed": "Bộ Nhớ Heap Đã Sử Dụng",
+        "threads": "Luồng",
+        "botsOnline": "Bots Trực Tuyến",
+        "uptime": "Thời Gian Hoạt Động"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "Sử dụng CPU (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "Bộ nhớ Heap (MB)"
       },
       "threadCount": {
-        "title": ""
+        "title": "Số lượng luồng"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "Bots trực tuyến (Tất cả phiên bản)"
       }
     },
     "instancesChart": {

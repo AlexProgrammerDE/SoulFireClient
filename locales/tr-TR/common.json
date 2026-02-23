@@ -33,6 +33,10 @@
       "type": "Tip",
       "value": "Değer",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "İşletim Sistemi",
         "platform": "Platform",
         "locale": "Yerel",

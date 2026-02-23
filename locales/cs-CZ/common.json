@@ -33,6 +33,10 @@
       "type": "Typ",
       "value": "Hodnota",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "Operační systém",
         "platform": "Platforma",
         "locale": "Místní nastavení",

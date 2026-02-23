@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "Bienvenue, {{name}}🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "Métriques du serveur",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPU",
+        "heapUsed": "Mémoire utilisée par le tas",
+        "threads": "Threads",
+        "botsOnline": "Bots en ligne",
+        "uptime": "Temps de fonctionnement"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "Utilisation du CPU (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "Mémoire Heap (Mo)"
       },
       "threadCount": {
-        "title": ""
+        "title": "Nombre de threads"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "Bots en ligne (toutes les instances)"
       }
     },
     "instancesChart": {

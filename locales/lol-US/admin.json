@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "WELCUM BAK, {{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "Servur Metrikzz!",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPUZ",
+        "heapUsed": "Heap UZED",
+        "threads": "THR3DZ",
+        "botsOnline": "BOTS ONLAIIN",
+        "uptime": "UPTAIM"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "CPU Usaj (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "Heap Memry (MB)"
       },
       "threadCount": {
-        "title": ""
+        "title": "Thred Counz"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "Bots Onlinez (All Instunces)"
       }
     },
     "instancesChart": {

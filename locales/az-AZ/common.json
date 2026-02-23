@@ -33,6 +33,10 @@
       "type": "Növ",
       "value": "Dəyər",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "Əməliyyat Sistemi",
         "platform": "Platforma",
         "locale": "Lokallaşdırma",

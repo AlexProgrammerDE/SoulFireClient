@@ -33,6 +33,10 @@
       "type": "Тип",
       "value": "Значення",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "Операційна система",
         "platform": "Платформа",
         "locale": "Мова інтерфейсу",

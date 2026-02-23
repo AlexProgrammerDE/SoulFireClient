@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "uoıʇɐɔıɟıʇuǝ lɐʇuǝɥʇn∀ ǝpoɔ ǝɔıʌǝp",
-      "description": "",
-      "start": ""
+      "description": ".ʍolɟ ǝpoɔ ǝɔᴉʌǝp ǝɥʇ ƃuᴉʇɹɐʇs ǝɹoɟǝq suoᴉʇdo l ǝɹnƃᴉɟuoɔ",
+      "start": "uoᴉʇɐɔᴉʇuǝɥʇn∀ ʇɹɐʇS"
     },
     "deviceCodeDialog": {
       "title": "uoıʇɐɔıɟıʇuǝ lɐʇuǝɥʇn∀ ǝpoɔ ǝɔıʌǝp",
@@ -177,6 +177,21 @@
       "duplicateError": "sʎǝʞ puɐ ǝɔɐdsǝɯɐu sᴉɥʇ ɥʇᴉM ɥʇᴉʍ ʎɹʇuǝ uɐ",
       "invalidJson": "uoʎlɐʌ uosſ ǝnlɐʌᴉ"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "ǝɔɐdsǝɯɐN",
+    "keyPlaceholder": "ʎǝ⋊",
+    "valuePlaceholder": ")NOႧ( ǝnlɐʌ",
+    "noEntries": "..ǝʌoɯɐ ǝuo ppp∀ .sǝᴉɹʇuǝ ɐʇɐpɐʇǝɯ oN",
+    "addSuccess": "pǝpp∀ ʎɹʇuƎ",
+    "addError": "ʎɹʇuǝ  ppA oʇ pǝlᴉɐℲ",
+    "updateError": "ʎɹʇuǝ ǝʇɐpdnl pǝlᴉɐℲ",
+    "deleteSuccess": "pǝʇǝlǝp ʎɹʇuƎ",
+    "deleteError": "ʎɹʇuǝ ǝʇǝlǝp pǝlᴉɐℲ",
+    "duplicateError": "sʎǝʞ puɐ ǝɔɐdsǝɯɐu sᴉɥʇ ɥʇᴉM ɥʇᴉʍ ʎɹʇuǝ uɐ",
+    "invalidJson": "uoʎlɐʌ uosſ ǝnlɐʌᴉ"
   },
   "bots": {
     "searchPlaceholder": "...sʇoq ɥɔɹɐǝS",
