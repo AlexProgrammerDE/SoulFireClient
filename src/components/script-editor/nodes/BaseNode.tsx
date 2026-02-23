@@ -175,8 +175,10 @@ function PortRow({
 }
 
 function ValidationBadges({ nodeId }: { nodeId: string }) {
-  const diagnostics = useScriptEditorStore((s) =>
-    s.validationDiagnostics.filter((d) => d.nodeId === nodeId),
+  const allDiagnostics = useScriptEditorStore((s) => s.validationDiagnostics);
+  const diagnostics = useMemo(
+    () => allDiagnostics.filter((d) => d.nodeId === nodeId),
+    [allDiagnostics, nodeId],
   );
   if (diagnostics.length === 0) return null;
 
