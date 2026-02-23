@@ -1,1 +1,1 @@
-pub const SOULFIRE_VERSION: &str = "2.5.4";
+pub const SOULFIRE_VERSION: &str = "2.5.5";
