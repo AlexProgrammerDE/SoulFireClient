@@ -13,6 +13,7 @@ import {
 import { create } from "zustand";
 import {
   getEdgeStyle,
+  getNodeDefinition,
   getPortTypeFromDefinition,
   isTypeCompatible,
   type PortType,
@@ -116,6 +117,7 @@ export interface ScriptEditorState {
   getVisibleEdges: () => Edge[];
 
   // Auto-insert on edge
+  findClosestEdge: (position: XYPosition, threshold: number) => Edge | null;
   insertNodeOnEdge: (nodeId: string, edgeId: string) => void;
 
   // Debug node actions
@@ -278,6 +280,49 @@ const _getPortType = (handleId: string | null | undefined): string => {
   // For simple IDs, there's no type prefix - return "any" as fallback
   // The actual type should be looked up from node definitions
   return "any";
+};
+
+/** Distance from point to line segment */
+const pointToSegmentDistance = (
+  p: XYPosition,
+  a: XYPosition,
+  b: XYPosition,
+): number => {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const lenSq = dx * dx + dy * dy;
+  if (lenSq === 0) return Math.hypot(p.x - a.x, p.y - a.y);
+  const t = Math.max(
+    0,
+    Math.min(1, ((p.x - a.x) * dx + (p.y - a.y) * dy) / lenSq),
+  );
+  return Math.hypot(p.x - (a.x + t * dx), p.y - (a.y + t * dy));
+};
+
+/** Find edge closest to a point within threshold (flow coords). */
+const findClosestEdgeToPoint = (
+  nodes: Node[],
+  edges: Edge[],
+  point: XYPosition,
+  threshold: number,
+): Edge | null => {
+  const nodePositions = new Map(nodes.map((n) => [n.id, n.position]));
+  let closest: Edge | null = null;
+  let closestDist = threshold;
+  for (const edge of edges) {
+    const sp = nodePositions.get(edge.source);
+    const tp = nodePositions.get(edge.target);
+    if (!sp || !tp) continue;
+    // Same offset logic as cutEdgesIntersectingLine
+    const a = { x: sp.x + 80, y: sp.y + 40 };
+    const b = { x: tp.x, y: tp.y + 40 };
+    const d = pointToSegmentDistance(point, a, b);
+    if (d < closestDist) {
+      closestDist = d;
+      closest = edge;
+    }
+  }
+  return closest;
 };
 
 export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
@@ -1100,57 +1145,70 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   },
 
   // Auto-insert on edge
+  findClosestEdge: (position, threshold) => {
+    const { nodes, edges } = get();
+    return findClosestEdgeToPoint(nodes, edges, position, threshold);
+  },
+
   insertNodeOnEdge: (nodeId, edgeId) => {
     const { nodes, edges } = get();
     const edge = edges.find((e) => e.id === edgeId);
     const node = nodes.find((n) => n.id === nodeId);
     if (!edge || !node) return;
 
-    // Get port types from the source and target nodes via definitions
-    const sourceNode = nodes.find((n) => n.id === edge.source);
-    const targetNode = nodes.find((n) => n.id === edge.target);
-
-    const sourceType = sourceNode
-      ? getPortTypeForNode(nodes, edge.source, edge.sourceHandle)
-      : "any";
-    const targetType = targetNode
-      ? getPortTypeForNode(nodes, edge.target, edge.targetHandle)
-      : "any";
-
-    // Look for compatible sockets in node data if available
-    // This is a simplified version - in practice, we'd need the node definition
-    const nodeData = node.data as Record<string, unknown>;
-    const nodeInputs =
-      (nodeData.inputs as Array<{ id: string; type: string }>) || [];
-    const nodeOutputs =
-      (nodeData.outputs as Array<{ id: string; type: string }>) || [];
-
-    // Try to find compatible input socket
-    let inputSocket = nodeInputs.find(
-      (p) =>
-        p.type !== "execution" &&
-        isTypeCompatible(sourceType, p.type as PortType),
+    // Get port types from the edge's source/target
+    const sourceType = getPortTypeForNode(
+      nodes,
+      edge.source,
+      edge.sourceHandle,
     );
-
-    // Try to find compatible output socket
-    let outputSocket = nodeOutputs.find(
-      (p) =>
-        p.type !== "execution" &&
-        isTypeCompatible(p.type as PortType, targetType),
+    const targetType = getPortTypeForNode(
+      nodes,
+      edge.target,
+      edge.targetHandle,
     );
+    const isExecutionEdge = sourceType === "execution";
 
-    // If no matching sockets found in data, try common patterns
-    // Port IDs are now simple names without type prefix
-    if (!inputSocket) {
-      // Common input handle patterns (simple names)
-      const commonInputs = ["in", "input", "value", "a"];
-      inputSocket = { id: commonInputs[0], type: sourceType };
+    // Look up ports from the node definition
+    const definition = getNodeDefinition(node.type ?? "");
+    const defInputs = definition?.inputs ?? [];
+    const defOutputs = definition?.outputs ?? [];
+
+    // Find compatible input port on the new node
+    let inputHandle: string | undefined;
+    if (isExecutionEdge) {
+      inputHandle = defInputs.find((p) => p.type === "execution")?.id;
+    } else {
+      inputHandle = defInputs.find(
+        (p) =>
+          p.type !== "execution" &&
+          isTypeCompatible(sourceType, p.type as PortType),
+      )?.id;
     }
 
-    if (!outputSocket) {
-      // Common output handle patterns (simple names)
-      const commonOutputs = ["out", "output", "result"];
-      outputSocket = { id: commonOutputs[0], type: targetType };
+    // Find compatible output port on the new node
+    let outputHandle: string | undefined;
+    if (isExecutionEdge) {
+      outputHandle = defOutputs.find((p) => p.type === "execution")?.id;
+    } else {
+      outputHandle = defOutputs.find(
+        (p) =>
+          p.type !== "execution" &&
+          isTypeCompatible(p.type as PortType, targetType),
+      )?.id;
+    }
+
+    // Fallback for layout nodes (reroute, group) without definitions
+    if (!inputHandle) inputHandle = "in";
+    if (!outputHandle) outputHandle = "out";
+
+    // If definition exists but no compatible ports found, bail out
+    if (
+      definition &&
+      (!defInputs.some((p) => p.id === inputHandle) ||
+        !defOutputs.some((p) => p.id === outputHandle))
+    ) {
+      return;
     }
 
     // Create new edges
@@ -1159,7 +1217,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       source: edge.source,
       sourceHandle: edge.sourceHandle,
       target: nodeId,
-      targetHandle: inputSocket.id,
+      targetHandle: inputHandle,
       type: edge.type,
       data: edge.data,
     };
@@ -1167,7 +1225,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     const newEdge2: Edge = {
       id: generateId(),
       source: nodeId,
-      sourceHandle: outputSocket.id,
+      sourceHandle: outputHandle,
       target: edge.target,
       targetHandle: edge.targetHandle,
       type: edge.type,

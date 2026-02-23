@@ -160,6 +160,12 @@ function ScriptEditorContent() {
   const setActive = useScriptEditorStore((state) => state.setActive);
   const setActiveNode = useScriptEditorStore((state) => state.setActiveNode);
   const addNode = useScriptEditorStore((state) => state.addNode);
+  const findClosestEdge = useScriptEditorStore(
+    (state) => state.findClosestEdge,
+  );
+  const insertNodeOnEdge = useScriptEditorStore(
+    (state) => state.insertNodeOnEdge,
+  );
   const getScriptData = useScriptEditorStore((state) => state.getScriptData);
   const markSaved = useScriptEditorStore((state) => state.markSaved);
   const addNodeExecutionTime = useScriptEditorStore(
@@ -678,7 +684,18 @@ function ScriptEditorContent() {
         y: position.y - DEFAULT_NODE_HEIGHT / 2,
       };
 
-      addNode(nodeType, centeredPosition, definition.defaultData);
+      // Check if dropping near an existing edge
+      const closestEdge = findClosestEdge(position, 30);
+
+      const newNodeId = addNode(
+        nodeType,
+        centeredPosition,
+        definition.defaultData,
+      );
+
+      if (closestEdge) {
+        insertNodeOnEdge(newNodeId, closestEdge.id);
+      }
     };
 
     document.addEventListener("pointermove", handlePointerMove);
@@ -687,7 +704,14 @@ function ScriptEditorContent() {
       document.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("pointerup", handlePointerUp);
     };
-  }, [dragPreview, reactFlowInstance, addNode, getDefinition]);
+  }, [
+    dragPreview,
+    reactFlowInstance,
+    addNode,
+    getDefinition,
+    findClosestEdge,
+    insertNodeOnEdge,
+  ]);
 
   if (isMobile) {
     return (
