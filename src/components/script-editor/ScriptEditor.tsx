@@ -742,6 +742,7 @@ export function ScriptEditor() {
           onReconnectEnd={handleReconnectEnd}
           colorMode={(resolvedTheme as ColorMode) ?? "dark"}
           fitView
+          minZoom={0.1}
           snapToGrid
           snapGrid={[16, 16]}
           deleteKeyCode={null}
