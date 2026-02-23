@@ -33,6 +33,10 @@
       "type": "Tipe",
       "value": "Nilai",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "Sistem Operasi",
         "platform": "Platform",
         "locale": "Lokal",

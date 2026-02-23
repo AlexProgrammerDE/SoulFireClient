@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "Yenidən xoş gəldin, {{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "Serverin Metrikləri",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPU",
+        "heapUsed": "İstifadə olunan Yığın (Heap)",
+        "threads": "Thread-lər",
+        "botsOnline": "Onlayn Botlar",
+        "uptime": "İşləmə vaxtı"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "CPU İstifadəsi (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "Heap Yaddaşı (MB)"
       },
       "threadCount": {
-        "title": ""
+        "title": "Thread Sayı"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "Botlar Onlinedır (Bütün İnstansiyalar)"
       }
     },
     "instancesChart": {

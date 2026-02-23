@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "Selamat datang kembali, {{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "Metrix Server",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPU",
+        "heapUsed": "Heap Digunakan",
+        "threads": "Thread",
+        "botsOnline": "Bot Online",
+        "uptime": "Waktu Aktif"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "Penggunaan CPU (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "Memori Heap (MB)"
       },
       "threadCount": {
-        "title": ""
+        "title": "Jumlah Thread"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "Bot Online (Semua Instansi)"
       }
     },
     "instancesChart": {

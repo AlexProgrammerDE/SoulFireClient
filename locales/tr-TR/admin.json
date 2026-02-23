@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "Hoş geldiniz, {{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "Sunucu Metrikleri",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPU",
+        "heapUsed": "Kullanılan Yığın",
+        "threads": "İş Parçacıkları",
+        "botsOnline": "Çevrimiçi Botlar",
+        "uptime": "Çalışma Süresi"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "CPU Kullanımı (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "Yığın Bellek (MB)"
       },
       "threadCount": {
-        "title": ""
+        "title": "İş Parçacığı Sayısı"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "Botlar Çevrimiçi (Tüm Sunucular)"
       }
     },
     "instancesChart": {

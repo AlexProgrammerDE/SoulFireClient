@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Аутентификация с помощью кода устройства",
-      "description": "",
-      "start": ""
+      "description": "Настройте параметры перед запуском авторизации с помощью кода устройства.",
+      "start": "Начать аутентификацию"
     },
     "deviceCodeDialog": {
       "title": "Аутентификация с помощью кода устройства",
@@ -177,6 +177,21 @@
       "duplicateError": "Запись с этим пространством имен и ключом уже существует",
       "invalidJson": "Недопустимое значение JSON"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Пространство имён",
+    "keyPlaceholder": "Ключ",
+    "valuePlaceholder": "Значение (JSON)",
+    "noEntries": "Нет метаданных. Добавьте запись выше.",
+    "addSuccess": "Запись добавлена",
+    "addError": "Ошибка добавления записи",
+    "updateError": "Ошибка обновления записи",
+    "deleteSuccess": "Запись удалена",
+    "deleteError": "Не удалось удалить запись",
+    "duplicateError": "Запись с этим пространством имен и ключом уже существует",
+    "invalidJson": "Недопустимое значение JSON"
   },
   "bots": {
     "searchPlaceholder": "Поиск ботов...",

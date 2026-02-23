@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Overenie zariadenia pomocou kódu",
-      "description": "",
-      "start": ""
+      "description": "Nastavte možnosti pred spustením procesu overenia zariadenia.",
+      "start": "Spustiť overenie"
     },
     "deviceCodeDialog": {
       "title": "Overenie zariadenia pomocou kódu",
@@ -177,6 +177,21 @@
       "duplicateError": "Záznam s touto mennou oblasťou a kľúčom už existuje",
       "invalidJson": "Neplatná hodnota JSON"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Menný priestor",
+    "keyPlaceholder": "Kľúč",
+    "valuePlaceholder": "Hodnota (JSON)",
+    "noEntries": "Žiadne záznamy metaúdajov. Pridajte jeden vyššie.",
+    "addSuccess": "Záznam pridaný",
+    "addError": "Záznam sa nepodarilo pridať",
+    "updateError": "Záznam sa nepodarilo aktualizovať",
+    "deleteSuccess": "Záznam bol odstránený",
+    "deleteError": "Zlyhalo odstránenie záznamu",
+    "duplicateError": "Záznam s touto mennou oblasťou a kľúčom už existuje",
+    "invalidJson": "Neplatná hodnota JSON"
   },
   "bots": {
     "searchPlaceholder": "Hľadať botov...",

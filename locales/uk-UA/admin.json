@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "Ласкаво просимо назад, {{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "Метрики сервера",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "ЦП",
+        "heapUsed": "Використана купа",
+        "threads": "Потоки",
+        "botsOnline": "Боти онлайн",
+        "uptime": "Час роботи"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "Використання CPU (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "Оперативна памʼять (MB)"
       },
       "threadCount": {
-        "title": ""
+        "title": "Кількість потоків"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "Ботів онлайн (усі інстанси)"
       }
     },
     "instancesChart": {

@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Authentification avec le code de l'appareil",
-      "description": "",
-      "start": ""
+      "description": "Configurez les options avant de démarrer le flux de code de l'appareil.",
+      "start": "Commencer l'authentification"
     },
     "deviceCodeDialog": {
       "title": "Authentification avec le code de l'appareil",
@@ -177,6 +177,21 @@
       "duplicateError": "Une entrée avec cet espace de noms et cette clé existe déjà",
       "invalidJson": "Valeur JSON invalide"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Espace de noms",
+    "keyPlaceholder": "Clé",
+    "valuePlaceholder": "Valeur (JSON)",
+    "noEntries": "Aucune entrée de métadonnée. Ajoutez-en une ci-dessus.",
+    "addSuccess": "Entrée ajoutée",
+    "addError": "Impossible d'ajouter l'entrée",
+    "updateError": "Impossible de mettre à jour l'entrée",
+    "deleteSuccess": "Entrée supprimée",
+    "deleteError": "Échec de la suppression de l'entrée",
+    "duplicateError": "Une entrée avec cet espace de noms et cette clé existe déjà",
+    "invalidJson": "Valeur JSON invalide"
   },
   "bots": {
     "searchPlaceholder": "Rechercher des bots...",

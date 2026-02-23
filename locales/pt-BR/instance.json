@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Autenticação por Código de Dispositivo",
-      "description": "",
-      "start": ""
+      "description": "Configure as opções antes de iniciar o fluxo de código do dispositivo.",
+      "start": "Iniciar autenticação"
     },
     "deviceCodeDialog": {
       "title": "Autenticação por Código de Dispositivo",
@@ -177,6 +177,21 @@
       "duplicateError": "Já existe uma entrada com este namespace e chave",
       "invalidJson": "Valor JSON inválido"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Namespace",
+    "keyPlaceholder": "Chave",
+    "valuePlaceholder": "Valor (JSON)",
+    "noEntries": "Nenhuma entrada de metadados. Adicione uma acima.",
+    "addSuccess": "Entrada adicionada",
+    "addError": "Falha ao adicionar entrada",
+    "updateError": "Falha ao atualizar entrada",
+    "deleteSuccess": "Entrada excluída",
+    "deleteError": "Falha ao excluir entrada",
+    "duplicateError": "Já existe uma entrada com este namespace e chave",
+    "invalidJson": "Valor JSON inválido"
   },
   "bots": {
     "searchPlaceholder": "Pesquisar bots...",

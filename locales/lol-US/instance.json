@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "DEVIC COD AUTENTIKASHUNZ!11!",
-      "description": "",
-      "start": ""
+      "description": "Settin ur opshuns b4 u start teh devize kode floh.",
+      "start": "STAWT AUTHENTICASHUN"
     },
     "deviceCodeDialog": {
       "title": "DEVIC COD AUTENTIKASHUNZ!11!",
@@ -177,6 +177,21 @@
       "duplicateError": "Dis entry already existz wit dat namespace an key!",
       "invalidJson": "Dis JSON iz borked, fix plz!"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Namspace",
+    "keyPlaceholder": "Key",
+    "valuePlaceholder": "Valoo (JSON)",
+    "noEntries": "No metadata enturiez. Addz one up dere.",
+    "addSuccess": "Entury addzored",
+    "addError": "No can add entury, oh noes!",
+    "updateError": "No can updait entury, sry!",
+    "deleteSuccess": "Entry deletd, kthxbye!",
+    "deleteError": "O NOEZ! Couldn delet entry D:",
+    "duplicateError": "Dis entry already existz wit dat namespace an key!",
+    "invalidJson": "Dis JSON iz borked, fix plz!"
   },
   "bots": {
     "searchPlaceholder": "Serch bots...",

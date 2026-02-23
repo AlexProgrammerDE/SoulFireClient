@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Ověření pomocí kódu zařízení",
-      "description": "",
-      "start": ""
+      "description": "Před zahájením procesu s ověřovacím kódem zařízení nastavte možnosti.",
+      "start": "Spustit ověřování"
     },
     "deviceCodeDialog": {
       "title": "Ověření pomocí kódu zařízení",
@@ -177,6 +177,21 @@
       "duplicateError": "Záznam s tímto jmenným prostorem a klíčem již existuje",
       "invalidJson": "Neplatná hodnota JSON"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Jmenný prostor",
+    "keyPlaceholder": "Klíč",
+    "valuePlaceholder": "Hodnota (JSON)",
+    "noEntries": "Žádné položky metadat. Přidejte jednu výše.",
+    "addSuccess": "Položka byla přidána",
+    "addError": "Nepodařilo se přidat položku",
+    "updateError": "Nepodařilo se aktualizovat položku",
+    "deleteSuccess": "Záznam byl smazán",
+    "deleteError": "Nepodařilo se smazat záznam",
+    "duplicateError": "Záznam s tímto jmenným prostorem a klíčem již existuje",
+    "invalidJson": "Neplatná hodnota JSON"
   },
   "bots": {
     "searchPlaceholder": "Vyhledat boty...",

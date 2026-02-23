@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "디바이스 코드 인증",
-      "description": "",
-      "start": ""
+      "description": "디바이스 코드 플로우를 시작하기 전에 옵션을 구성하세요.",
+      "start": "인증 시작"
     },
     "deviceCodeDialog": {
       "title": "디바이스 코드 인증",
@@ -177,6 +177,21 @@
       "duplicateError": "이 네임스페이스와 키를 가진 항목이 이미 존재합니다.",
       "invalidJson": "잘못된 JSON 값"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "네임스페이스",
+    "keyPlaceholder": "키",
+    "valuePlaceholder": "값 (JSON)",
+    "noEntries": "메타데이터 항목이 없습니다. 위에서 하나 추가하세요.",
+    "addSuccess": "항목이 추가되었습니다",
+    "addError": "항목 추가에 실패하였습니다",
+    "updateError": "항목 수정에 실패하였습니다",
+    "deleteSuccess": "항목이 삭제되었습니다.",
+    "deleteError": "항목 삭제에 실패했습니다.",
+    "duplicateError": "이 네임스페이스와 키를 가진 항목이 이미 존재합니다.",
+    "invalidJson": "잘못된 JSON 값"
   },
   "bots": {
     "searchPlaceholder": "봇 검색...",

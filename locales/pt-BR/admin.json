@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "Bem-vindo de volta, {{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "Métricas do Servidor",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPU",
+        "heapUsed": "Heap Usada",
+        "threads": "Threads",
+        "botsOnline": "Bots Online",
+        "uptime": "Tempo de atividade"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "Uso da CPU (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "Memória Heap (MB)"
       },
       "threadCount": {
-        "title": ""
+        "title": "Contagem de Threads"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "Bots Online (Todas as Instâncias)"
       }
     },
     "instancesChart": {

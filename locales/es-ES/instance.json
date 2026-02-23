@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Autenticación con código de dispositivo",
-      "description": "",
-      "start": ""
+      "description": "Configura las opciones antes de iniciar el flujo de código de dispositivo.",
+      "start": "Iniciar autenticación"
     },
     "deviceCodeDialog": {
       "title": "Autenticación con código de dispositivo",
@@ -177,6 +177,21 @@
       "duplicateError": "Ya existe una entrada con este espacio de nombres y clave",
       "invalidJson": "Valor JSON no válido"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Espacio de nombres",
+    "keyPlaceholder": "Clave",
+    "valuePlaceholder": "Valor (JSON)",
+    "noEntries": "No hay entradas de metadatos. Agregue una arriba.",
+    "addSuccess": "Entrada añadida",
+    "addError": "Error al añadir la entrada",
+    "updateError": "Error al actualizar la entrada",
+    "deleteSuccess": "Entrada eliminada",
+    "deleteError": "Error al eliminar la entrada",
+    "duplicateError": "Ya existe una entrada con este espacio de nombres y clave",
+    "invalidJson": "Valor JSON no válido"
   },
   "bots": {
     "searchPlaceholder": "Buscar bots...",

@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "Vítejte zpět, {{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "Metriky serveru",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPU",
+        "heapUsed": "Využitá hromada",
+        "threads": "Vlákna",
+        "botsOnline": "Boti online",
+        "uptime": "Doba provozu"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "Využití CPU (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "Paměť haldy (MB)"
       },
       "threadCount": {
-        "title": ""
+        "title": "Počet vláken"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "Boti online (všechny instance)"
       }
     },
     "instancesChart": {

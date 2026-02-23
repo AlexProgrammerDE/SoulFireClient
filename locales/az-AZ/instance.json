@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Cihaz Kodu İlə Doğrulama",
-      "description": "",
-      "start": ""
+      "description": "Cihaz kodu axınını başlamazdan əvvəl seçimləri konfiqurasiya edin.",
+      "start": "Doğrulamaya Başla"
     },
     "deviceCodeDialog": {
       "title": "Cihaz Kodu İlə Doğrulama",
@@ -177,6 +177,21 @@
       "duplicateError": "Bu ad sahəsi və açarla giriş artıq mövcuddur",
       "invalidJson": "Yanlış JSON dəyəri"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Məkan (Namespace)",
+    "keyPlaceholder": "Açar",
+    "valuePlaceholder": "Dəyər (JSON)",
+    "noEntries": "Heç bir metadata girişi yoxdur. Yuxarıdan birini əlavə edin.",
+    "addSuccess": "Giriş əlavə olundu",
+    "addError": "Girişi əlavə etmək mümkün olmadı",
+    "updateError": "Girişi yeniləmək mümkün olmadı",
+    "deleteSuccess": "Qeyd silindi",
+    "deleteError": "Qeydi silmək mümkün olmadı",
+    "duplicateError": "Bu ad sahəsi və açarla giriş artıq mövcuddur",
+    "invalidJson": "Yanlış JSON dəyəri"
   },
   "bots": {
     "searchPlaceholder": "Botları axtar...",

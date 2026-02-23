@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Device Code Authentication",
-      "description": "",
-      "start": ""
+      "description": "Set yer options afore ye begin the device code flow, matey!",
+      "start": "Hoist Authentication!"
     },
     "deviceCodeDialog": {
       "title": "Device Code Authentication",
@@ -177,6 +177,21 @@
       "duplicateError": "A trinket with that seaspace and key be 'ere already, arrr!",
       "invalidJson": "That JSON be cursed!"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Namespace o' the Seven Seas",
+    "keyPlaceholder": "Key to the chest",
+    "valuePlaceholder": "Booty Value (JSON)",
+    "noEntries": "No metadata trinkets. Add one up top!",
+    "addSuccess": "Entry stashed!",
+    "addError": "Failed to stash the loot!",
+    "updateError": "Couldn't update that trinket, arrr!",
+    "deleteSuccess": "Trinket tossed overboard!",
+    "deleteError": "Couldn't toss that trinket, mate.",
+    "duplicateError": "A trinket with that seaspace and key be 'ere already, arrr!",
+    "invalidJson": "That JSON be cursed!"
   },
   "bots": {
     "searchPlaceholder": "Search bots, arrr...",

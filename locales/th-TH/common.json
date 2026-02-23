@@ -33,6 +33,10 @@
       "type": "ประเภท",
       "value": "ค่า",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "ระบบปฏิบัติการ",
         "platform": "แพลตฟอร์ม",
         "locale": "ภาษาโลแคล (Locale)",

@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "Tervetuloa takaisin, {{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "Palvelimen mittarit",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "Suoritin",
+        "heapUsed": "Käytetty kasa",
+        "threads": "Säikeet",
+        "botsOnline": "Botit verkossa",
+        "uptime": "Käyttöaika"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "Prosessorin käyttö (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "Kasa-muisti (MB)"
       },
       "threadCount": {
-        "title": ""
+        "title": "Säikeiden määrä"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "Botit verkossa (kaikissa instansseissa)"
       }
     },
     "instancesChart": {

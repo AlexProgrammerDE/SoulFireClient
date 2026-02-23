@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "Välkommen tillbaka, {{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "Serverstatistik​er​/Mätvärden​",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPU",
+        "heapUsed": "Använt heapminne",
+        "threads": "Trådar",
+        "botsOnline": "Bots online",
+        "uptime": "Drifttid"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "CPU-användning (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "Heap-minne (MB)"
       },
       "threadCount": {
-        "title": ""
+        "title": "Trådantal"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "Botar online (alla instanser)"
       }
     },
     "instancesChart": {

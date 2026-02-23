@@ -33,6 +33,10 @@
       "type": "Loại",
       "value": "Giá trị",
       "fields": {
+        "serverVersion": "",
+        "serverCommit": "",
+        "serverBranch": "",
+        "minecraftVersion": "",
         "operatingSystem": "Hệ điều hành",
         "platform": "Nền tảng",
         "locale": "Ngôn ngữ",

@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Аутентифікація за допомогою коду пристрою",
-      "description": "",
-      "start": ""
+      "description": "Налаштуйте параметри перед початком автентифікації через код пристрою.",
+      "start": "Почати автентифікацію"
     },
     "deviceCodeDialog": {
       "title": "Аутентифікація за допомогою коду пристрою",
@@ -177,6 +177,21 @@
       "duplicateError": "Запис із цим простором і ключем вже існує",
       "invalidJson": "Неприпустиме значення JSON"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Простір імен",
+    "keyPlaceholder": "Ключ",
+    "valuePlaceholder": "Значення (JSON)",
+    "noEntries": "Немає записів метаданих. Додайте один вище.",
+    "addSuccess": "Запис додано",
+    "addError": "Не вдалося додати запис",
+    "updateError": "Не вдалося оновити запис",
+    "deleteSuccess": "Запис видалено",
+    "deleteError": "Не вдалося видалити запис",
+    "duplicateError": "Запис із цим простором і ключем вже існує",
+    "invalidJson": "Неприпустиме значення JSON"
   },
   "bots": {
     "searchPlaceholder": "Пошук ботів...",

@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "การยืนยันตัวตนด้วยรหัสอุปกรณ์",
-      "description": "",
-      "start": ""
+      "description": "กำหนดค่าตัวเลือกก่อนเริ่มกระบวนการยืนยันโค้ดบนอุปกรณ์.",
+      "start": "เริ่มการยืนยันตัวตน"
     },
     "deviceCodeDialog": {
       "title": "การยืนยันตัวตนด้วยรหัสอุปกรณ์",
@@ -177,6 +177,21 @@
       "duplicateError": "มีรายการที่ใช้ namespace และคีย์นี้อยู่แล้ว",
       "invalidJson": "ค่า JSON ไม่ถูกต้อง"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "เนมสเปซ",
+    "keyPlaceholder": "คีย์",
+    "valuePlaceholder": "ค่า (JSON)",
+    "noEntries": "ไม่มีรายการข้อมูลเมตา กรุณาเพิ่มรายการด้านบน",
+    "addSuccess": "เพิ่มรายการแล้ว",
+    "addError": "ไม่สามารถเพิ่มรายการได้",
+    "updateError": "ไม่สามารถอัปเดตรายการได้",
+    "deleteSuccess": "ลบรายการเรียบร้อยแล้ว",
+    "deleteError": "ลบรายการไม่สำเร็จ",
+    "duplicateError": "มีรายการที่ใช้ namespace และคีย์นี้อยู่แล้ว",
+    "invalidJson": "ค่า JSON ไม่ถูกต้อง"
   },
   "bots": {
     "searchPlaceholder": "ค้นหาบ็อต...",

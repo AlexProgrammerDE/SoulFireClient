@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Gerätecode-Authentifizierung",
-      "description": "",
-      "start": ""
+      "description": "Optionen konfigurieren, bevor der Gerätecode-Flow gestartet wird.",
+      "start": "Authentifizierung starten"
     },
     "deviceCodeDialog": {
       "title": "Gerätecode-Authentifizierung",
@@ -177,6 +177,21 @@
       "duplicateError": "Ein Eintrag mit diesem Namensraum und Schlüssel existiert bereits",
       "invalidJson": "Ungültiger JSON-Wert"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Namensraum",
+    "keyPlaceholder": "Schlüssel",
+    "valuePlaceholder": "Wert (JSON)",
+    "noEntries": "Keine Metadaten-Einträge. Fügen Sie oben einen hinzu.",
+    "addSuccess": "Eintrag hinzugefügt",
+    "addError": "Eintrag konnte nicht hinzugefügt werden",
+    "updateError": "Eintrag konnte nicht aktualisiert werden",
+    "deleteSuccess": "Eintrag gelöscht",
+    "deleteError": "Fehler beim Löschen des Eintrags",
+    "duplicateError": "Ein Eintrag mit diesem Namensraum und Schlüssel existiert bereits",
+    "invalidJson": "Ungültiger JSON-Wert"
   },
   "bots": {
     "searchPlaceholder": "Bots suchen...",

@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "欢迎回来, {{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "服务器指标",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPU",
+        "heapUsed": "已用堆内存",
+        "threads": "线程数",
+        "botsOnline": "机器人在线",
+        "uptime": "运行时间"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "CPU使用率（%）"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "堆内存（MB）"
       },
       "threadCount": {
-        "title": ""
+        "title": "线程数"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "机器人在线（所有实例）"
       }
     },
     "instancesChart": {

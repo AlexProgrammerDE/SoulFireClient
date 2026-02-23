@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "다시 오신 것을 환영합니다, {{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "서버 메트릭스(지표)",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPU",
+        "heapUsed": "사용된 힙",
+        "threads": "스레드",
+        "botsOnline": "온라인 봇",
+        "uptime": "가동 시간"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "CPU 사용량 (%)"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "힙 메모리 (MB)"
       },
       "threadCount": {
-        "title": ""
+        "title": "스레드 수"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "온라인 봇 (모든 인스턴스)"
       }
     },
     "instancesChart": {

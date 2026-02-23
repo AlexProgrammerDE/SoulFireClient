@@ -2,25 +2,25 @@
   "overview": {
     "welcome": "おかえりなさい、{{name}} 🧙",
     "serverMetrics": {
-      "sectionTitle": "",
+      "sectionTitle": "サーバーメトリクス",
       "summary": {
-        "cpu": "",
-        "heapUsed": "",
-        "threads": "",
-        "botsOnline": "",
-        "uptime": ""
+        "cpu": "CPU",
+        "heapUsed": "ヒープ使用量",
+        "threads": "スレッド",
+        "botsOnline": "オンライン中のボット",
+        "uptime": "稼働時間"
       },
       "cpuUsage": {
-        "title": ""
+        "title": "CPU使用率（％）"
       },
       "memoryUsage": {
-        "title": ""
+        "title": "ヒープメモリ（MB）"
       },
       "threadCount": {
-        "title": ""
+        "title": "スレッド数"
       },
       "aggregateBots": {
-        "title": ""
+        "title": "Botオンライン数（全インスタンス）"
       }
     },
     "instancesChart": {

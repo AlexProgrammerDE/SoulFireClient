@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Otentikasi Kode Perangkat",
-      "description": "",
-      "start": ""
+      "description": "Konfigurasikan opsi sebelum memulai alur kode perangkat.",
+      "start": "Mulai Otentikasi"
     },
     "deviceCodeDialog": {
       "title": "Otentikasi Kode Perangkat",
@@ -177,6 +177,21 @@
       "duplicateError": "Entri dengan namespace dan kunci ini sudah ada",
       "invalidJson": "Nilai JSON tidak valid"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Namespace",
+    "keyPlaceholder": "Kunci",
+    "valuePlaceholder": "Nilai (JSON)",
+    "noEntries": "Tidak ada entri metadata. Tambahkan satu di atas.",
+    "addSuccess": "Entri berhasil ditambahkan",
+    "addError": "Gagal menambahkan entri",
+    "updateError": "Gagal memperbarui entri",
+    "deleteSuccess": "Entri dihapus",
+    "deleteError": "Gagal menghapus entri",
+    "duplicateError": "Entri dengan namespace dan kunci ini sudah ada",
+    "invalidJson": "Nilai JSON tidak valid"
   },
   "bots": {
     "searchPlaceholder": "Cari bot...",

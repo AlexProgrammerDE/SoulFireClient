@@ -150,8 +150,8 @@
     },
     "deviceCodeConfirmDialog": {
       "title": "Enhetskodautentisering",
-      "description": "",
-      "start": ""
+      "description": "Konfigurera alternativen innan du startar flödet för enhetskod.",
+      "start": "Starta autentisering"
     },
     "deviceCodeDialog": {
       "title": "Enhetskodautentisering",
@@ -177,6 +177,21 @@
       "duplicateError": "En post med detta namnrymd och nyckel finns redan",
       "invalidJson": "Ogiltigt JSON-värde"
     }
+  },
+  "instanceMetadata": {
+    "title": "",
+    "description": "",
+    "namespacePlaceholder": "Namnområde",
+    "keyPlaceholder": "Nyckel",
+    "valuePlaceholder": "Värde (JSON)",
+    "noEntries": "Inga metadata-poster. Lägg till en ovan.",
+    "addSuccess": "Post tillagd",
+    "addError": "Misslyckades med att lägga till posten",
+    "updateError": "Misslyckades med att uppdatera posten",
+    "deleteSuccess": "Post borttagen",
+    "deleteError": "Misslyckades med att ta bort posten",
+    "duplicateError": "En post med detta namnrymd och nyckel finns redan",
+    "invalidJson": "Ogiltigt JSON-värde"
   },
   "bots": {
     "searchPlaceholder": "Sök bland botar...",
