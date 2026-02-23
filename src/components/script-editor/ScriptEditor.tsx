@@ -2,6 +2,7 @@ import {
   Background,
   BackgroundVariant,
   type ColorMode,
+  type Connection,
   Controls,
   type Edge,
   MiniMap,
@@ -44,6 +45,7 @@ export function ScriptEditor() {
   const onNodesChange = useScriptEditorStore((state) => state.onNodesChange);
   const onEdgesChange = useScriptEditorStore((state) => state.onEdgesChange);
   const onConnect = useScriptEditorStore((state) => state.onConnect);
+  const storeOnReconnect = useScriptEditorStore((state) => state.onReconnect);
   const updateNodeData = useScriptEditorStore((state) => state.updateNodeData);
   const setSelectedNode = useScriptEditorStore(
     (state) => state.setSelectedNode,
@@ -673,6 +675,32 @@ export function ScriptEditor() {
     [visibleNodes],
   );
 
+  // Edge reconnection: drag an edge to move it, drop on empty to delete
+  const edgeReconnectSuccessful = useRef(true);
+
+  const handleReconnectStart = useCallback(() => {
+    edgeReconnectSuccessful.current = false;
+  }, []);
+
+  const handleReconnect = useCallback(
+    (oldEdge: Edge, newConnection: Connection) => {
+      edgeReconnectSuccessful.current = true;
+      storeOnReconnect(oldEdge, newConnection);
+    },
+    [storeOnReconnect],
+  );
+
+  const handleReconnectEnd = useCallback(
+    (_: MouseEvent | TouchEvent, edge: Edge) => {
+      if (!edgeReconnectSuccessful.current) {
+        // Dropped on empty space: delete the edge
+        onEdgesChange([{ id: edge.id, type: "remove" }]);
+      }
+      edgeReconnectSuccessful.current = true;
+    },
+    [onEdgesChange],
+  );
+
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: ReactFlow canvas wrapper requires keyboard and mouse handling for operations
     <div
@@ -708,6 +736,10 @@ export function ScriptEditor() {
           onEdgeContextMenu={handleEdgeContextMenu}
           onPaneClick={handlePaneClick}
           isValidConnection={connectionValidator}
+          edgesReconnectable
+          onReconnectStart={handleReconnectStart}
+          onReconnect={handleReconnect}
+          onReconnectEnd={handleReconnectEnd}
           colorMode={(resolvedTheme as ColorMode) ?? "dark"}
           fitView
           snapToGrid

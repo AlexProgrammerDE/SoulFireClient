@@ -2,12 +2,14 @@ import {
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
+  type Connection,
   type Edge,
   MarkerType,
   type Node,
   type OnConnect,
   type OnEdgesChange,
   type OnNodesChange,
+  reconnectEdge,
   type XYPosition,
 } from "@xyflow/react";
 import { create } from "zustand";
@@ -15,6 +17,7 @@ import {
   getEdgeStyle,
   getNodeDefinition,
   getPortTypeFromDefinition,
+  isPortMultiInput,
   isTypeCompatible,
   type PortType,
 } from "@/components/script-editor/nodes/types";
@@ -82,6 +85,7 @@ export interface ScriptEditorState {
   onNodesChange: OnNodesChange;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
+  onReconnect: (oldEdge: Edge, newConnection: Connection) => void;
   addNode: (
     type: string,
     position: XYPosition,
@@ -386,7 +390,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
 
   onConnect: (connection) => {
     // Look up port type from node definition
-    const { nodes } = get();
+    const { nodes, edges } = get();
     const sourcePortType = getPortTypeForNode(
       nodes,
       connection.source,
@@ -397,6 +401,21 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     // Execution edges use "animated" style, data edges use "default"
     const isExecutionStyle = edgeStyle === "animated";
     const edgeType = isExecutionStyle ? "execution" : "data";
+
+    // Auto-replace: remove existing edge on non-multiInput target
+    const targetNode = nodes.find((n) => n.id === connection.target);
+    let baseEdges = edges;
+    if (targetNode && connection.targetHandle) {
+      if (!isPortMultiInput(targetNode.type ?? "", connection.targetHandle)) {
+        baseEdges = edges.filter(
+          (e) =>
+            !(
+              e.target === connection.target &&
+              e.targetHandle === connection.targetHandle
+            ),
+        );
+      }
+    }
 
     set({
       edges: addEdge(
@@ -413,8 +432,15 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
             },
           }),
         },
-        get().edges,
+        baseEdges,
       ),
+      isDirty: true,
+    });
+  },
+
+  onReconnect: (oldEdge, newConnection) => {
+    set({
+      edges: reconnectEdge(oldEdge, newConnection, get().edges),
       isDirty: true,
     });
   },

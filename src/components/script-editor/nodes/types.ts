@@ -314,6 +314,16 @@ export function isExecutionPort(nodeType: string, portId: string): boolean {
 }
 
 /**
+ * Check if a port accepts multiple connections.
+ */
+export function isPortMultiInput(nodeType: string, portId: string): boolean {
+  const def = nodeDefinitionsByType.get(nodeType);
+  if (!def) return false;
+  const input = def.inputs.find((p) => p.id === portId);
+  return input?.multiInput === true;
+}
+
+/**
  * Convert proto HandleShape enum to local string type
  */
 function protoHandleShapeToLocal(protoShape: ProtoHandleShape): HandleShape {
