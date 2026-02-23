@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { cn } from "@/lib/utils";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
 import { useNodeTypes } from "./NodeTypesContext";
@@ -22,6 +23,7 @@ export function QuickAddMenu() {
   const [search, setSearch] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const isMobile = useIsMobile();
 
   const quickAddMenu = useScriptEditorStore((s) => s.quickAddMenu);
   const closeQuickAddMenu = useScriptEditorStore((s) => s.closeQuickAddMenu);
@@ -210,12 +212,19 @@ export function QuickAddMenu() {
 
       {/* Menu */}
       <div
-        className="fixed z-50 w-72 rounded-lg border bg-popover shadow-lg"
-        style={{
-          left: quickAddMenu.screenPosition.x,
-          top: quickAddMenu.screenPosition.y,
-          maxHeight: "400px",
-        }}
+        className={cn(
+          "fixed z-50 rounded-lg border bg-popover shadow-lg",
+          isMobile ? "inset-x-4 bottom-4" : "w-72",
+        )}
+        style={
+          isMobile
+            ? { maxHeight: "50vh" }
+            : {
+                left: quickAddMenu.screenPosition.x,
+                top: quickAddMenu.screenPosition.y,
+                maxHeight: "400px",
+              }
+        }
         onKeyDown={handleKeyDown}
         role="dialog"
         aria-label="Quick add node menu"
@@ -243,7 +252,7 @@ export function QuickAddMenu() {
         </div>
 
         {/* Node list */}
-        <ScrollArea className="h-[300px]">
+        <ScrollArea className={isMobile ? "max-h-[40vh]" : "h-[300px]"}>
           <div className="p-1">
             {flatList.length === 0 ? (
               <div className="py-4 text-center text-sm text-muted-foreground">

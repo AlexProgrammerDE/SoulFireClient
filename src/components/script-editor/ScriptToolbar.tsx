@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import {
   ArrowLeftIcon,
   DownloadIcon,
+  EllipsisVerticalIcon,
   LoaderCircleIcon,
   PauseIcon,
   PlayIcon,
@@ -16,6 +17,13 @@ import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 import {
@@ -23,6 +31,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip.tsx";
+import { useIsMobile } from "@/hooks/use-mobile.ts";
 import { cn } from "@/lib/utils.tsx";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 import { ComplexityScore } from "./ComplexityScore";
@@ -55,6 +64,7 @@ export function ScriptToolbar({
   className,
 }: ScriptToolbarProps) {
   const { t } = useTranslation("instance");
+  const isMobile = useIsMobile();
   const scriptName = useScriptEditorStore((state) => state.scriptName);
   const setScriptName = useScriptEditorStore((state) => state.setScriptName);
   const scriptDescription = useScriptEditorStore(
@@ -169,17 +179,22 @@ export function ScriptToolbar({
         </Link>
       </Button>
 
-      <Separator orientation="vertical" className="h-6 my-auto" />
+      {!isMobile && (
+        <Separator orientation="vertical" className="h-6 my-auto" />
+      )}
 
       {/* Script Name */}
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 min-w-0">
         {isEditingName ? (
           <Input
             value={editedName}
             onChange={(e) => setEditedName(e.target.value)}
             onBlur={handleNameSubmit}
             onKeyDown={handleNameKeyDown}
-            className="h-7 w-48 text-sm font-medium"
+            className={cn(
+              "h-7 text-sm font-medium",
+              isMobile ? "w-24" : "w-48",
+            )}
             autoFocus
           />
         ) : (
@@ -189,9 +204,12 @@ export function ScriptToolbar({
               setIsEditingName(true);
               setEditedName(scriptName);
             }}
-            className="flex items-center gap-1 rounded px-2 py-1 text-sm font-medium transition-colors hover:bg-muted"
+            className={cn(
+              "flex items-center gap-1 rounded px-2 py-1 text-sm font-medium transition-colors hover:bg-muted",
+              isMobile && "max-w-24",
+            )}
           >
-            <span>{scriptName}</span>
+            <span className={cn(isMobile && "truncate")}>{scriptName}</span>
             {isDirty && (
               <span className="text-muted-foreground" title="Unsaved changes">
                 *
@@ -199,33 +217,35 @@ export function ScriptToolbar({
             )}
           </button>
         )}
-        {isDirty && !isEditingName && (
+        {!isMobile && isDirty && !isEditingName && (
           <Badge variant="secondary" className="shrink-0 text-xs">
             {t("scripts.editor.toolbar.unsaved")}
           </Badge>
         )}
-        <ComplexityScore />
+        {!isMobile && <ComplexityScore />}
       </div>
 
-      <Separator orientation="vertical" className="h-6 my-auto" />
+      {!isMobile && (
+        <Separator orientation="vertical" className="h-6 my-auto" />
+      )}
 
-      {/* Save Button + Diff */}
-      <ScriptDiffDialog />
+      {/* Save Button + Diff (diff hidden on mobile) */}
+      {!isMobile && <ScriptDiffDialog />}
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
             variant="outline"
-            size="sm"
+            size={isMobile ? "icon" : "sm"}
             onClick={onSave}
             disabled={isSaving || !isDirty}
-            className="gap-1.5"
+            className={cn(!isMobile && "gap-1.5")}
           >
             {isSaving ? (
               <LoaderCircleIcon className="size-4 animate-spin" />
             ) : (
               <SaveIcon className="size-4" />
             )}
-            {t("scripts.editor.toolbar.save")}
+            {!isMobile && t("scripts.editor.toolbar.save")}
           </Button>
         </TooltipTrigger>
         <TooltipContent>
@@ -233,7 +253,9 @@ export function ScriptToolbar({
         </TooltipContent>
       </Tooltip>
 
-      <Separator orientation="vertical" className="h-6 my-auto" />
+      {!isMobile && (
+        <Separator orientation="vertical" className="h-6 my-auto" />
+      )}
 
       {/* Execution Controls */}
       <div className="flex items-center gap-1">
@@ -242,12 +264,12 @@ export function ScriptToolbar({
             <TooltipTrigger asChild>
               <Button
                 variant="outline"
-                size="sm"
+                size={isMobile ? "icon" : "sm"}
                 onClick={onStart}
-                className="gap-1.5"
+                className={cn(!isMobile && "gap-1.5")}
               >
                 <PlayIcon className="size-4" />
-                {t("scripts.editor.toolbar.resume")}
+                {!isMobile && t("scripts.editor.toolbar.resume")}
               </Button>
             </TooltipTrigger>
             <TooltipContent>
@@ -260,110 +282,166 @@ export function ScriptToolbar({
               <TooltipTrigger asChild>
                 <Button
                   variant="outline"
-                  size="sm"
+                  size={isMobile ? "icon" : "sm"}
                   onClick={onStop}
-                  className="gap-1.5"
+                  className={cn(!isMobile && "gap-1.5")}
                 >
                   <PauseIcon className="size-4" />
-                  {t("scripts.editor.toolbar.pause")}
+                  {!isMobile && t("scripts.editor.toolbar.pause")}
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
                 <p>{t("scripts.editor.toolbar.pauseTooltip")}</p>
               </TooltipContent>
             </Tooltip>
-            <Badge variant="default" className="gap-1.5 bg-green-600">
-              <div className="size-2 animate-pulse rounded-full bg-white" />
-              {t("scripts.running")}
-            </Badge>
+            {!isMobile && (
+              <Badge variant="default" className="gap-1.5 bg-green-600">
+                <div className="size-2 animate-pulse rounded-full bg-white" />
+                {t("scripts.running")}
+              </Badge>
+            )}
           </>
         )}
-        <DryRunDialog />
+        {!isMobile && <DryRunDialog />}
       </div>
 
       <div className="flex-1" />
 
-      {/* Export/Import */}
-      <div className="flex items-center gap-1">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button variant="ghost" size="icon" onClick={handleExport}>
-              <DownloadIcon className="size-4" />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{t("scripts.editor.toolbar.export")}</p>
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <TooltipTrigger asChild>
+      {isMobile ? (
+        /* Mobile: Overflow dropdown menu */
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon">
+                <EllipsisVerticalIcon className="size-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={handleExport}>
+                <DownloadIcon className="size-4" />
+                {t("scripts.editor.toolbar.export")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => fileInputRef.current?.click()}>
+                <UploadIcon className="size-4" />
+                {t("scripts.editor.toolbar.import")}
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={onZoomIn}>
+                <ZoomInIcon className="size-4" />
+                {t("scripts.editor.toolbar.zoomIn")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={onZoomOut}>
+                <ZoomOutIcon className="size-4" />
+                {t("scripts.editor.toolbar.zoomOut")}
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={onFitView}>
+                {t("scripts.editor.toolbar.fit")}
+              </DropdownMenuItem>
+              {onClear && (
+                <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={onClear}>
+                    <Trash2Icon className="size-4" />
+                    {t("scripts.editor.toolbar.clearCanvas")}
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json,.soulfire-script.json"
+            onChange={handleImport}
+            className="hidden"
+          />
+        </>
+      ) : (
+        /* Desktop: Full toolbar */
+        <>
+          {/* Export/Import */}
+          <div className="flex items-center gap-1">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="ghost" size="icon" onClick={handleExport}>
+                  <DownloadIcon className="size-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("scripts.editor.toolbar.export")}</p>
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => fileInputRef.current?.click()}
+                >
+                  <UploadIcon className="size-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{t("scripts.editor.toolbar.import")}</p>
+              </TooltipContent>
+            </Tooltip>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".json,.soulfire-script.json"
+              onChange={handleImport}
+              className="hidden"
+            />
+          </div>
+
+          <Separator orientation="vertical" className="h-6 my-auto" />
+
+          {/* Clear Button */}
+          {onClear && (
+            <>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button variant="ghost" size="icon" onClick={onClear}>
+                    <Trash2Icon className="size-4" />
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t("scripts.editor.toolbar.clearCanvas")}</p>
+                </TooltipContent>
+              </Tooltip>
+              <Separator orientation="vertical" className="h-6 my-auto" />
+            </>
+          )}
+
+          {/* Zoom Controls */}
+          <div className="flex items-center gap-1">
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => fileInputRef.current?.click()}
+              onClick={onZoomOut}
+              title={t("scripts.editor.toolbar.zoomOut")}
             >
-              <UploadIcon className="size-4" />
+              <ZoomOutIcon className="size-4" />
             </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>{t("scripts.editor.toolbar.import")}</p>
-          </TooltipContent>
-        </Tooltip>
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept=".json,.soulfire-script.json"
-          onChange={handleImport}
-          className="hidden"
-        />
-      </div>
-
-      <Separator orientation="vertical" className="h-6 my-auto" />
-
-      {/* Clear Button */}
-      {onClear && (
-        <>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="ghost" size="icon" onClick={onClear}>
-                <Trash2Icon className="size-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{t("scripts.editor.toolbar.clearCanvas")}</p>
-            </TooltipContent>
-          </Tooltip>
-          <Separator orientation="vertical" className="h-6 my-auto" />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onZoomIn}
+              title={t("scripts.editor.toolbar.zoomIn")}
+            >
+              <ZoomInIcon className="size-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onFitView}
+              className="text-xs"
+            >
+              {t("scripts.editor.toolbar.fit")}
+            </Button>
+          </div>
         </>
       )}
-
-      {/* Zoom Controls */}
-      <div className="flex items-center gap-1">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onZoomOut}
-          title={t("scripts.editor.toolbar.zoomOut")}
-        >
-          <ZoomOutIcon className="size-4" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={onZoomIn}
-          title={t("scripts.editor.toolbar.zoomIn")}
-        >
-          <ZoomInIcon className="size-4" />
-        </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={onFitView}
-          className="text-xs"
-        >
-          {t("scripts.editor.toolbar.fit")}
-        </Button>
-      </div>
     </div>
   );
 }

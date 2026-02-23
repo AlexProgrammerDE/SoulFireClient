@@ -16,6 +16,7 @@ import { useNodeTranslations } from "./useNodeTranslations";
 
 interface NodePaletteProps {
   onNodeDragStart?: (nodeType: string, x: number, y: number) => void;
+  onNodeTap?: (nodeType: string) => void;
   className?: string;
 }
 
@@ -23,13 +24,30 @@ interface DraggableNodeItemProps {
   node: NodeDefinition;
   nodeLabel: string;
   onDragStart?: (nodeType: string, x: number, y: number) => void;
+  onTap?: (nodeType: string) => void;
 }
 
 function DraggableNodeItem({
   node,
   nodeLabel,
   onDragStart,
+  onTap,
 }: DraggableNodeItemProps) {
+  if (onTap) {
+    // Mobile mode: tap to add instead of drag
+    return (
+      <button
+        type="button"
+        title={node.description}
+        onClick={() => onTap(node.type)}
+        className="group flex cursor-pointer items-center gap-2 rounded-md border border-transparent bg-muted/50 px-2 py-1.5 text-sm select-none transition-colors hover:border-border hover:bg-muted"
+      >
+        <DynamicIcon name={node.icon} className="size-4 shrink-0" />
+        <span className="truncate">{nodeLabel}</span>
+      </button>
+    );
+  }
+
   return (
     // biome-ignore lint/a11y/useSemanticElements: drag source requires div for proper pointer behavior
     <div
@@ -56,6 +74,7 @@ interface CategorySectionProps {
   getNodeLabel: (node: NodeDefinition) => string;
   defaultOpen?: boolean;
   onNodeDragStart?: (nodeType: string, x: number, y: number) => void;
+  onNodeTap?: (nodeType: string) => void;
 }
 
 function CategorySection({
@@ -65,6 +84,7 @@ function CategorySection({
   getNodeLabel,
   defaultOpen = true,
   onNodeDragStart,
+  onNodeTap,
 }: CategorySectionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
@@ -99,6 +119,7 @@ function CategorySection({
               node={node}
               nodeLabel={getNodeLabel(node)}
               onDragStart={onNodeDragStart}
+              onTap={onNodeTap}
             />
           ))}
         </div>
@@ -107,7 +128,11 @@ function CategorySection({
   );
 }
 
-export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
+export function NodePalette({
+  onNodeDragStart,
+  onNodeTap,
+  className,
+}: NodePaletteProps) {
   const { t } = useTranslation("instance");
   const { getNodeLabel, getCategoryName } = useNodeTranslations();
   const {
@@ -186,6 +211,7 @@ export function NodePalette({ onNodeDragStart, className }: NodePaletteProps) {
                 getNodeLabel={getNodeLabel}
                 defaultOpen={!searchQuery}
                 onNodeDragStart={onNodeDragStart}
+                onNodeTap={onNodeTap}
               />
             );
           })}

@@ -5,6 +5,7 @@ import {
 } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ReactFlowProvider, useReactFlow } from "@xyflow/react";
+import { PlusIcon, ScrollTextIcon } from "lucide-react";
 import { Suspense, use, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
@@ -20,14 +21,29 @@ import {
 } from "@/components/script-editor/NodeTypesContext.tsx";
 import { ScriptEditor } from "@/components/script-editor/ScriptEditor.tsx";
 import { ScriptToolbar } from "@/components/script-editor/ScriptToolbar.tsx";
+import { Button } from "@/components/ui/button.tsx";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer.tsx";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable.tsx";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { DiagnosticSeverity } from "@/generated/soulfire/script";
 import { ScriptServiceClient } from "@/generated/soulfire/script.client";
+import { useIsMobile } from "@/hooks/use-mobile.ts";
 import {
   edgesToProto,
   nodesToProto,
@@ -153,9 +169,13 @@ function ScriptEditorContent() {
     (state) => state.setExecutionStats,
   );
 
+  const isMobile = useIsMobile();
+
   // Local state
   const [isSaving, setIsSaving] = useState(false);
   const [logs, setLogs] = useState<LogEntry[]>([]);
+  const [nodePaletteOpen, setNodePaletteOpen] = useState(false);
+  const [executionLogsOpen, setExecutionLogsOpen] = useState(false);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const executionAbortRef = useRef<AbortController | null>(null);
   // Pointer-based drag state (replaces HTML5 DnD which is broken in WebView2)
@@ -590,6 +610,32 @@ function ScriptEditorContent() {
     [getDefinition],
   );
 
+  // Mobile: tap a node in the palette to add it at viewport center
+  const handleMobileNodeAdd = useCallback(
+    (nodeType: string) => {
+      const definition = getDefinition(nodeType);
+      if (!definition) return;
+
+      const wrapper = reactFlowWrapper.current;
+      if (!wrapper) return;
+
+      const rect = wrapper.getBoundingClientRect();
+      const position = reactFlowInstance.screenToFlowPosition({
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2,
+      });
+
+      const centeredPosition = {
+        x: position.x - DEFAULT_NODE_WIDTH / 2,
+        y: position.y - DEFAULT_NODE_HEIGHT / 2,
+      };
+
+      addNode(nodeType, centeredPosition, definition.defaultData);
+      setNodePaletteOpen(false);
+    },
+    [reactFlowInstance, addNode, getDefinition],
+  );
+
   useEffect(() => {
     if (!dragPreview) return;
 
@@ -642,6 +688,87 @@ function ScriptEditorContent() {
       document.removeEventListener("pointerup", handlePointerUp);
     };
   }, [dragPreview, reactFlowInstance, addNode, getDefinition]);
+
+  if (isMobile) {
+    return (
+      <div className="flex h-full w-full flex-col">
+        {/* Compact Toolbar */}
+        <ScriptToolbar
+          instanceId={instanceId}
+          onSave={handleSave}
+          onStart={handleStart}
+          onStop={handleStop}
+          onZoomIn={handleZoomIn}
+          onZoomOut={handleZoomOut}
+          onFitView={handleFitView}
+          isSaving={isSaving}
+        />
+
+        {/* Full-screen canvas */}
+        <div className="relative flex-1">
+          <div
+            role="application"
+            ref={reactFlowWrapper}
+            className="h-full w-full"
+          >
+            <ScriptEditor />
+          </div>
+
+          {/* Floating action buttons */}
+          <div className="absolute bottom-4 right-4 z-10 flex flex-col gap-2">
+            <Button
+              size="icon"
+              className="size-12 rounded-full shadow-lg"
+              onClick={() => setNodePaletteOpen(true)}
+            >
+              <PlusIcon className="size-5" />
+              <span className="sr-only">
+                {tInstance("scripts.editor.palette.title")}
+              </span>
+            </Button>
+            <Button
+              size="icon"
+              variant="secondary"
+              className="size-12 rounded-full shadow-lg"
+              onClick={() => setExecutionLogsOpen(true)}
+            >
+              <ScrollTextIcon className="size-5" />
+              <span className="sr-only">
+                {tInstance("scripts.editor.logs.title")}
+              </span>
+            </Button>
+          </div>
+        </div>
+
+        {/* Node Palette Sheet (left) */}
+        <Sheet open={nodePaletteOpen} onOpenChange={setNodePaletteOpen}>
+          <SheetContent side="left" className="w-[80vw] p-0">
+            <SheetHeader className="sr-only">
+              <SheetTitle>
+                {tInstance("scripts.editor.palette.title")}
+              </SheetTitle>
+              <SheetDescription>
+                {tInstance("scripts.editor.palette.title")}
+              </SheetDescription>
+            </SheetHeader>
+            <NodePalette onNodeTap={handleMobileNodeAdd} />
+          </SheetContent>
+        </Sheet>
+
+        {/* Execution Logs Drawer (bottom) */}
+        <Drawer open={executionLogsOpen} onOpenChange={setExecutionLogsOpen}>
+          <DrawerContent className="max-h-[50vh]">
+            <DrawerHeader className="sr-only">
+              <DrawerTitle>
+                {tInstance("scripts.editor.logs.title")}
+              </DrawerTitle>
+            </DrawerHeader>
+            <ExecutionLogs logs={logs} onClearLogs={handleClearLogs} />
+          </DrawerContent>
+        </Drawer>
+      </div>
+    );
+  }
 
   return (
     <div className="flex h-full w-full flex-col">

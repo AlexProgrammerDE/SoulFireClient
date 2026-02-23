@@ -625,10 +625,11 @@ export function ScriptEditor() {
     setNodeContextMenu(null);
   }, []);
 
-  // Handle mouse down for link cutting (Alt+drag)
-  // Note: React Flow doesn't provide onPaneMouseDown, so we use the wrapper div
-  const handleMouseDown = useCallback(
-    (event: React.MouseEvent) => {
+  // Handle pointer down for link cutting (Alt+drag)
+  // Uses pointer events instead of mouse events to support touch/stylus
+  // Note: React Flow doesn't provide onPanePointerDown, so we use the wrapper div
+  const handlePointerDown = useCallback(
+    (event: React.PointerEvent) => {
       if (event.altKey && event.button === 0 && reactFlowInstance) {
         event.preventDefault();
         const flowPosition = reactFlowInstance.screenToFlowPosition({
@@ -641,9 +642,9 @@ export function ScriptEditor() {
     [reactFlowInstance, startLinkCutting],
   );
 
-  // Handle mouse move for link cutting
-  const handleMouseMove = useCallback(
-    (event: React.MouseEvent) => {
+  // Handle pointer move for link cutting
+  const handlePointerMove = useCallback(
+    (event: React.PointerEvent) => {
       if (linkCutting.active && reactFlowInstance) {
         const flowPosition = reactFlowInstance.screenToFlowPosition({
           x: event.clientX,
@@ -655,8 +656,8 @@ export function ScriptEditor() {
     [linkCutting.active, reactFlowInstance, updateLinkCutting],
   );
 
-  // Handle mouse up for link cutting
-  const handleMouseUp = useCallback(() => {
+  // Handle pointer up for link cutting
+  const handlePointerUp = useCallback(() => {
     if (linkCutting.active) {
       endLinkCutting();
     }
@@ -680,9 +681,9 @@ export function ScriptEditor() {
       onKeyDown={handleKeyDown}
       onCopy={handleCopy}
       onPaste={handlePaste}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
+      onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
     >
       <NodeEditingProvider
         edges={visibleEdges}
