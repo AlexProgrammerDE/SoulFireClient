@@ -25,6 +25,9 @@ import {
 } from "@/components/ui/tooltip.tsx";
 import { cn } from "@/lib/utils.tsx";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
+import { ComplexityScore } from "./ComplexityScore";
+import { DryRunDialog } from "./DryRunDialog";
+import { ScriptDiffDialog } from "./ScriptDiffDialog";
 
 interface ScriptToolbarProps {
   instanceId: string;
@@ -201,11 +204,13 @@ export function ScriptToolbar({
             {t("scripts.editor.toolbar.unsaved")}
           </Badge>
         )}
+        <ComplexityScore />
       </div>
 
       <Separator orientation="vertical" className="h-6 my-auto" />
 
-      {/* Save Button */}
+      {/* Save Button + Diff */}
+      <ScriptDiffDialog />
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
@@ -273,6 +278,7 @@ export function ScriptToolbar({
             </Badge>
           </>
         )}
+        <DryRunDialog />
       </div>
 
       <div className="flex-1" />

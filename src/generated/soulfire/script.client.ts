@@ -19,6 +19,7 @@ import type {
   DeactivateScriptResponse,
   DeleteScriptRequest,
   DeleteScriptResponse,
+  DryRunScriptRequest,
   GetNodeTypesRequest,
   GetNodeTypesResponse,
   GetRegistryDataRequest,
@@ -34,6 +35,8 @@ import type {
   SubscribeScriptLogsRequest,
   UpdateScriptRequest,
   UpdateScriptResponse,
+  ValidateScriptRequest,
+  ValidateScriptResponse,
 } from "./script";
 import { ScriptService } from "./script";
 /**
@@ -213,6 +216,28 @@ export interface IScriptServiceClient {
     input: GetRegistryDataRequest,
     options?: RpcOptions,
   ): UnaryCall<GetRegistryDataRequest, GetRegistryDataResponse>;
+  /**
+   * Validates a script graph without saving it.
+   * Returns all diagnostics (errors and warnings) for the given nodes and edges.
+   * Useful for live validation in the editor without requiring a save.
+   *
+   * @generated from protobuf rpc: ValidateScript
+   */
+  validateScript(
+    input: ValidateScriptRequest,
+    options?: RpcOptions,
+  ): UnaryCall<ValidateScriptRequest, ValidateScriptResponse>;
+  /**
+   * Dry-runs a script from a specified trigger with mock inputs.
+   * Executes the graph without requiring an active instance.
+   * Returns execution events as a stream for the editor to display.
+   *
+   * @generated from protobuf rpc: DryRunScript
+   */
+  dryRunScript(
+    input: DryRunScriptRequest,
+    options?: RpcOptions,
+  ): ServerStreamingCall<DryRunScriptRequest, ScriptEvent>;
 }
 /**
  * ScriptService provides management and execution capabilities for visual node-based
@@ -499,6 +524,48 @@ export class ScriptServiceClient implements IScriptServiceClient, ServiceInfo {
       opt = this._transport.mergeOptions(options);
     return stackIntercept<GetRegistryDataRequest, GetRegistryDataResponse>(
       "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Validates a script graph without saving it.
+   * Returns all diagnostics (errors and warnings) for the given nodes and edges.
+   * Useful for live validation in the editor without requiring a save.
+   *
+   * @generated from protobuf rpc: ValidateScript
+   */
+  validateScript(
+    input: ValidateScriptRequest,
+    options?: RpcOptions,
+  ): UnaryCall<ValidateScriptRequest, ValidateScriptResponse> {
+    const method = this.methods[11],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<ValidateScriptRequest, ValidateScriptResponse>(
+      "unary",
+      this._transport,
+      method,
+      opt,
+      input,
+    );
+  }
+  /**
+   * Dry-runs a script from a specified trigger with mock inputs.
+   * Executes the graph without requiring an active instance.
+   * Returns execution events as a stream for the editor to display.
+   *
+   * @generated from protobuf rpc: DryRunScript
+   */
+  dryRunScript(
+    input: DryRunScriptRequest,
+    options?: RpcOptions,
+  ): ServerStreamingCall<DryRunScriptRequest, ScriptEvent> {
+    const method = this.methods[12],
+      opt = this._transport.mergeOptions(options);
+    return stackIntercept<DryRunScriptRequest, ScriptEvent>(
+      "serverStreaming",
       this._transport,
       method,
       opt,

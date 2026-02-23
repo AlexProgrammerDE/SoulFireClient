@@ -26,6 +26,7 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { DiagnosticSeverity } from "@/generated/soulfire/script";
 import { ScriptServiceClient } from "@/generated/soulfire/script.client";
 import {
   edgesToProto,
@@ -144,6 +145,13 @@ function ScriptEditorContent() {
   const setActiveNode = useScriptEditorStore((state) => state.setActiveNode);
   const addNode = useScriptEditorStore((state) => state.addNode);
   const getScriptData = useScriptEditorStore((state) => state.getScriptData);
+  const markSaved = useScriptEditorStore((state) => state.markSaved);
+  const addNodeExecutionTime = useScriptEditorStore(
+    (state) => state.addNodeExecutionTime,
+  );
+  const setExecutionStats = useScriptEditorStore(
+    (state) => state.setExecutionStats,
+  );
 
   // Local state
   const [isSaving, setIsSaving] = useState(false);
@@ -169,6 +177,50 @@ function ScriptEditorContent() {
     }
   }, [scriptId, serverScriptData, loadScript, resetEditor]);
 
+  // Item 25: Debounced live validation
+  const validationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
+  const setValidationDiagnostics = useScriptEditorStore(
+    (state) => state.setValidationDiagnostics,
+  );
+  const nodes = useScriptEditorStore((state) => state.nodes);
+  const edges = useScriptEditorStore((state) => state.edges);
+
+  useEffect(() => {
+    if (!transport || scriptId === "new") return;
+    if (validationTimeoutRef.current) {
+      clearTimeout(validationTimeoutRef.current);
+    }
+    validationTimeoutRef.current = setTimeout(async () => {
+      try {
+        const client = new ScriptServiceClient(transport);
+        const result = await client.validateScript({
+          instanceId,
+          nodes: nodesToProto(nodes),
+          edges: edgesToProto(edges),
+        });
+        const diagnostics = result.response.diagnostics.map((d) => ({
+          nodeId: d.nodeId,
+          edgeId: d.edgeId,
+          message: d.message,
+          severity:
+            d.severity === DiagnosticSeverity.DIAGNOSTIC_WARNING
+              ? ("warning" as const)
+              : ("error" as const),
+        }));
+        setValidationDiagnostics(diagnostics);
+      } catch {
+        // Validation is best-effort, don't show errors
+      }
+    }, 500);
+    return () => {
+      if (validationTimeoutRef.current) {
+        clearTimeout(validationTimeoutRef.current);
+      }
+    };
+  }, [transport, instanceId, scriptId, nodes, edges, setValidationDiagnostics]);
+
   // Create script mutation
   const createMutation = useMutation({
     mutationKey: ["script", "create", instanceId],
@@ -189,6 +241,7 @@ function ScriptEditorContent() {
     },
     onSuccess: (response) => {
       setDirty(false);
+      markSaved();
       toast.success(tInstance("scripts.saveSuccess"));
       // Navigate to the real script ID
       if (response.script) {
@@ -231,6 +284,7 @@ function ScriptEditorContent() {
     },
     onSuccess: () => {
       setDirty(false);
+      markSaved();
       toast.success(tInstance("scripts.saveSuccess"));
     },
     onError: (error) => {
@@ -327,6 +381,10 @@ function ScriptEditorContent() {
           ]);
         } else if (event.event.oneofKind === "nodeCompleted") {
           const nodeId = event.event.nodeCompleted.nodeId;
+          const execTimeNanos = event.event.nodeCompleted.executionTimeNanos;
+          if (execTimeNanos && execTimeNanos !== "0") {
+            addNodeExecutionTime(nodeId, Number(execTimeNanos) / 1_000_000);
+          }
           setLogs((prev) => [
             ...prev,
             {
@@ -335,6 +393,22 @@ function ScriptEditorContent() {
               level: "debug",
               nodeId,
               message: tInstance("scripts.nodeCompleted", { nodeId }),
+            },
+          ]);
+        } else if (event.event.oneofKind === "executionStats") {
+          const { nodeCount, maxCount } = event.event.executionStats;
+          setExecutionStats({
+            nodeCount: Number(nodeCount),
+            maxCount: Number(maxCount),
+          });
+          setLogs((prev) => [
+            ...prev,
+            {
+              id: crypto.randomUUID(),
+              timestamp: new Date(),
+              level: "info",
+              nodeId: null,
+              message: `Execution stats: ${nodeCount}/${maxCount} nodes executed`,
             },
           ]);
         } else if (event.event.oneofKind === "nodeError") {
@@ -422,6 +496,8 @@ function ScriptEditorContent() {
     setActiveNode,
     tInstance,
     queryClient,
+    addNodeExecutionTime,
+    setExecutionStats,
   ]);
 
   // Handle script deactivation

@@ -1,37 +1,18 @@
 import type { Connection, Edge, IsValidConnection, Node } from "@xyflow/react";
 import {
   getPortTypeFromDefinition,
+  isTypeCompatible,
   type PortType,
 } from "@/components/script-editor/nodes/types";
 
 /**
- * Type conversion rules - Blender-style implicit conversions.
- * Maps source type to array of compatible target types.
- */
-const TYPE_CONVERSIONS: Record<string, string[]> = {
-  // Number can convert to string, boolean, vector3 (all components same)
-  number: ["string", "boolean"],
-  // Boolean can convert to string, number (0/1)
-  boolean: ["string", "number"],
-  // String can convert to number (parse), boolean (truthy check)
-  string: ["number", "boolean"],
-  // Vector3 can convert to list
-  vector3: ["list"],
-  // List can convert to string (join)
-  list: ["string"],
-  // Bot, entity, block, item have no implicit conversions
-  bot: [],
-  entity: [],
-  block: [],
-  item: [],
-};
-
-/**
  * Check if a source type can be converted to a target type.
+ * Uses the server-provided type compatibility metadata (via isTypeCompatible)
+ * as the single source of truth, with fallback to basic rules.
  */
 export function canConvertType(
-  sourceType: string,
-  targetType: string,
+  sourceType: PortType,
+  targetType: PortType,
 ): boolean {
   // Same type always works
   if (sourceType === targetType) return true;
@@ -39,11 +20,8 @@ export function canConvertType(
   // Any type is universal
   if (sourceType === "any" || targetType === "any") return true;
 
-  // Check explicit conversion rules
-  const conversions = TYPE_CONVERSIONS[sourceType];
-  if (conversions?.includes(targetType)) return true;
-
-  return false;
+  // Use server-provided compatibility rules
+  return isTypeCompatible(sourceType, targetType);
 }
 
 /**

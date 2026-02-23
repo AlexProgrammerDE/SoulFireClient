@@ -174,6 +174,62 @@ function PortRow({
   );
 }
 
+function ValidationBadges({ nodeId }: { nodeId: string }) {
+  const diagnostics = useScriptEditorStore((s) =>
+    s.validationDiagnostics.filter((d) => d.nodeId === nodeId),
+  );
+  if (diagnostics.length === 0) return null;
+
+  const errors = diagnostics.filter((d) => d.severity === "error");
+  const warnings = diagnostics.filter((d) => d.severity === "warning");
+
+  return (
+    <div className="flex items-center gap-0.5">
+      {errors.length > 0 && (
+        <span
+          className="flex items-center justify-center size-4 rounded-full bg-red-500 text-white text-[9px] font-bold"
+          title={errors.map((d) => d.message).join("\n")}
+        >
+          {errors.length}
+        </span>
+      )}
+      {warnings.length > 0 && (
+        <span
+          className="flex items-center justify-center size-4 rounded-full bg-yellow-500 text-white text-[9px] font-bold"
+          title={warnings.map((d) => d.message).join("\n")}
+        >
+          {warnings.length}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function ExecutionTimeBadge({ nodeId }: { nodeId: string }) {
+  const times = useScriptEditorStore((s) => s.nodeExecutionTimes.get(nodeId));
+  if (!times || times.length === 0) return null;
+
+  const avg = times.reduce((a, b) => a + b, 0) / times.length;
+  const display = avg < 1 ? "<1ms" : `${Math.round(avg)}ms`;
+  const colorClass =
+    avg < 1
+      ? "text-green-500"
+      : avg < 10
+        ? "text-yellow-500"
+        : avg < 100
+          ? "text-orange-500"
+          : "text-red-500";
+
+  return (
+    <span
+      className={`text-[10px] font-mono ${colorClass} bg-muted/50 px-1 rounded`}
+      title={`Avg execution time: ${avg.toFixed(2)}ms (last ${times.length} runs)`}
+    >
+      {display}
+    </span>
+  );
+}
+
 function BaseNodeComponent({
   id,
   data,
@@ -338,6 +394,8 @@ function BaseNodeComponent({
         {isMuted && supportsMuting && (
           <span className="text-xs text-muted-foreground">(muted)</span>
         )}
+        <ValidationBadges nodeId={id} />
+        <ExecutionTimeBadge nodeId={id} />
       </div>
 
       {/* Ports - hidden when collapsed, but still render handles */}

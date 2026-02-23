@@ -213,6 +213,35 @@ export interface ScriptEditorState {
     description: string;
     paused: boolean;
   };
+
+  // Validation diagnostics from server
+  validationDiagnostics: Array<{
+    nodeId: string;
+    edgeId: string;
+    message: string;
+    severity: "error" | "warning";
+  }>;
+  setValidationDiagnostics: (
+    diagnostics: Array<{
+      nodeId: string;
+      edgeId: string;
+      message: string;
+      severity: "error" | "warning";
+    }>,
+  ) => void;
+
+  // Node execution profiling
+  nodeExecutionTimes: Map<string, number[]>;
+  addNodeExecutionTime: (nodeId: string, timeNanos: number) => void;
+
+  // Execution stats
+  lastExecutionStats: { nodeCount: number; maxCount: number } | null;
+  setExecutionStats: (stats: { nodeCount: number; maxCount: number }) => void;
+
+  // Saved state for diff
+  lastSavedNodes: Node[] | null;
+  lastSavedEdges: Edge[] | null;
+  markSaved: () => void;
 }
 
 // Generate unique IDs
@@ -1730,6 +1759,8 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
         string,
         Array<{ value: unknown; timestamp: Date }>
       >(),
+      lastSavedNodes: data.nodes,
+      lastSavedEdges: data.edges,
     }),
 
   loadScriptData: (data) => {
@@ -1779,6 +1810,11 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
         startPoint: null,
         endPoint: null,
       },
+      validationDiagnostics: [],
+      nodeExecutionTimes: new Map<string, number[]>(),
+      lastExecutionStats: null,
+      lastSavedNodes: null,
+      lastSavedEdges: null,
     }),
 
   getScriptData: () => ({
@@ -1788,4 +1824,34 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     description: get().scriptDescription,
     paused: get().paused,
   }),
+
+  // Validation diagnostics
+  validationDiagnostics: [],
+  setValidationDiagnostics: (diagnostics) =>
+    set({ validationDiagnostics: diagnostics }),
+
+  // Node execution profiling (rolling window of last 10 times per node)
+  nodeExecutionTimes: new Map<string, number[]>(),
+  addNodeExecutionTime: (nodeId, timeNanos) =>
+    set((state) => {
+      const times = new Map(state.nodeExecutionTimes);
+      const existing = times.get(nodeId) ?? [];
+      const updated = [...existing, timeNanos].slice(-10);
+      times.set(nodeId, updated);
+      return { nodeExecutionTimes: times };
+    }),
+
+  // Execution stats
+  lastExecutionStats: null,
+  setExecutionStats: (stats) => set({ lastExecutionStats: stats }),
+
+  // Saved state for diff
+  lastSavedNodes: null,
+  lastSavedEdges: null,
+  markSaved: () =>
+    set((state) => ({
+      lastSavedNodes: [...state.nodes],
+      lastSavedEdges: [...state.edges],
+      isDirty: false,
+    })),
 }));
