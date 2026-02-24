@@ -41,6 +41,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
+import { LogsServiceClient } from "@/generated/soulfire/logs.client.ts";
 import { DiagnosticSeverity } from "@/generated/soulfire/script";
 import { ScriptServiceClient } from "@/generated/soulfire/script.client";
 import { useIsMobile } from "@/hooks/use-mobile.ts";
@@ -50,6 +51,7 @@ import {
   scriptDataToStore,
   scriptQueryOptions,
 } from "@/lib/script-service.ts";
+import { isDemo, timestampToDate } from "@/lib/utils.tsx";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 
 import "@xyflow/react/dist/style.css";
@@ -202,6 +204,56 @@ function ScriptEditorContent() {
       loadScript(scriptDataToStore(serverScriptData));
     }
   }, [scriptId, serverScriptData, loadScript, resetEditor]);
+
+  // Load previous execution logs on mount
+  useEffect(() => {
+    if (scriptId === "new" || !transport || isDemo()) return;
+
+    const abortController = new AbortController();
+    const logsService = new LogsServiceClient(transport);
+    void logsService
+      .getPrevious(
+        {
+          scope: {
+            scope: {
+              oneofKind: "instanceScript",
+              instanceScript: { instanceId, scriptId },
+            },
+          },
+          count: 300,
+        },
+        { abort: abortController.signal },
+      )
+      .then((call) => {
+        const entries: LogEntry[] = call.response.messages.map((msg) => {
+          const rawLevel = msg.level?.toLowerCase();
+          const level: LogEntry["level"] =
+            rawLevel === "info"
+              ? "info"
+              : rawLevel === "warn" || rawLevel === "warning"
+                ? "warn"
+                : rawLevel === "error" || rawLevel === "fatal"
+                  ? "error"
+                  : "debug";
+          return {
+            id: msg.id,
+            timestamp: msg.timestamp
+              ? timestampToDate(msg.timestamp)
+              : new Date(),
+            level,
+            nodeId: null,
+            message: msg.message,
+          };
+        });
+        if (entries.length > 0) {
+          setLogs((prev) => [...entries, ...prev]);
+        }
+      });
+
+    return () => {
+      abortController.abort();
+    };
+  }, [transport, instanceId, scriptId]);
 
   // Item 25: Debounced live validation
   const validationTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
