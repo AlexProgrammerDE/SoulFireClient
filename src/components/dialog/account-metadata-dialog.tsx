@@ -18,13 +18,14 @@ import { TransportContext } from "@/components/providers/transport-context.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Card, CardContent, CardHeader } from "@/components/ui/card.tsx";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog.tsx";
+  Credenza,
+  CredenzaBody,
+  CredenzaContent,
+  CredenzaDescription,
+  CredenzaFooter,
+  CredenzaHeader,
+  CredenzaTitle,
+} from "@/components/ui/credenza.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Skeleton } from "@/components/ui/skeleton.tsx";
 import { Value } from "@/generated/google/protobuf/struct.ts";
@@ -80,25 +81,27 @@ export function AccountMetadataDialog({
   const { t } = useTranslation("instance");
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[700px]">
-        <DialogHeader>
-          <DialogTitle>
+    <Credenza open={open} onOpenChange={onOpenChange}>
+      <CredenzaContent className="sm:max-w-[700px]">
+        <CredenzaHeader>
+          <CredenzaTitle>
             {t("account.metadata.title", { name: account.lastKnownName })}
-          </DialogTitle>
-          <DialogDescription>
+          </CredenzaTitle>
+          <CredenzaDescription>
             {t("account.metadata.description")}
-          </DialogDescription>
-        </DialogHeader>
-        <Suspense fallback={<DialogSkeleton />}>
-          <DialogContentInner
-            account={account}
-            open={open}
-            onOpenChange={onOpenChange}
-          />
-        </Suspense>
-      </DialogContent>
-    </Dialog>
+          </CredenzaDescription>
+        </CredenzaHeader>
+        <CredenzaBody>
+          <Suspense fallback={<DialogSkeleton />}>
+            <DialogContentInner
+              account={account}
+              open={open}
+              onOpenChange={onOpenChange}
+            />
+          </Suspense>
+        </CredenzaBody>
+      </CredenzaContent>
+    </Credenza>
   );
 }
 
@@ -485,11 +488,11 @@ function DialogContentInner({
           ))}
         </CardContent>
       </Card>
-      <DialogFooter>
+      <CredenzaFooter>
         <Button variant="outline" onClick={() => onOpenChange(false)}>
           {t("common:close")}
         </Button>
-      </DialogFooter>
+      </CredenzaFooter>
     </div>
   );
 }

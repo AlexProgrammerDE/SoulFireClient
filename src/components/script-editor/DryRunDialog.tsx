@@ -3,12 +3,14 @@ import { useCallback, useMemo, useState } from "react";
 import { getNodeDefinition } from "@/components/script-editor/nodes/types";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  Credenza,
+  CredenzaBody,
+  CredenzaContent,
+  CredenzaDescription,
+  CredenzaHeader,
+  CredenzaTitle,
+  CredenzaTrigger,
+} from "@/components/ui/credenza";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
@@ -48,17 +50,20 @@ export function DryRunDialog() {
   if (triggerNodes.length === 0) return null;
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Credenza>
+      <CredenzaTrigger asChild>
         <Button variant="ghost" size="sm" title="Dry Run">
           <FlaskConical className="h-4 w-4" />
         </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Dry Run Script</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4">
+      </CredenzaTrigger>
+      <CredenzaContent>
+        <CredenzaHeader>
+          <CredenzaTitle>Dry Run Script</CredenzaTitle>
+          <CredenzaDescription>
+            Run a script from a selected trigger with mock inputs.
+          </CredenzaDescription>
+        </CredenzaHeader>
+        <CredenzaBody className="space-y-4">
           <div className="space-y-2">
             <Label>Trigger Node</Label>
             <select
@@ -110,8 +115,8 @@ export function DryRunDialog() {
             <FlaskConical className="h-4 w-4 mr-2" />
             Start Dry Run
           </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </CredenzaBody>
+      </CredenzaContent>
+    </Credenza>
   );
 }

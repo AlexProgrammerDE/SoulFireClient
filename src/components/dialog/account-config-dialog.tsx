@@ -7,11 +7,12 @@ import DynamicIcon from "@/components/dynamic-icon.tsx";
 import { BotPluginInfoCard } from "@/components/instance-plugin-info-card.tsx";
 import { BotSettingsPageComponent } from "@/components/settings-page.tsx";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from "@/components/ui/dialog.tsx";
+  Credenza,
+  CredenzaBody,
+  CredenzaContent,
+  CredenzaDescription,
+  CredenzaTitle,
+} from "@/components/ui/credenza.tsx";
 import {
   Select,
   SelectContent,
@@ -109,27 +110,26 @@ export function AccountConfigDialog({
   const [selectedPage, setSelectedPage] = useState<string | null>(null);
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        showCloseButton
-        className="overflow-hidden p-0 md:max-h-[500px] md:max-w-[700px] lg:max-w-[800px]"
-      >
-        <DialogTitle className="sr-only">
+    <Credenza open={open} onOpenChange={onOpenChange}>
+      <CredenzaContent className="overflow-hidden p-0 md:max-h-[500px] md:max-w-[700px] lg:max-w-[800px]">
+        <CredenzaTitle className="sr-only">
           {t("account.config.title", { name: account.lastKnownName })}
-        </DialogTitle>
-        <DialogDescription className="sr-only">
+        </CredenzaTitle>
+        <CredenzaDescription className="sr-only">
           {t("account.config.description")}
-        </DialogDescription>
-        <Suspense fallback={<DialogSkeleton isMobile={isMobile} />}>
-          <DialogContentInner
-            account={account}
-            selectedPage={selectedPage}
-            setSelectedPage={setSelectedPage}
-            isMobile={isMobile}
-          />
-        </Suspense>
-      </DialogContent>
-    </Dialog>
+        </CredenzaDescription>
+        <CredenzaBody>
+          <Suspense fallback={<DialogSkeleton isMobile={isMobile} />}>
+            <DialogContentInner
+              account={account}
+              selectedPage={selectedPage}
+              setSelectedPage={setSelectedPage}
+              isMobile={isMobile}
+            />
+          </Suspense>
+        </CredenzaBody>
+      </CredenzaContent>
+    </Credenza>
   );
 }
 

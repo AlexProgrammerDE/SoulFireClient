@@ -2,12 +2,14 @@ import { FileDiff } from "lucide-react";
 import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  Credenza,
+  CredenzaBody,
+  CredenzaContent,
+  CredenzaDescription,
+  CredenzaHeader,
+  CredenzaTitle,
+  CredenzaTrigger,
+} from "@/components/ui/credenza";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
 
 interface DiffResult {
@@ -89,18 +91,21 @@ export function ScriptDiffDialog() {
   if (totalChanges === 0) return null;
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Credenza>
+      <CredenzaTrigger asChild>
         <Button variant="ghost" size="sm" title="Review changes">
           <FileDiff className="h-4 w-4" />
           <span className="ml-1 text-xs">{totalChanges}</span>
         </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Unsaved Changes</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-2 text-sm">
+      </CredenzaTrigger>
+      <CredenzaContent>
+        <CredenzaHeader>
+          <CredenzaTitle>Unsaved Changes</CredenzaTitle>
+          <CredenzaDescription>
+            Summary of changes since last save.
+          </CredenzaDescription>
+        </CredenzaHeader>
+        <CredenzaBody className="space-y-2 text-sm">
           {diff.addedNodes.length > 0 && (
             <div className="text-green-500">
               + {diff.addedNodes.length} node(s) added
@@ -126,8 +131,8 @@ export function ScriptDiffDialog() {
               - {diff.removedEdges.length} edge(s) removed
             </div>
           )}
-        </div>
-      </DialogContent>
-    </Dialog>
+        </CredenzaBody>
+      </CredenzaContent>
+    </Credenza>
   );
 }

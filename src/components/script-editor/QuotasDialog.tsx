@@ -2,12 +2,14 @@ import { Settings2 } from "lucide-react";
 import { useCallback, useEffect, useId, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+  Credenza,
+  CredenzaBody,
+  CredenzaContent,
+  CredenzaDescription,
+  CredenzaHeader,
+  CredenzaTitle,
+  CredenzaTrigger,
+} from "@/components/ui/credenza";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -79,22 +81,21 @@ export function QuotasDialog() {
   ]);
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+    <Credenza open={open} onOpenChange={setOpen}>
+      <CredenzaTrigger asChild>
         <Button variant="ghost" size="sm" title="Script Quotas">
           <Settings2 className="h-4 w-4" />
         </Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Script Quotas</DialogTitle>
-        </DialogHeader>
-        <div className="space-y-4">
-          <p className="text-sm text-muted-foreground">
+      </CredenzaTrigger>
+      <CredenzaContent>
+        <CredenzaHeader>
+          <CredenzaTitle>Script Quotas</CredenzaTitle>
+          <CredenzaDescription>
             Configure resource limits for this script. Empty fields use server
             defaults.
-          </p>
-
+          </CredenzaDescription>
+        </CredenzaHeader>
+        <CredenzaBody className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor={`${id}-maxExecutionCount`}>
               Max Execution Count
@@ -180,8 +181,8 @@ export function QuotasDialog() {
           <Button className="w-full" onClick={handleSave}>
             Save Quotas
           </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </CredenzaBody>
+      </CredenzaContent>
+    </Credenza>
   );
 }
