@@ -372,6 +372,7 @@ export function scriptDataToStore(script: ScriptData) {
     name: script.name,
     description: script.description,
     paused: script.paused,
+    quotas: script.quotas,
     nodes: protoToNodes(script.nodes),
     edges: protoToEdges(script.edges),
   };

@@ -481,6 +481,12 @@ export interface ScriptQuotas {
    * @generated from protobuf field: optional int64 max_state_store_entries = 4
    */
   maxStateStoreEntries?: string;
+  /**
+   * When true, disables per-node and data edge timeouts entirely.
+   *
+   * @generated from protobuf field: bool disable_timeouts = 5
+   */
+  disableTimeouts: boolean;
 }
 /**
  * Summary information about a script for listing purposes.
@@ -943,6 +949,12 @@ export interface CreateScriptRequest {
    * @generated from protobuf field: bool paused = 7
    */
   paused: boolean;
+  /**
+   * Optional resource quotas for this script.
+   *
+   * @generated from protobuf field: soulfire.v1.ScriptQuotas quotas = 8
+   */
+  quotas?: ScriptQuotas;
 }
 /**
  * Response after successfully creating a script.
@@ -1067,6 +1079,18 @@ export interface UpdateScriptRequest {
    * @generated from protobuf field: optional bool paused = 10
    */
   paused?: boolean;
+  /**
+   * Updated resource quotas for this script.
+   *
+   * @generated from protobuf field: soulfire.v1.ScriptQuotas quotas = 11
+   */
+  quotas?: ScriptQuotas;
+  /**
+   * Whether the quotas field should be updated (allows clearing quotas).
+   *
+   * @generated from protobuf field: bool update_quotas = 12
+   */
+  updateQuotas: boolean;
 }
 /**
  * Response after successfully updating a script.
@@ -2806,10 +2830,17 @@ class ScriptQuotas$Type extends MessageType<ScriptQuotas> {
         opt: true,
         T: 3 /*ScalarType.INT64*/,
       },
+      {
+        no: 5,
+        name: "disable_timeouts",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
     ]);
   }
   create(value?: PartialMessage<ScriptQuotas>): ScriptQuotas {
     const message = globalThis.Object.create(this.messagePrototype!);
+    message.disableTimeouts = false;
     if (value !== undefined)
       reflectionMergePartial<ScriptQuotas>(this, message, value);
     return message;
@@ -2836,6 +2867,9 @@ class ScriptQuotas$Type extends MessageType<ScriptQuotas> {
           break;
         case /* optional int64 max_state_store_entries */ 4:
           message.maxStateStoreEntries = reader.int64().toString();
+          break;
+        case /* bool disable_timeouts */ 5:
+          message.disableTimeouts = reader.bool();
           break;
         default:
           let u = options.readUnknownField;
@@ -2873,6 +2907,9 @@ class ScriptQuotas$Type extends MessageType<ScriptQuotas> {
     /* optional int64 max_state_store_entries = 4; */
     if (message.maxStateStoreEntries !== undefined)
       writer.tag(4, WireType.Varint).int64(message.maxStateStoreEntries);
+    /* bool disable_timeouts = 5; */
+    if (message.disableTimeouts !== false)
+      writer.tag(5, WireType.Varint).bool(message.disableTimeouts);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -4304,6 +4341,7 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
         T: () => ScriptEdge,
       },
       { no: 7, name: "paused", kind: "scalar", T: 8 /*ScalarType.BOOL*/ },
+      { no: 8, name: "quotas", kind: "message", T: () => ScriptQuotas },
     ]);
   }
   create(value?: PartialMessage<CreateScriptRequest>): CreateScriptRequest {
@@ -4350,6 +4388,14 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
           break;
         case /* bool paused */ 7:
           message.paused = reader.bool();
+          break;
+        case /* soulfire.v1.ScriptQuotas quotas */ 8:
+          message.quotas = ScriptQuotas.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.quotas,
+          );
           break;
         default:
           let u = options.readUnknownField;
@@ -4401,6 +4447,13 @@ class CreateScriptRequest$Type extends MessageType<CreateScriptRequest> {
     /* bool paused = 7; */
     if (message.paused !== false)
       writer.tag(7, WireType.Varint).bool(message.paused);
+    /* soulfire.v1.ScriptQuotas quotas = 8; */
+    if (message.quotas)
+      ScriptQuotas.internalBinaryWrite(
+        message.quotas,
+        writer.tag(8, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
@@ -4723,6 +4776,13 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
         opt: true,
         T: 8 /*ScalarType.BOOL*/,
       },
+      { no: 11, name: "quotas", kind: "message", T: () => ScriptQuotas },
+      {
+        no: 12,
+        name: "update_quotas",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
     ]);
   }
   create(value?: PartialMessage<UpdateScriptRequest>): UpdateScriptRequest {
@@ -4733,6 +4793,7 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
     message.edges = [];
     message.updateNodes = false;
     message.updateEdges = false;
+    message.updateQuotas = false;
     if (value !== undefined)
       reflectionMergePartial<UpdateScriptRequest>(this, message, value);
     return message;
@@ -4778,6 +4839,17 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
           break;
         case /* optional bool paused */ 10:
           message.paused = reader.bool();
+          break;
+        case /* soulfire.v1.ScriptQuotas quotas */ 11:
+          message.quotas = ScriptQuotas.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.quotas,
+          );
+          break;
+        case /* bool update_quotas */ 12:
+          message.updateQuotas = reader.bool();
           break;
         default:
           let u = options.readUnknownField;
@@ -4838,6 +4910,16 @@ class UpdateScriptRequest$Type extends MessageType<UpdateScriptRequest> {
     /* optional bool paused = 10; */
     if (message.paused !== undefined)
       writer.tag(10, WireType.Varint).bool(message.paused);
+    /* soulfire.v1.ScriptQuotas quotas = 11; */
+    if (message.quotas)
+      ScriptQuotas.internalBinaryWrite(
+        message.quotas,
+        writer.tag(11, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* bool update_quotas = 12; */
+    if (message.updateQuotas !== false)
+      writer.tag(12, WireType.Varint).bool(message.updateQuotas);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(

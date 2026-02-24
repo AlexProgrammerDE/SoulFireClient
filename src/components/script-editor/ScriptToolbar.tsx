@@ -36,6 +36,7 @@ import { cn } from "@/lib/utils.tsx";
 import { useScriptEditorStore } from "@/stores/script-editor-store.ts";
 import { ComplexityScore } from "./ComplexityScore";
 import { DryRunDialog } from "./DryRunDialog";
+import { QuotasDialog } from "./QuotasDialog";
 import { ScriptDiffDialog } from "./ScriptDiffDialog";
 
 interface ScriptToolbarProps {
@@ -72,6 +73,7 @@ export function ScriptToolbar({
   );
   const isDirty = useScriptEditorStore((state) => state.isDirty);
   const paused = useScriptEditorStore((state) => state.paused);
+  const quotas = useScriptEditorStore((state) => state.quotas);
   const nodes = useScriptEditorStore((state) => state.nodes);
   const edges = useScriptEditorStore((state) => state.edges);
   const loadScriptData = useScriptEditorStore((state) => state.loadScriptData);
@@ -86,6 +88,7 @@ export function ScriptToolbar({
       name: scriptName,
       description: scriptDescription,
       paused,
+      quotas,
       nodes,
       edges,
       exportedAt: new Date().toISOString(),
@@ -126,6 +129,7 @@ export function ScriptToolbar({
           name: importData.name ?? scriptName,
           description: importData.description ?? scriptDescription,
           paused: importData.paused ?? false,
+          quotas: importData.quotas,
         });
 
         toast.success(t("scripts.editor.toolbar.importSuccess"));
@@ -303,6 +307,7 @@ export function ScriptToolbar({
           </>
         )}
         {!isMobile && <DryRunDialog />}
+        {!isMobile && <QuotasDialog />}
       </div>
 
       <div className="flex-1" />

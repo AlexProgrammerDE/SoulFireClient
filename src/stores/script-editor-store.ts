@@ -21,6 +21,7 @@ import {
   isTypeCompatible,
   type PortType,
 } from "@/components/script-editor/nodes/types";
+import type { ScriptQuotas } from "@/generated/soulfire/script";
 import { hasScriptClipboardData } from "@/lib/script-clipboard";
 
 export type { PortType };
@@ -38,6 +39,7 @@ export interface ScriptEditorState {
   scriptName: string;
   scriptDescription: string;
   paused: boolean;
+  quotas: ScriptQuotas | undefined;
   isDirty: boolean;
 
   // Execution state
@@ -183,6 +185,7 @@ export interface ScriptEditorState {
   setScriptName: (name: string) => void;
   setScriptDescription: (description: string) => void;
   setPaused: (paused: boolean) => void;
+  setQuotas: (quotas: ScriptQuotas | undefined) => void;
   setDirty: (dirty: boolean) => void;
 
   // Execution actions
@@ -201,6 +204,7 @@ export interface ScriptEditorState {
     name: string;
     description: string;
     paused: boolean;
+    quotas: ScriptQuotas | undefined;
     nodes: Node[];
     edges: Edge[];
   }) => void;
@@ -210,6 +214,7 @@ export interface ScriptEditorState {
     name?: string;
     description?: string;
     paused?: boolean;
+    quotas?: ScriptQuotas;
   }) => void;
   resetEditor: () => void;
   getScriptData: () => {
@@ -218,6 +223,7 @@ export interface ScriptEditorState {
     name: string;
     description: string;
     paused: boolean;
+    quotas: ScriptQuotas | undefined;
   };
 
   // Validation diagnostics from server
@@ -337,6 +343,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   scriptName: "Untitled Script",
   scriptDescription: "",
   paused: false,
+  quotas: undefined,
   isDirty: false,
   isActive: false,
   activeNodeId: null,
@@ -1811,6 +1818,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
   setScriptDescription: (description) =>
     set({ scriptDescription: description, isDirty: true }),
   setPaused: (paused) => set({ paused, isDirty: true }),
+  setQuotas: (quotas) => set({ quotas, isDirty: true }),
   setDirty: (dirty) => set({ isDirty: dirty }),
 
   // Execution actions
@@ -1832,6 +1840,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       scriptName: data.name,
       scriptDescription: data.description,
       paused: data.paused,
+      quotas: data.quotas,
       nodes: data.nodes,
       edges: data.edges,
       isDirty: false,
@@ -1855,6 +1864,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       scriptName: data.name ?? current.scriptName,
       scriptDescription: data.description ?? current.scriptDescription,
       paused: data.paused ?? current.paused,
+      quotas: data.quotas ?? current.quotas,
       isDirty: true,
       selectedNodeId: null,
       groupEditStack: [],
@@ -1875,6 +1885,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
       scriptName: "Untitled Script",
       scriptDescription: "",
       paused: false,
+      quotas: undefined,
       isDirty: false,
       isActive: false,
       activeNodeId: null,
@@ -1907,6 +1918,7 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
     name: get().scriptName,
     description: get().scriptDescription,
     paused: get().paused,
+    quotas: get().quotas,
   }),
 
   // Validation diagnostics

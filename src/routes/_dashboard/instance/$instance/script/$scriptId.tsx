@@ -262,6 +262,7 @@ function ScriptEditorContent() {
         nodes: nodesToProto(scriptData.nodes),
         edges: edgesToProto(scriptData.edges),
         paused: scriptData.paused,
+        quotas: scriptData.quotas,
       });
       return result.response;
     },
@@ -305,6 +306,8 @@ function ScriptEditorContent() {
         updateNodes: true,
         updateEdges: true,
         paused: scriptData.paused,
+        quotas: scriptData.quotas,
+        updateQuotas: true,
       });
       return result.response;
     },
