@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "實例中繼資料（Metadata）",
+    "description": "管理此實例的持久中繼資料項目。每個項目都包含一個命名空間、鍵，以及 JSON 值。",
     "namespacePlaceholder": "命名空間",
     "keyPlaceholder": "鍵",
     "valuePlaceholder": "值（JSON）",

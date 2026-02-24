@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Instanssin metatiedot",
+    "description": "Hallinnoi tämän instanssin pysyviä metatietomerkintöjä. Jokaisella merkinnällä on nimiavaruus, avain ja JSON-arvo.",
     "namespacePlaceholder": "Nimiavaruus",
     "keyPlaceholder": "Avain",
     "valuePlaceholder": "Arvo (JSON)",

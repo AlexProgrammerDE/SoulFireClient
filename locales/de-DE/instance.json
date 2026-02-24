@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Instanz-Metadaten",
+    "description": "Verwalten Sie persistente Metadaten-Einträge für diese Instanz. Jeder Eintrag hat einen Namespace, einen Schlüssel und einen JSON-Wert.",
     "namespacePlaceholder": "Namensraum",
     "keyPlaceholder": "Schlüssel",
     "valuePlaceholder": "Wert (JSON)",

@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Instansmetadata",
+    "description": "Hantera beständiga metadata-poster för denna instans. Varje post har ett namnrymd, en nyckel och ett JSON-värde.",
     "namespacePlaceholder": "Namnområde",
     "keyPlaceholder": "Nyckel",
     "valuePlaceholder": "Värde (JSON)",

@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Метаданные экземпляра",
+    "description": "Управляйте постоянными метаданными этого экземпляра. Каждая запись содержит пространство имён, ключ и значение в формате JSON.",
     "namespacePlaceholder": "Пространство имён",
     "keyPlaceholder": "Ключ",
     "valuePlaceholder": "Значение (JSON)",

@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Metadáta inštancie",
+    "description": "Spravujte pretrvávajúce metadáta tejto inštancie. Každá položka obsahuje menný priestor, kľúč a hodnotu v JSON formáte.",
     "namespacePlaceholder": "Menný priestor",
     "keyPlaceholder": "Kľúč",
     "valuePlaceholder": "Hodnota (JSON)",

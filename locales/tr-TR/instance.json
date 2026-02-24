@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Varlık Meta Verisi / Instance Meta Verisi ",
+    "description": "Bu örnek için kalıcı meta veri girişlerini yönetin. Her bir giriş, bir ad alanı, bir anahtar ve bir JSON değeri içerir.",
     "namespacePlaceholder": "Ad Alanı",
     "keyPlaceholder": "Anahtar",
     "valuePlaceholder": "Değer (JSON)",

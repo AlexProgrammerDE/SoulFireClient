@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Siêu dữ liệu Phiên bản",
+    "description": "Quản lý các mục siêu dữ liệu lưu trữ cho phiên bản này. Mỗi mục bao gồm một không gian tên, khoá và giá trị JSON.",
     "namespacePlaceholder": "Không gian tên",
     "keyPlaceholder": "Khóa",
     "valuePlaceholder": "Giá trị (JSON)",

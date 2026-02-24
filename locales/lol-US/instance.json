@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Instanz MetaDataz",
+    "description": "Manaj persiztent metadata entriez fur dis instanz. Each entry haz a namespaze, key, an JSON valu.",
     "namespacePlaceholder": "Namspace",
     "keyPlaceholder": "Key",
     "valuePlaceholder": "Valoo (JSON)",

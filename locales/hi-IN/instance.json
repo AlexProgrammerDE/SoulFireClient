@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "इंस्टेंस मेटाडेटा",
+    "description": "इस इंस्टेंस के लिए स्थायी मेटाडेटा प्रविष्टियाँ प्रबंधित करें। प्रत्येक प्रविष्टि में एक नेमस्पेस, कुंजी, और JSON मान होता है।",
     "namespacePlaceholder": "नेमस्पेस",
     "keyPlaceholder": "कुंजी",
     "valuePlaceholder": "मान (JSON)",

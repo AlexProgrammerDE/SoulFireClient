@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Instance Metadata, arrr!",
+    "description": "Manage persistent metadata entries fer this here instance. Each booty piece be havin' a namespace, key, and JSON value, matey!",
     "namespacePlaceholder": "Namespace o' the Seven Seas",
     "keyPlaceholder": "Key to the chest",
     "valuePlaceholder": "Booty Value (JSON)",

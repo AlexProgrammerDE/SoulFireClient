@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Metadata Instance",
+    "description": "Kelola entri metadata persisten untuk instance ini. Setiap entri memiliki namespace, kunci, dan nilai JSON.",
     "namespacePlaceholder": "Namespace",
     "keyPlaceholder": "Kunci",
     "valuePlaceholder": "Nilai (JSON)",

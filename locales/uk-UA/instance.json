@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Мета-дані екземпляра",
+    "description": "Керуйте постійними метаданими цього екземпляра. Кожен запис має простір імен, ключ і значення у форматі JSON.",
     "namespacePlaceholder": "Простір імен",
     "keyPlaceholder": "Ключ",
     "valuePlaceholder": "Значення (JSON)",
