@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Metadane instancji",
+    "description": "Zarządzaj trwałymi wpisami metadanych dla tej instancji. Każdy wpis ma przestrzeń nazw, klucz i wartość JSON.",
     "namespacePlaceholder": "Przestrzeń nazw",
     "keyPlaceholder": "Klucz",
     "valuePlaceholder": "Wartość (JSON)",

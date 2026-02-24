@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "เมทาดาท-instance",
+    "description": "จัดการรายการเมทาดาทาถาวรสำหรับอินสแตนซ์นี้ แต่ละรายการจะมีเนมสเปซ คีย์ และค่า JSON",
     "namespacePlaceholder": "เนมสเปซ",
     "keyPlaceholder": "คีย์",
     "valuePlaceholder": "ค่า (JSON)",

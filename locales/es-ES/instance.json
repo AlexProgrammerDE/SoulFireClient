@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Metadatos de la instancia",
+    "description": "Administre entradas de metadatos persistentes para esta instancia. Cada entrada tiene un espacio de nombres, clave y un valor en formato JSON.",
     "namespacePlaceholder": "Espacio de nombres",
     "keyPlaceholder": "Clave",
     "valuePlaceholder": "Valor (JSON)",

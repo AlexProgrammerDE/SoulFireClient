@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "인스턴스 메타데이터",
+    "description": "이 인스턴스에 대한 영구 메타데이터 항목을 관리합니다. 각 항목에는 네임스페이스, 키, 그리고 JSON 값이 있습니다.",
     "namespacePlaceholder": "네임스페이스",
     "keyPlaceholder": "키",
     "valuePlaceholder": "값 (JSON)",

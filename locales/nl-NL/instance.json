@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Instance Metadata",
+    "description": "Beheer permanente metadata-items voor deze instantie. Elk item heeft een namespace, sleutel en JSON-waarde.",
     "namespacePlaceholder": "Namespace",
     "keyPlaceholder": "Sleutel",
     "valuePlaceholder": "Waarde (JSON)",

@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "インスタンスメタデータ",
+    "description": "このインスタンスの永続的なメタデータエントリを管理します。各エントリにはネームスペース、キー、およびJSON値があります。",
     "namespacePlaceholder": "名前空間",
     "keyPlaceholder": "キー",
     "valuePlaceholder": "値（JSON）",

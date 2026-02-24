@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Metadati dell'istanza",
+    "description": "Gestisci le voci di metadati persistenti per questa istanza. Ogni voce ha uno spazio dei nomi, una chiave e un valore JSON.",
     "namespacePlaceholder": "Spazio dei nomi",
     "keyPlaceholder": "Chiave",
     "valuePlaceholder": "Valore (JSON)",

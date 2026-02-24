@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Metadata instance",
+    "description": "Spravujte trvalé metadata této instance. Každý záznam má jmenný prostor, klíč a hodnotu ve formátu JSON.",
     "namespacePlaceholder": "Jmenný prostor",
     "keyPlaceholder": "Klíč",
     "valuePlaceholder": "Hodnota (JSON)",

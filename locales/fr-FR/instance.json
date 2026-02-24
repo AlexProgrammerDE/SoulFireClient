@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "Métadonnées de l'instance",
+    "description": "Gérer les entrées de métadonnées persistantes pour cette instance. Chaque entrée possède un espace de noms, une clé et une valeur JSON.",
     "namespacePlaceholder": "Espace de noms",
     "keyPlaceholder": "Clé",
     "valuePlaceholder": "Valeur (JSON)",

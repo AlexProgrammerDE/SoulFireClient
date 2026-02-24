@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "İnstantın Metadatası.",
+    "description": "Bu instant üçün davamlı metadata qeydlərini idarə edin. Hər qeyd bir namespace, açar və JSON dəyərinə malikdir.",
     "namespacePlaceholder": "Məkan (Namespace)",
     "keyPlaceholder": "Açar",
     "valuePlaceholder": "Dəyər (JSON)",

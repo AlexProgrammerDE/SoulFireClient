@@ -179,8 +179,8 @@
     }
   },
   "instanceMetadata": {
-    "title": "",
-    "description": "",
+    "title": "实例元数据​​.",
+    "description": "管理此实例的持久元数据条目。每条条目包含命名空间、键和值（JSON格式）。",
     "namespacePlaceholder": "命名空间",
     "keyPlaceholder": "键",
     "valuePlaceholder": "值（JSON）",
