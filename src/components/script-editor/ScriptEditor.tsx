@@ -701,6 +701,61 @@ export function ScriptEditor() {
     [onEdgesChange],
   );
 
+  // Handle-based reconnection: dragging from an occupied input detaches the
+  // existing edge so the user can reconnect it elsewhere. If dropped on empty
+  // space the original edge is restored.
+  const detachedEdgeRef = useRef<Edge | null>(null);
+  const connectionMadeRef = useRef(false);
+
+  const handleConnectStart = useCallback(
+    (
+      _event: MouseEvent | TouchEvent,
+      params: {
+        nodeId: string | null;
+        handleId: string | null;
+        handleType: string | null;
+      },
+    ) => {
+      connectionMadeRef.current = false;
+      detachedEdgeRef.current = null;
+
+      if (params.handleType === "target" && params.nodeId && params.handleId) {
+        const { edges: currentEdges } = useScriptEditorStore.getState();
+        const existingEdges = currentEdges.filter(
+          (e) =>
+            e.target === params.nodeId && e.targetHandle === params.handleId,
+        );
+        // Only detach if there's exactly one edge (single-input port)
+        if (existingEdges.length === 1) {
+          detachedEdgeRef.current = existingEdges[0];
+          onEdgesChange([{ id: existingEdges[0].id, type: "remove" }]);
+        }
+      }
+    },
+    [onEdgesChange],
+  );
+
+  const handleConnect = useCallback(
+    (connection: Connection) => {
+      connectionMadeRef.current = true;
+      detachedEdgeRef.current = null;
+      onConnect(connection);
+    },
+    [onConnect],
+  );
+
+  const handleConnectEnd = useCallback(() => {
+    if (detachedEdgeRef.current && !connectionMadeRef.current) {
+      // Restore the detached edge since no new connection was made
+      const edgeToRestore = detachedEdgeRef.current;
+      useScriptEditorStore.setState((state) => ({
+        edges: [...state.edges, edgeToRestore],
+      }));
+    }
+    detachedEdgeRef.current = null;
+    connectionMadeRef.current = false;
+  }, []);
+
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: ReactFlow canvas wrapper requires keyboard and mouse handling for operations
     <div
@@ -726,7 +781,9 @@ export function ScriptEditor() {
           edgeTypes={edgeTypes}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
+          onConnectStart={handleConnectStart}
+          onConnect={handleConnect}
+          onConnectEnd={handleConnectEnd}
           onInit={handleInit}
           onNodeClick={handleNodeClick}
           onNodeDoubleClick={handleNodeDoubleClick}
