@@ -4,7 +4,6 @@ import {
   applyNodeChanges,
   type Connection,
   type Edge,
-  MarkerType,
   type Node,
   type OnConnect,
   type OnEdgesChange,
@@ -430,14 +429,6 @@ export const useScriptEditorStore = create<ScriptEditorState>((set, get) => ({
           ...connection,
           type: edgeType,
           data: { edgeType, edgeStyle },
-          // Add arrow marker for animated (execution) edges
-          ...(isExecutionStyle && {
-            markerEnd: {
-              type: MarkerType.ArrowClosed,
-              width: 16,
-              height: 16,
-            },
-          }),
         },
         baseEdges,
       ),

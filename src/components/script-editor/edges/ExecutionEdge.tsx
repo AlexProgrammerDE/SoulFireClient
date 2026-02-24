@@ -1,9 +1,10 @@
 import {
   BaseEdge,
   type Edge,
+  EdgeLabelRenderer,
   type EdgeProps,
   getSmoothStepPath,
-  MarkerType,
+  Position,
 } from "@xyflow/react";
 
 import { cn } from "@/lib/utils";
@@ -14,6 +15,22 @@ export type ExecutionEdgeData = {
 
 export type ExecutionEdgeType = Edge<ExecutionEdgeData, "execution">;
 
+/**
+ * Arrow rotation so it points into the target node based on handle position.
+ */
+function getArrowRotation(position: Position): number {
+  switch (position) {
+    case Position.Left:
+      return 0;
+    case Position.Right:
+      return 180;
+    case Position.Top:
+      return -90;
+    case Position.Bottom:
+      return 90;
+  }
+}
+
 function ExecutionEdge({
   sourceX,
   sourceY,
@@ -23,7 +40,6 @@ function ExecutionEdge({
   targetPosition,
   data,
   selected,
-  markerEnd,
 }: EdgeProps<ExecutionEdgeType>) {
   const [edgePath] = getSmoothStepPath({
     sourceX,
@@ -36,31 +52,48 @@ function ExecutionEdge({
   });
 
   const isActive = data?.isActive ?? false;
+  const arrowRotation = getArrowRotation(targetPosition);
 
   return (
-    <BaseEdge
-      path={edgePath}
-      markerEnd={markerEnd}
-      className={cn(
-        "!stroke-muted-foreground",
-        isActive && "animate-pulse",
-        selected && "!stroke-foreground",
-      )}
-      style={{
-        strokeWidth: 2.5,
-        strokeDasharray: isActive ? "5 5" : undefined,
-      }}
-    />
+    <>
+      <BaseEdge
+        path={edgePath}
+        className={cn(
+          "!stroke-muted-foreground",
+          isActive && "animate-pulse",
+          selected && "!stroke-foreground",
+        )}
+        style={{
+          strokeWidth: 2.5,
+          strokeDasharray: isActive ? "5 5" : undefined,
+        }}
+      />
+      <EdgeLabelRenderer>
+        <div
+          className="nodrag nopan pointer-events-none absolute"
+          style={{
+            transform: `translate(-50%, -50%) translate(${targetX}px, ${targetY}px)`,
+          }}
+        >
+          <svg
+            role="img"
+            aria-label="Edge direction"
+            width="10"
+            height="10"
+            viewBox="0 0 10 10"
+            style={{ transform: `rotate(${arrowRotation}deg)` }}
+            className={cn(
+              "fill-muted-foreground",
+              isActive && "animate-pulse",
+              selected && "fill-foreground",
+            )}
+          >
+            <polygon points="0,1 10,5 0,9" />
+          </svg>
+        </div>
+      </EdgeLabelRenderer>
+    </>
   );
 }
-
-// Default edge options for execution edges
-export const executionEdgeDefaults = {
-  markerEnd: {
-    type: MarkerType.ArrowClosed,
-    width: 16,
-    height: 16,
-  },
-};
 
 export { ExecutionEdge };

@@ -1,6 +1,6 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
 import { queryOptions } from "@tanstack/react-query";
-import type { Edge, MarkerType, Node } from "@xyflow/react";
+import type { Edge, Node } from "@xyflow/react";
 import type { Value } from "@/generated/google/protobuf/struct";
 import {
   EdgeType,
@@ -352,13 +352,6 @@ export function protoToEdges(edges: ScriptEdge[]): Edge[] {
       targetHandle: edge.targetHandle || undefined,
       type: isExecution ? "execution" : "data",
       data: { edgeType: isExecution ? "execution" : "data" },
-      ...(isExecution && {
-        markerEnd: {
-          type: "arrowclosed" as unknown as MarkerType,
-          width: 16,
-          height: 16,
-        },
-      }),
     };
   });
 }
