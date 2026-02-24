@@ -18,6 +18,7 @@ export type PortType =
   | "block"
   | "item"
   | "list"
+  | "map"
   | "any";
 
 /**
@@ -34,6 +35,222 @@ export const StandardPorts = {
 
 export type NodeCategory = string;
 
+// ==================== Type Descriptor ====================
+
+/**
+ * A recursive type descriptor for generic/parameterized port types.
+ * Supports simple types, parameterized types (List<Bot>, Map<String, Number>),
+ * and type variables (T, K, V) that are resolved based on connections.
+ */
+export type TypeDescriptor =
+  | { kind: "simple"; type: PortType }
+  | { kind: "parameterized"; base: PortType; params: TypeDescriptor[] }
+  | { kind: "type_variable"; name: string };
+
+/**
+ * Create a simple type descriptor.
+ */
+export function simpleType(type: PortType): TypeDescriptor {
+  return { kind: "simple", type };
+}
+
+/**
+ * Create a type variable descriptor.
+ */
+export function typeVar(name: string): TypeDescriptor {
+  return { kind: "type_variable", name };
+}
+
+/**
+ * Create a parameterized list type: List<elementType>.
+ */
+export function listType(elementType: TypeDescriptor): TypeDescriptor {
+  return { kind: "parameterized", base: "list", params: [elementType] };
+}
+
+/**
+ * Create a parameterized map type: Map<keyType, valueType>.
+ */
+export function mapType(
+  keyType: TypeDescriptor,
+  valueType: TypeDescriptor,
+): TypeDescriptor {
+  return { kind: "parameterized", base: "map", params: [keyType, valueType] };
+}
+
+/**
+ * Get the base PortType from a TypeDescriptor (for backward compat and handle rendering).
+ */
+export function getBaseType(td: TypeDescriptor): PortType {
+  switch (td.kind) {
+    case "simple":
+      return td.type;
+    case "parameterized":
+      return td.base;
+    case "type_variable":
+      return "any";
+  }
+}
+
+/**
+ * Get a human-readable display string for a TypeDescriptor.
+ */
+export function typeDescriptorDisplayString(td: TypeDescriptor): string {
+  switch (td.kind) {
+    case "simple":
+      return td.type;
+    case "parameterized":
+      return `${td.base}<${td.params.map(typeDescriptorDisplayString).join(", ")}>`;
+    case "type_variable":
+      return td.name;
+  }
+}
+
+/**
+ * Check whether a TypeDescriptor contains any type variables.
+ */
+export function hasTypeVariables(td: TypeDescriptor): boolean {
+  switch (td.kind) {
+    case "simple":
+      return false;
+    case "parameterized":
+      return td.params.some(hasTypeVariables);
+    case "type_variable":
+      return true;
+  }
+}
+
+/**
+ * Resolve type variables using the given bindings map.
+ */
+export function resolveTypeDescriptor(
+  td: TypeDescriptor,
+  bindings: Map<string, TypeDescriptor>,
+): TypeDescriptor {
+  switch (td.kind) {
+    case "simple":
+      return td;
+    case "parameterized":
+      return {
+        kind: "parameterized",
+        base: td.base,
+        params: td.params.map((p) => resolveTypeDescriptor(p, bindings)),
+      };
+    case "type_variable": {
+      const bound = bindings.get(td.name);
+      if (bound) {
+        return resolveTypeDescriptor(bound, bindings);
+      }
+      return td;
+    }
+  }
+}
+
+/**
+ * Attempt to unify two type descriptors, updating bindings for type variables.
+ * Returns true if unification succeeds.
+ */
+export function unifyTypes(
+  a: TypeDescriptor,
+  b: TypeDescriptor,
+  bindings: Map<string, TypeDescriptor>,
+): boolean {
+  const resolvedA = resolveTypeDescriptor(a, bindings);
+  const resolvedB = resolveTypeDescriptor(b, bindings);
+
+  // TypeVariable on either side: bind it
+  if (resolvedA.kind === "type_variable") {
+    bindings.set(resolvedA.name, resolvedB);
+    return true;
+  }
+  if (resolvedB.kind === "type_variable") {
+    bindings.set(resolvedB.name, resolvedA);
+    return true;
+  }
+
+  // ANY on either side matches everything
+  if (resolvedA.kind === "simple" && resolvedA.type === "any") return true;
+  if (resolvedB.kind === "simple" && resolvedB.type === "any") return true;
+
+  // Simple vs Simple
+  if (resolvedA.kind === "simple" && resolvedB.kind === "simple") {
+    return isTypeCompatible(resolvedA.type, resolvedB.type);
+  }
+
+  // Parameterized vs Parameterized
+  if (
+    resolvedA.kind === "parameterized" &&
+    resolvedB.kind === "parameterized"
+  ) {
+    if (
+      resolvedA.base !== resolvedB.base ||
+      resolvedA.params.length !== resolvedB.params.length
+    ) {
+      return false;
+    }
+    for (let i = 0; i < resolvedA.params.length; i++) {
+      if (!unifyTypes(resolvedA.params[i], resolvedB.params[i], bindings)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Simple LIST/MAP vs Parameterized LIST/MAP (backward compat)
+  if (resolvedA.kind === "simple" && resolvedB.kind === "parameterized") {
+    if (resolvedA.type === resolvedB.base) return true;
+  }
+  if (resolvedB.kind === "simple" && resolvedA.kind === "parameterized") {
+    if (resolvedB.type === resolvedA.base) return true;
+  }
+
+  return false;
+}
+
+/**
+ * Resolve type variables for a node based on its connected edges.
+ * Returns a map of variable name to resolved TypeDescriptor.
+ */
+export function resolveNodeTypeVars(
+  nodeType: string,
+  connectedInputTypes: Map<string, TypeDescriptor>,
+): Map<string, TypeDescriptor> {
+  const def = nodeDefinitionsByType.get(nodeType);
+  if (!def) return new Map();
+
+  const bindings = new Map<string, TypeDescriptor>();
+
+  // For each connected input, try to unify with the port's type descriptor
+  for (const [portId, sourceType] of connectedInputTypes) {
+    const port = def.inputs.find((p) => p.id === portId);
+    if (!port?.typeDescriptor) continue;
+    unifyTypes(sourceType, port.typeDescriptor, bindings);
+  }
+
+  return bindings;
+}
+
+/**
+ * Get the resolved PortType for a port, given the node's type variable bindings.
+ * If the port has a TypeDescriptor with type variables, resolves them and returns
+ * the base type of the resolved descriptor. Otherwise returns the static port type.
+ */
+export function getResolvedPortType(
+  port: PortDefinition,
+  bindings: Map<string, TypeDescriptor>,
+): PortType {
+  if (!port.typeDescriptor || !hasTypeVariables(port.typeDescriptor)) {
+    return port.type;
+  }
+  const resolved = resolveTypeDescriptor(port.typeDescriptor, bindings);
+  if (!hasTypeVariables(resolved)) {
+    return getBaseType(resolved);
+  }
+  return port.type;
+}
+
+// ==================== Port Definition ====================
+
 export interface PortDefinition {
   id: string;
   label: string;
@@ -48,6 +265,8 @@ export interface PortDefinition {
   acceptedTypes?: PortType[];
   /** For dynamic output ports, the ID of the input port to inherit type from */
   inferTypeFrom?: string;
+  /** Generic type descriptor for parameterized types */
+  typeDescriptor?: TypeDescriptor;
 }
 
 export interface NodeDefinition {
@@ -107,9 +326,43 @@ export function protoPortTypeToLocal(protoType: ProtoPortType): PortType {
       return "entity";
     case ProtoPortType.ITEM:
       return "item";
+    case ProtoPortType.MAP:
+      return "map";
     default:
       return "any";
   }
+}
+
+/**
+ * Convert proto TypeDescriptor to local TypeDescriptor
+ */
+export function protoTypeDescriptorToLocal(
+  proto: { kind: { oneofKind: string } & Record<string, unknown> } | undefined,
+): TypeDescriptor | undefined {
+  if (!proto?.kind) return undefined;
+
+  const kind = proto.kind;
+  if (kind.oneofKind === "simple") {
+    return simpleType(protoPortTypeToLocal(kind.simple as ProtoPortType));
+  }
+  if (kind.oneofKind === "parameterized") {
+    const p = kind.parameterized as {
+      base: ProtoPortType;
+      params: Array<{ kind: { oneofKind: string } & Record<string, unknown> }>;
+    };
+    return {
+      kind: "parameterized",
+      base: protoPortTypeToLocal(p.base),
+      params: p.params
+        .map(protoTypeDescriptorToLocal)
+        .filter((td): td is TypeDescriptor => td !== undefined),
+    };
+  }
+  if (kind.oneofKind === "typeVariable") {
+    return typeVar(kind.typeVariable as string);
+  }
+
+  return undefined;
 }
 
 /**
@@ -133,6 +386,13 @@ export function protoPortToLocal(proto: ProtoPortDefinition): PortDefinition {
         ? proto.acceptedTypes.map(protoPortTypeToLocal)
         : undefined,
     inferTypeFrom: proto.inferTypeFrom || undefined,
+    typeDescriptor: proto.typeDescriptor
+      ? protoTypeDescriptorToLocal(
+          proto.typeDescriptor as {
+            kind: { oneofKind: string } & Record<string, unknown>;
+          },
+        )
+      : undefined,
   };
 }
 
@@ -201,6 +461,7 @@ export const DEFAULT_PORT_COLORS: Record<PortType, string> = {
   block: "#06b6d4",
   item: "#ec4899",
   list: "#8b5cf6",
+  map: "#14b8a6",
   any: "#6b7280",
 };
 
@@ -218,6 +479,7 @@ export const DEFAULT_HANDLE_SHAPES: Record<PortType, HandleShape> = {
   block: "circle",
   item: "circle",
   list: "circle",
+  map: "diamond",
   any: "circle",
 };
 
@@ -235,6 +497,7 @@ export const DEFAULT_EDGE_STYLES: Record<PortType, EdgeStyle> = {
   block: "default",
   item: "default",
   list: "default",
+  map: "default",
   any: "default",
 };
 
@@ -257,6 +520,7 @@ export const DEFAULT_TYPE_COMPATIBILITY: Partial<Record<PortType, PortType[]>> =
       "block",
       "item",
       "list",
+      "map",
     ],
   };
 
@@ -302,6 +566,25 @@ export function getPortTypeFromDefinition(
 
   const output = def.outputs.find((p) => p.id === portId);
   if (output) return output.type;
+
+  return null;
+}
+
+/**
+ * Look up the port definition for a given node type and port ID.
+ */
+export function getPortDefinition(
+  nodeType: string,
+  portId: string,
+): PortDefinition | null {
+  const def = nodeDefinitionsByType.get(nodeType);
+  if (!def) return null;
+
+  const input = def.inputs.find((p) => p.id === portId);
+  if (input) return input;
+
+  const output = def.outputs.find((p) => p.id === portId);
+  if (output) return output;
 
   return null;
 }
@@ -448,6 +731,17 @@ export function isTypeCompatible(
   // Fall back to default compatibility
   const defaultCompat = DEFAULT_TYPE_COMPATIBILITY[targetType];
   return defaultCompat?.includes(sourceType) ?? false;
+}
+
+/**
+ * Check if a source TypeDescriptor can be connected to a target TypeDescriptor.
+ * Handles generics and type variables via unification.
+ */
+export function isDescriptorCompatible(
+  source: TypeDescriptor,
+  target: TypeDescriptor,
+): boolean {
+  return unifyTypes(source, target, new Map());
 }
 
 /**

@@ -43,6 +43,70 @@ export interface Position {
   y: number;
 }
 /**
+ * A recursive type descriptor for generic/parameterized port types.
+ * Supports simple types (NUMBER, STRING), parameterized types (List<Bot>, Map<String, Number>),
+ * and type variables (T, K, V) that are resolved based on connections.
+ *
+ * @generated from protobuf message soulfire.v1.TypeDescriptor
+ */
+export interface TypeDescriptor {
+  /**
+   * @generated from protobuf oneof: kind
+   */
+  kind:
+    | {
+        oneofKind: "simple";
+        /**
+         * A simple, non-parameterized type (e.g., NUMBER, STRING, BOT).
+         *
+         * @generated from protobuf field: soulfire.v1.PortType simple = 1
+         */
+        simple: PortType;
+      }
+    | {
+        oneofKind: "parameterized";
+        /**
+         * A parameterized type like List<T> or Map<K, V>.
+         *
+         * @generated from protobuf field: soulfire.v1.ParameterizedType parameterized = 2
+         */
+        parameterized: ParameterizedType;
+      }
+    | {
+        oneofKind: "typeVariable";
+        /**
+         * A type variable name (e.g., "T", "K", "V") that gets resolved from connections.
+         * Type variables are scoped per node: each node instance has its own bindings.
+         *
+         * @generated from protobuf field: string type_variable = 3
+         */
+        typeVariable: string;
+      }
+    | {
+        oneofKind: undefined;
+      };
+}
+/**
+ * A parameterized type with a base type and type arguments.
+ * For example, List<Bot> has base=LIST and params=[Simple(BOT)].
+ *
+ * @generated from protobuf message soulfire.v1.ParameterizedType
+ */
+export interface ParameterizedType {
+  /**
+   * The container type (e.g., LIST, MAP).
+   *
+   * @generated from protobuf field: soulfire.v1.PortType base = 1
+   */
+  base: PortType;
+  /**
+   * The type arguments (e.g., [BOT] for List<Bot>, [STRING, NUMBER] for Map<String, Number>).
+   *
+   * @generated from protobuf field: repeated soulfire.v1.TypeDescriptor params = 2
+   */
+  params: TypeDescriptor[];
+}
+/**
  * Definition of a port (input or output) on a node type.
  * Describes the port's type, constraints, and display properties.
  *
@@ -120,6 +184,14 @@ export interface PortDefinition {
    * @generated from protobuf field: string infer_type_from = 10
    */
   inferTypeFrom: string;
+  /**
+   * Optional generic type descriptor for parameterized types.
+   * When present, provides richer type information than the flat port_type field.
+   * For example, List<Bot> or a type variable T that resolves from connections.
+   *
+   * @generated from protobuf field: optional soulfire.v1.TypeDescriptor type_descriptor = 11
+   */
+  typeDescriptor?: TypeDescriptor;
 }
 /**
  * Complete definition of a node type.
@@ -1655,6 +1727,12 @@ export enum PortType {
    * @generated from protobuf enum value: PORT_TYPE_ITEM = 10;
    */
   ITEM = 10,
+  /**
+   * Key-value map of entries.
+   *
+   * @generated from protobuf enum value: PORT_TYPE_MAP = 11;
+   */
+  MAP = 11,
 }
 /**
  * Log levels for script execution logging.
@@ -1837,6 +1915,218 @@ class Position$Type extends MessageType<Position> {
  */
 export const Position = new Position$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class TypeDescriptor$Type extends MessageType<TypeDescriptor> {
+  constructor() {
+    super("soulfire.v1.TypeDescriptor", [
+      {
+        no: 1,
+        name: "simple",
+        kind: "enum",
+        oneof: "kind",
+        T: () => ["soulfire.v1.PortType", PortType, "PORT_TYPE_"],
+      },
+      {
+        no: 2,
+        name: "parameterized",
+        kind: "message",
+        oneof: "kind",
+        T: () => ParameterizedType,
+      },
+      {
+        no: 3,
+        name: "type_variable",
+        kind: "scalar",
+        oneof: "kind",
+        T: 9 /*ScalarType.STRING*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<TypeDescriptor>): TypeDescriptor {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.kind = { oneofKind: undefined };
+    if (value !== undefined)
+      reflectionMergePartial<TypeDescriptor>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: TypeDescriptor,
+  ): TypeDescriptor {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.PortType simple */ 1:
+          message.kind = {
+            oneofKind: "simple",
+            simple: reader.int32(),
+          };
+          break;
+        case /* soulfire.v1.ParameterizedType parameterized */ 2:
+          message.kind = {
+            oneofKind: "parameterized",
+            parameterized: ParameterizedType.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options,
+              (message.kind as any).parameterized,
+            ),
+          };
+          break;
+        case /* string type_variable */ 3:
+          message.kind = {
+            oneofKind: "typeVariable",
+            typeVariable: reader.string(),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: TypeDescriptor,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.PortType simple = 1; */
+    if (message.kind.oneofKind === "simple")
+      writer.tag(1, WireType.Varint).int32(message.kind.simple);
+    /* soulfire.v1.ParameterizedType parameterized = 2; */
+    if (message.kind.oneofKind === "parameterized")
+      ParameterizedType.internalBinaryWrite(
+        message.kind.parameterized,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* string type_variable = 3; */
+    if (message.kind.oneofKind === "typeVariable")
+      writer.tag(3, WireType.LengthDelimited).string(message.kind.typeVariable);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.TypeDescriptor
+ */
+export const TypeDescriptor = new TypeDescriptor$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class ParameterizedType$Type extends MessageType<ParameterizedType> {
+  constructor() {
+    super("soulfire.v1.ParameterizedType", [
+      {
+        no: 1,
+        name: "base",
+        kind: "enum",
+        T: () => ["soulfire.v1.PortType", PortType, "PORT_TYPE_"],
+      },
+      {
+        no: 2,
+        name: "params",
+        kind: "message",
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: () => TypeDescriptor,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<ParameterizedType>): ParameterizedType {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.base = 0;
+    message.params = [];
+    if (value !== undefined)
+      reflectionMergePartial<ParameterizedType>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: ParameterizedType,
+  ): ParameterizedType {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* soulfire.v1.PortType base */ 1:
+          message.base = reader.int32();
+          break;
+        case /* repeated soulfire.v1.TypeDescriptor params */ 2:
+          message.params.push(
+            TypeDescriptor.internalBinaryRead(reader, reader.uint32(), options),
+          );
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: ParameterizedType,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* soulfire.v1.PortType base = 1; */
+    if (message.base !== 0) writer.tag(1, WireType.Varint).int32(message.base);
+    /* repeated soulfire.v1.TypeDescriptor params = 2; */
+    for (let i = 0; i < message.params.length; i++)
+      TypeDescriptor.internalBinaryWrite(
+        message.params[i],
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.ParameterizedType
+ */
+export const ParameterizedType = new ParameterizedType$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class PortDefinition$Type extends MessageType<PortDefinition> {
   constructor() {
     super("soulfire.v1.PortDefinition", [
@@ -1887,6 +2177,12 @@ class PortDefinition$Type extends MessageType<PortDefinition> {
         name: "infer_type_from",
         kind: "scalar",
         T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 11,
+        name: "type_descriptor",
+        kind: "message",
+        T: () => TypeDescriptor,
       },
     ]);
   }
@@ -1948,6 +2244,14 @@ class PortDefinition$Type extends MessageType<PortDefinition> {
         case /* string infer_type_from */ 10:
           message.inferTypeFrom = reader.string();
           break;
+        case /* optional soulfire.v1.TypeDescriptor type_descriptor */ 11:
+          message.typeDescriptor = TypeDescriptor.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.typeDescriptor,
+          );
+          break;
         default:
           let u = options.readUnknownField;
           if (u === "throw")
@@ -2006,6 +2310,13 @@ class PortDefinition$Type extends MessageType<PortDefinition> {
     /* string infer_type_from = 10; */
     if (message.inferTypeFrom !== "")
       writer.tag(10, WireType.LengthDelimited).string(message.inferTypeFrom);
+    /* optional soulfire.v1.TypeDescriptor type_descriptor = 11; */
+    if (message.typeDescriptor)
+      TypeDescriptor.internalBinaryWrite(
+        message.typeDescriptor,
+        writer.tag(11, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(

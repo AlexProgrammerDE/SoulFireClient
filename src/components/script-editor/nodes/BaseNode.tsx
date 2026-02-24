@@ -1,4 +1,10 @@
-import { type Edge, Handle, type NodeProps, Position } from "@xyflow/react";
+import {
+  type Edge,
+  Handle,
+  type NodeProps,
+  Position,
+  useReactFlow,
+} from "@xyflow/react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { memo, useCallback, useMemo } from "react";
 import { cn } from "@/lib/utils";
@@ -10,8 +16,15 @@ import { InlineEditor } from "./InlineEditor";
 import {
   getHandleShape,
   getPortColor,
+  getPortDefinition,
+  getResolvedPortType,
+  hasTypeVariables,
   type NodeDefinition,
   type PortDefinition,
+  type PortType,
+  resolveNodeTypeVars,
+  simpleType,
+  type TypeDescriptor,
 } from "./types";
 
 // Stable empty object to avoid creating new references in selectors
@@ -36,6 +49,8 @@ interface BaseNodeProps extends NodeProps {
   edges?: Edge[];
   /** Callback to update node data */
   onDataChange?: (data: Record<string, unknown>) => void;
+  /** Resolved type variable bindings from generic inference */
+  typeBindings?: Map<string, TypeDescriptor>;
 }
 
 /**
@@ -56,6 +71,8 @@ interface PortRowProps {
   isConnected?: boolean;
   value?: unknown;
   onValueChange?: (value: unknown) => void;
+  /** Resolved port type after generic type inference (overrides static type for color/shape) */
+  resolvedType?: PortType;
 }
 
 function PortRow({
@@ -67,9 +84,12 @@ function PortRow({
   isConnected,
   value,
   onValueChange,
+  resolvedType,
 }: PortRowProps) {
-  const color = getPortColor(port.type);
-  const handleShape = getHandleShape(port.type);
+  // Use resolved type for color/shape when available (from generic inference)
+  const effectiveType = resolvedType ?? port.type;
+  const color = getPortColor(effectiveType);
+  const handleShape = getHandleShape(effectiveType);
   const isMultiInput = port.multiInput;
   const isLeft = position === Position.Left;
   const hasDefault = port.defaultValue !== undefined;
@@ -239,8 +259,26 @@ function BaseNodeComponent({
   selected,
   edges = [],
   onDataChange,
+  typeBindings,
 }: BaseNodeProps) {
   const { inputs, outputs, label, color, supportsMuting } = definition;
+
+  // Compute resolved port type for a given port using type bindings
+  const getResolvedType = useCallback(
+    (port: PortDefinition): PortType | undefined => {
+      if (
+        !typeBindings ||
+        typeBindings.size === 0 ||
+        !port.typeDescriptor ||
+        !hasTypeVariables(port.typeDescriptor)
+      ) {
+        return undefined;
+      }
+      const resolved = getResolvedPortType(port, typeBindings);
+      return resolved !== port.type ? resolved : undefined;
+    },
+    [typeBindings],
+  );
 
   // Handler for toggling collapsed state
   const handleToggleCollapse = useCallback(
@@ -413,6 +451,7 @@ function BaseNodeComponent({
               translatedLabel=""
               collapsed
               isConnected={connectedInputs.has(input.id)}
+              resolvedType={getResolvedType(input)}
             />
           ))}
           {visibleOutputs.map((output) => (
@@ -424,6 +463,7 @@ function BaseNodeComponent({
               translatedLabel=""
               collapsed
               isConnected={connectedOutputs.has(output.id)}
+              resolvedType={getResolvedType(output)}
             />
           ))}
         </div>
@@ -447,6 +487,7 @@ function BaseNodeComponent({
                     onValueChange={(val) =>
                       handleValueChange(row.input.id, val)
                     }
+                    resolvedType={getResolvedType(row.input)}
                   />
                 ) : (
                   <div />
@@ -460,6 +501,7 @@ function BaseNodeComponent({
                     position={Position.Right}
                     translatedLabel={getPortLabel(row.output)}
                     isConnected={connectedOutputs.has(row.output.id)}
+                    resolvedType={getResolvedType(row.output)}
                   />
                 ) : (
                   <div />
@@ -488,11 +530,26 @@ function BaseNodeComponent({
 // Create a memoized version for better performance
 export const BaseNode = memo(BaseNodeComponent);
 
+// Check if a node definition has any ports with type variables
+function definitionHasTypeVars(def: NodeDefinition): boolean {
+  return (
+    def.inputs.some(
+      (p) => p.typeDescriptor && hasTypeVariables(p.typeDescriptor),
+    ) ||
+    def.outputs.some(
+      (p) => p.typeDescriptor && hasTypeVariables(p.typeDescriptor),
+    )
+  );
+}
+
 // Factory function to create node components from definitions
 // Uses NodeEditingContext for inline editing capabilities
 export function createNodeComponent(definition: NodeDefinition) {
+  const hasGenericPorts = definitionHasTypeVars(definition);
+
   const NodeComponent = (props: NodeProps) => {
     const { edges, updateNodeData } = useNodeEditing();
+    const { getNodes } = useReactFlow();
 
     const handleDataChange = useCallback(
       (data: Record<string, unknown>) => {
@@ -503,6 +560,49 @@ export function createNodeComponent(definition: NodeDefinition) {
 
     const nodeData = props.data as BaseNodeData;
 
+    // Compute type variable bindings for generic nodes
+    const typeBindings = useMemo(() => {
+      if (!hasGenericPorts) return undefined;
+
+      const connectedInputTypes = new Map<string, TypeDescriptor>();
+      const allNodes = getNodes();
+
+      for (const edge of edges) {
+        if (
+          edge.target !== props.id ||
+          !edge.targetHandle ||
+          !edge.sourceHandle
+        )
+          continue;
+
+        // Find the source node to get its type
+        const sourceNode = allNodes.find((n) => n.id === edge.source);
+        if (!sourceNode?.type) continue;
+
+        // Look up the source port's type descriptor
+        const srcPortDef = getPortDefinition(
+          sourceNode.type,
+          edge.sourceHandle,
+        );
+        if (srcPortDef?.typeDescriptor) {
+          connectedInputTypes.set(edge.targetHandle, srcPortDef.typeDescriptor);
+        } else if (srcPortDef) {
+          connectedInputTypes.set(
+            edge.targetHandle,
+            simpleType(srcPortDef.type),
+          );
+        }
+      }
+
+      if (connectedInputTypes.size === 0) return undefined;
+
+      const bindings = resolveNodeTypeVars(
+        definition.type,
+        connectedInputTypes,
+      );
+      return bindings.size > 0 ? bindings : undefined;
+    }, [edges, props.id, getNodes]);
+
     return (
       <BaseNode
         {...props}
@@ -510,6 +610,7 @@ export function createNodeComponent(definition: NodeDefinition) {
         data={nodeData}
         edges={edges}
         onDataChange={handleDataChange}
+        typeBindings={typeBindings}
       />
     );
   };

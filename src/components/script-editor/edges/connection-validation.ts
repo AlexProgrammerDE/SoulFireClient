@@ -1,8 +1,12 @@
 import type { Connection, Edge, IsValidConnection, Node } from "@xyflow/react";
 import {
+  getPortDefinition,
   getPortTypeFromDefinition,
+  isDescriptorCompatible,
   isTypeCompatible,
   type PortType,
+  simpleType,
+  type TypeDescriptor,
 } from "@/components/script-editor/nodes/types";
 
 /**
@@ -22,6 +26,17 @@ export function canConvertType(
 
   // Use server-provided compatibility rules
   return isTypeCompatible(sourceType, targetType);
+}
+
+/**
+ * Check if a source TypeDescriptor can connect to a target TypeDescriptor.
+ * Uses unification for generic type checking.
+ */
+export function canConvertDescriptor(
+  source: TypeDescriptor,
+  target: TypeDescriptor,
+): boolean {
+  return isDescriptorCompatible(source, target);
 }
 
 /**
@@ -50,8 +65,32 @@ function getPortType(
 }
 
 /**
+ * Get the TypeDescriptor for a port, falling back to simple type.
+ */
+function getPortDescriptor(
+  nodes: Node[],
+  nodeId: string,
+  handleId: string | null | undefined,
+): TypeDescriptor {
+  if (!handleId) return simpleType("any");
+
+  const node = nodes.find((n) => n.id === nodeId);
+  if (!node) return simpleType("any");
+
+  const portDef = getPortDefinition(node.type ?? "", handleId);
+  if (portDef?.typeDescriptor) return portDef.typeDescriptor;
+  if (portDef) return simpleType(portDef.type);
+
+  // Fallback for layout nodes
+  const nodeData = node.data as { resolvedType?: PortType } | undefined;
+  if (nodeData?.resolvedType) return simpleType(nodeData.resolvedType);
+
+  return simpleType("any");
+}
+
+/**
  * Creates a connection validator that uses node definitions to determine port types.
- * This is the primary validation method that should be used.
+ * Supports generic type descriptors with type variable unification.
  *
  * @param nodes The current nodes in the graph
  * @returns An IsValidConnection function for React Flow
@@ -73,7 +112,22 @@ export function createConnectionValidator(nodes: Node[]): IsValidConnection {
     if (sourceType === "execution" && targetType === "execution") return true;
     if (sourceType === "execution" || targetType === "execution") return false;
 
-    // Use the enhanced type conversion check
+    // Try TypeDescriptor-based validation first (supports generics)
+    const sourceDesc = getPortDescriptor(
+      nodes,
+      connection.source,
+      connection.sourceHandle,
+    );
+    const targetDesc = getPortDescriptor(
+      nodes,
+      connection.target,
+      connection.targetHandle,
+    );
+    if (sourceDesc && targetDesc) {
+      return canConvertDescriptor(sourceDesc, targetDesc);
+    }
+
+    // Fall back to flat type check
     return canConvertType(sourceType, targetType);
   };
 }
