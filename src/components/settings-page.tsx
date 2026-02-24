@@ -342,11 +342,11 @@ function ComboComponent(props: {
 }) {
   const [open, setOpen] = useState(false);
 
-  const selectedOption = props.setting.options.find(
-    (option) => option.id === props.value,
-  );
-  if (!selectedOption) {
-    throw new Error("Selected option not found");
+  const selectedOption =
+    props.setting.options.find((option) => option.id === props.value) ??
+    props.setting.options[0];
+  if (selectedOption.id !== props.value) {
+    props.changeCallback(selectedOption.id);
   }
 
   return (
