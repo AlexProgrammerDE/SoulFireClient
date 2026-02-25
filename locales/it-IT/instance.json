@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "Codice dispositivo Microsoft",
       "microsoftRefreshToken": "Token di aggiornamento Microsoft",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "Importa account {{type}}",
         "description": "Incolla qui i tuoi account, uno per riga"

@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "Microsoft Device Code",
       "microsoftRefreshToken": "Microsoft Rum Token (Refresh)",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "Bring in {{type}} accounts, hoist the sails!",
         "description": "Paste yer accounts here, one per line o' rope"

@@ -37,6 +37,7 @@ import {
   SparklesIcon,
   SquareIcon,
   TerminalIcon,
+  TicketIcon,
   Trash2Icon,
   UtensilsIcon,
   WifiOffIcon,
@@ -144,6 +145,8 @@ const accountTypeLabel = (
         return "Java (Refresh Token)";
       case "MICROSOFT_JAVA_COOKIES":
         return "Java (Cookies)";
+      case "MICROSOFT_JAVA_ACCESS_TOKEN":
+        return "Java (Access Token)";
       case "MICROSOFT_BEDROCK_CREDENTIALS":
         return "Bedrock (Credentials)";
       case "MICROSOFT_BEDROCK_DEVICE_CODE":
@@ -166,6 +169,8 @@ const accountTypeToIcon = (
         return RotateCcwKeyIcon;
       case "MICROSOFT_JAVA_COOKIES":
         return CookieIcon;
+      case "MICROSOFT_JAVA_ACCESS_TOKEN":
+        return TicketIcon;
       case "MICROSOFT_BEDROCK_CREDENTIALS":
         return KeyRoundIcon;
       case "MICROSOFT_BEDROCK_DEVICE_CODE":

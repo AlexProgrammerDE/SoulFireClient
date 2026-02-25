@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "Mã thiết bị Microsoft",
       "microsoftRefreshToken": "Refresh Token Microsoft",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "Nhập tài khoản loại {{type}}",
         "description": "Dán tài khoản của bạn tại đây, mỗi dòng một tài khoản"

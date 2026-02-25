@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "Microsoft Device Code",
       "microsoftRefreshToken": "Microsoft Refresh Token",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "Import {{type}} accounts",
         "description": "Paste your accounts here, one per line"

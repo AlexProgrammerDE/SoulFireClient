@@ -18,6 +18,7 @@ import {
   ShoppingCartIcon,
   SparklesIcon,
   TextIcon,
+  TicketIcon,
   TrashIcon,
   WifiOffIcon,
 } from "lucide-react";
@@ -231,6 +232,8 @@ const accountTypeToIcon = (
         return RotateCcwKeyIcon;
       case "MICROSOFT_JAVA_COOKIES":
         return CookieIcon;
+      case "MICROSOFT_JAVA_ACCESS_TOKEN":
+        return TicketIcon;
       case "MICROSOFT_BEDROCK_CREDENTIALS":
         return KeyRoundIcon;
       case "MICROSOFT_BEDROCK_DEVICE_CODE":
@@ -721,6 +724,16 @@ function AddButton() {
             }}
           >
             {t("account.import.microsoftCookies")}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              void trackEvent("import_account_microsoft_java_access_token");
+              setAccountTypeCredentialsSelected(
+                AccountTypeCredentials.MICROSOFT_JAVA_ACCESS_TOKEN,
+              );
+            }}
+          >
+            {t("account.import.microsoftAccessToken")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuLabel>

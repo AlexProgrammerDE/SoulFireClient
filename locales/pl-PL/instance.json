@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "Kod urządzenia Microsoft",
       "microsoftRefreshToken": "Microsoft Refresh Token",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "Importuj konta {{type}}",
         "description": "Wklej tutaj swoje konta, po jednym na linię"

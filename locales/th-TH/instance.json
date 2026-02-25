@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "รหัสอุปกรณ์ Microsoft",
       "microsoftRefreshToken": "โทเค็นรีเฟรชของ Microsoft",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "นำเข้าไอดี {{type}}",
         "description": "วางไอดีของคุณที่นี่ ทีละบรรทัด"

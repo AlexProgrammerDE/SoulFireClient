@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "Microsoft 裝置驗證碼",
       "microsoftRefreshToken": "Microsoft 重新整理權杖",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "導入 {{type}} 帳戶",
         "description": "請將您的帳戶貼在此處，每行一個"

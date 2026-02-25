@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "Microsoft Device Codez",
       "microsoftRefreshToken": "Microsoft Refresh Tokenz",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "Import {{type}} acountz",
         "description": "Paste ur acountz here, one purr line kthx."

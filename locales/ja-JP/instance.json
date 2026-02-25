@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "Microsoftデバイスコード",
       "microsoftRefreshToken": "Microsoftリフレッシュトークン",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "{{type}}アカウントをインポート",
         "description": "ここにアカウントを1行ごとに貼り付けてください。"

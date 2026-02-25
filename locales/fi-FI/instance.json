@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "Microsoft-laitteen koodi",
       "microsoftRefreshToken": "Microsoft-virkistystunnus",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "Tuo {{type}} tilejä",
         "description": "Liitä tilisi tähän, yksi per rivi"

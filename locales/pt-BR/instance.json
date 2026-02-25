@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "Código de Dispositivo Microsoft",
       "microsoftRefreshToken": "Refresh Token Microsoft",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "Importar contas do tipo {{type}}",
         "description": "Cole suas contas aqui, uma por linha"

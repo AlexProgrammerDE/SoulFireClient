@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "ǝpoɔ ǝɔᴉʌǝp ʇɥɢosɟoɹɔosɟoɹɯ",
       "microsoftRefreshToken": "uǝʞoʇ ɥsǝɹɟǝɹ ʇɥɢosɟoɹɔosɟoɹɯ",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "sʇunoɔɔɐ {{type}} ʇɹodɯI",
         "description": "ǝuᴉl ɹǝd ǝuo ,ǝɹǝɥ sʇunoɔɔɐ ɹnoʎ ǝʇsɐԀ"

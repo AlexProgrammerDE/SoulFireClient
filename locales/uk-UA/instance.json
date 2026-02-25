@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "Код пристрою Microsoft",
       "microsoftRefreshToken": "Токен оновлення Microsoft",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "Імпортувати {{type}} акаунти",
         "description": "Вставте ваші акаунти тут, по одному на рядок"

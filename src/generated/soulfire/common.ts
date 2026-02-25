@@ -154,6 +154,15 @@ export interface MinecraftAccountProto {
         bedrockData: MinecraftAccountProto_BedrockData;
       }
     | {
+        oneofKind: "onlineSimpleJavaData";
+        /**
+         * Data for Java accounts authenticated with a raw access token.
+         *
+         * @generated from protobuf field: soulfire.v1.MinecraftAccountProto.OnlineSimpleJavaData online_simple_java_data = 10
+         */
+        onlineSimpleJavaData: MinecraftAccountProto_OnlineSimpleJavaData;
+      }
+    | {
         oneofKind: undefined;
       };
   /**
@@ -203,6 +212,27 @@ export interface MinecraftAccountProto_OnlineChainJavaData {
  * @generated from protobuf message soulfire.v1.MinecraftAccountProto.OfflineJavaData
  */
 export interface MinecraftAccountProto_OfflineJavaData {}
+/**
+ * Account data for Java Edition accounts authenticated with a raw access token.
+ * Contains only the token and its expiry, without a full authentication chain.
+ * Cannot be refreshed; used until the token expires.
+ *
+ * @generated from protobuf message soulfire.v1.MinecraftAccountProto.OnlineSimpleJavaData
+ */
+export interface MinecraftAccountProto_OnlineSimpleJavaData {
+  /**
+   * The raw Minecraft access token (JWT).
+   *
+   * @generated from protobuf field: string access_token = 1
+   */
+  accessToken: string;
+  /**
+   * Token expiry time in milliseconds since epoch.
+   *
+   * @generated from protobuf field: int64 expire_time_ms = 2
+   */
+  expireTimeMs: string;
+}
 /**
  * Authentication chain data for Bedrock Edition accounts.
  * Contains Xbox Live and Bedrock-specific authentication details.
@@ -278,6 +308,13 @@ export enum MinecraftAccountProto_AccountTypeProto {
    * @generated from protobuf enum value: MICROSOFT_JAVA_COOKIES = 8;
    */
   MICROSOFT_JAVA_COOKIES = 8,
+  /**
+   * Authenticated via raw Minecraft Java access token.
+   * Account data stored in OnlineSimpleJavaData.
+   *
+   * @generated from protobuf enum value: MICROSOFT_JAVA_ACCESS_TOKEN = 9;
+   */
+  MICROSOFT_JAVA_ACCESS_TOKEN = 9,
 }
 /**
  * A collection of settings entries grouped under a common namespace.
@@ -1097,6 +1134,15 @@ export enum AccountTypeCredentials {
    * @generated from protobuf enum value: MICROSOFT_JAVA_COOKIES = 6;
    */
   MICROSOFT_JAVA_COOKIES = 6,
+  /**
+   * Microsoft Java Edition authentication using a raw Minecraft access token.
+   * The token is validated by fetching the profile from Mojang's API.
+   * Cannot be refreshed; used until expiry.
+   * Payload format: raw JWT access token string.
+   *
+   * @generated from protobuf enum value: MICROSOFT_JAVA_ACCESS_TOKEN = 7;
+   */
+  MICROSOFT_JAVA_ACCESS_TOKEN = 7,
 }
 /**
  * Authentication service types that use the OAuth 2.0 Device Code flow.
@@ -1581,6 +1627,13 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
         T: () => MinecraftAccountProto_BedrockData,
       },
       {
+        no: 10,
+        name: "online_simple_java_data",
+        kind: "message",
+        oneof: "accountData",
+        T: () => MinecraftAccountProto_OnlineSimpleJavaData,
+      },
+      {
         no: 8,
         name: "config",
         kind: "message",
@@ -1661,6 +1714,18 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
               options,
               (message.accountData as any).bedrockData,
             ),
+          };
+          break;
+        case /* soulfire.v1.MinecraftAccountProto.OnlineSimpleJavaData online_simple_java_data */ 10:
+          message.accountData = {
+            oneofKind: "onlineSimpleJavaData",
+            onlineSimpleJavaData:
+              MinecraftAccountProto_OnlineSimpleJavaData.internalBinaryRead(
+                reader,
+                reader.uint32(),
+                options,
+                (message.accountData as any).onlineSimpleJavaData,
+              ),
           };
           break;
         case /* repeated soulfire.v1.SettingsNamespace config */ 8:
@@ -1746,6 +1811,13 @@ class MinecraftAccountProto$Type extends MessageType<MinecraftAccountProto> {
       SettingsNamespace.internalBinaryWrite(
         message.persistentMetadata[i],
         writer.tag(9, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* soulfire.v1.MinecraftAccountProto.OnlineSimpleJavaData online_simple_java_data = 10; */
+    if (message.accountData.oneofKind === "onlineSimpleJavaData")
+      MinecraftAccountProto_OnlineSimpleJavaData.internalBinaryWrite(
+        message.accountData.onlineSimpleJavaData,
+        writer.tag(10, WireType.LengthDelimited).fork(),
         options,
       ).join();
     let u = options.writeUnknownFields;
@@ -1913,6 +1985,100 @@ class MinecraftAccountProto_OfflineJavaData$Type extends MessageType<MinecraftAc
  */
 export const MinecraftAccountProto_OfflineJavaData =
   new MinecraftAccountProto_OfflineJavaData$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MinecraftAccountProto_OnlineSimpleJavaData$Type extends MessageType<MinecraftAccountProto_OnlineSimpleJavaData> {
+  constructor() {
+    super("soulfire.v1.MinecraftAccountProto.OnlineSimpleJavaData", [
+      {
+        no: 1,
+        name: "access_token",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 2,
+        name: "expire_time_ms",
+        kind: "scalar",
+        T: 3 /*ScalarType.INT64*/,
+      },
+    ]);
+  }
+  create(
+    value?: PartialMessage<MinecraftAccountProto_OnlineSimpleJavaData>,
+  ): MinecraftAccountProto_OnlineSimpleJavaData {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.accessToken = "";
+    message.expireTimeMs = "0";
+    if (value !== undefined)
+      reflectionMergePartial<MinecraftAccountProto_OnlineSimpleJavaData>(
+        this,
+        message,
+        value,
+      );
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: MinecraftAccountProto_OnlineSimpleJavaData,
+  ): MinecraftAccountProto_OnlineSimpleJavaData {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string access_token */ 1:
+          message.accessToken = reader.string();
+          break;
+        case /* int64 expire_time_ms */ 2:
+          message.expireTimeMs = reader.int64().toString();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: MinecraftAccountProto_OnlineSimpleJavaData,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* string access_token = 1; */
+    if (message.accessToken !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.accessToken);
+    /* int64 expire_time_ms = 2; */
+    if (message.expireTimeMs !== "0")
+      writer.tag(2, WireType.Varint).int64(message.expireTimeMs);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer,
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message soulfire.v1.MinecraftAccountProto.OnlineSimpleJavaData
+ */
+export const MinecraftAccountProto_OnlineSimpleJavaData =
+  new MinecraftAccountProto_OnlineSimpleJavaData$Type();
 // @generated message type with reflection information, may provide speed optimized methods
 class MinecraftAccountProto_BedrockData$Type extends MessageType<MinecraftAccountProto_BedrockData> {
   constructor() {

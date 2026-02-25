@@ -117,6 +117,7 @@
       "microsoftDeviceCode": "Microsoft-apparaatcode",
       "microsoftRefreshToken": "Microsoft-vernieuwingstoken",
       "microsoftCookies": "Microsoft Cookies",
+      "microsoftAccessToken": "Microsoft Access Token",
       "dialog": {
         "title": "Importeer {{type}} accounts",
         "description": "Plak hier je accounts, één per regel"
