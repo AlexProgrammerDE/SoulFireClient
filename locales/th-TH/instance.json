@@ -116,6 +116,7 @@
       "microsoftCredentials": "ข้อมูลบัญชี Microsoft",
       "microsoftDeviceCode": "รหัสอุปกรณ์ Microsoft",
       "microsoftRefreshToken": "โทเค็นรีเฟรชของ Microsoft",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "นำเข้าไอดี {{type}}",
         "description": "วางไอดีของคุณที่นี่ ทีละบรรทัด"

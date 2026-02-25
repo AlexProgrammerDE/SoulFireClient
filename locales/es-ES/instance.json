@@ -116,6 +116,7 @@
       "microsoftCredentials": "Credenciales de Microsoft",
       "microsoftDeviceCode": "Código de dispositivo de Microsoft",
       "microsoftRefreshToken": "Token de actualización de Microsoft",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "Importar cuentas {{type}}",
         "description": "Pega tus cuentas aquí, una por línea"

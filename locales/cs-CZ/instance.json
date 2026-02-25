@@ -116,6 +116,7 @@
       "microsoftCredentials": "Microsoft přihlašovací údaje",
       "microsoftDeviceCode": "Microsoft Device Code",
       "microsoftRefreshToken": "Microsoft Refresh Token",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "Importovat účty typu {{type}}",
         "description": "Vložte své účty zde, jeden na řádek"

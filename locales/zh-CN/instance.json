@@ -116,6 +116,7 @@
       "microsoftCredentials": "Microsoft 账户",
       "microsoftDeviceCode": "Microsoft 设备代码",
       "microsoftRefreshToken": "Microsoft 刷新令牌",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "导入 {{type}} 个账户",
         "description": "在这里粘贴您的帐户，每行一个"

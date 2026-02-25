@@ -116,6 +116,7 @@
       "microsoftCredentials": "Kredensial Microsoft",
       "microsoftDeviceCode": "Kode Perangkat Microsoft",
       "microsoftRefreshToken": "Token Refresh Microsoft",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "Impor akun {{type}}",
         "description": "Tempel akun Anda di sini, satu baris per akun"

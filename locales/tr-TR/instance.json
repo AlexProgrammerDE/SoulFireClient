@@ -116,6 +116,7 @@
       "microsoftCredentials": "Microsoft Kimlik Bilgileri",
       "microsoftDeviceCode": "Microsoft Cihaz Kodu",
       "microsoftRefreshToken": "Microsoft Yenileme Jetonu",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "{{type}} hesapları içe aktar",
         "description": "Hesaplarınızı buraya yapıştırın, her satıra bir tane olacak şekilde"

@@ -116,6 +116,7 @@
       "microsoftCredentials": "Microsoft-gegevens",
       "microsoftDeviceCode": "Microsoft-apparaatcode",
       "microsoftRefreshToken": "Microsoft-vernieuwingstoken",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "Importeer {{type}} accounts",
         "description": "Plak hier je accounts, één per regel"

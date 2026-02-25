@@ -116,6 +116,7 @@
       "microsoftCredentials": "Облікові дані Microsoft",
       "microsoftDeviceCode": "Код пристрою Microsoft",
       "microsoftRefreshToken": "Токен оновлення Microsoft",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "Імпортувати {{type}} акаунти",
         "description": "Вставте ваші акаунти тут, по одному на рядок"

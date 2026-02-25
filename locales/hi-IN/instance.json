@@ -116,6 +116,7 @@
       "microsoftCredentials": "Microsoft क्रेडेंशियल्स",
       "microsoftDeviceCode": "Microsoft डिवाइस कोड",
       "microsoftRefreshToken": "Microsoft रिफ्रेश टोकन",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "{{type}} खाते आयात करें",
         "description": "अपने खाते यहाँ चिपकाएँ, प्रत्येक पंक्ति में एक"

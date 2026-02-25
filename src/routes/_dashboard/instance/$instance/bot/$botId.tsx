@@ -17,6 +17,7 @@ import {
   ChevronUpIcon,
   ClipboardCopyIcon,
   CompassIcon,
+  CookieIcon,
   EyeIcon,
   GamepadIcon,
   HandIcon,
@@ -141,6 +142,8 @@ const accountTypeLabel = (
         return "Java (Device Code)";
       case "MICROSOFT_JAVA_REFRESH_TOKEN":
         return "Java (Refresh Token)";
+      case "MICROSOFT_JAVA_COOKIES":
+        return "Java (Cookies)";
       case "MICROSOFT_BEDROCK_CREDENTIALS":
         return "Bedrock (Credentials)";
       case "MICROSOFT_BEDROCK_DEVICE_CODE":
@@ -161,6 +164,8 @@ const accountTypeToIcon = (
         return MonitorSmartphoneIcon;
       case "MICROSOFT_JAVA_REFRESH_TOKEN":
         return RotateCcwKeyIcon;
+      case "MICROSOFT_JAVA_COOKIES":
+        return CookieIcon;
       case "MICROSOFT_BEDROCK_CREDENTIALS":
         return KeyRoundIcon;
       case "MICROSOFT_BEDROCK_DEVICE_CODE":

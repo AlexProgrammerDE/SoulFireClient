@@ -116,6 +116,7 @@
       "microsoftCredentials": "Microsoft Məlumatları",
       "microsoftDeviceCode": "Microsoft Cihaz Kodu",
       "microsoftRefreshToken": "Microsoft Yeniləmə Tokeni",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "{{type}} hesabları idxal et",
         "description": "Hesablarınızı buraya yapışdırın, hər sətrin birində bir hesab olmalıdır"

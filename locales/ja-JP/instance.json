@@ -116,6 +116,7 @@
       "microsoftCredentials": "Microsoft認証情報",
       "microsoftDeviceCode": "Microsoftデバイスコード",
       "microsoftRefreshToken": "Microsoftリフレッシュトークン",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "{{type}}アカウントをインポート",
         "description": "ここにアカウントを1行ごとに貼り付けてください。"

@@ -116,6 +116,7 @@
       "microsoftCredentials": "Microsoft Zugangsdaten",
       "microsoftDeviceCode": "Microsoft Gerätecode",
       "microsoftRefreshToken": "Microsoft Aktualisierungstoken",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "Importiere {{type}} Konten",
         "description": "Fügen Sie Ihre Konten hier ein, eins pro Zeile"

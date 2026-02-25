@@ -116,6 +116,7 @@
       "microsoftCredentials": "Microsoft-tunnukset",
       "microsoftDeviceCode": "Microsoft-laitteen koodi",
       "microsoftRefreshToken": "Microsoft-virkistystunnus",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "Tuo {{type}} tilejä",
         "description": "Liitä tilisi tähän, yksi per rivi"

@@ -116,6 +116,7 @@
       "microsoftCredentials": "Microsoft 자격 증명",
       "microsoftDeviceCode": "Microsoft 디바이스 코드",
       "microsoftRefreshToken": "Microsoft 리프레시 토큰",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "{{type}} 계정 가져오기",
         "description": "여기에 계정을 한 줄에 하나씩 붙여넣으세요."

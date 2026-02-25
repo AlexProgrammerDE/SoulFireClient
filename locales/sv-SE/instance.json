@@ -116,6 +116,7 @@
       "microsoftCredentials": "Microsoft-uppgifter",
       "microsoftDeviceCode": "Microsoft Enhetskod",
       "microsoftRefreshToken": "Microsoft Uppfriskningstoken",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "Importera {{type}} konton",
         "description": "Klistra in dina konton här, ett per rad"

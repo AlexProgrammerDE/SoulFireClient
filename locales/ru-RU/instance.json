@@ -116,6 +116,7 @@
       "microsoftCredentials": "Учетные данные Microsoft",
       "microsoftDeviceCode": "Код устройства Microsoft",
       "microsoftRefreshToken": "Microsoft Refresh Token",
+      "microsoftCookies": "Microsoft Cookies",
       "dialog": {
         "title": "Импорт {{type}} аккаунтов",
         "description": "Вставьте здесь свои аккаунты, по одном на строу"

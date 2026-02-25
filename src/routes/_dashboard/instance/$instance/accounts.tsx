@@ -9,6 +9,7 @@ import type { ColumnDef, Table as ReactTable } from "@tanstack/react-table";
 import {
   BracesIcon,
   ClipboardCopyIcon,
+  CookieIcon,
   KeyRoundIcon,
   MonitorSmartphoneIcon,
   PlusIcon,
@@ -228,6 +229,8 @@ const accountTypeToIcon = (
         return MonitorSmartphoneIcon;
       case "MICROSOFT_JAVA_REFRESH_TOKEN":
         return RotateCcwKeyIcon;
+      case "MICROSOFT_JAVA_COOKIES":
+        return CookieIcon;
       case "MICROSOFT_BEDROCK_CREDENTIALS":
         return KeyRoundIcon;
       case "MICROSOFT_BEDROCK_DEVICE_CODE":
@@ -708,6 +711,16 @@ function AddButton() {
             }}
           >
             {t("account.import.microsoftRefreshToken")}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => {
+              void trackEvent("import_account_microsoft_java_cookies");
+              setAccountTypeCredentialsSelected(
+                AccountTypeCredentials.MICROSOFT_JAVA_COOKIES,
+              );
+            }}
+          >
+            {t("account.import.microsoftCookies")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuLabel>
