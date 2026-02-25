@@ -15,6 +15,7 @@ use tauri_plugin_updater;
 
 mod cast;
 mod discord;
+mod rave;
 mod sf_loader;
 mod sf_version_constant;
 #[cfg(desktop)]
@@ -22,6 +23,7 @@ mod tray;
 #[cfg(desktop)]
 mod updater;
 mod utils;
+use crate::rave::{rave_key_info, rave_purchase, rave_stock};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -91,7 +93,10 @@ pub fn run() {
             get_sf_server_version,
             discover_casts,
             connect_cast,
-            get_casts
+            get_casts,
+            rave_stock,
+            rave_key_info,
+            rave_purchase
         ])
         .setup(|app| {
             std::panic::set_hook(Box::new(|panic_info| {

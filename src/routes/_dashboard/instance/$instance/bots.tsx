@@ -100,6 +100,8 @@ const accountTypeToIcon = (
         return MonitorSmartphoneIcon;
       case "MICROSOFT_JAVA_REFRESH_TOKEN":
         return RotateCcwKeyIcon;
+      case "MICROSOFT_JAVA_ACCESS_TOKEN":
+        return KeyRoundIcon;
       case "MICROSOFT_BEDROCK_CREDENTIALS":
         return KeyRoundIcon;
       case "MICROSOFT_BEDROCK_DEVICE_CODE":
@@ -119,6 +121,8 @@ const accountTypeLabel = (
       case "MICROSOFT_JAVA_DEVICE_CODE":
         return "Java";
       case "MICROSOFT_JAVA_REFRESH_TOKEN":
+        return "Java";
+      case "MICROSOFT_JAVA_ACCESS_TOKEN":
         return "Java";
       case "MICROSOFT_BEDROCK_CREDENTIALS":
         return "Bedrock";

@@ -271,6 +271,14 @@ export enum MinecraftAccountProto_AccountTypeProto {
    * @generated from protobuf enum value: MICROSOFT_JAVA_REFRESH_TOKEN = 7;
    */
   MICROSOFT_JAVA_REFRESH_TOKEN = 7,
+  /**
+   * Authenticated via raw Minecraft access token.
+   * Account data stored in OnlineChainJavaData.
+   * Cannot be refreshed.
+   *
+   * @generated from protobuf enum value: MICROSOFT_JAVA_ACCESS_TOKEN = 8;
+   */
+  MICROSOFT_JAVA_ACCESS_TOKEN = 8,
 }
 /**
  * A collection of settings entries grouped under a common namespace.
@@ -1082,6 +1090,23 @@ export enum AccountTypeCredentials {
    * @generated from protobuf enum value: MICROSOFT_JAVA_REFRESH_TOKEN = 5;
    */
   MICROSOFT_JAVA_REFRESH_TOKEN = 5,
+  /**
+   * Microsoft Java Edition authentication using a raw Minecraft access token.
+   * Useful for importing accounts from other launchers or tools.
+   * Payload format: ["access_token"] for each account.
+   * Note: Access token accounts cannot be refreshed.
+   *
+   * @generated from protobuf enum value: MICROSOFT_JAVA_ACCESS_TOKEN = 6;
+   */
+  MICROSOFT_JAVA_ACCESS_TOKEN = 6,
+  /**
+   * Microsoft Java Edition authentication using browser cookies for login.live.com.
+   * The server exchanges cookies for an OAuth refresh token, then authenticates normally.
+   * Payload format: a cookie jar / Cookie header / cookie export for each account.
+   *
+   * @generated from protobuf enum value: MICROSOFT_JAVA_COOKIES = 7;
+   */
+  MICROSOFT_JAVA_COOKIES = 7,
 }
 /**
  * Authentication service types that use the OAuth 2.0 Device Code flow.

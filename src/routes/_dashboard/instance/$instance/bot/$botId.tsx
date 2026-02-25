@@ -140,6 +140,8 @@ const accountTypeLabel = (
         return "Java (Device Code)";
       case "MICROSOFT_JAVA_REFRESH_TOKEN":
         return "Java (Refresh Token)";
+      case "MICROSOFT_JAVA_ACCESS_TOKEN":
+        return "Java (Session ID)";
       case "MICROSOFT_BEDROCK_CREDENTIALS":
         return "Bedrock (Credentials)";
       case "MICROSOFT_BEDROCK_DEVICE_CODE":
@@ -160,6 +162,8 @@ const accountTypeToIcon = (
         return MonitorSmartphoneIcon;
       case "MICROSOFT_JAVA_REFRESH_TOKEN":
         return RotateCcwKeyIcon;
+      case "MICROSOFT_JAVA_ACCESS_TOKEN":
+        return KeyRoundIcon;
       case "MICROSOFT_BEDROCK_CREDENTIALS":
         return KeyRoundIcon;
       case "MICROSOFT_BEDROCK_DEVICE_CODE":

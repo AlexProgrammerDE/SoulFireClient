@@ -13,8 +13,8 @@
     "fix": "biome check --write --unsafe",
     "check": "biome check",
     "generate-icons": "tauri icon -v public/logo.png",
-    "dev-tauri": "cross-env RUST_LOG=info tauri dev",
-    "build-tauri": "tauri build",
+    "dev-tauri": "cross-env RUST_LOG=info CARGO_BUILD_JOBS=1 RUST_MIN_STACK=8388608 tauri dev",
+    "build-tauri": "cross-env CARGO_BUILD_JOBS=1 RUST_MIN_STACK=8388608 tauri build",
     "generate-proto": "tsx generate-proto.ts",
     "prepare": "husky",
     "pre-commit": "lint-staged"

@@ -45,6 +45,7 @@ export interface CredentialsAuthRequest {
    * - MICROSOFT_BEDROCK_CREDENTIALS: Payload format is "email:password"
    * - OFFLINE: Payload is the username to use (no authentication performed)
    * - MICROSOFT_JAVA_REFRESH_TOKEN: Payload is a Microsoft refresh token
+   * - MICROSOFT_JAVA_COOKIES: Payload is a cookie import (cookie jar / Cookie header / export)
    *
    * @generated from protobuf field: soulfire.v1.AccountTypeCredentials service = 2
    */
