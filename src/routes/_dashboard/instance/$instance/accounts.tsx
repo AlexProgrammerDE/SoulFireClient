@@ -49,7 +49,6 @@ import {
 } from "@/components/dialog/device-code-dialog.tsx";
 import GenerateAccountsDialog from "@/components/dialog/generate-accounts-dialog.tsx";
 import ImportDialog from "@/components/dialog/import-dialog.tsx";
-import RaveAltsDialog from "@/components/dialog/rave-alts-dialog.tsx";
 import { ExternalLink } from "@/components/external-link.tsx";
 import InstancePageLayout from "@/components/nav/instance/instance-page-layout.tsx";
 import { TransportContext } from "@/components/providers/transport-context.tsx";
@@ -218,89 +217,12 @@ const accountTypeToIcon = (
         return MonitorSmartphoneIcon;
       case "MICROSOFT_JAVA_REFRESH_TOKEN":
         return RotateCcwKeyIcon;
-      case "MICROSOFT_JAVA_ACCESS_TOKEN":
-        return KeyRoundIcon;
       case "MICROSOFT_BEDROCK_CREDENTIALS":
         return KeyRoundIcon;
       case "MICROSOFT_BEDROCK_DEVICE_CODE":
         return MonitorSmartphoneIcon;
     }
   });
-
-const accountTypeLabel = (
-  type: keyof typeof MinecraftAccountProto_AccountTypeProto,
-) =>
-  mapUnionToValue(type, (key) => {
-    switch (key) {
-      case "OFFLINE":
-        return "Offline";
-      case "MICROSOFT_JAVA_CREDENTIALS":
-        return "Java (Credentials)";
-      case "MICROSOFT_JAVA_DEVICE_CODE":
-        return "Java (Device Code)";
-      case "MICROSOFT_JAVA_REFRESH_TOKEN":
-        return "Java (Refresh Token)";
-      case "MICROSOFT_JAVA_ACCESS_TOKEN":
-        return "Java (Session ID)";
-      case "MICROSOFT_BEDROCK_CREDENTIALS":
-        return "Bedrock (Credentials)";
-      case "MICROSOFT_BEDROCK_DEVICE_CODE":
-        return "Bedrock (Device Code)";
-    }
-  });
-
-function getAccessTokenExpiry(account: ProfileAccount): number | null {
-  if (
-    account.type !==
-    MinecraftAccountProto_AccountTypeProto.MICROSOFT_JAVA_ACCESS_TOKEN
-  ) {
-    return null;
-  }
-
-  try {
-    if (account.accountData?.oneofKind !== "onlineChainJavaData") return null;
-
-    const authChainMap = account.accountData.onlineChainJavaData.authChain;
-    if (!authChainMap || !authChainMap.fields) return null;
-
-    const accessTokenOnlyField = authChainMap.fields._accessTokenOnly;
-    const isAccessTokenOnly =
-      accessTokenOnlyField?.kind.oneofKind === "boolValue" &&
-      accessTokenOnlyField.kind.boolValue;
-
-    if (!isAccessTokenOnly) return null;
-
-    const tokenField = authChainMap.fields._accessToken;
-    if (tokenField?.kind.oneofKind !== "stringValue") return null;
-
-    const token = tokenField.kind.stringValue;
-    const parts = token.split(".");
-    if (parts.length < 2) return null;
-
-    // Decode base64url
-    // Replace non-url compatible chars with base64 standard chars
-    let base64 = parts[1].replace(/-/g, "+").replace(/_/g, "/");
-    // Pad with standard base64 padding
-    const pad = base64.length % 4;
-    if (pad) {
-      if (pad === 1) {
-        throw new Error("InvalidLengthError");
-      }
-      base64 += new Array(5 - pad).join("=");
-    }
-
-    const payloadStr = atob(base64);
-    const payload = JSON.parse(payloadStr);
-
-    if (payload.exp && typeof payload.exp === "number") {
-      return payload.exp * 1000;
-    }
-  } catch (e) {
-    console.error("Failed to parse token expiry", e);
-  }
-
-  return null;
-}
 
 function ActionsCell({ account }: { account: ProfileAccount }) {
   const { t } = useTranslation("instance");
@@ -377,9 +299,9 @@ const columns: ColumnDef<ProfileAccount>[] = [
       const Icon = accountTypeToIcon(type);
 
       return (
-        <Badge variant="outline">
+        <Badge variant="outline" className="capitalize">
           <Icon />
-          {accountTypeLabel(type)}
+          {type}
         </Badge>
       );
     },
@@ -391,7 +313,7 @@ const columns: ColumnDef<ProfileAccount>[] = [
       options: getEnumEntries(MinecraftAccountProto_AccountTypeProto).map(
         (type) => {
           return {
-            label: accountTypeLabel(type.key),
+            label: type.key,
             value: type.key,
             icon: accountTypeToIcon(type.key),
           };
@@ -441,80 +363,6 @@ const columns: ColumnDef<ProfileAccount>[] = [
       icon: TextIcon,
     },
     enableColumnFilter: true,
-  },
-  {
-    id: "tokenStatus",
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        label={i18n.t("instance:account.table.tokenStatus")}
-      />
-    ),
-    cell: ({ row }) => {
-      const account = row.original;
-      const expiryMs = getAccessTokenExpiry(account);
-
-      if (expiryMs === null) {
-        return (
-          <span className="text-muted-foreground text-sm">
-            {i18n.t("instance:account.table.tokenStatusAutoRenews")}
-          </span>
-        );
-      }
-
-      const now = Date.now();
-      const isExpired = now >= expiryMs;
-
-      // Ensure consistent language setting via i18n
-      let timeString = "";
-      try {
-        const { formatDistanceToNowStrict } = require("date-fns");
-        // We use formatDistanceToNowStrict directly in the render
-        timeString = formatDistanceToNowStrict(expiryMs, {
-          addSuffix: true,
-        });
-      } catch (_e) {
-        // Fallback or ignore if date-fns is missing/errors
-        timeString = new Date(expiryMs).toLocaleString();
-      }
-
-      if (isExpired) {
-        return (
-          <Badge variant="destructive">
-            {i18n.t("instance:account.table.tokenStatusExpired")}
-          </Badge>
-        );
-      }
-
-      const hoursLeft = (expiryMs - now) / (1000 * 60 * 60);
-
-      if (hoursLeft < 1) {
-        return (
-          <Badge
-            variant="outline"
-            className="border-warning text-warning bg-warning/10"
-          >
-            {timeString}
-          </Badge>
-        );
-      }
-
-      return (
-        <Badge
-          variant="outline"
-          className="border-success text-success bg-success/10"
-        >
-          {timeString}
-        </Badge>
-      );
-    },
-    meta: {
-      get label() {
-        return i18n.t("instance:account.table.tokenStatus");
-      },
-    },
-    enableSorting: false,
-    enableColumnFilter: false,
   },
   {
     id: "actions",
@@ -581,13 +429,9 @@ function AddButton() {
   });
   const [accountTypeCredentialsSelected, setAccountTypeCredentialsSelected] =
     useState<AccountTypeCredentials | null>(null);
-  const [credentialImportMode, setCredentialImportMode] = useState<
-    "line" | "cookieJar"
-  >("line");
   const [deviceCodeData, setDeviceCodeData] = useState<DeviceCodeData | null>(
     null,
   );
-  const [raveAltsOpen, setRaveAltsOpen] = useState(false);
 
   const textSelectedCallback = useCallback(
     (text: string) => {
@@ -599,23 +443,15 @@ function AddButton() {
       }
 
       setAccountTypeCredentialsSelected(null);
-      setCredentialImportMode("line");
 
       if (transport === null) {
         return;
       }
 
-      const normalizedText = text.replace(/\r\n/g, "\n");
-      const textSplit =
-        credentialImportMode === "cookieJar"
-          ? normalizedText
-              .split(/\n\s*\n+/)
-              .map((b) => b.trim())
-              .filter((b) => b.length > 0)
-          : normalizedText
-              .split("\n")
-              .map((t) => t.trim())
-              .filter((t) => t.length > 0);
+      const textSplit = text
+        .split("\n")
+        .map((t) => t.trim())
+        .filter((t) => t.length > 0);
       const service = new MCAuthServiceClient(transport);
 
       const abortController = new AbortController();
@@ -727,7 +563,6 @@ function AddButton() {
     },
     [
       accountTypeCredentialsSelected,
-      credentialImportMode,
       instanceInfo.id,
       addAccountsBatchMutation,
       t,
@@ -826,7 +661,6 @@ function AddButton() {
           <DropdownMenuItem
             onClick={() => {
               void trackEvent("import_account_java_offline");
-              setCredentialImportMode("line");
               setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE);
             }}
           >
@@ -835,7 +669,6 @@ function AddButton() {
           <DropdownMenuItem
             onClick={() => {
               void trackEvent("import_account_microsoft_java_credentials");
-              setCredentialImportMode("line");
               setAccountTypeCredentialsSelected(
                 AccountTypeCredentials.MICROSOFT_JAVA_CREDENTIALS,
               );
@@ -856,48 +689,12 @@ function AddButton() {
           <DropdownMenuItem
             onClick={() => {
               void trackEvent("import_account_microsoft_java_refresh_token");
-              setCredentialImportMode("line");
               setAccountTypeCredentialsSelected(
                 AccountTypeCredentials.MICROSOFT_JAVA_REFRESH_TOKEN,
               );
             }}
           >
             {t("account.import.microsoftRefreshToken")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_account_microsoft_java_cookies");
-              setCredentialImportMode("cookieJar");
-              setAccountTypeCredentialsSelected(
-                AccountTypeCredentials.MICROSOFT_JAVA_COOKIES,
-              );
-            }}
-          >
-            {t("account.import.microsoftCookies")}
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("import_account_microsoft_java_access_token");
-              setCredentialImportMode("line");
-              setAccountTypeCredentialsSelected(
-                AccountTypeCredentials.MICROSOFT_JAVA_ACCESS_TOKEN,
-              );
-            }}
-          >
-            {t("account.import.microsoftAccessToken")}
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuLabel>
-            {t("account.import.altProviders")}
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
-            onClick={() => {
-              void trackEvent("open_rave_alts");
-              setRaveAltsOpen(true);
-            }}
-          >
-            {t("account.import.raveAlts")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuLabel>
@@ -907,7 +704,6 @@ function AddButton() {
           <DropdownMenuItem
             onClick={() => {
               void trackEvent("import_account_bedrock_offline");
-              setCredentialImportMode("line");
               setAccountTypeCredentialsSelected(AccountTypeCredentials.OFFLINE);
             }}
           >
@@ -916,7 +712,6 @@ function AddButton() {
           <DropdownMenuItem
             onClick={() => {
               void trackEvent("import_account_microsoft_bedrock_credentials");
-              setCredentialImportMode("line");
               setAccountTypeCredentialsSelected(
                 AccountTypeCredentials.MICROSOFT_BEDROCK_CREDENTIALS,
               );
@@ -936,102 +731,6 @@ function AddButton() {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-      <RaveAltsDialog
-        open={raveAltsOpen}
-        onClose={() => setRaveAltsOpen(false)}
-        onImport={(accounts, accountType) => {
-          if (transport === null || accounts.length === 0) return;
-
-          const service = new MCAuthServiceClient(transport);
-          const abortController = new AbortController();
-          const loadingData: ExternalToast = {
-            cancel: {
-              label: t("common:cancel"),
-              onClick: () => abortController.abort(),
-            },
-          };
-          const total = accounts.length;
-          let failed = 0;
-          let success = 0;
-          const accountsToAdd: ProfileAccount[] = [];
-          const loadingReport = () =>
-            t("account.listImportToast.loading", {
-              checked: success + failed,
-              total,
-              success,
-              failed,
-            });
-          const toastId = toast.loading(loadingReport(), loadingData);
-          const { responses } = service.loginCredentials(
-            {
-              instanceId: instanceInfo.id,
-              service: accountType,
-              payload: accounts,
-            },
-            { abort: abortController.signal },
-          );
-          responses.onMessage((r) => {
-            runAsync(async () => {
-              const data = r.data;
-              switch (data.oneofKind) {
-                case "oneSuccess": {
-                  if (abortController.signal.aborted) return;
-                  if (data.oneSuccess.account)
-                    accountsToAdd.push(data.oneSuccess.account);
-                  success++;
-                  toast.loading(loadingReport(), {
-                    id: toastId,
-                    ...loadingData,
-                  });
-                  break;
-                }
-                case "oneFailure": {
-                  if (abortController.signal.aborted) return;
-                  failed++;
-                  toast.loading(loadingReport(), {
-                    id: toastId,
-                    ...loadingData,
-                  });
-                  break;
-                }
-                case "end": {
-                  if (accountsToAdd.length > 0)
-                    await addAccountsBatchMutation(accountsToAdd);
-                  if (accountsToAdd.length === 0) {
-                    toast.error(t("account.listImportToast.allFailed"), {
-                      id: toastId,
-                      cancel: undefined,
-                    });
-                  } else if (failed > 0) {
-                    toast.warning(
-                      t("account.listImportToast.someFailed", {
-                        count: accountsToAdd.length,
-                        failed,
-                      }),
-                      { id: toastId, cancel: undefined },
-                    );
-                  } else {
-                    toast.success(
-                      t("account.listImportToast.noneFailed", {
-                        count: accountsToAdd.length,
-                      }),
-                      { id: toastId, cancel: undefined },
-                    );
-                  }
-                  break;
-                }
-              }
-            });
-          });
-          responses.onError((e) => {
-            console.error(e);
-            toast.error(t("account.unknownError"), {
-              id: toastId,
-              cancel: undefined,
-            });
-          });
-        }}
-      />
       {deviceCodeData !== null && (
         <DeviceCodeDialog
           open={true}
@@ -1044,23 +743,13 @@ function AddButton() {
       {accountTypeCredentialsSelected !== null && (
         <ImportDialog
           title={t("account.import.dialog.title", {
-            type:
-              credentialImportMode === "cookieJar"
-                ? t("account.import.microsoftCookies")
-                : getEnumKeyByValue(
-                    AccountTypeCredentials,
-                    accountTypeCredentialsSelected,
-                  ),
+            type: getEnumKeyByValue(
+              AccountTypeCredentials,
+              accountTypeCredentialsSelected,
+            ),
           })}
-          description={
-            credentialImportMode === "cookieJar"
-              ? t("account.import.dialog.descriptionCookies")
-              : t("account.import.dialog.description")
-          }
-          closer={() => {
-            setAccountTypeCredentialsSelected(null);
-            setCredentialImportMode("line");
-          }}
+          description={t("account.import.dialog.description")}
+          closer={() => setAccountTypeCredentialsSelected(null)}
           listener={textSelectedCallback}
           filters={[
             {

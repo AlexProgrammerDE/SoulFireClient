@@ -116,14 +116,9 @@
       "microsoftCredentials": "Microsoft Credentials",
       "microsoftDeviceCode": "Microsoft Device Code",
       "microsoftRefreshToken": "Microsoft Refresh Token",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Session ID",
-      "altProviders": "Alt Providers",
-      "raveAlts": "Rave Alts",
       "dialog": {
         "title": "Import {{type}} accounts",
-        "description": "Paste your accounts here, one per line",
-        "descriptionCookies": "Paste your cookies here, one account per block (separate blocks with a blank line)"
+        "description": "Paste your accounts here, one per line"
       }
     },
     "removeToast": {
@@ -137,10 +132,7 @@
       "lastKnownName": "Username",
       "searchProfileIds": "Search profile IDs...",
       "searchLastKnownNames": "Search last known names...",
-      "actions": "Actions",
-      "tokenStatus": "Session Token",
-      "tokenStatusAutoRenews": "Auto-renews",
-      "tokenStatusExpired": "Expired"
+      "actions": "Actions"
     },
     "removeSelectedTooltip": "Remove selected accounts",
     "contextMenu": {

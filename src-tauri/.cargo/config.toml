@@ -1,3 +1,2 @@
 [build]
-jobs = 1
-rustflags = []
+rustflags = ["-Z", "threads=8"]
