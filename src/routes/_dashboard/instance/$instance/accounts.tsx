@@ -201,161 +201,6 @@ function GenerateAccountsButton() {
   );
 }
 
-function RavealtsButton() {
-  const { t } = useTranslation("instance");
-  const queryClient = useQueryClient();
-  const { instanceInfoQueryOptions } = Route.useRouteContext();
-  const transport = use(TransportContext);
-  const { data: instanceInfo } = useSuspenseQuery(instanceInfoQueryOptions);
-  const { trackEvent } = useAptabase();
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  const { mutateAsync: addAccountsBatchMutation } = useMutation({
-    mutationKey: [
-      "instance",
-      "accounts",
-      "add-batch-ravealts",
-      instanceInfo.id,
-    ],
-    scope: { id: `instance-accounts-${instanceInfo.id}` },
-    mutationFn: async (accounts: ProfileAccount[]) => {
-      await addInstanceAccountsBatch(
-        accounts,
-        instanceInfo,
-        transport,
-        queryClient,
-        instanceInfoQueryOptions.queryKey,
-      );
-    },
-    onSettled: async () => {
-      await queryClient.invalidateQueries({
-        queryKey: instanceInfoQueryOptions.queryKey,
-      });
-    },
-  });
-
-  const handleImportAccounts = useCallback(
-    (payload: string[], credentialType: AccountTypeCredentials) => {
-      if (transport === null) return;
-
-      void trackEvent("ravealts_purchase", {
-        count: payload.length,
-        type: credentialType,
-      });
-
-      const service = new MCAuthServiceClient(transport);
-      const abortController = new AbortController();
-      const loadingData: ExternalToast = {
-        cancel: {
-          label: t("common:cancel"),
-          onClick: () => {
-            abortController.abort();
-          },
-        },
-      };
-      const total = payload.length;
-      let failed = 0;
-      let success = 0;
-      const accountsToAdd: ProfileAccount[] = [];
-      const loadingReport = () =>
-        t("account.listImportToast.loading", {
-          checked: success + failed,
-          total,
-          success,
-          failed,
-        });
-      const toastId = toast.loading(loadingReport(), loadingData);
-      const { responses } = service.loginCredentials(
-        {
-          instanceId: instanceInfo.id,
-          service: credentialType,
-          payload,
-        },
-        {
-          abort: abortController.signal,
-        },
-      );
-      responses.onMessage((r) => {
-        runAsync(async () => {
-          const data = r.data;
-          switch (data.oneofKind) {
-            case "oneSuccess": {
-              if (abortController.signal.aborted) return;
-              if (data.oneSuccess.account) {
-                accountsToAdd.push(data.oneSuccess.account);
-              }
-              success++;
-              toast.loading(loadingReport(), {
-                id: toastId,
-                ...loadingData,
-              });
-              break;
-            }
-            case "oneFailure": {
-              if (abortController.signal.aborted) return;
-              failed++;
-              toast.loading(loadingReport(), {
-                id: toastId,
-                ...loadingData,
-              });
-              break;
-            }
-            case "end": {
-              if (accountsToAdd.length > 0) {
-                await addAccountsBatchMutation(accountsToAdd);
-              }
-              if (accountsToAdd.length === 0) {
-                toast.error(t("account.listImportToast.allFailed"), {
-                  id: toastId,
-                  cancel: undefined,
-                });
-              } else if (failed > 0) {
-                toast.warning(
-                  t("account.listImportToast.someFailed", {
-                    count: accountsToAdd.length,
-                    failed,
-                  }),
-                  { id: toastId, cancel: undefined },
-                );
-              } else {
-                toast.success(
-                  t("account.listImportToast.noneFailed", {
-                    count: accountsToAdd.length,
-                  }),
-                  { id: toastId, cancel: undefined },
-                );
-              }
-              break;
-            }
-          }
-        });
-      });
-      responses.onError((e) => {
-        console.error(e);
-        toast.error(t("account.listImportToast.error"), {
-          id: toastId,
-          cancel: undefined,
-        });
-      });
-    },
-    [instanceInfo.id, addAccountsBatchMutation, t, transport, trackEvent],
-  );
-
-  return (
-    <>
-      <Button variant="outline" size="sm" onClick={() => setDialogOpen(true)}>
-        <ShoppingCartIcon />
-        {t("account.ravealts.button")}
-      </Button>
-      <RavealtsDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-        onImportAccounts={handleImportAccounts}
-      />
-    </>
-  );
-}
-
 export const Route = createFileRoute("/_dashboard/instance/$instance/accounts")(
   {
     validateSearch: dataTableValidateSearch,
@@ -607,6 +452,114 @@ function AddButton() {
   );
   const [pendingDeviceCodeType, setPendingDeviceCodeType] =
     useState<AccountTypeDeviceCode | null>(null);
+  const [ravealtsDialogOpen, setRavealtsDialogOpen] = useState(false);
+
+  const handleRavealtsImport = useCallback(
+    (payload: string[], credentialType: AccountTypeCredentials) => {
+      if (transport === null) return;
+
+      void trackEvent("ravealts_purchase", {
+        count: payload.length,
+        type: credentialType,
+      });
+
+      const service = new MCAuthServiceClient(transport);
+      const abortController = new AbortController();
+      const loadingData: ExternalToast = {
+        cancel: {
+          label: t("common:cancel"),
+          onClick: () => {
+            abortController.abort();
+          },
+        },
+      };
+      const total = payload.length;
+      let failed = 0;
+      let success = 0;
+      const accountsToAdd: ProfileAccount[] = [];
+      const loadingReport = () =>
+        t("account.listImportToast.loading", {
+          checked: success + failed,
+          total,
+          success,
+          failed,
+        });
+      const toastId = toast.loading(loadingReport(), loadingData);
+      const { responses } = service.loginCredentials(
+        {
+          instanceId: instanceInfo.id,
+          service: credentialType,
+          payload,
+        },
+        {
+          abort: abortController.signal,
+        },
+      );
+      responses.onMessage((r) => {
+        runAsync(async () => {
+          const data = r.data;
+          switch (data.oneofKind) {
+            case "oneSuccess": {
+              if (abortController.signal.aborted) return;
+              if (data.oneSuccess.account) {
+                accountsToAdd.push(data.oneSuccess.account);
+              }
+              success++;
+              toast.loading(loadingReport(), {
+                id: toastId,
+                ...loadingData,
+              });
+              break;
+            }
+            case "oneFailure": {
+              if (abortController.signal.aborted) return;
+              failed++;
+              toast.loading(loadingReport(), {
+                id: toastId,
+                ...loadingData,
+              });
+              break;
+            }
+            case "end": {
+              if (accountsToAdd.length > 0) {
+                await addAccountsBatchMutation(accountsToAdd);
+              }
+              if (accountsToAdd.length === 0) {
+                toast.error(t("account.listImportToast.allFailed"), {
+                  id: toastId,
+                  cancel: undefined,
+                });
+              } else if (failed > 0) {
+                toast.warning(
+                  t("account.listImportToast.someFailed", {
+                    count: accountsToAdd.length,
+                    failed,
+                  }),
+                  { id: toastId, cancel: undefined },
+                );
+              } else {
+                toast.success(
+                  t("account.listImportToast.noneFailed", {
+                    count: accountsToAdd.length,
+                  }),
+                  { id: toastId, cancel: undefined },
+                );
+              }
+              break;
+            }
+          }
+        });
+      });
+      responses.onError((e) => {
+        console.error(e);
+        toast.error(t("account.listImportToast.error"), {
+          id: toastId,
+          cancel: undefined,
+        });
+      });
+    },
+    [instanceInfo.id, addAccountsBatchMutation, t, transport, trackEvent],
+  );
 
   const textSelectedCallback = useCallback(
     (text: string) => {
@@ -893,6 +846,19 @@ function AddButton() {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuLabel>
+            {t("account.import.altProviders")}
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            onClick={() => {
+              void trackEvent("import_account_ravealts");
+              setRavealtsDialogOpen(true);
+            }}
+          >
+            {t("account.ravealts.button")}
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuLabel>
             {t("account.import.bedrockEdition")}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -1058,6 +1024,11 @@ function AddButton() {
           }
         />
       )}
+      <RavealtsDialog
+        open={ravealtsDialogOpen}
+        onOpenChange={setRavealtsDialogOpen}
+        onImportAccounts={handleRavealtsImport}
+      />
     </>
   );
 }
@@ -1206,7 +1177,6 @@ function Content() {
         <DataTableToolbar table={table}>
           <DataTableSortList table={table} />
           <GetAccountsButton />
-          <RavealtsButton />
           <GenerateAccountsButton />
           <AddButton />
         </DataTableToolbar>
