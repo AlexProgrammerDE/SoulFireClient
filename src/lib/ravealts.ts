@@ -12,7 +12,7 @@ export type RavealtsStockResponse = {
 
 export type RavealtsKeyInfoResponse = {
   status: "success";
-  credits: number;
+  available_credits: number;
 };
 
 export type RavealtsPurchasedAccount =

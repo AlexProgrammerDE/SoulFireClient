@@ -94,7 +94,7 @@ export default function RavealtsDialog({
     setValidating(true);
     try {
       const result = await fetchKeyInfo(apiKey.trim());
-      setCredits(result.credits);
+      setCredits(result.available_credits);
       setRavealtsApiKey(apiKey.trim());
       toast.success(t("account.ravealts.keyValid"));
     } catch (e) {
@@ -133,7 +133,7 @@ export default function RavealtsDialog({
       // Refresh credits
       try {
         const keyInfo = await fetchKeyInfo(apiKey.trim());
-        setCredits(keyInfo.credits);
+        setCredits(keyInfo.available_credits);
       } catch {
         // Ignore, credits will be stale
       }
