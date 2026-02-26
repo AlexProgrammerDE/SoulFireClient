@@ -116,8 +116,9 @@
       "microsoftCredentials": "Microsoft Məlumatları",
       "microsoftDeviceCode": "Microsoft Cihaz Kodu",
       "microsoftRefreshToken": "Microsoft Yeniləmə Tokeni",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "{{type}} hesabları idxal et",
         "description": "Hesablarınızı buraya yapışdırın, hər sətrin birində bir hesab olmalıdır"
@@ -162,6 +163,30 @@
       "orManually": "Və ya kodu əl ilə daxil edin",
       "codeLabel": "Sizin kodunuz",
       "urlLabel": "Keçin"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "Metadatanı redaktə et",

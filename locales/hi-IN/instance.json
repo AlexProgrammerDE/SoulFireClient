@@ -116,8 +116,9 @@
       "microsoftCredentials": "Microsoft क्रेडेंशियल्स",
       "microsoftDeviceCode": "Microsoft डिवाइस कोड",
       "microsoftRefreshToken": "Microsoft रिफ्रेश टोकन",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "{{type}} खाते आयात करें",
         "description": "अपने खाते यहाँ चिपकाएँ, प्रत्येक पंक्ति में एक"
@@ -162,6 +163,30 @@
       "orManually": "या कोड मैन्युअली दर्ज करें",
       "codeLabel": "आपका कोड",
       "urlLabel": "पर जाएं"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "मेटाडेटा संपादित करें",

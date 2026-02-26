@@ -116,8 +116,9 @@
       "microsoftCredentials": "Microsoft 账户",
       "microsoftDeviceCode": "Microsoft 设备代码",
       "microsoftRefreshToken": "Microsoft 刷新令牌",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "导入 {{type}} 个账户",
         "description": "在这里粘贴您的帐户，每行一个"
@@ -162,6 +163,30 @@
       "orManually": "或手动输入代码",
       "codeLabel": "您的代码",
       "urlLabel": "前往"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "编辑元数据",

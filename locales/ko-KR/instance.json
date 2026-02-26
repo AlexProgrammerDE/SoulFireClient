@@ -116,8 +116,9 @@
       "microsoftCredentials": "Microsoft 자격 증명",
       "microsoftDeviceCode": "Microsoft 디바이스 코드",
       "microsoftRefreshToken": "Microsoft 리프레시 토큰",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "{{type}} 계정 가져오기",
         "description": "여기에 계정을 한 줄에 하나씩 붙여넣으세요."
@@ -162,6 +163,30 @@
       "orManually": "또는 코드를 수동으로 입력",
       "codeLabel": "귀하의 코드",
       "urlLabel": "이동 주소"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "메타데이터 편집하기",

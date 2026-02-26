@@ -116,8 +116,9 @@
       "microsoftCredentials": "Microsoft Kimlik Bilgileri",
       "microsoftDeviceCode": "Microsoft Cihaz Kodu",
       "microsoftRefreshToken": "Microsoft Yenileme Jetonu",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "{{type}} hesapları içe aktar",
         "description": "Hesaplarınızı buraya yapıştırın, her satıra bir tane olacak şekilde"
@@ -162,6 +163,30 @@
       "orManually": "Ya da kodu elle girin",
       "codeLabel": "Kodunuz",
       "urlLabel": "Git:"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "Metaveriyi Düzenle",

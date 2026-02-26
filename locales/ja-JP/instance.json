@@ -116,8 +116,9 @@
       "microsoftCredentials": "Microsoft認証情報",
       "microsoftDeviceCode": "Microsoftデバイスコード",
       "microsoftRefreshToken": "Microsoftリフレッシュトークン",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "{{type}}アカウントをインポート",
         "description": "ここにアカウントを1行ごとに貼り付けてください。"
@@ -162,6 +163,30 @@
       "orManually": "またはコードを手動で入力",
       "codeLabel": "あなたのコード",
       "urlLabel": "アクセス先"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "メタデータを編集する",

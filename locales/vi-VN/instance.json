@@ -116,8 +116,9 @@
       "microsoftCredentials": "Thông tin đăng nhập Microsoft",
       "microsoftDeviceCode": "Mã thiết bị Microsoft",
       "microsoftRefreshToken": "Refresh Token Microsoft",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "Nhập tài khoản loại {{type}}",
         "description": "Dán tài khoản của bạn tại đây, mỗi dòng một tài khoản"
@@ -162,6 +163,30 @@
       "orManually": "Hoặc nhập mã theo cách thủ công",
       "codeLabel": "Mã của bạn",
       "urlLabel": "Truy cập"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "Chỉnh sửa Metadata",

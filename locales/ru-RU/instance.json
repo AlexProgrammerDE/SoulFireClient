@@ -116,8 +116,9 @@
       "microsoftCredentials": "Учетные данные Microsoft",
       "microsoftDeviceCode": "Код устройства Microsoft",
       "microsoftRefreshToken": "Microsoft Refresh Token",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "Импорт {{type}} аккаунтов",
         "description": "Вставьте здесь свои аккаунты, по одном на строу"
@@ -162,6 +163,30 @@
       "orManually": "Или введите код вручную",
       "codeLabel": "Ваш код",
       "urlLabel": "Перейдите на"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "Редактировать метаданные",

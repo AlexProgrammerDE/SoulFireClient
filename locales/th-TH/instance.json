@@ -116,8 +116,9 @@
       "microsoftCredentials": "ข้อมูลบัญชี Microsoft",
       "microsoftDeviceCode": "รหัสอุปกรณ์ Microsoft",
       "microsoftRefreshToken": "โทเค็นรีเฟรชของ Microsoft",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "นำเข้าไอดี {{type}}",
         "description": "วางไอดีของคุณที่นี่ ทีละบรรทัด"
@@ -162,6 +163,30 @@
       "orManually": "หรือกรอกรหัสด้วยตนเอง",
       "codeLabel": "รหัสของคุณ",
       "urlLabel": "ไปที่"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "แก้ไข Metadata",

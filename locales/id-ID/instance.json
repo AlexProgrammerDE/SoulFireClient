@@ -116,8 +116,9 @@
       "microsoftCredentials": "Kredensial Microsoft",
       "microsoftDeviceCode": "Kode Perangkat Microsoft",
       "microsoftRefreshToken": "Token Refresh Microsoft",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "Impor akun {{type}}",
         "description": "Tempel akun Anda di sini, satu baris per akun"
@@ -162,6 +163,30 @@
       "orManually": "Atau masukkan kode secara manual",
       "codeLabel": "Kode Anda",
       "urlLabel": "Kunjungi"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "Edit Metadata",

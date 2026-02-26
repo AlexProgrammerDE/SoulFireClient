@@ -116,8 +116,9 @@
       "microsoftCredentials": "Облікові дані Microsoft",
       "microsoftDeviceCode": "Код пристрою Microsoft",
       "microsoftRefreshToken": "Токен оновлення Microsoft",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "Імпортувати {{type}} акаунти",
         "description": "Вставте ваші акаунти тут, по одному на рядок"
@@ -162,6 +163,30 @@
       "orManually": "Або введіть код вручну",
       "codeLabel": "Ваш код",
       "urlLabel": "Перейдіть на"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "Редагувати метадані",
