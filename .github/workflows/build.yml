@@ -130,7 +130,7 @@ jobs:
           args: ${{ matrix.args }}
 
       - name: 'Desktop: Upload artifacts (Ubuntu AMD64)'
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # 6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # 7.0.0
         if: matrix.type == 'linux-amd64'
         with:
           name: tauri-artifact-linux-amd64
@@ -140,7 +140,7 @@ jobs:
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (Ubuntu AArch64)'
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # 6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # 7.0.0
         if: matrix.type == 'linux-aarch64'
         with:
           name: tauri-artifact-linux-aarch64
@@ -150,7 +150,7 @@ jobs:
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (macOS AArch64)'
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # 6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # 7.0.0
         if: matrix.type == 'macos-aarch64'
         with:
           name: tauri-artifact-macos-aarch64
@@ -160,7 +160,7 @@ jobs:
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (macOS AMD64)'
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # 6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # 7.0.0
         if: matrix.type == 'macos-amd64'
         with:
           name: tauri-artifact-macos-amd64
@@ -170,7 +170,7 @@ jobs:
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (Windows AMD64)'
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # 6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # 7.0.0
         if: matrix.type == 'windows-amd64'
         with:
           name: tauri-artifact-windows-amd64
@@ -179,7 +179,7 @@ jobs:
           if-no-files-found: error
 
       - name: 'Desktop: Upload artifacts (Windows AArch64)'
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # 6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # 7.0.0
         if: matrix.type == 'windows-aarch64'
         with:
           name: tauri-artifact-windows-aarch64
@@ -248,7 +248,7 @@ jobs:
 
       - name: 'Android: Upload artifacts'
         if: matrix.type == 'android'
-        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # 6.0.0
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # 7.0.0
         with:
           name: tauri-artifact-android
           path: './src-tauri/gen/android/app/build/outputs'
