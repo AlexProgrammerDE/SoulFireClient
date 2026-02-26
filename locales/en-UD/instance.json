@@ -116,8 +116,9 @@
       "microsoftCredentials": "slɐᴉʇuǝpǝɹɔ ʇɥɢosɟoɹɔosɟoɹɯ",
       "microsoftDeviceCode": "ǝpoɔ ǝɔᴉʌǝp ʇɥɢosɟoɹɔosɟoɹɯ",
       "microsoftRefreshToken": "uǝʞoʇ ɥsǝɹɟǝɹ ʇɥɢosɟoɹɔosɟoɹɯ",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "sʇunoɔɔɐ {{type}} ʇɹodɯI",
         "description": "ǝuᴉl ɹǝd ǝuo ,ǝɹǝɥ sʇunoɔɔɐ ɹnoʎ ǝʇsɐԀ"
@@ -162,6 +163,30 @@
       "orManually": "ʎllɐnɯ ǝpoɔ ɹǝʇuǝ ɹO",
       "codeLabel": "ǝpoɔ ɹnoʎ",
       "urlLabel": "oʇ oƃ"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "ɐʇɐpɐʇǝɯ ʇᴉpƎ",

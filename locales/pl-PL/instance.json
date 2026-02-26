@@ -116,8 +116,9 @@
       "microsoftCredentials": "Poświadczenia Microsoft",
       "microsoftDeviceCode": "Kod urządzenia Microsoft",
       "microsoftRefreshToken": "Microsoft Refresh Token",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "Importuj konta {{type}}",
         "description": "Wklej tutaj swoje konta, po jednym na linię"
@@ -162,6 +163,30 @@
       "orManually": "Lub wpisz kod ręcznie",
       "codeLabel": "Twój kod",
       "urlLabel": "Przejdź do"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "Edytuj metadane",

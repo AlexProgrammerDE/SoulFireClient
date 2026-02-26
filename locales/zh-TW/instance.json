@@ -116,8 +116,9 @@
       "microsoftCredentials": "Microsoft 憑證",
       "microsoftDeviceCode": "Microsoft 裝置驗證碼",
       "microsoftRefreshToken": "Microsoft 重新整理權杖",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "導入 {{type}} 帳戶",
         "description": "請將您的帳戶貼在此處，每行一個"
@@ -162,6 +163,30 @@
       "orManually": "或手動輸入代碼",
       "codeLabel": "您的代碼",
       "urlLabel": "前往"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "編輯中繼資料",

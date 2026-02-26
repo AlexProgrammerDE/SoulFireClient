@@ -116,8 +116,9 @@
       "microsoftCredentials": "Identifiants Microsoft",
       "microsoftDeviceCode": "Code de l'appareil Microsoft",
       "microsoftRefreshToken": "Token d'actualisation Microsoft",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "Importation des comptes {{type}}",
         "description": "Collez vos comptes ici, un par ligne"
@@ -162,6 +163,30 @@
       "orManually": "Ou saisir le code manuellement",
       "codeLabel": "Votre code",
       "urlLabel": "Aller sur"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "Éditer les métadonnées",

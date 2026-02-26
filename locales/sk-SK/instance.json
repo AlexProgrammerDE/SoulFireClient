@@ -116,8 +116,9 @@
       "microsoftCredentials": "Microsoft poverenia",
       "microsoftDeviceCode": "Microsoft kód zariadenia",
       "microsoftRefreshToken": "Microsoft obnovovací token",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "Importovať {{type}} účty",
         "description": "Vložte vaše účty sem, po jednom na riadok"
@@ -162,6 +163,30 @@
       "orManually": "Alebo zadajte kód ručne",
       "codeLabel": "Váš kód",
       "urlLabel": "Prejsť na"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "Upraviť metadáta",

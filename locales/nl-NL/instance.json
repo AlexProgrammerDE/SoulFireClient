@@ -116,8 +116,9 @@
       "microsoftCredentials": "Microsoft-gegevens",
       "microsoftDeviceCode": "Microsoft-apparaatcode",
       "microsoftRefreshToken": "Microsoft-vernieuwingstoken",
-      "microsoftCookies": "Microsoft Cookies",
-      "microsoftAccessToken": "Microsoft Access Token",
+      "microsoftCookies": "",
+      "microsoftAccessToken": "",
+      "altProviders": "",
       "dialog": {
         "title": "Importeer {{type}} accounts",
         "description": "Plak hier je accounts, één per regel"
@@ -162,6 +163,30 @@
       "orManually": "Of voer de code handmatig in",
       "codeLabel": "Je code",
       "urlLabel": "Ga naar"
+    },
+    "ravealts": {
+      "button": "",
+      "title": "",
+      "description": "",
+      "apiKeyLabel": "",
+      "apiKeyPlaceholder": "",
+      "validate": "",
+      "validating": "",
+      "keyValid": "",
+      "keyInvalid": "",
+      "credits": "",
+      "stockTitle": "",
+      "noStock": "",
+      "accountType": "",
+      "amount": "",
+      "purchase": "",
+      "purchasing": "",
+      "purchaseSuccess": "",
+      "purchaseError": "",
+      "networkError": "",
+      "outOfStock": "",
+      "insufficientBalance": "",
+      "rateLimited": ""
     },
     "metadata": {
       "openButton": "Metadata bewerken",
