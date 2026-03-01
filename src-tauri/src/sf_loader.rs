@@ -147,6 +147,25 @@ pub async fn get_sf_server_version() -> String {
 }
 
 #[tauri::command]
+pub async fn reset_integrated_data(app_handle: AppHandle) -> Result<(), SFAnyError> {
+    let app_local_data_dir = app_handle.path().app_local_data_dir()?;
+
+    let jvm_dir = app_local_data_dir.join("jvm-25");
+    if jvm_dir.exists() {
+        std::fs::remove_dir_all(&jvm_dir)?;
+        info!("Deleted JVM directory: {:?}", jvm_dir);
+    }
+
+    let jars_dir = app_local_data_dir.join("jars");
+    if jars_dir.exists() {
+        std::fs::remove_dir_all(&jars_dir)?;
+        info!("Deleted jars directory: {:?}", jars_dir);
+    }
+
+    Ok(())
+}
+
+#[tauri::command]
 pub async fn run_integrated_server(
     jvm_args: Vec<&str>,
     app_handle: AppHandle,
@@ -288,6 +307,17 @@ async fn internal_load_integrated_server(
             let _ = std::fs::remove_file(&archive_tmp_path);
             let _ = std::fs::remove_dir_all(&extract_tmp_root);
             return Err(SFAnyError::from(SFError::DownloadFailed));
+        }
+
+        send_log(&app_handle, "Validating extracted JVM...")?;
+        let extracted_java_home = get_java_home_dir(extracted_jvm_dir.clone());
+        let extracted_java_exec = extracted_java_home
+            .join("bin")
+            .join(get_java_exec_name());
+        if !extracted_java_exec.exists() {
+            let _ = std::fs::remove_file(&archive_tmp_path);
+            let _ = std::fs::remove_dir_all(&extract_tmp_root);
+            return Err(SFAnyError::from(SFError::JvmExtractIncomplete));
         }
 
         let jvm_tmp_dir = app_local_data_dir.join(format!("jvm-25.tmp.{}", timestamp));

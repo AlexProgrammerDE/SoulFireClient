@@ -29,6 +29,13 @@
       "success": "Integrated server started in {{time}}s",
       "error": "Failed to start integrated server"
     },
+    "retry": "Retry",
+    "reset": {
+      "button": "Reset Data",
+      "loading": "Resetting SoulFire data...",
+      "success": "SoulFire data reset successfully. Try starting again.",
+      "error": "Failed to reset SoulFire data"
+    },
     "description": "The integrated server runs locally on your PC. Configure the Java startup arguments below if needed.",
     "form": {
       "jvmArgs": {

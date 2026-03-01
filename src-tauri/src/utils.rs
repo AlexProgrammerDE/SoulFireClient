@@ -31,6 +31,8 @@ pub enum SFError {
     NoMainWindow,
     #[error("download failed")]
     DownloadFailed,
+    #[error("extracted JVM is missing required files")]
+    JvmExtractIncomplete,
     #[error("server already starting")]
     ServerAlreadyStarting,
 }
@@ -101,6 +103,9 @@ pub fn extract_zip(data: &[u8], target_dir: &std::path::Path) -> Result<(), SFAn
         if file_data.is_dir() {
             std::fs::create_dir_all(&path)?;
         } else {
+            if let Some(parent) = path.parent() {
+                std::fs::create_dir_all(parent)?;
+            }
             let mut file = std::fs::File::create(&path)?;
             std::io::copy(&mut file_data, &mut file)?;
         }

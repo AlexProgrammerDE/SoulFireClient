@@ -177,7 +177,7 @@ function Index() {
     [targetRedirect],
   );
 
-  const startIntegratedServer = () => {
+  const startIntegratedServer = (onError: () => void) => {
     const startTime = Date.now();
     toast.promise(
       (async () => {
@@ -204,7 +204,7 @@ function Index() {
             time: (elapsed / 1000).toFixed(1),
           }),
         error: (e) => {
-          setLoginType(null);
+          onError();
           console.error(e);
           return t("integrated.toast.error");
         },
@@ -471,7 +471,7 @@ function DefaultMenu(props: {
   );
 }
 
-type IntegratedState = "configure" | "loading" | "mobile";
+type IntegratedState = "configure" | "loading" | "mobile" | "error";
 
 function IntegratedMenu({
   redirectWithCredentials,
@@ -480,10 +480,23 @@ function IntegratedMenu({
 }: {
   redirectWithCredentials: LoginFunction;
   setLoginType: (type: LoginType) => void;
-  startIntegratedServer: () => void;
+  startIntegratedServer: (onError: () => void) => void;
 }) {
+  const { t } = useTranslation("login");
   const [integratedState, setIntegratedState] =
     useState<IntegratedState>("configure");
+  const [logs, setLogs] = useState<string[]>([t("integrated.preparing")]);
+
+  useEffect(() => {
+    const cancel = cancellablePromiseDefault(
+      listen("integrated-server-start-log", (event) => {
+        setLogs((prev) => [...prev, event.payload as string]);
+      }),
+    );
+    return () => {
+      cancel();
+    };
+  }, []);
 
   switch (integratedState) {
     case "configure":
@@ -495,7 +508,17 @@ function IntegratedMenu({
         />
       );
     case "loading":
-      return <IntegratedLoadingMenu />;
+      return <IntegratedLoadingMenu logs={logs} />;
+    case "error":
+      return (
+        <IntegratedErrorMenu
+          logs={logs}
+          setLogs={setLogs}
+          setLoginType={setLoginType}
+          setIntegratedState={setIntegratedState}
+          startIntegratedServer={startIntegratedServer}
+        />
+      );
     case "mobile":
       return (
         <IntegratedMobileMenu
@@ -513,7 +536,7 @@ function IntegratedConfigureMenu({
 }: {
   setLoginType: (type: LoginType) => void;
   setIntegratedState: (state: IntegratedState) => void;
-  startIntegratedServer: () => void;
+  startIntegratedServer: (onError: () => void) => void;
 }) {
   const systemInfo = use(SystemInfoContext);
   const { t } = useTranslation("login");
@@ -533,7 +556,7 @@ function IntegratedConfigureMenu({
         setIntegratedState("mobile");
       } else {
         setIntegratedState("loading");
-        startIntegratedServer();
+        startIntegratedServer(() => setIntegratedState("error"));
       }
     },
   });
@@ -639,28 +662,18 @@ function useElapsedSeconds() {
   return elapsed;
 }
 
-function IntegratedLoadingMenu() {
+function IntegratedLoadingMenu({ logs }: { logs: string[] }) {
   const { t } = useTranslation("login");
-  const [logs, setLogs] = useState<string[]>([t("integrated.preparing")]);
   const scrollRef = useRef<HTMLDivElement>(null);
   const elapsed = useElapsedSeconds();
 
-  // Hook for loading the integrated server
   useEffect(() => {
-    const cancel = cancellablePromiseDefault(
-      listen("integrated-server-start-log", (event) => {
-        setLogs((prev) => [...prev, event.payload as string]);
-        requestAnimationFrame(() => {
-          scrollRef.current?.scrollTo({
-            top: scrollRef.current.scrollHeight,
-            behavior: "smooth",
-          });
-        });
-      }),
-    );
-    return () => {
-      cancel();
-    };
+    requestAnimationFrame(() => {
+      scrollRef.current?.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    });
   }, []);
 
   return (
@@ -687,6 +700,99 @@ function IntegratedLoadingMenu() {
           </div>
         </Scroller>
       </CardContent>
+    </Card>
+  );
+}
+
+function IntegratedErrorMenu({
+  logs,
+  setLogs,
+  setLoginType,
+  setIntegratedState,
+  startIntegratedServer,
+}: {
+  logs: string[];
+  setLogs: (logs: string[]) => void;
+  setLoginType: (type: LoginType) => void;
+  setIntegratedState: (state: IntegratedState) => void;
+  startIntegratedServer: (onError: () => void) => void;
+}) {
+  const { t } = useTranslation("login");
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [resetting, setResetting] = useState(false);
+
+  return (
+    <Card>
+      <CardHeader>
+        <LoginCardTitle />
+        <CardDescription className="text-destructive">
+          {t("integrated.toast.error")}
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Scroller ref={scrollRef} className="h-48" hideScrollbar>
+          <div className="flex flex-col gap-1">
+            {logs.map((log, index) => (
+              <p
+                key={`${index}-${log}`}
+                className="select-text rounded-md bg-muted px-3 py-2 font-mono text-xs break-all"
+              >
+                {log}
+              </p>
+            ))}
+          </div>
+        </Scroller>
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <Button variant="outline" onClick={() => setLoginType(null)}>
+          <ArrowLeftIcon />
+          {t("integrated.form.back")}
+        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="destructive"
+            disabled={resetting}
+            onClick={() => {
+              setResetting(true);
+              toast.promise(
+                (async () => {
+                  await emit("kill-integrated-server", {});
+                  await invoke("reset_integrated_data", {});
+                })(),
+                {
+                  loading: t("integrated.reset.loading"),
+                  success: () => {
+                    setResetting(false);
+                    return t("integrated.reset.success");
+                  },
+                  error: (e) => {
+                    setResetting(false);
+                    console.error(e);
+                    return t("integrated.reset.error");
+                  },
+                },
+              );
+            }}
+          >
+            {resetting ? (
+              <LoaderCircleIcon className="animate-spin" />
+            ) : (
+              <RotateCcwIcon />
+            )}
+            {t("integrated.reset.button")}
+          </Button>
+          <Button
+            onClick={() => {
+              setLogs([t("integrated.preparing")]);
+              setIntegratedState("loading");
+              startIntegratedServer(() => setIntegratedState("error"));
+            }}
+          >
+            <PlayIcon />
+            {t("integrated.retry")}
+          </Button>
+        </div>
+      </CardFooter>
     </Card>
   );
 }
