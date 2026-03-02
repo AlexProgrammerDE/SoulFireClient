@@ -29,6 +29,13 @@
       "success": "Zintegrowany serwer uruchomiony w {{time}} s",
       "error": "Nie udało się uruchomić serwera zintegrowanego"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "Zintegrowany serwer działa lokalnie na Twoim komputerze. W razie potrzeby skonfiguruj poniżej argumenty uruchamiania Javy.",
     "form": {
       "jvmArgs": {

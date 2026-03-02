@@ -29,6 +29,13 @@
       "success": "統合サーバーが {{time}} 秒で起動しました",
       "error": "統合サーバーの起動に失敗しました"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "統合サーバーはご利用のPCでローカルに動作します。必要に応じて下記でJava起動引数を設定してください。",
     "form": {
       "jvmArgs": {

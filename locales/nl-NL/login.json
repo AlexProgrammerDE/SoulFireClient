@@ -29,6 +29,13 @@
       "success": "Geïntegreerde server gestart in {{time}}s",
       "error": "Kan geïntegreerde server niet starten"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "De geïntegreerde server draait lokaal op je pc. Stel indien nodig hieronder de Java-opstartargumenten in.",
     "form": {
       "jvmArgs": {

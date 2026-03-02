@@ -29,6 +29,13 @@
       "success": "Local ship set sail in {{time}}s",
       "error": "Blimey! Couldn’t start the local server."
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "The local SoulFire ship runs on yer own deck. Adjust the Java startup riggin' below if need be.",
     "form": {
       "jvmArgs": {

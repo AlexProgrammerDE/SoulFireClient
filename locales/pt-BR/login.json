@@ -29,6 +29,13 @@
       "success": "Servidor integrado iniciado em {{time}}s",
       "error": "Falha ao iniciar o servidor integrado"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "O servidor integrado roda localmente no seu PC. Configure os argumentos de inicialização do Java abaixo, se necessário.",
     "form": {
       "jvmArgs": {

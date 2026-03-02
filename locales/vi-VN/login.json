@@ -29,6 +29,13 @@
       "success": "Máy chủ tích hợp đã khởi động trong {{time}} giây",
       "error": "Không thể khởi động máy chủ tích hợp"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "Máy chủ tích hợp chạy cục bộ trên máy tính của bạn. Nếu cần, hãy cấu hình các tham số khởi động Java ở bên dưới.",
     "form": {
       "jvmArgs": {

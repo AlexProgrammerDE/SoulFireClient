@@ -29,6 +29,13 @@
       "success": "Integrierter Server in {{time}} s gestartet",
       "error": "Fehler beim Starten des integrierten Servers"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "Der integrierte Server läuft lokal auf deinem PC. Konfiguriere bei Bedarf die Java-Startargumente unten.",
     "form": {
       "jvmArgs": {

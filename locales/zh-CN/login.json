@@ -29,6 +29,13 @@
       "success": "集成服务器已在{{time}}秒内启动成功",
       "error": "启动集成服务器失败"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "集成服务器在您的电脑本地运行。如有需要，可在下方配置 Java 启动参数。",
     "form": {
       "jvmArgs": {

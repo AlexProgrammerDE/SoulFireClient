@@ -29,6 +29,13 @@
       "success": "Integrerad server startad på {{time}}s",
       "error": "Misslyckades med att starta integrerad server"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "Den integrerade servern körs lokalt på din dator. Konfigurera Java-startargumenten nedan om det behövs.",
     "form": {
       "jvmArgs": {

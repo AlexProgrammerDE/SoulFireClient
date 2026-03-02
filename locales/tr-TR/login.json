@@ -29,6 +29,13 @@
       "success": "Yerel sunucu {{time}} saniyede başlatıldı",
       "error": "Yerel sunucu başlatılamadı"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "Entegre sunucu bilgisayarınızda yerel olarak çalışır. Gerekirse aşağıdan Java başlatma argümanlarını yapılandırın.",
     "form": {
       "jvmArgs": {

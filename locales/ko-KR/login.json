@@ -29,6 +29,13 @@
       "success": "통합 서버가 {{time}}초 만에 시작되었습니다.",
       "error": "통합 서버 시작에 실패했습니다"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "통합 서버는 PC에서 로컬로 실행됩니다. 필요하다면 아래에서 Java 시작 인수를 설정하세요.",
     "form": {
       "jvmArgs": {

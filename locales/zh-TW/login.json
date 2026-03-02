@@ -29,6 +29,13 @@
       "success": "整合伺服器已於 {{time}} 秒內啟動",
       "error": "啟動整合式伺服器失敗"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "整合式伺服器在您的電腦本機運行。如有需要，請在下方設定 Java 啟動參數。",
     "form": {
       "jvmArgs": {
