@@ -29,6 +29,13 @@
       "success": "Integroitu palvelin käynnistyi {{time}} sekunnissa",
       "error": "Integroitu palvelin ei käynnistynyt"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "Integroitu palvelin toimii paikallisesti tietokoneellasi. Voit tarvittaessa määrittää Java-käynnistysparametrit alla.",
     "form": {
       "jvmArgs": {

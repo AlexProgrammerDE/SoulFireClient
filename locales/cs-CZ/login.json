@@ -29,6 +29,13 @@
       "success": "Integrovaný server spuštěn za {{time}}s",
       "error": "Nepodařilo se spustit integrovaný server"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "Integrovaný server běží lokálně na vašem PC. Pokud je třeba, nastavte níže argumenty pro spuštění Javy.",
     "form": {
       "jvmArgs": {

@@ -29,6 +29,13 @@
       "success": "Integraetd servr startd in {{time}}s",
       "error": "Faild 2 start integratd servr"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "Da intigratid server runz local on ur PC. Configur Java start argumints below if u wantz.",
     "form": {
       "jvmArgs": {

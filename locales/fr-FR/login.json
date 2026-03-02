@@ -29,6 +29,13 @@
       "success": "Serveur intégré démarré en {{time}}s",
       "error": "Échec du démarrage du serveur intégré"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "Le serveur intégré s'exécute localement sur votre PC. Configurez les arguments de démarrage Java ci-dessous si nécessaire.",
     "form": {
       "jvmArgs": {

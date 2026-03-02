@@ -29,6 +29,13 @@
       "success": "Inteqrasiya olunmuş server {{time}} saniyəyə başladıldı",
       "error": "İnteqrasiyalı serveri başlatmaq mümkün olmadı"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "İnteqrasiyalı server kompüterinizdə yerli olaraq işləyir. Lazım olarsa aşağıda Java başladılma arqumentlərini tənzimləyin.",
     "form": {
       "jvmArgs": {

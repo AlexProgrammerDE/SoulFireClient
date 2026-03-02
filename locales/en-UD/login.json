@@ -29,6 +29,13 @@
       "success": "{{s}}ǝɯᴉʇ uᴉ pǝʇɐɹʇs ɹǝʌɹǝs pǝʇɐɹƃǝʇuI",
       "error": "ɹǝʌɹǝs pǝʇɐɹƃǝʇuᴉ ʇɹɐʇs oʇ pǝlᴉɐlℲ"
     },
+    "retry": "",
+    "reset": {
+      "button": "",
+      "loading": "",
+      "success": "",
+      "error": ""
+    },
     "description": "˙pǝpǝǝu ɟᴉ 'ʍo˥ǝqǝן ɹnoʎ uo ʎʇlɐɔol snɹ ɹǝʌɹǝs pǝʇɐɹƃǝʇuᴉ ǝɥʇ .pǝʇuǝɹǝɟuᴉ ɟɟɐ sʇuǝƃnɯɐ ɥɔuǝʇ ɐʌɐɾ ǝɥʇ ǝɹnƃᴉɟuoɔ",
     "form": {
       "jvmArgs": {
