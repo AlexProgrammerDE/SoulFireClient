@@ -29,12 +29,12 @@
       "success": "Servidor integrado iniciado en {{time}}s",
       "error": "No se pudo iniciar el servidor integrado"
     },
-    "retry": "",
+    "retry": "Reintentar",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Restablecer datos",
+      "loading": "Restableciendo los datos de SoulFire...",
+      "success": "Datos de SoulFire restablecidos correctamente. Intenta comenzar de nuevo.",
+      "error": "No se pudo restablecer los datos de SoulFire"
     },
     "description": "El servidor integrado se ejecuta localmente en tu PC. Configura los argumentos de inicio de Java abajo si es necesario.",
     "form": {

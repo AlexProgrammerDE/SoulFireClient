@@ -29,12 +29,12 @@
       "success": "Servidor integrado iniciado em {{time}}s",
       "error": "Falha ao iniciar o servidor integrado"
     },
-    "retry": "",
+    "retry": "Tentar novamente",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Redefinir dados",
+      "loading": "Redefinindo os dados do SoulFire...",
+      "success": "Dados do SoulFire redefinidos com sucesso. Tente começar novamente.",
+      "error": "Falha ao redefinir os dados do SoulFire"
     },
     "description": "O servidor integrado roda localmente no seu PC. Configure os argumentos de inicialização do Java abaixo, se necessário.",
     "form": {

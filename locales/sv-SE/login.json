@@ -29,12 +29,12 @@
       "success": "Integrerad server startad på {{time}}s",
       "error": "Misslyckades med att starta integrerad server"
     },
-    "retry": "",
+    "retry": "Försök igen",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Återställ data",
+      "loading": "Återställer SoulFire-data...",
+      "success": "SoulFire-data återställdes. Försök starta om.",
+      "error": "Det gick inte att återställa SoulFire-data"
     },
     "description": "Den integrerade servern körs lokalt på din dator. Konfigurera Java-startargumenten nedan om det behövs.",
     "form": {

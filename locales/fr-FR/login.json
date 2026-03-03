@@ -29,12 +29,12 @@
       "success": "Serveur intégré démarré en {{time}}s",
       "error": "Échec du démarrage du serveur intégré"
     },
-    "retry": "",
+    "retry": "Réessayer",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Réinitialiser les données",
+      "loading": "Réinitialisation des données SoulFire...",
+      "success": "Les données SoulFire ont été réinitialisées avec succès. Essayez de recommencer.",
+      "error": "Échec de la réinitialisation des données SoulFire"
     },
     "description": "Le serveur intégré s'exécute localement sur votre PC. Configurez les arguments de démarrage Java ci-dessous si nécessaire.",
     "form": {

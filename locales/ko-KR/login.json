@@ -29,12 +29,12 @@
       "success": "통합 서버가 {{time}}초 만에 시작되었습니다.",
       "error": "통합 서버 시작에 실패했습니다"
     },
-    "retry": "",
+    "retry": "다시 시도하기",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "데이터 초기화",
+      "loading": "SoulFire 데이터를 초기화하는 중...",
+      "success": "SoulFire 데이터가 성공적으로 초기화되었습니다. 다시 시작해보세요.",
+      "error": "SoulFire 데이터 초기화에 실패했습니다."
     },
     "description": "통합 서버는 PC에서 로컬로 실행됩니다. 필요하다면 아래에서 Java 시작 인수를 설정하세요.",
     "form": {

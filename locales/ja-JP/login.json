@@ -29,12 +29,12 @@
       "success": "統合サーバーが {{time}} 秒で起動しました",
       "error": "統合サーバーの起動に失敗しました"
     },
-    "retry": "",
+    "retry": "再試行する",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "データをリセット",
+      "loading": "SoulFireのデータをリセットしています...",
+      "success": "SoulFireのデータが正常にリセットされました。再度開始してください。",
+      "error": "SoulFireのデータのリセットに失敗しました"
     },
     "description": "統合サーバーはご利用のPCでローカルに動作します。必要に応じて下記でJava起動引数を設定してください。",
     "form": {

@@ -29,12 +29,12 @@
       "success": "{{s}}ǝɯᴉʇ uᴉ pǝʇɐɹʇs ɹǝʌɹǝs pǝʇɐɹƃǝʇuI",
       "error": "ɹǝʌɹǝs pǝʇɐɹƃǝʇuᴉ ʇɹɐʇs oʇ pǝlᴉɐlℲ"
     },
-    "retry": "",
+    "retry": "ʎɹʇǝɹ",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "ɐʇɐᗡ ʇǝsǝᴚ",
+      "loading": "˙˙˙ɐɹǝɟlnoS ⅁uᴉʇʇǝs ɐʇɐᗡ",
+      "success": "˙uᴉɐƃɐ ǝuᴉʇɹɐʇs ʎɹ⊥ ˙ʎllnɟsǝɔɔns ʇǝsǝɹ ɐʇɐᗡ ⅁uᴉɟlnoS",
+      "error": "ɐʇɐᗡ ⅁uᴉɟlnoS ʇǝsǝɹ oʇ pǝlᴉɐɟ"
     },
     "description": "˙pǝpǝǝu ɟᴉ 'ʍo˥ǝqǝן ɹnoʎ uo ʎʇlɐɔol snɹ ɹǝʌɹǝs pǝʇɐɹƃǝʇuᴉ ǝɥʇ .pǝʇuǝɹǝɟuᴉ ɟɟɐ sʇuǝƃnɯɐ ɥɔuǝʇ ɐʌɐɾ ǝɥʇ ǝɹnƃᴉɟuoɔ",
     "form": {

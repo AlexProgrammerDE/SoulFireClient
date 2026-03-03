@@ -29,12 +29,12 @@
       "success": "Geïntegreerde server gestart in {{time}}s",
       "error": "Kan geïntegreerde server niet starten"
     },
-    "retry": "",
+    "retry": "Opnieuw proberen",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Gegevens herstellen",
+      "loading": "SoulFire-gegevens worden hersteld...",
+      "success": "SoulFire-gegevens zijn succesvol hersteld. Probeer opnieuw te starten.",
+      "error": "Het herstellen van SoulFire-gegevens is mislukt"
     },
     "description": "De geïntegreerde server draait lokaal op je pc. Stel indien nodig hieronder de Java-opstartargumenten in.",
     "form": {

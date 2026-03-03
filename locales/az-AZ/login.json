@@ -29,12 +29,12 @@
       "success": "Inteqrasiya olunmuş server {{time}} saniyəyə başladıldı",
       "error": "İnteqrasiyalı serveri başlatmaq mümkün olmadı"
     },
-    "retry": "",
+    "retry": "Təkrar cəhd et",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Məlumatları sıfırla",
+      "loading": "SoulFire məlumatları sıfırlanır...",
+      "success": "SoulFire məlumatları uğurla sıfırlandı. Yenidən başlamağa çalışın.",
+      "error": "SoulFire məlumatlarını sıfırlamaq mümkün olmadı"
     },
     "description": "İnteqrasiyalı server kompüterinizdə yerli olaraq işləyir. Lazım olarsa aşağıda Java başladılma arqumentlərini tənzimləyin.",
     "form": {

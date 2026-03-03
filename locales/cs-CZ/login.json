@@ -29,12 +29,12 @@
       "success": "Integrovaný server spuštěn za {{time}}s",
       "error": "Nepodařilo se spustit integrovaný server"
     },
-    "retry": "",
+    "retry": "Opakovat",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Resetovat data",
+      "loading": "Probíhá resetování dat SoulFire...",
+      "success": "Data SoulFire byla úspěšně resetována. Zkuste to znovu spustit.",
+      "error": "Nepodařilo se resetovat data SoulFire"
     },
     "description": "Integrovaný server běží lokálně na vašem PC. Pokud je třeba, nastavte níže argumenty pro spuštění Javy.",
     "form": {

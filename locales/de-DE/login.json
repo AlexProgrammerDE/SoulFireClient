@@ -29,12 +29,12 @@
       "success": "Integrierter Server in {{time}} s gestartet",
       "error": "Fehler beim Starten des integrierten Servers"
     },
-    "retry": "",
+    "retry": "Erneut versuchen",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Daten zurücksetzen",
+      "loading": "SoulFire-Daten werden zurückgesetzt...",
+      "success": "SoulFire-Daten wurden erfolgreich zurückgesetzt. Versuchen Sie, erneut zu starten.",
+      "error": "Fehler beim Zurücksetzen der SoulFire-Daten"
     },
     "description": "Der integrierte Server läuft lokal auf deinem PC. Konfiguriere bei Bedarf die Java-Startargumente unten.",
     "form": {

@@ -29,12 +29,12 @@
       "success": "Server integrato avviato in {{time}}s",
       "error": "Avvio del server integrato non riuscito"
     },
-    "retry": "",
+    "retry": "Riprova",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Reimposta dati",
+      "loading": "Reimpostazione dei dati di SoulFire in corso...",
+      "success": "Dati di SoulFire reimpostati con successo. Prova a ricominciare.",
+      "error": "Impossibile reimpostare i dati di SoulFire"
     },
     "description": "Il server integrato viene eseguito localmente sul tuo PC. Configura gli argomenti di avvio Java qui sotto se necessario.",
     "form": {
