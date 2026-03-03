@@ -29,12 +29,12 @@
       "success": "Máy chủ tích hợp đã khởi động trong {{time}} giây",
       "error": "Không thể khởi động máy chủ tích hợp"
     },
-    "retry": "",
+    "retry": "Thử lại",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Đặt lại dữ liệu",
+      "loading": "Đang đặt lại dữ liệu SoulFire...",
+      "success": "Đã đặt lại dữ liệu SoulFire thành công. Hãy thử bắt đầu lại.",
+      "error": "Đặt lại dữ liệu SoulFire thất bại"
     },
     "description": "Máy chủ tích hợp chạy cục bộ trên máy tính của bạn. Nếu cần, hãy cấu hình các tham số khởi động Java ở bên dưới.",
     "form": {

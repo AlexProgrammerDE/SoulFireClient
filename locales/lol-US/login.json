@@ -29,12 +29,12 @@
       "success": "Integraetd servr startd in {{time}}s",
       "error": "Faild 2 start integratd servr"
     },
-    "retry": "",
+    "retry": "Try agin? kthx!",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "ZOMGWTF RESET DATAZ",
+      "loading": "Resettin SoulFire data... hang onz plz",
+      "success": "SoulFire data haz reset, yaaay! Try agin now kthx.",
+      "error": "Uh-oh, failed to reset SoulFire dataz :("
     },
     "description": "Da intigratid server runz local on ur PC. Configur Java start argumints below if u wantz.",
     "form": {

@@ -29,12 +29,12 @@
       "success": "Yerel sunucu {{time}} saniyede başlatıldı",
       "error": "Yerel sunucu başlatılamadı"
     },
-    "retry": "",
+    "retry": "Yeniden Dene",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Verileri Sıfırla",
+      "loading": "SoulFire verileri sıfırlanıyor...",
+      "success": "SoulFire verileri başarıyla sıfırlandı. Tekrar başlatmayı deneyin.",
+      "error": "SoulFire verileri sıfırlanamadı"
     },
     "description": "Entegre sunucu bilgisayarınızda yerel olarak çalışır. Gerekirse aşağıdan Java başlatma argümanlarını yapılandırın.",
     "form": {

@@ -29,12 +29,12 @@
       "success": "Local ship set sail in {{time}}s",
       "error": "Blimey! Couldn’t start the local server."
     },
-    "retry": "",
+    "retry": "Try again, matey!",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Blast the Data Back to Start",
+      "loading": "Resetting the SoulFire loot...",
+      "success": "Arrr! SoulFire booty be reset. Give it another go, ye scallywag.",
+      "error": "Failed to reset the SoulFire booty, matey!"
     },
     "description": "The local SoulFire ship runs on yer own deck. Adjust the Java startup riggin' below if need be.",
     "form": {

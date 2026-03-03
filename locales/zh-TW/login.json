@@ -29,12 +29,12 @@
       "success": "整合伺服器已於 {{time}} 秒內啟動",
       "error": "啟動整合式伺服器失敗"
     },
-    "retry": "",
+    "retry": "重試",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "重設資料",
+      "loading": "正在重設 SoulFire 資料...",
+      "success": "SoulFire 資料重設成功。請重新開始。",
+      "error": "無法重設 SoulFire 資料"
     },
     "description": "整合式伺服器在您的電腦本機運行。如有需要，請在下方設定 Java 啟動參數。",
     "form": {

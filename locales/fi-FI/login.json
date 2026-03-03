@@ -29,12 +29,12 @@
       "success": "Integroitu palvelin käynnistyi {{time}} sekunnissa",
       "error": "Integroitu palvelin ei käynnistynyt"
     },
-    "retry": "",
+    "retry": "Yritä uudelleen",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Palauta tiedot",
+      "loading": "Palautetaan SoulFire-tietoja...",
+      "success": "SoulFire-tiedot palautettu onnistuneesti. Yritä aloittaa uudelleen.",
+      "error": "SoulFire-tietojen palautus epäonnistui"
     },
     "description": "Integroitu palvelin toimii paikallisesti tietokoneellasi. Voit tarvittaessa määrittää Java-käynnistysparametrit alla.",
     "form": {

@@ -29,12 +29,12 @@
       "success": "Zintegrowany serwer uruchomiony w {{time}} s",
       "error": "Nie udało się uruchomić serwera zintegrowanego"
     },
-    "retry": "",
+    "retry": "Ponów próbę",
     "reset": {
-      "button": "",
-      "loading": "",
-      "success": "",
-      "error": ""
+      "button": "Zresetuj dane",
+      "loading": "Resetowanie danych SoulFire...",
+      "success": "Dane SoulFire zostały zresetowane. Spróbuj ponownie uruchomić.",
+      "error": "Nie udało się zresetować danych SoulFire"
     },
     "description": "Zintegrowany serwer działa lokalnie na Twoim komputerze. W razie potrzeby skonfiguruj poniżej argumenty uruchamiania Javy.",
     "form": {
