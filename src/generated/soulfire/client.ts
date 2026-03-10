@@ -94,6 +94,14 @@ export interface ServerInfo {
    */
   publicDocsAddress: string;
   /**
+   * The public URL for the MCP (Model Context Protocol) endpoint.
+   * Derived from public_api_address with "/mcp" appended.
+   * Clients can use this to connect AI assistants to the SoulFire server.
+   *
+   * @generated from protobuf field: string public_mcp_address = 8
+   */
+  publicMcpAddress: string;
+  /**
    * The native Minecraft protocol version supported by this server (e.g., "1.21.4").
    *
    * @generated from protobuf field: string minecraft_version = 7
@@ -421,6 +429,12 @@ class ServerInfo$Type extends MessageType<ServerInfo> {
         T: 9 /*ScalarType.STRING*/,
       },
       {
+        no: 8,
+        name: "public_mcp_address",
+        kind: "scalar",
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
         no: 7,
         name: "minecraft_version",
         kind: "scalar",
@@ -436,6 +450,7 @@ class ServerInfo$Type extends MessageType<ServerInfo> {
     message.publicApiAddress = "";
     message.publicWebdavAddress = "";
     message.publicDocsAddress = "";
+    message.publicMcpAddress = "";
     message.minecraftVersion = "";
     if (value !== undefined)
       reflectionMergePartial<ServerInfo>(this, message, value);
@@ -469,6 +484,9 @@ class ServerInfo$Type extends MessageType<ServerInfo> {
           break;
         case /* string public_docs_address */ 6:
           message.publicDocsAddress = reader.string();
+          break;
+        case /* string public_mcp_address */ 8:
+          message.publicMcpAddress = reader.string();
           break;
         case /* string minecraft_version */ 7:
           message.minecraftVersion = reader.string();
@@ -520,6 +538,9 @@ class ServerInfo$Type extends MessageType<ServerInfo> {
     /* string minecraft_version = 7; */
     if (message.minecraftVersion !== "")
       writer.tag(7, WireType.LengthDelimited).string(message.minecraftVersion);
+    /* string public_mcp_address = 8; */
+    if (message.publicMcpAddress !== "")
+      writer.tag(8, WireType.LengthDelimited).string(message.publicMcpAddress);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
