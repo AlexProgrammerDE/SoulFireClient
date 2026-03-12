@@ -1,3 +1,5 @@
+import type { Timestamp } from "@/generated/google/protobuf/timestamp";
+
 const INTERVAL_SECONDS = 3;
 const MAX_SNAPSHOTS = 600; // 30 minutes at 3-second intervals
 const MAX_CHART_POINTS = 120;
@@ -14,7 +16,7 @@ const tooltipTimeFormatter = new Intl.DateTimeFormat(undefined, {
 });
 
 interface HasTimestamp {
-  timestamp?: { seconds: string; nanos: number };
+  timestamp?: Timestamp;
 }
 
 export interface PaddedSnapshot<T> {

@@ -982,8 +982,7 @@ export async function setSelfEmail(
 
 export function timestampToDate(timestamp: Timestamp): Date {
   return new Date(
-    parseInt(timestamp.seconds, 10) * 1000 +
-      Math.floor((timestamp.nanos || 0) / 1e6),
+    Number(timestamp.seconds) * 1000 + Math.floor((timestamp.nanos || 0) / 1e6),
   );
 }
 

@@ -89,7 +89,7 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
             plugins: [],
             state: InstanceState.RUNNING,
             lastModified: {
-              seconds: "0",
+              seconds: 0n,
               nanos: 0,
             },
           };

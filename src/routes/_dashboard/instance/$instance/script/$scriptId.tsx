@@ -463,7 +463,7 @@ function ScriptEditorContent() {
         } else if (event.event.oneofKind === "nodeCompleted") {
           const nodeId = event.event.nodeCompleted.nodeId;
           const execTimeNanos = event.event.nodeCompleted.executionTimeNanos;
-          if (execTimeNanos && execTimeNanos !== "0") {
+          if (execTimeNanos > 0n) {
             addNodeExecutionTime(nodeId, Number(execTimeNanos) / 1_000_000);
           }
           setLogs((prev) => [

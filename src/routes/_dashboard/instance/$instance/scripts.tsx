@@ -54,6 +54,7 @@ import { ScriptServiceClient } from "@/generated/soulfire/script.client";
 import { useContextMenu } from "@/hooks/use-context-menu.ts";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard.ts";
 import { scriptListQueryOptions } from "@/lib/script-service.ts";
+import { timestampToDate } from "@/lib/utils.tsx";
 
 const createScriptSchema = z.object({
   name: z.string(),
@@ -109,6 +110,25 @@ function ScriptsPageSkeleton() {
       </div>
     </div>
   );
+}
+
+function formatLastModified(timestamp: ScriptInfo["updatedAt"]) {
+  if (!timestamp) return "";
+
+  const date = timestampToDate(timestamp);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / (1000 * 60));
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffMins < 60) {
+    return `${diffMins}m ago`;
+  }
+  if (diffHours < 24) {
+    return `${diffHours}h ago`;
+  }
+  return `${diffDays}d ago`;
 }
 
 function InstanceScripts() {
@@ -506,26 +526,6 @@ function Content() {
 function ScriptCardSkeleton({ script }: { script: ScriptInfo }) {
   const { t: tInstance } = useTranslation("instance");
 
-  const formatLastModified = (
-    timestamp: { seconds: string; nanos: number } | undefined,
-  ) => {
-    if (!timestamp) return "";
-    const date = new Date(Number(timestamp.seconds) * 1000);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffMins = Math.floor(diffMs / (1000 * 60));
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-    if (diffMins < 60) {
-      return `${diffMins}m ago`;
-    }
-    if (diffHours < 24) {
-      return `${diffHours}h ago`;
-    }
-    return `${diffDays}d ago`;
-  };
-
   return (
     <Card className="group relative transition-colors hover:bg-muted/50">
       <CardHeader className="pb-2">
@@ -586,26 +586,6 @@ function ScriptCard({
 
   // Get paused state from script entity
   const isPaused = script.paused;
-
-  const formatLastModified = (
-    timestamp: { seconds: string; nanos: number } | undefined,
-  ) => {
-    if (!timestamp) return "";
-    const date = new Date(Number(timestamp.seconds) * 1000);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffMins = Math.floor(diffMs / (1000 * 60));
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-    if (diffMins < 60) {
-      return `${diffMins}m ago`;
-    }
-    if (diffHours < 24) {
-      return `${diffHours}h ago`;
-    }
-    return `${diffDays}d ago`;
-  };
 
   return (
     <Card

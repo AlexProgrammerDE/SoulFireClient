@@ -16,6 +16,15 @@ import { Switch } from "@/components/ui/switch";
 import type { ScriptQuotas } from "@/generated/soulfire/script";
 import { useScriptEditorStore } from "@/stores/script-editor-store";
 
+function bigintToInput(value: bigint | undefined): string {
+  return value?.toString() ?? "";
+}
+
+function parseOptionalBigIntInput(value: string): bigint | undefined {
+  const trimmed = value.trim();
+  return trimmed === "" ? undefined : BigInt(trimmed);
+}
+
 /**
  * Dialog for configuring script execution quotas.
  * Empty fields use server defaults.
@@ -36,19 +45,24 @@ export function QuotasDialog() {
   // Sync local state when dialog opens
   useEffect(() => {
     if (open) {
-      setMaxExecutionCount(quotas?.maxExecutionCount ?? "");
-      setMaxExecutionTimeMs(quotas?.maxExecutionTimeMs ?? "");
+      setMaxExecutionCount(bigintToInput(quotas?.maxExecutionCount));
+      setMaxExecutionTimeMs(bigintToInput(quotas?.maxExecutionTimeMs));
       setMaxConcurrentTriggers(
         quotas?.maxConcurrentTriggers != null
           ? String(quotas.maxConcurrentTriggers)
           : "",
       );
-      setMaxStateStoreEntries(quotas?.maxStateStoreEntries ?? "");
+      setMaxStateStoreEntries(bigintToInput(quotas?.maxStateStoreEntries));
       setDisableTimeouts(quotas?.disableTimeouts ?? false);
     }
   }, [open, quotas]);
 
   const handleSave = useCallback(() => {
+    const parsedMaxExecutionCount = parseOptionalBigIntInput(maxExecutionCount);
+    const parsedMaxExecutionTimeMs =
+      parseOptionalBigIntInput(maxExecutionTimeMs);
+    const parsedMaxStateStoreEntries =
+      parseOptionalBigIntInput(maxStateStoreEntries);
     const hasAnyValue =
       maxExecutionCount ||
       maxExecutionTimeMs ||
@@ -61,12 +75,18 @@ export function QuotasDialog() {
     } else {
       const newQuotas: ScriptQuotas = {
         disableTimeouts,
-        ...(maxExecutionCount && { maxExecutionCount }),
-        ...(maxExecutionTimeMs && { maxExecutionTimeMs }),
+        ...(parsedMaxExecutionCount !== undefined && {
+          maxExecutionCount: parsedMaxExecutionCount,
+        }),
+        ...(parsedMaxExecutionTimeMs !== undefined && {
+          maxExecutionTimeMs: parsedMaxExecutionTimeMs,
+        }),
         ...(maxConcurrentTriggers && {
           maxConcurrentTriggers: Number(maxConcurrentTriggers),
         }),
-        ...(maxStateStoreEntries && { maxStateStoreEntries }),
+        ...(parsedMaxStateStoreEntries !== undefined && {
+          maxStateStoreEntries: parsedMaxStateStoreEntries,
+        }),
       };
       setQuotas(newQuotas);
     }
