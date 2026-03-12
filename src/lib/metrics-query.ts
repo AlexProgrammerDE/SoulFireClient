@@ -1,14 +1,18 @@
 import type { RpcTransport } from "@protobuf-ts/runtime-rpc";
-import { queryOptions } from "@tanstack/react-query";
+import { type QueryClient, queryOptions } from "@tanstack/react-query";
 import type { GetInstanceMetricsResponse } from "@/generated/soulfire/metrics";
 import { MetricsServiceClient } from "@/generated/soulfire/metrics.client";
+import { mergeSnapshots } from "@/lib/metrics-utils";
 
 export function instanceMetricsQueryOptions(
   transport: RpcTransport | null,
   instanceId: string,
+  queryClient: QueryClient,
 ) {
+  const queryKey = ["instance-metrics", instanceId] as const;
+
   return queryOptions({
-    queryKey: ["instance-metrics", instanceId],
+    queryKey,
     queryFn: async ({ signal }): Promise<GetInstanceMetricsResponse> => {
       if (!transport) {
         return {
@@ -22,12 +26,34 @@ export function instanceMetricsQueryOptions(
           },
         };
       }
+
+      const previous =
+        queryClient.getQueryData<GetInstanceMetricsResponse>(queryKey);
+      const since =
+        previous && previous.snapshots.length > 0
+          ? previous.snapshots[previous.snapshots.length - 1].timestamp
+          : undefined;
+
       const client = new MetricsServiceClient(transport);
       const result = await client.getInstanceMetrics(
-        { instanceId },
+        since
+          ? {
+              instanceId,
+              since,
+            }
+          : { instanceId },
         { abort: signal },
       );
-      return result.response;
+      const response = result.response;
+
+      if (!previous || !since) {
+        return response;
+      }
+
+      return {
+        snapshots: mergeSnapshots(previous.snapshots, response.snapshots),
+        distributions: response.distributions ?? previous.distributions,
+      };
     },
     refetchInterval: 3_000,
   });

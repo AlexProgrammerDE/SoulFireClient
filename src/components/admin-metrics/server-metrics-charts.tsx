@@ -23,7 +23,11 @@ import type {
   GetServerMetricsResponse,
   ServerMetricsSnapshot,
 } from "@/generated/soulfire/metrics";
-import { padSnapshots } from "@/lib/metrics-utils";
+import {
+  downsampleTimeSeriesData,
+  formatChartAxisTime,
+  padSnapshots,
+} from "@/lib/metrics-utils";
 
 function formatMB(bytes: number): string {
   return `${(bytes / (1024 * 1024)).toFixed(0)} MB`;
@@ -37,6 +41,21 @@ function formatUptime(ms: number): string {
   if (days > 0) return `${days}d ${hours}h`;
   if (hours > 0) return `${hours}h ${minutes}m`;
   return `${minutes}m`;
+}
+
+const TIME_AXIS_PROPS = {
+  dataKey: "timestampMs",
+  domain: ["dataMin", "dataMax"] as const,
+  interval: "preserveStartEnd" as const,
+  minTickGap: 32,
+  scale: "time" as const,
+  tickCount: 6,
+  type: "number" as const,
+};
+
+function formatTooltipLabel(payload: CustomTooltipProps["payload"]) {
+  const timeLabel = payload?.[0]?.payload?.timeLabel;
+  return typeof timeLabel === "string" ? timeLabel : "";
 }
 
 export function ServerMetricsSummaryCards({
@@ -106,19 +125,22 @@ export function CpuUsageChart({
   const { t } = useTranslation("admin");
   const chartData = useMemo(
     () =>
-      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
-        time,
-        process: s
-          ? s.processCpuLoad >= 0
-            ? Number((s.processCpuLoad * 100).toFixed(1))
-            : 0
-          : null,
-        system: s
-          ? s.systemCpuLoad >= 0
-            ? Number((s.systemCpuLoad * 100).toFixed(1))
-            : 0
-          : null,
-      })),
+      downsampleTimeSeriesData(
+        padSnapshots(snapshots).map(({ timestampMs, timeLabel, snapshot }) => ({
+          timestampMs,
+          timeLabel,
+          process: snapshot
+            ? snapshot.processCpuLoad >= 0
+              ? Number((snapshot.processCpuLoad * 100).toFixed(1))
+              : 0
+            : null,
+          system: snapshot
+            ? snapshot.systemCpuLoad >= 0
+              ? Number((snapshot.systemCpuLoad * 100).toFixed(1))
+              : 0
+            : null,
+        })),
+      ),
     [snapshots],
   );
 
@@ -133,7 +155,11 @@ export function CpuUsageChart({
         <ChartContainer config={cpuConfig} className="min-h-[200px] w-full">
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" tick={{ fontSize: 10 }} />
+            <XAxis
+              {...TIME_AXIS_PROPS}
+              tick={{ fontSize: 10 }}
+              tickFormatter={(value) => formatChartAxisTime(Number(value))}
+            />
             <YAxis
               domain={[0, 100]}
               tick={{ fontSize: 10 }}
@@ -141,7 +167,12 @@ export function CpuUsageChart({
             />
             <ChartTooltip
               content={(props: CustomTooltipProps) => (
-                <ChartTooltipContent {...props} />
+                <ChartTooltipContent
+                  {...props}
+                  labelFormatter={(_label, payload) =>
+                    formatTooltipLabel(payload)
+                  }
+                />
               )}
             />
             <Area
@@ -150,6 +181,7 @@ export function CpuUsageChart({
               stroke="var(--color-system)"
               fill="var(--color-system)"
               fillOpacity={0.1}
+              isAnimationActive={false}
               strokeWidth={1}
               strokeDasharray="4 2"
             />
@@ -159,6 +191,7 @@ export function CpuUsageChart({
               stroke="var(--color-process)"
               fill="var(--color-process)"
               fillOpacity={0.3}
+              isAnimationActive={false}
               strokeWidth={2}
             />
             <ChartLegend content={<ChartLegendContent />} />
@@ -183,16 +216,23 @@ export function MemoryUsageChart({
   const { t } = useTranslation("admin");
   const chartData = useMemo(
     () =>
-      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
-        time,
-        used: s ? Number(s.heapUsedBytes) / (1024 * 1024) : null,
-        committed: s ? Number(s.heapCommittedBytes) / (1024 * 1024) : null,
-        max: s
-          ? Number(s.heapMaxBytes) > 0
-            ? Number(s.heapMaxBytes) / (1024 * 1024)
-            : undefined
-          : null,
-      })),
+      downsampleTimeSeriesData(
+        padSnapshots(snapshots).map(({ timestampMs, timeLabel, snapshot }) => ({
+          timestampMs,
+          timeLabel,
+          used: snapshot
+            ? Number(snapshot.heapUsedBytes) / (1024 * 1024)
+            : null,
+          committed: snapshot
+            ? Number(snapshot.heapCommittedBytes) / (1024 * 1024)
+            : null,
+          max: snapshot
+            ? Number(snapshot.heapMaxBytes) > 0
+              ? Number(snapshot.heapMaxBytes) / (1024 * 1024)
+              : undefined
+            : null,
+        })),
+      ),
     [snapshots],
   );
 
@@ -207,7 +247,11 @@ export function MemoryUsageChart({
         <ChartContainer config={memoryConfig} className="min-h-[200px] w-full">
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" tick={{ fontSize: 10 }} />
+            <XAxis
+              {...TIME_AXIS_PROPS}
+              tick={{ fontSize: 10 }}
+              tickFormatter={(value) => formatChartAxisTime(Number(value))}
+            />
             <YAxis
               tick={{ fontSize: 10 }}
               tickFormatter={(v: number) => `${v.toFixed(0)} MB`}
@@ -216,6 +260,9 @@ export function MemoryUsageChart({
               content={(props: CustomTooltipProps) => (
                 <ChartTooltipContent
                   {...props}
+                  labelFormatter={(_label, payload) =>
+                    formatTooltipLabel(payload)
+                  }
                   formatter={(value, name, item) => (
                     <>
                       <div
@@ -246,6 +293,7 @@ export function MemoryUsageChart({
               stroke="var(--color-max)"
               fill="var(--color-max)"
               fillOpacity={0.05}
+              isAnimationActive={false}
               strokeWidth={1}
               strokeDasharray="4 2"
             />
@@ -255,6 +303,7 @@ export function MemoryUsageChart({
               stroke="var(--color-committed)"
               fill="var(--color-committed)"
               fillOpacity={0.1}
+              isAnimationActive={false}
               strokeWidth={1}
             />
             <Area
@@ -263,6 +312,7 @@ export function MemoryUsageChart({
               stroke="var(--color-used)"
               fill="var(--color-used)"
               fillOpacity={0.3}
+              isAnimationActive={false}
               strokeWidth={2}
             />
             <ChartLegend content={<ChartLegendContent />} />
@@ -286,11 +336,14 @@ export function ThreadCountChart({
   const { t } = useTranslation("admin");
   const chartData = useMemo(
     () =>
-      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
-        time,
-        total: s ? s.threadCount : null,
-        daemon: s ? s.daemonThreadCount : null,
-      })),
+      downsampleTimeSeriesData(
+        padSnapshots(snapshots).map(({ timestampMs, timeLabel, snapshot }) => ({
+          timestampMs,
+          timeLabel,
+          total: snapshot ? snapshot.threadCount : null,
+          daemon: snapshot ? snapshot.daemonThreadCount : null,
+        })),
+      ),
     [snapshots],
   );
 
@@ -305,11 +358,20 @@ export function ThreadCountChart({
         <ChartContainer config={threadConfig} className="min-h-[200px] w-full">
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" tick={{ fontSize: 10 }} />
+            <XAxis
+              {...TIME_AXIS_PROPS}
+              tick={{ fontSize: 10 }}
+              tickFormatter={(value) => formatChartAxisTime(Number(value))}
+            />
             <YAxis allowDecimals={false} tick={{ fontSize: 10 }} />
             <ChartTooltip
               content={(props: CustomTooltipProps) => (
-                <ChartTooltipContent {...props} />
+                <ChartTooltipContent
+                  {...props}
+                  labelFormatter={(_label, payload) =>
+                    formatTooltipLabel(payload)
+                  }
+                />
               )}
             />
             <Line
@@ -318,6 +380,7 @@ export function ThreadCountChart({
               stroke="var(--color-total)"
               strokeWidth={2}
               dot={false}
+              isAnimationActive={false}
             />
             <Line
               type="monotone"
@@ -325,6 +388,7 @@ export function ThreadCountChart({
               stroke="var(--color-daemon)"
               strokeWidth={2}
               dot={false}
+              isAnimationActive={false}
             />
             <ChartLegend content={<ChartLegendContent />} />
           </LineChart>
@@ -347,11 +411,14 @@ export function AggregateBotsChart({
   const { t } = useTranslation("admin");
   const chartData = useMemo(
     () =>
-      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
-        time,
-        online: s ? s.totalBotsOnline : null,
-        total: s ? s.totalBotsTotal : null,
-      })),
+      downsampleTimeSeriesData(
+        padSnapshots(snapshots).map(({ timestampMs, timeLabel, snapshot }) => ({
+          timestampMs,
+          timeLabel,
+          online: snapshot ? snapshot.totalBotsOnline : null,
+          total: snapshot ? snapshot.totalBotsTotal : null,
+        })),
+      ),
     [snapshots],
   );
 
@@ -366,11 +433,20 @@ export function AggregateBotsChart({
         <ChartContainer config={botsConfig} className="min-h-[200px] w-full">
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" tick={{ fontSize: 10 }} />
+            <XAxis
+              {...TIME_AXIS_PROPS}
+              tick={{ fontSize: 10 }}
+              tickFormatter={(value) => formatChartAxisTime(Number(value))}
+            />
             <YAxis allowDecimals={false} tick={{ fontSize: 10 }} />
             <ChartTooltip
               content={(props: CustomTooltipProps) => (
-                <ChartTooltipContent {...props} />
+                <ChartTooltipContent
+                  {...props}
+                  labelFormatter={(_label, payload) =>
+                    formatTooltipLabel(payload)
+                  }
+                />
               )}
             />
             <Area
@@ -379,6 +455,7 @@ export function AggregateBotsChart({
               stroke="var(--color-total)"
               fill="var(--color-total)"
               fillOpacity={0.1}
+              isAnimationActive={false}
               strokeWidth={1}
               strokeDasharray="4 2"
             />
@@ -388,6 +465,7 @@ export function AggregateBotsChart({
               stroke="var(--color-online)"
               fill="var(--color-online)"
               fillOpacity={0.3}
+              isAnimationActive={false}
               strokeWidth={2}
             />
             <ChartLegend content={<ChartLegendContent />} />

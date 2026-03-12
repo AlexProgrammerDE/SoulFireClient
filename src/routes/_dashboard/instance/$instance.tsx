@@ -137,6 +137,7 @@ export const Route = createFileRoute("/_dashboard/instance/$instance")({
     const metricsQueryOptions = instanceMetricsQueryOptions(
       transport,
       instance,
+      props.context.queryClient,
     );
     props.abortController.signal.addEventListener("abort", () => {
       void props.context.queryClient.cancelQueries({

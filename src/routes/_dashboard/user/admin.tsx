@@ -82,7 +82,10 @@ export const Route = createFileRoute("/_dashboard/user/admin")({
       },
       refetchInterval: 3_000,
     });
-    const serverMetricsOptions = serverMetricsQueryOptions(createTransport());
+    const serverMetricsOptions = serverMetricsQueryOptions(
+      createTransport(),
+      props.context.queryClient,
+    );
     props.abortController.signal.addEventListener("abort", () => {
       void props.context.queryClient.cancelQueries({
         queryKey: serverInfoQueryOptions.queryKey,

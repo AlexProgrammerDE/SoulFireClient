@@ -29,7 +29,11 @@ import type {
   GetInstanceMetricsResponse,
   MetricsSnapshot,
 } from "@/generated/soulfire/metrics";
-import { padSnapshots } from "@/lib/metrics-utils";
+import {
+  downsampleTimeSeriesData,
+  formatChartAxisTime,
+  padSnapshots,
+} from "@/lib/metrics-utils";
 
 function formatBytes(bytes: number): string {
   if (bytes < 1024) return `${bytes.toFixed(0)} B/s`;
@@ -50,6 +54,21 @@ const PIE_COLORS = [
   "var(--chart-4)",
   "var(--chart-5)",
 ];
+
+const TIME_AXIS_PROPS = {
+  dataKey: "timestampMs",
+  domain: ["dataMin", "dataMax"] as const,
+  interval: "preserveStartEnd" as const,
+  minTickGap: 32,
+  scale: "time" as const,
+  tickCount: 6,
+  type: "number" as const,
+};
+
+function formatTooltipLabel(payload: CustomTooltipProps["payload"]) {
+  const timeLabel = payload?.[0]?.payload?.timeLabel;
+  return typeof timeLabel === "string" ? timeLabel : "";
+}
 
 // Summary cards at the top
 export function MetricsSummaryCards({
@@ -118,11 +137,14 @@ export function BotsOnlineChart({
 }) {
   const chartData = useMemo(
     () =>
-      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
-        time,
-        online: s ? s.botsOnline : null,
-        total: s ? s.botsTotal : null,
-      })),
+      downsampleTimeSeriesData(
+        padSnapshots(snapshots).map(({ timestampMs, timeLabel, snapshot }) => ({
+          timestampMs,
+          timeLabel,
+          online: snapshot ? snapshot.botsOnline : null,
+          total: snapshot ? snapshot.botsTotal : null,
+        })),
+      ),
     [snapshots],
   );
 
@@ -138,11 +160,20 @@ export function BotsOnlineChart({
         >
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" tick={{ fontSize: 10 }} />
+            <XAxis
+              {...TIME_AXIS_PROPS}
+              tick={{ fontSize: 10 }}
+              tickFormatter={(value) => formatChartAxisTime(Number(value))}
+            />
             <YAxis allowDecimals={false} tick={{ fontSize: 10 }} />
             <ChartTooltip
               content={(props: CustomTooltipProps) => (
-                <ChartTooltipContent {...props} />
+                <ChartTooltipContent
+                  {...props}
+                  labelFormatter={(_label, payload) =>
+                    formatTooltipLabel(payload)
+                  }
+                />
               )}
             />
             <Area
@@ -151,6 +182,7 @@ export function BotsOnlineChart({
               stroke="var(--color-total)"
               fill="var(--color-total)"
               fillOpacity={0.1}
+              isAnimationActive={false}
               strokeWidth={1}
               strokeDasharray="4 2"
             />
@@ -160,6 +192,7 @@ export function BotsOnlineChart({
               stroke="var(--color-online)"
               fill="var(--color-online)"
               fillOpacity={0.3}
+              isAnimationActive={false}
               strokeWidth={2}
             />
           </AreaChart>
@@ -182,11 +215,16 @@ export function NetworkTrafficChart({
 }) {
   const chartData = useMemo(
     () =>
-      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
-        time,
-        sent: s ? Math.round(s.packetsSentPerSecond) : null,
-        received: s ? Math.round(s.packetsReceivedPerSecond) : null,
-      })),
+      downsampleTimeSeriesData(
+        padSnapshots(snapshots).map(({ timestampMs, timeLabel, snapshot }) => ({
+          timestampMs,
+          timeLabel,
+          sent: snapshot ? Math.round(snapshot.packetsSentPerSecond) : null,
+          received: snapshot
+            ? Math.round(snapshot.packetsReceivedPerSecond)
+            : null,
+        })),
+      ),
     [snapshots],
   );
 
@@ -199,11 +237,20 @@ export function NetworkTrafficChart({
         <ChartContainer config={networkConfig} className="min-h-[200px] w-full">
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" tick={{ fontSize: 10 }} />
+            <XAxis
+              {...TIME_AXIS_PROPS}
+              tick={{ fontSize: 10 }}
+              tickFormatter={(value) => formatChartAxisTime(Number(value))}
+            />
             <YAxis tick={{ fontSize: 10 }} />
             <ChartTooltip
               content={(props: CustomTooltipProps) => (
-                <ChartTooltipContent {...props} />
+                <ChartTooltipContent
+                  {...props}
+                  labelFormatter={(_label, payload) =>
+                    formatTooltipLabel(payload)
+                  }
+                />
               )}
             />
             <Line
@@ -212,6 +259,7 @@ export function NetworkTrafficChart({
               stroke="var(--color-sent)"
               strokeWidth={2}
               dot={false}
+              isAnimationActive={false}
             />
             <Line
               type="monotone"
@@ -219,6 +267,7 @@ export function NetworkTrafficChart({
               stroke="var(--color-received)"
               strokeWidth={2}
               dot={false}
+              isAnimationActive={false}
             />
             <ChartLegend content={<ChartLegendContent />} />
           </LineChart>
@@ -241,11 +290,14 @@ export function BandwidthChart({
 }) {
   const chartData = useMemo(
     () =>
-      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
-        time,
-        upload: s ? s.bytesSentPerSecond : null,
-        download: s ? s.bytesReceivedPerSecond : null,
-      })),
+      downsampleTimeSeriesData(
+        padSnapshots(snapshots).map(({ timestampMs, timeLabel, snapshot }) => ({
+          timestampMs,
+          timeLabel,
+          upload: snapshot ? snapshot.bytesSentPerSecond : null,
+          download: snapshot ? snapshot.bytesReceivedPerSecond : null,
+        })),
+      ),
     [snapshots],
   );
 
@@ -261,7 +313,11 @@ export function BandwidthChart({
         >
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" tick={{ fontSize: 10 }} />
+            <XAxis
+              {...TIME_AXIS_PROPS}
+              tick={{ fontSize: 10 }}
+              tickFormatter={(value) => formatChartAxisTime(Number(value))}
+            />
             <YAxis
               tick={{ fontSize: 10 }}
               tickFormatter={(v: number) => formatBytes(v).replace("/s", "")}
@@ -270,6 +326,9 @@ export function BandwidthChart({
               content={(props: CustomTooltipProps) => (
                 <ChartTooltipContent
                   {...props}
+                  labelFormatter={(_label, payload) =>
+                    formatTooltipLabel(payload)
+                  }
                   formatter={(value, name, item) => (
                     <>
                       <div
@@ -296,6 +355,7 @@ export function BandwidthChart({
               stroke="var(--color-upload)"
               fill="var(--color-upload)"
               fillOpacity={0.3}
+              isAnimationActive={false}
               strokeWidth={2}
             />
             <Area
@@ -304,6 +364,7 @@ export function BandwidthChart({
               stroke="var(--color-download)"
               fill="var(--color-download)"
               fillOpacity={0.2}
+              isAnimationActive={false}
               strokeWidth={2}
             />
             <ChartLegend content={<ChartLegendContent />} />
@@ -327,11 +388,14 @@ export function TickDurationChart({
 }) {
   const chartData = useMemo(
     () =>
-      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
-        time,
-        avg: s ? Number(s.avgTickDurationMs.toFixed(2)) : null,
-        max: s ? Number(s.maxTickDurationMs.toFixed(2)) : null,
-      })),
+      downsampleTimeSeriesData(
+        padSnapshots(snapshots).map(({ timestampMs, timeLabel, snapshot }) => ({
+          timestampMs,
+          timeLabel,
+          avg: snapshot ? Number(snapshot.avgTickDurationMs.toFixed(2)) : null,
+          max: snapshot ? Number(snapshot.maxTickDurationMs.toFixed(2)) : null,
+        })),
+      ),
     [snapshots],
   );
 
@@ -344,14 +408,23 @@ export function TickDurationChart({
         <ChartContainer config={tickConfig} className="min-h-[200px] w-full">
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" tick={{ fontSize: 10 }} />
+            <XAxis
+              {...TIME_AXIS_PROPS}
+              tick={{ fontSize: 10 }}
+              tickFormatter={(value) => formatChartAxisTime(Number(value))}
+            />
             <YAxis
               tick={{ fontSize: 10 }}
               tickFormatter={(v: number) => `${v}ms`}
             />
             <ChartTooltip
               content={(props: CustomTooltipProps) => (
-                <ChartTooltipContent {...props} />
+                <ChartTooltipContent
+                  {...props}
+                  labelFormatter={(_label, payload) =>
+                    formatTooltipLabel(payload)
+                  }
+                />
               )}
             />
             <Line
@@ -360,6 +433,7 @@ export function TickDurationChart({
               stroke="var(--color-avg)"
               strokeWidth={2}
               dot={false}
+              isAnimationActive={false}
             />
             <Line
               type="monotone"
@@ -368,6 +442,7 @@ export function TickDurationChart({
               strokeWidth={1}
               strokeDasharray="4 2"
               dot={false}
+              isAnimationActive={false}
             />
             <ChartLegend content={<ChartLegendContent />} />
           </LineChart>
@@ -390,11 +465,14 @@ export function HealthFoodChart({
 }) {
   const chartData = useMemo(
     () =>
-      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
-        time,
-        health: s ? Number(s.avgHealth.toFixed(1)) : null,
-        food: s ? Number(s.avgFoodLevel.toFixed(1)) : null,
-      })),
+      downsampleTimeSeriesData(
+        padSnapshots(snapshots).map(({ timestampMs, timeLabel, snapshot }) => ({
+          timestampMs,
+          timeLabel,
+          health: snapshot ? Number(snapshot.avgHealth.toFixed(1)) : null,
+          food: snapshot ? Number(snapshot.avgFoodLevel.toFixed(1)) : null,
+        })),
+      ),
     [snapshots],
   );
 
@@ -410,11 +488,20 @@ export function HealthFoodChart({
         >
           <LineChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" tick={{ fontSize: 10 }} />
+            <XAxis
+              {...TIME_AXIS_PROPS}
+              tick={{ fontSize: 10 }}
+              tickFormatter={(value) => formatChartAxisTime(Number(value))}
+            />
             <YAxis domain={[0, 20]} tick={{ fontSize: 10 }} />
             <ChartTooltip
               content={(props: CustomTooltipProps) => (
-                <ChartTooltipContent {...props} />
+                <ChartTooltipContent
+                  {...props}
+                  labelFormatter={(_label, payload) =>
+                    formatTooltipLabel(payload)
+                  }
+                />
               )}
             />
             <Line
@@ -423,6 +510,7 @@ export function HealthFoodChart({
               stroke="var(--color-health)"
               strokeWidth={2}
               dot={false}
+              isAnimationActive={false}
             />
             <Line
               type="monotone"
@@ -430,6 +518,7 @@ export function HealthFoodChart({
               stroke="var(--color-food)"
               strokeWidth={2}
               dot={false}
+              isAnimationActive={false}
             />
             <ChartLegend content={<ChartLegendContent />} />
           </LineChart>
@@ -452,11 +541,14 @@ export function ChunksEntitiesChart({
 }) {
   const chartData = useMemo(
     () =>
-      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
-        time,
-        chunks: s ? s.totalLoadedChunks : null,
-        entities: s ? s.totalTrackedEntities : null,
-      })),
+      downsampleTimeSeriesData(
+        padSnapshots(snapshots).map(({ timestampMs, timeLabel, snapshot }) => ({
+          timestampMs,
+          timeLabel,
+          chunks: snapshot ? snapshot.totalLoadedChunks : null,
+          entities: snapshot ? snapshot.totalTrackedEntities : null,
+        })),
+      ),
     [snapshots],
   );
 
@@ -472,11 +564,20 @@ export function ChunksEntitiesChart({
         >
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" tick={{ fontSize: 10 }} />
+            <XAxis
+              {...TIME_AXIS_PROPS}
+              tick={{ fontSize: 10 }}
+              tickFormatter={(value) => formatChartAxisTime(Number(value))}
+            />
             <YAxis tick={{ fontSize: 10 }} />
             <ChartTooltip
               content={(props: CustomTooltipProps) => (
-                <ChartTooltipContent {...props} />
+                <ChartTooltipContent
+                  {...props}
+                  labelFormatter={(_label, payload) =>
+                    formatTooltipLabel(payload)
+                  }
+                />
               )}
             />
             <Area
@@ -485,6 +586,7 @@ export function ChunksEntitiesChart({
               stroke="var(--color-chunks)"
               fill="var(--color-chunks)"
               fillOpacity={0.3}
+              isAnimationActive={false}
               strokeWidth={2}
             />
             <Area
@@ -493,6 +595,7 @@ export function ChunksEntitiesChart({
               stroke="var(--color-entities)"
               fill="var(--color-entities)"
               fillOpacity={0.2}
+              isAnimationActive={false}
               strokeWidth={2}
             />
             <ChartLegend content={<ChartLegendContent />} />
@@ -516,11 +619,16 @@ export function ConnectionEventsChart({
 }) {
   const chartData = useMemo(
     () =>
-      padSnapshots(snapshots).map(({ time, snapshot: s }) => ({
-        time,
-        connections: s ? s.connections : null,
-        disconnections: s ? s.disconnections : null,
-      })),
+      downsampleTimeSeriesData(
+        padSnapshots(snapshots).map(({ timestampMs, timeLabel, snapshot }) => ({
+          time: formatChartAxisTime(timestampMs),
+          timestampMs,
+          timeLabel,
+          connections: snapshot ? snapshot.connections : null,
+          disconnections: snapshot ? snapshot.disconnections : null,
+        })),
+        { mode: "sum" },
+      ),
     [snapshots],
   );
 
@@ -536,21 +644,32 @@ export function ConnectionEventsChart({
         >
           <BarChart data={chartData}>
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" tick={{ fontSize: 10 }} />
+            <XAxis
+              dataKey="time"
+              interval="preserveStartEnd"
+              tick={{ fontSize: 10 }}
+            />
             <YAxis allowDecimals={false} tick={{ fontSize: 10 }} />
             <ChartTooltip
               content={(props: CustomTooltipProps) => (
-                <ChartTooltipContent {...props} />
+                <ChartTooltipContent
+                  {...props}
+                  labelFormatter={(_label, payload) =>
+                    formatTooltipLabel(payload)
+                  }
+                />
               )}
             />
             <Bar
               dataKey="connections"
               fill="var(--color-connections)"
+              isAnimationActive={false}
               radius={2}
             />
             <Bar
               dataKey="disconnections"
               fill="var(--color-disconnections)"
+              isAnimationActive={false}
               radius={2}
             />
             <ChartLegend content={<ChartLegendContent />} />
@@ -612,7 +731,12 @@ export function HealthDistributionChart({
                 <ChartTooltipContent {...props} />
               )}
             />
-            <Bar dataKey="count" fill="var(--color-count)" radius={2} />
+            <Bar
+              dataKey="count"
+              fill="var(--color-count)"
+              isAnimationActive={false}
+              radius={2}
+            />
           </BarChart>
         </ChartContainer>
       </CardContent>
@@ -675,6 +799,7 @@ export function DimensionPieChart({
               dataKey="bots"
               nameKey="dimension"
               innerRadius={40}
+              isAnimationActive={false}
               strokeWidth={3}
             >
               {chartData.map((entry) => (
@@ -743,6 +868,7 @@ export function GameModePieChart({
               dataKey="bots"
               nameKey="mode"
               innerRadius={40}
+              isAnimationActive={false}
               strokeWidth={3}
             >
               {chartData.map((entry) => (
@@ -812,6 +938,7 @@ export function PositionScatterChart({
             <Scatter
               data={chartData}
               fill="var(--color-position)"
+              isAnimationActive={false}
               shape="circle"
             />
           </ScatterChart>
