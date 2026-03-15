@@ -66,8 +66,8 @@
     "i18next-resources-to-backend": "^1.2.1",
     "input-otp": "^1.4.2",
     "js-sha256": "^0.11.1",
-    "lucide-react": "^0.576.0",
-    "lucide-static": "^0.576.0",
+    "lucide-react": "^0.577.0",
+    "lucide-static": "^0.577.0",
     "mime-matcher": "^1.0.5",
     "motion": "^12.34.2",
     "nanoid": "^5.1.6",
@@ -94,7 +94,7 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.4",
+    "@biomejs/biome": "2.4.7",
     "@protobuf-ts/plugin": "^2.11.1",
     "@tailwindcss/postcss": "^4.2.0",
     "@tanstack/devtools-vite": "^0.5.1",
@@ -104,7 +104,7 @@
     "@tanstack/react-router-devtools": "^1.161.3",
     "@tanstack/router-cli": "^1.161.3",
     "@tanstack/router-plugin": "^1.161.3",
-    "@tauri-apps/cli": "2.10.0",
+    "@tauri-apps/cli": "2.10.1",
     "@types/file-saver": "^2.0.7",
     "@types/loadable__component": "^5.13.10",
     "@types/node": "^24.10.13",
