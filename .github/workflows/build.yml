@@ -67,13 +67,13 @@ jobs:
         uses: ilammy/setup-nasm@72793074d3c8cdda771dba85f6deafe00623038b # 1.5.2
 
       - name: 'Shared: Setup node'
-        uses: actions/setup-node@6044e13b5dc448c55e2357c09f80417699197238 # 6.2.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # 6.3.0
         with:
           node-version: lts/*
           check-latest: true
 
       - name: 'Shared: Install pnpm'
-        uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # 4.2.0
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # 4.4.0
         with:
           version: latest
 
@@ -94,7 +94,7 @@ jobs:
 
       - name: 'Desktop: Cache dependencies'
         if: matrix.type != 'android'
-        uses: Swatinem/rust-cache@779680da715d629ac1d338a641029a2f4372abb5 # 2.8.2
+        uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # 2.9.1
         with:
           save-if: ${{ github.ref == 'refs/heads/main' }}
           workspaces: src-tauri
@@ -119,7 +119,7 @@ jobs:
 
       - name: 'Desktop: Build Tauri project'
         if: matrix.type != 'android'
-        uses: tauri-apps/tauri-action@73fb865345c54760d875b94642314f8c0c894afa # 0.6.1
+        uses: tauri-apps/tauri-action@84b9d35b5fc46c1e45415bdb6144030364f7ebc5 # 0.6.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
